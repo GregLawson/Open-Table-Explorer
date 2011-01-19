@@ -1,5 +1,5 @@
 Installation:
-Requires previous installation of ruby interpreter and the Postgresql database. A future version is hoped to support ActiveRecord so that MySQL, and Oracle will also be supported.
+Requires previous installation of ruby interpreter and Rails. 
 Some individual programs require nmap and wget be installed.
 Installation of ruby rails is optional with this version but will be required for future versons. The ruby rails code is in the subdirectory rails but the doc and vendor directories
 have not been included as they are standard and not changed.
