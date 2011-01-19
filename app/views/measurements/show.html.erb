@@ -1,0 +1,53 @@
+<p>
+  <b>Description:</b>
+  <%=h @measurement.description %>
+</p>
+
+<p>
+  <b>Load measurement:</b>
+  <%=h @measurement.load_measurement %>
+</p>
+
+<p>
+  <b>Load:</b>
+  <%=h @measurement.load %>
+</p>
+
+<p>
+  <b>Power factor:</b>
+  <%=h @measurement.power_factor %>
+</p>
+
+<p>
+  <b>Period:</b>
+  <%=h @measurement.period %>
+</p>
+
+<p>
+  <b>Duty cycle measurement:</b>
+  <%=h @measurement.duty_cycle_measurement %>
+</p>
+
+<p>
+  <b>Duty cycle:</b>
+  <%=h @measurement.duty_cycle %>
+</p>
+
+<p>
+  <b>Load:</b>
+  <%=h @measurement.load_id %>
+</p>
+
+<p>
+  <b>Mode:</b>
+  <%=h @measurement.mode %>
+</p>
+
+<p>
+  <b>Va:</b>
+  <%=h @measurement.va %>
+</p>
+
+
+<%= link_to 'Edit', edit_measurement_path(@measurement) %> |
+<%= link_to 'Back', measurements_path %>

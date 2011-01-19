@@ -1,0 +1,31 @@
+<h1>New network</h1>
+
+<% form_for(@network) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nmap_addresses %><br />
+    <%= f.text_field :nmap_addresses %>
+  </p>
+  <p>
+    <%= f.label :last_scan %><br />
+    <%= f.datetime_select :last_scan %>
+  </p>
+  <p>
+    <%= f.label :nmap_exection_time %><br />
+    <%= f.text_field :nmap_exection_time %>
+  </p>
+  <p>
+    <%= f.label :expanded %><br />
+    <%= f.check_box :expanded %>
+  </p>
+  <p>
+    <%= f.label :nmap_execution_time %><br />
+    <%= f.text_field :nmap_execution_time %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', networks_path %>

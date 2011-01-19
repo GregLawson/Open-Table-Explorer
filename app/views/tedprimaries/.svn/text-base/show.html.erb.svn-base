@@ -1,0 +1,78 @@
+<p>
+  <b>Hour:</b>
+  <%=h @tedprimary.hour %>
+</p>
+
+<p>
+  <b>Minute:</b>
+  <%=h @tedprimary.minute %>
+</p>
+
+<p>
+  <b>Month:</b>
+  <%=h @tedprimary.month %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%=h @tedprimary.day %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%=h @tedprimary.year %>
+</p>
+
+<p>
+  <b>Maxsecond:</b>
+  <%=h @tedprimary.maxsecond %>
+</p>
+
+<p>
+  <b>Accusecond:</b>
+  <%=h @tedprimary.accusecond %>
+</p>
+
+<p>
+  <b>Total voltagenow:</b>
+  <%=h @tedprimary.total_voltagenow %>
+</p>
+
+<p>
+  <b>Mtu1 voltagenow:</b>
+  <%=h @tedprimary.mtu1_voltagenow %>
+</p>
+
+<p>
+  <b>Total powernow:</b>
+  <%=h @tedprimary.total_powernow %>
+</p>
+
+<p>
+  <b>Total kva:</b>
+  <%=h @tedprimary.total_kva %>
+</p>
+
+<p>
+  <b>Mtu1 powernow:</b>
+  <%=h @tedprimary.mtu1_powernow %>
+</p>
+
+<p>
+  <b>Mtu1 kva:</b>
+  <%=h @tedprimary.mtu1_kva %>
+</p>
+
+<p>
+  <b>Total costnow:</b>
+  <%=h @tedprimary.total_costnow %>
+</p>
+
+<p>
+  <b>Mtu1 costnow:</b>
+  <%=h @tedprimary.mtu1_costnow %>
+</p>
+
+
+<%= link_to 'Edit', edit_tedprimary_path(@tedprimary) %> |
+<%= link_to 'Back', tedprimaries_path %>

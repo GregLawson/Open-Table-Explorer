@@ -1,0 +1,33 @@
+<h1>Listing urls</h1>
+
+<table>
+  <tr>
+    <th>Href</th>
+    <th>Url</th>
+    <th>Cache path</th>
+    <th>Last cache</th>
+    <th>Error</th>
+    <th>Context</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @urls.each do |url| %>
+  <tr>
+    <td><%= url.href %></td>
+    <td><%= url.url %></td>
+    <td><%= url.cache_path %></td>
+    <td><%= url.last_cache %></td>
+    <td><%= url.error %></td>
+    <td><%= url.context %></td>
+    <td><%= link_to 'Show', url %></td>
+    <td><%= link_to 'Edit', edit_url_path(url) %></td>
+    <td><%= link_to 'Destroy', url, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Url', new_url_path %>

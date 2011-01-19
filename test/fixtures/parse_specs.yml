@@ -1,0 +1,51 @@
+--- 
+one: 
+  column_name_location: header
+  parse_interface: HTML_Parse
+  id: "4"
+  column_name_selection: tr:nth-child(0)"
+  table_selection_is_regexp: t
+  acquisition_stream_spec_id: "3"
+  column_selection: td
+  row_selection: tr
+  name_prefix: 
+  table_selection: |-
+    KCET[^
+    ]*</tr>\s*(<tr.*</tr>).*KVIE
+  column_value_selection: ""
+parse_specs_004: 
+  column_name_location: tagged
+  parse_interface: JSON_Parse
+  id: "3"
+  column_name_selection: 
+  table_selection_is_regexp: 
+  acquisition_stream_spec_id: "1"
+  column_selection: 
+  row_selection: 
+  name_prefix: 
+  table_selection: 
+  column_value_selection: 
+parse_specs_001: 
+  column_name_location: tagged
+  parse_interface: XML_Parse
+  id: "1"
+  column_name_selection: 
+  table_selection_is_regexp: 
+  acquisition_stream_spec_id: "5"
+  column_selection: 
+  row_selection: 
+  name_prefix: KHHR_
+  table_selection: 
+  column_value_selection: 
+parse_specs_002: 
+  column_name_location: tagged
+  parse_interface: XML_Parse
+  id: "2"
+  column_name_selection: 
+  table_selection_is_regexp: 
+  acquisition_stream_spec_id: "4"
+  column_selection: 
+  row_selection: 
+  name_prefix: KLAX_
+  table_selection: 
+  column_value_selection: 

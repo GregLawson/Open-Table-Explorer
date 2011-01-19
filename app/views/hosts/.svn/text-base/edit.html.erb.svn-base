@@ -1,0 +1,48 @@
+<h1>Editing host</h1>
+
+<% form_for(@host) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nmap %><br />
+    <%= f.text_area :nmap %>
+  </p>
+  <p>
+    <%= f.label :otherports %><br />
+    <%= f.text_field :otherports %>
+  </p>
+  <p>
+    <%= f.label :otherstate %><br />
+    <%= f.text_field :otherstate %>
+  </p>
+  <p>
+    <%= f.label :mac %><br />
+    <%= f.text_area :mac %>
+  </p>
+  <p>
+    <%= f.label :nicvendor %><br />
+    <%= f.text_area :nicvendor %>
+  </p>
+  <p>
+    <%= f.label :ip %><br />
+    <%= f.text_field :ip %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :last_detection %><br />
+    <%= f.datetime_select :last_detection %>
+  </p>
+  <p>
+    <%= f.label :nmap_execution_time %><br />
+    <%= f.text_field :nmap_execution_time %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @host %> |
+<%= link_to 'Back', hosts_path %>

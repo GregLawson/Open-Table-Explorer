@@ -1,0 +1,28 @@
+<p>
+  <b>Node:</b>
+  <%=h @node.node %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @node.description %>
+</p>
+
+<p>
+  <b>Parent node:</b>
+  <%=h @node.parent_node %>
+</p>
+
+<p>
+  <b>Parent description:</b>
+  <%=h @node.parent_description %>
+</p>
+
+<p>
+  <b>Id:</b>
+  <%=h @node.id %>
+</p>
+
+
+<%= link_to 'Edit', edit_node_path(@node) %> |
+<%= link_to 'Back', nodes_path %>

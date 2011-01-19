@@ -1,0 +1,27 @@
+<h1>Listing huelshows</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Shortname</th>
+    <th>Id</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @huelshows.each do |huelshow| %>
+  <tr>
+    <td><%= huelshow.name %></td>
+    <td><%= huelshow.shortname %></td>
+    <td><%= huelshow.id %></td>
+    <td><%= link_to 'Show', huelshow %></td>
+    <td><%= link_to 'Edit', edit_huelshow_path(huelshow) %></td>
+    <td><%= link_to 'Destroy', huelshow, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Huelshow', new_huelshow_path %>

@@ -1,0 +1,59 @@
+<h1>Listing production_ftps</h1>
+
+<table>
+  <tr>
+    <th>Timestamp</th>
+    <th>Backup state</th>
+    <th>Co2 saved</th>
+    <th>Error</th>
+    <th>E total</th>
+    <th>Fac</th>
+    <th>Grid type</th>
+    <th>H on</th>
+    <th>H total</th>
+    <th>Iac</th>
+    <th>Ipv</th>
+    <th>Mode</th>
+    <th>Pac</th>
+    <th>Power on</th>
+    <th>Serial number</th>
+    <th>Temperature</th>
+    <th>Vac</th>
+    <th>Vpv</th>
+    <th>Date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @production_ftps.each do |production_ftp| %>
+  <tr>
+    <td><%= production_ftp.timestamp %></td>
+    <td><%= production_ftp.backup_state %></td>
+    <td><%= production_ftp.co2_saved %></td>
+    <td><%= production_ftp.error %></td>
+    <td><%= production_ftp.e_total %></td>
+    <td><%= production_ftp.fac %></td>
+    <td><%= production_ftp.grid_type %></td>
+    <td><%= production_ftp.h_on %></td>
+    <td><%= production_ftp.h_total %></td>
+    <td><%= production_ftp.iac %></td>
+    <td><%= production_ftp.ipv %></td>
+    <td><%= production_ftp.mode %></td>
+    <td><%= production_ftp.pac %></td>
+    <td><%= production_ftp.power_on %></td>
+    <td><%= production_ftp.serial_number %></td>
+    <td><%= production_ftp.temperature %></td>
+    <td><%= production_ftp.vac %></td>
+    <td><%= production_ftp.vpv %></td>
+    <td><%= production_ftp.Date %></td>
+    <td><%= link_to 'Show', production_ftp %></td>
+    <td><%= link_to 'Edit', edit_production_ftp_path(production_ftp) %></td>
+    <td><%= link_to 'Destroy', production_ftp, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Production ftp', new_production_ftp_path %>

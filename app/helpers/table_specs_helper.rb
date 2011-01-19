@@ -1,0 +1,2 @@
+module TableSpecsHelper
+end

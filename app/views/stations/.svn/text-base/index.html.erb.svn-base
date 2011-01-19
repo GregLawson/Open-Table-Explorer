@@ -1,0 +1,38 @@
+<h1>Listing stations</h1>
+
+<table>
+  <tr>
+    <th>Dtv</th>
+    <th>Antennatype</th>
+    <th>Call sign</th>
+    <th>Channel</th>
+    <th>Network</th>
+    <th>City  state</th>
+    <th>Livedate</th>
+    <th>Compassheading</th>
+    <th>Milesfrom</th>
+    <th>Rfchannel</th>
+  </tr>
+
+<% for station in @stations %>
+  <tr>
+    <td><%=h station.dtv %></td>
+    <td><%=h station.antennatype %></td>
+    <td><%=h station.call_sign %></td>
+    <td><%=h station.channel %></td>
+    <td><%=h station.network %></td>
+    <td><%=h station.city__state %></td>
+    <td><%=h station.livedate %></td>
+    <td><%=h station.compassheading %></td>
+    <td><%=h station.milesfrom %></td>
+    <td><%=h station.rfchannel %></td>
+    <td><%= link_to 'Show', station %></td>
+    <td><%= link_to 'Edit', edit_station_path(station) %></td>
+    <td><%= link_to 'Destroy', station, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New station', new_station_path %>

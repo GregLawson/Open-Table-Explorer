@@ -1,0 +1,31 @@
+--- 
+one: 
+  merge: table
+  file_caching: DB
+  id: "6"
+  model_class_name: ifconfig
+table_specs_002: 
+  merge: row
+  file_caching: DB
+  id: "3"
+  model_class_name: MULTIPLE_WEATHER
+table_specs_003: 
+  merge: table
+  file_caching: DB
+  id: "7"
+  model_class_name: nmap
+table_specs_004: 
+  merge: row
+  file_caching: DB
+  id: "1"
+  model_class_name: TEDWebBoxFull
+table_specs_005: 
+  merge: table
+  file_caching: DB
+  id: "8"
+  model_class_name: Network
+table_specs_006: 
+  merge: rows
+  file_caching: DB
+  id: "2"
+  model_class_name: huell_schedule

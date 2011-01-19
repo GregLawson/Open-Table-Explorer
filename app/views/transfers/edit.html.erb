@@ -1,0 +1,24 @@
+<h1>Editing transfer</h1>
+
+<% form_for(@transfer) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :account %><br />
+    <%= f.text_field :account %>
+  </p>
+  <p>
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </p>
+  <p>
+    <%= f.label :posted %><br />
+    <%= f.date_select :posted %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @transfer %> |
+<%= link_to 'Back', transfers_path %>

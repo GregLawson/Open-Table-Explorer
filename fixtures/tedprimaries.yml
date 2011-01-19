@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  hour: 1
+  minute: 1
+  month: 1
+  day: 1
+  year: 1
+  maxsecond: 1
+  accusecond: 1
+  total_voltagenow: 1
+  mtu1_voltagenow: 1
+  total_powernow: 1
+  total_kva: 1
+  mtu1_powernow: 1
+  mtu1_kva: 1
+  total_costnow: 1
+  mtu1_costnow: 1
+
+two:
+  hour: 1
+  minute: 1
+  month: 1
+  day: 1
+  year: 1
+  maxsecond: 1
+  accusecond: 1
+  total_voltagenow: 1
+  mtu1_voltagenow: 1
+  total_powernow: 1
+  total_kva: 1
+  mtu1_powernow: 1
+  mtu1_kva: 1
+  total_costnow: 1
+  mtu1_costnow: 1

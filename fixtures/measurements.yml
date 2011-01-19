@@ -1,0 +1,1794 @@
+--- 
+one: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: DSL modem
+  load_id: "171"
+  duty_cycle: 
+  load: 
+measurements_128: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Panasonic 5 CD, 2 tape Stereo system
+  load_id: "142"
+  duty_cycle: 
+  load: "34"
+measurements_070: 
+  va: 
+  power_factor: "0.61"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Ikea hanging light
+  load_id: "82"
+  duty_cycle: "0"
+  load: "23"
+measurements_042: 
+  va: 
+  power_factor: "0.61"
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Eric laptop, 50W full charge, less screen bright 44W, close lid 35-1W)
+  load_id: "53"
+  duty_cycle: "0.01"
+  load: "71"
+measurements_014: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: 3 x 60W
+  load_id: "17"
+  duty_cycle: "0.02"
+  load: "180"
+measurements_157: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: 16 port Ethernet switch
+  load_id: "172"
+  duty_cycle: 
+  load: 
+measurements_129: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: DTV converter, Airlink
+  load_id: "143"
+  duty_cycle: 
+  load: "1"
+measurements_071: 
+  va: 
+  power_factor: "0.57"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Duracell battery charger $ Aas
+  load_id: "83"
+  duty_cycle: "1"
+  load: "4"
+measurements_043: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Rated
+  duty_cycle_measurement: 
+  description: Eric light
+  load_id: "54"
+  duty_cycle: "0.33"
+  load: "23"
+measurements_015: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: 1 13W compact florescent
+  load_id: "18"
+  duty_cycle: "0.02"
+  load: "13"
+measurements_158: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Web Box for SMA inverter
+  load_id: "173"
+  duty_cycle: 
+  load: 
+measurements_072: 
+  va: 
+  power_factor: "0.94"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Dremel battery charger charging
+  load_id: "84"
+  duty_cycle: "1"
+  load: "13"
+measurements_044: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Guess
+  duty_cycle_measurement: 
+  description: Eric fan
+  load_id: "55"
+  duty_cycle: "0.33"
+  load: "40"
+measurements_016: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: 8 x 13W compact florescent
+  load_id: "19"
+  duty_cycle: "0.02"
+  load: "104"
+measurements_159: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Spa thermostat shut-off over-ride
+  load_id: "174"
+  duty_cycle: 
+  load: 
+measurements_073: 
+  va: 
+  power_factor: "0.98"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Massage chair
+  load_id: "85"
+  duty_cycle: "0.01"
+  load: "90"
+measurements_045: 
+  va: 
+  power_factor: 
+  mode: Standby
+  period: Weekly
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Dell laptop Sleep mode
+  load_id: "56"
+  duty_cycle: "0.5"
+  load: "13"
+measurements_100: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: Always
+  load_measurement: Measued-TED
+  duty_cycle_measurement: 
+  description: Door bell (lit button)
+  load_id: "112"
+  duty_cycle: "0.01"
+  load: "3"
+measurements_017: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: Always
+  load_measurement: Rated
+  duty_cycle_measurement: Rated
+  description: Electric range
+  load_id: "21"
+  duty_cycle: "0"
+  load: "0"
+measurements_074: 
+  va: 
+  power_factor: "0.23"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Shredder
+  load_id: "86"
+  duty_cycle: "0.01"
+  load: "170"
+measurements_046: 
+  va: 
+  power_factor: "0.95"
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Window fan low
+  load_id: "57"
+  duty_cycle: "0.05"
+  load: "160"
+measurements_101: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: "100"
+  description: Stove clock
+  load_id: "113"
+  duty_cycle: "1"
+  load: "4"
+measurements_018: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: garage sub panel
+  load_id: "22"
+  duty_cycle: "0.02"
+  load: "200"
+measurements_130: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Play Time HD multmedia player
+  load_id: "144"
+  duty_cycle: 
+  load: "7"
+measurements_075: 
+  va: 
+  power_factor: "0.67"
+  mode: Standby
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Roomba docking rapid charger
+  load_id: "87"
+  duty_cycle: "1"
+  load: "3"
+measurements_047: 
+  va: 
+  power_factor: "0.96"
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Window fan medium
+  load_id: "58"
+  duty_cycle: "0.15"
+  load: "196"
+measurements_102: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: Rated
+  description: Alan's computer
+  load_id: "114"
+  duty_cycle: "1"
+  load: "200"
+measurements_019: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: including garage door
+  load_id: "23"
+  duty_cycle: "0.01"
+  load: "100"
+measurements_131: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Clock, projection
+  load_id: "145"
+  duty_cycle: "1"
+  load: "2"
+measurements_048: 
+  va: 
+  power_factor: "0.91"
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Window fan high
+  load_id: "59"
+  duty_cycle: "0.05"
+  load: "257"
+measurements_103: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: North wall TV
+  load_id: "115"
+  duty_cycle: 
+  load: "56"
+measurements_076: 
+  va: 
+  power_factor: "0.66"
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Roomba docking rapid charger
+  load_id: "88"
+  duty_cycle: "0.01"
+  load: "5"
+measurements_160: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: "1"
+  description: Kitchen exhaust fan
+  load_id: "175"
+  duty_cycle: 
+  load: 
+measurements_132: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Weather Radio
+  load_id: "146"
+  duty_cycle: "1"
+  load: "2"
+measurements_049: 
+  va: 
+  power_factor: "1"
+  mode: "On"
+  period: Daily
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Toaster oven
+  load_id: "60"
+  duty_cycle: "0.01"
+  load: "1460"
+measurements_104: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Daily
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Visio LCD TV
+  load_id: "116"
+  duty_cycle: "0.5"
+  load: "119"
+measurements_077: 
+  va: 
+  power_factor: "0.45"
+  mode: "On"
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Mac isolation transformer
+  load_id: "89"
+  duty_cycle: "1"
+  load: "3"
+measurements_161: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Breakfast bar track light
+  load_id: "176"
+  duty_cycle: "0.01"
+  load: 
+measurements_133: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Weather Radio
+  load_id: "147"
+  duty_cycle: 
+  load: "2"
+measurements_105: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: Daily
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Visio LCD TV
+  load_id: "117"
+  duty_cycle: "0.5"
+  load: "0"
+measurements_078: 
+  va: 
+  power_factor: "0.52"
+  mode: "Off"
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Mac
+  load_id: "90"
+  duty_cycle: "1"
+  load: "3"
+measurements_162: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Dining room ceiling fan
+  load_id: "177"
+  duty_cycle: 
+  load: 
+measurements_134: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: DTV converter, Airlink
+  load_id: "148"
+  duty_cycle: 
+  load: "5"
+measurements_106: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: TV
+  load_id: "118"
+  duty_cycle: 
+  load: "56"
+measurements_020: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: North east outlet
+  load_id: "24"
+  duty_cycle: 
+  load: 
+measurements_079: 
+  va: 
+  power_factor: "0.65"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Dazzler idling
+  load_id: "91"
+  duty_cycle: "1"
+  load: "3"
+measurements_163: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Brother PC label printer
+  load_id: "178"
+  duty_cycle: 
+  load: 
+measurements_135: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Panasonic cordless phone
+  load_id: "149"
+  duty_cycle: "1"
+  load: "3"
+measurements_107: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Playstation 2
+  load_id: "119"
+  duty_cycle: "0.07"
+  load: "17"
+measurements_021: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Bread maker
+  load_id: "26"
+  duty_cycle: 
+  load: 
+measurements_136: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Emachines computer
+  load_id: "150"
+  duty_cycle: 
+  load: "87"
+measurements_108: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Liteon DVD player
+  load_id: "120"
+  duty_cycle: "0.5"
+  load: "28"
+measurements_050: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Washer on filling
+  load_id: "61"
+  duty_cycle: "0.01"
+  load: "110"
+measurements_022: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Weekly
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Couch light
+  load_id: "28"
+  duty_cycle: "0.05"
+  load: "23"
+measurements_137: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Belkin KVM live
+  load_id: "151"
+  duty_cycle: 
+  load: "3"
+measurements_109: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Panasonic VCR
+  load_id: "121"
+  duty_cycle: "0.01"
+  load: "3"
+measurements_051: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Washer spin dry
+  load_id: "62"
+  duty_cycle: "0.01"
+  load: "210"
+measurements_023: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Attic ceiling light
+  load_id: "30"
+  duty_cycle: "0.01"
+  load: "60"
+measurements_138: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Sahara computer
+  load_id: "152"
+  duty_cycle: 
+  load: "64"
+measurements_052: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Washer on
+  load_id: "63"
+  duty_cycle: "0.01"
+  load: "9"
+measurements_024: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: attic receptacle
+  load_id: "31"
+  duty_cycle: "0.01"
+  load: "0"
+measurements_080: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Mac powering on
+  load_id: "92"
+  duty_cycle: "0.02"
+  load: "55"
+measurements_139: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: 
+  description: video splitter x 8
+  load_id: "153"
+  duty_cycle: 
+  load: "19"
+measurements_053: 
+  va: 
+  power_factor: 
+  mode: Standby
+  period: Weekly
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Dryer
+  load_id: "64"
+  duty_cycle: "0.6"
+  load: "4"
+measurements_025: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Eric's computer
+  load_id: "32"
+  duty_cycle: "1"
+  load: "200"
+measurements_081: 
+  va: 
+  power_factor: "0.98"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Mac logged on
+  load_id: "93"
+  duty_cycle: "0.5"
+  load: "73"
+measurements_054: 
+  va: 
+  power_factor: "0.54"
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Dryer spinning
+  load_id: "65"
+  duty_cycle: "0.02"
+  load: "680"
+measurements_026: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: back bathroom receptacle
+  load_id: "33"
+  duty_cycle: 
+  load: 
+measurements_082: 
+  va: 
+  power_factor: "1"
+  mode: Standby
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Antenna rotator
+  load_id: "94"
+  duty_cycle: "0.99"
+  load: "1"
+measurements_110: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Water heater recirculation pump
+  load_id: "122"
+  duty_cycle: 
+  load: "32"
+measurements_027: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: front bathroom receptacle
+  load_id: "34"
+  duty_cycle: 
+  load: 
+measurements_083: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Antenna rotator rotating
+  load_id: "95"
+  duty_cycle: "0.01"
+  load: "3"
+measurements_055: 
+  va: 
+  power_factor: "0.92"
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Microwave oven
+  load_id: "66"
+  duty_cycle: "0.01"
+  load: "1420"
+measurements_111: 
+  va: 
+  power_factor: "1"
+  mode: "Off"
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Rated
+  description: Front garage door
+  load_id: "123"
+  duty_cycle: "1"
+  load: "3"
+measurements_028: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: air conditioner
+  load_id: "36"
+  duty_cycle: "0.79"
+  load: "6"
+measurements_084: 
+  va: 
+  power_factor: "0.5"
+  mode: "Off"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Toshiba DVD recorder
+  load_id: "96"
+  duty_cycle: "1"
+  load: "2"
+measurements_056: 
+  va: 
+  power_factor: "0.62"
+  mode: "Off"
+  period: Weekly
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Microwave oven
+  load_id: "67"
+  duty_cycle: "0.99"
+  load: "12"
+measurements_140: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Always
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: Rated
+  description: component video switching
+  load_id: "154"
+  duty_cycle: "1"
+  load: "1"
+measurements_029: 
+  va: 
+  power_factor: "0.66"
+  mode: Charging
+  period: Weekly
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Dell laptop
+  load_id: "37"
+  duty_cycle: "0"
+  load: "44"
+measurements_085: 
+  va: 
+  power_factor: "0.66"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Toshiba DVD recorder
+  load_id: "97"
+  duty_cycle: "0.01"
+  load: "13"
+measurements_057: 
+  va: 
+  power_factor: "0.62"
+  mode: "Off"
+  period: Seasonal
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Refridgerator
+  load_id: "68"
+  duty_cycle: "0.5"
+  load: "24"
+measurements_112: 
+  va: 
+  power_factor: "0.71"
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Front garage door light
+  load_id: "124"
+  duty_cycle: "0.01"
+  load: "35"
+measurements_141: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Always
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: Rated
+  description: Beta VCR, Sony
+  load_id: "155"
+  duty_cycle: "0"
+  load: "18"
+measurements_086: 
+  va: 
+  power_factor: 
+  mode: Standby
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Panasonic DVD recorder
+  load_id: "98"
+  duty_cycle: "0.95"
+  load: "15"
+measurements_058: 
+  va: 
+  power_factor: "0.9"
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Refridgerator door light
+  load_id: "69"
+  duty_cycle: "0.1"
+  load: "66"
+measurements_113: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Front keyless entry
+  load_id: "125"
+  duty_cycle: 
+  load: "2"
+measurements_142: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Always
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: Rated
+  description: IBM computer
+  load_id: "156"
+  duty_cycle: "0"
+  load: "63"
+measurements_087: 
+  va: 
+  power_factor: "0.69"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Panasonic DVD recorder
+  load_id: "99"
+  duty_cycle: "0.05"
+  load: "20"
+measurements_059: 
+  va: 
+  power_factor: "0.94"
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Refridgerator compressor on
+  load_id: "70"
+  duty_cycle: "0.4"
+  load: "222"
+measurements_114: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Sprinkler controller
+  load_id: "126"
+  duty_cycle: 
+  load: "12"
+measurements_143: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Mitsubishi stereo
+  load_id: "157"
+  duty_cycle: 
+  load: 
+measurements_115: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Sprinkler controller
+  load_id: "127"
+  duty_cycle: 
+  load: "2"
+measurements_088: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Linksys WRT-54G
+  load_id: "100"
+  duty_cycle: "1"
+  load: "4"
+measurements_001: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: rated
+  duty_cycle_measurement: 
+  description: Ceiling light
+  load_id: "1"
+  duty_cycle: 
+  load: "23"
+measurements_144: 
+  va: 
+  power_factor: 
+  mode: Charging
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Rated
+  description: Eric PSP charger
+  load_id: "158"
+  duty_cycle: "1"
+  load: "7"
+measurements_116: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Rated
+  duty_cycle_measurement: 
+  description: Desk light
+  load_id: "128"
+  duty_cycle: 
+  load: "13"
+measurements_030: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Seasonal
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: North wall plug, fan
+  load_id: "38"
+  duty_cycle: 
+  load: 
+measurements_089: 
+  va: 
+  power_factor: "0.57"
+  mode: "Off"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Monoprice HDMI switch
+  load_id: "101"
+  duty_cycle: "1"
+  load: "1"
+measurements_002: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measued-TED
+  duty_cycle_measurement: Guess
+  description: Sconce 2 37W bulbs
+  load_id: "2"
+  duty_cycle: "0.15"
+  load: "73"
+measurements_145: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Eric desk light
+  load_id: "159"
+  duty_cycle: "0.01"
+  load: "37"
+measurements_117: 
+  va: 
+  power_factor: "0.46"
+  mode: "On"
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Rated
+  description: TED5000 display
+  load_id: "129"
+  duty_cycle: "1"
+  load: "2"
+measurements_031: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: 
+  description: back porch light
+  load_id: "39"
+  duty_cycle: 
+  load: "60"
+measurements_003: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Always
+  load_measurement: Guess
+  duty_cycle_measurement: 
+  description: Telephone and answering machine
+  load_id: "5"
+  duty_cycle: 
+  load: "10"
+measurements_146: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: Seasonal
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: Guess
+  description: Eric TV
+  load_id: "160"
+  duty_cycle: "0"
+  load: "3"
+measurements_118: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measued-TED
+  duty_cycle_measurement: 
+  description: "Porch light: 3x15W"
+  load_id: "130"
+  duty_cycle: 
+  load: "30"
+measurements_032: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Greg computers
+  load_id: "40"
+  duty_cycle: 
+  load: 
+measurements_004: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Weekly
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Dishwasher
+  load_id: "6"
+  duty_cycle: "0.04"
+  load: "100"
+measurements_060: 
+  va: 
+  power_factor: "0.27"
+  mode: "On"
+  period: Daily
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Garbage disposal
+  load_id: "71"
+  duty_cycle: "0.01"
+  load: "300"
+measurements_147: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Eric speakers
+  load_id: "161"
+  duty_cycle: 
+  load: "1"
+measurements_119: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Weekly
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Bathroom fan, breaker 2
+  load_id: "131"
+  duty_cycle: "0.05"
+  load: "80"
+measurements_033: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Daily
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Alan's radio
+  load_id: "43"
+  duty_cycle: 
+  load: 
+measurements_005: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Seasonal
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Front hall Exhaust fan
+  load_id: "7"
+  duty_cycle: "0.01"
+  load: "100"
+measurements_090: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: HP 3210xi Printer
+  load_id: "102"
+  duty_cycle: "0.96"
+  load: "5"
+measurements_061: 
+  va: 
+  power_factor: "0.72"
+  mode: "Off"
+  period: Weekly
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Rated
+  description: Massage chair
+  load_id: "72"
+  duty_cycle: "1"
+  load: "3"
+measurements_148: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Eric printer
+  load_id: "162"
+  duty_cycle: 
+  load: "2"
+measurements_006: 
+  va: 
+  power_factor: "0.01"
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Front garage door
+  load_id: "8"
+  duty_cycle: "0.01"
+  load: "610"
+measurements_062: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Pole light
+  load_id: "74"
+  duty_cycle: "0.04"
+  load: "23"
+measurements_034: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: AC full on (560W to 2000W)
+  load_id: "45"
+  duty_cycle: "0.01"
+  load: "2000"
+measurements_149: 
+  va: 
+  power_factor: 
+  mode: Idle
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Eric clock (radio?)
+  load_id: "163"
+  duty_cycle: 
+  load: "2"
+measurements_007: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: car battery charger
+  load_id: "9"
+  duty_cycle: 
+  load: "23"
+measurements_091: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: HP 3210xi Printer
+  load_id: "103"
+  duty_cycle: "0.04"
+  load: "14"
+measurements_063: 
+  va: 
+  power_factor: "0.74"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Battery charger plug bar
+  load_id: "75"
+  duty_cycle: "1"
+  load: "53"
+measurements_035: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: AC fan mid speed
+  load_id: "46"
+  duty_cycle: "0"
+  load: "66"
+measurements_008: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measued-TED
+  duty_cycle_measurement: Guess
+  description: Spa pump, no heat
+  load_id: "10"
+  duty_cycle: "0.01"
+  load: "570"
+measurements_092: 
+  va: 
+  power_factor: "0.83"
+  mode: "On"
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: GQ2000
+  load_id: "104"
+  duty_cycle: "1"
+  load: "160"
+measurements_064: 
+  va: 
+  power_factor: "0.69"
+  mode: "Off"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Massage chair
+  load_id: "76"
+  duty_cycle: "1"
+  load: "3"
+measurements_036: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: AC vent mid speed
+  load_id: "47"
+  duty_cycle: "0.1"
+  load: "77"
+measurements_120: 
+  va: 
+  power_factor: "1"
+  mode: "On"
+  period: 
+  load_measurement: Guess
+  duty_cycle_measurement: 
+  description: Alan's light
+  load_id: "132"
+  duty_cycle: 
+  load: "180"
+measurements_009: 
+  va: 
+  power_factor: 
+  mode: 
+  period: Seasonal
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Patio outlets
+  load_id: "12"
+  duty_cycle: "0"
+  load: "0"
+measurements_093: 
+  va: 
+  power_factor: "0.83"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Dell LCD full video
+  load_id: "105"
+  duty_cycle: 
+  load: "48"
+measurements_065: 
+  va: 
+  power_factor: "0.82"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Panasonic battery charger 4 Aas
+  load_id: "77"
+  duty_cycle: "1"
+  load: "10"
+measurements_037: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: AC vent low speed
+  load_id: "48"
+  duty_cycle: "0.1"
+  load: "48"
+measurements_121: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Shapely lantern
+  load_id: "133"
+  duty_cycle: 
+  load: 
+measurements_094: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Panasonic 5 DVD player
+  load_id: "106"
+  duty_cycle: "0.01"
+  load: "5"
+measurements_066: 
+  va: 
+  power_factor: "1"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Small magnifier light
+  load_id: "78"
+  duty_cycle: "0.01"
+  load: "4"
+measurements_038: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: AC vent high speed
+  load_id: "49"
+  duty_cycle: "0.01"
+  load: "100"
+measurements_150: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: Guess
+  description: Eric monitor
+  load_id: "164"
+  duty_cycle: "0.5"
+  load: "35"
+measurements_122: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: South outlet bar
+  load_id: "134"
+  duty_cycle: 
+  load: 
+measurements_095: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Mitsubishi VCR
+  load_id: "107"
+  duty_cycle: "0.01"
+  load: "7"
+measurements_067: 
+  va: 
+  power_factor: "0.32"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Durabuilt battery charger
+  load_id: "79"
+  duty_cycle: "0.8"
+  load: "2"
+measurements_039: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Weekly
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Dell laptop on and charging
+  load_id: "50"
+  duty_cycle: "0.03"
+  load: "43"
+measurements_151: 
+  va: 
+  power_factor: 
+  mode: Idle
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Eric monitor
+  load_id: "165"
+  duty_cycle: 
+  load: "1"
+measurements_123: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Kenwood Receiver
+  load_id: "136"
+  duty_cycle: 
+  load: "37"
+measurements_096: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: TEAC audio mixer
+  load_id: "108"
+  duty_cycle: "0.05"
+  load: "2"
+measurements_068: 
+  va: 
+  power_factor: "0.85"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Durabuilt battery charger charging
+  load_id: "80"
+  duty_cycle: "0.2"
+  load: "42"
+measurements_152: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: Seasonal
+  load_measurement: Guess
+  duty_cycle_measurement: Guess
+  description: Beta VCR, Sony
+  load_id: "167"
+  duty_cycle: "0"
+  load: "1"
+measurements_124: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: Greg bed light
+  load_id: "137"
+  duty_cycle: 
+  load: "22"
+measurements_010: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: 2 x 4 x 40W tube florescent fixture
+  load_id: "13"
+  duty_cycle: "0.03"
+  load: "320"
+measurements_069: 
+  va: 
+  power_factor: "0.44"
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: radio
+  load_id: "81"
+  duty_cycle: "0.15"
+  load: "2"
+measurements_097: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Dell LCD  no video?
+  load_id: "109"
+  duty_cycle: 
+  load: "1"
+measurements_153: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: Spa UV light
+  load_id: "168"
+  duty_cycle: 
+  load: 
+measurements_125: 
+  va: 
+  power_factor: 
+  mode: Idle
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: My book 1TG USB drive
+  load_id: "138"
+  duty_cycle: 
+  load: "4"
+measurements_011: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: 3 x 13W compact florescent
+  load_id: "14"
+  duty_cycle: "0.04"
+  load: "39"
+measurements_098: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Phillips DVR loading
+  load_id: "110"
+  duty_cycle: "1"
+  load: "23"
+measurements_154: 
+  va: 
+  power_factor: 
+  mode: 
+  period: 
+  load_measurement: 
+  duty_cycle_measurement: 
+  description: 4 port Ethernet switch NetGear?
+  load_id: "169"
+  duty_cycle: 
+  load: 
+measurements_126: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: USB-2 hub, 7 ports
+  load_id: "139"
+  duty_cycle: "1"
+  load: "1"
+measurements_012: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: 3 x 15W dimmable floods
+  load_id: "15"
+  duty_cycle: "0.04"
+  load: "45"
+measurements_040: 
+  va: 
+  power_factor: "0.79"
+  mode: "On"
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Eric  router, modem, ether switch
+  load_id: "51"
+  duty_cycle: "1"
+  load: "29"
+measurements_099: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Bullet blender
+  load_id: "111"
+  duty_cycle: "0.01"
+  load: "145"
+measurements_155: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Energy Detective Gateway
+  load_id: "170"
+  duty_cycle: 
+  load: "3"
+measurements_127: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: 
+  load_measurement: Measured-WUP
+  duty_cycle_measurement: 
+  description: "Iomega ScreenPlay HD Pro #5"
+  load_id: "141"
+  duty_cycle: 
+  load: "12"
+measurements_041: 
+  va: 
+  power_factor: 
+  mode: "Off"
+  period: Always
+  load_measurement: Measured-KAW
+  duty_cycle_measurement: 
+  description: Eric   computer ( 6W-160 W- 220W)
+  load_id: "52"
+  duty_cycle: "0.25"
+  load: "160"
+measurements_013: 
+  va: 
+  power_factor: 
+  mode: "On"
+  period: Seasonal
+  load_measurement: Rated
+  duty_cycle_measurement: Guess
+  description: 8 x W globe florescents
+  load_id: "16"
+  duty_cycle: "0.01"
+  load: "80"

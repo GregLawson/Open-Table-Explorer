@@ -1,0 +1,43 @@
+<p>
+  <b>Node:</b>
+  <%=h @breaker.node %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @breaker.description %>
+</p>
+
+<p>
+  <b>Parent node:</b>
+  <%=h @breaker.parent_node %>
+</p>
+
+<p>
+  <b>Parent description:</b>
+  <%=h @breaker.parent_description %>
+</p>
+
+<p>
+  <b>Volts:</b>
+  <%=h @breaker.volts %>
+</p>
+
+<p>
+  <b>Amps:</b>
+  <%=h @breaker.amps %>
+</p>
+
+<p>
+  <b>Measured load:</b>
+  <%=h @breaker.measured_load %>
+</p>
+
+<p>
+  <b>Id:</b>
+  <%=h @breaker.id %>
+</p>
+
+
+<%= link_to 'Edit', edit_breaker_path(@breaker) %> |
+<%= link_to 'Back', breakers_path %>

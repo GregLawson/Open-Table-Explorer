@@ -1,0 +1,2 @@
+module EdisonsHelper
+end
