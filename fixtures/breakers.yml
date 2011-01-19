@@ -1,0 +1,171 @@
+--- 
+one: 
+  parent_description: ""
+  Position: "8"
+  node: "8"
+  id: "8"
+  parent_node: 
+  amps: "20"
+  description: "\"8) Back garage lights, door\""
+  measured_load: "16"
+  volts: "220"
+breakers_010: 
+  parent_description: B
+  Position: "11"
+  node: "11"
+  id: "10"
+  parent_node: 
+  amps: "20"
+  description: 11) East wall FR&LR outlets
+  measured_load: "57"
+  volts: "110"
+breakers_009: 
+  parent_description: A
+  Position: "10"
+  node: "10"
+  id: "9"
+  parent_node: 
+  amps: "20"
+  description: 10) Patio outlet
+  measured_load: "29"
+  volts: "110"
+breakers_011: 
+  parent_description: B
+  Position: "12"
+  node: "12"
+  id: "11"
+  parent_node: 
+  amps: 
+  description: "\"12) Dishwasher, garbage disposal\""
+  measured_load: "0"
+  volts: "110"
+breakers_012: 
+  parent_description: A
+  Position: "13"
+  node: "13"
+  id: "12"
+  parent_node: 
+  amps: 
+  description: "\"13) Air conditioner, recirculation pump\""
+  measured_load: "2"
+  volts: "110"
+breakers_001: 
+  parent_description: A
+  Position: "1"
+  node: "1"
+  id: "1"
+  parent_node: 
+  amps: "20"
+  description: "\"1) Family room outlets, outside back lights\""
+  measured_load: "19"
+  volts: "20"
+breakers_013: 
+  parent_description: B
+  Position: "16"
+  node: "16"
+  id: "13"
+  parent_node: 
+  amps: 
+  description: "\"16)Energy Detective Gateway, LR&FR ceiling, hall fan\""
+  measured_load: 
+  volts: "110"
+breakers_002: 
+  parent_description: A
+  Position: "2"
+  node: "2"
+  id: "2"
+  parent_node: 
+  amps: "20"
+  description: "\"2) Western outlets, etc.\""
+  measured_load: "382"
+  volts: "110"
+breakers_014: 
+  parent_description: A
+  Position: "17"
+  node: "17"
+  id: "14"
+  parent_node: 
+  amps: 
+  description: 17) Living room ceiling light
+  measured_load: "0"
+  volts: "110"
+breakers_003: 
+  parent_description: B
+  Position: "3"
+  node: "2"
+  id: "3"
+  parent_node: 
+  amps: "20"
+  description: 3) Back hall and bathroom lights
+  measured_load: "0"
+  volts: "110"
+breakers_015: 
+  parent_description: ""
+  Position: "18"
+  node: "18"
+  id: "15"
+  parent_node: 
+  amps: "50"
+  description: 18/19) Energy detective MTU (range outlet)
+  measured_load: 
+  volts: "220"
+breakers_004: 
+  parent_description: B
+  Position: "4"
+  node: "4"
+  id: "4"
+  parent_node: 
+  amps: "20"
+  description: "\"4) Garage, sconce, S wall outlet\""
+  measured_load: "158"
+  volts: "110"
+breakers_016: 
+  parent_description: B
+  Position: "20"
+  node: "20"
+  id: "16"
+  parent_node: 
+  amps: "110"
+  description: Refrigerator, microwave, telephone, LR N outlet
+  measured_load: "0"
+  volts: "110"
+breakers_005: 
+  parent_description: A
+  Position: "5"
+  node: "5"
+  id: "5"
+  parent_node: 
+  amps: "20"
+  description: "\"5) Kitchen, hall, bath, bedroom lights\""
+  measured_load: "64"
+  volts: "110"
+breakers_017: 
+  parent_description: ""
+  Position: "23"
+  node: "23"
+  id: "17"
+  parent_node: 
+  amps: "60"
+  description: 23) Spa
+  measured_load: "542"
+  volts: "220"
+breakers_006: 
+  parent_description: A
+  Position: "6"
+  node: "6"
+  id: "6"
+  parent_node: 
+  amps: 
+  description: "\"6) BBQ GFCI, spa GFCI\""
+  measured_load: "0"
+  volts: "110"
+breakers_007: 
+  parent_description: B
+  Position: "7"
+  node: "7"
+  id: "7"
+  parent_node: 
+  amps: "20"
+  description: "\"7) Toaster oven, doorbell\""
+  measured_load: "16"
+  volts: "110"

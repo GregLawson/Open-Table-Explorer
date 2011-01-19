@@ -1,0 +1,48 @@
+<p>
+  <b>Nmap:</b>
+  <%=h @host.nmap %>
+</p>
+
+<p>
+  <b>Otherports:</b>
+  <%=h @host.otherports %>
+</p>
+
+<p>
+  <b>Otherstate:</b>
+  <%=h @host.otherstate %>
+</p>
+
+<p>
+  <b>Mac:</b>
+  <%=h @host.mac %>
+</p>
+
+<p>
+  <b>Nicvendor:</b>
+  <%=h @host.nicvendor %>
+</p>
+
+<p>
+  <b>Ip:</b>
+  <%=h @host.ip %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @host.name %>
+</p>
+
+<p>
+  <b>Last detection:</b>
+  <%=h @host.last_detection %>
+</p>
+
+<p>
+  <b>Nmap execution time:</b>
+  <%=h @host.nmap_execution_time %>
+</p>
+
+
+<%= link_to 'Edit', edit_host_path(@host) %> |
+<%= link_to 'Back', hosts_path %>

@@ -1,0 +1,36 @@
+<h1>Editing router</h1>
+
+<% form_for(@router) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Model %><br />
+    <%= f.text_field :Model %>
+  </p>
+  <p>
+    <%= f.label :Version %><br />
+    <%= f.text_field :Version %>
+  </p>
+  <p>
+    <%= f.label :Serial_Number %><br />
+    <%= f.text_field :Serial_Number %>
+  </p>
+  <p>
+    <%= f.label :WAN_MAC %><br />
+    <%= f.text_field :WAN_MAC %>
+  </p>
+  <p>
+    <%= f.label :Status %><br />
+    <%= f.text_field :Status %>
+  </p>
+  <p>
+    <%= f.label :Power_Supply %><br />
+    <%= f.text_field :Power_Supply %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @router %> |
+<%= link_to 'Back', routers_path %>

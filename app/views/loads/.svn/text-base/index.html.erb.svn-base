@@ -1,0 +1,48 @@
+<h1>Listing loads</h1>
+
+<table border=1>
+  <tr>
+    <th>Node</th>
+    <th>Description</th>
+    <th>Parent node</th>
+    <th>Parent description</th>
+    <th>Plug in location</th>
+    <th>X 10 address</th>
+    <th>Volatile</th>
+    <th>Daylight savings adjustment</th>
+    <th>Timer savings</th>
+    <th>Motion savings</th>
+    <th>Bedtime savings</th>
+    <th>Away savings</th>
+    <th>Background</th>
+    <th>Computer common</th>
+    <th>Audio video</th>
+    <th>Recorder</th>
+    <th>Plug width</th>
+  </tr>
+
+<% for loads in @loads %>
+  <tr>
+    <td><%=h loads.node %></td>
+    <td><%=h loads.description %></td>
+    <td><%=h loads.parent_node %></td>
+    <td><%=h loads.parent_description %></td>
+    <td><%=h loads.plug_in_location %></td>
+    <td><%=h loads.x_10_address %></td>
+    <td><%=h loads.volatile %></td>
+    <td><%=h loads.daylight_savings_adjustment %></td>
+    <td><%=h loads.timer_savings %></td>
+    <td><%=h loads.motion_savings %></td>
+    <td><%=h loads.bedtime_savings %></td>
+    <td><%=h loads.away_savings %></td>
+    <td><%=h loads.background %></td>
+    <td><%=h loads.computer_common %></td>
+    <td><%=h loads.audio_video %></td>
+    <td><%=h loads.recorder %></td>
+    <td><%=h loads.plug_width %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

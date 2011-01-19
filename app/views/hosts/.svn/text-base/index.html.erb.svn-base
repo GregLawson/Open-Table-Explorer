@@ -1,0 +1,36 @@
+<h1>Listing hosts</h1>
+
+<table>
+  <tr>
+    <th>Nmap</th>
+    <th>Otherports</th>
+    <th>Otherstate</th>
+    <th>Mac</th>
+    <th>Nicvendor</th>
+    <th>Ip</th>
+    <th>Name</th>
+    <th>Last detection</th>
+    <th>Nmap execution time</th>
+  </tr>
+
+<% for host in @hosts %>
+  <tr>
+    <td><%=h host.nmap %></td>
+    <td><%=h host.otherports %></td>
+    <td><%=h host.otherstate %></td>
+    <td><%=h host.mac %></td>
+    <td><%=h host.nicvendor %></td>
+    <td><%=h host.ip %></td>
+    <td><%=h host.name %></td>
+    <td><%=h host.last_detection %></td>
+    <td><%=h host.nmap_execution_time %></td>
+    <td><%= link_to 'Show', host %></td>
+    <td><%= link_to 'Edit', edit_host_path(host) %></td>
+    <td><%= link_to 'Destroy', host, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New host', new_host_path %>

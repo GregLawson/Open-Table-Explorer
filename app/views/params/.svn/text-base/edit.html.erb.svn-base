@@ -1,0 +1,28 @@
+<h1>Editing param</h1>
+
+<% form_for(@param) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :parameter %><br />
+    <%= f.text_field :parameter %>
+  </p>
+  <p>
+    <%= f.label :import_type %><br />
+    <%= f.text_field :import_type %>
+  </p>
+  <p>
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </p>
+  <p>
+    <%= f.label :formula %><br />
+    <%= f.text_field :formula %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @param %> |
+<%= link_to 'Back', params_path %>

@@ -1,0 +1,43 @@
+<p>
+  <b>Date:</b>
+  <%=h @transaction.Date %>
+</p>
+
+<p>
+  <b>Posted:</b>
+  <%=h @transaction.Posted %>
+</p>
+
+<p>
+  <b>Payee:</b>
+  <%=h @transaction.Payee %>
+</p>
+
+<p>
+  <b>Descrition:</b>
+  <%=h @transaction.Descrition %>
+</p>
+
+<p>
+  <b>From accont:</b>
+  <%=h @transaction.From_Accont %>
+</p>
+
+<p>
+  <b>To account:</b>
+  <%=h @transaction.To_Account %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%=h @transaction.Amount %>
+</p>
+
+<p>
+  <b>Tax reporting:</b>
+  <%=h @transaction.Tax_Reporting %>
+</p>
+
+
+<%= link_to 'Edit', edit_transaction_path(@transaction) %> |
+<%= link_to 'Back', transactions_path %>

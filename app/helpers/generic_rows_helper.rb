@@ -1,0 +1,2 @@
+module GenericRowsHelper
+end

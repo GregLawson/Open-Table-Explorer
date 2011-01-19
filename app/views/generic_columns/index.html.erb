@@ -1,0 +1,28 @@
+<h1>Listing generic_columns</h1>
+
+<table>
+  <tr>
+    <th>Table name</th>
+    <th>Column name</th>
+    <th>Before pattern</th>
+    <th>Data pattern</th>
+    <th>After pattern</th>
+  </tr>
+
+<% for generic_column in @generic_columns %>
+  <tr>
+    <td><%=h generic_column.Table_Name %></td>
+    <td><%=h generic_column.Column_Name %></td>
+    <td><%=h generic_column.Before_Pattern %></td>
+    <td><%=h generic_column.Data_Pattern %></td>
+    <td><%=h generic_column.After_Pattern %></td>
+    <td><%= link_to 'Show', generic_column %></td>
+    <td><%= link_to 'Edit', edit_generic_column_path(generic_column) %></td>
+    <td><%= link_to 'Destroy', generic_column, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New generic_column', new_generic_column_path %>

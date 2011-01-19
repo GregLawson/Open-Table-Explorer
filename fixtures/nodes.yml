@@ -1,0 +1,1531 @@
+--- 
+one: 
+  parent_description: North wall with TV
+  node: "120"
+  id: "200"
+  parent_node: "52"
+  description: Liteon DVD player
+nodes_199: 
+  parent_description: North wall with TV
+  node: "121"
+  id: "201"
+  parent_node: "52"
+  description: Panasonic VCR
+nodes_010: 
+  parent_description: B
+  node: "11"
+  id: "10"
+  parent_node: 
+  description: 11) East wall FR&LR outlets
+nodes_011: 
+  parent_description: B
+  node: "12"
+  id: "11"
+  parent_node: 
+  description: "\"12) Dishwasher, garbage disposal\""
+nodes_012: 
+  parent_description: A
+  node: "13"
+  id: "12"
+  parent_node: 
+  description: "\"13) Air conditioner, recirculation pump\""
+nodes_200: 
+  parent_description: Water heater enclosure
+  node: "122"
+  id: "202"
+  parent_node: "57"
+  description: Water heater recirculation pump
+nodes_013: 
+  parent_description: B
+  node: "16"
+  id: "13"
+  parent_node: 
+  description: "\"16)Energy Detective Gateway, LR&FR ceiling, hall fan\""
+nodes_040: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "31"
+  id: "45"
+  parent_node: "2"
+  description: near opening and switch
+nodes_120: 
+  parent_description: electronic & computer racks
+  node: "40"
+  id: "124"
+  parent_node: "40"
+  description: Greg computers
+nodes_201: 
+  parent_description: Front garage door
+  node: "123"
+  id: "203"
+  parent_node: "8"
+  description: Front garage door
+nodes_014: 
+  parent_description: A
+  node: "17"
+  id: "14"
+  parent_node: 
+  description: 17) Living room ceiling light
+nodes_041: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "32"
+  id: "46"
+  parent_node: "2"
+  description: Alan's computer
+nodes_121: 
+  parent_description: radio
+  node: "43"
+  id: "125"
+  parent_node: "43"
+  description: Alan's radio
+nodes_202: 
+  parent_description: Front garage door
+  node: "124"
+  id: "204"
+  parent_node: "8"
+  description: Front garage door light
+nodes_015: 
+  parent_description: ""
+  node: "18"
+  id: "15"
+  parent_node: 
+  description: 18/19) Energy detective MTU (range outlet)
+nodes_122: 
+  parent_description: air conditioner
+  node: "45"
+  id: "126"
+  parent_node: "36"
+  description: AC full on (560W to 2000W)
+nodes_203: 
+  parent_description: Front garage door
+  node: "125"
+  id: "205"
+  parent_node: "8"
+  description: Front keyless entry
+nodes_230: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  node: "154"
+  id: "232"
+  parent_node: "123"
+  description: component video switching
+nodes_016: 
+  parent_description: B
+  node: "20"
+  id: "16"
+  parent_node: 
+  description: Refrigerator, microwave, telephone, LR N outlet
+nodes_042: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "33"
+  id: "47"
+  parent_node: "2"
+  description: GFCI
+nodes_123: 
+  parent_description: air conditioner
+  node: "46"
+  id: "127"
+  parent_node: "36"
+  description: AC fan mid speed
+nodes_150: 
+  parent_description: South wall behind massage chair
+  node: "74"
+  id: "154"
+  parent_node: "37"
+  description: Pole light
+nodes_204: 
+  parent_description: Front garage door
+  node: "126"
+  id: "206"
+  parent_node: "8"
+  description: Sprinkler controller
+nodes_231: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  node: "155"
+  id: "233"
+  parent_node: "123"
+  description: Beta VCR, Sony
+nodes_043: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "34"
+  id: "48"
+  parent_node: "2"
+  description: Right GFCI
+nodes_070: 
+  parent_description: behind bed
+  node: "120"
+  id: "75"
+  parent_node: "41"
+  description: EMI/RFI/Surge_Protector
+nodes_124: 
+  parent_description: air conditioner
+  node: "47"
+  id: "128"
+  parent_node: "36"
+  description: AC vent mid speed
+nodes_151: 
+  parent_description: South wall behind massage chair
+  node: "75"
+  id: "155"
+  parent_node: "37"
+  description: Battery charger plug bar
+nodes_205: 
+  parent_description: Front garage door
+  node: "127"
+  id: "207"
+  parent_node: "8"
+  description: Sprinkler controller
+nodes_017: 
+  parent_description: ""
+  node: "23"
+  id: "17"
+  parent_node: 
+  description: 23) Spa
+nodes_232: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  node: "156"
+  id: "234"
+  parent_node: "127"
+  description: IBM computer
+nodes_044: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "35"
+  id: "49"
+  parent_node: "2"
+  description: computer
+nodes_071: 
+  parent_description: EMI/RFI/Surge_Protector
+  node: "122"
+  id: "76"
+  parent_node: "120"
+  description: Power control, 6 switch, PC computer
+nodes_125: 
+  parent_description: air conditioner
+  node: "48"
+  id: "129"
+  parent_node: "36"
+  description: AC vent low speed
+nodes_206: 
+  parent_description: West wall near desk
+  node: "128"
+  id: "208"
+  parent_node: "50"
+  description: Desk light
+nodes_018: 
+  parent_description: 
+  node: "4"
+  id: "21"
+  parent_node: 
+  description: microwave
+nodes_233: 
+  parent_description: North east outlet
+  node: "157"
+  id: "235"
+  parent_node: "24"
+  description: Mitsubishi stereo
+nodes_072: 
+  parent_description: Power control, 6 switch, PC computer
+  node: "123"
+  id: "77"
+  parent_node: "122"
+  description: "Switch #1 outlet bar, splitter"
+nodes_126: 
+  parent_description: air conditioner
+  node: "49"
+  id: "130"
+  parent_node: "36"
+  description: AC vent high speed
+nodes_152: 
+  parent_description: South wall behind massage chair
+  node: "76"
+  id: "156"
+  parent_node: "37"
+  description: Massage chair
+nodes_207: 
+  parent_description: West wall near desk
+  node: "129"
+  id: "209"
+  parent_node: "50"
+  description: TED5000 display
+nodes_019: 
+  parent_description: "\"12) Dishwasher, garbage disposal\""
+  node: "6"
+  id: "23"
+  parent_node: "12"
+  description: Dishwasher
+nodes_045: 
+  parent_description: "\"13) Air conditioner, recirculation pump\""
+  node: "36"
+  id: "50"
+  parent_node: "13"
+  description: air conditioner
+nodes_234: 
+  parent_description: Eric top plug outlet bar
+  node: "158"
+  id: "236"
+  parent_node: "129"
+  description: Eric PSP charger
+nodes_073: 
+  parent_description: Power control, 6 switch, PC computer
+  node: "124"
+  id: "78"
+  parent_node: "122"
+  description: "Switch #2 outlet bar, computers, KVM"
+nodes_127: 
+  parent_description: West wall near desk
+  node: "50"
+  id: "131"
+  parent_node: "50"
+  description: Dell laptop on and charging
+nodes_153: 
+  parent_description: South wall behind massage chair
+  node: "77"
+  id: "157"
+  parent_node: "37"
+  description: Panasonic battery charger 4 Aas
+nodes_180: 
+  parent_description: new receptacle
+  node: "102"
+  id: "182"
+  parent_node: "42"
+  description: HP 3210xi Printer
+nodes_208: 
+  parent_description: Porch light
+  node: "130"
+  id: "210"
+  parent_node: "59"
+  description: "Porch light: 3x15W"
+nodes_046: 
+  parent_description: "\"4) Garage, sconce, S wall outlet\""
+  node: "37"
+  id: "51"
+  parent_node: "4"
+  description: South wall behind massage chair
+nodes_235: 
+  parent_description: Eric top plug outlet bar
+  node: "159"
+  id: "237"
+  parent_node: "129"
+  description: Eric desk light
+nodes_128: 
+  parent_description: Eric botom plug outlet bar
+  node: "51"
+  id: "132"
+  parent_node: "130"
+  description: Eric  router, modem, ether switch
+nodes_154: 
+  parent_description: South wall behind massage chair
+  node: "78"
+  id: "158"
+  parent_node: "37"
+  description: Small magnifier light
+nodes_181: 
+  parent_description: new receptacle
+  node: "103"
+  id: "183"
+  parent_node: "42"
+  description: HP 3210xi Printer
+nodes_209: 
+  parent_description: Bathroom fan switch
+  node: "131"
+  id: "211"
+  parent_node: "60"
+  description: Bathroom fan, breaker 2
+nodes_047: 
+  parent_description: "\"1) Family room outlets, outside back lights\""
+  node: "38"
+  id: "52"
+  parent_node: "1"
+  description: North wall plug, fan
+nodes_074: 
+  parent_description: Power control, 6 switch, PC computer
+  node: "125"
+  id: "79"
+  parent_node: "122"
+  description: "Switch #3 outlet bar, Philips"
+nodes_236: 
+  parent_description: Eric botom plug outlet bar
+  node: "160"
+  id: "238"
+  parent_node: "130"
+  description: Eric TV
+nodes_129: 
+  parent_description: Eric top plug outlet bar
+  node: "52"
+  id: "133"
+  parent_node: "129"
+  description: Eric   computer ( 6W-160 W- 220W)
+nodes_155: 
+  parent_description: South wall behind massage chair
+  node: "79"
+  id: "159"
+  parent_node: "37"
+  description: Durabuilt battery charger
+nodes_182: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  node: "104"
+  id: "184"
+  parent_node: "124"
+  description: GQ2000
+nodes_048: 
+  parent_description: "\"1) Family room outlets, outside back lights\""
+  node: "39"
+  id: "53"
+  parent_node: "1"
+  description: back
+nodes_237: 
+  parent_description: Eric botom plug outlet bar
+  node: "161"
+  id: "239"
+  parent_node: "130"
+  description: Eric speakers
+nodes_156: 
+  parent_description: South wall behind massage chair
+  node: "80"
+  id: "160"
+  parent_node: "37"
+  description: Durabuilt battery charger charging
+nodes_183: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  node: "105"
+  id: "185"
+  parent_node: "127"
+  description: Dell LCD full video
+nodes_049: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "40"
+  id: "54"
+  parent_node: "2"
+  description: electronic & computer racks
+nodes_075: 
+  parent_description: Power control, 6 switch, PC computer
+  node: "126"
+  id: "80"
+  parent_node: "122"
+  description: "Switch #4 outlet bar, 5 DVD"
+nodes_238: 
+  parent_description: Eric botom plug outlet bar
+  node: "162"
+  id: "240"
+  parent_node: "130"
+  description: Eric printer
+nodes_157: 
+  parent_description: South wall behind massage chair
+  node: "81"
+  id: "161"
+  parent_node: "37"
+  description: radio
+nodes_184: 
+  parent_description: "Switch #4 outlet bar, 5 DVD"
+  node: "106"
+  id: "186"
+  parent_node: "126"
+  description: Panasonic 5 DVD player
+nodes_076: 
+  parent_description: Power control, 6 switch, PC computer
+  node: "127"
+  id: "81"
+  parent_node: "122"
+  description: "Switch #5 outlet bar, Kenwood"
+nodes_239: 
+  parent_description: Eric botom plug outlet bar
+  node: "163"
+  id: "241"
+  parent_node: "130"
+  description: Eric clock (radio?)
+nodes_158: 
+  parent_description: South wall behind massage chair
+  node: "82"
+  id: "162"
+  parent_node: "37"
+  description: Ikea hanging light
+nodes_077: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  node: "128"
+  id: "82"
+  parent_node: "125"
+  description: Ikea mini 3 outlet plug bar
+nodes_185: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  node: "107"
+  id: "187"
+  parent_node: "127"
+  description: Mitsubishi VCR
+nodes_078: 
+  parent_description: computer
+  node: "129"
+  id: "83"
+  parent_node: "35"
+  description: Eric top plug outlet bar
+nodes_159: 
+  parent_description: South wall behind massage chair
+  node: "83"
+  id: "163"
+  parent_node: "37"
+  description: Duracell battery charger $ Aas
+nodes_186: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  node: "108"
+  id: "188"
+  parent_node: "127"
+  description: TEAC audio mixer
+nodes_079: 
+  parent_description: computer
+  node: "130"
+  id: "84"
+  parent_node: "35"
+  description: Eric botom plug outlet bar
+nodes_187: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  node: "109"
+  id: "189"
+  parent_node: "124"
+  description: Dell LCD  no video?
+nodes_188: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  node: "110"
+  id: "190"
+  parent_node: "125"
+  description: Phillips DVR loading
+nodes_189: 
+  parent_description: toaster oven
+  node: "111"
+  id: "191"
+  parent_node: "47"
+  description: Bullet blender
+nodes_001: 
+  parent_description: A
+  node: "1"
+  id: "1"
+  parent_node: 
+  description: "\"1) Family room outlets, outside back lights\""
+nodes_002: 
+  parent_description: A
+  node: "2"
+  id: "2"
+  parent_node: 
+  description: "\"2) Western outlets, etc.\""
+nodes_003: 
+  parent_description: B
+  node: "2"
+  id: "3"
+  parent_node: 
+  description: 3) Back hall and bathroom lights
+nodes_030: 
+  parent_description: 3) Back hall and bathroom lights
+  node: "19"
+  id: "35"
+  parent_node: "3"
+  description: 8 horizontal lamp threads
+nodes_110: 
+  parent_description: Couch outlet
+  node: "28"
+  id: "114"
+  parent_node: "28"
+  description: Couch light
+nodes_004: 
+  parent_description: B
+  node: "4"
+  id: "4"
+  parent_node: 
+  description: "\"4) Garage, sconce, S wall outlet\""
+nodes_111: 
+  parent_description: Attic
+  node: "30"
+  id: "115"
+  parent_node: "30"
+  description: Attic ceiling light
+nodes_005: 
+  parent_description: A
+  node: "5"
+  id: "5"
+  parent_node: 
+  description: "\"5) Kitchen, hall, bath, bedroom lights\""
+nodes_031: 
+  parent_description: 18/19) Energy detective MTU (range outlet)
+  node: "21"
+  id: "36"
+  parent_node: "18"
+  description: Electric range
+nodes_112: 
+  parent_description: near opening and switch
+  node: "31"
+  id: "116"
+  parent_node: "31"
+  description: attic receptacle
+nodes_006: 
+  parent_description: A
+  node: "6"
+  id: "6"
+  parent_node: 
+  description: "\"6) BBQ GFCI, spa GFCI\""
+nodes_032: 
+  parent_description: "\"8) Back garage lights, door\""
+  node: "22"
+  id: "37"
+  parent_node: "8"
+  description: "sub panel fuse #1, lights"
+nodes_113: 
+  parent_description: computer
+  node: "32"
+  id: "117"
+  parent_node: "35"
+  description: Eric's computer
+nodes_140: 
+  parent_description: Washer and dryer receptacle
+  node: "63"
+  id: "144"
+  parent_node: "27"
+  description: Washer on
+nodes_220: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  node: "144"
+  id: "222"
+  parent_node: "127"
+  description: Play Time HD multmedia player
+nodes_007: 
+  parent_description: B
+  node: "7"
+  id: "7"
+  parent_node: 
+  description: "\"7) Toaster oven, doorbell\""
+nodes_033: 
+  parent_description: "\"8) Back garage lights, door\""
+  node: "23"
+  id: "38"
+  parent_node: "8"
+  description: "garage door and West receptacle, fuse #2"
+nodes_060: 
+  parent_description: "\"7) Toaster oven, doorbell\""
+  node: "51"
+  id: "65"
+  parent_node: "7"
+  description: Door bell
+nodes_114: 
+  parent_description: GFCI
+  node: "33"
+  id: "118"
+  parent_node: "33"
+  description: back bathroom receptacle
+nodes_221: 
+  parent_description: Ikea mini 3 outlet plug bar
+  node: "145"
+  id: "223"
+  parent_node: "128"
+  description: Clock, projection
+nodes_008: 
+  parent_description: ""
+  node: "8"
+  id: "8"
+  parent_node: 
+  description: "\"8) Back garage lights, door\""
+nodes_034: 
+  parent_description: 11) East wall FR&LR outlets
+  node: "24"
+  id: "39"
+  parent_node: "11"
+  description: North east outlet
+nodes_061: 
+  parent_description: "\"1) Family room outlets, outside back lights\""
+  node: "52"
+  id: "66"
+  parent_node: "1"
+  description: North wall with TV
+nodes_115: 
+  parent_description: Right GFCI
+  node: "34"
+  id: "119"
+  parent_node: "34"
+  description: front bathroom receptacle
+nodes_141: 
+  parent_description: Washer and dryer receptacle
+  node: "64"
+  id: "145"
+  parent_node: "27"
+  description: Dryer
+nodes_222: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  node: "146"
+  id: "224"
+  parent_node: "125"
+  description: Weather Radio
+nodes_250: 
+  parent_description: Kitchen exhaust fan
+  node: "175"
+  id: "252"
+  parent_node: "138"
+  description: Kitchen exhaust fan
+nodes_223: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  node: "147"
+  id: "225"
+  parent_node: "125"
+  description: Weather Radio
+nodes_009: 
+  parent_description: A
+  node: "10"
+  id: "9"
+  parent_node: 
+  description: 10) Patio outlet
+nodes_035: 
+  parent_description: 11) East wall FR&LR outlets
+  node: "26"
+  id: "40"
+  parent_node: "11"
+  description: East wall
+nodes_062: 
+  parent_description: 
+  node: "53"
+  id: "67"
+  parent_node: 
+  description: West wall by hall & refrigerator
+nodes_116: 
+  parent_description: air conditioner
+  node: "36"
+  id: "120"
+  parent_node: "36"
+  description: air conditioner
+nodes_142: 
+  parent_description: Washer and dryer receptacle
+  node: "65"
+  id: "146"
+  parent_node: "27"
+  description: Dryer spinning
+nodes_224: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  node: "148"
+  id: "226"
+  parent_node: "125"
+  description: DTV converter, Airlink
+nodes_036: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "27"
+  id: "41"
+  parent_node: "2"
+  description: Washer and dryer receptacle
+nodes_063: 
+  parent_description: 
+  node: "54"
+  id: "68"
+  parent_node: 
+  description: West wall metal cover over bookcase
+nodes_117: 
+  parent_description: West wall near desk
+  node: "37"
+  id: "121"
+  parent_node: "50"
+  description: Dell laptop
+nodes_143: 
+  parent_description: Refrigerator
+  node: "66"
+  id: "147"
+  parent_node: "3"
+  description: Microwave oven
+nodes_170: 
+  parent_description: new receptacle
+  node: "94"
+  id: "174"
+  parent_node: "42"
+  description: Antenna rotator
+nodes_251: 
+  parent_description: 
+  node: "176"
+  id: "253"
+  parent_node: 
+  description: Breakfast bar track light
+nodes_225: 
+  parent_description: Ikea mini 3 outlet plug bar
+  node: "149"
+  id: "227"
+  parent_node: "128"
+  description: Panasonic cordless phone
+nodes_037: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "28"
+  id: "42"
+  parent_node: "2"
+  description: Couch outlet
+nodes_090: 
+  parent_description: "\"4) Garage, sconce, S wall outlet\""
+  node: "138"
+  id: "92"
+  parent_node: "4"
+  description: Kitchen exhaust fan
+nodes_118: 
+  parent_description: North wall plug, fan
+  node: "38"
+  id: "122"
+  parent_node: "38"
+  description: North wall plug, fan
+nodes_144: 
+  parent_description: Refrigerator
+  node: "67"
+  id: "148"
+  parent_node: "3"
+  description: Microwave oven
+nodes_171: 
+  parent_description: new receptacle
+  node: "95"
+  id: "175"
+  parent_node: "42"
+  description: Antenna rotator rotating
+nodes_252: 
+  parent_description: 
+  node: "177"
+  id: "254"
+  parent_node: 
+  description: Dining room ceiling fan
+nodes_226: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  node: "150"
+  id: "228"
+  parent_node: "124"
+  description: Emachines computer
+nodes_038: 
+  parent_description: 
+  node: "29"
+  id: "43"
+  parent_node: 
+  description: fan
+nodes_064: 
+  parent_description: 
+  node: "56"
+  id: "69"
+  parent_node: 
+  description: Left GFCI
+nodes_091: 
+  parent_description: B
+  node: "2"
+  id: "20"
+  parent_node: "20"
+  description: Refrigerator
+nodes_119: 
+  parent_description: back
+  node: "39"
+  id: "123"
+  parent_node: "39"
+  description: back porch light
+nodes_145: 
+  parent_description: Refrigerator
+  node: "68"
+  id: "149"
+  parent_node: "3"
+  description: Refridgerator
+nodes_172: 
+  parent_description: Refrigerator, microwave, telephone, LR N outlet
+  node: "9"
+  id: "99"
+  parent_node: "9"
+  description: car battery charger
+nodes_253: 
+  parent_description: West wall near desk
+  node: "178"
+  id: "255"
+  parent_node: "50"
+  description: Brother PC label printer
+nodes_227: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  node: "151"
+  id: "229"
+  parent_node: "124"
+  description: Belkin KVM live
+nodes_039: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "30"
+  id: "44"
+  parent_node: "2"
+  description: Attic
+nodes_065: 
+  parent_description: "\"13) Air conditioner, recirculation pump\""
+  node: "57"
+  id: "70"
+  parent_node: "13"
+  description: Water heater enclosure
+nodes_092: 
+  parent_description: 17) Living room ceiling light
+  node: "2"
+  id: "18"
+  parent_node: "17"
+  description: Ceiling light with plug adaptor
+nodes_146: 
+  parent_description: Refrigerator
+  node: "69"
+  id: "150"
+  parent_node: "3"
+  description: Refridgerator door light
+nodes_173: 
+  parent_description: Sconce
+  node: "2"
+  id: "94"
+  parent_node: "2"
+  description: Sconce 2 37W bulbs
+nodes_254: 
+  parent_description: A
+  node: "5"
+  id: "95"
+  parent_node: "5"
+  description: Telephone and answering machine
+nodes_228: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  node: "152"
+  id: "230"
+  parent_node: "127"
+  description: Sahara computer
+nodes_066: 
+  parent_description: 
+  node: "58"
+  id: "71"
+  parent_node: 
+  description: BBQ GFCI
+nodes_093: 
+  parent_description: Dishwasher
+  node: "6"
+  id: "96"
+  parent_node: "6"
+  description: Dishwasher
+nodes_147: 
+  parent_description: Refrigerator
+  node: "70"
+  id: "151"
+  parent_node: "3"
+  description: Refridgerator compressor on
+nodes_255: 
+  parent_description: Ceiling light with plug adaptor
+  node: "2"
+  id: "93"
+  parent_node: "1"
+  description: Ceiling light
+nodes_229: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  node: "153"
+  id: "231"
+  parent_node: "123"
+  description: video splitter x 8
+nodes_067: 
+  parent_description: "\"4) Garage, sconce, S wall outlet\""
+  node: "59"
+  id: "72"
+  parent_node: "4"
+  description: Porch light
+nodes_094: 
+  parent_description: Exhaust fan
+  node: "7"
+  id: "97"
+  parent_node: "7"
+  description: Front hall Exhaust fan
+nodes_148: 
+  parent_description: Switched garbage disposal
+  node: "71"
+  id: "152"
+  parent_node: "48"
+  description: Garbage disposal
+nodes_174: 
+  parent_description: new receptacle
+  node: "96"
+  id: "176"
+  parent_node: "42"
+  description: Toshiba DVD recorder
+nodes_068: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "60"
+  id: "73"
+  parent_node: "2"
+  description: Bathroom fan switch
+nodes_095: 
+  parent_description: Front garage door
+  node: "8"
+  id: "98"
+  parent_node: "8"
+  description: Front garage door
+nodes_149: 
+  parent_description: South wall behind massage chair
+  node: "72"
+  id: "153"
+  parent_node: "37"
+  description: Massage chair
+nodes_175: 
+  parent_description: new receptacle
+  node: "97"
+  id: "177"
+  parent_node: "42"
+  description: Toshiba DVD recorder
+nodes_069: 
+  parent_description: 3) Back hall and bathroom lights
+  node: "61"
+  id: "74"
+  parent_node: "3"
+  description: Alan's ceiling light
+nodes_096: 
+  parent_description: Spa
+  node: "10"
+  id: "100"
+  parent_node: "10"
+  description: Spa pump, no heat
+nodes_176: 
+  parent_description: new receptacle
+  node: "98"
+  id: "178"
+  parent_node: "42"
+  description: Panasonic DVD recorder
+nodes_177: 
+  parent_description: new receptacle
+  node: "99"
+  id: "179"
+  parent_node: "42"
+  description: Panasonic DVD recorder
+nodes_097: 
+  parent_description: Patio outlets
+  node: "12"
+  id: "101"
+  parent_node: "12"
+  description: Patio outlets
+nodes_178: 
+  parent_description: DSL, router, hub plug bar
+  node: "100"
+  id: "180"
+  parent_node: "136"
+  description: Linksys WRT-54G
+nodes_098: 
+  parent_description: 2 x 4 tube florescent fixture
+  node: "13"
+  id: "102"
+  parent_node: "13"
+  description: 2 x 4 x 40W tube florescent fixture
+nodes_179: 
+  parent_description: new receptacle
+  node: "101"
+  id: "181"
+  parent_node: "42"
+  description: Monoprice HDMI switch
+nodes_099: 
+  parent_description: 3 angled standard bulb threads
+  node: "14"
+  id: "103"
+  parent_node: "14"
+  description: 3 x 13W compact florescent
+nodes_100: 
+  parent_description: 3 angled standard bulb threads
+  node: "15"
+  id: "104"
+  parent_node: "15"
+  description: 3 x 15W dimmable floods
+nodes_020: 
+  parent_description: "\"16)Energy Detective Gateway, LR&FR ceiling, hall fan\""
+  node: "7"
+  id: "24"
+  parent_node: "16"
+  description: Exhaust fan
+nodes_101: 
+  parent_description: 8 horizontal lamp threads
+  node: "16"
+  id: "105"
+  parent_node: "16"
+  description: 8 x W globe florescents
+nodes_021: 
+  parent_description: "\"4) Garage, sconce, S wall outlet\""
+  node: "8"
+  id: "25"
+  parent_node: "4"
+  description: Front garage door
+nodes_102: 
+  parent_description: 3 slanted lamp threads
+  node: "17"
+  id: "106"
+  parent_node: "17"
+  description: 3 x 60W
+nodes_210: 
+  parent_description: Alan's ceiling light
+  node: "132"
+  id: "212"
+  parent_node: "61"
+  description: Alan's light
+nodes_022: 
+  parent_description: 23) Spa
+  node: "10"
+  id: "27"
+  parent_node: "23"
+  description: Spa
+nodes_103: 
+  parent_description: 1 vertical lamp threads
+  node: "18"
+  id: "107"
+  parent_node: "18"
+  description: 1 13W compact florescent
+nodes_211: 
+  parent_description: West wall near desk
+  node: "133"
+  id: "213"
+  parent_node: "50"
+  description: Shapely lantern
+nodes_023: 
+  parent_description: 10) Patio outlet
+  node: "12"
+  id: "28"
+  parent_node: "10"
+  description: Patio outlets
+nodes_050: 
+  parent_description: 
+  node: "41"
+  id: "55"
+  parent_node: 
+  description: behind bed
+nodes_104: 
+  parent_description: 8 horizontal lamp threads
+  node: "19"
+  id: "108"
+  parent_node: "19"
+  description: 8 x 13W compact florescent
+nodes_130: 
+  parent_description: sewing machine
+  node: "53"
+  id: "134"
+  parent_node: "44"
+  description: Eric laptop, 50W full charge, less screen bright 44W, close lid 35-1W)
+nodes_212: 
+  parent_description: South wall behind massage chair
+  node: "134"
+  id: "214"
+  parent_node: "37"
+  description: South outlet bar
+nodes_024: 
+  parent_description: "\"5) Kitchen, hall, bath, bedroom lights\""
+  node: "13"
+  id: "29"
+  parent_node: "5"
+  description: 2 x 4 tube florescent fixture
+nodes_051: 
+  parent_description: "\"16)Energy Detective Gateway, LR&FR ceiling, hall fan\""
+  node: "42"
+  id: "56"
+  parent_node: "16"
+  description: new receptacle
+nodes_105: 
+  parent_description: Electric range
+  node: "21"
+  id: "109"
+  parent_node: "21"
+  description: Electric range
+nodes_131: 
+  parent_description: fan and light
+  node: "54"
+  id: "135"
+  parent_node: "46"
+  description: Eric light
+nodes_213: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  node: "136"
+  id: "215"
+  parent_node: "127"
+  description: Kenwood Receiver
+nodes_025: 
+  parent_description: "\"5) Kitchen, hall, bath, bedroom lights\""
+  node: "14"
+  id: "30"
+  parent_node: "5"
+  description: 3 angled standard bulb threads
+nodes_052: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "43"
+  id: "57"
+  parent_node: "2"
+  description: radio
+nodes_106: 
+  parent_description: "sub panel fuse #1, lights"
+  node: "22"
+  id: "110"
+  parent_node: "22"
+  description: garage sub panel
+nodes_132: 
+  parent_description: fan and light
+  node: "55"
+  id: "136"
+  parent_node: "46"
+  description: Eric fan
+nodes_240: 
+  parent_description: Eric botom plug outlet bar
+  node: "164"
+  id: "242"
+  parent_node: "130"
+  description: Eric monitor
+nodes_026: 
+  parent_description: "\"5) Kitchen, hall, bath, bedroom lights\""
+  node: "15"
+  id: "31"
+  parent_node: "5"
+  description: 3 angled standard bulb threads
+nodes_107: 
+  parent_description: "garage door and West receptacle, fuse #2"
+  node: "23"
+  id: "111"
+  parent_node: "23"
+  description: including garage door
+nodes_133: 
+  parent_description: West wall near desk
+  node: "56"
+  id: "137"
+  parent_node: "50"
+  description: Dell laptop Sleep mode
+nodes_160: 
+  parent_description: South wall behind massage chair
+  node: "84"
+  id: "164"
+  parent_node: "37"
+  description: Dremel battery charger charging
+nodes_214: 
+  parent_description: EMI/RFI/Surge_Protector
+  node: "137"
+  id: "216"
+  parent_node: "120"
+  description: Greg bed light
+nodes_241: 
+  parent_description: Eric botom plug outlet bar
+  node: "165"
+  id: "243"
+  parent_node: "130"
+  description: Eric monitor
+nodes_027: 
+  parent_description: "\"5) Kitchen, hall, bath, bedroom lights\""
+  node: "16"
+  id: "32"
+  parent_node: "5"
+  description: 8 horizontal lamp threads
+nodes_053: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "44"
+  id: "58"
+  parent_node: "2"
+  description: sewing machine
+nodes_080: 
+  parent_description: 
+  node: "131"
+  id: "85"
+  parent_node: 
+  description: Bar track lights
+nodes_108: 
+  parent_description: North east outlet
+  node: "24"
+  id: "112"
+  parent_node: "24"
+  description: North east outlet
+nodes_134: 
+  parent_description: North wall plug, fan
+  node: "57"
+  id: "138"
+  parent_node: "38"
+  description: Window fan low
+nodes_161: 
+  parent_description: South wall behind massage chair
+  node: "85"
+  id: "165"
+  parent_node: "37"
+  description: Massage chair
+nodes_215: 
+  parent_description: EMI/RFI/Surge_Protector
+  node: "138"
+  id: "217"
+  parent_node: "120"
+  description: My book 1TG USB drive
+nodes_242: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  node: "167"
+  id: "244"
+  parent_node: "123"
+  description: Beta VCR, Sony
+nodes_028: 
+  parent_description: "\"5) Kitchen, hall, bath, bedroom lights\""
+  node: "17"
+  id: "33"
+  parent_node: "5"
+  description: 3 slanted lamp threads
+nodes_054: 
+  parent_description: "\"6) BBQ GFCI, spa GFCI\""
+  node: "45"
+  id: "59"
+  parent_node: "6"
+  description: spa GFCI
+nodes_081: 
+  parent_description: 
+  node: "132"
+  id: "86"
+  parent_node: 
+  description: FR ceiling fan
+nodes_109: 
+  parent_description: East wall
+  node: "26"
+  id: "113"
+  parent_node: "26"
+  description: Bread maker
+nodes_135: 
+  parent_description: North wall plug, fan
+  node: "58"
+  id: "139"
+  parent_node: "38"
+  description: Window fan medium
+nodes_162: 
+  parent_description: South wall behind massage chair
+  node: "86"
+  id: "166"
+  parent_node: "37"
+  description: Shredder
+nodes_216: 
+  parent_description: EMI/RFI/Surge_Protector
+  node: "139"
+  id: "218"
+  parent_node: "120"
+  description: USB-2 hub, 7 ports
+nodes_243: 
+  parent_description: spa GFCI
+  node: "168"
+  id: "245"
+  parent_node: "45"
+  description: Spa UV light
+nodes_029: 
+  parent_description: 3) Back hall and bathroom lights
+  node: "18"
+  id: "34"
+  parent_node: "3"
+  description: 1 vertical lamp threads
+nodes_055: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "46"
+  id: "60"
+  parent_node: "2"
+  description: fan and light
+nodes_082: 
+  parent_description: 
+  node: "133"
+  id: "87"
+  parent_node: 
+  description: Attic junction box
+nodes_136: 
+  parent_description: North wall plug, fan
+  node: "59"
+  id: "140"
+  parent_node: "38"
+  description: Window fan high
+nodes_217: 
+  parent_description: Ikea mini 3 outlet plug bar
+  node: "141"
+  id: "219"
+  parent_node: "128"
+  description: "Iomega ScreenPlay HD Pro #5"
+nodes_244: 
+  parent_description: West wall near desk
+  node: "169"
+  id: "246"
+  parent_node: "50"
+  description: 4 port Ethernet switch NetGear?
+nodes_056: 
+  parent_description: "\"7) Toaster oven, doorbell\""
+  node: "47"
+  id: "61"
+  parent_node: "7"
+  description: toaster oven
+nodes_083: 
+  parent_description: "\"4) Garage, sconce, S wall outlet\""
+  node: "2"
+  id: "19"
+  parent_node: "4"
+  description: Sconce
+nodes_137: 
+  parent_description: toaster oven
+  node: "60"
+  id: "141"
+  parent_node: "47"
+  description: Toaster oven
+nodes_163: 
+  parent_description: new receptacle
+  node: "87"
+  id: "167"
+  parent_node: "42"
+  description: Roomba docking rapid charger
+nodes_190: 
+  parent_description: Door bell
+  node: "112"
+  id: "192"
+  parent_node: "51"
+  description: Door bell (lit button)
+nodes_218: 
+  parent_description: EMI/RFI/Surge_Protector
+  node: "142"
+  id: "220"
+  parent_node: "120"
+  description: Panasonic 5 CD, 2 tape Stereo system
+nodes_245: 
+  parent_description: new receptacle
+  node: "170"
+  id: "247"
+  parent_node: "42"
+  description: Energy Detective Gateway
+nodes_057: 
+  parent_description: "\"12) Dishwasher, garbage disposal\""
+  node: "48"
+  id: "62"
+  parent_node: "12"
+  description: Switched garbage disposal
+nodes_084: 
+  parent_description: Refrigerator, microwave, telephone, LR N outlet
+  node: "9"
+  id: "26"
+  parent_node: "20"
+  description: North wall with car battery charger
+nodes_138: 
+  parent_description: Washer and dryer receptacle
+  node: "61"
+  id: "142"
+  parent_node: "27"
+  description: Washer on filling
+nodes_164: 
+  parent_description: new receptacle
+  node: "88"
+  id: "168"
+  parent_node: "42"
+  description: Roomba docking rapid charger
+nodes_191: 
+  parent_description: toaster oven
+  node: "113"
+  id: "193"
+  parent_node: "47"
+  description: Stove clock
+nodes_219: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  node: "143"
+  id: "221"
+  parent_node: "125"
+  description: DTV converter, Airlink
+nodes_246: 
+  parent_description: DSL, router, hub plug bar
+  node: "171"
+  id: "248"
+  parent_node: "136"
+  description: DSL modem
+nodes_058: 
+  parent_description: 
+  node: "49"
+  id: "63"
+  parent_node: 
+  description: West wall near front door
+nodes_085: 
+  parent_description: A
+  node: "5"
+  id: "22"
+  parent_node: "20"
+  description: Telephone and answering machine
+nodes_139: 
+  parent_description: Washer and dryer receptacle
+  node: "62"
+  id: "143"
+  parent_node: "27"
+  description: Washer spin dry
+nodes_165: 
+  parent_description: new receptacle
+  node: "89"
+  id: "169"
+  parent_node: "42"
+  description: Mac isolation transformer
+nodes_192: 
+  parent_description: Alan's computer
+  node: "114"
+  id: "194"
+  parent_node: "32"
+  description: Alan's computer
+nodes_247: 
+  parent_description: DSL, router, hub plug bar
+  node: "172"
+  id: "249"
+  parent_node: "136"
+  description: 16 port Ethernet switch
+nodes_059: 
+  parent_description: "\"2) Western outlets, etc.\""
+  node: "50"
+  id: "64"
+  parent_node: "2"
+  description: West wall near desk
+nodes_166: 
+  parent_description: new receptacle
+  node: "90"
+  id: "170"
+  parent_node: "42"
+  description: Mac
+nodes_193: 
+  parent_description: North wall plug, fan
+  node: "115"
+  id: "195"
+  parent_node: "38"
+  description: North wall TV
+nodes_248: 
+  parent_description: DSL, router, hub plug bar
+  node: "173"
+  id: "250"
+  parent_node: "136"
+  description: Web Box for SMA inverter
+nodes_086: 
+  parent_description: 
+  node: "134"
+  id: "88"
+  parent_node: 
+  description: Circuit panel juncton box
+nodes_167: 
+  parent_description: new receptacle
+  node: "91"
+  id: "171"
+  parent_node: "42"
+  description: Dazzler idling
+nodes_194: 
+  parent_description: Flat plug, 2+1 extension cord
+  node: "116"
+  id: "196"
+  parent_node: "135"
+  description: Visio LCD TV
+nodes_249: 
+  parent_description: spa GFCI
+  node: "174"
+  id: "251"
+  parent_node: "45"
+  description: Spa thermostat shut-off over-ride
+nodes_087: 
+  parent_description: electronic & computer racks
+  node: "135"
+  id: "89"
+  parent_node: "40"
+  description: Flat plug, 2+1 extension cord
+nodes_168: 
+  parent_description: new receptacle
+  node: "92"
+  id: "172"
+  parent_node: "42"
+  description: Mac powering on
+nodes_195: 
+  parent_description: Flat plug, 2+1 extension cord
+  node: "117"
+  id: "197"
+  parent_node: "135"
+  description: Visio LCD TV
+nodes_088: 
+  parent_description: Flat plug, 2+1 extension cord
+  node: "136"
+  id: "90"
+  parent_node: "135"
+  description: DSL, router, hub plug bar
+nodes_169: 
+  parent_description: new receptacle
+  node: "93"
+  id: "173"
+  parent_node: "42"
+  description: Mac logged on
+nodes_089: 
+  parent_description: Flat plug, 2+1 extension cord
+  node: "137"
+  id: "91"
+  parent_node: "135"
+  description: Surge protector, wide
+nodes_196: 
+  parent_description: North wall with TV
+  node: "118"
+  id: "198"
+  parent_node: "52"
+  description: TV
+nodes_197: 
+  parent_description: North wall with TV
+  node: "119"
+  id: "199"
+  parent_node: "52"
+  description: Playstation 2

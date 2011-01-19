@@ -1,0 +1,38 @@
+<p>
+  <b>Acquisition data:</b>
+  <%=h @acquisition.acquisition_data %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @acquisition.created_at %>
+</p>
+
+<p>
+  <b>Id:</b>
+  <%=h @acquisition.id %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @acquisition.url %>
+</p>
+
+<p>
+  <b>Acquisition stream:</b>
+  <%=h @acquisition.acquisition_stream_id %>
+</p>
+
+<p>
+  <b>Error:</b>
+  <%=h @acquisition.error %>
+</p>
+
+<p>
+  <b>Acquisition updated:</b>
+  <%=h @acquisition.acquisition_updated %>
+</p>
+
+
+<%= link_to 'Edit', edit_acquisition_path(@acquisition) %> |
+<%= link_to 'Back', acquisitions_path %>

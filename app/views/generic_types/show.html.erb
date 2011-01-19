@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Search sequence:</b>
+  <%= @generic_type.search_sequence %>
+</p>
+
+<p>
+  <b>Import class:</b>
+  <%= @generic_type.import_class %>
+</p>
+
+<p>
+  <b>Rails type:</b>
+  <%= @generic_type.rails_type %>
+</p>
+
+<p>
+  <b>Data regexp:</b>
+  <%= @generic_type.data_regexp %>
+</p>
+
+<p>
+  <b>Id:</b>
+  <%= @generic_type.id %>
+</p>
+
+<p>
+  <b>Ruby conversion:</b>
+  <%= @generic_type.ruby_conversion %>
+</p>
+
+
+<%= link_to 'Edit', edit_generic_type_path(@generic_type) %> |
+<%= link_to 'Back', generic_types_path %>

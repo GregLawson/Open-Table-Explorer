@@ -1,0 +1,23 @@
+<p>
+  <b>Protocol:</b>
+  <%=h @port.protocol %>
+</p>
+
+<p>
+  <b>Port:</b>
+  <%=h @port.port %>
+</p>
+
+<p>
+  <b>Portname:</b>
+  <%=h @port.portname %>
+</p>
+
+<p>
+  <b>Ip:</b>
+  <%=h @port.ip %>
+</p>
+
+
+<%= link_to 'Edit', edit_port_path(@port) %> |
+<%= link_to 'Back', ports_path %>

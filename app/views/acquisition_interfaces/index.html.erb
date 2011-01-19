@@ -1,0 +1,22 @@
+<h1>Listing acquisition_interfaces</h1>
+
+<table>
+  <tr>
+    <th>Library</th>
+    <th>Acquire data</th>
+  </tr>
+
+<% for acquisition_interface in @acquisition_interfaces %>
+  <tr>
+    <td><%=h acquisition_interface.library %></td>
+    <td><%=h acquisition_interface.acquire_data %></td>
+    <td><%= link_to 'Show', acquisition_interface %></td>
+    <td><%= link_to 'Edit', edit_acquisition_interface_path(acquisition_interface) %></td>
+    <td><%= link_to 'Destroy', acquisition_interface, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New acquisition_interface', new_acquisition_interface_path %>

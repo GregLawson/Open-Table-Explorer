@@ -1,0 +1,65 @@
+<h1>Greg's Home Page</h1>
+<table border=2>
+<tr>
+<td>Specifications</td>
+<td><%=link_to "Acquisition Interfaces",acquisition_interfaces_path %></td>
+<td><%=link_to "Frequencies",frequencies_path %></td>
+<td><%=link_to "Table specs",table_specs_path %></td>
+<td><%= link_to "Acquisition Stream Spec", acquisition_stream_specs_path %></td>
+<td><%= link_to "Generic Types", generic_types_path %></td>
+<td><%= link_to "Example Types", example_types_path %></td>
+<td><%= link_to "Parse Specs", parse_specs_path %></td>
+</tr>
+<tr>
+<td>Environment</td>
+<td><%= link_to "Hosts", hosts_path %></td>
+<td><%= link_to "Acquisitions",acquisitions_path %></td>
+<td><%= link_to "Routers",routers_path %></td>
+</tr>
+<tr>
+<td>Energy</td>
+<td><%= link_to "Nodes",nodes_path %></td>
+<td><%= link_to "Breakers",breakers_path %></td>
+<td><%= link_to "Measurements",measurements_path %></td>
+<td><%= link_to "Wired_locations",wired_locations_path %></td>
+<td><%= link_to "Loads",loads_path %></td>
+<td><%= link_to "Solar Producton FTP",production_ftps_path %></td>
+<td></td>
+</tr>
+<tr>
+<td>Financial</td>
+<td><%= link_to "Accounts",accounts_path %></td>
+<td><%= link_to "Transfers",transfers_path %></td>
+<td><%= link_to "Transactions",transactions_path %></td>
+<td></td>
+</tr>
+<tr>
+<td>Huell Howser</td>
+<td><%= link_to "Huell Shows","huelshows" %></td>
+<td><%= link_to "Huell Series","huelseries" %></td>
+<td></td>
+</tr>
+<tr>
+<td>Live Source Data</td>
+<td><%= link_to "TED data 193", "http://192.168.3.193/api/LiveData.xml" %></td>
+<td><%= link_to "TED data 194", "http://192.168.3.194/api/LiveData.xml" %></td>
+<td><%= link_to "Sunny Boy Inverter data 136", "http://192.168.3.136" %></td>
+<td><%= link_to "Sunny Boy Inverter data 137", "http://192.168.3.137" %></td>
+<td><%= link_to "LAX data", "http://www.weather.gov/xml/current_obs/KLAX.xml" %></td>
+<td><%= link_to "Hawthorne data", "http://www.weather.gov/xml/current_obs/KHHR.xml" %></td>
+<td><%= link_to "Edison", "http://www.sce.com" %> Use firefox. Account=Greg_Lawson</td>
+</tr>
+<tr>
+<td>URLs</td>
+<td><%= link_to "URLs",urls_path %></td>
+<td><%= link_to "Bugs",bugs_path %></td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td><A HREF="http://sourceforge.net/search/?type_of_search=soft&words=Home+energy+explorer&search=Search">Related projects<A></td>
+<td><A HREF="images/Electronics.html">Electronic Datasheets</A></td>
+<td><A HREF="images/AVR.html">AVR</A></td>
+<td></td>
+</tr>
+</table>
+<p>Find me in app/views/home/index.html.erb</p>

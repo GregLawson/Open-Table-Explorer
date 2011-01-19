@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/homenergyexplor/!svn/ver/11/rails/app/views/nodes
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/homenergyexplor/!svn/ver/11/rails/app/views/nodes/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/homenergyexplor/!svn/ver/11/rails/app/views/nodes/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/homenergyexplor/!svn/ver/11/rails/app/views/nodes/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/homenergyexplor/!svn/ver/11/rails/app/views/nodes/show.html.erb
+END

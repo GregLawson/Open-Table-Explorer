@@ -1,0 +1,32 @@
+<h1>Editing node</h1>
+
+<% form_for(@node) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :node %><br />
+    <%= f.text_field :node %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :parent_node %><br />
+    <%= f.text_field :parent_node %>
+  </p>
+  <p>
+    <%= f.label :parent_description %><br />
+    <%= f.text_field :parent_description %>
+  </p>
+  <p>
+    <%= f.label :id %><br />
+    <%= f.text_field :id %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @node %> |
+<%= link_to 'Back', nodes_path %>

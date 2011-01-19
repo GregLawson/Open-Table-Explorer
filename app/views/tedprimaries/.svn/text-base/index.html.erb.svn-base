@@ -1,0 +1,48 @@
+<h1>Listing tedprimaries</h1>
+
+<table>
+  <tr>
+    <th>Hour</th>
+    <th>Minute</th>
+    <th>Month</th>
+    <th>Day</th>
+    <th>Year</th>
+    <th>Maxsecond</th>
+    <th>Accusecond</th>
+    <th>Total voltagenow</th>
+    <th>Mtu1 voltagenow</th>
+    <th>Total powernow</th>
+    <th>Total kva</th>
+    <th>Mtu1 powernow</th>
+    <th>Mtu1 kva</th>
+    <th>Total costnow</th>
+    <th>Mtu1 costnow</th>
+  </tr>
+
+<% for tedprimary in @tedprimaries %>
+  <tr>
+    <td><%=h tedprimary.hour %></td>
+    <td><%=h tedprimary.minute %></td>
+    <td><%=h tedprimary.month %></td>
+    <td><%=h tedprimary.day %></td>
+    <td><%=h tedprimary.year %></td>
+    <td><%=h tedprimary.maxsecond %></td>
+    <td><%=h tedprimary.accusecond %></td>
+    <td><%=h tedprimary.total_voltagenow %></td>
+    <td><%=h tedprimary.mtu1_voltagenow %></td>
+    <td><%=h tedprimary.total_powernow %></td>
+    <td><%=h tedprimary.total_kva %></td>
+    <td><%=h tedprimary.mtu1_powernow %></td>
+    <td><%=h tedprimary.mtu1_kva %></td>
+    <td><%=h tedprimary.total_costnow %></td>
+    <td><%=h tedprimary.mtu1_costnow %></td>
+    <td><%= link_to 'Show', tedprimary %></td>
+    <td><%= link_to 'Edit', edit_tedprimary_path(tedprimary) %></td>
+    <td><%= link_to 'Destroy', tedprimary, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New tedprimary', new_tedprimary_path %>

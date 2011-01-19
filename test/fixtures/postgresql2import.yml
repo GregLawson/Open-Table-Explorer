@@ -1,0 +1,82 @@
+--- 
+one: 
+  import_type: Binary_Column
+  postgresql_type: character
+postgresql2import_011: 
+  import_type: Time_Column
+  postgresql_type: time without time zone
+postgresql2import_023: 
+  import_type: Binary_Column
+  postgresql_type: "\"char\""
+postgresql2import_012: 
+  import_type: Timestamp_Column
+  postgresql_type: timestamp with time zone
+postgresql2import_001: 
+  import_type: 
+  postgresql_type: anyarray
+postgresql2import_024: 
+  import_type: Integer_Column
+  postgresql_type: network
+postgresql2import_013: 
+  import_type: Timestamp_Column
+  postgresql_type: timestamp without time zone
+postgresql2import_002: 
+  import_type: 
+  postgresql_type: ARRAY
+postgresql2import_025: 
+  import_type: VARCHAR_Column
+  postgresql_type: character varying
+postgresql2import_014: 
+  import_type: Text_Column
+  postgresql_type: text
+postgresql2import_003: 
+  import_type: 
+  postgresql_type: interval
+postgresql2import_026: 
+  import_type: VARCHAR_Column
+  postgresql_type: inet
+postgresql2import_015: 
+  import_type: Integer_Column
+  postgresql_type: smallint
+postgresql2import_004: 
+  import_type: 
+  postgresql_type: regproc
+postgresql2import_027: 
+  import_type: VARCHAR_Column
+  postgresql_type: name
+postgresql2import_016: 
+  import_type: Float_Column
+  postgresql_type: real
+postgresql2import_005: 
+  import_type: 
+  postgresql_type: xid
+postgresql2import_017: 
+  import_type: Float_Column
+  postgresql_type: double precision
+postgresql2import_006: 
+  import_type: Integer_Column
+  postgresql_type: bigint
+postgresql2import_018: 
+  import_type: Decimal_Column
+  postgresql_type: money
+postgresql2import_007: 
+  import_type: Integer_Column
+  postgresql_type: integer
+postgresql2import_019: 
+  import_type: Decimal_Column
+  postgresql_type: numeric
+postgresql2import_008: 
+  import_type: Binary_Column
+  postgresql_type: bytea
+postgresql2import_020: 
+  import_type: Integer_Column
+  postgresql_type: oid
+postgresql2import_009: 
+  import_type: Boolean_Column
+  postgresql_type: boolean
+postgresql2import_021: 
+  import_type: Time_Column
+  postgresql_type: abstime
+postgresql2import_010: 
+  import_type: Date_Column
+  postgresql_type: date

@@ -1,0 +1,36 @@
+Installation:
+Requires previous installation of ruby interpreter and the Postgresql database. A future version is hoped to support ActiveRecord so that MySQL, and Oracle will also be supported.
+Some individual programs require nmap and wget be installed.
+Installation of ruby rails is optional with this version but will be required for future versons. The ruby rails code is in the subdirectory rails but the doc and vendor directories
+have not been included as they are standard and not changed.
+The database used is called energy_development following the ruby rails convention for a database still being written.
+A ruby rails definition of the databases is in rails/db/schema.rb.
+If you are on a private net of the form w.x.y.z, network.rb will search all hosts w.x.0-y.1-254 for supported web interfaces. If y is a large number or 0 to y-1 are networks 
+that you shouldn't scan, don't run this version.
+
+Commands for downloading:
+apt-get install ruby-full
+apt-get install rubygems
+apt-get install rails
+apt-get install R
+apt-get install libpgsql-ruby
+gem install activerecord-postgresql-adapter
+export R_HOME=/usr/lib/R
+export RUBYOPT=rubygems
+export GEM_HOME=/var/lib/gems/1.8/gems/1.8
+
+gem install rsruby  -- --with-R-dir=/usr/lib/R --with-R-include=/usr/share/R/include/
+gem install hpricot 
+
+File Descriptions:
+network.rb - setup program using nmap to find all hosts on local network or lower numbered ones
+remainingAcquisition.rb - script to collect non-real-time data from weather (only LAX and Hawthorne for now)
+TEDacquisition.rb - acquire real-time data from The Energy Detective (TED)
+TED.rb - library to interface with TED
+TED_with_WebBox.rb  - net metering interface combining TED with SMA WebBox interface to solar inverter.
+sunnywebbox.rb  - library interface with SMA WebBox interface to solar inverter.
+weather.rb  - interface to US national weather from airports
+table.rb  - generic interface for any table backed by an interface
+columns.rb - generic typed data columns
+webBox.sh - shell script using wget to get to passworded more detailed data from SMA webBox. May have to be run twice. Password times-out.
+Views.sql - postgresql view definition of possible use.
