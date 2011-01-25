@@ -8,9 +8,9 @@ one:
   Posted: 
   Date: 2009-12-31 00:00:00
   id: "4"
-  Amount: "174.53"
+  Amount: "1.53"
   Tax_Reporting: W2.17
-  Payee: Raytheon
+  Payee: Boss
 transactions_004: 
   From_Accont: Pension
   created_at: 
@@ -22,7 +22,7 @@ transactions_004:
   id: "5"
   Amount: "10215.9"
   Tax_Reporting: 1099-R.4
-  Payee: Raytheon
+  Payee: Boss
 transactions_005: 
   From_Accont: Pension
   created_at: 
@@ -32,9 +32,9 @@ transactions_005:
   Posted: 
   Date: 2009-12-31 00:00:00
   id: "1"
-  Amount: "51079.6"
+  Amount: "9.6"
   Tax_Reporting: 1099-R.2a
-  Payee: Raytheon Company Masster Trust
+  Payee: Masster Trust
 transactions_006: 
   From_Accont: 
   created_at: 
@@ -44,9 +44,9 @@ transactions_006:
   Posted: 
   Date: 2009-12-31 00:00:00
   id: "7"
-  Amount: "1275.71"
+  Amount: "5.71"
   Tax_Reporting: "1098.1"
-  Payee: Kinecta Mortgage
+  Payee: Mortgage
 transactions_007: 
   From_Accont: 
   created_at: 
@@ -56,9 +56,9 @@ transactions_007:
   Posted: 
   Date: 2009-10-01 00:00:00
   id: "6"
-  Amount: "12135.16"
+  Amount: "5.16"
   Tax_Reporting: "1098.1"
-  Payee: Kinecta Mortgage
+  Payee: Mortgage
 transactions_008: 
   From_Accont: Interest
   created_at: 
@@ -68,9 +68,9 @@ transactions_008:
   Posted: 
   Date: 
   id: "8"
-  Amount: "20.4"
+  Amount: "2.4"
   Tax_Reporting: 
-  Payee: Kinecta Interest
+  Payee: Interest
 transactions_009: 
   From_Accont: Interest
   created_at: 
@@ -94,7 +94,7 @@ transactions_010:
   id: "10"
   Amount: "2.48"
   Tax_Reporting: 1099-OID
-  Payee: Treasury Direct
+  Payee: Direct
 transactions_001: 
   From_Accont: Wages
   created_at: 
@@ -104,9 +104,9 @@ transactions_001:
   Posted: 
   Date: 2009-12-31 00:00:00
   id: "3"
-  Amount: "1876.66"
+  Amount: "6.66"
   Tax_Reporting: W2.1
-  Payee: Raytheon
+  Payee: Boss
 transactions_002: 
   From_Accont: Wages
   created_at: 
@@ -116,6 +116,6 @@ transactions_002:
   Posted: 
   Date: 2009-12-31 00:00:00
   id: "2"
-  Amount: "469.17"
+  Amount: "9.17"
   Tax_Reporting: W2.4
   Payee: Raytheon
