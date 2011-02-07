@@ -2,6 +2,9 @@
 db/*.sqlite3
 log/*.log
 tmp/**/*
+<<<<<<< HEAD
 fixtures/transactions.yml
 test/fixtures/transactions.yml
 
+=======
+>>>>>>> fa1246ace37b20904fa1596f88ac81db18d9ac30
