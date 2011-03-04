@@ -20,7 +20,7 @@ example_types_004:
   inspect_value: "NULL"
   example_string: ""
 example_types_005: 
-  id: "10"
+  id: "8"
   import_class: Macaddr_Column
   inspect_value: 1A:2B:3C:4D
   example_string: 1a:2B:3C:4d

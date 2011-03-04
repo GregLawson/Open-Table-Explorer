@@ -7,6 +7,7 @@
 ###########################################################################
 require 'global.rb'
 class AcquisitionInterface < ActiveRecord::Base
+has_many :acquisition_stream_specs, :class_name => "Acquisition_Stream_Spec"
 include Global
 def URI(component)
 	self[:uri].select(component)
