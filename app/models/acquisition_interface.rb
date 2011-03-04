@@ -9,9 +9,6 @@ require 'global.rb'
 class AcquisitionInterface < ActiveRecord::Base
 has_many :acquisition_stream_specs, :class_name => "Acquisition_Stream_Spec"
 include Global
-def URI(component)
-	self[:uri].select(component)
-end #end
 def scheme
 	return self[:name].downcase
 end #def
@@ -19,7 +16,7 @@ def acquisition_class_name
 	return "#{self[:name]}_Acquisition"
 end # def
 def urls_by_scheme
-	@acquisition_stream_specs=AcquisitionStreamSpec.all
+	@acquisition_stream_specs=Acquisition_Stream_Spec.all
 	acquisition_stream_specs.select do |acquisition_stream_spec|
 		acquisition_stream_spec.url = scheme 
 	end # select
@@ -42,12 +39,6 @@ rescue Exception => e
 else
 	self[:error]= "Not subclass of Exception: " + "couldn't acquire data from #{url}"
 	return self
-end #def
-def parsedURI
-	return URI.split(URI.escape(self[:url]))
-end #def
-def schemelessUrl
-	return URI.unescape(URI.escape(self[:url]).split(':').last)
 end #def
 def acquisitionDuplicated?(acquisitionData=self[:acquisition_data])
 	return @previousAcq==acquisitionData

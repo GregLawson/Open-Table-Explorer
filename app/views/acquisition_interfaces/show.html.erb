@@ -66,9 +66,8 @@
   where({:url => @acquisition_interface.name.downcase })
 </p>
 
-<% @acquisition_stream_specs=AcquisitionStreamSpec.all %>
+<% @acquisition_stream_specs=Acquisition_Stream_Spec.all %>
 <% for acquisition_stream_spec in @acquisition_stream_specs %>
-<% if acquisition_stream_spec.url = @acquisition_interface.name.downcase then %>
   <tr>
     <td><%=h acquisition_stream_spec.id %></td>
     <td><%=h acquisition_stream_spec.acquisition_interface %></td>
@@ -79,7 +78,6 @@
     <td><%= link_to 'Edit', edit_acquisition_stream_spec_path(acquisition_stream_spec) %></td>
     <td><%= link_to 'Destroy', acquisition_stream_spec, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
-<% end %>
 <% end %>
 </table>
 
