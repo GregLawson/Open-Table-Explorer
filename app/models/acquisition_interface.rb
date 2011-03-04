@@ -12,6 +12,19 @@ include Global
 def URI(component)
 	self[:uri].select(component)
 end #end
+def scheme
+	return self[:name].downcase
+end #def
+def acquisition_class_name
+	return "#{self[:name]}_Acquisition"
+end # def
+def urls_by_scheme
+	@acquisition_stream_specs=AcquisitionStreamSpec.all
+	acquisition_stream_specs.each do |acquisition_stream_spec|
+		if acquisition_stream_spec.url = @acquisition_interface.name.downcase then
+		end #if
+	end #if
+end #def
 def acquire
 	@previousAcq=self[:acquisition_data] # change detection
 	@uri=URI.parse(URI.escape(self[:url]))	
