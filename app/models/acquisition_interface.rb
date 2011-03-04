@@ -20,10 +20,9 @@ def acquisition_class_name
 end # def
 def urls_by_scheme
 	@acquisition_stream_specs=AcquisitionStreamSpec.all
-	acquisition_stream_specs.each do |acquisition_stream_spec|
-		if acquisition_stream_spec.url = @acquisition_interface.name.downcase then
-		end #if
-	end #if
+	acquisition_stream_specs.select do |acquisition_stream_spec|
+		acquisition_stream_spec.url = scheme 
+	end # select
 end #def
 def acquire
 	@previousAcq=self[:acquisition_data] # change detection
