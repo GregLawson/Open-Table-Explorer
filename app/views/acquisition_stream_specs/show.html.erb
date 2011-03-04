@@ -23,6 +23,25 @@
   <%=h @acquisition_stream_spec.required_order %>
 </p>
 
+<p>
+  <b>uriHash:</b>
+  <%=h @acquisition_stream_spec.uriHash.inspect %>
+</p>
+
+<p>
+  <b>scheme:</b>
+  <%=h @acquisition_stream_spec.scheme %>
+</p>
+
+<p>
+  <b>acquisition_interface:</b>
+  <%=h @acquisition_stream_spec.acquisition_interface %>
+</p>
+
+<p>
+  <b>consistantSchemes:</b>
+  <%=h @acquisition_stream_spec.consistantSchemes %>
+</p>
 
 <%= link_to 'Edit', edit_acquisition_stream_spec_path(@acquisition_stream_spec) %> |
 <%= link_to 'Back', acquisition_stream_specs_path %>

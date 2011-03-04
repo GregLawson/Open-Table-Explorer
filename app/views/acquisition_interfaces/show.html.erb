@@ -28,10 +28,6 @@
   <%=h @acquisition_interface.acquire_data %>
 </p>
 
-<p>
-  <b>@acquisition_interface.inspect:</b>
-  <%=h @acquisition_interface.inspect %>
-</p>
 <P>
 
 <%=link_to "Associations Guide", "http://guides.rubyonrails.org/association_basics.html",:target => "_blank" %>
@@ -48,6 +44,7 @@
 
 <%= link_to 'Edit', edit_acquisition_interface_path(@acquisition_interface) %> |
 <%= link_to 'Back', acquisition_interfaces_path %>
+
 <h1>Listing acquisition_stream_specs</h1>
 
 <table>
@@ -56,23 +53,19 @@
     <th>Acquisition interface</th>
     <th>Url</th>
     <th>Table spec</th>
+    <th>schemeFromInterface</th>
     <th>Required order</th>
   </tr>
 
-<p>
-  <b>@acquisition_interface.name.downcase }.inspect</b>
-  h { :url => @acquisition_interface.name.downcase }.inspect  
- h { :url => "http://www.yahoo.com"}.inspect 
-  where({:url => @acquisition_interface.name.downcase })
-</p>
 
-<% @acquisition_stream_specs=Acquisition_Stream_Spec.all %>
-<% for acquisition_stream_spec in @acquisition_stream_specs %>
+<% @acquisition_stream_specs=AcquisitionStreamSpec.all %>
+<% for acquisition_stream_spec in @acquisition_interface.urls_by_scheme %>
   <tr>
     <td><%=h acquisition_stream_spec.id %></td>
     <td><%=h acquisition_stream_spec.acquisition_interface %></td>
     <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
+    <td><%=h acquisition_stream_spec.schemeFromInterface %></td>
     <td><%=h acquisition_stream_spec.required_order %></td>
     <td><%= link_to 'Show', acquisition_stream_spec %></td>
     <td><%= link_to 'Edit', edit_acquisition_stream_spec_path(acquisition_stream_spec) %></td>
