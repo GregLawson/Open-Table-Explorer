@@ -18,11 +18,16 @@ class AcquisitionStreamSpec < ActiveRecord::Base
 attr_reader :uri
 include Generic_Table
 belongs_to :table_spec, :class_name => "Table_spec"
-validates_format_of :acquisition_interface, :with => /\A[a-zA-Z]{4,5}_Acquisition\z/,
-    :message => "Only four or five letter mode followed by '_Acquisition' allowed."
-def after_initialize
-	@uri=URI.parse(URI.escape(self[:url]))	
-	@classReference= Generic_Table.classReference(self[:acquisition_interface])
+#~ validates_format_of :acquisition_interface, :with => /\A[a-zA-Z]{4,5}_Acquisition\z/,
+    #~ :message => "Only four or five letter mode followed by '_Acquisition' allowed."
+after_initialize :init
+def init
+	if  self[:url].nil?
+		@uri=nil
+	else
+		@uri=URI.parse(URI.escape(self[:url]))	
+	end
+	#~ @classReference= Generic_Table.classReference(self[:acquisition_interface])
 	#~ @objectReference=@classReference.create(:url => self[:url])
 end
 def uriComponent(componentName)

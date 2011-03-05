@@ -14,7 +14,7 @@ class AcquisitionStreamSpecsControllerTest < ActionController::TestCase
 
   def test_should_create_acquisition_stream_spec
     assert_difference('AcquisitionStreamSpec.count') do
-      post :create, :acquisition_stream_spec => { }
+      post :create, :acquisition_stream_spec => { :id => 999, :url => "http:www.yahoo.com" }
     end
 
     assert_redirected_to acquisition_stream_spec_path(assigns(:acquisition_stream_spec))

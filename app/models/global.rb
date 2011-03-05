@@ -146,4 +146,3 @@ def Global.relationship(obj=self)
 end #def
 
 end #module
-
