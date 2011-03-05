@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110108155503) do
+ActiveRecord::Schema.define(:version => 20110305131130) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20110108155503) do
     t.string  "url"
     t.integer "table_spec_id"
     t.integer "required_order"
+    t.integer "AcquisitionInterface_Id"
   end
 
   add_index "acquisition_stream_specs", ["url"], :name => "acquisition_stream_specs_url_key", :unique => true

@@ -47,10 +47,11 @@
 
 <h1>Listing acquisition_stream_specs</h1>
 
-<table>
+<table border=1>
   <tr>
     <th>Id</th>
     <th>Acquisition interface</th>
+     <th>Acquisition interface Id</th>
     <th>Url</th>
     <th>Table spec</th>
     <th>schemeFromInterface</th>
@@ -63,6 +64,7 @@
   <tr>
     <td><%=h acquisition_stream_spec.id %></td>
     <td><%=h acquisition_stream_spec.acquisition_interface %></td>
+    <td><%=h acquisition_stream_spec.AcquisitionInterface_Id %></td>
     <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
     <td><%=h acquisition_stream_spec.schemeFromInterface %></td>
