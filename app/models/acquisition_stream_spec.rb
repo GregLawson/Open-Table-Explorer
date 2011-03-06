@@ -30,6 +30,12 @@ def init
 	#~ @classReference= Generic_Table.classReference(self[:acquisition_interface])
 	#~ @objectReference=@classReference.create(:url => self[:url])
 end
+def parsedURI
+	return URI.split(URI.escape(self[:url]))
+end #def
+def schemelessUrl
+	return URI.unescape(URI.escape(self[:url]).split(':').last)
+end #def
 def uriComponent(componentName)
 	ret=@uri.select(componentName)
 	if ret.class==Array then

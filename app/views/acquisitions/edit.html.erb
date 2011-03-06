@@ -38,3 +38,33 @@
 
 <%= link_to 'Show', @acquisition %> |
 <%= link_to 'Back', acquisitions_path %>
+
+<p>
+  <b>Id:</b>
+  <%=h @acquisition_interface.id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @acquisition_interface.name %>
+</p>
+
+<p>
+  <b>Sceme:</b>
+  <%=h @acquisition_interface.scheme %>
+</p>
+
+<p>
+  <b>Acquisition Class Name:</b>
+  <%=h @acquisition_interface.acquisition_class_name %>
+</p>
+
+<p>
+  <b>Library:</b>
+  <%=h @acquisition_interface.library %>
+</p>
+
+<p>
+  <b>Acquire data:</b>
+  <%=h @acquisition_interface.acquire_data %>
+</p>
