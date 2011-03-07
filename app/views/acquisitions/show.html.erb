@@ -36,8 +36,10 @@
 
 <%= link_to 'Edit', edit_acquisition_path(@acquisition) %> |
 <%= link_to 'Back', acquisitions_path %>
+
+    <!-- 
 <P>
-<% @acquisition_stream_spec=@acquisition.acquisitionStreamSpec %>
+<% @acquisition_stream_spec=@acquisition.asociatedAcquisitionStreamSpec %>
 <%=@acquisition_stream_spec.inspect %>
 <p>
   <b>Id:</b>
@@ -87,4 +89,39 @@
 <%= link_to 'Edit', edit_acquisition_stream_spec_path(@acquisition_stream_spec) %> |
 <%= link_to 'Back', acquisition_stream_specs_path %>
 
- @acquisition_interface=@acquisition_stream_spec.acquuisiton_interface_id 
+ <P><%= @acquisition_stream_spec.inspect %></P>
+ 
+ <% @acquisition_interface=@acquisition_stream_spec.acquisition_interface %>
+ <P><%= @acquisition_interface.inspect %></P>
+
+<p>
+  <b>Id:</b>
+  <%=h @acquisition_interface.id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @acquisition_interface.name %>
+</p>
+
+<p>
+  <b>Sceme:</b>
+  <%=h @acquisition_interface.scheme %>
+</p>
+
+<p>
+  <b>Acquisition Class Name:</b>
+  <%=h @acquisition_interface.acquisition_class_name %>
+</p>
+
+<p>
+  <b>Library:</b>
+  <%=h @acquisition_interface.library %>
+</p>
+
+<p>
+  <b>Acquire data:</b>
+  <%=h @acquisition_interface.acquire_data %>
+</p>
+
+est of form -->

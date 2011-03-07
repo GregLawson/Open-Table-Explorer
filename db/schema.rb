@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110305131130) do
+ActiveRecord::Schema.define(:version => 20110307160803) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -595,7 +595,7 @@ ActiveRecord::Schema.define(:version => 20110305131130) do
   end
 
   create_table "wired_locations", :force => true do |t|
-    t.integer "node",              :null => false
+    t.integer "node",               :null => false
     t.string  "description"
     t.integer "plug_in_location"
     t.string  "x10_address"
@@ -604,6 +604,9 @@ ActiveRecord::Schema.define(:version => 20110305131130) do
     t.string  "interface"
     t.boolean "ground_test_light"
     t.integer "node_id"
+    t.string  "parent_description"
+    t.integer "parent_node"
+    t.string  "user_interface"
   end
 
 end

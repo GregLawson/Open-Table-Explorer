@@ -1,7 +1,7 @@
 class Acquisition < ActiveRecord::Base
 belongs_to :acquisitionStreamSpec, :class_name => "AcquisitionStreamSpec",:foreign_key => "acquisition_stream_id"
 def asociatedAcquisitionStreamSpec
-	acquisition_stream_spec=AcquisitionStreamSpecs.find_by_id(self[:acquisition_stream_spec_id])
+	acquisition_stream_spec=AcquisitionStreamSpec.find_by_id(self[:acquisition_stream_spec_id])
 end #def
 def acquire(acquisition_stream_spec_id)
 	@previousAcq=self[:acquisition_data] # change detection
