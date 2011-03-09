@@ -17,17 +17,17 @@ def Global.canonicalName(obj,verbose=false)
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
 		return "Symbol :#{obj.to_s}has no superclass"
 	elsif obj.class.name=='Module' then
-		log.info("obj.name=#{obj.name}")
-		log.info("nesting.inspect=#{nesting.inspect}")
+		puts("obj.name=#{obj.name}")
+		puts("nesting.inspect=#{nesting.inspect}")
 		return "Module #{obj.name}"
 	elsif activeRecordTableNotCreatedYet?(obj) then
 		return "Active_Record #{obj.class.inspect}"
 	else
 		if obj.respond_to?(:name) then
-			log.info("obj.name=#{obj.name}")
+			puts("obj.name=#{obj.name}")
 			if obj.respond_to?(:superclass) then
-				log.info("obj.superclass=#{obj.superclass}")
-				log.info("obj.superclass.name=#{obj.superclass.name}")
+				puts("obj.superclass=#{obj.superclass}")
+				puts("obj.superclass.name=#{obj.superclass.name}")
 				return "Class #{obj.name} subclass of #{obj.superclass.name}"
 			else
 				return "obj Class #{obj.name} has no superclass."
@@ -49,42 +49,42 @@ def Global.noninherited_public_class_methods(obj)
 	end
 end
 def Global.whoAmI(obj,verbose=false)
-	log.info("obj=#{obj}")
-	log.info("obj.class=#{obj.class}")
-	log.info("obj.class.name=#{obj.class.name}")
-	log.info("obj.to_s=#{obj.to_s}")
-	log.info("obj.inspect=#{obj.inspect}")
-#	log.info("obj.object_id=#{obj.object_id}")
+	puts("obj=#{obj}") if verbose
+	puts("obj.class=#{obj.class}") if verbose
+	puts("obj.class.name=#{obj.class.name}") if verbose
+	puts("obj.to_s=#{obj.to_s}") if verbose
+	puts("obj.inspect=#{obj.inspect}") if verbose
+#	puts("obj.object_id=#{obj.object_id}") if verbose
 	if obj.respond_to?(:name) then
-		log.info("obj.name=#{obj.name}")
+		puts("obj.name=#{obj.name}") if verbose
 	else
-		log.info("obj has no name. obj.inspect=#{obj.inspect}.")
+		puts("obj has no name. obj.inspect=#{obj.inspect}.") if verbose
 	end
 	if obj.respond_to?(:human_name) then
-		log.info("obj.model_name.collection=#{obj.model_name.collection}")
-		log.info("obj.human_name=#{obj.human_name}")
-		log.info("obj.model_name.element=#{obj.model_name.element}")
-		log.info("obj.model_name.partial_path=#{obj.model_name.partial_path}")
-		log.info("obj.model_name.plural=#{obj.model_name.plural}")
-		log.info("obj.model_name.singular=#{obj.model_name.singular}")
+		puts("obj.model_name.collection=#{obj.model_name.collection}") if verbose
+		puts("obj.human_name=#{obj.human_name}") if verbose
+		puts("obj.model_name.element=#{obj.model_name.element}") if verbose
+		puts("obj.model_name.partial_path=#{obj.model_name.partial_path}") if verbose
+		puts("obj.model_name.plural=#{obj.model_name.plural}") if verbose
+		puts("obj.model_name.singular=#{obj.model_name.singular}") if verbose
 	end
-	log.info("noninherited_public_instance_methods(obj).inspect=#{noninherited_public_instance_methods(obj).inspect}")
-	log.info("noninherited_public_class_methods(obj).inspect=#{noninherited_public_class_methods(obj).inspect}")
+	puts("noninherited_public_instance_methods(obj) if verbose.inspect=#{noninherited_public_instance_methods(obj).inspect}")
+	puts("noninherited_public_class_methods(obj).inspect=#{noninherited_public_class_methods(obj).inspect}")
 	if obj.nil? then
 		return "#{obj} is nil."
 	elsif obj.class.name=='Symbol' then
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
 		return "Symbol :#{obj.to_s}has no superclass"
 	elsif obj.class.name=='Module' then
-		log.info("obj.name=#{obj.name}")
-		log.info("nesting.inspect=#{nesting.inspect}")
+		puts("obj.name=#{obj.name}") if verbose
+		puts("nesting.inspect=#{nesting.inspect}") if verbose
 		return "Module #{obj.name}"
 	else
 		if obj.respond_to?(:name) then
-			log.info("obj.name=#{obj.name}")
+			puts("obj.name=#{obj.name}") if verbose
 			if obj.respond_to?(:superclass) then
-				log.info("obj.superclass=#{obj.superclass}")
-				log.info("obj.superclass.name=#{obj.superclass.name}")
+				puts("obj.superclass=#{obj.superclass}") if verbose
+				puts("obj.superclass.name=#{obj.superclass.name}") if verbose
 				return "Class #{obj.name} subclass of #{obj.superclass.name}"
 			else
 				return "obj Class #{obj.name} has no superclass."
@@ -144,6 +144,11 @@ def Global.relationship(obj=self)
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
 end #def
+def foreignKeys
+	return instance_variables
+end #def
+def associate(ass1,ass2)
 
+end #def
 end #module
 

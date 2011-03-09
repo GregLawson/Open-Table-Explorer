@@ -15,6 +15,7 @@ def testCallResult(obj,methodName,*arguments)
 	return m.call(*arguments)
 end #def
 def testCall(obj,methodName,*arguments)
+	explain_assert_respond_to(obj,methodName)
 	result=testCallResult(obj,methodName,*arguments)
 	assert_not_nil(result)
 	message="\n#{Global.canonicalName(obj)}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
@@ -57,4 +58,57 @@ def explain_assert_respond_to(obj,methodName)
 		end
 	end
 end
+def assert_public_instance_method(obj,methodName,message='')
+	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
+	if obj.respond_to?(methodName) then
+		message='expect to pass'
+	elsif obj.respond_to?(methodName.to_s.singularize) then
+		message="but singular #{methodName.to_s.singularize} is a method"
+	elsif obj.respond_to?(methodName.to_s.pluralize) then
+		message="but plural #{methodName.to_s.pluralize} is a method"
+	elsif obj.respond_to?(methodName.to_s.tableize) then
+		message="but tableize #{methodName.to_s.tableize} is a method"
+	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
+		message="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
+	else
+		message="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
+	end #if
+	assert_respond_to( obj, methodName,message)
+end #def
+def assert_association(ass1,ass2)
+# assume ass1 contains foreign key so we don't need to check both 
+	singularAssociatonName=ass2.class.name.tableize.singularize.to_sym
+	pluralAssociatonName=ass2.class.name.tableize.to_sym
+	if ass1.respond_to?(singularAssociatonName) then
+		message="but singularAssociatonName #{singularAssociatonName} is a method"
+		if ass1.send(singularAssociatonName).respond_to?(:exists?) then
+			fail "singular association could have multiple records."
+		end
+		assert_public_instance_method(ass1,singularAssociatonName,message)
+	elsif ass1.respond_to?(pluralAssociatonName) then
+		message="but pluralAssociatonName #{pluralAssociatonName} is a method"
+		if ass1.send(pluralAssociatonName).respond_to?(:exists?) then
+		else
+			fail "plural association cannot have multiple records."
+		end
+		assert_public_instance_method(ass1,pluralAssociatonName,message)
+	else
+		fail "No association exists between #ass1 and #ass2"
+	end
+	conventionalForeignKey1=ass2.class.name.foreign_key # assume
+	singularForeignKey="#{singularAssociatonName}_id"
+	pluralForeignKey="#{pluralAssociatonName}_id"
+	if ass1.respond_to?(conventionalForeignKey1)  then
+		assert_respond_to(ass1,conventionalForeignKey1)
+		assert_equal(1,ass1.send(conventionalForeignKey1))
+	elsif ass1.respond_to?(singularForeignKey) then
+		fail "singularForeignKey=#{singularForeignKey}"
+	elsif ass1.respond_to?(pluralForeignKey) then
+		fail "pluralForeignKey=#{pluralForeignKey}"
+	end
+	conventionalForeignKey2=ass1.class.name.foreign_key # assume not
+	if ass2.respond_to?(conventionalForeignKey2)  then
+		fail "conventionalForeignKey2=#{conventionalForeignKey2} should not be a foreign key in ass2=#{ass2.inspect}"
+	end
+end #def
 end #class

@@ -15,7 +15,7 @@ end #def
 end # module
 
 class AcquisitionStreamSpec < ActiveRecord::Base
-belongs_to :acquisition_interface, :class_name => "AcquisitionInterface",:foreign_key => "acquisitionInterface_id"
+belongs_to :acquisition_interface
 has_many :acquisitions
 attr_reader :uri
 include Generic_Table
@@ -71,7 +71,7 @@ def AcquisitionStreamSpec.urls(model_class_name)
 	return AcquisitionStreamSpec.all(:order => "id",:conditions =>{:model_class_name=>model_class_name}).collect { |m| m.url }
 end #def
 def nameFromInterface
-	self[:acquisition_interface][/([^_]*)_/, 1] 
+	acquisition_interface.name
 end #def
 def schemeFromInterface
 	nameFromInterface.downcase

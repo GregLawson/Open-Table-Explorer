@@ -7,7 +7,7 @@
 ###########################################################################
 require 'global.rb'
 class AcquisitionInterface < ActiveRecord::Base
-has_many :acquisition_stream_specs, :class_name => "AcquisitionStreamSpec"
+has_many :acquisition_stream_specs
 include Global
 def scheme
 	return self[:name].downcase
