@@ -32,12 +32,15 @@ def assert_association(klass,ass)
 	assert_respond_to(klass,(ass.to_s+'=').to_sym)
 	assert(is_association?(klass,ass))
 end #def
+def assert_include(element,list)
+	assert(list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
+end #def
 def is_association_to_many?(klass,ass)
-	#~ assert_public_instance_method(klass,ass)
-	#~ assert_public_instance_method(klass,ass+'=') 
-	#~ assert_public_instance_method(klass,ass+'_ids') 
-	#~ assert_public_instance_method(klass,ass+'_ids=')
 	if klass.respond_to?(ass) and klass.respond_to?(ass+'=')  and klass.respond_to?(ass+'_ids') and klass.respond_to?(ass+'_ids=') then
+		#~ assert_public_instance_method(klass,ass)
+		#~ assert_public_instance_method(klass,ass+'=') 
+		#~ assert_public_instance_method(klass,ass+'_ids') 
+		#~ assert_public_instance_method(klass,ass+'_ids=')
 		return true
 	else
 		return false
@@ -47,7 +50,10 @@ def define_association_names
 	@model_name=self.class.name[0..-5]
 	@model_class=eval(@model_name)
  	@table_name=@model_name.tableize
- 	@possible_associations=@model_class.instance_methods(false).select { |m| m[-1,1]=='=' and m[-5,5]!='_ids=' and is_association?(table_specs(:one),m[0..-2])}.collect {|m| m[0..-2] }
+	@fixture_names=@loaded_fixtures.keys
+	puts " @fixture_names.inspect=#{ @fixture_names.inspect}"
+	@my_fixture=eval(@table_name+'(:one)')
+ 	@possible_associations=@model_class.instance_methods(false).select { |m| m =~ /=$/ and !(m =~ /_ids=$/) and is_association?(@my_fixture,m[0..-2])}.collect {|m| m[0..-2] }
 	puts "@model_class.column_names=#{@model_class.column_names.inspect}"
 	@content_column_names=@model_class.content_columns.collect {|m| m.name}
 	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
@@ -61,8 +67,13 @@ def setup
 end
 test "specific, stable and working" do
 	assert_equal(@model_name,'TableSpec')
+	assert_equal(@model_class,TableSpec)
 	assert_equal(@table_name,'table_specs')
 	assert(TableSpec.instance_methods(false).include?('acquisition_stream_specs'))
+	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
+	assert_raise(Test::Unit::AssertionFailedError) do
+		assert_include('acquisition_stream_specs_Not_a_method',TableSpec.instance_methods(false))
+	end #assert_raise
 	explain_assert_respond_to(table_specs(:one),:acquisition_stream_specs)
 	assert_respond_to(table_specs(:one),:acquisition_stream_specs)
 	assert_association(table_specs(:one),:acquisition_stream_specs)
@@ -70,14 +81,14 @@ test "specific, stable and working" do
 	assert_equal(@possible_associations,['acquisition_stream_specs'])
 	assert_equal(@possible_foreign_keys,['frequency_id'])
 end #def
-def test_aaa
+def test_aaa_test_assertions # aaa to output first
+	
 #	assert_equal([:table_spec_id,:acquisition_stream_spec_id],@possible_foreign_keys)
 #	http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
 	assert(@model_class.instance_methods(false).include?('acquisition_stream_specs'))
 
 #	puts "self.class.instance_methods(false)=#{self.class.instance_methods(false).inspect}"
 
-	puts " @loaded_fixtures.keys.inspect=#{ @loaded_fixtures.keys.inspect}"
 #	puts " @loaded_fixtures['table_specs'].inspect=#{ @loaded_fixtures['table_specs'].inspect}"
 #	puts " @loaded_fixtures['table_specs'].at(0).inspect=#{ @loaded_fixtures['table_specs'].at(0).inspect}"
 #	puts " @loaded_fixtures['table_specs'].at(0).at(1).inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).inspect}"
