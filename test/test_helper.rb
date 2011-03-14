@@ -7,14 +7,7 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  puts "self.inspect=#{self.inspect}"
   fixtures :acquisition_interfaces
-puts "self.inspect=#{self.inspect}"
-   #~ puts "instance_variables.inspect=#{instance_variables.inspect}"
-  #~ puts "@fixture_cache.inspect=#{@fixture_cache.inspect}"
-  #~ puts "class_variables.inspect=#{class_variables.inspect}"
-puts " @loaded_fixtures.inspect=#{ @loaded_fixtures.inspect}"
-#assert_equal(1,acquisition_stream_specs(:one).acquisition_interface_id,"Foreign keys seem to be overwritten in fixtures or something.")
   fixtures :acquisition_stream_specs
   fixtures :acquisitions
   fixtures :table_specs
@@ -61,7 +54,6 @@ def explain_assert_respond_to(obj,methodName)
 			return # OK not ActiveRecord
 		elsif Global.activeRecordTableNotCreatedYet?(obj) then
 			message="#{message1}; noninherited instance methods= #{Global.noninherited_public_instance_methods(obj).inspect}"
-			Global::log.debug(message)
 		else
 			message="#{message1}; noninherited instance methods= #{Global.noninherited_public_instance_methods(obj)}"
 			assert_respond_to(obj,methodName,message)

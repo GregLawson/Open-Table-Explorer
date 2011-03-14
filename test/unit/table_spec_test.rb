@@ -18,50 +18,72 @@ def assert_fixture_name(obj,methodName=self.class.name,message='')
 	assert_respond_to( obj, methodName,message)
 end #def
 def is_association?(klass,ass)
-	assert_public_instance_method(klass,ass)
-	assert_public_instance_method(klass,ass+'=') 
-	assert_public_instance_method(klass,ass+'_ids') 
-	assert_public_instance_method(klass,ass+'_ids=')
+#	puts "is_association? is called with #{ass}"
+	if klass.respond_to?(ass) and klass.respond_to?((ass.to_s+'=').to_sym)  then
+		assert_respond_to(klass,ass)
+		assert_respond_to(klass,(ass.to_s+'=').to_sym)
+		return true
+	else
+		return false
+	end
+end #def
+def assert_association(klass,ass)
+	assert_respond_to(klass,ass)
+	assert_respond_to(klass,(ass.to_s+'=').to_sym)
+	assert(is_association?(klass,ass))
+end #def
+def is_association_to_many?(klass,ass)
+	#~ assert_public_instance_method(klass,ass)
+	#~ assert_public_instance_method(klass,ass+'=') 
+	#~ assert_public_instance_method(klass,ass+'_ids') 
+	#~ assert_public_instance_method(klass,ass+'_ids=')
 	if klass.respond_to?(ass) and klass.respond_to?(ass+'=')  and klass.respond_to?(ass+'_ids') and klass.respond_to?(ass+'_ids=') then
 		return true
 	else
 		return false
 	end
 end #def
-def setup
+def define_association_names
 	@model_name=self.class.name[0..-5]
 	@model_class=eval(@model_name)
  	@table_name=@model_name.tableize
- 	@possible_association_methods=@model_class.instance_methods(false).select { |m| m[-4,4]=='_ids' or m[-1,1]=='=' or m[-5,5]=='_ids='}
-	puts "@possible_association_methods=#{@possible_association_methods.inspect}"
+ 	@possible_associations=@model_class.instance_methods(false).select { |m| m[-1,1]=='=' and m[-5,5]!='_ids=' and is_association?(table_specs(:one),m[0..-2])}.collect {|m| m[0..-2] }
+	puts "@model_class.column_names=#{@model_class.column_names.inspect}"
+	@content_column_names=@model_class.content_columns.collect {|m| m.name}
+	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
+	@special_columns=@model_class.column_names-@content_column_names
+	puts "@special_columns.inspect=#{@special_columns.inspect}"
+	@possible_foreign_keys=@special_columns.select { |m| m =~ /_id$/ }
+	puts "@possible_foreign_keys=#{@possible_foreign_keys.inspect}"
 end
-def test_aaa
-#	puts self.fixtures
+def setup
+	define_association_names
+end
+test "specific, stable and working" do
 	assert_equal(@model_name,'TableSpec')
 	assert_equal(@table_name,'table_specs')
-	@possible_foreign_keys=@model_class.instance_methods(false).select { |m| m[-4..-1]='_id' and m[0,1]!='_' and m[0,9]!='validate_' and m[0,9]!='autosave_'}
-	puts "@possible_foreign_keys=#{@possible_foreign_keys.inspect}"
-#	assert_equal([:table_spec_id,:acquisition_stream_spec_id],@possible_foreign_keys)
-	@other_models=@possible_foreign_keys.collect { |k| k[0..-5]}
-	puts "@other_models=#{@other_models.inspect}"
-#	http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
-	@possible_associations=@model_class.instance_methods(false).select { |m| m[0..4]=='acqui' and  m[-4..-1]!='_id' and m[0,1]!='_' and m[0,9]!='validate_' and m[0,9]!='autosave_'}
-	puts "@possible_associations=#{@possible_associations.inspect}"
-	@confirmed_models=@other_models.select {|m| @model_class.instance_methods(false).include?(m)}
-	puts "@confirmed_models=#{@confirmed_models.inspect}"
-#	@assocation_names=@other_models.collect |m| {}
-	assert(@model_class.instance_methods(false).include?('acquisition_stream_specs'))
 	assert(TableSpec.instance_methods(false).include?('acquisition_stream_specs'))
+	explain_assert_respond_to(table_specs(:one),:acquisition_stream_specs)
+	assert_respond_to(table_specs(:one),:acquisition_stream_specs)
+	assert_association(table_specs(:one),:acquisition_stream_specs)
+	assert(is_association?(table_specs(:one),:acquisition_stream_specs))
+	assert_equal(@possible_associations,['acquisition_stream_specs'])
+	assert_equal(@possible_foreign_keys,['frequency_id'])
+end #def
+def test_aaa
+#	assert_equal([:table_spec_id,:acquisition_stream_spec_id],@possible_foreign_keys)
+#	http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
+	assert(@model_class.instance_methods(false).include?('acquisition_stream_specs'))
 
-	puts "self.class.instance_methods(false)=#{self.class.instance_methods(false).inspect}"
+#	puts "self.class.instance_methods(false)=#{self.class.instance_methods(false).inspect}"
 
 	puts " @loaded_fixtures.keys.inspect=#{ @loaded_fixtures.keys.inspect}"
-	puts " @loaded_fixtures['table_specs'].inspect=#{ @loaded_fixtures['table_specs'].inspect}"
-	puts " @loaded_fixtures['table_specs'].at(0).inspect=#{ @loaded_fixtures['table_specs'].at(0).inspect}"
-	puts " @loaded_fixtures['table_specs'].at(0).at(1).inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).inspect}"
+#	puts " @loaded_fixtures['table_specs'].inspect=#{ @loaded_fixtures['table_specs'].inspect}"
+#	puts " @loaded_fixtures['table_specs'].at(0).inspect=#{ @loaded_fixtures['table_specs'].at(0).inspect}"
+#	puts " @loaded_fixtures['table_specs'].at(0).at(1).inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).inspect}"
 #	puts " @loaded_fixtures['table_specs'].at(0).at(1).instance_methods.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_methods.inspect}"
 	puts " @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect}"
-#	puts " @loaded_fixtures['table_specs'].at(0).at(1).class_variables.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).class_variables.inspect}"
+#	puts " @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect}"
 	puts " @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect}"
 	
 #	assert_fixture_name(self,@model_name.to_sym)
@@ -69,7 +91,7 @@ def test_aaa
 	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(table_specs(:one),:acquisition_interfaces) }
 	assert_raise(Test::Unit::AssertionFailedError) { assert_public_instance_method(table_specs(:one),:cabbage) }
 #	table_specs(:one).acquisition_interface_id=1 # kludge
-	assert_association(AcquisitionStreamSpec,@model_class)
+#	assert_association(AcquisitionStreamSpec,@model_class)
 #	assert_equal(table_specs(:one).acquisition_interface_id,acquisition_interfaces(:one).id)
 #	assert_equal(table_specs(:one).scheme,acquisition_interfaces(:one).scheme)
 #	assert_equal(table_specs(:one).scheme,acquisition_stream_specs(:one).acquisition_interface.scheme)
