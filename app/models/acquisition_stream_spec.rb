@@ -16,6 +16,7 @@ end # module
 
 class AcquisitionStreamSpec < ActiveRecord::Base
 belongs_to :acquisition_interface
+belongs_to :table_spec
 has_many :acquisitions
 attr_reader :uri
 include Generic_Table

@@ -16,6 +16,21 @@ def test_aaa
 	assert_equal(acquisition_stream_specs(:one).scheme,acquisition_stream_specs(:one).acquisition_interface.scheme)
 	testCall(acquisition_stream_specs(:one),:acquisition_interface)
 end
+def test_acquisition_interface_id_equal
+#	assert_raise(Test::Unit::AssertionFailedError) do
+		assert_equal(Fixtures::identify(:one)Fixtures::identify(:one),acquisition_stream_specs(:one).acquisition_interface_id,"identify != acquisition_interface_id")
+#	end #assert_raise
+end #def
+def test_id_equal
+#	assert_raise(Test::Unit::AssertionFailedError) do
+		assert_equal(acquisition_stream_specs(:one).id,acquisition_stream_specs(:one).acquisition_interface_id,"id != acquisition_interface_id")
+#	end #assert_raise
+end #def
+def test_table_spec_id_equal
+#	assert_raise(Test::Unit::AssertionFailedError) do
+		assert_equal(acquisition_stream_specs(:one).table_spec_id,acquisition_stream_specs(:one).acquisition_interface_id,"table_spec_id != acquisition_interface_id")
+#	end #assert_raise
+end #def
 def test_acquisition_interface_not_nil
 	acquisition_stream_specs(:one).acquisition_interface_id=1 # kludge
 		assert_not_nil(acquisition_stream_specs(:one).acquisition_interface,"Weird. Doesn't this work fine in test above")
@@ -33,11 +48,6 @@ def test_acquisition_stream_specs_not_nil
 end
 def test_acquisition_interface_id_not_nil
 	assert_not_nil(acquisition_stream_specs(:one).acquisition_interface_id)
-end #def
-def test_acquisition_interface_id_equal
-	assert_raise(Test::Unit::AssertionFailedError) do
-		assert_equal(1,acquisition_stream_specs(:one).acquisition_interface_id,"Foreign keys seem to be overwritten in fixtures or something.")
-	end #assert_raise
 end #def
 def test_associatons
 	assert_public_instance_method(acquisition_stream_specs(:one),:acquisition_interface)

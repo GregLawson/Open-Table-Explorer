@@ -7,7 +7,17 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
+  puts "self.inspect=#{self.inspect}"
+  fixtures :acquisition_interfaces
+puts "self.inspect=#{self.inspect}"
+   #~ puts "instance_variables.inspect=#{instance_variables.inspect}"
+  #~ puts "@fixture_cache.inspect=#{@fixture_cache.inspect}"
+  #~ puts "class_variables.inspect=#{class_variables.inspect}"
+puts " @loaded_fixtures.inspect=#{ @loaded_fixtures.inspect}"
+#assert_equal(1,acquisition_stream_specs(:one).acquisition_interface_id,"Foreign keys seem to be overwritten in fixtures or something.")
+  fixtures :acquisition_stream_specs
+  fixtures :acquisitions
+  fixtures :table_specs
 
   # Add more helper methods to be used by all tests here...
 def testCallResult(obj,methodName,*arguments)
@@ -75,6 +85,7 @@ def assert_public_instance_method(obj,methodName,message='')
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #def
+# http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
 def assert_association(ass1,ass2)
 # assume ass1 contains foreign key so we don't need to check both 
 	singularAssociatonName=ass2.class.name.tableize.singularize.to_sym
@@ -106,9 +117,9 @@ def assert_association(ass1,ass2)
 	elsif ass1.respond_to?(pluralForeignKey) then
 		fail "pluralForeignKey=#{pluralForeignKey}"
 	end
-	conventionalForeignKey2=ass1.class.name.foreign_key # assume not
+	conventionalForeignKey2=ass1.class.name.foreign_key # assume not                                                                                
 	if ass2.respond_to?(conventionalForeignKey2)  then
-		fail "conventionalForeignKey2=#{conventionalForeignKey2} should not be a foreign key in ass2=#{ass2.inspect}"
+		fail "conventionalForeignKey2=#{conventionalForeignKey2} should not be a foreign key in ass2=#{ass2.inspect}. Try assert_association(#{ass2.class.name},#{ass1.class.name})"
 	end
 end #def
 end #class
