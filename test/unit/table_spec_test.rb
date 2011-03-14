@@ -80,7 +80,12 @@ test "specific, stable and working" do
 	assert(is_association?(table_specs(:one),:acquisition_stream_specs))
 	assert_equal(@possible_associations,['acquisition_stream_specs'])
 	assert_equal(@possible_foreign_keys,['frequency_id'])
+	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(table_specs(:one),:acquisition_interfaces) }
+	assert_raise(Test::Unit::AssertionFailedError) { assert_public_instance_method(table_specs(:one),:cabbage) }
 end #def
+test "association empty" do
+	assert(acquisition_stream_specs.empty?,"table_specs(:one)=#{table_specs(:one)} but acquisition_stream_specs not associated with #{acquisition_stream_specs(:one).inspect}")
+end
 def test_aaa_test_assertions # aaa to output first
 	
 #	assert_equal([:table_spec_id,:acquisition_stream_spec_id],@possible_foreign_keys)
@@ -99,8 +104,6 @@ def test_aaa_test_assertions # aaa to output first
 	
 #	assert_fixture_name(self,@model_name.to_sym)
 #	assert_public_instance_method(table_specs(:one),:acquisition_stream_specs)
-	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(table_specs(:one),:acquisition_interfaces) }
-	assert_raise(Test::Unit::AssertionFailedError) { assert_public_instance_method(table_specs(:one),:cabbage) }
 #	table_specs(:one).acquisition_interface_id=1 # kludge
 #	assert_association(AcquisitionStreamSpec,@model_class)
 #	assert_equal(table_specs(:one).acquisition_interface_id,acquisition_interfaces(:one).id)
@@ -109,8 +112,11 @@ def test_aaa_test_assertions # aaa to output first
 #	testCall(table_specs(:one),:acquisition_stream_interfaces)
 end
 def test_id_equal
-#	assert_raise(Test::Unit::AssertionFailedError) do
 		assert_equal(Fixtures::identify(:one),table_specs(:one).id,"identify != id")
-#	end #assert_raise
+end #def
+def test_associated_id_equal
+	puts "table_specs(:one).inspect=#{table_specs(:one).inspect}"
+	puts "table_specs(:one).acquisition_stream_specs.inspect=#{table_specs(:one).acquisition_stream_specs.inspect}"
+	assert_equal(Fixtures::identify(:one),table_specs(:one).acquisition_stream_specs.first.table_spec_id,"identify != acquisition_stream_specs.first.table_spec_id")
 end #def
 end
