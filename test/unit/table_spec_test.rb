@@ -1,13 +1,13 @@
 require 'test_helper'
 
 class TableSpecTest < ActiveSupport::TestCase
-def similar_modules(fixture,symbol)
+def similar_methods(fixture,symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
 	table='^'+symbol.to_s.tableize
-	return (matching_modules(fixture,singular) << matching_modules(fixture,plural) << matching_modules(table,plural)).uniq
+	return (matching_methods(fixture,singular) + matching_methods(fixture,plural) + matching_methods(table,plural)).uniq
 end #def
-def matching_modules(fixture,regexp)
+def matching_methods(fixture,regexp)
 	fixture.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
 end #def
 def is_association?(fixture,ass)
@@ -45,12 +45,12 @@ def assert_association(fixture,ass)
 end #def
 def assert_association_to_many(fixture,ass)
 	assert_association(fixture,ass)
-	assert(is_association_to_many?(fixture,ass),"is_association_to_many?(#{fixture.inspect},#{ass.inspect}) returns false. #{similar_modules(fixture,ass).inspect}.respond_to?(#{(ass.to_s+'_ids').to_sym}) and fixture.respond_to?(#{(ass.to_s+'_ids=').to_sym})")
+	assert(is_association_to_many?(fixture,ass),"is_association_to_many?(#{fixture.inspect},#{ass.inspect}) returns false. #{similar_methods(fixture,ass).inspect}.respond_to?(#{(ass.to_s+'_ids').to_sym}) and fixture.respond_to?(#{(ass.to_s+'_ids=').to_sym})")
 	assert(!is_association_to_one?(fixture,ass),"fail !is_association_to_one?, fixture.inspect=#{fixture.inspect},ass=#{ass}")
 end #def
 def assert_association_to_one(fixture,ass)
 	assert_association(fixture,ass)
-	assert(!is_association_to_many?(fixture,ass),"fail !is_association_to_many?, fixture.inspect=#{fixture.inspect},ass=#{ass}, similar_modules(fixture,ass).inspect=#{similar_modules(fixture,ass).inspect}")
+	assert(!is_association_to_many?(fixture,ass),"fail !is_association_to_many?, fixture.inspect=#{fixture.inspect},ass=#{ass}, similar_methods(fixture,ass).inspect=#{similar_methods(fixture,ass).inspect}")
 end #def
 def assert_association_one_to_one(fixture,ass)
 	assert_association_to_one(fixture,ass)
@@ -98,7 +98,7 @@ def associated_foreign_key_name(obj,assName)
 	many_to_one_foreign_keys=foreign_key_names(obj.class)
 	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
 	many_to_one_associations.each do |ass|
-		assert_association_many_to_one(obj.class,ass.pluralize) # suspicious
+		assert_association_many_to_one(obj,ass)
 	end
 	return many_to_one_foreign_keys.first
 end #def
@@ -110,6 +110,12 @@ def associated_foreign_key_id(obj,assName)
 end #def
 def setup
 	define_association_names
+end
+def assert_foreign_key_points_to_me?(fixture,ass)
+	associated_records=testCallResult(fixture,ass)
+	associated_records.all? do |ar|
+		assert_equal(fixture.id,associated_foreign_key_id(ar,ass))
+	end #each
 end
 test "general associations" do
 	@possible_associations.each do |ass|
@@ -151,6 +157,8 @@ test "specific, stable and working" do
 	assert_association(acquisition_stream_specs(:one),:table_spec)
 	assert_association_to_one(acquisition_stream_specs(:one),:table_spec)
 	assert_association_many_to_one(acquisition_stream_specs(:one),:table_spec)
+	assert_association_to_many(@my_fixture,:acquisition_stream_specs)
+	assert_association_one_to_many(@my_fixture,:acquisition_stream_specs)
 end #def
 test "association empty" do
 	message="table_specs(:one).inspect=#{table_specs(:one).inspect} but acquisition_stream_specs not associated with #{acquisition_stream_specs(:one).inspect}"
@@ -165,10 +173,17 @@ def test_aaa_test_assertions # aaa to output first
 	puts "name=#{Global.objectName(acquisition_stream_specs(:one))}"
 	puts "class=#{Global.objectClass(acquisition_stream_specs(:one))}"
 	puts Global.canonicalName(acquisition_stream_specs(:one),verbose=true)
-	puts "matching_modules(acquisition_stream_specs(:one),/^acquisition_stream_spec/)).inspect=#{matching_modules(@my_fixture,/^acquisition_stream_spec/).inspect}"
-	puts "similar_modules(@my_fixture,:acquisition_stream_specs).inspect=#{similar_modules(@my_fixture,:acquisition_stream_specs).inspect}"
-	assert_association_to_many(@my_fixture,:acquisition_stream_specs)
-	assert_association_one_to_many(@my_fixture,:acquisition_stream_specs)
+	puts "matching_methods(acquisition_stream_specs(:one),/^acquisition_stream_spec/)).inspect=#{matching_methods(@my_fixture,/^acquisition_stream_spec/).inspect}"
+	puts "similar_methods(@my_fixture,:acquisition_stream_specs).inspect=#{similar_methods(@my_fixture,:acquisition_stream_specs).inspect}"
+	assert_respond_to(@my_fixture,:acquisition_stream_specs)
+	associated_records=testCallResult(@my_fixture,:acquisition_stream_specs)
+	assert_public_instance_method(acquisition_stream_specs(:one),:table_spec)
+	puts "similar_methods(acquisition_stream_specs(:one),:table_spec)=#{similar_methods(acquisition_stream_specs(:one),:table_spec)}"
+	assert_equal(@my_fixture.id,associated_foreign_key_id(acquisition_stream_specs(:one),:table_spec))
+	associated_records.all? do |ar|
+		assert_equal(@my_fixture.id,associated_foreign_key_id(acquisition_stream_specs(:one),:table_spec))
+	end #each
+#	assert_foreign_key_points_to_me?(@my_fixture,:acquisition_stream_specs)
 #	Global.whoAmI(acquisition_stream_specs(:one))
 #	assert_equal([:table_spec_id,:acquisition_stream_spec_id],@possible_foreign_keys)
 #	http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
