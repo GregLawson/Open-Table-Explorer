@@ -1,5 +1,5 @@
 class Frequency < ActiveRecord::Base
-belongs_to :table_spec, :class_name => "Table_spec"
+belongs_to :table_specs
 def intervalString(seconds)
 #	assert_operator(seconds,:>,0.0)
 #	assert_operator(seconds,:<,365*24*3600)

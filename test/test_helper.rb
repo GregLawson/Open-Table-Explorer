@@ -11,6 +11,7 @@ class ActiveSupport::TestCase
   fixtures :acquisition_stream_specs
   fixtures :acquisitions
   fixtures :table_specs
+  fixtures :frequencies
 
   # Add more helper methods to be used by all tests here...
 def testCallResult(obj,methodName,*arguments)

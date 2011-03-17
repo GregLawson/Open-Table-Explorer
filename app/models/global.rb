@@ -9,6 +9,52 @@ module Global
 def Global.activeRecordTableNotCreatedYet?(obj)
 	return (obj.class.inspect=~/^[a-zA-Z0-9_]+\(Table doesn\'t exist\)/)==0
 end #def
+def Global.objectName(obj,verbose=false)
+	if obj.nil? then
+		return "#{obj} is nil."
+	elsif obj.class.name=='Symbol' then
+		#puts "find_symbol(obj)=#{find_symbol(obj)}"
+		return "Symbol :#{obj.to_s}has no superclass"
+	elsif obj.class.name=='Module' then
+		puts("obj.name=#{obj.name}")
+		puts("nesting.inspect=#{nesting.inspect}")
+		return "Module #{obj.name}"
+	elsif activeRecordTableNotCreatedYet?(obj) then
+		return "Active_Record #{obj.class.inspect}"
+	else
+		if obj.respond_to?(:name) then
+			puts("obj.name=#{obj.name}")
+		else
+			return "obj.to_s=#{obj.to_s} has no name."
+		end
+	end
+
+end
+def Global.objectClass(obj,verbose=false)
+	if obj.nil? then
+		return "#{obj} is nil."
+	elsif obj.class.name=='Symbol' then
+		#puts "find_symbol(obj)=#{find_symbol(obj)}"
+		return "Symbol :#{obj.to_s}has no superclass"
+	elsif obj.class.name=='Module' then
+		puts("obj.name=#{obj.name}") if verbose
+		puts("nesting.inspect=#{nesting.inspect}") if verbose
+		return "Module #{obj.name}"
+	elsif activeRecordTableNotCreatedYet?(obj) then
+		return "Active_Record #{obj.class.inspect}"
+	else
+		obj=obj.class
+		puts("obj.name=#{obj.name}") if verbose
+		if obj.respond_to?(:superclass) then
+			#puts("obj.superclass=#{obj.superclass}")
+			puts("obj.superclass.name=#{obj.superclass.name}") if verbose
+			return "Class #{obj.name} subclass of #{obj.superclass.name}"
+		else
+			return "obj Class #{obj.name} has no superclass."
+		end
+	end
+
+end
 def Global.canonicalName(obj,verbose=false)
 
 	if obj.nil? then
@@ -68,8 +114,8 @@ def Global.whoAmI(obj,verbose=false)
 		puts("obj.model_name.plural=#{obj.model_name.plural}") if verbose
 		puts("obj.model_name.singular=#{obj.model_name.singular}") if verbose
 	end
-	puts("noninherited_public_instance_methods(obj) if verbose.inspect=#{noninherited_public_instance_methods(obj).inspect}")
-	puts("noninherited_public_class_methods(obj).inspect=#{noninherited_public_class_methods(obj).inspect}")
+	puts("noninherited_public_instance_methods(obj).inspect=#{noninherited_public_instance_methods(obj).inspect}") if verbose
+	puts("noninherited_public_class_methods(obj).inspect=#{noninherited_public_class_methods(obj).inspect}") if verbose
 	if obj.nil? then
 		return "#{obj} is nil."
 	elsif obj.class.name=='Symbol' then
@@ -143,12 +189,6 @@ def Global.relationship(obj=self)
 	else
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
-end #def
-def foreignKeys
-	return instance_variables
-end #def
-def associate(ass1,ass2)
-
 end #def
 end #module
 
