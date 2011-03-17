@@ -121,7 +121,7 @@ test "general associations" do
 	@possible_associations.each do |ass|
 		if is_association_to_many?(@my_fixture,ass) then
 			 assert_association_to_many(@my_fixture,ass)
-#			assert_equal(@my_fixture.id,associated_foreign_key_id(testCallResult(@my_fixture,ass).first,ass),Fixtures::identify(:one))
+			assert_equal(@my_fixture.id,associated_foreign_key_id(testCallResult(@my_fixture,ass).first,ass),Fixtures::identify(:one))
 		else
 			assert_association_to_one(@my_fixture,ass)
 #			assert_equal(associated_foreign_key_id(testCallResult(@my_fixture,ass).first,ass),Fixtures::identify(:one))
