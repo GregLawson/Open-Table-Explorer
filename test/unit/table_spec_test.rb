@@ -10,17 +10,8 @@ end #def
 def matching_methods(fixture,regexp)
 	fixture.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
 end #def
-def is_association?(fixture,ass)
-#	puts "is_association? is called with #{ass}"
-	if fixture.respond_to?(ass) and fixture.respond_to?((ass.to_s+'=').to_sym)  then
-		assert_respond_to(fixture,ass)
-		assert_respond_to(fixture,(ass.to_s+'=').to_sym)
-		return true
-	else
-		return false
-	end
-end #def
 def is_association_to_one?(fixture,ass)
+	assert_instance_of(Symbol,ass,"is_association_to_one")
 	if is_association?(fixture,ass)  and !fixture.respond_to?((ass.to_s.singularize+'_ids').to_sym) and !fixture.respond_to?((ass.to_s.singularize+'_ids=').to_sym) then
 		assert_association(fixture,ass)
 		return true
@@ -29,6 +20,7 @@ def is_association_to_one?(fixture,ass)
 	end
 end #def
 def is_association_to_many?(fixture,ass)
+	assert_instance_of(Symbol,ass,"is_association_to_many  caller=#{caller.inspect}")
 	if is_association?(fixture,ass)  and fixture.respond_to?((ass.to_s.singularize+'_ids').to_sym) and fixture.respond_to?((ass.to_s.singularize+'_ids=').to_sym) then
 		assert_association(fixture,ass)
 		assert_public_instance_method(fixture,(ass.to_s.singularize+'_ids').to_sym) 
@@ -38,27 +30,27 @@ def is_association_to_many?(fixture,ass)
 		return false
 	end
 end #def
-def assert_association(fixture,ass)
-	assert_respond_to(fixture,ass)
-	assert_respond_to(fixture,(ass.to_s+'=').to_sym)
-	assert(is_association?(fixture,ass),"fail s_association?, fixture.inspect=#{fixture.inspect},ass=#{ass}")
-end #def
 def assert_association_to_many(fixture,ass)
+	assert_instance_of(Symbol,ass,"assert_association_to_many")
 	assert_association(fixture,ass)
 	assert(is_association_to_many?(fixture,ass),"is_association_to_many?(#{fixture.inspect},#{ass.inspect}) returns false. #{similar_methods(fixture,ass).inspect}.respond_to?(#{(ass.to_s+'_ids').to_sym}) and fixture.respond_to?(#{(ass.to_s+'_ids=').to_sym})")
 	assert(!is_association_to_one?(fixture,ass),"fail !is_association_to_one?, fixture.inspect=#{fixture.inspect},ass=#{ass}")
 end #def
 def assert_association_to_one(fixture,ass)
+	assert_instance_of(Symbol,ass,"assert_association_to_one")
 	assert_association(fixture,ass)
 	assert(!is_association_to_many?(fixture,ass),"fail !is_association_to_many?, fixture.inspect=#{fixture.inspect},ass=#{ass}, similar_methods(fixture,ass).inspect=#{similar_methods(fixture,ass).inspect}")
 end #def
 def assert_association_one_to_one(fixture,ass)
+	assert_instance_of(Symbol,ass,"assert_association_one_to_one")
 	assert_association_to_one(fixture,ass)
 end #def
 def assert_association_one_to_many(fixture,ass)
+	assert_instance_of(Symbol,ass,"assert_association_one_to_many")
 	assert_association_to_many(fixture,ass)
 end #def
 def assert_association_many_to_one(fixture,ass)
+	assert_instance_of(Symbol,ass,"assert_association_many_to_one")
 	assert_association_to_one(fixture,ass)
 end #def
 
@@ -72,11 +64,11 @@ def define_association_names
 	@fixture_names=@loaded_fixtures.keys
 #	puts " @fixture_names.inspect=#{ @fixture_names.inspect}"
 	@my_fixture=eval(@table_name+'(:one)')
- 	@possible_associations=@model_class.instance_methods(false).select { |m| m =~ /=$/ and !(m =~ /_ids=$/) and is_association?(@my_fixture,m[0..-2])}.collect {|m| m[0..-2] }
+ 	@possible_associations=@model_class.instance_methods(false).select { |m| m =~ /=$/ and !(m =~ /_ids=$/) and is_association?(@my_fixture,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
 #	puts "@possible_associations.inspect=#{@possible_associations.inspect}"
 
 #	puts "@model_class.column_names=#{@model_class.column_names.inspect}"
- 	@possible_many_associations=@model_class.instance_methods(false).select { |m| (m =~ /_ids=$/) and is_association_to_many?(@my_fixture,m[0..-2])}.collect {|m| m[0..-2] }
+ 	@possible_many_associations=@model_class.instance_methods(false).select { |m| (m =~ /_ids=$/) and is_association_to_many?(@my_fixture,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
 #	puts "@possible_many_associations.inspect=#{@possible_many_associations.inspect}"
 	#~ @content_column_names=@model_class.content_columns.collect {|m| m.name}
 	#~ puts "@content_column_names.inspect=#{@content_column_names.inspect}"
@@ -95,36 +87,65 @@ def foreign_key_names(model_class)
 	return @possible_foreign_keys
 end #def
 def associated_foreign_key_name(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
 	many_to_one_foreign_keys=foreign_key_names(obj.class)
-	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
-	many_to_one_associations.each do |ass|
+#	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
+	matchingAssNames=many_to_one_foreign_keys.select do |fk|
+		assert_instance_of(String,fk)
+		ass=fk[0..-4].to_sym
 		assert_association_many_to_one(obj,ass)
+#not all		assert_equal(ass,assName,"associated_foreign_key_name ass,assName=#{ass},#{assName}")
+		ass==assName
 	end
-	return many_to_one_foreign_keys.first
+	assert_equal(matchingAssNames,[matchingAssNames.first].compact,"assName=#{assName.inspect},matchingAssNames=#{matchingAssNames.inspect},many_to_one_foreign_keys=#{many_to_one_foreign_keys.inspect}")
+	return matchingAssNames.first
 end #def
 def associated_foreign_key(obj,assName)
-	return obj.method(associated_foreign_key_name(obj,assName))
+	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
+	assert_association(obj,assName)
+	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
+	return obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #def
 def associated_foreign_key_id(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key_id assName=#{assName.inspect}")
 	return associated_foreign_key(obj,assName).call
 end #def
 def setup
 	define_association_names
 end
-def assert_foreign_key_points_to_me?(fixture,ass)
+def assert_foreign_key_points_to_me(fixture,ass)
+	assert_association(fixture,ass)
 	associated_records=testCallResult(fixture,ass)
-	associated_records.all? do |ar|
-		assert_equal(fixture.id,associated_foreign_key_id(ar,ass))
-	end #each
-end
+	assert_not_nil(associated_records,"assert_foreign_key_points_to_me fixture.inspect=#{fixture.inspect},ass=#{ass} Check if id is specified in #{ass.to_sym}.yml file.")
+	if associated_records.instance_of?(Array) then
+		associated_records.each do |ar|
+			fkAssName=fixture.class.name.tableize.singularize
+			fk=associated_foreign_key_name(ar,(fkAssName.to_s).to_sym)
+			assert_not_nil(fk,"assert_foreign_key_points_to_me ar.inspect=#{ar.inspect},fixture.class.name=#{fixture.class.name} Check if id is specified in #{ass.to_sym}.yml file,fixture.class.name.tableize.singularize.to_s+'_id'=#{fixture.class.name.tableize.singularize.to_s+'_id'}.")
+			@associated_foreign_key_id=
+			assert_equal(fixture.id,associated_foreign_key_id(ar,fkAssName.to_sym),"assert_foreign_key_points_to_me: associated_records=#{associated_records.inspect},fixture=#{fixture.inspect}")
+		end #each
+	else # single record
+			associated_foreign_key_name(associated_records,ass).each do |fk|
+				assert_equal(fixture.id,associated_foreign_key_id(associated_records,fk.to_sym),"assert_foreign_key_points_to_me: associated_records=#{associated_records.inspect},fixture=#{fixture.inspect},ass=#{ass}")
+			end #each
+	end #if
+end #def
+def assert_my_foreign_key_points_to_correct_id(fixture,ass)
+	assert_association(fixture,ass)
+	myForeignKeyName=associated_foreign_key_name(fixture,ass)
+	assert_not_nil(myForeignKeyName,"assert_my_foreign_key_points_to_correct_id fixture.inspect=#{fixture.inspect},ass=#{ass}")
+	assert_equal(testCallResult(@my_fixture,myForeignKeyName.to_sym),testCallResult(@my_fixture,ass).id)
+end #def
 test "general associations" do
-	@possible_associations.each do |ass|
+	@possible_associations.each do |association_name|
+		ass=association_name.to_sym
 		if is_association_to_many?(@my_fixture,ass) then
 			 assert_association_to_many(@my_fixture,ass)
-			assert_equal(@my_fixture.id,associated_foreign_key_id(testCallResult(@my_fixture,ass).first,ass),Fixtures::identify(:one))
+			assert_foreign_key_points_to_me(@my_fixture,ass)
 		else
 			assert_association_to_one(@my_fixture,ass)
-#			assert_equal(associated_foreign_key_id(testCallResult(@my_fixture,ass).first,ass),Fixtures::identify(:one))
+			assert_my_foreign_key_points_to_correct_id(@my_fixture,ass)
 		end
 	end
 	assert_equal(Fixtures::identify(:one),@my_fixture.id,"identify != id")
@@ -159,7 +180,16 @@ test "specific, stable and working" do
 	assert_association_many_to_one(acquisition_stream_specs(:one),:table_spec)
 	assert_association_to_many(@my_fixture,:acquisition_stream_specs)
 	assert_association_one_to_many(@my_fixture,:acquisition_stream_specs)
-end #def
+	assert_respond_to(@my_fixture,:acquisition_stream_specs)
+	associated_records=testCallResult(@my_fixture,:acquisition_stream_specs)
+	#~ associated_records.all? do |ar|
+		#~ assert_equal(@my_fixture.id,associated_foreign_key_id(ar,:table_spec))
+	#~ end #each
+	assert_public_instance_method(acquisition_stream_specs(:one),:table_spec)
+	assert_association_many_to_one(@my_fixture,:frequency)
+	assert_equal(["frequency_id"],foreign_key_names(@my_fixture.class),"foreign_key_names(@my_fixture.class)=#{foreign_key_names(@my_fixture.class)}")
+
+	end #def
 test "association empty" do
 	message="table_specs(:one).inspect=#{table_specs(:one).inspect} but acquisition_stream_specs not associated with #{acquisition_stream_specs(:one).inspect}"
 	assert_not_nil(acquisition_stream_specs,message)
@@ -169,21 +199,26 @@ test "association empty" do
 	assert(!@my_fixture.acquisition_stream_specs.empty?,"empty "+message)
 end
 def test_aaa_test_assertions # aaa to output first
-	puts "acquisition_stream_specs(:one).class.instance_method_names.inspect=#{acquisition_stream_specs(:one).class.instance_method_names.inspect}"
+#	puts "acquisition_stream_specs(:one).class.instance_method_names.inspect=#{acquisition_stream_specs(:one).class.instance_method_names.inspect}"
 	puts "name=#{Global.objectName(acquisition_stream_specs(:one))}"
 	puts "class=#{Global.objectClass(acquisition_stream_specs(:one))}"
 	puts Global.canonicalName(acquisition_stream_specs(:one),verbose=true)
 	puts "matching_methods(acquisition_stream_specs(:one),/^acquisition_stream_spec/)).inspect=#{matching_methods(@my_fixture,/^acquisition_stream_spec/).inspect}"
 	puts "similar_methods(@my_fixture,:acquisition_stream_specs).inspect=#{similar_methods(@my_fixture,:acquisition_stream_specs).inspect}"
-	assert_respond_to(@my_fixture,:acquisition_stream_specs)
-	associated_records=testCallResult(@my_fixture,:acquisition_stream_specs)
-	assert_public_instance_method(acquisition_stream_specs(:one),:table_spec)
 	puts "similar_methods(acquisition_stream_specs(:one),:table_spec)=#{similar_methods(acquisition_stream_specs(:one),:table_spec)}"
-	assert_equal(@my_fixture.id,associated_foreign_key_id(acquisition_stream_specs(:one),:table_spec))
-	associated_records.all? do |ar|
-		assert_equal(@my_fixture.id,associated_foreign_key_id(acquisition_stream_specs(:one),:table_spec))
-	end #each
-#	assert_foreign_key_points_to_me?(@my_fixture,:acquisition_stream_specs)
+
+	assert_my_foreign_key_points_to_correct_id(@my_fixture,:frequency)
+	assert_foreign_key_points_to_me(@my_fixture,:acquisition_stream_specs)
+#~ assert_equal(@my_fixture.id,associated_foreign_key_id(acquisition_stream_specs(:one),:table_spec))
+
+#	assert_equal([:frequency_id],associated_foreign_key_id(@my_fixture,:frequency),"associated_foreign_key_id(@my_fixture,:frequecy_id)=#{associated_foreign_key_id(@my_fixture,:frequecy_id)}")
+#	assert_equal(Fixtures::identify(:one),associated_foreign_key_id(@my_fixture,:frequency),"associated_foreign_key_id(@my_fixture,:frequecy_id)=#{associated_foreign_key_id(@my_fixture,:frequecy_id)}")
+
+#	assert_equal([],testCallResult(@my_fixture,:frequency))
+#	assert_equal(associated_foreign_key_id(testCallResult(@my_fixture,:frequency).first,ass),Fixtures::identify(:one))
+
+#	assert_foreign_key_points_to_me(@my_fixture,:acquisition_stream_specs)
+	
 #	Global.whoAmI(acquisition_stream_specs(:one))
 #	assert_equal([:table_spec_id,:acquisition_stream_spec_id],@possible_foreign_keys)
 #	http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
@@ -193,7 +228,7 @@ def test_aaa_test_assertions # aaa to output first
 #	puts " @loaded_fixtures['table_specs'].at(0).inspect=#{ @loaded_fixtures['table_specs'].at(0).inspect}"
 #	puts " @loaded_fixtures['table_specs'].at(0).at(1).inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).inspect}"
 #	puts " @loaded_fixtures['table_specs'].at(0).at(1).instance_methods.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_methods.inspect}"
-	puts " @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect}"
+#	puts " @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect}"
 #	puts " @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect}"
 	puts " @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect}"
 	

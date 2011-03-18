@@ -3,6 +3,7 @@ one:
   merge: table
   file_caching: DB
   model_class_name: ifconfig
+  frequency: one
 table_specs_002: 
   merge: row
   file_caching: DB

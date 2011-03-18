@@ -15,11 +15,12 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 def testCallResult(obj,methodName,*arguments)
+	assert_instance_of(Symbol,methodName,"testCallResult caller=#{caller.inspect}")
+	explain_assert_respond_to(obj,methodName)
 	m=obj.method(methodName)
 	return m.call(*arguments)
 end #def
 def testCall(obj,methodName,*arguments)
-	explain_assert_respond_to(obj,methodName)
 	result=testCallResult(obj,methodName,*arguments)
 	assert_not_nil(result)
 	message="\n#{Global.canonicalName(obj)}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
@@ -78,41 +79,26 @@ def assert_public_instance_method(obj,methodName,message='')
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #def
-# http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
-def assert_association(ass1,ass2)
-# assume ass1 contains foreign key so we don't need to check both 
-	singularAssociatonName=ass2.class.name.tableize.singularize.to_sym
-	pluralAssociatonName=ass2.class.name.tableize.to_sym
-	if ass1.respond_to?(singularAssociatonName) then
-		message="but singularAssociatonName #{singularAssociatonName} is a method"
-		if ass1.send(singularAssociatonName).respond_to?(:exists?) then
-			fail "singular association could have multiple records."
-		end
-		assert_public_instance_method(ass1,singularAssociatonName,message)
-	elsif ass1.respond_to?(pluralAssociatonName) then
-		message="but pluralAssociatonName #{pluralAssociatonName} is a method"
-		if ass1.send(pluralAssociatonName).respond_to?(:exists?) then
-		else
-			fail "plural association cannot have multiple records."
-		end
-		assert_public_instance_method(ass1,pluralAssociatonName,message)
+def is_association?(fixture,ass)
+	assert_instance_of(Symbol,ass,"is_association? is called with #{ass} caller=#{caller}")
+#	puts "is_association? is called with #{ass}"
+	if ass.to_s[-3..-1]=='_id' then 
+		fail "ass=#{ass} should not end in '_id' as it will be confused wth a foreign key."
+	end # if
+	if fixture.respond_to?(ass) and fixture.respond_to?((ass.to_s+'=').to_sym)  then
+		assert_respond_to(fixture,ass)
+		assert_respond_to(fixture,(ass.to_s+'=').to_sym)
+		return true
 	else
-		fail "No association exists between #ass1 and #ass2"
-	end
-	conventionalForeignKey1=ass2.class.name.foreign_key # assume
-	singularForeignKey="#{singularAssociatonName}_id"
-	pluralForeignKey="#{pluralAssociatonName}_id"
-	if ass1.respond_to?(conventionalForeignKey1)  then
-		assert_respond_to(ass1,conventionalForeignKey1)
-		assert_equal(1,ass1.send(conventionalForeignKey1))
-	elsif ass1.respond_to?(singularForeignKey) then
-		fail "singularForeignKey=#{singularForeignKey}"
-	elsif ass1.respond_to?(pluralForeignKey) then
-		fail "pluralForeignKey=#{pluralForeignKey}"
-	end
-	conventionalForeignKey2=ass1.class.name.foreign_key # assume not                                                                                
-	if ass2.respond_to?(conventionalForeignKey2)  then
-		fail "conventionalForeignKey2=#{conventionalForeignKey2} should not be a foreign key in ass2=#{ass2.inspect}. Try assert_association(#{ass2.class.name},#{ass1.class.name})"
+		return false
 	end
 end #def
+def assert_association(fixture,ass)
+	assert_instance_of(Symbol,ass,"assert_association")
+	assert_respond_to(fixture,ass)
+	assert_respond_to(fixture,(ass.to_s+'=').to_sym)
+	assert(is_association?(fixture,ass),"fail s_association?, fixture.inspect=#{fixture.inspect},ass=#{ass}")
+end #def
+
+# http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
 end #class

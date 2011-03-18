@@ -1,13 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  id: "1"
   name: HTTP
   library: net/http
   acquire_data:  self[:acquisition_data]= Net::HTTP.get(@uri)
-
 two:
-  id: "2"
   name: Shell
   library: 
   acquire_data: self[:acquisition_data]=`#{schemelessUrl} 2>&1`
