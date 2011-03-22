@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  frequency_name: Hourly
+hourly:
+  frequency_name: hourly
   min_seconds: "3590"
   max_seconds: "3600"
   scheduled_time: 2010-10-27 22:51:12
@@ -9,8 +9,26 @@ one:
   shortest_update: "3590"
   longest_no_update: "3600"
 
-two:
-  frequency_name: Fastest
+fastest:
+  frequency_name: fastest
+  min_seconds: "10"
+  max_seconds: "20"
+  scheduled_time: 2010-10-27 22:51:12
+  interval: "15"
+  shortest_update: "15"
+  longest_no_update: "60"
+
+monthly:
+  frequency_name: monthly
+  min_seconds: "10"
+  max_seconds: "20"
+  scheduled_time: 2010-10-27 22:51:12
+  interval: "15"
+  shortest_update: "15"
+  longest_no_update: "60"
+
+daily:
+  frequency_name: daily
   min_seconds: "10"
   max_seconds: "20"
   scheduled_time: 2010-10-27 22:51:12

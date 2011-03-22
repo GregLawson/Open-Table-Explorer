@@ -33,6 +33,9 @@ def init
 	#~ @classReference= Generic_Table.classReference(self[:acquisition_interface])
 	#~ @objectReference=@classReference.create(:url => self[:url])
 end
+def logical_primary_key
+	return frequency_name
+end #def
 def parsedURI
 	return URI.split(URI.escape(self[:url]))
 end #def

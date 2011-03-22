@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110309174007) do
+ActiveRecord::Schema.define(:version => 20110319061837) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -410,6 +410,7 @@ ActiveRecord::Schema.define(:version => 20110309174007) do
     t.string  "file_caching"
     t.string  "model_class_name"
     t.integer "frequency_id"
+    t.string  "primary_key_expression"
   end
 
   add_index "table_specs", ["model_class_name"], :name => "table_specs_model_class_name_key", :unique => true

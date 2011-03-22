@@ -1,2 +1,2 @@
 rake test:units
-rake test:functonals
+rake test:functionals

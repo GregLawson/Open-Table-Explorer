@@ -9,6 +9,9 @@ require 'global.rb'
 class AcquisitionInterface < ActiveRecord::Base
 has_many :acquisition_stream_specs
 include Global
+def logical_primary_key
+	return acquisition_name
+end #def
 def scheme
 	return self[:name].downcase
 end #def

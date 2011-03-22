@@ -12,9 +12,13 @@
     <%= f.text_field :acquisition_interface %>
   </p>
   <p>
+    <!-- rest of form -->
     <%= f.label :url %><br />
-    <%= f.text_field :url %>
+  %= f.collection_select(:AcquisitionInterface_Id,AcquisitionInterface.all,:id, :name) %
+    : <%= f.text_field :AcquisitionInterface_Id %>    : <%= f.text_field :url %>
   </p>
+  <p>
+</P>
   <p>
     <%= f.label :table_spec_id %><br />
     <%= f.text_field :table_spec_id %>

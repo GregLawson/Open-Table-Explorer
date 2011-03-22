@@ -10,26 +10,21 @@ def test_aaa
 	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(acquisition_stream_specs(:one),:acquisition_interfaces) }
 	assert_raise(Test::Unit::AssertionFailedError) { assert_public_instance_method(acquisition_stream_specs(:one),:cabbage) }
 	assert_association(acquisition_stream_specs(:one),:acquisition_interface)
-	assert_equal(Fixtures::identify(:one),acquisition_interfaces(:one).id)
-	assert_equal(Fixtures::identify(:one),acquisition_stream_specs(:one).acquisition_interface_id)
-	assert_equal(acquisition_stream_specs(:one).acquisition_interface_id,acquisition_interfaces(:one).id)
-	assert_equal(acquisition_stream_specs(:one).scheme,acquisition_interfaces(:one).scheme)
+	assert_equal(Fixtures::identify(:HTTP),acquisition_interfaces(:HTTP).id)
+	assert_equal(Fixtures::identify(:HTTP),acquisition_stream_specs(:one).acquisition_interface_id)
+	assert_equal(acquisition_stream_specs(:one).acquisition_interface_id,acquisition_interfaces(:HTTP).id)
+	assert_equal(acquisition_stream_specs(:one).scheme,acquisition_interfaces(:HTTP).scheme)
 	assert_equal(acquisition_stream_specs(:one).scheme,acquisition_stream_specs(:one).acquisition_interface.scheme)
 	testCall(acquisition_stream_specs(:one),:acquisition_interface)
 end
 def test_acquisition_interface_id_equal
 #	assert_raise(Test::Unit::AssertionFailedError) do
-		assert_equal(Fixtures::identify(:one),acquisition_stream_specs(:one).acquisition_interface_id,"identify != acquisition_interface_id")
+		assert_equal(Fixtures::identify(:HTTP),acquisition_stream_specs(:one).acquisition_interface_id,"identify != acquisition_interface_id")
 #	end #assert_raise
 end #def
 def test_id_equal
 #	assert_raise(Test::Unit::AssertionFailedError) do
-		assert_equal(acquisition_interfaces(:one).id,acquisition_stream_specs(:one).acquisition_interface_id,"id != acquisition_interface_id")
-#	end #assert_raise
-end #def
-def test_table_spec_id_equal
-#	assert_raise(Test::Unit::AssertionFailedError) do
-		assert_equal(acquisition_stream_specs(:one).table_spec_id,acquisition_stream_specs(:one).acquisition_interface_id,"table_spec_id != acquisition_interface_id")
+		assert_equal(acquisition_interfaces(:HTTP).id,acquisition_stream_specs(:one).acquisition_interface_id,"id != acquisition_interface_id")
 #	end #assert_raise
 end #def
 def test_acquisition_interface_not_nil
@@ -37,9 +32,6 @@ def test_acquisition_interface_not_nil
 end #def
 def test_acquisition_interface
 	assert_instance_of(AcquisitionInterface,acquisition_stream_specs(:one).acquisition_interface)
-end #def
-def test_acquisition_interface_inspect
-	assert_equal('#<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 980190962, required_order: nil, acquisition_interface_id: 980190962>',acquisition_stream_specs(:one).inspect)
 end #def
 def test_acquisition_stream_specs_not_nil
 		assert_not_nil(acquisition_stream_specs(:one))
