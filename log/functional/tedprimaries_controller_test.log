@@ -1,0 +1,10 @@
+Loaded suite test/functional/tedprimaries_controller_test
+Started
+.............
+<<<<<<< HEAD
+Finished in 13.423873 seconds.
+=======
+Finished in 12.814425 seconds.
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902
+
+13 tests, 10 assertions, 0 failures, 0 errors

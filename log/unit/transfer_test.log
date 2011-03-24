@@ -1,0 +1,13 @@
+Loaded suite test/unit/transfer_test
+Started
+<<<<<<< HEAD
+......
+Finished in 12.763526 seconds.
+
+6 tests, 3 assertions, 0 failures, 0 errors
+=======
+.......
+Finished in 13.085502 seconds.
+
+7 tests, 1 assertions, 0 failures, 0 errors
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902

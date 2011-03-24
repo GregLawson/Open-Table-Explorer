@@ -1,0 +1,51 @@
+Loaded suite test/unit/acquire_all_observer_test
+Started
+.EEEEE
+Finished in 12.397736 seconds.
+
+  1) Error:
+test_association_empty(ActionController::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  2) Error:
+test_association_empty(ActionDispatch::IntegrationTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  3) Error:
+test_association_empty(ActionView::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  4) Error:
+test_association_empty(ActiveRecord::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  5) Error:
+test_association_empty(ActiveSupport::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+6 tests, 1 assertions, 0 failures, 5 errors

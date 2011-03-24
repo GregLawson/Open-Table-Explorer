@@ -1,0 +1,138 @@
+Loaded suite test/functional/huelseries_controller_test
+Started
+<<<<<<< HEAD
+EEEEEEEEEEEEE
+Finished in 13.923086 seconds.
+
+  1) Error:
+test_association_empty(ActionController::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  2) Error:
+test_association_empty(ActionDispatch::IntegrationTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  3) Error:
+test_association_empty(ActionView::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  4) Error:
+test_association_empty(ActiveRecord::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  5) Error:
+test_association_empty(ActiveSupport::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  6) Error:
+test_association_empty(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  7) Error:
+test_should_create_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  8) Error:
+test_should_destroy_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  9) Error:
+test_should_get_edit(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+ 10) Error:
+test_should_get_index(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+ 11) Error:
+test_should_get_new(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+ 12) Error:
+test_should_show_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+ 13) Error:
+test_should_update_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+13 tests, 0 assertions, 0 failures, 13 errors
+=======
+.....EEEEEEEE
+Finished in 12.432873 seconds.
+
+  1) Error:
+test_association_empty(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+  2) Error:
+test_should_create_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+  3) Error:
+test_should_destroy_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+  4) Error:
+test_should_get_edit(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+  5) Error:
+test_should_get_index(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+  6) Error:
+test_should_get_new(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+  7) Error:
+test_should_show_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+  8) Error:
+test_should_update_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_87'
+
+13 tests, 0 assertions, 0 failures, 8 errors
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902

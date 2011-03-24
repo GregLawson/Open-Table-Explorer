@@ -1,0 +1,142 @@
+Loaded suite test/functional/acquisition_interfaces_controller_test
+Started
+<<<<<<< HEAD
+EEEEEEEEEEEEE
+Finished in 12.47017 seconds.
+
+  1) Error:
+test_association_empty(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  2) Error:
+test_should_create_acquisition_interface(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  3) Error:
+test_should_destroy_acquisition_interface(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  4) Error:
+test_should_get_edit(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  5) Error:
+test_should_get_index(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  6) Error:
+test_should_get_new(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  7) Error:
+test_should_show_acquisition_interface(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  8) Error:
+test_should_update_acquisition_interface(AcquisitionInterfacesControllerTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  9) Error:
+test_association_empty(ActionController::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+ 10) Error:
+test_association_empty(ActionDispatch::IntegrationTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+ 11) Error:
+test_association_empty(ActionView::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+ 12) Error:
+test_association_empty(ActiveRecord::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+ 13) Error:
+test_association_empty(ActiveSupport::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+13 tests, 0 assertions, 0 failures, 13 errors
+=======
+......E......
+Finished in 12.946327 seconds.
+
+  1) Error:
+test_should_show_acquisition_interface(AcquisitionInterfacesControllerTest):
+ActionView::Template::Error: undefined method `name' for nil:NilClass
+    app/models/acquisition_stream_spec.rb:78:in `nameFromInterface'
+    app/models/acquisition_stream_spec.rb:81:in `schemeFromInterface'
+    app/models/acquisition_interface.rb:24:in `urls_by_scheme'
+    app/models/acquisition_interface.rb:23:in `select'
+    app/models/acquisition_interface.rb:23:in `urls_by_scheme'
+    app/views/acquisition_interfaces/show.html.erb:63:in `_app_views_acquisition_interfaces_show_html_erb___331669309__621607548_0'
+    app/controllers/acquisition_interfaces_controller.rb:18:in `show'
+    test/functional/acquisition_interfaces_controller_test.rb:24:in `test_should_show_acquisition_interface'
+
+13 tests, 9 assertions, 0 failures, 1 errors
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902

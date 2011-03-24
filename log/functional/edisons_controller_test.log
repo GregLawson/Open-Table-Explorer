@@ -1,0 +1,72 @@
+Loaded suite test/functional/edisons_controller_test
+Started
+<<<<<<< HEAD
+EEEEE.E......
+Finished in 12.912456 seconds.
+
+  1) Error:
+test_association_empty(ActionController::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  2) Error:
+test_association_empty(ActionDispatch::IntegrationTest):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  3) Error:
+test_association_empty(ActionView::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  4) Error:
+test_association_empty(ActiveRecord::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  5) Error:
+test_association_empty(ActiveSupport::TestCase):
+NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.collect
+    /test/test_helper.rb:108:in `record_keys'
+    /test/test_helper.rb:209:in `define_association_names'
+    /test/test_helper.rb:246:in `setup'
+
+  6) Error:
+test_should_create_edison(EdisonsControllerTest):
+ActiveRecord::StatementInvalid: SQLite3::ConstraintException: edisons.READDATE may not be NULL: INSERT INTO "edisons" ("kwhusage", "AVGDAILY", "Days", "SANUM", "READDATE", "CANUM", "TOTCHARGES", "KHWREAD") VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+=======
+......E......
+Finished in 12.813611 seconds.
+
+  1) Error:
+test_should_create_edison(EdisonsControllerTest):
+ActiveRecord::StatementInvalid: SQLite3::ConstraintException: edisons.READDATE may not be NULL: INSERT INTO "edisons" ("CANUM", "kwhusage", "TOTCHARGES", "SANUM", "Days", "KHWREAD", "AVGDAILY", "READDATE") VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902
+    app/controllers/edisons_controller.rb:46:in `create'
+    app/controllers/edisons_controller.rb:45:in `create'
+    test/functional/edisons_controller_test.rb:23:in `test_should_create_edison'
+    test/functional/edisons_controller_test.rb:20:in `test_should_create_edison'
+
+<<<<<<< HEAD
+13 tests, 8 assertions, 0 failures, 6 errors
+=======
+13 tests, 8 assertions, 0 failures, 1 errors
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902

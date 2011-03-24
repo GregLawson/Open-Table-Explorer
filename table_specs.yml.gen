@@ -1,0 +1,7 @@
+--- 
+huell_schedule: 
+  merge: rows
+  file_caching: DB
+  primary_key_expression: 
+  frequency_id: 715507355
+  model_class_name: huell_schedule

@@ -1,0 +1,9 @@
+Loaded suite test/unit/weather_test
+Started
+<<<<<<< HEAD
+=======
+.......
+Finished in 12.605858 seconds.
+
+7 tests, 1 assertions, 0 failures, 0 errors
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902

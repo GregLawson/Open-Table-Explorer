@@ -1,0 +1,10 @@
+Loaded suite test/unit/parse_spec_test
+Started
+.......
+<<<<<<< HEAD
+Finished in 13.433502 seconds.
+=======
+Finished in 12.431687 seconds.
+>>>>>>> 6edf09d775fff29132398b48342e8e030993c902
+
+7 tests, 1 assertions, 0 failures, 0 errors
