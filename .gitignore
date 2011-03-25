@@ -5,3 +5,4 @@ tmp/**/*
 fixtures/transactions.yml
 test/fixtures/transactions.yml
 Gemfile.lock
+scite.session
