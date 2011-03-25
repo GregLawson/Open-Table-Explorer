@@ -7,9 +7,9 @@ class TableSpecTest < ActiveSupport::TestCase
   #~ fixtures :table_specs
   #~ fixtures :frequencies
 def find_fixture
-	puts "name=#{Global.objectName(table_specs(:MULTIPLE_WEATHER))}"
-	puts "class=#{Global.objectClass(table_specs(:MULTIPLE_WEATHER))}"
-	puts Global.canonicalName(table_specs(:MULTIPLE_WEATHER),verbose=true)
+	#~ puts "name=#{Global.objectName(table_specs(:MULTIPLE_WEATHER))}"
+	#~ puts "class=#{Global.objectClass(table_specs(:MULTIPLE_WEATHER))}"
+	#~ puts Global.canonicalName(table_specs(:MULTIPLE_WEATHER),verbose=true)
 	assert_equal(fixture_names,["weathers", "edisons", "breakers","acquisition_stream_specs", "measurements","transactions", "routers", "parse_specs", "loads", "urls", "stations", "schema_migrations","parameters","acquisition_interfaces", "tedprimaries","huelseries", "hosts","frequencies", "example_types","example_acquisitions", "postgresql2rails", "productions", "huelshows", "accounts", "ports","table_specs", "production_ftps","postgresql2import", "networks", "nodes","acquisitions", "transfers", "params", "generic_types", "bugs", "wired_locations"])
 	assert_equal(record_keys('table_specs'),["huell_schedule","TEDWebBoxFull","nmap","Network","MULTIPLE_WEATHER"])
 
@@ -118,13 +118,7 @@ end #def
 def setup
 	define_association_names
 	@model_class=eval(@model_name)
-	@record_keys=@loaded_fixtures[@table_name].collect do |fix|
-#		puts "fix.at(0)=#{fix.at(0).inspect}"
-		fix.at(0)
-	end #collect
-	@my_fixtures=@record_keys.collect do |rk|
-		table_specs(rk)
-	end #each
+	
 	@possible_associations=@model_class.instance_methods(false).select { |m| m =~ /=$/ and !(m =~ /_ids=$/) and is_association?(@my_fixtures.first,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
 #	puts "@possible_associations.inspect=#{@possible_associations.inspect}"
 
