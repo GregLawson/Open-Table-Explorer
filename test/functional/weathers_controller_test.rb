@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class WeathersControllerTest < ActionController::TestCase
-  def test_should_get_index
+def setup
+	@weather=weathers(:one)
+end #def
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:weathers)
@@ -14,7 +17,9 @@ class WeathersControllerTest < ActionController::TestCase
 
   def test_should_create_weather
     assert_difference('Weather.count') do
-      post :create, :weather => { }
+	    weather_attributes=@weather.attributes
+	    weather_attributes[:khhr_observation_time_rfc822]=Time.now
+      post :create, :weather => weather_attributes 
     end
 
     assert_redirected_to weather_path(assigns(:weather))

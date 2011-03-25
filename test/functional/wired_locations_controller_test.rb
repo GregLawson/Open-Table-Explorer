@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class WiredLocationsControllerTest < ActionController::TestCase
+def setup
+	@wired_location=wired_locations(:one)
+end #def
   def test_should_get_index
     get :index
     assert_response :success
@@ -14,7 +17,9 @@ class WiredLocationsControllerTest < ActionController::TestCase
 
   def test_should_create_wired_location
     assert_difference('WiredLocation.count') do
-      post :create, :wired_location => { node +> 99999 }
+	    wired_location_attributes=@wired_location.attributes
+	    wired_location_attributes[:node]=99999
+      post :create, :wired_location =>  wired_location_attributes 
     end
 
     assert_redirected_to wired_location_path(assigns(:wired_location))

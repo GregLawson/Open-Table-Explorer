@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class LoadsControllerTest < ActionController::TestCase
-  def test_should_get_index
+   def setup
+    @load = loads(:one)
+  end
+
+ def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:loads)
@@ -14,7 +18,11 @@ class LoadsControllerTest < ActionController::TestCase
 
   def test_should_create_loads
     assert_difference('Load.count') do
-      post :create, :loads => { node=>9999999  }
+	    loads_attributes=@load.attributes
+	    puts "loads_attributes=#{loads_attributes.inspect}"
+	    loads_attributes['node']=9999999 
+	    puts "loads_attributes=#{loads_attributes.inspect}"
+      post :create, :loads => loads_attributes 
     end
 
     assert_redirected_to loads_path(assigns(:loads))

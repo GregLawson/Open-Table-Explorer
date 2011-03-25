@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class NodesControllerTest < ActionController::TestCase
-  def test_should_get_index
+def setup
+	@node=nodes(:one)
+end #def
+ def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:nodes)
@@ -14,7 +17,9 @@ class NodesControllerTest < ActionController::TestCase
 
   def test_should_create_node
     assert_difference('Node.count') do
-      post :create, :node => { }
+      node_attributes=@node.attributes
+      node_attributes['node']=999999
+      post :create, :node => node_attributes 
     end
 
     assert_redirected_to node_path(assigns(:node))
