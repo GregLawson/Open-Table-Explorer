@@ -133,6 +133,12 @@ def fixtures(table_name)
 		when :acquisitions then
 			assert_equal(acquisitions(rk).id,Fixtures::identify(rk))
 			acquisitions(rk)
+		when :accounts then
+			assert_equal(accounts(rk).id,Fixtures::identify(rk))
+			accounts(rk)
+		when :transfers then
+			assert_equal(transfers(rk).id,Fixtures::identify(rk))
+			transfers(rk)
 		else
 			"else #{rk.inspect}"
 		end #case
@@ -198,10 +204,12 @@ def assert_include(element,list)
 	assert(list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
 end #def
 def define_association_names
-	@model_name=self.class.name[0..-5]
+	@model_name=self.class.name.sub(/Test$/, '').sub(/Controller$/, '')
  	@table_name=@model_name.tableize
-
-
+	assert_not_nil(@loaded_fixtures)
+	assert_table_name(@table_name)
+	@record_keys=record_keys(@table_name)
+	@my_fixtures=fixtures(@table_name)
 end
 def foreign_key_names(model_class)
 	@content_column_names=model_class.content_columns.collect {|m| m.name}
@@ -236,9 +244,6 @@ def associated_foreign_key_id(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key_id assName=#{assName.inspect}")
 	return associated_foreign_key(obj,assName).call
 end #def
-def setup
-	define_association_names
-end
 def assert_foreign_key_points_to_me(fixture,ass)
 	assert_association(fixture,ass)
 	associated_records=testCallResult(fixture,ass)

@@ -4,6 +4,7 @@ Rtest3::Application.routes.draw do
   resources :urls
 
   resources :production_ftps
+  resources :productions
 
   resources :huelshows
   resources :huelseries
