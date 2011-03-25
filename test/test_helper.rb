@@ -147,6 +147,9 @@ end #def
 #~ def fixture(table_name,record_key)
 	#~ return fixtures(table_name)(record_key)
 #~ end #def
+def model_class(fixtures)
+	return fixtures.first.class
+end #def
 def similar_methods(fixture,symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
@@ -210,6 +213,16 @@ def define_association_names
 	assert_table_name(@table_name)
 	@record_keys=record_keys(@table_name)
 	@my_fixtures=fixtures(@table_name)
+	@model_class=model_class(@my_fixtures)
+	@possible_associations=@model_class.instance_methods(false).select { |m| m =~ /=$/ and !(m =~ /_ids=$/) and is_association?(@my_fixtures.first,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
+#	puts "@possible_associations.inspect=#{@possible_associations.inspect}"
+ 	@possible_many_associations=@model_class.instance_methods(false).select { |m| (m =~ /_ids=$/) and is_association_to_many?(@my_fixtures.first,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
+#	puts "@possible_many_associations.inspect=#{@possible_many_associations.inspect}"
+	#~ @content_column_names=@model_class.content_columns.collect {|m| m.name}
+	#~ puts "@content_column_names.inspect=#{@content_column_names.inspect}"
+	#~ @special_columns=@model_class.column_names-@content_column_names
+	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
+	@possible_foreign_keys=foreign_key_names(@model_class)
 end
 def foreign_key_names(model_class)
 	@content_column_names=model_class.content_columns.collect {|m| m.name}

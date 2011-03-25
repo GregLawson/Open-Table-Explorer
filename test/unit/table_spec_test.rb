@@ -117,19 +117,8 @@ test "specific, stable and working" do
 end #def
 def setup
 	define_association_names
-	@model_class=eval(@model_name)
 	
-	@possible_associations=@model_class.instance_methods(false).select { |m| m =~ /=$/ and !(m =~ /_ids=$/) and is_association?(@my_fixtures.first,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
-#	puts "@possible_associations.inspect=#{@possible_associations.inspect}"
 
-#	puts "@model_class.column_names=#{@model_class.column_names.inspect}"
- 	@possible_many_associations=@model_class.instance_methods(false).select { |m| (m =~ /_ids=$/) and is_association_to_many?(@my_fixtures.first,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
-#	puts "@possible_many_associations.inspect=#{@possible_many_associations.inspect}"
-	#~ @content_column_names=@model_class.content_columns.collect {|m| m.name}
-	#~ puts "@content_column_names.inspect=#{@content_column_names.inspect}"
-	#~ @special_columns=@model_class.column_names-@content_column_names
-	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
-	@possible_foreign_keys=foreign_key_names(@model_class)
 
 end
 def test_aaa_test_assertions # aaa to output first
