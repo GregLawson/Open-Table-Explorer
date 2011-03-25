@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class BreakersControllerTest < ActionController::TestCase
+ def setup
+    @breaker = breakers(:one)
+  end
   def test_should_get_index
     get :index
     assert_response :success
@@ -14,7 +17,9 @@ class BreakersControllerTest < ActionController::TestCase
 
   def test_should_create_breaker
     assert_difference('Breaker.count') do
-      post :create, :breaker => { }
+	    breaker_attributes=@breaker.attributes
+	    breaker_attributes[:node]=99999
+      post :create, :breaker => breaker_attributes
     end
 
     assert_redirected_to breaker_path(assigns(:breaker))

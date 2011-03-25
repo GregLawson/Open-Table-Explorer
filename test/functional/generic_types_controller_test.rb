@@ -18,7 +18,9 @@ class GenericTypesControllerTest < ActionController::TestCase
 
   test "should create generic_type" do
     assert_difference('GenericType.count') do
-      post :create, :generic_type => @generic_type.attributes
+	    generic_type_attributes=@generic_type.attributes
+	    generic_type_attributes['data_regexp']='[test insertion with unique data_regexp]'
+      post :create, :generic_type => generic_type_attributes
     end
 
     assert_redirected_to generic_type_path(assigns(:generic_type))

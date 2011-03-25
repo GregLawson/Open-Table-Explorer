@@ -18,7 +18,10 @@ class HuelshowsControllerTest < ActionController::TestCase
 
   test "should create huelshow" do
     assert_difference('Huelshow.count') do
-      post :create, :huelshow => @huelshow.attributes
+	    huelshow_attributes=@huelshow.attributes
+	    huelshow_attributes[:shortname]='test create record'
+	    huelshow_attributes[:name]='test create record'
+      post :create, :huelshow => huelshow_attributes
     end
 
     assert_redirected_to huelshow_path(assigns(:huelshow))

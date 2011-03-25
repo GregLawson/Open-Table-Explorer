@@ -21,23 +21,23 @@ class AcquisitionInterfacesControllerTest < ActionController::TestCase
   end
 
   def test_should_show_acquisition_interface
-    get :show, :id => acquisition_interfaces(:one).id
+    get :show, :id => acquisition_interfaces(:HTTP).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => acquisition_interfaces(:one).id
+    get :edit, :id => acquisition_interfaces(:HTTP).id
     assert_response :success
   end
 
   def test_should_update_acquisition_interface
-    put :update, :id => acquisition_interfaces(:one).id, :acquisition_interface => { }
+    put :update, :id => acquisition_interfaces(:HTTP).id, :acquisition_interface => { }
     assert_redirected_to acquisition_interface_path(assigns(:acquisition_interface))
   end
 
   def test_should_destroy_acquisition_interface
     assert_difference('AcquisitionInterface.count', -1) do
-      delete :destroy, :id => acquisition_interfaces(:one).id
+      delete :destroy, :id => acquisition_interfaces(:HTTP).id
     end
 
     assert_redirected_to acquisition_interfaces_path

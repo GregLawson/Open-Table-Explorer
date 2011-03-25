@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HuelseriesControllerTest < ActionController::TestCase
   setup do
-    @huelseries = huelseries(:one)
+    @huelseries= huelseries(:one)
   end
 
   test "should get index" do
@@ -18,7 +18,9 @@ class HuelseriesControllerTest < ActionController::TestCase
 
   test "should create huelseries" do
     assert_difference('Huelserie.count') do
-      post :create, :huelseries => @huelseries.attributes
+	    huelseries_attributes=@huelseries.attributes
+	    huelseries_attributes['shortname']='test create'
+      post :create, :huelseries => huelseries_attributes
     end
 
     assert_redirected_to huelseries_path(assigns(:huelseries))

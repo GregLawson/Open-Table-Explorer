@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UrlsControllerTest < ActionController::TestCase
-  setup do
+  def setup 
     @url = urls(:one)
   end
 

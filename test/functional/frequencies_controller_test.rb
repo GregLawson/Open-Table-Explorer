@@ -21,23 +21,23 @@ class FrequenciesControllerTest < ActionController::TestCase
   end
 
   def test_should_show_frequency
-    get :show, :id => frequencies(:one).id
+    get :show, :id => frequencies(:hourly).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => frequencies(:one).id
+    get :edit, :id => frequencies(:hourly).id
     assert_response :success
   end
 
   def test_should_update_frequency
-    put :update, :id => frequencies(:one).id, :frequency => { }
+    put :update, :id => frequencies(:hourly).id, :frequency => { }
     assert_redirected_to frequency_path(assigns(:frequency))
   end
 
   def test_should_destroy_frequency
     assert_difference('Frequency.count', -1) do
-      delete :destroy, :id => frequencies(:one).id
+      delete :destroy, :id => frequencies(:hourly).id
     end
 
     assert_redirected_to frequencies_path

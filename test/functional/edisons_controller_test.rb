@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class EdisonsControllerTest < ActionController::TestCase
-  def test_should_get_index
+   def setup
+    @edison = edisons(:one)
+  end
+
+ def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:edisons)
@@ -14,6 +18,10 @@ class EdisonsControllerTest < ActionController::TestCase
 
   def test_should_create_edison
     assert_difference('Edison.count') do
+	edison_attributes=@edison.attributes
+	edison_attributes['READDATE']=Time.now
+      post :create, :example_type => edison_attributes
+
       post :create, :edison => { }
     end
 

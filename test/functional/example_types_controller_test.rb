@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ExampleTypesControllerTest < ActionController::TestCase
-  setup do
+  def setup
     @example_type = example_types(:one)
   end
 
@@ -18,7 +18,10 @@ class ExampleTypesControllerTest < ActionController::TestCase
 
   test "should create example_type" do
     assert_difference('ExampleType.count') do
-      post :create, :example_type => @example_type.attributes
+	    example_type_attributes=@example_type.attributes
+	    example_type_attributes['example_string']='123456.789'
+	    example_type_attributes['import_class']='test insertion'
+      post :create, :example_type => example_type_attributes
     end
 
     assert_redirected_to example_type_path(assigns(:example_type))
