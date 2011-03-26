@@ -59,8 +59,8 @@ def find_fixture
 	#~ end #each
 #	puts "@possible_foreign_keys=#{@possible_foreign_keys.inspect}"	
 end #def
-test "general associations" do
-	@my_fixtures.each do |my_fixture|
+def assert_general_associations(table_name)
+	fixtures(table_name).each do |my_fixture|
 	@possible_associations.each do |association_name|
 		ass=association_name.to_sym
 		if is_association_to_many?(my_fixture,ass) then
@@ -73,11 +73,11 @@ test "general associations" do
 	end #each
 	assert_equal(Fixtures::identify(my_fixture.model_class_name),my_fixture.id,"identify != id")
 	end #each
-end #test
+end #def
 test "specific, stable and working" do
-	assert_equal(@model_name,'TableSpec')
-	assert_equal(@model_class,TableSpec)
-	assert_equal(@table_name,'table_specs')
+	assert_equal('TableSpec',@model_name)
+	assert_equal(TableSpec,@model_class)
+	assert_equal('table_specs',@table_name)
 	assert(TableSpec.instance_methods(false).include?('acquisition_stream_specs'),"TableSpec.instance_methods(false).include?('acquisition_stream_specs')")
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
 	assert_raise(Test::Unit::AssertionFailedError) do
@@ -117,9 +117,9 @@ test "specific, stable and working" do
 end #def
 def setup
 	define_association_names
-	
-
-
+end
+def test_general_associations
+	assert_general_associations(@table_name)
 end
 def test_aaa_test_assertions # aaa to output first
 	assert_equal(@my_fixtures,fixtures('table_specs'))
