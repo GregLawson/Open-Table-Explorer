@@ -21,23 +21,23 @@ class AccountsControllerTest < ActionController::TestCase
   end
 
   def test_should_show_account
-    get :show, :id => accounts(:one).id
+    get :show, :id => accounts('Roth Conversion'.to_sym).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => accounts(:one).id
+    get :edit, :id => accounts('Roth Conversion'.to_sym).id
     assert_response :success
   end
 
   def test_should_update_account
-    put :update, :id => accounts(:one).id, :account => { }
+    put :update, :id => accounts('Roth Conversion'.to_sym).id, :account => { }
     assert_redirected_to account_path(assigns(:account))
   end
 
   def test_should_destroy_account
     assert_difference('Account.count', -1) do
-      delete :destroy, :id => accounts(:one).id
+      delete :destroy, :id => accounts('Roth Conversion'.to_sym).id
     end
 
     assert_redirected_to accounts_path
