@@ -1,6 +1,6 @@
 Loaded suite test/functional/measurements_controller_test
 Started
-.............
-Finished in 13.431848 seconds.
+.......
+Finished in 13.600391 seconds.
 
-13 tests, 10 assertions, 0 failures, 0 errors
+7 tests, 10 assertions, 0 failures, 0 errors

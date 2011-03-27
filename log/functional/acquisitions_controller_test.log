@@ -1,143 +1,19 @@
 Loaded suite test/functional/acquisitions_controller_test
 Started
-<<<<<<< HEAD
-EEEEEEEEEEEEE
-Finished in 13.423372 seconds.
-
-  1) Error:
-test_association_empty(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  2) Error:
-test_should_create_acquisition(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  3) Error:
-test_should_destroy_acquisition(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  4) Error:
-test_should_get_edit(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  5) Error:
-test_should_get_index(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  6) Error:
-test_should_get_new(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  7) Error:
-test_should_show_acquisition(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  8) Error:
-test_should_update_acquisition(AcquisitionsControllerTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-  9) Error:
-test_association_empty(ActionController::TestCase):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
- 10) Error:
-test_association_empty(ActionDispatch::IntegrationTest):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
- 11) Error:
-test_association_empty(ActionView::TestCase):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
- 12) Error:
-test_association_empty(ActiveRecord::TestCase):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
- 13) Error:
-test_association_empty(ActiveSupport::TestCase):
-NoMethodError: You have a nil object when you didn't expect it!
-You might have expected an instance of Array.
-The error occurred while evaluating nil.collect
-    /test/test_helper.rb:108:in `record_keys'
-    /test/test_helper.rb:209:in `define_association_names'
-    /test/test_helper.rb:246:in `setup'
-
-13 tests, 0 assertions, 0 failures, 13 errors
-=======
-...E..E......
-Finished in 18.770879 seconds.
+..E..E.
+Finished in 18.376548 seconds.
 
   1) Error:
 test_should_get_edit(AcquisitionsControllerTest):
 ActionView::Template::Error: Called id for nil, which would mistakenly be 4 -- if you really wanted the id of nil, use object_id
-    app/views/acquisitions/edit.html.erb:44:in `_app_views_acquisitions_edit_html_erb___485769991__621271948_0'
+    app/views/acquisitions/edit.html.erb:44:in `_app_views_acquisitions_edit_html_erb___485769991__621645668_0'
     test/functional/acquisitions_controller_test.rb:29:in `test_should_get_edit'
 
   2) Error:
 test_should_show_acquisition(AcquisitionsControllerTest):
 ActionView::Template::Error: Called id for nil, which would mistakenly be 4 -- if you really wanted the id of nil, use object_id
-    app/views/acquisitions/show.html.erb:46:in `_app_views_acquisitions_show_html_erb___1048543860__620335478_0'
+    app/views/acquisitions/show.html.erb:46:in `_app_views_acquisitions_show_html_erb___1048543860__620750938_0'
     app/controllers/acquisitions_controller.rb:18:in `show'
     test/functional/acquisitions_controller_test.rb:24:in `test_should_show_acquisition'
 
-13 tests, 8 assertions, 0 failures, 2 errors
->>>>>>> 6edf09d775fff29132398b48342e8e030993c902
+7 tests, 8 assertions, 0 failures, 2 errors

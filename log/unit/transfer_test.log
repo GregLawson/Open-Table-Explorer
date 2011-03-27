@@ -1,13 +1,20 @@
 Loaded suite test/unit/transfer_test
 Started
-<<<<<<< HEAD
-......
-Finished in 12.763526 seconds.
+F
+Finished in 12.648543 seconds.
 
-6 tests, 3 assertions, 0 failures, 0 errors
-=======
-.......
-Finished in 13.085502 seconds.
+  1) Failure:
+test_general_associations(TransferTest)
+    [/test/test_helper.rb:301:in `assert_my_foreign_key_points_to_correct_id'
+     /test/test_helper.rb:284:in `each'
+     /test/test_helper.rb:284:in `assert_my_foreign_key_points_to_correct_id'
+     /test/test_helper.rb:315:in `assert_general_associations'
+     /test/test_helper.rb:308:in `each'
+     /test/test_helper.rb:308:in `assert_general_associations'
+     /test/test_helper.rb:307:in `each'
+     /test/test_helper.rb:307:in `assert_general_associations'
+     test/unit/transfer_test.rb:8:in `test_general_associations']:
+No records associated. #<Transfer id: 298486374, account: nil, amount: nil, posted: "2011-01-01", created_at: "2011-03-26 14:41:00", updated_at: "2011-03-26 14:41:00", account_id: 110791571>: Foreign key account_id=110791571, accounts=, Fixtures::identify(MyString)=110791571=298486374, Fixtures::identify(MyString)=110791571=980190962.
+<nil> expected to not be nil.
 
-7 tests, 1 assertions, 0 failures, 0 errors
->>>>>>> 6edf09d775fff29132398b48342e8e030993c902
+1 tests, 110 assertions, 1 failures, 0 errors

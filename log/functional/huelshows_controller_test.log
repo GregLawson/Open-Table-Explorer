@@ -1,9 +1,6 @@
 Loaded suite test/functional/huelshows_controller_test
 Started
-<<<<<<< HEAD
-=======
-.............
-Finished in 12.612029 seconds.
+.......
+Finished in 12.870231 seconds.
 
-13 tests, 10 assertions, 0 failures, 0 errors
->>>>>>> 6edf09d775fff29132398b48342e8e030993c902
+7 tests, 10 assertions, 0 failures, 0 errors

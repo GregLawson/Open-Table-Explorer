@@ -1,6 +1,6 @@
 Loaded suite test/unit/loads_test
 Started
-.......
-Finished in 12.906475 seconds.
+.
+Finished in 14.041749 seconds.
 
-7 tests, 1 assertions, 0 failures, 0 errors
+1 tests, 1 assertions, 0 failures, 0 errors
