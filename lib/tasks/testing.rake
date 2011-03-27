@@ -9,28 +9,6 @@ namespace :testing do
 desc "Run tests testing:incremental, testing:full, testing:summarize, or testing:unit_test TABLE=plural_table . Output in log/{unit,functional}/"
 directory "log/full"
 def build_table(singular_table)
-	 plural_table=singular_table.pluralize
-	 model_file="app/models/#{singular_table}.rb"
-	 # commn_sources apply to both unit and functional tests.
-	 common_sources=[model_file,"db/schema.rb","test/test_helper.rb","test/fixtres/#{plural_table}.yml"]
-	target = "log/unit/#{singular_table}_test.log"
-	sources=["test/unit/#{singular_table}_test.rb"]+common_sources
-	sources.each do |s|
-		if !uptodate?(target, s)  then
-			puts "not uptodate."
-			sh "ls -l #{target}"
-			sh "ls -l #{s}"
-		end
-	end #def
-	unless uptodate?(target, sources) 
-		ruby_run_and_log(sources[0], target)
-	end #file
-	target = "log/functional/#{plural_table}_controller_test.log"
-	sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
-	sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controller/#{plural_table}_controller.rb","app/helpers/#{plural_table}"]
-	unless uptodate?(target, sources) 
-		ruby_run_and_log(sources[0], target)
-	end #file
 end #def
 def ruby_run_and_log(ruby_source,log_file)
 	ruby %Q{-I test #{ruby_source} >#{log_file}}  do |ok, res|
@@ -66,11 +44,34 @@ task :unit_test do
 	summarize
 end #task
 task :incremental do
- FileList['app/models/*.rb'].each do |model_file|
-	 singular_table=model_file[11..-4]
-	 build_table(singular_table)
- end #each
- summarize
+	all_models=FileList['app/models/*.rb']
+	affects_everything="db/schema.rb","test/test_helper.rb"
+	all_models .each do |model_file|
+		 singular_table=model_file[11..-4]
+		 plural_table=singular_table.pluralize
+		 model_file="app/models/#{singular_table}.rb"
+		 # commn_sources apply to both unit and functional tests.
+		 common_sources=[model_file,"test/fixtures/#{plural_table}.yml"]
+		target = "log/unit/#{singular_table}_test.log"
+		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
+		sources.each do |s|
+			if !uptodate?(target, s)  then
+				puts "not up to date."
+				sh "ls -l #{target}"
+				sh "ls -l #{s}"
+			end
+		end #def
+		unless uptodate?(target, sources) 
+			ruby_run_and_log(sources[0], target)
+		end #file
+		target = "log/functional/#{plural_table}_controller_test.log"
+		sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
+		sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controller/#{plural_table}_controller.rb","app/helpers/#{plural_table}"]
+		unless uptodate?(target, sources) 
+			ruby_run_and_log(sources[0], target)
+		end #file
+	end #each
+	summarize
 end #task
 task :full do	
 	sh "rake test:units >log/full/rake_test.log"
