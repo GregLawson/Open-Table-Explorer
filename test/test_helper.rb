@@ -303,18 +303,19 @@ def assert_my_foreign_key_points_to_correct_id(fixture,ass)
 		assert_equal(testCallResult(my_fixture,myForeignKeyName.to_sym),testCallResult(my_fixture,ass).id)
 	end
 end #def
-test "association empty" do
-#	assert_not_nil(acquisition_stream_specs,message)
-	frequencies.each do |my_fixture|
-		puts "my_fixture.inspect=#{my_fixture.inspect}"
-		assert_instance_of(Array,@my_fixtures)
-		my_fixture=@my_fixtures[rk.to_sym]
-		puts "my_fixture.frequency_id=#{my_fixture.frequency_id}"
-		message="#{my_fixture.inspect} but frequency not associated with #{frequencies.inspect}"
-		assert_equal(frequencies(rk.to_sym).id,my_fixture.frequency_id)
-		assert_operator(my_fixture.frequency.count,:>,0,"count "+message)
-		assert_operator(my_fixture.frequency.length,:>,0,"length "+message)
-		assert(!my_fixture.frequency.empty?,"empty "+message)
+def assert_general_associations(table_name)
+	fixtures(table_name).each do |my_fixture|
+	@possible_associations.each do |association_name|
+		ass=association_name.to_sym
+		if is_association_to_many?(my_fixture,ass) then
+			 assert_association_to_many(my_fixture,ass)
+			assert_foreign_key_points_to_me(my_fixture,ass)
+		else
+			assert_association_to_one(my_fixture,ass)
+			assert_my_foreign_key_points_to_correct_id(my_fixture,ass)
+		end #if
+	end #each
+#	assert_equal(Fixtures::identify(my_fixture.logical_prmary_key),my_fixture.id,"identify != id")
 	end #each
 end #def
 end #class

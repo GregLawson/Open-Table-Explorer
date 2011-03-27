@@ -59,21 +59,6 @@ def find_fixture
 	#~ end #each
 #	puts "@possible_foreign_keys=#{@possible_foreign_keys.inspect}"	
 end #def
-def assert_general_associations(table_name)
-	fixtures(table_name).each do |my_fixture|
-	@possible_associations.each do |association_name|
-		ass=association_name.to_sym
-		if is_association_to_many?(my_fixture,ass) then
-			 assert_association_to_many(my_fixture,ass)
-			assert_foreign_key_points_to_me(my_fixture,ass)
-		else
-			assert_association_to_one(my_fixture,ass)
-			assert_my_foreign_key_points_to_correct_id(my_fixture,ass)
-		end #if
-	end #each
-	assert_equal(Fixtures::identify(my_fixture.model_class_name),my_fixture.id,"identify != id")
-	end #each
-end #def
 test "specific, stable and working" do
 	assert_equal('TableSpec',@model_name)
 	assert_equal(TableSpec,@model_class)
@@ -147,7 +132,6 @@ def test_id_equal
 	@my_fixtures.each do |my_fixture|
 		assert_equal(Fixtures::identify(my_fixture.model_class_name),my_fixture.id,"identify != id")
 	end
-	@my_fixtures.first.table2yaml(@my_fixtures.first.class.name.tableize)
 end #def
 def test_associated_id_equal
 #	puts "@my_fixture.inspect=#{@my_fixture.inspect}"
@@ -158,6 +142,20 @@ def test_associated_id_equal
 		my_fixture.acquisition_stream_specs.each do |ar|
 			assert_equal(Fixtures::identify(my_fixture.model_class_name),ar.table_spec_id,"identify != acquisition_stream_specs.first.table_spec_id")
 		end #each
+	end #each
+end #def
+test "association empty" do
+#	assert_not_nil(acquisition_stream_specs,message)
+	frequencies.each do |my_fixture|
+		puts "my_fixture.inspect=#{my_fixture.inspect}"
+		assert_instance_of(Array,@my_fixtures)
+		my_fixture=@my_fixtures[rk.to_sym]
+		puts "my_fixture.frequency_id=#{my_fixture.frequency_id}"
+		message="#{my_fixture.inspect} but frequency not associated with #{frequencies.inspect}"
+		assert_equal(frequencies(rk.to_sym).id,my_fixture.frequency_id)
+		assert_operator(my_fixture.frequency.count,:>,0,"count "+message)
+		assert_operator(my_fixture.frequency.length,:>,0,"length "+message)
+		assert(!my_fixture.frequency.empty?,"empty "+message)
 	end #each
 end #def
 end #class
