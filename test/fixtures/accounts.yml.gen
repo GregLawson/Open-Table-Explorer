@@ -1,13 +1,15 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
----
+--- 
 Long Term Gain-Tax-Managed Capital Appreciation: 
   name: Long Term Gain-Tax-Managed Capital Appreciation
   parent: Income
+  created_at: 2011-03-27 16:48:17 Z
+  updated_at: 2011-03-27 16:48:17 Z
   tax_reporting: Average Cost
   budgeting: ""
-  
 Roth Conversion: 
   name: Roth Conversion
   parent: Income
+  created_at: 2011-03-27 16:48:17 Z
+  updated_at: 2011-03-27 16:48:17 Z
   tax_reporting: 1040/L
   budgeting: 

@@ -3,21 +3,14 @@ require 'test_helper'
 class AccountTest < ActiveSupport::TestCase
 def setup
 	define_association_names
-	@model_class=eval(@model_name)
-	@record_keys=@loaded_fixtures[@table_name].collect do |fix|
-#		puts "fix.at(0)=#{fix.at(0).inspect}"
-		fix.at(0)
-	end #collect
-	@my_fixtures=@record_keys.collect do |rk|
-		accounts(rk)
-	end #each
-	@possible_associations=@model_class.instance_methods(false).select { |m| m =~ /=$/ and !(m =~ /_ids=$/) and is_association?(@my_fixtures.first,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
- 	@possible_many_associations=@model_class.instance_methods(false).select { |m| (m =~ /_ids=$/) and is_association_to_many?(@my_fixtures.first,m[0..-2].to_sym)}.collect {|m| m[0..-2] }
-	@possible_foreign_keys=foreign_key_names(@model_class)
 end
+def test_general_associations
+	assert_general_associations(@table_name)
 end
-def test_id_equal
+def test_id_and_hash_equal
+	@my_fixtures.first.table2yaml(@my_fixtures.first.class.name.tableize)
 	@my_fixtures.each do |my_fixture|
-		assert_equal(Fixtures::identify(my_fixture.model_class_name),my_fixture.id,"identify != id")
+		assert_equal(Fixtures::identify(my_fixture.logical_primary_key),my_fixture.id,"Fixture file test/fixture/#{@table_name}.yml has wrong tag or explicit id, logical_primary_key='#{my_fixture.logical_primary_key}',=#{Fixtures::identify(my_fixture.logical_primary_key)} != my_fixture.id=#{my_fixture.id} where fixture=#{my_fixture.inspect}.")
 	end
 end #def
+end #class

@@ -9,7 +9,10 @@
     <th>account</th>
     <th>edit_account_path(account)</th>
   </tr>
-
+@accounts.inspect=<%=   @accounts.inspect %><BR>
+@accounts.first.inspect=<%=   @accounts.first.inspect %><BR>
+@accounts.first.class.name.tableize=<%=   @accounts.first.class.name.tableize %><BR>
+@accounts.first.table2yaml (@accounts.first.class.name.tableize)=<%=   @accounts.first.table2yaml (@accounts.first.class.name.tableize) %>
 <% for account in @accounts %>
   <tr>
     <td><%=h account.name %></td>
@@ -17,6 +20,7 @@
     <td><%=h account.tax_reporting %></td>
     <td><%=h account.budgeting %></td>
     <td><%=h account %></td>
+  
     <td><%=h edit_account_path(account) %></td>
     <td><%= link_to 'Show', account %></td>
     <td><%= link_to 'Edit', edit_account_path(account) %></td>

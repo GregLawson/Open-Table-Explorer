@@ -190,5 +190,30 @@ def Global.relationship(obj=self)
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
 end #def
+def table2yaml(table_name=self.class.tableize)
+	i = "000"
+	limit=100
+	sql  = "SELECT * FROM %s LIMIT #{limit}"
+    	File.open("test/fixtures/#{table_name}.yml.gen", 'w') do |file|
+      		data = self.class.limit(limit).all
+		puts "data.inspect=#{data.inspect}"
+		 file.write data.inject({}) { |hash, record|
+			primaryKeyValue=record.logical_primary_key
+			record=record.attributes
+			record.delete('id') 
+			puts "record.inspect=#{record.inspect}"
+			puts "record.to_yaml.inspect=#{record.to_yaml.inspect}"
+			hash[primaryKeyValue] = record
+			hash
+		}.to_yaml
+	end# file open
+end #def
+def self.db2yaml
+	skip_tables = ["schema_info","tedprimaries","weathers"]
+  (	ActiveRecord::Base.connection.tables - skip_tables).each do |table_name|
+		table2yaml(table_name)
+	end #each
+end #def
+
 end #module
 
