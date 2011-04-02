@@ -190,7 +190,7 @@ def Global.relationship(obj=self)
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
 end #def
-def table2yaml(table_name=self.class.tableize)
+def table2yaml(table_name=self.class.name.tableize)
 	i = "000"
 	limit=100
 	sql  = "SELECT * FROM %s LIMIT #{limit}"

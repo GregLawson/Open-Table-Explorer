@@ -9,10 +9,7 @@
     <th>account</th>
     <th>edit_account_path(account)</th>
   </tr>
-@accounts.inspect=<%=   @accounts.inspect %><BR>
-@accounts.first.inspect=<%=   @accounts.first.inspect %><BR>
-@accounts.first.class.name.tableize=<%=   @accounts.first.class.name.tableize %><BR>
-@accounts.first.table2yaml (@accounts.first.class.name.tableize)=<%=   @accounts.first.table2yaml (@accounts.first.class.name.tableize) %>
+@accounts.first.table2yaml =< %=   @accounts.first.table2yaml % >
 <% for account in @accounts %>
   <tr>
     <td><%=h account.name %></td>

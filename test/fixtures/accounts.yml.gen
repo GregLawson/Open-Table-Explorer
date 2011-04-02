@@ -1,15 +1,148 @@
 --- 
+Contribution Planned Parenthood: 
+  name: Contribution Planned Parenthood
+  parent: Expense
+  created_at: 2011-03-27 18:13:05 Z
+  updated_at: 2011-03-27 18:13:05 Z
+  tax_reporting: ""
+  budgeting: ACH
+CFI Contribution: 
+  name: CFI Contribution
+  parent: Expense
+  created_at: 2011-03-27 18:13:05 Z
+  updated_at: 2011-03-27 18:13:05 Z
+  tax_reporting: 1040/L8a
+  budgeting: ACH
 Long Term Gain-Tax-Managed Capital Appreciation: 
   name: Long Term Gain-Tax-Managed Capital Appreciation
   parent: Income
-  created_at: 2011-03-27 16:48:17 Z
-  updated_at: 2011-03-27 16:48:17 Z
+  created_at: 2011-03-27 18:13:05 Z
+  updated_at: 2011-03-27 18:13:05 Z
+  tax_reporting: Average Cost
+  budgeting: ""
+Short Term Gain - Short-Term  Investment Grade: 
+  name: Short Term Gain - Short-Term  Investment Grade
+  parent: Income
+  created_at: 2011-03-23 03:49:41.917145 Z
+  updated_at: 2011-03-23 03:49:41.917145 Z
   tax_reporting: Average Cost
   budgeting: ""
 Roth Conversion: 
   name: Roth Conversion
   parent: Income
-  created_at: 2011-03-27 16:48:17 Z
-  updated_at: 2011-03-27 16:48:17 Z
-  tax_reporting: 1040/L
-  budgeting: 
+  created_at: 2011-03-27 18:13:05 Z
+  updated_at: 2011-03-27 18:13:05 Z
+  tax_reporting: 1099-R2a
+  budgeting: ""
+Pension Employee Contributions: 
+  name: Pension Employee Contributions
+  parent: Income
+  created_at: 2011-03-23 02:03:21.629289 Z
+  updated_at: 2011-03-23 02:13:33.323046 Z
+  tax_reporting: 1099-R.5
+  budgeting: ACH
+Mortgage Interest: 
+  name: Mortgage Interest
+  parent: Expense
+  created_at: 2011-03-23 03:14:33.972740 Z
+  updated_at: 2011-03-23 03:14:33.972740 Z
+  tax_reporting: ""
+  budgeting: ACH
+Pension State Withholding: 
+  name: Pension State Withholding
+  parent: Expense
+  created_at: 2011-03-23 02:29:32.530041 Z
+  updated_at: 2011-03-23 02:29:32.530041 Z
+  tax_reporting: 1099-R.10
+  budgeting: ""
+Dividends Short-Term Investment-Grade: 
+  name: Dividends Short-Term Investment-Grade
+  parent: Income
+  created_at: 2011-03-23 03:28:39.421043 Z
+  updated_at: 2011-03-23 03:28:39.421043 Z
+  tax_reporting: 1099-DIV
+  budgeting: ""
+Dividends - Ameritrade: 
+  name: Dividends - Ameritrade
+  parent: Income
+  created_at: 2011-03-23 03:25:53.173992 Z
+  updated_at: 2011-03-23 03:25:53.173992 Z
+  tax_reporting: 1099-DIV
+  budgeting: ""
+Dividends Tax-Managed Small Cap: 
+  name: Dividends Tax-Managed Small Cap
+  parent: Income
+  created_at: 2011-03-23 03:32:29.128415 Z
+  updated_at: 2011-03-23 03:32:29.128415 Z
+  tax_reporting: 1099-DIV.1b
+  budgeting: ""
+Long Term Gain-Short Term Investment Grade: 
+  name: Long Term Gain-Short Term Investment Grade
+  parent: Income
+  created_at: 2011-03-23 03:51:26.112380 Z
+  updated_at: 2011-03-23 03:51:26.112380 Z
+  tax_reporting: Average Cost
+  budgeting: ""
+Kinecta Interest: 
+  name: Kinecta Interest
+  parent: Income
+  created_at: 2011-03-23 01:31:48.020860 Z
+  updated_at: 2011-03-23 02:31:46.497361 Z
+  tax_reporting: 1099-INT
+  budgeting: ""
+Dividends-Short-Term Bond Index: 
+  name: Dividends-Short-Term Bond Index
+  parent: Income
+  created_at: 2011-03-23 03:37:35.020027 Z
+  updated_at: 2011-03-23 03:37:35.020027 Z
+  tax_reporting: 1099-DIV.1a
+  budgeting: ""
+Pension Federal Withholding: 
+  name: Pension Federal Withholding
+  parent: Expense
+  created_at: 2011-03-23 02:00:21.368945 Z
+  updated_at: 2011-03-23 02:26:05.804550 Z
+  tax_reporting: 1099-R.4
+  budgeting: ACH
+Dividends Tax-Managed Capital Appreciation: 
+  name: Dividends Tax-Managed Capital Appreciation
+  parent: Expense
+  created_at: 2011-03-23 03:31:00.287477 Z
+  updated_at: 2011-03-23 03:31:00.287477 Z
+  tax_reporting: 1099-DIV.1b
+  budgeting: ""
+Treasury Direct Original Issue Discount: 
+  name: Treasury Direct Original Issue Discount
+  parent: Income
+  created_at: 2011-03-23 02:45:17.506746 Z
+  updated_at: 2011-03-23 02:45:17.506746 Z
+  tax_reporting: 1099-OID.5
+  budgeting: ""
+Treasury Direct Inflation Adjusted: 
+  name: Treasury Direct Inflation Adjusted
+  parent: Income
+  created_at: 2011-03-23 02:43:48.848781 Z
+  updated_at: 2011-03-23 02:43:48.848781 Z
+  tax_reporting: "1099.3"
+  budgeting: ""
+Admiral Money Market: 
+  name: Admiral Money Market
+  parent: Vanguard Taxable
+  created_at: 2011-02-10 20:08:56 Z
+  updated_at: 2011-03-03 20:55:43.108701 Z
+  tax_reporting: ""
+  budgeting: Monthly Cycle
+Pension Taxable: 
+  name: Pension Taxable
+  parent: Income
+  created_at: 2011-03-23 01:56:06.536421 Z
+  updated_at: 2011-03-23 02:14:51.806921 Z
+  tax_reporting: 1099-R.2b
+  budgeting: ACH
+Monthly Income: 
+  name: Monthly Income
+  parent: Sustainable Income
+  created_at: 2011-02-10 20:08:56 Z
+  updated_at: 2011-03-03 20:53:13.083569 Z
+  tax_reporting: L9
+  budgeting: ACH

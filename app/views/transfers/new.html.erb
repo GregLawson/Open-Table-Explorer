@@ -4,8 +4,8 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :account %><br />
-    <%= f.text_field :account %>
+    <%= f.label :account_id %><br />
+	<%= f.select(:account_id,options_from_collection_for_select(Account.all, :id, :name)) %>
   </p>
   <p>
     <%= f.label :amount %><br />
@@ -16,9 +16,6 @@
     <%= f.date_select :posted %>
   </p>
   
-  	<%= select_tag(:account_id,options_from_collection_for_select(Account.all, :id, :name)) %>
-	<% accounts_array = Account.all.map { |a| [a.name, a.id] } %>
-	<%= select_tag(:account_id, options_for_select(accounts_array)) %>
 
   
   <p>

@@ -1,6 +1,16 @@
 <p>
+  <b>Account_id:</b>
+  <%=h @transfer.account_id %>
+</p>
+
+<p>
   <b>Account:</b>
-  <%=h @transfer.account %>
+    <% if @transfer.account.nil? then %>
+      <% else %>
+	<%=h @transfer.account.name %>
+     <% end %>
+
+
 </p>
 
 <p>

@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Account_id</th>
     <th>Account</th>
     <th>Amount</th>
     <th>Posted</th>
@@ -9,8 +10,13 @@
 
 <% for transfer in @transfers %>
   <tr>
-    <td><%=h transfer.account %></td>
-    <td><%=h transfer.amount %></td>
+    <td><%=h transfer.account_id %></td>
+    <% if transfer.account.nil? then %>
+	<td></td>
+      <% else %>
+	<td><%=h transfer.account.name %></td>
+     <% end %>
+   <td><%=h transfer.amount %></td>
     <td><%=h transfer.posted %></td>
     <td><%= link_to 'Show', transfer %></td>
     <td><%= link_to 'Edit', edit_transfer_path(transfer) %></td>
