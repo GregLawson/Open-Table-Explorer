@@ -1,0 +1,33 @@
+<h1>Listing generic_types</h1>
+
+<table>
+  <tr>
+    <th>Search sequence</th>
+    <th>Import class</th>
+    <th>Rails type</th>
+    <th>Data regexp</th>
+    <th>Id</th>
+    <th>Ruby conversion</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @generic_types.each do |generic_type| %>
+  <tr>
+    <td><%= generic_type.search_sequence %></td>
+    <td><%= generic_type.import_class %></td>
+    <td><%= generic_type.rails_type %></td>
+    <td><%= generic_type.data_regexp %></td>
+    <td><%= generic_type.id %></td>
+    <td><%= generic_type.ruby_conversion %></td>
+    <td><%= link_to 'Show', generic_type %></td>
+    <td><%= link_to 'Edit', edit_generic_type_path(generic_type) %></td>
+    <td><%= link_to 'Destroy', generic_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Generic type', new_generic_type_path %>

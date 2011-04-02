@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>whoAmI (Global)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/global.rb, line 97</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-constant">Global</span>.<span class="ruby-identifier">whoAmI</span>(<span class="ruby-identifier">obj</span>,<span class="ruby-identifier">verbose</span>=<span class="ruby-keyword kw">false</span>)
+        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj=#{obj}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.class=#{obj.class}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.class.name=#{obj.class.name}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.to_s=#{obj.to_s}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.inspect=#{obj.inspect}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+<span class="ruby-comment cmt">#       puts(&quot;obj.object_id=#{obj.object_id}&quot;) if verbose</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:name</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.name=#{obj.name}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj has no name. obj.inspect=#{obj.inspect}.&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:human_name</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.model_name.collection=#{obj.model_name.collection}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.human_name=#{obj.human_name}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.model_name.element=#{obj.model_name.element}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.model_name.partial_path=#{obj.model_name.partial_path}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.model_name.plural=#{obj.model_name.plural}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.model_name.singular=#{obj.model_name.singular}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;noninherited_public_instance_methods(obj).inspect=#{noninherited_public_instance_methods(obj).inspect}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;noninherited_public_class_methods(obj).inspect=#{noninherited_public_class_methods(obj).inspect}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+                <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;#{obj} is nil.&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">==</span><span class="ruby-value str">'Symbol'</span> <span class="ruby-keyword kw">then</span>
+                <span class="ruby-comment cmt">#puts &quot;find_symbol(obj)=#{find_symbol(obj)}&quot;</span>
+                <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;Symbol :#{obj.to_s}has no superclass&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">==</span><span class="ruby-value str">'Module'</span> <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.name=#{obj.name}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;nesting.inspect=#{nesting.inspect}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;Module #{obj.name}&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:name</span>) <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.name=#{obj.name}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:superclass</span>) <span class="ruby-keyword kw">then</span>
+                                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.superclass=#{obj.superclass}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                                <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;obj.superclass.name=#{obj.superclass.name}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
+                                <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;Class #{obj.name} subclass of #{obj.superclass.name}&quot;</span>
+                        <span class="ruby-keyword kw">else</span>
+                                <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;obj Class #{obj.name} has no superclass.&quot;</span>
+                        <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">else</span>
+                        <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;obj.inspect=#{obj.inspect} has no name.&quot;</span>
+                <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

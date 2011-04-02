@@ -1,0 +1,23 @@
+<p>
+  <b>Parameter:</b>
+  <%=h @param.parameter %>
+</p>
+
+<p>
+  <b>Import type:</b>
+  <%=h @param.import_type %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%=h @param.value %>
+</p>
+
+<p>
+  <b>Formula:</b>
+  <%=h @param.formula %>
+</p>
+
+
+<%= link_to 'Edit', edit_param_path(@param) %> |
+<%= link_to 'Back', params_path %>

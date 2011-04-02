@@ -1,0 +1,3098 @@
+--- 
+one: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: North east outlet
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "157"
+  background: t
+  id: "235"
+  parent_node: "24"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Mitsubishi stereo
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_029: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: radio
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "43"
+  background: f
+  id: "125"
+  parent_node: "43"
+  computer_common: f
+  recorder: f
+  volatile: t
+  description: Alan's radio
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_086: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: DSL, router, hub plug bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "100"
+  background: t
+  id: "180"
+  parent_node: "136"
+  computer_common: f
+  recorder: t
+  volatile: f
+  description: Linksys WRT-54G
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "135"
+loads_057: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "72"
+  background: f
+  id: "153"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Massage chair
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_112: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Front garage door
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "126"
+  background: t
+  id: "206"
+  parent_node: "8"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Sprinkler controller
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_142: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric top plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "158"
+  background: t
+  id: "236"
+  parent_node: "129"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric PSP charger
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_087: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "101"
+  background: t
+  id: "181"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Monoprice HDMI switch
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_058: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "74"
+  background: f
+  id: "154"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Pole light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_113: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Front garage door
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "127"
+  background: f
+  id: "207"
+  parent_node: "8"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Sprinkler controller
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_143: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric top plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "159"
+  background: f
+  id: "237"
+  parent_node: "129"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric desk light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_088: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "102"
+  background: t
+  id: "182"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: HP 3210xi Printer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_001: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Dishwasher
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "6"
+  background: f
+  id: "96"
+  parent_node: "6"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dishwasher
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_059: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: B5
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "75"
+  background: f
+  id: "155"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Battery charger plug bar
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_114: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "128"
+  background: f
+  id: "208"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Desk light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_144: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: Eric botom plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "160"
+  background: f
+  id: "238"
+  parent_node: "130"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric TV
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_115: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "129"
+  background: t
+  id: "209"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: TED5000 display
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_030: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: air conditioner
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "45"
+  background: f
+  id: "126"
+  parent_node: "36"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: AC full on (560W to 2000W)
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_089: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "103"
+  background: f
+  id: "183"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: HP 3210xi Printer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_116: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Porch light
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "130"
+  background: f
+  id: "210"
+  parent_node: "59"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: "Porch light: 3x15W"
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_031: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: air conditioner
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "46"
+  background: f
+  id: "127"
+  parent_node: "36"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: AC fan mid speed
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_002: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: A3
+  parent_description: Exhaust fan
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "7"
+  background: f
+  id: "97"
+  parent_node: "7"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Front hall Exhaust fan
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_145: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric botom plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "161"
+  background: t
+  id: "239"
+  parent_node: "130"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric speakers
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_117: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Bathroom fan switch
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "131"
+  background: f
+  id: "211"
+  parent_node: "60"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Bathroom fan, breaker 2
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_032: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: air conditioner
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "47"
+  background: t
+  id: "128"
+  parent_node: "36"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: AC vent mid speed
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_003: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Front garage door
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "8"
+  background: f
+  id: "98"
+  parent_node: "8"
+  computer_common: f
+  recorder: f
+  volatile: t
+  description: Front garage door
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_060: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "76"
+  background: f
+  id: "156"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Massage chair
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_146: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Eric botom plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "162"
+  background: t
+  id: "240"
+  parent_node: "130"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric printer
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "35"
+loads_118: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: B8
+  parent_description: Alan's ceiling light
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "132"
+  background: f
+  id: "212"
+  parent_node: "61"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Alan's light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_004: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Spa
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "10"
+  background: f
+  id: "100"
+  parent_node: "10"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Spa pump, no heat
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_061: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "77"
+  background: f
+  id: "157"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Panasonic battery charger 4 Aas
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_033: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: air conditioner
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "48"
+  background: f
+  id: "129"
+  parent_node: "36"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: AC vent low speed
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_147: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric botom plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "163"
+  background: t
+  id: "241"
+  parent_node: "130"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric clock (radio?)
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_119: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: B3
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "133"
+  background: f
+  id: "213"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Shapely lantern
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_005: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Patio outlets
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "12"
+  background: f
+  id: "101"
+  parent_node: "12"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Patio outlets
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_090: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "104"
+  background: f
+  id: "184"
+  parent_node: "124"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: GQ2000
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_062: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "78"
+  background: f
+  id: "158"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Small magnifier light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_034: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: air conditioner
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "49"
+  background: f
+  id: "130"
+  parent_node: "36"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: AC vent high speed
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_148: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric botom plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "164"
+  background: t
+  id: "242"
+  parent_node: "130"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric monitor
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_006: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: 2 x 4 tube florescent fixture
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "13"
+  background: f
+  id: "102"
+  parent_node: "13"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 2 x 4 x 40W tube florescent fixture
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_091: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "105"
+  background: f
+  id: "185"
+  parent_node: "127"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dell LCD full video
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "122"
+loads_063: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "79"
+  background: t
+  id: "159"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Durabuilt battery charger
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_149: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric botom plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "165"
+  background: f
+  id: "243"
+  parent_node: "130"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric monitor
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_007: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: 3 angled standard bulb threads
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "14"
+  background: f
+  id: "103"
+  parent_node: "14"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 3 x 13W compact florescent
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_092: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #4 outlet bar, 5 DVD"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "106"
+  background: f
+  id: "186"
+  parent_node: "126"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Panasonic 5 DVD player
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_064: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "80"
+  background: f
+  id: "160"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Durabuilt battery charger charging
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_035: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "50"
+  background: t
+  id: "131"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dell laptop on and charging
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_120: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "134"
+  background: f
+  id: "214"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: South outlet bar
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_008: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: A1
+  parent_description: 3 angled standard bulb threads
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "15"
+  background: f
+  id: "104"
+  parent_node: "15"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 3 x 15W dimmable floods
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_093: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "107"
+  background: t
+  id: "187"
+  parent_node: "127"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Mitsubishi VCR
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_065: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "81"
+  background: f
+  id: "161"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: radio
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_036: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric botom plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "51"
+  background: t
+  id: "132"
+  parent_node: "130"
+  computer_common: f
+  recorder: f
+  volatile: t
+  description: Eric  router, modem, ether switch
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_121: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "136"
+  background: t
+  id: "215"
+  parent_node: "127"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Kenwood Receiver
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_009: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: 8 horizontal lamp threads
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "16"
+  background: f
+  id: "105"
+  parent_node: "16"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 8 x W globe florescents
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_094: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "108"
+  background: f
+  id: "188"
+  parent_node: "127"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: TEAC audio mixer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_066: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: B7
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "82"
+  background: f
+  id: "162"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Ikea hanging light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_037: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Eric top plug outlet bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "52"
+  background: f
+  id: "133"
+  parent_node: "129"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric   computer ( 6W-160 W- 220W)
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "35"
+loads_150: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "167"
+  background: t
+  id: "244"
+  parent_node: "123"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Beta VCR, Sony
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_122: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: EMI/RFI/Surge_Protector
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "137"
+  background: f
+  id: "216"
+  parent_node: "120"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Greg bed light
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "41"
+loads_095: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "109"
+  background: t
+  id: "189"
+  parent_node: "124"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dell LCD  no video?
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: t
+  plug_in_location: "122"
+loads_067: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "83"
+  background: f
+  id: "163"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Duracell battery charger $ Aas
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_038: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: sewing machine
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "53"
+  background: t
+  id: "134"
+  parent_node: "44"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric laptop, 50W full charge, less screen bright 44W, close lid 35-1W)
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_151: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: H1
+  parent_description: spa GFCI
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "168"
+  background: f
+  id: "245"
+  parent_node: "45"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Spa UV light
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_039: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: fan and light
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "54"
+  background: t
+  id: "135"
+  parent_node: "46"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_096: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "110"
+  background: t
+  id: "190"
+  parent_node: "125"
+  computer_common: f
+  recorder: t
+  volatile: t
+  description: Phillips DVR loading
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_152: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: B4
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "169"
+  background: f
+  id: "246"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 4 port Ethernet switch NetGear?
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_123: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: EMI/RFI/Surge_Protector
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "138"
+  background: t
+  id: "217"
+  parent_node: "120"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: My book 1TG USB drive
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "41"
+loads_010: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: 3 slanted lamp threads
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "17"
+  background: f
+  id: "106"
+  parent_node: "17"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 3 x 60W
+  motion_savings: t
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_068: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "84"
+  background: f
+  id: "164"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dremel battery charger charging
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_097: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: toaster oven
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "111"
+  background: f
+  id: "191"
+  parent_node: "47"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Bullet blender
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_153: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "170"
+  background: f
+  id: "247"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Energy Detective Gateway
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_124: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: EMI/RFI/Surge_Protector
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "139"
+  background: t
+  id: "218"
+  parent_node: "120"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: USB-2 hub, 7 ports
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "41"
+loads_011: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: 1 vertical lamp threads
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "18"
+  background: f
+  id: "107"
+  parent_node: "18"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 1 13W compact florescent
+  motion_savings: t
+  away_savings: f
+  bedtime_savings: t
+  plug_in_location: 
+loads_069: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "85"
+  background: f
+  id: "165"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Massage chair
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_098: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Door bell
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "112"
+  background: t
+  id: "192"
+  parent_node: "51"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Door bell (lit button)
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_154: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: DSL, router, hub plug bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "171"
+  background: f
+  id: "248"
+  parent_node: "136"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: DSL modem
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "135"
+loads_125: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: Ikea mini 3 outlet plug bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "141"
+  background: t
+  id: "219"
+  parent_node: "128"
+  computer_common: t
+  recorder: t
+  volatile: f
+  description: "Iomega ScreenPlay HD Pro #5"
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "125"
+loads_040: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: fan and light
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "55"
+  background: t
+  id: "136"
+  parent_node: "46"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric fan
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_099: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: toaster oven
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "113"
+  background: t
+  id: "193"
+  parent_node: "47"
+  computer_common: f
+  recorder: f
+  volatile: t
+  description: Stove clock
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_012: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: 8 horizontal lamp threads
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "19"
+  background: f
+  id: "108"
+  parent_node: "19"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 8 x 13W compact florescent
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: f
+  plug_in_location: 
+loads_155: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: DSL, router, hub plug bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "172"
+  background: f
+  id: "249"
+  parent_node: "136"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: 16 port Ethernet switch
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "135"
+loads_126: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: EMI/RFI/Surge_Protector
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "142"
+  background: f
+  id: "220"
+  parent_node: "120"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Panasonic 5 CD, 2 tape Stereo system
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "41"
+loads_041: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "56"
+  background: f
+  id: "137"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dell laptop Sleep mode
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_127: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "143"
+  background: t
+  id: "221"
+  parent_node: "125"
+  computer_common: f
+  recorder: t
+  volatile: f
+  description: DTV converter, Airlink
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_070: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: South wall behind massage chair
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "86"
+  background: f
+  id: "166"
+  parent_node: "37"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Shredder
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_042: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall plug, fan
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "57"
+  background: f
+  id: "138"
+  parent_node: "38"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Window fan low
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_013: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Electric range
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "21"
+  background: f
+  id: "109"
+  parent_node: "21"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Electric range
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_156: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: DSL, router, hub plug bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "173"
+  background: f
+  id: "250"
+  parent_node: "136"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Web Box for SMA inverter
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "135"
+loads_128: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "144"
+  background: f
+  id: "222"
+  parent_node: "127"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Play Time HD multmedia player
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_071: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "87"
+  background: t
+  id: "167"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Roomba docking rapid charger
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_043: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall plug, fan
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "58"
+  background: f
+  id: "139"
+  parent_node: "38"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Window fan medium
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_014: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: "sub panel fuse #1, lights"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "22"
+  background: f
+  id: "110"
+  parent_node: "22"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: garage sub panel
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_157: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: H2
+  parent_description: spa GFCI
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "174"
+  background: f
+  id: "251"
+  parent_node: "45"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Spa thermostat shut-off over-ride
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_129: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Ikea mini 3 outlet plug bar
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "145"
+  background: t
+  id: "223"
+  parent_node: "128"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Clock, projection
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "125"
+loads_072: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "88"
+  background: t
+  id: "168"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Roomba docking rapid charger
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_044: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall plug, fan
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "59"
+  background: f
+  id: "140"
+  parent_node: "38"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Window fan high
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_015: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: "garage door and West receptacle, fuse #2"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "23"
+  background: f
+  id: "111"
+  parent_node: "23"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: including garage door
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_158: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Kitchen exhaust fan
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "175"
+  background: f
+  id: "252"
+  parent_node: "138"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Kitchen exhaust fan
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_073: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "89"
+  background: t
+  id: "169"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Mac isolation transformer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_045: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: toaster oven
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "60"
+  background: f
+  id: "141"
+  parent_node: "47"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Toaster oven
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_100: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Alan's computer
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "114"
+  background: t
+  id: "194"
+  parent_node: "32"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Alan's computer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_016: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: North east outlet
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "24"
+  background: f
+  id: "112"
+  parent_node: "24"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: North east outlet
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_159: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: 
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "176"
+  background: f
+  id: "253"
+  parent_node: 
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Breakfast bar track light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_074: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "90"
+  background: f
+  id: "170"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Mac
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_017: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: East wall
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "26"
+  background: f
+  id: "113"
+  parent_node: "26"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Bread maker
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_130: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "146"
+  background: t
+  id: "224"
+  parent_node: "125"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Weather Radio
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_046: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Washer and dryer receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "61"
+  background: f
+  id: "142"
+  parent_node: "27"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Washer on filling
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_101: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: North wall plug, fan
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "115"
+  background: t
+  id: "195"
+  parent_node: "38"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: North wall TV
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_018: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: B2
+  parent_description: Couch outlet
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "28"
+  background: f
+  id: "114"
+  parent_node: "28"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Couch light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_075: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "91"
+  background: t
+  id: "171"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dazzler idling
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_131: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "147"
+  background: f
+  id: "225"
+  parent_node: "125"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Weather Radio
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_047: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Washer and dryer receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "62"
+  background: f
+  id: "143"
+  parent_node: "27"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Washer spin dry
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_102: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: Flat plug, 2+1 extension cord
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "116"
+  background: f
+  id: "196"
+  parent_node: "135"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Visio LCD TV
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "40"
+loads_019: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Attic
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "30"
+  background: f
+  id: "115"
+  parent_node: "30"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Attic ceiling light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_076: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "92"
+  background: f
+  id: "172"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Mac powering on
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_160: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: 
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "177"
+  background: f
+  id: "254"
+  parent_node: 
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dining room ceiling fan
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_132: 
+  audio_video: t
+  timer_savings: f
+  x_10_address: 
+  parent_description: "Switch #3 outlet bar, Philips"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "148"
+  background: f
+  id: "226"
+  parent_node: "125"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: DTV converter, Airlink
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_048: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Washer and dryer receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "63"
+  background: f
+  id: "144"
+  parent_node: "27"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Washer on
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_103: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: Flat plug, 2+1 extension cord
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "117"
+  background: f
+  id: "197"
+  parent_node: "135"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Visio LCD TV
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "40"
+loads_077: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "93"
+  background: f
+  id: "173"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Mac logged on
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_161: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "178"
+  background: f
+  id: "255"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Brother PC label printer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_133: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Ikea mini 3 outlet plug bar
+  plug_width: Double_width
+  daylight_savings_adjustment: f
+  node: "149"
+  background: t
+  id: "227"
+  parent_node: "128"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Panasonic cordless phone
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "125"
+loads_049: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Washer and dryer receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "64"
+  background: f
+  id: "145"
+  parent_node: "27"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dryer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_104: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall with TV
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "118"
+  background: f
+  id: "198"
+  parent_node: "52"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: TV
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_078: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "94"
+  background: t
+  id: "174"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Antenna rotator
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_162: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: A
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "5"
+  background: f
+  id: "95"
+  parent_node: "5"
+  computer_common: f
+  recorder: t
+  volatile: t
+  description: Telephone and answering machine
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_105: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall with TV
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "119"
+  background: t
+  id: "199"
+  parent_node: "52"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Playstation 2
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_020: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: near opening and switch
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "31"
+  background: f
+  id: "116"
+  parent_node: "31"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: attic receptacle
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_163: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Ceiling light with plug adaptor
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "2"
+  background: f
+  id: "93"
+  parent_node: "1"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Ceiling light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_134: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "150"
+  background: f
+  id: "228"
+  parent_node: "124"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Emachines computer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_106: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall with TV
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "120"
+  background: t
+  id: "200"
+  parent_node: "52"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Liteon DVD player
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_021: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: computer
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "32"
+  background: f
+  id: "117"
+  parent_node: "35"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Eric's computer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_079: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "95"
+  background: f
+  id: "175"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Antenna rotator rotating
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_135: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #2 outlet bar, computers, KVM"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "151"
+  background: f
+  id: "229"
+  parent_node: "124"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Belkin KVM live
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "122"
+loads_107: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall with TV
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "121"
+  background: t
+  id: "201"
+  parent_node: "52"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Panasonic VCR
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_050: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Washer and dryer receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "65"
+  background: f
+  id: "146"
+  parent_node: "27"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dryer spinning
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_022: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: GFCI
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "33"
+  background: f
+  id: "118"
+  parent_node: "33"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: back bathroom receptacle
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_136: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "152"
+  background: f
+  id: "230"
+  parent_node: "127"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Sahara computer
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: "122"
+loads_108: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Water heater enclosure
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "122"
+  background: t
+  id: "202"
+  parent_node: "57"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Water heater recirculation pump
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_051: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Refrigerator
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "66"
+  background: f
+  id: "147"
+  parent_node: "3"
+  computer_common: f
+  recorder: f
+  volatile: t
+  description: Microwave oven
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_023: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Right GFCI
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "34"
+  background: f
+  id: "119"
+  parent_node: "34"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: front bathroom receptacle
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_137: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "153"
+  background: t
+  id: "231"
+  parent_node: "123"
+  computer_common: t
+  recorder: f
+  volatile: f
+  description: video splitter x 8
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "122"
+loads_052: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Refrigerator
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "67"
+  background: f
+  id: "148"
+  parent_node: "3"
+  computer_common: f
+  recorder: f
+  volatile: t
+  description: Microwave oven
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_080: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Refrigerator, microwave, telephone, LR N outlet
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "9"
+  background: f
+  id: "99"
+  parent_node: "9"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: car battery charger
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_109: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Front garage door
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "123"
+  background: t
+  id: "203"
+  parent_node: "8"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Front garage door
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_138: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "154"
+  background: t
+  id: "232"
+  parent_node: "123"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: component video switching
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "122"
+loads_053: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Refrigerator
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "68"
+  background: f
+  id: "149"
+  parent_node: "3"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Refridgerator
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_024: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: air conditioner
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "36"
+  background: f
+  id: "120"
+  parent_node: "36"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: air conditioner
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_081: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: Sconce
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "2"
+  background: f
+  id: "94"
+  parent_node: "2"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Sconce 2 37W bulbs
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_139: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #1 outlet bar, splitter"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "155"
+  background: f
+  id: "233"
+  parent_node: "123"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Beta VCR, Sony
+  motion_savings: t
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "122"
+loads_025: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: West wall near desk
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "37"
+  background: f
+  id: "121"
+  parent_node: "50"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Dell laptop
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_082: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "96"
+  background: t
+  id: "176"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Toshiba DVD recorder
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_054: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Refrigerator
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "69"
+  background: f
+  id: "150"
+  parent_node: "3"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Refridgerator door light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_110: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Front garage door
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "124"
+  background: f
+  id: "204"
+  parent_node: "8"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Front garage door light
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_026: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: North wall plug, fan
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "38"
+  background: f
+  id: "122"
+  parent_node: "38"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: North wall plug, fan
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_083: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "97"
+  background: f
+  id: "177"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Toshiba DVD recorder
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_055: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Refrigerator
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "70"
+  background: f
+  id: "151"
+  parent_node: "3"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Refridgerator compressor on
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_027: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: back
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "39"
+  background: f
+  id: "123"
+  parent_node: "39"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: back porch light
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: 
+loads_084: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "98"
+  background: t
+  id: "178"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Panasonic DVD recorder
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_056: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Switched garbage disposal
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "71"
+  background: f
+  id: "152"
+  parent_node: "48"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Garbage disposal
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_111: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: Front garage door
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "125"
+  background: t
+  id: "205"
+  parent_node: "8"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Front keyless entry
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_140: 
+  audio_video: f
+  timer_savings: t
+  x_10_address: 
+  parent_description: "Switch #5 outlet bar, Kenwood"
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "156"
+  background: t
+  id: "234"
+  parent_node: "127"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: IBM computer
+  motion_savings: f
+  away_savings: t
+  bedtime_savings: t
+  plug_in_location: "122"
+loads_028: 
+  audio_video: f
+  timer_savings: f
+  x_10_address: 
+  parent_description: electronic & computer racks
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "40"
+  background: f
+  id: "124"
+  parent_node: "40"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Greg computers
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 
+loads_085: 
+  audio_video: t
+  timer_savings: t
+  x_10_address: 
+  parent_description: new receptacle
+  plug_width: 
+  daylight_savings_adjustment: f
+  node: "99"
+  background: f
+  id: "179"
+  parent_node: "42"
+  computer_common: f
+  recorder: f
+  volatile: f
+  description: Panasonic DVD recorder
+  motion_savings: f
+  away_savings: f
+  bedtime_savings: f
+  plug_in_location: 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>table2yaml (Global)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/global.rb, line 193</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table2yaml</span>(<span class="ruby-identifier">table_name</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>)
+        <span class="ruby-identifier">i</span> = <span class="ruby-value str">&quot;000&quot;</span>
+        <span class="ruby-identifier">limit</span>=<span class="ruby-value">100</span>
+        <span class="ruby-identifier">sql</span>  = <span class="ruby-node">&quot;SELECT * FROM %s LIMIT #{limit}&quot;</span>
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;test/fixtures/#{table_name}.yml.gen&quot;</span>, <span class="ruby-value str">'w'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">data</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">limit</span>(<span class="ruby-identifier">limit</span>).<span class="ruby-identifier">all</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;data.inspect=#{data.inspect}&quot;</span>
+                 <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">inject</span>({}) { <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>, <span class="ruby-identifier">record</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">primaryKeyValue</span>=<span class="ruby-identifier">record</span>.<span class="ruby-identifier">logical_primary_key</span>
+                        <span class="ruby-identifier">record</span>=<span class="ruby-identifier">record</span>.<span class="ruby-identifier">attributes</span>
+                        <span class="ruby-identifier">record</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'id'</span>) 
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;record.inspect=#{record.inspect}&quot;</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;record.to_yaml.inspect=#{record.to_yaml.inspect}&quot;</span>
+                        <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">primaryKeyValue</span>] = <span class="ruby-identifier">record</span>
+                        <span class="ruby-identifier">hash</span>
+                }.<span class="ruby-identifier">to_yaml</span>
+        <span class="ruby-keyword kw">end</span><span class="ruby-comment cmt"># file open</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

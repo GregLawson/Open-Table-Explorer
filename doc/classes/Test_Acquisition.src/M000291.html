@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_new_model (Test_Acquisition)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/ts_acquisition.rb, line 33</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_new_model</span>
+        <span class="ruby-identifier">defaultAttributes</span>={<span class="ruby-identifier">:model_class_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'nmap'</span>,
+                <span class="ruby-identifier">:min_seconds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">3600</span>,
+                 <span class="ruby-identifier">:max_seconds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">24</span><span class="ruby-operator">*</span><span class="ruby-value">3600</span>,
+                 <span class="ruby-identifier">:scheduled_time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>,
+                 <span class="ruby-identifier">:merge</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'table'</span>,
+                 <span class="ruby-identifier">:file_caching</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'DB'</span>}
+        <span class="ruby-identifier">command</span>=<span class="ruby-value str">'nmap 192.168.3.1-254'</span>
+        <span class="ruby-identifier">stream_attributes</span>={<span class="ruby-identifier">:acquisition_interface</span> =<span class="ruby-operator">&gt;</span><span class="ruby-value str">'Shell_Acquisition'</span>,<span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span>  <span class="ruby-identifier">command</span>}
+        <span class="ruby-identifier">network</span>=<span class="ruby-constant">Table_spec</span>.<span class="ruby-identifier">find_by_model_class_name</span>(<span class="ruby-identifier">defaultAttributes</span>[<span class="ruby-identifier">:model_class_name</span>])
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">network</span> <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">network</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">defaultAttributes</span>)
+                <span class="ruby-identifier">stream</span>=<span class="ruby-identifier">network</span>.<span class="ruby-identifier">acquisition_stream_specs</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span><span class="ruby-identifier">stream_attributes</span>)
+                <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">stream</span> <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-identifier">network</span>.<span class="ruby-identifier">acquisition_stream_specs</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">stream_attributes</span>)
+                        <span class="ruby-identifier">network</span>.<span class="ruby-identifier">acquisition_stream_specs</span>.<span class="ruby-identifier">save</span>
+                <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">network</span>=<span class="ruby-constant">Table_spec</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">defaultAttributes</span>)
+                <span class="ruby-identifier">stream</span>=<span class="ruby-identifier">network</span>.<span class="ruby-identifier">acquisition_stream_specs</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span><span class="ruby-identifier">stream_attributes</span>)
+                <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">stream</span> <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-identifier">network</span>.<span class="ruby-identifier">acquisition_stream_specs</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">stream_attributes</span>)
+                <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#if</span>
+<span class="ruby-comment cmt">#       testAnswer(Shell_Acquisition.new,:acquire,[command,&quot;cat\n&quot;],command)</span>
+<span class="ruby-comment cmt">#        testAnswer(network,:acquire,[[command,&quot;cat\n&quot;]])</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

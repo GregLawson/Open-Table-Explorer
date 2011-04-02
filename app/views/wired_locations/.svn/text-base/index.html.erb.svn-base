@@ -1,0 +1,36 @@
+<h1>Listing wired_locations</h1>
+
+<table>
+  <tr>
+    <th>Node</th>
+    <th>Description</th>
+    <th>Parent node</th>
+    <th>Parent description</th>
+    <th>Room</th>
+    <th>Wall</th>
+    <th>Type</th>
+    <th>Ground test light</th>
+    <th>Id</th>
+  </tr>
+
+<% for wired_location in @wired_locations %>
+  <tr>
+    <td><%=h wired_location.node %></td>
+    <td><%=h wired_location.description %></td>
+    <td><%=h wired_location.parent_node %></td>
+    <td><%=h wired_location.parent_description %></td>
+    <td><%=h wired_location.room %></td>
+    <td><%=h wired_location.wall %></td>
+    <td><%=h wired_location.type %></td>
+    <td><%=h wired_location.ground_test_light %></td>
+    <td><%=h wired_location.id %></td>
+    <td><%= link_to 'Show', wired_location %></td>
+    <td><%= link_to 'Edit', edit_wired_location_path(wired_location) %></td>
+    <td><%= link_to 'Destroy', wired_location, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New wired_location', new_wired_location_path %>

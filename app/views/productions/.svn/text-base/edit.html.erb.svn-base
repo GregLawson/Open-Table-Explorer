@@ -1,0 +1,16 @@
+<h1>Editing production</h1>
+
+<% form_for(@production) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :power %><br />
+    <%= f.text_field :power %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @production %> |
+<%= link_to 'Back', productions_path %>

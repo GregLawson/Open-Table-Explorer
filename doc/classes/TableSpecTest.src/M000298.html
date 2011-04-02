@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>find_fixture (TableSpecTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/table_spec_test.rb, line 9</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_fixture</span>
+        <span class="ruby-comment cmt">#~ puts &quot;name=#{Global.objectName(table_specs(:MULTIPLE_WEATHER))}&quot;</span>
+        <span class="ruby-comment cmt">#~ puts &quot;class=#{Global.objectClass(table_specs(:MULTIPLE_WEATHER))}&quot;</span>
+        <span class="ruby-comment cmt">#~ puts Global.canonicalName(table_specs(:MULTIPLE_WEATHER),verbose=true)</span>
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">fixture_names</span>,[<span class="ruby-value str">&quot;weathers&quot;</span>, <span class="ruby-value str">&quot;edisons&quot;</span>, <span class="ruby-value str">&quot;breakers&quot;</span>,<span class="ruby-value str">&quot;acquisition_stream_specs&quot;</span>, <span class="ruby-value str">&quot;measurements&quot;</span>,<span class="ruby-value str">&quot;transactions&quot;</span>, <span class="ruby-value str">&quot;routers&quot;</span>, <span class="ruby-value str">&quot;parse_specs&quot;</span>, <span class="ruby-value str">&quot;loads&quot;</span>, <span class="ruby-value str">&quot;urls&quot;</span>, <span class="ruby-value str">&quot;stations&quot;</span>, <span class="ruby-value str">&quot;schema_migrations&quot;</span>,<span class="ruby-value str">&quot;parameters&quot;</span>,<span class="ruby-value str">&quot;acquisition_interfaces&quot;</span>, <span class="ruby-value str">&quot;tedprimaries&quot;</span>,<span class="ruby-value str">&quot;huelseries&quot;</span>, <span class="ruby-value str">&quot;hosts&quot;</span>,<span class="ruby-value str">&quot;frequencies&quot;</span>, <span class="ruby-value str">&quot;example_types&quot;</span>,<span class="ruby-value str">&quot;example_acquisitions&quot;</span>, <span class="ruby-value str">&quot;postgresql2rails&quot;</span>, <span class="ruby-value str">&quot;productions&quot;</span>, <span class="ruby-value str">&quot;huelshows&quot;</span>, <span class="ruby-value str">&quot;accounts&quot;</span>, <span class="ruby-value str">&quot;ports&quot;</span>,<span class="ruby-value str">&quot;table_specs&quot;</span>, <span class="ruby-value str">&quot;production_ftps&quot;</span>,<span class="ruby-value str">&quot;postgresql2import&quot;</span>, <span class="ruby-value str">&quot;networks&quot;</span>, <span class="ruby-value str">&quot;nodes&quot;</span>,<span class="ruby-value str">&quot;acquisitions&quot;</span>, <span class="ruby-value str">&quot;transfers&quot;</span>, <span class="ruby-value str">&quot;params&quot;</span>, <span class="ruby-value str">&quot;generic_types&quot;</span>, <span class="ruby-value str">&quot;bugs&quot;</span>, <span class="ruby-value str">&quot;wired_locations&quot;</span>])
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">record_keys</span>(<span class="ruby-value str">'table_specs'</span>),[<span class="ruby-value str">&quot;huell_schedule&quot;</span>,<span class="ruby-value str">&quot;TEDWebBoxFull&quot;</span>,<span class="ruby-value str">&quot;nmap&quot;</span>,<span class="ruby-value str">&quot;Network&quot;</span>,<span class="ruby-value str">&quot;MULTIPLE_WEATHER&quot;</span>])
+
+        <span class="ruby-comment cmt">#~ fixture=fixtures.send(:[],:MULTIPLE_WEATHER)</span>
+        <span class="ruby-comment cmt">#~ assert_equal(table_specs(:MULTIPLE_WEATHER),fixture)</span>
+        <span class="ruby-comment cmt">#~ fixtures=self.send(:table_specs)</span>
+        <span class="ruby-comment cmt">#~ assert_not_nil(fixtures)</span>
+        <span class="ruby-comment cmt">#~ assert_instance_of(Array,fixtures)</span>
+        <span class="ruby-comment cmt">#~ assert_equal(fixtures,@my_fixtures)</span>
+        <span class="ruby-comment cmt">#~ assert_respond_to(self,:table_specs)</span>
+                
+<span class="ruby-comment cmt">#       assert_public_instance_method(self,:table_specs)</span>
+        <span class="ruby-comment cmt">#~ explain_assert_respond_to(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)</span>
+        <span class="ruby-comment cmt">#~ assert(TableSpec.instance_methods(false).include?('acquisition_stream_specs'),&quot;TableSpec.instance_methods(false).include?('acquisition_stream_specs')&quot;)</span>
+        <span class="ruby-comment cmt">#~ assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))</span>
+
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures.inspect=#{ @loaded_fixtures.inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].inspect=#{ @loaded_fixtures['table_specs'].inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].at(0).inspect=#{ @loaded_fixtures['table_specs'].at(0).inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].at(0).at(1).inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].at(0).at(1).instance_methods.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_methods.inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect}&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot; @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect}&quot;</span>
+        <span class="ruby-ivar">@my_fixtures</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">my_fixture</span><span class="ruby-operator">|</span>
+                <span class="ruby-comment cmt">#~ puts &quot;matching_methods(acquisition_stream_specs(:MULTIPLE_WEATHER),/^acquisition_stream_spec/)).inspect=#{matching_methods(my_fixture,/^acquisition_stream_spec/).inspect}&quot;</span>
+                <span class="ruby-comment cmt">#~ puts &quot;similar_methods(@my_fixture,:acquisition_stream_specs).inspect=#{similar_methods(my_fixture,:acquisition_stream_specs).inspect}&quot;</span>
+                <span class="ruby-comment cmt">#~ puts &quot;similar_methods(acquisition_stream_specs(:one),:table_spec)=#{similar_methods(acquisition_stream_specs(:one),:table_spec)}&quot;</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#each</span>
+        <span class="ruby-ivar">@my_fixtures</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">my_fixture</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">assert_my_foreign_key_points_to_correct_id</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">:frequency</span>)
+                <span class="ruby-identifier">assert_foreign_key_points_to_me</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">:acquisition_stream_specs</span>)
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#each</span>
+        <span class="ruby-ivar">@fixture_names</span>=<span class="ruby-ivar">@loaded_fixtures</span>.<span class="ruby-identifier">keys</span>
+<span class="ruby-comment cmt">#       puts &quot; @fixture_names.inspect=#{ @fixture_names.inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures.inspect=#{ @loaded_fixtures.inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].inspect=#{ @loaded_fixtures['table_specs'].inspect}&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot; @loaded_fixtures['table_specs'].at(0).inspect=#{ @loaded_fixtures['table_specs'].at(0).inspect}&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot; @loaded_fixtures['table_specs'].at(0).at(1).inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).instance_variables.inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect}&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot; @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).model_class.inspect}&quot;</span>
+<span class="ruby-comment cmt">#       puts &quot; @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect=#{ @loaded_fixtures['table_specs'].at(0).at(1).fixture.inspect}&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;matching_methods(self,/.*_spec$/).inspect=#{matching_methods(self,/_spec/).inspect}&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;instance_variables.inspect=#{instance_variables.inspect}&quot;</span>
+        <span class="ruby-comment cmt">#~ @my_fixtures=@record_keys.collect do |rk|</span>
+                <span class="ruby-comment cmt">#~ table_specs(rk)</span>
+        <span class="ruby-comment cmt">#~ end #each</span>
+<span class="ruby-comment cmt">#       puts &quot;@possible_foreign_keys=#{@possible_foreign_keys.inspect}&quot;       </span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

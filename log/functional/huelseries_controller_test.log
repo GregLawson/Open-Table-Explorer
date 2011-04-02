@@ -1,0 +1,41 @@
+Loaded suite test/functional/huelseries_controller_test
+Started
+EEEEEEE
+Finished in 12.507702 seconds.
+
+  1) Error:
+test_should_create_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  2) Error:
+test_should_destroy_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  3) Error:
+test_should_get_edit(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  4) Error:
+test_should_get_index(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  5) Error:
+test_should_get_new(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  6) Error:
+test_should_show_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+  7) Error:
+test_should_update_huelseries(HuelseriesControllerTest):
+FixtureClassNotFound: No class attached to find.
+    test/functional/huelseries_controller_test.rb:5:in `_callback_before_101'
+
+7 tests, 0 assertions, 0 failures, 7 errors

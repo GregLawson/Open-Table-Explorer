@@ -1,0 +1,88 @@
+<p>
+  <b>Node:</b>
+  <%=h @loads.node %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @loads.description %>
+</p>
+
+<p>
+  <b>Parent node:</b>
+  <%=h @loads.parent_node %>
+</p>
+
+<p>
+  <b>Parent description:</b>
+  <%=h @loads.parent_description %>
+</p>
+
+<p>
+  <b>Plug in location:</b>
+  <%=h @loads.plug_in_location %>
+</p>
+
+<p>
+  <b>X 10 address:</b>
+  <%=h @loads.x_10_address %>
+</p>
+
+<p>
+  <b>Volatile:</b>
+  <%=h @loads.volatile %>
+</p>
+
+<p>
+  <b>Daylight savings adjustment:</b>
+  <%=h @loads.daylight_savings_adjustment %>
+</p>
+
+<p>
+  <b>Timer savings:</b>
+  <%=h @loads.timer_savings %>
+</p>
+
+<p>
+  <b>Motion savings:</b>
+  <%=h @loads.motion_savings %>
+</p>
+
+<p>
+  <b>Bedtime savings:</b>
+  <%=h @loads.bedtime_savings %>
+</p>
+
+<p>
+  <b>Away savings:</b>
+  <%=h @loads.away_savings %>
+</p>
+
+<p>
+  <b>Background:</b>
+  <%=h @loads.background %>
+</p>
+
+<p>
+  <b>Computer common:</b>
+  <%=h @loads.computer_common %>
+</p>
+
+<p>
+  <b>Audio video:</b>
+  <%=h @loads.audio_video %>
+</p>
+
+<p>
+  <b>Recorder:</b>
+  <%=h @loads.recorder %>
+</p>
+
+<p>
+  <b>Plug width:</b>
+  <%=h @loads.plug_width %>
+</p>
+
+
+<%= link_to 'Edit', edit_loads_path(@loads) %> |
+<%= link_to 'Back', loads_path %>

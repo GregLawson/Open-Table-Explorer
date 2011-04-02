@@ -1,0 +1,28 @@
+<p>
+  <b>Account_id:</b>
+  <%=h @transfer.account_id %>
+</p>
+
+<p>
+  <b>Account:</b>
+    <% if @transfer.account.nil? then %>
+      <% else %>
+	<%=h @transfer.account.name %>
+     <% end %>
+
+
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%=h @transfer.amount %>
+</p>
+
+<p>
+  <b>Posted:</b>
+  <%=h @transfer.posted %>
+</p>
+
+
+<%= link_to 'Edit', edit_transfer_path(@transfer) %> |
+<%= link_to 'Back', transfers_path %>

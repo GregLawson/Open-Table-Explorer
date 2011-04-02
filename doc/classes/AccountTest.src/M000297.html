@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_id_and_hash_equal (AccountTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/account_test.rb, line 10</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_id_and_hash_equal</span>
+        <span class="ruby-ivar">@my_fixtures</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">table2yaml</span>(<span class="ruby-ivar">@my_fixtures</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>)
+        <span class="ruby-ivar">@my_fixtures</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">my_fixture</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">Fixtures</span><span class="ruby-operator">::</span><span class="ruby-identifier">identify</span>(<span class="ruby-identifier">my_fixture</span>.<span class="ruby-identifier">logical_primary_key</span>),<span class="ruby-identifier">my_fixture</span>.<span class="ruby-identifier">id</span>,<span class="ruby-node">&quot;Fixture file test/fixture/#{@table_name}.yml has wrong tag or explicit id, logical_primary_key='#{my_fixture.logical_primary_key}',=#{Fixtures::identify(my_fixture.logical_primary_key)} != my_fixture.id=#{my_fixture.id} where fixture=#{my_fixture.inspect}.&quot;</span>)
+        <span class="ruby-keyword kw">end</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

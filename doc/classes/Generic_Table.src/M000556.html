@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>Require_Table (Generic_Table)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/generic_table.rb, line 152</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-constant">Require_Table</span>(<span class="ruby-identifier">tableName</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_s</span>)
+<span class="ruby-comment cmt">#       Global::log.info(&quot;in Require_Table self.class=#{self.class}&quot;)</span>
+<span class="ruby-comment cmt">#       Global::log.info(&quot;in Require_Table self.to_s=#{self.to_s}&quot;)</span>
+<span class="ruby-comment cmt">#       Global::log.info(&quot;in Require_Table tableName=#{tableName}&quot;)</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pg_table_exists?</span> <span class="ruby-keyword kw">then</span>
+                <span class="ruby-comment cmt">#return new</span>
+        <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Table #{tableName} does not exist. Enter following command in rails to create:&quot;</span>
+                <span class="ruby-comment cmt">#puts Generic_Columns.scaffold(Generic_Columns.column_Definitions)</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">scaffold</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">column_Definitions</span>)
+<span class="ruby-comment cmt">#               puts scaffold(self.column_Definitions)</span>
+        <span class="ruby-keyword kw">end</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<h1>Listing example_types</h1>
+
+<table>
+  <tr>
+    <th>Import class</th>
+    <th>Example string</th>
+    <th>Id</th>
+    <th>Inspect value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @example_types.each do |example_type| %>
+  <tr>
+    <td><%= example_type.import_class %></td>
+    <td><%= example_type.example_string %></td>
+    <td><%= example_type.id %></td>
+    <td><%= example_type.inspect_value %></td>
+    <td><%= link_to 'Show', example_type %></td>
+    <td><%= link_to 'Edit', edit_example_type_path(example_type) %></td>
+    <td><%= link_to 'Destroy', example_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Example type', new_example_type_path %>

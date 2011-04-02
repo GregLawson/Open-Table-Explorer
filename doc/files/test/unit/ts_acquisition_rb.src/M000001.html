@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>gaTest (test/unit/ts_acquisition.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/ts_acquisition.rb, line 14</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gaTest</span>(<span class="ruby-identifier">model</span>)
+        <span class="ruby-identifier">model_class_name</span>=<span class="ruby-identifier">model</span>.<span class="ruby-identifier">model_class_name</span>
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Table_spec</span>,<span class="ruby-identifier">model</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">String</span>,<span class="ruby-identifier">model_class_name</span>)
+        <span class="ruby-identifier">explain_assert_respond_to</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">:acquire</span>)
+        <span class="ruby-identifier">explain_assert_respond_to</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">:acquisitionsUpdated?</span>)
+        <span class="ruby-identifier">acquisitionData</span>=<span class="ruby-identifier">model</span>.<span class="ruby-identifier">acquire</span>
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Array</span>,<span class="ruby-identifier">acquisitionData</span>)
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

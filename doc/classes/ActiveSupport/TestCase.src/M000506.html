@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>assert_public_instance_method (ActiveSupport::TestCase)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/test_helper.rb, line 61</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_public_instance_method</span>(<span class="ruby-identifier">obj</span>,<span class="ruby-identifier">methodName</span>,<span class="ruby-identifier">message</span>=<span class="ruby-value str">''</span>)
+        <span class="ruby-comment cmt">#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">methodName</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">message</span>=<span class="ruby-value str">'expect to pass'</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">methodName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">message</span>=<span class="ruby-node">&quot;but singular #{methodName.to_s.singularize} is a method&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">methodName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">message</span>=<span class="ruby-node">&quot;but plural #{methodName.to_s.pluralize} is a method&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">methodName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">tableize</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">message</span>=<span class="ruby-node">&quot;but tableize #{methodName.to_s.tableize} is a method&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">methodName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">singularize</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">message</span>=<span class="ruby-node">&quot;but singular tableize #{methodName.to_s.tableize.singularize} is a method&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">message</span>=<span class="ruby-node">&quot;but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method&quot;</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#if</span>
+        <span class="ruby-identifier">assert_respond_to</span>( <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">methodName</span>,<span class="ruby-identifier">message</span>)
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

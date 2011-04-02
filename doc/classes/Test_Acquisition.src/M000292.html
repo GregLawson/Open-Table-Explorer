@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_model_acquire_all (Test_Acquisition)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/ts_acquisition.rb, line 60</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_model_acquire_all</span>
+        <span class="ruby-constant">Table_spec</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">gaTest</span>(<span class="ruby-identifier">model</span>)
+                <span class="ruby-identifier">model_class_name</span>=<span class="ruby-identifier">model</span>.<span class="ruby-identifier">model_class_name</span>
+                <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">model_class_name</span>)
+<span class="ruby-comment cmt">#               typeRecord=Generic_Acquisitions.typeRecords(model_class_name)</span>
+                
+<span class="ruby-comment cmt">#               tableType=MODEL_REFS[model_class_name]</span>
+<span class="ruby-comment cmt">#               table=tableType.new(model_class_name)</span>
+                <span class="ruby-identifier">testCall</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">:flooredSleepInterval</span>)
+                <span class="ruby-identifier">previousTime</span>=<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>
+<span class="ruby-comment cmt">#               puts &quot;previousTime=#{previousTime}&quot;</span>
+                <span class="ruby-identifier">testCall</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">:updateSleepInterval</span>)
+<span class="ruby-comment cmt">#               advancedTime=testCall(model,:advanceScheduleTime)</span>
+                <span class="ruby-identifier">advancedTime</span>=<span class="ruby-identifier">testCall</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">:advanceScheduleTime</span>,<span class="ruby-identifier">model</span>.<span class="ruby-identifier">flooredSleepInterval</span>)
+                <span class="ruby-identifier">assert_not_equal</span>(<span class="ruby-identifier">advancedTime</span>,<span class="ruby-identifier">previousTime</span>)
+                <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">advancedTime</span>,<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>)
+                <span class="ruby-identifier">assert_in_delta</span>(<span class="ruby-identifier">advancedTime</span>,<span class="ruby-identifier">previousTime</span><span class="ruby-operator">+</span><span class="ruby-identifier">model</span>.<span class="ruby-identifier">flooredSleepInterval</span>,<span class="ruby-value">0</span><span class="ruby-value">.5</span>,<span class="ruby-node">&quot;model.scheduled_time=#{model.scheduled_time}, previousTime=#{previousTime}, model.interval=#{model.interval}&quot;</span>)
+
+                <span class="ruby-identifier">acquisitionData</span>=<span class="ruby-identifier">testCall</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">:acquire</span>)
+                <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Array</span>,<span class="ruby-identifier">acquisitionData</span>)
+                
+                <span class="ruby-identifier">acquisitionData</span>.<span class="ruby-identifier">each</span>  <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">aq</span><span class="ruby-operator">|</span>
+<span class="ruby-comment cmt">#debug                          assert_kind_of(Acquitition,aq)</span>
+                                <span class="ruby-identifier">aq</span>.<span class="ruby-identifier">save</span>
+                <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

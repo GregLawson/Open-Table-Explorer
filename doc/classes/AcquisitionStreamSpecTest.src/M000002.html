@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_aaa (AcquisitionStreamSpecTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/acquisition_stream_spec_test.rb, line 6</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_aaa</span>
+        <span class="ruby-identifier">assert</span>(<span class="ruby-constant">AcquisitionStreamSpec</span>.<span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword kw">false</span>).<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'acquisition_interface'</span>))
+        <span class="ruby-identifier">assert</span>(<span class="ruby-constant">AcquisitionStreamSpec</span>.<span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword kw">false</span>).<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'table_spec'</span>))
+        <span class="ruby-identifier">assert_public_instance_method</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>),<span class="ruby-identifier">:acquisition_interface</span>)
+        <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">Test</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span><span class="ruby-operator">::</span><span class="ruby-constant">AssertionFailedError</span>) {<span class="ruby-identifier">assert_public_instance_method</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>),<span class="ruby-identifier">:acquisition_interfaces</span>) }
+        <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">Test</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span><span class="ruby-operator">::</span><span class="ruby-constant">AssertionFailedError</span>) { <span class="ruby-identifier">assert_public_instance_method</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>),<span class="ruby-identifier">:cabbage</span>) }
+        <span class="ruby-identifier">assert_association</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>),<span class="ruby-identifier">:acquisition_interface</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">Fixtures</span><span class="ruby-operator">::</span><span class="ruby-identifier">identify</span>(<span class="ruby-identifier">:HTTP</span>),<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-identifier">:HTTP</span>).<span class="ruby-identifier">id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">Fixtures</span><span class="ruby-operator">::</span><span class="ruby-identifier">identify</span>(<span class="ruby-identifier">:HTTP</span>),<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>).<span class="ruby-identifier">acquisition_interface_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>).<span class="ruby-identifier">acquisition_interface_id</span>,<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-identifier">:HTTP</span>).<span class="ruby-identifier">id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>).<span class="ruby-identifier">scheme</span>,<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-identifier">:HTTP</span>).<span class="ruby-identifier">scheme</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>).<span class="ruby-identifier">scheme</span>,<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>).<span class="ruby-identifier">acquisition_interface</span>.<span class="ruby-identifier">scheme</span>)
+        <span class="ruby-identifier">testCall</span>(<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-identifier">:one</span>),<span class="ruby-identifier">:acquisition_interface</span>)
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

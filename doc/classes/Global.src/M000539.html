@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>relationship (Global)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/global.rb, line 144</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-constant">Global</span>.<span class="ruby-identifier">relationship</span>(<span class="ruby-identifier">obj</span>=<span class="ruby-keyword kw">self</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;self is #{self.whoAmI}&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;obj is #{whoAmI(obj)}&quot;</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is nil.&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">==</span><span class="ruby-value str">'Symbol'</span> <span class="ruby-keyword kw">then</span>
+        <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;obj.name=#{obj.name}&quot;</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_a?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{self.name} is the class of (or superclass of) #{obj}&quot;</span>
+                <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span><span class="ruby-operator">==</span><span class="ruby-identifier">obj</span> <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is the same(==) as #{self.name}&quot;</span>
+         
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{self.name} will respond to #{obj}&quot;</span>
+         
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">singleton_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a include?d modules of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">included_modules</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a include?d modules of #{self.name}&quot;</span>
+<span class="ruby-comment cmt">#       elsif self.class_variable_defined?(obj) then</span>
+<span class="ruby-comment cmt">#               puts &quot;#{obj} is declared as a class variable.&quot;</span>
+<span class="ruby-comment cmt">#       elsif self.const_defined? then</span>
+<span class="ruby-comment cmt">#               puts &quot;#{obj} is is a defined constant.&quot;</span>
+        
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">public_instance_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a public instance method of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">public_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a public method of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">protected_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a protected method of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">private_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a private method of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a instance variables of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">class_variables</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a class variables of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">included_modules</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is a module of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is an instance module of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">obj</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{obj} is an ancestor module of #{self.name}&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Can't figure out relation between #{obj.inspect} and #{self.inspect}&quot;</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#if</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

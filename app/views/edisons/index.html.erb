@@ -1,0 +1,34 @@
+<h1>Listing edisons</h1>
+
+<table>
+  <tr>
+    <th>Canum</th>
+    <th>Sanum</th>
+    <th>Readdate</th>
+    <th>Khwread</th>
+    <th>Kwhusage</th>
+    <th>Days</th>
+    <th>Avgdaily</th>
+    <th>Totcharges</th>
+  </tr>
+
+<% for edison in @edisons %>
+  <tr>
+    <td><%=h edison.CANUM %></td>
+    <td><%=h edison.SANUM %></td>
+    <td><%=h edison.READDATE %></td>
+    <td><%=h edison.KHWREAD %></td>
+    <td><%=h edison.kwhusage %></td>
+    <td><%=h edison.Days %></td>
+    <td><%=h edison.AVGDAILY %></td>
+    <td><%=h edison.TOTCHARGES %></td>
+    <td><%= link_to 'Show', edison %></td>
+    <td><%= link_to 'Edit', edit_edison_path(edison) %></td>
+    <td><%= link_to 'Destroy', edison, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New edison', new_edison_path %>

@@ -1,0 +1,31 @@
+--- 
+one: 
+  url: http://www.weather.gov/xml/current_obs/KHHR.xml
+  required_order: 
+  table_spec: MULTIPLE_WEATHER
+  acquisition_interface: HTTP
+acquisition_stream_specs_005: 
+  url: /sbin/ifconfig
+  required_order: 
+  table_spec: ifconfig
+  acquisition_interface: Shell
+acquisition_stream_specs_006: 
+  url: nmap 192.168.3.1-254
+  required_order: 
+  table_spec_id: "7"
+  acquisition_interface: Shell
+acquisition_stream_specs_001: 
+  url: sunnywebbox
+  required_order: 
+  table_spec_id: "1"
+  acquisition_interface: SunnyWebBox_Acquisition
+acquisition_stream_specs_002: 
+  url: http://www.calgold.com/Schedule.asp
+  required_order: 
+  table_spec_id: "2"
+  acquisition_interface: HTTP
+http://www.weather.gov/xml/current_obs/KLAX.xml: 
+  url: http://www.weather.gov/xml/current_obs/KLAX.xml
+  required_order: 
+  table_spec: MULTIPLE_WEATHER
+  acquisition_interface: HTTP

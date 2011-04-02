@@ -1,0 +1,2 @@
+module GenericTypesHelper
+end

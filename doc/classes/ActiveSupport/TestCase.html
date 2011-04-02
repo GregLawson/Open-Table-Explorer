@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ActiveSupport::TestCase</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ActiveSupport::TestCase</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/test/test_helper_rb.html">
+                test/test_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000508">assert_association</a>&nbsp;&nbsp;
+      <a href="#M000522">assert_association_many_to_one</a>&nbsp;&nbsp;
+      <a href="#M000521">assert_association_one_to_many</a>&nbsp;&nbsp;
+      <a href="#M000520">assert_association_one_to_one</a>&nbsp;&nbsp;
+      <a href="#M000518">assert_association_to_many</a>&nbsp;&nbsp;
+      <a href="#M000519">assert_association_to_one</a>&nbsp;&nbsp;
+      <a href="#M000529">assert_foreign_key_points_to_me</a>&nbsp;&nbsp;
+      <a href="#M000531">assert_general_associations</a>&nbsp;&nbsp;
+      <a href="#M000523">assert_include</a>&nbsp;&nbsp;
+      <a href="#M000504">assert_model</a>&nbsp;&nbsp;
+      <a href="#M000530">assert_my_foreign_key_points_to_correct_id</a>&nbsp;&nbsp;
+      <a href="#M000506">assert_public_instance_method</a>&nbsp;&nbsp;
+      <a href="#M000510">assert_table_name</a>&nbsp;&nbsp;
+      <a href="#M000527">associated_foreign_key</a>&nbsp;&nbsp;
+      <a href="#M000528">associated_foreign_key_id</a>&nbsp;&nbsp;
+      <a href="#M000526">associated_foreign_key_name</a>&nbsp;&nbsp;
+      <a href="#M000524">define_association_names</a>&nbsp;&nbsp;
+      <a href="#M000505">explain_assert_respond_to</a>&nbsp;&nbsp;
+      <a href="#M000509">fixture_names</a>&nbsp;&nbsp;
+      <a href="#M000512">fixtures</a>&nbsp;&nbsp;
+      <a href="#M000525">foreign_key_names</a>&nbsp;&nbsp;
+      <a href="#M000507">is_association?</a>&nbsp;&nbsp;
+      <a href="#M000517">is_association_to_many?</a>&nbsp;&nbsp;
+      <a href="#M000516">is_association_to_one?</a>&nbsp;&nbsp;
+      <a href="#M000515">matching_methods</a>&nbsp;&nbsp;
+      <a href="#M000513">model_class</a>&nbsp;&nbsp;
+      <a href="#M000511">record_keys</a>&nbsp;&nbsp;
+      <a href="#M000514">similar_methods</a>&nbsp;&nbsp;
+      <a href="#M000503">testAnswer</a>&nbsp;&nbsp;
+      <a href="#M000502">testCall</a>&nbsp;&nbsp;
+      <a href="#M000501">testCallResult</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000508" class="method-detail">
+        <a name="M000508"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000508.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000508.html');return false;">
+          <span class="method-name">assert_association</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000522" class="method-detail">
+        <a name="M000522"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000522.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000522.html');return false;">
+          <span class="method-name">assert_association_many_to_one</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000521" class="method-detail">
+        <a name="M000521"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000521.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000521.html');return false;">
+          <span class="method-name">assert_association_one_to_many</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000520" class="method-detail">
+        <a name="M000520"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000520.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000520.html');return false;">
+          <span class="method-name">assert_association_one_to_one</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000518" class="method-detail">
+        <a name="M000518"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000518.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000518.html');return false;">
+          <span class="method-name">assert_association_to_many</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000519" class="method-detail">
+        <a name="M000519"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000519.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000519.html');return false;">
+          <span class="method-name">assert_association_to_one</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000529" class="method-detail">
+        <a name="M000529"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000529.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000529.html');return false;">
+          <span class="method-name">assert_foreign_key_points_to_me</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000531" class="method-detail">
+        <a name="M000531"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000531.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000531.html');return false;">
+          <span class="method-name">assert_general_associations</span><span class="method-args">(table_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000523" class="method-detail">
+        <a name="M000523"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000523.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000523.html');return false;">
+          <span class="method-name">assert_include</span><span class="method-args">(element,list)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000504" class="method-detail">
+        <a name="M000504"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000504.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000504.html');return false;">
+          <span class="method-name">assert_model</span><span class="method-args">(model_class_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000530" class="method-detail">
+        <a name="M000530"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000530.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000530.html');return false;">
+          <span class="method-name">assert_my_foreign_key_points_to_correct_id</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000506" class="method-detail">
+        <a name="M000506"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000506.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000506.html');return false;">
+          <span class="method-name">assert_public_instance_method</span><span class="method-args">(obj,methodName,message='')</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000510" class="method-detail">
+        <a name="M000510"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000510.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000510.html');return false;">
+          <span class="method-name">assert_table_name</span><span class="method-args">(table_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000527" class="method-detail">
+        <a name="M000527"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000527.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000527.html');return false;">
+          <span class="method-name">associated_foreign_key</span><span class="method-args">(obj,assName)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000528" class="method-detail">
+        <a name="M000528"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000528.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000528.html');return false;">
+          <span class="method-name">associated_foreign_key_id</span><span class="method-args">(obj,assName)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000526" class="method-detail">
+        <a name="M000526"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000526.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000526.html');return false;">
+          <span class="method-name">associated_foreign_key_name</span><span class="method-args">(obj,assName)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000524" class="method-detail">
+        <a name="M000524"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000524.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000524.html');return false;">
+          <span class="method-name">define_association_names</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000505" class="method-detail">
+        <a name="M000505"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000505.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000505.html');return false;">
+          <span class="method-name">explain_assert_respond_to</span><span class="method-args">(obj,methodName)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000509" class="method-detail">
+        <a name="M000509"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000509.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000509.html');return false;">
+          <span class="method-name">fixture_names</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a
+href="http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html">api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000512" class="method-detail">
+        <a name="M000512"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000512.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000512.html');return false;">
+          <span class="method-name">fixtures</span><span class="method-args">(table_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000525" class="method-detail">
+        <a name="M000525"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000525.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000525.html');return false;">
+          <span class="method-name">foreign_key_names</span><span class="method-args">(model_class)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000507" class="method-detail">
+        <a name="M000507"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000507.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000507.html');return false;">
+          <span class="method-name">is_association?</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000517" class="method-detail">
+        <a name="M000517"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000517.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000517.html');return false;">
+          <span class="method-name">is_association_to_many?</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000516" class="method-detail">
+        <a name="M000516"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000516.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000516.html');return false;">
+          <span class="method-name">is_association_to_one?</span><span class="method-args">(fixture,ass)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000515" class="method-detail">
+        <a name="M000515"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000515.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000515.html');return false;">
+          <span class="method-name">matching_methods</span><span class="method-args">(fixture,regexp)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000513" class="method-detail">
+        <a name="M000513"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000513.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000513.html');return false;">
+          <span class="method-name">model_class</span><span class="method-args">(fixtures)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+~ def fixture(table_name,record_key) ~ return <a
+href="TestCase.html#M000512">fixtures</a>(table_name)(record_key) ~ end def
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000511" class="method-detail">
+        <a name="M000511"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000511.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000511.html');return false;">
+          <span class="method-name">record_keys</span><span class="method-args">(table_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000514" class="method-detail">
+        <a name="M000514"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000514.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000514.html');return false;">
+          <span class="method-name">similar_methods</span><span class="method-args">(fixture,symbol)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000503" class="method-detail">
+        <a name="M000503"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000503.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000503.html');return false;">
+          <span class="method-name">testAnswer</span><span class="method-args">(obj,methodName,answer,*arguments)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000502" class="method-detail">
+        <a name="M000502"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000502.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000502.html');return false;">
+          <span class="method-name">testCall</span><span class="method-args">(obj,methodName,*arguments)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000501" class="method-detail">
+        <a name="M000501"></a>
+
+        <div class="method-heading">
+          <a href="TestCase.src/M000501.html" target="Code" class="method-signature"
+            onclick="popupCode('TestCase.src/M000501.html');return false;">
+          <span class="method-name">testCallResult</span><span class="method-args">(obj,methodName,*arguments)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Add more helper methods to be used by all tests here&#8230;
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

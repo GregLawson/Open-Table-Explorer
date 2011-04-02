@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>assert_my_foreign_key_points_to_correct_id (ActiveSupport::TestCase)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/test_helper.rb, line 278</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_my_foreign_key_points_to_correct_id</span>(<span class="ruby-identifier">fixture</span>,<span class="ruby-identifier">ass</span>)
+        <span class="ruby-identifier">assert_association</span>(<span class="ruby-identifier">fixture</span>,<span class="ruby-identifier">ass</span>)
+        <span class="ruby-identifier">myForeignKeyName</span>=<span class="ruby-identifier">associated_foreign_key_name</span>(<span class="ruby-identifier">fixture</span>,<span class="ruby-identifier">ass</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">myForeignKeyName</span>,<span class="ruby-node">&quot;assert_my_foreign_key_points_to_correct_id fixture.inspect=#{fixture.inspect},ass=#{ass}&quot;</span>)
+        <span class="ruby-identifier">record_keys</span>(<span class="ruby-value str">'table_specs'</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rk</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#each rk</span>
+        <span class="ruby-ivar">@my_fixtures</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">my_fixture</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">assert_respond_to</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">ass</span>,<span class="ruby-node">&quot;assert_my_foreign_key_points_to_correct_id my_fixture.inspect=#{my_fixture.inspect},ass=#{ass}&quot;</span>)
+                <span class="ruby-identifier">foreignKey_id</span>=<span class="ruby-identifier">testCallResult</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">myForeignKeyName</span>.<span class="ruby-identifier">to_sym</span>)
+                <span class="ruby-identifier">associated_table_name</span>=<span class="ruby-identifier">ass</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>
+                <span class="ruby-identifier">assert_table_name</span>(<span class="ruby-identifier">associated_table_name</span>)
+                <span class="ruby-identifier">associated_fixtures</span>=<span class="ruby-identifier">fixtures</span>(<span class="ruby-identifier">associated_table_name</span>)
+                <span class="ruby-identifier">fixtures</span>(<span class="ruby-value str">'table_specs'</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+                        
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-identifier">possible_ids</span>=<span class="ruby-value str">&quot;&quot;</span>
+                <span class="ruby-identifier">available_ids</span>=<span class="ruby-identifier">fixtures</span>(<span class="ruby-identifier">associated_table_name</span>).<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">possible_ids</span>= <span class="ruby-identifier">possible_ids</span><span class="ruby-operator">+</span><span class="ruby-node">&quot;, Fixtures::identify(#{f.logical_primary_key})=#{Fixtures::identify(f.logical_primary_key)}=#{f.id}&quot;</span>
+                        <span class="ruby-identifier">f</span>.<span class="ruby-identifier">id</span>
+                <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#collect</span>
+                <span class="ruby-identifier">association</span>=<span class="ruby-identifier">my_fixture</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">ass</span>)
+                <span class="ruby-identifier">associated_records</span>=<span class="ruby-identifier">testCallResult</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">ass</span>)
+                <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">association</span>,<span class="ruby-identifier">associated_records</span>)
+                <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">association</span>,<span class="ruby-node">&quot;No records associated. #{my_fixture.inspect}: Foreign key #{myForeignKeyName}=#{foreignKey_id}, #{associated_table_name}=#{possible_ids}&quot;</span>)
+                <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">testCallResult</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">ass</span>),<span class="ruby-node">&quot;assert_my_foreign_key_points_to_correct_id my_fixture.inspect=#{my_fixture.inspect},ass=#{ass}&quot;</span>)
+                <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">testCallResult</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">myForeignKeyName</span>.<span class="ruby-identifier">to_sym</span>),<span class="ruby-identifier">testCallResult</span>(<span class="ruby-identifier">my_fixture</span>,<span class="ruby-identifier">ass</span>).<span class="ruby-identifier">id</span>)
+        <span class="ruby-keyword kw">end</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

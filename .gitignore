@@ -1,0 +1,10 @@
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/**/*
+fixtures/transactions.yml
+test/fixtures/transactions.yml
+Gemfile.lock
+scite.session
+/accounts.yml.gen
+/test/table_specs.yml.gen

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>acquisitionNotUpdated (Frequency)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/frequency.rb, line 106</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">acquisitionNotUpdated</span>
+        <span class="ruby-identifier">noUpdateInterval</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span><span class="ruby-operator">-</span><span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">previous_update</span>]
+        <span class="ruby-identifier">longestWait</span>=[<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:max_seconds</span>],<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:longest_no_update</span>]].<span class="ruby-identifier">min</span>
+        <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:longest_no_update</span>]=[<span class="ruby-identifier">noUpdateInterval</span>,<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:longest_no_update</span>]].<span class="ruby-identifier">max</span>               
+                <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:interval</span>]=<span class="ruby-ivar">@@b</span><span class="ruby-operator">*</span><span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:shortest_update</span>]<span class="ruby-operator">+</span><span class="ruby-ivar">@@a</span><span class="ruby-operator">*</span><span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:longest_no_update</span>]
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:interval</span>],<span class="ruby-identifier">:&lt;</span>,<span class="ruby-value">365</span><span class="ruby-operator">*</span><span class="ruby-value">24</span><span class="ruby-operator">*</span><span class="ruby-value">3600</span>)
+                <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-ivar">@freezeLength</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:shortest_update</span>],<span class="ruby-identifier">:&gt;</span>,<span class="ruby-value">0</span><span class="ruby-value">.0</span>)
+                <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-identifier">sleepRange</span>)
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

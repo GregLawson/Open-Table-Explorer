@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_scheduler (Test_Acquisition)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/ts_acquisition.rb, line 88</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_scheduler</span>
+        <span class="ruby-identifier">scheduleAll</span>=<span class="ruby-constant">Table_spec</span>.<span class="ruby-identifier">all</span>
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">scheduleAll</span>)
+        <span class="ruby-identifier">schedule</span>=<span class="ruby-identifier">scheduleAll</span>.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">scheduled_time</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>;<span class="ruby-identifier">a</span>}
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">schedule</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">schedule</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">schedule</span>.<span class="ruby-identifier">first</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">schedule</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">scheduled_time</span>)
+        <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">schedule</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">scheduled_time</span>,<span class="ruby-identifier">:&lt;</span>,<span class="ruby-constant">Time</span>.<span class="ruby-identifier">new</span>)
+        <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">schedule</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">scheduled_time</span>,<span class="ruby-identifier">:&lt;</span>,<span class="ruby-constant">Time</span>.<span class="ruby-identifier">new</span>)
+        <span class="ruby-identifier">schedule</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">min_seconds</span>)
+                <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>,<span class="ruby-identifier">:&lt;</span>,<span class="ruby-constant">Time</span>.<span class="ruby-identifier">new</span>)
+                <span class="ruby-identifier">previousTime</span>=<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>
+                <span class="ruby-identifier">advancedTime</span>=<span class="ruby-identifier">testCall</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">:advanceScheduleTime</span>,<span class="ruby-identifier">model</span>.<span class="ruby-identifier">flooredSleepInterval</span>)
+<span class="ruby-comment cmt">#               advancedTime=model.advanceScheduleTime</span>
+                <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">advancedTime</span>,<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">advancedTime</span>,<span class="ruby-identifier">:&gt;</span>,<span class="ruby-identifier">previousTime</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>,<span class="ruby-identifier">:&gt;</span>,<span class="ruby-identifier">previousTime</span>)
+                <span class="ruby-identifier">model</span>.<span class="ruby-identifier">updateSleepInterval</span>(<span class="ruby-keyword kw">true</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">shortest_update</span>,<span class="ruby-identifier">:&gt;</span>,<span class="ruby-value">0</span><span class="ruby-value">.0</span>)
+                <span class="ruby-identifier">model</span>.<span class="ruby-identifier">updateSleepInterval</span>(<span class="ruby-keyword kw">false</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">longest_no_update</span>,<span class="ruby-identifier">:&gt;</span>,<span class="ruby-value">0</span><span class="ruby-value">.0</span>)
+                <span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-comment cmt"># keep tests from  long delays</span>
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>,<span class="ruby-identifier">:&lt;</span>,<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span><span class="ruby-operator">-</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>,<span class="ruby-identifier">:&gt;</span>,<span class="ruby-value">-1.0</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span><span class="ruby-operator">-</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>,<span class="ruby-identifier">:&lt;</span>,<span class="ruby-value">5.0</span>)
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># each</span>
+        <span class="ruby-identifier">schedule</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span>,<span class="ruby-identifier">:&lt;</span>,<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+                <span class="ruby-identifier">assert_operator</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">scheduled_time</span><span class="ruby-operator">-</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>,<span class="ruby-identifier">:&lt;</span>,<span class="ruby-value">5.0</span>)
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># each</span>
+        <span class="ruby-identifier">nextAcq</span>=<span class="ruby-constant">Table_spec</span>.<span class="ruby-identifier">nextAcquisition</span>(<span class="ruby-keyword kw">true</span>)
+<span class="ruby-comment cmt">#       assert_operator(nextAcq.scheduled_time-Time.now,:&gt;,0.0)</span>
+<span class="ruby-comment cmt">#debug  assert_operator(nextAcq.scheduled_time-Time.now,:&lt;,5.0,nextAcq.inspect)</span>
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">nextAcq</span>)
+<span class="ruby-comment cmt">#slow   assert_not_nil(Table_spec.nextAcquisition(false))</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

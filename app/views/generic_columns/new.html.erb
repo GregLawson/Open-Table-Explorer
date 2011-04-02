@@ -1,0 +1,31 @@
+<h1>New generic_column</h1>
+
+<% form_for(@generic_column) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Table_Name %><br />
+    <%= f.text_field :Table_Name %>
+  </p>
+  <p>
+    <%= f.label :Column_Name %><br />
+    <%= f.text_field :Column_Name %>
+  </p>
+  <p>
+    <%= f.label :Before_Pattern %><br />
+    <%= f.text_field :Before_Pattern %>
+  </p>
+  <p>
+    <%= f.label :Data_Pattern %><br />
+    <%= f.text_field :Data_Pattern %>
+  </p>
+  <p>
+    <%= f.label :After_Pattern %><br />
+    <%= f.text_field :After_Pattern %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', generic_columns_path %>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>sample (Generic_Table)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/generic_table.rb, line 63</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sample</span>
+        <span class="ruby-ivar">@acqClasses</span>=<span class="ruby-constant">Generic_Acquisitions</span>.<span class="ruby-identifier">parse_classes</span>(<span class="ruby-identifier">m</span>)
+        <span class="ruby-ivar">@acqClasses</span>.<span class="ruby-identifier">each</span> <span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ac</span><span class="ruby-operator">|</span>
+                <span class="ruby-ivar">@acquisitionData</span>=<span class="ruby-identifier">acquire</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#collect</span>
+        <span class="ruby-ivar">@acquisitionData</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ad</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">acquisitionUpdated?</span>(<span class="ruby-identifier">ad</span>) <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-identifier">row</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">create</span>
+                        <span class="ruby-identifier">row</span>=<span class="ruby-identifier">process</span>(<span class="ruby-identifier">ad</span>)
+                        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">printLog</span>
+                <span class="ruby-keyword kw">else</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">ad</span>
+                <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

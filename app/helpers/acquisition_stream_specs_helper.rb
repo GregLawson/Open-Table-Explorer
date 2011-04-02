@@ -1,0 +1,2 @@
+module AcquisitionStreamSpecsHelper
+end

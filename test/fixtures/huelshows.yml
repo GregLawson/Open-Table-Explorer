@@ -1,0 +1,49 @@
+--- 
+one: 
+  shortname: calgold
+  name: California's Gold
+  id: "191"
+huelshows_006: 
+  shortname: goldencoast
+  name: California's Golden Coast
+  id: "192"
+huelshows_007: 
+  shortname: goldenparks
+  name: California's Golden Parks
+  id: "193"
+huelshows_008: 
+  shortname: roadtrip
+  name: "Road Trip "
+  id: "194"
+huelshows_009: 
+  shortname: visiting
+  name: Visiting...
+  id: "195"
+huelshows_010: 
+  shortname: missions
+  name: California Missions
+  id: "196"
+huelshows_011: 
+  shortname: palmsprings
+  name: Palm Springs
+  id: "197"
+huelshows_012: 
+  shortname: specials
+  name: Specials
+  id: "198"
+huelshows_001: 
+  shortname: communities
+  name: California's Communities
+  id: "187"
+huelshows_002: 
+  shortname: downtown
+  name: Downtown
+  id: "188"
+huelshows_003: 
+  shortname: water
+  name: California's Water
+  id: "189"
+huelshows_004: 
+  shortname: green
+  name: California's Green
+  id: "190"

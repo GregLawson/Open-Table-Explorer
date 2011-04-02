@@ -1,0 +1,2 @@
+module HuelshowsHelper
+end

@@ -1,0 +1,18 @@
+Loaded suite test/functional/acquisition_interfaces_controller_test
+Started
+.....E.
+Finished in 12.795919 seconds.
+
+  1) Error:
+test_should_show_acquisition_interface(AcquisitionInterfacesControllerTest):
+ActionView::Template::Error: undefined method `name' for nil:NilClass
+    app/models/acquisition_stream_spec.rb:78:in `nameFromInterface'
+    app/models/acquisition_stream_spec.rb:81:in `schemeFromInterface'
+    app/models/acquisition_interface.rb:24:in `urls_by_scheme'
+    app/models/acquisition_interface.rb:23:in `select'
+    app/models/acquisition_interface.rb:23:in `urls_by_scheme'
+    app/views/acquisition_interfaces/show.html.erb:63:in `_app_views_acquisition_interfaces_show_html_erb___331669309__621996368_0'
+    app/controllers/acquisition_interfaces_controller.rb:18:in `show'
+    test/functional/acquisition_interfaces_controller_test.rb:24:in `test_should_show_acquisition_interface'
+
+7 tests, 9 assertions, 0 failures, 1 errors

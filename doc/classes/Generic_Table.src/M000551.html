@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>column_Definitions (Generic_Table)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/generic_table.rb, line 86</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">column_Definitions</span>
+        <span class="ruby-identifier">adaptiveAcquisition</span>
+        <span class="ruby-identifier">names</span>=<span class="ruby-identifier">getNames</span>
+<span class="ruby-comment cmt">#       Global::log.debug(&quot;names=#{names}&quot;)</span>
+        <span class="ruby-identifier">typeNums</span>=[] <span class="ruby-comment cmt"># make it array, so array functons can be used</span>
+        <span class="ruby-identifier">numSamples</span>=<span class="ruby-value">0</span>
+        <span class="ruby-keyword kw">begin</span>
+                <span class="ruby-identifier">typeNums</span>=<span class="ruby-identifier">updateMaxTypeNum</span>(<span class="ruby-identifier">typeNums</span>)
+                <span class="ruby-identifier">numSamples</span> = <span class="ruby-identifier">numSamples</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">streamEnd</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">numSamples</span><span class="ruby-operator">&gt;</span><span class="ruby-value">10</span>
+        <span class="ruby-ivar">@sqlTypes</span>=[]
+        <span class="ruby-identifier">ret</span>=[]
+        <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> 
+                <span class="ruby-ivar">@sqlTypes</span>.<span class="ruby-identifier">push</span>(<span class="ruby-constant">Import_Column</span>.<span class="ruby-identifier">row2ImportType</span>(<span class="ruby-identifier">typeNums</span>[<span class="ruby-identifier">i</span>]))
+<span class="ruby-comment cmt">#               Global::log.info(&quot;#{names[i]} #{@sqlTypes[i]} \&quot;#{@sqlValues[i]}\&quot; #{typeNums[i]}&quot;)</span>
+                <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">push</span>([<span class="ruby-identifier">names</span>[<span class="ruby-identifier">i</span>],<span class="ruby-ivar">@sqlTypes</span>[<span class="ruby-identifier">i</span>]])
+<span class="ruby-comment cmt">#               Global::log.info(&quot;ret=#{ret}&quot;)</span>
+        <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt">#       Global::log.info(&quot;ret=#{ret}&quot;)</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

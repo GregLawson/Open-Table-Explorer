@@ -1,0 +1,71 @@
+<h1>New tedprimary</h1>
+
+<% form_for(@tedprimary) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :hour %><br />
+    <%= f.text_field :hour %>
+  </p>
+  <p>
+    <%= f.label :minute %><br />
+    <%= f.text_field :minute %>
+  </p>
+  <p>
+    <%= f.label :month %><br />
+    <%= f.text_field :month %>
+  </p>
+  <p>
+    <%= f.label :day %><br />
+    <%= f.text_field :day %>
+  </p>
+  <p>
+    <%= f.label :year %><br />
+    <%= f.text_field :year %>
+  </p>
+  <p>
+    <%= f.label :maxsecond %><br />
+    <%= f.text_field :maxsecond %>
+  </p>
+  <p>
+    <%= f.label :accusecond %><br />
+    <%= f.text_field :accusecond %>
+  </p>
+  <p>
+    <%= f.label :total_voltagenow %><br />
+    <%= f.text_field :total_voltagenow %>
+  </p>
+  <p>
+    <%= f.label :mtu1_voltagenow %><br />
+    <%= f.text_field :mtu1_voltagenow %>
+  </p>
+  <p>
+    <%= f.label :total_powernow %><br />
+    <%= f.text_field :total_powernow %>
+  </p>
+  <p>
+    <%= f.label :total_kva %><br />
+    <%= f.text_field :total_kva %>
+  </p>
+  <p>
+    <%= f.label :mtu1_powernow %><br />
+    <%= f.text_field :mtu1_powernow %>
+  </p>
+  <p>
+    <%= f.label :mtu1_kva %><br />
+    <%= f.text_field :mtu1_kva %>
+  </p>
+  <p>
+    <%= f.label :total_costnow %><br />
+    <%= f.text_field :total_costnow %>
+  </p>
+  <p>
+    <%= f.label :mtu1_costnow %><br />
+    <%= f.text_field :mtu1_costnow %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', tedprimaries_path %>

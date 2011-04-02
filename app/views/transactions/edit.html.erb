@@ -1,0 +1,44 @@
+<h1>Editing transaction</h1>
+
+<% form_for(@transaction) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Date %><br />
+    <%= f.datetime_select :Date %>
+  </p>
+  <p>
+    <%= f.label :Posted %><br />
+    <%= f.datetime_select :Posted %>
+  </p>
+  <p>
+    <%= f.label :Payee %><br />
+    <%= f.text_field :Payee %>
+  </p>
+  <p>
+    <%= f.label :Descrition %><br />
+    <%= f.text_field :Descrition %>
+  </p>
+  <p>
+    <%= f.label :From_Accont %><br />
+    <%= f.text_field :From_Accont %>
+  </p>
+  <p>
+    <%= f.label :To_Account %><br />
+    <%= f.text_field :To_Account %>
+  </p>
+  <p>
+    <%= f.label :Amount %><br />
+    <%= f.text_field :Amount %>
+  </p>
+  <p>
+    <%= f.label :Tax_Reporting %><br />
+    <%= f.text_field :Tax_Reporting %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @transaction %> |
+<%= link_to 'Back', transactions_path %>

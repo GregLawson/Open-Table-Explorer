@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_aaa_test_assertions (TableSpecTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/unit/table_spec_test.rb, line 109</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_aaa_test_assertions</span> <span class="ruby-comment cmt"># aaa to output first</span>
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@my_fixtures</span>,<span class="ruby-identifier">fixtures</span>(<span class="ruby-value str">'table_specs'</span>))
+        <span class="ruby-identifier">find_fixture</span>
+<span class="ruby-comment cmt">#       puts &quot;acquisition_stream_specs(:one).class.instance_method_names.inspect=#{acquisition_stream_specs(:one).class.instance_method_names.inspect}&quot;</span>
+<span class="ruby-comment cmt">#~ assert_equal(@my_fixture.id,associated_foreign_key_id(acquisition_stream_specs(:one),:table_spec))</span>
+
+<span class="ruby-comment cmt">#       assert_equal([:frequency_id],associated_foreign_key_id(@my_fixture,:frequency),&quot;associated_foreign_key_id(@my_fixture,:frequecy_id)=#{associated_foreign_key_id(@my_fixture,:frequecy_id)}&quot;)</span>
+<span class="ruby-comment cmt">#       assert_equal(Fixtures::identify(:one),associated_foreign_key_id(@my_fixture,:frequency),&quot;associated_foreign_key_id(@my_fixture,:frequecy_id)=#{associated_foreign_key_id(@my_fixture,:frequecy_id)}&quot;)</span>
+
+<span class="ruby-comment cmt">#       assert_equal([],testCallResult(@my_fixture,:frequency))</span>
+<span class="ruby-comment cmt">#       assert_equal(associated_foreign_key_id(testCallResult(@my_fixture,:frequency).first,ass),Fixtures::identify(:one))</span>
+
+<span class="ruby-comment cmt">#       assert_foreign_key_points_to_me(@my_fixture,:acquisition_stream_specs)</span>
+        
+<span class="ruby-comment cmt">#       Global.whoAmI(acquisition_stream_specs(:one))</span>
+<span class="ruby-comment cmt">#       assert_equal([:table_spec_id,:acquisition_stream_spec_id],@possible_foreign_keys)</span>
+<span class="ruby-comment cmt">#       http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html</span>
+<span class="ruby-comment cmt">#       puts &quot;self.class.instance_methods(false)=#{self.class.instance_methods(false).inspect}&quot;</span>
+
+        
+<span class="ruby-comment cmt">#       assert_association(AcquisitionStreamSpec,@model_class)</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

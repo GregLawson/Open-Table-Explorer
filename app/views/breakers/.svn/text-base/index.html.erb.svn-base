@@ -1,0 +1,34 @@
+<h1>Listing breakers</h1>
+
+<table>
+  <tr>
+    <th>Node</th>
+    <th>Description</th>
+    <th>Parent node</th>
+    <th>Parent description</th>
+    <th>Volts</th>
+    <th>Amps</th>
+    <th>Measured load</th>
+    <th>Id</th>
+  </tr>
+
+<% for breaker in @breakers %>
+  <tr>
+    <td><%=h breaker.node %></td>
+    <td><%=h breaker.description %></td>
+    <td><%=h breaker.parent_node %></td>
+    <td><%=h breaker.parent_description %></td>
+    <td><%=h breaker.volts %></td>
+    <td><%=h breaker.amps %></td>
+    <td><%=h breaker.measured_load %></td>
+    <td><%=h breaker.id %></td>
+    <td><%= link_to 'Show', breaker %></td>
+    <td><%= link_to 'Edit', edit_breaker_path(breaker) %></td>
+    <td><%= link_to 'Destroy', breaker, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New breaker', new_breaker_path %>
