@@ -4,8 +4,8 @@
   <%= f.error_messages %>
 
   <p>
-    < %= f.label :account_id % ><br />
-	<%= f.select(:account_id,options_from_collection_for_select(Account.all, :id, :name)) %>
+    <%= f.label :account_id %><br />
+	<%= collection_select(:transfer,:account_id,Account.all, :id, :name) %>
 
   </p>
   <p>

@@ -60,11 +60,11 @@
 
 
 <% @acquisition_stream_specs=AcquisitionStreamSpec.all %>
-<% for acquisition_stream_spec in @acquisition_interface.urls_by_scheme %>
+<% for acquisition_stream_spec in @acquisition_interface.acquisition_stream_specs %>
   <tr>
     <td><%=h acquisition_stream_spec.id %></td>
     <td><%=h acquisition_stream_spec.acquisition_interface %></td>
-    <td><%=h acquisition_stream_spec.AcquisitionInterface_Id %></td>
+    <td><%=h acquisition_stream_spec.acquisition_interface_id %></td>
     <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
     <td><%=h acquisition_stream_spec.schemeFromInterface %></td>
