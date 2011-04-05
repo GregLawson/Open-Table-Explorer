@@ -1,18 +1,18 @@
 Loaded suite test/functional/acquisitions_controller_test
 Started
 ..E..E.
-Finished in 18.376548 seconds.
+Finished in 18.437124 seconds.
 
   1) Error:
 test_should_get_edit(AcquisitionsControllerTest):
 ActionView::Template::Error: Called id for nil, which would mistakenly be 4 -- if you really wanted the id of nil, use object_id
-    app/views/acquisitions/edit.html.erb:44:in `_app_views_acquisitions_edit_html_erb___485769991__621645668_0'
+    app/views/acquisitions/edit.html.erb:44:in `_app_views_acquisitions_edit_html_erb___485769991__621839698_0'
     test/functional/acquisitions_controller_test.rb:29:in `test_should_get_edit'
 
   2) Error:
 test_should_show_acquisition(AcquisitionsControllerTest):
 ActionView::Template::Error: Called id for nil, which would mistakenly be 4 -- if you really wanted the id of nil, use object_id
-    app/views/acquisitions/show.html.erb:46:in `_app_views_acquisitions_show_html_erb___1048543860__620750938_0'
+    app/views/acquisitions/show.html.erb:46:in `_app_views_acquisitions_show_html_erb___1048543860__620861738_0'
     app/controllers/acquisitions_controller.rb:18:in `show'
     test/functional/acquisitions_controller_test.rb:24:in `test_should_show_acquisition'
 

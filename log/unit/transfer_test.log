@@ -1,7 +1,7 @@
 Loaded suite test/unit/transfer_test
 Started
 F
-Finished in 12.648543 seconds.
+Finished in 13.366463 seconds.
 
   1) Failure:
 test_general_associations(TransferTest)
@@ -14,7 +14,7 @@ test_general_associations(TransferTest)
      /test/test_helper.rb:307:in `each'
      /test/test_helper.rb:307:in `assert_general_associations'
      test/unit/transfer_test.rb:8:in `test_general_associations']:
-No records associated. #<Transfer id: 298486374, account: nil, amount: nil, posted: "2011-01-01", created_at: "2011-03-26 14:41:00", updated_at: "2011-03-26 14:41:00", account_id: 110791571>: Foreign key account_id=110791571, accounts=, Fixtures::identify(MyString)=110791571=298486374, Fixtures::identify(MyString)=110791571=980190962.
+No records associated. #<Transfer id: 298486374, account: nil, amount: nil, posted: "2011-01-01", created_at: "2011-04-05 15:19:52", updated_at: "2011-04-05 15:19:52", account_id: 110791571>: Foreign key account_id=110791571, accounts=, Fixtures::identify(Contribution Planned Parenthood)=537440372=537440372, Fixtures::identify(CFI Contribution)=374138391=374138391, Fixtures::identify(Long Term Gain-Tax-Managed Capital Appreciation)=756839699=756839699, Fixtures::identify(Short Term Gain - Short-Term  Investment Grade)=92360201=92360201, Fixtures::identify(Pension Employee Contributions)=455905765=455905765, Fixtures::identify(Roth Conversion)=676110925=676110925, Fixtures::identify(Mortgage Interest)=275259282=275259282, Fixtures::identify(Pension State Withholding)=791144680=791144680, Fixtures::identify(Dividends Short-Term Investment-Grade)=238514346=238514346, Fixtures::identify(Dividends - Ameritrade)=777640545=777640545, Fixtures::identify(Kinecta Interest)=625058376=625058376, Fixtures::identify(Pension Federal Withholding)=213284366=213284366, Fixtures::identify(Dividends Tax-Managed Small Cap)=1051577785=1051577785, Fixtures::identify(Dividends-Short-Term Bond Index)=282953882=282953882, Fixtures::identify(Long Term Gain-Short Term Investment Grade)=639092293=639092293, Fixtures::identify(Treasury Direct Original Issue Discount)=305901432=305901432, Fixtures::identify(Dividends Tax-Managed Capital Appreciation)=474625947=474625947, Fixtures::identify(Monthly Income)=216017975=216017975, Fixtures::identify(Admiral Money Market)=949135451=949135451, Fixtures::identify(Pension Taxable)=832489563=832489563, Fixtures::identify(Treasury Direct Inflation Adjusted)=983182212=983182212.
 <nil> expected to not be nil.
 
-1 tests, 110 assertions, 1 failures, 0 errors
+1 tests, 224 assertions, 1 failures, 0 errors
