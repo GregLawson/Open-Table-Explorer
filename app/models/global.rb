@@ -190,6 +190,21 @@ def Global.relationship(obj=self)
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
 end #def
+end #module
+module Generic_Table
+def Generic_Table.rubyClassName(model_class_name)
+	model_class_name=model_class_name[0,1].upcase+model_class_name[1,model_class_name.length-1] # ruby class names are constants and must start with a capital letter.
+	# remainng case is unchanged to allow camel casing to separate words for model names.
+	return model_class_name
+end #def
+def Generic_Table.classDefiniton(model_class_name)
+	return "class #{Generic_Table.rubyClassName(model_class_name)}  < ActiveRecord::Base\ninclude Generic_Table\nend"
+end #def
+def Generic_Table.classReference(model_class_name)
+	rubyClassName=Generic_Table.rubyClassName(model_class_name)
+	model_class_eval=eval("#{classDefiniton(rubyClassName)}\n#{rubyClassName}")
+	return model_class_eval
+end #def
 def table2yaml(table_name=self.class.name.tableize)
 	i = "000"
 	limit=100
@@ -214,6 +229,13 @@ def self.db2yaml
 		table2yaml(table_name)
 	end #each
 end #def
-
-end #module
+def associated_to_s(assName,method,*args)
+	ass=send(assName)
+	if ass.nil? then
+		return ''
+	else
+		return ass.send(method.to_sym,*args).to_s
+	end
+end #def
+end # module
 
