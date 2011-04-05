@@ -26,3 +26,34 @@
 
 <%= link_to 'Edit', edit_transfer_path(@transfer) %> |
 <%= link_to 'Back', transfers_path %>
+
+<% @account=@transfer.account %>
+<% if !@account.nil? then %>
+<p>
+  <b>Name:</b>
+  <%=h @account.name %>
+</p>
+
+<p>
+  <b>Parent:</b>
+  <%=h @account.parent %>
+</p>
+
+<p>
+  <b>Tax reporting:</b>
+  <%=h @account.tax_reporting %>
+</p>
+  <p>
+	<b>Open Tax Solver Line:</b>
+	<%=h @account.open_tax_solver_line %>
+  </p>
+
+<p>
+  <b>Budgeting:</b>
+  <%=h @account.budgeting %>
+</p>
+
+
+<%= link_to 'Edit', edit_account_path(@account) %> |
+<%= link_to 'Back', accounts_path %>
+<% end %>

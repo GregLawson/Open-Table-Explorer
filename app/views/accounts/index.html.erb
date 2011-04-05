@@ -1,24 +1,20 @@
 <h1>Listing accounts</h1>
 
-<table>
+<table border=1>
   <tr>
     <th>Name</th>
     <th>Parent</th>
     <th>Tax reporting</th>
+    <th>Open Tax Solver Line</th>
     <th>Budgeting</th>
-    <th>account</th>
-    <th>edit_account_path(account)</th>
   </tr>
-@accounts.first.table2yaml =< %=   @accounts.first.table2yaml % >
 <% for account in @accounts %>
   <tr>
     <td><%=h account.name %></td>
     <td><%=h account.parent %></td>
     <td><%=h account.tax_reporting %></td>
+    <td><%=h account.open_tax_solver_line %></td>
     <td><%=h account.budgeting %></td>
-    <td><%=h account %></td>
-  
-    <td><%=h edit_account_path(account) %></td>
     <td><%= link_to 'Show', account %></td>
     <td><%= link_to 'Edit', edit_account_path(account) %></td>
     <td><%= link_to 'Destroy', account, :confirm => 'Are you sure?', :method => :delete %></td>
