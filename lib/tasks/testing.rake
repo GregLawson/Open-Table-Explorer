@@ -43,33 +43,35 @@ task :unit_test do
 	full_unit_test(plural_table)
 	summarize
 end #task
+def conditional_build(target, sources)
+	sources.each do |s|
+		if !uptodate?(target, s)  then
+			puts "not up to date."
+			sh "ls -l #{target}"
+			sh "ls -l #{s}"
+		end
+	end #each
+	unless uptodate?(target, sources) 
+		ruby_run_and_log(sources[0], target)
+	end #file
+end #def
 task :incremental do
 	all_models=FileList['app/models/*.rb']
-	affects_everything="db/schema.rb","test/test_helper.rb"
+	affects_everything=["db/schema.rb","test/test_helper.rb"]
 	all_models .each do |model_file|
 		 singular_table=model_file[11..-4]
 		 plural_table=singular_table.pluralize
 		 model_file="app/models/#{singular_table}.rb"
 		 # commn_sources apply to both unit and functional tests.
-		 common_sources=[model_file,"test/fixtures/#{plural_table}.yml"]
+		 common_sources=affects_everything+[model_file,"test/fixtures/#{plural_table}.yml"]
 		target = "log/unit/#{singular_table}_test.log"
 		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
-		sources.each do |s|
-			if !uptodate?(target, s)  then
-				puts "not up to date."
-				sh "ls -l #{target}"
-				sh "ls -l #{s}"
-			end
-		end #def
-		unless uptodate?(target, sources) 
-			ruby_run_and_log(sources[0], target)
-		end #file
+		conditional_build(target, sources)
+		
 		target = "log/functional/#{plural_table}_controller_test.log"
 		sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
 		sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controller/#{plural_table}_controller.rb","app/helpers/#{plural_table}"]
-		unless uptodate?(target, sources) 
-			ruby_run_and_log(sources[0], target)
-		end #file
+		conditional_build(target, sources)
 	end #each
 	summarize
 end #task
@@ -79,7 +81,8 @@ task :full do
 	FileList['app/models/*.rb'].each do |model_file|
 		 singular_table=model_file[11..-4]
 		  full_unit_test(singular_table.pluralize)
-	 end #each
+	  end #each
+	  sh 'rdoc'
 	summarize
 end #task
 task :change_test do
