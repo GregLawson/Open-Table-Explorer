@@ -1,5 +1,5 @@
 class Acquisition < ActiveRecord::Base
-has_one :acquisitionStreamSpec
+has_one :acquisition_stream_spec
 def asociatedAcquisitionStreamSpec
 	acquisition_stream_spec=AcquisitionStreamSpec.find_by_id(self[:acquisition_stream_spec_id])
 end #def
