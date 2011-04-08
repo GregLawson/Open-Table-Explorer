@@ -8,22 +8,23 @@
     <%= f.text_field :id %>
   </p>
   <p>
-    <%= f.label :acquisition_interface %><br />
-    <%= f.text_field :acquisition_interface %>
+   <p>
+    <%= f.label :acquisition_interface_id %><br />
+	<%= collection_select(:acquisition_stream_spec,:acquisition_interface_id,AcquisitionInterface.all, :id, :name) %>
   </p>
-  <p>
-    <!-- rest of form -->
     <%= f.label :url %><br />
-  %= f.collection_select(:AcquisitionInterface_Id,AcquisitionInterface.all,:id, :name) %
-    : <%= f.text_field :AcquisitionInterface_Id %>    : <%= f.text_field :url %>
+	<%= f.text_field :url %>
   </p>
-  <p>
-</P>
-  <p>
+  
+<p>
     <%= f.label :table_spec_id %><br />
     <%= f.text_field :table_spec_id %>
   </p>
-  <p>
+    <p>
+    <%= f.label :table_spec_id %><br />
+	<%= collection_select(:acquisition_stream_spec,:table_spec_id,TableSpec.all, :id, :model_class_name) %>
+  </p>
+ <p>
     <%= f.label :required_order %><br />
     <%= f.text_field :required_order %>
   </p>

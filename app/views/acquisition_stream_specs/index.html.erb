@@ -1,8 +1,9 @@
 <h1>Listing acquisition_stream_specs</h1>
 
-<table>
+<table border=1>
   <tr>
     <th>Id</th>
+    <th>acquisition_interface_id</th>
     <th>Acquisition interface</th>
     <th>Url</th>
     <th>Table spec</th>
@@ -12,7 +13,8 @@
 <% for acquisition_stream_spec in @acquisition_stream_specs %>
   <tr>
     <td><%=h acquisition_stream_spec.id %></td>
-    <td><%=h acquisition_stream_spec.acquisition_interface %></td>
+    <td><%=h acquisition_stream_spec.acquisition_interface_id %></td>
+    <td><%=h acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) %></td>
     <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
     <td><%=h acquisition_stream_spec.required_order %></td>
@@ -26,4 +28,5 @@
 <br />
 
 <%= link_to 'New acquisition_stream_spec', new_acquisition_stream_spec_path %>
-<%= link_to 'URI definition','http://www.apps.ietf.org/rfc/rfc2396.html' %>
+<BR>
+<%= link_to 'URI definition','https://github.com/GregLawson/Open-Table-Explorer/wiki/URLs' %>

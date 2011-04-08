@@ -1,13 +1,49 @@
 Loaded suite test/functional/acquisition_stream_specs_controller_test
 Started
-..E....
-Finished in 14.749217 seconds.
+data.inspect=[#<AcquisitionStreamSpec id: 685260137, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KLAX.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 737240217, acquisition_interface: nil, url: "sunnywebbox", table_spec_id: 1, required_order: nil, acquisition_interface_id: 414412125>, #<AcquisitionStreamSpec id: 748462210, acquisition_interface: nil, url: "/sbin/ifconfig", table_spec_id: 665359353, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 855127333, acquisition_interface: nil, url: "http://www.calgold.com/Schedule.asp", table_spec_id: 2, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 899019070, acquisition_interface: nil, url: "nmap 192.168.3.1-254", table_spec_id: 7, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 980190963, acquisition_interface: nil, url: "http:www.yahoo.com", table_spec_id: nil, required_order: nil, acquisition_interface_id: nil>]
+E....Edata.inspect=[#<AcquisitionStreamSpec id: 685260137, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KLAX.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 737240217, acquisition_interface: nil, url: "sunnywebbox", table_spec_id: 1, required_order: nil, acquisition_interface_id: 414412125>, #<AcquisitionStreamSpec id: 748462210, acquisition_interface: nil, url: "/sbin/ifconfig", table_spec_id: 665359353, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 855127333, acquisition_interface: nil, url: "http://www.calgold.com/Schedule.asp", table_spec_id: 2, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 899019070, acquisition_interface: nil, url: "nmap 192.168.3.1-254", table_spec_id: 7, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>]
+E
+Finished in 13.062385 seconds.
 
   1) Error:
-test_should_get_edit(AcquisitionStreamSpecsControllerTest):
-ActionView::Template::Error: undefined method `AcquisitionInterface_Id' for #<AcquisitionStreamSpec:0xb5d23b3c>
-    app/views/acquisition_stream_specs/edit.html.erb:18:in `_app_views_acquisition_stream_specs_edit_html_erb___392069454__622268718_0'
-    app/views/acquisition_stream_specs/edit.html.erb:3:in `_app_views_acquisition_stream_specs_edit_html_erb___392069454__622268718_0'
-    test/functional/acquisition_stream_specs_controller_test.rb:29:in `test_should_get_edit'
+test_should_create_acquisition_stream_spec(AcquisitionStreamSpecsControllerTest):
+NameError: undefined local variable or method `frequency_name' for #<AcquisitionStreamSpec:0xb5e21e6c>
+    app/models/acquisition_stream_spec.rb:22:in `logical_primary_key'
+    app/models/generic_table.rb:243:in `sequential_id?'
+    app/models/generic_table.rb:272:in `table2yaml'
+    app/models/generic_table.rb:267:in `each'
+    app/models/generic_table.rb:267:in `inject'
+    app/models/generic_table.rb:267:in `table2yaml'
+    app/models/generic_table.rb:263:in `open'
+    app/models/generic_table.rb:263:in `table2yaml'
+    app/models/generic_table.rb:294:in `save'
+    app/controllers/acquisition_stream_specs_controller.rb:46:in `create'
+    app/controllers/acquisition_stream_specs_controller.rb:45:in `create'
+    test/functional/acquisition_stream_specs_controller_test.rb:17:in `test_should_create_acquisition_stream_spec'
+    test/functional/acquisition_stream_specs_controller_test.rb:16:in `test_should_create_acquisition_stream_spec'
 
-7 tests, 9 assertions, 0 failures, 1 errors
+  2) Error:
+test_should_show_acquisition_stream_spec(AcquisitionStreamSpecsControllerTest):
+ActionView::Template::Error: wrong number of arguments (0 for 1)
+    app/views/acquisition_stream_specs/show.html.erb:17:in `h'
+    app/views/acquisition_stream_specs/show.html.erb:17:in `_app_views_acquisition_stream_specs_show_html_erb___954843323__622782928_0'
+    app/controllers/acquisition_stream_specs_controller.rb:18:in `show'
+    test/functional/acquisition_stream_specs_controller_test.rb:24:in `test_should_show_acquisition_stream_spec'
+
+  3) Error:
+test_should_update_acquisition_stream_spec(AcquisitionStreamSpecsControllerTest):
+NameError: undefined local variable or method `frequency_name' for #<AcquisitionStreamSpec:0xb5bef324>
+    app/models/acquisition_stream_spec.rb:22:in `logical_primary_key'
+    app/models/generic_table.rb:243:in `sequential_id?'
+    app/models/generic_table.rb:272:in `table2yaml'
+    app/models/generic_table.rb:267:in `each'
+    app/models/generic_table.rb:267:in `inject'
+    app/models/generic_table.rb:267:in `table2yaml'
+    app/models/generic_table.rb:263:in `open'
+    app/models/generic_table.rb:263:in `table2yaml'
+    app/models/generic_table.rb:294:in `save'
+    app/controllers/acquisition_stream_specs_controller.rb:63:in `update'
+    app/controllers/acquisition_stream_specs_controller.rb:62:in `update'
+    test/functional/acquisition_stream_specs_controller_test.rb:34:in `test_should_update_acquisition_stream_spec'
+
+7 tests, 6 assertions, 0 failures, 3 errors

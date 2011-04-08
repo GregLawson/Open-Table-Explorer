@@ -3,35 +3,10 @@
 <% form_for(@acquisition) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :acquisition_data %><br />
-    <%= f.text_field :acquisition_data %>
-  </p>
-  <p>
-    <%= f.label :created_at %><br />
-    <%= f.datetime_select :created_at %>
-  </p>
-  <p>
-    <%= f.label :id %><br />
-    <%= f.text_field :id %>
-  </p>
-  <p>
-    <%= f.label :url %><br />
-    <%= f.text_field :url %>
-  </p>
-  <p>
+    <p>
     <%= f.label :acquisition_stream_id %><br />
-    <%= f.text_field :acquisition_stream_id %>
+	<%= collection_select(:acquisition,:acquisition_stream_id,Acquisition.all, :id, :url) %>
   </p>
-  <p>
-    <%= f.label :error %><br />
-    <%= f.text_field :error %>
-  </p>
-  <p>
-    <%= f.label :acquisition_updated %><br />
-    <%= f.check_box :acquisition_updated %>
-  </p>
-  <p>
     <%= f.submit "Create" %>
   </p>
 <% end %>
