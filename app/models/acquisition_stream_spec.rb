@@ -1,25 +1,10 @@
-module Generic_Table
-def Generic_Table.rubyClassName(model_class_name)
-	model_class_name=model_class_name[0,1].upcase+model_class_name[1,model_class_name.length-1] # ruby class names are constants and must start with a capital letter.
-	# remainng case is unchanged to allow camel casing to separate words for model names.
-	return model_class_name
-end #def
-def Generic_Table.classDefiniton(model_class_name)
-	return "class #{Generic_Table.rubyClassName(model_class_name)}  < ActiveRecord::Base\ninclude Generic_Table\nend"
-end #def
-def Generic_Table.classReference(model_class_name)
-	rubyClassName=Generic_Table.rubyClassName(model_class_name)
-	model_class_eval=eval("#{classDefiniton(rubyClassName)}\n#{rubyClassName}")
-	return model_class_eval
-end #def
-end # module
-
 class AcquisitionStreamSpec < ActiveRecord::Base
 belongs_to :acquisition_interface
 belongs_to :table_spec
 has_many :acquisitions
 attr_reader :uri
 include Generic_Table
+include Global
 belongs_to :table_spec, :class_name => "Table_spec"
 #~ validates_format_of :acquisition_interface, :with => /\A[a-zA-Z]{4,5}_Acquisition\z/,
     #~ :message => "Only four or five letter mode followed by '_Acquisition' allowed."
