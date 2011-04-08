@@ -3,11 +3,11 @@ Started
 loads_attributes={"x_10_address"=>nil, "timer_savings"=>true, "parent_description"=>"North east outlet", "audio_video"=>true, "plug_width"=>nil, "node"=>157, "daylight_savings_adjustment"=>false, "background"=>true, "node_id"=>nil, "parent_node"=>24, "id"=>235, "computer_common"=>false, "volatile"=>false, "recorder"=>false, "description"=>"Mitsubishi stereo", "motion_savings"=>false, "plug_in_location"=>nil, "bedtime_savings"=>false, "away_savings"=>false}
 loads_attributes={"x_10_address"=>nil, "timer_savings"=>true, "parent_description"=>"North east outlet", "audio_video"=>true, "plug_width"=>nil, "node"=>9999999, "daylight_savings_adjustment"=>false, "background"=>true, "node_id"=>nil, "parent_node"=>24, "id"=>235, "computer_common"=>false, "volatile"=>false, "recorder"=>false, "description"=>"Mitsubishi stereo", "motion_savings"=>false, "plug_in_location"=>nil, "bedtime_savings"=>false, "away_savings"=>false}
 E.....F
-Finished in 15.160493 seconds.
+Finished in 12.847988 seconds.
 
   1) Error:
 test_should_create_loads(LoadsControllerTest):
-ActiveRecord::StatementInvalid: SQLite3::ConstraintException: loads.node may not be NULL: INSERT INTO "loads" ("background", "plug_in_location", "bedtime_savings", "away_savings", "node", "audio_video", "x_10_address", "motion_savings", "description", "volatile", "recorder", "parent_node", "daylight_savings_adjustment", "plug_width", "parent_description", "timer_savings", "node_id", "computer_common") VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+ActiveRecord::StatementInvalid: SQLite3::ConstraintException: loads.node may not be NULL: INSERT INTO "loads" ("x_10_address", "computer_common", "bedtime_savings", "background", "motion_savings", "description", "node_id", "away_savings", "volatile", "parent_node", "parent_description", "plug_in_location", "timer_savings", "recorder", "node", "daylight_savings_adjustment", "plug_width", "audio_video") VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
     app/controllers/loads_controller.rb:46:in `create'
     app/controllers/loads_controller.rb:45:in `create'
     test/functional/loads_controller_test.rb:25:in `test_should_create_loads'

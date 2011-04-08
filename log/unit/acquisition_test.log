@@ -1,6 +1,50 @@
 Loaded suite test/unit/acquisition_test
 Started
-.
-Finished in 12.352813 seconds.
+FFFF
+Finished in 12.932485 seconds.
 
-1 tests, 1 assertions, 0 failures, 0 errors
+  1) Failure:
+test_associatons(AcquisitionTest)
+    [/test/test_helper.rb:134:in `fixtures'
+     /test/test_helper.rb:116:in `collect'
+     /test/test_helper.rb:116:in `fixtures'
+     /test/test_helper.rb:215:in `define_association_names'
+     test/unit/acquisition_test.rb:5:in `setup']:
+acquisitions.yml probably defines id rather than letting Fixtures define it as a hash.
+<4768> expected but was
+<644032427>.
+
+  2) Failure:
+test_general_associations(AcquisitionTest)
+    [/test/test_helper.rb:134:in `fixtures'
+     /test/test_helper.rb:116:in `collect'
+     /test/test_helper.rb:116:in `fixtures'
+     /test/test_helper.rb:215:in `define_association_names'
+     test/unit/acquisition_test.rb:5:in `setup']:
+acquisitions.yml probably defines id rather than letting Fixtures define it as a hash.
+<4768> expected but was
+<644032427>.
+
+  3) Failure:
+test_id_equal(AcquisitionTest)
+    [/test/test_helper.rb:134:in `fixtures'
+     /test/test_helper.rb:116:in `collect'
+     /test/test_helper.rb:116:in `fixtures'
+     /test/test_helper.rb:215:in `define_association_names'
+     test/unit/acquisition_test.rb:5:in `setup']:
+acquisitions.yml probably defines id rather than letting Fixtures define it as a hash.
+<4768> expected but was
+<644032427>.
+
+  4) Failure:
+test_specific,_stable_and_working(AcquisitionTest)
+    [/test/test_helper.rb:134:in `fixtures'
+     /test/test_helper.rb:116:in `collect'
+     /test/test_helper.rb:116:in `fixtures'
+     /test/test_helper.rb:215:in `define_association_names'
+     test/unit/acquisition_test.rb:5:in `setup']:
+acquisitions.yml probably defines id rather than letting Fixtures define it as a hash.
+<4768> expected but was
+<644032427>.
+
+4 tests, 32 assertions, 4 failures, 0 errors
