@@ -4,10 +4,6 @@
   %= f.error_messages %
 
   <p>
-    <%= f.label :acquisition_data %><br />
-    <%= f.text_field :acquisition_data %>
-  </p>
-  <p>
     <%= f.label :created_at %><br />
     <%= f.datetime_select :created_at %>
   </p>
@@ -23,6 +19,14 @@
     <%= f.label :acquisition_stream_id %><br />
     <%= f.text_field :acquisition_stream_id %>
   </p>
+    <p>
+    <%= f.label :acquisition_stream_id %><br />
+	<%= collection_select(:acquisition,:acquisition_stream_id,Acquisition.all, :id, :url) %>
+  </p>
+  <p>
+    <%= f.label :created_at %><br />
+    <%= f.datetime_select :created_at %>
+  </p>
   <p>
     <%= f.label :error %><br />
     <%= f.text_field :error %>
@@ -31,26 +35,31 @@
     <%= f.label :acquisition_updated %><br />
     <%= f.check_box :acquisition_updated %>
   </p>
-  <p>
+   <p>
+    <%= f.label :acquisition_data %><br />
+    <%= f.text_area :acquisition_data %>
+  </p>
+ <p>
     <%= f.submit "Update" %>
   </p>
 <% end %>
 
 <%= link_to 'Show', @acquisition %> |
 <%= link_to 'Back', acquisitions_path %>
-
+<% @acquisition_stream_spec=@acquisition.acquisition_stream_spec %>
+<% if @acquisition_stream_spec.nil? then%>
 <p>
   <b>Id:</b>
-  <%=h @acquisition_interface.id %>
+  <%=h @acquisition_stream_spec.id %>
 </p>
 
 <p>
   <b>Name:</b>
-  <%=h @acquisition_interface.name %>
+  <%=h @acquisition_stream_spec.url %>
 </p>
 
 <p>
   <b>Sceme:</b>
-  <%=h @acquisition_interface.scheme %>
+  <%=h @acquisition_stream_spec.scheme %>
 </p>
-
+<% end #if %>
