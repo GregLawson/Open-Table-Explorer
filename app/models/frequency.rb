@@ -1,7 +1,7 @@
 class Frequency < ActiveRecord::Base
 belongs_to :table_specs
 def logical_primary_key
-	return frequency_name
+	return :frequency_name
 end #def
 def intervalString(seconds)
 #	assert_operator(seconds,:>,0.0)

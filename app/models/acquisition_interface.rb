@@ -10,10 +10,14 @@ class AcquisitionInterface < ActiveRecord::Base
 has_many :acquisition_stream_specs
 include Global
 def logical_primary_key
-	return acquisition_name
+	return :acquisition_name
 end #def
 def scheme
-	return self[:name].downcase
+	if self[:name].nil? then
+		return ''
+	else
+		return self[:name].downcase
+	end #if
 end #def
 def acquisition_class_name
 	return "#{self[:name]}_Acquisition"
