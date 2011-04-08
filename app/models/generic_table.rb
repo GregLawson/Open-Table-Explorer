@@ -229,8 +229,77 @@ def Generic_Table.classDefiniton(model_class_name)
 	return "class #{Generic_Table.rubyClassName(model_class_name)}  < ActiveRecord::Base\ninclude Generic_Table\nend"
 end #def
 def Generic_Table.classReference(model_class_name)
-	rubyClassName=Generic_Acquisitions.rubyClassName(model_class_name)
+	rubyClassName=Generic_Table.rubyClassName(model_class_name)
 	model_class_eval=eval("#{classDefiniton(rubyClassName)}\n#{rubyClassName}")
 	return model_class_eval
 end #def
+def Generic_Table.classReference(model_class_name)
+	rubyClassName=Generic_Table.rubyClassName(model_class_name)
+	model_class_eval=eval("#{classDefiniton(rubyClassName)}\n#{rubyClassName}")
+	return model_class_eval
+end #def
+def sequential_id?
+	if self.respond_to?(:logical_primary_key) then
+		if logical_primary_key==:created_at then # still sequential, not requred, default
+			return true
+		else
+			return false
+		end
+	else # default to sequential id
+		return true
+	end #if
+end # def
+def logical_primary_key_value
+	if sequential_id? then
+		return self[:created_at]
+	else
+		return self[logical_primary_key]
+	end #if
+end #def
+def table2yaml(table_name=self.class.name.tableize)
+	i = 0 #"000"
+	limit=100 # too long slow all tsts, too short give poor test coverage
+	sql  = "SELECT * FROM %s LIMIT #{limit}"
+    	File.open("test/fixtures/#{table_name}.yml.gen", 'w') do |file|
+      		data = self.class.limit(limit).all
+		puts "data.inspect=#{data.inspect}"
+		file.write "# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html"
+		 file.write data.inject({}) { |hash, model_instance|
+			i=i+1
+			fixture_attributes=model_instance.attributes
+			fixture_attributes.delete('created_at')  # automatically regenerated
+			fixture_attributes.delete('updated_at')  # automatically regenerated
+			if sequential_id? then
+				primaryKeyValue=i
+				fixture_attributes['id']=i  # automatically regenerated
+			else
+				primaryKeyValue=model_instance.logical_primary_key_value
+				fixture_attributes.delete('id')  # automatically regenerated
+			end
+			puts "fixture_attributes.inspect=#{fixture_attributes.inspect}"
+			puts "fixture_attributes.to_yaml.inspect=#{fixture_attributes.to_yaml.inspect}"
+			hash[primaryKeyValue] = fixture_attributes
+			hash
+		}.to_yaml
+	end# file open
+end #def
+def self.db2yaml
+	skip_tables = ["schema_info","tedprimaries","weathers"]
+  (	ActiveRecord::Base.connection.tables - skip_tables).each do |table_name|
+		table2yaml(table_name)
+	end #each
+end #def
+def save
+	super
+	table2yaml
+end #def
+def associated_to_s(assName,method,*args)
+	ass=send(assName)
+	if ass.nil? then
+		return ''
+	else
+		return ass.send(method.to_sym,*args).to_s
+	end
+end #def
 end # module
+

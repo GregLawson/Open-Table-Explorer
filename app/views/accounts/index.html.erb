@@ -2,6 +2,7 @@
 
 <table border=1>
   <tr>
+    <th>Account Id</th>
     <th>Name</th>
     <th>Parent</th>
     <th>Tax reporting</th>
@@ -10,6 +11,7 @@
   </tr>
 <% for account in @accounts %>
   <tr>
+    <td><%=h account.id %></td>
     <td><%=h account.name %></td>
     <td><%=h account.parent %></td>
     <td><%=h account.tax_reporting %></td>

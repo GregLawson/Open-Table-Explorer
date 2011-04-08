@@ -1,4 +1,30 @@
 <p>
+  <b>Id:</b>
+  <%=h @account.id %>
+</p>
+<p>
+  <b>logical_primary_key:</b>
+  <%=h @account.logical_primary_key %>
+</p>
+<p>
+  <b>logical_primary_key==:created_at:</b>
+  <%=h @account.logical_primary_key==:created_at %>
+</p>
+
+<p>
+  <b>respond_to?(:logical_primary_key):</b>
+  <%=h @account.respond_to?(:logical_primary_key)  %>
+</p>
+<p>
+  <b>sequential_id?:</b>
+  <%=h @account.sequential_id? %>
+</p>
+<p>
+  <b>logical_primary_key_value:</b>
+  <%=h @account.logical_primary_key_value %>
+</p>
+
+<p>
   <b>Name:</b>
   <%=h @account.name %>
 </p>

@@ -7,7 +7,6 @@
     <th>Amount</th>
     <th>Posted</th>
   </tr>
-
 <% for transfer in @transfers %>
   <tr>
     <td><%=h transfer.account_id %></td>
@@ -16,7 +15,7 @@
       <% else %>
 	<td><%=h transfer.account.name %></td>
      <% end %>
-   <td><%=h transfer.amount %></td>
+   <td><%=h number_to_currency(transfer.amount) %></td>
     <td><%=h transfer.posted %></td>
     <td><%= link_to 'Show', transfer %></td>
     <td><%= link_to 'Edit', edit_transfer_path(transfer) %></td>
@@ -28,3 +27,12 @@
 <br />
 
 <%= link_to 'New transfer', new_transfer_path %>
+<p>
+< %=  Transfer.to_sql  %>
+< %=  Transfer.arel.to_sql  %>
+</p>
+< %=  Transfer.arel.includes(:account).account.to_sql  %>
+< %=  Transfer.arel.includes(:account).account.open_tax_solver_line.to_sql  %>
+< %=  Transfer.arel.includes(:account).where("accounts.open_tax_solver_line is not null").to_sql  %>
+< %=  Transfer.open_tax_solver %>
+</p>
