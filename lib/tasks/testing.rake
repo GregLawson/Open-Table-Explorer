@@ -41,7 +41,7 @@ end #task
 task :unit_test do
 	plural_table = ENV["TABLE"] || "accounts"
 	full_unit_test(plural_table)
-	summarize
+#	summarize
 end #task
 def conditional_build(target, sources)
 	sources.each do |s|
