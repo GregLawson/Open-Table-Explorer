@@ -1,15 +1,32 @@
 Loaded suite test/unit/transfer_test
 Started
-F
-Finished in 28.369045 seconds.
+...transfers.columns=[:id, :account, :amount, :posted, :created_at, :updated_at, :account_id]
+Arel::Table
+Class
+SELECT  FROM "users" LIMIT -1 OFFSET 2
+obj.name=transfers
+obj.name=TransferTest::Transfer
+obj.superclass=ActiveRecord::Base
+obj.superclass.name=ActiveRecord::Base
+obj.name=TransferTest::Transfer
+obj.superclass=ActiveRecord::Base
+obj.superclass.name=ActiveRecord::Base
+SELECT open_tax_solver_line, amount FROM "transfers" INNER JOIN "accounts" ON "transfers"."account_id" = "accounts"."id"
+accounts.columns=[:id, :name, :parent, :tax_reporting, :budgeting, :created_at, :updated_at, :open_tax_solver_line]
+Arel::Table
+SELECT * FROM "transfers"
+SELECT  FROM "transfers" WHERE "transfers"."amount" = 100.0
+SELECT "transfers"."id" FROM "transfers"
+SELECT  FROM "transfers" WHERE 'accounts.open_tax_solver_line is not null'
+#<Arel::Table:0xb63bda9c @columns=nil, @name="transfers", @primary_key=nil, @aliases=[], @engine=ActiveRecord::Base, @table_alias=nil>
+nil
+Title:  US Federal 1040 Tax Form - 2010 - Generated
 
-  1) Failure:
-test_general_associations(TransferTest)
-    [/test/test_helper.rb:119:in `fixtures'
-     /test/test_helper.rb:116:in `collect'
-     /test/test_helper.rb:116:in `fixtures'
-     /test/test_helper.rb:221:in `define_association_names'
-     test/unit/transfer_test.rb:5:in `setup']:
-<nil> expected to not be nil.
+Status     Married/Joint {Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)}
+Dependents     2         {Number of Dependents, self=1, spouse, etc.}
+{Income}
+obj.name=transfers
+.
+Finished in 15.644579 seconds.
 
-1 tests, 7 assertions, 1 failures, 0 errors
+4 tests, 9575 assertions, 0 failures, 0 errors

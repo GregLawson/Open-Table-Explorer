@@ -1,60 +1,11 @@
 Loaded suite test/unit/table_spec_test
 Started
-EEEEEE
-Finished in 17.959368 seconds.
+.....F
+Finished in 23.272948 seconds.
 
-  1) Error:
-test_aaa_test_assertions(TableSpecTest):
-NoMethodError: undefined method `sequential_id?' for #<TableSpec:0xb5fac91c>
-    /test/test_helper.rb:146:in `fixtures'
-    /test/test_helper.rb:116:in `collect'
-    /test/test_helper.rb:116:in `fixtures'
-    /test/test_helper.rb:221:in `define_association_names'
-    test/unit/table_spec_test.rb:10:in `setup'
+  1) Failure:
+test_specific,_stable_and_working(TableSpecTest) [test/unit/table_spec_test.rb:59]:
+<#<Set: {"acquisition_stream_specs", "frequency"}>> expected but was
+<#<Set: {}>>.
 
-  2) Error:
-test_associated_id_equal(TableSpecTest):
-NoMethodError: undefined method `sequential_id?' for #<TableSpec:0xb5f73090>
-    /test/test_helper.rb:146:in `fixtures'
-    /test/test_helper.rb:116:in `collect'
-    /test/test_helper.rb:116:in `fixtures'
-    /test/test_helper.rb:221:in `define_association_names'
-    test/unit/table_spec_test.rb:10:in `setup'
-
-  3) Error:
-test_association_empty(TableSpecTest):
-NoMethodError: undefined method `sequential_id?' for #<TableSpec:0xb5f5a978>
-    /test/test_helper.rb:146:in `fixtures'
-    /test/test_helper.rb:116:in `collect'
-    /test/test_helper.rb:116:in `fixtures'
-    /test/test_helper.rb:221:in `define_association_names'
-    test/unit/table_spec_test.rb:10:in `setup'
-
-  4) Error:
-test_general_associations(TableSpecTest):
-NoMethodError: undefined method `sequential_id?' for #<TableSpec:0xb5f4c2c4>
-    /test/test_helper.rb:146:in `fixtures'
-    /test/test_helper.rb:116:in `collect'
-    /test/test_helper.rb:116:in `fixtures'
-    /test/test_helper.rb:221:in `define_association_names'
-    test/unit/table_spec_test.rb:10:in `setup'
-
-  5) Error:
-test_id_equal(TableSpecTest):
-NoMethodError: undefined method `sequential_id?' for #<TableSpec:0xb5f3e6ec>
-    /test/test_helper.rb:146:in `fixtures'
-    /test/test_helper.rb:116:in `collect'
-    /test/test_helper.rb:116:in `fixtures'
-    /test/test_helper.rb:221:in `define_association_names'
-    test/unit/table_spec_test.rb:10:in `setup'
-
-  6) Error:
-test_specific,_stable_and_working(TableSpecTest):
-NoMethodError: undefined method `sequential_id?' for #<TableSpec:0xb5f310f0>
-    /test/test_helper.rb:146:in `fixtures'
-    /test/test_helper.rb:116:in `collect'
-    /test/test_helper.rb:116:in `fixtures'
-    /test/test_helper.rb:221:in `define_association_names'
-    test/unit/table_spec_test.rb:10:in `setup'
-
-6 tests, 48 assertions, 0 failures, 6 errors
+6 tests, 1440 assertions, 1 failures, 0 errors
