@@ -11,19 +11,23 @@ directory "log/full"
 def build_table(singular_table)
 end #def
 def ruby_run_and_log(ruby_source,log_file)
-	ruby %Q{-I test #{ruby_source} >#{log_file}}  do |ok, res|
-		if ! ok
-			# puts "ruby failed(status = #{res.exitstatus})"
-			puts IO.read(log_file)
-		else
-			sh "tail --lines=2 #{log_file}"
-		end
+	ruby %Q{-I test #{ruby_source} | tee #{log_file}}  do |ok, res|
+		#~ if ! ok
+			#~ # puts "ruby failed(status = #{res.exitstatus})"
+			#~ puts IO.read(log_file)
+		#~ else
+			#~ sh "tail --lines=2 #{log_file}"
+		#~ end
 	end # ruby
 end #def
 def full_unit_test(plural_table)
 	singular_table=plural_table.singularize
 	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
 	ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log")
+end #def
+def unit_test(plural_table)
+	singular_table=plural_table.singularize
+	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
 end #def
 def summarize
 	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/failed_tests.tmp)	
@@ -39,6 +43,11 @@ task :summarize do
 	summarize
 end #task
 task :unit_test do
+	plural_table = ENV["TABLE"] || "accounts"
+	unit_test(plural_table)
+#	summarize
+end #task
+task :full_unit_test do
 	plural_table = ENV["TABLE"] || "accounts"
 	full_unit_test(plural_table)
 #	summarize
