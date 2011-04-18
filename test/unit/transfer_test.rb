@@ -41,14 +41,16 @@ def Transfer.open_tax_solver
 end #def
 end
 def assert_relation(relation)
-	assert_kind_of(Arel::SelectManager,relation)
+	assert_kind_of(ActiveRecord::Relation,relation)
 	explain_assert_respond_to(relation,:to_sql)	
 	testCall(relation,:to_sql)
 	explain_assert_respond_to(relation,:each)	
 end #def
 test "each" do
-cars = Transfer.where(:amount => 100.0) # No Query
-cars.each {|c| puts c.amount } # Fires "select * from cars where ..."
+	transfers = Transfer.where(:amount => 100.0) # No Query
+	assert_relation(transfers)
+	transfers.each {|c| puts c.amount } # Fires "select * from cars where ..."
+	assert_relation(transfers)
 	Transfer.transfers_extended.each do |t|
 		puts t.inspect
 	end # each
