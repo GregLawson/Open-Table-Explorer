@@ -16,7 +16,7 @@ def test_id_equal
 end #def
 def test_aaa_test_assertions # aaa to output first
 #	puts "fixtures(@table_name)=#{fixtures(@table_name)}"
-	assert_not_nil(fixtures('transfers')[5])
+#	assert_not_nil(fixtures('transfers')[5])
 end
 class Transfer < ActiveRecord::Base
 belongs_to :account
@@ -39,7 +39,15 @@ def Transfer.open_tax_solver
 	end # each
 end #def
 end
+def assert_relation(relation)
+	assert_kind_of(Arel::SelectManager,relation)
+	explain_assert_respond_to(relation,:to_sql)	
+	testCall(relation,:to_sql)
+	explain_assert_respond_to(relation,:each)	
+end #def
 test "open_tax_solver" do
+cars = Transfer.where(:amount => 100.0) # No Query
+cars.each {|c| puts c.amount } # Fires "select * from cars where ..."
 	transfers=Transfer.transfers
 	
 	assert_kind_of(Arel::Table,Transfer.transfers)
@@ -51,27 +59,9 @@ test "open_tax_solver" do
 	testCall(Transfer.joins(accounts),:to_sql)
 
 	relational_algebra=Transfer.account_join
-	testCall(relational_algebra,:to_sql)
 	
 	expected_sql='SELECT open_tax_solver_line, amount FROM "transfers" INNER JOIN "accounts" ON "transfers"."account_id" = "accounts"."id"'
-	puts relational_algebra.to_sql
 	assert_equal(expected_sql,relational_algebra.to_sql)
 	arel_methods=["where","having","from","group","project",'joins','order']
-	
-#	assert_equal(Set.new(arel_methods),Set.new(transfers.class.instance_methods(true)))
-	accounts=Arel::Table.new(:accounts)
-	puts "accounts.columns=#{accounts.columns.collect {|col| col.name}.inspect}"
-	puts accounts.class
-	
-	puts(transfers.project(Arel.sql('*')).to_sql)
-	puts(transfers.where(transfers[:amount].eq(100.00)).to_sql)
-	puts(transfers.project(transfers[:id]).to_sql)
-	puts(transfers.where("accounts.open_tax_solver_line is not null").to_sql)
-	
-	join=transfers.join(accounts).on(transfers[:account_id].eq(accounts[:id]))
-	assert_not_nil(join)
-	puts fixtures('transfers').values.first.account_join.inspect
-	puts fixtures('transfers').values.first.class.open_tax_solver
-	explain_assert_respond_to(transfers,:join)
 end #test
 end #class
