@@ -35,8 +35,8 @@ def Transfer.ots_lines
 end #def
 def Transfer.open_tax_solver
 	ots_data="Title:  US Federal 1040 Tax Form - 2010 - Generated\n\nStatus     Married/Joint {Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)}\nDependents     2         {Number of Dependents, self=1, spouse, etc.}\n{Income}\n"
-	ots_lines.each do |ots_line|
-		ots_data="#{ots_data} #{transfer.amount.to_s}<BR>\n"
+	Account.ots_line_values.each do |ots_line|
+		ots_data="#{ots_line} # {transfer.amount.to_s}<BR>\n"
 	end # each
 end #def
 end
@@ -51,14 +51,13 @@ test "each" do
 	assert_relation(transfers)
 	transfers.each {|c| puts c.amount } # Fires "select * from cars where ..."
 	assert_relation(transfers)
-	Transfer.transfers_extended.each do |t|
-		puts t.inspect
-	end # each
+	accounts=Account.scoped
+	assert_relation(Account.ots_line_values)
 end #test
 test "stable and working" do	
 	transfers=Transfer.transfers
 	
-	assert_kind_of(Arel::Table,Transfer.transfers)
+	assert_kind_of(ActiveRecord::Relation,Transfer.scoped)
 	assert_kind_of(Arel::SelectManager,Transfer.transfers_extended)
 	explain_assert_respond_to(Transfer.transfers_extended,:to_sql)	
 	testCall(Transfer.transfers_extended,:to_sql)
@@ -71,6 +70,10 @@ test "stable and working" do
 	expected_sql='SELECT open_tax_solver_line, amount FROM "transfers" INNER JOIN "accounts" ON "transfers"."account_id" = "accounts"."id"'
 	assert_equal(expected_sql,relational_algebra.to_sql)
 	arel_methods=["where","having","from","group","project",'joins','order']
+end #test
+test "relations" do
+	assert_relation(Transfer.scoped)
+	assert_relation(Account.ots_line_values)
 end #test
 test "open_tax_solver" do
 	Transfer.open_tax_solver
