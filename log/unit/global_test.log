@@ -1,6 +1,10 @@
 Loaded suite test/unit/global_test
 Started
+self is Class GlobalTest::TestClass subclass of Object
+obj is Symbol :cat
+Can't figure out relation between :cat and GlobalTest::TestClass
+..noninherited_public_instance_methods in class Object called
 .
-Finished in 13.295451 seconds.
+Finished in 13.952692 seconds.
 
-1 tests, 0 assertions, 0 failures, 0 errors
+3 tests, 13 assertions, 0 failures, 0 errors

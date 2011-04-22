@@ -14,7 +14,7 @@ def Global.objectName(obj,verbose=false)
 		return "#{obj} is nil."
 	elsif obj.class.name=='Symbol' then
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
-		return "Symbol :#{obj.to_s}has no superclass"
+		return "#{obj.to_s}"
 	elsif obj.class.name=='Module' then
 		puts("obj.name=#{obj.name}")
 		puts("nesting.inspect=#{nesting.inspect}")
@@ -35,7 +35,7 @@ def Global.objectClass(obj,verbose=false)
 		return "#{obj} is nil."
 	elsif obj.class.name=='Symbol' then
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
-		return "Symbol :#{obj.to_s}has no superclass"
+		return "Symbol"
 	elsif obj.class.name=='Module' then
 		puts("obj.name=#{obj.name}") if verbose
 		puts("nesting.inspect=#{nesting.inspect}") if verbose
@@ -61,19 +61,27 @@ def Global.canonicalName(obj,verbose=false)
 		return "#{obj} is nil."
 	elsif obj.class.name=='Symbol' then
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
-		return "Symbol :#{obj.to_s}has no superclass"
+		return "Symbol :#{obj.to_s}"
 	elsif obj.class.name=='Module' then
-		puts("obj.name=#{obj.name}")
-		puts("nesting.inspect=#{nesting.inspect}")
+		puts("obj.name=#{obj.name}") if verbose
+		puts("nesting.inspect=#{nesting.inspect}") if verbose
 		return "Module #{obj.name}"
 	elsif activeRecordTableNotCreatedYet?(obj) then
 		return "Active_Record #{obj.class.inspect}"
+	elsif obj.instance_of?(Class) then
+		return "Class"
+	elsif obj.instance_of?(Array) then
+		return "Array"
+	elsif !obj.to_s[/#<ActiveRecord::Relation:/].empty? then
+		return "#<ActiveRecord::Relation:"
 	else
+		puts "obj.to_s=#{obj.to_s}"
+		puts "obj=#{obj.inspect}"
 		if obj.respond_to?(:name) then
-			puts("obj.name=#{obj.name}")
+			puts("obj.name=#{obj.name}") if verbose
 			if obj.respond_to?(:superclass) then
-				puts("obj.superclass=#{obj.superclass}")
-				puts("obj.superclass.name=#{obj.superclass.name}")
+				puts("obj.superclass=#{obj.superclass}") if verbose
+				puts("obj.superclass.name=#{obj.superclass.name}") if verbose
 				return "Class #{obj.name} subclass of #{obj.superclass.name}"
 			else
 				return "obj Class #{obj.name} has no superclass."
@@ -83,16 +91,6 @@ def Global.canonicalName(obj,verbose=false)
 		end
 	end
 
-end
-def Global.noninherited_public_instance_methods(obj)
-	return public_instance_methods(false)-Class.public_instance_methods
-end
-def Global.noninherited_public_class_methods(obj)
-	if obj.respond_to?(:superclass) then
-		return obj.methods-obj.superclass.methods-noninherited_public_instance_methods(obj)
-	else
-		return obj.methods-noninherited_public_instance_methods(obj)
-	end
 end
 def Global.whoAmI(obj,verbose=false)
 	puts("obj=#{obj}") if verbose
@@ -120,7 +118,7 @@ def Global.whoAmI(obj,verbose=false)
 		return "#{obj} is nil."
 	elsif obj.class.name=='Symbol' then
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
-		return "Symbol :#{obj.to_s}has no superclass"
+		return "Symbol :#{obj.to_s}"
 	elsif obj.class.name=='Module' then
 		puts("obj.name=#{obj.name}") if verbose
 		puts("nesting.inspect=#{nesting.inspect}") if verbose
