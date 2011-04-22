@@ -92,7 +92,18 @@ def Global.canonicalName(obj,verbose=false)
 	end
 
 end
-def Global.whoAmI(obj,verbose=false)
+end #module
+
+class Object
+def noninherited_public_instance_methods
+	puts "noninherited_public_instance_methods in class Object called"
+	return self.class.public_instance_methods(false)
+end
+def noninherited_public_class_methods
+	self.class.methods-self.class.superclass.methods
+end
+def whoAmI(verbose=false)
+	obj=self
 	puts("obj=#{obj}") if verbose
 	puts("obj.class=#{obj.class}") if verbose
 	puts("obj.class.name=#{obj.class.name}") if verbose
@@ -139,9 +150,9 @@ def Global.whoAmI(obj,verbose=false)
 	end
 
 end #def
-def Global.relationship(obj=self)
+def relationship(obj=self)
 	puts "self is #{self.whoAmI}"
-	puts "obj is #{whoAmI(obj)}"
+	puts "obj is #{obj.whoAmI}"
 	if obj.nil? then
 		puts "#{obj} is nil."
 	elsif obj.class.name=='Symbol' then
@@ -188,4 +199,5 @@ def Global.relationship(obj=self)
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
 end #def
-end #module
+
+end #class
