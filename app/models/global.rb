@@ -5,8 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-module Global
-end #module
 class Object
 def objectClass(verbose=false)
 	if nil? then
@@ -54,9 +52,8 @@ def objectName(verbose=false)
 
 end
 def canonicalName(verbose=false)
-
 	if nil? then
-		return "#{obj} is nil."
+		return "nil"
 	elsif self.class.name=='Symbol' then
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
 		return "Symbol :#{to_s}"
@@ -64,12 +61,14 @@ def canonicalName(verbose=false)
 		puts("name=#{name}") if verbose
 		puts("nesting.inspect=#{nesting.inspect}") if verbose
 		return "Module #{name}"
-	elsif activeRecordTableNotCreatedYet?(obj) then
+	elsif Generic_Table.activeRecordTableNotCreatedYet?(self) then
 		return "Active_Record #{self.class.inspect}"
 	elsif instance_of?(Class) then
 		return "Class"
 	elsif instance_of?(Array) then
 		return "Array"
+	elsif !respond_to?(:to_s) then
+		return "#{self.class.name}"
 	elsif !to_s[/#<ActiveRecord::Relation:/].empty? then
 		return "#<ActiveRecord::Relation:"
 	else

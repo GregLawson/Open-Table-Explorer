@@ -4,7 +4,6 @@ belongs_to :table_spec
 has_many :acquisitions
 attr_reader :uri
 include Generic_Table
-include Global
 belongs_to :table_spec, :class_name => "Table_spec"
 #~ validates_format_of :acquisition_interface, :with => /\A[a-zA-Z]{4,5}_Acquisition\z/,
     #~ :message => "Only four or five letter mode followed by '_Acquisition' allowed."

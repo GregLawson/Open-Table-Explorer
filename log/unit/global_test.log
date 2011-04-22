@@ -3,8 +3,8 @@ Started
 self is Class GlobalTest::TestClass subclass of Object
 obj is Symbol :cat
 Can't figure out relation between :cat and GlobalTest::TestClass
-..noninherited_public_instance_methods in class Object called
+...noninherited_public_instance_methods in class Object called
 .
-Finished in 94.921512 seconds.
+Finished in 23.539248 seconds.
 
-3 tests, 13 assertions, 0 failures, 0 errors
+4 tests, 13 assertions, 0 failures, 0 errors

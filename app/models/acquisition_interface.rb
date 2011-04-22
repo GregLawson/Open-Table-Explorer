@@ -5,10 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'global.rb'
 class AcquisitionInterface < ActiveRecord::Base
 has_many :acquisition_stream_specs
-include Global
 def logical_primary_key
 	return :acquisition_name
 end #def

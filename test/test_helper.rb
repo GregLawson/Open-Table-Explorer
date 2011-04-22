@@ -41,7 +41,7 @@ def explain_assert_respond_to(obj,methodName)
 	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
 	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
-	message1="Object #{Global.canonicalName(obj,false)} of class='#{obj.class}' does not respond to method :#{methodName}"
+	message1="Object #{obj.canonicalName(false)} of class='#{obj.class}' does not respond to method :#{methodName}"
 	if obj.instance_of?(Class) then
 		message="#{message1}; noninherited class methods= #{Global.noninherited_public_class_methods(obj)}"
 		assert_respond_to(obj,methodName,message)

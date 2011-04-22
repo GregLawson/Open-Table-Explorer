@@ -1,6 +1,6 @@
 module Generic_Table
 #include Structure_From_Data
-def activeRecordTableNotCreatedYet?(obj)
+def Generic_Table.activeRecordTableNotCreatedYet?(obj)
 	return (obj.class.inspect=~/^[a-zA-Z0-9_]+\(Table doesn\'t exist\)/)==0
 end #def
 def updates(variableHashes)
