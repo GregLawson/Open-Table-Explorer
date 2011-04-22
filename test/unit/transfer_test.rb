@@ -16,28 +16,30 @@ def test_id_equal
 end #def
 def test_aaa_test_assertions # aaa to output first
 #	puts "fixtures(@table_name)=#{fixtures(@table_name)}"
-#	assert_not_nil(fixtures('transfers')[5])
+	assert_not_nil(fixtures('transfers')[5])
 end
 class Transfer < ActiveRecord::Base
 belongs_to :account
 include Generic_Table
-@@transfers=Arel::Table.new(:transfers)
-@@accounts=Arel::Table.new(:accounts)
+@@transfers=Transfer.scoped
+@@accounts=Account.scoped
 def Transfer.transfers
 	return @@transfers
 end #def
 #scope :transfers_extended, join(@@accounts).on(@@transfers[:account_id].eq(@@accounts[:id])).project(:open_tax_solver_line,:amount)
 def Transfer.transfers_extended
-	@@transfers.join(@@accounts).on(@@transfers[:account_id].eq(@@accounts[:id])).project(:open_tax_solver_line,:amount)
+#	@@transfers.joins(@@accounts).on(@@transfers[:account_id].eq(@@accounts[:id])).select(:open_tax_solver_line,:amount)
+	@@transfers.joins(@@accounts).select('*')
 end #def
 def Transfer.ots_lines
 	@@accounts.project(:open_tax_solver_line)
 end #def
 def Transfer.open_tax_solver
 	ots_data="Title:  US Federal 1040 Tax Form - 2010 - Generated\n\nStatus     Married/Joint {Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)}\nDependents     2         {Number of Dependents, self=1, spouse, etc.}\n{Income}\n"
-	ots_lines.each do |ots_line|
-		ots_data="#{ots_data} #{transfer.amount.to_s}<BR>\n"
+	Account.all.each do |ots_line|
+		ots_data="#{ots_line} # {transfer.amount.to_s}<BR>\n"
 	end # each
+	return ots_data
 end #def
 end
 def assert_relation(relation)
@@ -51,6 +53,7 @@ test "each" do
 	assert_relation(transfers)
 	transfers.each {|c| puts c.amount } # Fires "select * from cars where ..."
 	assert_relation(transfers)
+	assert_relation(Transfer.transfers_extended)
 	Transfer.transfers_extended.each do |t|
 		puts t.inspect
 	end # each
@@ -58,8 +61,8 @@ end #test
 test "stable and working" do	
 	transfers=Transfer.transfers
 	
-	assert_kind_of(Arel::Table,Transfer.transfers)
-	assert_kind_of(Arel::SelectManager,Transfer.transfers_extended)
+	assert_kind_of(ActiveRecord::Relation,Transfer.scoped)
+	assert_kind_of(ActiveRecord::Relation,Transfer.transfers_extended)
 	explain_assert_respond_to(Transfer.transfers_extended,:to_sql)	
 	testCall(Transfer.transfers_extended,:to_sql)
 	assert_equal(Transfer.transfers_extended.to_sql,"SELECT open_tax_solver_line, amount FROM \"transfers\" INNER JOIN \"accounts\" ON \"transfers\".\"account_id\" = \"accounts\".\"id\"")
@@ -72,7 +75,36 @@ test "stable and working" do
 	assert_equal(expected_sql,relational_algebra.to_sql)
 	arel_methods=["where","having","from","group","project",'joins','order']
 end #test
+test "relations" do
+	assert_relation(Transfer.transfers)
+	assert_relation(Transfer.scoped)
+	assert_relation(Account.scoped.select(:open_tax_solver_line))
+	assert_relation(Account.ots_line_values)
+	assert_relation(Transfer.transfers_extended)
+end #test
 test "open_tax_solver" do
 	Transfer.open_tax_solver
+end #test
+test "join" do
+# Our relation variables(RelVars)
+U =Arel::Table.new(:transfers, :as => 'U')
+I =Arel::Table.new(:accounts, :as => 'I')
+
+# perform operations on relations
+G =U.join(I)  #(implicit) will reference final joined relationship
+
+#(explicit) predicate = Arel::Predicates::Equality.new U[:user_id], I[:user_id]
+G =U.join(I).on( U[:user_id].eq(I[:user_id] )) 
+
+# Keep in mind you MUST PROJECT for this to make sense
+G.project(U[:user_id], I[:login_count].sum.as('total_login'))
+
+# Now you can group
+G=G.group(U[:user_id])
+
+#from this group you can project and group again (or group and project)
+# for the final relation
+TL=G.project(G[:total_login].as('logins'),G[:id].count.as('users')).group(G[:total_login])
+
 end #test
 end #class
