@@ -1,4 +1,3 @@
-
 require 'test_helper'
 class GlobalTest < ActiveSupport::TestCase
 include Global
@@ -17,9 +16,9 @@ end #def
 end #class
 
 def test_aaa
-	assert_equal('Symbol :cat',Global.canonicalName(:cat))
-	assert_equal('Symbol',Global.objectClass(:cat))
-	assert_equal('cat',Global.objectName(:cat))
+	assert_equal('Symbol :cat',:cat.canonicalName)
+	assert_equal('Symbol',:cat.objectClass)
+	assert_equal('cat',:cat.objectName)
 
 	assert_equal('Symbol :cat',:cat.whoAmI)
 	assert_nil(TestClass.relationship(:cat))
