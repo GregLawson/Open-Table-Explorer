@@ -1,3 +1,17 @@
+class Object
+def matching_methods(regexp)
+	self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
+end #def
+module Generic_Table
+end #def
+def similar_methods(symbol)
+	singular='^'+symbol.to_s.singularize
+	plural='^'+symbol.to_s.pluralize
+	table='^'+symbol.to_s.tableize
+	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
+end #def
+end #class
+
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -19,7 +33,7 @@ end #def
 def testCall(obj,methodName,*arguments)
 	result=testCallResult(obj,methodName,*arguments)
 	assert_not_nil(result)
-	message="\n#{Global.canonicalName(obj)}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
+	message="\n#{obj.canonicalName}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
 	if result.instance_of?(Array) then
 		assert_operator(result.size,:>,0,message)
 	elsif result.instance_of?(String) then
@@ -34,26 +48,23 @@ def testAnswer(obj,methodName,answer,*arguments)
 	assert_equal(answer,result)
 	return result
 end #def
-def assert_model(model_class_name)
-	assert_block("#{model_class_name} not defined in Generic_Acquisitions table."){Generic_Acquisitions.typeRecords(model_class_name).size>0}
-end #def
 def explain_assert_respond_to(obj,methodName)
 	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
 	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
 	message1="Object #{obj.canonicalName(false)} of class='#{obj.class}' does not respond to method :#{methodName}"
 	if obj.instance_of?(Class) then
-		message="#{message1}; noninherited class methods= #{Global.noninherited_public_class_methods(obj)}"
+		message="#{message1}; noninherited class methods= #{obj.noninherited_public_class_methods(obj)}"
 		assert_respond_to(obj,methodName,message)
 	else
 		noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 #			assert_equal(obj.class.public_instance_methods,obj.public_class_methods)
 		if noninherited.include?(methodName.to_s) then
 			return # OK not ActiveRecord
-		elsif Global.activeRecordTableNotCreatedYet?(obj) then
-			message="#{message1}; noninherited instance methods= #{Global.noninherited_public_instance_methods(obj).inspect}"
-		else
-			message="#{message1}; noninherited instance methods= #{Global.noninherited_public_instance_methods(obj)}"
+		#~ elsif obj.activeRecordTableNotCreatedYet?(obj) then
+			#~ message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj).inspect}"
+		#~ else
+			message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj)}"
 			assert_respond_to(obj,methodName,message)
 		end
 	end
@@ -183,15 +194,6 @@ def model_class(fixtures)
 	ret=a_fixture_record.class
 	return ret
 end #def
-def similar_methods(ar_from_fixture,symbol)
-	singular='^'+symbol.to_s.singularize
-	plural='^'+symbol.to_s.pluralize
-	table='^'+symbol.to_s.tableize
-	return (matching_methods(ar_from_fixture,singular) + matching_methods(ar_from_fixture,plural) + matching_methods(table,plural)).uniq
-end #def
-def matching_methods(ar_from_fixture,regexp)
-	ar_from_fixture.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
-end #def
 def is_association_to_one?(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"is_association_to_one")
 	if is_association?(ar_from_fixture,assName)  and !ar_from_fixture.respond_to?((assName.to_s.singularize+'_ids').to_sym) and !ar_from_fixture.respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
@@ -215,13 +217,13 @@ end #def
 def assert_association_to_many(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_many")
 	assert_association(ar_from_fixture,assName)
-	assert(is_association_to_many?(ar_from_fixture,assName),"is_association_to_many?(#{ar_from_fixture.inspect},#{assName.inspect}) returns false. #{similar_methods(ar_from_fixture,assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and ar_from_fixture.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
+	assert(is_association_to_many?(ar_from_fixture,assName),"is_association_to_many?(#{ar_from_fixture.inspect},#{assName.inspect}) returns false. #{ar_from_fixture.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and ar_from_fixture.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
 	assert(!is_association_to_one?(ar_from_fixture,assName),"fail !is_association_to_one?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
 end #def
 def assert_association_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_one")
 	assert_association(ar_from_fixture,assName)
-	assert(!is_association_to_many?(ar_from_fixture,assName),"fail !is_association_to_many?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}, similar_methods(ar_from_fixture,assName).inspect=#{similar_methods(ar_from_fixture,assName).inspect}")
+	assert(!is_association_to_many?(ar_from_fixture,assName),"fail !is_association_to_many?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}, ar_from_fixture.similar_methods(assName).inspect=#{ar_from_fixture.similar_methods(assName).inspect}")
 end #def
 def assert_association_one_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_one_to_one")
@@ -279,6 +281,7 @@ def foreign_key_names(model_class)
 #	puts "@possible_foreign_keys=#{@possible_foreign_keys.inspect}"
 	return @possible_foreign_keys
 end #def
+# 
 def associated_foreign_key_name(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
 	many_to_one_foreign_keys=foreign_key_names(obj.class)
@@ -293,6 +296,7 @@ def associated_foreign_key_name(obj,assName)
 	assert_equal(matchingAssNames,[matchingAssNames.first].compact,"assName=#{assName.inspect},matchingAssNames=#{matchingAssNames.inspect},many_to_one_foreign_keys=#{many_to_one_foreign_keys.inspect}")
 	return matchingAssNames.first
 end #def
+# find 
 def associated_foreign_key(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
 	assert_association(obj,assName)
@@ -321,29 +325,6 @@ def assert_foreign_key_points_to_me(ar_from_fixture,assName)
 			end #each
 	end #if
 end #def
-def assert_my_foreign_key_points_to_correct_id(ar_from_fixture,assName)
-	assert_association(ar_from_fixture,assName)
-	myForeignKeyName=associated_foreign_key_name(ar_from_fixture,assName)
-	assert_not_nil(myForeignKeyName,"assert_my_foreign_key_points_to_correct_id ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
-	@my_fixtures.each_value do |my_fixture|
-		assert_respond_to(my_fixture,assName,"assert_my_foreign_key_points_to_correct_id my_fixture.inspect=#{my_fixture.inspect},assName=#{assName}")
-		foreignKey_id=testCallResult(my_fixture,myForeignKeyName.to_sym)
-		associated_table_name=assName.to_s.pluralize.to_sym
-		assert_fixture_name(associated_table_name)
-		associated_fixtures=fixtures(associated_table_name)
-		possible_ids=""
-		available_ids=fixtures(associated_table_name).values.collect do |f|
-			possible_ids= possible_ids+", Fixtures::identify(#{f.logical_primary_key_value})=#{Fixtures::identify(f.logical_primary_key_value)}=#{f.id}"
-			f.id
-		end #collect
-		association=my_fixture.send(assName)
-		associated_records=testCallResult(my_fixture,assName)
-		assert_equal(association,associated_records)
-#kludge		assert_not_nil(association,"No records associated. #{my_fixture.inspect}: Foreign key #{myForeignKeyName}=#{foreignKey_id}, #{associated_table_name}=#{possible_ids}")
-#kludge		assert_not_nil(testCallResult(my_fixture,assName),"assert_my_foreign_key_points_to_correct_id my_fixture.inspect=#{my_fixture.inspect},assName=#{assName}")
-#kludge		assert_equal(testCallResult(my_fixture,myForeignKeyName.to_sym),testCallResult(my_fixture,assName).id)
-	end
-end #def
 def assert_general_associations(table_name)
 	fixtures(table_name).each_value do |my_fixture|
 	@possible_associations.each do |association_name|
@@ -353,7 +334,6 @@ def assert_general_associations(table_name)
 			assert_foreign_key_points_to_me(my_fixture,assName)
 		else
 			assert_association_to_one(my_fixture,assName)
-			assert_my_foreign_key_points_to_correct_id(my_fixture,assName)
 		end #if
 	end #each
 #	assert_equal(Fixtures::identify(my_fixture.logical_prmary_key),my_fixture.id,"identify != id")
