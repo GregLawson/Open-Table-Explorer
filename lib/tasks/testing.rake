@@ -6,18 +6,24 @@ require 'active_support' # for singularize and pluralize
 # syntax http://rake.rubyforge.org/
 namespace :testing do
 
-desc "Run tests testing:incremental, testing:full, testing:summarize, or testing:unit_test TABLE=plural_table . Output in log/{unit,functional}/"
+desc "Run tests testing:incremental, testing:full, testing:summarize, or testing:unit_test TABLE=plural_table TEST=. Output in log/{unit,functional}/"
 directory "log/full"
 def build_table(singular_table)
 end #def
-def ruby_run_and_log(ruby_source,log_file)
-	ruby %Q{-I test #{ruby_source} | tee #{log_file}}  do |ok, res|
-		#~ if ! ok
-			#~ # puts "ruby failed(status = #{res.exitstatus})"
+def ruby_run_and_log(ruby_source,log_file,test=nil)
+	if test.nil? then
+		ruby_test=ruby_source
+	else
+		ruby_test="#{ruby_source} -n #{test}"
+	end #if
+	ruby %Q{-I test #{ruby_test} | tee #{log_file}}  do |ok, res|
+		if  ok
+			sh "git add #{ruby_source}"
 			#~ puts IO.read(log_file)
-		#~ else
+		else
+			puts "ruby failed(status = #{res.exitstatus})"
 			#~ sh "tail --lines=2 #{log_file}"
-		#~ end
+		end
 	end # ruby
 end #def
 def full_unit_test(plural_table)
@@ -25,9 +31,9 @@ def full_unit_test(plural_table)
 	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
 	ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log")
 end #def
-def unit_test(plural_table)
+def unit_test(plural_table,test=nil)
 	singular_table=plural_table.singularize
-	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
+	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log",test)
 end #def
 def summarize
 	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/failed_tests.tmp)	
@@ -44,7 +50,8 @@ task :summarize do
 end #task
 task :unit_test do
 	plural_table = ENV["TABLE"] || "accounts"
-	unit_test(plural_table)
+	test = ENV["TEST"]
+	unit_test(plural_table,test)
 #	summarize
 end #task
 task :full_unit_test do

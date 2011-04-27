@@ -36,7 +36,7 @@ def Transfer.ots_lines
 end #def
 def Transfer.open_tax_solver
 	ots_data="Title:  US Federal 1040 Tax Form - 2010 - Generated\n\nStatus     Married/Joint {Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)}\nDependents     2         {Number of Dependents, self=1, spouse, etc.}\n{Income}\n"
-	Account.all.each do |ots_line|
+	Account.ots_line_values.each do |ots_line|
 		ots_data="#{ots_line} # {transfer.amount.to_s}<BR>\n"
 	end # each
 	return ots_data
@@ -87,24 +87,37 @@ test "open_tax_solver" do
 end #test
 test "join" do
 # Our relation variables(RelVars)
-U =Arel::Table.new(:transfers, :as => 'U')
-I =Arel::Table.new(:accounts, :as => 'I')
+T=Arel::Table.new(:transfers, :as => 'T')
+A =Arel::Table.new(:accounts, :as => 'A')
 
 # perform operations on relations
-G =U.join(I)  #(implicit) will reference final joined relationship
+G =T.join(A)  #(implicit) will reference final joined relationship
 
-#(explicit) predicate = Arel::Predicates::Equality.new U[:user_id], I[:user_id]
-G =U.join(I).on( U[:user_id].eq(I[:user_id] )) 
+#(explicit) predicate = Arel::Predicates::Equality.new T[:account_id], A[:id]
+G =T.join(A).on( T[:account_id].eq(A[:id] )) 
 
 # Keep in mind you MUST PROJECT for this to make sense
-G.project(U[:user_id], I[:login_count].sum.as('total_login'))
+G.project(T[:account_id], A[:login_count].sum.as('amount'))
 
 # Now you can group
-G=G.group(U[:user_id])
+G=G.group(T[:account_id])
 
 #from this group you can project and group again (or group and project)
 # for the final relation
-TL=G.project(G[:total_login].as('logins'),G[:id].count.as('users')).group(G[:total_login])
+TL=G.project(G[:amount].as('logins'),G[:id].count.as('users')).group(G[:amount])
 
+end #test
+test "canonical" do
+	assert_match('#<Transfer id: 5, account: nil, amount: 13.55, posted: "2010-12-31"',fixtures('transfers')[5].canonicalName)
+	assert_match('Account ',Account.new.canonicalName)
+	assert_match('Transfer',Transfer.new.canonicalName)
+	assert_kind_of(Account,Account.new)
+	assert_match('Class',Account.canonicalName)
+	assert_match('Class',Transfer.canonicalName)
+	assert_kind_of(ActiveRecord::Relation,Transfer.transfers_extended)
+	assert_relation(Transfer.transfers_extended)
+	assert_respond_to(Transfer.transfers_extended,:to_s)
+	assert_relation(Transfer.transfers_extended.respond_to?(:to_s))
+	assert_relation(Transfer.transfers_extended.canonicalName)
 end #test
 end #class
