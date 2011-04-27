@@ -1,4 +1,7 @@
 class Transfer< ActiveRecord::Base
+def canonicalName(verbose=false)
+	return "#{self.inspect}"
+end #def
 belongs_to :account
 include Generic_Table
 @@AREL=Arel::Table.new(:transfers)

@@ -1,11 +1,32 @@
 Loaded suite test/unit/table_spec_test
 Started
-.....F
-Finished in 23.272948 seconds.
+...to_s=#<TableSpec:0xb5d925a0>
+obj=#<TableSpec id: 870743096, merge: "row", file_caching: "DB", model_class_name: "MULTIPLE_WEATHER", frequency_id: 620940717, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5da0a10>
+obj=#<TableSpec id: 360290728, merge: "row", file_caching: "DB", model_class_name: "TEDWebBoxFull", frequency_id: 837501268, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5d9bc68>
+obj=#<TableSpec id: 374418567, merge: "table", file_caching: "DB", model_class_name: "nmap", frequency_id: 620940717, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5da5ee8>
+obj=#<TableSpec id: 988912740, merge: "rows", file_caching: "DB", model_class_name: "huell_schedule", frequency_id: 715507355, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5d973fc>
+obj=#<TableSpec id: 792313378, merge: "table", file_caching: "DB", model_class_name: "Network", frequency_id: 620940717, primary_key_expression: nil>
+..to_s=#<TableSpec:0xb5c8e49c>
+obj=#<TableSpec id: 870743096, merge: "row", file_caching: "DB", model_class_name: "MULTIPLE_WEATHER", frequency_id: 620940717, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5c8e49c>
+obj=#<TableSpec id: 870743096, merge: "row", file_caching: "DB", model_class_name: "MULTIPLE_WEATHER", frequency_id: 620940717, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5c8e49c>
+obj=#<TableSpec id: 870743096, merge: "row", file_caching: "DB", model_class_name: "MULTIPLE_WEATHER", frequency_id: 620940717, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5c9c790>
+obj=#<TableSpec id: 870743096, merge: "row", file_caching: "DB", model_class_name: "MULTIPLE_WEATHER", frequency_id: 620940717, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5caaee4>
+obj=#<TableSpec id: 360290728, merge: "row", file_caching: "DB", model_class_name: "TEDWebBoxFull", frequency_id: 837501268, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5ca6060>
+obj=#<TableSpec id: 374418567, merge: "table", file_caching: "DB", model_class_name: "nmap", frequency_id: 620940717, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5cafd04>
+obj=#<TableSpec id: 988912740, merge: "rows", file_caching: "DB", model_class_name: "huell_schedule", frequency_id: 715507355, primary_key_expression: nil>
+to_s=#<TableSpec:0xb5ca163c>
+obj=#<TableSpec id: 792313378, merge: "table", file_caching: "DB", model_class_name: "Network", frequency_id: 620940717, primary_key_expression: nil>
+.
+Finished in 13.396962 seconds.
 
-  1) Failure:
-test_specific,_stable_and_working(TableSpecTest) [test/unit/table_spec_test.rb:59]:
-<#<Set: {"acquisition_stream_specs", "frequency"}>> expected but was
-<#<Set: {}>>.
-
-6 tests, 1440 assertions, 1 failures, 0 errors
+6 tests, 2291 assertions, 0 failures, 0 errors

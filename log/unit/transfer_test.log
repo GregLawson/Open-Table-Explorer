@@ -1,32 +1,16 @@
 Loaded suite test/unit/transfer_test
 Started
-...transfers.columns=[:id, :account, :amount, :posted, :created_at, :updated_at, :account_id]
-Arel::Table
-Class
-SELECT  FROM "users" LIMIT -1 OFFSET 2
-obj.name=transfers
-obj.name=TransferTest::Transfer
-obj.superclass=ActiveRecord::Base
-obj.superclass.name=ActiveRecord::Base
-obj.name=TransferTest::Transfer
-obj.superclass=ActiveRecord::Base
-obj.superclass.name=ActiveRecord::Base
-SELECT open_tax_solver_line, amount FROM "transfers" INNER JOIN "accounts" ON "transfers"."account_id" = "accounts"."id"
-accounts.columns=[:id, :name, :parent, :tax_reporting, :budgeting, :created_at, :updated_at, :open_tax_solver_line]
-Arel::Table
-SELECT * FROM "transfers"
-SELECT  FROM "transfers" WHERE "transfers"."amount" = 100.0
-SELECT "transfers"."id" FROM "transfers"
-SELECT  FROM "transfers" WHERE 'accounts.open_tax_solver_line is not null'
-#<Arel::Table:0xb63bda9c @columns=nil, @name="transfers", @primary_key=nil, @aliases=[], @engine=ActiveRecord::Base, @table_alias=nil>
-nil
-Title:  US Federal 1040 Tax Form - 2010 - Generated
+to_s=#<TransferTest::Transfer:0xb5acb704>
+obj=#<TransferTest::Transfer id: nil, account: nil, amount: nil, posted: nil, created_at: nil, updated_at: nil, account_id: nil>
+E
+Finished in 13.925909 seconds.
 
-Status     Married/Joint {Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)}
-Dependents     2         {Number of Dependents, self=1, spouse, etc.}
-{Income}
-obj.name=transfers
-.
-Finished in 15.644579 seconds.
+  1) Error:
+test_canonical(TransferTest):
+TypeError: Cannot visit Account
+    app/models/global.rb:77:in `canonicalName'
+    /test/test_helper.rb:55:in `explain_assert_respond_to'
+    test/unit/transfer_test.rb:47:in `assert_relation'
+    test/unit/transfer_test.rb:118:in `test_canonical'
 
-4 tests, 9575 assertions, 0 failures, 0 errors
+1 tests, 2382 assertions, 0 failures, 1 errors

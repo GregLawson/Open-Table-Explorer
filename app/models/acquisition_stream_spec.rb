@@ -18,7 +18,7 @@ def init
 	#~ @objectReference=@classReference.create(:url => self[:url])
 end
 def logical_primary_key
-	return frequency_name
+	return :url
 end #def
 def parsedURI
 	return URI.split(URI.escape(self[:url]))

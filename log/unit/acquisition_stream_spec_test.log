@@ -1,6 +1,12 @@
 Loaded suite test/unit/acquisition_stream_spec_test
 Started
-...............
-Finished in 12.631204 seconds.
+to_s=#<AcquisitionStreamSpec:0xb5fbeae0>
+obj=#<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>
+to_s=#<AcquisitionStreamSpec:0xb5fbeae0>
+obj=#<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>
+.............to_s=#<AcquisitionStreamSpec:0xb5e64f78>
+obj=#<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>
+..
+Finished in 12.793055 seconds.
 
 15 tests, 41 assertions, 0 failures, 0 errors

@@ -1,18 +1,18 @@
 Loaded suite test/functional/bugs_controller_test
 Started
-data.inspect=[#<Bug id: 298486374, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-07 22:43:51", updated_at: "2011-04-07 22:43:51">, #<Bug id: 980190962, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-07 22:43:51", updated_at: "2011-04-07 22:43:51">, #<Bug id: 980190963, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-07 22:43:51", updated_at: "2011-04-07 22:43:51">]
+data.inspect=[#<Bug id: 298486374, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-26 21:03:08", updated_at: "2011-04-26 21:03:08">, #<Bug id: 980190962, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-26 21:03:08", updated_at: "2011-04-26 21:03:08">, #<Bug id: 980190963, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-26 21:03:08", updated_at: "2011-04-26 21:03:08">]
 fixture_attributes.inspect={"resolution"=>nil, "url"=>"MyString", "id"=>1, "gui"=>nil, "context"=>"MyString", "error"=>"MyString"}
 fixture_attributes.to_yaml.inspect="--- \nresolution: \nurl: MyString\nid: 1\ngui: \ncontext: MyString\nerror: MyString\n"
 fixture_attributes.inspect={"resolution"=>nil, "url"=>"MyString", "id"=>2, "gui"=>nil, "context"=>"MyString", "error"=>"MyString"}
 fixture_attributes.to_yaml.inspect="--- \nresolution: \nurl: MyString\nid: 2\ngui: \ncontext: MyString\nerror: MyString\n"
 fixture_attributes.inspect={"resolution"=>nil, "url"=>"MyString", "id"=>3, "gui"=>nil, "context"=>"MyString", "error"=>"MyString"}
 fixture_attributes.to_yaml.inspect="--- \nresolution: \nurl: MyString\nid: 3\ngui: \ncontext: MyString\nerror: MyString\n"
-......data.inspect=[#<Bug id: 298486374, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-07 22:43:51", updated_at: "2011-04-07 22:43:51">, #<Bug id: 980190962, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-07 22:43:51", updated_at: "2011-04-07 22:43:51">]
+......data.inspect=[#<Bug id: 298486374, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-26 21:03:08", updated_at: "2011-04-26 21:03:08">, #<Bug id: 980190962, gui: nil, url: "MyString", error: "MyString", context: "MyString", resolution: nil, created_at: "2011-04-26 21:03:08", updated_at: "2011-04-26 21:03:08">]
 fixture_attributes.inspect={"resolution"=>nil, "url"=>"MyString", "id"=>1, "gui"=>nil, "context"=>"MyString", "error"=>"MyString"}
 fixture_attributes.to_yaml.inspect="--- \nresolution: \nurl: MyString\nid: 1\ngui: \ncontext: MyString\nerror: MyString\n"
 fixture_attributes.inspect={"resolution"=>nil, "url"=>"MyString", "id"=>2, "gui"=>nil, "context"=>"MyString", "error"=>"MyString"}
 fixture_attributes.to_yaml.inspect="--- \nresolution: \nurl: MyString\nid: 2\ngui: \ncontext: MyString\nerror: MyString\n"
 .
-Finished in 13.000705 seconds.
+Finished in 20.722022 seconds.
 
 7 tests, 10 assertions, 0 failures, 0 errors

@@ -1,12 +1,12 @@
 Loaded suite test/functional/acquisitions_controller_test
 Started
 ..E....
-Finished in 19.189013 seconds.
+Finished in 22.373837 seconds.
 
   1) Error:
 test_should_get_edit(AcquisitionsControllerTest):
 ActionView::Template::Error: SQLite3::SQLException: no such column: acquisition_stream_specs.acquisition_id: SELECT "acquisition_stream_specs".* FROM "acquisition_stream_specs" WHERE ("acquisition_stream_specs".acquisition_id = 4603) LIMIT 1
-    app/views/acquisitions/edit.html.erb:49:in `_app_views_acquisitions_edit_html_erb___485769991__621547168_0'
+    app/views/acquisitions/edit.html.erb:49:in `_app_views_acquisitions_edit_html_erb___485769991__621978068_0'
     test/functional/acquisitions_controller_test.rb:29:in `test_should_get_edit'
 
 7 tests, 9 assertions, 0 failures, 1 errors

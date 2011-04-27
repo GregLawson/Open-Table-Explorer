@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# cntains mostly functions created for testing / debugging but not dependant on TestCase
 class Object
 def objectClass(verbose=false)
 	if nil? then
@@ -52,6 +53,8 @@ def objectName(verbose=false)
 
 end
 def canonicalName(verbose=false)
+	#~ puts "inspect=#{inspect}"
+	#~ puts "respond_to?(:to_s)=#{respond_to?(:to_s)}"
 	if nil? then
 		return "nil"
 	elsif self.class.name=='Symbol' then
@@ -67,10 +70,22 @@ def canonicalName(verbose=false)
 		return "Class"
 	elsif instance_of?(Array) then
 		return "Array"
+	elsif kind_of?(Account) then
+		return "Account"
+	elsif instance_of?(Account) then
+		return "Account"
 	elsif !respond_to?(:to_s) then
-		return "#{self.class.name}"
-	elsif !to_s[/#<ActiveRecord::Relation:/].empty? then
-		return "#<ActiveRecord::Relation:"
+		return "#{self.class.name} does not respond to :to_s"
+	elsif to_s.nil? then
+		return "#{self.class.name} to_s returns nil"
+	elsif to_s.empty? then
+		return "#{self.class.name} to_s returns empty"
+	elsif !to_s[/#<ActiveRecord::Relation:/].nil? then
+		if !to_s[/#<ActiveRecord::Relation:/].empty? then
+			return "#{self.class.name} #<ActiveRecord::Relation:"
+		else
+			return "#{self.class.name}.!to_s[/#<ActiveRecord::Relation:/] is not nil"
+		end
 	else
 		puts "to_s=#{to_s}"
 		puts "obj=#{inspect}"
