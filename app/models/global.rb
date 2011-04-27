@@ -87,8 +87,8 @@ def canonicalName(verbose=false)
 			return "#{self.class.name}.!to_s[/#<ActiveRecord::Relation:/] is not nil"
 		end
 	else
-		puts "to_s=#{to_s}"
-		puts "obj=#{inspect}"
+		#~ puts "to_s=#{to_s}"
+		#~ puts "obj=#{inspect}"
 		if respond_to?(:name) then
 			puts("name=#{name}") if verbose
 			if respond_to?(:superclass) then

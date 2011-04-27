@@ -1,5 +1,18 @@
 require 'test_helper'
 class TestHelperTest < ActiveSupport::TestCase
+class TestClass
+def self.classMethod
+end #def
+public
+def publicInstanceMethod
+end #def
+protected
+def protectedInstanceMethod
+end #def
+private
+def privateInstanceMethod
+end #def
+end #class
 def setup
 #	define_association_names
 end
@@ -7,11 +20,11 @@ def testMethod
 	return 'nice result'
 end #def
 test "method call" do
-	explain_assert_respond_to(self,:testMethod)
+	#~ explain_assert_respond_to(self,:testMethod)
 	testCallResult(self,:testMethod)
 	testCall(self,:testMethod)
-	testAnswer(self,:testMethod,'nice result')
-	assert_public_instance_method(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)
+	#~ testAnswer(self,:testMethod,'nice result')
+	#~ assert_public_instance_method(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)
 end #test
 test "various assertions" do
 	assert_not_empty([1])
@@ -37,7 +50,7 @@ test "association to one" do
 	assert_association_to_one(acquisition_stream_specs(:one),:table_spec)
 	assert_association_many_to_one(fixtures(:acquisition_stream_specs).values.first,:table_spec)
 	assert_association_one_to_one(acquisition_stream_specs(:one),:acquisition_interface)
-#	assert_foreign_key_points_to_me(ar_from_fixture,assName)
+	assert_foreign_key_points_to_me(ar_from_fixture,assName)
 
 end #test
 test "association to many" do

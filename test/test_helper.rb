@@ -2,15 +2,15 @@ class Object
 def matching_methods(regexp)
 	self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
 end #def
+end #class
 module Generic_Table
-end #def
 def similar_methods(symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
 	table='^'+symbol.to_s.tableize
 	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
 end #def
-end #class
+end #module
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
