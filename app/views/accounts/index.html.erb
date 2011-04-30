@@ -9,7 +9,7 @@
     <th>Open Tax Solver Line</th>
     <th>Budgeting</th>
   </tr>
-<% for account in @accounts %>
+<% @accounts.each do |account| %>
   <tr>
     <td><%=h account.id %></td>
     <td><%=h account.name %></td>
