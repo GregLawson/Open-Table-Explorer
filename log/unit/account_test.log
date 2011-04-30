@@ -1,6 +1,6 @@
 Loaded suite test/unit/account_test
 Started
+..
+Finished in 21.837777 seconds.
 
-Finished in 0.00031 seconds.
-
-0 tests, 0 assertions, 0 failures, 0 errors
+2 tests, 3960 assertions, 0 failures, 0 errors
