@@ -1,18 +1,18 @@
 require 'test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
-  def test_should_get_index
+  test "should get index" do
     get :index
     assert_response :success
     assert_not_nil assigns(:accounts)
   end
 
-  def test_should_get_new
+  test "should get new" do
     get :new
     assert_response :success
   end
 
-  def test_should_create_account
+  test "should create account" do
     assert_difference('Account.count') do
       post :create, :account => { }
     end
@@ -20,22 +20,22 @@ class AccountsControllerTest < ActionController::TestCase
     assert_redirected_to account_path(assigns(:account))
   end
 
-  def test_should_show_account
+  test "should show account" do
     get :show, :id => accounts('Roth Conversion'.to_sym).id
     assert_response :success
   end
 
-  def test_should_get_edit
+  test "should get edit" do
     get :edit, :id => accounts('Roth Conversion'.to_sym).id
     assert_response :success
   end
 
-  def test_should_update_account
+  test "should update account" do
     put :update, :id => accounts('Roth Conversion'.to_sym).id, :account => { }
     assert_redirected_to account_path(assigns(:account))
   end
 
-  def test_should_destroy_account
+  test "should destroy account" do
     assert_difference('Account.count', -1) do
       delete :destroy, :id => accounts('Roth Conversion'.to_sym).id
     end
