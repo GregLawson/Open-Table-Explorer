@@ -18,6 +18,7 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 	end #if
 	ruby %Q{-I test #{ruby_test} | tee #{log_file}}  do |ok, res|
 		if  ok
+			puts "ruby ok(status = #{res.inspect})"
 			sh "git add #{ruby_source}"
 			#~ puts IO.read(log_file)
 		else
@@ -26,10 +27,10 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 		end
 	end # ruby
 end #def
-def full_unit_test(plural_table)
+def full_unit_test(plural_table,test)
 	singular_table=plural_table.singularize
 	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
-	ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log")
+	ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) # only?
 end #def
 def unit_test(plural_table,test=nil)
 	singular_table=plural_table.singularize
@@ -56,7 +57,8 @@ task :unit_test do
 end #task
 task :full_unit_test do
 	plural_table = ENV["TABLE"] || "accounts"
-	full_unit_test(plural_table)
+	test = ENV["TEST"]
+	full_unit_test(plural_table,test)
 #	summarize
 end #task
 def conditional_build(target, sources)
