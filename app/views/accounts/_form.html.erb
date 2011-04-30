@@ -1,0 +1,37 @@
+<%= form_for(@bug) do |f| %>
+  <% if @bug.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bug.errors.count, "error") %> prohibited this bug from being saved:</h2>
+
+      <ul>
+      <% @bug.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :parent %><br />
+    <%= f.text_field :parent %>
+  </div>
+  <div class="field">
+    <%= f.label :tax_reporting %><br />
+    <%= f.text_field :tax_reporting %>
+  </div>
+  <div class="field">
+	<%= f.label :open_tax_solver_line %><br />
+	<%=h f.text_field :open_tax_solver_line %>
+  </div>
+  <div class="field">
+    <%= f.label :budgeting %><br />
+    <%= f.text_field :budgeting %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
