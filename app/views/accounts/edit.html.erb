@@ -1,32 +1,6 @@
 <h1>Editing account</h1>
 
-<% form_for(@account) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :parent %><br />
-    <%= f.text_field :parent %>
-  </p>
-  <p>
-    <%= f.label :tax_reporting %><br />
-    <%= f.text_field :tax_reporting %>
-  </p>
-  <p>
-	<%= f.label :open_tax_solver_line %><br />
-	<%=h f.text_field :open_tax_solver_line %>
-  </p>
-  <p>
-    <%= f.label :budgeting %><br />
-    <%= f.text_field :budgeting %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+<%= render 'form' %>
 
 <%= link_to 'Show', @account %> |
 <%= link_to 'Back', accounts_path %>
