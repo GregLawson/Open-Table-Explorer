@@ -21,23 +21,23 @@ class TransfersControllerTest < ActionController::TestCase
   end
 
   def test_should_show_transfer
-    get :show, :id => transfers(:one).id
+    get :show, :id => fixtures('transfers')[1].id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => transfers(:one).id
+    get :edit, :id => fixtures('transfers')[1].id
     assert_response :success
   end
 
   def test_should_update_transfer
-    put :update, :id => transfers(:one).id, :transfer => { }
+    put :update, :id => fixtures('transfers')[1].id, :transfer => { }
     assert_redirected_to transfer_path(assigns(:transfer))
   end
 
   def test_should_destroy_transfer
     assert_difference('Transfer.count', -1) do
-      delete :destroy, :id => transfers(:one).id
+      delete :destroy, :id => fixtures('transfers')[1].id
     end
 
     assert_redirected_to transfers_path

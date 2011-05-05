@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110405004036) do
+ActiveRecord::Schema.define(:version => 20110505193654) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -71,7 +71,10 @@ ActiveRecord::Schema.define(:version => 20110405004036) do
     t.text     "resolution"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "error_type_id"
   end
+
+  add_index "bugs", ["error", "context", "url"], :name => "index_bugs_on_error_and_context_and_url", :unique => true
 
   create_table "edisons", :force => true do |t|
     t.string  "CANUM",      :limit => 13
@@ -82,6 +85,13 @@ ActiveRecord::Schema.define(:version => 20110405004036) do
     t.integer "Days"
     t.float   "AVGDAILY"
     t.decimal "TOTCHARGES",               :precision => 19, :scale => 2
+  end
+
+  create_table "error_types", :force => true do |t|
+    t.string   "error_type"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "example_acquisitions", :force => true do |t|
