@@ -2,7 +2,7 @@ class BugsController < ApplicationController
   # GET /bugs
   # GET /bugs.xml
   def index
-    @bugs = Bug.all
+    @bugs = Bug.order("error,context,url").all
 
     respond_to do |format|
       format.html # index.html.erb
