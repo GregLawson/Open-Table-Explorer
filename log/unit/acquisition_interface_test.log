@@ -1,10 +1,6 @@
 Loaded suite test/unit/acquisition_interface_test
 Started
-to_s=#<AcquisitionInterface:0xb6088868>
-obj=#<AcquisitionInterface id: 569237512, library: "net/http", acquire_data: "self[:acquisition_data]= Net::HTTP.get(@uri)", created_at: "2011-04-26 21:00:18", updated_at: "2011-04-26 21:00:18", name: "HTTP", return_error_code: nil, rescue_code: nil>
-..to_s=#<AcquisitionInterface:0xb5fd11e0>
-obj=#<AcquisitionInterface id: 569237512, library: "net/http", acquire_data: "self[:acquisition_data]= Net::HTTP.get(@uri)", created_at: "2011-04-26 21:00:18", updated_at: "2011-04-26 21:00:18", name: "HTTP", return_error_code: nil, rescue_code: nil>
-.
-Finished in 13.81937 seconds.
+...
+Finished in 13.178759 seconds.
 
 3 tests, 11 assertions, 0 failures, 0 errors
