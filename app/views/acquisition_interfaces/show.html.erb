@@ -29,6 +29,8 @@
 </p>
 
 <P>
+  <b>classDefinition:</b>
+<%=h @acquisition_interface.classDefinition.each_line {|line| line.to_s+'  end Paragraph>'} %>
 
 </P>
 <p>
@@ -66,7 +68,7 @@
 <% for acquisition_stream_spec in @acquisition_interface.acquisition_stream_specs %>
   <tr>
     <td><%=h acquisition_stream_spec.id %></td>
-    <td><%=h @acquisition_interface.codeBody.each_line {|line| line.to_s+'<BR>'} %></td>
+    <td><%=h acquisition_stream_spec.acquire.inspect %></td>
     <td><%=h acquisition_stream_spec.acquisition_interface_id %></td>
     <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
