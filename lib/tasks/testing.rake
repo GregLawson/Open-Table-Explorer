@@ -60,7 +60,8 @@ def after(s,before,pattern)
 end #def
 def file_bug_reports(ruby_source,log_file,test=nil)
 	path=Pathname.new(ruby_source)
-	table=path.basename.to_s.split('_')[0]
+	table=path.basename.to_s.delete('_controller_test.rb')
+	table=table.delete('_test.rb')
 	test_type=path.basename.to_s.split('_')[1][0..-4]
 	#~ puts "test_type=#{test_type}"
 	test_type='unit' if test_type=='test'
