@@ -236,11 +236,6 @@ def Generic_Table.classReference(model_class_name)
 	model_class_eval=eval("#{classDefiniton(rubyClassName)}\n#{rubyClassName}")
 	return model_class_eval
 end #def
-def Generic_Table.classReference(model_class_name)
-	rubyClassName=Generic_Table.rubyClassName(model_class_name)
-	model_class_eval=eval("#{classDefiniton(rubyClassName)}\n#{rubyClassName}")
-	return model_class_eval
-end #def
 def sequential_id?
 	if self.respond_to?(:logical_primary_key) then
 		if logical_primary_key==:created_at then # still sequential, not requred, default
@@ -265,7 +260,7 @@ def table2yaml(table_name=self.class.name.tableize)
 	sql  = "SELECT * FROM %s LIMIT #{limit}"
     	File.open("test/fixtures/#{table_name}.yml.gen", 'w') do |file|
       		data = self.class.limit(limit).all
-		puts "data.inspect=#{data.inspect}"
+#		puts "data.inspect=#{data.inspect}"
 		file.write "# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html"
 		 file.write data.inject({}) { |hash, model_instance|
 			i=i+1
@@ -279,8 +274,8 @@ def table2yaml(table_name=self.class.name.tableize)
 				primaryKeyValue=model_instance.logical_primary_key_value
 				fixture_attributes.delete('id')  # automatically regenerated
 			end
-			puts "fixture_attributes.inspect=#{fixture_attributes.inspect}"
-			puts "fixture_attributes.to_yaml.inspect=#{fixture_attributes.to_yaml.inspect}"
+#			puts "fixture_attributes.inspect=#{fixture_attributes.inspect}"
+#			puts "fixture_attributes.to_yaml.inspect=#{fixture_attributes.to_yaml.inspect}"
 			hash[primaryKeyValue] = fixture_attributes
 			hash
 		}.to_yaml
