@@ -1,4 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html--- 
+ifconfig: 
+  merge: table
+  file_caching: DB
+  frequency: fastest 
+  model_class_name: ifconfig
 huell_schedule: 
   merge: rows
   file_caching: DB
@@ -19,6 +24,8 @@ Url:
   file_caching: DB
   frequency: 
   model_class_name: Url
+Account: 
+  model_class_name: Account
 Network: 
   merge: table
   file_caching: DB

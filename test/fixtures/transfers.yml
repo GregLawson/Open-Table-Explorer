@@ -1,11 +1,337 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  account: MyString
-  amount: 
-  posted: 2011-01-01
-
-two:
-  account: MyString
-  amount: 
-  posted: 2011-01-01
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html--- 
+49: 
+  posted: 2010-07-15
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 49
+38: 
+  posted: 2010-12-13
+  amount: 100.0
+  account_id: 980190997
+  account: 
+  id: 38
+27: 
+  posted: 2010-04-15
+  amount: 528.0
+  account_id: 980190987
+  account: 
+  id: 27
+16: 
+  posted: 2010-12-13
+  amount: 496.05
+  account_id: 980190982
+  account: 
+  id: 16
+5: 
+  posted: 2010-12-31
+  amount: 13.55
+  account_id: 980190963
+  account: 
+  id: 5
+55: 
+  posted: 2010-11-24
+  amount: 25.0
+  account_id: 980191002
+  account: 
+  id: 55
+44: 
+  posted: 2010-02-17
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 44
+33: 
+  posted: 2010-11-14
+  amount: 69.0
+  account_id: 980190992
+  account: 
+  id: 33
+22: 
+  posted: 2010-12-28
+  amount: 100.0
+  account_id: 980190972
+  account: 
+  id: 22
+11: 
+  posted: 2010-01-15
+  amount: 9.2
+  account_id: 980190970
+  account: 
+  id: 11
+50: 
+  posted: 2010-08-16
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 50
+39: 
+  posted: 2010-08-27
+  amount: 75.0
+  account_id: 980190999
+  account: 
+  id: 39
+28: 
+  posted: 2010-09-07
+  amount: 100.0
+  account_id: 980190988
+  account: 
+  id: 28
+17: 
+  posted: 2010-12-31
+  amount: 83.07
+  account_id: 980190978
+  account: 
+  id: 17
+6: 
+  posted: 2010-12-31
+  amount: 80.0
+  account_id: 980190968
+  account: 
+  id: 6
+56: 
+  posted: 2010-12-31
+  amount: 50.0
+  account_id: 980191003
+  account: 
+  id: 56
+45: 
+  posted: 2010-03-15
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 45
+34: 
+  posted: 2010-06-02
+  amount: 100.0
+  account_id: 980190968
+  account: 
+  id: 34
+23: 
+  posted: 2010-11-09
+  amount: 2460.62
+  account_id: 980190985
+  account: 
+  id: 23
+12: 
+  posted: 2010-12-01
+  amount: 13400.38
+  account_id: 980190973
+  account: 
+  id: 12
+1: 
+  posted: 2010-12-31
+  amount: 12092.16
+  account_id: 980190965
+  account: Vanguard Admiral Treasury
+  id: 1
+51: 
+  posted: 2010-09-15
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 51
+40: 
+  posted: 2010-08-27
+  amount: 100.0
+  account_id: 980190998
+  account: 
+  id: 40
+29: 
+  posted: 2010-05-21
+  amount: 40.0
+  account_id: 980190989
+  account: 
+  id: 29
+18: 
+  posted: 2010-12-31
+  amount: 305.24
+  account_id: 980190978
+  account: 
+  id: 18
+7: 
+  posted: 2010-12-31
+  amount: 60.0
+  account_id: 980190974
+  account: 
+  id: 7
+46: 
+  posted: 2010-04-15
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 46
+35: 
+  posted: 2010-04-16
+  amount: 100.0
+  account_id: 980190995
+  account: 
+  id: 35
+24: 
+  posted: 2010-03-29
+  amount: 2448.44
+  account_id: 980190985
+  account: 
+  id: 24
+13: 
+  posted: 2010-12-14
+  amount: 43662.15
+  account_id: 980190969
+  account: 
+  id: 13
+2: 
+  posted: 2010-12-31
+  amount: 60460.92
+  account_id: 980190964
+  account: Federal Withholding
+  id: 2
+52: 
+  posted: 2010-11-16
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 52
+41: 
+  posted: 2010-04-26
+  amount: 100.0
+  account_id: 980191001
+  account: 
+  id: 41
+30: 
+  posted: 2010-12-31
+  amount: 3.03
+  account_id: 980190990
+  account: 
+  id: 30
+19: 
+  posted: 2010-12-31
+  amount: 122.79
+  account_id: 980190977
+  account: 
+  id: 19
+8: 
+  posted: 2010-12-31
+  amount: 13.26
+  account_id: 980190971
+  account: 
+  id: 8
+47: 
+  posted: 2010-05-17
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 47
+36: 
+  posted: 2010-03-01
+  amount: 40.0
+  account_id: 980190994
+  account: 
+  id: 36
+25: 
+  posted: 2010-12-31
+  amount: 6.3
+  account_id: 980190984
+  account: 
+  id: 25
+14: 
+  posted: 2010-01-15
+  amount: 43.03
+  account_id: 980190980
+  account: 
+  id: 14
+3: 
+  posted: 2010-12-31
+  amount: 115.56
+  account_id: 980190967
+  account: 
+  id: 3
+53: 
+  posted: 2010-10-18
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 53
+42: 
+  posted: 2010-03-05
+  amount: 0.0
+  account_id: 980191001
+  account: 
+  id: 42
+31: 
+  posted: 2010-12-31
+  amount: 944.98
+  account_id: 980190989
+  account: 
+  id: 31
+20: 
+  posted: 2010-12-31
+  amount: 136.41
+  account_id: 980190976
+  account: 
+  id: 20
+9: 
+  posted: 2010-12-31
+  amount: 98646.84
+  account_id: 980190983
+  account: 
+  id: 9
+48: 
+  posted: 2010-06-16
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 48
+37: 
+  posted: 2010-12-27
+  amount: 2363.0
+  account_id: 980190967
+  account: 
+  id: 37
+26: 
+  posted: 2010-12-31
+  amount: 46.07
+  account_id: 980190984
+  account: 
+  id: 26
+15: 
+  posted: 2010-01-15
+  amount: 199.97
+  account_id: 980190981
+  account: 
+  id: 15
+4: 
+  posted: 2010-12-31
+  amount: 9472.92
+  account_id: 980190966
+  account: 
+  id: 4
+54: 
+  posted: 2010-12-16
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 54
+43: 
+  posted: 2010-01-15
+  amount: 7.42
+  account_id: 980191002
+  account: 
+  id: 43
+32: 
+  posted: 2010-11-17
+  amount: 100.0
+  account_id: 980190993
+  account: 
+  id: 32
+21: 
+  posted: 2010-12-31
+  amount: 27.56
+  account_id: 980190975
+  account: 
+  id: 21
+10: 
+  posted: 2010-07-15
+  amount: 9.28
+  account_id: 980190970
+  account: 
+  id: 10

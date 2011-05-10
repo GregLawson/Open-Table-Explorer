@@ -1,31 +1,41 @@
---- 
-one: 
-  url: http://www.weather.gov/xml/current_obs/KHHR.xml
-  required_order: 
-  table_spec: MULTIPLE_WEATHER
-  acquisition_interface: HTTP
-acquisition_stream_specs_005: 
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html--- 
+/sbin/ifconfig: 
   url: /sbin/ifconfig
-  required_order: 
   table_spec: ifconfig
+  required_order: 
   acquisition_interface: Shell
-acquisition_stream_specs_006: 
-  url: nmap 192.168.3.1-254
+http://www.weather.gov/xml/current_obs/KHHR.xml: 
+  url: http://www.weather.gov/xml/current_obs/KHHR.xml
+  table_spec: MULTIPLE_WEATHER
   required_order: 
-  table_spec_id: "7"
-  acquisition_interface: Shell
-acquisition_stream_specs_001: 
-  url: sunnywebbox
-  required_order: 
-  table_spec_id: "1"
-  acquisition_interface: SunnyWebBox_Acquisition
-acquisition_stream_specs_002: 
-  url: http://www.calgold.com/Schedule.asp
-  required_order: 
-  table_spec_id: "2"
   acquisition_interface: HTTP
+http://www.calgold.com/Schedule.asp: 
+  url: http://www.calgold.com/Schedule.asp
+  table_spec_id: 2
+  required_order: 
+  acquisition_interface: HTTP
+sunnywebbox: 
+  url: sunnywebbox
+  table_spec_id: 1
+  required_order: 
+  acquisition_interface: SunnyWebBox_Acquisition
+"file: log/production.log": 
+  url: "file: log/production.log"
+  table_spec_id: 9
+  required_order: 
+  acquisition_interface: File
+file:/home/greg/Desktop/Database/Finance/Taxes 2010/OpenTaxSolver2010_8.03/examples_and_templates/US_1040/US_1040_template.dat: 
+  url: file:/home/greg/Desktop/Database/Finance/Taxes 2010/OpenTaxSolver2010_8.03/examples_and_templates/US_1040/US_1040_template.dat
+  table_spec_id: 1
+  required_order: 
+  acquisition_interface: File
+nmap 192.168.3.1-254: 
+  url: nmap 192.168.3.1-254
+  table_spec_id: 7
+  required_order: 
+  acquisition_interface: Shell
 http://www.weather.gov/xml/current_obs/KLAX.xml: 
   url: http://www.weather.gov/xml/current_obs/KLAX.xml
-  required_order: 
   table_spec: MULTIPLE_WEATHER
+  required_order: 
   acquisition_interface: HTTP

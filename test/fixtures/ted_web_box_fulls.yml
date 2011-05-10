@@ -1,0 +1,5701 @@
+--- 
+ted_web_box_fulls_086: 
+  serial_number: "2000673163"
+  h_on_h: "3354.54"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:07.617396
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:07.861249
+  vac_v: "247.9"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311007"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.7"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_002: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-08 14:55:24.503923
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-08 14:55:24.503923
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310943"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_023: 
+  serial_number: "2000673163"
+  h_on_h: "3353.85"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "410"
+  pac_w: "2561"
+  switched_age: 
+  created_at: 2010-05-11 11:07:57.649285
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.13"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Mpp
+  co2_saved_lbs: "6287.86"
+  updated_at: 2010-05-11 11:07:58.166588
+  vac_v: "248.6"
+  iac_a: "10"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310951"
+  event_cnt: "6033"
+  noise: 
+  day: 
+  e_total_kwh: "3698.74"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "54.4"
+  ipv_a: "6"
+  vfan_v: "0"
+  vacl1_v: "127.8"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "410"
+  vpv__pe_v: "0"
+  vacl2_v: "120.7"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: -------
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_044: 
+  serial_number: "2000673163"
+  h_on_h: "3354.45"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:42.245528
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:42.509864
+  vac_v: "247.5"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310972"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_065: 
+  serial_number: "2000673163"
+  h_on_h: "3354.55"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "504"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:27.776637
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:28.010294
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311010"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_087: 
+  serial_number: "2000673163"
+  h_on_h: "3354.59"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:21.902876
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:22.134863
+  vac_v: "248"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311029"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.8"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_003: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-08 14:57:50.156441
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-08 14:57:50.156441
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310944"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_024: 
+  serial_number: "2000673163"
+  h_on_h: "3354.25"
+  fac_hz: "59.98"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:31:31.469833
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:31:32.058796
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310955"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "44.9"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "129.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_045: 
+  serial_number: "2000673163"
+  h_on_h: "3354.47"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:45:03.158994
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:45:03.433303
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310984"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.1"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_066: 
+  serial_number: "2000673163"
+  h_on_h: "3354.55"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:55.284072
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:55.703948
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311014"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_088: 
+  serial_number: "2000673163"
+  h_on_h: "3354.59"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:08.260518
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:08.494743
+  vac_v: "247.9"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311027"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_067: 
+  serial_number: "2000673163"
+  h_on_h: "3354.58"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:51:46.229819
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:51:46.462389
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311024"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.7"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_004: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-08 15:00:43.902895
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-08 15:00:43.902895
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310945"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_025: 
+  serial_number: "2000673163"
+  h_on_h: "3354.17"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "418"
+  pac_w: "2763"
+  switched_age: 
+  created_at: 2010-05-11 11:26:41.192507
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.44"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Mpp
+  co2_saved_lbs: "6289.28"
+  updated_at: 2010-05-11 11:26:41.839436
+  vac_v: "249.8"
+  iac_a: "11"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310953"
+  event_cnt: "6033"
+  noise: 
+  day: 
+  e_total_kwh: "3699.57"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "58.2"
+  ipv_a: "6"
+  vfan_v: "6"
+  vacl1_v: "127.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "418"
+  vpv__pe_v: "0"
+  vacl2_v: "122.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: -------
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_046: 
+  serial_number: "2000673163"
+  h_on_h: "3354.48"
+  fac_hz: "59.98"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:45:30.442858
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:45:30.926437
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310987"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.7"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_090: 
+  serial_number: "2000673163"
+  h_on_h: "3354.6"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:53:00.774361
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:53:01.005153
+  vac_v: "248"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311035"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.7"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_089: 
+  serial_number: "2000673163"
+  h_on_h: "3354.6"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:29.883828
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:30.379015
+  vac_v: "247.9"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311030"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_068: 
+  serial_number: "2000673163"
+  h_on_h: "3354.54"
+  fac_hz: "60.02"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:54.183911
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:54.440629
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311005"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_005: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-08 15:03:59.067263
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-08 15:03:59.067263
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310946"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_026: 
+  serial_number: "2000673163"
+  h_on_h: "3354.38"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:39:47.016783
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:39:47.248972
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310961"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "32.9"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_047: 
+  serial_number: "2000673163"
+  h_on_h: "3354.48"
+  fac_hz: "59.98"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:45:34.729914
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:45:34.966307
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310988"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.7"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_091: 
+  serial_number: "2000673163"
+  h_on_h: "3354.61"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:53:06.499457
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:53:06.754473
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311036"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_070: 
+  serial_number: "2000673163"
+  h_on_h: "3354.53"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:34.784876
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:35.256332
+  vac_v: "247.5"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311002"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_069: 
+  serial_number: "2000673163"
+  h_on_h: "3354.54"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "504"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:19.499186
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:19.732689
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311009"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_006: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-11 10:55:03.857185
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-11 10:55:05.104221
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310947"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_027: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-11 11:39:49.041954
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-11 11:39:49.041954
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310962"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_048: 
+  serial_number: "2000673163"
+  h_on_h: "3354.48"
+  fac_hz: "59.98"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:45:39.155503
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:45:39.391142
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310989"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.7"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_092: 
+  serial_number: "2000673163"
+  h_on_h: "3354.61"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:53:19.929997
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:53:20.160573
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311038"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_071: 
+  serial_number: "2000673163"
+  h_on_h: "3354.55"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:50:00.698375
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:50:00.960713
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311015"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.8"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_007: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-11 10:59:46.839946
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-11 10:59:46.839946
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310948"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_028: 
+  serial_number: "2000673163"
+  h_on_h: "3354.46"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "502"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:04.417036
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:04.836392
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310975"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.3"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_050: 
+  serial_number: "2000673163"
+  h_on_h: "3354.51"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:47:31.640492
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:47:31.876148
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310991"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.8"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_049: 
+  serial_number: "2000673163"
+  h_on_h: "3354.51"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:47:22.917169
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:47:23.315945
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310990"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.8"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_093: 
+  serial_number: "2000673163"
+  h_on_h: "3354.61"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:53:27.815207
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:53:28.099621
+  vac_v: "247.6"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311039"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_072: 
+  serial_number: "2000673163"
+  h_on_h: "3354.52"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:47:54.481894
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:47:54.721827
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310995"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.8"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_008: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-11 11:06:32.348938
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-11 11:06:32.348938
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310949"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_030: 
+  serial_number: "2000673163"
+  h_on_h: "3354.48"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:45:14.700632
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:45:14.932537
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310986"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.7"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_029: 
+  serial_number: "2000673163"
+  h_on_h: "3354.29"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:34:35.823198
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:34:36.504422
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310957"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "36.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "129.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_051: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-13 14:59:52.689746
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-13 14:59:52.689746
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5321892"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_094: 
+  serial_number: "2000673163"
+  h_on_h: "3354.61"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:53:33.822412
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:53:34.064663
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311040"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.7"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.8"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_073: 
+  serial_number: "2000673163"
+  h_on_h: "3354.52"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:47:40.80053
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:47:41.050159
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310993"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.8"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_009: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-11 11:06:56.62887
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-11 11:06:56.62887
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310950"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_031: 
+  serial_number: "2000673163"
+  h_on_h: "3354.47"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:45:08.964004
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:45:09.332495
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310985"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.8"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_052: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-15 09:04:08.509657
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-15 09:04:08.509657
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5327671"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_010: 
+  serial_number: "2000673163"
+  h_on_h: "3354.47"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:57.460786
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:57.705821
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310983"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_095: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-13 15:13:16.152942
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-13 15:13:16.152942
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5321893"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_074: 
+  serial_number: "2000673163"
+  h_on_h: "3354.52"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:06.24689
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:06.48582
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310997"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_053: 
+  serial_number: "2000673163"
+  h_on_h: "3354.61"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:53:14.612036
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:53:14.852177
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311037"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_011: 
+  serial_number: "2000673163"
+  h_on_h: "3354.45"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:47.804203
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:48.040667
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310973"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_032: 
+  serial_number: "2000673163"
+  h_on_h: "3354.44"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:42:57.906421
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:42:58.188868
+  vac_v: "247.6"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310965"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_096: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-15 21:34:04.574617
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-15 21:34:04.574617
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5333002"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_075: 
+  serial_number: "2000673163"
+  h_on_h: "3354.6"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:52.762898
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:52.991011
+  vac_v: "248.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311034"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.8"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_012: 
+  serial_number: "2000673163"
+  h_on_h: "3354.29"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:34:28.134195
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:34:28.994722
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310956"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "36.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "129.1"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_033: 
+  serial_number: "2000673163"
+  h_on_h: "3354.47"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:47.10047
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:47.333412
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310982"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.1"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_054: 
+  serial_number: "2000673163"
+  h_on_h: "3354.59"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:00.206698
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:00.438126
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311026"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_097: 
+  serial_number: "2000673163"
+  h_on_h: "3354.66"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:55:59.459654
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:55:59.69276
+  vac_v: "248.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311063"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.1"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "129.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.3"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_076: 
+  serial_number: "2000673163"
+  h_on_h: "3354.6"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:49.604149
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:49.835088
+  vac_v: "248.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311033"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.9"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_013: 
+  serial_number: "2000673163"
+  h_on_h: "3354.44"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:14.945003
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:15.181434
+  vac_v: "247.5"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310968"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_034: 
+  serial_number: "2000673163"
+  h_on_h: "3354.46"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:34.975216
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:35.210978
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310980"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_055: 
+  serial_number: "2000673163"
+  h_on_h: "3354.55"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:47.275407
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:47.511098
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311013"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_098: 
+  serial_number: "2000673163"
+  h_on_h: "3354.65"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:55:45.2495
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:55:45.482076
+  vac_v: "247.9"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311060"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.1"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "129.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.3"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_077: 
+  serial_number: "2000673163"
+  h_on_h: "3354.56"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:50:06.857716
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:50:07.09464
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311016"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.7"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_014: 
+  serial_number: "2000673163"
+  h_on_h: "3354.46"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "502"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:21.283756
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:21.521059
+  vac_v: "247.6"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310978"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.4"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_035: 
+  serial_number: "2000673163"
+  h_on_h: "3354.38"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:39:44.102993
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:39:44.643725
+  vac_v: "248"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310960"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "32.9"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.3"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_056: 
+  serial_number: "2000673163"
+  h_on_h: "3354.55"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:41.813791
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:42.074886
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311012"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_099: 
+  serial_number: "2000673163"
+  h_on_h: "3354.66"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:56:26.486365
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:56:26.722877
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311067"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.1"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "129.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.3"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_078: 
+  serial_number: "2000673163"
+  h_on_h: "3354.53"
+  fac_hz: "59.98"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:15.795692
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:16.036628
+  vac_v: "247"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310999"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.6"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_015: 
+  serial_number: "2000673163"
+  h_on_h: "3354.43"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:42:48.135894
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:42:48.7155
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310963"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_036: 
+  serial_number: "2000673163"
+  h_on_h: "3354.46"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "502"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:10.187517
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:10.439147
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310976"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.3"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_057: 
+  serial_number: "2000673163"
+  h_on_h: "3354.53"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:40.51172
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:40.756474
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311003"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.6"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_080: 
+  serial_number: "2000673163"
+  h_on_h: "3354.54"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:13.586917
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:13.947845
+  vac_v: "248.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311008"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.8"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_079: 
+  serial_number: "2000673163"
+  h_on_h: "3354.6"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:36.031616
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:36.290146
+  vac_v: "248.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311031"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.9"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_016: 
+  serial_number: "2000673163"
+  h_on_h: "3354.3"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:34:43.280535
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:34:43.514997
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310958"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "36"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.3"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_037: 
+  serial_number: "2000673163"
+  h_on_h: "3354.46"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "502"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:27.061527
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:27.300388
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310979"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_058: 
+  serial_number: "2000673163"
+  h_on_h: "3354.52"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:47:58.167914
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:47:58.404263
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310996"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_081: 
+  serial_number: "2000673163"
+  h_on_h: "3354.53"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:48.600429
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:48.844133
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311004"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_017: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-11 11:34:49.36774
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-11 11:34:49.36774
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310959"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_038: 
+  serial_number: "2000673163"
+  h_on_h: "3354.1"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "414"
+  pac_w: "2737"
+  switched_age: 
+  created_at: 2010-05-11 11:23:02.645633
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.38"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Mpp
+  co2_saved_lbs: "6288.99"
+  updated_at: 2010-05-11 11:23:04.072145
+  vac_v: "250.3"
+  iac_a: "10"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310952"
+  event_cnt: "6033"
+  noise: 
+  day: 
+  e_total_kwh: "3699.41"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "58.2"
+  ipv_a: "6"
+  vfan_v: "6"
+  vacl1_v: "127.8"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "414"
+  vpv__pe_v: "0"
+  vacl2_v: "122.3"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: -------
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_060: 
+  serial_number: "2000673163"
+  h_on_h: "3354.51"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:47:35.209334
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:47:35.485933
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310992"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_059: 
+  serial_number: "2000673163"
+  h_on_h: "3354.52"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:47:46.553233
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:47:46.788978
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310994"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_082: 
+  serial_number: "2000673163"
+  h_on_h: "3354.6"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:44.349157
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:44.579502
+  vac_v: "248.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311032"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.9"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_018: 
+  serial_number: "2000673163"
+  h_on_h: "3354.44"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:09.228827
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:09.476154
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310967"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_040: 
+  serial_number: "2000673163"
+  h_on_h: "3354.45"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:34.404012
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:34.659024
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310971"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_039: 
+  serial_number: "2000673163"
+  h_on_h: "3354.44"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:42:51.131594
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:42:51.498944
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310964"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.1"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.1"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_061: 
+  serial_number: "2000673163"
+  h_on_h: "3354.52"
+  fac_hz: "59.98"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:11.976718
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:12.211779
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310998"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_083: 
+  serial_number: "2000673163"
+  h_on_h: "3354.53"
+  fac_hz: "59.99"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:28.82637
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:29.063083
+  vac_v: "247.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311001"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.1"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_020: 
+  serial_number: "2000673163"
+  h_on_h: "3354.45"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:58.367617
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:58.623686
+  vac_v: "248"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310974"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.5"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.4"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_019: 
+  serial_number: "2000673163"
+  h_on_h: "3354.47"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "501"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:41.338141
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:41.571428
+  vac_v: "247.3"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310981"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_041: 
+  serial_number: "2000673163"
+  h_on_h: "3354.23"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "414"
+  pac_w: "2786"
+  switched_age: 
+  created_at: 2010-05-11 11:30:30.819885
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.5"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Mpp
+  co2_saved_lbs: "6289.57"
+  updated_at: 2010-05-11 11:30:31.51753
+  vac_v: "250.1"
+  iac_a: "11"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310954"
+  event_cnt: "6033"
+  noise: 
+  day: 
+  e_total_kwh: "3699.75"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "58.8"
+  ipv_a: "7"
+  vfan_v: "6"
+  vacl1_v: "129.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "414"
+  vpv__pe_v: "0"
+  vacl2_v: "120.5"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: -------
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_062: 
+  serial_number: "2000673163"
+  h_on_h: "3354.54"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:02.11299
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:02.351345
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311006"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.3"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_084: 
+  serial_number: "2000673163"
+  h_on_h: "3354.59"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:51:54.496773
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:51:54.750477
+  vac_v: "247.7"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311025"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_042: 
+  serial_number: "2000673163"
+  h_on_h: "3354.45"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:28.715231
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:28.951605
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310970"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_063: 
+  serial_number: "2000673163"
+  h_on_h: "3354.55"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "504"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:49:33.479341
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:49:33.739205
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311011"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.9"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_021: 
+  serial_number: "2000673163"
+  h_on_h: "3354.44"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:01.106874
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:01.343539
+  vac_v: "247.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310966"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_100: 
+  serial_number: "2000673163"
+  h_on_h: "3354.76"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 12:02:33.914759
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 12:02:34.172348
+  vac_v: "248.4"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311114"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "27.8"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.7"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.6"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_085: 
+  serial_number: "2000673163"
+  h_on_h: "3354.59"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "505"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:52:13.927486
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:52:14.157491
+  vac_v: "248.1"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311028"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "29.7"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.8"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_064: 
+  serial_number: "2000673163"
+  h_on_h: "3354.53"
+  fac_hz: "59.98"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:48:21.262029
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:48:21.494459
+  vac_v: "247.2"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5311000"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "30.3"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.4"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "118.7"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_001: 
+  serial_number: 
+  h_on_h: 
+  fac_hz: 
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: 
+  pac_w: 
+  switched_age: 
+  created_at: 2010-05-08 13:54:08.762445
+  prefix: 
+  max_vpv_v: 
+  h_total_h: 
+  backup_state: 
+  maxsecond: 
+  month: 
+  power_on: 
+  mode: 
+  co2_saved_lbs: 
+  updated_at: 2010-05-08 13:54:08.762445
+  vac_v: 
+  iac_a: 
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: 
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310942"
+  event_cnt: 
+  noise: 
+  day: 
+  e_total_kwh: 
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: 
+  ipv_a: 
+  vfan_v: 
+  vacl1_v: 
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: 
+  vpv__pe_v: 
+  vacl2_v: 
+  i_dif_ma: 
+  grid_type: 
+  error: 
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_022: 
+  serial_number: "2000673163"
+  h_on_h: "3354.46"
+  fac_hz: "60"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "502"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:44:13.409111
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:44:13.670548
+  vac_v: "247.8"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310977"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.3"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.4"
+  i_dif_ma: "55"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 
+ted_web_box_fulls_043: 
+  serial_number: "2000673163"
+  h_on_h: "3354.44"
+  fac_hz: "60.01"
+  mtu1_voltagenow: 
+  minute: 
+  vpv_v: "503"
+  pac_w: "0"
+  switched_age: 
+  created_at: 2010-05-11 11:43:20.511569
+  prefix: 
+  max_vpv_v: "537"
+  h_total_h: "2783.51"
+  backup_state: -----
+  maxsecond: 
+  month: 
+  power_on: "2251"
+  mode: Disturbance
+  co2_saved_lbs: "6289.59"
+  updated_at: 2010-05-11 11:43:20.74537
+  vac_v: "247.5"
+  iac_a: "0"
+  prediction: 
+  outlier: 
+  mtu1_costnow: 
+  mtu1_kva: 
+  mtu1_powernow: 
+  hour: 
+  max_temperature_degc: "72.1"
+  prediction_samples: 
+  production: 
+  total_powernow: 
+  id: "5310969"
+  event_cnt: "6034"
+  noise: 
+  day: 
+  e_total_kwh: "3699.76"
+  predict_reactive_power: 
+  switched_state: 
+  predictkva: 
+  sign: 
+  total_costnow: 
+  year: 
+  temperature_degc: "31.6"
+  ipv_a: "0"
+  vfan_v: "0"
+  vacl1_v: "128.2"
+  change_interval: 
+  total_kva: 
+  vpv_setpoint_v: "665"
+  vpv__pe_v: "0"
+  vacl2_v: "119.2"
+  i_dif_ma: "53"
+  grid_type: 240V
+  error: VacL1-Srr
+  total_voltagenow: 
+  accusecond: 

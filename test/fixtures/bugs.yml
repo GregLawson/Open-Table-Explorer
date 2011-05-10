@@ -1,11 +1,67 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  url: MyString
-  error: MyString
-  context: MyString
-
-two:
-  url: MyString
-  error: MyString
-  context: MyString
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html--- 
+http://mobiledell.lan:3000/acquisition_interface980190963/edit: 
+  resolution: 
+  url: http://mobiledell.lan:3000/acquisition_interface980190963/edit
+  gui: 
+  context: "  Processing by AcquisitionInterfacesController#update as HTML\\n  Parameters: {\"commit\"=>\"Update\", \"authenticity_token\"=>\"yFuPgO0UEuvolxQSc1aucxrgcO1VJYgQog6AkIkFDXU=\", \"utf8\"=>\"\xE2\x9C\x93\", \"id\"=>\"980190963\", \"acquisition_interface\"=>{\"name\"=>\"File\", \"acquire_data\"=>\"open(schemelessUrl) do |f|;self[:acquisition_data]=f.gets(nil);end\", \"rescue_code\"=>\"\", \"id\"=>\"980190963\", \"library\"=>\"\", \"return_error_code\"=>\"\"}}"
+  error: "ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):"
+" rake testing:full_unit_test TABLE=transfers": 
+  resolution: ""
+  url: " rake testing:full_unit_test TABLE=transfers"
+  gui: false
+  context: (called from _app_views_transfers_new_html_erb__813585372__620146448_0 at /home/greg/Desktop/Database/Open-Table-Explorer/app/views/transfers/new.html.erb:4
+  error: ".DEPRECATION WARNING: f.error_messages was removed from Rails and is now available as a plugin. Please install it with `rails plugin install git://github.com/rails/dynamic_form.git`."
+rake testing:full_unit_test TABLE=transfers: 
+  resolution: try git binary search on test
+  url: rake testing:full_unit_test TABLE=transfers
+  gui: 
+  context: transfer controller fixture(:one)
+  error: "StandardError: No fixture with name one found for table transfers"
+http://mobiledell.lan:3000/bugs: 
+  resolution: 
+  url: http://mobiledell.lan:3000/bugs
+  gui: 
+  context: all index views that work OK
+  error: "ActionController::RoutingError (No route matches \"/javascripts/application.js\"):"
+"shell: rake testing:full_unit_test TABLE=urls TEST=test_should_create_url": 
+  resolution: 
+  url: "shell: rake testing:full_unit_test TABLE=urls TEST=test_should_create_url"
+  gui: 
+  context: Controller test
+  error: "ActionController::RoutingError: No route matches {:controller=>\"urls\", :action=>\"show\"}"
+http://mobiledell.lan:3000/accounts/new: 
+  resolution: 
+  url: http://mobiledell.lan:3000/accounts/new
+  gui: 
+  context: app/views/accounts/_form.html.erb:1:in `_app_views_accounts__form_html_erb___1066772313__625150438_442816
+  error: "ActionView::Template::Error (undefined method `model_name for NilClass:Class):"
+rake testing:full_unit_test TABLE=accounts TEST=test_should_get_new: 
+  resolution: 
+  url: rake testing:full_unit_test TABLE=accounts TEST=test_should_get_new
+  gui: 
+  context: test/functional/accounts_controller_test.rb:11:in `test_should_get_new
+  error: "ActionView::Template::Error: undefined method `model_name for NilClass:Class"
+~: 
+  resolution: 
+  url: 
+  gui: 
+  context: 
+  error: Unable to load postgresql2rail, underlying cause No such file to load -- postgresql2rail
+http://mobiledell.lan:3000/transfers/new: 
+  resolution: 
+  url: http://mobiledell.lan:3000/transfers/new
+  gui: 
+  context: "  Processing by TransfersController#create as HTML\\n  Parameters: {\"commit\"=>\"Create\", \"transfer\"=>{\"amount\"=>\"8333\", \"account_id\"=>\"298486374\", \"posted(1i)\"=>\"2011\", \"posted(2i)\"=>\"1\", \"posted(3i)\"=>\"1\"}, \"authenticity_token\"=>\"yjK24FGbJJp+cHtdvLVTX+Vyf3VxaWn5WXoLt+7541U=\", \"utf8\"=>\"\xE2\x9C\x93\"}"
+  error: "ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):"
+rake testing:full_unit_test TABLE=accounts TEST=test_should_get_edit: 
+  resolution: 
+  url: rake testing:full_unit_test TABLE=accounts TEST=test_should_get_edit
+  gui: 
+  context: test/functional/accounts_controller_test.rb:29:in `test_should_get_edit
+  error: "ActionView::Template::Error: undefined method `model_name for NilClass:Class"
+http://mobiledell.lan:3000/bugs/new: 
+  resolution: 
+  url: http://mobiledell.lan:3000/bugs/new
+  gui: 
+  context: all new and edit submits? but only in production.
+  error: "ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):"
