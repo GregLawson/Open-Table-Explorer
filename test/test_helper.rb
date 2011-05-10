@@ -1,7 +1,4 @@
 class Object
-def matching_methods(regexp)
-	self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
-end #def
 end #class
 module Generic_Table
 def similar_methods(symbol)

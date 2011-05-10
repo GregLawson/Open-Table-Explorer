@@ -208,5 +208,8 @@ def relationship(obj=self)
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
 end #def
+def matching_methods(regexp)
+	self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
+end #def
 
 end #class
