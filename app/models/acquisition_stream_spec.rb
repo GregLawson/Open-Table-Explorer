@@ -3,6 +3,7 @@ belongs_to :acquisition_interface
 belongs_to :table_spec
 has_many :acquisitions
 attr_reader :uri
+require 'global.rb'
 include Generic_Table
 belongs_to :table_spec, :class_name => "Table_spec"
 #~ validates_format_of :acquisition_interface, :with => /\A[a-zA-Z]{4,5}_Acquisition\z/,
@@ -68,6 +69,6 @@ def consistantSchemes
 	return scheme==schemeFromInterface
 end #def
 def acquire
-	#~ @objectReference.acquire
+	acquisition_interface.acquire(url)
 end #def
 end

@@ -14,8 +14,8 @@
 </p>
 <p>
   <b>Table_spec:</b>
-  <%=h 
-  @acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name) %>
+  <%=h @acquisition_stream_spec.matching_methods(/table_spec.*/).inspect%>
+  < %=h @acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name) %>
 </p>
 
 

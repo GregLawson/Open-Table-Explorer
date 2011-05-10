@@ -9,6 +9,7 @@
   </p>
   <p>
     <%= f.label :acquisition_interface %><br />
+	<%= collection_select(:acquisition_stream_spec,:acquisition_interface_id,AcquisitionInterface.all, :id, :name) %>
     <%= f.text_field :acquisition_interface %>
   </p>
   <p>

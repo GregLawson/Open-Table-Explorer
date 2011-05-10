@@ -6,63 +6,79 @@ class AcquisitionStreamSpecTest < ActiveSupport::TestCase
 def test_aaa
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('acquisition_interface'))
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('table_spec'))
-	assert_public_instance_method(acquisition_stream_specs(:one),:acquisition_interface)
-	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(acquisition_stream_specs(:one),:acquisition_interfaces) }
-	assert_raise(Test::Unit::AssertionFailedError) { assert_public_instance_method(acquisition_stream_specs(:one),:cabbage) }
-	assert_association(acquisition_stream_specs(:one),:acquisition_interface)
+	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
+	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interfaces) }
+	assert_raise(Test::Unit::AssertionFailedError) { assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:cabbage) }
+	assert_association(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
 	assert_equal(Fixtures::identify(:HTTP),acquisition_interfaces(:HTTP).id)
-	assert_equal(Fixtures::identify(:HTTP),acquisition_stream_specs(:one).acquisition_interface_id)
-	assert_equal(acquisition_stream_specs(:one).acquisition_interface_id,acquisition_interfaces(:HTTP).id)
-	assert_equal(acquisition_stream_specs(:one).scheme,acquisition_interfaces(:HTTP).scheme)
-	assert_equal(acquisition_stream_specs(:one).scheme,acquisition_stream_specs(:one).acquisition_interface.scheme)
-	testCall(acquisition_stream_specs(:one),:acquisition_interface)
+	assert_equal(Fixtures::identify(:HTTP),acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface_id)
+	assert_equal(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface_id,acquisition_interfaces(:HTTP).id)
+	assert_equal(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).scheme,acquisition_interfaces(:HTTP).scheme)
+	assert_equal(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).scheme,acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface.scheme)
+	testCall(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
 end
 def test_acquisition_interface_id_equal
 #	assert_raise(Test::Unit::AssertionFailedError) do
-		assert_equal(Fixtures::identify(:HTTP),acquisition_stream_specs(:one).acquisition_interface_id,"identify != acquisition_interface_id")
+		assert_equal(Fixtures::identify(:HTTP),acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface_id,"identify != acquisition_interface_id")
 #	end #assert_raise
 end #def
 def test_id_equal
 #	assert_raise(Test::Unit::AssertionFailedError) do
-		assert_equal(acquisition_interfaces(:HTTP).id,acquisition_stream_specs(:one).acquisition_interface_id,"id != acquisition_interface_id")
+		assert_equal(acquisition_interfaces(:HTTP).id,acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface_id,"id != acquisition_interface_id")
 #	end #assert_raise
 end #def
 def test_acquisition_interface_not_nil
-		assert_not_nil(acquisition_stream_specs(:one).acquisition_interface,"Weird. Doesn't this work fine in test above")
+		assert_not_nil(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface,"Weird. Doesn't this work fine in test above")
 end #def
 def test_acquisition_interface
-	assert_instance_of(AcquisitionInterface,acquisition_stream_specs(:one).acquisition_interface)
+	assert_instance_of(AcquisitionInterface,acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface)
 end #def
 def test_acquisition_stream_specs_not_nil
-		assert_not_nil(acquisition_stream_specs(:one))
+		assert_not_nil(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym))
 end
 def test_acquisition_interface_id_not_nil
-	assert_not_nil(acquisition_stream_specs(:one).acquisition_interface_id)
+	assert_not_nil(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface_id)
 end #def
 def test_associatons
-	assert_public_instance_method(acquisition_stream_specs(:one),:acquisition_interface)
-	assert_public_instance_method(acquisition_stream_specs(:one),:table_spec)
+	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
+	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
 end #def
 def test_acquisition_interfaces_name
-	assert_equal('HTTP',acquisition_stream_specs(:one).acquisition_interface.name)
+	assert_equal('HTTP',acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).acquisition_interface.name)
 end #def
 def test_nameFromInterface
-    assert_equal('HTTP',acquisition_stream_specs(:one).nameFromInterface)
+    assert_equal('HTTP',acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).nameFromInterface)
 end
 def test_nameFromInterface_String
-    assert_instance_of(String,acquisition_stream_specs(:one).nameFromInterface)
+    assert_instance_of(String,acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).nameFromInterface)
 end
 def test_nameFromInterface_downcase_nil
-	assert_not_nil(acquisition_stream_specs(:one).nameFromInterface)
+	assert_not_nil(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).nameFromInterface)
 end
 def test_nameFromInterface_downcase
-	assert_equal('http',acquisition_stream_specs(:one).nameFromInterface.downcase)
+	assert_equal('http',acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).nameFromInterface.downcase)
 end #test
  
 def test_schemeFromInterface
-   assert_equal('http',acquisition_stream_specs(:one).schemeFromInterface)
+   assert_equal('http',acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).schemeFromInterface)
 end #test
 def test_scheme
-	testAnswer(acquisition_stream_specs(:one),:scheme,'http')
- end #test
+	testAnswer(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:scheme,'http')
+end #test
+test "associated_to_s" do
+	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
+	assert_not_nil(acquisition_stream_spec)
+	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
+	puts acquisition_stream_spec.similar_methods(:table_spec).inspect
+	assert_respond_to(acquisition_stream_spec,:table_spec)
+	meth=acquisition_stream_spec.method(:table_spec)
+	assert_not_nil(meth.call)
+	ass=acquisition_stream_spec.send(:table_spec)
+	if ass.nil? then
+		return ''
+	else
+		return ass.send(:model_class_name,*args).to_s
+	end
+	puts "acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)=#{acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)}"
+end #test
 end

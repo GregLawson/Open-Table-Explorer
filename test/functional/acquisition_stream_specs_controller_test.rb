@@ -21,23 +21,23 @@ class AcquisitionStreamSpecsControllerTest < ActionController::TestCase
   end
 
   def test_should_show_acquisition_stream_spec
-    get :show, :id => acquisition_stream_specs(:one).id
+    get :show, :id => acquisition_stream_specs('/sbin/ifconfig'.to_sym).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => acquisition_stream_specs(:one).id
+    get :edit, :id => acquisition_stream_specs('/sbin/ifconfig'.to_sym).id
     assert_response :success
   end
 
   def test_should_update_acquisition_stream_spec
-    put :update, :id => acquisition_stream_specs(:one).id, :acquisition_stream_spec => { }
+    put :update, :id => acquisition_stream_specs('/sbin/ifconfig'.to_sym).id, :acquisition_stream_spec => { }
     assert_redirected_to acquisition_stream_spec_path(assigns(:acquisition_stream_spec))
   end
 
   def test_should_destroy_acquisition_stream_spec
     assert_difference('AcquisitionStreamSpec.count', -1) do
-      delete :destroy, :id => acquisition_stream_specs(:one).id
+      delete :destroy, :id => acquisition_stream_specs('/sbin/ifconfig'.to_sym).id
     end
 
     assert_redirected_to acquisition_stream_specs_path
