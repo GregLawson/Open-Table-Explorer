@@ -21,6 +21,7 @@
   </p>
   <p>
     <%= f.label :frequency_id %><br />
+    <%= collection_select(:table_spec,:frequency_id,Frequency.all, :id, :frequency_name) %>
     <%= f.text_field :frequency_id %>
   </p>
   <p>
