@@ -24,6 +24,7 @@ has_many :acquisition_stream_specs
 include Generic_Table
 #include Generic_Acquisition 
 attr_reader :objReference
+after_initialize :setup
 # functons of class only
 def logical_primary_key
 	return :acquisition_name
