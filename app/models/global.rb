@@ -64,10 +64,14 @@ def canonicalName(verbose=false)
 		puts("name=#{name}") if verbose
 		puts("nesting.inspect=#{nesting.inspect}") if verbose
 		return "Module #{name}"
+	elsif instance_of?(ActiveRecord::Base) then
+		return "ActiveRecord::Base #{self.class.name}"		
+	elsif kind_of?(ActiveRecord::Base) then
+		return "ActiveRecord::Base subclass #{self.class.name}"		
 	elsif Generic_Table.activeRecordTableNotCreatedYet?(self) then
 		return "Active_Record #{self.class.inspect}"
 	elsif instance_of?(Class) then
-		return "Class"
+		return "Class #{name}"
 	elsif instance_of?(Array) then
 		return "Array"
 	elsif kind_of?(Account) then
