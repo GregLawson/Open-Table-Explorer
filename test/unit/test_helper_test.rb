@@ -47,9 +47,9 @@ test "association to one" do
 	assert_not_nil is_association?(ar_from_fixture,assName)
 	assert_association(ar_from_fixture,assName)
 	assert_not_nil is_association_to_one?(ar_from_fixture,assName)
-	assert_association_to_one(acquisition_stream_specs(:one),:table_spec)
+	assert_association_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
 	assert_association_many_to_one(fixtures(:acquisition_stream_specs).values.first,:table_spec)
-	assert_association_one_to_one(acquisition_stream_specs(:one),:acquisition_interface)
+	assert_association_one_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
 	assert_foreign_key_points_to_me(ar_from_fixture,assName)
 
 end #test
@@ -70,6 +70,14 @@ test "other association" do
 	assert_association(ar_from_fixture,assName)
 	assert_not_nil(associated_foreign_key_name(ar_from_fixture,assName),"associated_foreign_key_name: ar_from_fixture=#{ar_from_fixture},assName=#{assName})")
 	assert_equal('frequency_id',associated_foreign_key_name(ar_from_fixture,assName))
+end #test
+test "explain_assert_respond_to" do
+#	assert_raise(Test::Unit::AssertionFailedError,explain_assert_respond_to(TestClass,:sequential_id?))
+#	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
+
+	explain_assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+
 end #test
 end #class
 
