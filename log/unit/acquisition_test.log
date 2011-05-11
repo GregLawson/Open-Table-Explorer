@@ -1,54 +1,6 @@
 Loaded suite test/unit/acquisition_test
 Started
-FFFF
-Finished in 14.06784 seconds.
+......
+Finished in 48.019793 seconds.
 
-  1) Failure:
-test_associatons(AcquisitionTest)
-    [/test/test_helper.rb:163:in `fixtures'
-     /test/test_helper.rb:120:in `each'
-     /test/test_helper.rb:120:in `fixtures'
-     /test/test_helper.rb:250:in `define_association_names'
-     test/unit/acquisition_test.rb:5:in `setup']:
-sequential_id? ar_from_fixture.inspect=#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>.
-<#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>>
-of type <Acquisition(id: integer, acquisition_data: string, created_at: datetime, url: string, acquisition_stream_id: integer, error: string, acquisition_updated: boolean)>
-expected to respond_to?<:sequential_id?>.
-
-  2) Failure:
-test_general_associations(AcquisitionTest)
-    [/test/test_helper.rb:163:in `fixtures'
-     /test/test_helper.rb:120:in `each'
-     /test/test_helper.rb:120:in `fixtures'
-     /test/test_helper.rb:250:in `define_association_names'
-     test/unit/acquisition_test.rb:5:in `setup']:
-sequential_id? ar_from_fixture.inspect=#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>.
-<#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>>
-of type <Acquisition(id: integer, acquisition_data: string, created_at: datetime, url: string, acquisition_stream_id: integer, error: string, acquisition_updated: boolean)>
-expected to respond_to?<:sequential_id?>.
-
-  3) Failure:
-test_id_equal(AcquisitionTest)
-    [/test/test_helper.rb:163:in `fixtures'
-     /test/test_helper.rb:120:in `each'
-     /test/test_helper.rb:120:in `fixtures'
-     /test/test_helper.rb:250:in `define_association_names'
-     test/unit/acquisition_test.rb:5:in `setup']:
-sequential_id? ar_from_fixture.inspect=#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>.
-<#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>>
-of type <Acquisition(id: integer, acquisition_data: string, created_at: datetime, url: string, acquisition_stream_id: integer, error: string, acquisition_updated: boolean)>
-expected to respond_to?<:sequential_id?>.
-
-  4) Failure:
-test_specific,_stable_and_working(AcquisitionTest)
-    [/test/test_helper.rb:163:in `fixtures'
-     /test/test_helper.rb:120:in `each'
-     /test/test_helper.rb:120:in `fixtures'
-     /test/test_helper.rb:250:in `define_association_names'
-     test/unit/acquisition_test.rb:5:in `setup']:
-sequential_id? ar_from_fixture.inspect=#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>.
-<#<Acquisition id: 4768, acquisition_data: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n<?xml-...", created_at: "2010-09-15 03:07:47", url: "http://www.weather.gov/xml/current_obs/KHHR.xml", acquisition_stream_id: nil, error: nil, acquisition_updated: nil>>
-of type <Acquisition(id: integer, acquisition_data: string, created_at: datetime, url: string, acquisition_stream_id: integer, error: string, acquisition_updated: boolean)>
-expected to respond_to?<:sequential_id?>.
-
-4 tests, 112 assertions, 4 failures, 0 errors
+6 tests, 145755 assertions, 0 failures, 0 errors

@@ -1,6 +1,27 @@
 Loaded suite test/unit/acquisition_interface_test
 Started
-...
-Finished in 13.178759 seconds.
+acq.matching_methods(/code/).inspect=["codeBody"]
+acq.classDefinition=class HTTP_Acquisition  
+include Generic_Table
+require 'net/http'
+def acquire(stream)
+@previousAcq=self[:acquisition_data]
+self[:acquisition_data] =nil
+@uri=URI.parse(URI.escape(@stream.url))
+self[:acquisition_data]= Net::HTTP.get(@uri)
+if $?==0 then
+	self[:error]=nil
+else
+	self[:error]=self[:acquisition_data]
+	self[:acquisition_data]=nil
+end
+rescue StandardError => exception_raised
+return self
 
-3 tests, 11 assertions, 0 failures, 0 errors
+end
+
+end
+....
+Finished in 13.225874 seconds.
+
+4 tests, 19 assertions, 0 failures, 0 errors
