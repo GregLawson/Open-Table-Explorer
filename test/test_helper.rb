@@ -45,23 +45,31 @@ def testAnswer(obj,methodName,answer,*arguments)
 	assert_equal(answer,result)
 	return result
 end #def
-def explain_assert_respond_to(obj,methodName)
+def explain_assert_respond_to(obj,methodName,message='')
 	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
 	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
-	message1="Object #{obj.canonicalName(false)} of class='#{obj.class}' does not respond to method :#{methodName}"
+	message1=message+"Object #{obj.canonicalName(false)} of class='#{obj.class}' does not respond to method :#{methodName}"
 	if obj.instance_of?(Class) then
-		message="#{message1}; noninherited class methods= #{obj.noninherited_public_class_methods(obj)}"
+		if obj.instance_methods(true).include?(methodName.to_s) then
+			message= "It's an instance, not a class method."
+		else
+			if obj.instance_methods(false).empty? then
+				message="#{message1}; has no noninherited class methods."
+			else
+				message="#{message1}; noninherited class methods= #{obj.instance_methods(false).inspect}"
+			end #if
+		end #if
 		assert_respond_to(obj,methodName,message)
-	else
+	else # not class
 		noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
-#			assert_equal(obj.class.public_instance_methods,obj.public_class_methods)
-		if noninherited.include?(methodName.to_s) then
+#		assert_equal(obj.class.public_instance_methods,obj.public_class_methods)
+		if obj.respond_to?(methodName.to_s) then
 			return # OK not ActiveRecord
 		#~ elsif obj.activeRecordTableNotCreatedYet?(obj) then
 			#~ message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj).inspect}"
-		#~ else
-			message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj)}"
+		else
+			message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods.inspect}"
 			assert_respond_to(obj,methodName,message)
 		end
 	end
