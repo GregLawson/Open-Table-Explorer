@@ -8,10 +8,10 @@ def acquire(stream)
 delta(stream)
 self[:acquisition_data]= Net::HTTP.get(@uri)
 if $?==0 then
-	self[:error]=nil
+	@acquisition.error=nil
 else
-	self[:error]=self[:acquisition_data]
-	self[:acquisition_data]=nil
+	@acquisition.error=@acquisition.acquisition_data
+	@acquisition.acquisition_data=nil
 end
 rescue StandardError => exception_raised
 return self
@@ -20,6 +20,6 @@ end
 
 end
 ....
-Finished in 13.403756 seconds.
+Finished in 14.037996 seconds.
 
 4 tests, 19 assertions, 0 failures, 0 errors

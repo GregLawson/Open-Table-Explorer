@@ -64,18 +64,18 @@ def codeBody
 	else
 		ret="require '#{library}'\n"
 	end # if
-	acquireBody="@previousAcq=self[:acquisition_data]\n" # change detection
-	acquireBody+="self[:acquisition_data] =nil\n" # reinitialize
-	acquireBody+="@uri=URI.parse(URI.escape(@stream.url))\n"
+	#~ acquireBody="@previousAcq=@acquisition\n" # change detection
+	#~ acquireBody+="@acquisition=Acquisitions.new\n" # reinitialize
+	#~ acquireBody+="@uri=URI.parse(URI.escape(@stream.url))\n"
 	acquireBody="delta(stream)\n"
 	acquireBody+="#{acquire_data}\n"
 	
 	if return_error_code.nil? then
 		 acquireBody+="if $?==0 then\n"
-		acquireBody+="	self[:error]=nil\n"
+		acquireBody+="	@acquisition.error=nil\n"
 		acquireBody+="else\n"
-		acquireBody+="	self[:error]=self[:acquisition_data]\n"
-		acquireBody+="	self[:acquisition_data]=nil\n"
+		acquireBody+="	@acquisition.error=@acquisition.acquisition_data\n"
+		acquireBody+="	@acquisition.acquisition_data=nil\n"
 		acquireBody+="end\n"
 	else
 		acquireBody+="#{return_error_code}\n"
