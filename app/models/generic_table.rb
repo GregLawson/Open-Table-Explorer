@@ -291,12 +291,17 @@ def save
 	super
 	table2yaml
 end #def
+# Display attribute or method value from association even if association is nil
 def associated_to_s(assName,method,*args)
-	ass=send(assName)
-	if ass.nil? then
+	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
 		return ''
 	else
-		return ass.send(method.to_sym,*args).to_s
+		ass=send(assName)
+		if ass.nil? then
+			return ''
+		else
+			return ass.send(method.to_sym,*args).to_s
+		end
 	end
 end #def
 end # module

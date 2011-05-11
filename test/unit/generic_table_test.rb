@@ -16,6 +16,11 @@ def test_aaa
 	acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).associated_to_s(:acquisition_interface,:name)
 	assert_instance_of(String,acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym).associated_to_s(:acquisition_interface,:name))
 	assert_respond_to(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:associated_to_s)
+	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
+	acquisitions(:one).acquisition_stream_spec_id=nil
+	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
+	acquisitions(:one).acquisition_stream_spec_id=0
+#	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
 end
 
 end #test class

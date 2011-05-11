@@ -1,6 +1,13 @@
 Loaded suite test/unit/generic_table_test
 Started
-.
-Finished in 13.240554 seconds.
+E
+Finished in 13.611692 seconds.
 
-1 tests, 24 assertions, 0 failures, 0 errors
+  1) Error:
+test_aaa(GenericTableTest):
+ActiveRecord::StatementInvalid: SQLite3::SQLException: no such column: acquisition_stream_specs.acquisition_id: SELECT "acquisition_stream_specs".* FROM "acquisition_stream_specs" WHERE ("acquisition_stream_specs".acquisition_id = 4603) LIMIT 1
+    app/models/generic_table.rb:299:in `send'
+    app/models/generic_table.rb:299:in `associated_to_s'
+    test/unit/generic_table_test.rb:23:in `test_aaa'
+
+1 tests, 26 assertions, 0 failures, 1 errors
