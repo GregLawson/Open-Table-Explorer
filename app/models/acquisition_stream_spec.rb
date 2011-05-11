@@ -69,6 +69,6 @@ def consistantSchemes
 	return scheme==schemeFromInterface
 end #def
 def acquire
-	acquisition_interface.acquire(url)
+	acquisition_interface.acquire(acquisition_interface)
 end #def
 end
