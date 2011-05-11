@@ -53,6 +53,11 @@ def setup
 	@classReference=classReference
 	@objReference=@classReference.new
 end #def
+def delta(stream)
+	@previousAcq=@acquisition # change detection
+	@acquisition=Acquisition.new # reinitialize
+	@stream=stream
+end #def
 def codeBody
 	if library.nil? then
 		ret=''
