@@ -66,11 +66,11 @@ test "specific, stable and working" do
 	assert_association(table_specs(:MULTIPLE_WEATHER),:frequency)
 	assert_association_one_to_many(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)
 	assert_association_many_to_one(table_specs(:MULTIPLE_WEATHER),:frequency)
-	assert_public_instance_method(acquisition_stream_specs(:one),:table_spec)
-	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(acquisition_stream_specs(:one),:table_specs) }
-	assert_association(acquisition_stream_specs(:one),:table_spec)
-	assert_association_to_one(acquisition_stream_specs(:one),:table_spec)
-	assert_association_many_to_one(acquisition_stream_specs(:one),:table_spec)
+	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
+	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_specs) }
+	assert_association(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
+	assert_association_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
+	assert_association_many_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
 	@my_fixtures.each_value do |ar_from_fixture|
 		assert_association_to_many(ar_from_fixture,:acquisition_stream_specs)
 		assert_association_one_to_many(ar_from_fixture,:acquisition_stream_specs)
@@ -79,7 +79,7 @@ test "specific, stable and working" do
 		#~ associated_records.all? do |ar|
 			#~ assert_equal(ar_from_fixture.id,associated_foreign_key_id(ar,:table_spec))
 		#~ end #each
-		assert_public_instance_method(acquisition_stream_specs(:one),:table_spec)
+		assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
 		assert_association_many_to_one(ar_from_fixture,:frequency)
 		assert_equal(["frequency_id"],foreign_key_names(ar_from_fixture.class),"foreign_key_names(ar_from_fixture.class)=#{foreign_key_names(ar_from_fixture.class)}")
 	end #each
