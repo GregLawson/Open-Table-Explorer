@@ -65,20 +65,4 @@ end #test
 def test_scheme
 	testAnswer(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:scheme,'http')
 end #test
-test "associated_to_s" do
-	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
-	assert_not_nil(acquisition_stream_spec)
-	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
-	puts acquisition_stream_spec.similar_methods(:table_spec).inspect
-	assert_respond_to(acquisition_stream_spec,:table_spec)
-	meth=acquisition_stream_spec.method(:table_spec)
-	assert_not_nil(meth.call)
-	ass=acquisition_stream_spec.send(:table_spec)
-	if ass.nil? then
-		return ''
-	else
-		return ass.send(:model_class_name,*args).to_s
-	end
-	puts "acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)=#{acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)}"
-end #test
 end

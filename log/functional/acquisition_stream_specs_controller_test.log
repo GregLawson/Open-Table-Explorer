@@ -1,42 +1,6 @@
 Loaded suite test/functional/acquisition_stream_specs_controller_test
 Started
-data.inspect=[#<AcquisitionStreamSpec id: 685260137, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KLAX.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 737240217, acquisition_interface: nil, url: "sunnywebbox", table_spec_id: 1, required_order: nil, acquisition_interface_id: 414412125>, #<AcquisitionStreamSpec id: 748462210, acquisition_interface: nil, url: "/sbin/ifconfig", table_spec_id: 665359353, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 855127333, acquisition_interface: nil, url: "http://www.calgold.com/Schedule.asp", table_spec_id: 2, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 899019070, acquisition_interface: nil, url: "nmap 192.168.3.1-254", table_spec_id: 7, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 980190963, acquisition_interface: nil, url: "http:www.yahoo.com", table_spec_id: nil, required_order: nil, acquisition_interface_id: nil>]
-fixture_attributes.inspect={"url"=>"http://www.weather.gov/xml/current_obs/KLAX.xml", "table_spec_id"=>870743096, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>569237512}
-fixture_attributes.to_yaml.inspect="--- \nurl: http://www.weather.gov/xml/current_obs/KLAX.xml\ntable_spec_id: 870743096\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 569237512\n"
-fixture_attributes.inspect={"url"=>"sunnywebbox", "table_spec_id"=>1, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>414412125}
-fixture_attributes.to_yaml.inspect="--- \nurl: sunnywebbox\ntable_spec_id: 1\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 414412125\n"
-fixture_attributes.inspect={"url"=>"/sbin/ifconfig", "table_spec_id"=>665359353, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>72588795}
-fixture_attributes.to_yaml.inspect="--- \nurl: /sbin/ifconfig\ntable_spec_id: 665359353\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 72588795\n"
-fixture_attributes.inspect={"url"=>"http://www.calgold.com/Schedule.asp", "table_spec_id"=>2, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>569237512}
-fixture_attributes.to_yaml.inspect="--- \nurl: http://www.calgold.com/Schedule.asp\ntable_spec_id: 2\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 569237512\n"
-fixture_attributes.inspect={"url"=>"nmap 192.168.3.1-254", "table_spec_id"=>7, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>72588795}
-fixture_attributes.to_yaml.inspect="--- \nurl: nmap 192.168.3.1-254\ntable_spec_id: 7\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 72588795\n"
-fixture_attributes.inspect={"url"=>"http://www.weather.gov/xml/current_obs/KHHR.xml", "table_spec_id"=>870743096, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>569237512}
-fixture_attributes.to_yaml.inspect="--- \nurl: http://www.weather.gov/xml/current_obs/KHHR.xml\ntable_spec_id: 870743096\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 569237512\n"
-fixture_attributes.inspect={"url"=>"http:www.yahoo.com", "table_spec_id"=>nil, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>nil}
-fixture_attributes.to_yaml.inspect="--- \nurl: http:www.yahoo.com\ntable_spec_id: \nrequired_order: \nacquisition_interface: \nacquisition_interface_id: \n"
-.....Edata.inspect=[#<AcquisitionStreamSpec id: 685260137, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KLAX.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 737240217, acquisition_interface: nil, url: "sunnywebbox", table_spec_id: 1, required_order: nil, acquisition_interface_id: 414412125>, #<AcquisitionStreamSpec id: 748462210, acquisition_interface: nil, url: "/sbin/ifconfig", table_spec_id: 665359353, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 855127333, acquisition_interface: nil, url: "http://www.calgold.com/Schedule.asp", table_spec_id: 2, required_order: nil, acquisition_interface_id: 569237512>, #<AcquisitionStreamSpec id: 899019070, acquisition_interface: nil, url: "nmap 192.168.3.1-254", table_spec_id: 7, required_order: nil, acquisition_interface_id: 72588795>, #<AcquisitionStreamSpec id: 980190962, acquisition_interface: nil, url: "http://www.weather.gov/xml/current_obs/KHHR.xml", table_spec_id: 870743096, required_order: nil, acquisition_interface_id: 569237512>]
-fixture_attributes.inspect={"url"=>"http://www.weather.gov/xml/current_obs/KLAX.xml", "table_spec_id"=>870743096, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>569237512}
-fixture_attributes.to_yaml.inspect="--- \nurl: http://www.weather.gov/xml/current_obs/KLAX.xml\ntable_spec_id: 870743096\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 569237512\n"
-fixture_attributes.inspect={"url"=>"sunnywebbox", "table_spec_id"=>1, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>414412125}
-fixture_attributes.to_yaml.inspect="--- \nurl: sunnywebbox\ntable_spec_id: 1\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 414412125\n"
-fixture_attributes.inspect={"url"=>"/sbin/ifconfig", "table_spec_id"=>665359353, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>72588795}
-fixture_attributes.to_yaml.inspect="--- \nurl: /sbin/ifconfig\ntable_spec_id: 665359353\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 72588795\n"
-fixture_attributes.inspect={"url"=>"http://www.calgold.com/Schedule.asp", "table_spec_id"=>2, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>569237512}
-fixture_attributes.to_yaml.inspect="--- \nurl: http://www.calgold.com/Schedule.asp\ntable_spec_id: 2\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 569237512\n"
-fixture_attributes.inspect={"url"=>"nmap 192.168.3.1-254", "table_spec_id"=>7, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>72588795}
-fixture_attributes.to_yaml.inspect="--- \nurl: nmap 192.168.3.1-254\ntable_spec_id: 7\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 72588795\n"
-fixture_attributes.inspect={"url"=>"http://www.weather.gov/xml/current_obs/KHHR.xml", "table_spec_id"=>870743096, "required_order"=>nil, "acquisition_interface"=>nil, "acquisition_interface_id"=>569237512}
-fixture_attributes.to_yaml.inspect="--- \nurl: http://www.weather.gov/xml/current_obs/KHHR.xml\ntable_spec_id: 870743096\nrequired_order: \nacquisition_interface: \nacquisition_interface_id: 569237512\n"
-.
-Finished in 13.005899 seconds.
+.......
+Finished in 13.191135 seconds.
 
-  1) Error:
-test_should_show_acquisition_stream_spec(AcquisitionStreamSpecsControllerTest):
-ActionView::Template::Error: wrong number of arguments (0 for 1)
-    app/views/acquisition_stream_specs/show.html.erb:17:in `h'
-    app/views/acquisition_stream_specs/show.html.erb:17:in `_app_views_acquisition_stream_specs_show_html_erb___954843323__622394438_0'
-    app/controllers/acquisition_stream_specs_controller.rb:18:in `show'
-    test/functional/acquisition_stream_specs_controller_test.rb:24:in `test_should_show_acquisition_stream_spec'
-
-7 tests, 9 assertions, 0 failures, 1 errors
+7 tests, 10 assertions, 0 failures, 0 errors
