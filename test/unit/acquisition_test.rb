@@ -28,5 +28,7 @@ end #def
 test "acquisition_stream_spec" do
 	    assert_not_nil(acquisitions(:one))
 	    assert_association(acquisitions(:one),:acquisition_stream_spec)
+#	    assert_not_nil(acquisitions(:one).acquisition_stream_spec_id)
+#	    assert_not_nil(acquisitions(:one).acquisition_stream_spec)
 end #test
 end #class
