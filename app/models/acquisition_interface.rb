@@ -53,6 +53,11 @@ def setup
 	@classReference=classReference
 	@objReference=@classReference.new
 end #def
+def delta(stream)
+	@previousAcq=@acquisition # change detection
+	@acquisition=Acquisition.new # reinitialize
+	@stream=stream
+end #def
 def codeBody
 	if library.nil? then
 		ret=''
@@ -62,7 +67,7 @@ def codeBody
 	acquireBody="@previousAcq=self[:acquisition_data]\n" # change detection
 	acquireBody+="self[:acquisition_data] =nil\n" # reinitialize
 	acquireBody+="@uri=URI.parse(URI.escape(@stream.url))\n"
-	
+	acquireBody="delta(stream)\n"
 	acquireBody+="#{acquire_data}\n"
 	
 	if return_error_code.nil? then

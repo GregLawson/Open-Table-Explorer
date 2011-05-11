@@ -5,9 +5,7 @@ acq.classDefinition=class HTTP_Acquisition
 include Generic_Table
 require 'net/http'
 def acquire(stream)
-@previousAcq=self[:acquisition_data]
-self[:acquisition_data] =nil
-@uri=URI.parse(URI.escape(@stream.url))
+delta(stream)
 self[:acquisition_data]= Net::HTTP.get(@uri)
 if $?==0 then
 	self[:error]=nil
@@ -22,6 +20,6 @@ end
 
 end
 ....
-Finished in 13.225874 seconds.
+Finished in 13.403756 seconds.
 
 4 tests, 19 assertions, 0 failures, 0 errors
