@@ -55,7 +55,7 @@ def delta(stream)
 	@previousAcq=@acquisition # change detection
 	@acquisition=Acquisition.new # reinitialize
 	@stream=stream
-#	@acquisition.acquisition_stream_spec=stream
+	@acquisition.acquisition_stream_spec=stream
 end #def
 def eval_method(name,code)
 	method_def= "def #{name}\n#{code}\nend\n"
@@ -94,6 +94,8 @@ def acquire(stream)
 	error_return
 	rescue  StandardError => exception_raised
 		rescue_method
+	else
+		@acquisition[:error]= "Not subclass of StandardError: " + "couldn't acquire data from #{url}"
 	ensure
 		@acquisition.save
 		return @acquisition
