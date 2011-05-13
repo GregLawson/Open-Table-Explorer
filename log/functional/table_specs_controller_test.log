@@ -1,38 +1,6 @@
 Loaded suite test/functional/table_specs_controller_test
 Started
-data.inspect=[#<TableSpec id: 205194065, merge: "", file_caching: "DB", model_class_name: "Url", frequency_id: nil, primary_key_expression: nil>, #<TableSpec id: 230816244, merge: "row", file_caching: "DB", model_class_name: "Bug", frequency_id: nil, primary_key_expression: nil>, #<TableSpec id: 360290728, merge: "row", file_caching: "DB", model_class_name: "TEDWebBoxFull", frequency_id: 837501268, primary_key_expression: nil>, #<TableSpec id: 374418567, merge: "table", file_caching: "DB", model_class_name: "nmap", frequency_id: 620940717, primary_key_expression: nil>, #<TableSpec id: 792313378, merge: "table", file_caching: "DB", model_class_name: "Network", frequency_id: 620940717, primary_key_expression: nil>, #<TableSpec id: 870743096, merge: "row", file_caching: "DB", model_class_name: "MULTIPLE_WEATHER", frequency_id: 620940717, primary_key_expression: nil>, #<TableSpec id: 988912740, merge: "rows", file_caching: "DB", model_class_name: "huell_schedule", frequency_id: 715507355, primary_key_expression: nil>, #<TableSpec id: 988912741, merge: nil, file_caching: nil, model_class_name: nil, frequency_id: nil, primary_key_expression: nil>]
-fixture_attributes.inspect={"merge"=>"", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>nil, "model_class_name"=>"Url"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: \"\"\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: \nmodel_class_name: Url\n"
-fixture_attributes.inspect={"merge"=>"row", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>nil, "model_class_name"=>"Bug"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: row\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: \nmodel_class_name: Bug\n"
-fixture_attributes.inspect={"merge"=>"row", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>837501268, "model_class_name"=>"TEDWebBoxFull"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: row\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 837501268\nmodel_class_name: TEDWebBoxFull\n"
-fixture_attributes.inspect={"merge"=>"table", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>620940717, "model_class_name"=>"nmap"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: table\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 620940717\nmodel_class_name: nmap\n"
-fixture_attributes.inspect={"merge"=>"table", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>620940717, "model_class_name"=>"Network"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: table\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 620940717\nmodel_class_name: Network\n"
-fixture_attributes.inspect={"merge"=>"row", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>620940717, "model_class_name"=>"MULTIPLE_WEATHER"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: row\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 620940717\nmodel_class_name: MULTIPLE_WEATHER\n"
-fixture_attributes.inspect={"merge"=>"rows", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>715507355, "model_class_name"=>"huell_schedule"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: rows\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 715507355\nmodel_class_name: huell_schedule\n"
-fixture_attributes.inspect={"merge"=>nil, "primary_key_expression"=>nil, "file_caching"=>nil, "frequency_id"=>nil, "model_class_name"=>nil}
-fixture_attributes.to_yaml.inspect="--- \nmerge: \nprimary_key_expression: \nfile_caching: \nfrequency_id: \nmodel_class_name: \n"
-......data.inspect=[#<TableSpec id: 205194065, merge: "", file_caching: "DB", model_class_name: "Url", frequency_id: nil, primary_key_expression: nil>, #<TableSpec id: 230816244, merge: "row", file_caching: "DB", model_class_name: "Bug", frequency_id: nil, primary_key_expression: nil>, #<TableSpec id: 360290728, merge: "row", file_caching: "DB", model_class_name: "TEDWebBoxFull", frequency_id: 837501268, primary_key_expression: nil>, #<TableSpec id: 374418567, merge: "table", file_caching: "DB", model_class_name: "nmap", frequency_id: 620940717, primary_key_expression: nil>, #<TableSpec id: 792313378, merge: "table", file_caching: "DB", model_class_name: "Network", frequency_id: 620940717, primary_key_expression: nil>, #<TableSpec id: 870743096, merge: "row", file_caching: "DB", model_class_name: "MULTIPLE_WEATHER", frequency_id: 620940717, primary_key_expression: nil>, #<TableSpec id: 988912740, merge: "rows", file_caching: "DB", model_class_name: "huell_schedule", frequency_id: 715507355, primary_key_expression: nil>]
-fixture_attributes.inspect={"merge"=>"", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>nil, "model_class_name"=>"Url"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: \"\"\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: \nmodel_class_name: Url\n"
-fixture_attributes.inspect={"merge"=>"row", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>nil, "model_class_name"=>"Bug"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: row\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: \nmodel_class_name: Bug\n"
-fixture_attributes.inspect={"merge"=>"row", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>837501268, "model_class_name"=>"TEDWebBoxFull"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: row\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 837501268\nmodel_class_name: TEDWebBoxFull\n"
-fixture_attributes.inspect={"merge"=>"table", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>620940717, "model_class_name"=>"nmap"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: table\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 620940717\nmodel_class_name: nmap\n"
-fixture_attributes.inspect={"merge"=>"table", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>620940717, "model_class_name"=>"Network"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: table\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 620940717\nmodel_class_name: Network\n"
-fixture_attributes.inspect={"merge"=>"row", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>620940717, "model_class_name"=>"MULTIPLE_WEATHER"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: row\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 620940717\nmodel_class_name: MULTIPLE_WEATHER\n"
-fixture_attributes.inspect={"merge"=>"rows", "primary_key_expression"=>nil, "file_caching"=>"DB", "frequency_id"=>715507355, "model_class_name"=>"huell_schedule"}
-fixture_attributes.to_yaml.inspect="--- \nmerge: rows\nprimary_key_expression: \nfile_caching: DB\nfrequency_id: 715507355\nmodel_class_name: huell_schedule\n"
-.
-Finished in 13.493584 seconds.
+.......
+Finished in 13.201484 seconds.
 
 7 tests, 10 assertions, 0 failures, 0 errors

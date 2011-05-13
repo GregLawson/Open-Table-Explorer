@@ -1,32 +1,32 @@
 Loaded suite test/functional/urls_controller_test
 Started
 E.E.EE.
-Finished in 15.481107 seconds.
+Finished in 13.535552 seconds.
 
   1) Error:
 test_should_create_url(UrlsControllerTest):
-ActionController::RoutingError: No route matches {:controller=>"urls", :action=>"show"}
+ActionController::RoutingError: No route matches {:action=>"show", :controller=>"urls"}
     test/functional/urls_controller_test.rb:24:in `test_should_create_url'
 
   2) Error:
 test_should_get_edit(UrlsControllerTest):
 ActionView::Template::Error: undefined method `model_name' for NilClass:Class
-    app/views/urls/_form.html.erb:1:in `_app_views_urls__form_html_erb__406018613__621318778_448736'
-    app/views/urls/edit.html.erb:3:in `_app_views_urls_edit_html_erb___573093370__621312288_0'
+    app/views/urls/_form.html.erb:1:in `_app_views_urls__form_html_erb__61630517__624394638_448656'
+    app/views/urls/edit.html.erb:3:in `_app_views_urls_edit_html_erb__714490496__624387578_0'
     test/functional/urls_controller_test.rb:33:in `test_should_get_edit'
 
   3) Error:
 test_should_get_new(UrlsControllerTest):
 ActionView::Template::Error: undefined method `model_name' for NilClass:Class
-    app/views/urls/_form.html.erb:1:in `_app_views_urls__form_html_erb__406018613__621318778_448736'
-    app/views/urls/new.html.erb:3:in `_app_views_urls_new_html_erb__280969307__621594798_0'
+    app/views/urls/_form.html.erb:1:in `_app_views_urls__form_html_erb__61630517__624394638_448656'
+    app/views/urls/new.html.erb:3:in `_app_views_urls_new_html_erb___839056665__624673588_0'
     app/controllers/urls_controller.rb:29:in `new'
     test/functional/urls_controller_test.rb:15:in `test_should_get_new'
 
   4) Error:
 test_should_show_url(UrlsControllerTest):
 ActionView::Template::Error: undefined method `href' for nil:NilClass
-    app/views/urls/show.html.erb:5:in `_app_views_urls_show_html_erb__1011616409__621689938_0'
+    app/views/urls/show.html.erb:5:in `_app_views_urls_show_html_erb__151716627__624769878_0'
     app/controllers/urls_controller.rb:18:in `show'
     test/functional/urls_controller_test.rb:28:in `test_should_show_url'
 

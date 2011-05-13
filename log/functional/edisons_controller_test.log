@@ -1,11 +1,11 @@
 Loaded suite test/functional/edisons_controller_test
 Started
 E......
-Finished in 14.350567 seconds.
+Finished in 14.112556 seconds.
 
   1) Error:
 test_should_create_edison(EdisonsControllerTest):
-ActiveRecord::StatementInvalid: SQLite3::ConstraintException: edisons.READDATE may not be NULL: INSERT INTO "edisons" ("kwhusage", "TOTCHARGES", "AVGDAILY", "Days", "CANUM", "KHWREAD", "SANUM", "READDATE") VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+ActiveRecord::StatementInvalid: SQLite3::ConstraintException: edisons.READDATE may not be NULL: INSERT INTO "edisons" ("AVGDAILY", "SANUM", "CANUM", "kwhusage", "Days", "KHWREAD", "READDATE", "TOTCHARGES") VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
     app/controllers/edisons_controller.rb:46:in `create'
     app/controllers/edisons_controller.rb:45:in `create'
     test/functional/edisons_controller_test.rb:23:in `test_should_create_edison'
