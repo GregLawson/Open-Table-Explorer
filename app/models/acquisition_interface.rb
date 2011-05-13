@@ -90,6 +90,12 @@ end #def
 # functions parameterized by a acquisition_stream_spec and adding instance detail
 def acquire(stream)
 	delta(stream)
+	acquire_method
+	error_return
+	rescue  StandardError => exception_raised
+		rescue_method
+	ensure
+		@acquisition.save
 		return @acquisition
 end #def
 end # class

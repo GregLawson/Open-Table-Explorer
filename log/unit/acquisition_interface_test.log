@@ -6,6 +6,6 @@ include Generic_Table
 
 end
 ....
-Finished in 13.01759 seconds.
+Finished in 17.8919 seconds.
 
 4 tests, 18 assertions, 0 failures, 0 errors
