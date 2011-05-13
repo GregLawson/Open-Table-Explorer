@@ -23,7 +23,7 @@ class AcquisitionInterface < ActiveRecord::Base
 has_many :acquisition_stream_specs
 include Generic_Table
 #include Generic_Acquisition 
-attr_reader :objReference
+attr_reader :acquisition
 after_initialize :setup
 # functons of class only
 def logical_primary_key
@@ -56,6 +56,7 @@ def delta(stream)
 	@acquisition=Acquisition.new # reinitialize
 	@stream=stream
 	@acquisition.acquisition_stream_spec=stream
+	@acquisition.acquisition_stream_spec_id=stream.id
 end #def
 def eval_method(name,code)
 	method_def= "def #{name}\n#{code}\nend\n"

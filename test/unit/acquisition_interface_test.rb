@@ -25,13 +25,20 @@ test "acquisition" do
 	assert_not_nil(acq.acquire(stream))
 
 	acq.delta(stream)
+	assert_not_nil(acq.acquisition)
 	assert_raise(NoMethodError){acq.acquire_method}
 	acq.acquire_data=''
 	acq.codeBody # recompile eval code
 	assert_nothing_raised{acq.acquire_method}
+	assert_not_nil(acq.acquisition)
 	acq.error_return
 		acq.rescue_method
 		acq.save
+	assert_not_nil(acq.acquisition)
+#	assert_not_nil(acq.instance_variable_get(:stream))
+	assert_not_nil(acq.acquisition_stream_specs)
+#	assert_not_nil(acq.acquisition_stream_specs_ids)
+#	assert_equal(acq.acquisition_stream_spec.id,acq.acquisition_stream_spec_id)
 
 
 end #test
