@@ -25,7 +25,6 @@ test "acquisition" do
 	assert_not_nil(acq)
 	assert_instance_of(String,acq.codeBody)
 	assert_respond_to(acq,:acquire)
-	assert_respond_to(acq.classReference.new,:acquire)
 #	assert_not_nil(acq.acquire(stream))
 
 	acq.delta(stream)
