@@ -65,9 +65,9 @@ def eval_method(name,code)
 end #def
 def codeBody
 	if library.nil? then
-		ret=''
+		eval_method('acquire_method',acquire_data)
 	else
-		ret="require '#{library}'\n"
+		eval_method('acquire_method',"require '#{library}'\n#{acquire_data}")
 	end # if
 	#~ acquireBody="@previousAcq=@acquisition\n" # change detection
 	#~ acquireBody+="@acquisition=Acquisitions.new\n" # reinitialize
@@ -91,9 +91,6 @@ def codeBody
 	else
 		acquireBody+="rescue #{rescue_code}\n"
 	end
-	acquireBody+="return self\n"
-	ret+= "def acquire(stream)\n#{acquireBody}\nend\n"
-	return ret
 end #def
 # functions parameterized by a acquisition_stream_spec and adding instance detail
 def acquire(stream)
