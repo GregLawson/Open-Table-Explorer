@@ -67,21 +67,17 @@ def codeBody
 	else
 		eval_method('acquire_method',"require '#{library}'\n#{acquire_data}")
 	end # if
-	#~ acquireBody="@previousAcq=@acquisition\n" # change detection
-	#~ acquireBody+="@acquisition=Acquisitions.new\n" # reinitialize
-	#~ acquireBody+="@uri=URI.parse(URI.escape(@stream.url))\n"
-	acquireBody="delta(stream)\n"
-	acquireBody+="#{acquire_data}\n"
 	
 	if return_error_code.nil? then
-		 acquireBody+="if $?==0 then\n"
+		 acquireBody="if $?==0 then\n"
 		acquireBody+="	@acquisition.error=nil\n"
 		acquireBody+="else\n"
 		acquireBody+="	@acquisition.error=@acquisition.acquisition_data\n"
 		acquireBody+="	@acquisition.acquisition_data=nil\n"
 		acquireBody+="end\n"
+		eval_method('error_return',acquireBody)
 	else
-		acquireBody+="#{return_error_code}\n"
+		eval_method('error_return',return_error_code)
 	end #if
 	if rescue_code.nil? then
 		acquireBody+="rescue StandardError => exception_raised\n"

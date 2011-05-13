@@ -3,8 +3,6 @@ Started
 acq.matching_methods(/code/).inspect=["codeBody"]
 acq.classDefinition=class HTTP_Acquisition  
 include Generic_Table
-delta(stream)
-self[:acquisition_data]= Net::HTTP.get(@uri)
 if $?==0 then
 	@acquisition.error=nil
 else
@@ -15,6 +13,6 @@ rescue StandardError => exception_raised
 
 end
 ....
-Finished in 15.826659 seconds.
+Finished in 14.511851 seconds.
 
 4 tests, 19 assertions, 0 failures, 0 errors
