@@ -19,7 +19,6 @@ test "acquisition" do
 	acq=acquisition_interfaces(:HTTP)
 	assert_instance_of(AcquisitionInterface,acq)
 	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
-	puts "acq.classDefinition=#{acq.classDefinition}"
 	acq.setup
 	assert_not_nil(acq)
 	assert_respond_to(acq,:acquire)

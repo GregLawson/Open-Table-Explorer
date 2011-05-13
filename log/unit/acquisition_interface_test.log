@@ -1,11 +1,7 @@
 Loaded suite test/unit/acquisition_interface_test
 Started
 acq.matching_methods(/code/).inspect=["codeBody"]
-acq.classDefinition=class HTTP_Acquisition  
-include Generic_Table
-
-end
 ....
-Finished in 13.742687 seconds.
+Finished in 23.077235 seconds.
 
 4 tests, 18 assertions, 0 failures, 0 errors
