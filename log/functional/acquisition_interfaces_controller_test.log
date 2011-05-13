@@ -1,41 +1,6 @@
 Loaded suite test/functional/acquisition_interfaces_controller_test
 Started
-E...EE.
-Finished in 16.443364 seconds.
+.......
+Finished in 15.159305 seconds.
 
-  1) Error:
-test_should_create_acquisition_interface(AcquisitionInterfacesControllerTest):
-SyntaxError: (eval):19:in `classReference': compile error
-(eval):1: class/module name must be CONSTANT
-    app/models/acquisition_interface.rb:48:in `classReference'
-    app/models/acquisition_interface.rb:53:in `eval'
-    app/models/acquisition_interface.rb:48:in `classReference'
-    app/models/acquisition_interface.rb:53:in `setup'
-    app/controllers/acquisition_interfaces_controller.rb:43:in `new'
-    app/controllers/acquisition_interfaces_controller.rb:43:in `create'
-    test/functional/acquisition_interfaces_controller_test.rb:17:in `test_should_create_acquisition_interface'
-    test/functional/acquisition_interfaces_controller_test.rb:16:in `test_should_create_acquisition_interface'
-
-  2) Error:
-test_should_get_new(AcquisitionInterfacesControllerTest):
-SyntaxError: (eval):19:in `classReference': compile error
-(eval):1: class/module name must be CONSTANT
-    app/models/acquisition_interface.rb:48:in `classReference'
-    app/models/acquisition_interface.rb:53:in `eval'
-    app/models/acquisition_interface.rb:48:in `classReference'
-    app/models/acquisition_interface.rb:53:in `setup'
-    app/controllers/acquisition_interfaces_controller.rb:27:in `new'
-    app/controllers/acquisition_interfaces_controller.rb:27:in `new'
-    test/functional/acquisition_interfaces_controller_test.rb:11:in `test_should_get_new'
-
-  3) Error:
-test_should_show_acquisition_interface(AcquisitionInterfacesControllerTest):
-ActionView::Template::Error: undefined method `url' for "#<AcquisitionInterface:0xb5860320>":AcquisitionInterface
-    app/models/acquisition_interface.rb:95:in `acquire'
-    app/models/acquisition_stream_spec.rb:72:in `acquire'
-    app/views/acquisition_interfaces/show.html.erb:71:in `_app_views_acquisition_interfaces_show_html_erb___507683031__624640418_0'
-    app/views/acquisition_interfaces/show.html.erb:68:in `_app_views_acquisition_interfaces_show_html_erb___507683031__624640418_0'
-    app/controllers/acquisition_interfaces_controller.rb:18:in `show'
-    test/functional/acquisition_interfaces_controller_test.rb:24:in `test_should_show_acquisition_interface'
-
-7 tests, 6 assertions, 0 failures, 3 errors
+7 tests, 10 assertions, 0 failures, 0 errors

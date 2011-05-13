@@ -49,15 +49,13 @@ def classReference
 	return model_class_eval
 end #def
 def setup
-	@classDefnition=classDefinition
-	@classReference=classReference
-	@objReference=@classReference.new
+	codeBody
 end #def
 def delta(stream)
 	@previousAcq=@acquisition # change detection
 	@acquisition=Acquisition.new # reinitialize
 	@stream=stream
-	@acquisition.acquisition_stream_spec=stream
+#	@acquisition.acquisition_stream_spec=stream
 end #def
 def eval_method(name,code)
 	method_def= "def #{name}\n#{code}\nend\n"
