@@ -97,6 +97,6 @@ end #def
 # functions parameterized by a acquisition_stream_spec and adding instance detail
 def acquire(stream)
 	@objReference.acquire(stream)
-	return self
+		return @acquisition
 end #def
 end # class
