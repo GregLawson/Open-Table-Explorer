@@ -80,10 +80,11 @@ def codeBody
 		eval_method('error_return',return_error_code)
 	end #if
 	if rescue_code.nil? then
-		acquireBody+="rescue StandardError => exception_raised\n"
-#		acquireBody+="self[:error]= 'Error: ' + exception_raised.inspect + 'could not get data from '+stream.url\n"
+		acquireBody="rescue StandardError => exception_raised\n"
+#		acquireBody+="@acquisition.error= 'Error: ' + exception_raised.inspect + 'could not get data from '+stream.url\n"
+		eval_method('rescue_method',acquireBody)
 	else
-		acquireBody+="rescue #{rescue_code}\n"
+		eval_method('rescue_method',"rescue #{rescue_code}\n")
 	end
 end #def
 # functions parameterized by a acquisition_stream_spec and adding instance detail
