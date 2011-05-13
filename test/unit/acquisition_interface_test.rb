@@ -27,5 +27,13 @@ test "acquisition" do
 	assert_respond_to(acq,:acquire)
 	assert_respond_to(acq.classReference.new,:acquire)
 #	assert_not_nil(acq.acquire(stream))
+
+	acq.delta(stream)
+#	acq.acquire_method
+#	acq.error_return
+#		acq.rescue_method
+#		@acquisition.save
+
+
 end #test
 end
