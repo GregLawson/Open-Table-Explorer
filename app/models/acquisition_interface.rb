@@ -57,6 +57,7 @@ def delta(stream)
 	@previousAcq=@acquisition # change detection
 	@acquisition=Acquisition.new # reinitialize
 	@stream=stream
+	@acquisition.acquisition_stream_spec=stream
 end #def
 def eval_method(name,code)
 	method_def= "def #{name}\n#{code}\nend\n"
