@@ -287,10 +287,6 @@ def self.db2yaml
 		table2yaml(table_name)
 	end #each
 end #def
-def save
-	super
-	table2yaml
-end #def
 # Display attribute or method value from association even if association is nil
 def associated_to_s(assName,method,*args)
 	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
