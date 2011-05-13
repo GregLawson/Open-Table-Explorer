@@ -29,13 +29,13 @@ file:/home/greg/Desktop/Database/Finance/Taxes 2010/OpenTaxSolver2010_8.03/examp
   table_spec_id: 1
   required_order: 
   acquisition_interface: File
-nmap 192.168.3.1-254: 
-  url: nmap 192.168.3.1-254
-  table_spec_id: 7
-  required_order: 
-  acquisition_interface: Shell
 http://www.weather.gov/xml/current_obs/KLAX.xml: 
   url: http://www.weather.gov/xml/current_obs/KLAX.xml
   table_spec: MULTIPLE_WEATHER
   required_order: 
   acquisition_interface: HTTP
+nmap 192.168.3.1-254: 
+  url: nmap 192.168.3.1-254
+  table_spec_id: 7
+  required_order: 
+  acquisition_interface: Shell

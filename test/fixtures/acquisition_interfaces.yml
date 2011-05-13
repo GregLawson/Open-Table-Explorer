@@ -1,9 +1,14 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 HTTP:
   name: HTTP
+  acquire_data: self[:acquisition_data]= Net::HTTP.get(@uri)
+  rescue_code: 
   library: net/http
-  acquire_data:  self[:acquisition_data]= Net::HTTP.get(@uri)
+  return_error_code: 
 Shell:
   name: Shell
   library: 
   acquire_data: self[:acquisition_data]=`#{schemelessUrl} 2>&1`
+  rescue_code: 
+  library:
+  return_error_code: 
