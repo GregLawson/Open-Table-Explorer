@@ -29,9 +29,9 @@ test "acquisition" do
 	acq.acquire_data=''
 	acq.codeBody # recompile eval code
 	assert_nothing_raised{acq.acquire_method}
-#	acq.error_return
-#		acq.rescue_method
-#		@acquisition.save
+	acq.error_return
+		acq.rescue_method
+		acq.save
 
 
 end #test
