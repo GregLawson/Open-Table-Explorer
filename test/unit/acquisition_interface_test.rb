@@ -20,12 +20,10 @@ test "acquisition" do
 	assert_instance_of(AcquisitionInterface,acq)
 	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	puts "acq.classDefinition=#{acq.classDefinition}"
-	assert_instance_of(String,acq.codeBody)
 	acq.setup
 	assert_not_nil(acq)
-	assert_instance_of(String,acq.codeBody)
 	assert_respond_to(acq,:acquire)
-#	assert_not_nil(acq.acquire(stream))
+	assert_not_nil(acq.acquire(stream))
 
 	acq.delta(stream)
 	assert_raise(NoMethodError){acq.acquire_method}
