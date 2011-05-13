@@ -15,6 +15,6 @@ rescue StandardError => exception_raised
 
 end
 ....
-Finished in 15.139046 seconds.
+Finished in 18.638333 seconds.
 
-4 tests, 18 assertions, 0 failures, 0 errors
+4 tests, 19 assertions, 0 failures, 0 errors

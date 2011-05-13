@@ -28,7 +28,7 @@ test "acquisition" do
 #	assert_not_nil(acq.acquire(stream))
 
 	acq.delta(stream)
-#	assert_raise(NoMethodError){acq.acquire_method)
+	assert_raise(NoMethodError){acq.acquire_method}
 	acq.acquire_data=''
 	acq.codeBody # recompile eval code
 	assert_nothing_raised{acq.acquire_method}
