@@ -4,5 +4,6 @@ log/*.log
 tmp/**/*
 fixtures/transactions.yml
 test/fixtures/transactions.yml
+test/fixtures/*.yml.gen
 Gemfile.lock
 scite.session
