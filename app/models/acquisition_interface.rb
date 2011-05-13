@@ -58,6 +58,10 @@ def delta(stream)
 	@acquisition=Acquisition.new # reinitialize
 	@stream=stream
 end #def
+def eval_method(name,code)
+	method_def= "def #{name}\n#{code}\nend\n"
+	return instance_eval(method_def)
+end #def
 def codeBody
 	if library.nil? then
 		ret=''
