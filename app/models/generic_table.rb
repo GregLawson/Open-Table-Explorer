@@ -288,6 +288,19 @@ def self.db2yaml
 	end #each
 end #def
 # Display attribute or method value from association even if association is nil
+def association_state(assName)
+	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
+		return 'foreign key present but nil'
+	else
+		ass=send(assName)
+		if ass.nil? then
+			return 'Foreign key has value but does return nil'
+		else
+			return 'Foreign key has value and does not return nil'
+		end
+	end
+end #def
+
 def associated_to_s(assName,method,*args)
 	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
 		return ''
