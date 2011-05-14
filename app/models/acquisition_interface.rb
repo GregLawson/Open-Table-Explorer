@@ -56,7 +56,7 @@ def delta(stream)
 	@acquisition=Acquisition.new # reinitialize
 	@stream=stream
 	@acquisition.acquisition_stream_spec=stream
-#	@acquisition.acquisition_stream_spec_id=stream.id
+	@acquisition.acquisition_stream_spec_id=stream.id
 end #def
 def eval_method(name,code)
 	method_def= "def #{name}\n#{code}\nend\n"
@@ -74,7 +74,6 @@ end #def
 @@Default_Rescue_Code=acquireBody
 
 def codeBody
-	@Default_Rescue_Method=
 	if library.nil? then
 		eval_method('acquire_method',acquire_data)
 	else
@@ -97,7 +96,7 @@ def acquire(stream)
 	delta(stream)
 	before_acquire=@acquisition
 	acquire_method
-	if before_acquire==@acquisition then
+	if before_acquire!=@acquisition then
 		puts 'Nothing was acquired and no error was set'
 		@acquisition.error=['Nothing was acquired and no error was set']
 	end #if
