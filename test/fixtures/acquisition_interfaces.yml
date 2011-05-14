@@ -12,3 +12,10 @@ Shell:
   rescue_code: 
   library:
   return_error_code: 
+File:
+  name: File
+  library: 
+  acquire_data: @acquisition[:acquisition_data]=IO.read(@stream.schemelessUrl)
+  rescue_code: 
+  library:
+  return_error_code: 
