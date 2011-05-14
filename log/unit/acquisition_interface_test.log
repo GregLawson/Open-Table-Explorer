@@ -1,7 +1,8 @@
 Loaded suite test/unit/acquisition_interface_test
 Started
-acq.matching_methods(/code/).inspect=["codeBody"]
-....
-Finished in 13.228296 seconds.
+Error: #<NoMethodError: undefined method `host' for nil:NilClass> could not get data from http://www.weather.gov/xml/current_obs/KLAX.xml
+$!=undefined method `host' for nil:NilClass
+.....
+Finished in 14.238306 seconds.
 
-4 tests, 22 assertions, 0 failures, 0 errors
+5 tests, 32 assertions, 0 failures, 0 errors
