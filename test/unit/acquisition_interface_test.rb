@@ -59,6 +59,7 @@ test "default acquisition" do
 	acq.acquire_data='@acquisition[:acquisition_data]=Net::HTTP.get(@stream.uri)'
 	acq.codeBody # recompile eval code
 	assert_nothing_raised{acq.acquire_method}
+	assert(!acq.acquisition.error.nil? || !acq.acquisition.acquisition_data.nil?)
 
 	acq.return_error_code=''
 	acq.codeBody # recompile eval code
@@ -67,7 +68,10 @@ test "default acquisition" do
 	acq.rescue_code=''
 	acq.codeBody # recompile eval code
 	assert_nothing_raised{acq.rescue_method}
-
+	assert_difference('Acquisition.count') do
+		acq.acquisition.save
+	end #assert
+	puts "Acquisition.count=#{Acquisition.count}"
 	acq=acquisition_interfaces(:Shell)
 	stream=acquisition_stream_specs('/sbin/ifconfig'.to_sym)
 	acq.delta(stream)
@@ -75,8 +79,12 @@ test "default acquisition" do
 	acq.acquire_data='@acquisition[:acquisition_data]=`#{@stream.schemelessUrl} 2>&1`'
 	acq.codeBody # recompile eval code
 	assert_nothing_raised{acq.acquire_method}
+	assert(!acq.acquisition.error.nil? || !acq.acquisition.acquisition_data.nil?)
 
-	acq.acquisition.save
+	assert_difference('Acquisition.count') do
+		acq.acquisition.save
+	end #assert
+	puts "Acquisition.count=#{Acquisition.count}"
 
 end #test
 end
