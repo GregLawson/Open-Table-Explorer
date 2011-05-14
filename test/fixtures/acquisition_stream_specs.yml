@@ -35,7 +35,7 @@ http://www.weather.gov/xml/current_obs/KLAX.xml:
   required_order: 
   acquisition_interface: HTTP
 nmap 192.168.3.1-254: 
-  url: nmap 192.168.3.1-254
+  url: nmap 192.168.3.100-132
   table_spec_id: 7
   required_order: 
   acquisition_interface: Shell
