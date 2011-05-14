@@ -16,12 +16,12 @@
     <%= f.text_field :url %>
   </p>
   <p>
-    <%= f.label :acquisition_stream_id %><br />
-    <%= f.text_field :acquisition_stream_id %>
+    <%= f.label :acquisition_stream_spec_id %><br />
+    <%= f.text_field :acquisition_stream_spec_id %>
   </p>
     <p>
-    <%= f.label :acquisition_stream_id %><br />
-	<%= collection_select(:acquisition,:acquisition_stream_id,Acquisition.all, :id, :url) %>
+    <%= f.label :acquisition_stream_spec_id %><br />
+	<%= collection_select(:acquisition,:acquisition_stream_spec_id,Acquisition.all, :id, :url) %>
   </p>
   <p>
     <%= f.label :created_at %><br />
@@ -46,8 +46,10 @@
 
 <%= link_to 'Show', @acquisition %> |
 <%= link_to 'Back', acquisitions_path %>
+<% if @acquisition.association_state(:acquisition_stream_spec)!='Foreign key has value and does not return nil' then%>
+ <%= h "@acquisition.acquisition_stream_spec=nil" %>
+<% else %>
 <% @acquisition_stream_spec=@acquisition.acquisition_stream_spec %>
-<% if @acquisition_stream_spec.nil? then%>
 <p>
   <b>Id:</b>
   <%=h @acquisition_stream_spec.id %>
