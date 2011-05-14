@@ -40,7 +40,7 @@ test "acquisition" do
 	assert_nil(acq.acquisition.error)
 	assert_nil(acq.acquisition.acquisition_data)
 	acq_and_rescue
-	assert_raise(NoMethodError){acq.acquire_method}
+	assert_nothing_raised{acq.acquire_method}
 	assert_not_nil(acq.acquisition)
 	assert_equal({},acq.acquisition.errors)
 	assert_not_nil(acq.acquisition)
