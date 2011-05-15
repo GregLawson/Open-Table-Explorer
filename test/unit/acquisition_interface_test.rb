@@ -52,7 +52,11 @@ test "acquisition" do
 #	assert_not_nil(acq.acquisition_stream_specs_ids)
 #	assert_equal(acq.acquisition_stream_spec.id,acq.acquisition_stream_spec_id)
 	assert_not_nil(acq.acquire(stream))
+	assert_not_nil(acq.acquisition.acquisition_stream_spec_id)
+	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
 	assert_not_nil(stream.acquire)
+	acquisition=stream.acquire
+	assert_equal(stream.id,acquisition.acquisition_stream_spec_id)
 end #test
 test "default acquisition" do
 	stream=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KLAX.xml'.to_sym)
