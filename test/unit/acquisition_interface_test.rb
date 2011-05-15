@@ -11,10 +11,10 @@ def test_id_equal
 		assert_equal(acquisition_interfaces(:HTTP).id,Fixtures::identify(:HTTP),"id != Fixtures::identify(:one)")
 end #def
 def test_id_equal
-		assert_equal(acquisition_interfaces(:HTTP).id,acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KLAX.xml'.to_sym).acquisition_interface_id,"id != acquisition_stream_spec_id")
+		assert_equal(acquisition_interfaces(:HTTP).id,acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym).acquisition_interface_id,"id != acquisition_stream_spec_id")
 end #def
 def acq_and_rescue
-	stream=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KLAX.xml'.to_sym)
+	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
 	acq=acquisition_interfaces(:HTTP)
 	acq.acquire_method
 	assert(!acq.acquisition.error.nil? || !acq.acquisition.acquisition_data.nil?)
@@ -23,7 +23,7 @@ rescue  StandardError => exception_raised
 	puts "$!=#{$!}"
 end #def	  
 test "acquisition" do
-	stream=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KLAX.xml'.to_sym)
+	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
 	assert_not_nil(stream)
 	acq=acquisition_interfaces(:HTTP)
 	assert_instance_of(AcquisitionInterface,acq)
@@ -54,6 +54,9 @@ test "acquisition" do
 	assert_not_nil(acq.acquire(stream))
 	assert_not_nil(acq.acquisition.acquisition_stream_spec_id)
 	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
+end #test
+test "stream acquire" do
+	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
 	assert_not_nil(stream.acquire)
 	acquisition=stream.acquire
 	assert_instance_of(Acquisition,acquisition)
@@ -68,7 +71,7 @@ test "acquisition" do
 	acquisition.acquisition_stream_spec_id=self.id # not clear why this is nil after being set in acquisition_interface
 end #test
 test "default acquisition" do
-	stream=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KLAX.xml'.to_sym)
+	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
 	acq=acquisition_interfaces(:HTTP)
 	acq.delta(stream)
 
@@ -91,7 +94,6 @@ test "default acquisition" do
 
 	assert_not_nil(acq.acquisition.acquisition_stream_spec_id)
 	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
-
 	acq=acquisition_interfaces(:Shell)
 	stream=acquisition_stream_specs('/sbin/ifconfig'.to_sym)
 	acq.delta(stream)
