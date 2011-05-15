@@ -39,3 +39,15 @@ nmap 192.168.3.1-254:
   table_spec_id: 7
   required_order: 
   acquisition_interface: Shell
+http://192.168.3.136:
+  url: http://192.168.3.136
+  acquisition_interface: HTTP
+http://192.168.3.121/cgi-bin/webif.sh:
+  url: http://192.168.3.121/cgi-bin/webif.sh
+  acquisition_interface: HTTP
+http://192.168.3.115/index.htm?cat=info&page=printerInfo:
+  url: http://192.168.3.115/index.htm?cat=info&page=printerInfo
+  acquisition_interface: HTTP
+http://192.168.3.193/api/LiveData.xml:
+  url: http://192.168.3.193/api/LiveData.xml
+  acquisition_interface: HTTP
