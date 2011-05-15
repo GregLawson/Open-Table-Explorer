@@ -1,5 +1,4 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
----
 Contributions-Oxfam: 
   name: Contributions-Oxfam
   parent: Expense
@@ -30,17 +29,17 @@ Long Term Gain-Tax-Managed Capital Appreciation:
   open_tax_solver_line: Cap-Gains/Losses
   tax_reporting: Average Cost
   budgeting: ""
-Pension Rollover: 
-  name: Pension Rollover
-  parent: Income
-  open_tax_solver_line: L16a
-  tax_reporting: ""
-  budgeting: ""
 Interest-Treasury Direct Inflation Adjusted: 
   name: Interest-Treasury Direct Inflation Adjusted
   parent: Income
   open_tax_solver_line: L8a
   tax_reporting: 1099-INT.1
+  budgeting: ""
+Pension Rollover: 
+  name: Pension Rollover
+  parent: Income
+  open_tax_solver_line: L16a
+  tax_reporting: ""
   budgeting: ""
 Property Tax: 
   name: Property Tax
@@ -60,18 +59,6 @@ Interest-Kinecta:
   open_tax_solver_line: L8a
   tax_reporting: 1099-INT.1
   budgeting: ""
-Short Term Gain-Short-Term  Investment Grade: 
-  name: Short Term Gain-Short-Term  Investment Grade
-  parent: Income
-  open_tax_solver_line: Cap-Gains/Losses
-  tax_reporting: Average Cost
-  budgeting: ""
-Mortgage Interest: 
-  name: Mortgage Interest
-  parent: Expense
-  open_tax_solver_line: A10
-  tax_reporting: Sched A
-  budgeting: ACH
 Roth Conversion: 
   name: Roth Conversion
   parent: Income
@@ -84,6 +71,24 @@ Pension Employee Contributions:
   open_tax_solver_line: L16a
   tax_reporting: 1099-R.5
   budgeting: ACH
+Short Term Gain-Short-Term  Investment Grade: 
+  name: Short Term Gain-Short-Term  Investment Grade
+  parent: Income
+  open_tax_solver_line: Cap-Gains/Losses
+  tax_reporting: Average Cost
+  budgeting: ""
+Mortgage Interest: 
+  name: Mortgage Interest
+  parent: Expense
+  open_tax_solver_line: A10
+  tax_reporting: Sched A
+  budgeting: ACH
+Pension State Withholding: 
+  name: Pension State Withholding
+  parent: Expense
+  open_tax_solver_line: A5
+  tax_reporting: 1099-R.10
+  budgeting: ""
 Dividends-Tax-Managed Small Cap: 
   name: Dividends-Tax-Managed Small Cap
   parent: Income
@@ -96,29 +101,11 @@ Interest-Treasury Direct Original Issue Discount:
   open_tax_solver_line: L8a
   tax_reporting: 1099-OID.5
   budgeting: ""
-Pension State Withholding: 
-  name: Pension State Withholding
-  parent: Expense
-  open_tax_solver_line: A5
-  tax_reporting: 1099-R.10
-  budgeting: ""
 Mortgage Points: 
   name: Mortgage Points
   parent: Expense
   open_tax_solver_line: A12
   tax_reporting: Sched A
-  budgeting: ""
-Contributions-Unicef: 
-  name: Contributions-Unicef
-  parent: Expense
-  open_tax_solver_line: A16
-  tax_reporting: Letter
-  budgeting: ACH
-Interest-Tax Exempt-California Tax Exempt: 
-  name: Interest-Tax Exempt-California Tax Exempt
-  parent: Income
-  open_tax_solver_line: L8b
-  tax_reporting: ""
   budgeting: ""
 State Tax Refund: 
   name: State Tax Refund
@@ -126,17 +113,23 @@ State Tax Refund:
   open_tax_solver_line: L10
   tax_reporting: 1099-G-2
   budgeting: ""
-Long Term Gain-Short Term Investment Grade: 
-  name: Long Term Gain-Short Term Investment Grade
-  parent: Income
-  open_tax_solver_line: Cap-Gains/Losses
-  tax_reporting: Average Cost
-  budgeting: ""
 Dividends-Short-Term Investment Grade: 
   name: Dividends-Short-Term Investment Grade
   parent: Income
   open_tax_solver_line: L9a
   tax_reporting: 1099-DIV.1a
+  budgeting: ""
+Interest-Tax Exempt-California Tax Exempt: 
+  name: Interest-Tax Exempt-California Tax Exempt
+  parent: Income
+  open_tax_solver_line: L8b
+  tax_reporting: ""
+  budgeting: ""
+Long Term Gain-Short Term Investment Grade: 
+  name: Long Term Gain-Short Term Investment Grade
+  parent: Income
+  open_tax_solver_line: Cap-Gains/Losses
+  tax_reporting: Average Cost
   budgeting: ""
 Dividends-Short-Term Bond Index: 
   name: Dividends-Short-Term Bond Index
@@ -150,17 +143,17 @@ Pension Federal Withholding:
   open_tax_solver_line: L61
   tax_reporting: 1099-R.4
   budgeting: ACH
-Vehical License Fee: 
-  name: Vehical License Fee
+Contributions-Unicef: 
+  name: Contributions-Unicef
   parent: Expense
-  open_tax_solver_line: A7
-  tax_reporting: ""
-  budgeting: ""
-Health Savings Account Deduction: 
-  name: Health Savings Account Deduction
-  parent: Expense
-  open_tax_solver_line: L25
-  tax_reporting: ""
+  open_tax_solver_line: A16
+  tax_reporting: Letter
+  budgeting: ACH
+Dividends-Ameritrade: 
+  name: Dividends-Ameritrade
+  parent: Income
+  open_tax_solver_line: L9b
+  tax_reporting: 1099-DIV
   budgeting: ""
 Capital Gain Distribution-Short Term Bond Index: 
   name: Capital Gain Distribution-Short Term Bond Index
@@ -168,30 +161,36 @@ Capital Gain Distribution-Short Term Bond Index:
   open_tax_solver_line: D13
   tax_reporting: 1099-DIV.2a
   budgeting: ""
-Dividends-Ameritrade: 
-  name: Dividends-Ameritrade
-  parent: Income
-  open_tax_solver_line: L9b
-  tax_reporting: 1099-DIV
-  budgeting: ""
 Contribution-CFI: 
   name: Contribution-CFI
   parent: Expense
   open_tax_solver_line: A16
   tax_reporting: Letter
   budgeting: ACH
-Pension Taxable: 
-  name: Pension Taxable
-  parent: Income
-  open_tax_solver_line: L16b
-  tax_reporting: 1099-R.2b
-  budgeting: ACH
+Health Savings Account Deduction: 
+  name: Health Savings Account Deduction
+  parent: Expense
+  open_tax_solver_line: L25
+  tax_reporting: ""
+  budgeting: ""
+Vehical License Fee: 
+  name: Vehical License Fee
+  parent: Expense
+  open_tax_solver_line: A7
+  tax_reporting: ""
+  budgeting: ""
 Admiral Money Market: 
   name: Admiral Money Market
   parent: Vanguard Taxable
   open_tax_solver_line: 
   tax_reporting: ""
   budgeting: Monthly Cycle
+Pension Taxable: 
+  name: Pension Taxable
+  parent: Income
+  open_tax_solver_line: L16b
+  tax_reporting: 1099-R.2b
+  budgeting: ACH
 Monthly Income: 
   name: Monthly Income
   parent: Sustainable Income
