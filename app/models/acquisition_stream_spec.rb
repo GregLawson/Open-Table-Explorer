@@ -69,6 +69,8 @@ def consistantSchemes
 	return scheme==schemeFromInterface
 end #def
 def acquire
-	acquisition_interface.acquire(self)
+	acquisition=acquisition_interface.acquire(self)
+	acquisition.acquisition_stream_spec_id=self.id # not clear why this is nil after being set in acquisition_interface
+	acquisition
 end #def
 end
