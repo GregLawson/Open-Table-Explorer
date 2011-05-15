@@ -36,6 +36,8 @@ test "acquisition" do
 	assert_not_nil(acq.acquisition)
 	assert_instance_of(Acquisition,acq.acquisition)
 	assert_instance_of(AcquisitionStreamSpec,acq.acquisition.acquisition_stream_spec)
+	assert_not_nil(acq.acquisition.acquisition_stream_spec_id)
+	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
 	assert_instance_of(ActiveModel::Errors,acq.acquisition.errors)
 	assert_nil(acq.acquisition.error)
 	assert_nil(acq.acquisition.acquisition_data)
@@ -50,6 +52,7 @@ test "acquisition" do
 #	assert_not_nil(acq.acquisition_stream_specs_ids)
 #	assert_equal(acq.acquisition_stream_spec.id,acq.acquisition_stream_spec_id)
 	assert_not_nil(acq.acquire(stream))
+	assert_not_nil(stream.acquire)
 end #test
 test "default acquisition" do
 	stream=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KLAX.xml'.to_sym)
@@ -72,6 +75,10 @@ test "default acquisition" do
 		acq.acquisition.save
 	end #assert
 	puts "Acquisition.count=#{Acquisition.count}"
+
+	assert_not_nil(acq.acquisition.acquisition_stream_spec_id)
+	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
+
 	acq=acquisition_interfaces(:Shell)
 	stream=acquisition_stream_specs('/sbin/ifconfig'.to_sym)
 	acq.delta(stream)
@@ -85,6 +92,9 @@ test "default acquisition" do
 		acq.acquisition.save
 	end #assert
 	puts "Acquisition.count=#{Acquisition.count}"
+
+	assert_not_nil(acq.acquisition.acquisition_stream_spec_id)
+	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
 
 end #test
 end
