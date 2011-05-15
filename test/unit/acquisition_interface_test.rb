@@ -56,7 +56,16 @@ test "acquisition" do
 	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
 	assert_not_nil(stream.acquire)
 	acquisition=stream.acquire
+	assert_instance_of(Acquisition,acquisition)
+	assert_instance_of(Fixnum,stream.id)
+	assert_instance_of(Fixnum,acquisition.acquisition_stream_spec_id)
 	assert_equal(stream.id,acquisition.acquisition_stream_spec_id)
+	acquisition=stream.acquisition_interface.acquire(stream)
+	assert_not_nil(stream.id)
+	assert_not_nil(acquisition.acquisition_stream_spec_id)
+
+	assert_equal(stream.id,acquisition.acquisition_stream_spec_id)
+	acquisition.acquisition_stream_spec_id=self.id # not clear why this is nil after being set in acquisition_interface
 end #test
 test "default acquisition" do
 	stream=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KLAX.xml'.to_sym)
