@@ -45,25 +45,25 @@
 
 <table border=1>
   <tr>
-    <th>Acquisition</th>
      <th>Acquisition interface Id</th>
-    <th>Url</th>
     <th>Table spec</th>
-    <th>schemeFromInterface</th>
     <th>Required order</th>
-  </tr>
+	<th>Acquisition</th>
+     <th>scheme From Interface</th>
+   <th>Url</th>
+</tr>
 
 
 <% @acquisition_stream_specs=AcquisitionStreamSpec.all %>
 <% for acquisition_stream_spec in @acquisition_interface.acquisition_stream_specs %>
   <tr>
-    <td><%=h acquisition_stream_spec.acquire.display %></td>
     <td><%=h acquisition_stream_spec.acquisition_interface_id %></td>
-    <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
-    <td><%=h acquisition_stream_spec.schemeFromInterface %></td>
     <td><%=h acquisition_stream_spec.required_order %></td>
-    <td><%= link_to 'Show', acquisition_stream_spec %></td>
+     <td><%=h acquisition_stream_spec.acquire.display %></td>
+     <td><%=h acquisition_stream_spec.schemeFromInterface %></td>
+   <td><%=h acquisition_stream_spec.url %></td>
+   <td><%= link_to 'Show', acquisition_stream_spec %></td>
     <td><%= link_to 'Edit', edit_acquisition_stream_spec_path(acquisition_stream_spec) %></td>
     <td><%= link_to 'Destroy', acquisition_stream_spec, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
