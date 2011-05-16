@@ -30,23 +30,12 @@ def logical_primary_key
 	return :acquisition_name
 end #def
 # functions of ActiveRecord  instances
-def acquisition_class_name
-	return "#{self[:name]}_Acquisition"
-end # def
 def scheme
 	if self[:name].nil? then
 		return ''
 	else
 		return self[:name].downcase
 	end #if
-end #def
-def classDefinition
-	return "class #{Generic_Table.rubyClassName(acquisition_class_name)}  \ninclude Generic_Table\n#{codeBody}\nend"
-end #def
-def classReference
-	ruby_class_name=Generic_Table.rubyClassName(acquisition_class_name)
-	model_class_eval=eval("#{classDefinition}\n#{ruby_class_name}")
-	return model_class_eval
 end #def
 def setup
 	codeBody

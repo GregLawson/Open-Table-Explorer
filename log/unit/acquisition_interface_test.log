@@ -1,8 +1,8 @@
 Loaded suite test/unit/acquisition_interface_test
 Started
-..Acquisition.count=889
+.Acquisition.count=889
 Acquisition.count=890
 ....
-Finished in 29.11734 seconds.
+Finished in 26.056668 seconds.
 
-6 tests, 59 assertions, 0 failures, 0 errors
+5 tests, 54 assertions, 0 failures, 0 errors
