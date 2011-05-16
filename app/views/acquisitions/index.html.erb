@@ -1,12 +1,12 @@
 <h1>Listing acquisitions</h1>
 
-<table>
+<table border=1>
   <tr>
     <th>Acquisition data</th>
     <th>Created at</th>
     <th>Id</th>
     <th>Url</th>
-    <th>Acquisition stream</th>
+    <th>Acquisition stream spec</th>
     <th>Error</th>
     <th>Acquisition updated</th>
   </tr>
@@ -17,7 +17,7 @@
     <td><%=h acquisition.created_at %></td>
     <td><%=h acquisition.id %></td>
     <td><%=h acquisition.url %></td>
-    <td><%=h acquisition.acquisition_stream_id %></td>
+    <td><%=h acquisition.acquisition_stream_spec_id %></td>
     <td><%=h acquisition.error %></td>
     <td><%=h acquisition.acquisition_updated %></td>
     <td><%= link_to 'Show', acquisition %></td>
