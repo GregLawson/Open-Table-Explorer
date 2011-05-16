@@ -14,11 +14,6 @@
 </p>
 
 <p>
-  <b>Acquisition Class Name:</b>
-  <%=h @acquisition_interface.acquisition_class_name %>
-</p>
-
-<p>
   <b>Library:</b>
   <%=h @acquisition_interface.library %>
 </p>
@@ -27,10 +22,6 @@
   <b>Acquire data:</b>
   <%=h @acquisition_interface.acquire_data %>
 </p>
-
-<P>
-  <b>classDefinition:</b>
-<%=h @acquisition_interface.classDefinition.each_line {|line| line.to_s+'  end Paragraph>'} %>
 
 </P>
 <p>
@@ -54,8 +45,7 @@
 
 <table border=1>
   <tr>
-    <th>Id</th>
-    <th>Acquisition interface</th>
+    <th>Acquisition</th>
      <th>Acquisition interface Id</th>
     <th>Url</th>
     <th>Table spec</th>
@@ -67,8 +57,7 @@
 <% @acquisition_stream_specs=AcquisitionStreamSpec.all %>
 <% for acquisition_stream_spec in @acquisition_interface.acquisition_stream_specs %>
   <tr>
-    <td><%=h acquisition_stream_spec.id %></td>
-    <td><%=h acquisition_stream_spec.acquire.inspect %>< %=h @acquisition_interface.acquire(acquisition_stream_spec).inspect %></td>
+    <td><%=h acquisition_stream_spec.acquire.display %></td>
     <td><%=h acquisition_stream_spec.acquisition_interface_id %></td>
     <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
