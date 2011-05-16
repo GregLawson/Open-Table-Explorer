@@ -54,6 +54,10 @@ test "acquisition" do
 	assert_not_nil(acq.acquire(stream))
 	assert_not_nil(acq.acquisition.acquisition_stream_spec_id)
 	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
+	
+	assert_association(stream,:acquisition_interface)
+	assert_respond_to(stream,:associated_to_s)
+	assert_equal(stream.associated_to_s(:acquisition_interface,:name),"HTTP")
 end #test
 test "stream acquire" do
 	stream=acquisition_stream_specs(@testURL.to_sym)
