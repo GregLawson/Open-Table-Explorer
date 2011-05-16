@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class AcquisitionInterfaceTest < ActiveSupport::TestCase
+def setup
+	@testURL='http://192.168.3.193/api/LiveData.xml'
+end #def
 def test_scheme
 	testAnswer(acquisition_interfaces(:HTTP),:scheme,'http')
 end #test
@@ -8,10 +11,10 @@ def test_id_equal
 		assert_equal(acquisition_interfaces(:HTTP).id,Fixtures::identify(:HTTP),"id != Fixtures::identify(:one)")
 end #def
 def test_id_equal
-		assert_equal(acquisition_interfaces(:HTTP).id,acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym).acquisition_interface_id,"id != acquisition_stream_spec_id")
+		assert_equal(acquisition_interfaces(:HTTP).id,acquisition_stream_specs(@testURL.to_sym).acquisition_interface_id,"id != acquisition_stream_spec_id")
 end #def
 def acq_and_rescue
-	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
+	stream=acquisition_stream_specs(@testURL.to_sym)
 	acq=acquisition_interfaces(:HTTP)
 	acq.acquire_method
 	assert(!acq.acquisition.error.nil? || !acq.acquisition.acquisition_data.nil?)
@@ -20,7 +23,7 @@ rescue  StandardError => exception_raised
 	puts "$!=#{$!}"
 end #def	  
 test "acquisition" do
-	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
+	stream=acquisition_stream_specs(@testURL.to_sym)
 	assert_not_nil(stream)
 	acq=acquisition_interfaces(:HTTP)
 	assert_instance_of(AcquisitionInterface,acq)
@@ -53,7 +56,7 @@ test "acquisition" do
 	assert_equal(stream.id,acq.acquisition.acquisition_stream_spec_id)
 end #test
 test "stream acquire" do
-	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
+	stream=acquisition_stream_specs(@testURL.to_sym)
 	assert_not_nil(stream.acquire)
 	assert_not_nil(stream.id)
 	assert_instance_of(Fixnum,stream.id)
@@ -76,7 +79,7 @@ test "stream acquire" do
 	assert_equal(stream.id,acquisition.acquisition_stream_spec_id)
 end #test
 test "default acquisition" do
-	stream=acquisition_stream_specs('http://192.168.3.193/api/LiveData.xml'.to_sym)
+	stream=acquisition_stream_specs(@testURL.to_sym)
 	acq=acquisition_interfaces(:HTTP)
 	acq.delta(stream)
 
