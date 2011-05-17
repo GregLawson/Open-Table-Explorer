@@ -42,4 +42,16 @@ test 'class methods' do
 #	assert_equal(['classMethod'],TestClass.class.public_instance_methods)
 	assert_equal(['classMethod'],TestClass.new.noninherited_public_class_methods)
 end #test
+test 'matching methods' do
+	testClass=Acquisition
+#	puts "testClass.canonicalName=#{testClass.canonicalName}"
+#	puts "testClass.superclass.canonicalName=#{testClass.superclass.canonicalName}"
+#	puts "testClass.matching_methods(//).inspect=#{testClass.matching_methods(//).inspect}"
+	assert_instance_of(Array,testClass.matching_methods(//))
+	assert_equal([testClass.canonicalName,testClass.instance_methods(false)],testClass.matching_methods(//)[0])
+	assert_instance_of(Array,testClass.matching_methods(//))
+	assert_instance_of(Class,testClass.ancestors[0])
+	assert_equal(testClass,testClass.ancestors[0])
+	assert_equal([Generic_Table],testClass.ancestors-[testClass]-testClass.superclass.ancestors)
+end #def
 end #test class

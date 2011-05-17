@@ -212,8 +212,23 @@ def relationship(obj=self)
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
 end #def
-def matching_methods(regexp)
-	self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
+def matching_methods(regexp,depth=0)
+	instance_meths=instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
+	instance_meths=[canonicalName,instance_meths] # label level
+	next_ancestors=ancestors-[self]
+	puts	"next_ancestors=#{next_ancestors.inspect}"
+	next_ancestors.each do |a|
+		parent_methods=a.matching_methods(regexp,depth)
+		return [instance_meths,parent_methods]		
+	end
+	if self.class.name=='Module' then
+	elsif superclass.nil? || depth<0 then
+		return instance_meths
+	else
+		parent_methods=superclass.matching_methods(regexp,depth)
+		return [instance_meths,parent_methods]
+	end #if
+	depth -=1
 end #def
 
 end #class
