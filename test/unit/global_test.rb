@@ -54,4 +54,8 @@ test 'matching methods' do
 	assert_equal(testClass,testClass.ancestors[0])
 	assert_equal([Generic_Table],testClass.ancestors-[testClass]-testClass.superclass.ancestors)
 end #def
+test "modules" do
+	assert_equal([General_Table],Account.noninherited_modules)
+	assert(General_Table.module?)
+end #test
 end #test class
