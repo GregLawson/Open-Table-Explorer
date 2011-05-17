@@ -256,7 +256,7 @@ def logical_primary_key_value
 end #def
 def table2yaml(table_name=self.class.name.tableize)
 	i = 0 #"000"
-	limit=100 # too long slow all tsts, too short give poor test coverage
+	limit=100 # too long slow all tests, too short give poor test coverage
 	sql  = "SELECT * FROM %s LIMIT #{limit}"
     	File.open("test/fixtures/#{table_name}.yml.gen", 'w') do |file|
       		data = self.class.limit(limit).all
