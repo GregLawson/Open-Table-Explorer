@@ -217,12 +217,10 @@ def module?
 end #def
 def noninherited_modules
 	if module? then
-		next_ancestors=ancestors-[self]
+		return ancestors-[self]
 	else
-		next_ancestors=ancestors-[self]-superclass.ancestors
+		return ancestors-[self]-superclass.ancestors
 	end #if
-#	puts	"next_ancestors=#{next_ancestors.inspect}"
-	return next_ancestors
 end #def
 def module_included?(symbol)
 	if symbol.kind_of?(Class) then
@@ -231,22 +229,23 @@ def module_included?(symbol)
 		ancestors.map{|a| a.name}.include?(symbol.to_s)
 	end #if
 end #def
-def matching_methods(regexp,depth=0)
-	instance_meths=instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
-	instance_meths=[canonicalName,instance_meths] # label level
-	next_ancestors=ancestors-[self]
-	noninherited_modules.each do |a|
-		parent_methods=a.matching_methods(regexp,depth)
-		return [instance_meths,parent_methods]		
-	end
-	if module? then
-	elsif superclass.nil? || depth<0 then
-		return instance_meths
-	else
-		parent_methods=superclass.matching_methods(regexp,depth)
-		return [instance_meths,parent_methods]
-	end #if
-	depth -=1
+def method_contexts(depth=0)
+	[self]+ancestors[0..depth]
+end #def
+def context_names(depth=0)
+	method_contexts(depth).map{|c| c.canonicalName}
+end #def
+def matching_methods(regexp)
+		self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
+end #def
+#~ def matching_instance_methods(regexp)
+		#~ self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
+#~ end #def
+def matching_methods_in_context(regexp,depth=0)
+	method_contexts(depth).map do |context|
+		instance_meths=context.matching_methods(regexp)
+		[context.canonicalName,instance_meths] # label level
+	end #map
 end #def
 
 end #class

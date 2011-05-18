@@ -4,7 +4,7 @@ Started
 obj is Symbol :cat
 Can't figure out relation between :cat and GlobalTest::TestClass
 ...noninherited_public_instance_methods in class Object called
-..
-Finished in 15.836762 seconds.
+...
+Finished in 15.245997 seconds.
 
-7 tests, 31 assertions, 0 failures, 0 errors
+8 tests, 30 assertions, 0 failures, 0 errors

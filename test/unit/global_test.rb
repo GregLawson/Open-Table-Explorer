@@ -48,10 +48,12 @@ test 'matching methods' do
 #	puts "testClass.superclass.canonicalName=#{testClass.superclass.canonicalName}"
 #	puts "testClass.matching_methods(//).inspect=#{testClass.matching_methods(//).inspect}"
 	assert_instance_of(Array,testClass.matching_methods(//))
-	assert_equal([testClass.canonicalName,testClass.instance_methods(false)],testClass.matching_methods(//)[0])
-	assert_instance_of(Array,testClass.matching_methods(//))
-	assert_instance_of(Class,testClass.ancestors[0])
-	assert_equal(testClass,testClass.ancestors[0])
+end #def
+test 'matching methods in context' do
+	testClass=Acquisition
+	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
+	assert_equal([testClass.canonicalName,testClass.matching_methods(//)],testClass.matching_methods_in_context(//)[0])
+	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
 	assert_equal([Generic_Table],testClass.ancestors-[testClass]-testClass.superclass.ancestors)
 end #def
 test "Acquisition Stream Spec modules" do
