@@ -88,7 +88,7 @@ end #def
 def test_scheduler
 	scheduleAll=Table_spec.all
 	assert_not_nil(scheduleAll)
-	schedule=scheduleAll.collect{ |a| a.scheduled_time=Time.now;a}
+	schedule=scheduleAll.map{ |a| a.scheduled_time=Time.now;a}
 	assert_not_nil(schedule)
 	assert_not_nil(schedule)
 	assert_not_nil(schedule.first)

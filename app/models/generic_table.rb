@@ -33,7 +33,7 @@ end #def
 
 def process(acquisitionData)
 	acqClasses=Generic_Acquisitions.parse_classes(m)
-	acqClasses.each collect do |ac|
+	acqClasses.each map do |ac|
 		variableHashes=ac.parse(acquisitionData)
 	end #each
 	row.updates(variableHashes)
@@ -65,9 +65,9 @@ def monitor(keys) # update continously
 end # method monitor
 def sample
 	@acqClasses=Generic_Acquisitions.parse_classes(m)
-	@acqClasses.each collect do |ac|
+	@acqClasses.map do |ac|
 		@acquisitionData=acquire
-	end #collect
+	end #map
 	@acquisitionData.each do |ad|
 		if acquisitionUpdated?(ad) then
 			row=self.create

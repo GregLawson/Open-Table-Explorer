@@ -57,7 +57,7 @@ def schemelessUrl
 	return URI.unescape(URI.escape(self[:url]).split(':').last)
 end #def
 def AcquisitionStreamSpec.urls(model_class_name)
-	return AcquisitionStreamSpec.all(:order => "id",:conditions =>{:model_class_name=>model_class_name}).collect { |m| m.url }
+	return AcquisitionStreamSpec.all(:order => "id",:conditions =>{:model_class_name=>model_class_name}).map { |m| m.url }
 end #def
 def nameFromInterface
 	acquisition_interface.name
