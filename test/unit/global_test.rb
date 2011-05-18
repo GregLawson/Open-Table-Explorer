@@ -48,6 +48,22 @@ test 'matching methods' do
 #	puts "testClass.superclass.canonicalName=#{testClass.superclass.canonicalName}"
 #	puts "testClass.matching_methods(//).inspect=#{testClass.matching_methods(//).inspect}"
 	assert_instance_of(Array,testClass.matching_methods(//))
+	
+	acquisition_stream_spec=AcquisitionStreamSpec.new
+	assert_include('acquisition_interface',acquisition_stream_spec.matching_methods(//))
+	assert_respond_to(acquisition_stream_spec,:associated_to_s) 
+	assert_include('acquisition_interface',acquisition_stream_spec.matching_methods(/acquisition_interface/))
+	assert_respond_to(acquisition_stream_spec.class,:instance_methods)
+	assert_public_instance_method(acquisition_stream_spec.class,:instance_methods)
+	
+	#~ assert_include('instance_methods',acquisition_stream_spec.class.instance_methods)
+	#~ assert_equal('',acquisition_stream_spec.method_context(:instance_methods))
+	#~ assert_include('instance_methods',acquisition_stream_spec.class.matching_methods(/instance_method/)) 
+	#~ assert_include('instance_methods',acquisition_stream_spec.class.matching_methods_in_context(//,20)) 
+	#~ assert_include('instance_methods',acquisition_stream_spec.matching_methods(/instance_method/)) 
+	#~ assert_respond_to(acquisition_stream_spec,:instance_methods) 
+	assert_equal('',acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) )
+	
 end #def
 test 'matching methods in context' do
 	testClass=Acquisition

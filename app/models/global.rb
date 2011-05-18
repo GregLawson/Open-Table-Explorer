@@ -236,11 +236,15 @@ def context_names(depth=0)
 	method_contexts(depth).map{|c| c.canonicalName}
 end #def
 def matching_methods(regexp)
-		self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
+		self.public_methods(false).select {|m| m[Regexp.new(regexp),0] }
 end #def
-#~ def matching_instance_methods(regexp)
-		#~ self.class.instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
-#~ end #def
+def method_context(methodName)
+	if respond_to(methodName) then
+		matching_methods_in_context(methodName)
+	else
+		nil
+	end #if
+end #def
 def matching_methods_in_context(regexp,depth=0)
 	method_contexts(depth).map do |context|
 		instance_meths=context.matching_methods(regexp)
