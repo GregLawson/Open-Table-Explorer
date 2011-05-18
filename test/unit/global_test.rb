@@ -54,8 +54,20 @@ test 'matching methods' do
 	assert_equal(testClass,testClass.ancestors[0])
 	assert_equal([Generic_Table],testClass.ancestors-[testClass]-testClass.superclass.ancestors)
 end #def
-test "modules" do
-	assert_equal([General_Table],Account.noninherited_modules)
-	assert(General_Table.module?)
+test "Acquisition Stream Spec modules" do
+	assert(Generic_Table.module?)
+	assert_equal([Generic_Table],Account.noninherited_modules)
+	assert(AcquisitionStreamSpec.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
+	assert_include('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
+	assert(AcquisitionStreamSpec.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
+	assert_module_included(AcquisitionStreamSpec,:Generic_Table)
+end #test
+test "Acquisition Interface modules" do
+	assert(Generic_Table.module?)
+	assert_equal([Generic_Table],AcquisitionInterface.noninherited_modules)
+	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
+	assert_include('Generic_Table',AcquisitionInterface.ancestors.map{|a| a.name})
+	assert(AcquisitionInterface.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
+	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test
 end #test class

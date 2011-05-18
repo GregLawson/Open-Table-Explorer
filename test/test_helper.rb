@@ -94,6 +94,13 @@ end #def
 def assert_not_empty(object)
 	assert(!object.empty?)
 end #def
+def assert_module_included(klass,moduleName)
+#The assertion upon which all other assertions are based. Passes if the block yields true.
+  assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
+    klass.module_included?(moduleName)
+  end
+
+end #def
 def is_association?(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"is_association? is called with #{assName} caller=#{caller}")
 #	puts "is_association? is called with #{assName}"

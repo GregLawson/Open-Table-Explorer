@@ -224,6 +224,13 @@ def noninherited_modules
 #	puts	"next_ancestors=#{next_ancestors.inspect}"
 	return next_ancestors
 end #def
+def module_included?(symbol)
+	if symbol.kind_of?(Class) then
+		ancestors.map{|a| a.name}.include?(symbol.name)
+	else
+		ancestors.map{|a| a.name}.include?(symbol.to_s)
+	end #if
+end #def
 def matching_methods(regexp,depth=0)
 	instance_meths=instance_methods(false).select {|m| m[Regexp.new(regexp),0] }
 	instance_meths=[canonicalName,instance_meths] # label level
