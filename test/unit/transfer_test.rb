@@ -46,7 +46,7 @@ def assert_relation(relation)
 	assert_kind_of(ActiveRecord::Relation,relation)
 	assert_instance_of(ActiveRecord::Relation,relation)
 	puts "relation.matching_methods(/to_.*/)=#{relation.matching_methods(/to_.*/).inspect}"
-	assert_include(:to_sql,relation.instance_methods(true))	
+	assert_include('to_sql',relation.instance_methods(true))	
 #	explain_assert_respond_to(relation,:to_sql)	
 	testCall(relation,:to_sql)
 	explain_assert_respond_to(relation,:each)	
