@@ -1,4 +1,4 @@
-<p>
+ <p>
   <b>Id:</b>
   <%=h @acquisition_stream_spec.id %>
 </p>
@@ -14,7 +14,8 @@
 </p>
 <p>
   <b>Table_spec:</b>
-  <%=h @acquisition_stream_spec.matching_methods(/table_spec.*/).inspect%>
+  <%=h @acquisition_stream_spec.class.ancestors.inspect%>
+  <%=h @acquisition_stream_spec.methods.inspect%>
   < %=h @acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name) %>
 </p>
 
@@ -36,7 +37,7 @@
 
 <p>
   <b>Acquisition interface:</b>
-  <%=h @acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) %>
+  < %=h @acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) %>
 </p>
 
 
