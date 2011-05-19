@@ -253,14 +253,17 @@ end #def
 def assert_include(element,list)
 	assert(list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
 end #def
-def define_association_names
+def define_model_of_test
 	@model_name=self.class.name.sub(/Test$/, '').sub(/Controller$/, '')
  	@table_name=@model_name.tableize
+	@my_fixtures=fixtures(@table_name)
+	@model_class=model_class(@my_fixtures)
+end #def
+def define_association_names
+	define_model_of_test
 	assert_not_nil(@loaded_fixtures)
 	assert_fixture_name(@table_name)
 	@fixture_labels=fixture_labels(@table_name)
-	@my_fixtures=fixtures(@table_name)
-	@model_class=model_class(@my_fixtures)
 	@assignable_ids=@model_class.instance_methods(false).grep(/_ids=$/ )
 	@assignable=(@model_class.instance_methods(false).grep(/=$/ )-@assignable_ids).collect {|m| m[0..-2] }
 	@assignable_ids_to_many=@model_class.instance_methods(false).grep(/_ids=$/ ).collect {|m| m[0..-6] }

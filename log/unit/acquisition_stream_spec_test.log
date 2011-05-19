@@ -1,6 +1,6 @@
 Loaded suite test/unit/acquisition_stream_spec_test
 Started
-...............
-Finished in 16.778248 seconds.
+............
+Finished in 14.335764 seconds.
 
-15 tests, 41 assertions, 0 failures, 0 errors
+12 tests, 7979 assertions, 0 failures, 0 errors
