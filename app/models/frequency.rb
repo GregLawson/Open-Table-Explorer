@@ -1,5 +1,5 @@
 class Frequency < ActiveRecord::Base
-belongs_to :table_specs
+has_many :table_specs
 def logical_primary_key
 	return :frequency_name
 end #def
