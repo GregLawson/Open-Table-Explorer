@@ -1,0 +1,10 @@
+  <% semantic_form_for @transfer do |f| %>
+  <%= f.semantic_errors %>
+<% f.inputs do %>
+  <%= f.input :account_id, :as => :string,:label => 'Account ID' %>
+  <%= f.input :account,  :as => :select,      :collection => Account.find(:all, :order => "name ASC") %>
+  <%= f.input :amount, :label => 'Amount' %>
+  <%= f.input :posted, :label => 'Posted' %>
+    <%= f.buttons %>
+<% end %>
+<% end %>

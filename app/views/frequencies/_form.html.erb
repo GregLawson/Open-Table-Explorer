@@ -1,0 +1,13 @@
+  <% semantic_form_for @transfer do |f| %>
+  <%= f.semantic_errors %>
+<% f.inputs do %>
+  <%= f.input :frequency_name, :label => 'Frequency name' %>
+  <%= f.input :min_seconds, :label => 'Min seconds' %>
+  <%= f.input :max_seconds, :label => 'Max seconds' %>
+  <%= f.input :scheduled_time, :label => 'Scheduled time' %>
+  <%= f.input :interval, :label => 'Interval' %>
+  <%= f.input :shortest_update, :label => 'Shortest update' %>
+  <%= f.input :longest_no_update, :label => 'Longest no update' %>
+  <%= f.input :previous_update, :label => 'Previous update' %>
+<% end %>
+<% end %>
