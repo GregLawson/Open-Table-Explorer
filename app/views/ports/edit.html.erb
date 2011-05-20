@@ -1,4 +1,8 @@
 <h1>Editing port</h1>
+  <% semantic_form_for @port do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@port) do |f| %>
   <%= f.error_messages %>

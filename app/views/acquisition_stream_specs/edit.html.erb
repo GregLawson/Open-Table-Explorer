@@ -1,4 +1,8 @@
 <h1>Editing acquisition_stream_spec</h1>
+ <% semantic_form_for @acquisition_stream_spec do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <%= form_for(@acquisition_stream_spec) do |f| %>
    f.error_messages 

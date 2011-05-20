@@ -10,6 +10,10 @@
       </ul>
     </div>
   <% end %>
+  <% semantic_form_for @generic_type do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
   <div class="field">
     <%= f.label :search_sequence %><br />

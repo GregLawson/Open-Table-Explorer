@@ -1,4 +1,8 @@
 <h1>Editing station</h1>
+  <% semantic_form_for @station do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@station) do |f| %>
   <%= f.error_messages %>

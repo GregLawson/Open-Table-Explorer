@@ -1,4 +1,8 @@
 <h1>Editing acquisition_interface</h1>
+ <% semantic_form_for @acquisition_interface do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <%= form_for(@acquisition_interface) do |f| %>
    f.error_messages 

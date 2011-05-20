@@ -1,4 +1,8 @@
 <h1>Editing frequency</h1>
+ <% semantic_form_for @frequency do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@frequency) do |f| %>
   <%= f.error_messages %>

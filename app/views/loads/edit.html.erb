@@ -1,4 +1,8 @@
 <h1>Editing loads</h1>
+  <% semantic_form_for @load do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@load) do |f| %>
   <%= f.error_messages %>

@@ -1,4 +1,8 @@
 <h1>Editing production</h1>
+  <% semantic_form_for @production do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@production) do |f| %>
   <%= f.error_messages %>

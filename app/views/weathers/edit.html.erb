@@ -1,4 +1,8 @@
 <h1>Editing weather</h1>
+  <% semantic_form_for @weather do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@weather) do |f| %>
   <%= f.error_messages %>

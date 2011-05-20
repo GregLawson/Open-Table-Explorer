@@ -1,4 +1,8 @@
 <h1>Editing wired_location</h1>
+  <% semantic_form_for @wired_location do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@wired_location) do |f| %>
   <%= f.error_messages %>

@@ -1,4 +1,8 @@
 <h1>Editing generic_column</h1>
+  <% semantic_form_for @generic_column do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@generic_column) do |f| %>
   <%= f.error_messages %>

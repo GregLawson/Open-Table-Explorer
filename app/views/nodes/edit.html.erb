@@ -1,4 +1,8 @@
 <h1>Editing node</h1>
+ <% semantic_form_for @node do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@node) do |f| %>
   <%= f.error_messages %>

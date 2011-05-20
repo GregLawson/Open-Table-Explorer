@@ -1,4 +1,8 @@
 <h1>Editing measurement</h1>
+  <% semantic_form_for @measurement do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@measurement) do |f| %>
   <%= f.error_messages %>

@@ -1,4 +1,8 @@
 <h1>Editing host</h1>
+  <% semantic_form_for @host do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@host) do |f| %>
   <%= f.error_messages %>

@@ -10,6 +10,10 @@
       </ul>
     </div>
   <% end %>
+  <% semantic_form_for @production_ftp do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
   <div class="field">
     <%= f.label :timestamp %><br />

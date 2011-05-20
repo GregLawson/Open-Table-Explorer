@@ -1,4 +1,8 @@
 <h1>Editing parameter</h1>
+  <% semantic_form_for @parameter do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
 <% form_for(@parameter) do |f| %>
   <%= f.error_messages %>
