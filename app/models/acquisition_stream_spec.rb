@@ -1,13 +1,13 @@
 class AcquisitionStreamSpec < ActiveRecord::Base
 belongs_to :acquisition_interface
 belongs_to :table_spec
+#belongs_to :table_specs, :class_name => "TableSpec"
 has_many :acquisitions
 attr_reader :uri
 require 'global.rb'
 include Generic_Table
-belongs_to :table_spec, :class_name => "Table_spec"
-#~ validates_format_of :acquisition_interface, :with => /\A[a-zA-Z]{4,5}_Acquisition\z/,
-    #~ :message => "Only four or five letter mode followed by '_Acquisition' allowed."
+#~ validates_format_of :name, :with => /\A[a-zA-Z0-9_]\z/,
+    #~ :message => "Name should be alpha numeric plus underscores."
 after_initialize :init
 def init
 	if  self[:url].nil?
@@ -15,14 +15,15 @@ def init
 	else
 		@uri=URI.parse(URI.escape(self[:url]))	
 	end
-	#~ @classReference= Generic_Table.classReference(self[:acquisition_interface])
-	#~ @objectReference=@classReference.create(:url => self[:url])
 end
 def logical_primary_key
 	return :url
 end #def
 def parsedURI
 	return URI.split(URI.escape(self[:url]))
+end #def
+def display_model_class_name
+	associated_to_s(:table_spec,:model_class_name) 
 end #def
 def schemelessUrl
 	return URI.unescape(URI.escape(self[:url]).split(':').last)
