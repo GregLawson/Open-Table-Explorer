@@ -108,6 +108,7 @@ def assert_module_included(klass,moduleName)
 
 end #def
 def assert_association(ar_from_fixture,assName)
+	assName=ar_from_fixture.association_method_name(assName)
 	assName=assName.to_sym
 	assert_instance_of(Symbol,assName,"assert_association")
 	assert_public_instance_method(ar_from_fixture,assName)
@@ -203,13 +204,13 @@ end #def
 def assert_association_to_many(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_many")
 	assert_association(ar_from_fixture,assName)
-	assert(is_association_to_many?(ar_from_fixture,assName),"is_association_to_many?(#{ar_from_fixture.inspect},#{assName.inspect}) returns false. #{ar_from_fixture.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and ar_from_fixture.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
-	assert(!is_association_to_one?(ar_from_fixture,assName),"fail !is_association_to_one?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
+	assert(ar_from_fixture.is_association_to_many?(assName),"is_association_to_many?(#{ar_from_fixture.inspect},#{assName.inspect}) returns false. #{ar_from_fixture.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and ar_from_fixture.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
+	assert(!ar_from_fixture.is_association_to_one?(assName),"fail !is_association_to_one?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
 end #def
 def assert_association_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_one")
 	assert_association(ar_from_fixture,assName)
-	assert(!is_association_to_many?(ar_from_fixture,assName),"fail !is_association_to_many?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}, ar_from_fixture.similar_methods(assName).inspect=#{ar_from_fixture.similar_methods(assName).inspect}")
+	assert(!ar_from_fixture.is_association_to_many?(assName),"fail !is_association_to_many?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}, ar_from_fixture.similar_methods(assName).inspect=#{ar_from_fixture.similar_methods(assName).inspect}")
 end #def
 def assert_association_one_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_one_to_one")
@@ -237,7 +238,7 @@ def define_model_of_test
 end #def
 def define_association_names
 	define_model_of_test
-	assert_model_class(model_name)
+	assert_model_class(@model_name)
 	assert_fixture_name(@table_name)
 	assert_not_nil(@loaded_fixtures)
 	@my_fixtures=fixtures(@table_name)
@@ -313,7 +314,7 @@ def assert_general_associations(table_name)
 	fixtures(table_name).each_value do |my_fixture|
 	@possible_associations.each do |association_name|
 		assName=association_name.to_sym
-		if is_association_to_many?(my_fixture,assName) then
+		if my_fixture.is_association_to_many?(assName) then
 			 assert_association_to_many(my_fixture,assName)
 			assert_foreign_key_points_to_me(my_fixture,assName)
 		else

@@ -411,6 +411,13 @@ def is_matching_association?(assName)
 		return false
 	end #if
 end #def
+def association_method_name(association_table_name)
+	if respond_to?(association_table_name) then
+		return association_table_name
+	else
+		return association_table_name.singularize
+	end #if
+end #def
 
 end # module
 
