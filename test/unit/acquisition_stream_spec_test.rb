@@ -4,14 +4,15 @@ require 'test_helper'
 # move passing tests toward end
 class AcquisitionStreamSpecTest < ActiveSupport::TestCase
 def setup
-	define_model_of_test
+	define_model_of_test # allow generic tests
+	assert_module_included(@model_class,Generic_Table)
 	explain_assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
 end #def
 def test_general_associations
 	assert_general_associations(@table_name)
-end
+end #test
 def test_id_equal
 	if @model_class.new.sequential_id? then
 	else
@@ -24,7 +25,7 @@ def test_id_equal
 end #def
 test "specific, stable and working" do
 end #test
-def test_aaa_test_assertions # aaa to output first
+test "aaa test new assertions" do  # aaa to output first
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('acquisition_interface'))
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('table_spec'))
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
