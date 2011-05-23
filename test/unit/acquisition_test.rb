@@ -4,8 +4,9 @@ require 'test_helper'
 # move passing tests toward end
 class AcquisitionStreamSpecTest < ActiveSupport::TestCase
 def setup
-	explain_assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+	define_model_of_test
+	explain_assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
 end #def
 def test_general_associations
@@ -21,11 +22,11 @@ def test_id_equal
 		end
 	end
 end #def
+test "specific, stable and working" do
+end #test
 test "associations" do
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
-end #test
-test "specific, stable and working" do
 end #test
 test "acquisition_stream_spec" do
 	    assert_not_nil(acquisitions(:one))
