@@ -1,4 +1,7 @@
 require 'test_helper'
+# executed in alphabetical orer? Longer names sort later.
+# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
+# move passing tests toward end
 class Test_Table < TableSpec
 include Generic_Table
 has_many :acquisition_stream_specs
