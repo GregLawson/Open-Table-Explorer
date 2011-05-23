@@ -10,28 +10,9 @@
       </ul>
     </div>
   <% end %>
+  <% semantic_form_for @bug do |form| %>
+    <%= form.inputs %>
+    <%= form.buttons %>
+  <% end %>
 
-  <div class="field">
-    <%= f.label :gui %><br />
-    <%= f.check_box :gui %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br />
-    <%= f.text_field :url %>
-  </div>
-  <div class="field">
-    <%= f.label :error %><br />
-    <%= f.text_field :error %>
-  </div>
-  <div class="field">
-    <%= f.label :context %><br />
-    <%= f.text_field :context %>
-  </div>
-  <div class="field">
-    <%= f.label :resolution %><br />
-    <%= f.text_field :resolution %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
