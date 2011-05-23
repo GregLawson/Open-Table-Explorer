@@ -1,8 +1,6 @@
 Loaded suite test/unit/generic_table_test
 Started
-.["table_spec", "set_table_spec_target", "autosave_associated_records_for_table_spec", "table_spec=", "create_table_spec", "build_table_spec", "loaded_table_spec?"]
-["table_spec", "table_spec="]
 .
-Finished in 14.739155 seconds.
+Finished in 17.422889 seconds.
 
-2 tests, 28 assertions, 0 failures, 0 errors
+1 tests, 99 assertions, 0 failures, 0 errors

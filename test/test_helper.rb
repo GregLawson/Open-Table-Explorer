@@ -94,6 +94,12 @@ end #def
 def assert_not_empty(object)
 	assert(!object.empty?)
 end #def
+def assert_empty(object)
+	assert(object.empty?,"#{object.inspect} is not empty.")
+end #def
+def assert_equal_sets(array1,array2)
+	assert_equal(Set.new(array1),Set.new(array2))
+end #def
 def assert_module_included(klass,moduleName)
 #The assertion upon which all other assertions are based. Passes if the block yields true.
   assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
@@ -101,25 +107,12 @@ def assert_module_included(klass,moduleName)
   end
 
 end #def
-def is_association?(ar_from_fixture,assName)
-	assert_instance_of(Symbol,assName,"is_association? is called with #{assName} caller=#{caller}")
-#	puts "is_association? is called with #{assName}"
-	if assName.to_s[-3..-1]=='_id' then 
-		fail "assName=#{assName} should not end in '_id' as it will be confused wth a foreign key."
-	end # if
-	if ar_from_fixture.respond_to?(assName) and ar_from_fixture.respond_to?((assName.to_s+'=').to_sym)  then
-		assert_respond_to(ar_from_fixture,assName)
-		assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
-		return true
-	else
-		return false
-	end
-end #def
 def assert_association(ar_from_fixture,assName)
+	assName=assName.to_sym
 	assert_instance_of(Symbol,assName,"assert_association")
-	assert_respond_to(ar_from_fixture,assName)
-	assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
-	assert(is_association?(ar_from_fixture,assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
+	assert_public_instance_method(ar_from_fixture,assName)
+	explain_assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
+	assert(ar_from_fixture.is_association?(assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
 end #def
 # flexible access to all fixtures
 def fixtures(table_name)
@@ -200,31 +193,12 @@ def fixture_labels(table_name)
 	end #collect
 end #def
 
-def model_class(fixtures)
-	a_fixture_record=fixtures.values.first
+def assert_model_class(model_name)
+	a_fixture_record=fixtures(model_name.tableize).values.first
 	assert_kind_of(ActiveRecord::Base,a_fixture_record)
 	ret=a_fixture_record.class
+	assert_equal(ret,Generic_Table.eval_constant(model_name))
 	return ret
-end #def
-def is_association_to_one?(ar_from_fixture,assName)
-	assert_instance_of(Symbol,assName,"is_association_to_one")
-	if is_association?(ar_from_fixture,assName)  and !ar_from_fixture.respond_to?((assName.to_s.singularize+'_ids').to_sym) and !ar_from_fixture.respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
-		assert_association(ar_from_fixture,assName)
-		return true
-	else
-		return false
-	end
-end #def
-def is_association_to_many?(ar_from_fixture,assName)
-	assert_instance_of(Symbol,assName,"is_association_to_many  caller=#{caller.inspect}")
-	if is_association?(ar_from_fixture,assName)  and ar_from_fixture.respond_to?((assName.to_s.singularize+'_ids').to_sym) and ar_from_fixture.respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
-		assert_association(ar_from_fixture,assName)
-		assert_public_instance_method(ar_from_fixture,(assName.to_s.singularize+'_ids').to_sym) 
-		assert_public_instance_method(ar_from_fixture,(assName.to_s.singularize+'_ids=').to_sym)
-		return true
-	else
-		return false
-	end
 end #def
 def assert_association_to_many(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_many")
@@ -253,16 +227,20 @@ end #def
 def assert_include(element,list)
 	assert(list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
 end #def
-def define_model_of_test
+# does not require any fixtures
+def define_model_of_test 
 	@model_name=self.class.name.sub(/Test$/, '').sub(/Controller$/, '')
  	@table_name=@model_name.tableize
-	@my_fixtures=fixtures(@table_name)
-	@model_class=model_class(@my_fixtures)
+	@model_class=eval(@model_name)
+	assert_instance_of(Class,@model_class)
+	assert_kind_of(ActiveRecord::Base,@model_class.new)
 end #def
 def define_association_names
 	define_model_of_test
-	assert_not_nil(@loaded_fixtures)
+	assert_model_class(model_name)
 	assert_fixture_name(@table_name)
+	assert_not_nil(@loaded_fixtures)
+	@my_fixtures=fixtures(@table_name)
 	@fixture_labels=fixture_labels(@table_name)
 	@assignable_ids=@model_class.instance_methods(false).grep(/_ids=$/ )
 	@assignable=(@model_class.instance_methods(false).grep(/=$/ )-@assignable_ids).collect {|m| m[0..-2] }
@@ -285,21 +263,12 @@ def define_association_names
 	#~ puts "@content_column_names.inspect=#{@content_column_names.inspect}"
 	#~ @special_columns=@model_class.column_names-@content_column_names
 	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
-	@possible_foreign_keys=foreign_key_names(@model_class)
+	@possible_foreign_keys=@model_class.new.foreign_key_names
 end
-def foreign_key_names(model_class)
-	@content_column_names=model_class.content_columns.collect {|m| m.name}
-#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
-	@special_columns=model_class.column_names-@content_column_names
-#	puts "@special_columns.inspect=#{@special_columns.inspect}"
-	@possible_foreign_keys=@special_columns.select { |m| m =~ /_id$/ }
-#	puts "@possible_foreign_keys=#{@possible_foreign_keys.inspect}"
-	return @possible_foreign_keys
-end #def
-# 
+
 def associated_foreign_key_name(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
-	many_to_one_foreign_keys=foreign_key_names(obj.class)
+	many_to_one_foreign_keys=obj.class.new.foreign_key_names
 #	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
 	matchingAssNames=many_to_one_foreign_keys.select do |fk|
 		assert_instance_of(String,fk)
@@ -354,4 +323,41 @@ def assert_general_associations(table_name)
 #	assert_equal(Fixtures::identify(my_fixture.logical_prmary_key),my_fixture.id,"identify != id")
 	end #each
 end #def
+def assert_table_exists(table_name)
+	message="#{'table_name'.titleize} #{table_name} does not exist as a database table."
+	assert_block(message){Generic_Table.table_exists?(table_name)}
+end #def
+def assert_table(table_name)
+	message="#{'table_name'.titleize} #{table_name} does not exist and may be misspelled."
+	assert_block(message){Generic_Table.is_table?(table_name)}
+end #def
+def assert_ActiveRecord_table(model_class_name)
+	assert_table(model_class_name.tableize)
+	message="#{'model_class_name'.titleize} #{model_class_name} is not an ActiveRecord table."
+	assert_block(message){Generic_Table.is_ActiveRecord_table?(model_class_name)}
+end #def
+def assert_generic_table(model_class_name)
+	assert_no_match(/_ids$/,model_class_name,"Table name should not end in _ids to avoid confusion with to many associations.")
+	assert_ActiveRecord_table(model_class_name)
+	message="#{'model_class_name'.titleize} #{model_class_name} is not a Generic Table."
+	assert_block(message){Generic_Table.is_generic_table?(model_class_name)}
+end #def
+def assert_belongs_to(table_name1,table_name2)
+	model_class=Generic_Table.eval_constant(table_name1.classify)
+	assert_not_nil(model_class,"model_class #{table_name1.classify} is not a defined constant.")
+	if  model_class.new.is_association_to_one?(table_name2) then
+		assert_include(table_name2,model_class.new.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
+	end #if
+end #def
+def assert_matching_association(table_name,association_name)
+	assert_generic_table(table_name)
+	assert_generic_table(association_name)
+	assert_association(Generic_Table.eval_constant(table_name.classify).new,association_name)
+	assert_association(Generic_Table.eval_constant(association_name.classify).new,table_name)
+	assert_belongs_to(table_name,association_name) 
+	assert_belongs_to(association_name,table_name) 
+	message="#{'table_name'.titleize} #{table_name} do not have matching associations (has* declarations) with #{'association_name'.titleize} #{association_name}."
+	assert_block(message){Generic_Table.eval_constant(table_name.classify).new.is_matching_association?(association_name)}
+end #def
+
 end #class

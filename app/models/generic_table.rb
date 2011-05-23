@@ -313,5 +313,101 @@ def associated_to_s(assName,method,*args)
 		end
 	end
 end #def
+def foreign_key_names
+	content_column_names=self.class.content_columns.collect {|m| m.name}
+#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
+	special_columns=self.class.column_names-content_column_names
+#	puts "@special_columns.inspect=#{@special_columns.inspect}"
+	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
+	return possible_foreign_keys
+end #def
+def Match_and_strip(regexp=/=$/)
+	matching_methods(regexp).map do |m|
+		m.sub(regexp,'')
+	end
+end #def
+def is_association?(assName)
+	if assName.to_s[-3..-1]=='_id' then 
+		signal "assName=#{assName} should not end in '_id' as it will be confused wth a foreign key."
+	end # if
+	if assName.to_s[-4..-1]=='_ids' then
+		return false # causes confusion with automatic _ids and _ids= generated for to_many assoiations
+	end #if
+	if respond_to?(assName) and respond_to?((assName.to_s+'=').to_sym)  then
+		return true
+	else
+		return false
+	end
+end #def
+def is_association_to_one?(assName)
+	if is_association?(assName)  and !respond_to?((assName.to_s.singularize+'_ids').to_sym) and !respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+		return true
+	else
+		return false
+	end
+end #def
+def is_association_to_many?(assName)
+	if is_association?(assName)  and respond_to?((assName.to_s.singularize+'_ids').to_sym) and respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+		return true
+	else
+		return false
+	end
+end #def
+def Generic_Table.tables
+	TableSpec.new.tables
+end #def
+def Generic_Table.eval_constant(constant_name)
+	constant_name.constantize
+rescue NameError
+	return nil
+end #def
+def Generic_Table.is_table?(table_name)
+	raise "table_name must include only [A-Za-z0-9_]." if (table_name =~ /^[A-Za-z0-9_]+$/).nil?
+	if Generic_Table.table_exists?(table_name) then
+		return true
+	#~ elsif Generic_Table.table_exists?(table_name.tableize) then
+		#~ return true
+	else
+		return false
+	end #if
+end #def
+def Generic_Table.is_ActiveRecord_table?(model_class_name)
+	if Generic_Table.is_table?(model_class_name.tableize) then
+		model_class=Generic_Table.eval_constant(model_class_name.classify)
+		model_class.new.kind_of?(ActiveRecord::Base)
+	else
+		return false
+	end #if
+end #def
+def Generic_Table.is_generic_table?(model_class_name)
+	return false if (model_class_name =~ /_ids$/)
+	if Generic_Table.is_ActiveRecord_table?(model_class_name) then
+		model_class=Generic_Table.eval_constant(model_class_name.classify)
+		model_class.module_included?(Generic_Table)
+	else
+		return false
+	end #if
+end #def
+def Generic_Table.table_exists?(table_name)
+	TableSpec.connection.table_exists?(table_name)
+end #def
+def is_matching_association?(assName)
+	 if is_association?(assName) then
+		 model_class=Generic_Table.eval_constant(assName.classify)
+		 if model_class.nil? then
+			 signal "Association #{assName.classify} is not a defined constant."
+		end #if
+		 if model_class.new.is_association?(self.class.table_name) then
+			 return true
+		elsif model_class.new.is_association?(self.class.table_name.singularize)  then
+			return true
+		else
+			 return false
+		end #if
+	else
+		return false
+	end #if
+end #def
+
 end # module
 

@@ -61,9 +61,11 @@ def canonicalName(verbose=false)
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
 		return "Symbol :#{to_s}"
 	elsif self.class.name=='Module' then
-		puts("name=#{name}") if verbose
-		puts("nesting.inspect=#{nesting.inspect}") if verbose
-		return "Module #{name}"
+		if name=='' then
+			return "Module Id:#{sprintf("%X",object_id)} in (#{ancestors.inspect})"
+		else
+			return "Module #{name}"
+		end #if
 	elsif instance_of?(ActiveRecord::Base) then
 		return "ActiveRecord::Base #{self.class.name}"		
 	elsif kind_of?(ActiveRecord::Base) then
@@ -230,13 +232,17 @@ def module_included?(symbol)
 	end #if
 end #def
 def method_contexts(depth=0)
-	[self]+ancestors[0..depth]
+	if instance_of?(Class) then
+		ancestors[0..depth].uniq
+	else
+		[self]+self.class.ancestors[0..depth].uniq
+	end #if
 end #def
 def context_names(depth=0)
 	method_contexts(depth).map{|c| c.canonicalName}
 end #def
-def matching_methods(regexp)
-		self.public_methods(false).select {|m| m[Regexp.new(regexp),0] }
+def matching_methods(regexp,all=false)
+		self.public_methods(all).select {|m| m[Regexp.new(regexp),0] }
 end #def
 def method_context(methodName)
 	if respond_to(methodName) then
@@ -246,10 +252,12 @@ def method_context(methodName)
 	end #if
 end #def
 def matching_methods_in_context(regexp,depth=0)
+	ret={}
 	method_contexts(depth).map do |context|
 		instance_meths=context.matching_methods(regexp)
-		[context.canonicalName,instance_meths] # label level
+		ret[context.canonicalName]=instance_meths # label level
 	end #map
+	ret
 end #def
 
 end #class
