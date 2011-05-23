@@ -1,24 +1,8 @@
 <h1>Editing transfer</h1>
+<%= render 'form' %>
 
-<% form_for(@transfer) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :account_id %><br />
-	<%= collection_select(:transfer,:account_id,Account.all, :id, :name) %>
-
-  </p>
-  <p>
-    <%= f.label :amount %><br />
-    <%= f.text_field :amount %>
-  </p>
-  <p>
-    <%= f.label :posted %><br />
-    <%= f.date_select :posted %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+<%= semantic_form_for @transfer do |f| %>
+  <%= f.semantic_errors %>
 <% end %>
 
 <%= link_to 'Show', @transfer %> |
