@@ -321,6 +321,9 @@ def foreign_key_names
 	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
 	return possible_foreign_keys
 end #def
+def foreign_key_association_names
+	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
+end #def
 def Match_and_strip(regexp=/=$/)
 	matching_methods(regexp).map do |m|
 		m.sub(regexp,'')

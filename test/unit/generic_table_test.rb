@@ -143,7 +143,7 @@ test "matching associations" do
 	assert_equal_sets(["acquisition_stream_specs",  "acquisitions", "frequency"], Test_Table.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)})
 	assert_not_empty(Test_Table.new.foreign_key_names)
 	
-	assert_equal(Test_Table.new.foreign_key_names.map {|fk| fk.sub(/_id$/,'')}-Test_Table.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)},[])
+	assert_equal(Test_Table.new.foreign_key_association_names-Test_Table.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)},[])
 
 	assert_respond_to(TableSpec.new,:frequency)
 	assert_nil(TableSpec.new.frequency)
