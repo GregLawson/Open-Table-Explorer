@@ -1,6 +1,6 @@
 Loaded suite test/unit/frequency_test
 Started
-.
-Finished in 14.248671 seconds.
+....
+Finished in 14.56346 seconds.
 
-1 tests, 1 assertions, 0 failures, 0 errors
+4 tests, 1030 assertions, 0 failures, 0 errors
