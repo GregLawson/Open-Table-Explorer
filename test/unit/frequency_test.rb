@@ -27,6 +27,7 @@ test "specific, stable and working" do
 end #test
 test "aaa test new assertions" do  # aaa to output first
   assert_equal(@model_class.new.foreign_key_association_names-@model_class.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)},[])
+	assert_matching_association(@table_name,"table_specs")
 end #test
 
 end #class
