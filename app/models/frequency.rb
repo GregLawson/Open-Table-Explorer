@@ -1,4 +1,5 @@
 class Frequency < ActiveRecord::Base
+include Generic_Table
 has_many :table_specs
 def logical_primary_key
 	return :frequency_name
