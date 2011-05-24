@@ -2,5 +2,9 @@
 
 <%= render 'form' %>
 
+<%= semantic_form_for @bug do |f| %>
+  <%= f.semantic_errors %>
+<% end %>
+
 <%= link_to 'Show', @bug %> |
 <%= link_to 'Back', bugs_path %>
