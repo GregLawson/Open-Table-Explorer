@@ -5,20 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-module Generic_Table
-def Generic_Table.rubyClassName(model_class_name)
-	model_class_name=model_class_name[0,1].upcase+model_class_name[1,model_class_name.length-1] # ruby class names are constants and must start with a capital letter.
-	# remainng case is unchanged to allow camel casing to separate words for model names.
-	return model_class_name
-end #def
-def Generic_Table.classReference(model_class_name,code_body=nil)
-	rubyClassName=Generic_Table.rubyClassName(model_class_name)
-	model_class_eval=eval("#{classDefiniton(Generic_Table.rubyClassName(model_class_name),code_body)}\n#{rubyClassName}")
-	return model_class_eval
-end #def
-end #module
-module Generic_Acquisition
-end #module
 class AcquisitionInterface < ActiveRecord::Base
 has_many :acquisition_stream_specs
 include Generic_Table

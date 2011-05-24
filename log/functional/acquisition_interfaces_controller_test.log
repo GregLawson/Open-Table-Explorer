@@ -1,21 +1,6 @@
 Loaded suite test/functional/acquisition_interfaces_controller_test
 Started
-..EE...
-Finished in 17.434511 seconds.
+.......
+Finished in 17.418948 seconds.
 
-  1) Error:
-test_should_get_edit(AcquisitionInterfacesControllerTest):
-ActionView::Template::Error: undefined method `acquisition_class_name' for #<AcquisitionInterface:0xb5936bf0>
-    app/views/acquisition_interfaces/edit.html.erb:47:in `_app_views_acquisition_interfaces_edit_html_erb__55090838__624327448_0'
-    test/functional/acquisition_interfaces_controller_test.rb:29:in `test_should_get_edit'
-
-  2) Error:
-test_should_get_index(AcquisitionInterfacesControllerTest):
-ActionView::Template::Error: undefined method `acquisition_class_name' for #<AcquisitionInterface:0xb58d731c>
-    app/views/acquisition_interfaces/index.html.erb:19:in `_app_views_acquisition_interfaces_index_html_erb__794987579__624520718_0'
-    app/views/acquisition_interfaces/index.html.erb:15:in `each'
-    app/views/acquisition_interfaces/index.html.erb:15:in `_app_views_acquisition_interfaces_index_html_erb__794987579__624520718_0'
-    app/controllers/acquisition_interfaces_controller.rb:7:in `index'
-    test/functional/acquisition_interfaces_controller_test.rb:5:in `test_should_get_index'
-
-7 tests, 7 assertions, 0 failures, 2 errors
+7 tests, 10 assertions, 0 failures, 0 errors
