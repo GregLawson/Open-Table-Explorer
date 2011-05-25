@@ -88,7 +88,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 						#~ puts "error=#{error.inspect}"
 						#~ puts "trace=#{trace.inspect}"
 						#~ puts "context=#{context.inspect}"
-						puts "insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');"
+						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');") }						
 					end #scan
 				elsif error_type=='Failure' then
 					report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m) do |trace,error|
@@ -97,7 +97,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 						#~ puts "error=#{error.inspect}"
 						#~ puts "trace=#{trace.inspect}"
 						#~ puts "context=#{context.inspect}"
-						puts "insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');"
+						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');") }						
 					end #scan
 				else
 					puts "pre_match=#{s.pre_match}"
@@ -210,4 +210,63 @@ task :change_test do
 	sh "ruby functional/acquisition_stream_specs_controller_test.rb "
 	sh "ruby functional/acquisition_interfaces_controller_test.rb "
 end
+wiki_directory='../Open-Table-Explorer.wiki'
+directory wiki_directory
+
+task :wiki_toc do
+	wiki_files=FileList["#{wiki_directory}/*"]
+	delete_regexp=%r{^../[a-zA-Z0-9-.]+/}
+	parse_reference_regexp=%r{\[\[([0-9\/.]*)-?([a-z-A-Z0-9? '-]+)\]\]}
+	parse_filename_regexp=%r{([0-9\/.]*)-?([a-z-A-Z0-9-?']+)[.]([a-z]+)}
+	sections={}
+	wiki_files.map do |f|
+		hash={}
+		f.sub!(delete_regexp,'')
+		parse=parse_filename_regexp.match(f)
+		if parse.nil? then
+			puts "filename not parsed: #{f}"
+		else
+			hash[:section_number]=parse[1]
+			hash[:filename]=parse[2]
+			hash[:extension]=parse[3]
+			sections[parse[2].downcase.strip]=hash
+		end #if
+	end #mapo
+	#~ puts "sections=#{sections.inspect}"
+	sections.each do |fileKey,hash|
+		#~ puts "fileKey=#{fileKey}"
+		puts "hash=#{hash.inspect}"
+		if ['md','mediawiki','creole'].include?(hash[:extension]) then
+
+			write_path=wiki_directory+'/updated/'+hash[:section_number]+"-"+hash[:filename]+'.'+hash[:extension]			
+			open(write_path,'w') do |write_file|
+
+			
+			path=wiki_directory+'/'+hash[:section_number]+"-"+hash[:filename]+'.'+hash[:extension]
+			IO.foreach(path) do |line|
+				#~ puts "readline: #{line}"
+				matchData=parse_reference_regexp.match(line) 
+				if matchData then					
+					puts "found: matchData=#{matchData.inspect}"
+					key=matchData[2].strip.gsub(' ','-').downcase
+					puts "key=#{key}"
+					newHash=sections[key]
+					puts "newHash=#{newHash.inspect}"
+					if newHash.nil? then
+						puts "reference to nonexistant section [[#{matchData[2]}]] in #{line}"
+					else
+						newRef=newHash[:section_number]+'-'+matchData[2]
+						line=matchData.pre_match+'[['+newRef+']]'+matchData.post_match
+						puts "#{matchData} becomes #{'[['+newRef+']]'}"
+					end #if
+				else
+#					puts "no match: regexp:#{parse_reference_regexp.to_s} in #{line}"
+				end #if
+				#~ puts line
+				write_file.print line
+			end #IO.foreach
+			end #open
+		end #if
+	end #each
+end #task
 end # namespace testing
