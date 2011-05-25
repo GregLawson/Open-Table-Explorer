@@ -1,21 +1,6 @@
 Loaded suite test/functional/accounts_controller_test
 Started
-..E.E..
-Finished in 23.769299 seconds.
+.......
+Finished in 15.10189 seconds.
 
-  1) Error:
-test_should_get_edit(AccountsControllerTest):
-ActionView::Template::Error: undefined method `model_name' for NilClass:Class
-    app/views/accounts/_form.html.erb:1:in `_app_views_accounts__form_html_erb__376672143__624308898_448416'
-    app/views/accounts/edit.html.erb:3:in `_app_views_accounts_edit_html_erb___286919254__624301938_0'
-    test/functional/accounts_controller_test.rb:29:in `test_should_get_edit'
-
-  2) Error:
-test_should_get_new(AccountsControllerTest):
-ActionView::Template::Error: undefined method `model_name' for NilClass:Class
-    app/views/accounts/_form.html.erb:1:in `_app_views_accounts__form_html_erb__376672143__624308898_448416'
-    app/views/accounts/new.html.erb:3:in `_app_views_accounts_new_html_erb___459041735__625056358_0'
-    app/controllers/accounts_controller.rb:29:in `new'
-    test/functional/accounts_controller_test.rb:11:in `test_should_get_new'
-
-7 tests, 8 assertions, 0 failures, 2 errors
+7 tests, 10 assertions, 0 failures, 0 errors
