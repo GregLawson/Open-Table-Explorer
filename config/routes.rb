@@ -1,4 +1,6 @@
 Rtest3::Application.routes.draw do
+  resources :tests
+
   resources :error_types
 
   resources :bugs

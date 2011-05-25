@@ -1,0 +1,37 @@
+<h1>Listing tests</h1>
+
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Test</th>
+    <th>Test type</th>
+    <th>Environment</th>
+    <th>Tests</th>
+    <th>Assertions</th>
+    <th>Failures</th>
+    <th>Errors</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tests.each do |test| %>
+  <tr>
+    <td><%= test.model %></td>
+    <td><%= test.test %></td>
+    <td><%= test.test_type %></td>
+    <td><%= test.environment %></td>
+    <td><%= test.tests %></td>
+    <td><%= test.assertions %></td>
+    <td><%= test.failures %></td>
+    <td><%= test.errors %></td>
+    <td><%= link_to 'Show', test %></td>
+    <td><%= link_to 'Edit', edit_test_path(test) %></td>
+    <td><%= link_to 'Destroy', test, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Test', new_test_path %>

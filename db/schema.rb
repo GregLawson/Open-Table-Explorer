@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110511170200) do
+ActiveRecord::Schema.define(:version => 20110524192813) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -516,6 +516,19 @@ ActiveRecord::Schema.define(:version => 20110511170200) do
   end
 
   add_index "tedprimaries", ["created_at", "switched_age"], :name => "redo"
+
+  create_table "tests", :force => true do |t|
+    t.string   "model"
+    t.string   "test"
+    t.string   "test_type"
+    t.string   "environment"
+    t.integer  "tests"
+    t.integer  "assertions"
+    t.integer  "failures"
+    t.integer  "errors"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "transactions", :force => true do |t|
     t.datetime "Date",          :default => '2009-12-31 00:00:00'
