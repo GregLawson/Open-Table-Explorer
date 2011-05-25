@@ -1,6 +1,6 @@
 Loaded suite test/unit/acquisition_test
 Started
-......
-Finished in 50.789001 seconds.
+.....
+Finished in 23.053443 seconds.
 
-6 tests, 145755 assertions, 0 failures, 0 errors
+5 tests, 3502 assertions, 0 failures, 0 errors
