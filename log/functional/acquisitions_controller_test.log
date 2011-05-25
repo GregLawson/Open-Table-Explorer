@@ -1,37 +1,14 @@
 Loaded suite test/functional/acquisitions_controller_test
 Started
-..EEEE.
-Finished in 23.247269 seconds.
+....E..
+Finished in 20.622935 seconds.
 
   1) Error:
-test_should_get_edit(AcquisitionsControllerTest):
-ActionView::Template::Error: undefined method `acquisition_stream_id' for #<Acquisition:0xb5862224>
-    app/views/acquisitions/edit.html.erb:20:in `_app_views_acquisitions_edit_html_erb__575985571__624762558_0'
-    app/views/acquisitions/edit.html.erb:3:in `_app_views_acquisitions_edit_html_erb__575985571__624762558_0'
-    test/functional/acquisitions_controller_test.rb:29:in `test_should_get_edit'
-
-  2) Error:
-test_should_get_index(AcquisitionsControllerTest):
-ActionView::Template::Error: undefined method `acquisition_stream_id' for #<Acquisition:0xb59ee5fc>
-    app/views/acquisitions/index.html.erb:20:in `_app_views_acquisitions_index_html_erb___462330270__624120938_0'
-    app/views/acquisitions/index.html.erb:14:in `each'
-    app/views/acquisitions/index.html.erb:14:in `_app_views_acquisitions_index_html_erb___462330270__624120938_0'
-    app/controllers/acquisitions_controller.rb:7:in `index'
-    test/functional/acquisitions_controller_test.rb:5:in `test_should_get_index'
-
-  3) Error:
 test_should_get_new(AcquisitionsControllerTest):
-ActionView::Template::Error: undefined method `acquisition_stream_id' for #<Acquisition:0xb592f24c>
-    app/views/acquisitions/new.html.erb:8:in `_app_views_acquisitions_new_html_erb__939500544__624336478_0'
-    app/views/acquisitions/new.html.erb:3:in `_app_views_acquisitions_new_html_erb__939500544__624336478_0'
+ActionView::Template::Error: undefined method `acquisition_stream_id' for #<Acquisition:0xb617a3fc>
+    app/views/acquisitions/new.html.erb:8:in `_app_views_acquisitions_new_html_erb__939500544__619986918_0'
+    app/views/acquisitions/new.html.erb:3:in `_app_views_acquisitions_new_html_erb__939500544__619986918_0'
     app/controllers/acquisitions_controller.rb:29:in `new'
     test/functional/acquisitions_controller_test.rb:11:in `test_should_get_new'
 
-  4) Error:
-test_should_show_acquisition(AcquisitionsControllerTest):
-ActionView::Template::Error: undefined method `acquisition_stream_id' for #<Acquisition:0xb5708af4>
-    app/views/acquisitions/show.html.erb:13:in `_app_views_acquisitions_show_html_erb__13211702__625464488_0'
-    app/controllers/acquisitions_controller.rb:18:in `show'
-    test/functional/acquisitions_controller_test.rb:24:in `test_should_show_acquisition'
-
-7 tests, 5 assertions, 0 failures, 4 errors
+7 tests, 9 assertions, 0 failures, 1 errors

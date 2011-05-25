@@ -1,6 +1,11 @@
 Loaded suite test/unit/table_spec_test
 Started
-......
-Finished in 14.010776 seconds.
+.....E
+Finished in 15.953126 seconds.
 
-6 tests, 5179 assertions, 0 failures, 0 errors
+  1) Error:
+test_specific,_stable_and_working(TableSpecTest):
+NoMethodError: undefined method `is_association?' for #<TableSpecTest:0xb6234a90>
+    test/unit/table_spec_test.rb:42:in `test_specific,_stable_and_working'
+
+6 tests, 4222 assertions, 0 failures, 1 errors
