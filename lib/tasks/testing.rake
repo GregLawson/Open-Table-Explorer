@@ -73,6 +73,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 	header= blocks[0]
 	errors=blocks[1..-2]
 	summary=blocks[-1]
+	puts "summary=#{summary.split(' ').inspect}"
 	if !errors.nil? then
 		errors.each do |error|
 			error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
