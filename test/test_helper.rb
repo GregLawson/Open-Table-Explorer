@@ -1,13 +1,5 @@
 class Object
 end #class
-module Generic_Table
-def similar_methods(symbol)
-	singular='^'+symbol.to_s.singularize
-	plural='^'+symbol.to_s.pluralize
-	table='^'+symbol.to_s.tableize
-	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
-end #def
-end #module
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
@@ -21,100 +13,6 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-def testCallResult(obj,methodName,*arguments)
-	assert_instance_of(Symbol,methodName,"testCallResult caller=#{caller.inspect}")
-	explain_assert_respond_to(obj,methodName)
-	m=obj.method(methodName)
-	return m.call(*arguments)
-end #def
-def testCall(obj,methodName,*arguments)
-	result=testCallResult(obj,methodName,*arguments)
-	assert_not_nil(result)
-	message="\n#{obj.canonicalName}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
-	if result.instance_of?(Array) then
-		assert_operator(result.size,:>,0,message)
-	elsif result.instance_of?(String) then
-		assert_operator(result.length,:>,0,message)
-	elsif result.kind_of?(Acquisition) then
-		assert(!result.acquisition_data.empty? || !result.error.empty?) 
-	end
-	return result
-end #def
-def testAnswer(obj,methodName,answer,*arguments)
-	result=testCallResult(obj,methodName,*arguments)	
-	assert_equal(answer,result)
-	return result
-end #def
-def explain_assert_respond_to(obj,methodName,message='')
-	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
-	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
-	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
-	message1=message+"Object #{obj.canonicalName(false)} of class='#{obj.class}' does not respond to method :#{methodName}"
-	if obj.instance_of?(Class) then
-		if obj.instance_methods(true).include?(methodName.to_s) then
-			message= "It's an instance, not a class method."
-		else
-			if obj.instance_methods(false).empty? then
-				message="#{message1}; has no noninherited class methods."
-			else
-				message="#{message1}; noninherited class methods= #{obj.instance_methods(false).inspect}"
-			end #if
-		end #if
-		assert_respond_to(obj,methodName,message)
-	else # not class
-		noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
-#		assert_equal(obj.class.public_instance_methods,obj.public_class_methods)
-		if obj.respond_to?(methodName.to_s) then
-			return # OK not ActiveRecord
-		#~ elsif obj.activeRecordTableNotCreatedYet?(obj) then
-			#~ message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj).inspect}"
-		else
-			message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods.inspect}"
-			assert_respond_to(obj,methodName,message)
-		end
-	end
-end
-def assert_public_instance_method(obj,methodName,message='')
-	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
-	if obj.respond_to?(methodName) then
-		message='expect to pass'
-	elsif obj.respond_to?(methodName.to_s.singularize) then
-		message="but singular #{methodName.to_s.singularize} is a method"
-	elsif obj.respond_to?(methodName.to_s.pluralize) then
-		message="but plural #{methodName.to_s.pluralize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize) then
-		message="but tableize #{methodName.to_s.tableize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
-		message="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
-	else
-		message="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
-	end #if
-	assert_respond_to( obj, methodName,message)
-end #def
-def assert_not_empty(object)
-	assert(!object.empty?)
-end #def
-def assert_empty(object)
-	assert(object.empty?,"#{object.inspect} is not empty.")
-end #def
-def assert_equal_sets(array1,array2)
-	assert_equal(Set.new(array1),Set.new(array2))
-end #def
-def assert_module_included(klass,moduleName)
-#The assertion upon which all other assertions are based. Passes if the block yields true.
-  assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
-    klass.module_included?(moduleName)
-  end
-
-end #def
-def assert_association(ar_from_fixture,assName)
-	assName=ar_from_fixture.association_method_name(assName)
-	assName=assName.to_sym
-	assert_instance_of(Symbol,assName,"assert_association")
-	assert_public_instance_method(ar_from_fixture,assName)
-	explain_assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
-	assert(ar_from_fixture.is_association?(assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
-end #def
 # flexible access to all fixtures
 def fixtures(table_name)
 	table_name=table_name.to_s
@@ -192,6 +90,101 @@ def fixture_labels(table_name)
 #		puts "fix.at(0)=#{fix.at(0).inspect}"
 		fix.at(0)
 	end #collect
+end #def
+def testCallResult(obj,methodName,*arguments)
+	assert_instance_of(Symbol,methodName,"testCallResult caller=#{caller.inspect}")
+	explain_assert_respond_to(obj,methodName)
+	m=obj.method(methodName)
+	return m.call(*arguments)
+end #def
+def testCall(obj,methodName,*arguments)
+	result=testCallResult(obj,methodName,*arguments)
+	assert_not_nil(result)
+	message="\n#{obj.canonicalName}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
+	if result.instance_of?(Array) then
+		assert_operator(result.size,:>,0,message)
+	elsif result.instance_of?(String) then
+		assert_operator(result.length,:>,0,message)
+	elsif result.kind_of?(Acquisition) then
+		assert(!result.acquisition_data.empty? || !result.error.empty?) 
+	end
+	return result
+end #def
+def testAnswer(obj,methodName,answer,*arguments)
+	result=testCallResult(obj,methodName,*arguments)	
+	assert_equal(answer,result)
+	return result
+end #def
+
+def explain_assert_respond_to(obj,methodName,message='')
+	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
+	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
+	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
+	message1=message+"Object #{obj.canonicalName(false)} of class='#{obj.class}' does not respond to method :#{methodName}"
+	if obj.instance_of?(Class) then
+		if obj.instance_methods(true).include?(methodName.to_s) then
+			message= "It's an instance, not a class method."
+		else
+			if obj.instance_methods(false).empty? then
+				message="#{message1}; has no noninherited class methods."
+			else
+				message="#{message1}; noninherited class methods= #{obj.instance_methods(false).inspect}"
+			end #if
+		end #if
+		assert_respond_to(obj,methodName,message)
+	else # not class
+		noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
+#		assert_equal(obj.class.public_instance_methods,obj.public_class_methods)
+		if obj.respond_to?(methodName.to_s) then
+			return # OK not ActiveRecord
+		#~ elsif obj.activeRecordTableNotCreatedYet?(obj) then
+			#~ message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj).inspect}"
+		else
+			message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods.inspect}"
+			assert_respond_to(obj,methodName,message)
+		end
+	end
+end
+def assert_public_instance_method(obj,methodName,message='')
+	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
+	if obj.respond_to?(methodName) then
+		message='expect to pass'
+	elsif obj.respond_to?(methodName.to_s.singularize) then
+		message="but singular #{methodName.to_s.singularize} is a method"
+	elsif obj.respond_to?(methodName.to_s.pluralize) then
+		message="but plural #{methodName.to_s.pluralize} is a method"
+	elsif obj.respond_to?(methodName.to_s.tableize) then
+		message="but tableize #{methodName.to_s.tableize} is a method"
+	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
+		message="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
+	else
+		message="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
+	end #if
+	assert_respond_to( obj, methodName,message)
+end #def
+def assert_not_empty(object)
+	assert(!object.empty?)
+end #def
+def assert_empty(object)
+	assert(object.empty?,"#{object.inspect} is not empty.")
+end #def
+def assert_equal_sets(array1,array2)
+	assert_equal(Set.new(array1),Set.new(array2))
+end #def
+def assert_module_included(klass,moduleName)
+#The assertion upon which all other assertions are based. Passes if the block yields true.
+  assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
+    klass.module_included?(moduleName)
+  end
+
+end #def
+def assert_association(ar_from_fixture,assName)
+	assName=ar_from_fixture.association_method_name(assName)
+	assName=assName.to_sym
+	assert_instance_of(Symbol,assName,"assert_association")
+	assert_public_instance_method(ar_from_fixture,assName)
+	explain_assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
+	assert(ar_from_fixture.is_association?(assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
 end #def
 
 def assert_model_class(model_name)
