@@ -60,14 +60,18 @@ def after(s,before,pattern)
 end #def
 def file_bug_reports(ruby_source,log_file,test=nil)
 	path=Pathname.new(ruby_source)
-	table=path.basename.to_s.delete('_controller_test.rb')
-	table=table.delete('_test.rb')
-	test_type=path.basename.to_s.split('_')[1][0..-4]
-	#~ puts "test_type=#{test_type}"
-	test_type='unit' if test_type=='test'
-	test_type='functional' if test_type=='controller'
-	#~ puts "ruby_source=#{ruby_source}"
-#	log=StringScanner.new(IO.read(log_file))
+	#~ puts "path=#{path.inspect}"
+	words=path.basename.to_s.split('_')
+#	puts "words=#{words.inspect}"
+	raise "not a test pathname =#{path.inspect}" if words[-1]!='test.rb'
+	if words[-2]=='controller' then
+		test_type='functional'
+		table=words[0..-3].join('_')
+	else
+		test_type='unit'
+		table=words[0..-2].join('_')
+	end #if
+	#~ puts "test_type='#{test_type}'"
 	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
 #	puts "blocks=#{blocks.inspect}"
 	header= blocks[0]
@@ -75,7 +79,9 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 	summary=blocks[-1]
 	if summary.nil? then
 	else
-		puts "summary=#{summary.split(' ').inspect}"
+		#~ puts "summary=#{summary.split(' ').inspect}"
+		summary=summary.split(' ')
+		open('db/tests.sql',"a" ) {|f| f.write("insert into test_runs(model,test,test_type,environment,tests,assertions,failures,tests_stop_on_error) values('#{table}','#{ENV["TEST"]}','#{test_type}','#{ENV["RAILS_ENV"]}',#{summary[0]},#{summary[2]},#{summary[4]},#{summary[6]});\n") }
 	end #if
 	if !errors.nil? then
 		errors.each do |error|
@@ -92,7 +98,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 						#~ puts "error=#{error.inspect}"
 						#~ puts "trace=#{trace.inspect}"
 						#~ puts "context=#{context.inspect}"
-						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');") }						
+						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');\n") }						
 					end #scan
 				elsif error_type=='Failure' then
 					report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m) do |trace,error|
@@ -101,7 +107,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 						#~ puts "error=#{error.inspect}"
 						#~ puts "trace=#{trace.inspect}"
 						#~ puts "context=#{context.inspect}"
-						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');") }						
+						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context) values('#{url}','#{error.tr("'",'`')}','#{context}');\n") }						
 					end #scan
 				else
 					puts "pre_match=#{s.pre_match}"
@@ -127,19 +133,19 @@ task :summarize do
 	summarize
 end #task
 task :unit_test do
-	plural_table = ENV["TABLE"] || "accounts"
+	plural_table = ENV["TABLE"].pluralize  || "accounts"
 	test = ENV["TEST"]
 	unit_test(plural_table,test)
 #	summarize
 end #task
 task :controller_test do
-	plural_table = ENV["TABLE"] || "accounts"
+	plural_table = ENV["TABLE"].pluralize || "accounts"
 	test = ENV["TEST"]
 	controller_test(plural_table,test)
 #	summarize
 end #task
 task :full_unit_test do
-	plural_table = ENV["TABLE"] || "accounts"
+	plural_table = ENV["TABLE"].pluralize  || "accounts"
 	test = ENV["TEST"]
 	full_unit_test(plural_table,test)
 #	summarize
