@@ -1,0 +1,33 @@
+<h1>Listing ruby_interfaces</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Library</th>
+    <th>Interface code</th>
+    <th>Return code</th>
+    <th>Rescue code</th>
+    <th>Type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ruby_interfaces.each do |ruby_interface| %>
+  <tr>
+    <td><%= ruby_interface.name %></td>
+    <td><%= ruby_interface.library %></td>
+    <td><%= ruby_interface.interface_code %></td>
+    <td><%= ruby_interface.return_code %></td>
+    <td><%= ruby_interface.rescue_code %></td>
+    <td><%= ruby_interface.type %></td>
+    <td><%= link_to 'Show', ruby_interface %></td>
+    <td><%= link_to 'Edit', edit_ruby_interface_path(ruby_interface) %></td>
+    <td><%= link_to 'Destroy', ruby_interface, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ruby interface', new_ruby_interface_path %>

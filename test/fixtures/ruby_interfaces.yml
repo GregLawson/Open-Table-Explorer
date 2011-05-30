@@ -1,0 +1,69 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+XML:
+  name: XML
+  library: 
+  interface_code:  @parsedData= REXML::Document.new(dataToParse)\nreturn @parsedData.get_elements(selection)\n variableHash=Hash.new\n@parsedData.each do |s|\nputs "s.inner_html=#{s.inner_html}" if $DEBUG\n variableHash[attrName]=s[0].to_s\nend
+
+  return_code: 
+  rescue_code: 
+  type: 
+
+JSON:
+  name: JSON
+  library: 
+  interface_code:  @parsedData = JSON.parse(dataToParse)\ncv=result['CurrentValues']\n@variableHash=Hash.new\ncv.each do |j|\nname=sqlForm("#{j['Name']}_#{j['Unit']}")\n@variableHash[name]= j['Value']\nend #each\nreturn variableHash
+  return_code: 
+  rescue_code: 
+  type: 
+
+HTML:
+  name: HTML
+  library: hpricot
+  interface_code:  @parsedData= Hpricot(dataToParse).search(selection)\n@variableHash=Hash.new\n@parsedData.each do |s|\nend
+  return_code: 
+  rescue_code: 
+  type: 
+
+Binary:
+  name: Binary
+  library: 
+  interface_code: @parsedData=dataToParse.unpack(selection)
+  return_code: 
+  rescue_code: 
+  type: 
+
+RegExp:
+  name: RegExp
+  library: RegExp_Parse
+  interface_code: @parsedData=dataToParse
+  return_code: 
+  rescue_code: 
+  type: 
+
+HTTP:
+  name: HTTP
+  interface_code: @acquisition[:acquisition_data]= Net::HTTP.get(@stream.uri)
+  rescue_code: 
+  library: net/http
+  return_code: 
+  type: 
+  
+Shell:
+  name: Shell
+  library: 
+  interface_code: @acquisition[:acquisition_data]=`#{@stream.schemelessUrl} 2>&1`
+  rescue_code: 
+  library:
+  return_code: 
+  type: 
+  
+File:
+  name: File
+  library: 
+  interface_code: @acquisition[:acquisition_data]=IO.read(@stream.schemelessUrl)
+  rescue_code: 
+  library:
+  return_code: 
+  type: 
+  

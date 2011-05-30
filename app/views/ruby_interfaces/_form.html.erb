@@ -1,0 +1,41 @@
+<%= form_for(@ruby_interface) do |f| %>
+  <% if @ruby_interface.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ruby_interface.errors.count, "error") %> prohibited this ruby_interface from being saved:</h2>
+
+      <ul>
+      <% @ruby_interface.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :library %><br />
+    <%= f.text_field :library %>
+  </div>
+  <div class="field">
+    <%= f.label :interface_code %><br />
+    <%= f.text_area :interface_code %>
+  </div>
+  <div class="field">
+    <%= f.label :return_code %><br />
+    <%= f.text_area :return_code %>
+  </div>
+  <div class="field">
+    <%= f.label :rescue_code %><br />
+    <%= f.text_area :rescue_code %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br />
+    <%= f.text_field :type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

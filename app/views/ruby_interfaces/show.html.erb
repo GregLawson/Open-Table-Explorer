@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @ruby_interface.name %>
+</p>
+
+<p>
+  <b>Library:</b>
+  <%= @ruby_interface.library %>
+</p>
+
+<p>
+  <b>Interface code:</b>
+  <%= @ruby_interface.interface_code %>
+</p>
+
+<p>
+  <b>Return code:</b>
+  <%= @ruby_interface.return_code %>
+</p>
+
+<p>
+  <b>Rescue code:</b>
+  <%= @ruby_interface.rescue_code %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @ruby_interface.type %>
+</p>
+
+
+<%= link_to 'Edit', edit_ruby_interface_path(@ruby_interface) %> |
+<%= link_to 'Back', ruby_interfaces_path %>
