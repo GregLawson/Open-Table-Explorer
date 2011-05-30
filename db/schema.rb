@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524192813) do
+ActiveRecord::Schema.define(:version => 20110530155127) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -403,6 +403,17 @@ ActiveRecord::Schema.define(:version => 20110524192813) do
     t.datetime "updated_at"
   end
 
+  create_table "ruby_interfaces", :force => true do |t|
+    t.string   "name"
+    t.string   "library"
+    t.text     "interface_code"
+    t.text     "return_code"
+    t.text     "rescue_code"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "stations", :force => true do |t|
     t.string  "dtv"
     t.string  "antennatype"
@@ -516,6 +527,19 @@ ActiveRecord::Schema.define(:version => 20110524192813) do
   end
 
   add_index "tedprimaries", ["created_at", "switched_age"], :name => "redo"
+
+  create_table "test_runs", :force => true do |t|
+    t.string   "model"
+    t.string   "test"
+    t.string   "test_type"
+    t.string   "environment"
+    t.integer  "tests"
+    t.integer  "assertions"
+    t.integer  "failures"
+    t.integer  "tests_stop_on_error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tests", :force => true do |t|
     t.string   "model"
