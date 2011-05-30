@@ -1,5 +1,12 @@
 module Generic_Table
 require 'global.rb'
+def similar_methods(symbol)
+	singular='^'+symbol.to_s.singularize
+	plural='^'+symbol.to_s.pluralize
+	table='^'+symbol.to_s.tableize
+	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
+end #def
+
 def Generic_Table.activeRecordTableNotCreatedYet?(obj)
 	return (obj.class.inspect=~/^[a-zA-Z0-9_]+\(Table doesn\'t exist\)/)==0
 end #def
@@ -147,11 +154,6 @@ def display(exp)
  puts "#{eval(exp)}"
  puts "#{exp}=#{eval(exp)}"
 end
-def singularTableName2
-#	Global::log.info("in singularTableName self.class=#{self.class}")
-#	Global::log.info("in singularTableName self.to_s=#{self.to_s}")
-	return self.to_s.chop
-end # def
 def Require_Table(tableName=self.to_s)
 #	Global::log.info("in Require_Table self.class=#{self.class}")
 #	Global::log.info("in Require_Table self.to_s=#{self.to_s}")
