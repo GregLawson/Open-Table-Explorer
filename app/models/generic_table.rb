@@ -420,6 +420,14 @@ def association_method_name(association_table_name)
 		return association_table_name.singularize
 	end #if
 end #def
-
+def association_names_to_one
+	return self.class.instance_methods(false).select {|m| is_association_to_one?(m)}
+end #def
+def association_names_to_many
+	return self.class.instance_methods(false).select {|m| is_association_to_many?(m)}
+end #def
+def association_names
+	return self.class.instance_methods(false).select {|m| is_association?(m)}
+end #def
 end # module
 
