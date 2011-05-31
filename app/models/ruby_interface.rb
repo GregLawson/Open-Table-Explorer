@@ -6,45 +6,41 @@
 #
 ###########################################################################
 class RubyInterface < ActiveRecord::Base
+has_many :acquisition_stream_specs
 include Generic_Table
+attr_reader :interaction
+after_initialize :compile_code
 # functons of class only
 # functions of ActiveRecord  instances
-def setup
-	codeBody
-end #def
 def delta(stream)
-	@previousAcq=@acquisition # change detection
-	@acquisition=Acquisition.new # reinitialize
-	@stream=stream
-	@acquisition.acquisition_stream_spec=stream
-	@acquisition.acquisition_stream_spec_id=stream.id
+	@interaction=Acquisition.new # reinitialize
 end #def
 def eval_method(name,code)
 	method_def= "def #{name}\n#{code}\nend\n"
 	return instance_eval(method_def)
+rescue  SyntaxError => exception_raised
+	errors.add(name, 'SyntaxError: ' + exception_raised.inspect, options = {}) 
+	return nil
+else
+	errors.add(name, "Not subclass of SyntaxError: " + "couldn't compile string #{method_def} in context of a ruby_class object.")
+
 end #def
-		acquireBody="if $?==0 then\n"
-		acquireBody+="	@acquisition.error=nil\n"
-		acquireBody+="else\n"
-		acquireBody+="	@acquisition.error=@acquisition.acquisition_data\n"
-		acquireBody+="	@acquisition.acquisition_data=nil\n"
-		acquireBody+="end\n"
-@@Default_Return_Code=acquireBody
+@@Default_Return_Code=''
 		acquireBody="rescue StandardError => exception_raised\n"
-#		acquireBody+="@acquisition.error= 'Error: ' + exception_raised.inspect + 'could not get data from '+stream.url\n"
+#		acquireBody+="@interaction.error= 'Error: ' + exception_raised.inspect + 'could not get data from '+stream.url\n"
 @@Default_Rescue_Code=acquireBody
 
-def codeBody
+def compile_code
 	if library.nil? then
-		eval_method('acquire_method',acquire_data)
+		eval_method('interface_method',interface_code)
 	else
-		eval_method('acquire_method',"require '#{library}'\n#{acquire_data}")
+		eval_method('interface_method',"require '#{library}'\n#{interface_code}")
 	end # if
 	
-	if return_error_code.nil? then
-		eval_method('error_return',@Default_Return_Code)
+	if return_code.nil? then
+		eval_method('error_return',@@Default_Return_Code)
 	else
-		eval_method('error_return',return_error_code)
+		eval_method('error_return',return_code)
 	end #if
 	if rescue_code.nil? then
 		eval_method('rescue_method',@@Default_Rescue_Code)
@@ -54,20 +50,17 @@ def codeBody
 end #def
 # functions parameterized by a acquisition_stream_spec and adding instance detail
 def acquire(stream)
-	delta(stream)
-	before_acquire=@acquisition
-	acquire_method
-	if before_acquire!=@acquisition then
-		puts 'Nothing was acquired and no error was set'
-		@acquisition.error=['Nothing was acquired and no error was set']
+	interface_method
+	if before_acquire==@interaction then
+		@interaction.errors.add(:error,'Nothing was acquired and no error was set')
 	end #if
 	error_return
 	rescue  StandardError => exception_raised
 		rescue_method
 	else
-		@acquisition[:error]= "Not subclass of StandardError: " + "couldn't acquire data from #{url}"
+		@interaction.errors.add("Not subclass of StandardError: " + "couldn't acquire data from #{url}")
 	ensure
-		@acquisition.save
-		return @acquisition
+		@interaction[:error]=errors.full_messages
+		return @interaction
 end #def
 end # class
