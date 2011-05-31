@@ -18,11 +18,11 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 	end #if
 	ruby %Q{-I test #{ruby_test} | tee #{log_file}}  do |ok, res|
 		if  ok
-			puts "ruby ok(status = #{res.inspect})"
+#always happens			puts "ruby ok(status = #{res.inspect})"
 			#~ sh "git add #{ruby_source}"
 			#~ puts IO.read(log_file)
 		else
-			puts "ruby failed(status = #{res.exitstatus})"
+			puts "ruby failed(status = #{res.exitstatus})!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			#~ sh "tail --lines=2 #{log_file}"
 		end
 		file_bug_reports(ruby_source,log_file,test)
