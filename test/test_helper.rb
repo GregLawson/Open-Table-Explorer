@@ -162,11 +162,21 @@ def assert_public_instance_method(obj,methodName,message='')
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #def
-def assert_not_empty(object)
-	assert(!object.empty?)
+def assert_has_associations(model_class,message)
+	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
+	assert_block(message){!model_class.new.association_names.empty?}	
 end #def
-def assert_empty(object)
-	assert(object.empty?,"#{object.inspect} is not empty.")
+def assert_has_instance_methods(model_class,message=nil)
+	message=build_message(message, "? has no public instance methods.", model_class.canonicalName)   
+	assert_block(message){!model_class.instance_methods(false).empty?}
+end #def
+def assert_not_empty(object,message=nil)
+	  message=build_message(message, "? is empty with value ?.", object.canonicalName,object.inspect)   
+	assert_block(message){!object.empty?}
+end #def
+def assert_empty(object,message=nil)
+	  message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
+	assert(message){object.empty?}
 end #def
 def assert_equal_sets(array1,array2)
 	assert_equal(Set.new(array1),Set.new(array2))
@@ -229,6 +239,7 @@ def define_model_of_test
 	assert_instance_of(Class,@model_class)
 	assert_kind_of(ActiveRecord::Base,@model_class.new)
 end #def
+MESSAGE_CONTEXT="In define_association_names of test_helper.rb, "
 def define_association_names
 	define_model_of_test
 	assert_model_class(@model_name)
@@ -240,8 +251,8 @@ def define_association_names
 	@assignable=(@model_class.instance_methods(false).grep(/=$/ )-@assignable_ids).collect {|m| m[0..-2] }
 	@assignable_ids_to_many=@model_class.instance_methods(false).grep(/_ids=$/ ).collect {|m| m[0..-6] }
 	@ids_to_many=@model_class.instance_methods(false).grep(/_ids$/ ).collect {|m| m[0..-5] }
-	assert_not_empty(@model_class.instance_methods(false))
-	assert_not_empty(@assignable)
+	assert_has_instance_methods(@model_class,MESSAGE_CONTEXT)
+	assert_has_associations(@model_class,MESSAGE_CONTEXT)
 #	puts "@model_class.instance_methods(false)=#{@model_class.instance_methods(false).inspect}"
 	assert_not_empty(@model_class.instance_methods(false).grep(/=$/ ))
 	#~ puts "@model_class.instance_methods(false).grep(/=$/ )=#{@model_class.instance_methods(false).grep(/=$/ ).inspect}"
