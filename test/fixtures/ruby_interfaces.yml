@@ -47,7 +47,7 @@ HTTP:
   rescue_code: 
   library: net/http
   return_code: 
-  type: 
+  type: AcquisitionInterface
   
 Shell:
   name: Shell
@@ -56,7 +56,7 @@ Shell:
   rescue_code: 
   library:
   return_code: 
-  type: 
+  type: AcquisitionInterface
   
 File:
   name: File
@@ -65,5 +65,5 @@ File:
   rescue_code: 
   library:
   return_code: 
-  type: 
+  type: AcquisitionInterface
   

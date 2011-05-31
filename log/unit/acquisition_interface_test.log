@@ -1,8 +1,24 @@
 Loaded suite test/unit/acquisition_interface_test
 Started
-.Acquisition.count=889
+Error: #<NoMethodError: You have a nil object when you didn't expect it!
+You might have expected an instance of ActiveRecord::Base.
+The error occurred while evaluating nil.[]=> could not get data from http://192.168.3.193/api/LiveData.xml
+$!=You have a nil object when you didn't expect it!
+You might have expected an instance of ActiveRecord::Base.
+The error occurred while evaluating nil.[]=
+FAcquisition.count=889
 Acquisition.count=890
 ....
-Finished in 31.071031 seconds.
+Finished in 30.26901 seconds.
 
-5 tests, 62 assertions, 0 failures, 0 errors
+  1) Failure:
+test_acquisition(AcquisitionInterfaceTest) [test/unit/acquisition_interface_test.rb:45]:
+Exception raised:
+Class: <NoMethodError>
+Message: <"You have a nil object when you didn't expect it!\nYou might have expected an instance of ActiveRecord::Base.\nThe error occurred while evaluating nil.[]=">
+---Backtrace---
+test/unit/acquisition_interface_test.rb:45:in `test_acquisition'
+test/unit/acquisition_interface_test.rb:45:in `test_acquisition'
+---------------
+
+5 tests, 45 assertions, 1 failures, 0 errors
