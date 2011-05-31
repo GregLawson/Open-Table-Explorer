@@ -75,7 +75,7 @@ def canonicalName(verbose=false)
 	elsif instance_of?(Class) then
 		return "Class #{name}"
 	elsif instance_of?(Array) then
-		return "Array"
+		return "Array instance"
 	elsif kind_of?(Account) then
 		return "Account"
 	elsif instance_of?(Account) then
