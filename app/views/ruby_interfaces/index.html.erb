@@ -19,8 +19,7 @@
     <td><%= ruby_interface.name %></td>
     <td><%= ruby_interface.library %></td>
     <td>
-     <% @ruby_interface=ruby_interface %>
-     <%= render "shared/syntax_errors" %>
+     <%= render :partial => "shared/syntax_errors", :locals => { :code => ruby_interface.interface_code } %>
     </td>
     <td><%= ruby_interface.return_code %></td>
     <td><%= ruby_interface.rescue_code %></td>

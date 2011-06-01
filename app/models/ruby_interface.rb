@@ -5,6 +5,22 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+module Generic_Table
+def Generic_Table.syntax_error(code)
+	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
+	instance_eval(method_def)
+	return nil
+rescue  SyntaxError => exception_raised
+	return exception_raised.to_s
+end #def
+def Generic_Table.no_syntax_error?(code)
+	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
+	instance_eval(method_def)
+	return true
+rescue  SyntaxError => exception_raised
+	return false
+end #def
+end #module
 class RubyInterface < ActiveRecord::Base
 has_many :acquisition_stream_specs
 include Generic_Table
@@ -14,20 +30,6 @@ after_initialize :compile_code
 # functions of ActiveRecord  instances
 def delta(stream)
 	@interaction=Acquisition.new # reinitialize
-end #def
-def syntax_error(code)
-	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
-	instance_eval(method_def)
-	return nil
-rescue  SyntaxError => exception_raised
-	return exception_raised.to_s
-end #def
-def no_syntax_error?(code)
-	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
-	instance_eval(method_def)
-	return true
-rescue  SyntaxError => exception_raised
-	return false
 end #def
 def partition(code,passMask,failMask)
 	lines=code.split("\n")

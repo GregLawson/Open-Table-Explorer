@@ -1,20 +1,20 @@
-  <% if @ruby_interface.no_syntax_error?(@ruby_interface.interface_code) then %>
- <%= render "shared/multi-line.html.erb" %>
+  <% if Generic_Table.no_syntax_error?(code) then %>
+ <%= render :partial =>"shared/multi-line.html.erb", :locals => { :code => code } %>
   <% else %>
  <TABLE BORDER=1>
-  <% @ruby_interface.interface_code.split(/\n/).map do |l| %>
+  <% code.split(/\n/).map do |l| %>
   <TR>
    <TD>
   <%=  l %>
   </TD>
    <TD>
-  <%= @ruby_interface.syntax_error(l)  %>
+  <%= Generic_Table.syntax_error(l)  %>
   </TD>
    <TD>
-  <%= @ruby_interface.syntax_error(@ruby_interface.interface_code)  %>
+  <%= Generic_Table.syntax_error(code)  %>
   </TD>
    <TD>
-  <%= @ruby_interface.syntax_error(@ruby_interface.interface_code.split(/\n/).join("\n"))  %>
+  <%= Generic_Table.syntax_error(code.split(/\n/).join("\n"))  %>
   </TD>
  </TR>
   <% end #map %>

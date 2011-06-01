@@ -76,7 +76,13 @@ Shell:
   interface_code: @acquisition[:acquisition_data]=`#{@stream.schemelessUrl} 2>&1`
   rescue_code: 
   library:
-  return_code: 
+  return_code:  |
+    if $?==0 then
+    @interaction.error=nil
+    else	  
+    @interaction.error=@interaction.acquisition_data\n"
+    @interaction.acquisition_data=nil
+    end
   type: AcquisitionInterface
   
 File:
