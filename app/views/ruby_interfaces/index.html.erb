@@ -8,6 +8,7 @@
     <th>Return code</th>
     <th>Rescue code</th>
     <th>Type</th>
+    <th>Error Message</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,10 +18,14 @@
   <tr>
     <td><%= ruby_interface.name %></td>
     <td><%= ruby_interface.library %></td>
-    <td><%= ruby_interface.interface_code %></td>
+    <td>
+     <% @ruby_interface=ruby_interface %>
+     <%= render "shared/syntax_errors" %>
+    </td>
     <td><%= ruby_interface.return_code %></td>
     <td><%= ruby_interface.rescue_code %></td>
     <td><%= ruby_interface.type %></td>
+    <td><%= ruby_interface.errors %></td>
     <td><%= link_to 'Show', ruby_interface %></td>
     <td><%= link_to 'Edit', edit_ruby_interface_path(ruby_interface) %></td>
     <td><%= link_to 'Destroy', ruby_interface, :confirm => 'Are you sure?', :method => :delete %></td>

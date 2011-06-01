@@ -15,14 +15,39 @@ after_initialize :compile_code
 def delta(stream)
 	@interaction=Acquisition.new # reinitialize
 end #def
+def syntax_error(code)
+	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
+	instance_eval(method_def)
+	return nil
+rescue  SyntaxError => exception_raised
+	return exception_raised.to_s
+end #def
+def no_syntax_error?(code)
+	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
+	instance_eval(method_def)
+	return true
+rescue  SyntaxError => exception_raised
+	return false
+end #def
+def partition(code,passMask,failMask)
+	lines=code.split("\n")
+	testLine=testLine+1
+	testMask=passMask<<testLine
+	if no_syntax_error?(lines.select(testMask).join("\n")) then
+		passMask=testMask
+	else
+		failMask=failMask<<testLine
+	end #if
+
+end #def
 def eval_method(name,code)
 	method_def= "def #{name}\n#{code}\nend\n"
 	return instance_eval(method_def)
 rescue  SyntaxError => exception_raised
 	errors.add(name, 'SyntaxError: ' + exception_raised.inspect, options = {}) 
 	return nil
-else
-	errors.add(name, "Not subclass of SyntaxError: " + "couldn't compile string #{method_def} in context of a ruby_class object.")
+#else
+#	errors.add(name, "Not subclass of SyntaxError: " + "couldn't compile string #{method_def} in context of a ruby_class object.")
 
 end #def
 @@Default_Return_Code=''
