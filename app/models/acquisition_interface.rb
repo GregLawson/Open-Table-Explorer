@@ -29,10 +29,6 @@ def delta(stream)
 	@interaction.acquisition_stream_spec=stream
 	@interaction.acquisition_stream_spec_id=stream.id
 end #def
-def eval_method(name,code)
-	method_def= "def #{name}\n#{code}\nend\n"
-	return instance_eval(method_def)
-end #def
 		acquireBody="if $?==0 then\n"
 		acquireBody+="	@interaction.error=nil\n"
 		acquireBody+="else\n"
