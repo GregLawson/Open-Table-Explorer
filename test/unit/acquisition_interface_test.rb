@@ -16,7 +16,7 @@ end #def
 def acq_and_rescue
 	stream=acquisition_stream_specs(@testURL.to_sym)
 	acq=acquisition_interfaces(:HTTP)
-	acq.interface_method
+	acq.interface_code_method
 	assert(!acq.interaction.error.nil? || !acq.interaction.acquisition_data.nil?)
 rescue  StandardError => exception_raised
 	puts 'Error: ' + exception_raised.inspect + ' could not get data from '+stream.url
@@ -42,7 +42,7 @@ test "acquisition" do
 	assert_nil(acq.interaction.error)
 	assert_nil(acq.interaction.acquisition_data)
 	acq_and_rescue
-	assert_nothing_raised{acq.interface_method}
+	assert_nothing_raised{acq.interface_code_method}
 	assert_not_nil(acq.interaction)
 	assert_equal({},acq.interaction.errors)
 	assert_not_nil(acq.interaction)
@@ -88,16 +88,16 @@ test "default acquisition" do
 
 	acq.interface_code='@interaction[:acquisition_data]=Net::HTTP.get(@stream.uri)'
 	acq.compile_code # recompile eval code
-	assert_nothing_raised{acq.interface_method}
+	assert_nothing_raised{acq.interface_code_method}
 	assert(!acq.interaction.error.nil? || !acq.interaction.acquisition_data.nil?)
 
 	acq.return_code=''
 	acq.compile_code # recompile eval code
-	assert_nothing_raised{acq.error_return}
+	assert_nothing_raised{acq.return_code_method}
 
 	acq.rescue_code=''
 	acq.compile_code # recompile eval code
-	assert_nothing_raised{acq.rescue_method}
+	assert_nothing_raised{acq.rescue_code_method}
 	assert_difference('Acquisition.count') do
 		acq.interaction.save
 	end #assert
@@ -111,7 +111,7 @@ test "default acquisition" do
 
 	acq.interface_code='@interaction[:acquisition_data]=`#{@stream.schemelessUrl} 2>&1`'
 	acq.compile_code # recompile eval code
-	assert_nothing_raised{acq.interface_method}
+	assert_nothing_raised{acq.interface_code_method}
 	assert(!acq.interaction.error.nil? || !acq.interaction.acquisition_data.nil?)
 
 	assert_difference('Acquisition.count') do
