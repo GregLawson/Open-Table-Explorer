@@ -18,7 +18,7 @@ def Generic_Table.short_error_message(code)
 	if error_message.nil? then
 		return nil
 	else
-		return error_message.sub(%r{^\(eval\):\d+:in `syntax_error': compile error},'').sub(%r{^\(eval\):\d+: syntax error, },'')
+		return error_message.sub(%r{^\(eval\):\d+:in `syntax_error': compile error},'').gsub(%r{\(eval\):\d+: syntax error, },'').gsub(%r{\(eval\):\d+: },'')
 	end #if
 end #def
 def Generic_Table.no_syntax_error?(code)
@@ -51,7 +51,7 @@ def partition(code,passMask,failMask)
 
 end #def
 def eval_method(name,code)
-	method_def= "def #{name}\n#{code}\nend\n"
+	method_def= "def #{name}_method\n#{code}\nend\n"
 	return instance_eval(method_def)
 rescue  SyntaxError => exception_raised
 	errors.add(name, 'SyntaxError: ' + exception_raised.inspect, options = {}) 
@@ -67,31 +67,31 @@ end #def
 
 def compile_code
 	if library.nil? then
-		eval_method('interface_method',interface_code)
+		eval_method('interface_code',interface_code)
 	else
-		eval_method('interface_method',"require '#{library}'\n#{interface_code}")
+		eval_method('interface_code',"require '#{library}'\n#{interface_code}")
 	end # if
 	
 	if return_code.nil? then
-		eval_method('error_return',@@Default_Return_Code)
+		eval_method('return_code',@@Default_Return_Code)
 	else
-		eval_method('error_return',return_code)
+		eval_method('return_code',return_code)
 	end #if
 	if rescue_code.nil? then
-		eval_method('rescue_method',@@Default_Rescue_Code)
+		eval_method('rescue_code',@@Default_Rescue_Code)
 	else
-		eval_method('rescue_method',"rescue #{rescue_code}\n")
+		eval_method('rescue_code',"rescue #{rescue_code}\n")
 	end
 end #def
 # functions parameterized by a acquisition_stream_spec and adding instance detail
 def acquire(stream)
-	interface_method
+	interface_code_method
 	if before_acquire==@interaction then
 		@interaction.errors.add(:error,'Nothing was acquired and no error was set')
 	end #if
-	error_return
+	return_code_method
 	rescue  StandardError => exception_raised
-		rescue_method
+		rescue_code_method
 	else
 		@interaction.errors.add("Not subclass of StandardError: " + "couldn't acquire data from #{url}")
 	ensure

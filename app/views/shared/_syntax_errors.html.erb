@@ -5,7 +5,9 @@
   <%= Generic_Table.short_error_message(code)  %>
  </PRE>
  <TABLE BORDER=1>
-  <% code.split(/\n/).map do |l| %>
+<TH>Line of Code</TH> 
+<TH>Single Line Syntax Error</TH> 
+ <% code.split(/\n/).map do |l| %>
   <TR>
    <TD>
   <%=  l %>
