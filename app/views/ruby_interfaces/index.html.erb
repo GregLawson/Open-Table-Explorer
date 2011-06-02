@@ -21,8 +21,10 @@
     <td>
      <%= render :partial => "shared/syntax_errors", :locals => { :code => ruby_interface.interface_code } %>
     </td>
-    <td><%= ruby_interface.return_code %></td>
-    <td><%= ruby_interface.rescue_code %></td>
+    <td><%= ruby_interface.return_code %>
+     <%= render :partial => "shared/syntax_errors", :locals => { :code => ruby_interface.return_code } %></td>
+    <td><%= ruby_interface.rescue_code %>
+     <%= render :partial => "shared/syntax_errors", :locals => { :code => ruby_interface.rescue_code } %></td>
     <td><%= ruby_interface.type %></td>
     <td><%= ruby_interface.errors %></td>
     <td><%= link_to 'Show', ruby_interface %></td>

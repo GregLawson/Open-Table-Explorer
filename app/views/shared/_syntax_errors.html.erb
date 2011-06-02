@@ -8,13 +8,13 @@
   <%=  l %>
   </TD>
    <TD>
-  <%= Generic_Table.syntax_error(l)  %>
+  <%= Generic_Table.short_error_message(l)  %>
   </TD>
    <TD>
-  <%= Generic_Table.syntax_error(code)  %>
+  <%= Generic_Table.short_error_message(code)  %>
   </TD>
    <TD>
-  <%= Generic_Table.syntax_error(code.split(/\n/).join("\n"))  %>
+  <%= Generic_Table.short_error_message(code.split(/\n/).join("\n"))  %>
   </TD>
  </TR>
   <% end #map %>

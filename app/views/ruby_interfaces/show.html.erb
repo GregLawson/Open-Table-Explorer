@@ -12,16 +12,18 @@
 
 <p>
   <b>Interface code:</b>
- <%= render "shared/syntax_errors" %>
+     <%= render :partial => "shared/syntax_errors", :locals => { :code => @ruby_interface.interface_code } %>
 
 <p>
   <b>Return code:</b>
   <%= @ruby_interface.return_code %>
+     <%= render :partial => "shared/syntax_errors", :locals => { :code => @ruby_interface.return_code } %>
 </p>
 
 <p>
   <b>Rescue code:</b>
   <%= @ruby_interface.rescue_code %>
+     <%= render :partial => "shared/syntax_errors", :locals => { :code => @ruby_interface.rescue_code } %>
 </p>
 
 <p>
