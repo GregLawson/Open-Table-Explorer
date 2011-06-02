@@ -38,14 +38,18 @@ test "interaction" do
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code
 	assert_not_nil(acq)
-	assert_respond_to(acq,:acquire)
 	@my_fixtures.each_value do |acq|
 		assert_instance_of(RubyInterface,acq)
 #		puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 		acq.compile_code
+		#~ if acq.errors.empty? then
+			#~ puts "No error in acq=#{acq.interface_code.inspect}"
+		#~ else
+			#~ puts "acq.errors=#{acq.errors.inspect} for acq=#{acq.interface_code.inspect}"
+		#~ end #if
 		assert_not_nil(acq)
+		assert(!acq.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
 	end #each_value
-	assert_respond_to(acq,:acquire)
- 
+
 end #test
 end
