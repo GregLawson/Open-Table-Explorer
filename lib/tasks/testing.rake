@@ -81,7 +81,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 	else
 		#~ puts "summary=#{summary.split(' ').inspect}"
 		summary=summary.split(' ')
-		open('db/tests.sql',"a" ) {|f| f.write("insert into test_runs(model,test,test_type,environment,tests,assertions,failures,tests_stop_on_error,created_at,updated_at) values('#{table}','#{ENV["TEST"]}','#{test_type}','#{ENV["RAILS_ENV"]}',#{summary[0]},#{summary[2]},#{summary[4]},#{summary[6]},'#{Time.now}','#{Time.now}');\n") }
+		open('db/tests.sql',"a" ) {|f| f.write("insert into test_runs(model,test,test_type,environment,tests,assertions,failures,tests_stop_on_error,created_at,updated_at) values('#{table}','#{ENV["TEST"]}','#{test_type}','#{ENV["RAILS_ENV"]}',#{summary[0]},#{summary[2]},#{summary[4]},#{summary[6]},'#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }
 	end #if
 	if !errors.nil? then
 		errors.each do |error|
@@ -98,7 +98,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 						#~ puts "error=#{error.inspect}"
 						#~ puts "trace=#{trace.inspect}"
 						#~ puts "context=#{context.inspect}"
-						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now}','#{Time.now}');\n") }						
+						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
 					end #scan
 				elsif error_type=='Failure' then
 					report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m) do |trace,error|
@@ -107,7 +107,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 						#~ puts "error=#{error.inspect}"
 						#~ puts "trace=#{trace.inspect}"
 						#~ puts "context=#{context.inspect}"
-						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now}','#{Time.now}');\n") }						
+						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
 					end #scan
 				else
 					puts "pre_match=#{s.pre_match}"
@@ -247,35 +247,43 @@ task :wiki_toc do
 		#~ puts "fileKey=#{fileKey}"
 		puts "hash=#{hash.inspect}"
 		if ['md','mediawiki','creole'].include?(hash[:extension]) then
-
-			write_path=wiki_directory+'/updated/'+hash[:section_number]+"-"+hash[:filename]+'.'+hash[:extension]			
-			open(write_path,'w') do |write_file|
-
-			
 			path=wiki_directory+'/'+hash[:section_number]+"-"+hash[:filename]+'.'+hash[:extension]
-			IO.foreach(path) do |line|
-				#~ puts "readline: #{line}"
-				matchData=parse_reference_regexp.match(line) 
-				if matchData then					
-					puts "found: matchData=#{matchData.inspect}"
-					key=matchData[2].strip.gsub(' ','-').downcase
-					puts "key=#{key}"
-					newHash=sections[key]
-					puts "newHash=#{newHash.inspect}"
-					if newHash.nil? then
-						puts "reference to nonexistant section [[#{matchData[2]}]] in #{line}"
-					else
-						newRef=newHash[:section_number]+'-'+matchData[2]
-						line=matchData.pre_match+'[['+newRef+']]'+matchData.post_match
-						puts "#{matchData} becomes #{'[['+newRef+']]'}"
-					end #if
-				else
-#					puts "no match: regexp:#{parse_reference_regexp.to_s} in #{line}"
-				end #if
-				#~ puts line
-				write_file.print line
-			end #IO.foreach
-			end #open
+			if !File.exist?(path) then
+				puts "Path #{path} is not in standard form. Check for section number and dash between section number and name."
+			else
+				write_path=wiki_directory+'/updated/'+hash[:section_number]+"-"+hash[:filename]+'.'+hash[:extension]			
+				open(write_path,'w') do |write_file|
+					searchText=IO.read(path)
+					begin
+						#~ puts "readline: #{line}"
+						matchData=parse_reference_regexp.match(searchText) 
+						if matchData then					
+							write_file.print matchData.pre_match # pass through unchanged text
+							puts "found: matchData=#{matchData.inspect}"
+							referenced_section_name=matchData[2] # section number is updated if it exists
+							key=referenced_section_name.strip.gsub(' ','-').downcase # canonical name, see above
+							puts "key=#{key}"
+							newHash=sections[key]
+							puts "newHash=#{newHash.inspect}"
+							if newHash.nil? then
+								puts "Reference to nonexistant section [[#{referenced_section_name}]] in file #{path}"
+								write_file.print matchData[0] # leave it unchanged for manual editting
+							else
+								newRef=newHash[:section_number]+'-'+referenced_section_name
+								if matchData[1] != newHash[:section_number] then
+									puts "#{matchData[0]} becomes #{'[['+newRef+']]'}" # changed section number
+								else
+									puts "#{matchData[0]} stays #{'[['+newRef+']]'}" # unchangedchanged section number
+								end
+								write_file.print '[['+newRef+']]' # update reference, format even if section number doesn't change
+							end #if
+							searchText=matchData.post_match
+						else
+							write_file.print searchText # pass through text after all matches
+						end #if
+					end while matchData #begin
+				end #open
+			end #if
 		end #if
 	end #each
 end #task

@@ -429,5 +429,8 @@ end #def
 def association_names
 	return self.class.instance_methods(false).select {|m| is_association?(m)}
 end #def
+def display_full_time(time)
+	time.rfc2822
+end #def
 end # module
 
