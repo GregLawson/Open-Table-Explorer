@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RubyInterfacesControllerTest < ActionController::TestCase
   setup do
-    @ruby_interface = ruby_interfaces(:one)
+    @ruby_interface = ruby_interfaces(:HTTP)
   end
 
   test "should get index" do
@@ -36,7 +36,7 @@ class RubyInterfacesControllerTest < ActionController::TestCase
 
   test "should update ruby_interface" do
     put :update, :id => @ruby_interface.to_param, :ruby_interface => @ruby_interface.attributes
-    assert_redirected_to ruby_interface_path(assigns(:ruby_interface))
+    assert_redirected_to acquisition_interface_path(assigns(:ruby_interface))
   end
 
   test "should destroy ruby_interface" do
