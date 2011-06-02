@@ -1,6 +1,9 @@
   <% if Generic_Table.no_syntax_error?(code) then %>
  <%= render :partial =>"shared/multi-line.html.erb", :locals => { :code => code } %>
   <% else %>
+  <PRE>
+  <%= Generic_Table.short_error_message(code)  %>
+ </PRE>
  <TABLE BORDER=1>
   <% code.split(/\n/).map do |l| %>
   <TR>
@@ -8,13 +11,11 @@
   <%=  l %>
   </TD>
    <TD>
+   <PRE>
   <%= Generic_Table.short_error_message(l)  %>
+  </PRE>
   </TD>
    <TD>
-  <%= Generic_Table.short_error_message(code)  %>
-  </TD>
-   <TD>
-  <%= Generic_Table.short_error_message(code.split(/\n/).join("\n"))  %>
   </TD>
  </TR>
   <% end #map %>
