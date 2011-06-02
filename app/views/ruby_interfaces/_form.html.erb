@@ -1,16 +1,5 @@
-<%= form_for(@ruby_interface) do |f| %>
-  <% if @ruby_interface.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@ruby_interface.errors.count, "error") %> prohibited this ruby_interface from being saved:</h2>
-
-      <ul>
-      <% @ruby_interface.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+ <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @ruby_interface } %>
+ <% form_for @ruby_interface do |f| %>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -19,23 +8,22 @@
     <%= f.label :library %><br />
     <%= f.text_field :library %>
   </div>
-  <div class="field">
-    <%= f.label :interface_code %><br />
-    <%= f.text_area :interface_code %>
-  </div>
-  <div class="field">
-    <%= f.label :return_code %><br />
-    <%= f.text_area :return_code %>
-  </div>
-  <div class="field">
-    <%= f.label :rescue_code %><br />
-    <%= f.text_area :rescue_code %>
-  </div>
-  <div class="field">
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<table border=1>
+	<TR>
+	<th><%= f.label :interface_code %></th>
+	<th><%= f.label :return_code %></th>
+	<th><%= f.label :rescue_code %></th>
+	<TR>
+	</tr>
+     	<td><%= f.text_area :interface_code %></td>
+     	<td>    <%= f.text_area :return_code %></td>
+     	<td>    <%= f.text_area :rescue_code %></td>
+	</tr>
 <% end %>
+ <% semantic_form_for @ruby_interface do |form| %>
+    <%= form.buttons %>
+  <div class="field">
+    <%= form.label :type %><br />
+    <%= form.text_field :type %>
+  </div>
+  <% end %>

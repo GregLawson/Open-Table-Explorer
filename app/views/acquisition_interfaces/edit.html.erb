@@ -1,27 +1,23 @@
 <h1>Editing acquisition_interface</h1>
- <% semantic_form_for @acquisition_interface do |form| %>
-    <%= form.inputs %>
-    <%= form.buttons %>
-  <% end %>
+ <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @acquisition_interface } %>
 
 <%= form_for(@acquisition_interface) do |f| %>
-   f.error_messages 
 <p>
   <%=  f.label :Id %><br />
   <%=h  f.text_field :id%>
 </p>
 <p>
+  <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
-</p>
-
-  <p>
+  </div>
+  <div class="field">
     <%= f.label :library %><br />
     <%= f.text_field :library %>
-  </p>
+  </div>
 <table border=1>
 	<TR>
-	<th><%= f.label :acquire_data %></th>
+	<th><%= f.label :interface_code %></th>
 	<th><%= f.label :return_code %></th>
 	<th><%= f.label :rescue_code %></th>
 	<TR>
@@ -31,9 +27,9 @@
      	<td>    <%= f.text_area :rescue_code %></td>
 	</tr>
 </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+ <% semantic_form_for @acquisition_interface do |form| %>
+    <%= form.buttons %>
+  <% end %>
 
 <% end %>
 
