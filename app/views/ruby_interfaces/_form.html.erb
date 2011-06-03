@@ -22,8 +22,15 @@
 <% end %>
  <% semantic_form_for @ruby_interface do |form| %>
     <%= form.buttons %>
+<% end %>
+
+ <% semantic_form_for @ruby_interface do |form| %>
   <div class="field">
     <%= form.label :type %><br />
     <%= form.text_field :type %>
   </div>
+<p>
+  <%=  form.label :Id %><br />
+  <%=h  form.text_field :id%>
+</p>
   <% end %>

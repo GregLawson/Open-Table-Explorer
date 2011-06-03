@@ -2,11 +2,6 @@
  <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @acquisition_interface } %>
 
 <%= form_for(@acquisition_interface) do |f| %>
-<p>
-  <%=  f.label :Id %><br />
-  <%=h  f.text_field :id%>
-</p>
-<p>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -27,11 +22,11 @@
      	<td>    <%= f.text_area :rescue_code %></td>
 	</tr>
 </p>
+<% end %>
  <% semantic_form_for @acquisition_interface do |form| %>
     <%= form.buttons %>
-  <% end %>
-
 <% end %>
+
 
 <%= link_to 'Show', @acquisition_interface %> |
 <%= link_to 'Back', acquisition_interfaces_path %>
