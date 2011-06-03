@@ -226,7 +226,7 @@ directory wiki_directory
 task :wiki_toc do
 	wiki_files=FileList["#{wiki_directory}/*"]
 	delete_regexp=%r{^../[a-zA-Z0-9-.]+/}
-	parse_reference_regexp=%r{\[\[([0-9\/.]*)-?([a-z-A-Z0-9? '-]+)\]\]}
+	parse_reference_regexp=%r{\[\[([0-9\/.]*)?-?\s?([a-z-A-Z0-9? '-]+)\]\]}
 	parse_filename_regexp=%r{([0-9\/.]*)-?([a-z-A-Z0-9-?']+)[.]([a-z]+)}
 	sections={}
 	wiki_files.map do |f|
@@ -245,7 +245,7 @@ task :wiki_toc do
 	#~ puts "sections=#{sections.inspect}"
 	sections.each do |fileKey,hash|
 		#~ puts "fileKey=#{fileKey}"
-		puts "hash=#{hash.inspect}"
+		#~ puts "hash=#{hash.inspect}"
 		if ['md','mediawiki','creole'].include?(hash[:extension]) then
 			path=wiki_directory+'/'+hash[:section_number]+"-"+hash[:filename]+'.'+hash[:extension]
 			if !File.exist?(path) then
@@ -259,23 +259,27 @@ task :wiki_toc do
 						matchData=parse_reference_regexp.match(searchText) 
 						if matchData then					
 							write_file.print matchData.pre_match # pass through unchanged text
-							puts "found: matchData=#{matchData.inspect}"
+							#~ puts "found: matchData=#{matchData.inspect}"
 							referenced_section_name=matchData[2] # section number is updated if it exists
 							key=referenced_section_name.strip.gsub(' ','-').downcase # canonical name, see above
-							puts "key=#{key}"
+							#~ puts "key=#{key}"
 							newHash=sections[key]
-							puts "newHash=#{newHash.inspect}"
+							#~ puts "newHash=#{newHash.inspect}"
 							if newHash.nil? then
 								puts "Reference to nonexistant section [[#{referenced_section_name}]] in file #{path}"
 								write_file.print matchData[0] # leave it unchanged for manual editting
 							else
-								newRef=newHash[:section_number]+'-'+referenced_section_name
+								newRef='[['+newHash[:section_number]+'-'+referenced_section_name+']]'
 								if matchData[1] != newHash[:section_number] then
-									puts "#{matchData[0]} becomes #{'[['+newRef+']]'}" # changed section number
+									puts "#{matchData[0]} becomes #{newRef}" # changed section number
 								else
-									puts "#{matchData[0]} stays #{'[['+newRef+']]'}" # unchangedchanged section number
+									if newRef==matchData[0]  then
+										#~ puts "#{matchData[0]} stays #{'[['+newRef+']]'}" # unchangedchanged section number
+									else
+										puts "#{matchData[0]} reformatted to #{newRef}" # unchangedchanged section number
+									end
 								end
-								write_file.print '[['+newRef+']]' # update reference, format even if section number doesn't change
+								write_file.print newRef # update reference, format even if section number doesn't change
 							end #if
 							searchText=matchData.post_match
 						else
