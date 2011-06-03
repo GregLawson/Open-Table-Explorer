@@ -226,7 +226,7 @@ directory wiki_directory
 task :wiki_toc do
 	wiki_files=FileList["#{wiki_directory}/*"]
 	delete_regexp=%r{^../[a-zA-Z0-9-.]+/}
-	parse_reference_regexp=%r{\[\[([0-9\/.]*)?-?\s?([a-z-A-Z0-9? '-]+)\]\]}
+	parse_reference_regexp=%r{\[\[([0-9\/.]*)?-?\s?([a-z-A-Z0-9? '-]+)\]\]|\[https://github.com/GregLawson/Open-Table-Explorer/wiki/([0-9\/.]*)?-?([a-z-A-Z0-9?'-]+) [a-zA-Z0-9 ]+\]}
 	parse_filename_regexp=%r{([0-9\/.]*)-?([a-z-A-Z0-9-?']+)[.]([a-z]+)}
 	sections={}
 	wiki_files.map do |f|
@@ -260,13 +260,17 @@ task :wiki_toc do
 						if matchData then					
 							write_file.print matchData.pre_match # pass through unchanged text
 							#~ puts "found: matchData=#{matchData.inspect}"
-							referenced_section_name=matchData[2] # section number is updated if it exists
+							if matchData[4].nil? then
+								referenced_section_name=matchData[2] # section number is updated if it exists
+							else
+								referenced_section_name=matchData[4] # section number is updated if it exists
+							end
 							key=referenced_section_name.strip.gsub(' ','-').downcase # canonical name, see above
 							#~ puts "key=#{key}"
 							newHash=sections[key]
 							#~ puts "newHash=#{newHash.inspect}"
 							if newHash.nil? then
-								puts "Reference to nonexistant section [[#{referenced_section_name}]] in file #{path}"
+								puts "Reference to nonexistant section named '#{key}' in file #{path}. "
 								write_file.print matchData[0] # leave it unchanged for manual editting
 							else
 								newRef='[['+newHash[:section_number]+'-'+referenced_section_name+']]'
