@@ -1,6 +1,6 @@
 <h1>Editing ruby_interface</h1>
 
-<%= render 'form' %>
+<%= render 'form', :locals => { :ruby_interface => @ruby_interface } %>
 
 <%= link_to 'Show', @ruby_interface %> |
 <%= link_to 'Back', ruby_interfaces_path %>
