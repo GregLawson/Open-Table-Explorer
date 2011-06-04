@@ -1,5 +1,4 @@
- <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @ruby_interface } %>
- <% form_for @ruby_interface do |f| %>
+ <% form_for ruby_interface do |f| %>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -20,11 +19,11 @@
      	<td>    <%= f.text_area :rescue_code %></td>
 	</tr>
 <% end %>
- <% semantic_form_for @ruby_interface do |form| %>
+ <% semantic_form_for ruby_interface do |form| %>
     <%= form.buttons %>
 <% end %>
 
- <% semantic_form_for @ruby_interface do |form| %>
+ <% semantic_form_for ruby_interface do |form| %>
   <div class="field">
     <%= form.label :type %><br />
     <%= form.text_field :type %>
