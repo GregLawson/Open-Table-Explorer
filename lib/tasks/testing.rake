@@ -226,7 +226,7 @@ directory wiki_directory
 task :wiki_toc do
 	wiki_files=FileList["#{wiki_directory}/*"]
 	delete_regexp=%r{^../[a-zA-Z0-9-.]+/}
-	parse_reference_regexp=%r{\[\[([0-9\/.]*)?-?\s?([a-z-A-Z0-9? '-]+)\]\]|\[https://github.com/GregLawson/Open-Table-Explorer/wiki/([0-9\/.]*)?-?([a-z-A-Z0-9?'-]+) [a-zA-Z0-9 ]+\]}
+	parse_reference_regexp=%r{\[\[([0-9\/.]*)?-?\s?([a-z-A-Z0-9? '-]+)\]\]|\[https://github.com/GregLawson/Open-Table-Explorer/wiki/([0-9\/.]*)?-?([a-z-A-Z0-9%?'-]+) [a-zA-Z0-9 ]+\]}
 	parse_filename_regexp=%r{([0-9\/.]*)-?([a-z-A-Z0-9-?']+)[.]([a-z]+)}
 	sections={}
 	wiki_files.map do |f|
