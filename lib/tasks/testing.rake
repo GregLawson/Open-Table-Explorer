@@ -8,8 +8,6 @@ namespace :testing do
 
 desc "Run tests testing:incremental, testing:full, testing:summarize, or testing:unit_test TABLE=plural_table TEST=. Output in log/{unit,functional}/"
 directory "log/full"
-def build_table(singular_table)
-end #def
 def ruby_run_and_log(ruby_source,log_file,test=nil)
 	if test.nil? then
 		ruby_test=ruby_source
@@ -25,22 +23,106 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 			puts "ruby failed(status = #{res.exitstatus})!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			#~ sh "tail --lines=2 #{log_file}"
 		end
-		file_bug_reports(ruby_source,log_file,test)
+		stop=file_bug_reports(ruby_source,log_file,test)
 	end # ruby
+	if stop.nil? then
+		puts "stop is nil or undefined?"
+		puts "Dd ruby block not execute?"
+	end
+	return stop
+rescue Exception
+	puts "exception" 
 end #def
 def full_unit_test(plural_table,test)
 	singular_table=plural_table.singularize
-	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
-	ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) # only?
+	stop=ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
+	return stop if stop
+	stop=ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) # only?
+	return stop
 end #def
 def unit_test(plural_table,test=nil)
 	singular_table=plural_table.singularize
-	ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log",test)
+	stop=ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log",test)
+	return stop
 end #def
 def controller_test(plural_table,test=nil)
 	singular_table=plural_table.singularize
-	ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) #
+	stop=ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) #
+	return stop
 end #def
+def conditional_build(target, sources)
+	sources.each do |s|
+		if !uptodate?(target, s)  then
+			puts "not up to date."
+			sh ("ls -l #{target}") {|ok, res| } # discard result if file doesn't exist
+			sh "ls -l #{s}"
+		end
+	end #each
+	if uptodate?(target, sources) then
+		stop=false
+	else
+		stop=ruby_run_and_log(sources[0], target)
+	end #file
+	return stop
+end #def
+def workFlow(test=nil) 
+	all_models=FileList['app/models/*.rb']
+	affects_everything=["db/schema.rb","test/test_helper.rb"]
+	file_mod_times=all_models .map do |model_file|
+		[model_file,File.mtime(model_file)]
+	end #map
+	file_mod_times.sort! {|x,y| x[1] <=> y[1] } # sort on file mod times
+	file_mod_times .each do |file_mod_time|
+		model_file=file_mod_time[0]
+		 singular_table=model_file.sub(/^app\/models\//,'').sub(/[.]rb$/,'')
+		 plural_table=singular_table.pluralize
+		 model_file="app/models/#{singular_table}.rb"
+		 # commn_sources apply to both unit and functional tests.
+		 common_sources=affects_everything+[model_file,"test/fixtures/#{plural_table}.yml"]
+		target = "log/unit/#{singular_table}_test.log"
+		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
+		stop=conditional_build(target, sources)
+		return stop if stop
+
+		target = "log/functional/#{plural_table}_controller_test.log"
+		sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
+		sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controllers/#{plural_table}_controller.rb","app/helpers/#{plural_table}_helper.rb"]
+		stop=conditional_build(target, sources)
+		return stop if stop
+	end #each
+#	summarize
+end #def
+task :work_flow do
+	if ENV["TABLE"] then
+		plural_table = ENV["TABLE"].pluralize 
+		stop=full_unit_test(plural_table,test)
+	else
+		stop=false # want to do something
+	end #if
+	test = ENV["TEST"]
+	workFlow(test) if !stop
+#	summarize
+end #task
+task :incremental do
+	all_models=FileList['app/models/*.rb']
+	affects_everything=["db/schema.rb","test/test_helper.rb"]
+	all_models .each do |model_file|
+		 singular_table=model_file[11..-4]
+		 plural_table=singular_table.pluralize
+		 model_file="app/models/#{singular_table}.rb"
+		 # commn_sources apply to both unit and functional tests.
+		 common_sources=affects_everything+[model_file,"test/fixtures/#{plural_table}.yml"]
+		target = "log/unit/#{singular_table}_test.log"
+		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
+		conditional_build(target, sources)
+		
+		target = "log/functional/#{plural_table}_controller_test.log"
+		sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
+		sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controllers/#{plural_table}_controller.rb","app/helpers/#{plural_table}_helper.rb"]
+		conditional_build(target, sources)
+	end #each
+	summarize
+end #task
 def short_context(trace)
 	return trace.reverse[1..-1].collect{|t| t.slice(/`([a-zA-Z_]+)'/,1)}.join(', ')
 end #def
@@ -81,7 +163,16 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 	else
 		#~ puts "summary=#{summary.split(' ').inspect}"
 		summary=summary.split(' ')
-		open('db/tests.sql',"a" ) {|f| f.write("insert into test_runs(model,test,test_type,environment,tests,assertions,failures,tests_stop_on_error,created_at,updated_at) values('#{table}','#{ENV["TEST"]}','#{test_type}','#{ENV["RAILS_ENV"]}',#{summary[0]},#{summary[2]},#{summary[4]},#{summary[6]},'#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }
+		tests=summary[0]
+		assertions=summary[2]
+		failures=summary[4]
+		tests_stop_on_error=summary[6]
+		if    (failures+tests_stop_on_error)==0 then
+			stop=false
+		else
+			stop=true
+		end #if
+		open('db/tests.sql',"a" ) {|f| f.write("insert into test_runs(model,test,test_type,environment,tests,assertions,failures,tests_stop_on_error,created_at,updated_at) values('#{table}','#{ENV["TEST"]}','#{test_type}','#{ENV["RAILS_ENV"]}',#{tests},#{assertions},#{failures},#{tests_stop_on_error},'#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }
 	end #if
 	if !errors.nil? then
 		errors.each do |error|
@@ -118,6 +209,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 		end #each
 	end #if 
 #	puts "ARGF.argv.inspect=#{ARGF.argv.inspect}"
+	return stop
 end #def
 def summarize
 	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/failed_tests.tmp)	
@@ -149,38 +241,6 @@ task :full_unit_test do
 	test = ENV["TEST"]
 	full_unit_test(plural_table,test)
 #	summarize
-end #task
-def conditional_build(target, sources)
-	sources.each do |s|
-		if !uptodate?(target, s)  then
-			puts "not up to date."
-			sh ("ls -l #{target}") {|ok, res| } # discard result if file doesn't exist
-			sh "ls -l #{s}"
-		end
-	end #each
-	unless uptodate?(target, sources) 
-		ruby_run_and_log(sources[0], target)
-	end #file
-end #def
-task :incremental do
-	all_models=FileList['app/models/*.rb']
-	affects_everything=["db/schema.rb","test/test_helper.rb"]
-	all_models .each do |model_file|
-		 singular_table=model_file[11..-4]
-		 plural_table=singular_table.pluralize
-		 model_file="app/models/#{singular_table}.rb"
-		 # commn_sources apply to both unit and functional tests.
-		 common_sources=affects_everything+[model_file,"test/fixtures/#{plural_table}.yml"]
-		target = "log/unit/#{singular_table}_test.log"
-		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
-		conditional_build(target, sources)
-		
-		target = "log/functional/#{plural_table}_controller_test.log"
-		sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
-		sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controllers/#{plural_table}_controller.rb","app/helpers/#{plural_table}_helper.rb"]
-		conditional_build(target, sources)
-	end #each
-	summarize
 end #task
 task :full do	
 	sh "rake test:units >log/full/rake_test.log"
