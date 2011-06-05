@@ -1,32 +1,8 @@
 <h1>Editing acquisition_interface</h1>
  <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @acquisition_interface } %>
 
-<%= form_for(@acquisition_interface) do |f| %>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :library %><br />
-    <%= f.text_field :library %>
-  </div>
-<table border=1>
-	<TR>
-	<th><%= f.label :interface_code %></th>
-	<th><%= f.label :return_code %></th>
-	<th><%= f.label :rescue_code %></th>
-	<TR>
-	</tr>
-     	<td><%= f.text_area :interface_code %></td>
-     	<td>    <%= f.text_area :return_code %></td>
-     	<td>    <%= f.text_area :rescue_code %></td>
-	</tr>
-</p>
-<% end %>
- <% semantic_form_for @acquisition_interface do |form| %>
-    <%= form.buttons %>
-<% end %>
 
+<%= render :partial => 'ruby_interfaces/form', :locals => { :ruby_interface => @acquisition_interface } %>
 
 <%= link_to 'Show', @acquisition_interface %> |
 <%= link_to 'Back', acquisition_interfaces_path %>
