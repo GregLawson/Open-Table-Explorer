@@ -1,5 +1,7 @@
 <h1>New ruby_interface</h1>
+ <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @ruby_interface } %>
 
-<%= render 'form' %>
+
+<%= render :partial => 'ruby_interfaces/form', :locals => { :ruby_interface => @ruby_interface } %>
 
 <%= link_to 'Back', ruby_interfaces_path %>
