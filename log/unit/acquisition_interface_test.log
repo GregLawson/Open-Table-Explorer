@@ -9,7 +9,7 @@ The error occurred while evaluating nil.[]=
 FAcquisition.count=889
 Acquisition.count=890
 ....
-Finished in 20.789218 seconds.
+Finished in 15.2926 seconds.
 
   1) Failure:
 test_acquisition(AcquisitionInterfaceTest) [test/unit/acquisition_interface_test.rb:45]:
