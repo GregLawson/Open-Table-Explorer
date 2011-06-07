@@ -14,7 +14,7 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 	else
 		ruby_test="#{ruby_source} -n #{test}"
 	end #if
-	ruby %Q{-I test #{ruby_test} | tee #{log_file}}  do |ok, res|
+	stop=ruby %Q{-I test #{ruby_test} | tee #{log_file}}  do |ok, res|
 		if  ok
 #always happens			puts "ruby ok(status = #{res.inspect})"
 			#~ sh "git add #{ruby_source}"
@@ -23,15 +23,28 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 			puts "ruby failed(status = #{res.exitstatus})!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			#~ sh "tail --lines=2 #{log_file}"
 		end
+#		puts "calling file_bug_reports"
 		stop=file_bug_reports(ruby_source,log_file,test)
+#		puts "return from file_bug_reports. stop=#{stop}"
+#		puts "local_variables=#{local_variables.inspect}"
+		return stop
 	end # ruby
-	if stop.nil? then
-		puts "stop is nil or undefined?"
-		puts "Dd ruby block not execute?"
+	if local_variables.include?('stop') then
+		puts "stop is defined here."
+		return stop
+	else
+		puts "stop is nil or undefined? local_variables=#{local_variables.inspect}"
+		puts "Did ruby block not execute?"
+		return true
 	end
-	return stop
-rescue Exception
-	puts "exception" 
+rescue StandardError => exception_raised
+	puts  'StandardError Error: ' + exception_raised.inspect 
+	puts exception_raised.backtrace.join("\n")
+
+	return true
+rescue SyntaxError => exception_raised
+	puts  'SyntaxError Error: ' + exception_raised.inspect 
+	return true
 end #def
 def full_unit_test(plural_table,test)
 	singular_table=plural_table.singularize
@@ -53,9 +66,9 @@ end #def
 def conditional_build(target, sources)
 	sources.each do |s|
 		if !uptodate?(target, s)  then
-			puts "not up to date."
-			sh ("ls -l #{target}") {|ok, res| } # discard result if file doesn't exist
-			sh "ls -l #{s}"
+#			puts "not up to date."
+#			sh ("ls -l #{target}") {|ok, res| } # discard result if file doesn't exist
+#			sh "ls -l #{s}"
 		end
 	end #each
 	if uptodate?(target, sources) then
@@ -65,20 +78,22 @@ def conditional_build(target, sources)
 	end #file
 	return stop
 end #def
+ALL_MODEL_FILES=FileList['app/models/*.rb']
+#	puts "ALL_MODEL_FILES=#{ALL_MODEL_FILES.inspect}"
+AFFECTS_EVERYTHING=["db/schema.rb","test/test_helper.rb"]
 def workFlow(test=nil) 
-	all_models=FileList['app/models/*.rb']
-	affects_everything=["db/schema.rb","test/test_helper.rb"]
-	file_mod_times=all_models .map do |model_file|
+	file_mod_times=ALL_MODEL_FILES.map do |model_file|
 		[model_file,File.mtime(model_file)]
 	end #map
-	file_mod_times.sort! {|x,y| x[1] <=> y[1] } # sort on file mod times
+	file_mod_times.sort! {|x,y| y[1] <=> x[1] } # sort on file mod times
+#	puts "file_mod_times=#{file_mod_times.inspect}"
 	file_mod_times .each do |file_mod_time|
 		model_file=file_mod_time[0]
 		 singular_table=model_file.sub(/^app\/models\//,'').sub(/[.]rb$/,'')
 		 plural_table=singular_table.pluralize
 		 model_file="app/models/#{singular_table}.rb"
 		 # commn_sources apply to both unit and functional tests.
-		 common_sources=affects_everything+[model_file,"test/fixtures/#{plural_table}.yml"]
+		 common_sources=AFFECTS_EVERYTHING+[model_file,"test/fixtures/#{plural_table}.yml"]
 		target = "log/unit/#{singular_table}_test.log"
 		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
 		stop=conditional_build(target, sources)
@@ -93,6 +108,7 @@ def workFlow(test=nil)
 #	summarize
 end #def
 task :work_flow do
+	puts "starting work_flow"
 	if ENV["TABLE"] then
 		plural_table = ENV["TABLE"].pluralize 
 		stop=full_unit_test(plural_table,test)
@@ -104,14 +120,12 @@ task :work_flow do
 #	summarize
 end #task
 task :incremental do
-	all_models=FileList['app/models/*.rb']
-	affects_everything=["db/schema.rb","test/test_helper.rb"]
-	all_models .each do |model_file|
+	ALL_MODEL_FILES .each do |model_file|
 		 singular_table=model_file[11..-4]
 		 plural_table=singular_table.pluralize
 		 model_file="app/models/#{singular_table}.rb"
 		 # commn_sources apply to both unit and functional tests.
-		 common_sources=affects_everything+[model_file,"test/fixtures/#{plural_table}.yml"]
+		 common_sources=AFFECTS_EVERYTHING+[model_file,"test/fixtures/#{plural_table}.yml"]
 		target = "log/unit/#{singular_table}_test.log"
 		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
 		conditional_build(target, sources)
@@ -209,6 +223,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 		end #each
 	end #if 
 #	puts "ARGF.argv.inspect=#{ARGF.argv.inspect}"
+#	puts "file_bug_reports stop=#{stop}"
 	return stop
 end #def
 def summarize
