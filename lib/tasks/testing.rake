@@ -107,6 +107,36 @@ def workFlow(test=nil)
 	end #each
 #	summarize
 end #def
+task :update_master do
+	 sh %{git checkout master} do |ok, res|
+		if ok
+			 sh %{git merge development} do |ok, res|
+				if ok
+					puts "git merge development ok (status = #{res.exitstatus})"					
+					 sh %{git checkout development} do |ok, res|
+						if ok
+							puts "git checkout development ok (status = #{res.exitstatus})"					
+						else
+							puts "git checkout development failed (status = #{res.exitstatus})"
+						end #if
+					end #sh			
+				else
+					puts "git merge development failed (status = #{res.exitstatus})"
+				end #if
+			end #sh			
+		else
+			puts "git checkout failed (status = #{res.exitstatus})"
+			 sh %{git-cola} do |ok, res|
+				if ok
+					puts "git cola ok (status = #{res.exitstatus})"					
+				else
+					puts "git cola failed (status = #{res.exitstatus})"
+				end #if
+			end #sh
+		end #if
+	  end #sh
+
+end #task	
 task :push do
 	 sh %{git checkout master} do |ok, res|
 		if ok
