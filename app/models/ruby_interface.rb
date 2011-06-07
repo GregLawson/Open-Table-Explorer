@@ -51,13 +51,24 @@ def partition(code,passMask,failMask)
 
 end #def
 def eval_method(name,code)
+	if code.nil? || code.empty? then
+		rows=0
+		cols=0
+	else
+		code_lines=code.split("\n")
+		rows=code_lines.size
+		cols=code_lines.map {|l|l.length}.max
+	end #if
+	
+	instance_eval("def #{name}_rows\n#{rows}\nend\n")
+	instance_eval("def #{name}_cols\n#{cols}\nend\n")
 	method_def= "def #{name}_method\n#{code}\nend\n"
 	return instance_eval(method_def)
 rescue  SyntaxError => exception_raised
 	errors.add(name, 'SyntaxError: ' + exception_raised.inspect, options = {}) 
 	return nil
-#else
-#	errors.add(name, "Not subclass of SyntaxError: " + "couldn't compile string #{method_def} in context of a ruby_class object.")
+#~ else
+	#~ errors.add(name, "Not subclass of SyntaxError: " + "couldn't compile string #{method_def} in context of a ruby_class object.")
 
 end #def
 @@Default_Return_Code=''
