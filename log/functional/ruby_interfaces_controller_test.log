@@ -1,6 +1,6 @@
 Loaded suite test/functional/ruby_interfaces_controller_test
 Started
-.......
-Finished in 13.433733 seconds.
 
-7 tests, 10 assertions, 0 failures, 0 errors
+Finished in 0.000349 seconds.
+
+0 tests, 0 assertions, 0 failures, 0 errors

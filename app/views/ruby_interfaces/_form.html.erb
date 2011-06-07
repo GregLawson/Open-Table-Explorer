@@ -9,14 +9,15 @@
   </div>
 <table border=1>
 	<TR>
-	<th><%= f.label :interface_code %></th>
+	<th><%= f.label :interface_code%></th>
 	<th><%= f.label :return_code %></th>
 	<th><%= f.label :rescue_code %></th>
 	<TR>
 	</tr>
-     	<td><%= f.text_area :interface_code %></td>
-     	<td>    <%= f.text_area :return_code %></td>
-     	<td>    <%= f.text_area :rescue_code %></td>
+	<% max_rows=[ruby_interface.interface_code_rows,ruby_interface.return_code_rows,ruby_interface.rescue_code_rows].max %>
+     	<td><%= f.text_area :interface_code,:rows=>max_rows,:cols=>[ruby_interface.interface_code_cols+2,20].max %></td>
+     	<td>   <%= f.text_area :return_code,:rows=>max_rows,:cols=>[ruby_interface.return_code_cols+2,20].max %></td>
+     	<td>   <%= f.text_area :rescue_code,:rows=>max_rows,:cols=>[ruby_interface.rescue_code_cols+2,20].max %></td>
 	</tr>
 <% end %>
  <%= semantic_form_for ruby_interface do |form| %>
