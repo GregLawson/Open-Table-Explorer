@@ -112,9 +112,23 @@ task :push do
 		if ok
 			 sh %{git merge development} do |ok, res|
 				if ok
-					puts "git cola ok (status = #{res.exitstatus})"					
+					puts "git merge development ok (status = #{res.exitstatus})"					
+					 sh %{git push} do |ok, res|
+						if ok
+							puts "git push ok (status = #{res.exitstatus})"					
+							 sh %{git checkout development} do |ok, res|
+								if ok
+									puts "git checkout development ok (status = #{res.exitstatus})"					
+								else
+									puts "git checkout development failed (status = #{res.exitstatus})"
+								end #if
+							end #sh			
+						else
+							puts "git push failed (status = #{res.exitstatus})"
+						end #if
+					end #sh			
 				else
-					puts "git cola failed (status = #{res.exitstatus})"
+					puts "git merge development failed (status = #{res.exitstatus})"
 				end #if
 			end #sh			
 		else
