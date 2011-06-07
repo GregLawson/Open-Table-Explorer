@@ -242,7 +242,10 @@ def context_names(depth=0)
 	method_contexts(depth).map{|c| c.canonicalName}
 end #def
 def matching_methods(regexp,all=false)
-		self.public_methods(all).select {|m| m[Regexp.new(regexp),0] }
+	if regexp.instance_of?(Symbol) then
+		regexp=regexp.to_s
+	end #if
+	self.public_methods(all).select {|m| m[Regexp.new(regexp),0] }
 end #def
 def method_context(methodName)
 	if respond_to(methodName) then
