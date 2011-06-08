@@ -1,3 +1,6 @@
+ <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @acquisition_interface } %>
+
+<%= render :partial =>'ruby_interfaces/show_partial', :locals => { :@ruby_interface => @acquisition_interface } %>
 <p>
   <b>Id:</b>
   <%=h @acquisition_interface.id %>
