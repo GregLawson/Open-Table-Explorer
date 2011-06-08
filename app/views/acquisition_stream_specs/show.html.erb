@@ -1,44 +1,16 @@
- <p>
-  <b>Id:</b>
-  <%=h @acquisition_stream_spec.id %>
-</p>
-
-<p>
-  <b>Url:</b>
-  <%=h @acquisition_stream_spec.url %>
-</p>
-
-<p>
-  <b>Table spec:</b>
-  <%=h @acquisition_stream_spec.table_spec_id %>
-</p>
-<p>
-  <b>Table_spec:</b>
-  <%=h @acquisition_stream_spec.class.ancestors.inspect%>
-  <%=h @acquisition_stream_spec.methods.inspect%>
-  < %=h @acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name) %>
-</p>
-
-
-<p>
-  <b>Required order:</b>
-  <%=h @acquisition_stream_spec.required_order %>
-</p>
-
-<p>
-  <b>uriHash:</b>
-  <%=h @acquisition_stream_spec.uriHash.inspect %>
-</p>
-
-<p>
-  <b>scheme:</b>
-  <%=h @acquisition_stream_spec.scheme %>
-</p>
-
+ <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @acquisition_stream_spec } %>
+<%= render :partial =>'acquisition_stream_specs/show_partial', :locals => { :@acquisition_stream_spec => @acquisition_stream_spec } %>
 <p>
   <b>Acquisition interface:</b>
-  < %=h @acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) %>
+  <%=h @acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) %>
 </p>
+<p>
+  <b>Acquisition interface:</b>
+  <%=h @acquisition_stream_spec.association_state(:acquisition_interface) %>
+</p>
+<% if @acquisition_stream_spec.association_has_data(:acquisition_interface) then %>
+<%= render :partial =>'ruby_interfaces/show_partial', :locals => { :@ruby_interface => @acquisition_stream_spec.acquisition_interface } %>
+<% end #if %>
 
 
 
