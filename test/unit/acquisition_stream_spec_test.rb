@@ -68,5 +68,20 @@ end #test
 def test_scheme
 	testAnswer(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:scheme,'http')
 end #test
+test "associated_to_s" do
+		@my_fixtures.each_value do |acs|
+			acs=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
+			assert_include(ActiveRecord::Base,acs.class.ancestors)
+			assert_include("model_class_name",acs.table_spec.methods)
+			
+			assert_nil(acs[table_specs.to_s+'_id']) # foreign key uninitialized
+			ass=acs.send(:table_spec)
+			assert_not_nil(ass)
+			assert_not_nil(ass.send(:model_class_name))
+			
+			acs.associated_to_s(:table_spec,:model_class_name)
+		end
 
+	
+end #test
 end #class
