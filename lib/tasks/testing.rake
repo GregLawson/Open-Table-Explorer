@@ -71,10 +71,19 @@ def conditional_build(target, sources)
 #			sh "ls -l #{s}"
 		end
 	end #each
+	not_uptodate_sources=sources.select {|s|  !uptodate?(target, s) && 	File.exist?(s) }
 	if uptodate?(target, sources) then
 		stop=false
 	else
+		if !File.exist?(target) then
+			return false
+		end #if
 		stop=ruby_run_and_log(sources[0], target)
+		if !stop then
+			not_uptodate_sources.each do |s|
+				sh "git add #{s}"
+			end #each
+		end #if
 	end #file
 	return stop
 end #def
@@ -82,6 +91,15 @@ ALL_MODEL_FILES=FileList['app/models/*.rb']
 #	puts "ALL_MODEL_FILES=#{ALL_MODEL_FILES.inspect}"
 AFFECTS_EVERYTHING=["db/schema.rb","test/test_helper.rb"]
 def workFlow(test=nil) 
+	FileList['log/unit/*.log'].select {|f| !File.size?(f) }.each do |f|
+		sh %Q(ls -1 -s #{f})	
+		rm f
+	end #each
+	FileList['log/functional/*.log'].select {|f| !File.size?(f) }.each do |f|
+		sh %Q(ls -1 -s #{f})	
+		rm f
+	end #each
+	
 	file_mod_times=ALL_MODEL_FILES.map do |model_file|
 		[model_file,File.mtime(model_file)]
 	end #map
@@ -105,7 +123,7 @@ def workFlow(test=nil)
 		stop=conditional_build(target, sources)
 		return stop if stop
 	end #each
-#	summarize
+
 end #def
 task :update_master do
 	 sh %{git checkout master} do |ok, res|
@@ -295,10 +313,10 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 	return stop
 end #def
 def summarize
-	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/failed_tests.tmp)	
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >>log/failed_tests.tmp}
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >>log/failed_tests.tmp}
-	sh %Q{sort log/failed_tests.tmp|uniq >log/failed_tests.log}
+	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/empty_tests.tmp)	
+	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
+	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
+	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
 	rm "log/failed_tests.tmp"
 	(IO.readlines("log/failed_tests.log")- IO.readlines("log/arrested_development.log")).each do |f|
 		puts f
@@ -309,7 +327,7 @@ task :summarize do
 end #task
 task :unit_test do
 	plural_table = ENV["TABLE"].pluralize  || "accounts"
-	test = ENV["TEST"]
+	test = ENV["TEST"] 
 	unit_test(plural_table,test)
 #	summarize
 end #task
