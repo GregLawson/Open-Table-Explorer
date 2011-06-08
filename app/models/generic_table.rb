@@ -291,18 +291,23 @@ def self.db2yaml
 end #def
 # Display attribute or method value from association even if association is nil
 def association_state(assName)
+	if !is_association?(assName) then
+		return "#{self.class.name} does not have an association named #{assName}."
+	end #if
 	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
-		return 'foreign key present but nil'
+		return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
 	else
 		ass=send(assName)
 		if ass.nil? then
-			return 'Foreign key has value but does return nil'
+			return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} but the association returns nil."
 		else
-			return 'Foreign key has value and does not return nil'
+			return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} and returns type #{ass.class.name}."
 		end
 	end
 end #def
-
+def association_has_data(assName)
+	return association_state(assName)[/ and returns type /,0]
+end #def
 def associated_to_s(assName,method,*args)
 	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
 		return ''
