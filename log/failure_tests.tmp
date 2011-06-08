@@ -1,0 +1,3 @@
+acquisition_interface_test.log:5 tests, 45 assertions, 1 failures, 0 errors
+transfer_test.log:9 tests, 23750 assertions, 3 failures, 2 errors
+rake_test.log:215 tests, 238 assertions, 1 failures, 19 errors

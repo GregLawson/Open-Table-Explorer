@@ -1,0 +1,4 @@
+arel_readme_test.log:2 tests, 0 assertions, 0 failures, 2 errors
+table_spec_test.log:6 tests, 4222 assertions, 0 failures, 1 errors
+transfer_test.log:9 tests, 23750 assertions, 3 failures, 2 errors
+rake_test.log:215 tests, 238 assertions, 1 failures, 19 errors
