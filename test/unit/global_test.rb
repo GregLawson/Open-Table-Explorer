@@ -109,4 +109,6 @@ test "Acquisition Interface modules" do
 	assert(AcquisitionInterface.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test
+test "method model" do
+	puts "Generic_Table.method_model=#{Generic_Table.method_model}"
 end #test class

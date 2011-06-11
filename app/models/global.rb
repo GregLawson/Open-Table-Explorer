@@ -262,5 +262,17 @@ def matching_methods_in_context(regexp,depth=0)
 	end #map
 	ret
 end #def
+def method_model
+	modules(true).map do |m|
+		mHash={}
+		mHash[:name]=m
+		theMethod=method(m.to_sym)
+		mHash[:method]=theMethod
+		mHash[:arity]=theMethod.arity
+		mHash[:owner]=theMethod.owner
+		mHash[:parameters]=theMethod.parameters.inspect
+		mHash[:source_location]=theMethod.source_location		
+	end #map
+end #def
 
 end #class
