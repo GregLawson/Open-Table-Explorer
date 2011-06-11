@@ -90,6 +90,23 @@ end #def
 ALL_MODEL_FILES=FileList['app/models/*.rb']
 #	puts "ALL_MODEL_FILES=#{ALL_MODEL_FILES.inspect}"
 AFFECTS_EVERYTHING=["db/schema.rb","test/test_helper.rb"]
+AFFECTS_CONTROLLERS=FileList['app/views/shared/*']
+def unit_sources(singular_table)
+	plural_table=singular_table.pluralize
+	# commn_sources apply to both unit and functional tests.
+	model_file="app/models/#{singular_table}.rb"
+	common_sources=AFFECTS_EVERYTHING+[model_file,"test/fixtures/#{plural_table}.yml"]
+	return ["test/unit/#{singular_table}_test.rb"]+common_sources
+end #def
+def conrolller_sources(singular_table)
+	plural_table=singular_table.pluralize
+	# commn_sources apply to both unit and functional tests.
+	model_file="app/models/#{singular_table}.rb"
+	common_sources=AFFECTS_EVERYTHING+[model_file,"test/fixtures/#{plural_table}.yml"]
+	sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]+AFFECTS_CONTROLLERS
+	return ["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controllers/#{plural_table}_controller.rb","app/helpers/#{plural_table}_helper.rb"]
+end #def
+
 def workFlow(test=nil) 
 	FileList['log/unit/*.log'].select {|f| !File.size?(f) }.each do |f|
 		sh %Q(ls -1 -s #{f})	
@@ -109,18 +126,12 @@ def workFlow(test=nil)
 		model_file=file_mod_time[0]
 		 singular_table=model_file.sub(/^app\/models\//,'').sub(/[.]rb$/,'')
 		 plural_table=singular_table.pluralize
-		 model_file="app/models/#{singular_table}.rb"
-		 # commn_sources apply to both unit and functional tests.
-		 common_sources=AFFECTS_EVERYTHING+[model_file,"test/fixtures/#{plural_table}.yml"]
 		target = "log/unit/#{singular_table}_test.log"
-		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
-		stop=conditional_build(target, sources)
+		stop=conditional_build(target, unit_sources(singular_table))
 		return stop if stop
 
 		target = "log/functional/#{plural_table}_controller_test.log"
-		sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
-		sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controllers/#{plural_table}_controller.rb","app/helpers/#{plural_table}_helper.rb"]
-		stop=conditional_build(target, sources)
+		stop=conditional_build(target, conrolller_sources(singular_table))
 		return stop if stop
 	end #each
 
@@ -210,16 +221,11 @@ task :incremental do
 		 singular_table=model_file[11..-4]
 		 plural_table=singular_table.pluralize
 		 model_file="app/models/#{singular_table}.rb"
-		 # commn_sources apply to both unit and functional tests.
-		 common_sources=AFFECTS_EVERYTHING+[model_file,"test/fixtures/#{plural_table}.yml"]
 		target = "log/unit/#{singular_table}_test.log"
-		sources=["test/unit/#{singular_table}_test.rb"]+common_sources
-		conditional_build(target, sources)
+		conditional_build(target, unit_sources(singular_table))
 		
 		target = "log/functional/#{plural_table}_controller_test.log"
-		sources=common_sources+FileList["app/views/#{plural_table}/*.html.erb "]
-		sources=["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controllers/#{plural_table}_controller.rb","app/helpers/#{plural_table}_helper.rb"]
-		conditional_build(target, sources)
+		conditional_build(target, conrolller_sources(singular_table))
 	end #each
 	summarize
 end #task
@@ -317,10 +323,6 @@ def summarize
 	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
 	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
 	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
-	rm "log/failed_tests.tmp"
-	(IO.readlines("log/failed_tests.log")- IO.readlines("log/arrested_development.log")).each do |f|
-		puts f
-	end #each
 end #def
 task :summarize do
 	summarize
