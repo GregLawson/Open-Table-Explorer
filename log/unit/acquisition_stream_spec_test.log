@@ -1,6 +1,18 @@
 Loaded suite test/unit/acquisition_stream_spec_test
 Started
-.
-Finished in 24.242687 seconds.
+......Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
+.......
+Finished in 25.767755 seconds.
 
-1 tests, 617 assertions, 0 failures, 0 errors
+13 tests, 8054 assertions, 0 failures, 0 errors

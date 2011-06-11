@@ -80,8 +80,9 @@ test "associated_to_s" do
 			assert_not_nil(ass.send(:model_class_name))
 			
 			acs.associated_to_s(:table_spec,:model_class_name)
-		end
 
+			puts acs.association_state(:acquisition_interface)
+		end #each_value
 	
 end #test
 end #class
