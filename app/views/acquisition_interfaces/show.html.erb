@@ -6,10 +6,6 @@
   <%=h @acquisition_interface.id %>
 </p>
 
-<p>
-  <b>Name:</b>
-  <%=h @acquisition_interface.name %>
-</p>
 
 <p>
   <b>Sceme:</b>
@@ -17,29 +13,10 @@
 </p>
 
 <p>
-  <b>Library:</b>
-  <%=h @acquisition_interface.library %>
-</p>
-
-<p>
-  <b>Acquire data:</b>
-  <%=h @acquisition_interface.interface_code %>
-</p>
-<p>
   <b>Inspect :</b>
   <%=h @acquisition_interface.inspect %>
 </p>
 
-</P>
-<p>
-  <b> return_error_code:</b>
-  <%=h @acquisition_interface. return_code %>
-</p>
-
-<p>
-  <b>rescue_code:</b>
-  <%=h @acquisition_interface.rescue_code %>
-</p>
 <p>
   <b>logical_primary_key:</b>
   <%=h @acquisition_interface.logical_primary_key %>
@@ -47,7 +24,7 @@
 
 <%= link_to 'Edit', edit_acquisition_interface_path(@acquisition_interface) %> |
 <%= link_to 'Back', acquisition_interfaces_path %>
-
+<%= render :partial =>'acquisition_stream_specs/index_partial', :locals => { :@acquisition_stream_specs => @acquisition_interface.acquisition_stream_specs } %>
 <h1>Listing acquisition_stream_specs</h1>
 
 <table border=1>
