@@ -15,7 +15,7 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 		end
 #		puts "calling file_bug_reports"
 		stop=file_bug_reports(ruby_source,log_file,test)
-#		puts "return from file_bug_reports. stop=#{stop}"
+		#~ puts "return from file_bug_reports. stop=#{stop}"
 #		puts "local_variables=#{local_variables.inspect}"
 		return stop
 	end # ruby
@@ -172,10 +172,10 @@ def table_type_from_source(ruby_source)
 end #def
 def parse_summary(summary)
 	summary=summary.split(' ')
-	tests=summary[0]
-	assertions=summary[2]
-	failures=summary[4]
-	tests_stop_on_error=summary[6]
+	tests=summary[0].to_i
+	assertions=summary[2].to_i
+	failures=summary[4].to_i
+	tests_stop_on_error=summary[6].to_i
 	return [tests,assertions,failures,tests_stop_on_error]
 end #def
 def parse_bug(test_type,table,error)
@@ -239,6 +239,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 	if summary.nil? then
 	else
 		tests,assertions,failures,tests_stop_on_error=parse_summary(summary)
+		#~ puts "failures+tests_stop_on_error=#{failures+tests_stop_on_error}"
 		if    (failures+tests_stop_on_error)==0 then
 			stop=false
 		else
@@ -252,7 +253,7 @@ def file_bug_reports(ruby_source,log_file,test=nil)
 		end #each
 	end #if 
 #	puts "ARGF.argv.inspect=#{ARGF.argv.inspect}"
-#	puts "file_bug_reports stop=#{stop}"
+	#~ puts "file_bug_reports stop=#{stop}"
 	return stop
 end #def
 def summarize
