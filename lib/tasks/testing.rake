@@ -106,101 +106,6 @@ task :incremental do
 	end #each
 	summarize
 end #task
-def short_context(trace)
-	return trace.reverse[1..-1].collect{|t| t.slice(/`([a-zA-Z_]+)'/,1)}.join(', ')
-end #def
-def after(s,before,pattern)
-	if s.scan_until(before).nil? then
-		puts "before #{s.rest[0..50]}, #{pattern.to_s} not matched."
-	else
-		puts "matched at #{s.matched} after #{before}"
-		ret=s.scan(pattern)
-		if ret.nil? then
-			puts "before #{s.rest[0..50]}, #{pattern.to_s} not matched."
-			return nil
-		else
-			return ret
-		end
-	end
-end #def
-def file_bug_reports(ruby_source,log_file,test=nil)
-	path=Pathname.new(ruby_source)
-	#~ puts "path=#{path.inspect}"
-	words=path.basename.to_s.split('_')
-#	puts "words=#{words.inspect}"
-	raise "not a test pathname =#{path.inspect}" if words[-1]!='test.rb'
-	if words[-2]=='controller' then
-		test_type='functional'
-		table=words[0..-3].join('_')
-	else
-		test_type='unit'
-		table=words[0..-2].join('_')
-	end #if
-	#~ puts "test_type='#{test_type}'"
-	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
-#	puts "blocks=#{blocks.inspect}"
-	header= blocks[0]
-	errors=blocks[1..-2]
-	summary=blocks[-1]
-	if summary.nil? then
-	else
-		#~ puts "summary=#{summary.split(' ').inspect}"
-		summary=summary.split(' ')
-		tests=summary[0]
-		assertions=summary[2]
-		failures=summary[4]
-		tests_stop_on_error=summary[6]
-		if    (failures+tests_stop_on_error)==0 then
-			stop=false
-		else
-			stop=true
-		end #if
-		open('db/tests.sql',"a" ) {|f| f.write("insert into test_runs(model,test,test_type,environment,tests,assertions,failures,tests_stop_on_error,created_at,updated_at) values('#{table}','#{ENV["TEST"]}','#{test_type}','#{ENV["RAILS_ENV"]}',#{tests},#{assertions},#{failures},#{tests_stop_on_error},'#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }
-	end #if
-	if !errors.nil? then
-		errors.each do |error|
-			error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
-				#~ puts "number=#{number.inspect}"
-				#~ puts "error_type=#{error_type}"
-				#~ puts "test=#{test.inspect}"
-				#~ puts "klass=#{klass.inspect}"
-				#~ puts "report=#{report.inspect}"
-				url="rake testing:#{test_type}_test TABLE=#{table} TEST=#{test}"
-				if error_type=='Error' then
-					report.scan(/^([^\n]*)\n(.*)$/m) do |error,trace|
-						context=short_context(trace.split("\n"))
-						#~ puts "error=#{error.inspect}"
-						#~ puts "trace=#{trace.inspect}"
-						#~ puts "context=#{context.inspect}"
-						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-					end #scan
-				elsif error_type=='Failure' then
-					report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m) do |trace,error|
-						context=short_context(trace.split("\n"))
-						error=error.slice(0,50)
-						#~ puts "error=#{error.inspect}"
-						#~ puts "trace=#{trace.inspect}"
-						#~ puts "context=#{context.inspect}"
-						open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-					end #scan
-				else
-					puts "pre_match=#{s.pre_match}"
-					puts "post_match=#{s.post_match}"
-					puts "before #{s.rest}"
-				end #if
-			end #scan
-		end #each
-	end #if 
-#	puts "ARGF.argv.inspect=#{ARGF.argv.inspect}"
-#	puts "file_bug_reports stop=#{stop}"
-	return stop
-end #def
-def summarize
-	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/empty_tests.tmp)	
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
-	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
-end #def
 task :summarize do
 	summarize
 end #task
@@ -232,15 +137,6 @@ task :full do
 	  sh 'rdoc'
 	summarize
 end #task
-def view(url)
-	uri=URI(url)
-	output_file='log/view/test.html'
-	old=IO.read('log/production.log')
-	sh "curl #{url} -o #{output_file}"
-	new=IO.read('log/production.log')
-	changes=new[old.size..-1]
-	puts "changes=#{changes}"
-end #def
 task :view do
 	url = ENV["URL"]
 	view(url)
