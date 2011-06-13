@@ -1,9 +1,7 @@
 <h1>Listing acquisition_stream_specs</h1>
-
+<%= render :partial =>'acquisition_stream_specs/index_partial', :locals => { :@acquisition_stream_specs => @acquisition_stream_specs } %>
 <table border=1>
   <tr>
-    <th>Id</th>
-    <th>acquisition_interface_id</th>
     <th>Acquisition interface</th>
     <th>Url</th>
     <th>Table spec</th>
@@ -12,8 +10,6 @@
 
 <% for acquisition_stream_spec in @acquisition_stream_specs %>
   <tr>
-    <td><%=h acquisition_stream_spec.id %></td>
-    <td><%=h acquisition_stream_spec.acquisition_interface_id %></td>
     <td><%=h acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) %></td>
     <td><%=h acquisition_stream_spec.url %></td>
     <td><%=h acquisition_stream_spec.table_spec_id %></td>
