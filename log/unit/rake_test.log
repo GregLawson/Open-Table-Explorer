@@ -1,30 +1,24 @@
 Loaded suite test/unit/rake_test
 Started
-status=M, file=app/models/global.rb
 status=M, file=app/views/acquisition_interfaces/show.html.erb
 status=M, file=app/views/acquisition_stream_specs/_index_partial.html.erb
 status=M, file=app/views/acquisition_stream_specs/index.html.erb
 status=M, file=db/bugs.sql
 status=M, file=db/tests.sql
-status=M, file=lib/tasks/testing.rake
 status=M, file=lib/tasks/testing.rb
-status=M, file=log/empty_tests.tmp
+status=M, file=log/functional/acquisition_interfaces_controller_test.log
+status=M, file=log/unit/acquisition_interface_test.log
 status=M, file=log/unit/generic_table_test.log
 status=M, file=log/unit/global_test.log
-status=M, file=log/unit/rake_test.log
+status=MM, file=log/unit/rake_test.log
+status=M, file=log/unit/table_spec_test.log
+status=M, file=log/unit/transfer_test.log
 status=M, file=test/unit/global_test.rb
 status=M, file=test/unit/rake_test.rb
-app/views/acquisition_stream_specs/_index_partial.html.erb not up to date.
-Target log/functional/globals_controller_test.log for file=app/models/global.rb does not exist.
-app/views/acquisition_interfaces/show.html.erb not up to date.
-app/views/acquisition_stream_specs/_index_partial.html.erb not up to date.
-app/views/acquisition_stream_specs/index.html.erb not up to date.
 db/bugs.sql don't know when to stage.
 db/tests.sql don't know when to stage.
-lib/tasks/testing.rake don't know when to stage.
 lib/tasks/testing.rb don't know when to stage.
-log/empty_tests.tmp don't know when to stage.
 .
-Finished in 14.077712 seconds.
+Finished in 14.24839 seconds.
 
-1 tests, 28 assertions, 0 failures, 0 errors
+1 tests, 29 assertions, 0 failures, 0 errors
