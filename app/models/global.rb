@@ -263,16 +263,27 @@ def matching_methods_in_context(regexp,depth=0)
 	ret
 end #def
 def method_model
-	modules(true).map do |m|
-		mHash={}
-		mHash[:name]=m
-		theMethod=method(m.to_sym)
-		mHash[:method]=theMethod
-		mHash[:arity]=theMethod.arity
-		mHash[:owner]=theMethod.owner
-		mHash[:parameters]=theMethod.parameters.inspect
-		mHash[:source_location]=theMethod.source_location		
-	end #map
+	Module.constants.map do |c|
+		c.methods(false).map do |m|
+#		c.methods(false)+c.instance_methods(false).map do |m|
+			mHash={}
+			mHash[:name]=m
+			theMethod=method(m.to_sym)
+			mHash[:method]=theMethod
+			mHash[:arity]=theMethod.arity
+			mHash[:owner]=theMethod.owner
+			mHash[:instance_variable_defined]=theMethod.instance_variable_defined?('@'+m.to_sym)
+			mHash[:singleton]=singleton_methods.include?(m)
+			mHash[:protected]=protected_method_defined?(m)
+			mHash[:private]=private_method_defined?(m)
+			mHash[:scope]=self.class==Class ? 'Class': 'Instance'
+			private_method_defined?
+			#~ puts "methods=#{theMethod.matching_methods(/ar/).inspect}"
+			#~ mHash[:parameters]=theMethod.parameters
+			#~ mHash[:source_location]=theMethod.source_location
+			mHash		
+		end #map
+	end.flatten #map
 end #def
 
 end #class
