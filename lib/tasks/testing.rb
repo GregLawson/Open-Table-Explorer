@@ -15,8 +15,7 @@ def ruby_run_and_log(ruby_source,log_file,test=nil)
 		end
 #		puts "calling file_bug_reports"
 		stop=file_bug_reports(ruby_source,log_file,test)
-		#~ puts "return from file_bug_reports. stop=#{stop}"
-#		puts "local_variables=#{local_variables.inspect}"
+		#c#		puts "local_variables=#{local_variables.inspect}"
 		return stop
 	end # ruby
 	if local_variables.include?('stop') then
@@ -95,7 +94,7 @@ def controller_sources(singular_table)
 	# commn_sources apply to both unit and functional tests.
 	model_file="app/models/#{singular_table}.rb"
 	common_sources=AFFECTS_EVERYTHING+[model_file,"test/fixtures/#{plural_table}.yml"]
-	sources=common_sources+Dir["app/views/#{plural_table}/*.html.erb "]+AFFECTS_CONTROLLERS
+	sources=common_sources+Dir["app/views/#{plural_table}/*.html.erb"]+AFFECTS_CONTROLLERS
 	return ["test/functional/#{plural_table}_controller_test.rb"] +sources+["app/controllers/#{plural_table}_controller.rb","app/helpers/#{plural_table}_helper.rb"]
 end #def
 def unit_target(singular_table)
