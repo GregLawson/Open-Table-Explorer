@@ -62,25 +62,26 @@ def why_not_stage_helper(file,target,sources,test_type)
 		#~ puts "Target #{target}  does exist." 
 		if log_passed?(target) then
 			system "git add #{target}"
-			if  uptodate?(target,[file]) then
+			if file==target then
+				return true
+			elsif  uptodate?(target,[file]) then
 				if sources.include?(file) then
 					system "git add #{file}"
-					stage=true
+					return true
 				else
 					puts "#{file} not a #{test_type} source."
+					return false
 				end #if
 			else
 				puts "#{file} not up to date." 
 			end #if
-			stage=true
+			return true
 		else
-			stage=false
+			return false
 		end #if
-		puts "#{file} not up to date."unless  uptodate?(target,[file]) 
-		stage=false
 	else
 		puts "Target #{target} for file=#{file} does not exist."
-		stage=false
+		return false
 	end #if
 
 end #def
@@ -136,5 +137,6 @@ test "git status" do
 	assert_nothing_raised{gitStatus{|status,file| why_not_stage(file,singular_table_from_file(file)) }}
 	assert_equal(['global','unit'],table_type_from_source('test/unit/global_test.rb'))
 #	assert_nothing_raised{why_not_stage_helper('app/views/acquisition_stream_specs/_index_partial.html.erb',target,sources,test_type)}
+	assert_include('app/views/acquisition_stream_specs/index.html.erb',controller_sources('acquisition_stream_spec'))
 end #test
 end #class
