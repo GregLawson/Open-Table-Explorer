@@ -64,7 +64,7 @@ test 'matching methods' do
 	#~ assert_respond_to(acquisition_stream_spec,:instance_methods) 
 	assert_equal('',acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) )
 	
-end #def
+end #test
 test '' do
 #~ def noninherited_modules
 	#~ if module? then
@@ -110,5 +110,36 @@ test "Acquisition Interface modules" do
 	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test
 test "method model" do
-	puts "Generic_Table.method_model=#{Generic_Table.method_model}"
+	assert_equal(['String'],Module.constants.map { |c| c.objectKind}.uniq)
+	assert_include('String',CONSTANTIZED.map { |c| c.objectKind}.uniq)
+	assert_operator(383,:<,Module.constants.size)
+	assert_operator(CONSTANTIZED.size,:<,Module.constants.size)
+	assert_operator(100,:<,CONSTANTIZED.size)
+#	puts "Module.constants=#{Module.constants.inspect}"
+	METHODS=Module.constants.map do |c|
+		if c.objectKind=='Class' || c.objectKind=='Module' then
+			method_record(c)
+		end #if
+	end #map
+	assert_operator(METHODS.size,:<,1000)
+	assert_operator(100,:<,METHODS.size)
+	assert_include( "Class",CONSTANTIZED.map { |c| c.objectKind}.uniq)
+	puts "pretty print"
+	#~ pp Object.method_model
+	#~ assert_not_nil(method_record('object_id',Object,:methods))
+	assert_equal([4,6,10],Object.method_model.map { |m| m.keys.size}.uniq)
+	assert_equal(Set.new([Set.new([:exception,:scope, :owner, :name]),
+ Set.new([:exception,:scope, :method, :arity, :owner, :name]),
+ Set.new([:exception,:scope,
+  :instance_variable_defined,
+  :method,
+  :singleton,
+  :protected,
+  :private,
+  :arity,
+  :owner,
+  :name])]),Set.new(Object.method_model.map { |m| Set.new(m.keys)}.uniq))
+	puts Object.method_model.map { |m| m.keys}.uniq.inspect
+	assert_equal(Set.new([:instance, :class, :singleton]),Set.new(Object.method_model.map { |m| m[:scope]}.uniq))
+end #test
 end #test class

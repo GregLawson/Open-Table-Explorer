@@ -7,6 +7,24 @@
 ###########################################################################
 # cntains mostly functions created for testing / debugging but not dependant on TestCase
 class Object
+def objectKind
+	if nil? then
+		return "nil."
+	elsif self.class.name=='Symbol' then
+		return "Symbol"
+	elsif self.class.name=='Module' then
+		return "Module"
+	elsif self.class.name=='String' then
+		return "String"
+	else
+		if respond_to?(:superclass) then
+			return "Class"
+		else
+			return "Class #{self.class.name} has no superclass."
+		end
+	end
+
+end
 def objectClass(verbose=false)
 	if nil? then
 		return "nil."
@@ -17,8 +35,6 @@ def objectClass(verbose=false)
 		puts("name=#{name}") if verbose
 		puts("nesting.inspect=#{nesting.inspect}") if verbose
 		return "Module #{name}"
-	elsif activeRecordTableNotCreatedYet?(obj) then
-		return "Active_Record #{self.class.inspect}"
 	else
 		puts("name=#{name}") if verbose
 		if respond_to?(:superclass) then
@@ -262,28 +278,43 @@ def matching_methods_in_context(regexp,depth=0)
 	end #map
 	ret
 end #def
+def method_record(m,owner,scope)
+	begin
+		mHash={}
+		mHash[:name]=m
+		theMethod=method(m.to_sym)
+		mHash[:method]=theMethod
+		mHash[:arity]=theMethod.arity
+		mHash[:owner]=theMethod.owner
+		mHash[:instance_variable_defined]=theMethod.instance_variable_defined?(('@'+m))
+		mHash[:singleton]=singleton_methods.include?(m)
+		mHash[:scope]=self.class==Class ? 'Class': 'Instance'
+		mHash[:protected]=protected_method_defined?(m)
+		mHash[:private]=private_method_defined?(m)
+		mHash[:parameters]=theMethod.parameters
+		mHash[:source_location]=theMethod.source_location
+		mHash		
+	rescue StandardError => exc
+		mHash[:owner]=owner
+		mHash[:scope]=scope
+		mHash[:exception]=exc
+		#~ puts "exc=#{exc.inspect}"
+		mHash		
+	end #begin
+end #def
+CONSTANTIZED=Module.constants.map do |c|
+	begin
+		c=c.constantize
+	rescue
+		 puts "rescued c=#{c.inspect}"
+		 nil
+	 end #begin
+end #map
+CLASSES_AND_MODULES=CONSTANTIZED.select { |c| c.objectKind=='Class' || c.objectKind=='Module' }
 def method_model
-	Module.constants.map do |c|
-		c.methods(false).map do |m|
-#		c.methods(false)+c.instance_methods(false).map do |m|
-			mHash={}
-			mHash[:name]=m
-			theMethod=method(m.to_sym)
-			mHash[:method]=theMethod
-			mHash[:arity]=theMethod.arity
-			mHash[:owner]=theMethod.owner
-			mHash[:instance_variable_defined]=theMethod.instance_variable_defined?('@'+m.to_sym)
-			mHash[:singleton]=singleton_methods.include?(m)
-			mHash[:protected]=protected_method_defined?(m)
-			mHash[:private]=private_method_defined?(m)
-			mHash[:scope]=self.class==Class ? 'Class': 'Instance'
-			private_method_defined?
-			#~ puts "methods=#{theMethod.matching_methods(/ar/).inspect}"
-			#~ mHash[:parameters]=theMethod.parameters
-			#~ mHash[:source_location]=theMethod.source_location
-			mHash		
-		end #map
-	end.flatten #map
+	(CLASSES_AND_MODULES.map { |c| c.methods(false).map { |m| method_record(m,c,:class) } } +
+	CLASSES_AND_MODULES.map { |c| c.instance_methods(false).map { |m| method_record(m,c,:instance) } } +
+	CLASSES_AND_MODULES.map { |c| c.singleton_methods(false).map { |m| method_record(m,c,:singleton) } }).flatten
 end #def
 
 end #class
