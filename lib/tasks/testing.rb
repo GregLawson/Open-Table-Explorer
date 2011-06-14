@@ -156,7 +156,11 @@ def after(s,before,pattern)
 	end
 end #def
 def stage
-	gitStatus{|status,file| why_not_stage(file,singular_table_from_file(file)) }
+	gitStatus do|status,file| 
+		if status != 'D' then
+			why_not_stage(file,singular_table_from_file(file))
+		end #if
+	end #gitStatus
 end #def
 def table_type_from_source(ruby_source)
 	path=Pathname.new(ruby_source)
