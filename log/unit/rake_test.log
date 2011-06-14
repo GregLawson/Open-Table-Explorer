@@ -1,24 +1,28 @@
 Loaded suite test/unit/rake_test
 Started
-status=M, file=app/views/acquisition_interfaces/show.html.erb
-status=M, file=app/views/acquisition_stream_specs/_index_partial.html.erb
-status=M, file=app/views/acquisition_stream_specs/index.html.erb
+status=M, file=app/models/global.rb
 status=M, file=db/bugs.sql
 status=M, file=db/tests.sql
 status=M, file=lib/tasks/testing.rb
 status=M, file=log/functional/acquisition_interfaces_controller_test.log
+status=M, file=log/functional/ruby_interfaces_controller_test.log
 status=M, file=log/unit/acquisition_interface_test.log
 status=M, file=log/unit/generic_table_test.log
-status=M, file=log/unit/global_test.log
-status=MM, file=log/unit/rake_test.log
+status=D, file=log/unit/global_test.log
+status=M, file=log/unit/rake_test.log
+status=M, file=log/unit/ruby_interface_test.log
 status=M, file=log/unit/table_spec_test.log
 status=M, file=log/unit/transfer_test.log
 status=M, file=test/unit/global_test.rb
 status=M, file=test/unit/rake_test.rb
+Target log/unit/global_test.log for file=app/models/global.rb does not exist.
+Target log/functional/globals_controller_test.log for file=app/models/global.rb does not exist.
 db/bugs.sql don't know when to stage.
 db/tests.sql don't know when to stage.
 lib/tasks/testing.rb don't know when to stage.
+Target log/unit/global_test.log for file=log/unit/global_test.log does not exist.
+Target log/unit/global_test.log for file=test/unit/global_test.rb does not exist.
 .
-Finished in 14.24839 seconds.
+Finished in 23.303667 seconds.
 
 1 tests, 29 assertions, 0 failures, 0 errors
