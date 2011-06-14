@@ -56,6 +56,12 @@ def uptodate?(target,sources)
 	sources.each do |s|
 		#~ system ("ls -l #{target}") {|ok, res| } # discard result if file doesn't exist
 		#~ system "ls -l #{s}"
+		if !File.exist?(target) then
+			return false
+		end #def
+		if !File.exist?(s) then
+			return false
+		end #def
 		if File.mtime(target)<File.mtime(s) then
 			return false
 		end #if
