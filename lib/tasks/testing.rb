@@ -156,12 +156,7 @@ def after(s,before,pattern)
 	end
 end #def
 def stage
-		gitStatus=`git status --porcelain`.split("\n").each do |s|
-		status,file=s.split(" ")
-		pp "status",status
-		pp "file",file
-		why_not_stage(file,"acquisition_stream_spec")
-	end #map
+	gitStatus{|status,file| why_not_stage(file,singular_table_from_file(file)) }
 end #def
 def table_type_from_source(ruby_source)
 	path=Pathname.new(ruby_source)

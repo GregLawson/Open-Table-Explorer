@@ -92,6 +92,7 @@ task :work_flow do
 	test = ENV["TEST"]
 	workFlow(test) if !stop
 #	summarize
+	stage
 end #task
 task :incremental do
 	ALL_MODEL_FILES .each do |model_file|
@@ -105,6 +106,7 @@ task :incremental do
 		conditional_build(target, controller_sources(singular_table))
 	end #each
 	summarize
+	stage
 end #task
 task :summarize do
 	summarize
@@ -126,6 +128,7 @@ task :full_unit_test do
 	test = ENV["TEST"]
 	full_unit_test(plural_table,test)
 #	summarize
+	stage
 end #task
 task :full do	
 	sh "rake test:units >log/full/rake_test.log"
