@@ -55,5 +55,7 @@
 </table>
 
 <br />
+<% require 'global.rb' %>
+<%= render :partial =>'methods/index_partial', :locals => { :@methods => MethodModel.all } %>
 
 <%= link_to 'New acquisition_stream_spec', new_acquisition_stream_spec_path %>
