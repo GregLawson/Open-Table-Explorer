@@ -278,43 +278,5 @@ def matching_methods_in_context(regexp,depth=0)
 	end #map
 	ret
 end #def
-def method_record(m,owner,scope)
-	begin
-		mHash={}
-		mHash[:name]=m
-		theMethod=method(m.to_sym)
-		mHash[:method]=theMethod
-		mHash[:arity]=theMethod.arity
-		mHash[:owner]=theMethod.owner
-		mHash[:instance_variable_defined]=theMethod.instance_variable_defined?(('@'+m))
-		mHash[:singleton]=singleton_methods.include?(m)
-		mHash[:scope]=self.class==Class ? 'Class': 'Instance'
-		mHash[:protected]=protected_method_defined?(m)
-		mHash[:private]=private_method_defined?(m)
-		mHash[:parameters]=theMethod.parameters
-		mHash[:source_location]=theMethod.source_location
-		mHash		
-	rescue StandardError => exc
-		mHash[:owner]=owner
-		mHash[:scope]=scope
-		mHash[:exception]=exc
-		#~ puts "exc=#{exc.inspect}"
-		mHash		
-	end #begin
-end #def
-CONSTANTIZED=Module.constants.map do |c|
-	begin
-		c=c.constantize
-	rescue
-		 puts "rescued c=#{c.inspect}"
-		 nil
-	 end #begin
-end #map
-CLASSES_AND_MODULES=CONSTANTIZED.select { |c| c.objectKind=='Class' || c.objectKind=='Module' }
-def method_model
-	(CLASSES_AND_MODULES.map { |c| c.methods(false).map { |m| method_record(m,c,:class) } } +
-	CLASSES_AND_MODULES.map { |c| c.instance_methods(false).map { |m| method_record(m,c,:instance) } } +
-	CLASSES_AND_MODULES.map { |c| c.singleton_methods(false).map { |m| method_record(m,c,:singleton) } }).flatten
-end #def
 
 end #class
