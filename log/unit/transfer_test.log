@@ -1,62 +1,174 @@
 Loaded suite test/unit/transfer_test
 Started
-.Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-Foreign key acquisition_interface_id has value 569237512 and returns type AcquisitionInterface.
-.........
-Finished in 20.965038 seconds.
+.Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
 
-10 tests, 26462 assertions, 0 failures, 0 errors
+Foreign key account_id has value 980190997 but the association returns nil.
+Foreign key account_id has value 980190997 but the association returns nil.
+
+Foreign key account_id has value 980190987 but the association returns nil.
+Foreign key account_id has value 980190987 but the association returns nil.
+
+Foreign key account_id has value 980190982 but the association returns nil.
+Foreign key account_id has value 980190982 but the association returns nil.
+
+Foreign key account_id has value 980190963 but the association returns nil.
+Foreign key account_id has value 980190963 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190992 but the association returns nil.
+Foreign key account_id has value 980190992 but the association returns nil.
+
+Foreign key account_id has value 980190972 but the association returns nil.
+Foreign key account_id has value 980190972 but the association returns nil.
+
+Foreign key account_id has value 980190970 but the association returns nil.
+Foreign key account_id has value 980190970 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190999 but the association returns nil.
+Foreign key account_id has value 980190999 but the association returns nil.
+
+Foreign key account_id has value 980190988 but the association returns nil.
+Foreign key account_id has value 980190988 but the association returns nil.
+
+Foreign key account_id has value 980190978 but the association returns nil.
+Foreign key account_id has value 980190978 but the association returns nil.
+
+Foreign key account_id has value 980190968 but the association returns nil.
+Foreign key account_id has value 980190968 but the association returns nil.
+
+Foreign key account_id has value 980191003 but the association returns nil.
+Foreign key account_id has value 980191003 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190968 but the association returns nil.
+Foreign key account_id has value 980190968 but the association returns nil.
+
+Foreign key account_id has value 980190985 but the association returns nil.
+Foreign key account_id has value 980190985 but the association returns nil.
+
+Foreign key account_id has value 980190973 but the association returns nil.
+Foreign key account_id has value 980190973 but the association returns nil.
+
+Foreign key account_id has value 937851865 but the association returns nil.
+Foreign key account_id has value 937851865 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190998 but the association returns nil.
+Foreign key account_id has value 980190998 but the association returns nil.
+
+Foreign key account_id has value 980190989 but the association returns nil.
+Foreign key account_id has value 980190989 but the association returns nil.
+
+Foreign key account_id has value 980190978 but the association returns nil.
+Foreign key account_id has value 980190978 but the association returns nil.
+
+Foreign key account_id has value 980190974 but the association returns nil.
+Foreign key account_id has value 980190974 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190995 but the association returns nil.
+Foreign key account_id has value 980190995 but the association returns nil.
+
+Foreign key account_id has value 980190985 but the association returns nil.
+Foreign key account_id has value 980190985 but the association returns nil.
+
+Foreign key account_id has value 980190969 but the association returns nil.
+Foreign key account_id has value 980190969 but the association returns nil.
+
+Foreign key account_id has value 764269359 but the association returns nil.
+Foreign key account_id has value 764269359 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980191001 but the association returns nil.
+Foreign key account_id has value 980191001 but the association returns nil.
+
+Foreign key account_id has value 980190990 but the association returns nil.
+Foreign key account_id has value 980190990 but the association returns nil.
+
+Foreign key account_id has value 980190977 but the association returns nil.
+Foreign key account_id has value 980190977 but the association returns nil.
+
+Foreign key account_id has value 980190971 but the association returns nil.
+Foreign key account_id has value 980190971 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190994 but the association returns nil.
+Foreign key account_id has value 980190994 but the association returns nil.
+
+Foreign key account_id has value 980190984 but the association returns nil.
+Foreign key account_id has value 980190984 but the association returns nil.
+
+Foreign key account_id has value 980190980 but the association returns nil.
+Foreign key account_id has value 980190980 but the association returns nil.
+
+Foreign key account_id has value 980190967 but the association returns nil.
+Foreign key account_id has value 980190967 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980191001 but the association returns nil.
+Foreign key account_id has value 980191001 but the association returns nil.
+
+Foreign key account_id has value 980190989 but the association returns nil.
+Foreign key account_id has value 980190989 but the association returns nil.
+
+Foreign key account_id has value 980190976 but the association returns nil.
+Foreign key account_id has value 980190976 but the association returns nil.
+
+Foreign key account_id has value 980190983 but the association returns nil.
+Foreign key account_id has value 980190983 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190967 but the association returns nil.
+Foreign key account_id has value 980190967 but the association returns nil.
+
+Foreign key account_id has value 980190984 but the association returns nil.
+Foreign key account_id has value 980190984 but the association returns nil.
+
+Foreign key account_id has value 980190981 but the association returns nil.
+Foreign key account_id has value 980190981 but the association returns nil.
+
+Foreign key account_id has value 980190966 but the association returns nil.
+Foreign key account_id has value 980190966 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980191002 but the association returns nil.
+Foreign key account_id has value 980191002 but the association returns nil.
+
+Foreign key account_id has value 980190993 but the association returns nil.
+Foreign key account_id has value 980190993 but the association returns nil.
+
+Foreign key account_id has value 980190975 but the association returns nil.
+Foreign key account_id has value 980190975 but the association returns nil.
+
+Foreign key account_id has value 980190970 but the association returns nil.
+Foreign key account_id has value 980190970 but the association returns nil.
+
+.........
+Finished in 21.889221 seconds.
+
+10 tests, 26854 assertions, 0 failures, 0 errors

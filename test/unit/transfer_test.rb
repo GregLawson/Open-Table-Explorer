@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'active_support' # for singularize and pluralize
 # executed in alphabetical orer? Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
@@ -132,20 +133,30 @@ test "canonical" do
 	#~ assert_relation(Transfer.transfers_extended.respond_to?(:to_s))
 	#~ assert_relation(Transfer.transfers_extended.canonicalName)
 end #test
+def assert_association_value
+			puts ar_from_fixture.association_state(expected_association_symbol)
+			assert_nil(ar_from_fixture[expected_association_symbol.to_s+'_id']) # foreign key uninitialized
+end #def
 test "associated_to_s" do
-		@my_fixtures.each_value do |acs|
-			acs=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
-			assert_include(ActiveRecord::Base,acs.class.ancestors)
-			assert_include("model_class_name",acs.table_spec.methods)
+		expected_association_symbol=:account
+		expected_association_class=expected_association_symbol.to_s.camelize.constantize
+		method_of_association=:name
+		@my_fixtures.each_value do |ar_from_fixture|
+			assert_include(expected_association_symbol.to_s,ar_from_fixture.foreign_key_association_names)
+			assert_association_to_one(ar_from_fixture,expected_association_symbol)
+#			ar_from_fixture=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
+			assert_include(ActiveRecord::Base,ar_from_fixture.class.ancestors)
+			assert_include(method_of_association.to_s,Account.methods)
+			assert_include(method_of_association.to_s,ar_from_fixture.account.class.methods)
 			
-			assert_nil(acs[table_specs.to_s+'_id']) # foreign key uninitialized
-			ass=acs.send(:table_spec)
-			assert_not_nil(ass)
-			assert_not_nil(ass.send(:model_class_name))
+			puts ar_from_fixture.association_state(expected_association_symbol)
+			ass=ar_from_fixture.send(expected_association_symbol)
+			puts ar_from_fixture.association_state(expected_association_symbol)
+			#~ assert_not_nil(ass,ar_from_fixture.association_state(expected_association_symbol))
+			#~ assert_not_nil(ass.send(method_of_association))
 			
-			acs.associated_to_s(:table_spec,:model_class_name)
+			puts ar_from_fixture.associated_to_s(expected_association_symbol,method_of_association)
 
-			puts acs.association_state(:acquisition_interface)
 		end #each_value
 	
 end #test
