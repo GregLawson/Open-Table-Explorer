@@ -1,0 +1,34 @@
+<h1>Listing methods</h1>
+<table border=1>
+  <tr>
+    <th>name</th>
+    <th>scope</th>
+    <th>owner</th>
+    <th>arity</th>
+    <th>instance_variable_defined</th>
+    <th>singleton</th>
+    <th>private</th>
+    <th>protected</th>
+    <th>exception</th>
+  </tr>
+
+<% for method in @methods %>
+  <tr>
+    <td><%=method.name %></td>
+    <td><%=method.scope %></td>
+    <td><%=method.owner %></td>
+    <td><%=h method.arity %></td>
+    <td><%=h method.instance_variable_defined %></td>
+    <td><%=h method.singleton %></td>
+    <td><%=h method.private %></td>
+    <td><%=h method.protected %></td>
+    <td><%=h method.exception %></td>
+    <td><%= link_to 'Show', method %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New method', new_method_path %>
+<BR>
