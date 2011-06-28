@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110530155127) do
+ActiveRecord::Schema.define(:version => 20110616013042) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -313,6 +313,21 @@ ActiveRecord::Schema.define(:version => 20110530155127) do
 
   add_index "nodes", ["parent_description"], :name => "fki_"
   add_index "nodes", ["parent_node"], :name => "fki_Foriegn key parent node"
+
+  create_table "ofxes", :force => true do |t|
+    t.integer  "cuisp"
+    t.decimal  "units"
+    t.decimal  "unit_price"
+    t.decimal  "total"
+    t.string   "account_number"
+    t.datetime "trade_date"
+    t.datetime "settle_date"
+    t.string   "memo"
+    t.string   "direction"
+    t.string   "transfer_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "parameters", :force => true do |t|
     t.string   "parameter",   :null => false

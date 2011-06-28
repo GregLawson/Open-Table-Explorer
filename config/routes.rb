@@ -1,4 +1,6 @@
 Rtest3::Application.routes.draw do
+  resources :ofxes
+
   resources :test_runs
 
   resources :ruby_interfaces
