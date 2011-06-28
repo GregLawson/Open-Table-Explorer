@@ -156,7 +156,7 @@ test "associated_to_s" do
 			#~ assert_not_nil(ass.send(method_of_association))
 			
 			puts ar_from_fixture.associated_to_s(expected_association_symbol,method_of_association)
-
+			puts Account.all.map {|r| r.id}.uniq.sort.inspect
 		end #each_value
 	
 end #test
