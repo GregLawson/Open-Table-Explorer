@@ -7,9 +7,14 @@ end
 def test_general_associations
 	assert_general_associations(@table_name)
 end
-def test_id_and_hash_equal
-	@my_fixtures.each_value do |my_fixture|
-		assert_equal(Fixtures::identify(my_fixture.logical_primary_key_value),my_fixture.id,"Fixture file test/fixture/#{@table_name}.yml has wrong tag or explicit id, logical_primary_key='#{my_fixture.logical_primary_key}',=#{Fixtures::identify(my_fixture.logical_primary_key)} != my_fixture.id=#{my_fixture.id} where fixture=#{my_fixture.inspect}.")
+def test_id_equal
+	if @model_class.new.sequential_id? then
+	else
+		@my_fixtures.each_value do |ar_from_fixture|
+			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
+			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
+			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
+		end
 	end
 end #def
 end #class
