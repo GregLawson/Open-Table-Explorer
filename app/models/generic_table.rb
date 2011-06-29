@@ -437,5 +437,28 @@ end #def
 def display_full_time(time)
 	time.rfc2822
 end #def
+def Generic_Table.syntax_error(code)
+	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
+	instance_eval(method_def)
+	return nil
+rescue  SyntaxError => exception_raised
+	return exception_raised.to_s
+end #def
+def Generic_Table.short_error_message(code)
+	error_message= Generic_Table.syntax_error(code)
+	if error_message.nil? then
+		return nil
+	else
+		return error_message.sub(%r{^\(eval\):\d+:in `syntax_error': compile error},'').gsub(%r{\(eval\):\d+: syntax error, },'').gsub(%r{\(eval\):\d+: },'')
+	end #if
+end #def
+def Generic_Table.no_syntax_error?(code)
+	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
+	instance_eval(method_def)
+	return true
+rescue  SyntaxError => exception_raised
+	return false
+end #def
+
 end # module
 
