@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @scalar_argument.id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @scalar_argument.name %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @scalar_argument.value %>
+</p>
+
+<p>
+  <b>Formula:</b>
+  <%= @scalar_argument.formula %>
+</p>
+
+<p>
+  <b>Ruby type:</b>
+  <%= @scalar_argument.ruby_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_scalar_argument_path(@scalar_argument) %> |
+<%= link_to 'Back', scalar_arguments_path %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  library: MyString
+  interface_code: MyText
+  return_code: MyText
+  rescue_code: MyText
+
+two:
+  name: MyString
+  library: MyString
+  interface_code: MyText
+  return_code: MyText
+  rescue_code: MyText

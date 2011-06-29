@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @stream_method_argument.id %>
+</p>
+
+<p>
+  <b>Stream method:</b>
+  <%= @stream_method_argument.stream_method_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @stream_method_argument.name %>
+</p>
+
+<p>
+  <b>Ruby type:</b>
+  <%= @stream_method_argument.ruby_type %>
+</p>
+
+<p>
+  <b>Direction:</b>
+  <%= @stream_method_argument.direction %>
+</p>
+
+<p>
+  <b>Parameter:</b>
+  <%= @stream_method_argument.parameter_id %>
+</p>
+
+<p>
+  <b>Parameter type:</b>
+  <%= @stream_method_argument.parameter_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_stream_method_argument_path(@stream_method_argument) %> |
+<%= link_to 'Back', stream_method_arguments_path %>

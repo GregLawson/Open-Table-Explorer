@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @stream_method_call.id %>
+</p>
+
+<p>
+  <b>Stream method:</b>
+  <%= @stream_method_call.stream_method_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_stream_method_call_path(@stream_method_call) %> |
+<%= link_to 'Back', stream_method_calls_path %>

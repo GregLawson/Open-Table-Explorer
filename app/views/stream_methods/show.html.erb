@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @stream_method.name %>
+</p>
+
+<p>
+  <b>Library:</b>
+  <%= @stream_method.library %>
+</p>
+
+<p>
+  <b>Interface code:</b>
+  <%= @stream_method.interface_code %>
+</p>
+
+<p>
+  <b>Return code:</b>
+  <%= @stream_method.return_code %>
+</p>
+
+<p>
+  <b>Rescue code:</b>
+  <%= @stream_method.rescue_code %>
+</p>
+
+
+<%= link_to 'Edit', edit_stream_method_path(@stream_method) %> |
+<%= link_to 'Back', stream_methods_path %>

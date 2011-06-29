@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110616013042) do
+ActiveRecord::Schema.define(:version => 20110629194900) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -429,6 +429,15 @@ ActiveRecord::Schema.define(:version => 20110616013042) do
     t.datetime "updated_at"
   end
 
+  create_table "scalar_arguments", :force => true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.string   "formula"
+    t.string   "ruby_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "stations", :force => true do |t|
     t.string  "dtv"
     t.string  "antennatype"
@@ -440,6 +449,40 @@ ActiveRecord::Schema.define(:version => 20110616013042) do
     t.string  "compassheading"
     t.float   "milesfrom"
     t.integer "rfchannel"
+  end
+
+  create_table "stream_method_arguments", :force => true do |t|
+    t.integer  "stream_method_id"
+    t.string   "name"
+    t.string   "ruby_type"
+    t.string   "direction"
+    t.integer  "parameter_id"
+    t.string   "parameter_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stream_method_calls", :force => true do |t|
+    t.integer  "stream_method_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stream_methods", :force => true do |t|
+    t.string   "name"
+    t.string   "library"
+    t.text     "interface_code"
+    t.text     "return_code"
+    t.text     "rescue_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stream_parameters", :force => true do |t|
+    t.integer  "stream_method_call_id"
+    t.integer  "stream_method_argument_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "table_specs", :force => true do |t|

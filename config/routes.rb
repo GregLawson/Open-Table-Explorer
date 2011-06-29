@@ -1,4 +1,14 @@
 Rtest3::Application.routes.draw do
+  resources :scalar_arguments
+
+  resources :stream_method_arguments
+
+  resources :stream_methods
+
+  resources :stream_parameters
+
+  resources :stream_method_calls
+
   resources :ofxes
 
   resources :test_runs

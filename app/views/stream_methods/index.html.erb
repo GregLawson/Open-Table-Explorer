@@ -1,0 +1,31 @@
+<h1>Listing stream_methods</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Library</th>
+    <th>Interface code</th>
+    <th>Return code</th>
+    <th>Rescue code</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stream_methods.each do |stream_method| %>
+  <tr>
+    <td><%= stream_method.name %></td>
+    <td><%= stream_method.library %></td>
+    <td><%= stream_method.interface_code %></td>
+    <td><%= stream_method.return_code %></td>
+    <td><%= stream_method.rescue_code %></td>
+    <td><%= link_to 'Show', stream_method %></td>
+    <td><%= link_to 'Edit', edit_stream_method_path(stream_method) %></td>
+    <td><%= link_to 'Destroy', stream_method, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stream method', new_stream_method_path %>

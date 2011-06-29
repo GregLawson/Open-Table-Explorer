@@ -1,0 +1,2 @@
+module StreamMethodCallsHelper
+end
