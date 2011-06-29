@@ -19,19 +19,19 @@
     <%= f.label :library %><br />
     <%= f.text_field :library %>
   </div>
-  <div class="field">
-    <%= f.label :interface_code %><br />
-    <%= f.text_area :interface_code %>
-  </div>
-  <div class="field">
-    <%= f.label :return_code %><br />
-    <%= f.text_area :return_code %>
-  </div>
-  <div class="field">
-    <%= f.label :rescue_code %><br />
-    <%= f.text_area :rescue_code %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<table border=1>
+	<TR>
+	<th><%= f.label :interface_code%></th>
+	<th><%= f.label :return_code %></th>
+	<th><%= f.label :rescue_code %></th>
+	<TR>
+	</tr>
+	<% max_rows=[@stream_method.interface_code_rows,@stream_method.return_code_rows,@stream_method.rescue_code_rows].max %>
+     	<td><%= f.text_area :interface_code,:rows=>max_rows,:cols=>[@stream_method.interface_code_cols+2,20].max %></td>
+     	<td>   <%= f.text_area :return_code,:rows=>max_rows,:cols=>[@stream_method.return_code_cols+2,20].max %></td>
+     	<td>   <%= f.text_area :rescue_code,:rows=>max_rows,:cols=>[@stream_method.rescue_code_cols+2,20].max %></td>
+	</tr>
+<% end %>
+ <%= semantic_form_for @stream_method do |form| %>
+    <%= form.buttons %>
 <% end %>
