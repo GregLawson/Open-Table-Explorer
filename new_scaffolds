@@ -1,0 +1,26 @@
+rails generate scaffold node id:integer stream_method_id:integer  # like a method call, many-to-many parmeters/streams 
+rails generate scaffold stream_parameters id:integer node_id:integer stream_method_argument_id:integer # like a method call, many-to-many parmeters/streams 
+rails generate scaffold stream_method name:string library:string interface_code:text return_code:text rescue_code:text  # like a method definition
+rails generate scaffold stream_method_argument id:integer stream_method_id:integer name:string ruby_type:string direction:string parameter_id:integer parameter_type:string
+rails generate scaffold parameter id:integer name:string value:string formula:string ruby_type:string type:string # include single and non-stream multiple values? like arrays of hashes, ActiveRecord
+
+http://guides.rubyonrails.org/association_basics.html#polymorphic-associations
+
+class Node < ActiveRecord::Base
+has_one :stream_method
+has_many :stream_parameters
+end #class
+class StreamParameter < ActiveRecord::Base
+belongs_to :nodes
+belongs_to :stream_method_arguments
+end #class
+class StreamMethod  < ActiveRecord::Base
+has_many :nodes
+has_many :stream_method_arguments, :as => :arguments
+end #class
+class StreamMethodArgument < ActiveRecord::Base
+has_many :arguments, :polymorphic => true
+end #class
+class Parameter  < ActiveRecord::Base
+has_many :stream_parameters, :as => :arguments
+end #class
