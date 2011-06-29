@@ -3,8 +3,6 @@ class GlobalTest < ActiveSupport::TestCase
 test 'matching methods' do
 	testClass=Acquisition
 	assert_instance_of(Array,testClass.matching_methods(//))
-	
-	
 end #test
 test '' do
 	assert(Generic_Table.module?)
@@ -43,7 +41,7 @@ test "Acquisition Interface modules" do
 	assert(AcquisitionInterface.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test
-test "method model" do
+def txest_method_model
 	assert_equal(['String'],Module.constants.map { |c| c.objectKind}.uniq)
 	assert_include('String',MethodModel.constantized.map { |c| c.objectKind}.uniq)
 	assert_operator(1000,:>,Module.constants.size)
@@ -57,13 +55,13 @@ test "method model" do
 	assert_operator(MethodModel.constantized.size,:<,MethodModel.classes_and_modules.size)
 	assert_operator(100,:<,MethodModel.constantized.size)
 #	puts "Module.constants=#{Module.constants.inspect}"
-	METHODS=Module.constants.map do |c|
+	method_list=Module.constants.map do |c|
 		if c.objectKind=='Class' || c.objectKind=='Module' then
 			method_record(c)
 		end #if
 	end #map
-	assert_operator(METHODS.size,:<,1000)
-	assert_operator(100,:<,METHODS.size)
+	assert_operator(method_list.size,:<,1000)
+	assert_operator(100,:<,method_list.size)
 	assert_include( "Class",MethodModel.constantized.map { |c| c.objectKind}.uniq)
 	puts "pretty print"
 	#~ pp MethodModel.all
@@ -82,5 +80,20 @@ test "method model" do
   :name])]),Set.new(MethodModel.all.map { |m| Set.new(m.keys)}.uniq))
 	puts MethodModel.all.map { |m| m.keys}.uniq.inspect
 	assert_equal(Set.new([:instance, :class, :singleton]),Set.new(MethodModel.all.map { |m| m[:scope]}.uniq))
+end #test
+test "size" do
+	assert_equal(MethodModel.classes.size,MethodModel.classes.uniq.size)
+#	puts MethodModel.classes.inspect
+	assert_empty(MethodModel.classes.map { |c| c.name}.sort-MethodModel.classes.map { |c| c.name}.sort.uniq)
+	classNames=MethodModel.classes.map { |c| c.name}
+	uniqClasses=classNames.sort.uniq
+	duplicates=0 # found so far
+	classNames.each_index do |i|
+		if classNames[i+duplicates]!=uniqClasses[i] then
+			puts "Duplicate class name = #{classNames[i+duplicates]}"
+			duplicates+=1
+		end # if
+	end #each
+	assert_equal(MethodModel.modules.size,MethodModel.modules.uniq.size)
 end #test
 end #test class

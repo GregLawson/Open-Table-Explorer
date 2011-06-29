@@ -38,24 +38,26 @@ def self.classes
 	ObjectSpace.each_object(Class) do |c| 
 		ret << c
 	end #each_object
-	return ret
+	ret=ret.sort{|x,y| (x.name)<=>(y.name)}
+	return ret.uniq
 end #def
 def self.modules
 	ret=[]
 	ObjectSpace.each_object(Module) do |mod| 
 		ret << mod
 	end #each_object
-	return ret
+	ret=ret.sort{|x,y| x.name<=>y.name}
+	return ret.uniq
 end #def
 def self.classes_and_modules
-	return classes+modules
+	return @@CLASSES_AND_MODULES||=classes+modules
 end #def
-def self.classes_and_modules2
-	@@CLASSES_AND_MODULES||=constantized.select { |c| c.objectKind=='Class' || c.objectKind=='Module' }
-end #def
+def method_names
+	
+end #end
 def self.all
 	@@ALL||=(classes_and_modules.map { |c| c.methods(false).map { |m| method_record(m,c,:class) } } +
 	classes_and_modules.map { |c| c.instance_methods(false).map { |m| method_record(m,c,:instance) } } +
 	classes_and_modules.map { |c| c.singleton_methods(false).map { |m| method_record(m,c,:singleton) } }).flatten
 end #def
-end
+end #class
