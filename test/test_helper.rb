@@ -162,7 +162,7 @@ def assert_public_instance_method(obj,methodName,message='')
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #def
-def assert_has_associations(model_class,message)
+def assert_has_associations(model_class,message='')
 	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
 	assert_block(message){!model_class.new.association_names.empty?}	
 end #def
@@ -176,7 +176,7 @@ def assert_not_empty(object,message=nil)
 end #def
 def assert_empty(object,message=nil)
 	  message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
-	assert(message){object.empty?}
+	assert_block(message){object.empty?}
 end #def
 def assert_equal_sets(array1,array2)
 	assert_equal(Set.new(array1),Set.new(array2))
