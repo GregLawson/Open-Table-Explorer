@@ -1,15 +1,90 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# yaml description http://en.wikipedia.org/wiki/Yaml
+# especially http://en.wikipedia.org/wiki/Yaml#Syntax
+# yaml spec http://yaml.org/spec/1.2/spec.htm
 
-one:
-  name: MyString
-  library: MyString
-  interface_code: MyText
-  return_code: MyText
-  rescue_code: MyText
+XML:
+  name: XML
+  library: 
+  interface_code:  |
+     @parsedData= REXML::Document.new(dataToParse)
+      return @parsedData.get_elements(selection)
+       variableHash=Hash.new
+      @parsedData.each do |s|
+      puts "s.inner_html=#{s.inner_html}" if $DEBUG
+       variableHash[attrName]=s[0].to_s
+      end
+  return_code: 
+  rescue_code: 
 
-two:
-  name: MyString
-  library: MyString
-  interface_code: MyText
-  return_code: MyText
-  rescue_code: MyText
+JSON:
+  name: JSON
+  library: 
+  interface_code:  |
+      @parsedData = JSON.parse(dataToParse)
+      cv=result['CurrentValues']
+      @variableHash=Hash.new
+      cv.each do |j|
+      name=sqlForm("#{j['Name']}_#{j['Unit']}")
+      @variableHash[name]= j['Value']
+      end #each
+      return variableHash
+  return_code: 
+  rescue_code: 
+
+HTML:
+  name: HTML
+  library: hpricot
+  interface_code:  |
+      @parsedData= Hpricot(dataToParse).search(selection)
+      @variableHash=Hash.new
+      @parsedData.each do |s|
+      end
+  return_code: 
+  rescue_code: 
+Binary:
+  name: Binary
+  library: 
+  interface_code: @parsedData=dataToParse.unpack(selection)
+  return_code: 
+  rescue_code: 
+RegExp:
+  name: RegExp
+  library: RegExp_Parse
+  interface_code: @parsedData=dataToParse
+  return_code: 
+  rescue_code: 
+HTTP:
+  name: HTTP
+  interface_code: @acquisition[:acquisition_data]= Net::HTTP.get(@stream.uri)
+  rescue_code: 
+  library: net/http
+  return_code: 
+Shell:
+  name: Shell
+  library: 
+  interface_code: @acquisition[:acquisition_data]=`#{@stream.schemelessUrl} 2>&1`
+  rescue_code: 
+  library:
+  return_code:  |
+    if $?==0 then
+    @interaction.error=nil
+    else	  
+    @interaction.error=@interaction.acquisition_data\n"
+    @interaction.acquisition_data=nil
+    end
+
+File:
+  name: File
+  library: 
+  interface_code: @acquisition[:acquisition_data]=IO.read(@stream.schemelessUrl)
+  rescue_code: 
+  library:
+  return_code: 
+Store:
+  name: Store
+  library: active_record
+  interface_code: @input.save
+  rescue_code: 
+  library:
+  return_code: 
