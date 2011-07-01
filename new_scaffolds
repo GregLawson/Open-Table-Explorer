@@ -7,7 +7,7 @@ rails generate scaffold scalar_argument id:integer name:string value:string form
 http://guides.rubyonrails.org/association_basics.html#polymorphic-associations
 
 class StreamMethodCall < ActiveRecord::Base # like a method call
-has_one :stream_method
+belongs_to :stream_method
 has_many :stream_parameters
 end #class
 class StreamParameter < ActiveRecord::Base # like the parameters of a method call
