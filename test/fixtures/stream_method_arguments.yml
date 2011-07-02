@@ -1,19 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  id: 1
+1URL:
   stream_method_id: 1
-  name: MyString
-  ruby_type: MyString
-  direction: MyString
+  name: URL
+  ruby_type: URI
+  direction: Input
   parameter_id: 1
-  parameter_type: MyString
+  parameter_type: ScalarArgument
 
-two:
-  id: 1
+acquisitions:
   stream_method_id: 1
-  name: MyString
-  ruby_type: MyString
-  direction: MyString
+  name: acquisitions
+  ruby_type: Acquisition
+  direction: Output
   parameter_id: 1
-  parameter_type: MyString
+  parameter_type: Acquisition

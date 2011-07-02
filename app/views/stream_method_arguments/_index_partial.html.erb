@@ -1,0 +1,35 @@
+<h1>Listing stream_method_arguments</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Stream method</th>
+    <th>Name</th>
+    <th>Ruby type</th>
+    <th>Direction</th>
+    <th>Parameter</th>
+    <th>Parameter type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stream_method_arguments.each do |stream_method_argument| %>
+  <tr>
+    <td><%= stream_method_argument.id %></td>
+    <td><%= stream_method_argument.stream_method_id %></td>
+    <td><%= stream_method_argument.name %></td>
+    <td><%= stream_method_argument.ruby_type %></td>
+    <td><%= stream_method_argument.direction %></td>
+    <td><%= stream_method_argument.parameter_id %></td>
+    <td><%= stream_method_argument.parameter_type %></td>
+    <td><%= link_to 'Show', stream_method_argument %></td>
+    <td><%= link_to 'Edit', edit_stream_method_argument_path(stream_method_argument) %></td>
+    <td><%= link_to 'Destroy', stream_method_argument, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stream method argument', new_stream_method_argument_path %>
