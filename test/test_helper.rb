@@ -200,9 +200,8 @@ end #def
 def assert_model_class(model_name)
 	a_fixture_record=fixtures(model_name.tableize).values.first
 	assert_kind_of(ActiveRecord::Base,a_fixture_record)
-	ret=a_fixture_record.class
-	assert_equal(ret,Generic_Table.eval_constant(model_name))
-	return ret
+	theClass=a_fixture_record.class
+	assert_equal(theClass,Generic_Table.eval_constant(model_name))
 end #def
 def assert_association_to_many(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_many")
