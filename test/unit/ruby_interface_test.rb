@@ -52,18 +52,6 @@ test "interaction" do
 	end #each_value
 
 end #test
-def name_methods(obj,method_symbol,regexp)
-	return [method_symbol,obj.send(method_symbol).select {|m| m[Regexp.new(regexp),0] }]
-
-end #def
-def find_name(symbol,obj=nil)
-	if obj.nil? then
-	else
-		[name_methods(obj,:methods,symbol),	
-		name_methods(obj.class,:instance_methods,symbol),	
-		name_methods(obj,:singleton_methods,symbol)]	
-	end
-end #def
 test "code sizes" do
 	acq=acquisition_interfaces(:HTTP)
 	name=:interface_code
@@ -81,7 +69,6 @@ test "code sizes" do
 	explain_assert_respond_to(acq,:interface_code_method)
 	assert_include('interface_code_method',acq.methods(true))
 #	puts acq.matching_methods_in_context(name,99).inspect
-#	puts "find_name('_code',acq)=#{find_name('interface_code_method',acq).inspect}"
 #	puts "acq.matching_methods(#{name})=#{acq.matching_methods(name).inspect}"
 #	acq.eval_method(:interface_code,'')
 	assert_include('interface_code_rows',acq.methods(true))
