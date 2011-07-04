@@ -293,17 +293,28 @@ end #def
 def association_state(assName)
 	if !is_association?(assName) then
 		return "#{self.class.name} does not have an association named #{assName}."
-	end #if
-	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
-		return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
-	else
+	elsif is_association_to_one?(assName) then
+		if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
+			
+			return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
+		else
+			ass=send(assName)
+			if ass.nil? then
+				return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} but the association returns nil."
+			else
+				return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} and returns type #{ass.class.name}."
+			end
+		end
+	elsif is_association_to_many?(assName) then
 		ass=send(assName)
 		if ass.nil? then
-			return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} but the association returns nil."
+			return "Association #{assName}'s foreign key #{self.class.name.to_s}_id has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
 		else
-			return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} and returns type #{ass.class.name}."
+			associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
+			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
+			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values} and returns type #{ass.class.name}."
 		end
-	end
+	end #if
 end #def
 def association_has_data(assName)
 	return association_state(assName)[/ and returns type /,0]
@@ -422,7 +433,7 @@ def association_method_name(association_table_name)
 	if respond_to?(association_table_name) then
 		return association_table_name
 	else
-		return association_table_name.singularize
+		return association_table_name.to_s.singularize.to_sym
 	end #if
 end #def
 def association_names_to_one
