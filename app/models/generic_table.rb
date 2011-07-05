@@ -1,6 +1,14 @@
 module Generic_Table
 require 'global.rb'
 require 'IncludeModuleClassMethods.rb'
+def foreign_key_names
+	content_column_names=self.class.content_columns.collect {|m| m.name}
+#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
+	special_columns=self.class.column_names-content_column_names
+#	puts "@special_columns.inspect=#{@special_columns.inspect}"
+	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
+	return possible_foreign_keys
+end #def
 def similar_methods(symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
@@ -331,14 +339,6 @@ def associated_to_s(assName,method,*args)
 			return ass.send(method.to_sym,*args).to_s
 		end
 	end
-end #def
-def foreign_key_names
-	content_column_names=self.class.content_columns.collect {|m| m.name}
-#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
-	special_columns=self.class.column_names-content_column_names
-#	puts "@special_columns.inspect=#{@special_columns.inspect}"
-	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
-	return possible_foreign_keys
 end #def
 def foreign_key_association_names
 	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
