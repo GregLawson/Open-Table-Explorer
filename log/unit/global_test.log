@@ -1,50 +1,3 @@
-rescued c="LengthValidator"
-rescued c="TimeZoneConversion"
-rescued c="WhiteList"
-rescued c="AssociationReflection"
-rescued c="ExclusionValidator"
-rescued c="AssociationProxy"
-rescued c="Write"
-rescued c="AggregateReflection"
-rescued c="TooManyRecords"
-rescued c="BelongsToAssociation"
-rescued c="ASSOCIATION_TYPES"
-rescued c="CallbackChain"
-rescued c="Callback"
-rescued c="Sanitizer"
-rescued c="Dirty"
-rescued c="BelongsToPolymorphicAssociation"
-rescued c="AssociatedValidator"
-rescued c="ATTRIBUTE_TYPES_CACHED_BY_DEFAULT"
-rescued c="UNASSIGNABLE_KEYS"
-rescued c="PermissionSet"
-rescued c="MacroReflection"
-rescued c="ClassMethods"
-rescued c="FormatValidator"
-rescued c="HasAndBelongsToManyAssociation"
-rescued c="Serializer"
-rescued c="ConnectionSpecification"
-rescued c="CALLBACKS"
-rescued c="BeforeTypeCast"
-rescued c="HasManyAssociation"
-rescued c="UniquenessValidator"
-rescued c="ConfirmationValidator"
-rescued c="HelperMethods"
-rescued c="InclusionValidator"
-rescued c="PrimaryKey"
-rescued c="HasManyThroughAssociation"
-rescued c="Callbacks"
-rescued c="AcceptanceValidator"
-rescued c="TransactionError"
-rescued c="Query"
-rescued c="HasOneAssociation"
-rescued c="NumericalityValidator"
-rescued c="PresenceValidator"
-rescued c="Read"
-rescued c="BlackList"
-rescued c="HasOneThroughAssociation"
-rescued c="ThroughReflection"
-rescued c="AssociationCollection"
 Loaded suite test/unit/global_test
 Started
 ...self is Class GlobalTest::TestClass subclass of Object
@@ -52,6 +5,6 @@ obj is Symbol :cat
 Can't figure out relation between :cat and GlobalTest::TestClass
 ...noninherited_public_instance_methods in class Object called
 ...
-Finished in 16.650143 seconds.
+Finished in 16.992099 seconds.
 
 9 tests, 44 assertions, 0 failures, 0 errors
