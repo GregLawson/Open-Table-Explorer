@@ -1,5 +1,6 @@
 module Generic_Table
 require 'global.rb'
+require 'IncludeModuleClassMethods.rb'
 def similar_methods(symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
