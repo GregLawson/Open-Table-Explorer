@@ -142,7 +142,7 @@ test "associated_to_s" do
 		expected_association_class=expected_association_symbol.to_s.camelize.constantize
 		method_of_association=:name
 		@my_fixtures.each_value do |ar_from_fixture|
-			assert_include(expected_association_symbol.to_s,ar_from_fixture.foreign_key_association_names)
+			assert_include(expected_association_symbol.to_s,ar_from_fixture.class.foreign_key_association_names)
 			assert_association_to_one(ar_from_fixture,expected_association_symbol)
 #			ar_from_fixture=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
 			assert_include(ActiveRecord::Base,ar_from_fixture.class.ancestors)

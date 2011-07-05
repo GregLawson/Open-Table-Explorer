@@ -267,12 +267,12 @@ def define_association_names
 	#~ puts "@content_column_names.inspect=#{@content_column_names.inspect}"
 	#~ @special_columns=@model_class.column_names-@content_column_names
 	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
-	@possible_foreign_keys=@model_class.new.foreign_key_names
+	@possible_foreign_keys=@model_class.foreign_key_names
 end
 
 def associated_foreign_key_name(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
-	many_to_one_foreign_keys=obj.class.new.foreign_key_names
+	many_to_one_foreign_keys=obj.class.foreign_key_names
 #	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
 	matchingAssNames=many_to_one_foreign_keys.select do |fk|
 		assert_instance_of(String,fk)
@@ -350,7 +350,7 @@ def assert_belongs_to(table_name1,table_name2)
 	model_class=Generic_Table.eval_constant(table_name1.classify)
 	assert_not_nil(model_class,"model_class #{table_name1.classify} is not a defined constant.")
 	if  model_class.new.is_association_to_one?(table_name2) then
-		assert_include(table_name2,model_class.new.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
+		assert_include(table_name2,model_class.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
 	end #if
 end #def
 def assert_matching_association(table_name,association_name)

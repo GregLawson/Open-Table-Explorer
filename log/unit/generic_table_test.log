@@ -3,6 +3,6 @@ Started
 .["build_table_spec", "loaded_table_spec?", "table_spec", "set_table_spec_target", "autosave_associated_records_for_table_spec", "table_spec=", "create_table_spec"]
 ["table_spec", "table_spec="]
 ...
-Finished in 14.600157 seconds.
+Finished in 18.108081 seconds.
 
 4 tests, 131 assertions, 0 failures, 0 errors
