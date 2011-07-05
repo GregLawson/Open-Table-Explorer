@@ -1,18 +1,8 @@
 Loaded suite test/unit/generic_table_test
 Started
-.["build_table_spec", "loaded_table_spec?", "set_table_spec_target", "table_spec", "autosave_associated_records_for_table_spec", "table_spec=", "create_table_spec"]
+.["build_table_spec", "loaded_table_spec?", "table_spec", "set_table_spec_target", "autosave_associated_records_for_table_spec", "table_spec=", "create_table_spec"]
 ["table_spec", "table_spec="]
-noninherited_public_instance_methods in class Object called
-F..
-Finished in 15.008562 seconds.
+...
+Finished in 14.600157 seconds.
 
-  1) Failure:
-test_associated_to_s(GenericTableTest)
-    [/test/test_helper.rb:144:in `explain_assert_respond_to'
-     test/unit/generic_table_test.rb:57:in `test_associated_to_s']:
-Object ActiveRecord::Base subclass StreamMethodArgument of class='StreamMethodArgument' does not respond to method :stream_method; noninherited instance methods= ["parameter", "autosave_associated_records_for_parameter", "_one_time_conditions_valid_112?", "loaded_parameter?", "parameter=", "set_parameter_target"].
-<#<StreamMethodArgument id: nil, stream_method_id: nil, name: nil, ruby_type: nil, direction: nil, parameter_id: nil, parameter_type: nil, created_at: nil, updated_at: nil>>
-of type <StreamMethodArgument(id: integer, stream_method_id: integer, name: string, ruby_type: string, direction: string, parameter_id: integer, parameter_type: string, created_at: datetime, updated_at: datetime)>
-expected to respond_to?<:stream_method>.
-
-4 tests, 135 assertions, 1 failures, 0 errors
+4 tests, 131 assertions, 0 failures, 0 errors
