@@ -47,9 +47,9 @@ test "associated_to_s" do
 	assert_respond_to(acquisition_stream_spec,:table_spec)
 	meth=acquisition_stream_spec.method(:table_spec)
 	
-	assert_not_empty(StreamMethodArgument.new.foreign_key_names)
-	assert_include('stream_method_id',StreamMethodArgument.new.foreign_key_names)
-	assert_include('stream_method',StreamMethodArgument.new.foreign_key_association_names)
+	assert_not_empty(StreamMethodArgument.foreign_key_names)
+	assert_include('stream_method_id',StreamMethodArgument.foreign_key_names)
+	assert_include('stream_method',StreamMethodArgument.foreign_key_association_names)
 	
 	assert_equal(:stream_method,StreamMethodArgument.new.association_method_name(:stream_method))
 	assert_equal(:stream_method,StreamMethodArgument.new.association_method_name(:stream_methods))
@@ -61,7 +61,7 @@ test "associated_to_s" do
 	#~ ass=StreamMethodArgument.send(:stream_method_id)
 	#~ assert_not_nil(ass)
 	#~ associations_foreign_key_name=(StreamMethodArgument.name.tableize.singularize+'_id').to_sym
-	#~ assert_include(associations_foreign_key_name,StreamMethodArgument.new.foreign_key_association_names)
+	#~ assert_include(associations_foreign_key_name,StreamMethodArgument.foreign_key_association_names)
 	#~ associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
 	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) })
 	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) }.uniq)
@@ -79,7 +79,7 @@ test "associated_to_s" do
 #	puts "acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)=#{acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)}"
 end #test
 test "matching associations" do
-	assert_equal(["frequency_id"],TableSpec.new.foreign_key_names)
+	assert_equal(["frequency_id"],TableSpec.foreign_key_names)
 	assert_equal([],Test_Table.new.matching_methods(/_id=$/))
 	assert_equal([],Test_Table.new.matching_methods(/_id$/))
 	assert_equal_sets(["fake_has_and_belongs_to_many_ids", "acquisition_ids", "acquisition_stream_spec_ids", "fake_has_many_ids"],Test_Table.new.matching_methods(/_ids$/))
@@ -171,9 +171,9 @@ test "matching associations" do
 	assert(!Generic_Table.is_generic_table?("fake_has_one"))
 	assert(!Generic_Table.is_generic_table?("fake_has_many"))
 	assert_equal_sets(["acquisition_stream_specs",  "acquisitions", "frequency"], Test_Table.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)})
-	assert_not_empty(Test_Table.new.foreign_key_names)
+	assert_not_empty(Test_Table.foreign_key_names)
 	
-	assert_equal(Test_Table.new.foreign_key_association_names-Test_Table.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)},[])
+	assert_equal(Test_Table.foreign_key_association_names-Test_Table.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)},[])
 
 	assert_respond_to(TableSpec.new,:frequency)
 	assert_nil(TableSpec.new.frequency)
