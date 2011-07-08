@@ -317,7 +317,7 @@ def assert_general_associations(table_name)
 	fixtures(table_name).each_value do |my_fixture|
 	@possible_associations.each do |association_name|
 		assName=association_name.to_sym
-		if my_fixture.is_association_to_many?(assName) then
+		if my_fixture.class.is_association_to_many?(assName) then
 			 assert_association_to_many(my_fixture,assName)
 			assert_foreign_key_points_to_me(my_fixture,assName)
 		else
