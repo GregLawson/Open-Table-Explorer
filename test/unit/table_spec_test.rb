@@ -39,7 +39,7 @@ test "specific, stable and working" do
 	explain_assert_respond_to(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)
 	assert_respond_to(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)
 	assert_association(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)
-	assert(is_association?(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs),"is_association?(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)")
+	assert(table_specs(:MULTIPLE_WEATHER).class.is_association?(:acquisition_stream_specs),"is_association?(table_specs(:MULTIPLE_WEATHER),:acquisition_stream_specs)")
 	assert_equal(Set.new(['acquisition_stream_specs',"frequency"]),Set.new(@possible_associations))
 	assert_equal(['frequency_id'],@possible_foreign_keys)
 	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(table_specs(:MULTIPLE_WEATHER),:acquisition_interfaces) }

@@ -30,7 +30,7 @@ test "various assertions" do
 	assert_not_empty([1])
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
 	ar_from_fixture=table_specs(:ifconfig)
-	assert_not_nil ar_from_fixture.similar_methods(:acquisition_stream_spec)
+	assert_not_nil ar_from_fixture.class.similar_methods(:acquisition_stream_spec)
 	assert_not_nil ar_from_fixture.matching_methods(/acquis*/)	
 end #test
 test "fixtures" do
@@ -44,27 +44,36 @@ end #test
 test "association to one" do
 	ar_from_fixture=table_specs(:ifconfig)
 	assName=:acquisition_stream_specs
-	assert_not_nil(ar_from_fixture.is_association?(assName))
-	assert_association(ar_from_fixture,assName)
-	assert_not_nil(ar_from_fixture.is_association_to_one?(assName))
+	ASSNAME=ar_from_fixture.class.association_method_name(assName)
+	assert_not_nil(ar_from_fixture.class.is_association?(ASSNAME))
+	assName=ASSNAME.to_sym
+	assert_instance_of(Symbol,ASSNAME,"assert_association")
+	assert_public_instance_method(ar_from_fixture,ASSNAME)
+	explain_assert_respond_to(ar_from_fixture,(ASSNAME.to_s+'=').to_sym)
+
+	assName=:acquisition_stream_specs
+
+	assert_association(ar_from_fixture,ASSNAME)
+	assert_association(ar_from_fixture,:acquisition_stream_specs)
+	assert_not_nil(ar_from_fixture.class.is_association_to_one?(ASSNAME))
 	assert_association_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
 	assert_association_many_to_one(fixtures(:acquisition_stream_specs).values.first,:table_spec)
 	assert_association_one_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
-	assert_foreign_key_points_to_me(ar_from_fixture,assName)
+	assert_foreign_key_points_to_me(ar_from_fixture,ASSNAME)
 	assert_has_associations(TableSpec)
 	assert_has_instance_methods(TableSpec)
 
 end #test
 test "association to many" do
-	assert_not_nil(table_specs(:ifconfig).is_association_to_many?(:acquisition_stream_specs))
+	assert_not_nil(table_specs(:ifconfig).class.is_association_to_many?(:acquisition_stream_specs))
 	assert_association_to_many(fixtures(:table_specs).values.first,:acquisition_stream_specs)
 	assert_association_one_to_many(table_specs(:ifconfig),:acquisition_stream_specs)
 end #test
 test "other association" do
 	model_class=TableSpec
-	assert_equal(['frequency_id'],TableSpec.new.foreign_key_names)
-	assert_equal(Set.new(['acquisition_interface_id','table_spec_id']),Set.new(AcquisitionStreamSpec.new.foreign_key_names))
-	assert_equal([],AcquisitionInterface.new.foreign_key_names)
+	assert_equal(['frequency_id'],TableSpec.foreign_key_names)
+	assert_equal(Set.new(['acquisition_interface_id','table_spec_id']),Set.new(AcquisitionStreamSpec.foreign_key_names))
+	assert_equal([],AcquisitionInterface.foreign_key_names)
 	ar_from_fixture=table_specs(:ifconfig)
 	assName=:frequency
 	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
