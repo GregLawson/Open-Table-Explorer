@@ -93,6 +93,16 @@ def is_matching_association?(assName)
 		return false
 	end #if
 end #def
+def association_type(assName)
+	if is_association_to_one?(assName) then
+		return :to_one
+	elsif is_association_to_many?(assName) then
+		return :to_many
+	else 
+		return :unknown_association
+	end #if
+end #def
+
 } # define_class_methods
 
 
@@ -380,29 +390,34 @@ def self.db2yaml
 end #def
 # Display attribute or method value from association even if association is nil
 def association_state(assName)
-	if !self.class.is_association?(assName) then
-		return "#{self.class.name} does not have an association named #{assName}."
-	elsif self.class.is_association_to_one?(assName) then
-		if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
-			
+	case self.class.association_type(assName)
+	when :to_one
+		foreign_key_value=self[assName.to_s+'_id']
+		if foreign_key_value.nil? then # foreign key uninitialized
 			return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
+		elsif foreign_key_value.empty? then # foreign key uninitialized
+			return "Foreign key #{assName.to_s}_id defined as attribute but has empty value."
 		else
 			ass=send(assName)
 			if ass.nil? then
-				return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} but the association returns nil."
+				return "Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect} but the association returns nil."
 			else
-				return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} and returns type #{ass.class.name}."
+				return "Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect},#{ass.inspect} and returns type #{ass.class.name}."
 			end
 		end
-	elsif is_association_to_many?(assName) then
+	when :to_many
 		ass=send(assName)
+		associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
 		if ass.nil? then
-			return "Association #{assName}'s foreign key #{self.class.name.to_s}_id has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
+			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
+		elsif ass.empty? then
+			return "Association #{assName} with foreign key #{associations_foreign_key_name} is empty."
 		else
-			associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
 			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
-			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values} and returns type #{ass.class.name}."
+			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
 		end
+	else
+		return "#{self.class..name} does not recognize #{assName} as association."
 	end #if
 end #def
 def association_has_data(assName)
