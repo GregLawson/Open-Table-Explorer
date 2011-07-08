@@ -70,8 +70,11 @@ end #def
 def model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
 end #def
-def association_grep(association_type,association_name)
-	return "grep \"^#{association_type} :#{association_name}\" #{model_file_name} &>/dev/null"
+def model_grep(model_regexp_string)
+	return "grep \"#{model_regexp_string}\" #{model_file_name} &>/dev/null"
+end #def
+def association_grep(model_regexp_string,association_name)
+	return model_grep("^#{model_regexp_string} :#{association_name}" )
 end #def
 def has_many_association?(association_name)
 	return system(association_grep('has_many',association_name))
