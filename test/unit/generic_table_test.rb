@@ -43,7 +43,7 @@ test "associated_to_s" do
 
 	assert_not_nil(acquisition_stream_spec)
 	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
-	puts acquisition_stream_spec.similar_methods(:table_spec).inspect
+	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
 	assert_respond_to(acquisition_stream_spec,:table_spec)
 	meth=acquisition_stream_spec.method(:table_spec)
 	
@@ -51,8 +51,8 @@ test "associated_to_s" do
 	assert_include('stream_method_id',StreamMethodArgument.foreign_key_names)
 	assert_include('stream_method',StreamMethodArgument.foreign_key_association_names)
 	
-	assert_equal(:stream_method,StreamMethodArgument.new.association_method_name(:stream_method))
-	assert_equal(:stream_method,StreamMethodArgument.new.association_method_name(:stream_methods))
+	assert_equal(:stream_method,StreamMethodArgument.association_method_name(:stream_method))
+	assert_equal(:stream_method,StreamMethodArgument.association_method_name(:stream_methods))
 
 	#~ explain_assert_respond_to(StreamMethodArgument.new,:stream_method)
 	#~ explain_assert_respond_to(StreamMethodArgument.new,:stream_method_id)
@@ -126,13 +126,13 @@ test "matching associations" do
  "fake_has_many_ids",
  "fake_has_one",
  "fake_has_many"],Test_Table.new.Match_and_strip(/=$/))
-	assert_equal_sets(["fake_belongs_to", "acquisition_stream_specs", "fake_has_and_belongs_to_many", "acquisitions", "frequency",  "fake_has_one", "fake_has_many"], Test_Table.new.Match_and_strip(/=$/).select {|a| Test_Table.new.is_association?(a)})
+	assert_equal_sets(["fake_belongs_to", "acquisition_stream_specs", "fake_has_and_belongs_to_many", "acquisitions", "frequency",  "fake_has_one", "fake_has_many"], Test_Table.new.Match_and_strip(/=$/).select {|a| Test_Table.is_association?(a)})
 
 	#~ puts Test_Table.new.matching_methods(/table/,true).inspect
-	#~ puts Test_Table.matching_methods(/table/,true).inspect
+	#~ puts Test_Table.new.matching_methods(/table/,true).inspect
 	#~ puts "Test_Table.context_names(22)=#{Test_Table.context_names(22).inspect}"
-	#~ puts "Test_Table.new.context_names(22)=#{Test_Table.new.context_names(22).inspect}"
-	#~ puts Test_Table.matching_methods_in_context(/table/,22).inspect
+	#~ puts "Test_Table.context_names(22)=#{Test_Table.context_names(22).inspect}"
+	#~ puts Test_Table.new.matching_methods_in_context(/table/,22).inspect
 	#~ explain_assert_respond_to(Test_Table.new,:tables)
 	#~ explain_assert_respond_to(TableSpec.new,:tables)
 	assert_equal("Acquisition","acquisitions".classify)
@@ -178,17 +178,34 @@ test "matching associations" do
 	assert_respond_to(TableSpec.new,:frequency)
 	assert_nil(TableSpec.new.frequency)
 	assert_association(TableSpec.new,"frequency")
-	assert(TableSpec.new.is_matching_association?("frequency"))
+	assert(TableSpec.is_matching_association?("frequency"))
 	assert_association(Frequency.new,"table_specs")
 	assert_equal('frequencies',Frequency.table_name)
-	assert(TableSpec.new.is_association?(Frequency.table_name.singularize))
-	assert(Frequency.new.is_matching_association?("table_specs"))
+	assert(TableSpec.is_association?(Frequency.table_name.singularize))
+	assert(Frequency.is_matching_association?("table_specs"))
 	assert_matching_association("table_specs","frequency")
 	assert_raise(Test::Unit::AssertionFailedError) do
 		assert_matching_association("acquisitions","frequency")
 	end #assert_raised
 end #test
+
 test "has macros" do
-#	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.matching_methods(/^has_/))
+	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
+	assert(StreamMethod.has_many_association?(:stream_method_arguments),StreamMethod.association_grep('has_many',:stream_method_arguments))
+	assert(StreamMethod.has_many_association?('stream_method_arguments'),StreamMethod.association_grep('has_many','stream_method_arguments'))
+	ar_from_fixture=table_specs(:ifconfig)
+	assName=:acquisition_stream_specs
+
+	if ar_from_fixture.respond_to?(assName) then
+		assert_public_instance_method(ar_from_fixture,assName)		
+	else
+		assert_public_instance_method(ar_from_fixture,assName.to_s.singularize.to_sym)
+	end #if
+
+	ASSNAME=ar_from_fixture.class.association_method_name(assName)
+
+	assert_public_instance_method(ar_from_fixture,ASSNAME)
+
+#	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_methods(/^has_/))
 end #test
 end #test class

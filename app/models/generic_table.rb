@@ -18,15 +18,83 @@ end #def
 def foreign_key_association_names
 	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
 end #def
-
-} # define_class_methods
-
 def similar_methods(symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
 	table='^'+symbol.to_s.tableize
 	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
 end #def
+def is_association?(assName)
+	if assName.to_s[-3..-1]=='_id' then 
+		signal "assName=#{assName} should not end in '_id' as it will be confused wth a foreign key."
+	end # if
+	if assName.to_s[-4..-1]=='_ids' then
+		return false # causes confusion with automatic _ids and _ids= generated for to_many assoiations
+	end #if
+	if self.new.respond_to?(assName) and self.new.respond_to?((assName.to_s+'=').to_sym)  then
+		return true
+	else
+		return false
+	end
+end #def
+def is_association_to_one?(assName)
+	if is_association?(assName)  and !self.new.respond_to?((assName.to_s.singularize+'_ids').to_sym) and !self.new.respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+		return true
+	else
+		return false
+	end
+end #def
+def is_association_to_many?(assName)
+	if is_association?(assName)  and self.new.respond_to?((assName.to_s.singularize+'_ids').to_sym) and self.new.respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+		return true
+	else
+		return false
+	end
+end #def
+def association_method_name(association_table_name)
+	if self.new.respond_to?(association_table_name) then
+		return association_table_name
+	else
+		return association_table_name.to_s.singularize.to_sym
+	end #if
+end #def
+def association_names_to_one
+	return instance_methods(false).select {|m| is_association_to_one?(m)}
+end #def
+def association_names_to_many
+	return instance_methods(false).select {|m| is_association_to_many?(m)}
+end #def
+def association_names
+	return instance_methods(false).select {|m| is_association?(m)}
+end #def
+def model_file_name
+	return "app/models/#{name.tableize.singularize}.rb"
+end #def
+def association_grep(association_type,association_name)
+	return "grep \"^#{association_type} :#{association_name}\" #{model_file_name} &>/dev/null"
+end #def
+def has_many_association?(association_name)
+	return system(association_grep('has_many',association_name))
+end #def
+def is_matching_association?(assName)
+	 if is_association?(assName) then
+		 model_class=assName.classify.constantize
+		 if model_class.nil? then
+			 signal "Association #{assName.classify} is not a defined constant."
+		end #if
+		 if model_class.is_association?(table_name) then
+			 return true
+		elsif model_class.is_association?(table_name.singularize)  then
+			return true
+		else
+			 return false
+		end #if
+	else
+		return false
+	end #if
+end #def
+} # define_class_methods
+
 
 def Generic_Table.activeRecordTableNotCreatedYet?(obj)
 	return (obj.class.inspect=~/^[a-zA-Z0-9_]+\(Table doesn\'t exist\)/)==0
@@ -312,9 +380,9 @@ def self.db2yaml
 end #def
 # Display attribute or method value from association even if association is nil
 def association_state(assName)
-	if !is_association?(assName) then
+	if !self.class.is_association?(assName) then
 		return "#{self.class.name} does not have an association named #{assName}."
-	elsif is_association_to_one?(assName) then
+	elsif self.class.is_association_to_one?(assName) then
 		if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
 			
 			return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
@@ -357,33 +425,6 @@ def Match_and_strip(regexp=/=$/)
 		m.sub(regexp,'')
 	end
 end #def
-def is_association?(assName)
-	if assName.to_s[-3..-1]=='_id' then 
-		signal "assName=#{assName} should not end in '_id' as it will be confused wth a foreign key."
-	end # if
-	if assName.to_s[-4..-1]=='_ids' then
-		return false # causes confusion with automatic _ids and _ids= generated for to_many assoiations
-	end #if
-	if respond_to?(assName) and respond_to?((assName.to_s+'=').to_sym)  then
-		return true
-	else
-		return false
-	end
-end #def
-def is_association_to_one?(assName)
-	if is_association?(assName)  and !respond_to?((assName.to_s.singularize+'_ids').to_sym) and !respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
-		return true
-	else
-		return false
-	end
-end #def
-def is_association_to_many?(assName)
-	if is_association?(assName)  and respond_to?((assName.to_s.singularize+'_ids').to_sym) and respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
-		return true
-	else
-		return false
-	end
-end #def
 def Generic_Table.tables
 	TableSpec.new.tables
 end #def
@@ -421,39 +462,6 @@ def Generic_Table.is_generic_table?(model_class_name)
 end #def
 def Generic_Table.table_exists?(table_name)
 	TableSpec.connection.table_exists?(table_name)
-end #def
-def is_matching_association?(assName)
-	 if is_association?(assName) then
-		 model_class=Generic_Table.eval_constant(assName.classify)
-		 if model_class.nil? then
-			 signal "Association #{assName.classify} is not a defined constant."
-		end #if
-		 if model_class.new.is_association?(self.class.table_name) then
-			 return true
-		elsif model_class.new.is_association?(self.class.table_name.singularize)  then
-			return true
-		else
-			 return false
-		end #if
-	else
-		return false
-	end #if
-end #def
-def association_method_name(association_table_name)
-	if respond_to?(association_table_name) then
-		return association_table_name
-	else
-		return association_table_name.to_s.singularize.to_sym
-	end #if
-end #def
-def association_names_to_one
-	return self.class.instance_methods(false).select {|m| is_association_to_one?(m)}
-end #def
-def association_names_to_many
-	return self.class.instance_methods(false).select {|m| is_association_to_many?(m)}
-end #def
-def association_names
-	return self.class.instance_methods(false).select {|m| is_association?(m)}
 end #def
 def display_full_time(time)
 	time.rfc2822

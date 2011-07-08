@@ -164,7 +164,7 @@ def assert_public_instance_method(obj,methodName,message='')
 end #def
 def assert_has_associations(model_class,message='')
 	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
-	assert_block(message){!model_class.new.association_names.empty?}	
+	assert_block(message){!model_class.association_names.empty?}	
 end #def
 def assert_has_instance_methods(model_class,message=nil)
 	message=build_message(message, "? has no public instance methods.", model_class.canonicalName)   
@@ -189,12 +189,12 @@ def assert_module_included(klass,moduleName)
 
 end #def
 def assert_association(ar_from_fixture,assName)
-	assName=ar_from_fixture.association_method_name(assName)
+	assName=ar_from_fixture.class.association_method_name(assName)
 	assName=assName.to_sym
 	assert_instance_of(Symbol,assName,"assert_association")
 	assert_public_instance_method(ar_from_fixture,assName)
 	explain_assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
-	assert(ar_from_fixture.is_association?(assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
+	assert(ar_from_fixture.class.is_association?(assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
 end #def
 
 def assert_model_class(model_name)
@@ -206,13 +206,13 @@ end #def
 def assert_association_to_many(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_many")
 	assert_association(ar_from_fixture,assName)
-	assert(ar_from_fixture.is_association_to_many?(assName),"is_association_to_many?(#{ar_from_fixture.inspect},#{assName.inspect}) returns false. #{ar_from_fixture.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and ar_from_fixture.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
-	assert(!ar_from_fixture.is_association_to_one?(assName),"fail !is_association_to_one?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
+	assert(ar_from_fixture.class.is_association_to_many?(assName),"is_association_to_many?(#{ar_from_fixture.inspect},#{assName.inspect}) returns false. #{ar_from_fixture.class.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and ar_from_fixture.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
+	assert(!ar_from_fixture.class.is_association_to_one?(assName),"fail !is_association_to_one?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
 end #def
 def assert_association_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_to_one")
 	assert_association(ar_from_fixture,assName)
-	assert(!ar_from_fixture.is_association_to_many?(assName),"fail !is_association_to_many?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}, ar_from_fixture.similar_methods(assName).inspect=#{ar_from_fixture.similar_methods(assName).inspect}")
+	assert(!ar_from_fixture.class.is_association_to_many?(assName),"fail !is_association_to_many?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}, ar_from_fixture.similar_methods(assName).inspect=#{ar_from_fixture.class.similar_methods(assName).inspect}")
 end #def
 def assert_association_one_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_one_to_one")
@@ -349,7 +349,7 @@ end #def
 def assert_belongs_to(table_name1,table_name2)
 	model_class=Generic_Table.eval_constant(table_name1.classify)
 	assert_not_nil(model_class,"model_class #{table_name1.classify} is not a defined constant.")
-	if  model_class.new.is_association_to_one?(table_name2) then
+	if  model_class.is_association_to_one?(table_name2) then
 		assert_include(table_name2,model_class.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
 	end #if
 end #def
@@ -361,7 +361,7 @@ def assert_matching_association(table_name,association_name)
 	assert_belongs_to(table_name,association_name) 
 	assert_belongs_to(association_name,table_name) 
 	message="#{'table_name'.titleize} #{table_name} do not have matching associations (has* declarations) with #{'association_name'.titleize} #{association_name}."
-	assert_block(message){Generic_Table.eval_constant(table_name.classify).new.is_matching_association?(association_name)}
+	assert_block(message){Generic_Table.eval_constant(table_name.classify).is_matching_association?(association_name)}
 end #def
 
 end #class
