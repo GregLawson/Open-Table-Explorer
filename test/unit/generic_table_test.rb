@@ -42,8 +42,8 @@ test "associated_to_s" do
 	acquisitions(:one).acquisition_stream_spec_id=0
 
 	assert_not_nil(acquisition_stream_spec)
-	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
-	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
+#	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
+#	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
 	assert_respond_to(acquisition_stream_spec,:table_spec)
 	meth=acquisition_stream_spec.method(:table_spec)
 	
@@ -207,5 +207,61 @@ test "has macros" do
 	assert_public_instance_method(ar_from_fixture,ASSNAME)
 
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_methods(/^has_/))
+end #test
+def is_generic_table_name?(model_name)
+	model_filename=model_name.singularize+'.rb'
+	if File.exists?("app/models/#{model_filename}") then
+		return true
+	else
+		puts "File.exists?(\"app/models/#{model_filename}\")=#{File.exists?('app/models/'+model_filename)}"
+		return false
+	end #if
+end #def
+def generic_table_classes
+#	puts fixture_names.inspect
+	fixture_names.map do |fixture_name|
+		model_name=fixture_name.classify
+		model_filename=fixture_name.singularize+'.rb'
+		if is_generic_table_name?(model_filename) then
+			model_name.constantize
+		else
+			puts "File.exists?(\"app/models/#{model_filename}\")=#{File.exists?('app/models/'+model_filename)}"
+		end #if
+	end.compact #map
+end #def
+def model_class_names
+	return model_classes.map { |klass| klass.name }
+end #def
+test 'Inter-model associations' do
+#	puts "model_classes=#{model_classes.inspect}"
+	generic_table_classes.each do |class_with_foreign_key|
+		if !class_with_foreign_key.module_included?(:Generic_Table) then
+			puts "#{class_with_foreign_key.name} does not include Generic_Table"
+		else
+			table_name_with_foreign_key=class_with_foreign_key.name
+			class_with_foreign_key.foreign_key_association_names.each do |foreign_key_association_name|
+				if is_association?(foreign_key_association_name) then
+				else
+					puts "#{}#{}"
+				end #if
+				if class_with_foreign_key.association_grep('belongs_to',foreign_key_association_name) then
+					puts "#{table_name_with_foreign_key} belongs_to #{foreign_key_association_name}"
+					if foreign_key_association_name.classify.constantize.association_grep('has_many',table_name_with_foreign_key) then
+						puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
+					else
+						puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
+					end #if
+				else
+					puts "#{table_name_with_foreign_key} does not have a belongs_to #{foreign_key_association_name}"
+					if foreign_key_association_name.classify.constantize.association_grep('has_many',table_name_with_foreign_key) then
+						puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
+					else
+						puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
+					end #if
+				end #if
+	#			fixtures(table_name)
+			end #each
+		end #if
+	end #each
 end #test
 end #test class
