@@ -216,13 +216,20 @@ test "missing belongs to" do
 	assert_not_nil(StreamMethodArgument.association_grep('belongs_to',:stream_method))
 	#~ assert_equal(false,StreamMethodArgument.association_grep('belongs_to',:stream_method))
 	
-	assert_equal(:not_generic_table,StreamMethodArgument.association_type(:stream_method))
+	assert_equal(:neither_has_many_nor_belongs_to,StreamMethodArgument.association_macro_type(:stream_method))
+	assert(Generic_Table.generic_table_class?(:stream_methods))
+	assert(Generic_Table.generic_table_class?(:stream_method))
+	assert_include('StreamMethod',Generic_Table.generic_table_classes.map {|c| c.name})
+	assert(Generic_Table.generic_table_classes.map {|c| c.name}.include?('StreamMethod'))
+	assert(Generic_Table.generic_table_class?('StreamMethod'))
+
+	assert_equal(:to_many,StreamMethodArgument.association_to_type(:stream_method))
 	assert(StreamMethodArgument.belongs_to_association?(:stream_method),"StreamMethodArgument does not have a belongs_to association with :stream_method")
 end #test
 test "handle polymorphic" do
 	assert(StreamMethodArgument.belongs_to_association?(:parameter))
 	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
-	assert_equal(:not_generic_table,StreamMethodArgument.association_type(:parameter))
+	assert_equal(:not_generic_table_belongs_to,StreamMethodArgument.association_type(:parameter))
 end #test
 test 'Inter-model associations' do
 #	puts "model_classes=#{model_classes.inspect}"

@@ -7,8 +7,12 @@
 </p>
 <%= render :partial =>'stream_methods/show_partial', :locals => { :@acquisition_stream_spec => @acquisition_stream_spec } %>
 <p>
-  <b>ENV[RAILS_ENV]:</b>
-  <%= ENV[RAILS_ENV] %>
+  <b>@stream_method.class.association_to_type(:stream_method_arguments):</b>
+  <%= @stream_method.class.association_to_type(:stream_method_arguments) %>
+</p>
+<p>
+  <b>@stream_method.class.association_macro_type(:stream_method_arguments):</b>
+  <%= @stream_method.class.association_macro_type(:stream_method_arguments) %>
 </p>
 <p>
   <b>@stream_method.class.association_type(:stream_method_arguments):</b>
