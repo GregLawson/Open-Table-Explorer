@@ -482,7 +482,6 @@ def association_state(assName)
 		end
 		
 	when :not_generic_table
-		return "#{self.class.name} does not recognize #{assName} as association."
 		return "#{self.class.name} does not recognize #{assName} as a generic table."
 	when:not_an_association
 		return "#{self.class.name} does not recognize #{assName} as association."
