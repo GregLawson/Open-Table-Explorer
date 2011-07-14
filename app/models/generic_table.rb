@@ -131,6 +131,18 @@ def association_type(association_name)
 end #def
 
 } # define_class_methods
+def Generic_Table.is_generic_table?(model_class_name)
+	return false if (model_class_name =~ /_ids$/)
+	if Generic_Table.is_ActiveRecord_table?(model_class_name) then
+		model_class=Generic_Table.eval_constant(model_class_name.classify)
+		model_class.module_included?(Generic_Table)
+	else
+		return false
+	end #if
+end #def
+def Generic_Table.table_exists?(table_name)
+	TableSpec.connection.table_exists?(table_name)
+end #def
 def Generic_Table.generic_table_class?(table_name)
 	return Generic_Table.generic_table_classes.map {|c| c.name}.include?(table_name.to_s.classify)
 end #def
@@ -534,18 +546,6 @@ def Generic_Table.is_ActiveRecord_table?(model_class_name)
 	else
 		return false
 	end #if
-end #def
-def Generic_Table.is_generic_table?(model_class_name)
-	return false if (model_class_name =~ /_ids$/)
-	if Generic_Table.is_ActiveRecord_table?(model_class_name) then
-		model_class=Generic_Table.eval_constant(model_class_name.classify)
-		model_class.module_included?(Generic_Table)
-	else
-		return false
-	end #if
-end #def
-def Generic_Table.table_exists?(table_name)
-	TableSpec.connection.table_exists?(table_name)
 end #def
 def display_full_time(time)
 	time.rfc2822
