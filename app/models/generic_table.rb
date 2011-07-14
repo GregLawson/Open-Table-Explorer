@@ -82,6 +82,13 @@ end #def
 def belongs_to_association?(association_name)
 	return system(association_grep('belongs_to',association_name))
 end #def
+def association_class(assName)
+	 if !is_association?(assName) then
+		signal "#{assName} is not an association of #{self.class.name}."
+	else
+		 return assName.to_s.classify.constantize
+	end #if
+end #def
 def is_matching_association?(assName)
 	 if is_association?(assName) then
 		 model_class=assName.classify.constantize
