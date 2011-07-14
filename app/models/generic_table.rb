@@ -466,6 +466,17 @@ def association_state(assName)
 			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
 		elsif ass.empty? then
 			return "Association #{assName} with foreign key #{associations_foreign_key_name} is empty."
+			ret= "Association #{assName} with foreign key #{associations_foreign_key_name} is empty; "
+			case self.class.association_class(assName).association_macro_type(self.class.name.tableize.singularize)
+			when :has_many
+				return ret+"but has many."
+			when :belongs_to
+				return ret+"but belongs_to."
+			when :neither_has_many_nor_belongs_to
+				return ret+"because neither_has_many_nor_belongs_to."
+			else
+				return "New return value from #{self.class.name}.association_macro_type(#{assName})=#{self.class.association_macro_type(assName)}."
+			end #case
 		else
 			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
 			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
