@@ -31,11 +31,11 @@ account does not has_many Transfer
 WiredLocation does not have a belongs_to node
 node does not has_many WiredLocation
 ......F
-Finished in 20.206024 seconds.
+Finished in 21.643361 seconds.
 
   1) Failure:
-test_missing_belongs_to(GenericTableTest) [test/unit/generic_table_test.rb:220]:
-StreamMethodArgument does not have a belongs_to association with :stream_method.
-<false> is not true.
+test_missing_belongs_to(GenericTableTest) [test/unit/generic_table_test.rb:226]:
+<:to_many> expected but was
+<:not_an_association>.
 
-7 tests, 145 assertions, 1 failures, 0 errors
+7 tests, 150 assertions, 1 failures, 0 errors

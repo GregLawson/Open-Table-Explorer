@@ -99,21 +99,33 @@ def is_matching_association?(assName)
 		return false
 	end #if
 end #def
-def association_type(assName)
-	if !Generic_Table.generic_table_classes.include?(assName) then
+def association_to_type(association_name)
+	if !Generic_Table.generic_table_class?(association_name) then
 		return :not_generic_table
-	elsif is_association_to_one?(assName) then
+	elsif is_association_to_one?(association_name) then
 		return :to_one
-	elsif is_association_to_many?(assName) then
+	elsif is_association_to_many?(association_name) then
 		return :to_many
 	else 
-		return :unknown_association
+		return :not_an_association
 	end #if
+end #def
+def association_macro_type(association_name)
+	if  has_many_association?(association_name) then
+		return :has_many
+	elsif belongs_to_association?(association_name) then
+		return :belongs_to
+	else
+		return :neither_has_many_nor_belongs_to
+	end #if
+end #def
+def association_type(association_name)
+	return (association_to_type(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym
 end #def
 
 } # define_class_methods
 def Generic_Table.generic_table_class?(table_name)
-	return Generic_Table.generic_table_classes.map {|c| c.name}.include?(table_name.classify)
+	return Generic_Table.generic_table_classes.map {|c| c.name}.include?(table_name.to_s.classify)
 end #def
 def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/models/',extention='.rb')
 	if File.exists?(directory+model_file_basename+extention) then
@@ -425,7 +437,7 @@ def self.db2yaml
 end #def
 # Display attribute or method value from association even if association is nil
 def association_state(assName)
-	case self.class.association_type(assName)
+	case self.class.association_to_type(assName)
 	when :to_one
 		foreign_key_value=self[assName.to_s+'_id']
 		if foreign_key_value.nil? then # foreign key uninitialized
@@ -451,8 +463,13 @@ def association_state(assName)
 			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
 			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
 		end
+		
+	when :not_generic_table
+		return "#{self.class.name} does not recognize #{assName} as association."
+	when:not_an_association
+		return "#{self.class.name} does not recognize #{assName} as association."
 	else
-		return "#{self.class..name} does not recognize #{assName} as association."
+		return "New return value from #{self.class.name}.association_to_type(#{assName})=#{self.class.association_to_type(assName)}."
 	end #if
 end #def
 def association_has_data(assName)
