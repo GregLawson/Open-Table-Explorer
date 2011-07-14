@@ -42,8 +42,8 @@ test "associated_to_s" do
 	acquisitions(:one).acquisition_stream_spec_id=0
 
 	assert_not_nil(acquisition_stream_spec)
-	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
-	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
+#	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
+#	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
 	assert_respond_to(acquisition_stream_spec,:table_spec)
 	meth=acquisition_stream_spec.method(:table_spec)
 	
@@ -207,5 +207,61 @@ test "has macros" do
 	assert_public_instance_method(ar_from_fixture,ASSNAME)
 
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_methods(/^has_/))
+end #test
+test "missing belongs to" do
+	assert_not_nil(system(StreamMethodArgument.model_grep('belongs_to :stream_method')))
+	assert_not_empty(StreamMethodArgument.model_grep('belongs_to :stream_method'))
+	assert_equal(false,system(StreamMethodArgument.model_grep('belongs_to :stream_method')))
+
+	assert_not_nil(StreamMethodArgument.association_grep('belongs_to',:stream_method))
+	#~ assert_equal(false,StreamMethodArgument.association_grep('belongs_to',:stream_method))
+	
+	assert_equal(:not_generic_table,StreamMethodArgument.association_type(:stream_method))
+	assert(StreamMethodArgument.belongs_to_association?(:stream_method),"StreamMethodArgument does not have a belongs_to association with :stream_method")
+end #test
+test "handle polymorphic" do
+	assert(StreamMethodArgument.belongs_to_association?(:parameter))
+	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
+	assert_equal(:not_generic_table,StreamMethodArgument.association_type(:parameter))
+end #test
+test 'Inter-model associations' do
+#	puts "model_classes=#{model_classes.inspect}"
+	Generic_Table.generic_table_classes.each do |class_with_foreign_key|
+		if !class_with_foreign_key.module_included?(:Generic_Table) then
+			puts "#{class_with_foreign_key.name} does not include Generic_Table"
+		else
+			table_name_with_foreign_key=class_with_foreign_key.name
+			class_with_foreign_key.foreign_key_association_names.each do |foreign_key_association_name|
+				if !class_with_foreign_key.is_association?(foreign_key_association_name) then
+					puts "#{foreign_key_association_name} is not an association of #{class_with_foreign_key.name}"
+				elsif class_with_foreign_key.belongs_to_association?(foreign_key_association_name) then
+					puts "#{table_name_with_foreign_key} belongs_to #{foreign_key_association_name}"
+					if !Generic_Table.generic_table_class?(foreign_key_association_name) then
+						puts "#{foreign_key_association_name} is not a generic table in #{Generic_Table.generic_table_classes.map {|c| c.name}.inspect}."
+					elsif !class_with_foreign_key.module_included?(:Generic_Table) then
+						puts "#{class_with_foreign_key.name} does not include Generic_Table"
+					else
+						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
+							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
+						else
+							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
+						end #if
+					end #if
+				else
+					if !class_with_foreign_key.module_included?(:Generic_Table) then
+						puts "#{class_with_foreign_key.name} does not include Generic_Table"
+					else
+						puts "#{table_name_with_foreign_key} does not have a belongs_to #{foreign_key_association_name}"
+						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
+							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
+						else
+							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
+						end #if
+					end #if
+				end #if
+	#			fixtures(table_name)
+			end #each
+		end #if
+	end #each
 end #test
 end #test class

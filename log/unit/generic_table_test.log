@@ -1,8 +1,41 @@
 Loaded suite test/unit/generic_table_test
 Started
-.["build_table_spec", "loaded_table_spec?", "set_table_spec_target", "table_spec", "autosave_associated_records_for_table_spec", "table_spec=", "create_table_spec"]
-[]
-...
-Finished in 13.681544 seconds.
+AcquisitionStreamSpec belongs_to table_spec
+table_spec does not has_many AcquisitionStreamSpec
+AcquisitionStreamSpec belongs_to acquisition_interface
+acquisition_interface does not has_many AcquisitionStreamSpec
+Acquisition does not have a belongs_to acquisition_stream_spec
+acquisition_stream_spec does not has_many Acquisition
+Breaker does not have a belongs_to node
+node does not has_many Breaker
+error_type is not an association of Bug
+Load does not have a belongs_to node
+node does not has_many Load
+Measurement does not have a belongs_to load
+load does not has_many Measurement
+Node does not have a belongs_to node
+node does not has_many Node
+ParseSpec does not include Generic_Table
+stream_method is not an association of StreamMethodArgument
+StreamMethodArgument belongs_to parameter
+parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation"].
+StreamMethodCall belongs_to stream_method
+stream_method does not has_many StreamMethodCall
+stream_method_call is not an association of StreamParameter
+stream_method_argument is not an association of StreamParameter
+TableSpec belongs_to frequency
+frequency does not has_many TableSpec
+Transaction does not include Generic_Table
+Transfer belongs_to account
+account does not has_many Transfer
+WiredLocation does not have a belongs_to node
+node does not has_many WiredLocation
+......F
+Finished in 20.206024 seconds.
 
-4 tests, 136 assertions, 0 failures, 0 errors
+  1) Failure:
+test_missing_belongs_to(GenericTableTest) [test/unit/generic_table_test.rb:220]:
+StreamMethodArgument does not have a belongs_to association with :stream_method.
+<false> is not true.
+
+7 tests, 145 assertions, 1 failures, 0 errors

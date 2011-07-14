@@ -70,11 +70,17 @@ end #def
 def model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
 end #def
-def association_grep(association_type,association_name)
-	return "grep \"^#{association_type} :#{association_name}\" #{model_file_name} &>/dev/null"
+def model_grep(model_regexp_string)
+	return "grep \"#{model_regexp_string}\" #{model_file_name} &>/dev/null"
+end #def
+def association_grep(model_regexp_string,association_name)
+	return model_grep("^#{model_regexp_string} :#{association_name}" )
 end #def
 def has_many_association?(association_name)
 	return system(association_grep('has_many',association_name))
+end #def
+def belongs_to_association?(association_name)
+	return system(association_grep('belongs_to',association_name))
 end #def
 def is_matching_association?(assName)
 	 if is_association?(assName) then
@@ -93,7 +99,46 @@ def is_matching_association?(assName)
 		return false
 	end #if
 end #def
+def association_type(assName)
+	if !Generic_Table.generic_table_classes.include?(assName) then
+		return :not_generic_table
+	elsif is_association_to_one?(assName) then
+		return :to_one
+	elsif is_association_to_many?(assName) then
+		return :to_many
+	else 
+		return :unknown_association
+	end #if
+end #def
+
 } # define_class_methods
+def Generic_Table.generic_table_class?(table_name)
+	return Generic_Table.generic_table_classes.map {|c| c.name}.include?(table_name.classify)
+end #def
+def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/models/',extention='.rb')
+	if File.exists?(directory+model_file_basename+extention) then
+		return true
+	else
+#		puts "File.exists?(\"#{directory+model_file_basename+extention})\")=#{File.exists?(directory+model_file_basename+extention)}"
+		return false
+	end #if
+end #def
+ALL_VIEW_DIRS=Dir['app/views/*']
+def Generic_Table.generic_table_classes
+#	puts fixture_names.inspect
+	ALL_VIEW_DIRS.map do |view_dir|
+		model_filename=view_dir.sub(%r{^app/views/},'')
+		if is_generic_table_name?(model_filename.singularize) then
+			model_filename.classify.constantize
+		else
+#			puts "File.exists?(\"app/models/#{model_filename}\")=#{File.exists?('app/models/'+model_filename)}"
+			nil # discarded by later Array#compact
+		end #if
+	end.compact #map
+end #def
+def Generic_Table.generic_table_class_names
+	return model_classes.map { |klass| klass.name }
+end #def
 
 
 def Generic_Table.activeRecordTableNotCreatedYet?(obj)
@@ -380,29 +425,34 @@ def self.db2yaml
 end #def
 # Display attribute or method value from association even if association is nil
 def association_state(assName)
-	if !self.class.is_association?(assName) then
-		return "#{self.class.name} does not have an association named #{assName}."
-	elsif self.class.is_association_to_one?(assName) then
-		if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
-			
+	case self.class.association_type(assName)
+	when :to_one
+		foreign_key_value=self[assName.to_s+'_id']
+		if foreign_key_value.nil? then # foreign key uninitialized
 			return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
+		elsif foreign_key_value.empty? then # foreign key uninitialized
+			return "Foreign key #{assName.to_s}_id defined as attribute but has empty value."
 		else
 			ass=send(assName)
 			if ass.nil? then
-				return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} but the association returns nil."
+				return "Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect} but the association returns nil."
 			else
-				return "Foreign key #{assName.to_s}_id has value #{self[assName.to_s+'_id']} and returns type #{ass.class.name}."
+				return "Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect},#{ass.inspect} and returns type #{ass.class.name}."
 			end
 		end
-	elsif is_association_to_many?(assName) then
+	when :to_many
 		ass=send(assName)
+		associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
 		if ass.nil? then
-			return "Association #{assName}'s foreign key #{self.class.name.to_s}_id has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
+			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
+		elsif ass.empty? then
+			return "Association #{assName} with foreign key #{associations_foreign_key_name} is empty."
 		else
-			associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
 			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
-			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values} and returns type #{ass.class.name}."
+			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
 		end
+	else
+		return "#{self.class..name} does not recognize #{assName} as association."
 	end #if
 end #def
 def association_has_data(assName)
