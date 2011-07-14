@@ -79,6 +79,9 @@ end #def
 def has_many_association?(association_name)
 	return system(association_grep('has_many',association_name))
 end #def
+def belongs_to_association?(association_name)
+	return system(association_grep('belongs_to',association_name))
+end #def
 def is_matching_association?(assName)
 	 if is_association?(assName) then
 		 model_class=assName.classify.constantize
@@ -97,7 +100,9 @@ def is_matching_association?(assName)
 	end #if
 end #def
 def association_type(assName)
-	if is_association_to_one?(assName) then
+	if !Generic_Table.generic_table_classes.include?(assName) then
+		return :not_generic_table
+	elsif is_association_to_one?(assName) then
 		return :to_one
 	elsif is_association_to_many?(assName) then
 		return :to_many
@@ -107,6 +112,33 @@ def association_type(assName)
 end #def
 
 } # define_class_methods
+def Generic_Table.generic_table_class?(table_name)
+	return Generic_Table.generic_table_classes.map {|c| c.name}.include?(table_name.classify)
+end #def
+def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/models/',extention='.rb')
+	if File.exists?(directory+model_file_basename+extention) then
+		return true
+	else
+#		puts "File.exists?(\"#{directory+model_file_basename+extention})\")=#{File.exists?(directory+model_file_basename+extention)}"
+		return false
+	end #if
+end #def
+ALL_VIEW_DIRS=Dir['app/views/*']
+def Generic_Table.generic_table_classes
+#	puts fixture_names.inspect
+	ALL_VIEW_DIRS.map do |view_dir|
+		model_filename=view_dir.sub(%r{^app/views/},'')
+		if is_generic_table_name?(model_filename.singularize) then
+			model_filename.classify.constantize
+		else
+#			puts "File.exists?(\"app/models/#{model_filename}\")=#{File.exists?('app/models/'+model_filename)}"
+			nil # discarded by later Array#compact
+		end #if
+	end.compact #map
+end #def
+def Generic_Table.generic_table_class_names
+	return model_classes.map { |klass| klass.name }
+end #def
 
 
 def Generic_Table.activeRecordTableNotCreatedYet?(obj)

@@ -33,4 +33,6 @@
 <%= @stream_method.class.association_names.inspect %>
 <P> system(@stream_method.class.association_grep('has_many',:stream_method_arguments)) 
 <%= system(@stream_method.class.association_grep('has_many',:stream_method_arguments)) %>
+<P> system(StreamMethodArgument.association_grep('belongs_to',:stream_methods)) 
+<%= system(StreamMethodArgument.association_grep('belongs_to',:stream_methods)) %>
 <% end #if %>

@@ -1,90 +1,41 @@
 Loaded suite test/unit/generic_table_test
 Started
-File.exists?("app/models/weather.rb.rb")=false
-File.exists?("app/models/weather.rb")=true
-File.exists?("app/models/stream_method_call.rb.rb")=false
-File.exists?("app/models/stream_method_call.rb")=true
-File.exists?("app/models/ruby_interface.rb.rb")=false
-File.exists?("app/models/ruby_interface.rb")=true
-File.exists?("app/models/edison.rb.rb")=false
-File.exists?("app/models/edison.rb")=true
-File.exists?("app/models/breaker.rb.rb")=false
-File.exists?("app/models/breaker.rb")=true
-File.exists?("app/models/acquisition_stream_spec.rb.rb")=false
-File.exists?("app/models/acquisition_stream_spec.rb")=true
-File.exists?("app/models/transaction.rb.rb")=false
-File.exists?("app/models/transaction.rb")=true
-File.exists?("app/models/test_run.rb.rb")=false
-File.exists?("app/models/test_run.rb")=true
-File.exists?("app/models/stream_method.rb.rb")=false
-File.exists?("app/models/stream_method.rb")=true
-File.exists?("app/models/router.rb.rb")=false
-File.exists?("app/models/router.rb")=true
-File.exists?("app/models/parse_spec.rb.rb")=false
-File.exists?("app/models/parse_spec.rb")=true
-File.exists?("app/models/measurement.rb.rb")=false
-File.exists?("app/models/measurement.rb")=true
-File.exists?("app/models/url.rb.rb")=false
-File.exists?("app/models/url.rb")=true
-File.exists?("app/models/stream_parameter.rb.rb")=false
-File.exists?("app/models/stream_parameter.rb")=true
-File.exists?("app/models/station.rb.rb")=false
-File.exists?("app/models/station.rb")=true
-File.exists?("app/models/load.rb.rb")=false
-File.exists?("app/models/load.rb")=true
-File.exists?("app/models/stream_method_argument.rb.rb")=false
-File.exists?("app/models/stream_method_argument.rb")=true
-File.exists?("app/models/parameter.rb.rb")=false
-File.exists?("app/models/parameter.rb")=true
-File.exists?("app/models/acquisition_interface.rb.rb")=false
-File.exists?("app/models/acquisition_interface.rb")=true
-File.exists?("app/models/tedprimary.rb.rb")=false
-File.exists?("app/models/tedprimary.rb")=true
-File.exists?("app/models/ofx.rb.rb")=false
-File.exists?("app/models/ofx.rb")=true
-File.exists?("app/models/huelseries.rb.rb")=false
-File.exists?("app/models/huelseries.rb")=false
-File.exists?("app/models/host.rb.rb")=false
-File.exists?("app/models/host.rb")=true
-File.exists?("app/models/frequency.rb.rb")=false
-File.exists?("app/models/frequency.rb")=true
-File.exists?("app/models/example_type.rb.rb")=false
-File.exists?("app/models/example_type.rb")=true
-File.exists?("app/models/error_type.rb.rb")=false
-File.exists?("app/models/error_type.rb")=true
-File.exists?("app/models/scalar_argument.rb.rb")=false
-File.exists?("app/models/scalar_argument.rb")=true
-File.exists?("app/models/production.rb.rb")=false
-File.exists?("app/models/production.rb")=true
-File.exists?("app/models/huelshow.rb.rb")=false
-File.exists?("app/models/huelshow.rb")=true
-File.exists?("app/models/account.rb.rb")=false
-File.exists?("app/models/account.rb")=true
-File.exists?("app/models/ted_web_box_full.rb.rb")=false
-File.exists?("app/models/ted_web_box_full.rb")=false
-File.exists?("app/models/table_spec.rb.rb")=false
-File.exists?("app/models/table_spec.rb")=true
-File.exists?("app/models/production_ftp.rb.rb")=false
-File.exists?("app/models/production_ftp.rb")=true
-File.exists?("app/models/port.rb.rb")=false
-File.exists?("app/models/port.rb")=true
-File.exists?("app/models/network.rb.rb")=false
-File.exists?("app/models/network.rb")=true
-File.exists?("app/models/transfer.rb.rb")=false
-File.exists?("app/models/transfer.rb")=true
-File.exists?("app/models/param.rb.rb")=false
-File.exists?("app/models/param.rb")=true
-File.exists?("app/models/node.rb.rb")=false
-File.exists?("app/models/node.rb")=true
-File.exists?("app/models/generic_type.rb.rb")=false
-File.exists?("app/models/generic_type.rb")=true
-File.exists?("app/models/acquisition.rb.rb")=false
-File.exists?("app/models/acquisition.rb")=true
-File.exists?("app/models/bug.rb.rb")=false
-File.exists?("app/models/bug.rb")=true
-File.exists?("app/models/wired_location.rb.rb")=false
-File.exists?("app/models/wired_location.rb")=true
-.....
-Finished in 13.956948 seconds.
+AcquisitionStreamSpec belongs_to table_spec
+table_spec does not has_many AcquisitionStreamSpec
+AcquisitionStreamSpec belongs_to acquisition_interface
+acquisition_interface does not has_many AcquisitionStreamSpec
+Acquisition does not have a belongs_to acquisition_stream_spec
+acquisition_stream_spec does not has_many Acquisition
+Breaker does not have a belongs_to node
+node does not has_many Breaker
+error_type is not an association of Bug
+Load does not have a belongs_to node
+node does not has_many Load
+Measurement does not have a belongs_to load
+load does not has_many Measurement
+Node does not have a belongs_to node
+node does not has_many Node
+ParseSpec does not include Generic_Table
+stream_method is not an association of StreamMethodArgument
+StreamMethodArgument belongs_to parameter
+parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation"].
+StreamMethodCall belongs_to stream_method
+stream_method does not has_many StreamMethodCall
+stream_method_call is not an association of StreamParameter
+stream_method_argument is not an association of StreamParameter
+TableSpec belongs_to frequency
+frequency does not has_many TableSpec
+Transaction does not include Generic_Table
+Transfer belongs_to account
+account does not has_many Transfer
+WiredLocation does not have a belongs_to node
+node does not has_many WiredLocation
+......F
+Finished in 20.206024 seconds.
 
-5 tests, 136 assertions, 0 failures, 0 errors
+  1) Failure:
+test_missing_belongs_to(GenericTableTest) [test/unit/generic_table_test.rb:220]:
+StreamMethodArgument does not have a belongs_to association with :stream_method.
+<false> is not true.
+
+7 tests, 145 assertions, 1 failures, 0 errors
