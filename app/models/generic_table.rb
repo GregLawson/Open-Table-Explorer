@@ -135,10 +135,10 @@ def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/mode
 		return false
 	end #if
 end #def
-ALL_VIEW_DIRS=Dir['app/views/*']
+@@ALL_VIEW_DIRS=Dir['app/views/*']
 def Generic_Table.generic_table_classes
 #	puts fixture_names.inspect
-	ALL_VIEW_DIRS.map do |view_dir|
+	@@ALL_VIEW_DIRS.map do |view_dir|
 		model_filename=view_dir.sub(%r{^app/views/},'')
 		if is_generic_table_name?(model_filename.singularize) then
 			model_filename.classify.constantize
