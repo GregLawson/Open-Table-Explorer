@@ -1,0 +1,35 @@
+<h1>Listing stream_pattern_arguments</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Stream pattern</th>
+    <th>Name</th>
+    <th>Ruby type</th>
+    <th>Direction</th>
+    <th>Parameter</th>
+    <th>Parameter type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stream_pattern_arguments.each do |stream_pattern_argument| %>
+  <tr>
+    <td><%= stream_pattern_argument.id %></td>
+    <td><%= stream_pattern_argument.stream_pattern_id %></td>
+    <td><%= stream_pattern_argument.name %></td>
+    <td><%= stream_pattern_argument.ruby_type %></td>
+    <td><%= stream_pattern_argument.direction %></td>
+    <td><%= stream_pattern_argument.parameter_id %></td>
+    <td><%= stream_pattern_argument.parameter_type %></td>
+    <td><%= link_to 'Show', stream_pattern_argument %></td>
+    <td><%= link_to 'Edit', edit_stream_pattern_argument_path(stream_pattern_argument) %></td>
+    <td><%= link_to 'Destroy', stream_pattern_argument, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stream pattern argument', new_stream_pattern_argument_path %>

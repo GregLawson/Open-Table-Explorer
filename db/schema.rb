@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110629194900) do
+ActiveRecord::Schema.define(:version => 20110714171029) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -481,6 +481,23 @@ ActiveRecord::Schema.define(:version => 20110629194900) do
   create_table "stream_parameters", :force => true do |t|
     t.integer  "stream_method_call_id"
     t.integer  "stream_method_argument_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stream_pattern_arguments", :force => true do |t|
+    t.integer  "stream_pattern_id"
+    t.string   "name"
+    t.string   "ruby_type"
+    t.string   "direction"
+    t.integer  "parameter_id"
+    t.string   "parameter_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stream_patterns", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
