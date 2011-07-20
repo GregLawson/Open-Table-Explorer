@@ -51,11 +51,26 @@ def is_association_to_many?(assName)
 		return false
 	end
 end #def
-def association_method_name(association_table_name)
+def association_method_plurality(association_table_name)
 	if self.new.respond_to?(association_table_name) then
-		return association_table_name
-	else
+		return association_table_name.to_sym
+	elsif self.new.respond_to?(association_table_name.to_s.singularize) then
 		return association_table_name.to_s.singularize.to_sym
+	elsif self.new.respond_to?(association_table_name.to_s.pluralize) then
+		return association_table_name.to_s.pluralize.to_sym
+	else # don't know what to do; mostlikely cure
+		return association_table_name.to_s.pluralize.to_sym
+	end #if
+end #def
+def association_method_name(association_table_name)
+	if association_table_name.kind_of?(Class) then
+		return association_method_plurality(association_table_name.name.tableize.to_sym)
+	elsif association_table_name.kind_of?(String) then
+		return association_method_plurality(association_table_name.to_sym)
+	elsif association_table_name.kind_of?(Symbol) then
+		return association_method_plurality(association_table_name.to_sym)
+	else # other object
+		return association_method_plurality(association_table_name.class.name.tableize.to_sym)
 	end #if
 end #def
 def association_names_to_one
@@ -89,6 +104,20 @@ def association_class(assName)
 		 return assName.to_s.classify.constantize
 	end #if
 end #def
+def association_symbol
+	assName=self.class.tableize
+	 if is_association?(assName) then
+		return assName.to_sym
+		if is_association?(assName.pluralize) then
+			return assName.pluralize.to_sym
+		else
+			signal "#{assName.pluralize} is not an association of #{self.class.name}."
+		end #if
+	else
+		signal "#{assName} is not an association of #{self.class.name}."
+	end #if
+end #def
+
 def is_matching_association?(assName)
 	 if is_association?(assName) then
 		 model_class=assName.classify.constantize

@@ -196,6 +196,10 @@ def assert_association(ar_from_fixture,assName)
 	explain_assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
 	assert(ar_from_fixture.class.is_association?(assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
 end #def
+def assert_associations(ass1,ass2)
+	assert_association(ass1,ass2)
+	assert_association(ass2,ass1)
+end #def
 
 def assert_model_class(model_name)
 	a_fixture_record=fixtures(model_name.tableize).values.first
