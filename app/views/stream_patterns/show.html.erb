@@ -33,17 +33,17 @@
 
 <% if StreamMethodArgument.find_all_by_stream_pattern_id(@stream_pattern.id ) then %>
 <H1><B>No data in associaton. Listing all data of model with matching Id.</B></H1>
-<%= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => StreamMethodArgument.find_all_by_stream_pattern_id(@stream_pattern.id ) } %>
+<%= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => StreamPatternArgument.find_all_by_stream_pattern_id(@stream_pattern.id ) } %>
 <% else %>
 <H1><B>No data in associaton. Listing all data of model.</B></H1>
-<%= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => StreamMethodArgument.all } %>
+<%= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => StreamPatternArgument.all } %>
 <% end #if %>
 <%= @stream_pattern.stream_pattern_arguments.inspect  %>
 <P>@stream_pattern.class.association_names=
 <%= @stream_pattern.class.association_names.inspect %>
 <P> system(@stream_pattern.class.association_grep('has_many',:stream_pattern_arguments)) 
 <%= system(@stream_pattern.class.association_grep('has_many',:stream_pattern_arguments)) %>
-<P> system(StreamMethodArgument.association_grep('belongs_to',:stream_patterns)) 
-<%= system(StreamMethodArgument.association_grep('belongs_to',:stream_patterns)) %>
+<P> system(StreamPatternArgument.association_grep('belongs_to',:stream_patterns)) 
+<%= system(StreamPatternArgument.association_grep('belongs_to',:stream_patterns)) %>
 <% end #if %>
 <% end #if %>
