@@ -6,7 +6,28 @@
 #
 ###########################################################################
 # cntains mostly functions created for testing / debugging but not dependant on TestCase
+class Module
+def instance_methods_from_class
+	return self.instance_methods(false)
+end #def
+def instance_respond_to?(method_name)
+	return instance_methods_from_class.include?(method_name.to_s)
+end #def
+def similar_methods(symbol)
+	singular='^'+symbol.to_s.singularize
+	plural='^'+symbol.to_s.pluralize
+	table='^'+symbol.to_s.tableize
+	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
+end #def
+
+end #class Class
 class Object
+#~ require 'IncludeModuleClassMethods.rb'
+ #~ mixin_class_methods { |klass|
+ #~ puts "Module Acquisition has been included by #{klass}" if $VERBOSE
+ #~ }
+#~ define_class_methods {
+#~ } #define_class_methods
 def objectKind
 	if nil? then
 		return "nil."
