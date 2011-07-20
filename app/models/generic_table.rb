@@ -481,8 +481,8 @@ def association_state(assName)
 		foreign_key_value=self[assName.to_s+'_id']
 		if foreign_key_value.nil? then # foreign key uninitialized
 			return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
-		elsif foreign_key_value.empty? then # foreign key uninitialized
-			return "Foreign key #{assName.to_s}_id defined as attribute but has empty value."
+		#~ elsif foreign_key_value.empty? then # foreign key uninitialized
+			#~ return "Foreign key #{assName.to_s}_id defined as attribute but has empty value."
 		else
 			ass=send(assName)
 			if ass.nil? then

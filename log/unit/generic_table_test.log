@@ -29,6 +29,6 @@ StreamPatternArgument belongs_to stream_pattern
 stream_pattern does not has_many StreamPatternArgument
 parameter is not an association of StreamPatternArgument
 .........
-Finished in 14.718567 seconds.
+Finished in 14.718622 seconds.
 
 11 tests, 159 assertions, 0 failures, 0 errors
