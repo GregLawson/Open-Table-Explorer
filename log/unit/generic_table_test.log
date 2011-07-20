@@ -11,10 +11,13 @@ error_type is not an association of Bug
 node is not an association of Load
 load is not an association of Measurement
 node is not an association of Node
+StreamPatternArgument belongs_to stream_pattern
+stream_pattern does not has_many StreamPatternArgument
+parameter is not an association of StreamPatternArgument
 ParseSpec does not include Generic_Table
 stream_method is not an association of StreamMethodArgument
 StreamMethodArgument belongs_to parameter
-parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "StreamPattern", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation", "StreamPatternArgument"].
+parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "StreamPatternArgument", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation", "StreamPattern"].
 StreamMethodCall belongs_to stream_method
 stream_method does not has_many StreamMethodCall
 stream_method_call is not an association of StreamParameter
@@ -25,10 +28,7 @@ Transaction does not include Generic_Table
 Transfer belongs_to account
 account does not has_many Transfer
 node is not an association of WiredLocation
-StreamPatternArgument belongs_to stream_pattern
-stream_pattern does not has_many StreamPatternArgument
-parameter is not an association of StreamPatternArgument
 .........
-Finished in 14.718622 seconds.
+Finished in 15.446207 seconds.
 
 11 tests, 159 assertions, 0 failures, 0 errors
