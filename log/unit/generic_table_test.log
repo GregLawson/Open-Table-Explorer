@@ -1,24 +1,20 @@
 Loaded suite test/unit/generic_table_test
 Started
-AcquisitionStreamSpec belongs_to table_spec
+..AcquisitionStreamSpec belongs_to table_spec
 table_spec does not has_many AcquisitionStreamSpec
 AcquisitionStreamSpec belongs_to acquisition_interface
 acquisition_interface does not has_many AcquisitionStreamSpec
 Acquisition does not have a belongs_to acquisition_stream_spec
 acquisition_stream_spec does not has_many Acquisition
-Breaker does not have a belongs_to node
-node does not has_many Breaker
+node is not an association of Breaker
 error_type is not an association of Bug
-Load does not have a belongs_to node
-node does not has_many Load
-Measurement does not have a belongs_to load
-load does not has_many Measurement
-Node does not have a belongs_to node
-node does not has_many Node
+node is not an association of Load
+load is not an association of Measurement
+node is not an association of Node
 ParseSpec does not include Generic_Table
 stream_method is not an association of StreamMethodArgument
 StreamMethodArgument belongs_to parameter
-parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation"].
+parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "StreamPattern", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation", "StreamPatternArgument"].
 StreamMethodCall belongs_to stream_method
 stream_method does not has_many StreamMethodCall
 stream_method_call is not an association of StreamParameter
@@ -28,14 +24,11 @@ frequency does not has_many TableSpec
 Transaction does not include Generic_Table
 Transfer belongs_to account
 account does not has_many Transfer
-WiredLocation does not have a belongs_to node
-node does not has_many WiredLocation
-......F
-Finished in 16.290443 seconds.
+node is not an association of WiredLocation
+StreamPatternArgument belongs_to stream_pattern
+stream_pattern does not has_many StreamPatternArgument
+parameter is not an association of StreamPatternArgument
+.........
+Finished in 14.718622 seconds.
 
-  1) Failure:
-test_missing_belongs_to(GenericTableTest) [test/unit/generic_table_test.rb:226]:
-<:to_many> expected but was
-<:not_an_association>.
-
-7 tests, 150 assertions, 1 failures, 0 errors
+11 tests, 159 assertions, 0 failures, 0 errors

@@ -1,0 +1,23 @@
+<h1>Listing stream_patterns</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stream_patterns.each do |stream_pattern| %>
+  <tr>
+    <td><%= stream_pattern.name %></td>
+    <td><%= link_to 'Show', stream_pattern %></td>
+    <td><%= link_to 'Edit', edit_stream_pattern_path(stream_pattern) %></td>
+    <td><%= link_to 'Destroy', stream_pattern, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stream pattern', new_stream_pattern_path %>

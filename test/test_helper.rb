@@ -13,6 +13,23 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+def assert_matching_association(table_reference,association_name)
+	table_class=ActiveRecord::Base.class_of_name(table_reference)
+	assert_association(table_class,association_name)
+
+	association_class=table_class.association_class(association_name)
+	assert_not_nil(association_class)
+	table_symbol=association_class.association_method_symbol(table_reference)
+	assert(association_class.is_association?(table_symbol) ,"#{association_class.inspect}.is_association?(#{table_symbol})")
+
+	
+	
+	assert_association(association_class,table_symbol)
+	#~ assert_belongs_to(table_reference,association_name) 
+	#~ assert_belongs_to(association_name,table_reference) 
+	message="Table name #{table_symbol.to_s} do not have matching associations (has* declarations) with #{'association_name'.titleize} #{association_name}."
+	assert_block(message){table_class.is_matching_association?(association_name)}
+end #def
 # flexible access to all fixtures
 def fixtures(table_name)
 	table_name=table_name.to_s
@@ -148,17 +165,17 @@ end
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
-		message='expect to pass'
+		message+='expect to pass'
 	elsif obj.respond_to?(methodName.to_s.singularize) then
-		message="but singular #{methodName.to_s.singularize} is a method"
+		message+="but singular #{methodName.to_s.singularize} is a method"
 	elsif obj.respond_to?(methodName.to_s.pluralize) then
-		message="but plural #{methodName.to_s.pluralize} is a method"
+		message+="but plural #{methodName.to_s.pluralize} is a method"
 	elsif obj.respond_to?(methodName.to_s.tableize) then
-		message="but tableize #{methodName.to_s.tableize} is a method"
+		message+="but tableize #{methodName.to_s.tableize} is a method"
 	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
-		message="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
+		message+="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
 	else
-		message="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
+		message+="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #def
@@ -188,13 +205,29 @@ def assert_module_included(klass,moduleName)
   end
 
 end #def
-def assert_association(ar_from_fixture,assName)
-	assName=ar_from_fixture.class.association_method_name(assName)
-	assName=assName.to_sym
-	assert_instance_of(Symbol,assName,"assert_association")
-	assert_public_instance_method(ar_from_fixture,assName)
-	explain_assert_respond_to(ar_from_fixture,(assName.to_s+'=').to_sym)
-	assert(ar_from_fixture.class.is_association?(assName),"fail is_association?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
+def assert_association(class_reference,association_reference)
+	if class_reference.kind_of?(Class) then
+		klass=class_reference
+	else
+		klass=class_reference.class
+	end #if
+	association_reference=association_reference.to_sym
+	assert_instance_of(Symbol,association_reference,"assert_association")
+	if klass.module_included?(Generic_Table) then
+		association_type=klass.association_to_type(association_reference)
+		assert_not_nil(association_type)
+		assert_include(association_type,[:to_one,:to_many])
+	end #if
+	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
+	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")
+	assert(klass.is_association?(association_reference),"fail is_association?, klass.inspect=#{klass.inspect},association_reference=#{association_reference}")
+end #def
+def assert_associations(ass1,ass2)
+	class1=ass1.to_s.classify.constantize # must succeed
+	association_symbol2=class1.association_method_symbol(ass2)
+	assert_association(class1,association_symbol2)
+	class2=association_symbol2.to_s.classify.constantize
+	assert_association(class1.association_class(ass2),class2.association_method_symbol(ass1))
 end #def
 
 def assert_model_class(model_name)
@@ -352,16 +385,6 @@ def assert_belongs_to(table_name1,table_name2)
 	if  model_class.is_association_to_one?(table_name2) then
 		assert_include(table_name2,model_class.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
 	end #if
-end #def
-def assert_matching_association(table_name,association_name)
-	assert_generic_table(table_name)
-	assert_generic_table(association_name)
-	assert_association(Generic_Table.eval_constant(table_name.classify).new,association_name)
-	assert_association(Generic_Table.eval_constant(association_name.classify).new,table_name)
-	assert_belongs_to(table_name,association_name) 
-	assert_belongs_to(association_name,table_name) 
-	message="#{'table_name'.titleize} #{table_name} do not have matching associations (has* declarations) with #{'association_name'.titleize} #{association_name}."
-	assert_block(message){Generic_Table.eval_constant(table_name.classify).is_matching_association?(association_name)}
 end #def
 
 end #class

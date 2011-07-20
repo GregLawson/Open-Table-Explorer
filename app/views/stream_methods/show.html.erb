@@ -6,6 +6,13 @@
   <%= @stream_method.id.inspect %>
 </p>
 <%= render :partial =>'stream_methods/show_partial', :locals => { :@acquisition_stream_spec => @acquisition_stream_spec } %>
+<% if @stream_method.association_has_data(:stream_method_arguments) then %>
+<%= render :partial =>'stream_method_arguments/index_partial', :locals => { :@stream_method_arguments => @stream_method.stream_method_arguments } %>
+<% else %>
+<p>
+  <b>@stream_method.class.is_matching_association?(:stream_method_arguments):</b>
+  < %= @stream_method.class.is_matching_association?(:stream_method_arguments) %>
+</p>
 <p>
   <b>@stream_method.class.association_to_type(:stream_method_arguments):</b>
   <%= @stream_method.class.association_to_type(:stream_method_arguments) %>
@@ -23,15 +30,13 @@
   <%= @stream_method.association_state(:stream_method_arguments) %>
 </p>
 
-<% if @stream_method.association_has_data(:stream_method_arguments) then %>
-<%= render :partial =>'stream_method_arguments/index_partial', :locals => { :@stream_method_arguments => @stream_method.stream_method_arguments } %>
+<% if StreamMethodArgument.find_all_by_stream_method_id(@stream_method.id ) then %>
+<H1><B>No data in associaton. Listing all data of model with matching Id.</B></H1>
+<%= render :partial =>'stream_method_arguments/index_partial', :locals => { :@stream_method_arguments => StreamMethodArgument.find_all_by_stream_method_id(@stream_method.id ) } %>
 <% else %>
 <H1><B>No data in associaton. Listing all data of model.</B></H1>
 <%= render :partial =>'stream_method_arguments/index_partial', :locals => { :@stream_method_arguments => StreamMethodArgument.all } %>
-<H1><B>No data in associaton. Listing all data of model with matching Id.</B></H1>
-<%= render :partial =>'stream_method_arguments/index_partial', :locals => { :@stream_method_arguments => StreamMethodArgument.find_all_by_stream_method_id(@stream_method.id ) } %>
-<H1><B>Data in associaton? Listing association.</B></H1>
-<%= render :partial =>'stream_method_arguments/index_partial', :locals => { :@stream_method_arguments => @stream_method.stream_method_arguments } %>
+<% end #if %>
 <%= @stream_method.stream_method_arguments.inspect  %>
 <P>@stream_method.class.association_names=
 <%= @stream_method.class.association_names.inspect %>

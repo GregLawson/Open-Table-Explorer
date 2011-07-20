@@ -44,7 +44,7 @@ end #test
 test "association to one" do
 	ar_from_fixture=table_specs(:ifconfig)
 	assName=:acquisition_stream_specs
-	ASSNAME=ar_from_fixture.class.association_method_name(assName)
+	ASSNAME=ar_from_fixture.class.association_method_symbol(assName)
 	assert_not_nil(ar_from_fixture.class.is_association?(ASSNAME))
 	assName=ASSNAME.to_sym
 	assert_instance_of(Symbol,ASSNAME,"assert_association")

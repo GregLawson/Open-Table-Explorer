@@ -1,0 +1,2 @@
+module StreamPatternArgumentsHelper
+end

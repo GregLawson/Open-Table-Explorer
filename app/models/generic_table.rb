@@ -1,96 +1,15 @@
-module Generic_Table
-require 'global.rb'
-require 'IncludeModuleClassMethods.rb'
- mixin_class_methods { |klass|
- puts "Module Acquisition has been included by #{klass}" if $VERBOSE
- }
-define_class_methods {
-
-
-def foreign_key_names
-	content_column_names=content_columns.collect {|m| m.name}
-#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
-	special_columns=column_names-content_column_names
-#	puts "@special_columns.inspect=#{@special_columns.inspect}"
-	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
-	return possible_foreign_keys
-end #def
-def foreign_key_association_names
-	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
-end #def
-def similar_methods(symbol)
-	singular='^'+symbol.to_s.singularize
-	plural='^'+symbol.to_s.pluralize
-	table='^'+symbol.to_s.tableize
-	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
-end #def
-def is_association?(assName)
-	if assName.to_s[-3..-1]=='_id' then 
-		signal "assName=#{assName} should not end in '_id' as it will be confused wth a foreign key."
-	end # if
-	if assName.to_s[-4..-1]=='_ids' then
-		return false # causes confusion with automatic _ids and _ids= generated for to_many assoiations
-	end #if
-	if self.new.respond_to?(assName) and self.new.respond_to?((assName.to_s+'=').to_sym)  then
-		return true
-	else
-		return false
-	end
-end #def
-def is_association_to_one?(assName)
-	if is_association?(assName)  and !self.new.respond_to?((assName.to_s.singularize+'_ids').to_sym) and !self.new.respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
-		return true
-	else
-		return false
-	end
-end #def
-def is_association_to_many?(assName)
-	if is_association?(assName)  and self.new.respond_to?((assName.to_s.singularize+'_ids').to_sym) and self.new.respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
-		return true
-	else
-		return false
-	end
-end #def
-def association_method_name(association_table_name)
-	if self.new.respond_to?(association_table_name) then
-		return association_table_name
-	else
-		return association_table_name.to_s.singularize.to_sym
-	end #if
-end #def
-def association_names_to_one
-	return instance_methods(false).select {|m| is_association_to_one?(m)}
-end #def
-def association_names_to_many
-	return instance_methods(false).select {|m| is_association_to_many?(m)}
-end #def
-def association_names
-	return instance_methods(false).select {|m| is_association?(m)}
-end #def
-def model_file_name
-	return "app/models/#{name.tableize.singularize}.rb"
-end #def
-def model_grep(model_regexp_string)
-	return "grep \"#{model_regexp_string}\" #{model_file_name} &>/dev/null"
-end #def
-def association_grep(model_regexp_string,association_name)
-	return model_grep("^#{model_regexp_string} :#{association_name}" )
-end #def
-def has_many_association?(association_name)
-	return system(association_grep('has_many',association_name))
-end #def
-def belongs_to_association?(association_name)
-	return system(association_grep('belongs_to',association_name))
-end #def
-def is_matching_association?(assName)
-	 if is_association?(assName) then
-		 model_class=assName.classify.constantize
-		 if model_class.nil? then
-			 signal "Association #{assName.classify} is not a defined constant."
+module ActiveRecord
+class Base
+def Base.is_matching_association?(association_name)
+	 if is_association?(association_name) then
+		association_class=association_class(association_name)
+		 if association_class.nil? then
+			 raise "Association #{association_name.classify} is not a defined constant."
 		end #if
-		 if model_class.is_association?(table_name) then
+		table_symbol=association_class.association_method_symbol(self)
+		 if association_class.is_association?(table_symbol) then
 			 return true
-		elsif model_class.is_association?(table_name.singularize)  then
+		elsif association_class.is_association?(association_method_symbol(self.table_name.singularize.to_sym))  then
 			return true
 		else
 			 return false
@@ -99,10 +18,109 @@ def is_matching_association?(assName)
 		return false
 	end #if
 end #def
-def association_to_type(association_name)
-	if !Generic_Table.generic_table_class?(association_name) then
-		return :not_generic_table
-	elsif is_association_to_one?(association_name) then
+def Base.is_association?(association_name)
+	if association_name.to_s[-3..-1]=='_id' then 
+		raise "association_name=#{association_name} should not end in '_id' as it will be confused wth a foreign key."
+	end # if
+	if association_name.to_s[-4..-1]=='_ids' then
+		return false # causes confusion with automatic _ids and _ids= generated for to_many assoiations
+	end #if
+	if self.instance_respond_to?(association_name) and self.instance_respond_to?((association_name.to_s+'=').to_sym)  then
+		return true
+	else
+		return false
+	end
+end #def
+def Base.foreign_key_names
+	content_column_names=content_columns.collect {|m| m.name}
+#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
+	special_columns=column_names-content_column_names
+#	puts "@special_columns.inspect=#{@special_columns.inspect}"
+	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
+	return possible_foreign_keys
+end #def
+def Base.foreign_key_association_names
+	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
+end #def
+def Base.is_association_to_one?(assName)
+	if is_association?(assName)  and !self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and !self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+		return true
+	else
+		return false
+	end
+end #def
+def Base.is_association_to_many?(assName)
+	if is_association?(assName)  and self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+		return true
+	else
+		return false
+	end
+end #def
+def Base.association_names_to_one
+	return instance_methods(false).select {|m| is_association_to_one?(m)}
+end #def
+def Base.association_names_to_many
+	return instance_methods(false).select {|m| is_association_to_many?(m)}
+end #def
+def Base.association_names
+	return instance_methods(false).select {|m| is_association?(m)}
+end #def
+def Base.model_file_name
+	return "app/models/#{name.tableize.singularize}.rb"
+end #def
+def Base.model_grep(model_regexp_string)
+	if !Generic_Table.rails_MVC_class?(self.name) then
+		raise "#{self.name}.model_grep only works on Rails MVC."
+	end #if
+	return "grep \"#{model_regexp_string}\" #{model_file_name} &>/dev/null"
+end #def
+def Base.association_grep(model_regexp_string,association_name)
+	return model_grep("^#{model_regexp_string} :#{association_name}" )
+end #def
+def Base.has_many_association?(association_name)
+	return system(association_grep('has_many',association_name))
+end #def
+def Base.belongs_to_association?(association_name)
+	return system(association_grep('belongs_to',association_name))
+end #def
+def Base.association_method_plurality(association_table_name)
+	if self.instance_respond_to?(association_table_name) then
+		return association_table_name.to_sym
+	elsif self.instance_respond_to?(association_table_name.to_s.singularize) then
+		return association_table_name.to_s.singularize.to_sym
+	elsif self.instance_respond_to?(association_table_name.to_s.pluralize) then
+		return association_table_name.to_s.pluralize.to_sym
+	else # don't know what to do; most likely cure
+		return association_table_name.to_s.pluralize.to_sym
+	end #if
+end #def
+def Base.name_symbol(association_table_name)
+	if association_table_name.kind_of?(Class) then
+		return association_table_name.name.tableize.to_sym					
+	elsif association_table_name.kind_of?(String) then
+		return association_table_name.to_sym						
+	elsif association_table_name.kind_of?(Symbol) then
+		return association_table_name.to_sym
+	else # other object
+		return association_table_name.class.name.tableize.to_sym
+	end #if
+end #def
+def Base.association_method_symbol(association_table_name)
+	return association_method_plurality(name_symbol(association_table_name))
+end #def
+def Base.class_of_name(name)
+	 return name.to_s.classify.constantize
+end #def
+def Base.association_class(assName)
+	 if !is_association?(assName) then
+		raise "#{assName} is not an association of #{self.name}."
+	else
+		 return class_of_name(assName)
+	end #if
+end #def
+
+def Base.association_to_type(association_name)
+	if is_association_to_one?(association_name) then
 		return :to_one
 	elsif is_association_to_many?(association_name) then
 		return :to_many
@@ -110,7 +128,7 @@ def association_to_type(association_name)
 		return :not_an_association
 	end #if
 end #def
-def association_macro_type(association_name)
+def Base.association_macro_type(association_name)
 	if  has_many_association?(association_name) then
 		return :has_many
 	elsif belongs_to_association?(association_name) then
@@ -119,13 +137,34 @@ def association_macro_type(association_name)
 		return :neither_has_many_nor_belongs_to
 	end #if
 end #def
-def association_type(association_name)
+def Base.association_type(association_name)
 	return (association_to_type(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym
 end #def
+end #class Base
+end #module ActiveRecord
 
+module Generic_Table
+require 'global.rb'
+require 'IncludeModuleClassMethods.rb'
+ mixin_class_methods { |klass|
+ puts "Module Acquisition has been included by #{klass}" if $VERBOSE
+ }
+define_class_methods {
 } # define_class_methods
-def Generic_Table.generic_table_class?(table_name)
-	return Generic_Table.generic_table_classes.map {|c| c.name}.include?(table_name.to_s.classify)
+def Generic_Table.is_generic_table?(model_class_name)
+	return false if (model_class_name =~ /_ids$/)
+	if Generic_Table.is_ActiveRecord_table?(model_class_name) then
+		model_class=Generic_Table.eval_constant(model_class_name.classify)
+		model_class.module_included?(Generic_Table)
+	else
+		return false
+	end #if
+end #def
+def Generic_Table.table_exists?(table_name)
+	TableSpec.connection.table_exists?(table_name)
+end #def
+def Generic_Table.rails_MVC_class?(table_name)
+	return Generic_Table.rails_MVC_classes.map {|c| c.name}.include?(table_name.to_s.classify)
 end #def
 def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/models/',extention='.rb')
 	if File.exists?(directory+model_file_basename+extention) then
@@ -135,8 +174,8 @@ def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/mode
 		return false
 	end #if
 end #def
-@@ALL_VIEW_DIRS=Dir['app/views/*']
-def Generic_Table.generic_table_classes
+@@ALL_VIEW_DIRS||=Dir['app/views/*']
+def Generic_Table.rails_MVC_classes
 #	puts fixture_names.inspect
 	@@ALL_VIEW_DIRS.map do |view_dir|
 		model_filename=view_dir.sub(%r{^app/views/},'')
@@ -442,8 +481,8 @@ def association_state(assName)
 		foreign_key_value=self[assName.to_s+'_id']
 		if foreign_key_value.nil? then # foreign key uninitialized
 			return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
-		elsif foreign_key_value.empty? then # foreign key uninitialized
-			return "Foreign key #{assName.to_s}_id defined as attribute but has empty value."
+		#~ elsif foreign_key_value.empty? then # foreign key uninitialized
+			#~ return "Foreign key #{assName.to_s}_id defined as attribute but has empty value."
 		else
 			ass=send(assName)
 			if ass.nil? then
@@ -458,14 +497,24 @@ def association_state(assName)
 		if ass.nil? then
 			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
 		elsif ass.empty? then
-			return "Association #{assName} with foreign key #{associations_foreign_key_name} is empty."
+			ret= "Association #{assName} with foreign key #{associations_foreign_key_name} is empty; "
+			case self.class.association_class(assName).association_macro_type(self.class.name.tableize.singularize)
+			when :has_many
+				return ret+"but has many."
+			when :belongs_to
+				return ret+"but belongs_to."
+			when :neither_has_many_nor_belongs_to
+				return ret+"because neither_has_many_nor_belongs_to."
+			else
+				return "New return value from #{self.class.name}.association_macro_type(#{assName})=#{self.class.association_macro_type(assName)}."
+			end #case
 		else
 			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
 			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
 		end
 		
 	when :not_generic_table
-		return "#{self.class.name} does not recognize #{assName} as association."
+		return "#{self.class.name} does not recognize #{assName} as a generic table."
 	when:not_an_association
 		return "#{self.class.name} does not recognize #{assName} as association."
 	else
@@ -517,18 +566,6 @@ def Generic_Table.is_ActiveRecord_table?(model_class_name)
 	else
 		return false
 	end #if
-end #def
-def Generic_Table.is_generic_table?(model_class_name)
-	return false if (model_class_name =~ /_ids$/)
-	if Generic_Table.is_ActiveRecord_table?(model_class_name) then
-		model_class=Generic_Table.eval_constant(model_class_name.classify)
-		model_class.module_included?(Generic_Table)
-	else
-		return false
-	end #if
-end #def
-def Generic_Table.table_exists?(table_name)
-	TableSpec.connection.table_exists?(table_name)
 end #def
 def display_full_time(time)
 	time.rfc2822

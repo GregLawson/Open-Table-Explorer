@@ -1,0 +1,20 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+Acquisition:
+  name: Acquisition
+
+Parse_Table:
+  name: Parse_Table
+
+Parse_Row:
+  name: Parse_Row  
+Parse_Column:
+  name: Parse_Column  
+R_Analysis:
+  name: R_Analysis  
+Parallel_Acquisition:
+  name: Parallel_Acquisition  
+Merge_Rows:
+  name: Merge_Rows  
+Schedule:
+  name: Schedule  

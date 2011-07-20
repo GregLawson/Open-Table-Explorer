@@ -1,4 +1,8 @@
 Rtest3::Application.routes.draw do
+  resources :stream_pattern_arguments
+
+  resources :stream_patterns
+
   resources :scalar_arguments
 
   resources :stream_method_arguments
