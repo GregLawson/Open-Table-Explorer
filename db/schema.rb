@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110714171029) do
+ActiveRecord::Schema.define(:version => 20110714220030) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -476,6 +476,7 @@ ActiveRecord::Schema.define(:version => 20110714171029) do
     t.text     "rescue_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "stream_pattern_id"
   end
 
   create_table "stream_parameters", :force => true do |t|
