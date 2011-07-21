@@ -5,13 +5,14 @@ require 'test_helper'
 class AcquisitionStreamSpecTest < ActiveSupport::TestCase
 def setup
 	define_model_of_test
+	assert_module_included(@model_class,Generic_Table)
 	explain_assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
 end #def
 def test_general_associations
 	assert_general_associations(@table_name)
-end
+end #test
 def test_id_equal
 	if @model_class.new.sequential_id? then
 	else
