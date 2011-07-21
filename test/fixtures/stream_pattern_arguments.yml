@@ -1,14 +1,14 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 URI:
- # stream_pattern: HTTP
+  stream_pattern: Acquisition
   name: URI
   ruby_type: String
   direction: Input
   parameter_type: Stream
 
-two:
-#  stream_pattern: HTTP
+Acquisition:
+  stream_pattern: Acquisition
   name: Acquisition
   ruby_type: Acquisition
   direction: Output
