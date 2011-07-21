@@ -1,12 +1,18 @@
 require 'test_helper'
-
+# executed in alphabetical orer? Longer names sort later.
+# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
+# move passing tests toward end
 class AccountTest < ActiveSupport::TestCase
 def setup
+	define_model_of_test # allow generic tests
+	assert_module_included(@model_class,Generic_Table)
+	explain_assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
-end
+end #def
 def test_general_associations
 	assert_general_associations(@table_name)
-end
+end #test
 def test_id_equal
 	if @model_class.new.sequential_id? then
 	else
@@ -17,4 +23,8 @@ def test_id_equal
 		end
 	end
 end #def
+test "specific, stable and working" do
+end #test
+test "aaa test new assertions" do  # aaa to output first
+end #test
 end #class

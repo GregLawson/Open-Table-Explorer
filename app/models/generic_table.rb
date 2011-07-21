@@ -1,3 +1,18 @@
+require 'global.rb'
+class Module
+def instance_methods_from_class
+	return self.instance_methods(false)
+end #def
+def instance_respond_to?(method_name)
+	return instance_methods_from_class.include?(method_name.to_s)
+end #def
+def similar_methods(symbol)
+	singular='^'+symbol.to_s.singularize
+	plural='^'+symbol.to_s.pluralize
+	table='^'+symbol.to_s.tableize
+	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
+end #def
+end #module
 module ActiveRecord
 class Base
 def Base.is_matching_association?(association_name)
@@ -144,7 +159,6 @@ end #class Base
 end #module ActiveRecord
 
 module Generic_Table
-require 'global.rb'
 require 'IncludeModuleClassMethods.rb'
  mixin_class_methods { |klass|
  puts "Module Acquisition has been included by #{klass}" if $VERBOSE
@@ -591,6 +605,31 @@ def Generic_Table.no_syntax_error?(code)
 	return true
 rescue  SyntaxError => exception_raised
 	return false
+end #def
+def associated_foreign_key_name(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
+	many_to_one_foreign_keys=obj.class.foreign_key_names
+#	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
+	matchingAssNames=many_to_one_foreign_keys.select do |fk|
+		assert_instance_of(String,fk)
+		ass=fk[0..-4].to_sym
+		assert_association_many_to_one(obj,ass)
+#not all		assert_equal(ass,assName,"associated_foreign_key_name ass,assName=#{ass},#{assName}")
+		ass==assName
+	end #end
+	assert_equal(matchingAssNames,[matchingAssNames.first].compact,"assName=#{assName.inspect},matchingAssNames=#{matchingAssNames.inspect},many_to_one_foreign_keys=#{many_to_one_foreign_keys.inspect}")
+	return matchingAssNames.first
+end #def
+# find 
+def associated_foreign_key(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
+	assert_association(obj,assName)
+	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
+	return obj.method(associated_foreign_key_name(obj,assName).to_sym)
+end #def
+def associated_foreign_key_id(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key_id assName=#{assName.inspect}")
+	return associated_foreign_key(obj,assName).call
 end #def
 
 end # module

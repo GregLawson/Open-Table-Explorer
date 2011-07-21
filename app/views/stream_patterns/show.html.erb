@@ -7,6 +7,7 @@
 </p>
 <%= render :partial =>'stream_patterns/show_partial', :locals => { :@stream_pattern => @stream_pattern } %>
 <% if Generic_Table.is_generic_table?(@stream_pattern.class.name) then %>
+<% require 'global.rb' %>
 <% if @stream_pattern.association_has_data(:stream_pattern_arguments) then %>
 <%= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => @stream_pattern.stream_pattern_arguments } %>
 <% else %>
