@@ -1,3 +1,18 @@
+require 'global.rb'
+class Module
+def instance_methods_from_class
+	return self.instance_methods(false)
+end #def
+def instance_respond_to?(method_name)
+	return instance_methods_from_class.include?(method_name.to_s)
+end #def
+def similar_methods(symbol)
+	singular='^'+symbol.to_s.singularize
+	plural='^'+symbol.to_s.pluralize
+	table='^'+symbol.to_s.tableize
+	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
+end #def
+end #module
 module ActiveRecord
 class Base
 def Base.is_matching_association?(association_name)
@@ -144,7 +159,6 @@ end #class Base
 end #module ActiveRecord
 
 module Generic_Table
-require 'global.rb'
 require 'IncludeModuleClassMethods.rb'
  mixin_class_methods { |klass|
  puts "Module Acquisition has been included by #{klass}" if $VERBOSE
