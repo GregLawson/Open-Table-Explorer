@@ -2,7 +2,6 @@
  <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @stream_pattern } %>
 <p>
   <b>Id:</b>
-  <%= @stream_pattern.id.class.name %>
   <%= @stream_pattern.id.inspect %>
 </p>
 <%= render :partial =>'stream_patterns/show_partial', :locals => { :@stream_pattern => @stream_pattern } %>
