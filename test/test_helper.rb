@@ -159,6 +159,9 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end
 	end
 end
+def assert_include(element,list)
+	assert(list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
+end #def
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
@@ -257,9 +260,6 @@ def assert_association_many_to_one(ar_from_fixture,assName)
 	assert_association_to_one(ar_from_fixture,assName)
 end #def
 
-def assert_include(element,list)
-	assert(list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
-end #def
 # does not require any fixtures
 def define_model_of_test 
 	@model_name=self.class.name.sub(/Test$/, '').sub(/Controller$/, '')
@@ -300,6 +300,29 @@ def define_association_names
 	@possible_foreign_keys=@model_class.foreign_key_names
 end
 
+def assert_associated_foreign_key_name(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
+	many_to_one_foreign_keys=obj.class.foreign_key_names
+#	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
+	matchingAssNames=many_to_one_foreign_keys.select do |fk|
+		assert_instance_of(String,fk)
+		ass=fk[0..-4].to_sym
+		assert_association_many_to_one(obj,ass)
+#not all		assert_equal(ass,assName,"associated_foreign_key_name ass,assName=#{ass},#{assName}")
+		ass==assName
+	end #end
+	assert_equal(matchingAssNames,[matchingAssNames.first].compact,"assName=#{assName.inspect},matchingAssNames=#{matchingAssNames.inspect},many_to_one_foreign_keys=#{many_to_one_foreign_keys.inspect}")
+	assert(obj.class.associated_foreign_key_name(assName))
+end #def
+# find 
+def assert_associated_foreign_key(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
+	assert_association(obj,assName)
+	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
+	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
+end #def
+
+
 def assert_foreign_key_points_to_me(ar_from_fixture,assName)
 	assert_association(ar_from_fixture,assName)
 	associated_records=testCallResult(ar_from_fixture,assName)
@@ -307,7 +330,7 @@ def assert_foreign_key_points_to_me(ar_from_fixture,assName)
 	if associated_records.instance_of?(Array) then
 		associated_records.each do |ar|
 			fkAssName=ar_from_fixture.class.name.tableize.singularize
-			fk=associated_foreign_key_name(ar,(fkAssName.to_s).to_sym)
+			fk=ar.associated_foreign_key_name(fkAssName.to_s).to_sym)
 			assert_not_nil(fk,"assert_foreign_key_points_to_me ar.inspect=#{ar.inspect},ar_from_fixture.class.name=#{ar_from_fixture.class.name} Check if id is specified in #{assName.to_sym}.yml file,ar_from_fixture.class.name.tableize.singularize.to_s+'_id'=#{ar_from_fixture.class.name.tableize.singularize.to_s+'_id'}.")
 			@associated_foreign_key_id=
 			assert_equal(ar_from_fixture.id,associated_foreign_key_id(ar,fkAssName.to_sym),"assert_foreign_key_points_to_me: associated_records=#{associated_records.inspect},ar_from_fixture=#{ar_from_fixture.inspect}")

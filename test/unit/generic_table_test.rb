@@ -12,6 +12,9 @@ belongs_to :fake_belongs_to
 has_many :fake_has_many
 has_and_belongs_to_many :fake_has_and_belongs_to_many
 has_one :fake_has_one
+def attribute_names
+	return ['foreign_key_id'] 
+end #def
 end #class
 class FullAssociatedModel < ActiveRecord::Base
 include Generic_Table
@@ -37,6 +40,15 @@ test "instance_respond_to" do
 	assert(TestTable.instance_respond_to?(:full_associated_models))
 	assert(TestTable.respond_to?(:instance_respond_to?))
 end #test
+test "associated_foreign_key_name" do
+	many_to_one_foreign_keys=StreamPatternArgument.foreign_key_names
+	assert_not_empty(many_to_one_foreign_keys)
+	matchingAssNames=many_to_one_foreign_keys.select do |fk|
+		ass=fk[0..-4].to_sym
+		ass==:stream_pattern
+	end #end
+	assert_equal(1, matchingAssNames.size)
+end #test
 def test_aaa
 	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
 
@@ -54,6 +66,21 @@ def test_aaa
 	assert_association(acquisition_stream_spec,:acquisition_interface)
 #	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
 end
+test "foreign_key_names" do
+	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
+	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
+	special_columns=StreamPatternArgument.column_names-content_column_names
+	assert_include('stream_pattern_id',special_columns)
+	assert_equal(['stream_pattern_id','parameter_id'],StreamPatternArgument.foreign_key_names)
+	assert_not_empty(StreamPatternArgument.foreign_key_names)
+	possible_foreign_keys=StreamPatternArgument.foreign_key_names
+	assert_not_empty(possible_foreign_keys)
+	assert_include('stream_pattern_id',possible_foreign_keys)
+end #test
+test "foreign_key_association_names" do
+	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
+	assert_include('stream_pattern',StreamPatternArgument.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
+end #test
 test "Generic Table" do
 	assert(GenericTableAssociatedModel.module_included?(Generic_Table))
 	assert_module_included(GenericTableAssociatedModel,Generic_Table)
