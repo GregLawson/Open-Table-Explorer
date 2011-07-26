@@ -26,18 +26,25 @@ end #def
 def Base.foreign_key_association_names
 	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
 end #def
-def Base.associated_foreign_key_name(assName)
+def Base.associated_foreign_key_name(association_referenced_by_foreign_key)
+	if !is_association?(association_referenced_by_foreign_key.to_s.singularize) then
+		raise "Association #{association_referenced_by_foreign_key.to_s.singularize} is not an association of #{self.name}."
+	end #if
 	many_to_one_foreign_keys=foreign_key_names
 	matchingAssNames=many_to_one_foreign_keys.select do |fk|
 		ass=fk[0..-4].to_sym
-		ass==assName
+		ass==association_referenced_by_foreign_key.to_s.singularize.to_sym
 	end #end
+	if matchingAssNames.size==0 then
+		raise "Association #{association_referenced_by_foreign_key} does not have a corresponding foreign key in association #{self.name}."
+	end #if
 	return matchingAssNames.first
 end #def
 # find 
-def associated_foreign_key_records(assName)
-	foreign_key_symbol=self.class.associated_foreign_key_name(assName)
-	associated_records=self.class.associated_class(assName).where(foreign_key_symbol => self[id])
+def associated_foreign_key_records(association_with_foreign_key)
+	class_with_foreign_key=self.class.association_class(association_with_foreign_key)
+	foreign_key_symbol=class_with_foreign_key.associated_foreign_key_name(self.class.name.tableize)
+	associated_records=class_with_foreign_key.where(foreign_key_symbol => self[:id])
 
 	return associated_records
 end #def

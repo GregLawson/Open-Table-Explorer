@@ -29,6 +29,6 @@ Transfer belongs_to account
 account does not has_many Transfer
 node is not an association of WiredLocation
 ................
-Finished in 17.0602 seconds.
+Finished in 23.475156 seconds.
 
-18 tests, 180 assertions, 0 failures, 0 errors
+18 tests, 189 assertions, 0 failures, 0 errors
