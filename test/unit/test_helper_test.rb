@@ -26,6 +26,19 @@ test "method call" do
 	#~ testAnswer(self,:testMethod,'nice result')
 	#~ assert_public_instance_method(table_specs(:ifconfig),:acquisition_stream_specs)
 end #test
+test "explain_assert_respond_to" do
+#	assert_raise(Test::Unit::AssertionFailedError,explain_assert_respond_to(TestClass,:sequential_id?))
+#	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
+
+	explain_assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+
+end #test
+test "assert_include" do
+	assert_include('table_specs',fixture_names)
+	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
+
+end #test
 test "various assertions" do
 	assert_not_empty([1])
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
@@ -40,6 +53,12 @@ test "fixtures" do
 	assert_not_nil fixture_labels(table_name)
 #	assert_not_nil model_class(table_specs(:ifconfig))
 	assert_include('table_specs',fixture_names)
+end #test
+test "assert_associations" do
+	assert(@@CLASS_WITH_FOREIGN_KEY.belongs_to_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL) ,"StreamPatternArgument belongs_to stream_pattern")
+	assert(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s.classify.constantize.has_many_association?(@@TABLE_NAME_WITH_FOREIGN_KEY),"#{@@FOREIGN_KEY_ASSOCIATION_SYMBOL} does not has_many #{@@TABLE_NAME_WITH_FOREIGN_KEY}")
+	assert_associations(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
+	assert_associations(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,@@CLASS_WITH_FOREIGN_KEY)
 end #test
 test "association to one" do
 	ar_from_fixture=table_specs(:ifconfig)
@@ -79,16 +98,8 @@ test "other association" do
 	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
 	
 	assert_association(ar_from_fixture,assName)
-	assert_not_nil(associated_foreign_key_name(ar_from_fixture,assName),"associated_foreign_key_name: ar_from_fixture=#{ar_from_fixture},assName=#{assName})")
-	assert_equal('frequency_id',associated_foreign_key_name(ar_from_fixture,assName))
-end #test
-test "explain_assert_respond_to" do
-#	assert_raise(Test::Unit::AssertionFailedError,explain_assert_respond_to(TestClass,:sequential_id?))
-#	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
-
-	explain_assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
-
+	assert_not_nil(ar_from_fixture.class.associated_foreign_key_name(assName),"associated_foreign_key_name: ar_from_fixture=#{ar_from_fixture},assName=#{assName})")
+	assert_equal('frequency_id',ar_from_fixture.class.associated_foreign_key_name(assName))
 end #test
 test "empty" do
 	assert_not_empty('a')
