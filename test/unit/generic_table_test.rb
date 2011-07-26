@@ -40,6 +40,22 @@ test "instance_respond_to" do
 	assert(TestTable.instance_respond_to?(:full_associated_models))
 	assert(TestTable.respond_to?(:instance_respond_to?))
 end #test
+test "foreign_key_names" do
+	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
+	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
+	special_columns=StreamPatternArgument.column_names-content_column_names
+	assert_include('stream_pattern_id',special_columns)
+	assert_equal(['stream_pattern_id','parameter_id'],StreamPatternArgument.foreign_key_names)
+	assert_not_empty(StreamPatternArgument.foreign_key_names)
+	possible_foreign_keys=StreamPatternArgument.foreign_key_names
+	assert_not_empty(possible_foreign_keys)
+	assert_include('stream_pattern_id',possible_foreign_keys)
+end #test
+test "foreign_key_association_names" do
+	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
+	assert_include('stream_pattern',StreamPatternArgument.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
+end #test
+
 test "associated_foreign_key_name" do
 	many_to_one_foreign_keys=StreamPatternArgument.foreign_key_names
 	assert_not_empty(many_to_one_foreign_keys)
@@ -48,6 +64,124 @@ test "associated_foreign_key_name" do
 		ass==:stream_pattern
 	end #end
 	assert_equal(1, matchingAssNames.size)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s+'_id',@@CLASS_WITH_FOREIGN_KEY.associated_foreign_key_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+end #test
+test "associated_foreign_key_records" do
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s+'_id',@@CLASS_WITH_FOREIGN_KEY.associated_foreign_key_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	assert_not_nil(@@INSTANCE_WITH_FOREIGN_KEY[:id])
+	assert_equal(2,@@CLASS_WITH_FOREIGN_KEY.where(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s+'_id' => @@INSTANCE_WITH_FOREIGN_KEY[:id]).count)
+end #test
+test "is_matching_association?" do
+	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
+#	 association_class=@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
+	 association_class=@@FOREIGN_KEY_ASSOCIATION_CLASS.association_class(@@TABLE_NAME_WITH_FOREIGN_KEY)
+	assert_equal(association_class,@@CLASS_WITH_FOREIGN_KEY)
+	assert_not_nil(association_class)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	assert(@@CLASS_WITH_FOREIGN_KEY.is_matching_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+end #test
+
+test "has_many_association" do
+	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
+	assert(StreamMethod.has_many_association?(:stream_method_arguments),StreamMethod.association_grep('has_many',:stream_method_arguments))
+	assert(StreamMethod.has_many_association?('stream_method_arguments'),StreamMethod.association_grep('has_many','stream_method_arguments'))
+	ar_from_fixture=table_specs(:ifconfig)
+	assName=:acquisition_stream_specs
+
+	if ar_from_fixture.respond_to?(assName) then
+		assert_public_instance_method(ar_from_fixture,assName)		
+	else
+		assert_public_instance_method(ar_from_fixture,assName.to_s.singularize.to_sym)
+	end #if
+
+	ASSNAME=ar_from_fixture.class.association_method_symbol(assName)
+
+	assert_public_instance_method(ar_from_fixture,ASSNAME)
+
+#	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_methods(/^has_/))
+end #test
+test "association_method_plurality" do
+	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
+	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
+	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_pattern))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
+end #test
+test "association_class" do
+	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.class_of_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+end #test
+test "association_method_symbol" do
+	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_models))
+	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_model))
+	
+	assert_public_instance_method(StreamPatternArgument.new,:stream_pattern)
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_pattern))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_patterns))
+	 association_class=@@FOREIGN_KEY_ASSOCIATION_CLASS.association_class(@@TABLE_NAME_WITH_FOREIGN_KEY)
+	assert_equal(association_class,@@CLASS_WITH_FOREIGN_KEY)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+end #test
+
+def foreign_key_points_to_me?(ar_from_fixture,assName)
+	associated_records=testCallResult(ar_from_fixture,assName)
+	if associated_records.instance_of?(Array) then
+		associated_records.each do |ar|
+			fkAssName=ar_from_fixture.class.name.tableize.singularize
+			fk=ar.class.associated_foreign_key_name(fkAssName.to_s.to_sym)
+			@associated_foreign_key_id=ar[fk]
+		end #each
+	else # single record
+			ar.class.associated_foreign_key_name(associated_records,assName).each do |fk|
+				assert_equal(ar_from_fixture.id,associated_foreign_key_id(associated_records,fk.to_sym),"assert_foreign_key_points_to_me: associated_records=#{associated_records.inspect},ar_from_fixture=#{ar_from_fixture.inspect},assName=#{assName}")
+			end #each
+	end #if
+end #def
+test "handle polymorphic" do
+	assert(StreamMethodArgument.belongs_to_association?(:parameter))
+	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
+	assert_equal(:to_one_belongs_to,StreamMethodArgument.association_type(:parameter))
+end #test
+test 'Inter-model associations' do
+#	puts "model_classes=#{model_classes.inspect}"
+	Generic_Table.rails_MVC_classes.each do |class_with_foreign_key|
+		if !class_with_foreign_key.module_included?(:Generic_Table) then
+			puts "#{class_with_foreign_key.name} does not include Generic_Table"
+		else
+			table_name_with_foreign_key=class_with_foreign_key.name
+			class_with_foreign_key.foreign_key_association_names.each do |foreign_key_association_name|
+				if !class_with_foreign_key.is_association?(foreign_key_association_name) then
+					puts "#{foreign_key_association_name} is not an association of #{class_with_foreign_key.name}"
+				elsif class_with_foreign_key.belongs_to_association?(foreign_key_association_name) then
+					puts "#{table_name_with_foreign_key} belongs_to #{foreign_key_association_name}"
+					if !Generic_Table.rails_MVC_class?(foreign_key_association_name) then
+						puts "#{foreign_key_association_name} is not a generic table in #{Generic_Table.rails_MVC_classes.map {|c| c.name}.inspect}."
+					elsif !class_with_foreign_key.module_included?(:Generic_Table) then
+						puts "#{class_with_foreign_key.name} does not include Generic_Table"
+					else
+						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
+							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
+						else
+							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
+						end #if
+					end #if
+				else
+					if !class_with_foreign_key.module_included?(:Generic_Table) then
+						puts "#{class_with_foreign_key.name} does not include Generic_Table"
+					else
+						puts "#{table_name_with_foreign_key} does not have a belongs_to #{foreign_key_association_name}"
+						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
+							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
+						else
+							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
+						end #if
+					end #if
+				end #if
+	#			fixtures(table_name)
+			end #each
+		end #if
+	end #each
 end #test
 def test_aaa
 	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
@@ -66,21 +200,6 @@ def test_aaa
 	assert_association(acquisition_stream_spec,:acquisition_interface)
 #	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
 end
-test "foreign_key_names" do
-	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
-	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
-	special_columns=StreamPatternArgument.column_names-content_column_names
-	assert_include('stream_pattern_id',special_columns)
-	assert_equal(['stream_pattern_id','parameter_id'],StreamPatternArgument.foreign_key_names)
-	assert_not_empty(StreamPatternArgument.foreign_key_names)
-	possible_foreign_keys=StreamPatternArgument.foreign_key_names
-	assert_not_empty(possible_foreign_keys)
-	assert_include('stream_pattern_id',possible_foreign_keys)
-end #test
-test "foreign_key_association_names" do
-	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
-	assert_include('stream_pattern',StreamPatternArgument.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
-end #test
 test "Generic Table" do
 	assert(GenericTableAssociatedModel.module_included?(Generic_Table))
 	assert_module_included(GenericTableAssociatedModel,Generic_Table)
@@ -121,20 +240,6 @@ test "Generic Table" do
 	assert_include('StreamMethod',Generic_Table.rails_MVC_classes.map {|c| c.name})
 	assert(Generic_Table.rails_MVC_classes.map {|c| c.name}.include?('StreamMethod'))
 	assert(Generic_Table.rails_MVC_class?('StreamMethod'))
-end #test
-test "regularize association symbols" do
-	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
-	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
-	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
-	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_models))
-	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_model))
-	
-	assert_public_instance_method(StreamPatternArgument.new,:stream_pattern)
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_pattern))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_pattern))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_patterns))
 end #test
 test "Association Progression" do
 	assert(FullAssociatedModel.instance_respond_to?(:test_table))
@@ -234,79 +339,5 @@ test "matching associations" do
 	assert_raise(Test::Unit::AssertionFailedError) do
 		assert_matching_association("acquisitions","frequency")
 	end #assert_raised
-end #test
-
-test "has macros" do
-	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
-	assert(StreamMethod.has_many_association?(:stream_method_arguments),StreamMethod.association_grep('has_many',:stream_method_arguments))
-	assert(StreamMethod.has_many_association?('stream_method_arguments'),StreamMethod.association_grep('has_many','stream_method_arguments'))
-	ar_from_fixture=table_specs(:ifconfig)
-	assName=:acquisition_stream_specs
-
-	if ar_from_fixture.respond_to?(assName) then
-		assert_public_instance_method(ar_from_fixture,assName)		
-	else
-		assert_public_instance_method(ar_from_fixture,assName.to_s.singularize.to_sym)
-	end #if
-
-	ASSNAME=ar_from_fixture.class.association_method_symbol(assName)
-
-	assert_public_instance_method(ar_from_fixture,ASSNAME)
-
-#	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_methods(/^has_/))
-end #test
-test "handle polymorphic" do
-	assert(StreamMethodArgument.belongs_to_association?(:parameter))
-	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
-	assert_equal(:to_one_belongs_to,StreamMethodArgument.association_type(:parameter))
-end #test
-test 'Inter-model associations' do
-#	puts "model_classes=#{model_classes.inspect}"
-	Generic_Table.rails_MVC_classes.each do |class_with_foreign_key|
-		if !class_with_foreign_key.module_included?(:Generic_Table) then
-			puts "#{class_with_foreign_key.name} does not include Generic_Table"
-		else
-			table_name_with_foreign_key=class_with_foreign_key.name
-			class_with_foreign_key.foreign_key_association_names.each do |foreign_key_association_name|
-				if !class_with_foreign_key.is_association?(foreign_key_association_name) then
-					puts "#{foreign_key_association_name} is not an association of #{class_with_foreign_key.name}"
-				elsif class_with_foreign_key.belongs_to_association?(foreign_key_association_name) then
-					puts "#{table_name_with_foreign_key} belongs_to #{foreign_key_association_name}"
-					if !Generic_Table.rails_MVC_class?(foreign_key_association_name) then
-						puts "#{foreign_key_association_name} is not a generic table in #{Generic_Table.rails_MVC_classes.map {|c| c.name}.inspect}."
-					elsif !class_with_foreign_key.module_included?(:Generic_Table) then
-						puts "#{class_with_foreign_key.name} does not include Generic_Table"
-					else
-						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
-							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
-						else
-							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
-						end #if
-					end #if
-				else
-					if !class_with_foreign_key.module_included?(:Generic_Table) then
-						puts "#{class_with_foreign_key.name} does not include Generic_Table"
-					else
-						puts "#{table_name_with_foreign_key} does not have a belongs_to #{foreign_key_association_name}"
-						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
-							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
-						else
-							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
-						end #if
-					end #if
-				end #if
-	#			fixtures(table_name)
-			end #each
-		end #if
-	end #each
-end #test
-test "failing association" do
-	class_with_foreign_key=StreamPatternArgument
-	foreign_key_association_name=:stream_pattern
-	table_name_with_foreign_key=StreamPatternArgument.name.tableize
-	assert(class_with_foreign_key.belongs_to_association?(foreign_key_association_name) ,"StreamPatternArgument belongs_to stream_pattern")
-	assert(foreign_key_association_name.to_s.classify.constantize.has_many_association?(table_name_with_foreign_key),"stream_pattern does not has_many StreamPatternArgument")
-
-	assert_associations(class_with_foreign_key,foreign_key_association_name)
 end #test
 end #test class

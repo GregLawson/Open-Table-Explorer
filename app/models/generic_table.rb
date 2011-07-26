@@ -15,9 +15,19 @@ end #def
 end #module
 module ActiveRecord
 class Base
+def Base.foreign_key_names
+	content_column_names=content_columns.collect {|m| m.name}
+#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
+	special_columns=column_names-content_column_names
+#	puts "@special_columns.inspect=#{@special_columns.inspect}"
+	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
+	return possible_foreign_keys
+end #def
+def Base.foreign_key_association_names
+	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
+end #def
 def Base.associated_foreign_key_name(assName)
 	many_to_one_foreign_keys=foreign_key_names
-#	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
 	matchingAssNames=many_to_one_foreign_keys.select do |fk|
 		ass=fk[0..-4].to_sym
 		ass==assName
@@ -25,9 +35,13 @@ def Base.associated_foreign_key_name(assName)
 	return matchingAssNames.first
 end #def
 # find 
-def Base.associated_foreign_key(assName)
-	return method(associated_foreign_key_name(assName).to_sym)
+def associated_foreign_key_records(assName)
+	foreign_key_symbol=self.class.associated_foreign_key_name(assName)
+	associated_records=self.class.associated_class(assName).where(foreign_key_symbol => self[id])
+
+	return associated_records
 end #def
+
 
 def Base.is_matching_association?(association_name)
 	 if is_association?(association_name) then
@@ -59,17 +73,6 @@ def Base.is_association?(association_name)
 	else
 		return false
 	end
-end #def
-def Base.foreign_key_names
-	content_column_names=content_columns.collect {|m| m.name}
-#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
-	special_columns=column_names-content_column_names
-#	puts "@special_columns.inspect=#{@special_columns.inspect}"
-	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
-	return possible_foreign_keys
-end #def
-def Base.foreign_key_association_names
-	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
 end #def
 def Base.is_association_to_one?(assName)
 	if is_association?(assName)  and !self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and !self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
@@ -141,8 +144,8 @@ def Base.class_of_name(name)
 	 return name.to_s.classify.constantize
 end #def
 def Base.association_class(assName)
-	 if !is_association?(assName) then
-		raise "#{assName} is not an association of #{self.name}."
+	 if !is_association?(association_method_symbol(assName)) then
+		raise "#{association_method_symbol(assName)} is not an association of #{self.name}."
 	else
 		 return class_of_name(assName)
 	end #if
@@ -619,10 +622,6 @@ def Generic_Table.no_syntax_error?(code)
 	return true
 rescue  SyntaxError => exception_raised
 	return false
-end #def
-def associated_foreign_key_id_value(assName)
-	assert_instance_of(Symbol,assName,"associated_foreign_key_id assName=#{assName.inspect}")
-	return self.class.associated_foreign_key(assName).call
 end #def
 
 end # module
