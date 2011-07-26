@@ -12,7 +12,7 @@
 <% else %>
 <p>
   <b>@stream_pattern.class.is_matching_association?(:stream_pattern_arguments):</b>
-  < %= @stream_pattern.class.is_matching_association?(:stream_pattern_arguments) %>
+  <%= @stream_pattern.class.is_matching_association?(:stream_pattern_arguments) %>
 </p>
 <p>
   <b>@stream_pattern.class.association_to_type(:stream_pattern_arguments):</b>
@@ -30,14 +30,14 @@
   <b>@stream_pattern.association_state(:stream_pattern_arguments):</b>
   <%= @stream_pattern.association_state(:stream_pattern_arguments) %>
 </p>
-
-< % if StreamMethodArgument.find_all_by_stream_pattern_id(@stream_pattern.id ) then %>
+<% @matching_records=StreamPatternArgument.where(:stream_pattern_id => @stream_pattern.id ) %>
+<% if @matching_records.size>0 then %>
 <H1><B>No data in associaton. Listing all data of model with matching Id.</B></H1>
-< %= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => StreamPatternArgument.find_all_by_stream_pattern_id(@stream_pattern.id ) } %>
-< % else %>
+<%= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => @matching_records } %>
+<% else %>
 <H1><B>No data in associaton. Listing all data of model.</B></H1>
 <%= render :partial =>'stream_pattern_arguments/index_partial', :locals => { :@stream_pattern_arguments => StreamPatternArgument.all } %>
-< % end #if %>
+<% end #if %>
 <%= @stream_pattern.stream_pattern_arguments.inspect  %>
 <P>@stream_pattern.class.association_names=
 <%= @stream_pattern.class.association_names.inspect %>
