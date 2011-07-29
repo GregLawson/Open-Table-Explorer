@@ -1,6 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-1URL:
+URL:
   stream_method_id: 1
   name: URL
   ruby_type: URI
