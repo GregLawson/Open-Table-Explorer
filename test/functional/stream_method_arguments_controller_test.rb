@@ -2,7 +2,7 @@ require 'test_helper'
 
 class StreamMethodArgumentsControllerTest < ActionController::TestCase
   setup do
-    @stream_method_argument = stream_method_arguments(:one)
+    @stream_method_argument = stream_method_arguments(:URL)
   end
 
   test "should get index" do

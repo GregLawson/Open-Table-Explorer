@@ -2,35 +2,7 @@ require 'test_helper'
 # executed in alphabetical orer? Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class TestTable < ActiveRecord::Base
-include Generic_Table
-has_many :full_associated_models
-has_many :acquisition_stream_specs
-belongs_to :frequency
-has_many :acquisitions
-belongs_to :fake_belongs_to
-has_many :fake_has_many
-has_and_belongs_to_many :fake_has_and_belongs_to_many
-has_one :fake_has_one
-def attribute_names
-	return ['foreign_key_id'] 
-end #def
-end #class
-class FullAssociatedModel < ActiveRecord::Base
-include Generic_Table
-belongs_to :test_table
-end #class
-class HalfAssociatedModel < ActiveRecord::Base
-include Generic_Table
-belongs_to :test_table
-end #class
-class GenericTableAssociatedModel < ActiveRecord::Base
-include Generic_Table
-end #class
-class EmptyAssociatedModel < ActiveRecord::Base
-end #class
-class EmptyClass
-end #class
+require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
 test "instance_methods_from_class" do
 	assert_include('full_associated_models',['full_associated_models'])
@@ -91,6 +63,54 @@ test "is_matching_association?" do
 	assert(@@CLASS_WITH_FOREIGN_KEY.is_matching_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #test
 
+test "is_association" do
+	class_reference=StreamMethodArgument
+	association_reference=:parameter
+	if class_reference.kind_of?(Class) then
+		klass=class_reference
+	else
+		klass=class_reference.class
+	end #if
+	association_reference=association_reference.to_sym
+	assert_instance_of(Symbol,association_reference,"In assert_association, association_reference=#{association_reference} must be a Symbol.")
+#  For instance, attributes and connection would be bad choices for association names.
+	assert_include('attributes',ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
+	assert_include('connection',ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
+	assert_instance_of(Symbol,association_reference,"assert_association")
+	assert_not_include(association_reference.to_s,ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
+	if klass.module_included?(Generic_Table) then
+		association_type=klass.association_to_type(association_reference)
+		assert_not_nil(association_type)
+		assert_include(association_type,[:to_one,:to_many])
+	end #if
+	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
+	#~ assert_public_instance_method(klass.new,association_reference.to_s,"association_type=#{association_type.to_s}, ")
+	assert(klass.is_association?(association_reference),"fail is_association?, klass.inspect=#{klass.inspect},association_reference=#{association_reference}")
+end #test
+test 'is_association_to_one' do
+	class_reference=StreamMethodArgument
+	association_reference=:parameter
+	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_id').to_sym)
+	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_id=').to_sym)
+	assert(class_reference.is_association?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
+	assert(class_reference.is_association_to_one?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
+end #test
+test 'is_association_to_many' do
+	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
+	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY
+	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_ids').to_sym)
+	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_ids=').to_sym)
+	assert(class_reference.is_association?(association_reference),"fail in is_association_to_many?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
+	assert(class_reference.is_association_to_many?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
+end #test
+test 'association_names_to_many' do
+	class_reference=StreamMethodArgument
+	assert(class_reference.instance_methods(false).select {|m| class_reference.is_association_to_many?(m)})
+end #test
+test 'association_names' do
+	class_reference=StreamMethodArgument
+	assert_not_empty(class_reference.instance_methods(false).select {|m| class_reference.is_association?(m)})
+end #test
 test "has_many_association" do
 	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
 	assert(StreamMethod.has_many_association?(:stream_method_arguments),StreamMethod.association_grep('has_many',:stream_method_arguments))
@@ -148,10 +168,17 @@ def foreign_key_points_to_me?(ar_from_fixture,assName)
 			end #each
 	end #if
 end #def
-test "handle polymorphic" do
-	assert(StreamMethodArgument.belongs_to_association?(:parameter))
-	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
-	assert_equal(:to_one_belongs_to,StreamMethodArgument.association_type(:parameter))
+test 'association_to_type' do
+	class_reference=StreamMethodArgument
+	association_reference=:parameter
+	assert_association_to_one(class_reference,association_reference)
+end #test
+test 'is_active_record_method' do
+	association_reference=:parameter
+	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
+	assert(!ActiveRecord::Base.instance_methods_from_class.include?(:parameter.to_s))
+	assert(!TestTable.is_active_record_method?(:parameter))
+	assert(TestTable.is_active_record_method?(:connection))
 end #test
 test 'Inter-model associations' do
 #	puts "model_classes=#{model_classes.inspect}"
@@ -279,7 +306,6 @@ test "Association Progression" do
 	assert(FullAssociatedModel.is_association?(:test_table))
 	association_class=TestTable.association_class(:full_associated_models)
 	assert(association_class.is_association?(association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)) ,"#{association_class.inspect}.is_association?(#{association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)})")
-	assert_matching_association(TestTable,:full_associated_models)	
 	assert(TestTable.is_matching_association?(:full_associated_models))
 end #test
 test "associated_to_s" do
@@ -345,9 +371,5 @@ test "matching associations" do
 	assert_association(Frequency.new,"table_specs")
 	assert_equal('frequencies',Frequency.table_name)
 	assert(TableSpec.is_association?(Frequency.table_name.singularize))
-	assert_matching_association("table_specs","frequency")
-	assert_raise(Test::Unit::AssertionFailedError) do
-		assert_matching_association("acquisitions","frequency")
-	end #assert_raised
 end #test
 end #test class

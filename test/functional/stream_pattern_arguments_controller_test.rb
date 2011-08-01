@@ -2,7 +2,7 @@ require 'test_helper'
 
 class StreamPatternArgumentsControllerTest < ActionController::TestCase
   setup do
-    @stream_pattern_argument = stream_pattern_arguments(:one)
+    @stream_pattern_argument = stream_pattern_arguments(:URI)
   end
 
   test "should get index" do

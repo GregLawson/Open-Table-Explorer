@@ -28,7 +28,7 @@ Transaction does not include Generic_Table
 Transfer belongs_to account
 account does not has_many Transfer
 node is not an association of WiredLocation
-................
-Finished in 18.662956 seconds.
+......................
+Finished in 16.811379 seconds.
 
-18 tests, 189 assertions, 0 failures, 0 errors
+24 tests, 212 assertions, 0 failures, 0 errors

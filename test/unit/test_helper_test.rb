@@ -1,18 +1,6 @@
 require 'test_helper'
 class TestHelperTest < ActiveSupport::TestCase
-class TestClass
-def self.classMethod
-end #def
-public
-def publicInstanceMethod
-end #def
-protected
-def protectedInstanceMethod
-end #def
-private
-def privateInstanceMethod
-end #def
-end #class
+require 'test/test_helper_test_tables.rb'
 def setup
 #	define_association_names
 end
@@ -54,39 +42,72 @@ test "fixtures" do
 #	assert_not_nil model_class(table_specs(:ifconfig))
 	assert_include('table_specs',fixture_names)
 end #test
+test "assert_association" do
+	class_reference=StreamMethodArgument
+	association_reference=:parameter
+	if class_reference.kind_of?(Class) then
+		klass=class_reference
+	else
+		klass=class_reference.class
+	end #if
+	association_reference=association_reference.to_sym
+	assert_not_empty(ActiveRecord::Base.instance_methods_from_class)
+	assert_not_include(association_reference.to_s,ActiveRecord::Base.instance_methods_from_class)
+	if (ActiveRecord::Base.instance_methods_from_class(true).include?(association_reference.to_s)) then
+		raise "# Don’t create associations that have the same name (#{association_reference.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord::Base.instance_methods_from_class.inspect})."
+	end #if
+	assert_instance_of(Symbol,association_reference,"assert_association")
+	if klass.module_included?(Generic_Table) then
+		association_type=klass.association_to_type(association_reference)
+		assert_not_nil(association_type)
+		assert_include(association_type,[:to_one,:to_many])
+	end #if
+	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
+	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")
+	assert(klass.is_association?(association_reference),"fail is_association?, klass.inspect=#{klass.inspect},association_reference=#{association_reference}")
+	assert_association(class_reference,association_reference)
+end #test
+test "assert_association to one" do
+	class_reference=StreamMethodArgument
+	association_reference=:parameter
+	assert_association(class_reference,association_reference)
+	assert_association_to_one(class_reference,association_reference)
+	
+	assert_has_associations(TableSpec)
+	assert_has_instance_methods(TableSpec)
+
+end #test
+test "assert_association to many" do
+	assert_not_nil(table_specs(:ifconfig).class.is_association_to_many?(:acquisition_stream_specs))
+	assert_association_to_many(fixtures(:table_specs).values.first,:acquisition_stream_specs)
+	assert_association_one_to_many(table_specs(:ifconfig),:acquisition_stream_specs)
+end #test
+test 'assert_active_record_method' do
+	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
+	method_name=:connection
+	assert(ActiveRecord::Base.is_active_record_method?(method_name))
+	assert_active_record_method(method_name)
+
+	assert(ActiveRecord::Base.is_active_record_method?(:connection))
+	assert(TestTable.is_active_record_method?(:connection))
+	assert(TestTable.is_active_record_method?(method_name))
+end #test
+test 'assert_not_active_record_method' do
+	association_reference=:parameter
+	assert(!ActiveRecord::Base.instance_methods_from_class.include?(:parameter.to_s))
+	assert(!TestTable.is_active_record_method?(:parameter))
+	method_name=:parameter
+	assert(!ActiveRecord::Base.is_active_record_method?(method_name))
+	assert_not_active_record_method(method_name)
+end #test
+#
+# not single generic_table method
+#
 test "assert_associations" do
 	assert(@@CLASS_WITH_FOREIGN_KEY.belongs_to_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL) ,"StreamPatternArgument belongs_to stream_pattern")
 	assert(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s.classify.constantize.has_many_association?(@@TABLE_NAME_WITH_FOREIGN_KEY),"#{@@FOREIGN_KEY_ASSOCIATION_SYMBOL} does not has_many #{@@TABLE_NAME_WITH_FOREIGN_KEY}")
 	assert_associations(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_associations(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,@@CLASS_WITH_FOREIGN_KEY)
-end #test
-test "association to one" do
-	ar_from_fixture=table_specs(:ifconfig)
-	assName=:acquisition_stream_specs
-	ASSNAME=ar_from_fixture.class.association_method_symbol(assName)
-	assert_not_nil(ar_from_fixture.class.is_association?(ASSNAME))
-	assName=ASSNAME.to_sym
-	assert_instance_of(Symbol,ASSNAME,"assert_association")
-	assert_public_instance_method(ar_from_fixture,ASSNAME)
-	explain_assert_respond_to(ar_from_fixture,(ASSNAME.to_s+'=').to_sym)
-
-	assName=:acquisition_stream_specs
-
-	assert_association(ar_from_fixture,ASSNAME)
-	assert_association(ar_from_fixture,:acquisition_stream_specs)
-	assert_not_nil(ar_from_fixture.class.is_association_to_one?(ASSNAME))
-	assert_association_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
-	assert_association_many_to_one(fixtures(:acquisition_stream_specs).values.first,:table_spec)
-	assert_association_one_to_one(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
-	assert_foreign_key_points_to_me(ar_from_fixture,ASSNAME)
-	assert_has_associations(TableSpec)
-	assert_has_instance_methods(TableSpec)
-
-end #test
-test "association to many" do
-	assert_not_nil(table_specs(:ifconfig).class.is_association_to_many?(:acquisition_stream_specs))
-	assert_association_to_many(fixtures(:table_specs).values.first,:acquisition_stream_specs)
-	assert_association_one_to_many(table_specs(:ifconfig),:acquisition_stream_specs)
 end #test
 test "other association" do
 	model_class=TableSpec
@@ -109,6 +130,17 @@ test 'assert_matching_association' do
 		assert_matching_association("acquisitions","frequency")
 	end #assert_raised
 end  #test
+test "handle polymorphic" do
+	association_type=StreamMethodArgument.association_to_type(:parameter)
+	assert_not_nil(association_type)
+	assert_include(association_type,[:to_one,:to_many])
+	assert_association(StreamMethodArgument,:parameter)
+	assert_belongs_to_association(StreamMethodArgument,:parameter)
+	assert(StreamMethodArgument.belongs_to_association?(:parameter))
+	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
+	assert_equal(:to_one_belongs_to,StreamMethodArgument.association_type(:parameter))
+end #test
+
 test "empty" do
 	assert_not_empty('a')
 	assert_not_empty(['a'])
