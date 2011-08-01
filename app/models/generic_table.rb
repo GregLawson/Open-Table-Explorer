@@ -1,7 +1,7 @@
 require 'global.rb'
 class Module
-def instance_methods_from_class
-	return self.instance_methods(false)
+def instance_methods_from_class(all=false)
+	return self.instance_methods(all)
 end #def
 def instance_respond_to?(method_name)
 	return instance_methods_from_class.include?(method_name.to_s)
@@ -69,11 +69,9 @@ def Base.is_matching_association?(association_name)
 	end #if
 end #def
 def Base.is_association?(association_name)
-	if association_name.to_s[-3..-1]=='_id' then 
-		raise "association_name=#{association_name} should not end in '_id' as it will be confused wth a foreign key."
-	end # if
-	if association_name.to_s[-4..-1]=='_ids' then
-		return false # causes confusion with automatic _ids and _ids= generated for to_many assoiations
+	# Don’t create associations that have the same name as instance methods of ActiveRecord::Base.
+	if ActiveRecord::Base.instance_methods_from_class.include?(association_name.to_s) then
+		raise "# Don’t create associations that have the same name (#{association_name.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class})."
 	end #if
 	if self.instance_respond_to?(association_name) and self.instance_respond_to?((association_name.to_s+'=').to_sym)  then
 		return true
@@ -179,6 +177,15 @@ end #def
 def Base.association_type(association_name)
 	return (association_to_type(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym
 end #def
+def Base.is_active_record_method?(method_name)
+	if ActiveRecord::Base.instance_methods_from_class(true).include?(method_name.to_s) then
+		return true
+	else
+		return false
+	end #if
+end #def
+
+
 end #class Base
 end #module ActiveRecord
 

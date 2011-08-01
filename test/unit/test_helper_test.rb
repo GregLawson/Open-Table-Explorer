@@ -101,6 +101,14 @@ test "other association" do
 	assert_not_nil(ar_from_fixture.class.associated_foreign_key_name(assName),"associated_foreign_key_name: ar_from_fixture=#{ar_from_fixture},assName=#{assName})")
 	assert_equal('frequency_id',ar_from_fixture.class.associated_foreign_key_name(assName))
 end #test
+test 'assert_matching_association' do
+#	assert_matching_association(TestTable,:full_associated_models)	
+#	assert(TestTable.is_matching_association?(:full_associated_models))
+	assert_matching_association("table_specs","frequency")
+	assert_raise(Test::Unit::AssertionFailedError) do
+		assert_matching_association("acquisitions","frequency")
+	end #assert_raised
+end  #test
 test "empty" do
 	assert_not_empty('a')
 	assert_not_empty(['a'])
