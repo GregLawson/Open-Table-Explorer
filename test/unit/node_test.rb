@@ -28,5 +28,7 @@ test "specific, stable and working" do
 end #test
 test "aaa test new assertions" do  # aaa to output first
 	assert_equal(@my_fixtures,fixtures(@table_name))
+	assert_association(Node,:branch)
+	assert_association(Node,:parent)
 end #test
 end #class

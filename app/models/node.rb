@@ -1,3 +1,5 @@
 class Node < ActiveRecord::Base
 include Generic_Table
-end
+belongs_to :branch , :polymorphic => true
+belongs_to :parent , :polymorphic => true
+end #class
