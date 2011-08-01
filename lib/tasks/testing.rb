@@ -71,7 +71,7 @@ end #def
 def conditional_build(target, sources)
 	sources.each do |s|
 		if !File.exist?(target) then
-			puts "#{target} does not exist."
+			puts "#{target} does not exist but uptodate?(target, sources)=#{uptodate?(target, sources)}."
 		elsif !File.exist?(s) then
 			puts "#{s} does not exist."
 		elsif !uptodate?(target, s)  then
@@ -80,14 +80,14 @@ def conditional_build(target, sources)
 			sh "ls -l #{s}"
 		end
 	end #each
-	not_uptodate_sources=sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, s)}
 	if uptodate?(target, sources) then
 		stop=false
 	else
-		if !File.exist?(target) then
-			return false
-		end #if
+#		if !File.exist?(target) then
+#			return false
+#		end #if
 		stop=ruby_run_and_log(sources[0], target)
+		not_uptodate_sources=sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, s)}
 		if !stop then
 			not_uptodate_sources.each do |s|
 				sh "git add #{s}"
