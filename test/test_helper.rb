@@ -143,8 +143,13 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end
 	end
 end
-def assert_include(element,list)
+def assert_include(element,list,message=nil)
+	message=build_message(message, "? is not in list ?", element,list)   
 	assert(list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
+end #def
+def assert_not_include(element,list,message=nil)
+	message=build_message(message, "? is in list ?", element,list)   
+	assert(!list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
 end #def
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods

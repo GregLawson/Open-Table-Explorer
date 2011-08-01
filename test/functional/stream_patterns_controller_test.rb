@@ -2,7 +2,7 @@ require 'test_helper'
 
 class StreamPatternsControllerTest < ActionController::TestCase
   setup do
-    @stream_pattern = stream_patterns(:one)
+    @stream_pattern = stream_patterns(:Acquisition)
   end
 
   test "should get index" do
