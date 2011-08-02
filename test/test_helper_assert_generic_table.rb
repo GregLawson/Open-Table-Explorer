@@ -130,10 +130,10 @@ def assert_general_associations(table_name)
 	@possible_associations.each do |association_name|
 		assName=association_name.to_sym
 		if my_fixture.class.is_association_to_many?(assName) then
-			 assert_association_to_many(my_fixture,assName)
-			assert_foreign_key_points_to_me(my_fixture,assName)
+			 assert_association_to_many(my_fixture.class,assName)
+			assert_foreign_key_points_to_me(my_fixture.class,assName)
 		else
-			assert_association_to_one(my_fixture,assName)
+			assert_association_to_one(my_fixture.class,assName)
 		end #if
 	end #each
 #	assert_equal(Fixtures::identify(my_fixture.logical_prmary_key),my_fixture.id,"identify != id")
