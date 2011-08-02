@@ -1,3 +1,4 @@
 class Huelshow < ActiveRecord::Base
 include Generic_Table
-end
+belongs_to :huelserie
+end #class
