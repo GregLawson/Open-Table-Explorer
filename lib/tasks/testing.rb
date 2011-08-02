@@ -70,9 +70,7 @@ def uptodate?(target,sources)
 end #def
 def conditional_build(target, sources)
 	sources.each do |s|
-		if !File.exist?(target) then
-			puts "#{target} does not exist but uptodate?(target, sources)=#{uptodate?(target, sources)}."
-		elsif !File.exist?(s) then
+		if !File.exist?(s) then
 			puts "#{s} does not exist."
 		elsif !uptodate?(target, s)  then
 			puts "not up to date."
@@ -141,7 +139,7 @@ def workFlow(test=nil)
 		 singular_table=model_file.sub(/^app\/models\//,'').sub(/[.]rb$/,'')
 		stop=conditional_build(unit_target(singular_table), unit_sources(singular_table))
 		return stop if stop
-		puts "controller has a chance to run"
+#		puts "controller has a chance to run"
 		stop=conditional_build(controller_target(singular_table), controller_sources(singular_table))
 		return stop if stop
 	end #each
