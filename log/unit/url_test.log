@@ -1,0 +1,15 @@
+Loaded suite test/unit/url_test
+Started
+..F.
+Finished in 18.818905 seconds.
+
+  1) Failure:
+test_id_equal(UrlTest)
+    [test/unit/url_test.rb:23:in `test_id_equal'
+     test/unit/url_test.rb:20:in `each_value'
+     test/unit/url_test.rb:20:in `test_id_equal']:
+Check that logical key (url) value (MyString) exactly matches yaml label for record. identify != id. ar_from_fixture.inspect=#<Url id: 980190962, href: "MyString", url: "MyString", cache_path: "MyString", last_cache: "2000-01-01 14:14:44", error: "MyString", context: "MyString", created_at: "2011-08-02 00:30:58", updated_at: "2011-08-02 00:30:58"> ar_from_fixture.logical_primary_key_value=MyString.
+<110791571> expected but was
+<980190962>.
+
+4 tests, 586 assertions, 1 failures, 0 errors

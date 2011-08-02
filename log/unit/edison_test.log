@@ -1,0 +1,17 @@
+Loaded suite test/unit/edison_test
+Started
+.E..
+Finished in 16.151234 seconds.
+
+  1) Error:
+test_general_associations(EdisonTest):
+NoMethodError: undefined method `is_association_to_many?' for Class:Class
+    /test/test_helper_assert_generic_table.rb:77:in `assert_association_to_many'
+    /test/test_helper_assert_generic_table.rb:133:in `assert_general_associations'
+    /test/test_helper_assert_generic_table.rb:130:in `each'
+    /test/test_helper_assert_generic_table.rb:130:in `assert_general_associations'
+    /test/test_helper_assert_generic_table.rb:129:in `each_value'
+    /test/test_helper_assert_generic_table.rb:129:in `assert_general_associations'
+    test/unit/edison_test.rb:15:in `test_general_associations'
+
+4 tests, 12104 assertions, 0 failures, 1 errors

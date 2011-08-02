@@ -1,0 +1,13 @@
+Loaded suite test/functional/measurements_controller_test
+Started
+..E....
+Finished in 14.395352 seconds.
+
+  1) Error:
+test_should_get_edit(MeasurementsControllerTest):
+ActionView::Template::Error: uninitialized constant Measurement::Nodes
+    app/views/measurements/edit.html.erb:3:in `_app_views_measurements_edit_html_erb___339055399__622662698_0'
+    app/views/measurements/edit.html.erb:2:in `_app_views_measurements_edit_html_erb___339055399__622662698_0'
+    test/functional/measurements_controller_test.rb:29:in `test_should_get_edit'
+
+7 tests, 9 assertions, 0 failures, 1 errors

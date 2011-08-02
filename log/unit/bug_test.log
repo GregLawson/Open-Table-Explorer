@@ -1,0 +1,46 @@
+Loaded suite test/unit/bug_test
+Started
+FFFF
+Finished in 13.701847 seconds.
+
+  1) Failure:
+test_aaa_test_new_assertions(BugTest)
+    [/test/test_helper.rb:24:in `fixtures'
+     /test/test_helper.rb:22:in `each'
+     /test/test_helper.rb:22:in `fixtures'
+     /test/test_helper.rb:188:in `assert_model_class'
+     /test/test_helper.rb:205:in `define_association_names'
+     test/unit/bug_test.rb:12:in `setup']:
+<nil> expected to not be nil.
+
+  2) Failure:
+test_general_associations(BugTest)
+    [/test/test_helper.rb:24:in `fixtures'
+     /test/test_helper.rb:22:in `each'
+     /test/test_helper.rb:22:in `fixtures'
+     /test/test_helper.rb:188:in `assert_model_class'
+     /test/test_helper.rb:205:in `define_association_names'
+     test/unit/bug_test.rb:12:in `setup']:
+<nil> expected to not be nil.
+
+  3) Failure:
+test_id_equal(BugTest)
+    [/test/test_helper.rb:24:in `fixtures'
+     /test/test_helper.rb:22:in `each'
+     /test/test_helper.rb:22:in `fixtures'
+     /test/test_helper.rb:188:in `assert_model_class'
+     /test/test_helper.rb:205:in `define_association_names'
+     test/unit/bug_test.rb:12:in `setup']:
+<nil> expected to not be nil.
+
+  4) Failure:
+test_specific,_stable_and_working(BugTest)
+    [/test/test_helper.rb:24:in `fixtures'
+     /test/test_helper.rb:22:in `each'
+     /test/test_helper.rb:22:in `fixtures'
+     /test/test_helper.rb:188:in `assert_model_class'
+     /test/test_helper.rb:205:in `define_association_names'
+     test/unit/bug_test.rb:12:in `setup']:
+<nil> expected to not be nil.
+
+4 tests, 500 assertions, 4 failures, 0 errors

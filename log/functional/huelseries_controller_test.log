@@ -1,0 +1,48 @@
+Loaded suite test/functional/huelseries_controller_test
+Started
+EEEEEEE
+Finished in 13.731086 seconds.
+
+  1) Error:
+test_should_create_huelseries(HuelseriesControllerTest):
+LoadError: Expected /home/greg/Desktop/Database/development/app/models/huelserie.rb to define Huelserie
+    test/functional/huelseries_controller_test.rb:20:in `test_should_create_huelseries'
+    test/functional/huelseries_controller_test.rb:20:in `test_should_create_huelseries'
+
+  2) Error:
+test_should_destroy_huelseries(HuelseriesControllerTest):
+LoadError: Expected /home/greg/Desktop/Database/development/app/models/huelserie.rb to define Huelserie
+    test/functional/huelseries_controller_test.rb:45:in `test_should_destroy_huelseries'
+    test/functional/huelseries_controller_test.rb:45:in `test_should_destroy_huelseries'
+
+  3) Error:
+test_should_get_edit(HuelseriesControllerTest):
+LoadError: Expected /home/greg/Desktop/Database/development/app/models/huelserie.rb to define Huelserie
+    app/controllers/huelseries_controller.rb:37:in `edit'
+    test/functional/huelseries_controller_test.rb:35:in `test_should_get_edit'
+
+  4) Error:
+test_should_get_index(HuelseriesControllerTest):
+LoadError: Expected /home/greg/Desktop/Database/development/app/models/huelserie.rb to define Huelserie
+    app/controllers/huelseries_controller.rb:5:in `index'
+    test/functional/huelseries_controller_test.rb:9:in `test_should_get_index'
+
+  5) Error:
+test_should_get_new(HuelseriesControllerTest):
+LoadError: Expected /home/greg/Desktop/Database/development/app/models/huelserie.rb to define Huelserie
+    app/controllers/huelseries_controller.rb:27:in `new'
+    test/functional/huelseries_controller_test.rb:15:in `test_should_get_new'
+
+  6) Error:
+test_should_show_huelseries(HuelseriesControllerTest):
+LoadError: Expected /home/greg/Desktop/Database/development/app/models/huelserie.rb to define Huelserie
+    app/controllers/huelseries_controller.rb:16:in `show'
+    test/functional/huelseries_controller_test.rb:30:in `test_should_show_huelseries'
+
+  7) Error:
+test_should_update_huelseries(HuelseriesControllerTest):
+LoadError: Expected /home/greg/Desktop/Database/development/app/models/huelserie.rb to define Huelserie
+    app/controllers/huelseries_controller.rb:59:in `update'
+    test/functional/huelseries_controller_test.rb:40:in `test_should_update_huelseries'
+
+7 tests, 0 assertions, 0 failures, 7 errors

@@ -1,0 +1,13 @@
+Loaded suite test/functional/routers_controller_test
+Started
+..E....
+Finished in 14.719059 seconds.
+
+  1) Error:
+test_should_get_edit(RoutersControllerTest):
+ActionView::Template::Error: uninitialized constant Router::Hosts
+    app/views/routers/edit.html.erb:3:in `_app_views_routers_edit_html_erb__775529122__622255718_0'
+    app/views/routers/edit.html.erb:2:in `_app_views_routers_edit_html_erb__775529122__622255718_0'
+    test/functional/routers_controller_test.rb:29:in `test_should_get_edit'
+
+7 tests, 9 assertions, 0 failures, 1 errors
