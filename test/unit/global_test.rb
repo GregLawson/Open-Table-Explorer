@@ -18,6 +18,23 @@ private
 def privateInstanceMethod
 end #def
 end #class
+test 'matching_instance_methods' do
+	testClass=TestClass
+	assert_instance_of(Array,testClass.matching_instance_methods(//))
+	assert_equal(['classMethod'],testClass.public_methods(false).select {|m| m[Regexp.new('M'),0] })
+	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/),false)
+	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/),true)
+	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/))
+end #test
+test 'matching_class_methods' do
+	testClass=TestClass
+	assert_instance_of(Array,testClass.matching_class_methods(//))
+	assert_equal(['classMethod'],testClass.public_methods(false).select {|m| m[Regexp.new('M'),0] })
+	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),false)
+	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),false)
+	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),true)
+	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/))
+end #test
 
 def test_aaa
 	assert_equal('Symbol',:cat.objectClass)
@@ -41,29 +58,6 @@ test 'class methods' do
 	assert_equal(['classMethod'],TestClass.methods-TestClass.superclass.methods)
 #	assert_equal(['classMethod'],TestClass.class.public_instance_methods)
 	assert_equal(['classMethod'],TestClass.new.noninherited_public_class_methods)
-end #test
-test 'matching methods' do
-	testClass=Acquisition
-#	puts "testClass.canonicalName=#{testClass.canonicalName}"
-#	puts "testClass.superclass.canonicalName=#{testClass.superclass.canonicalName}"
-#	puts "testClass.matching_methods(//).inspect=#{testClass.matching_methods(//).inspect}"
-	assert_instance_of(Array,testClass.matching_methods(//))
-	
-	acquisition_stream_spec=AcquisitionStreamSpec.new
-	assert_include('acquisition_interface',acquisition_stream_spec.matching_methods(//))
-	assert_respond_to(acquisition_stream_spec,:associated_to_s) 
-	assert_include('acquisition_interface',acquisition_stream_spec.matching_methods(/acquisition_interface/))
-	assert_respond_to(acquisition_stream_spec.class,:instance_methods)
-	assert_public_instance_method(acquisition_stream_spec.class,:instance_methods)
-	
-	#~ assert_include('instance_methods',acquisition_stream_spec.class.instance_methods)
-	#~ assert_equal('',acquisition_stream_spec.method_context(:instance_methods))
-	#~ assert_include('instance_methods',acquisition_stream_spec.class.matching_methods(/instance_method/)) 
-	#~ assert_include('instance_methods',acquisition_stream_spec.class.matching_methods_in_context(//,20)) 
-	#~ assert_include('instance_methods',acquisition_stream_spec.matching_methods(/instance_method/)) 
-	#~ assert_respond_to(acquisition_stream_spec,:instance_methods) 
-	assert_equal('',acquisition_stream_spec.associated_to_s(:acquisition_interface,:name) )
-	
 end #test
 test '' do
 #~ def noninherited_modules
@@ -89,7 +83,7 @@ end #test
 test 'matching methods in context' do
 	testClass=Acquisition
 #error message too long	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
-#error message too long		assert_equal([testClass.canonicalName,testClass.matching_methods(//)],testClass.matching_methods_in_context(//)[0])
+#error message too long		assert_equal([testClass.canonicalName,testClass.matching_instance_methods(//)],testClass.matching_methods_in_context(//)[0])
 #error message too long			assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
 end #def
 test "Acquisition Stream Spec modules" do

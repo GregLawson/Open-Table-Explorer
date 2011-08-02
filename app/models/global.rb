@@ -1,11 +1,37 @@
 ###########################################################################
-#    Copyright (C) 2010 by Greg Lawson                                      
-#    <GregLawson@gmail.com>                                                             
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-# contains mostly functions created for testing / debugging but not dependant on TestCase
+# contains mostly functions created for testing / debugging but not dependant on ActiveRecord
+class Module
+def instance_methods_from_class(all=false)
+	return self.instance_methods(all)
+end #def
+def instance_respond_to?(method_name)
+	return instance_methods_from_class.include?(method_name.to_s)
+end #def
+def similar_methods(symbol)
+	singular='^'+symbol.to_s.singularize
+	plural='^'+symbol.to_s.pluralize
+	table='^'+symbol.to_s.tableize
+	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
+end #def
+def matching_instance_methods(regexp,all=false)
+	if regexp.instance_of?(Symbol) then
+		regexp=regexp.to_s
+	end #if
+	instance_methods_from_class(all).select {|m| m[Regexp.new(regexp),0] }
+end #def
+def matching_class_methods(regexp,all=false)
+	if regexp.instance_of?(Symbol) then
+		regexp=regexp.to_s
+	end #if
+	self.public_methods(all).select {|m| m[Regexp.new(regexp),0] }
+end #def
+end #module
 class Object
 #~ require 'IncludeModuleClassMethods.rb'
  #~ mixin_class_methods { |klass|
@@ -262,12 +288,6 @@ def method_contexts(depth=0)
 end #def
 def context_names(depth=0)
 	method_contexts(depth).map{|c| c.canonicalName}
-end #def
-def matching_methods(regexp,all=false)
-	if regexp.instance_of?(Symbol) then
-		regexp=regexp.to_s
-	end #if
-	public_methods(all).select {|m| m[Regexp.new(regexp),0] }
 end #def
 def method_context(methodName)
 	if respond_to(methodName) then

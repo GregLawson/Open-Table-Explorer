@@ -1,18 +1,4 @@
 require 'global.rb'
-class Module
-def instance_methods_from_class(all=false)
-	return self.instance_methods(all)
-end #def
-def instance_respond_to?(method_name)
-	return instance_methods_from_class.include?(method_name.to_s)
-end #def
-def similar_methods(symbol)
-	singular='^'+symbol.to_s.singularize
-	plural='^'+symbol.to_s.pluralize
-	table='^'+symbol.to_s.tableize
-	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
-end #def
-end #module
 module ActiveRecord
 class Base
 def Base.foreign_key_names
@@ -92,6 +78,9 @@ def Base.is_association_to_many?(assName)
 	else
 		return false
 	end
+end #def
+def Base.is_polymorphic_association?(association_name)
+	return false
 end #def
 def Base.association_names_to_one
 	return instance_methods(false).select {|m| is_association_to_one?(m)}
