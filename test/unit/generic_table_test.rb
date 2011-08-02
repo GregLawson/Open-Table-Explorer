@@ -103,6 +103,12 @@ test 'is_association_to_many' do
 	assert(class_reference.is_association?(association_reference),"fail in is_association_to_many?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 	assert(class_reference.is_association_to_many?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 end #test
+test 'is_polymorphic_association' do
+	class_reference=Node
+	association_name=:branch
+	assert_equal([],class_reference.matching_methods(association_name.to_s))
+	assert(class_reference.is_polymorphic_association?(association_name))
+end #test
 test 'association_names_to_many' do
 	class_reference=StreamMethodArgument
 	assert(class_reference.instance_methods(false).select {|m| class_reference.is_association_to_many?(m)})

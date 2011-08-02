@@ -31,4 +31,16 @@ test "aaa test new assertions" do  # aaa to output first
 	assert_association(Node,:branch)
 	assert_association(Node,:parent)
 end #test
+test "handle polymorphic" do
+	class_reference=Node
+	association_reference=:branch
+	association_type=class_reference.association_to_type(association_reference)
+	assert_not_nil(association_type)
+	assert_include(association_type,[:to_one,:to_many])
+	assert_association(class_reference,association_reference)
+	assert_belongs_to_association(class_reference,association_reference)
+	assert(class_reference.belongs_to_association?(association_reference))
+	assert_include(association_reference.to_s,class_reference.foreign_key_association_names)
+	assert_equal(:to_one_belongs_to,class_reference.association_type(association_reference))
+end #test
 end #class
