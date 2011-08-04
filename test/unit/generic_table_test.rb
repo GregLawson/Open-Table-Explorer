@@ -63,6 +63,34 @@ test "is_matching_association?" do
 	assert(@@CLASS_WITH_FOREIGN_KEY.is_matching_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #test
 
+test 'association_methods' do
+	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
+	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY
+
+	assert_equal_sets(["stream_pattern_arguments=", "validate_associated_records_for_stream_pattern_arguments","autosave_associated_records_for_stream_pattern_arguments", "stream_pattern_arguments"],class_reference.association_methods(association_reference))
+end #test
+@@fk_association_patterns=Set.new([/^autosave_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/, /^validate_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/])
+test 'association_patterns' do
+	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
+	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY.to_sym
+	matchData=Regexp.new(association_reference.to_s).match(association_reference.to_s)
+	assert_equal("^([a-z0-9_]+)$",'^'+matchData.pre_match+'([a-z0-9_]+)'+matchData.post_match+'$')
+	assert_equal_sets(@@fk_association_patterns,class_reference.association_patterns(association_reference))
+end #test
+test 'match_association_patterns' do
+	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
+	association_name=@@TABLE_NAME_WITH_FOREIGN_KEY
+#	assert(class_reference.instance_respond_to?(association_name))
+	assert(class_reference.match_association_patterns?(association_name,association_name))
+end #test
+test 'is_association_patterns' do
+	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
+	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY
+	assert_equal_sets(@@fk_association_patterns,class_reference.association_patterns(association_reference))
+	assert_empty(@@fk_association_patterns-class_reference.association_patterns(association_reference))
+	assert_empty(class_reference.association_patterns(association_reference)-@@fk_association_patterns)
+	assert(class_reference.is_association_patterns?(association_reference,@@fk_association_patterns))
+end #test
 test "is_association" do
 	class_reference=StreamMethodArgument
 	association_reference=:parameter
@@ -104,9 +132,27 @@ test 'is_association_to_many' do
 	assert(class_reference.is_association_to_many?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 end #test
 test 'is_polymorphic_association' do
+	@possible_nonpolymorphic_methods=Set.new(["create_stream_pattern", "stream_pattern=", "build_stream_pattern", "set_stream_pattern_target", "stream_pattern", "loaded_stream_pattern?", "autosave_associated_records_for_stream_pattern"])
+	assert_equal(@possible_nonpolymorphic_methods,Set.new(StreamPatternArgument.matching_instance_methods(:stream_pattern.to_s)))
+	@example_nonpolymorphic_patterns=Set.new([/^build_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/,/^autosave_associated_records_for_([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^loaded_([a-z0-9_]+)?$/, /^create_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/])
+	assert_equal_sets(@example_nonpolymorphic_patterns,Set.new(StreamPatternArgument.association_patterns(:stream_pattern.to_s)))
+
 	class_reference=Node
 	association_name=:branch
-	assert_equal([],class_reference.matching_methods(association_name.to_s))
+	@possible_polymorphic_methods=Set.new(["autosave_associated_records_for_branch","loaded_branch?", "set_branch_target", "branch","branch="])
+	assert_equal_sets(@possible_polymorphic_methods,Set.new(class_reference.matching_instance_methods(association_name.to_s)))
+
+	@example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
+	assert_equal_sets(@example_polymorphic_patterns,Set.new(class_reference.association_patterns(association_name.to_s)))
+	assert_equal_sets(@example_polymorphic_patterns,Set.new(StreamMethodArgument.association_patterns(:parameter.to_s)))
+
+	@possible_polymorphic_patterns2=Set.new(["", "autosave_associated_records_for_", "validate_associated_records_for_","="])
+	@common_patterns=@example_nonpolymorphic_patterns & @example_polymorphic_patterns
+	
+#	assert(@example_polymorphic_patterns.all? { |a| class_reference.instance_respond_to?(a)})
+
+#	assert(@example_polymorphic_patterns.all? { |a| class_reference.instance_respond_to?(a)})
+
 	assert(class_reference.is_polymorphic_association?(association_name))
 end #test
 test 'association_names_to_many' do
@@ -134,7 +180,7 @@ test "has_many_association" do
 
 	assert_public_instance_method(ar_from_fixture,ASSNAME)
 
-#	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_methods(/^has_/))
+#	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_instance_methods(/^has_/))
 end #test
 test "association_method_plurality" do
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
@@ -326,7 +372,7 @@ test "associated_to_s" do
 	acquisitions(:one).acquisition_stream_spec_id=0
 
 	assert_not_nil(acquisition_stream_spec)
-#	puts acquisition_stream_spec.matching_methods(/table_spec/).inspect
+#	puts acquisition_stream_spec.matching_instance_methods(/table_spec/).inspect
 #	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
 	assert_respond_to(acquisition_stream_spec,:table_spec)
 	meth=acquisition_stream_spec.method(:table_spec)

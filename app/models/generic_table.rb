@@ -54,6 +54,30 @@ def Base.is_matching_association?(association_name)
 		return false
 	end #if
 end #def
+def Base.association_methods(association_name)
+	return matching_instance_methods(association_name,false)
+end #def
+def Base.association_patterns(association_name)
+	patterns=association_methods(association_name).map do |n| 
+		matchData=Regexp.new(association_name.to_s).match(n)
+		Regexp.new('^'+matchData.pre_match+'([a-z0-9_]+)'+matchData.post_match+'$')
+	end #map
+	return Set.new(patterns)
+end #def
+def Base.match_association_patterns?(association_name,association_pattern)
+	patterns=association_methods(association_name).map do |n| 
+		matchData=association_pattern.match(association_pattern)
+	end #map
+	
+	instance_respond_to?(association_name)
+end #def
+def Base.is_association_patterns?(association_name,association_patterns)
+	(association_patterns(association_name)-association_patterns.to_a).empty?&&
+	(association_patterns-association_patterns(association_name).to_a).empty?
+end #def
+def Base.unique_association_patterns(association_name)
+end #def
+
 def Base.is_association?(association_name)
 	# Don’t create associations that have the same name as instance methods of ActiveRecord::Base.
 	if ActiveRecord::Base.instance_methods_from_class.include?(association_name.to_s) then
@@ -79,8 +103,10 @@ def Base.is_association_to_many?(assName)
 		return false
 	end
 end #def
+Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
+
 def Base.is_polymorphic_association?(association_name)
-	return false
+	return is_association_patterns?(association_name,Example_polymorphic_patterns)
 end #def
 def Base.association_names_to_one
 	return instance_methods(false).select {|m| is_association_to_one?(m)}
