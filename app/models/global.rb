@@ -17,7 +17,7 @@ def similar_methods(symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
 	table='^'+symbol.to_s.tableize
-	return (matching_methods(singular) + matching_methods(plural) + matching_methods(table)).uniq
+	return (matching_instance_methods(singular) + matching_instance_methods(plural) + matching_instance_methods(table)).uniq
 end #def
 def matching_instance_methods(regexp,all=false)
 	if regexp.instance_of?(Symbol) then
@@ -299,7 +299,7 @@ end #def
 def matching_methods_in_context(regexp,depth=0)
 	ret={}
 	method_contexts(depth).map do |context|
-		instance_meths=context.matching_methods(regexp)
+		instance_meths=context.matching_instance_methods(regexp)
 		ret[context.canonicalName]=instance_meths # label level
 	end #map
 	ret
