@@ -1,4 +1,5 @@
 require 'global.rb'
+require 'lib/tasks/testing_file_patterns.rb'
 module ActiveRecord
 class Base
 def Base.foreign_key_names

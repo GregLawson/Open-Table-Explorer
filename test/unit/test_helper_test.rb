@@ -1,6 +1,19 @@
 require 'test_helper'
 class TestHelperTest < ActiveSupport::TestCase
 require 'test/test_helper_test_tables.rb'
+test "empty" do
+	assert_not_empty('a')
+	assert_not_empty(['a'])
+	assert_empty([])
+	assert_empty('')
+end #test
+test "equal sets" do
+	array1=['a']
+	array2=['a']
+	assert_equal_sets(array1,array2)
+	assert_equal(Set.new(array1),Set.new(array2))
+	assert_module_included(Acquisition,Generic_Table)
+end #test
 def setup
 #	define_association_names
 end
@@ -22,17 +35,11 @@ test "explain_assert_respond_to" do
 	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
 
 end #test
-test "assert_include" do
-	assert_include('table_specs',fixture_names)
-	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
-
-end #test
 test "various assertions" do
 	assert_not_empty([1])
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
 	ar_from_fixture=table_specs(:ifconfig)
 	assert_not_nil ar_from_fixture.class.similar_methods(:acquisition_stream_spec)
-	assert_not_nil ar_from_fixture.matching_methods(/acquis*/)	
 end #test
 test "fixtures" do
 	table_name='table_specs'
@@ -42,11 +49,39 @@ test "fixtures" do
 #	assert_not_nil model_class(table_specs(:ifconfig))
 	assert_include('table_specs',fixture_names)
 end #test
-test "assert_association" do
-	class_reference=StreamMethodArgument
-	association_reference=:parameter
-	if class_reference.kind_of?(Class) then
-		klass=class_reference
+test 'fixture_names' do
+	assert_include('stream_patterns',fixture_names)
+end #test
+test 'assert_include' do
+	element=:b
+	list=[:a,:b,:c]
+	assert_include(element,list,"#{element.inspect} is not in list #{list.inspect}")
+	assert_include('table_specs',fixture_names)
+	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
+
+end #test
+test 'assert_dir_include' do
+	assert_dir_include('app','*')
+	assert_not_empty(Dir['app/models/[a-zA-Z0-9_]*.rb'])
+	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*.rb')
+	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*[.]rb')
+end #test
+def assert_not_include(element,list,message=nil)
+	message=build_message(message, "? is in list ?", element,list)   
+	assert(!list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
+end #def
+def assert_public_instance_method(obj,methodName,message='')
+	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
+	if obj.respond_to?(methodName) then
+		message+='expect to pass'
+	elsif obj.respond_to?(methodName.to_s.singularize) then
+		message+="but singular #{methodName.to_s.singularize} is a method"
+	elsif obj.respond_to?(methodName.to_s.pluralize) then
+		message+="but plural #{methodName.to_s.pluralize} is a method"
+	elsif obj.respond_to?(methodName.to_s.tableize) then
+		message+="but tableize #{methodName.to_s.tableize} is a method"
+	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
+		message+="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
 	else
 		klass=class_reference.class
 	end #if
@@ -141,18 +176,5 @@ test "handle polymorphic" do
 	assert_equal(:to_one_belongs_to,StreamMethodArgument.association_type(:parameter))
 end #test
 
-test "empty" do
-	assert_not_empty('a')
-	assert_not_empty(['a'])
-	assert_empty([])
-	assert_empty('')
-end #test
-test "equal sets" do
-	array1=['a']
-	array2=['a']
-	assert_equal_sets(array1,array2)
-	assert_equal(Set.new(array1),Set.new(array2))
-	assert_module_included(Acquisition,Generic_Table)
-end #test
 end #class
 
