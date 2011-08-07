@@ -35,8 +35,6 @@ def associated_foreign_key_records(association_with_foreign_key)
 
 	return associated_records
 end #def
-
-
 def Base.is_matching_association?(association_name)
 	 if is_association?(association_name) then
 		association_class=association_class(association_name)
