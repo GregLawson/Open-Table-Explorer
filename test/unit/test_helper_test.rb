@@ -1,13 +1,18 @@
 require 'test_helper'
 class TestHelperTest < ActiveSupport::TestCase
 require 'test/test_helper_test_tables.rb'
-test "empty" do
+test 'fixture_names' do
+	assert_include('stream_patterns',fixture_names)
+end #test
+test 'assert_not_empty' do
 	assert_not_empty('a')
 	assert_not_empty(['a'])
+end #test
+test 'assert_empty' do
 	assert_empty([])
 	assert_empty('')
 end #test
-test "equal sets" do
+test 'equal_sets' do
 	array1=['a']
 	array2=['a']
 	assert_equal_sets(array1,array2)
@@ -20,14 +25,14 @@ end
 def testMethod
 	return 'nice result'
 end #def
-test "method call" do
+test 'method_call' do
 	#~ explain_assert_respond_to(self,:testMethod)
 	testCallResult(self,:testMethod)
 	testCall(self,:testMethod)
 	#~ testAnswer(self,:testMethod,'nice result')
 	#~ assert_public_instance_method(table_specs(:ifconfig),:acquisition_stream_specs)
 end #test
-test "explain_assert_respond_to" do
+test 'explain_assert_respond_to' do
 #	assert_raise(Test::Unit::AssertionFailedError,explain_assert_respond_to(TestClass,:sequential_id?))
 #	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
 
@@ -35,13 +40,13 @@ test "explain_assert_respond_to" do
 	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
 
 end #test
-test "various assertions" do
+test 'various_assertions' do
 	assert_not_empty([1])
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
 	ar_from_fixture=table_specs(:ifconfig)
 	assert_not_nil ar_from_fixture.class.similar_methods(:acquisition_stream_spec)
 end #test
-test "fixtures" do
+test 'fixtures' do
 	table_name='table_specs'
 	assert_not_nil fixtures(table_name)
 	assert_fixture_name(table_name)
@@ -66,11 +71,14 @@ test 'assert_dir_include' do
 	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*.rb')
 	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*[.]rb')
 end #test
-def assert_not_include(element,list,message=nil)
-	message=build_message(message, "? is in list ?", element,list)   
-	assert(!list.include?(element),"#{element.inspect} is not in list #{list.inspect}")
-end #def
-def assert_public_instance_method(obj,methodName,message='')
+test 'assert_not_include' do
+	element=1
+	list=[1,2,3]
+	assert_not_include(element, list)
+end #test
+test 'assert_public_instance_method' do
+	obj=StreamPattern.new
+	methodName=:stream_pattern_arguments
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
 		message+='expect to pass'
@@ -102,7 +110,7 @@ def assert_public_instance_method(obj,methodName,message='')
 	assert(klass.is_association?(association_reference),"fail is_association?, klass.inspect=#{klass.inspect},association_reference=#{association_reference}")
 	assert_association(class_reference,association_reference)
 end #test
-test "assert_association to one" do
+test 'assert_association to one' do
 	class_reference=StreamMethodArgument
 	association_reference=:parameter
 	assert_association(class_reference,association_reference)
@@ -112,7 +120,7 @@ test "assert_association to one" do
 	assert_has_instance_methods(TableSpec)
 
 end #test
-test "assert_association to many" do
+test 'assert_association to many' do
 	assert_not_nil(table_specs(:ifconfig).class.is_association_to_many?(:acquisition_stream_specs))
 	assert_association_to_many(fixtures(:table_specs).values.first,:acquisition_stream_specs)
 	assert_association_one_to_many(table_specs(:ifconfig),:acquisition_stream_specs)
@@ -138,13 +146,13 @@ end #test
 #
 # not single generic_table method
 #
-test "assert_associations" do
+test 'assert_associations' do
 	assert(@@CLASS_WITH_FOREIGN_KEY.belongs_to_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL) ,"StreamPatternArgument belongs_to stream_pattern")
 	assert(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s.classify.constantize.has_many_association?(@@TABLE_NAME_WITH_FOREIGN_KEY),"#{@@FOREIGN_KEY_ASSOCIATION_SYMBOL} does not has_many #{@@TABLE_NAME_WITH_FOREIGN_KEY}")
 	assert_associations(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_associations(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,@@CLASS_WITH_FOREIGN_KEY)
 end #test
-test "other association" do
+test 'other_association' do
 	model_class=TableSpec
 	assert_equal(['frequency_id'],TableSpec.foreign_key_names)
 	assert_equal(Set.new(['acquisition_interface_id','table_spec_id']),Set.new(AcquisitionStreamSpec.foreign_key_names))
@@ -165,7 +173,7 @@ test 'assert_matching_association' do
 		assert_matching_association("acquisitions","frequency")
 	end #assert_raised
 end  #test
-test "handle polymorphic" do
+test 'handle_polymorphic' do
 	association_type=StreamMethodArgument.association_to_type(:parameter)
 	assert_not_nil(association_type)
 	assert_include(association_type,[:to_one,:to_many])
