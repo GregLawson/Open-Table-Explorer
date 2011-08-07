@@ -6,6 +6,12 @@
 #
 ###########################################################################
 # contains mostly functions created for testing / debugging but not dependant on ActiveRecord
+class Set
+def set_inspect
+	return "#{inspect}; #{map {|h| h.object_identities}.join(', ')}"
+end #def
+
+end #class
 class Module
 def instance_methods_from_class(all=false)
 	return self.instance_methods(all)
@@ -39,9 +45,12 @@ class Object
  #~ }
 #~ define_class_methods {
 #~ } #define_class_methods
+def object_identities
+	return "<#{objectClass} \##{object_id}{#{hash}},#{to_s},#{inspect}>"
+end #def
 def objectKind
 	if nil? then
-		return "nil."
+		return "nil"
 	elsif self.class.name=='Symbol' then
 		return "Symbol"
 	elsif self.class.name=='Module' then
@@ -59,22 +68,16 @@ def objectKind
 end
 def objectClass(verbose=false)
 	if nil? then
-		return "nil."
+		return "NilClass"
 	elsif self.class.name=='Symbol' then
-		#puts "find_symbol(obj)=#{find_symbol(obj)}"
 		return "Symbol"
 	elsif self.class.name=='Module' then
-		puts("name=#{name}") if verbose
-		puts("nesting.inspect=#{nesting.inspect}") if verbose
 		return "Module #{name}"
 	else
-		puts("name=#{name}") if verbose
 		if respond_to?(:superclass) then
-			#puts("superclass=#{superclass}")
-			puts("superclass.name=#{superclass.name}") if verbose
-			return "Class #{name} subclass of #{superclass.name}"
+			return "#{self.class.name} subclass of #{self.class.superclass.name}"
 		else
-			return "obj Class #{name} has no superclass."
+			return "#{self.class.name}"
 		end
 	end
 
@@ -167,11 +170,11 @@ def noninherited_public_class_methods
 end
 def whoAmI(verbose=false)
 	obj=self
-	puts("obj=#{obj}") if verbose
-	puts("obj.class=#{obj.class}") if verbose
-	puts("obj.class.name=#{obj.class.name}") if verbose
-	puts("obj.to_s=#{obj.to_s}") if verbose
-	puts("obj.inspect=#{obj.inspect}") if verbose
+#	puts("obj=#{obj}") if verbose
+#	puts("obj.class=#{obj.class}") if verbose
+#	puts("obj.class.name=#{obj.class.name}") if verbose
+#	puts("obj.to_s=#{obj.to_s}") if verbose
+#	puts("obj.inspect=#{obj.inspect}") if verbose
 #	puts("obj.object_id=#{obj.object_id}") if verbose
 	if obj.respond_to?(:name) then
 		puts("obj.name=#{obj.name}") if verbose
