@@ -5,6 +5,7 @@
 require 'active_support' # for singularize and pluralize
 # syntax http://rake.rubyforge.org/
 require 'lib/tasks/testing.rb'
+require 'lib/tasks/testing_file_patterns.rb'
 namespace :testing do
 
 desc "Run tests testing:incremental, testing:full, testing:summarize, or testing:unit_test TABLE=plural_table TEST=. Output in log/{unit,functional}/"
