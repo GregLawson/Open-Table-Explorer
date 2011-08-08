@@ -1,6 +1,6 @@
 Loaded suite test/unit/test_helper_test
 Started
-.................
-Finished in 102.895002 seconds.
+.......................
+Finished in 51.363365 seconds.
 
-17 tests, 567 assertions, 0 failures, 0 errors
+23 tests, 594 assertions, 0 failures, 0 errors

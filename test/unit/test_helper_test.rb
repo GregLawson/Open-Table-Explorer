@@ -1,8 +1,31 @@
 require 'test_helper'
 class TestHelperTest < ActiveSupport::TestCase
 require 'test/test_helper_test_tables.rb'
+test 'fixtures' do
+	table_name='table_specs'
+	assert_not_nil fixtures(table_name)
+	assert_fixture_name(table_name)
+	assert_not_nil fixture_labels(table_name)
+#	assert_not_nil model_class(table_specs(:ifconfig))
+end #test
 test 'fixture_names' do
 	assert_include('stream_patterns',fixture_names)
+	assert_include('table_specs',fixture_names)
+end #test
+test 'testCallResult' do
+	#~ explain_assert_respond_to(self,:testMethod)
+	testCallResult(self,:testMethod)
+	testCall(self,:testMethod)
+	#~ testAnswer(self,:testMethod,'nice result')
+	#~ assert_public_instance_method(table_specs(:ifconfig),:acquisition_stream_specs)
+end #test
+test 'explain_assert_respond_to' do
+	assert_raise(Test::Unit::AssertionFailedError){explain_assert_respond_to(TestClass,:sequential_id?)}
+#	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
+
+	explain_assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+
 end #test
 test 'assert_not_empty' do
 	assert_not_empty('a')
@@ -11,6 +34,14 @@ end #test
 test 'assert_empty' do
 	assert_empty([])
 	assert_empty('')
+end #test
+test 'assert_flat_set' do
+	set=Set[1,2,3]
+	assert(assert_flat_set(set))
+	set=Set[1,Set[2],3]
+	assert(set.to_a[1].instance_of?(Set))
+	assert_raise(Test::Unit::AssertionFailedError) {assert(assert_flat_set(set))}
+	
 end #test
 test 'equal_sets' do
 	array1=['a']
@@ -25,37 +56,11 @@ end
 def testMethod
 	return 'nice result'
 end #def
-test 'method_call' do
-	#~ explain_assert_respond_to(self,:testMethod)
-	testCallResult(self,:testMethod)
-	testCall(self,:testMethod)
-	#~ testAnswer(self,:testMethod,'nice result')
-	#~ assert_public_instance_method(table_specs(:ifconfig),:acquisition_stream_specs)
-end #test
-test 'explain_assert_respond_to' do
-#	assert_raise(Test::Unit::AssertionFailedError,explain_assert_respond_to(TestClass,:sequential_id?))
-#	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
-
-	explain_assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(Acquisition.new,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
-
-end #test
 test 'various_assertions' do
 	assert_not_empty([1])
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
 	ar_from_fixture=table_specs(:ifconfig)
 	assert_not_nil ar_from_fixture.class.similar_methods(:acquisition_stream_spec)
-end #test
-test 'fixtures' do
-	table_name='table_specs'
-	assert_not_nil fixtures(table_name)
-	assert_fixture_name(table_name)
-	assert_not_nil fixture_labels(table_name)
-#	assert_not_nil model_class(table_specs(:ifconfig))
-	assert_include('table_specs',fixture_names)
-end #test
-test 'fixture_names' do
-	assert_include('stream_patterns',fixture_names)
 end #test
 test 'assert_include' do
 	element=:b
@@ -74,25 +79,31 @@ end #test
 test 'assert_not_include' do
 	element=1
 	list=[1,2,3]
-	assert_not_include(element, list)
+	assert(list.include?(element))
+	assert_include(element, list)
+	assert_not_include(4, list)
+	assert_raise(Test::Unit::AssertionFailedError){assert_not_include(element, list)}
 end #test
 test 'assert_public_instance_method' do
 	obj=StreamPattern.new
 	methodName=:stream_pattern_arguments
-	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
-	if obj.respond_to?(methodName) then
-		message+='expect to pass'
-	elsif obj.respond_to?(methodName.to_s.singularize) then
-		message+="but singular #{methodName.to_s.singularize} is a method"
-	elsif obj.respond_to?(methodName.to_s.pluralize) then
-		message+="but plural #{methodName.to_s.pluralize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize) then
-		message+="but tableize #{methodName.to_s.tableize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
-		message+="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
-	else
-		klass=class_reference.class
-	end #if
+	assert_respond_to(obj,methodName)
+	assert_raise(Test::Unit::AssertionFailedError){assert_respond_to(obj,methodName.to_s.singularize)}
+	assert_respond_to(obj,methodName.to_s.pluralize) 
+	assert_respond_to(obj,methodName.to_s.tableize)
+	assert_raise(Test::Unit::AssertionFailedError){assert_respond_to(obj,methodName.to_s.tableize.singularize)}
+	assert_public_instance_method(obj,methodName)
+	assert_raise(Test::Unit::AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.singularize)}
+	assert_public_instance_method(obj,methodName.to_s.pluralize) 
+	assert_public_instance_method(obj,methodName.to_s.tableize)
+	assert_raise(Test::Unit::AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.tableize.singularize)}
+
+
+end #test
+test 'unknown' do
+	class_reference=StreamMethodArgument
+	association_reference=:parameter
+		klass=class_reference
 	association_reference=association_reference.to_sym
 	assert_not_empty(ActiveRecord::Base.instance_methods_from_class)
 	assert_not_include(association_reference.to_s,ActiveRecord::Base.instance_methods_from_class)
