@@ -143,6 +143,52 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end
 	end
 end
+def assert_not_empty(object,message=nil)
+	message=build_message(message, "? is empty with value ?.", object.canonicalName,object.inspect)   
+	assert_block(message){!object.empty?}
+end #def
+def assert_empty(object,message=nil)
+	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
+	assert_block(message){object.empty?}
+end #def
+def assert_flat_set(set)
+	set.to_a.each do |e|
+		assert(!e.instance_of?(Set))
+	end
+end #def
+def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
+	if expected_enumeration.instance_of?(Set) then
+		expected_set=expected_enumeration
+	else
+		expected_set=Set.new(expected_enumeration.to_a.map {|e| e.to_s})
+	end #if
+	if actual_enumeration.instance_of?(Set) then
+		actual_set=actual_enumeration
+	else
+		actual_set=Set.new(actual_enumeration.to_a.map {|e| e.to_s})
+	end #if
+	assert_flat_set(expected_set)
+	assert_flat_set(actual_set)
+#	actual_set=Set[actual_enumeration.to_a.map {|e| e.to_s}]
+	expected_extras=expected_set-actual_set
+	actual_extras=actual_set-expected_set
+	if expected_extras.empty? then
+		message=build_message(message, message="expected is a subset of actual")
+	else
+		message=build_message(message, " ? is in expected set but not actual set.", expected_extras.set_inspect)   
+	end
+	if actual_extras.empty? then
+		message=message=build_message(message, "actual is a subset of expected")
+	else
+		message=build_message(message, " ? is in actual set but not expected set.", actual_extras.set_inspect)   
+	end
+	if expected_set!=actual_set then
+		
+		message=build_message(message, " expected idenities= ? but actual idenities= ? .", expected_set.set_inspect, actual_set.set_inspect)
+		raise "#{message}"
+		assert_equal(expected_set,actual_set,message)
+	end #if
+end #def
 def assert_include(element,list,message=nil)
 	if message.nil? then
 		message=build_message(message, "? is not in list ?", element,list.inspect)
@@ -176,52 +222,6 @@ end #def
 def assert_has_instance_methods(model_class,message=nil)
 	message=build_message(message, "? has no public instance methods.", model_class.canonicalName)   
 	assert_block(message){!model_class.instance_methods(false).empty?}
-end #def
-def assert_not_empty(object,message=nil)
-	message=build_message(message, "? is empty with value ?.", object.canonicalName,object.inspect)   
-	assert_block(message){!object.empty?}
-end #def
-def assert_empty(object,message=nil)
-	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
-	assert_block(message){object.empty?}
-end #def
-def assert_flat_set(set)
-	set.to_a.each do |e|
-		assert(!e.instance_of?(Set))
-	end
-end #def
-def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
-	if expected_enumeration.instance_of?(Set) then
-		expected_set=expected_enumeration
-	else
-		expected_set=Set[expected_enumeration.to_a.map {|e| e.to_s}]
-	end #if
-	if actual_enumeration.instance_of?(Set) then
-		actual_set=actual_enumeration
-	else
-		actual_set=Set[actual_enumeration.to_a.map {|e| e.to_s}]
-	end #if
-	assert_flat_set(expected_set)
-	assert_flat_set(actual_set)
-	actual_set=Set[actual_enumeration.to_a.map {|e| e.to_s}]
-	expected_extras=expected_set-actual_set
-	actual_extras=actual_set-expected_set
-	if expected_extras.empty? then
-		message=build_message(message, message="expected is a subset of actual")
-	else
-		message=build_message(message, " ? is in expected set but not actual set.", expected_extras.set_inspect)   
-	end
-	if actual_extras.empty? then
-		message=message=build_message(message, "actual is a subset of expected")
-	else
-		message=build_message(message, " ? is in actual set but not expected set.", actual_extras.set_inspect)   
-	end
-	if expected_set!=actual_set then
-		
-		message=build_message(message, " expected idenities= ? but actual idenities= ? .", expected_set.set_inspect, actual_set.set_inspect)
-		raise "#{message}"
-		assert_equal(expected_set,actual_set,message)
-	end #if
 end #def
 
 def assert_model_class(model_name)

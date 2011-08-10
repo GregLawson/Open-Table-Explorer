@@ -44,23 +44,17 @@ test 'assert_flat_set' do
 	
 end #test
 test 'equal_sets' do
-	array1=['a']
-	array2=['a']
-	assert_equal_sets(array1,array2)
-	assert_equal(Set.new(array1),Set.new(array2))
+	expected_enumeration=[/a/,/b/]
+	actual_enumeration=[/b/,/a/]
+	assert_equal(Set.new(expected_enumeration),Set.new(actual_enumeration))
+	assert(!expected_enumeration.instance_of?(Set))
+		expected_set=Set.new(expected_enumeration.to_a.map {|e| e.to_s})
+	assert(!actual_enumeration.instance_of?(Set))
+		actual_set=Set.new(actual_enumeration.to_a.map {|e| e.to_s})
+	assert_flat_set(expected_set)
+	assert_flat_set(actual_set)
+	assert_equal_sets(expected_enumeration,actual_enumeration)
 	assert_module_included(Acquisition,Generic_Table)
-end #test
-def setup
-#	define_association_names
-end
-def testMethod
-	return 'nice result'
-end #def
-test 'various_assertions' do
-	assert_not_empty([1])
-	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
-	ar_from_fixture=table_specs(:ifconfig)
-	assert_not_nil ar_from_fixture.class.similar_methods(:acquisition_stream_spec)
 end #test
 test 'assert_include' do
 	element=:b
@@ -193,6 +187,18 @@ test 'handle_polymorphic' do
 	assert(StreamMethodArgument.belongs_to_association?(:parameter))
 	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
 	assert_equal(:to_one_belongs_to,StreamMethodArgument.association_type(:parameter))
+end #test
+def setup
+#	define_association_names
+end
+def testMethod
+	return 'nice result'
+end #def
+test 'various_assertions' do
+	assert_not_empty([1])
+	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
+	ar_from_fixture=table_specs(:ifconfig)
+	assert_not_nil ar_from_fixture.class.similar_methods(:acquisition_stream_spec)
 end #test
 
 end #class
