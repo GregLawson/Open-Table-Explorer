@@ -74,8 +74,6 @@ def Base.is_association_patterns?(association_name,association_patterns)
 	(association_patterns(association_name)-association_patterns.to_a).empty?&&
 	(association_patterns-association_patterns(association_name).to_a).empty?
 end #def
-def Base.unique_association_patterns(association_name)
-end #def
 
 def Base.is_association?(association_name)
 	# Don’t create associations that have the same name as instance methods of ActiveRecord::Base.
