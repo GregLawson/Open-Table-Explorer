@@ -20,6 +20,7 @@ StreamMethodArgument belongs_to parameter
 parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "StreamPatternArgument", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation", "StreamPattern"].
 StreamMethodCall belongs_to stream_method
 stream_method does not has_many StreamMethodCall
+stream_pattern is not an association of StreamMethod
 stream_method_call is not an association of StreamParameter
 stream_method_argument is not an association of StreamParameter
 TableSpec belongs_to frequency
@@ -28,7 +29,7 @@ Transaction does not include Generic_Table
 Transfer belongs_to account
 account does not has_many Transfer
 node is not an association of WiredLocation
-...........................
-Finished in 14.966493 seconds.
+..................................
+Finished in 17.873671 seconds.
 
-29 tests, 240 assertions, 0 failures, 0 errors
+36 tests, 348 assertions, 0 failures, 0 errors

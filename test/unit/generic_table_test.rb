@@ -142,7 +142,7 @@ test 'is_polymorphic_association' do
 	@possible_polymorphic_methods=Set.new(["autosave_associated_records_for_branch","loaded_branch?", "set_branch_target", "branch","branch="])
 	assert_equal_sets(@possible_polymorphic_methods,Set.new(class_reference.matching_instance_methods(association_name.to_s)))
 
-	@example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]*)=$/, /^autosave_associated_records_for_([a-z0-9_]*)$/, /^loaded_([a-z0-9_]*)?$/])
+	@example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
 	assert_equal_sets(@example_polymorphic_patterns,Set.new(class_reference.association_patterns(association_name.to_s)))
 	assert_equal_sets(@example_polymorphic_patterns,Set.new(StreamMethodArgument.association_patterns(:parameter.to_s)))
 
