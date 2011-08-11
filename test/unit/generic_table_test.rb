@@ -424,42 +424,4 @@ test "matching associations" do
 	assert_equal('frequencies',Frequency.table_name)
 	assert(TableSpec.is_association?(Frequency.table_name.singularize))
 end #test
-test 'match_spec_from_file' do
-	assert('app/models/([a-zA-Z0-9_]*)[.]rb',CodeBase::match_spec_from_file('app/models/global.rb'))
-end #test
-test 'singular_table_from_file' do
-	assert('global',CodeBase::singular_table_from_file('app/models/global.rb'))
-end #test
-test 'file_glob' do
-	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
-	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
-	assert_equal(%{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
-	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
-		assert_not_nil(spec)
-		assert_not_nil(spec[:example_file])
-		assert_not_nil(CodeBase.file_glob(spec))
-	end #map
-end #test
-test 'regexp' do
-#	assert_equal(%{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
-	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
-	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
-	assert_equal(%{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
-	assert_equal('app/models/[a-zA-Z0-9_]*[.]rb',CodeBase.file_glob(spec))
-	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
-		assert_not_nil(spec)
-		assert_not_nil(spec[:example_file])
-		assert_not_nil(CodeBase.file_glob(spec))
-		assert_not_nil(Dir[CodeBase.regexp(spec)])
-#		assert_not_empty(Dir[CodeBase.file_glob(spec)],"Dir[#{CodeBase.file_glob(spec)}]=#{Dir[CodeBase.file_glob(spec)]}")
-		assert_dir_include(spec[:example_file],CodeBase.file_glob(spec))
-		assert_include(spec[:example_file],Dir[CodeBase.file_glob(spec)])
-	end #map
-end #test
-test 'gitStatus' do
-end #test
-test 'why_not_stage_helper' do
-end #test
-test 'why_not_stage' do
-end #test
 end #test class

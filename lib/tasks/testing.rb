@@ -133,7 +133,7 @@ def controller_target(singular_table)
 	return "log/functional/#{plural_table}_controller_test.log"
 end #def
 
-def workFlow(test=nil) 
+def work_flow(test=nil) 
 	Dir['log/unit/*.log'].select {|f| !File.size?(f) }.each do |f|
 		sh %Q(ls -1 -s #{f})	
 		rm f
@@ -179,22 +179,6 @@ def stage
 			why_not_stage(file,singular_table_from_file(file))
 		end #if
 	end #gitStatus
-end #def
-def table_type_from_source(ruby_source)
-	path=Pathname.new(ruby_source)
-	#~ puts "path=#{path.inspect}"
-	words=path.basename.to_s.split('_')
-#	puts "words=#{words.inspect}"
-	raise "not a test log or source pathname =#{path.inspect}" if words[-1][0..3]!='test'
-	if words[-2]=='controller' then
-		test_type='functional'
-		table=words[0..-3].join('_')
-	else
-		test_type='unit'
-		table=words[0..-2].join('_')
-	end #if
-	#~ puts "test_type='#{test_type}'"
-	return [table,test_type]
 end #def
 def parse_summary(summary)
 	summary=summary.split(' ')
@@ -260,7 +244,7 @@ def log_passed?(log_file)
 	end #if
 end #def
 def file_bug_reports(ruby_source,log_file,test=nil)
-	table,test_type=table_type_from_source(ruby_source)
+	table,test_type=CodeBase.table_type_from_source(ruby_source)
 	header,errors,summary=parse_log_file(log_file)
 	if summary.nil? then
 	else

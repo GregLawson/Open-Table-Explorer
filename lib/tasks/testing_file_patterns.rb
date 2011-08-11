@@ -31,6 +31,23 @@ def CodeBase.singular_table_from_file(file)
 		end #if
 	end #if
 end #def
+def CodeBase.table_type_from_source(ruby_source)
+	path=Pathname.new(ruby_source)
+	#~ puts "path=#{path.inspect}"
+	words=path.basename.to_s.split('_')
+#	puts "words=#{words.inspect}"
+	raise "not a test log or source pathname =#{path.inspect}" if words[-1][0..3]!='test'
+	if words[-2]=='controller' then
+		test_type='functional'
+		table=words[0..-3].join('_')
+	else
+		test_type='unit'
+		table=words[0..-2].join('_')
+	end #if
+	#~ puts "test_type='#{test_type}'"
+	return [table,test_type]
+end #def
+
 def CodeBase.file_glob(spec)
 	ret=spec[:Dir_glob].sub(/(\()/,'').sub(/(\))/,'')
 	return ret
@@ -88,4 +105,4 @@ def CodeBase.why_not_stage(file,singular_table)
 		why_not_stage_helper(file,controller_target(singular_table),controller_sources(singular_table),:controller)  if match_spec[:test_type] != :unit
 	end #if
 end #def
-end #odule CodeBase
+end #module CodeBase

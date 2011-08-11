@@ -91,7 +91,7 @@ task :work_flow do
 		stop=false # want to do something
 	end #if
 	test = ENV["TEST"]
-	workFlow(test) if !stop
+	work_flow(test) if !stop
 #	summarize
 	stage
 end #task
