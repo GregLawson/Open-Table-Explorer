@@ -1,4 +1,4 @@
-module CodeBase
+class CodeBase
 # [example_file, Dir_glob, plural,test_type]
 TABLE_FINDER_REGEXPS=[
 {:example_file => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
@@ -105,4 +105,4 @@ def CodeBase.why_not_stage(file,singular_table)
 		why_not_stage_helper(file,controller_target(singular_table),controller_sources(singular_table),:controller)  if match_spec[:test_type] != :unit
 	end #if
 end #def
-end #module CodeBase
+end #class CodeBase
