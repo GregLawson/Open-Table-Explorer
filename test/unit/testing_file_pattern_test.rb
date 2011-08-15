@@ -6,6 +6,27 @@ require 'lib/tasks/testing_file_patterns.rb'
 require 'test/test_helper_test_tables.rb'
 class TestingFilePatternsTest < ActiveSupport::TestCase
 require 'lib/tasks/testing.rb'
+test 'spec_from_symbol' do
+	spec_name_symbol=:models
+	index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
+	assert_instance_of(Fixnum,index)
+	assert_instance_of(Hash,CodeBase::TABLE_FINDER_REGEXPS[index])
+end #test
+test 'models_from_spec' do
+	spec_name_symbol=:models
+	index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
+	spec=CodeBase.spec_from_symbol(spec_name_symbol)
+	files=Dir[CodeBase.file_glob(spec)]
+	assert_not_empty(files)
+	models=files.map do |f| 
+		assert_instance_of(Regexp, CodeBase.regexp(spec))
+		assert_instance_of(String,f[CodeBase.regexp(spec),1])
+		assert_not_empty(f[CodeBase.regexp(spec),1])
+	end #map
+	models=files.map {|f| f[CodeBase.regexp(spec),1] }
+	assert_not_empty(models)
+	assert_include('stream_pattern',CodeBase.models_from_spec(spec_name_symbol))
+end #test
 test 'match_spec_from_file' do
 	assert('app/models/([a-zA-Z0-9_]*)[.]rb',CodeBase::match_spec_from_file('app/models/global.rb'))
 end #test
@@ -15,7 +36,7 @@ end #test
 test 'file_glob' do
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
-	assert_equal(%{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
+	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
 	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
 		assert_not_nil(spec)
 		assert_not_nil(spec[:example_file])
@@ -23,16 +44,16 @@ test 'file_glob' do
 	end #map
 end #test
 test 'regexp' do
-#	assert_equal(%{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
+#	assert_equal(%r{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
-	assert_equal(%{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
+	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
 	assert_equal('app/models/[a-zA-Z0-9_]*[.]rb',CodeBase.file_glob(spec))
 	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
 		assert_not_nil(spec)
 		assert_not_nil(spec[:example_file])
 		assert_not_nil(CodeBase.file_glob(spec))
-		assert_not_nil(Dir[CodeBase.regexp(spec)])
+		assert_not_nil(Dir[CodeBase.file_glob(spec)])
 #		assert_not_empty(Dir[CodeBase.file_glob(spec)],"Dir[#{CodeBase.file_glob(spec)}]=#{Dir[CodeBase.file_glob(spec)]}")
 		assert_dir_include(spec[:example_file],CodeBase.file_glob(spec))
 		assert_include(spec[:example_file],Dir[CodeBase.file_glob(spec)])

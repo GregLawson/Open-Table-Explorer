@@ -1,13 +1,22 @@
 class CodeBase
 # [example_file, Dir_glob, plural,test_type]
 TABLE_FINDER_REGEXPS=[
-{:example_file => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
-{:example_file => 'test/unit/global_test.rb', :Dir_glob =>  'test/unit/([a-zA-Z0-9_]*)_test[.]rb', :plural => false, :test_type => :unit},
-{:example_file => 'test/functional/stream_patterns_controller_test.rb', :Dir_glob =>  'test/functional/([a-zA-Z0-9_]*)_test[.]rb', :plural => true, :test_type => :controller},
-{:example_file => 'log/unit/generic_table_test.log', :Dir_glob =>  'log/unit/([a-zA-Z0-9_]*)_test[.]log', :plural => false, :test_type => :unit},
-{:example_file => 'log/functional/stream_patterns_controller_test.log', :Dir_glob =>  'log/functional/([a-zA-Z0-9_]*)_controller_test[.]log', :plural => true, :test_type => :controller},
-{:example_file => 'app/views/acquisition_stream_specs/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/[a-zA-Z0-9_]*[.]html[.]erb', :plural => true, :test_type => :controller}
+{:name => :models, :example_file => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
+{:name => :unit_tests, :example_file => 'test/unit/global_test.rb', :Dir_glob =>  'test/unit/([a-zA-Z0-9_]*)_test[.]rb', :plural => false, :test_type => :unit},
+{:name => :functional_tests, :example_file => 'test/functional/stream_patterns_controller_test.rb', :Dir_glob =>  'test/functional/([a-zA-Z0-9_]*)_test[.]rb', :plural => true, :test_type => :controller},
+{:name => :unit_test_logs, :example_file => 'log/unit/generic_table_test.log', :Dir_glob =>  'log/unit/([a-zA-Z0-9_]*)_test[.]log', :plural => false, :test_type => :unit},
+{:name => :functional_test_logs, :example_file => 'log/functional/stream_patterns_controller_test.log', :Dir_glob =>  'log/functional/([a-zA-Z0-9_]*)_controller_test[.]log', :plural => true, :test_type => :controller},
+{:name => :views, :example_file => 'app/views/acquisition_stream_specs/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/[a-zA-Z0-9_]*[.]html[.]erb', :plural => true, :test_type => :controller}
 ]
+def CodeBase.spec_from_symbol(spec_name_symbol)
+	index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
+	return CodeBase::TABLE_FINDER_REGEXPS[index]
+end #def
+def CodeBase.models_from_spec(spec_name_symbol)
+	spec=spec_from_symbol(spec_name_symbol)
+	files=Dir[CodeBase.file_glob(spec)]
+	models=files.map {|f| f[CodeBase.regexp(spec),1] }
+end #def
 def CodeBase.match_spec_from_file(file)
 	TABLE_FINDER_REGEXPS.each do |match_specs|
 		matchData=file.match(match_specs[:Dir_glob])
@@ -54,7 +63,7 @@ def CodeBase.file_glob(spec)
 end #def
 def CodeBase.regexp(spec)
 	ret='^'+spec[:Dir_glob]+'$'
-	return ret
+	return Regexp.new(ret)
 end #def
 def CodeBase.gitStatus(&process_status)
 	return `git status --porcelain`.split("\n").each do |line| 

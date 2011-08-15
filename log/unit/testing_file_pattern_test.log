@@ -1,24 +1,31 @@
 Loaded suite test/unit/testing_file_pattern_test
 Started
-.status=M, file=lib/tasks/testing_file_patterns.rb
+.status=M, file=db/bugs.sql
+status=M, file=db/tests.sql
+status=M, file=lib/tasks/testing_file_patterns.rb
 status=D, file=log/functional/networks_controller_test.log
 status=D, file=log/functional/ports_controller_test.log
 status=D, file=log/functional/stations_controller_test.log
 status=M, file=log/unit/edison_test.log
 status=D, file=log/unit/generic_column_test.log
 status=D, file=log/unit/generic_row_test.log
+status=M, file=log/unit/generic_table_test.log
 status=D, file=log/unit/load_test.log
 status=D, file=log/unit/network_test.log
 status=M, file=log/unit/node_test.log
 status=D, file=log/unit/port_test.log
 status=D, file=log/unit/station_test.log
-status=M, file=log/unit/testing_file_pattern_test.log
+status=M, file=log/unit/test_helper_test.log
+status=MM, file=log/unit/testing_file_pattern_test.log
+status=M, file=test/unit/testing_file_pattern_test.rb
 status=??, file=db/migrate/20110802013211_add_branch_id_and_branch_type_to_node.rb
 status=??, file=log/functional/bugs_controller_test.log
 status=??, file=log/functional/edisons_controller_test.log
 status=??, file=log/functional/error_types_controller_test.log
 status=??, file=log/functional/generic_tables_controller_test.log
 Target log/functional/acquisition_stream_specs_controller_test.log for file=app/views/acquisition_stream_specs/_index_partial.html.erb does not exist.
+db/bugs.sql don't know when to stage.
+db/tests.sql don't know when to stage.
 lib/tasks/testing_file_patterns.rb don't know when to stage.
 Target log/functional/networks_controller_test.log for file=log/functional/networks_controller_test.log does not exist.
 Target log/functional/ports_controller_test.log for file=log/functional/ports_controller_test.log does not exist.
@@ -30,7 +37,7 @@ Target log/unit/network_test.log for file=log/unit/network_test.log does not exi
 Target log/unit/port_test.log for file=log/unit/port_test.log does not exist.
 Target log/unit/station_test.log for file=log/unit/station_test.log does not exist.
 db/migrate/20110802013211_add_branch_id_and_branch_type_to_node.rb don't know when to stage.
-......
-Finished in 15.662518 seconds.
+........
+Finished in 12.996921 seconds.
 
-7 tests, 90 assertions, 0 failures, 0 errors
+9 tests, 248 assertions, 0 failures, 0 errors
