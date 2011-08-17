@@ -30,10 +30,12 @@ end #test
 test 'assert_not_empty' do
 	assert_not_empty('a')
 	assert_not_empty(['a'])
+	assert_not_empty(Set[nil])
 end #test
 test 'assert_empty' do
 	assert_empty([])
 	assert_empty('')
+	assert_empty(Set[])
 end #test
 test 'assert_flat_set' do
 	set=Set[1,2,3]
@@ -56,13 +58,23 @@ test 'equal_sets' do
 	assert_equal_sets(expected_enumeration,actual_enumeration)
 	assert_module_included(Acquisition,Generic_Table)
 end #test
+test 'assert_overlap' do
+	enum1=[1,2,3]
+	enum2=[3,4,5]
+	assert_overlap(enum1,enum2)
+	enum1=Set[1,2,3]
+	enum2=Set[3,4,5]
+	assert_overlap(enum1,enum2)
+end #test
 test 'assert_include' do
 	element=:b
 	list=[:a,:b,:c]
 	assert_include(element,list,"#{element.inspect} is not in list #{list.inspect}")
 	assert_include('table_specs',fixture_names)
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
-
+	set=Set.new(list)
+	assert(set.include?(element))
+	assert_include(element,set)
 end #test
 test 'assert_dir_include' do
 	assert_dir_include('app','*')

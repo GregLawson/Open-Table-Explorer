@@ -3,19 +3,55 @@ class CodeBase
 TABLE_FINDER_REGEXPS=[
 {:name => :models, :example_file => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
 {:name => :unit_tests, :example_file => 'test/unit/global_test.rb', :Dir_glob =>  'test/unit/([a-zA-Z0-9_]*)_test[.]rb', :plural => false, :test_type => :unit},
-{:name => :functional_tests, :example_file => 'test/functional/stream_patterns_controller_test.rb', :Dir_glob =>  'test/functional/([a-zA-Z0-9_]*)_test[.]rb', :plural => true, :test_type => :controller},
+{:name => :functional_tests, :example_file => 'test/functional/stream_patterns_controller_test.rb', :Dir_glob =>  'test/functional/([a-zA-Z0-9_]*)_controller_test[.]rb', :plural => true, :test_type => :controller},
 {:name => :unit_test_logs, :example_file => 'log/unit/generic_table_test.log', :Dir_glob =>  'log/unit/([a-zA-Z0-9_]*)_test[.]log', :plural => false, :test_type => :unit},
 {:name => :functional_test_logs, :example_file => 'log/functional/stream_patterns_controller_test.log', :Dir_glob =>  'log/functional/([a-zA-Z0-9_]*)_controller_test[.]log', :plural => true, :test_type => :controller},
-{:name => :views, :example_file => 'app/views/acquisition_stream_specs/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/[a-zA-Z0-9_]*[.]html[.]erb', :plural => true, :test_type => :controller}
+{:name => :new_views, :example_file => 'app/views/acquisition_stream_specs/new.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/new[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :edit_views, :example_file => 'app/views/acquisition_stream_specs/edit.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/edit[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :show_views, :example_file => 'app/views/acquisition_stream_specs/show.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/show[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :index_views, :example_file => 'app/views/acquisition_stream_specs/index.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/index[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :shared_partials, :example_file => 'app/views/shared/_multi-line.html.erb', :Dir_glob =>  'app/views/shared/_[a-zA-Z0-9_-]*[.]html[.]erb', :plural => true, :test_type => :shared},
+{:name => :form_partials, :example_file => 'app/views/stream_patterns/_form.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_form[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :show_partials, :example_file => 'app/views/stream_patterns/_show_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_show_partial[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :index_partials, :example_file => 'app/views/stream_patterns/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_index_partial[.]html[.]erb', :plural => true, :test_type => :controller}
 ]
+def CodeBase.model_spec_symbols
+	return CodeBase::TABLE_FINDER_REGEXPS.select {|s| s[:test_type]!=:shared}.map {|s| s[:name]}
+end #def
+def CodeBase.spec_symbols
+	return CodeBase::TABLE_FINDER_REGEXPS.map {|s| s[:name]}
+end #def
+def CodeBase.complete_models
+	list_of_model_sets=CodeBase.model_spec_symbols.map {|spec_name_symbol| CodeBase.models_from_spec(spec_name_symbol)}
+	list_of_model_sets.reduce(:&)
+end #def
 def CodeBase.spec_from_symbol(spec_name_symbol)
 	index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
+	raise "spec_name_symbol=#{spec_name_symbol} not found" if index.nil?
 	return CodeBase::TABLE_FINDER_REGEXPS[index]
 end #def
 def CodeBase.models_from_spec(spec_name_symbol)
 	spec=spec_from_symbol(spec_name_symbol)
+	raise "models_from_spec called with spec=#{spec.inspect}" if spec[:test_type]==:shared
 	files=Dir[CodeBase.file_glob(spec)]
-	models=files.map {|f| f[CodeBase.regexp(spec),1] }
+	if files.nil? then
+		raise "#{CodeBase.file_glob(spec)} does not match any files."
+	end #if
+	models=files.map do|f|
+		model=f[CodeBase.regexp(spec),1]
+		if model.nil? then
+			raise "file=#{f} does not match regexp=#{CodeBase.regexp(spec)}"
+		end #if
+		if spec[:plural] then
+			model=model.singularize
+		end #if
+		model
+	end #map
+	if models.instance_of?(Array) then
+		return Set.new(models)
+	else
+		return Set[]
+	end #if
 end #def
 def CodeBase.match_spec_from_file(file)
 	TABLE_FINDER_REGEXPS.each do |match_specs|
@@ -29,7 +65,7 @@ def CodeBase.match_spec_from_file(file)
 end #def
 def CodeBase.singular_table_from_file(file)
 	match_spec=match_spec_from_file(file)
-	if match_spec.nil? then
+	if match_spec.nil? || match_spec[:test_type]==:shared then
 		return  nil
 	else
 		table_name=match_spec[:matchData][1]

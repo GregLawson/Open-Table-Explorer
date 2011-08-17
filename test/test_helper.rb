@@ -149,7 +149,7 @@ def assert_not_empty(object,message=nil)
 end #def
 def assert_empty(object,message=nil)
 	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
-	assert_block(message){object.empty?}
+	assert_block(message){object.empty? || object==Set[nil]}
 end #def
 def assert_flat_set(set)
 	set.to_a.each do |e|
@@ -188,6 +188,9 @@ def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
 		raise "#{message}"
 		assert_equal(expected_set,actual_set,message)
 	end #if
+end #def
+def assert_overlap(enum1,enum2)
+	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #def
 def assert_include(element,list,message=nil)
 	if message.nil? then
