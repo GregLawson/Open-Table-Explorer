@@ -5,7 +5,10 @@
 require 'active_support' # for singularize and pluralize
 # syntax http://rake.rubyforge.org/
 require 'lib/tasks/testing.rb'
+require 'app/models/global.rb'
+require 'app/models/generic_table.rb'
 require 'lib/tasks/testing_file_patterns.rb'
+require 'app/models/test_run.rb'
 namespace :testing do
 
 desc "Run tests testing:incremental, testing:full, testing:summarize, or testing:unit_test TABLE=plural_table TEST=. Output in log/{unit,functional}/"
@@ -145,21 +148,6 @@ task :view do
 	url = ENV["URL"]
 	view(url)
 end #test
-task :change_test do
-	sh "ruby unit/account_test.rb >log/unit/account_test.lis"
-	sh "ruby unit/transfer_test.rb "
-	sh "ruby unit/table_spec_test.rb "
-	sh "ruby unit/acquisition_interface_test.rb "
-	sh "ruby unit/acquisition_stream_spec_test.rb "
-	sh "ruby unit/acquisition_test.rb "
-	sh "#ruby functional/acquisition_controller_test.rb "
-	sh "ruby functional/accounts_controller_test.rb "
-	sh "ruby functional/transfers_controller_test.rb "
-	sh "ruby functional/table_specs_controller_test.rb "
-	sh "ruby functional/acquisitions_controller_test.rb "
-	sh "ruby functional/acquisition_stream_specs_controller_test.rb "
-	sh "ruby functional/acquisition_interfaces_controller_test.rb "
-end
 wiki_directory='../Open-Table-Explorer.wiki'
 directory wiki_directory
 
