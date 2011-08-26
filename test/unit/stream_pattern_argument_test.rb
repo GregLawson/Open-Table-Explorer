@@ -3,7 +3,8 @@ require 'test_helper'
 class StreamPatternArgumentTest < ActiveSupport::TestCase
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
-	define_model_of_test
+	define_model_of_test # allow generic tests
+	assert_module_included(@model_class,Generic_Table)
 	explain_assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
