@@ -3,6 +3,9 @@ require 'test_helper'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class TestRunTest < ActiveSupport::TestCase
+test 'ruby_run_and_log' do
+	TestRun.ruby_run_and_log('/dev/null','/dev/null')
+end #test
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests
