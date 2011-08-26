@@ -4,14 +4,6 @@ require 'test_helper'
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
-test "instance_methods_from_class" do
-	assert_include('full_associated_models',['full_associated_models'])
-	assert_include('full_associated_models',TestTable.instance_methods_from_class)
-end #test
-test "instance_respond_to" do
-	assert(TestTable.instance_respond_to?(:full_associated_models))
-	assert(TestTable.respond_to?(:instance_respond_to?))
-end #test
 test "foreign_key_names" do
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)

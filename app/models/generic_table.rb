@@ -1,4 +1,4 @@
-require 'global.rb'
+require 'app/models/global.rb'
 require 'lib/tasks/testing_file_patterns.rb'
 module ActiveRecord
 class Base
@@ -100,10 +100,10 @@ def Base.is_association_to_many?(assName)
 		return false
 	end
 end #def
-Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
+@@Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
 
 def Base.is_polymorphic_association?(association_name)
-	return is_association_patterns?(association_name,Example_polymorphic_patterns)
+	return is_association_patterns?(association_name,@@Example_polymorphic_patterns)
 end #def
 def Base.association_names_to_one
 	return instance_methods(false).select {|m| is_association_to_one?(m)}
@@ -202,7 +202,7 @@ end #class Base
 end #module ActiveRecord
 
 module Generic_Table
-require 'IncludeModuleClassMethods.rb'
+require 'app/models/IncludeModuleClassMethods.rb'
  mixin_class_methods { |klass|
  puts "Module Acquisition has been included by #{klass}" if $VERBOSE
  }
