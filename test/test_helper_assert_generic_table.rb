@@ -4,18 +4,7 @@
 @@FOREIGN_KEY_ASSOCIATION_SYMBOL=:stream_pattern # needs correct plurality
 @@FOREIGN_KEY_ASSOCIATION_INSTANCE=@@FOREIGN_KEY_ASSOCIATION_CLASS.where(:name => 'Acquisition').first
 @@TABLE_NAME_WITH_FOREIGN_KEY=@@CLASS_WITH_FOREIGN_KEY.name.tableize
-def assert_has_associations(model_class,message='')
-	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
-	assert_block(message){!model_class.association_names.empty?}	
-end #def
 # assertions testing single global (Object) methods
-def assert_module_included(klass,moduleName)
-#The assertion upon which all other assertions are based. Passes if the block yields true.
-  assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
-    klass.module_included?(moduleName)
-  end
-
-end #def
 # assertions testing single generic_table methods
 def assert_associated_foreign_key_name(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
@@ -66,16 +55,22 @@ def assert_association(class_reference,association_reference)
 end #def
 
 def assert_association_to_one(class_reference,assName)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
 	assert_instance_of(Symbol,assName,"assert_association_to_one")
 	assert_association(class_reference,assName)
 	assert(!class_reference.is_association_to_many?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.class.similar_methods(assName).inspect}")
 	assert(class_reference.is_association_to_one?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.similar_methods(assName).inspect}")
 end #def
-def assert_association_to_many(ar_from_fixture,assName)
+def assert_association_to_many(class_reference,assName)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
 	assert_instance_of(Symbol,assName,"assert_association_to_many")
-	assert_association(ar_from_fixture,assName)
-	assert(ar_from_fixture.class.is_association_to_many?(assName),"is_association_to_many?(#{ar_from_fixture.inspect},#{assName.inspect}) returns false. #{ar_from_fixture.class.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and ar_from_fixture.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
-	assert(!ar_from_fixture.class.is_association_to_one?(assName),"fail !is_association_to_one?, ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName}")
+	assert_association(class_reference,assName)
+	assert(class_reference.is_association_to_many?(assName),"is_association_to_many?(#{class_reference.inspect},#{assName.inspect}) returns false. #{class_reference.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and class_reference.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
+	assert(!class_reference.is_association_to_one?(assName),"fail !is_association_to_one?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}")
 end #def
 def assert_has_many_association(class_reference, association_name)
 	assert(system(class_reference.association_grep('has_many',association_name)))
@@ -100,7 +95,7 @@ end #def
 # assertions not directly testing single generic_table methods
 #
 def assert_foreign_key_points_to_me(ar_from_fixture,assName)
-	assert_association(ar_from_fixture,assName)
+	assert_association(ar_from_fixture.class,assName)
 	associated_records=ar_from_fixture.associated_foreign_key_records(assName)
 	assert_not_empty(associated_records,"assert_foreign_key_points_to_me ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName} Check if id is specified in #{assName.to_sym}.yml file.")
 end #def
@@ -126,17 +121,18 @@ def assert_associations(ass1,ass2)
 	assert_association(class1.association_class(ass2),class2.association_method_symbol(ass1))
 end #def
 def assert_general_associations(table_name)
-	fixtures(table_name).each_value do |my_fixture|
-	@possible_associations.each do |association_name|
+	fixtures(table_name).each_value do |fixture|
+	fixture.class.association_names.each do |association_name|
+		assert_associations(table_name,association_name)
 		assName=association_name.to_sym
-		if my_fixture.class.is_association_to_many?(assName) then
-			 assert_association_to_many(my_fixture.class,assName)
-			assert_foreign_key_points_to_me(my_fixture.class,assName)
+		if fixture.class.is_association_to_many?(assName) then
+			 assert_association_to_many(fixture.class,assName)
+			assert_foreign_key_points_to_me(fixture,assName)
 		else
-			assert_association_to_one(my_fixture.class,assName)
+			assert_association_to_one(fixture.class,assName)
 		end #if
 	end #each
-#	assert_equal(Fixtures::identify(my_fixture.logical_prmary_key),my_fixture.id,"identify != id")
+#	assert_equal(Fixtures::identify(fixture.logical_prmary_key),fixture.id,"identify != id")
 	end #each
 end #def
 def assert_table_exists(table_name)
@@ -174,5 +170,16 @@ def assert_matching_association(table_reference,association_name)
 	#~ assert_belongs_to(association_name,table_reference) 
 	message="Table name #{table_symbol.to_s} do not have matching associations (has* declarations) with #{'association_name'.titleize} #{association_name}."
 	assert_block(message){table_class.is_matching_association?(association_name)}
+end #def
+def assert_has_associations(model_class,message='')
+	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
+	assert_block(message){!model_class.association_names.empty?}	
+end #def
+def assert_module_included(klass,moduleName)
+#The assertion upon which all other assertions are based. Passes if the block yields true.
+  assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
+    klass.module_included?(moduleName)
+  end
+
 end #def
 
