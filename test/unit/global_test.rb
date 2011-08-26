@@ -1,3 +1,11 @@
+###########################################################################
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+# contains mostly functions created for testing / debugging but not dependant on ActiveRecord
 class Nil_Class
 def canonicalName
 	return 'nil'
@@ -32,6 +40,14 @@ test 'set_inspect' do
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},/,set.set_inspect)
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},(?-mix:1),\/1\/>, <Regexp #[0-9-]+\{4408\},(?-mix:3),\/3\/>/,set.set_inspect)
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},(?-mix:1),\/1\/>, <Regexp #[0-9-]+\{4408\},(?-mix:3),\/3\/>/,set.set_inspect)
+end #test
+test "instance_methods_from_class" do
+	assert_include('full_associated_models',['full_associated_models'])
+	assert_include('full_associated_models',TestTable.instance_methods_from_class)
+end #test
+test "instance_respond_to" do
+	assert(TestTable.instance_respond_to?(:full_associated_models))
+	assert(TestTable.respond_to?(:instance_respond_to?))
 end #test
 test 'similar_methods' do
 end #test
