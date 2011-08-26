@@ -1,23 +1,13 @@
 Loaded suite test/unit/node_test
 Started
-EE..
-Finished in 21.672342 seconds.
+..F..
+Finished in 41.699955 seconds.
 
-  1) Error:
-test_aaa_test_new_assertions(NodeTest):
-RuntimeError: # Don’t create associations that have the same name (connection)as instance methods of ActiveRecord::Base (["_save_callbacks", "timestamped_migrations", "table_name_prefix?", "_protected_attributes?", "has_attribute?", "table_name_prefix", "to_param", "time_zone_aware_attributes", "store_full_sti_class?", "attributes", "_commit_callbacks", "partial_updates", "_active_authorizer", "_validators", "_accessible_attributes?", "hash", "dup", "_touch_callbacks", "schema_format", "primary_key_prefix_type", "attribute_for_inspect", "_active_authorizer=", "_validate_callbacks", "default_scoping", "_validators=", "attributes=", "_accessible_attributes", "readonly?", "_find_callbacks", "cache_key", "logger", "nested_attributes_options", "connection_handler?", "_store_full_sti_class", "eql?", "include_root_in_json", "_validators?", "_accessible_attributes=", "attribute_types_cached_by_default", "init_with", "[]", "_initialize_callbacks", "table_name_suffix", "inspect", "_destroy_callbacks", "default_timezone", "[]=", "frozen?", "lock_optimistically", "include_root_in_json?", "include_root_in_json=", "_validation_callbacks", "validation_context", "partial_updates?", "_protected_attributes", "_update_callbacks", "connection_handler", "clone_attribute_value", "record_timestamps", "readonly!", "associated_foreign_key_records", "freeze", "validation_context=", "quoted_id", "table_name_suffix?", "store_full_sti_class", "skip_time_zone_conversion_for_attributes", "_partial_updates", "_protected_attributes=", "_active_authorizer?", "_create_callbacks", "connection", "==", "attribute_names", "clone_attributes", "pluralize_table_names", "column_for_attribute", "configurations", "attribute_present?", "_rollback_callbacks"]).
-    /test/test_helper_assert_generic_table.rb:55:in `assert_association'
-    test/unit/node_test.rb:31:in `test_aaa_test_new_assertions'
+  1) Failure:
+test_handle_polymorphic(NodeTest)
+    [/test/test_helper.rb:148:in `assert_include'
+     test/unit/node_test.rb:43:in `test_handle_polymorphic']:
+"branch" is not in list ["node"].
+<false> is not true.
 
-  2) Error:
-test_general_associations(NodeTest):
-NoMethodError: undefined method `is_association_to_many?' for #<Node:0xb5bf3cf8>
-    /test/test_helper_assert_generic_table.rb:71:in `assert_association_to_one'
-    /test/test_helper_assert_generic_table.rb:136:in `assert_general_associations'
-    /test/test_helper_assert_generic_table.rb:130:in `each'
-    /test/test_helper_assert_generic_table.rb:130:in `assert_general_associations'
-    /test/test_helper_assert_generic_table.rb:129:in `each_value'
-    /test/test_helper_assert_generic_table.rb:129:in `assert_general_associations'
-    test/unit/node_test.rb:15:in `test_general_associations'
-
-4 tests, 53686 assertions, 0 failures, 2 errors
+5 tests, 69029 assertions, 1 failures, 0 errors

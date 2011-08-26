@@ -1,6 +1,22 @@
 Loaded suite test/unit/test_helper_test
 Started
-........................
-Finished in 43.718584 seconds.
+........F................
+Finished in 56.04837 seconds.
 
-24 tests, 608 assertions, 0 failures, 0 errors
+  1) Failure:
+test_assert_general_associations(TestHelperTest)
+    [/test/test_helper_assert_generic_table.rb:42:in `assert_association'
+     /test/test_helper_assert_generic_table.rb:117:in `assert_associations'
+     /test/test_helper_assert_generic_table.rb:126:in `assert_general_associations'
+     /test/test_helper_assert_generic_table.rb:125:in `each'
+     /test/test_helper_assert_generic_table.rb:125:in `assert_general_associations'
+     /test/test_helper_assert_generic_table.rb:124:in `each_value'
+     /test/test_helper_assert_generic_table.rb:124:in `assert_general_associations'
+     test/unit/test_helper_test.rb:174:in `test_assert_general_associations'
+     test/unit/test_helper_test.rb:173:in `each'
+     test/unit/test_helper_test.rb:173:in `test_assert_general_associations']:
+association_reference=stream_parameter_ids causes confusion with automatic _ids and _ids= generated for to_many assoiations.
+<"_ids"> expected to be != to
+<"_ids">.
+
+25 tests, 15434 assertions, 1 failures, 0 errors

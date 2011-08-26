@@ -1,19 +1,19 @@
 Loaded suite test/unit/stream_pattern_test
 Started
 .F..
-Finished in 14.561445 seconds.
+Finished in 15.494873 seconds.
 
   1) Failure:
 test_general_associations(StreamPatternTest)
-    [/test/test_helper.rb:172:in `assert_not_empty'
-     /test/test_helper_assert_generic_table.rb:110:in `assert_foreign_key_points_to_me'
-     /test/test_helper_assert_generic_table.rb:118:in `assert_general_associations'
-     /test/test_helper_assert_generic_table.rb:114:in `each'
-     /test/test_helper_assert_generic_table.rb:114:in `assert_general_associations'
-     /test/test_helper_assert_generic_table.rb:113:in `each_value'
-     /test/test_helper_assert_generic_table.rb:113:in `assert_general_associations'
+    [/test/test_helper.rb:148:in `assert_not_empty'
+     /test/test_helper_assert_generic_table.rb:105:in `assert_foreign_key_points_to_me'
+     /test/test_helper_assert_generic_table.rb:134:in `assert_general_associations'
+     /test/test_helper_assert_generic_table.rb:130:in `each'
+     /test/test_helper_assert_generic_table.rb:130:in `assert_general_associations'
+     /test/test_helper_assert_generic_table.rb:129:in `each_value'
+     /test/test_helper_assert_generic_table.rb:129:in `assert_general_associations'
      test/unit/stream_pattern_test.rb:15:in `test_general_associations']:
-assert_foreign_key_points_to_me ar_from_fixture.inspect=#<StreamPattern id: 67825817, name: "Parse_Table", created_at: "2011-07-29 12:18:51", updated_at: "2011-07-29 12:18:51">,assName=stream_pattern_arguments Check if id is specified in stream_pattern_arguments.yml file.
+assert_foreign_key_points_to_me ar_from_fixture.inspect=#<StreamPattern id: 592343983, name: "Schedule", created_at: "2011-08-18 18:53:57", updated_at: "2011-08-18 18:53:57">,assName=stream_pattern_arguments Check if id is specified in stream_pattern_arguments.yml file.
 "ActiveRecord::Relation #<ActiveRecord::Relation:" is empty with value "[]".
 
-4 tests, 1827 assertions, 1 failures, 0 errors
+4 tests, 1831 assertions, 1 failures, 0 errors

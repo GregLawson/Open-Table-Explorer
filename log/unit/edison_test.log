@@ -1,7 +1,7 @@
 Loaded suite test/unit/edison_test
 Started
 .E..
-Finished in 16.151234 seconds.
+Finished in 17.087767 seconds.
 
   1) Error:
 test_general_associations(EdisonTest):

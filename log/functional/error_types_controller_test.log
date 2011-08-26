@@ -1,0 +1,25 @@
+Loaded suite test/functional/error_types_controller_test
+Started
+..E.E..
+Finished in 13.477814 seconds.
+
+  1) Error:
+test_should_get_edit(ErrorTypesControllerTest):
+ActionView::Template::Error: uninitialized constant ErrorType::TestRuns
+    app/views/error_types/_form.html.erb:14:in `_app_views_error_types__form_html_erb__169327666__622908868_447536'
+    app/views/error_types/_form.html.erb:13:in `_app_views_error_types__form_html_erb__169327666__622908868_447536'
+    app/views/error_types/_form.html.erb:1:in `_app_views_error_types__form_html_erb__169327666__622908868_447536'
+    app/views/error_types/edit.html.erb:3:in `_app_views_error_types_edit_html_erb__674318277__622902368_0'
+    test/functional/error_types_controller_test.rb:33:in `test_should_get_edit'
+
+  2) Error:
+test_should_get_new(ErrorTypesControllerTest):
+ActionView::Template::Error: uninitialized constant ErrorType::TestRuns
+    app/views/error_types/_form.html.erb:14:in `_app_views_error_types__form_html_erb__169327666__622908868_447536'
+    app/views/error_types/_form.html.erb:13:in `_app_views_error_types__form_html_erb__169327666__622908868_447536'
+    app/views/error_types/_form.html.erb:1:in `_app_views_error_types__form_html_erb__169327666__622908868_447536'
+    app/views/error_types/new.html.erb:3:in `_app_views_error_types_new_html_erb___605604896__623255508_0'
+    app/controllers/error_types_controller.rb:29:in `new'
+    test/functional/error_types_controller_test.rb:15:in `test_should_get_new'
+
+7 tests, 8 assertions, 0 failures, 2 errors
