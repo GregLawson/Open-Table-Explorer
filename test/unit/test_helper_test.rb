@@ -139,7 +139,7 @@ test 'assert_association to one' do
 end #test
 test 'assert_association to many' do
 	assert_not_nil(table_specs(:ifconfig).class.is_association_to_many?(:acquisition_stream_specs))
-	assert_association_to_many(fixtures(:table_specs).values.first,:acquisition_stream_specs)
+	assert_association_to_many(TableSpec,:acquisition_stream_specs)
 	assert_association_one_to_many(table_specs(:ifconfig),:acquisition_stream_specs)
 end #test
 test 'assert_active_record_method' do
@@ -168,6 +168,11 @@ test 'assert_associations' do
 	assert(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s.classify.constantize.has_many_association?(@@TABLE_NAME_WITH_FOREIGN_KEY),"#{@@FOREIGN_KEY_ASSOCIATION_SYMBOL} does not has_many #{@@TABLE_NAME_WITH_FOREIGN_KEY}")
 	assert_associations(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_associations(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,@@CLASS_WITH_FOREIGN_KEY)
+end #test
+test 'assert_general_associations' do
+	fixture_names.each do |table_name|
+		assert_general_associations(table_name)
+	end #each
 end #test
 test 'other_association' do
 	model_class=TableSpec
