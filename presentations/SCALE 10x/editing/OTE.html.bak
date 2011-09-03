@@ -1,0 +1,1077 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Open Table Explorer</title>
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20110901" />
+<meta name="author" content="Greg Lawson" />
+<meta name="company" content="" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>UUASC September 1, 2011</h1>
+<h2>Open Table Explorer</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+<h1>Open Table Explorer</h1>
+<h2>How to Gain Control of Your Data and Find Out Who's Lying to You</h2>
+<h3>Greg Lawson</h3>
+<h4>Free Data Analyst</h4>
+</div>
+<div class="slide">
+<h1>Intro</h1>
+<ul>
+<li>I was forced to present by Jordan's threats.</li>
+<li>I wanted to delay because my open
+source project doesn't have a downloadable demo yet.</li>
+<li>This project is completing the Proof-of-Concept stage</li>
+<li>In Barry Boehm's Spiral Model, the first spiral has been completed, resulting in choosing a single architecture.</li>
+<li> But I hope this talk will prove interesting, even inspiring, as its wildly
+ambitious, strongly open source, as well as unapologetically nerdy. </li>
+<li>It also
+provides my answer to the question, "If you don't have a job, and you
+aren't desperate to find one, what software would you write?"
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>The Metaphorical Problems to Be Solved</h1>
+<ul>
+<li>We Are Starving In the Midst Of Plenty</li>
+<li>How Do We, "Think Globally, Act Locally."</li>
+<li>Hint: Even though these metaphors come from other contexts, the solutions will have something to do with this project and home engineering.</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+<div class="slide">
+<h1>We Are Starving In the Midst Of Plenty</h1>
+<ul>
+<li>By plenty, I mean the vast data and software resources of the Internet.</li>
+<li>By starving, I mean the inability to solve our problems. I define problem solving as:</li>
+<ul>
+<li>analyze available facts and data</li>
+<li>predict the future</li>
+<li>respond to error feedback (difference between prediction and reality)</li>
+</ul>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>This Starving Metaphor</h1>
+<ul>
+<li>This metaphor is meant to motivate our compassion and dispell the illusion that we are powerless.</li>
+<li>If you want us to continue to starve in the midst of plenty, look for solutions from celebreties, politicians, and journalists.</li>
+<li>If you want real solutions, look to altruistic and useful engineers.</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>How Do We, "Think Globally, Act Locally."</h1>
+<ul>
+<li>I believe the best way to think globally is engineering.</li>
+<ul>
+<li>Engineering is the application of science and experience to solving practical problems.
+</li>
+</ul>
+<li>The Locality Principal</li>
+<ul>
+<li>We are most efficient when acting locally (close in space and time)</li>
+<li>Computers are more efficient using small, fast local memory (registers, caches) than large, slow global memories (disk drives and network storage)</li>
+<li>We think more efficiently about abstractions that fit in our consciousness and short term memory than about the realities that won't fit in our brains.</li>
+<li>Home is local.</li>
+</ul>
+</ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+<h1>Agenda</h1>
+<ul>
+<li>Project Evolution</li>
+<li>Current Architecture</li>
+<li>Rationale</li>
+<li>Applications</li>
+<li>Project Hosting</li>
+<li>How To Share Data?</li>
+<li>Conclusion</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>Project Evolution</h1>
+<ul>
+<li>
+<https://github.com/GregLawson/Open-Table-Explorer/wiki>
+The project consists of an application and a framework.
+</li>
+<li>I started with the application Home Energy Explorer to analyze my home
+energy consumption and solar panel production as a function of
+weather.</li>
+<li>But I thought that was a crappy open source project since you would
+need the same expensive hardware to run it.</li>
+<li>So I decided to factor
+out the weird hardware and code into tables, thus was born the general
+purpose, does everything, framework Open Table Explorer.</li>
+<li>Since developing software is hard, I wanted to write as little code as possible, so I
+delegated all the heavy lifting to Ruby Rails, SQL, R, and the ruby
+language as a Domain Specific Language (DSL).</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Fourth Architecture Considered</h1>
+<ul>
+<li>Architecture is Extensible in multiple ways.</li>
+<li>Streams</li>
+<li>Stream Storage Life-cycle</li>
+<li>Stream Patterns</li>
+<li>Stream Methods</li>
+<li>Where Should We Put the Computations?</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+<div class="slide">
+<h1>What Is a Stream?</h1>
+<ul>
+<li>A Stream is a ruby class that abstracts as much useful data management architecture as possible.</li>
+<li>A stream can be visualized as a possibly infinite table consisting of rows and columns.</li>
+<li>Stream Data Buffers can be implemented as</li>
+<ul>
+<li> <a href="http://www.ruby-doc.org/core/classes/Array.html">Array</a> of <a href="http://www.ruby-doc.org/core/classes/Hash.html">Hashes</a> of name => value pairs</li>
+<li>ActiveRecord  -  When implemented as a SQL database, an id primary key is added along with  a creation and update time-stamp. A logical primary key is added as a unique index to prevent duplicate entries.</li>
+</ul>
+</li>
+<li>Ruby Expressions</li>
+<li>A Statistical model</li>
+
+</ul>
+<div class="handout">
+A Stream is a ruby class that abstracts as much useful data management architecture as possible. A stream can be visualized as a possibly infinite table consisting of rows and columns. Each column has a unique [[2.2.9. Column Data Types]]. This project intends to leave most data management issues to the underlying database management systems. Since Ruby Rails has been chosen as the user interface and database interface, the capabilities [[2.2.2.-ActiveRecord]] abstracts from or simulates on top of the underlying database system are the easiest to support. The tools specific to the underlying database system are still available, since [[2.2.2.-ActiveRecord]] makes few demands on the underlying database.
+</div>
+</div>
+<div class="slide">
+<h1>Stream Storage Life-cycle</h1>
+Eventually each stream input is eventually consumed and deleted, to avoid an unbounded need to buy more disk drives. But for practical reasons some data's consumption is delayed indefinitely:
+<ul>
+<li>Test data, error messages, and historical trends are saved to support development.
+</li>
+<li>Statistics that representing a set of historical values that are well enough characterized that the original data provides little added-value.  
+</li>
+<li>data representing external objects with long life-cycles.
+</li>
+<li>supporting data for a statistical model. Training data, interesting outliers, context around anomalies. It is assumed that for large data sets this supporting data is much smaller than keeping all acquired data.
+</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>Stream Patterns</h1>
+<ul>
+<h1>Listing stream_patterns</h1>
+
+<table border=1>
+  <tr>
+
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>Acquisition</td>
+    <td><a href="/stream_patterns/695672806">Show</a></td>
+    <td><a href="/stream_patterns/695672806/edit">Edit</a></td>
+    <td><a href="/stream_patterns/695672806" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+
+  <tr>
+    <td>Parallel_Acquisition</td>
+    <td><a href="/stream_patterns/402305667">Show</a></td>
+    <td><a href="/stream_patterns/402305667/edit">Edit</a></td>
+
+    <td><a href="/stream_patterns/402305667" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+
+  <tr>
+    <td>Schedule</td>
+    <td><a href="/stream_patterns/592343983">Show</a></td>
+    <td><a href="/stream_patterns/592343983/edit">Edit</a></td>
+    <td><a href="/stream_patterns/592343983" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+
+  </tr>
+
+  <tr>
+    <td>Parse</td>
+
+    <td><a href="/stream_patterns/67825817">Show</a></td>
+    <td><a href="/stream_patterns/67825817/edit">Edit</a></td>
+    <td><a href="/stream_patterns/67825817" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+ <tr>
+    <td>Storage</td>
+    <td><a href="/stream_patterns/400131708">Show</a></td>
+
+    <td><a href="/stream_patterns/400131708/edit">Edit</a></td>
+    <td><a href="/stream_patterns/400131708" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+  <tr>
+    <td>R_Plot</td>
+    <td><a href="/stream_patterns/803719852">Show</a></td>
+    <td><a href="/stream_patterns/803719852/edit">Edit</a></td>
+    <td><a href="/stream_patterns/803719852" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+  <tr>
+    <td>R_Report</td>
+    <td><a href="/stream_patterns/803719852">Show</a></td>
+    <td><a href="/stream_patterns/803719852/edit">Edit</a></td>
+    <td><a href="/stream_patterns/803719852" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+ <tr>
+    <td>R_Value</td>
+    <td><a href="/stream_patterns/803719852">Show</a></td>
+    <td><a href="/stream_patterns/803719852/edit">Edit</a></td>
+    <td><a href="/stream_patterns/803719852" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+</table>
+
+<br />
+
+<a href="/stream_patterns/new">New Stream pattern</a>
+
+
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+</div>
+<div class="slide">
+<h1>Stream  Pattern Arguments</h1>
+<p>
+  <b>Name:</b>
+  Acquisition
+</p>
+
+
+<a href="/stream_patterns/695672806/edit">Edit</a> |
+
+<a href="/stream_patterns">Back</a>
+
+<h1>Listing stream_pattern_arguments</h1>
+
+<table border=1>
+  <tr>
+    <th>Name</th>
+
+    <th>Ruby type</th>
+    <th>Direction</th>
+   <th></th>
+    <th></th>
+    <th></th>
+
+  </tr>
+
+  <tr>
+    <td>Uri</td>
+    <td>URI</td>
+
+    <td>Input</td>
+   <td><a href="/stream_pattern_arguments/314307499">Show</a></td>
+    <td><a href="/stream_pattern_arguments/314307499/edit">Edit</a></td>
+    <td><a href="/stream_pattern_arguments/314307499" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+
+  </tr>
+  <tr>
+    <td>acquisition</td>
+    <td>String</td>
+    <td>Output</td>
+   <td><a href="/stream_pattern_arguments/695672806">Show</a></td>
+    <td><a href="/stream_pattern_arguments/695672806/edit">Edit</a></td>
+    <td><a href="/stream_pattern_arguments/695672806" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+</table>
+
+<br />
+
+<a href="/stream_pattern_arguments/new">New Stream pattern argument</a>
+
+
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Listing stream_methods</h1>
+<small>
+
+<table border=1>
+  <tr>
+    <th>Stream Pattern</th>
+    <th>Name</th>
+    <th>Library</th>
+    <th>Interface code</th>
+ </tr>
+  <tr>
+    <td>Acquisition</td>
+    <td>HTTP</td>
+    <td>net/http</td>
+    <td><PRE>@acquisition= Net::HTTP.get(@uri.uri)</PRE></td>
+  </tr>
+  <tr>
+    <td>Acquisition</td>
+    <td>File</td>
+    <td></td>
+    <td><PRE>@acquisition=IO.read(@uri.schemelessUrl)</PRE></td>
+  </tr>
+
+  <tr>
+    <td>Acquisition</td>
+    <td>Shell</td>
+    <td></td>
+    <td><PRE>@acquisition=`#{@uri.schemelessUrl} 2&gt;&amp;1`</PRE></td>
+  </tr>
+  <tr>
+    <td>Parse</td>
+    <td>HTML</td>
+    <td>hpricot</td>
+    <td><PRE>@parsed Data= Hpricot(@dataToParse).search(@selection)</PRE></td>
+</tr>
+  <tr>
+    <td>Parse</td>
+    <td>XML</td>
+    <td></td>
+    <td><PRE>@parsedData= REXML::Document.new(@dataToParse).get_elements(@selection)</PRE></td>
+  </tr>
+
+  <tr>
+    <td>Parse</td>
+    <td>Regexp</td>
+    <td></td>
+    <td><PRE>@parsedData=Regexp.new(@selection).match(@dataToParse)</PRE></td>
+  </tr>
+  <tr>
+    <td>Parse</td>
+    <td>JSON</td>
+    <td></td>
+    <td><PRE>@parsedData = JSON.parse(@dataToParse)[@selection]</PRE></td>
+  </tr>
+  <tr>
+    <td>Parse</td>
+    <td>Binary</td>
+    <td></td>
+    <td><PRE>@parsedData=@dataToParse.unpack(@selection)</PRE></td>
+  </tr>
+  <tr>
+    <td>Storage</td>
+    <td>Store</td>
+    <td>ActiveRecord::Base</td>
+    <td><PRE>@model_class.create(@name_value_pairs)</PRE></td>
+  </tr>
+</table>
+</small>
+<br />
+
+<a href="/stream_methods/new">New Stream method</a>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Where Should We Put the Computations?</h1>
+<table border=1>
+<tr><th>Computational Tool</th><th>Scope</th><th>Usage</th></tr>
+<tr><td>ActiveRecord</td><td>Within one Record</td><td>Cells of same record</td></tr>
+<<tr><td>ActiveRecord</td><td>Sequential Scan of Records</td><td>cumulative sums, locals noise computation, moving average, time series windowing and filtering</td></tr>
+<tr><td>Active Relation</td><td>Tables</td><td>table join computations</td></tr>
+<tr><td>R</td><td>Between columns</td><td>compute analog models </td></tr>
+</table>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Rationale</h1>
+<ul>
+<li>Why Open? Table? Explorer? Home? Energy? SQL? ruby? rails? R?</li>
+<li>Cognitive Biases</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Why Open?</h1>
+<ul>
+<li>While software consists of both source and data, I do not believe enough attention has been paid to Open Data.</li>
+<li>
+For years (from some of the earliest versions) I used Quicken to record my financial data. I abandoned using Quicken when I realized after years of exhaustive work putting my data into Quicken, I did not own that data. I could not use my data in the ways I believed I had every right to do so. When I ran out of disk space, my Quicken data file became corrupted, and unrecoverable.</li>
+<li>The other major problem is that programs (even open source ones) create data silos or data jails, where data cannot be easily shared between programs. Anyone with a little familiarity with database systems knows that separate copies of the same data are inevitably inconsistent and incomplete.</li>
+<li></li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Why Table?</h1>
+<ul>
+<li>A table consists of rows and columns and is believed by data base psychologists as one of the best understood data structures for ordinary users.</li>
+<li>SQL databases have inspired the rigorous definitions and the commercial data processing of the world has proven the practicality of tables in numerous fields demanding efficiency, consistency, error control, transparency, and security.</li>
+<li>While relational SQL databases provide a mathematically sound approach to the analysis of digital data, statistical analysis packages bring clarity to analog data. Fortunately statistical analysis programs support tables quite well.</li>
+<li></li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Why Home Energy Explorer?</h1>
+<ul>
+<li>Why Explorer? - This is an attempt to provide useful software by focusing on a narrow range of functionality first. An explorer focuses on data navigation and simple, basic data analysis.</li>
+<li>Why Home? - This is an attempt to focus on what a single person can comprehend and afford. Small business is equally applicable. Even a single person's view of a corporate monstrosity is applicable.</li>
+<li>Why Energy? - Energy is a concept from physics with huge applicability and yet the average person has a workable understanding. Energy is often highly correlated with economics. Our energy savings could conceivably fund this project.</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Why Ruby?</h1>
+<ul>
+<li> Ruby was chosen as an ideal tool to parse Internet text data. </li>
+<li>I would have used Perl, but my Perl code has proven unmaintainable.</li>
+<li>As a dynamically typed scripting language, it is well suited to the project goal of interactively discovering the data types of tables from unknown sources.</li>
+<li>Ruby supports internal Domain Specific Languages (DSL). This project provides a DSL for Data Analysis embedded  in the ruby language. Thus the following two design goals are supported:</li>
+<ul>
+<li>Easy things should be easy via the web interface</li>
+<li>Hard things should still be possible via the DSL.</li>
+</ul>
+<li>Macro processing and meta-programming are well integrated.</li>
+</ul>
+<div class="handout">
+<li>Ruby code can be introspective even self-referential.</li>
+<li>Ruby is quietly ambitious as a programming language.</li>
+</div>
+</div><div class="slide">
+<h1>Why Ruby Rails?</h1>
+<ul>
+<li>I want to interact with my programs and data from any computer in my house or elsewhere. </li>
+<li>I wanted a rich graphical interface which people would not need to be trained to use.</li>
+<li>I love the Internet.</li>
+<li> These requirements led to the selection of the browser interface. </li>
+<li>Ruby Rails was the interesting open source package that supported ruby, database, and web interfaces.</li>
+<li>Rails scaffolding provides a relative easy way to generate  skeleton CRUD (Create, Read, Update, and Delete) interface code.</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Why SQL Databases?</h1>
+<ul>
+<li>The Internet currently consists of vast stores of data, but the human brain is the bottleneck in its understanding. </li>
+<li>Some of this complexity is inherent in the problems we are trying to solve, but much of the complexity is artificial and can be hidden by the right glue software.</li>
+<li>One obvious problem of the Internet is that that vast amount of data is not in a form where it can be computationally combined.</li>
+<li>In contrast, data bases provide an algebra for selection, projection, aggregation, and grouping for any digital data. </li>
+<li>Since most large web servers on the Internet are in fact built on databases, the translation of this data into your own database is fairly straight forward.</li>
+
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>Why Statistical Analysis Programs?</h1>
+<ul>
+<li>As powerful as database management programs are in the digital domain, they are rather feeble in the analog domain. </li>
+<li>The type of software that provides powerful analog analysis is statistical analysis programs. Such package can uncover the hidden structure in our data.</li>
+<li>While it is often said that "correlation is not causation", it is hard to imagine prediction and control with out correlation.</li>
+<li>The most inspiring approach to statistics is Exploratory Data Analysis as developed by <a href="http://en.wikipedia.org/wiki/Tukey"> John Tukey</a>.</li>
+<li>The program Data Desk implemented these principals well over a decade ago, but has not been updated substantially since. I know of no open source equivalent, though there have been many attempts which could be supported.</li>
+<li>In the Open Table Explorer, I hope to support a nice feature of Data Desk: suggested data analyses based on the types of the columns in your table.</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Cognitive Biases</h1>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Source_amnesia">Source Amnesia</a> where we forget or choose not to remember where our beliefs come from.</li>
+<li>Narrative Fallacy</li>
+<li></li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>Narrative Fallacy</h1>
+<ul>
+<li>The <a href="http://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#Narrative_Fallacy Narrative Fallacy">Narrative Fallacy</a> is a cognitive bias where people will believe a story about data even if that story is contradicted by the data itself</li>
+<li>Probably the greatest example is politics versus engineering: In politics, you can succeed with an appealing story, no matter how far it strays from the data, while in engineering the farther you stray from the data the greater your risk of failure.</li>
+<li>The Narrative Fallacy is exacerbated by the intellectual and social distance between a scientifically educated minority and the rest of the population.</li>
+<li>Even among intellectuals there is the gulf between the sciences and the humanities described as <a href="http://en.wikipedia.org/wiki/The_Two_Cultures">The Two Cultures]</a>.</li>
+<li>The <a href="http://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#Narrative_Fallacy Narrative Fallacy">Narrative Fallacy</a> is in the spirit of <a href="http://en.wikipedia.org/wiki/Daniel_Kahneman">Kahneman and Tversky</a>. Their cognitive bias of [http://en.wikipedia.org/wiki/Representativeness_heuristic representativeness] overlaps with the Narrative Fallacy, though with a different emphasis.</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Applications</h1>
+<ul>
+<li>Data Collected</li>
+<ul>
+<li>Solar production</li>
+<li>Electrical Consumption</li>
+<li>Bugs, Test Runs, Code Locations, Methods</li>
+</ul>
+<li> Future Applications</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+
+<div class="slide">
+<h1>Solar Production</h1>
+<img src="Pac_t001.png">
+<img src="PowerACPV001.png">
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+</div>
+<div class="slide">
+<h1>Electrical Consumption</h1>
+<ul>
+<li>Load Parameters</li>
+<li>Levels at Which Electricity Can Be Measured</li>
+<li>Electric Monitoring Primary Cost Drivers</li>
+<li>Cost Depends On How You Discriminate Devices</li>
+<li>Possible Discrimination Algorithms</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Load Parameters</h1>
+<table border=1>
+  <tr>
+
+    <th>Description</th>
+    <th>Load measurement</th>
+    <th>Load</th>
+    <th>Power factor</th>
+    <th>Period</th>
+    <th>Duty cycle</th>
+    <th>Mode</th>
+  </tr>
+
+
+  <tr>
+    <td>Toaster oven</td>
+
+    <td>Measured-KAW</td>
+    <td>1460.0</td>
+    <td>1.0</td>
+    <td>Daily</td>
+    <td>0.01</td>
+   <td>On</td>
+    <td><a href="/measurements/97089747">Show</a></td>
+    <td><a href="/measurements/97089747/edit">Edit</a></td>
+    <td><a href="/measurements/97089747" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+
+  </tr>
+  <tr>
+    <td>Microwave oven</td>
+    <td>Measured-WUP</td>
+    <td>12.0</td>
+    <td>0.62</td>
+    <td>Weekly</td>
+    <td>0.99</td>
+    <td>Off</td>
+    <td><a href="/measurements/208491525">Show</a></td>
+    <td><a href="/measurements/208491525/edit">Edit</a></td>
+
+    <td><a href="/measurements/208491525" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+  <tr>
+    <td>Dell laptop Sleep mode</td>
+    <td>Measured-KAW</td>
+    <td>13.0</td>
+    <td></td>
+
+    <td>Weekly</td>
+    <td>0.5</td>
+   <td>Standby</td>
+    <td><a href="/measurements/209663224">Show</a></td>
+
+    <td><a href="/measurements/209663224/edit">Edit</a></td>
+    <td><a href="/measurements/209663224" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+  <tr>
+    <td>Garbage disposal</td>
+
+    <td>Measured-KAW</td>
+    <td>300.0</td>
+    <td>0.27</td>
+    <td>Daily</td>
+    <td>0.01</td>
+   <td>On</td>
+   <td><a href="/measurements/237216502">Show</a></td>
+    <td><a href="/measurements/237216502/edit">Edit</a></td>
+    <td><a href="/measurements/237216502" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+
+  </tr>
+
+  <tr>
+    <td>Shredder</td>
+    <td>Measured-KAW</td>
+    <td>170.0</td>
+    <td>0.23</td>
+    <td></td>
+    <td>0.01</td>
+   <td>On</td>
+   <td><a href="/measurements/274028462">Show</a></td>
+    <td><a href="/measurements/274028462/edit">Edit</a></td>
+
+    <td><a href="/measurements/274028462" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+ 
+  <tr>
+    <td>Dryer spinning</td>
+    <td>Measured-WUP</td>
+    <td>680.0</td>
+    <td>0.54</td>
+
+    <td>Weekly</td>
+    <td>0.02</td>
+    <td>On</td>
+    <td><a href="/measurements/576927024">Show</a></td>
+
+    <td><a href="/measurements/576927024/edit">Edit</a></td>
+    <td><a href="/measurements/576927024" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></td>
+  </tr>
+
+</table>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Levels at Which Electricity Can Be Measured</h1>
+<table border=1>
+<tr>
+<th>Measurement point</th>
+<th>Number of measurement points</th>
+<th>unit cost</th>
+<th>Full cost</th>
+<th>Smart cost</th>
+</tr>
+<tr><td>whole house measurement </td><td>1 </td><td>$200 </td><td>$200 </td><td>$200
+</tr>
+<tr><td>breaker branch circuit measurement </td><td>20 </td><td>$10 to $200 </td><td>$200 to $4,000 </td><td> $500
+</tr>
+<tr><td>plug-bar measurement </td><td>10 </td><td>$10 to $30 </td><td>$100 to $300 </td><td>$100 to $300
+</tr>
+<tr><td>individual device measurement </td><td>100 </td><td>$100 </td><td>$10,000 </td><td>$100
+</tr>
+<tr><td>Total cost </td><td>100 </td><td> - </td><td>$10,000 </td><td>$1,000 or less
+</tr>
+</table>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Electric Monitoring Primary Cost Drivers</h1>
+<ul>
+<li>how many measurement points </li>
+<ul>
+<li>  1 for whole house only</li>
+<li> 10 for strategic measurements</li>
+<li>100 for measuring every device</li>
+</ul>
+<li>whether you buy or build hardware</li>
+<ul>
+<li> $10 for current transformers, custom wiring, and analog to digital converters</li>
+<li>$200 for commercial computer connected devices</li>
+</ul>
+</ul>
+<div class="handout">
+<li>The cost of a system varies widely depending on:</li>
+<ul>
+<li>If you are willing to build hardware yourself</li>
+<li>How much of this planned software gets written</li>
+<li>How much manual testing you are willing to do (including flipping breakers and creating mini-power outages)</li>
+</ul>
+
+</div>
+</div>
+<div class="slide">
+<h1>Cost Depends On How You Discriminate Devices</h1>
+<ul>
+<li>$10,000 - you don't have to; you bought enough hardware</li>
+<li>$400 - you're willing to move plug-in meters from device to device over time to collect device signatures. You need a sophisticated version of this software to be written</li>
+<li>$250 - you don't have too many devices; you like meticulous record keeping, you live alone, and you know when and for how long devices are turned on</li>
+<li>$20 - you don't have a large electric bill, you want a general idea</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Discrimination Algorithms</h1>
+<table border=1>
+<small>
+<tr><th>Algorithm</th><th>Example</th><th>Discrimination math</th></tr>
+<tr><td>power consumption </td><td> 60 watt light from 1000W toaster oven </td><td> 1D level change detection
+</td></tr>
+<tr><td>real and reactive power consumption </td><td> 100W light bulb from 100W motor </td><td> 2D discrimination complex number discrimination
+</td></tr>
+<tr><td>transient power analysis  </td><td> 100W motor from 100W TV </td><td> measure transient ringing or resonance 
+</td></tr>
+<tr><td>schedule discrimination  </td><td><small>60 watt front porch light from 60 watt sprinkler</small></td><td> time-of-day probability distribution
+</td></tr>
+<tr><td>branch discrimination  </td><td><small>identical devices on different branch circuits</small></td><td> Gaussian elimination / generalized linear model
+</td></tr>
+<tr><td>power consumption time sequence  </td><td> 300W washer from 300W electric heater </td><td> state machine
+</td></tr>
+<tr><td>multi-hypothesis tracking </td><td> any ambiguous case above </td><td><small>delay discrimination until sufficient time signature is collected</small>
+</small>
+</table>
+<div class="handout">
+Statistically telling things apart is called discrimination (i.g. [http://en.wikipedia.org/wiki/Linear_discriminant_analysis Wikipedia linear discriminant analysis]. A device signature is a way of telling devices apart in a single measurement time series; that is devices with the same device signature cannot be told apart.   The following table includes increasingly complicated algorithms needing increasingly more data to discriminate between device signatures. Each algorithm adds another dimension to the discrimination space:
+
+</div>
+</div>
+<div class="slide">
+<h1>Future Applications</h1>
+<ul>
+<li>Needle in a Haystack System Administration</li>
+<ul>
+<li>Home Network Surveillance (nmap, ssh ifconfig, smbtree, snort)</li>
+<li>Boot Log Comparisons</li>
+</ul>
+<li>TV (MythTV, schedules, program descriptions)</li>
+<li>Economic Data</li>
+<li>Accounting Data</li>
+<ul>
+<li>Budgeting</li>
+<li>Taxes</li>
+<ul>
+<li>Open Tax Solver</li>
+<li>IRS PDF Form Fill-in</li>
+</ul>
+</ul>
+<li>Health Data</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Health Data</h1>
+<table border=1>
+  <tr>
+    <th><small>Device</small></th><th><small>Brand</small></th><th><small>Interface</small></th><th><small>Health</small></th><th><small>Raw</small></th><th><small>Derived</small></th>
+  </tr>
+  <tr>
+    <td><small>GPS and heart rate</td></small><td><small>Garmin Forerunner</td></small><td><small>USB, Windows text</td></small><td><small> exercise; heart rate monitoring</td></small><td><small>GPS location, pulse</td></small><td><small>Speed, calories</td></small>
+  </tr>
+  <tr>
+    <td><small>pedometer</td></small><td><small>Omron 2-axis pedometer</td></small><td><small>USB, Windows text</td></small><td><small>exercise</td></small><td><small>steps per hour</td></small><td><small>Distance, calories</td></small>
+  </tr>  
+  <tr>
+    <td><small>Scale</td></small><td><small>Hemming Weigh</td></small><td><small>USB, Windows</td></small><td><small>Weight, body fat</td></small><td><small>impedance</td></small><td><small>percent fat, water</td></small>
+  </tr>
+  <tr>
+    <td><small>Blood Pressure</td></small><td><small>Microlife (Costco)</td></small><td><small>USB, Windows text</td></small><td><small>Blood pressure</td></small><td><small>Systolic, diastolic, pulse</td></small><td><small>other</td></small>
+  </tr>
+<tr>
+    <td><small>Voice recorder</td></small><td><small>Panasonic</td></small><td><small>USB storage</td></small><td><small>Voice log, Sleep monitoring</td></small><td><small>mp3</td></small>
+  </tr>
+  <tr>
+    <td><small>Oximeter</td></small><td><small></td></small><td><small>USB, Windows text; Arduino</td></small><td><small>Blood oxygen content</td></small><td><small>other</td></small>
+  </tr>
+  <tr>
+    <td><small>Lung volume</td></small><td><small></td></small><td><small>Arduino</td></small><td><small>Lung volume, inspiration and expiration rate</td></small><td><small></td></small>
+  </tr>
+<tr>
+    <td><small>4 camera DVD</td></small><td><small>US Security Solutions</td></small><td><small>JPEG, Windows</td></small><td><small>Sleep monitoring</td></small>
+  </tr>  
+
+</table>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>Project Hosting</h1>
+<small>
+<ul>
+<li>Github</li>
+<ul>
+<li>git Software Configuration Management</li>
+<li>Wiki</li>
+<li>Issue Tracker</li>
+<li>HTML Pages</li>
+</ul>
+<li><a href="http://www.stanford.edu/~pgbovine/cdepack.html">CDE</a> - Code, Data, Environment packaging - purportedly automatically packages up everything required to execute a Linux command on another computer without any installation or configuration. Does require same kernel version (e.g. 2.6X).</li>
+<li>Intranet - Trusted Users</li>
+<li>Heroku - Pay as you compute Ruby Rails Hosting. I couldn't afford storage costs of rapid acquisition.</li>
+<li>Vision of a Grand and Glorious Future</li>
+</small>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Serving Data</h1>
+<ul>
+<li>Serving copyrighted data without permission can get you in legal trouble.</li>
+<li>Rails scaffolding provides a default XML output</li>
+<li>Huge data-sets require different handling based on response time</li>
+<ul>
+<li>Rails scaffolding provides a default HTML and XML outputs, that for huge tables, will crash your browser</li>
+<li>Nobody really wants to look at a million row table in their browser, anyway.</li>
+<li>I'd prefer to see some overview plots in my browser.</li>
+
+</ul>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Overview plots in the browser</h1>
+<ul>
+<li>Interactive browsing could generate a plot of a small sample of the data</li>
+<li>Slow browsing could generate a larger sample.</li>
+<li>Batch processing could generate comprehensive plots.</li>
+<ul>
+<li>Statistical processing is always subject to combinatorial explosion, that may not be predictable until the data is analyzed.</li>
+<li>Statistical data types can block use of raw integers and strings as factors.</li>
+<li>Check for number of distinct values at least up to a user specified limit (for interactive use) and a hard implementation limit (for batch use)</li>
+</ul>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>Vision of a Grand and Glorious Future</h1>
+<ul>
+<li>Wiki Data - a Wikipedia Project for Statistics</lu>
+<li>Each empirical Claim is Linked to Supporting Data</li>
+<li>All Advocates are morally Bound to Provide Such Links</li>
+<ul>
+<li>Scientists, Medical Researchers, Economists, Press Releases</li>
+<li>Are They  Quoting Statistics Out of Context?</li>
+<li>Compare Their Data to Other Data-sets</li>
+<li>Create Incentives In the Attention Economy For Full Data Disclosure</li>
+<li>Create Disincentives to <a href="http://www.amazon.com">Lying With Statistics</a></li>
+</ul>
+</ul>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Social Incentives</h1>
+<ul>
+<li>Young People Love to Prove Their Elders Wrong</li>
+<ul>
+<li>Give Them the Statistical Tools to Do So</li>
+<li>Motivate Them to Learn Critical Thinking, Statistics, Probability, Science</li>
+</ul>
+<li>Journalists as Data Hungry But Math Phobic</li>
+<ul>
+<li>Demand Links to Their Data</li>
+<li>Educate Them in Better Data Reporting, Less Data Porn</li>
+<li>Give Them the Tools to Do Investigative Reporting on Seemingly Intractable Problems</li>
+</ul>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Licensing - How to Share Data?</h1>
+<ul>
+<li>Licenses</li>
+<ul>
+<li>GPL-like - Incentivize Sharing</li>
+<li>Creative Commons With Attribution (including full derivation as Open Table Explorer code)</li>
+<li>Public Domain</li>
+<li>Pay-wall</li>
+</ul>
+<li>What is a Derivative Work?</li>
+<ul>
+<li>If You Provide So Many Statistics That the Original Data Can Be Completely Computed, Then You Definitely Have a Derivative Work</li>
+<li>A Review With Only Summary Statistics is Not a Derivative Work, But Fair Use</li>
+<li>Reading Two Books And Writing a Third Does not Create a Derivative Work Unless The Inputs Reappear Largely Verbatim</li>
+</ul>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+<div class="slide">
+<h1>My Opinion, But Don't Sue Me If I'm Wrong</h1>
+<ul>
+<li>Data Reduction is the Key To Avoiding Creating a Derivative Work</li>
+<li>Scientific Advance Can Be Seen as Data Reduction/Lossy Compression</li>
+<li>Correlated Data From Multiple Independent Sources Shouldn't Meet the Originality Requirement of Copyright and Patents</li>
+<li>Avoid False Precision</li>
+<li>I Am not a Copyright Lawyer!</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+</div>
+<div class="slide">
+<h1>Conclusion</h1>
+<table border=1>
+<tr><th>Normal People Think</th><th>This Project Thinks</th></tr>
+<tr><td>Software projects should only talk about software.</td><td>Software projects generate an endless stream of questions, whose answers may be in engineering, psychology, or information theory.</td></tr>
+<tr><td>Programs should get bigger with time as features are added.</td><td>Programs should get smaller in time, as they are re-factored and conceptually simplified.</td></tr>
+<tr><td>We know what we are doing.</td><td>We are no where near as smart as we think we are. Cognitive biases are everywhere.</td></tr>
+<tr><td>Statistics and information theory are boring subjects full of impenetrable jargon.</td><td>True. But the tedium can be largely delegated to the computer. Exploratory Data Analysis is an essential learning tool.</td></tr>
+<tr><td>Early release is essential to gain mind share.</td><td>Solving problems takes time. The bottleneck is our learning curve.</td></tr>
+</table>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Levels of Commitment</h1>
+<ul>
+<li>Tourist</li>
+<li>Passive Learner</li>
+<li>Active Learner/User (not yet?)</li>
+<li>Contributor</li>
+<li>Architect</li>
+<li>Risk Manager</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+<div class="slide">
+<h1>Project Interface</h1>
+<ul>
+<li>www.github.com/GregLawson</li>
+<ul>
+<li>Wiki (this presentation is an abridgment of the Wiki) Wiki contains links details.</li>
+<li>git</li>
+<li>issue tracker (send confusions and complaints here.)</li>
+<li>Raw Data</li>
+</ul>
+<li>Two short SurveyMonkey surveys</li>
+<li>Email: GregLawson123@gmail.com</li>
+<ul>
+<li>If your issue (question or complaint) is of general interest, the answer will likely be clarifying the issue in the wiki if possible or creating an issue in the issue tracker.</li> 
+</ul>
+<li>Write it down, it will have an influence.</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>Power Law Added Value of Aggregating Statistical Databases</h1>
+<ul>
+<li>If a Aggregation of Data Is Many times As Valuable As the Copyrighted Sources, How can Fair Use Incentivize Statistical Aggregation?</li>
+<li></li>
+<li></li>
+<li><a href="http://edge.org/conversation/geoffrey-west">Geoffrey West TED Talk</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+</div>
+
+</body>
+</html>
