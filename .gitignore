@@ -1,5 +1,5 @@
-**/BCCrash*.txt
-**/*~
+*~
+BCCrash*.txt
 .bundle
 db/*.sqlite3
 log/*.log
@@ -9,6 +9,6 @@ test/fixtures/transactions.yml
 Gemfile.lock
 scite.session
 /test/*.gen
-**/._.DS_Store
-**/.DS_Store
-**/.directory
+._.DS_Store
+.DS_Store
+.directory
