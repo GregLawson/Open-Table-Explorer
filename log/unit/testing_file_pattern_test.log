@@ -1,11 +1,6 @@
 Loaded suite test/unit/testing_file_pattern_test
 Started
-E
-Finished in 18.649739 seconds.
+.
+Finished in 23.220683 seconds.
 
-  1) Error:
-test_uptodate(TestingFilePatternsTest):
-ActiveRecord::StatementInvalid: SQLite3::SQLException: table test_runs has no column named : INSERT INTO "test_runs" ("", "tests_stop_on_error", "failures", "test_type", "model", "created_at", "updated_at", "tests", "id", "assertions", "environment", "test", "test_id") VALUES ('', 0, 2, 'unit', 'acquisition_interface', 'Thu', '02 Jun 2011 00:53:47 -0700', 5, 980193036, 34, '', '', 0)
-    
-
-1 tests, 0 assertions, 0 failures, 1 errors
+1 tests, 13 assertions, 0 failures, 0 errors
