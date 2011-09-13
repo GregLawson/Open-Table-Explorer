@@ -1,6 +1,11 @@
 Loaded suite test/unit/testing_file_pattern_test
 Started
-.
-Finished in 23.220683 seconds.
-
-1 tests, 13 assertions, 0 failures, 0 errors
+........status=M, file=db/tests.sql
+status=M, file=lib/tasks/testing.rb
+status=M, file=lib/tasks/testing_file_patterns.rb
+status=M, file=log/unit/testing_file_pattern_test.log
+status=M, file=test/unit/testing_file_pattern_test.rb
+status=??, file=log/unit/stream_method_test.log
+db/tests.sql don't know when to stage.
+lib/tasks/testing.rb don't know when to stage.
+lib/tasks/testing_file_patterns.rb don't know when to stage.

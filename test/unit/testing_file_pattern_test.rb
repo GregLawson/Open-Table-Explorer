@@ -15,7 +15,7 @@ test 'file_glob' do
 		assert_not_nil(spec[:example_file])
 		assert_not_nil(CodeBase.file_glob(spec))
 	end #map
-end #test
+end #file_glob
 test 'regexp' do
 #	assert_equal(%r{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
@@ -31,19 +31,19 @@ test 'regexp' do
 		assert_dir_include(spec[:example_file],CodeBase.file_glob(spec))
 		assert_include(spec[:example_file],Dir[CodeBase.file_glob(spec)])
 	end #map
-end #test
+end #regexp
 test 'files_from_spec' do
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		instance=CodeBase.new(spec)
 		assert_not_empty(instance.files_from_spec)
 	end #each
-end #test
+end #files_from_spec
 test 'all_model_specfic_files' do
 	assert_not_empty(CodeBase.all_model_specfic_files)
 	assert_instance_of(Array,CodeBase.all_model_specfic_files)
 	assert_instance_of(Hash,CodeBase.all_model_specfic_files[0])
-end #test
-test 'test_order' do
+end #all_model_specfic_files
+test 'prioritized_file_order' do
 	CodeBase::FILE_MOD_TIMES.map do |file_and_spec|
 		assert_not_nil(file_and_spec[:file])
 		assert_not_empty(file_and_spec[:file])
@@ -56,13 +56,17 @@ test 'test_order' do
 		assert_not_nil(file_and_spec[:spec][:test_type])
 		assert_include(file_and_spec[:spec][:test_type],[:unit,:controller,:both,:shared])
 	end #map
-	CodeBase.test_order do |target,sources|
+	CodeBase.prioritized_file_order do |target,sources|
 		assert_not_nil(target)
 		assert_not_nil(sources)
-	end #test_order
-end #test
+	end #prioritized_file_order
+end #prioritized_file_order
 test 'run_test' do
-	CodeBase.test_order do |target,sources|
+end #run_test
+test 'uptodate_order' do
+	CodeBase.not_uptodate_order do 
+	end #not_uptodate_order
+	CodeBase.prioritized_file_order do |target,sources|
 		if CodeBase.uptodate?(target,sources) then
 		else
 			if !File.exist?(target) then
@@ -82,24 +86,28 @@ test 'run_test' do
 				end #each
 			end #if
 		end #if
-	end #test_order
-end #test
+	end #do
+end #uptodate_order
+def CodeBase.test_file(singular_table, test_type)
+end #test_file
+def CodeBase.model_file(singular_table)
+end #model_file
 test 'unit_sources' do
-end #def
+end #unit_sources
 test 'controller_sources' do
-end #def
+end #controller_sources
 test 'unit_target' do
-end #def
+end #unit_target
 test 'controller_target' do
-end #def
+end #controller_target
 test 'model_spec_symbols' do
 	assert_not_empty(CodeBase.model_spec_symbols)
 	assert_equal_sets([:models, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views],CodeBase.model_spec_symbols)
-end #test
+end #model_spec_symbols
 test 'spec_symbols' do
 	assert_not_empty(CodeBase.spec_symbols)
 	assert_equal_sets([:models, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :shared_partials, :new_views, :show_views],CodeBase.spec_symbols)
-end #test
+end #spec_symbols
 test 'complete_models' do
 	list_of_model_sets=CodeBase.model_spec_symbols.map {|spec_name_symbol| CodeBase.models_from_spec(spec_name_symbol)}
 	assert_not_empty(list_of_model_sets)
@@ -127,13 +135,13 @@ test 'complete_models' do
 	assert_overlap(CodeBase.models_from_spec(:unit_tests),CodeBase.models_from_spec(:functional_tests))
 	assert_not_empty(list_of_model_sets.reduce(:&))
 	assert_not_empty(CodeBase.complete_models)
-end #test
+end #complete_models
 test 'spec_from_symbol' do
 	spec_name_symbol=:models
 	index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
 	assert_instance_of(Fixnum,index)
 	assert_instance_of(Hash,CodeBase::TABLE_FINDER_REGEXPS[index])
-end #test
+end #spec_from_symbol
 test 'models_from_spec' do
 	CodeBase.model_spec_symbols.each do |spec_name_symbol|
 	#	spec_name_symbol=:models
@@ -155,10 +163,10 @@ test 'models_from_spec' do
 		assert_not_empty(CodeBase.models_from_spec(spec_name_symbol))
 		assert_include('stream_pattern',CodeBase.models_from_spec(spec_name_symbol))
 	end #each
-end #test
+end #models_from_spec
 test 'match_spec_from_file' do
 	assert('app/models/([a-zA-Z0-9_]*)[.]rb',CodeBase::match_spec_from_file('app/models/global.rb'))
-end #test
+end #match_spec_from_file
 test 'singular_table_from_file' do
 	assert('global',CodeBase::singular_table_from_file('app/models/global.rb'))
 	assert_equal('global',CodeBase.singular_table_from_file('app/models/global.rb'))
@@ -176,12 +184,12 @@ test 'singular_table_from_file' do
 			assert_not_empty(CodeBase.singular_table_from_file(example_file),"example_file=#{example_file}")
 		end #if
 	end #each
-end #test
+end #singular_table_from_file
 test 'uptodate' do
-end #test
+end #uptodate
 test 'not_uptodate_sources' do
-end #test
-test "git status" do
+end #not_uptodate_sources
+test "git_status" do
 	#~ assert_match('app/views/acquisition_stream_specs/_index_partial.html.erb',TABLE_FINDER_REGEXPS['app/views/acquisition_stream_specs/_index_partial.html.erb'])
 #	assert_equal('acquisition_stream_specs','app/views/acquisition_stream_specs/_index_partial.html.erb'.match(CodeBase.regexp(CodeBase::TABLE_FINDER_REGEXPS[5]))[1])
 	assert_equal('acquisition_stream_spec',CodeBase.singular_table_from_file('app/views/acquisition_stream_specs/_index_partial.html.erb'))
@@ -190,17 +198,17 @@ test "git status" do
 	file='app/views/acquisition_stream_specs/_index_partial.html.erb'
 	assert_not_empty(CodeBase.singular_table_from_file(file))
 	assert_nothing_raised{CodeBase.gitStatus{|status,file| CodeBase.why_not_stage(file,CodeBase.singular_table_from_file(file)) }}
-	assert_equal(['global','unit'],CodeBase.table_type_from_source('test/unit/global_test.rb'))
+	assert_equal(['global','unit'],CodeBase.test_type_from_source('test/unit/global_test.rb'))
 	assert_include('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
-end #test
+end #git_status
 test 'why_not_stage_helper' do
-end #test
+end #why_not_stage_helper
 test 'why_not_stage' do
 	file='app/views/acquisition_stream_specs/_index_partial.html.erb'
 	assert_nothing_raised{CodeBase.why_not_stage(file,CodeBase.singular_table_from_file(file)) }
 #	assert_nothing_raised{CodeBase.why_not_stage_helper('app/views/acquisition_stream_specs/_index_partial.html.erb',target,sources,test_type)}
-end #test
-test 'example_files exist' do
+end #why_not_stage_helper
+test 'example_files_exist' do
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		example_file=spec[:example_file]
 		assert(File.exists?(example_file))
@@ -210,8 +218,8 @@ test 'example_files exist' do
 			#~ puts "#{example_file} matches \n#{regexp.inspect}"
 		end #if
 	end #each_pair
-end #test
-test 'example files match regexp' do
+end #example_files_exist
+test 'example_files_match_regexp' do
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		example_file=spec[:example_file]
 		assert(example_file.match(CodeBase.regexp(spec)))
@@ -221,8 +229,8 @@ test 'example files match regexp' do
 		regexp=CodeBase.regexp(spec)
 		assert_match(regexp,example_file,"example_file=#{example_file}, regexp=#{regexp}")
 	end #each
-end #test
-test 'globs match regexp' do
+end #example_files_match_regexp
+test 'globs_match_regexp' do
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		files=Dir[CodeBase.file_glob(spec)]
 		if files.nil? then
@@ -234,5 +242,5 @@ test 'globs match regexp' do
 		end #each
 	end #each
 
-end #test
-end #test class
+end #globs_match_regexp
+end #CodeBase
