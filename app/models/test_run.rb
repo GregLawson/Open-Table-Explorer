@@ -1,6 +1,6 @@
 class TestRun < ActiveRecord::Base
 include Generic_Table
-has_many :bugs
+#has_many :bugs
 def TestRun.ruby_run_and_log(ruby_source,log_file,test=nil)
 	if test.nil? then
 		ruby_test=ruby_source
@@ -39,7 +39,7 @@ rescue SyntaxError => exception_raised
 	return true
 end #def
 def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
-	table,test_type=CodeBase.table_type_from_source(ruby_source)
+	table,test_type=CodeBase.test_type_from_source(ruby_source)
 	header,errors,summary=parse_log_file(log_file)
 	if summary.nil? then
 	else
