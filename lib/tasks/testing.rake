@@ -7,7 +7,7 @@ require 'active_support' # for singularize and pluralize
 require 'lib/tasks/testing.rb'
 require 'app/models/global.rb'
 require 'app/models/generic_table.rb'
-require 'lib/tasks/testing_file_patterns.rb'
+require 'app/models/code_base.rb'
 require 'app/models/test_run.rb'
 namespace :testing do
 
