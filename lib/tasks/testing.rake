@@ -116,13 +116,13 @@ task :summarize do
 	summarize
 end #task
 task :unit_test do
-	plural_table = ENV["TABLE"].pluralize  || "accounts"
+	plural_table = ENV["TABLE"].pluralize  || "code_bases"
 	test = ENV["TEST"] 
 	unit_test(plural_table,test)
 #	summarize
 end #task
 task :controller_test do
-	plural_table = ENV["TABLE"].pluralize || "accounts"
+	plural_table = ENV["TABLE"].pluralize || "code_bases"
 	test = ENV["TEST"]
 	controller_test(plural_table,test)
 #	summarize
