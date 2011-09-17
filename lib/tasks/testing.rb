@@ -57,7 +57,7 @@ def work_flow(test=nil)
 	end #each
 	
 #	puts "CodeBase::FILE_MOD_TIMES=#{CodeBase::FILE_MOD_TIMES.inspect}"
-	CodeBase.uptodate_order do |target_file, sources|
+	CodeBase.not_uptodate_order do |target_file, sources|
 	ruby_source=CodeBase.test_program_from_file(target_file)
 		stop=TestRun.ruby_run_and_log(ruby_source,target_file)
 		return stop

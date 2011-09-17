@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'lib/tasks/testing_file_patterns.rb'
+#require 'lib/tasks/testing_file_patterns.rb'
 # executed in alphabetical orer? Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
@@ -44,39 +44,68 @@ test 'all_model_specfic_files' do
 	assert_instance_of(Hash,CodeBase.all_model_specfic_files[0])
 end #all_model_specfic_files
 test 'prioritized_file_order' do
-	CodeBase::FILE_MOD_TIMES.map do |file_and_spec|
-		assert_not_nil(file_and_spec[:file])
-		assert_not_empty(file_and_spec[:file])
-		assert_instance_of(Regexp,CodeBase.regexp(file_and_spec[:spec]))
+	file_type_pairs=CodeBase::FILE_MOD_TIMES.map do |file_and_spec|
 		assert_not_empty(file_and_spec[:spec])
+		assert_instance_of(Regexp,CodeBase.regexp(file_and_spec[:spec]))
+		assert_include(file_and_spec[:spec][:test_type],[:unit,:controller,:both,:shared])
 		if file_and_spec[:spec][:test_type]!=:shared then
+			singular_table=CodeBase.singular_table_from_file(file_and_spec[:file])
+			assert_not_nil(singular_table)
+			assert_not_empty(singular_table,"file_and_spec=#{file_and_spec.inspect}")
 			assert_not_nil(file_and_spec[:file][CodeBase.regexp(file_and_spec[:spec]),1],"file_and_spec=#{file_and_spec.inspect}")
 			assert_not_empty(file_and_spec[:file][CodeBase.regexp(file_and_spec[:spec]),1],"file_and_spec=#{file_and_spec.inspect}")
 		end #if
 		assert_not_nil(file_and_spec[:spec][:test_type])
-		assert_include(file_and_spec[:spec][:test_type],[:unit,:controller,:both,:shared])
+		[singular_table,file_and_spec[:spec][:test_type].to_s]
 	end #map
+	file_type_pairs.each do |file_and_type|
+		assert_instance_of(Array,file_and_type)
+		singular_table=file_and_type[0]
+		assert_not_empty(singular_table)
+		assert_not_empty(file_and_type[1])
+		case file_and_type[1].to_sym
+		when :unit
+			assert_not_empty(CodeBase.unit_target(singular_table))
+			assert_not_empty(CodeBase.unit_sources(singular_table))
+#			process_test.call(CodeBase.unit_target(singular_table), CodeBase.unit_sources(singular_table))
+		when :controller
+#			process_test.call(CodeBase.controller_target(singular_table), CodeBase.controller_sources(singular_table))
+		when :both
+			assert_not_empty(CodeBase.unit_target(singular_table))
+			assert_not_empty(CodeBase.unit_sources(singular_table))
+#			process_test.call(CodeBase.unit_target(singular_table), CodeBase.unit_sources(singular_table)) &&
+			assert_not_empty(CodeBase.controller_target(singular_table))
+			assert_not_empty(CodeBase.controller_sources(singular_table))
+#			process_test.call(CodeBase.controller_target(singular_table), CodeBase.controller_sources(singular_table))
+		when :shared
+			# some other file will trigger compilation
+		else
+			raise "illegal test type=#{test_type}"
+		end #case
+	end #each
+	puts "Most recently modified file=#{CodeBase.prioritized_file_order{|t,s|[t,s]}.first}"
 	CodeBase.prioritized_file_order do |target,sources|
 		assert_not_nil(target)
 		assert_not_nil(sources)
-	end #prioritized_file_order
+	end #do
+	puts "Most recently modified file=#{CodeBase.prioritized_file_order.first}"
 end #prioritized_file_order
 test 'run_test' do
 end #run_test
-test 'uptodate_order' do
-	CodeBase.not_uptodate_order do 
-	end #not_uptodate_order
+test 'not_uptodate_order' do
 	CodeBase.prioritized_file_order do |target,sources|
 		if CodeBase.uptodate?(target,sources) then
 		else
 			if !File.exist?(target) then
 				puts "#{target} does not exist."
 			else
+				assert_not_empty(target)
+				assert_not_empty(sources)
 				not_uptodate_sources=CodeBase.not_uptodate_sources(target,sources)
 				puts "#{target.inspect} <- #{not_uptodate_sources.inspect}"
 				system ("ls -l #{target}")  # discard result if file doesn't exist
 				not_uptodate_sources.each do |s|
-					if !CodeBase.uptodate?(target, s)  then
+					if !CodeBase.uptodate?(target, [s])  then
 						puts "not up to date."
 						if !File.exist?(s) then
 							puts "#{s} does not exist."
@@ -87,7 +116,10 @@ test 'uptodate_order' do
 			end #if
 		end #if
 	end #do
-end #uptodate_order
+	CodeBase.not_uptodate_order do 
+	end #not_uptodate_order
+	puts "Most recently modified up to date file=#{CodeBase.not_uptodate_order{|t,s|[t,s]}.first}"
+end #not_uptodate_order
 def CodeBase.test_file(singular_table, test_type)
 end #test_file
 def CodeBase.model_file(singular_table)
@@ -185,9 +217,26 @@ test 'singular_table_from_file' do
 		end #if
 	end #each
 end #singular_table_from_file
+test 'name_plurality_from_file' do
+end #test_run_from_file
+test 'test_type_from_source' do
+end #test_type_from_source
+test 'test_program_from_file' do
+end #test_program_from_file
 test 'uptodate' do
+# uptodate if target > sources
+	target='/proc/bus' # changes often
+	sources=['/'] #changes slowly
+#	target='/dev/null'
+#	sources=['/home/greg/git/development/test/unit/code_base_test.rb']
+assert(CodeBase.uptodate?(target,sources))
 end #uptodate
 test 'not_uptodate_sources' do
+# not uptodate if sources > target
+	sources=['/proc/bus', '/proc/bus']
+	target='/'
+	assert(CodeBase.not_uptodate_sources(target,sources))
+	assert(sources.all?{|s| s.instance_of?(String)} ,"sources=#{sources.inspect} must be an Array of Strings(pathnames)")
 end #not_uptodate_sources
 test "git_status" do
 	#~ assert_match('app/views/acquisition_stream_specs/_index_partial.html.erb',TABLE_FINDER_REGEXPS['app/views/acquisition_stream_specs/_index_partial.html.erb'])
@@ -243,4 +292,6 @@ test 'globs_match_regexp' do
 	end #each
 
 end #globs_match_regexp
+test 'stuck' do
+end #
 end #CodeBase
