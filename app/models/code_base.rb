@@ -188,6 +188,23 @@ def CodeBase.singular_table_from_file(file)
 		end #if
 	end #if
 end #singular_table_from_file
+def CodeBase.name_plurality_from_spec(match_spec)
+	if match_spec.nil? || match_spec[:test_type]==:shared then
+		return  nil
+	else
+		table_name=match_spec[:matchData][1]
+		if match_spec[:plural] then
+			{:singular => table_name.singularize, :plural => table_name}
+		else
+			{:singular =>  table_name, plural => table_name.pluralize}
+		end #if
+	end #if
+end #test_run_from_file
+def CodeBase.test_run_from_file(file)
+	match_spec=match_spec_from_file(file)
+	name_plurality=name_plurality_from_spec(match_spec)
+	TestRun.new(match_spec[:test_type],name_plurality[:singular], name_plurality[:plural])
+end #test_run_from_file
 def CodeBase.test_type_from_source(ruby_source)
 	path=Pathname.new(ruby_source)
 	#~ puts "path=#{path.inspect}"
@@ -208,7 +225,7 @@ def CodeBase.test_program_from_file(ruby_source)
 #	singular_table=CodeBase.singular_table_from_file(ruby_source)
 	test_type=test_type_from_source(ruby_source)
 	return CodeBase.test_file(test_type[0], test_type[1])
-end #def
+end #test_program_from_file
 def CodeBase.uptodate?(target,sources) 
 	raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.instance_of?(Array)
 	raise "target=#{target.inspect} must be a String (pathnames)" unless target.instance_of?(String)
