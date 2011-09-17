@@ -22,3 +22,73 @@ db/bugs.sql don't know when to stage.
 db/tests.sql don't know when to stage.
 lib/tasks/testing.rake don't know when to stage.
 lib/tasks/testing.rb don't know when to stage.
+test/test_helper.rb don't know when to stage.
+test/unit/generic_table_test.rb not up to date.
+....."log/unit/code_base_test.log" <- []
+-rw-r--r-- 1 greg greg 1110 Sep 17 10:35 log/unit/code_base_test.log
+"log/unit/code_base_test.log" <- []
+-rw-r--r-- 1 greg greg 1215 Sep 17 10:35 log/unit/code_base_test.log
+"log/unit/code_base_test.log" <- []
+-rw-r--r-- 1 greg greg 1320 Sep 17 10:35 log/unit/code_base_test.log
+log/functional/code_bases_controller_test.log does not exist.
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 2117 Sep 16 15:23 log/unit/generic_table_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 26310 Sep 16 23:13 test/unit/generic_table_test.rb
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 2117 Sep 16 15:23 log/unit/generic_table_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 26310 Sep 16 23:13 test/unit/generic_table_test.rb
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+log/functional/generic_tables_controller_test.log does not exist.
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 2117 Sep 16 15:23 log/unit/generic_table_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 26310 Sep 16 23:13 test/unit/generic_table_test.rb
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+"log/unit/test_run_test.log" <- ["app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 751 Sep 16 11:27 log/unit/test_run_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+"log/unit/test_run_test.log" <- ["app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 751 Sep 16 11:27 log/unit/test_run_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+"log/unit/test_run_test.log" <- ["app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 751 Sep 16 11:27 log/unit/test_run_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 22844 Sep 16 23:13 app/models/generic_table.rb
+E.F...........
+Finished in 35.066382 seconds.
+
+  1) Error:
+test_not_uptodate_order(TestingFilePatternsTest):
+RuntimeError: sources=["test/functional/test_runs_controller_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", nil, "test/fixtures/test_runs.yml", "app/views/test_runs/_form.html.erb", "app/views/test_runs/edit.html.erb", "app/views/test_runs/index.html.erb", "app/views/test_runs/new.html.erb", "app/views/test_runs/show.html.erb", "app/views/shared/_error_messages.html.erb", "app/views/shared/_multi-line.html.erb", "app/views/shared/_syntax_errors.html.erb", "app/controllers/test_runs_controller.rb", "app/helpers/test_runs_helper.rb"] must be an Array of Strings(pathnames)
+    app/models/code_base.rb:235:in `not_uptodate_sources'
+    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'
+    app/models/code_base.rb:63:in `call'
+    app/models/code_base.rb:63:in `prioritized_file_order'
+    app/models/code_base.rb:54:in `each'
+    app/models/code_base.rb:54:in `prioritized_file_order'
+    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'
+
+  2) Failure:
+test_prioritized_file_order(TestingFilePatternsTest)
+    [/test/test_helper.rb:148:in `assert_not_empty'
+     test/unit/code_base_test.rb:64:in `test_prioritized_file_order'
+     test/unit/code_base_test.rb:61:in `each'
+     test/unit/code_base_test.rb:61:in `test_prioritized_file_order']:
+"nil" is empty with value "nil".
+<nil> expected to not be nil.
+
+27 tests, 10991 assertions, 1 failures, 1 errors
