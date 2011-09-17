@@ -46,9 +46,10 @@ AFFECTS_CONTROLLERS=Dir['app/views/shared/*']
 
 
 def CodeBase.prioritized_file_order(&process_test)
-	file_type_pairs=FILE_MOD_TIMES.map do |file_and_spec|
+	file_type_pairs=CodeBase::FILE_MOD_TIMES.map do |file_and_spec|
 		singular_table=singular_table_from_file(file_and_spec[:file])
-		[singular_table,file_and_spec[:spec][:test_type].to_s]
+		test_type=file_and_spec[:spec][:test_type].to_s
+		[singular_table,test_type]
 	end #map
 	file_type_pairs.each do |file_and_type|
 		singular_table=file_and_type[0]
@@ -77,8 +78,10 @@ def CodeBase.run_test(singular_table, test_type)
 	else raise "Unnown test_type=#{test_type} for singular_table=#{singular_table}"
 	end #case
 end #run_test
-def CodeBase.uptodate_order(&proc_update)
+def CodeBase.not_uptodate_order(&proc_update)
 	CodeBase.prioritized_file_order do |target,sources|
+		raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.instance_of?(Array)
+		raise "target=#{target.inspect} must be a Strings(pathnames)" unless target.instance_of?(String)
 		if CodeBase.uptodate?(target,sources) then
 		else
 			if !File.exist?(target) then
@@ -89,7 +92,7 @@ def CodeBase.uptodate_order(&proc_update)
 			end #if
 		end #if
 	end #prioritized_file_order
-end #uptodate_order
+end #not_uptodate_order
 
 def CodeBase.test_file(singular_table, test_type)
 	case test_type.to_sym
@@ -207,6 +210,8 @@ def CodeBase.test_program_from_file(ruby_source)
 	return CodeBase.test_file(test_type[0], test_type[1])
 end #def
 def CodeBase.uptodate?(target,sources) 
+	raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.instance_of?(Array)
+	raise "target=#{target.inspect} must be a String (pathnames)" unless target.instance_of?(String)
 	sources.each do |s|
 		#~ system ("ls -l #{target}") {|ok, res| } # discard result if file doesn't exist
 		#~ system "ls -l #{s}"
@@ -226,7 +231,10 @@ end #uptodate
 # all files newer than previous test log.
 # file must also have changed since last staging
 def CodeBase.not_uptodate_sources(target,sources)
-	sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, s)}
+	raise "sources=#{sources.inspect} must be an Array" unless sources.instance_of?(Array)
+	raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.all?{|s| s.instance_of?(String)}
+	raise "target=#{target.inspect} must be a String (pathnames)" unless target.instance_of?(String)
+	sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, [s])}
 end #not_uptodate_sources
 def CodeBase.gitStatus(&process_status)
 	return `git status --porcelain`.split("\n").each do |line| 

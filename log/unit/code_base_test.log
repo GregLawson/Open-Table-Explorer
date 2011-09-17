@@ -1,0 +1,24 @@
+Loaded suite test/unit/code_base_test
+Started
+........status=M, file=app/models/code_base.rb
+status=MM, file=app/models/generic_table.rb
+status=M, file=app/models/test_run.rb
+status=M, file=db/bugs.sql
+status=M, file=db/tests.sql
+status=M, file=lib/tasks/testing.rake
+status=M, file=lib/tasks/testing.rb
+status=AM, file=log/unit/code_base_test.log
+status=M, file=log/unit/generic_table_test.log
+status=M, file=log/unit/test_run_test.log
+status=M, file=log/unit/testing_file_pattern_test.log
+status=M, file=test/test_helper.rb
+status=RM, file=test/unit/testing_file_pattern_test.rb
+status=MM, file=test/unit/generic_table_test.rb
+status=M, file=test/unit/test_run_test.rb
+status=??, file=log/unit/stream_method_test.log
+app/models/generic_table.rb not up to date.
+app/models/test_run.rb not up to date.
+db/bugs.sql don't know when to stage.
+db/tests.sql don't know when to stage.
+lib/tasks/testing.rake don't know when to stage.
+lib/tasks/testing.rb don't know when to stage.
