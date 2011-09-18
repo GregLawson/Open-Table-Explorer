@@ -7,7 +7,7 @@ require 'active_support' # for singularize and pluralize
 require 'lib/tasks/testing.rb'
 require 'app/models/global.rb'
 require 'app/models/generic_table.rb'
-require 'lib/tasks/testing_file_patterns.rb'
+require 'app/models/code_base.rb'
 require 'app/models/test_run.rb'
 namespace :testing do
 
@@ -116,13 +116,13 @@ task :summarize do
 	summarize
 end #task
 task :unit_test do
-	plural_table = ENV["TABLE"].pluralize  || "accounts"
+	plural_table = ENV["TABLE"].pluralize  || "code_bases"
 	test = ENV["TEST"] 
 	unit_test(plural_table,test)
 #	summarize
 end #task
 task :controller_test do
-	plural_table = ENV["TABLE"].pluralize || "accounts"
+	plural_table = ENV["TABLE"].pluralize || "code_bases"
 	test = ENV["TEST"]
 	controller_test(plural_table,test)
 #	summarize

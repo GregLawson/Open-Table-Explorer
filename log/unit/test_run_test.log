@@ -1,39 +1,78 @@
 Loaded suite test/unit/test_run_test
 Started
-.E.-StandardError Error: #<NoMethodError: undefined method `ruby' for #<Class:0xb5fe7094>>
-/usr/lib/ruby/gems/1.8/gems/activerecord-3.0.3/lib/active_record/base.rb:1008:in `method_missing'
-/home/greg/Desktop/Database/development/app/models/test_run.rb:10:in `ruby_run_and_log'
-test/unit/test_run_test.rb:7:in `test_ruby_run_and_log'
-/usr/lib/ruby/gems/1.8/gems/activesupport-3.0.3/lib/active_support/testing/setup_and_teardown.rb:67:in `__send__'
-/usr/lib/ruby/gems/1.8/gems/activesupport-3.0.3/lib/active_support/testing/setup_and_teardown.rb:67:in `run'
-/usr/lib/ruby/gems/1.8/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:418:in `_run_setup_callbacks'
-/usr/lib/ruby/gems/1.8/gems/activesupport-3.0.3/lib/active_support/testing/setup_and_teardown.rb:65:in `run'
-/usr/lib/ruby/1.8/test/unit/testsuite.rb:34:in `run'
-/usr/lib/ruby/1.8/test/unit/testsuite.rb:33:in `each'
-/usr/lib/ruby/1.8/test/unit/testsuite.rb:33:in `run'
-/usr/lib/ruby/1.8/test/unit/testsuite.rb:34:in `run'
-/usr/lib/ruby/1.8/test/unit/testsuite.rb:33:in `each'
-/usr/lib/ruby/1.8/test/unit/testsuite.rb:33:in `run'
-/usr/lib/ruby/1.8/test/unit/ui/testrunnermediator.rb:46:in `run_suite'
-/usr/lib/ruby/1.8/test/unit/ui/console/testrunner.rb:67:in `start_mediator'
-/usr/lib/ruby/1.8/test/unit/ui/console/testrunner.rb:41:in `start'
-/usr/lib/ruby/1.8/test/unit/ui/testrunnerutilities.rb:29:in `run'
-/usr/lib/ruby/1.8/test/unit/autorunner.rb:216:in `run'
-/usr/lib/ruby/1.8/test/unit/autorunner.rb:12:in `run'
-/usr/lib/ruby/1.8/test/unit.rb:279
-test/unit/test_run_test.rb:32
-..
-Finished in 21.315789 seconds.
+EEEEEE
+Finished in 72.130747 seconds.
 
   1) Error:
-test_general_associations(TestRunTest):
-NoMethodError: undefined method `is_association_to_many?' for Class:Class
-    /test/test_helper_assert_generic_table.rb:77:in `assert_association_to_many'
-    /test/test_helper_assert_generic_table.rb:133:in `assert_general_associations'
-    /test/test_helper_assert_generic_table.rb:130:in `each'
-    /test/test_helper_assert_generic_table.rb:130:in `assert_general_associations'
-    /test/test_helper_assert_generic_table.rb:129:in `each_value'
-    /test/test_helper_assert_generic_table.rb:129:in `assert_general_associations'
-    test/unit/test_run_test.rb:18:in `test_general_associations'
+test_aaa_test_new_assertions(TestRunTest):
+NameError: undefined local variable or method `attributes' for #<Class:0xb5fe08fc>
+    app/models/generic_table.rb:200:in `logical_primary_key'
+    app/models/generic_table.rb:204:in `sequential_id?'
+    /test/test_helper.rb:69:in `fixtures'
+    /test/test_helper.rb:22:in `each'
+    /test/test_helper.rb:22:in `fixtures'
+    /test/test_helper.rb:232:in `assert_model_class'
+    /test/test_helper.rb:249:in `define_association_names'
+    test/unit/test_run_test.rb:35:in `setup'
 
-5 tests, 667 assertions, 0 failures, 1 errors
+  2) Error:
+test_general_associations(TestRunTest):
+NameError: undefined local variable or method `attributes' for #<Class:0xb5fe08fc>
+    app/models/generic_table.rb:200:in `logical_primary_key'
+    app/models/generic_table.rb:204:in `sequential_id?'
+    /test/test_helper.rb:69:in `fixtures'
+    /test/test_helper.rb:22:in `each'
+    /test/test_helper.rb:22:in `fixtures'
+    /test/test_helper.rb:232:in `assert_model_class'
+    /test/test_helper.rb:249:in `define_association_names'
+    test/unit/test_run_test.rb:35:in `setup'
+
+  3) Error:
+test_id_equal(TestRunTest):
+NameError: undefined local variable or method `attributes' for #<Class:0xb5fe08fc>
+    app/models/generic_table.rb:200:in `logical_primary_key'
+    app/models/generic_table.rb:204:in `sequential_id?'
+    /test/test_helper.rb:69:in `fixtures'
+    /test/test_helper.rb:22:in `each'
+    /test/test_helper.rb:22:in `fixtures'
+    /test/test_helper.rb:232:in `assert_model_class'
+    /test/test_helper.rb:249:in `define_association_names'
+    test/unit/test_run_test.rb:35:in `setup'
+
+  4) Error:
+test_initialize(TestRunTest):
+NameError: undefined local variable or method `attributes' for #<Class:0xb5fe08fc>
+    app/models/generic_table.rb:200:in `logical_primary_key'
+    app/models/generic_table.rb:204:in `sequential_id?'
+    /test/test_helper.rb:69:in `fixtures'
+    /test/test_helper.rb:22:in `each'
+    /test/test_helper.rb:22:in `fixtures'
+    /test/test_helper.rb:232:in `assert_model_class'
+    /test/test_helper.rb:249:in `define_association_names'
+    test/unit/test_run_test.rb:35:in `setup'
+
+  5) Error:
+test_ruby_run_and_log(TestRunTest):
+NameError: undefined local variable or method `attributes' for #<Class:0xb5fe08fc>
+    app/models/generic_table.rb:200:in `logical_primary_key'
+    app/models/generic_table.rb:204:in `sequential_id?'
+    /test/test_helper.rb:69:in `fixtures'
+    /test/test_helper.rb:22:in `each'
+    /test/test_helper.rb:22:in `fixtures'
+    /test/test_helper.rb:232:in `assert_model_class'
+    /test/test_helper.rb:249:in `define_association_names'
+    test/unit/test_run_test.rb:35:in `setup'
+
+  6) Error:
+test_specific,_stable_and_working(TestRunTest):
+NameError: undefined local variable or method `attributes' for #<Class:0xb5fe08fc>
+    app/models/generic_table.rb:200:in `logical_primary_key'
+    app/models/generic_table.rb:204:in `sequential_id?'
+    /test/test_helper.rb:69:in `fixtures'
+    /test/test_helper.rb:22:in `each'
+    /test/test_helper.rb:22:in `fixtures'
+    /test/test_helper.rb:232:in `assert_model_class'
+    /test/test_helper.rb:249:in `define_association_names'
+    test/unit/test_run_test.rb:35:in `setup'
+
+6 tests, 234 assertions, 0 failures, 6 errors

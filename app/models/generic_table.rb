@@ -1,5 +1,5 @@
 require 'app/models/global.rb'
-require 'lib/tasks/testing_file_patterns.rb'
+#require 'lib/tasks/testing_file_patterns.rb'
 module ActiveRecord
 class Base
 def Base.foreign_key_names
@@ -9,10 +9,10 @@ def Base.foreign_key_names
 #	puts "@special_columns.inspect=#{@special_columns.inspect}"
 	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
 	return possible_foreign_keys
-end #def
+end #foreign_key_names
 def Base.foreign_key_association_names
 	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
-end #def
+end #foreign_key_association_names
 def Base.associated_foreign_key_name(association_referenced_by_foreign_key)
 	if !is_association?(association_referenced_by_foreign_key.to_s.singularize) then
 		raise "Association #{association_referenced_by_foreign_key.to_s.singularize} is not an association of #{self.name}."
@@ -26,7 +26,7 @@ def Base.associated_foreign_key_name(association_referenced_by_foreign_key)
 		raise "Association #{association_referenced_by_foreign_key} does not have a corresponding foreign key in association #{self.name}."
 	end #if
 	return matchingAssNames.first
-end #def
+end #associated_foreign_key_name
 # find 
 def associated_foreign_key_records(association_with_foreign_key)
 	class_with_foreign_key=self.class.association_class(association_with_foreign_key)
@@ -34,7 +34,7 @@ def associated_foreign_key_records(association_with_foreign_key)
 	associated_records=class_with_foreign_key.where(foreign_key_symbol => self[:id])
 
 	return associated_records
-end #def
+end #associated_foreign_key_records
 def Base.is_matching_association?(association_name)
 	 if is_association?(association_name) then
 		association_class=association_class(association_name)
@@ -52,28 +52,28 @@ def Base.is_matching_association?(association_name)
 	else
 		return false
 	end #if
-end #def
+end #is_matching_association
 def Base.association_methods(association_name)
 	return matching_instance_methods(association_name,false)
-end #def
+end #association_methods
 def Base.association_patterns(association_name)
 	patterns=association_methods(association_name).map do |n| 
 		matchData=Regexp.new(association_name.to_s).match(n)
 		Regexp.new('^'+matchData.pre_match+'([a-z0-9_]+)'+matchData.post_match+'$')
 	end #map
 	return Set.new(patterns)
-end #def
+end #association_patterns
 def Base.match_association_patterns?(association_name,association_pattern)
 	patterns=association_methods(association_name).map do |n| 
 		matchData=association_pattern.match(association_pattern)
 	end #map
 	
 	instance_respond_to?(association_name)
-end #def
+end #match_association_patterns
 def Base.is_association_patterns?(association_name,association_patterns)
 	(association_patterns(association_name)-association_patterns.to_a).empty?&&
 	(association_patterns-association_patterns(association_name).to_a).empty?
-end #def
+end #is_association_patterns
 
 def Base.is_association?(association_name)
 	# Don’t create associations that have the same name as instance methods of ActiveRecord::Base.
@@ -85,26 +85,26 @@ def Base.is_association?(association_name)
 	else
 		return false
 	end
-end #def
+end #is_association
 def Base.is_association_to_one?(assName)
 	if is_association?(assName)  and !self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and !self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
 		return true
 	else
 		return false
 	end
-end #def
+end #is_association_to_one
 def Base.is_association_to_many?(assName)
 	if is_association?(assName)  and self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
 		return true
 	else
 		return false
 	end
-end #def
+end #is_association_to_many
 @@Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
 
 def Base.is_polymorphic_association?(association_name)
 	return is_association_patterns?(association_name,@@Example_polymorphic_patterns)
-end #def
+end #is_polymorphic_association
 def Base.association_names_to_one
 	return instance_methods(false).select {|m| is_association_to_one?(m)}
 end #def
@@ -176,7 +176,7 @@ def Base.association_to_type(association_name)
 	else 
 		return :not_an_association
 	end #if
-end #def
+end #association_to_type
 def Base.association_macro_type(association_name)
 	if  has_many_association?(association_name) then
 		return :has_many
@@ -194,6 +194,27 @@ def Base.is_active_record_method?(method_name)
 		return true
 	else
 		return false
+	end #if
+end #is_active_record_method
+def Base.logical_primary_key
+	return column_names
+end #logical_primary_key
+def Base.sequential_id?
+	if self.respond_to?(:logical_primary_key) then
+		if logical_primary_key==[:created_at] then # still sequential, not requred, default
+			return true
+		else
+			return false
+		end
+	else # default to sequential id
+		return true
+	end #if
+end # def
+def logical_primary_key_value(delimiter=',')
+	if sequential_id? then
+		return self[:created_at]
+	else
+		return logical_primary_key.map {|k| self[k]}.join(delimiter)
 	end #if
 end #def
 
@@ -479,24 +500,6 @@ def Generic_Table.classReference(model_class_name)
 	rubyClassName=Generic_Table.rubyClassName(model_class_name)
 	model_class_eval=eval("#{classDefiniton(rubyClassName)}\n#{rubyClassName}")
 	return model_class_eval
-end #def
-def sequential_id?
-	if self.respond_to?(:logical_primary_key) then
-		if logical_primary_key==:created_at then # still sequential, not requred, default
-			return true
-		else
-			return false
-		end
-	else # default to sequential id
-		return true
-	end #if
-end # def
-def logical_primary_key_value
-	if sequential_id? then
-		return self[:created_at]
-	else
-		return self[logical_primary_key]
-	end #if
 end #def
 def table2yaml(table_name=self.class.name.tableize)
 	i = 0 #"000"

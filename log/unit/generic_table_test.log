@@ -25,11 +25,12 @@ stream_method_call is not an association of StreamParameter
 stream_method_argument is not an association of StreamParameter
 TableSpec belongs_to frequency
 frequency does not has_many TableSpec
+test is not an association of TestRun
 Transaction does not include Generic_Table
 Transfer belongs_to account
 account does not has_many Transfer
 node is not an association of WiredLocation
-.........................
-Finished in 16.433802 seconds.
+...........................
+Finished in 33.570556 seconds.
 
-27 tests, 283 assertions, 0 failures, 0 errors
+29 tests, 288 assertions, 0 failures, 0 errors

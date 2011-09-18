@@ -1,6 +1,43 @@
 class TestRun < ActiveRecord::Base
 include Generic_Table
 has_many :bugs
+def initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
+	if testType.instance_of?(Hash) then
+		super(testType) # actually hash of attributes
+#		attributes=testType 
+	else
+		super(nil) #
+		if !testType.nil? then
+			raise "initialize test run with bad testType=#{testType}" unless [:unit,:controller].include?(testType.to_sym)
+			test_type=testType
+			table=ENV["TABLE"]
+			if singular_table.nil? then
+				if plural_table.nil? then
+					@singular_table = "code_base"
+					@plural_table = "code_bases"
+				else
+					@singular_table = plural_table.singularize
+					@plural_table = plural_table
+				end #if
+			else
+				if plural_table.nil? then
+					@singular_table = singular_table
+					@plural_table = singular_table.pluralize
+				else
+					@singular_table = singular_table
+					@plural_table = plural_table
+				end #if
+			end #if
+			model = plural_table # canonical form since plurals are more irregular?
+			if test.nil? then
+				test = ENV["TEST"] 
+			end #if
+		end #if
+
+	end #if
+end #initialize
+def run
+end #run
 def TestRun.ruby_run_and_log(ruby_source,log_file,test=nil)
 	if test.nil? then
 		ruby_test=ruby_source
@@ -37,9 +74,9 @@ rescue StandardError => exception_raised
 rescue SyntaxError => exception_raised
 	puts  '-SyntaxError Error: ' + exception_raised.inspect 
 	return true
-end #def
+end #ruby_run_and_log
 def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
-	table,test_type=CodeBase.table_type_from_source(ruby_source)
+	table,test_type=CodeBase.test_type_from_source(ruby_source)
 	header,errors,summary=parse_log_file(log_file)
 	if summary.nil? then
 	else

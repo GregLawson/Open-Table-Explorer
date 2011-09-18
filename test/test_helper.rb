@@ -15,13 +15,13 @@ require 'test_helper_assert_generic_table.rb'
 def fixtures(table_name)
 	table_name=table_name.to_s
 	assert_fixture_name(table_name)
-	assert_not_nil(fixture_labels(table_name))
-	assert_not_nil(@loaded_fixtures[table_name])
+	assert_not_empty(fixture_labels(table_name))
+	assert_not_empty(@loaded_fixtures[table_name])
 	assert_instance_of(Array,fixture_labels(table_name))
 	fixture_hash={}
 	@loaded_fixtures[table_name].each do |f|
 		fixture_label=f.at(0)
-		assert_not_nil(fixture_label)
+		assert_not_empty(fixture_label)
 		if fixture_label.instance_of?(String) then
 			fixture_label=fixture_label.to_sym
 		end
@@ -29,7 +29,7 @@ def fixtures(table_name)
 		fixture_data=f.at(1)
 		ar_from_fixture=fixture_data.model_class.new(fixture_data.to_hash)
 		if ar_from_fixture.id.nil? and !fixture_data.to_hash['id'].nil? then # id not set in new
-			assert_nil(ar_from_fixture['id'])
+			assert_nil(ar_from_fixture['id'],"ar_from_fixture=#{ar_from_fixture.inspect}")
 			assert_nil(ar_from_fixture[:id])
 			assert_nil(ar_from_fixture.id)
 			assert_equal(ar_from_fixture.id,ar_from_fixture['id'])
@@ -47,7 +47,7 @@ def fixtures(table_name)
 			assert_equal(ar_from_fixture.id,ar_from_fixture[:id])
 			assert_equal(ar_from_fixture.id,ar_from_fixture['id'])
 		else
-			assert_not_nil(ar_from_fixture.id)
+			assert_not_empty(ar_from_fixture.id)
 			assert_equal(ar_from_fixture.id,ar_from_fixture[:id])
 			assert_equal(ar_from_fixture.id,ar_from_fixture['id'])
 		end
@@ -62,11 +62,11 @@ def fixtures(table_name)
 		#~ puts " ar_from_fixture.key_list.inspect=#{ ar_from_fixture.key_list.inspect}"
 		#~ puts " ar_from_fixture.value_list.inspect=#{ ar_from_fixture.value_list.inspect}"
 	#	puts " ar_from_fixture.ar_from_fixture.inspect=#{ ar_from_fixture.ar_from_fixture.inspect}"
-		assert_respond_to(ar_from_fixture,:sequential_id?,"sequential_id? ar_from_fixture.inspect=#{ar_from_fixture.inspect}")
+		assert_respond_to(ar_from_fixture.class,:sequential_id?,"sequential_id? ar_from_fixture.inspect=#{ar_from_fixture.inspect}")
 	#	puts " ar_from_fixture.class.table_name.inspect=#{ ar_from_fixture.class.table_name.inspect}"
 	#	puts " ar_from_fixture.class.name.inspect=#{ ar_from_fixture.class.name.inspect}"
 		assert_not_nil(ar_from_fixture['id'],"ar_from_fixture.id is nil. From hash=#{fixture_data.to_hash.inspect} into in ar_from_fixture.inspect=#{ar_from_fixture.inspect}")
-		if ar_from_fixture.sequential_id? then
+		if ar_from_fixture.class.sequential_id? then
 		else
 			assert_equal(Fixtures::identify(fixture_label),ar_from_fixture.id,"#{table_name}.yml probably defines id rather than letting Fixtures define it as a hash.")
 		end #if
@@ -145,6 +145,7 @@ def explain_assert_respond_to(obj,methodName,message='')
 end
 def assert_not_empty(object,message=nil)
 	message=build_message(message, "? is empty with value ?.", object.canonicalName,object.inspect)   
+	assert_not_nil(object,message)
 	assert_block(message){!object.empty?}
 end #def
 def assert_empty(object,message=nil)

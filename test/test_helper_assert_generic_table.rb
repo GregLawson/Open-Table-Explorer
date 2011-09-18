@@ -47,7 +47,7 @@ def assert_association(class_reference,association_reference)
 	if klass.module_included?(Generic_Table) then
 		association_type=klass.association_to_type(association_reference)
 		assert_not_nil(association_type)
-		assert_include(association_type,[:to_one,:to_many])
+		assert_include(association_type,[:to_one,:to_many],"In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}")
 	end #if
 	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
 	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")
