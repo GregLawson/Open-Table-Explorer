@@ -65,9 +65,6 @@ def work_flow(test=nil)
 
 end #def
 
-def short_context(trace)
-	return trace.reverse[1..-1].collect{|t| t.slice(/`([a-zA-Z_]+)'/,1)}.join(', ')
-end #def
 def after(s,before,pattern)
 	if s.scan_until(before).nil? then
 		puts "before #{s.rest[0..50]}, #{pattern.to_s} not matched."
@@ -88,69 +85,6 @@ def stage
 			CodeBase.why_not_stage(file,CodeBase.singular_table_from_file(file))
 		end #if
 	end #gitStatus
-end #def
-def parse_summary(summary)
-	summary=summary.split(' ')
-	tests=summary[0].to_i
-	assertions=summary[2].to_i
-	failures=summary[4].to_i
-	tests_stop_on_error=summary[6].to_i
-	return [tests,assertions,failures,tests_stop_on_error]
-end #def
-def parse_bug(test_type,table,error)
-	error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
-		#~ puts "number=#{number.inspect}"
-		#~ puts "error_type=#{error_type}"
-		#~ puts "test=#{test.inspect}"
-		#~ puts "klass=#{klass.inspect}"
-		#~ puts "report=#{report.inspect}"
-		url="rake testing:#{test_type}_test TABLE=#{table} TEST=#{test}"
-		if error_type=='Error' then
-			report.scan(/^([^\n]*)\n(.*)$/m) do |error,trace|
-				context=short_context(trace.split("\n"))
-				#~ puts "error=#{error.inspect}"
-				#~ puts "trace=#{trace.inspect}"
-				#~ puts "context=#{context.inspect}"
-				open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-			end #scan
-		elsif error_type=='Failure' then
-			report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m) do |trace,error|
-				context=short_context(trace.split("\n"))
-				error=error.slice(0,50)
-				#~ puts "error=#{error.inspect}"
-				#~ puts "trace=#{trace.inspect}"
-				#~ puts "context=#{context.inspect}"
-				open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-			end #scan
-		else
-			puts "pre_match=#{s.pre_match}"
-			puts "post_match=#{s.post_match}"
-			puts "before #{s.rest}"
-		end #if
-	end #scan
-end #def
-def parse_log_file(log_file)
-	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
-#	puts "blocks=#{blocks.inspect}"
-	header= blocks[0]
-	errors=blocks[1..-2]
-	summary=blocks[-1]
-	return [header,errors,summary]
-end #def
-def log_passed?(log_file)
-	if !File.size?(log_file) then
-		return false # no file or empty file, no evidence of passing
-	end #if
-	header,errors,summary=parse_log_file(log_file)
-	if summary.nil? then
-	else
-		tests,assertions,failures,tests_stop_on_error=parse_summary(summary)
-		if    (failures+tests_stop_on_error)==0 then
-			return true
-		else
-			return false
-		end #if
-	end #if
 end #def
 def view(url)
 	uri=URI(url)

@@ -1,6 +1,6 @@
 Loaded suite test/unit/test_run_test
 Started
-......
-Finished in 38.311137 seconds.
+.
+Finished in 17.93429 seconds.
 
-6 tests, 38356 assertions, 0 failures, 0 errors
+1 tests, 7635 assertions, 0 failures, 0 errors
