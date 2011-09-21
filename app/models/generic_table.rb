@@ -80,7 +80,9 @@ def Base.is_association?(association_name)
 	if ActiveRecord::Base.instance_methods_from_class.include?(association_name.to_s) then
 		raise "# Don’t create associations that have the same name (#{association_name.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class})."
 	end #if
-	if self.instance_respond_to?(association_name) and self.instance_respond_to?((association_name.to_s+'=').to_sym)  then
+	if association_name.to_s[-4,4]=='_ids' then # automatically generated
+		return false
+	elsif self.instance_respond_to?(association_name) and self.instance_respond_to?((association_name.to_s+'=').to_sym)  then
 		return true
 	else
 		return false
@@ -112,7 +114,7 @@ def Base.association_names_to_many
 	return instance_methods(false).select {|m| is_association_to_many?(m)}
 end #def
 def Base.association_names
-	return instance_methods(false).select {|m| is_association?(m)}
+	return instance_methods(false).select {|m| is_association_to_one?(m) or is_association_to_many?(m)}
 end #def
 def Base.model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
@@ -196,9 +198,9 @@ def Base.is_active_record_method?(method_name)
 		return false
 	end #if
 end #is_active_record_method
-def Base.logical_primary_key
-	return column_names
-end #logical_primary_key
+#def Base.logical_primary_key
+#	return column_names
+#end #logical_primary_key
 def Base.sequential_id?
 	if self.respond_to?(:logical_primary_key) then
 		if logical_primary_key==[:created_at] then # still sequential, not requred, default
@@ -211,10 +213,10 @@ def Base.sequential_id?
 	end #if
 end # def
 def logical_primary_key_value(delimiter=',')
-	if sequential_id? then
+	if self.class.sequential_id? then
 		return self[:created_at]
 	else
-		return logical_primary_key.map {|k| self[k]}.join(delimiter)
+		return self.class.logical_primary_key.map {|k| self[k]}.join(delimiter)
 	end #if
 end #def
 

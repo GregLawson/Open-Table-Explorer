@@ -11,16 +11,13 @@ error_type is not an association of Bug
 node is not an association of Load
 load is not an association of Measurement
 node is not an association of Node
-StreamPatternArgument belongs_to stream_pattern
-stream_pattern does not has_many StreamPatternArgument
-parameter is not an association of StreamPatternArgument
 ParseSpec does not include Generic_Table
+stream_pattern is not an association of StreamMethod
 stream_method is not an association of StreamMethodArgument
 StreamMethodArgument belongs_to parameter
-parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "StreamPatternArgument", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation", "StreamPattern"].
+parameter is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ScalarArgument", "ParseSpec", "Port", "ProductionFtp", "Production", "Router", "RubyInterface", "StreamMethod", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamParameter", "StreamPattern", "TableSpec", "Tedprimary", "TestRun", "Transaction", "Transfer", "Url", "Weather", "WiredLocation", "StreamPatternArgument"].
 StreamMethodCall belongs_to stream_method
 stream_method does not has_many StreamMethodCall
-stream_pattern is not an association of StreamMethod
 stream_method_call is not an association of StreamParameter
 stream_method_argument is not an association of StreamParameter
 TableSpec belongs_to frequency
@@ -30,7 +27,10 @@ Transaction does not include Generic_Table
 Transfer belongs_to account
 account does not has_many Transfer
 node is not an association of WiredLocation
+StreamPatternArgument belongs_to stream_pattern
+stream_pattern does not has_many StreamPatternArgument
+parameter is not an association of StreamPatternArgument
 ...........................
-Finished in 33.570556 seconds.
+Finished in 17.684587 seconds.
 
-29 tests, 288 assertions, 0 failures, 0 errors
+29 tests, 294 assertions, 0 failures, 0 errors

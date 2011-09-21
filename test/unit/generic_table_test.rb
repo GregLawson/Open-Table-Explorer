@@ -154,6 +154,12 @@ end #test
 test 'association_names' do
 	class_reference=StreamMethodArgument
 	assert_not_empty(class_reference.instance_methods(false).select {|m| class_reference.is_association?(m)})
+	assert_not_include('bug_ids', TestRun.association_names_to_one)
+	assert_equal([],TestRun.association_names_to_one)
+	assert_not_include('bug_ids', TestRun.association_names_to_many)
+	assert_equal(['bugs'],TestRun.association_names_to_many)
+	assert_not_include('bug_ids', TestRun.association_names)
+	assert_equal(['bugs'],TestRun.association_names)
 end #test
 test "has_many_association" do
 	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)

@@ -194,9 +194,9 @@ def assert_overlap(enum1,enum2)
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #def
 def assert_include(element,list,message=nil)
-	if message.nil? then
+#	if message.nil? then
 		message=build_message(message, "? is not in list ?", element,list.inspect)
-	end #if  
+#	end #if  
 	assert(list.include?(element),message)
 end #def
 def assert_dir_include(filename,glob)
