@@ -1,19 +1,26 @@
 Loaded suite test/unit/stream_pattern_test
 Started
-.F..
-Finished in 15.494873 seconds.
+EEEE
+Finished in 229.851924 seconds.
 
-  1) Failure:
-test_general_associations(StreamPatternTest)
-    [/test/test_helper.rb:148:in `assert_not_empty'
-     /test/test_helper_assert_generic_table.rb:105:in `assert_foreign_key_points_to_me'
-     /test/test_helper_assert_generic_table.rb:134:in `assert_general_associations'
-     /test/test_helper_assert_generic_table.rb:130:in `each'
-     /test/test_helper_assert_generic_table.rb:130:in `assert_general_associations'
-     /test/test_helper_assert_generic_table.rb:129:in `each_value'
-     /test/test_helper_assert_generic_table.rb:129:in `assert_general_associations'
-     test/unit/stream_pattern_test.rb:15:in `test_general_associations']:
-assert_foreign_key_points_to_me ar_from_fixture.inspect=#<StreamPattern id: 592343983, name: "Schedule", created_at: "2011-08-18 18:53:57", updated_at: "2011-08-18 18:53:57">,assName=stream_pattern_arguments Check if id is specified in stream_pattern_arguments.yml file.
-"ActiveRecord::Relation #<ActiveRecord::Relation:" is empty with value "[]".
+  1) Error:
+test_aaa_test_new_assertions(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
 
-4 tests, 1831 assertions, 1 failures, 0 errors
+  2) Error:
+test_general_associations(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
+
+  3) Error:
+test_id_equal(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
+
+  4) Error:
+test_specific,_stable_and_working(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
+
+4 tests, 0 assertions, 0 failures, 4 errors
