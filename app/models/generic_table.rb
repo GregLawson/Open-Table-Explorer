@@ -211,7 +211,7 @@ def Base.sequential_id?
 	end #if
 end # def
 def logical_primary_key_value(delimiter=',')
-	if sequential_id? then
+	if self.class.sequential_id? then
 		return self[:created_at]
 	else
 		return logical_primary_key.map {|k| self[k]}.join(delimiter)

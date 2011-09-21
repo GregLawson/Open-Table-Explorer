@@ -3,22 +3,44 @@ require 'test_helper'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class TestRunTest < ActiveSupport::TestCase
-def assert_logical_primary_key_defined(instance)
-	assert_not_nil(instance)
-	assert_instance_of(TestRun,instance)
-	assert_kind_of(ActiveRecord::Base,instance)
+def assert_logical_primary_key_defined(instance,message=nil)
+	message=build_message(message, "instance=?", instance.inspect)	
+	assert_not_nil(instance, message)
+	assert_instance_of(TestRun,instance, message)
+	assert_kind_of(ActiveRecord::Base,instance, message)
 
-	puts "instance=#{instance.inspect}"
-	assert_not_nil(instance.attributes)
-	assert_not_nil(instance['test_type'])
-	assert_not_nil(instance[:test_type])
-	assert_not_nil(instance.test_type)
-	assert_not_nil(instance.test_type)
-	assert_not_nil(instance.model)
+#	puts "instance=#{instance.inspect}"
+	assert_not_nil(instance.attributes, message)
+	assert_not_nil(instance[:test_type], message)
+	assert_not_nil(instance.test_type, message)
+	assert_not_nil(instance['test_type'], message)
+	assert_not_nil(instance.model, message)
 end #assert_logical_primary_key_defined
 test 'initialize' do
+	testRun=TestRun.new
+	TestRun.column_names.each do |n|
+		assert_instance_of(String,n)
+	end #each
+	# prove equivalence of attribute access
+	assert_include('model',TestRun.instance_methods)
+	testRun.model='method'
+	assert_equal('method', testRun.model)
+	assert_equal('method', testRun[:model])
+	assert_equal('method', testRun['model'])
+	
+	testRun[:model]='sym_hash'
+	assert_equal('sym_hash', testRun.model)
+	assert_equal('sym_hash', testRun[:model])
+	assert_equal('sym_hash', testRun['model'])
+	
+	testRun['model']='string_hash'
+	assert_equal('string_hash', testRun.model)
+	assert_equal('string_hash', testRun[:model])
+	assert_equal('string_hash', testRun['model'])
+	
 	assert_logical_primary_key_defined(TestRun.new({:test_type => :unit, :model => 'test_runs'}))
-	assert_not_nil(ENV["TABLE"])
+	assert_logical_primary_key_defined(TestRun.new(:unit, 'stream_pattern'))
+	assert_logical_primary_key_defined(TestRun.new(:unit, 'test_run'))
 	test=TestRun.new(:unit)
 	assert_logical_primary_key_defined(test)
 	
@@ -38,10 +60,10 @@ def test_general_associations
 	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	if @model_class.new.sequential_id? then
+	if @model_class.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
-			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
+			message="Check that logical key (#{ar_from_fixture.class.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
 			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
 			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
 		end
