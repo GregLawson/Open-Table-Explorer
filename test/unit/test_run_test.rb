@@ -45,8 +45,11 @@ test 'initialize' do
 	assert_logical_primary_key_defined(test)
 	
 end #initialize
+test 'run' do
+TestRun.new(:unit, 'stream_pattern').run
+end #run
 test 'ruby_run_and_log' do
-	TestRun.ruby_run_and_log('/dev/null','/dev/null')
+#	TestRun.ruby_run_and_log('/dev/null','/dev/null')
 end #ruby_run_and_log
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
@@ -57,7 +60,7 @@ def setup
 	define_association_names
 end #def
 def test_general_associations
-	assert_general_associations(@table_name)
+#	assert_general_associations(@table_name)
 end #test
 def test_id_equal
 	if @model_class.sequential_id? then
