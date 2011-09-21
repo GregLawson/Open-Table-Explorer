@@ -31,27 +31,28 @@ end #def
 def assert_matching_association(klass,association_name)
 	assert(klass.is_matching_association?(association_name))
 end #def
-def assert_association(class_reference,association_reference)
+def assert_association(class_reference,association_reference, message=nil)
+	message=build_message(message, "Class=? association=?", class_reference.inspect, association_reference.inspect)	
 	if class_reference.kind_of?(Class) then
 		klass=class_reference
 	else
 		klass=class_reference.class
 	end #if
 	association_reference=association_reference.to_sym
-	assert_not_equal('_id',association_reference.to_s[-3..-1],"association_reference=#{association_reference} should not end in '_id' as it will be confused wth a foreign key.")
-	assert_not_equal('_ids',association_reference.to_s[-4..-1],"association_reference=#{association_reference} causes confusion with automatic _ids and _ids= generated for to_many assoiations.")
+	assert_not_equal('_id',association_reference.to_s[-3..-1],build_message(message, "association_reference=#{association_reference} should not end in '_id' as it will be confused wth a foreign key."))
+	assert_not_equal('_ids',association_reference.to_s[-4..-1],build_message(message, "association_reference=#{association_reference} causes confusion with automatic _ids and _ids= generated for to_many assoiations."))
 	if ActiveRecord::Base.instance_methods_from_class(true).include?(association_reference.to_s) then
 		raise "# Don’t create associations that have the same name (#{association_reference.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord::Base.instance_methods_from_class.inspect})."
 	end #if
-	assert_instance_of(Symbol,association_reference,"assert_association")
+	assert_instance_of(Symbol,association_reference,build_message(message, "assert_association"))
 	if klass.module_included?(Generic_Table) then
 		association_type=klass.association_to_type(association_reference)
-		assert_not_nil(association_type)
-		assert_include(association_type,[:to_one,:to_many],"In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}")
+		assert_not_nil(association_type, message)
+		assert_include(association_type,[:to_one,:to_many,:not_an_association],build_message(message, "In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}"))
 	end #if
 	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
 	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")
-	assert(klass.is_association?(association_reference),"fail is_association?, klass.inspect=#{klass.inspect},association_reference=#{association_reference}")
+	assert(klass.is_association?(association_reference),build_message(message, "fail is_association, klass.inspect=?,association_reference=?",klass.inspect,association_reference))
 end #def
 
 def assert_association_to_one(class_reference,assName)
@@ -111,14 +112,15 @@ def assert_association_many_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_many_to_one")
 	assert_association_to_one(ar_from_fixture,assName)
 end #def
-def assert_associations(ass1,ass2)
+def assert_associations(ass1,ass2,message=nil)
+	message=build_message(message, "ass1=? ass2=?", ass1.inspect, ass2.inspect)	
 	class1=ass1.to_s.classify.constantize # must succeed
 	association_symbol2=class1.association_method_symbol(ass2)
-	assert_association(class1,association_symbol2)
+	assert_association(class1,association_symbol2, message)
 	class2=association_symbol2.to_s.classify.constantize
-	assert_kind_of(Class,class1.association_class(ass2))
-	assert_kind_of(Symbol,class2.association_method_symbol(ass1))
-	assert_association(class1.association_class(ass2),class2.association_method_symbol(ass1))
+	assert_kind_of(Class,class1.association_class(ass2), message)
+	assert_kind_of(Symbol,class2.association_method_symbol(ass1), message)
+	assert_association(class1.association_class(ass2),class2.association_method_symbol(ass1), message)
 end #def
 def assert_general_associations(table_name)
 	fixtures(table_name).each_value do |fixture|
@@ -127,7 +129,7 @@ def assert_general_associations(table_name)
 		assName=association_name.to_sym
 		if fixture.class.is_association_to_many?(assName) then
 			 assert_association_to_many(fixture.class,assName)
-			assert_foreign_key_points_to_me(fixture,assName)
+#GENERALIZE			assert_foreign_key_points_to_me(fixture,assName)
 		else
 			assert_association_to_one(fixture.class,assName)
 		end #if
