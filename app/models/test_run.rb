@@ -79,17 +79,17 @@ def run
 	TestRun.ruby_run_and_log(test_file,log_file,self[:test])
 end #run
 def TestRun.shell(command, &proc)
-	puts "command='#{command}'"
+#	puts "command='#{command}'"
 	output=`#{command}`
-	puts "$?=#{$?}"
-	puts "output='#{output}'"
+#	puts "$?=#{$?}"
+#	puts "output='#{output}'"
 	if $?==0 then
 		proc.call(true,output)
-		puts output
+#		puts output
 		return output
 	else
 		proc.call(false,"$?=#{$?}"+output)
-		puts output
+#		puts output
 		return nil
 	end #if
 end #ruby
@@ -104,9 +104,9 @@ def TestRun.ruby_run_and_log(ruby_source,log_file,test=nil)
 	end #if
 	stop=ruby %Q{-I test #{ruby_test} | tee #{log_file}}  do |ok, res|
 		if  ok
-		puts "ruby ok(status = #{res.inspect})"
+#		puts "ruby ok(status = #{res.inspect})"
 			#~ sh "git add #{ruby_source}"
-			 puts IO.read(log_file)
+			 puts "IO.read('#{log_file}')='#{IO.read(log_file)}'"
 		else
 			puts "ruby failed(status = #{res.exitstatus})!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			#~ sh "tail --lines=2 #{log_file}"
@@ -137,6 +137,8 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 	table,test_type=CodeBase.test_type_from_source(ruby_source)
 	header,errors,summary=parse_log_file(log_file)
 	if summary.nil? then
+		puts "summary is nil. probable rake failure."
+		stop=true
 	else
 		tests,assertions,failures,tests_stop_on_error=TestRun.parse_summary(summary)
 		#~ puts "failures+tests_stop_on_error=#{failures+tests_stop_on_error}"
@@ -150,10 +152,12 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 	if !errors.nil? then
 		errors.each do |error|
 			parse_bug(test_type,table,error)
+			puts "error='#{error}'"
 		end #each
 	end #if 
 #	puts "ARGF.argv.inspect=#{ARGF.argv.inspect}"
-	#~ puts "file_bug_reports stop=#{stop}"
+	puts "file_bug_reports stop=#{stop}"
+	puts "summary='#{summary}'"
 	return stop
 end #def
 def TestRun.parse_log_file(log_file)
@@ -170,6 +174,7 @@ def TestRun.log_passed?(log_file)
 	end #if
 	header,errors,summary=TestRun.parse_log_file(log_file)
 	if summary.nil? then
+		return false
 	else
 		tests,assertions,failures,tests_stop_on_error=TestRun.parse_summary(summary)
 		if    (failures+tests_stop_on_error)==0 then

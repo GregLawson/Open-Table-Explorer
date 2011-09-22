@@ -22,7 +22,7 @@ test 'initialize' do
 		assert_instance_of(String,n)
 	end #each
 	# prove equivalence of attribute access
-	assert_include('model',TestRun.instance_methods)
+	assert_respond_to(testRun, 'model')
 	testRun.model='method'
 	assert_equal('method', testRun.model)
 	assert_equal('method', testRun[:model])
@@ -46,7 +46,7 @@ test 'initialize' do
 	
 end #initialize
 test 'run' do
-TestRun.new(:unit, 'stream_pattern').run
+#	TestRun.new(:unit, 'stream_pattern').run
 end #run
 test 'ruby_run_and_log' do
 #	TestRun.ruby_run_and_log('/dev/null','/dev/null')
@@ -57,7 +57,7 @@ def setup
 	assert_module_included(@model_class,Generic_Table)
 	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	define_association_names
+#	define_association_names #38271 associations
 end #def
 def test_general_associations
 #	assert_general_associations(@table_name)
@@ -74,7 +74,8 @@ def test_id_equal
 end #def
 test "specific, stable and working" do
 end #test
-test "aaa test new assertions" do  # aaa to output first
+test "fixture_function" do  # aaa to output first
+	define_association_names #38271 associations
 	assert_equal(@my_fixtures,fixtures(@table_name))
 end #test
 end #class
