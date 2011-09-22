@@ -271,7 +271,7 @@ end #def
 def CodeBase.why_not_stage_helper(file,target,sources,test_type)
 	if File.exists?(target) then
 		#~ puts "Target #{target}  does exist." 
-		if log_passed?(target) then
+		if TestRun.log_passed?(target) then
 			system "git add #{target}"
 			if file==target then
 				return true

@@ -1,7 +1,7 @@
 Loaded suite test/unit/stream_pattern_test
 Started
 EEEE
-Finished in 229.851924 seconds.
+Finished in 258.982048 seconds.
 
   1) Error:
 test_aaa_test_new_assertions(StreamPatternTest):

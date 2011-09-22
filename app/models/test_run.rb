@@ -1,4 +1,4 @@
-class TestRun < ActiveRecord::Base
+class TestRun  < ActiveRecord::Base
 include Generic_Table
 has_many :bugs
 def initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
