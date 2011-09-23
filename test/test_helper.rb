@@ -21,7 +21,7 @@ def fixtures(table_name)
 	fixture_hash={}
 	@loaded_fixtures[table_name].each do |f|
 		fixture_label=f.at(0)
-		assert_not_empty(fixture_label)
+		assert_not_nil(fixture_label)
 		if fixture_label.instance_of?(String) then
 			fixture_label=fixture_label.to_sym
 		end
@@ -223,6 +223,16 @@ def assert_public_instance_method(obj,methodName,message='')
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #def
+def assert_array_of(obj, type)
+	assert_block("obj=#{obj.inspect} must be an Array") {obj.instance_of?(Array)}
+	puts "obj=#{obj.inspect} must be an Array of Strings(pathnames)"
+	puts "obj.size=#{obj.size} "
+	puts "obj[0]=#{obj[0].inspect} "
+	obj.each do |p|
+		puts "p=#{p.inspect} must be a String(pathnames)" 
+	end #each
+	assert_block("obj=#{obj.inspect} must be an Array of Strings(pathnames)") {obj.all?{|s| s.instance_of?(String)}}
+end #array_of
 def assert_has_instance_methods(model_class,message=nil)
 	message=build_message(message, "? has no public instance methods.", model_class.canonicalName)   
 	assert_block(message){!model_class.instance_methods(false).empty?}

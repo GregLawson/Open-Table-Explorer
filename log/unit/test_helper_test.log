@@ -1,22 +1,72 @@
 Loaded suite test/unit/test_helper_test
 Started
-........F................
-Finished in 56.04837 seconds.
+..obj=["", ""] must be an Array of Strings(pathnames)
+obj.size=2 
+obj[0]="" 
+p="" must be a String(pathnames)
+p="" must be a String(pathnames)
+obj=[[]] must be an Array of Strings(pathnames)
+obj.size=1 
+obj[0]=[] 
+p=[] must be a String(pathnames)
+obj=[] must be an Array of Strings(pathnames)
+obj.size=0 
+obj[0]=nil 
+..FE...F...........F..F.
+Finished in 86.962503 seconds.
 
   1) Failure:
-test_assert_general_associations(TestHelperTest)
-    [/test/test_helper_assert_generic_table.rb:42:in `assert_association'
-     /test/test_helper_assert_generic_table.rb:117:in `assert_associations'
-     /test/test_helper_assert_generic_table.rb:126:in `assert_general_associations'
-     /test/test_helper_assert_generic_table.rb:125:in `each'
-     /test/test_helper_assert_generic_table.rb:125:in `assert_general_associations'
-     /test/test_helper_assert_generic_table.rb:124:in `each_value'
-     /test/test_helper_assert_generic_table.rb:124:in `assert_general_associations'
-     test/unit/test_helper_test.rb:174:in `test_assert_general_associations'
-     test/unit/test_helper_test.rb:173:in `each'
-     test/unit/test_helper_test.rb:173:in `test_assert_general_associations']:
-association_reference=stream_parameter_ids causes confusion with automatic _ids and _ids= generated for to_many assoiations.
-<"_ids"> expected to be != to
-<"_ids">.
+test_assert_association_to_one(TestHelperTest)
+    [/test/test_helper_assert_generic_table.rb:55:in `assert_association'
+     test/unit/test_helper_test.rb:139:in `test_assert_association_to_one']:
+Class="StreamMethodArgument(id: integer, stream_method_id: integer, name: string, ruby_type: string, direction: string, parameter_id: integer, parameter_type: string, created_at: datetime, updated_at: datetime)" association=":parameter".
+fail is_association, klass.inspect="StreamMethodArgument(id: integer, stream_method_id: integer, name: string, ruby_type: string, direction: string, parameter_id: integer, parameter_type: string, created_at: datetime, updated_at: datetime)",association_reference=:parameter.
+<false> is not true.
 
-25 tests, 15434 assertions, 1 failures, 0 errors
+  2) Error:
+test_assert_associations(TestHelperTest):
+TypeError: can't convert Class into String
+    app/models/global.rb:32:in `initialize'
+    app/models/global.rb:32:in `new'
+    app/models/global.rb:32:in `matching_instance_methods'
+    app/models/global.rb:32:in `select'
+    app/models/global.rb:32:in `matching_instance_methods'
+    app/models/generic_table.rb:57:in `association_methods'
+    app/models/generic_table.rb:60:in `association_patterns'
+    app/models/generic_table.rb:74:in `is_association_patterns?'
+    app/models/generic_table.rb:108:in `is_polymorphic_association?'
+    /test/test_helper_assert_generic_table.rb:123:in `assert_associations'
+    test/unit/test_helper_test.rb:176:in `test_assert_associations'
+
+  3) Failure:
+test_assert_general_associations(TestHelperTest)
+    [/test/test_helper_assert_generic_table.rb:55:in `assert_association'
+     /test/test_helper_assert_generic_table.rb:124:in `assert_associations'
+     /test/test_helper_assert_generic_table.rb:130:in `assert_general_associations'
+     /test/test_helper_assert_generic_table.rb:129:in `each'
+     /test/test_helper_assert_generic_table.rb:129:in `assert_general_associations'
+     /test/test_helper_assert_generic_table.rb:128:in `each_value'
+     /test/test_helper_assert_generic_table.rb:128:in `assert_general_associations'
+     test/unit/test_helper_test.rb:180:in `test_assert_general_associations'
+     test/unit/test_helper_test.rb:179:in `each'
+     test/unit/test_helper_test.rb:179:in `test_assert_general_associations']:
+ass1="\"stream_parameters\"" ass2="\"stream_method_arguments\"".
+Class="StreamMethodArgument(id: integer, stream_method_id: integer, name: string, ruby_type: string, direction: string, parameter_id: integer, parameter_type: string, created_at: datetime, updated_at: datetime)" association=":stream_parameters".
+fail is_association, klass.inspect="StreamMethodArgument(id: integer, stream_method_id: integer, name: string, ruby_type: string, direction: string, parameter_id: integer, parameter_type: string, created_at: datetime, updated_at: datetime)",association_reference=:stream_parameters.
+<false> is not true.
+
+  4) Failure:
+test_handle_polymorphic(TestHelperTest)
+    [/test/test_helper.rb:200:in `assert_include'
+     test/unit/test_helper_test.rb:207:in `test_handle_polymorphic']:
+:not_an_association is not in list "[:to_one, :to_many]".
+<false> is not true.
+
+  5) Failure:
+test_unknown(TestHelperTest)
+    [/test/test_helper.rb:200:in `assert_include'
+     test/unit/test_helper_test.rb:129:in `test_unknown']:
+:not_an_association is not in list "[:to_one, :to_many]".
+<false> is not true.
+
+26 tests, 30599 assertions, 4 failures, 1 errors
