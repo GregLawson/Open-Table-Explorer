@@ -2,19 +2,21 @@
 
 Acquisition:
   name: Acquisition
-
-Parse_Table:
-  name: Parse_Table
-
-Parse_Row:
-  name: Parse_Row  
-Parse_Column:
-  name: Parse_Column  
-R_Analysis:
-  name: R_Analysis  
 Parallel_Acquisition:
-  name: Parallel_Acquisition  
-Merge_Rows:
-  name: Merge_Rows  
+  name:Parallel_Acquisition
+Parse:
+  name: Parse
 Schedule:
-  name: Schedule  
+  name: Schedule
+Storage:
+  name: Storage  
+R_Plot:
+  name: R_Plot  
+R_Report:
+  name: R_Report  
+R_Value:
+  name: R_Value  
+Query_Output:
+  name: Query_Output  
+Git:
+  name: Git
