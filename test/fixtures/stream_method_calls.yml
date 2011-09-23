@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 1:
-  stream_method: HTTP
+  stream_method: File
 
 2:
-  stream_method: Shell
+  stream_method: Split
