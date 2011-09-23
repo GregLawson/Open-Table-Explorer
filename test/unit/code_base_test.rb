@@ -237,6 +237,7 @@ test 'not_uptodate_sources' do
 	target='/'
 	assert(CodeBase.not_uptodate_sources(target,sources))
 	assert(sources.all?{|s| s.instance_of?(String)} ,"sources=#{sources.inspect} must be an Array of Strings(pathnames)")
+#	assert(CodeBase.not_uptodate_sources(target,[]))
 end #not_uptodate_sources
 test "git_status" do
 	#~ assert_match('app/views/acquisition_stream_specs/_index_partial.html.erb',TABLE_FINDER_REGEXPS['app/views/acquisition_stream_specs/_index_partial.html.erb'])

@@ -249,7 +249,13 @@ end #uptodate
 # file must also have changed since last staging
 def CodeBase.not_uptodate_sources(target,sources)
 	raise "sources=#{sources.inspect} must be an Array" unless sources.instance_of?(Array)
-	raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.all?{|s| s.instance_of?(String)}
+	puts "sources=#{sources.inspect} must be an Array of Strings(pathnames)"
+	puts "sources.size=#{sources.size} "
+	puts "sources[0]=#{sources[0].inspect} "
+	sources.each do |p|
+		puts "p=#{p.inspect} must be a String(pathnames)" unless p.instance_of?(String)
+	end #each
+	raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.any?{|s| s.instance_of?(String)}
 	raise "target=#{target.inspect} must be a String (pathnames)" unless target.instance_of?(String)
 	sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, [s])}
 end #not_uptodate_sources
