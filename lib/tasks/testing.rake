@@ -9,6 +9,11 @@ require 'app/models/global.rb'
 require 'app/models/generic_table.rb'
 require 'app/models/code_base.rb'
 require 'app/models/test_run.rb'
+ActiveRecord::Base.establish_connection(
+  :adapter => "sqlite3",
+  :database => "db/production.sqlite3",
+  :pool => 5,
+  :timeout => 5000)
 namespace :testing do
 
 desc "Run tests testing:incremental, testing:full, testing:summarize, or testing:unit_test TABLE=plural_table TEST=. Output in log/{unit,functional}/"
@@ -116,6 +121,9 @@ task :summarize do
 	summarize
 end #task
 task :unit_test do
+TestRun.new(:unit, ENV["TABLE"], ENV["TABLE"], ENV["TEST"]).run
+
+exit
 	plural_table = ENV["TABLE"].pluralize  || "code_bases"
 	test = ENV["TEST"] 
 	unit_test(plural_table,test)
