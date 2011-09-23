@@ -120,7 +120,9 @@ def assert_associations(ass1,ass2,message=nil)
 	class2=association_symbol2.to_s.classify.constantize
 	assert_kind_of(Class,class1.association_class(ass2), message)
 	assert_kind_of(Symbol,class2.association_method_symbol(ass1), message)
-	assert_association(class1.association_class(ass2),class2.association_method_symbol(ass1), message)
+	if !class1.is_polymorphic_association?(ass2) then
+		assert_association(class1.association_class(ass2),class2.association_method_symbol(ass1), message)
+	end #if
 end #def
 def assert_general_associations(table_name)
 	fixtures(table_name).each_value do |fixture|
