@@ -1,6 +1,6 @@
 class Url < ActiveRecord::Base
 include Generic_Table
-belongs_to :parameters
+has_many :stream_methods
 def logical_primary_key
 	return :url
 end

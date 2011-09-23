@@ -1,5 +1,6 @@
 class AcquisitionStreamSpec < ActiveRecord::Base
 belongs_to :acquisition_interface
+belongs_to :ruby_interface
 belongs_to :table_spec
 #belongs_to :table_specs, :class_name => "TableSpec"
 has_many :acquisitions
