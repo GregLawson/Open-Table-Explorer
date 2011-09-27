@@ -4,7 +4,7 @@
 # yaml spec http://yaml.org/spec/1.2/spec.htm
 
 HTTP:
-  name:HTTP
+  name: HTTP
   library: net/http
   interface_code: @acquisition= Net::HTTP.get(@uri.uri)
   return_code: 
@@ -31,6 +31,7 @@ File:
   rescue_code: 
   library:
   return_code: 
+
 Delmited:
   name: Delmited
   library: 
@@ -40,7 +41,7 @@ Delmited:
   rescue_code: 
 
 HTML:
-  name:HTML
+  name: HTML
   library: hpricot
   interface_code: @parsed Data= Hpricot(@acquisition).search(@selection)
   return_code: 
@@ -55,7 +56,7 @@ XML:
   rescue_code: 
 
 JSON:
-  name:JSON
+  name: JSON
   library: 
   interface_code: @parsed_data= JSON.parse(@acquisition)[@selection]
   return_code: 
@@ -69,16 +70,29 @@ Binary:
   return_code: 
   rescue_code: 
 Regexp:
-  name:Regexp
+  name: Regexp
   library: 
   interface_code: @parsed_data=Regexp.new(@selection).match(@acquisition)
   return_code: 
   rescue_code: 
 
 Store:
-  name:Store
-  interface: active_record
+  name: Store
+  library: active_record
   interface_code: @model_class.create(@name_value_pairs)
   return_code: 
   rescue_code: 
 
+Data_Table:
+  name: Data_Table
+  library: r
+  interface_code: @input.find_by_sql(@sql)
+  return_code: 
+  rescue_code: 
+  
+GLM:
+  name: Store
+  library: r
+  interface_code: @input.r_execute('GLM')
+  return_code: 
+  rescue_code: 

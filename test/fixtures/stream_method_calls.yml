@@ -5,3 +5,6 @@
 
 2:
   stream_method: Split
+
+3:
+  stream_method: GLM
