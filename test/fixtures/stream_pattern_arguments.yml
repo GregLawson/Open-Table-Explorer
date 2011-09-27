@@ -1,5 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+Parameters:
+  stream_pattern: Parameters
+  name: Value
+  ruby_type: String
+  direction: Output
+  parameter_type: Stream
+
 URI:
   stream_pattern: Acquisition
   name: URI
