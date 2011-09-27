@@ -84,8 +84,8 @@ test 'is_association_patterns' do
 	assert(class_reference.is_association_patterns?(association_reference,@@fk_association_patterns))
 end #is_association_patterns
 test "is_association" do
-	class_reference=StreamMethodArgument
-	association_reference=:parameter
+	class_reference=StreamLink
+	association_reference=:inputs
 	if class_reference.kind_of?(Class) then
 		klass=class_reference
 	else
@@ -108,8 +108,8 @@ test "is_association" do
 	assert(klass.is_association?(association_reference),"fail is_association?, klass.inspect=#{klass.inspect},association_reference=#{association_reference}")
 end #is_association
 test 'is_association_to_one' do
-	class_reference=StreamMethodArgument
-	association_reference=:parameter
+	class_reference=StreamPatternArgument
+	association_reference=:stream_pattern
 	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_id').to_sym)
 	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_id=').to_sym)
 	assert(class_reference.is_association?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
@@ -129,14 +129,17 @@ test 'is_polymorphic_association' do
 	@example_nonpolymorphic_patterns=Set.new([/^build_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/,/^autosave_associated_records_for_([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^loaded_([a-z0-9_]+)?$/, /^create_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/])
 	assert_equal_sets(@example_nonpolymorphic_patterns,Set.new(StreamPatternArgument.association_patterns(:stream_pattern.to_s)))
 
+#	@example_polymorphic_class=Node
+#	@example_polymorphic_association=:branch
 	class_reference=Node
 	association_name=:branch
+	assert_association(class_reference, association_name)
+	
 	@possible_polymorphic_methods=Set.new(["autosave_associated_records_for_branch","loaded_branch?", "set_branch_target", "branch","branch="])
 	assert_equal_sets(@possible_polymorphic_methods,Set.new(class_reference.matching_instance_methods(association_name.to_s)))
 
 	@example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
 	assert_equal_sets(@example_polymorphic_patterns,Set.new(class_reference.association_patterns(association_name.to_s)))
-	assert_equal_sets(@example_polymorphic_patterns,Set.new(StreamMethodArgument.association_patterns(:parameter.to_s)))
 
 	@possible_polymorphic_patterns2=Set.new(["", "autosave_associated_records_for_", "validate_associated_records_for_","="])
 	@common_patterns=@example_nonpolymorphic_patterns & @example_polymorphic_patterns
@@ -148,11 +151,11 @@ test 'is_polymorphic_association' do
 	assert(class_reference.is_polymorphic_association?(association_name))
 end #is_polymorphic_association
 test 'association_names_to_many' do
-	class_reference=StreamMethodArgument
+	class_reference=StreamLink
 	assert(class_reference.instance_methods(false).select {|m| class_reference.is_association_to_many?(m)})
 end #test
 test 'association_names' do
-	class_reference=StreamMethodArgument
+	class_reference=StreamLink
 	assert_not_empty(class_reference.instance_methods(false).select {|m| class_reference.is_association?(m)})
 	assert_not_include('bug_ids', TestRun.association_names_to_one)
 	assert_equal([],TestRun.association_names_to_one)
@@ -219,12 +222,12 @@ def foreign_key_points_to_me?(ar_from_fixture,assName)
 	end #if
 end #def
 test 'association_to_type' do
-	class_reference=StreamMethodArgument
-	association_reference=:parameter
+	class_reference=StreamLink
+	association_reference=:inputs
 	assert_association_to_one(class_reference,association_reference)
 end #association_to_type
 test 'is_active_record_method' do
-	association_reference=:parameter
+	association_reference=:inputs
 	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
 	assert(!ActiveRecord::Base.instance_methods_from_class.include?(:parameter.to_s))
 	assert(!TestTable.is_active_record_method?(:parameter))
