@@ -1,4 +1,6 @@
 Rtest3::Application.routes.draw do
+  resources :stream_links
+
   resources :stream_pattern_arguments
 
   resources :stream_patterns

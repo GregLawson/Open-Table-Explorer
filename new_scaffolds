@@ -5,6 +5,7 @@ rails generate scaffold stream_parameters id:integer stream_method_call_id:integ
 rails generate scaffold stream_method name:string library:string interface_code:text return_code:text rescue_code:text  # like a method definition
 rails generate scaffold stream_method_argument id:integer stream_method_id:integer name:string ruby_type:string direction:string parameter_id:integer parameter_type:string
 rails generate scaffold scalar_argument id:integer name:string value:string formula:string ruby_type:string  # include single and non-stream multiple values? like arrays of hashes, ActiveRecord
+rails generate scaffold stream_link id:integer input_stream_method_call_id:integer output_stream_method_call_id:integer storage_method_id:integer # like a method call, many-to-many parmeters/streams 
 
 http://guides.rubyonrails.org/association_basics.html#polymorphic-associations
 
