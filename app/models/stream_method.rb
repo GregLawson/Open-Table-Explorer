@@ -55,4 +55,18 @@ def compile_code
 		eval_method('rescue_code',"rescue #{rescue_code}\n")
 	end
 end #def
+def fire
+	interface_code_method
+#	if before_acquire==@interaction then
+#		@interaction.errors.add(:error,'Nothing was acquired and no error was set')
+#	end #if
+	return_code_method
+	rescue  StandardError => exception_raised
+		rescue_code_method
+	else
+		self.errors.add("Not subclass of StandardError: " + "couldn't acquire data from #{url}")
+	ensure
+		self[:error]=errors.full_messages
+		return self
+end #def
 end #class

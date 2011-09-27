@@ -15,12 +15,15 @@ def StreamMethodCall.schedule
 	end #each
 end #def
 def StreamMethodCall.next_fire
-	StreamMethodCall.find(:all)
+	StreamMethodCall.next
 end #def
 def fire
-	inputs=[]
-	inputs.fire
-	stream_method.execute
+	inputs=stream_parameters.find_by_direction('input')
+	inputs.each do |input|
+		input.fire
+	end #each
+	stream_method.fire
+	outputs=stream_parameters.find_by_direction('output')
 	outputs.fire
 end #fire
 end #class

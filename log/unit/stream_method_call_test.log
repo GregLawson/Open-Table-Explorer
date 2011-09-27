@@ -1,6 +1,27 @@
 Loaded suite test/unit/stream_method_call_test
 Started
-.
-Finished in 20.876087 seconds.
+EEF
+Finished in 18.727785 seconds.
 
-1 tests, 1 assertions, 0 failures, 0 errors
+  1) Error:
+test_EEG(StreamMethodCallTest):
+NoMethodError: undefined method `find_by_stream_pattern' for #<Class:0xb6170230>
+    test/unit/stream_method_call_test.rb:23:in `test_EEG'
+
+  2) Error:
+test_fire(StreamMethodCallTest):
+NoMethodError: undefined method `find_by_direction' for #<Class:0xb617a49c>
+    app/models/stream_method_call.rb:21:in `fire'
+    test/unit/stream_method_call_test.rb:29:in `test_fire'
+    test/unit/stream_method_call_test.rb:28:in `each'
+    test/unit/stream_method_call_test.rb:28:in `test_fire'
+
+  3) Failure:
+test_stream_parameters(StreamMethodCallTest)
+    [test/unit/stream_method_call_test.rb:14:in `test_stream_parameters'
+     test/unit/stream_method_call_test.rb:13:in `each'
+     test/unit/stream_method_call_test.rb:13:in `test_stream_parameters']:
+smc=#<StreamMethodCall id: 64810937, stream_method_id: 749574446, created_at: "2011-09-26 20:20:36", updated_at: "2011-09-26 20:20:36">, smc.stream_parameters=[] .
+<false> is not true.
+
+3 tests, 8 assertions, 1 failures, 2 errors
