@@ -8,4 +8,5 @@
 class StreamPattern < ActiveRecord::Base
 include Generic_Table
 has_many :stream_pattern_arguments
+has_many :stream_methods
 end

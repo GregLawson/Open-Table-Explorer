@@ -8,7 +8,7 @@
 class StreamMethodCall < ActiveRecord::Base # like a method call
 include Generic_Table
 belongs_to :stream_method
-has_many :stream_parameters
+has_many :stream_links
 def StreamMethodCall.schedule
 	StreamMethodCall.find(:all).each do |c|
 		c.fire
@@ -18,12 +18,12 @@ def StreamMethodCall.next_fire
 	StreamMethodCall.next
 end #def
 def fire
-	inputs=stream_parameters.find_by_direction('input')
+	inputs=stream_links.where('input_stream_method_argument_id=?',:id => self.id)
 	inputs.each do |input|
 		input.fire
 	end #each
 	stream_method.fire
-	outputs=stream_parameters.find_by_direction('output')
+	outputs=stream_links.find_by_direction('output')
 	outputs.fire
 end #fire
 end #class
