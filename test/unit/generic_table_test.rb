@@ -14,6 +14,8 @@ test "foreign_key_names" do
 	possible_foreign_keys=StreamPatternArgument.foreign_key_names
 	assert_not_empty(possible_foreign_keys)
 	assert_include('stream_pattern_id',possible_foreign_keys)
+
+	assert_foreign_key_name(StreamLink,:input_stream_method_argument_id)
 end #foreign_key_names
 test "foreign_key_association_names" do
 	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)

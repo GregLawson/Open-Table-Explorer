@@ -4,21 +4,35 @@
 @@FOREIGN_KEY_ASSOCIATION_SYMBOL=:stream_pattern # needs correct plurality
 @@FOREIGN_KEY_ASSOCIATION_INSTANCE=@@FOREIGN_KEY_ASSOCIATION_CLASS.where(:name => 'Acquisition').first
 @@TABLE_NAME_WITH_FOREIGN_KEY=@@CLASS_WITH_FOREIGN_KEY.name.tableize
+
+@@association_patterns=Set[/^build_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^loaded_([a-z0-9_]+)?$/, /^create_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/]
+
 # assertions testing single global (Object) methods
 # assertions testing single generic_table methods
-def assert_associated_foreign_key_name(obj,assName)
+def assert_foreign_key_name(class_reference, foreign_key_name)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
+	if !foreign_key_name.kind_of?(String) then
+		foreign_key_name=foreign_key_name.to_s
+	end #if
+	assert_block("foreign_key_name=#{foreign_key_name} is not a foreign key of class_reference=#{class_reference.inspect}"){class_reference.foreign_key_names.include?(foreign_key_name)}
+end #foreign_key_names
+def assert_associated_foreign_key_name(class_reference,assName)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
 	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
-	many_to_one_foreign_keys=obj.class.foreign_key_names
+	many_to_one_foreign_keys=class_reference.foreign_key_names
 #	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
 	matchingAssNames=many_to_one_foreign_keys.select do |fk|
 		assert_instance_of(String,fk)
 		ass=fk[0..-4].to_sym
-		assert_association_many_to_one(obj,ass)
-#not all		assert_equal(ass,assName,"associated_foreign_key_name ass,assName=#{ass},#{assName}")
+# not class remap		assert_association_many_to_one(class_reference,ass)
 		ass==assName
 	end #end
 	assert_equal(matchingAssNames,[matchingAssNames.first].compact,"assName=#{assName.inspect},matchingAssNames=#{matchingAssNames.inspect},many_to_one_foreign_keys=#{many_to_one_foreign_keys.inspect}")
-	assert(obj.class.associated_foreign_key_name(assName))
+	assert(class_reference.associated_foreign_key_name(assName))
 end #def
 def assert_associated_foreign_key(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
@@ -30,7 +44,7 @@ end #def
 
 def assert_matching_association(klass,association_name)
 	assert(klass.is_matching_association?(association_name))
-end #def
+end #matching_association
 def assert_association(class_reference,association_reference, message=nil)
 	message=build_message(message, "Class=? association=?", class_reference.inspect, association_reference.inspect)	
 	if class_reference.kind_of?(Class) then
@@ -63,7 +77,7 @@ def assert_association_to_one(class_reference,assName)
 	assert_association(class_reference,assName)
 	assert(!class_reference.is_association_to_many?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.class.similar_methods(assName).inspect}")
 	assert(class_reference.is_association_to_one?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.similar_methods(assName).inspect}")
-end #def
+end #association_to_one
 def assert_association_to_many(class_reference,assName)
 	if !class_reference.kind_of?(Class) then
 		class_reference=class_reference.class
@@ -72,7 +86,7 @@ def assert_association_to_many(class_reference,assName)
 	assert_association(class_reference,assName)
 	assert(class_reference.is_association_to_many?(assName),"is_association_to_many?(#{class_reference.inspect},#{assName.inspect}) returns false. #{class_reference.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and class_reference.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
 	assert(!class_reference.is_association_to_one?(assName),"fail !is_association_to_one?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}")
-end #def
+end #association_to_many
 def assert_has_many_association(class_reference, association_name)
 	assert(system(class_reference.association_grep('has_many',association_name)))
 end #def
@@ -107,7 +121,7 @@ end #def
 def assert_association_one_to_many(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_one_to_many")
 	assert_association_to_many(ar_from_fixture,assName)
-end #def
+end #is_association_to_many
 def assert_association_many_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_many_to_one")
 	assert_association_to_one(ar_from_fixture,assName)
