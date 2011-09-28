@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 class CreateStreamLinks < ActiveRecord::Migration
   def self.up
     create_table :stream_links do |t|

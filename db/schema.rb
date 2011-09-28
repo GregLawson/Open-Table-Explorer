@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110714220030) do
+ActiveRecord::Schema.define(:version => 20110926213934) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -309,6 +309,8 @@ ActiveRecord::Schema.define(:version => 20110714220030) do
     t.integer "parent_node"
     t.string  "parent_description"
     t.integer "node_id"
+    t.integer "branch_id"
+    t.string  "branch_type"
   end
 
   add_index "nodes", ["parent_description"], :name => "fki_"
@@ -449,6 +451,15 @@ ActiveRecord::Schema.define(:version => 20110714220030) do
     t.string  "compassheading"
     t.float   "milesfrom"
     t.integer "rfchannel"
+  end
+
+  create_table "stream_links", :force => true do |t|
+    t.integer  "input_stream_method_argument_id"
+    t.integer  "output_stream_method_argument_id"
+    t.integer  "store_method_id"
+    t.integer  "next_method_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "stream_method_arguments", :force => true do |t|

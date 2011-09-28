@@ -1,0 +1,22 @@
+Loaded suite test/unit/stream_link_test
+Started
+.FF
+Finished in 18.023656 seconds.
+
+  1) Failure:
+test_input_stream_method_argument(StreamLinkTest)
+    [test/unit/stream_link_test.rb:44:in `test_input_stream_method_argument'
+     test/unit/stream_link_test.rb:40:in `each'
+     test/unit/stream_link_test.rb:40:in `test_input_stream_method_argument']:
+<""> expected but was
+<"Foreign key input_stream_method_argument_id has value 1 but the association returns nil.">.
+
+  2) Failure:
+test_output_stream_method_argument(StreamLinkTest)
+    [test/unit/stream_link_test.rb:30:in `test_output_stream_method_argument'
+     test/unit/stream_link_test.rb:26:in `each'
+     test/unit/stream_link_test.rb:26:in `test_output_stream_method_argument']:
+<""> expected but was
+<"Foreign key output_stream_method_argument_id has value 2 but the association returns nil.">.
+
+3 tests, 48 assertions, 2 failures, 0 errors
