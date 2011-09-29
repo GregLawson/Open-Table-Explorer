@@ -94,7 +94,7 @@ def Base.is_association_to_one?(assName)
 	else
 		return false
 	end
-end #is_association_to_one
+end #association_to_one
 def Base.is_association_to_many?(assName)
 	if is_association?(assName)  and self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
 		return true
