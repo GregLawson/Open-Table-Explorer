@@ -50,7 +50,7 @@ Delmited:
 HTML:
   name: HTML
   library: hpricot
-  interface_code: @parsed Data= Hpricot(@acquisition).search(@selection)
+  interface_code: @parsed_data= Hpricot(@acquisition).search(@selection)
   return_code: 
   rescue_code: 
 
