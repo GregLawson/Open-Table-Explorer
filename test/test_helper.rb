@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -7,7 +14,7 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
+#  fixtures :all
 
   # Add more helper methods to be used by all tests here...
 require 'test_helper_assert_generic_table.rb'
