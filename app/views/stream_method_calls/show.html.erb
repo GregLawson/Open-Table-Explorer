@@ -1,15 +1,49 @@
 <p id="notice"><%= notice %></p>
-
+ <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @stream_pattern } %>
 <p>
   <b>Id:</b>
-  <%= @stream_method_call.id %>
+  <%= @stream_method_call.id.inspect %>
 </p>
-
+<%= render :partial =>'stream_method_calls/show_partial', :locals => { :@stream_method_call => @stream_method_call } %>
+<% if Generic_Table.is_generic_table?(@stream_method_call.class.name) then %>
+<% require 'global.rb' %>
+<% if @stream_method_call.association_has_data(:stream_links) then %>
+<%= render :partial =>'stream_links/index_partial', :locals => { :@stream_links => @stream_method_call.stream_links } %>
+<% else %>
 <p>
-  <b>Stream method:</b>
-  <%= @stream_method_call.stream_method_id %>
+  <b>@stream_method_call.class.is_matching_association?(:stream_links):</b>
+  <%= @stream_method_call.class.is_matching_association?(:stream_links) %>
 </p>
-
-
-<%= link_to 'Edit', edit_stream_method_call_path(@stream_method_call) %> |
-<%= link_to 'Back', stream_method_calls_path %>
+<p>
+  <b>@stream_method_call.class.association_to_type(:stream_links):</b>
+  <%= @stream_method_call.class.association_to_type(:stream_links) %>
+</p>
+<p>
+  <b>@stream_method_call.class.association_macro_type(:stream_links):</b>
+  <%= @stream_method_call.class.association_macro_type(:stream_links) %>
+</p>
+<p>
+  <b>@stream_method_call.class.association_type(:stream_links):</b>
+  <%= @stream_method_call.class.association_type(:stream_links) %>
+</p>
+<p>
+  <b>@stream_method_call.association_state(:stream_links):</b>
+  <%= @stream_method_call.association_state(:stream_links) %>
+</p>
+<% @matching_records=StreamPatternArgument.where(:stream_method_call_id => @stream_method_call.id ) %>
+<% if @matching_records.size>0 then %>
+<H1><B>No data in associaton. Listing all data of model with matching Id.</B></H1>
+<%= render :partial =>'stream_links/index_partial', :locals => { :@stream_links => @matching_records } %>
+<% else %>
+<H1><B>No data in associaton. Listing all data of model.</B></H1>
+<%= render :partial =>'stream_links/index_partial', :locals => { :@stream_links => StreamPatternArgument.all } %>
+<% end #if %>
+<%= @stream_method_call.stream_links.inspect  %>
+<P>@stream_method_call.class.association_names=
+<%= @stream_method_call.class.association_names.inspect %>
+<P> system(@stream_method_call.class.association_grep('has_many',:stream_links)) 
+<%= system(@stream_method_call.class.association_grep('has_many',:stream_links)) %>
+<P> system(StreamPatternArgument.association_grep('belongs_to',:stream_method_calls)) 
+<%= system(StreamPatternArgument.association_grep('belongs_to',:stream_method_calls)) %>
+<% end #if %>
+<% end #if %>
