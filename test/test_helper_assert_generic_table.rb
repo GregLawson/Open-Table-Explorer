@@ -6,9 +6,33 @@
 @@TABLE_NAME_WITH_FOREIGN_KEY=@@CLASS_WITH_FOREIGN_KEY.name.tableize
 
 @@association_patterns=Set[/^build_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^loaded_([a-z0-9_]+)?$/, /^create_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/]
+#	@@example_class_reference=StreamPattern
+#	@@example_association_reference=:stream_methods
+	@@example_class_reference=@@CLASS_WITH_FOREIGN_KEY
+	@@example_association_reference=@@FOREIGN_KEY_ASSOCIATION_SYMBOL
 
 # assertions testing single global (Object) methods
 # assertions testing single generic_table methods
+def all_foreign_key_associations(&block)
+	Generic_Table.rails_MVC_classes.each do |class_with_foreign_key|
+		class_with_foreign_key.foreign_key_association_names.each do |foreign_key_association_name|
+			block.call(class_with_foreign_key, foreign_key_association_name)
+		end #each
+	end #each
+end #all_associations
+def association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
+	if class_reference.kind_of?(Class) then
+		klass=class_reference
+	else
+		klass=class_reference.class
+	end #if
+	association_reference=association_reference.to_sym
+	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
+	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
+#	assert_kind_of(ActiveRecord::Base,class_reference)
+	assert_ActiveRecord_table(class_reference.name)
+	block.call(class_reference, association_reference)
+end #association_refs
 def assert_foreign_key_name(class_reference, foreign_key_name)
 	if !class_reference.kind_of?(Class) then
 		class_reference=class_reference.class
