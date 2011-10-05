@@ -11,15 +11,6 @@ def initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
 			raise "initialize test run with bad testType=#{testType}" unless [:unit,:controller].include?(testType.to_sym)
 			#~ puts "testType is not nil. testType=#{testType} singular_table=#{singular_table}"
 			self[:test_type]=testType
-			#~ puts "test_type=#{test_type} self.test_type=#{self.test_type} self['test_type']=#{self['test_type']}"
-			#~ self.test_type = testType
-			#~ puts "test_type=#{test_type} self.test_type=#{self.test_type} self['test_type']=#{self['test_type']}"
-			#~ self[:test_type] = testType # 
-			#~ puts "test_type=#{test_type} self.test_type=#{self.test_type} self['test_type']=#{self['test_type']}"
-			#~ self['test_type'] = testType # 
-			#~ puts "test_type=#{test_type} self.test_type=#{self.test_type} self['test_type']=#{self['test_type']}"
-
-#			table=ENV["TABLE"]
 			if singular_table.nil? then
 				if plural_table.nil? then
 					@singular_table = "code_base"
@@ -46,9 +37,7 @@ def initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
 			#~ puts "model=#{model} self.model=#{self.model} self['model']=#{self['model']}"
 			#~ self['model'] = @singular_table # canonical form since class is accessible
 			#~ puts "model=#{model} self.model=#{self.model} self['model']=#{self['model']}"
-			if test.nil? then
-				test = ENV["TEST"] 
-			end #if
+			self.test = test 
 		else
 			#~ puts "nil testType"
 		end #if
@@ -102,6 +91,7 @@ def TestRun.ruby_run_and_log(ruby_source,log_file,test=nil)
 	else
 		ruby_test="#{ruby_source} -n #{test}"
 	end #if
+	puts "ruby_test=#{ruby_test}"
 	stop=ruby %Q{-I test #{ruby_test} | tee #{log_file}}  do |ok, res|
 		if  ok
 #		puts "ruby ok(status = #{res.inspect})"
