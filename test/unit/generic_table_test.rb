@@ -4,7 +4,10 @@ require 'test_helper'
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
-	ActiveSupport::TestCase::fixtures :all
+	fixtures :table_specs
+	fixtures :acquisition_stream_specs
+	fixtures :acquisition_interfaces
+	fixtures :acquisitions
 def setup
 #	ActiveSupport::TestCase::fixtures :acquisition_stream_specs
 end #setup
