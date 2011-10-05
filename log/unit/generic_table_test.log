@@ -31,13 +31,15 @@ test is not an association of TestRun
 Transaction does not include Generic_Table
 Transfer belongs_to account
 account does not has_many Transfer
-input_stream_method_argument is not an association of StreamLink
-output_stream_method_argument is not an association of StreamLink
+StreamLink belongs_to input_stream_method_argument
+input_stream_method_argument is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
+StreamLink belongs_to output_stream_method_argument
+output_stream_method_argument is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
 StreamLink belongs_to store_method
 store_method is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
 StreamLink belongs_to next_method
 next_method is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
-...........................
-Finished in 26.223426 seconds.
+..............................
+Finished in 18.492591 seconds.
 
-29 tests, 290 assertions, 0 failures, 0 errors
+32 tests, 321 assertions, 0 failures, 0 errors

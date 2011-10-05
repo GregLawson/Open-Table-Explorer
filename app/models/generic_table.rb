@@ -2,6 +2,34 @@ require 'app/models/global.rb'
 #require 'lib/tasks/testing_file_patterns.rb'
 module ActiveRecord
 class Base
+def column_html
+end #column_html
+def row_html
+	ret="<tr>"
+	self.attributes.values.each do |col|
+		ret+='<td>'+col.inspect+'</td>'
+	end #each
+	ret+="</tr>"
+	return ret
+
+end #row_html
+def Base.header_html
+	ret="<tr>"
+	self.column_names.each do |header|
+		ret+='<th>'+header+'</th>'
+	end #each
+	ret+="</tr>"
+	return ret
+end #header_html
+def Base.table_html
+	ret="<table>"
+	ret+=header_html
+	self.all.each do |row|
+		ret+=row.row_html
+	end #each
+	ret+="</table>"
+	return ret
+end #table_html
 def Base.foreign_key_names
 	content_column_names=content_columns.collect {|m| m.name}
 #	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
@@ -74,7 +102,6 @@ def Base.is_association_patterns?(association_name,association_patterns)
 	(association_patterns(association_name)-association_patterns.to_a).empty?&&
 	(association_patterns-association_patterns(association_name).to_a).empty?
 end #is_association_patterns
-
 def Base.is_association?(association_name)
 	# Don’t create associations that have the same name as instance methods of ActiveRecord::Base.
 	if ActiveRecord::Base.instance_methods_from_class.include?(association_name.to_s) then

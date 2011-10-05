@@ -4,6 +4,29 @@ require 'test_helper'
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
+def setup
+#	ActiveSupport::TestCase::fixtures :all
+#	ActiveSupport::TestCase::fixtures :acquisition_stream_specs
+end #setup
+test 'association_refs' do
+	class_reference=StreamPattern
+	association_reference=:stream_methods
+	assert_equal([class_reference, association_reference], association_refs(class_reference, association_reference) do |class_reference, association_reference|
+		[class_reference, association_reference]
+	end)
+	assert_equal([StreamPattern, :stream_methods], association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
+end #association_refs
+test 'header_html' do
+	association_refs do |class_reference, association_reference|
+
+		assert_not_empty(StreamPattern.column_names)
+		assert_equal('<tr><th>id</th><th>name</th><th>created_at</th><th>updated_at</th></tr>', StreamPattern.header_html)
+	end #each
+end #header_html
+test 'table_html' do
+	assert_not_nil(StreamPattern.table_html)
+	
+end #table_html
 test "foreign_key_names" do
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
@@ -86,28 +109,17 @@ test 'is_association_patterns' do
 	assert(class_reference.is_association_patterns?(association_reference,@@fk_association_patterns))
 end #is_association_patterns
 test "is_association" do
-	class_reference=StreamLink
-	association_reference=:inputs
-	if class_reference.kind_of?(Class) then
-		klass=class_reference
-	else
-		klass=class_reference.class
-	end #if
-	association_reference=association_reference.to_sym
-	assert_instance_of(Symbol,association_reference,"In assert_association, association_reference=#{association_reference} must be a Symbol.")
-#  For instance, attributes and connection would be bad choices for association names.
-	assert_include('attributes',ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
-	assert_include('connection',ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
-	assert_instance_of(Symbol,association_reference,"assert_association")
-	assert_not_include(association_reference.to_s,ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
-	if klass.module_included?(Generic_Table) then
-		association_type=klass.association_to_type(association_reference)
-		assert_not_nil(association_type)
-		assert_include(association_type,[:to_one,:to_many])
-	end #if
-	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
-	#~ assert_public_instance_method(klass.new,association_reference.to_s,"association_type=#{association_type.to_s}, ")
-	assert(klass.is_association?(association_reference),"fail is_association?, klass.inspect=#{klass.inspect},association_reference=#{association_reference}")
+		class_reference=StreamLink
+		association_reference=:inputs
+	association_refs do |class_reference, association_reference|
+	#  For instance, attributes and connection would be bad choices for association names.
+		assert_include('attributes',ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
+		assert_include('connection',ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
+		assert_not_include(association_reference.to_s,ActiveRecord::Base.instance_methods_from_class, "# Don’t create associations that have the same name (#{association_reference})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).")
+		explain_assert_respond_to(class_reference.new,(association_reference.to_s+'=').to_sym)
+		explain_assert_respond_to(class_reference.new,association_reference.to_s,"association_reference=#{association_reference.to_s}, ")
+		assert(class_reference.is_association?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
+	end #association_refs
 end #is_association
 test 'is_association_to_one' do
 	class_reference=StreamPatternArgument
@@ -226,7 +238,14 @@ end #def
 test 'association_to_type' do
 	class_reference=StreamLink
 	association_reference=:inputs
-	assert_association_to_one(class_reference,association_reference)
+	association_refs do |class_reference, association_reference|
+		assert_association_to_one(class_reference,association_reference)
+		if class_reference.module_included?(Generic_Table) then
+			association_type=class_reference.association_to_type(association_reference)
+			assert_not_nil(association_type)
+			assert_include(association_type,[:to_one,:to_many])
+		end #if
+	end #association_refs
 end #association_to_type
 test 'is_active_record_method' do
 	association_reference=:inputs
