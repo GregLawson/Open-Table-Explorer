@@ -4,8 +4,8 @@ require 'test_helper'
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
+	ActiveSupport::TestCase::fixtures :all
 def setup
-#	ActiveSupport::TestCase::fixtures :all
 #	ActiveSupport::TestCase::fixtures :acquisition_stream_specs
 end #setup
 test 'association_refs' do
