@@ -1,27 +1,26 @@
 Loaded suite test/unit/stream_method_call_test
 Started
-EEF
-Finished in 18.727785 seconds.
+FEE
+Finished in 17.051808 seconds.
 
-  1) Error:
-test_EEG(StreamMethodCallTest):
-NoMethodError: undefined method `find_by_stream_pattern' for #<Class:0xb6170230>
-    test/unit/stream_method_call_test.rb:23:in `test_EEG'
+  1) Failure:
+test_EEG(StreamMethodCallTest) [test/unit/stream_method_call_test.rb:23]:
+<"Acquisition"> expected but was
+<"StreamPatternArgument">.
 
   2) Error:
 test_fire(StreamMethodCallTest):
-NoMethodError: undefined method `find_by_direction' for #<Class:0xb617a49c>
-    app/models/stream_method_call.rb:21:in `fire'
+ActiveRecord::StatementInvalid: SQLite3::SQLException: no such column: stream_links.stream_method_call_id: SELECT "stream_links".* FROM "stream_links" WHERE ("stream_links".stream_method_call_id = 64810937) AND (input_stream_method_argument_id='id64810937')
+    app/models/stream_method_call.rb:22:in `fire'
     test/unit/stream_method_call_test.rb:29:in `test_fire'
     test/unit/stream_method_call_test.rb:28:in `each'
     test/unit/stream_method_call_test.rb:28:in `test_fire'
 
-  3) Failure:
-test_stream_parameters(StreamMethodCallTest)
-    [test/unit/stream_method_call_test.rb:14:in `test_stream_parameters'
-     test/unit/stream_method_call_test.rb:13:in `each'
-     test/unit/stream_method_call_test.rb:13:in `test_stream_parameters']:
-smc=#<StreamMethodCall id: 64810937, stream_method_id: 749574446, created_at: "2011-09-26 20:20:36", updated_at: "2011-09-26 20:20:36">, smc.stream_parameters=[] .
-<false> is not true.
+  3) Error:
+test_stream_links(StreamMethodCallTest):
+NoMethodError: undefined method `inputs' for #<StreamMethodCall:0xb5edef6c>
+    test/unit/stream_method_call_test.rb:14:in `test_stream_links'
+    test/unit/stream_method_call_test.rb:13:in `each'
+    test/unit/stream_method_call_test.rb:13:in `test_stream_links'
 
 3 tests, 8 assertions, 1 failures, 2 errors
