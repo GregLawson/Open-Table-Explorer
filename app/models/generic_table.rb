@@ -2,30 +2,37 @@ require 'app/models/global.rb'
 #require 'lib/tasks/testing_file_patterns.rb'
 module ActiveRecord
 class Base
-def column_html
+def column_html(column_symbol)
+	return self[column_symbol].inspect
 end #column_html
-def row_html
+def row_html(column_order=nil)
 	ret="<tr>"
-	self.attributes.values.each do |col|
-		ret+='<td>'+col.inspect+'</td>'
+	column_order.each do |col|
+		ret+='<td>'+column_html(col).inspect+'</td>'
 	end #each
 	ret+="</tr>"
 	return ret
 
 end #row_html
-def Base.header_html
+def Base.header_html(column_order=nil)
+	if column_order.nil? then
+		column_order=self.column_names
+	end #if
 	ret="<tr>"
-	self.column_names.each do |header|
+	column_order.each do |header|
 		ret+='<th>'+header+'</th>'
 	end #each
 	ret+="</tr>"
 	return ret
 end #header_html
-def Base.table_html
+def Base.table_html(column_order=nil)
+	if column_order.nil? then
+		column_order=self.column_names
+	end #if
 	ret="<table>"
-	ret+=header_html
+	ret+=header_html(column_order)
 	self.all.each do |row|
-		ret+=row.row_html
+		ret+=row.row_html(column_order)
 	end #each
 	ret+="</table>"
 	return ret

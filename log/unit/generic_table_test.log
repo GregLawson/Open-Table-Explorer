@@ -40,6 +40,6 @@ store_method is not a generic table in ["Account", "AcquisitionInterface", "Acqu
 StreamLink belongs_to next_method
 next_method is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
 ..............................
-Finished in 8.368817 seconds.
+Finished in 11.595507 seconds.
 
 32 tests, 321 assertions, 0 failures, 0 errors
