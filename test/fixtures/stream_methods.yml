@@ -15,7 +15,8 @@ HTTP:
   library: net/http
   interface_code: @acquisition= Net::HTTP.get(@uri.uri)
   return_code: 
-  rescue_code: 
+  rescue_code:
+  stream_pattern: Acquisition
 
 Shell:
   name: Shell
@@ -30,6 +31,7 @@ Shell:
     @interaction.error=@interaction.acquisition_data
     @interaction.acquisition_data=nil
     end
+  stream_pattern: Acquisition
 
 File:
   name: File
@@ -38,6 +40,7 @@ File:
   rescue_code: 
   library:
   return_code: 
+  stream_pattern: Acquisition
 
 Delmited:
   name: Delmited
@@ -46,6 +49,7 @@ Delmited:
      @parsed_data= @acquisition.split(@selection)
   return_code: 
   rescue_code: 
+  stream_pattern: Parse
 
 HTML:
   name: HTML
@@ -53,6 +57,7 @@ HTML:
   interface_code: @parsed_data= Hpricot(@acquisition).search(@selection)
   return_code: 
   rescue_code: 
+  stream_pattern: Parse
 
 XML:
   name: XML
@@ -61,6 +66,7 @@ XML:
      @parsed_data= REXML::Document.new(@acquisition).get_elements(@selection)
   return_code: 
   rescue_code: 
+  stream_pattern: Parse
 
 JSON:
   name: JSON
@@ -68,6 +74,7 @@ JSON:
   interface_code: @parsed_data= JSON.parse(@acquisition)[@selection]
   return_code: 
   rescue_code: 
+  stream_pattern: Parse
 
 
 Binary:
@@ -76,12 +83,15 @@ Binary:
   interface_code: @parsed_data=@acquisition.unpack(@selection)
   return_code: 
   rescue_code: 
+  stream_pattern: Parse
+
 Regexp:
   name: Regexp
   library: 
   interface_code: @parsed_data=Regexp.new(@selection).match(@acquisition)
   return_code: 
   rescue_code: 
+  stream_pattern: Parse
 
 Store:
   name: Store
@@ -89,6 +99,7 @@ Store:
   interface_code: @model_class.create(@name_value_pairs)
   return_code: 
   rescue_code: 
+  stream_pattern: Storage
 
 Data_Table:
   name: Data_Table
@@ -96,10 +107,12 @@ Data_Table:
   interface_code: @input.find_by_sql(@sql)
   return_code: 
   rescue_code: 
-  
+  stream_pattern: Query_output
+
 GLM:
   name: Store
   library: r
   interface_code: @input.r_execute('GLM')
   return_code: 
   rescue_code: 
+  stream_pattern: Query_Output
