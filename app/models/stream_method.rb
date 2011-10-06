@@ -9,7 +9,7 @@ class StreamMethod  < ActiveRecord::Base # like a method def
 include Generic_Table
 has_many :stream_method_calls
 has_many :stream_method_arguments
-belongs_to :stream_patterns
+belongs_to :stream_pattern
 has_many :urls
 after_initialize :compile_code
 # functions of ActiveRecord  instances
