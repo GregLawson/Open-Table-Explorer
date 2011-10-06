@@ -47,3 +47,6 @@
 <%= system(StreamPatternArgument.association_grep('belongs_to',:stream_patterns)) %>
 <% end #if %>
 <% end #if %>
+<h1>Listing stream_methods</h1>
+< %= simple_format(StreamMethod.select('name').table_html)=%>
+<%= simple_format(@stream_pattern.stream_methods.table_html)=%>
