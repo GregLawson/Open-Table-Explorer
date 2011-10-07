@@ -5,13 +5,25 @@ body, p, ol, ul {
   font-size:   13px;
   line-height: 18px;
 }
+/* table wizard at http://www.somacon.com/p141.php */
+th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: outset;
+	border-color: gray;
+	background-color: rgb(255, 255, 224);
+}
 td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
   color: blue;
+	border-width: 1px;
+	padding: 1px;
+	border-style: outset;
+	border-color: gray;
+	background-color: rgb(255, 255, 224);
 }
-
 pre {
   background-color: #eee;
   padding: 10px;
