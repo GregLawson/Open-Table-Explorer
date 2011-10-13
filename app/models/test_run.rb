@@ -63,7 +63,7 @@ def log_file
 		return CodeBase.controller_target(@plural_table)
 	else raise "Unnown self[:test_type]=#{self[:test_type]} for singular_table=#{singular_table}"
 	end #case
-end #test_file
+end #log_file
 def run
 	TestRun.ruby_run_and_log(test_file,log_file,self[:test])
 end #run
@@ -81,7 +81,7 @@ def TestRun.shell(command, &proc)
 #		puts output
 		return nil
 	end #if
-end #ruby
+end #shell
 def TestRun.ruby(args, &proc)
 	shell("ruby #{args}",&proc)
 end #ruby
@@ -130,6 +130,9 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 		puts "summary is nil. probable rake failure."
 		stop=true
 	else
+		sysout,run_time=TestRun.parse_header(header)
+		puts sysout="sysout='#{sysout}'"
+		puts sysout="run_time='#{run_time}'"
 		tests,assertions,failures,tests_stop_on_error=TestRun.parse_summary(summary)
 		#~ puts "failures+tests_stop_on_error=#{failures+tests_stop_on_error}"
 		if    (failures+tests_stop_on_error)==0 then
@@ -149,7 +152,7 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 	puts "file_bug_reports stop=#{stop}"
 	puts "summary='#{summary}'"
 	return stop
-end #def
+end #file_bug_reports
 def TestRun.parse_log_file(log_file)
 	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
 #	puts "blocks=#{blocks.inspect}"
@@ -157,7 +160,7 @@ def TestRun.parse_log_file(log_file)
 	errors=blocks[1..-2]
 	summary=blocks[-1]
 	return [header,errors,summary]
-end #def
+end #parse_log_file
 def TestRun.log_passed?(log_file)
 	if !File.size?(log_file) then
 		return false # no file or empty file, no evidence of passing
@@ -187,7 +190,13 @@ def TestRun.parse_summary(summary)
 	failures=summary[4].to_i
 	tests_stop_on_error=summary[6].to_i
 	return [tests,assertions,failures,tests_stop_on_error]
-end #def
+end #parse_summary
+def TestRun.parse_header(header)
+	headerArray=header.split("\n")
+	sysout=headerArray[0..-2]
+	run_time=headerArray[-1].split(' ')[2].to_f
+	return [sysout,run_time]
+end #parse_header
 def TestRun.parse_bug(test_type,table,error)
 	error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
 		#~ puts "number=#{number.inspect}"
