@@ -1,6 +1,6 @@
 require 'test_helper'
 class GlobalTest < ActiveSupport::TestCase
-def test_method_record
+def test_initialize
 	owner=ActiveRecord::ConnectionAdapters::ColumnDefinition
 	scope=:instance
 	m=:to_sql
@@ -8,12 +8,15 @@ def test_method_record
 	assert_respond_to(owner.new,m)
 	assert_instance_of(Method,owner.new.method(m.to_sym))
 	assert_instance_of(Method,owner.new.method(m.to_sym))
-	mr=MethodModel.method_record(m,owner,scope)
-	assert_nil(mr[:exception])
+	mr=MethodModel.new(m,owner,scope)
+	assert_instance_of(MethodModel,mr)
+	assert_not_nil(mr)
+	assert_equal(MethodModel, mr.class)
+#	assert_nil(mr[:exception])
 
 	assert_equal(mr[:name], :to_sql)
-	assert_equal(mr[:scope], :class)
-	assert_equal(mr[:protected], false)
+	assert_equal(mr[:scope], :instance)
+#	assert_equal(mr[:protected], false)
 	assert_equal(mr[:instance_variable_defined], false)
 	assert_equal(mr[:private], false)
 	assert_equal(mr[:singleton], false)
@@ -26,9 +29,9 @@ def test_method_record
 	assert_equal_sets(["inspect", "instantiate_observers", "joins", "instance_method_already_implemented?"],owner.matching_class_methods(/ins/,false))
 #new	assert_instance_of(Method,owner.new.method(m.to_sym))
 #new	assert_instance_of(Method,owner.new.method(m.to_sym))
-	assert_nil(MethodModel.method_record(m,owner,scope)[:exception])
+	assert_nil(MethodModel.new(m,owner,scope)[:exception])
 
-end #method_record
+end #new
 def test_constantized
 	assert_equal(['String'],Module.constants.map { |c| c.objectKind}.uniq)
 	assert_include('String',MethodModel.constantized.map { |c| c.objectKind}.uniq)
@@ -38,7 +41,7 @@ def test_constantized
 #	puts "Module.constants=#{Module.constants.inspect}"
 	method_list=Module.constants.map do |c|
 		if c.objectKind==:class || c.objectKind==:module then
-			method_record(c)
+			new(c)
 		end #if
 	end #map
 	assert_operator(method_list.size,:<,1000)
@@ -46,7 +49,7 @@ def test_constantized
 	assert_include( "Class",MethodModel.constantized.map { |c| c.objectKind}.uniq)
 	puts "pretty print"
 	#~ pp MethodModel.all
-	#~ assert_not_nil(method_record('object_id',Object,:methods))
+	#~ assert_not_nil(new('object_id',Object,:methods))
 end #constantized
 test "size" do
 end #test
@@ -85,6 +88,7 @@ def test_modules
 	MethodModel.modules.each do |m|
 		if !m.instance_of?(Module) then
 			if MethodModel.classes.include?(m) then
+				puts "#{m} should be Module but is #{m.class}, included in classes."
 			else
 				puts "#{m} should be Module but is #{m.class}"
 			end #if
@@ -99,18 +103,44 @@ def test_modules
 
 end #modules
 def test_classes_and_modules
-	assert_not_equal(MethodModel.classes.size,MethodModel.modules.size)
+	assert_operator(MethodModel.classes.size, :>, MethodModel.modules.size)
 	assert_empty((MethodModel.modules-MethodModel.classes)&MethodModel.classes)
 	assert_not_empty(MethodModel.classes_and_modules)
 	assert_not_empty(MethodModel.classes_and_modules.find_all{|i| i.to_s=='ActiveRecord::ConnectionAdapters::ColumnDefinition'})
 #	assert_equal([],MethodModel.classes_and_modules.find_all{|i| i.to_s=='ActiveRecord::ConnectionAdapters::ColumnDefinition'})
 
 end #classes_and_modules
+def test_all_instance_methods
+	assert(MethodModel.classes.all? {|mr| mr.instance_of?(Class)})
+	assert(MethodModel.modules.all? {|mr| mr.instance_of?(Module)})
+	assert(MethodModel.all_instance_methods.any? {|mr| mr.instance_of?(MethodModel)})
+	MethodModel.all_instance_methods.each do |mr| 
+		assert_instance_of(MethodModel, mr)
+	end #each
+end #all_instance_methods
+def test_all_class_methods
+	assert(MethodModel.classes.all? {|mr| mr.instance_of?(Class)})
+	assert(MethodModel.modules.all? {|mr| mr.instance_of?(Module)})
+#	assert(MethodModel.classes.map { |c| c.methods(false).map { |m| new(m,c,:class) } }
+	assert(MethodModel.all_class_methods.any? {|mr| mr.instance_of?(MethodModel)})
+	MethodModel.all_class_methods.each do |mr| 
+		assert_instance_of(MethodModel, mr)
+	end #each
+end #all_class_methods
+def test_all_singleton_methods
+	assert(MethodModel.classes.all? {|mr| mr.instance_of?(Class)})
+	assert(MethodModel.modules.all? {|mr| mr.instance_of?(Module)})
+	assert(MethodModel.all_singleton_methods.any? {|mr| mr.instance_of?(MethodModel)})
+	MethodModel.all_singleton_methods.each do |mr| 
+		assert_instance_of(MethodModel, mr)
+	end #each
+end #all_singleton_methods
 def test_all
 	all_records=MethodModel.all
 	assert_instance_of(Array,all_records)
 	assert_operator(100,:<,all_records.size)
 	all_records.each do |mr| 
+		assert_instance_of(MethodModel, mr)
 		assert_include(mr[:scope].to_sym, [:instance, :class, :singleton])
 	end #each
 	assert(all_records.all? {|mr| mr[:name]})
@@ -133,7 +163,7 @@ def test_all
 #why?	assert_equal(Set.new([4,6,10]),Set.new(all_records.map { |m| m.keys.size}.uniq))
 	assert_not_empty(Set.new(all_records.map { |m| m.keys}.uniq))
 end #all
-def self.first
+def test_first
 	all_records=MethodModel.all
 	assert_instance_of(Hash,all_records[0])
 	assert_equal(all_records.first,all_records[0])
@@ -149,7 +179,6 @@ def self.first
 	assert_instance_of(String,MethodModel.first[:owner].name)
 end #first
 def test_find_by_name
-	assert_instance_of(Array,MethodModel.first.keys)
 	to_sqls=MethodModel.all.select {|m|m[:name].to_sym==:to_sql}
 	assert_equal(to_sqls,MethodModel.find_by_name(:to_sql))
 	assert_equal(to_sqls,MethodModel.all.find_all{|i| i[:name].to_sym==:to_sql})
@@ -194,6 +223,9 @@ test '' do
 	assert_equal([Generic_Table],AcquisitionInterface.ancestors-[AcquisitionInterface,RubyInterface]-AcquisitionInterface.superclass.superclass.ancestors)
 	assert_equal([],AcquisitionInterface.noninherited_modules) # stI at work
 end #test
+def test_owners_of
+	assert_not_empty(MethodModel.owners_of(:to_sql))
+end #owners_of
 def test_matching_methods_in_context
 	testClass=Acquisition
 #error message too long	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
