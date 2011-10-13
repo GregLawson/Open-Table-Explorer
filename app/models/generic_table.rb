@@ -235,22 +235,76 @@ end #is_active_record_method
 #def Base.logical_primary_key
 #	return column_names
 #end #logical_primary_key
+def Base.attribute_ddl(attribute_name)
+	table_sql= self.to_sql
+	attribute_sql=table_sql.grep(attribute_name)
+	return attribute_sql
+end #attribute_ddl
+
+def Base.attribute_type(attribute_name)
+	table_sql= self.to_sql
+	attribute_sql=table_sql.grep(attribute_name)
+	return attribute_sql
+end #
+def Base.candidate_logical_keys_from_indexes
+	indexes=self.connection.indexes(self.name.tableize)
+		if indexes != [] then
+			indexes.map do |i|
+				i.columns
+			end #map
+		else
+			return nil
+		end #if
+end #candidate_logical_keys_from_indexes
+def Base.logical_attributes
+	return (column_names-['id','created_at','updated_at']).select {|n|attribute_type(name)!=:real}
+end #logical_attributes
+def Base.is_logical_primary_key?(attribute_names)
+	quoted_primary_key
+	if self.respond_to?(:logical_primary_key) then
+		if Set[logical_primary_key]==Set[attribute_names] then
+			return true
+		end #if
+	end #if
+	attribute_names.each do |attribute_name|
+		if attribute_name='id' then
+			return false
+		elsif !column_names.include(attribute_name.to_s) then
+			return false
+		end #IF	
+	end #each
+	if self.count==self.count(:distinct => true, :select => attribute_names) then
+		return true
+	else
+		return false
+	end #if
+	return true # if we get here
+end #logical_primary_key
+
 def Base.sequential_id?
 	if self.respond_to?(:logical_primary_key) then
 		if logical_primary_key==[:created_at] then # still sequential, not requred, default
-			return true
+			return true # better sequential key
 		else
-			return false
+			return false # logical primary key
 		end
-	else # default to sequential id
-		return true
+	else # default to sequential id if not specified
+		return true  
 	end #if
 end # def
 def logical_primary_key_value(delimiter=',')
 	if self.class.sequential_id? then
-		return self[:created_at]
+		if self.respond_to?(:logical_primary_key) then # still sequential, not requred, default
+			return self[:created_at] # better sequential key
+		else
+			return id # logical primary key
+		end
 	else
-		return self.class.logical_primary_key.map {|k| self[k]}.join(delimiter)
+		if self.class.logical_primary_key.is_a?(Array) then
+			return self.class.logical_primary_key.map {|k| self[k]}.join(delimiter)
+		else #not array
+			return self[self.class.logical_primary_key]
+		end #if
 	end #if
 end #def
 

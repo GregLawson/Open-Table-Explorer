@@ -21,7 +21,6 @@ test 'association_refs' do
 end #association_refs
 test 'header_html' do
 	association_refs do |class_reference, association_reference|
-
 		assert_not_empty(StreamPattern.column_names)
 		assert_equal('<tr><th>id</th><th>name</th><th>created_at</th><th>updated_at</th></tr>', StreamPattern.header_html)
 	end #each
@@ -180,7 +179,7 @@ test 'association_names' do
 	assert_equal(['bugs'],TestRun.association_names_to_many)
 	assert_not_include('bug_ids', TestRun.association_names)
 	assert_equal(['bugs'],TestRun.association_names)
-end #test
+end #association_names
 test "has_many_association" do
 	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
 	assert(StreamMethod.has_many_association?(:stream_method_arguments),StreamMethod.association_grep('has_many',:stream_method_arguments))
@@ -257,7 +256,81 @@ test 'is_active_record_method' do
 	assert(!TestTable.is_active_record_method?(:parameter))
 	assert(TestTable.is_active_record_method?(:connection))
 end #is_active_record_method
+test 'logical_primary_key' do
+	Generic_Table.rails_MVC_classes.each do |model_class|
+		if self.respond_to?(:logical_primary_key) then
+			assert_not_empty(model_class.logical_primary_key)
+		end #if
+
+	end #each
+end #logical_primary_key
+@@default_connection=StreamPattern.connection
+def test_attribute_ddl
+	assert(@@default_connection.table_exists?(:stream_patterns))
+	assert_equal('integer',@@default_connection.type_to_sql(:integer))
+#private	assert_equal('',@@default_connection.default_primary_key_type)
+#2 arguments	assert_equal([],@@default_connection.index_name)
+#too long	assert_equal([],@@default_connection.methods)
+	assert_instance_of(Hash,MethodModel.all.first)
+	assert_instance_of(Hash,MethodModel.first)
+	assert_instance_of(Array,MethodModel.first.keys)
+	assert_instance_of(Class,MethodModel.first[:owner])
+	assert_equal([{:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::ColumnDefinition},
+ {:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::TableDefinition},
+ {:scope=>:class, :owner=>ActiveRecord::Relation},
+ {:scope=>:class, :owner=>Arel::Nodes::Node},
+ {:scope=>:class, :owner=>Arel::TreeManager}],MethodModel.owners_of(:to_sql))
+	table_sql= @@default_connection.to_sql
+	assert_not_empty(table_sql)
+	attribute_sql=table_sql.grep(attribute_name)
+	assert_not_empty(attribute_sql)
+end #attribute_ddl
+def test_candidate_logical_keys_from_indexes
+#?	assert(Frequency.connection.index_exists?(:frequencies,:frequency_name))
+	assert(StreamPattern.connection.index_exists?(:stream_patterns,:id, :unique => true))
+#	assert(StreamPattern.index_exists?(:id))
+	Generic_Table.rails_MVC_classes.each do |model_class|
+		indexes=model_class.connection.indexes(model_class.name.tableize)
+#delay		assert_operator(indexes.size, :<, 2,"test_candidate_logical_keys_from_indexes=#{indexes.inspect}") 
+		if indexes.select{|i|i.unique}.size>=2 then
+			puts "test_candidate_logical_keys_from_indexes=#{indexes.inspect}"
+		end #if
+		if indexes != [] then
+			indexes.map do |i|
+				assert_equal(model_class.name.tableize,i.table)
+			end #map
+			assert_not_empty(model_class.candidate_logical_keys_from_indexes)
+		else
+			assert_nil(model_class.candidate_logical_keys_from_indexes)
+		end #if
+	end #each
+end #candidate_logical_keys_from_indexes
+def test_logical_attributes
+	assert_equal(Set[{:name=>"float"},
+ {:name=>"datetime"},
+ {:name=>"decimal"},
+ "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+ {:name=>"datetime"},
+ {:name=>"blob"},
+ {:name=>"boolean"},
+ {:name=>"date"},
+ {:name=>"time"},
+ {:name=>"text"},
+ {:name=>"integer"},
+ {:name=>"varchar", :limit=>255}],Set.new(StreamPattern.connection.native_database_types.values))
+	assert_equal(['name'],StreamPattern.logical_attributes)
+end #logical_attributes
+test 'is_logical_primary_key' do
+end #logical_primary_key
 test 'sequential_id' do
+	Generic_Table.rails_MVC_classes.each do |model_class|
+		if model_class.sequential_id? then
+			puts "#{model_class} is a sequential id primary key."
+		else
+			puts "#{model_class.name} has logical primary key of #{model_class.logical_primary_key} is not a sequential id primary key."
+			assert_include(class_reference.logical_primary_key,class_reference.column_names)
+		end #if
+	end #each
 end # def
 test 'logical_primary_key_value' do
 end #def
