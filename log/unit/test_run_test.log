@@ -1,8 +1,26 @@
 Loaded suite test/unit/test_run_test
 Started
-...........true
+......number="1"
+error_type=Error
+test="test_not_uptodate_order"
+klass="TestingFilePatternsTest"
+report="TypeError: can't convert nil into String\n    app/models/code_base.rb:260:in `exist?'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    app/models/code_base.rb:260:in `select'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'\n    app/models/code_base.rb:60:in `call'\n    app/models/code_base.rb:60:in `prioritized_file_order'\n    app/models/code_base.rb:54:in `each'\n    app/models/code_base.rb:54:in `prioritized_file_order'\n    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'"
+error="TypeError: can't convert nil into String"
+trace="    app/models/code_base.rb:260:in `exist?'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    app/models/code_base.rb:260:in `select'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'\n    app/models/code_base.rb:60:in `call'\n    app/models/code_base.rb:60:in `prioritized_file_order'\n    app/models/code_base.rb:54:in `each'\n    app/models/code_base.rb:54:in `prioritized_file_order'\n    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'"
+context="prioritized_file_order, each, prioritized_file_order, call, test_not_uptodate_order, not_uptodate_sources, select, not_uptodate_sources, "
+error='TypeError: can't convert nil into String'
+F.....true
 /home/greg/Desktop/git/development
 ...
-Finished in 5.740832 seconds.
+Finished in 5.205205 seconds.
 
-14 tests, 7487 assertions, 0 failures, 0 errors
+  1) Failure:
+test_parse_bug(TestRunTest)
+    [/test/test_helper.rb:207:in `assert_include'
+     test/unit/test_run_test.rb:181:in `test_parse_bug'
+     test/unit/test_run_test.rb:147:in `each'
+     test/unit/test_run_test.rb:147:in `test_parse_bug']:
+"TypeError: can't convert nil into String" is not in list "[]".
+<false> is not true.
+
+15 tests, 7497 assertions, 1 failures, 0 errors

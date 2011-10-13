@@ -1,3 +1,5 @@
+require 'app/models/generic_table.rb'
+require 'app/models/bug.rb'
 class TestRun  < ActiveRecord::Base
 include Generic_Table
 has_many :bugs
@@ -102,7 +104,7 @@ def TestRun.ruby_run_and_log(ruby_source,log_file,test=nil)
 			#~ sh "tail --lines=2 #{log_file}"
 		end
 #		puts "calling file_bug_reports"
-		stop=file_bug_reports(ruby_source,log_file,test)
+		stop=Bug.new(ruby_source,log_file,test)
 		#c#		puts "local_variables=#{local_variables.inspect}"
 		return stop
 	end # ruby
@@ -131,8 +133,8 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 		stop=true
 	else
 		sysout,run_time=TestRun.parse_header(header)
-		puts sysout="sysout='#{sysout}'"
-		puts sysout="run_time='#{run_time}'"
+#		puts "sysout='#{sysout}'"
+		puts "run_time='#{run_time}'"
 		tests,assertions,failures,tests_stop_on_error=TestRun.parse_summary(summary)
 		#~ puts "failures+tests_stop_on_error=#{failures+tests_stop_on_error}"
 		if    (failures+tests_stop_on_error)==0 then
@@ -197,40 +199,5 @@ def TestRun.parse_header(header)
 	run_time=headerArray[-1].split(' ')[2].to_f
 	return [sysout,run_time]
 end #parse_header
-def TestRun.parse_bug(test_type,table,error)
-	error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
-		#~ puts "number=#{number.inspect}"
-		#~ puts "error_type=#{error_type}"
-		#~ puts "test=#{test.inspect}"
-		#~ puts "klass=#{klass.inspect}"
-		#~ puts "report=#{report.inspect}"
-		url="rake testing:#{test_type}_test TABLE=#{table} TEST=#{test}"
-		if error_type=='Error' then
-			report.scan(/^([^\n]*)\n(.*)$/m) do |error,trace|
-				context=TestRun.short_context(trace.split("\n"))
-				#~ puts "error=#{error.inspect}"
-				#~ puts "trace=#{trace.inspect}"
-				#~ puts "context=#{context.inspect}"
-				open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-			end #scan
-		elsif error_type=='Failure' then
-			report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m) do |trace,error|
-				context=short_context(trace.split("\n"))
-				error=error.slice(0,50)
-				#~ puts "error=#{error.inspect}"
-				#~ puts "trace=#{trace.inspect}"
-				#~ puts "context=#{context.inspect}"
-				open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{context}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-			end #scan
-		else
-			puts "pre_match=#{s.pre_match}"
-			puts "post_match=#{s.post_match}"
-			puts "before #{s.rest}"
-		end #if
-	end #scan
-end #def
-def TestRun.short_context(trace)
-	return trace.reverse[1..-1].collect{|t| t.slice(/`([a-zA-Z_]+)'/,1)}.join(', ')
-end #def
 
 end #class

@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'test_helper'
+require 'active_support' # for singularize and pluralize
 # executed in alphabetical orer? Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
@@ -153,7 +154,7 @@ def test_general_associations
 #	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	if @model_class.sequential_id? then
+	if @model_class.new.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
 			message="Check that logical key (#{ar_from_fixture.class.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."

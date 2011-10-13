@@ -1,46 +1,53 @@
 Loaded suite test/unit/bug_test
 Started
-FFFF
-Finished in 13.701847 seconds.
+EE.Enumber="1"
+error_type=Error
+test="test_not_uptodate_order"
+klass="TestingFilePatternsTest"
+report="TypeError: can't convert nil into String\n    app/models/code_base.rb:260:in `exist?'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    app/models/code_base.rb:260:in `select'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'\n    app/models/code_base.rb:60:in `call'\n    app/models/code_base.rb:60:in `prioritized_file_order'\n    app/models/code_base.rb:54:in `each'\n    app/models/code_base.rb:54:in `prioritized_file_order'\n    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'"
+error="TypeError: can't convert nil into String"
+trace="    app/models/code_base.rb:260:in `exist?'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    app/models/code_base.rb:260:in `select'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'\n    app/models/code_base.rb:60:in `call'\n    app/models/code_base.rb:60:in `prioritized_file_order'\n    app/models/code_base.rb:54:in `each'\n    app/models/code_base.rb:54:in `prioritized_file_order'\n    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'"
+E.
+Finished in 5.378077 seconds.
 
-  1) Failure:
-test_aaa_test_new_assertions(BugTest)
-    [/test/test_helper.rb:24:in `fixtures'
-     /test/test_helper.rb:22:in `each'
-     /test/test_helper.rb:22:in `fixtures'
-     /test/test_helper.rb:188:in `assert_model_class'
-     /test/test_helper.rb:205:in `define_association_names'
-     test/unit/bug_test.rb:12:in `setup']:
-<nil> expected to not be nil.
+  1) Error:
+test_aaa_test_new_assertions(BugTest):
+NoMethodError: undefined method `instance_of' for #<Hash:0xb72202d8>
+    app/models/bug.rb:12:in `initialize'
+    /test/test_helper.rb:37:in `new'
+    /test/test_helper.rb:37:in `fixtures'
+    /test/test_helper.rb:29:in `each'
+    /test/test_helper.rb:29:in `fixtures'
+    test/unit/bug_test.rb:76:in `test_aaa_test_new_assertions'
 
-  2) Failure:
-test_general_associations(BugTest)
-    [/test/test_helper.rb:24:in `fixtures'
-     /test/test_helper.rb:22:in `each'
-     /test/test_helper.rb:22:in `fixtures'
-     /test/test_helper.rb:188:in `assert_model_class'
-     /test/test_helper.rb:205:in `define_association_names'
-     test/unit/bug_test.rb:12:in `setup']:
-<nil> expected to not be nil.
+  2) Error:
+test_fixture_function(BugTest):
+NoMethodError: undefined method `instance_of' for #<Hash:0xb72202d8>
+    app/models/bug.rb:12:in `initialize'
+    /test/test_helper.rb:37:in `new'
+    /test/test_helper.rb:37:in `fixtures'
+    /test/test_helper.rb:29:in `each'
+    /test/test_helper.rb:29:in `fixtures'
+    /test/test_helper.rb:249:in `assert_model_class'
+    /test/test_helper.rb:266:in `define_association_names'
+    test/unit/bug_test.rb:57:in `test_fixture_function'
 
-  3) Failure:
-test_id_equal(BugTest)
-    [/test/test_helper.rb:24:in `fixtures'
-     /test/test_helper.rb:22:in `each'
-     /test/test_helper.rb:22:in `fixtures'
-     /test/test_helper.rb:188:in `assert_model_class'
-     /test/test_helper.rb:205:in `define_association_names'
-     test/unit/bug_test.rb:12:in `setup']:
-<nil> expected to not be nil.
+  3) Error:
+test_id_equal(BugTest):
+NoMethodError: undefined method `keys' for nil:NilClass
+    test/unit/bug_test.rb:64:in `test_id_equal'
 
-  4) Failure:
-test_specific,_stable_and_working(BugTest)
-    [/test/test_helper.rb:24:in `fixtures'
-     /test/test_helper.rb:22:in `each'
-     /test/test_helper.rb:22:in `fixtures'
-     /test/test_helper.rb:188:in `assert_model_class'
-     /test/test_helper.rb:205:in `define_association_names'
-     test/unit/bug_test.rb:12:in `setup']:
-<nil> expected to not be nil.
+  4) Error:
+test_parse_bug(BugTest):
+NameError: undefined local variable or method `context' for #<BugTest:0xb731d53c>
+    test/unit/bug_test.rb:25:in `test_parse_bug'
+    test/unit/bug_test.rb:25:in `open'
+    test/unit/bug_test.rb:25:in `test_parse_bug'
+    test/unit/bug_test.rb:22:in `scan'
+    test/unit/bug_test.rb:22:in `test_parse_bug'
+    test/unit/bug_test.rb:14:in `scan'
+    test/unit/bug_test.rb:14:in `test_parse_bug'
+    test/unit/bug_test.rb:13:in `each'
+    test/unit/bug_test.rb:13:in `test_parse_bug'
 
-4 tests, 500 assertions, 4 failures, 0 errors
+6 tests, 68 assertions, 0 failures, 4 errors
