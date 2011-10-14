@@ -104,7 +104,7 @@ def TestRun.ruby_run_and_log(ruby_source,log_file,test=nil)
 			#~ sh "tail --lines=2 #{log_file}"
 		end
 #		puts "calling file_bug_reports"
-		stop=Bug.new(ruby_source,log_file,test)
+		stop=TestRun.file_bug_reports(ruby_source,log_file,test)
 		#c#		puts "local_variables=#{local_variables.inspect}"
 		return stop
 	end # ruby
@@ -146,7 +146,7 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 	end #if
 	if !errors.nil? then
 		errors.each do |error|
-			parse_bug(test_type,table,error)
+			Bug.new(test_type,table,error)
 			puts "error='#{error}'"
 		end #each
 	end #if 
