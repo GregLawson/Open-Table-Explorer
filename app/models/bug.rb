@@ -7,20 +7,18 @@ def logical_primary_key
 end #def
 def initialize(test_type=nil,table=nil,error=nil)
 	return if test_type==nil
-	if table.nil? && error.nil? then # hash initialization
-		hash=test_type
-		raise "Single Bug initializer argument must be hash not='#{hash.inspect}'" if !hash.instance_of?(Hash)
-		table=hash[:table]
-		error=hash[:error]
-		test_type=hash[:test_type]
-	end #if
+	if test_type.instance_of?(Hash) then
+		super(test_type) # actually hash of attributes
+#		attributes=testType 
+	else
+		super(nil)
 	error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
 		#~ puts "number=#{number.inspect}"
 		#~ puts "error_type=#{error_type}"
 		#~ puts "test=#{test.inspect}"
 		#~ puts "klass=#{klass.inspect}"
 		#~ puts "report=#{report.inspect}"
-		self[:url]="rake testing:#{test_type}_test TABLE=#{table} TEST=#{test}"
+		self.url="rake testing:#{test_type}_test TABLE=#{table} TEST=#{test}"
 		if error_type=='Error' then
 			report.scan(/^([^\n]*)\n(.*)$/m) do |error,trace|
 				self[:context]=trace.split("\n")
@@ -44,6 +42,7 @@ def initialize(test_type=nil,table=nil,error=nil)
 			puts "before #{s.rest}"
 		end #if
 	end #scan
+	end #if
 end #parse_bug
 def short_context
 	return self.context.reverse[1..-1].collect{|t| t.slice(/`([a-zA-Z_]+)'/,1)}.join(', ')

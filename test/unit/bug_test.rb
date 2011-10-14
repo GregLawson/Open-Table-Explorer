@@ -36,11 +36,11 @@ def test_parse_bug
 			puts "post_match=#{s.post_match}"
 			puts "before #{s.rest}"
 		end #if
+		assert_not_nil(error_type)
+		assert_include(error_type,['Error','Failure'])
 	end #scan
 		puts "error='#{error}'"
 		assert_not_nil(Bug.new(test_type,singular_table,error))
-		assert_not_nil(error_type)
-		assert_include(error_type,[])
 	assert_not_nil(Bug.new())
 	end #each
 	
@@ -54,14 +54,14 @@ def setup
 #	define_association_names #38271 associations
 end #def
 test "fixture_function" do  # aaa to output first
-	define_association_names #38271 associations
-	assert_equal(@my_fixtures,fixtures(@table_name))
+#?	define_association_names #38271 associations
+#csv	assert_equal(@my_fixtures,fixtures(@table_name))
 end #test
 def test_general_associations
 #	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	if @model_class.new.sequential_id? then
+	if @model_class.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
 			message="Check that logical key (#{ar_from_fixture.class.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
@@ -73,7 +73,7 @@ end #def
 test "specific, stable and working" do
 end #test
 test "aaa test new assertions" do  # aaa to output first
-	assert_equal(@my_fixtures,fixtures('bugs'))
+#csv	assert_equal(@my_fixtures,fixtures('bugs'))
 end #test
 
 end #class

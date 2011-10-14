@@ -27,8 +27,12 @@ def fixtures(table_name)
 	assert_instance_of(Array,fixture_labels(table_name))
 	fixture_hash={}
 	@loaded_fixtures[table_name].each do |f|
-		fixture_label=f.at(0)
-		assert_not_nil(fixture_label)
+		if f.at(0).nil? then # *.csv format?
+			raise "fixture label undefined for *.csv files."
+		else
+			fixture_label=f.at(0)
+		end #if
+		assert_not_nil(fixture_label,"f=#{f.inspect}, fixture_names=#{fixture_names.inspect}")
 		if fixture_label.instance_of?(String) then
 			fixture_label=fixture_label.to_sym
 		end
