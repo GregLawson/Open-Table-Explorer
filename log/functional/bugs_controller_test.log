@@ -1,41 +1,7 @@
 Loaded suite test/functional/bugs_controller_test
 Started
-EEEEEEE
-Finished in 13.800842 seconds.
+hash parameter=error_type_idcreated_atSat Oct 15 06:57:50 UTC 2011resolutionupdated_atSat Oct 15 06:57:50 UTC 2011urlunique keyguiid516212065contextall new and edit submits? but only in production.errorActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+.......
+Finished in 0.833276 seconds.
 
-  1) Error:
-test_should_create_bug(BugsControllerTest):
-StandardError: No fixture with name 'one' found for table 'bugs'
-    test/functional/bugs_controller_test.rb:5:in `_callback_before_255'
-
-  2) Error:
-test_should_destroy_bug(BugsControllerTest):
-StandardError: No fixture with name 'one' found for table 'bugs'
-    test/functional/bugs_controller_test.rb:5:in `_callback_before_255'
-
-  3) Error:
-test_should_get_edit(BugsControllerTest):
-StandardError: No fixture with name 'one' found for table 'bugs'
-    test/functional/bugs_controller_test.rb:5:in `_callback_before_255'
-
-  4) Error:
-test_should_get_index(BugsControllerTest):
-StandardError: No fixture with name 'one' found for table 'bugs'
-    test/functional/bugs_controller_test.rb:5:in `_callback_before_255'
-
-  5) Error:
-test_should_get_new(BugsControllerTest):
-StandardError: No fixture with name 'one' found for table 'bugs'
-    test/functional/bugs_controller_test.rb:5:in `_callback_before_255'
-
-  6) Error:
-test_should_show_bug(BugsControllerTest):
-StandardError: No fixture with name 'one' found for table 'bugs'
-    test/functional/bugs_controller_test.rb:5:in `_callback_before_255'
-
-  7) Error:
-test_should_update_bug(BugsControllerTest):
-StandardError: No fixture with name 'one' found for table 'bugs'
-    test/functional/bugs_controller_test.rb:5:in `_callback_before_255'
-
-7 tests, 0 assertions, 0 failures, 7 errors
+7 tests, 31 assertions, 0 failures, 0 errors
