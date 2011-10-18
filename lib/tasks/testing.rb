@@ -15,12 +15,12 @@ def unit_test(plural_table,test=nil)
 		CodeBase.git_add_successful(not_uptodate_sources)
 	end #if
 	return stop
-end #def
+end #unit_test
 def controller_test(plural_table,test=nil)
 	singular_table=plural_table.singularize
 	stop=TestRun.ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) #
 	return stop
-end #def
+end #controller_test
 def conditional_build(target, sources)
 	sources.each do |s|
 		if !File.exist?(s) then
@@ -63,7 +63,7 @@ def work_flow(test=nil)
 		return stop
 	end #each
 
-end #def
+end #work_flow
 
 def after(s,before,pattern)
 	if s.scan_until(before).nil? then
