@@ -6,12 +6,17 @@ def logical_primary_key
 	return :url
 end #def
 def initialize(test_type=nil,table=nil,error=nil)
-	return if test_type==nil
-	if test_type.instance_of?(Hash) then
+	if test_type==nil then
+		super(nil)
+		return
+	elsif test_type.instance_of?(Hash) || test_type.instance_of?(ActiveSupport::HashWithIndifferentAccess) then
+		puts "hash parameter=#{test_type}"
 		super(test_type) # actually hash of attributes
 #		attributes=testType 
 	else
+		puts "not hash, not empty: test_type.class=#{test_type.class}, test_type=#{test_type.inspect}, table=#{table}, error=#{error}"
 		super(nil)
+		raise "not hash, not empty:  test_type.class=#{test_type.class}, test_type=#{test_type.inspect}, table=#{table}, error=#{error}" if error.nil?
 	error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
 		#~ puts "number=#{number.inspect}"
 		#~ puts "error_type=#{error_type}"

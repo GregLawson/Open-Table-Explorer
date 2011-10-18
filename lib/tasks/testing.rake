@@ -102,7 +102,7 @@ task :work_flow do
 	work_flow(test) if !stop
 #	summarize
 	stage
-end #task
+end #work_flow
 task :incremental do
 	ALL_MODEL_FILES .each do |model_file|
 		 singular_table=model_file[11..-4]
@@ -121,25 +121,17 @@ task :summarize do
 	summarize
 end #task
 task :unit_test do
-TestRun.new(:unit, ENV["TABLE"], ENV["TABLE"], ENV["TEST"]).run
+	TestRun.new(:unit, ENV["TABLE"], ENV["TABLE"], ENV["TEST"]).run
 
-exit
-	plural_table = ENV["TABLE"].pluralize  || "code_bases"
-	test = ENV["TEST"] 
-	unit_test(plural_table,test)
-#	summarize
-end #task
+end #unit_test
 task :controller_test do
-	plural_table = ENV["TABLE"].pluralize || "code_bases"
-	test = ENV["TEST"]
-	controller_test(plural_table,test)
-#	summarize
-end #task
+	TestRun.new(:controller, ENV["TABLE"], ENV["TABLE"], ENV["TEST"]).run
+	exit
+end #controller_test
 task :full_unit_test do
 	plural_table = ENV["TABLE"].pluralize  || "accounts"
-	test = ENV["TEST"]
-	full_unit_test(plural_table,test)
-#	summarize
+	TestRun.new(:unit, ENV["TABLE"].singularize, ENV["TABLE"], ENV["TEST"]).run
+	TestRun.new(:controller, ENV["TABLE"], ENV["TABLE"].pluralize, ENV["TEST"]).run
 	stage
 end #task
 task :full do	

@@ -8,7 +8,7 @@ class BugsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @bugs }
     end
-  end
+  end #index
 
   # GET /bugs/1
   # GET /bugs/1.xml
@@ -19,7 +19,7 @@ class BugsController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @bug }
     end
-  end
+  end #show
 
   # GET /bugs/new
   # GET /bugs/new.xml
@@ -30,12 +30,12 @@ class BugsController < ApplicationController
       format.html # new.html.erb
       format.xml  { render :xml => @bug }
     end
-  end
+  end #new
 
   # GET /bugs/1/edit
   def edit
     @bug = Bug.find(params[:id])
-  end
+  end #edit
 
   # POST /bugs
   # POST /bugs.xml
@@ -51,7 +51,7 @@ class BugsController < ApplicationController
         format.xml  { render :xml => @bug.errors, :status => :unprocessable_entity }
       end
     end
-  end
+  end #create
 
   # PUT /bugs/1
   # PUT /bugs/1.xml
@@ -67,7 +67,7 @@ class BugsController < ApplicationController
         format.xml  { render :xml => @bug.errors, :status => :unprocessable_entity }
       end
     end
-  end
+  end #update
 
   # DELETE /bugs/1
   # DELETE /bugs/1.xml
@@ -79,5 +79,5 @@ class BugsController < ApplicationController
       format.html { redirect_to(bugs_url) }
       format.xml  { head :ok }
     end
-  end
-end
+  end #destroy
+end #class

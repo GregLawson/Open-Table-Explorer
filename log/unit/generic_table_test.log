@@ -1,6 +1,46 @@
 Loaded suite test/unit/generic_table_test
 Started
-  invalid method:
+..AcquisitionStreamSpec belongs_to table_spec
+table_spec does not has_many AcquisitionStreamSpec
+AcquisitionStreamSpec belongs_to acquisition_interface
+acquisition_interface does not has_many AcquisitionStreamSpec
+Acquisition does not have a belongs_to acquisition_stream_spec
+acquisition_stream_spec does not has_many Acquisition
+node is not an association of Breaker
+error_type is not an association of Bug
+node is not an association of Load
+load is not an association of Measurement
+node is not an association of Node
+Node belongs_to branch
+branch is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
+ParseSpec does not include Generic_Table
+stream_method is not an association of StreamMethodArgument
+parameter is not an association of StreamMethodArgument
+StreamMethodCall belongs_to stream_method
+stream_method does not has_many StreamMethodCall
+StreamMethod belongs_to stream_pattern
+stream_pattern does not has_many StreamMethod
+stream_method_call is not an association of StreamParameter
+stream_method_argument is not an association of StreamParameter
+TableSpec belongs_to frequency
+frequency does not has_many TableSpec
+StreamPatternArgument belongs_to stream_pattern
+stream_pattern does not has_many StreamPatternArgument
+parameter is not an association of StreamPatternArgument
+node is not an association of WiredLocation
+test is not an association of TestRun
+Transaction does not include Generic_Table
+Transfer belongs_to account
+account does not has_many Transfer
+StreamLink belongs_to input_stream_method_argument
+input_stream_method_argument is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
+StreamLink belongs_to output_stream_method_argument
+output_stream_method_argument is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
+StreamLink belongs_to store_method
+store_method is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
+StreamLink belongs_to next_method
+next_method is not a generic table in ["Account", "AcquisitionInterface", "AcquisitionStreamSpec", "Acquisition", "Breaker", "Bug", "Edison", "ErrorType", "ExampleType", "Frequency", "GenericColumn", "GenericType", "Host", "Huelshow", "Load", "Measurement", "Network", "Node", "Ofx", "ParseSpec", "ProductionFtp", "Url", "Port", "Router", "Production", "RubyInterface", "ScalarArgument", "Station", "StreamMethodArgument", "StreamMethodCall", "StreamMethod", "StreamParameter", "TableSpec", "Tedprimary", "StreamPatternArgument", "StreamPattern", "Weather", "WiredLocation", "TestRun", "Transaction", "Transfer", "StreamLink"].
+..............  invalid method:
 m=:action_path_for
 scope='instance'
 owner=ActionController::Caching::Sweeper
@@ -1361,2861 +1401,3969 @@ m=:inspect
 scope='instance'
 owner=UnboundMethod
   invalid method:
-m=:destroy
-scope='instance'
-owner=#<Module:0xb6b675a4>
-  invalid method:
 m=:alert
 scope='instance'
-owner=#<Module:0xb6801784>
+owner=#<Module:0xb67a2ec8>
   invalid method:
 m=:form_authenticity_token
 scope='instance'
-owner=#<Module:0xb6801784>
+owner=#<Module:0xb67a2ec8>
   invalid method:
 m=:protect_against_forgery?
 scope='instance'
-owner=#<Module:0xb6801784>
+owner=#<Module:0xb67a2ec8>
   invalid method:
 m=:cookies
 scope='instance'
-owner=#<Module:0xb6801784>
+owner=#<Module:0xb67a2ec8>
   invalid method:
 m=:notice
 scope='instance'
-owner=#<Module:0xb6801784>
-  invalid method:
-m=:hash_for_new_generic_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_example_types_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_method_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_wired_location_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_bug_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_edison_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_pattern_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_huelshow_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_measurement_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:table_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:assembly_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_calls_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_production_ftps_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_loads1_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_network_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_method_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_breaker_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_acquisition_stream_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_account_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_pattern_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_frequency_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ofx_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisitions_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:production_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:load_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_assembly_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_parameter_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_node_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transfers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_transaction_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_ruby_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:parse_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_huelseries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_station_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_frequencies_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ofxes_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hosts_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_productions_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_pattern_arguments_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_wired_location_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_bug_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_edison_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_generic_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:example_types_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_pattern_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_router_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_test_run_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_measurement_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_assembly_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_acquisition_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:production_ftps_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_loads1_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_link_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_table_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_method_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_breaker_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_error_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_stream_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_network_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:frequency_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ofx_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisitions_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_production_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_patterns_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_parameter_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_node_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_url_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_weather_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:assembly_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_scalar_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_transaction_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_ruby_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_parse_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_huelseries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_tedprimary_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ofxes_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:productions_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_pattern_arguments_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:frequencies_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_method_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_bug_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_edison_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_generic_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:test_run_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_parse_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelshow_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_measurement_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_pattern_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:router_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_method_call_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_acquisition_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_loads1_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_link_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:table_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:assembly_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_breaker_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_error_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_stream_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_account_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_network_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_method_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_test_runs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisitions_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:production_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_wired_location_index_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_patterns_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_routers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_parameter_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_node_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_url_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_weather_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_transfer_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_assembly_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:parse_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_huelseries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_station_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:scalar_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transaction_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ofxes_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_host_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_productions_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_frequencies_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:tedprimary_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_wired_location_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_generic_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_example_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_method_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_test_run_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:parse_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelshow_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_measurement_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_scalar_arguments_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_router_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_method_call_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_acquisition_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_production_ftp_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_link_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_tedprimaries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_error_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_stream_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_account_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_network_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_breaker_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:test_runs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelshows_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:wired_location_index_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_patterns_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:routers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_url_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_weather_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_transfer_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:assembly_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ruby_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_stream_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_huelseries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_station_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_scalar_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transaction_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_host_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:productions_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_pattern_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:frequencies_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_tedprimary_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_bug_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edison_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_example_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_method_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_wired_location_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:test_run_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_parse_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelshow_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:scalar_arguments_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:router_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_production_ftp_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_loads1_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_link_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_table_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:tedprimaries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_method_call_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_acquisition_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_error_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_stream_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_account_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_acquisition_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelshows_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_wired_location_index_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_patterns_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_routers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_test_runs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_url_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_weather_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_transfer_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_parameter_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_node_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ruby_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_stream_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelseries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_station_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:scalar_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transaction_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_pattern_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:tedprimary_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_ofx_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_host_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_bug_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edison_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_generic_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_example_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_method_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_wired_location_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelshow_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_measurement_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_scalar_arguments_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transactions_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ruby_interfaces_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:parse_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_production_ftp_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_loads1_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_table_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_tedprimaries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_method_call_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edisons_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_account_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_network_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_breaker_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelshows_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:wired_location_index_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:routers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:test_runs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_acquisition_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_transfer_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_assembly_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_parameter_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_node_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelseries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_station_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_arguments_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transaction_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ruby_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_stream_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_production_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_load_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_pattern_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_frequency_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_root_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_ofx_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_host_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edison_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_generic_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_example_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_wired_location_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_bug_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:measurement_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:scalar_arguments_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transactions_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ruby_interfaces_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_production_ftp_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_loads1_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_link_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_table_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:tedprimaries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_acquisition_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_network_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:breaker_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_error_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edisons_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelshows_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_measurements_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_pattern_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_acquisition_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_assembly_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_parameter_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_node_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_url_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_weather_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelseries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_arguments_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_breakers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ruby_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_stream_specs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_load_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_pattern_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_frequency_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_root_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_ofx_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_production_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_generic_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_wired_location_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_bug_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edison_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelseries_index_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_measurement_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transactions_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ruby_interfaces_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_parse_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_link_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_table_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_method_call_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_acquisition_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_loads1_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_account_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_network_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_breaker_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:error_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edisons_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:measurements_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_pattern_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_router_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_test_run_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_acquisition_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_transfer_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_assembly_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_parameter_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_node_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_url_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:weather_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelseries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_station_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_arguments_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:breakers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_error_types_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_frequency_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_ofx_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_host_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_production_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_load_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_generic_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_example_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:wired_location_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_weathers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_scalar_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transactions_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ruby_interfaces_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_parse_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelseries_index_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:measurement_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_link_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_tedprimary_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_method_call_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_acquisition_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_production_ftp_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads1_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_network_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_methods_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:breaker_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_error_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edisons_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:account_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:root_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_pattern_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_router_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_test_run_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_huelshow_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_measurements_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_transfer_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_assembly_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_node_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_url_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_weather_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_arguments_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_breakers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:error_types_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_acquisition_stream_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_accounts_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:station_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_pattern_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_frequency_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_host_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_production_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_load_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_example_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_wired_location_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_bug_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:weathers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_scalar_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_parse_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_huelseries_index_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stations_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_table_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_tedprimary_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_method_call_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_acquisition_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_production_ftp_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads1_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_link_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_methods_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_wired_locations_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:error_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_account_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_pattern_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_huelshow_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_test_run_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_router_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_acquisition_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:measurements_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_transfer_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_url_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_parameter_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:node_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:weather_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:accounts_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_error_types_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:breakers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_acquisition_stream_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_station_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_pattern_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_ofx_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_host_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_rails_info_properties_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_generic_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:bug_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:wired_location_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_weathers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_example_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_scalar_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:huelseries_index_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_ruby_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_transaction_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_parse_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stations_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_table_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_production_ftp_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_method_call_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads1_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_tedprimary_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:account_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_bugs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_methods_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:wired_locations_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_edison_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_network_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_router_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_huelshow_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_test_run_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_acquisition_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_transfer_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_url_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_parameter_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_node_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads1s_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_assembly_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_method_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_accounts_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:error_types_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_acquisition_stream_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:station_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_frequency_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_pattern_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_production_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_ofx_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_host_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_load_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:rails_info_properties_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_parameters_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:generic_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_bug_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_nodes_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:weathers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_example_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_transaction_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_scalar_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_ruby_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stations_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_table_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_link_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_production_ftp_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads1_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_tedprimary_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_methods_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_generic_types_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:bugs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_wired_locations_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_edison_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:network_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_pattern_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_huelshow_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_acquisition_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_measurement_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_parameter_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transfer_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:url_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:node_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads1s_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_assembly_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_method_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:accounts_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_breaker_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_acquisition_stream_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_networks_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_frequency_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_pattern_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_production_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_ofx_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_host_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_load_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_rails_info_properties_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_parameters_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_generic_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:bug_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:nodes_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_transaction_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_huelseries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_ruby_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_parse_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stations_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_call_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_table_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_link_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:generic_types_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_bugs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:wired_locations_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_edison_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_network_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_test_run_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_router_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_pattern_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_acquisition_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_measurement_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_parameter_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transfer_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_links_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_url_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_interfaces_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads1s_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_assembly_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_method_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_error_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_breaker_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:networks_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_ofx_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_frequency_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_production_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:host_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_load_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:rails_info_properties_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_parameters_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:generic_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_urls_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_nodes_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_weather_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_example_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_ruby_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_transaction_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_scalar_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_huelseries_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_parse_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_call_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_table_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_link_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_production_ftp_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_interface_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads1_index_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_tedprimary_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_method_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_generic_types_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:bugs_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_edison_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:network_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_test_run_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_router_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_pattern_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_huelshow_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_measurement_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_calls_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transfer_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_links_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:url_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_interfaces_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads1s_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_assembly_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_error_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_method_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_account_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_breaker_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_acquisition_stream_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_networks_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_frequency_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_pattern_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_production_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_host_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_load_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:urls_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_parameters_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transfers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:nodes_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_weather_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:example_type_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_scalar_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_huelseries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_parse_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_station_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_call_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:table_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_link_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:production_ftp_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_hosts_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads1_index_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_tedprimary_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_stream_method_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:generic_types_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_wired_location_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_example_types_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_test_run_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_router_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_stream_pattern_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_huelshow_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:load_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_measurement_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_production_ftps_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_calls_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transfer_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_links_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisition_interfaces_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_error_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_account_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_breaker_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_acquisition_stream_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:networks_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ofx_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_frequency_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_pattern_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:host_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_load_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_urls_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:transfers_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_weather_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_example_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_ruby_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_transaction_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_scalar_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_huelseries_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_parse_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_station_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_production_ftp_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_method_call_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_table_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_pattern_arguments_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hosts_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_loads1_index_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_tedprimary_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_bug_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_method_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_wired_location_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_edison_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:example_types_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_huelshow_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_test_run_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_router_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_pattern_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:production_ftps_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_method_calls_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_table_specs_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_links_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:acquisition_interfaces_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_loads1_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_assembly_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_error_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_stream_method_argument_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_account_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_edit_acquisition_stream_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:root_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_production_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:ofx_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:frequency_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_stream_pattern_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_acquisitions_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_load_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:urls_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_stream_parameter_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_transfers_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_node_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:new_weather_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:example_type_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_ruby_interface_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_transaction_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_scalar_argument_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_parse_spec_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_new_station_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:production_ftp_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_ofxes_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:table_spec_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:stream_pattern_arguments_path
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:hash_for_hosts_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:loads1_index_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:edit_tedprimary_url
-scope='instance'
-owner=#<Module:0xb6594924>
-  invalid method:
-m=:_routes
-scope='instance'
-owner=#<Module:0xb679be98>
+owner=#<Module:0xb67a2ec8>
   invalid method:
 m=:call
 scope='instance'
-owner=#<Module:0xb72f6504>
+owner=#<Module:0xb7297b44>
+  invalid method:
+m=:_routes
+scope='instance'
+owner=#<Module:0xb673d910>
+  invalid method:
+m=:required_order_change
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id_changed?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:reset_acquisition_interface!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id_change
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_changed?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:reset_acquisition_interface_id!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:required_order=
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id_change
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id_changed?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:required_order_will_change!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_change
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id=
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:required_order?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id_will_change!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id_change
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url=
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:required_order_was
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id=
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id=
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id_will_change!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:required_order_before_type_cast
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id_was
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_will_change!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url_was
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:reset_url!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id_was
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id_will_change!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url_change
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url_will_change!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:reset_required_order!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_was
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url_before_type_cast
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url_changed?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:required_order_changed?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:reset_table_spec_id!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_before_type_cast
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id_was
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:url?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:required_order
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:table_spec_id_changed?
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:reset_id!
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:acquisition_interface_id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5fb768c>
+  invalid method:
+m=:hash_for_new_generic_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_example_types_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_method_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_wired_location_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_bug_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_edison_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_pattern_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_huelshow_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_measurement_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:table_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:assembly_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_calls_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_production_ftps_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_loads1_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_network_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_method_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_breaker_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_acquisition_stream_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_account_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_pattern_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_frequency_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ofx_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisitions_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:production_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:load_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_assembly_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_parameter_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_node_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transfers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_transaction_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_ruby_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:parse_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_huelseries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_station_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_frequencies_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ofxes_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hosts_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_productions_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_pattern_arguments_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_wired_location_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_bug_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_edison_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_generic_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:example_types_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_pattern_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_router_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_test_run_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_measurement_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_assembly_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_acquisition_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:production_ftps_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_loads1_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_link_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_table_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_method_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_breaker_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_error_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_stream_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_network_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:frequency_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ofx_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisitions_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_production_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_patterns_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_parameter_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_node_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_url_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_weather_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:assembly_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_scalar_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_transaction_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_ruby_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_parse_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_huelseries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_tedprimary_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ofxes_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:productions_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_pattern_arguments_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:frequencies_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_method_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_bug_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_edison_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_generic_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:test_run_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_parse_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelshow_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_measurement_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_pattern_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:router_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_method_call_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_acquisition_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_loads1_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_link_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:table_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:assembly_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_breaker_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_error_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_stream_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_account_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_network_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_method_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_test_runs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisitions_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:production_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_wired_location_index_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_patterns_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_routers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_parameter_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_node_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_url_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_weather_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_transfer_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_assembly_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:parse_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_huelseries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_station_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:scalar_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transaction_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ofxes_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_host_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_productions_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_frequencies_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:tedprimary_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_wired_location_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_generic_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_example_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_method_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_test_run_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:parse_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelshow_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_measurement_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_scalar_arguments_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_router_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_method_call_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_acquisition_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_production_ftp_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_link_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_tedprimaries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_error_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_stream_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_account_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_network_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_breaker_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:test_runs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelshows_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:wired_location_index_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_patterns_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:routers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_url_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_weather_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_transfer_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:assembly_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ruby_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_stream_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_huelseries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_station_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_scalar_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transaction_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_host_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:productions_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_pattern_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:frequencies_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_tedprimary_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_bug_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edison_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_example_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_method_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_wired_location_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:test_run_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_parse_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelshow_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:scalar_arguments_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:router_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_production_ftp_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_loads1_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_link_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_table_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:tedprimaries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_method_call_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_acquisition_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_error_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_stream_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_account_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_acquisition_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelshows_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_wired_location_index_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_patterns_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_routers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_test_runs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_url_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_weather_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_transfer_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_parameter_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_node_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ruby_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_stream_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelseries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_station_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:scalar_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transaction_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_pattern_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:tedprimary_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_ofx_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_host_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_bug_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edison_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_generic_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_example_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_method_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_wired_location_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelshow_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_measurement_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_scalar_arguments_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transactions_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ruby_interfaces_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:parse_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_production_ftp_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_loads1_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_table_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_tedprimaries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_method_call_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edisons_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_account_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_network_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_breaker_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelshows_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:wired_location_index_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:routers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:test_runs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_acquisition_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_transfer_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_assembly_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_parameter_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_node_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelseries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_station_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_arguments_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transaction_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ruby_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_stream_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_production_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_load_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_pattern_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_frequency_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_root_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_ofx_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_host_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edison_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_generic_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_example_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_wired_location_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_bug_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:measurement_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:scalar_arguments_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transactions_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ruby_interfaces_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_production_ftp_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_loads1_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_link_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_table_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:tedprimaries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_acquisition_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_network_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:breaker_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_error_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edisons_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelshows_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_measurements_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_pattern_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_acquisition_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_assembly_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_parameter_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_node_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_url_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_weather_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelseries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_arguments_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_breakers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ruby_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_stream_specs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_load_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_pattern_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_frequency_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_root_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_ofx_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_production_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_generic_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_wired_location_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_bug_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edison_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelseries_index_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_measurement_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transactions_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ruby_interfaces_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_parse_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_link_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_table_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_method_call_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_acquisition_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_loads1_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_account_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_network_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_breaker_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:error_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edisons_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:measurements_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_pattern_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_router_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_test_run_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_acquisition_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_transfer_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_assembly_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_parameter_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_node_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_url_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:weather_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelseries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_station_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_arguments_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:breakers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_error_types_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_frequency_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_ofx_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_host_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_production_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_load_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_generic_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_example_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:wired_location_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_weathers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_scalar_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transactions_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ruby_interfaces_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_parse_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelseries_index_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:measurement_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_link_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_tedprimary_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_method_call_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_acquisition_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_production_ftp_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads1_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_network_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_methods_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:breaker_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_error_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edisons_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:account_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:root_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_pattern_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_router_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_test_run_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_huelshow_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_measurements_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_transfer_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_assembly_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_node_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_url_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_weather_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_arguments_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_breakers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:error_types_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_acquisition_stream_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_accounts_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:station_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_pattern_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_frequency_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_host_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_production_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_load_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_example_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_wired_location_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_bug_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:weathers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_scalar_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_parse_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_huelseries_index_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stations_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_table_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_tedprimary_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_method_call_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_acquisition_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_production_ftp_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads1_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_link_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_methods_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_wired_locations_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:error_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_account_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_pattern_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_huelshow_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_test_run_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_router_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_acquisition_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:measurements_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_transfer_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_url_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_parameter_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:node_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:weather_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:accounts_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_error_types_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:breakers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_acquisition_stream_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_station_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_pattern_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_ofx_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_host_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_rails_info_properties_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_generic_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:bug_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:wired_location_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_weathers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_example_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_scalar_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:huelseries_index_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_ruby_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_transaction_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_parse_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stations_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_table_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_production_ftp_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_method_call_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads1_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_tedprimary_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:account_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_bugs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_methods_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:wired_locations_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_edison_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_network_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_router_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_huelshow_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_test_run_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_acquisition_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_transfer_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_url_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_parameter_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_node_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads1s_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_assembly_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_method_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_accounts_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:error_types_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_acquisition_stream_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:station_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_frequency_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_pattern_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_production_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_ofx_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_host_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_load_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:rails_info_properties_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_parameters_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:generic_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_bug_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_nodes_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:weathers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_example_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_transaction_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_scalar_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_ruby_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stations_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_table_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_link_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_production_ftp_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads1_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_tedprimary_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_methods_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_generic_types_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:bugs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_wired_locations_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_edison_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:network_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_pattern_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_huelshow_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_acquisition_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_measurement_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_parameter_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transfer_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:url_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:node_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads1s_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_assembly_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_method_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:accounts_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_breaker_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_acquisition_stream_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_networks_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_frequency_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_pattern_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_production_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_ofx_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_host_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_load_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_rails_info_properties_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_parameters_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_generic_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:bug_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:nodes_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_transaction_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_huelseries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_ruby_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_parse_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stations_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_call_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_table_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_link_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:generic_types_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_bugs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:wired_locations_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_edison_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_network_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_test_run_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_router_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_pattern_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_acquisition_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_measurement_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_parameter_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transfer_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_links_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_url_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_interfaces_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads1s_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_assembly_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_method_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_error_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_breaker_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:networks_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_ofx_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_frequency_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_production_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:host_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_load_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:rails_info_properties_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_parameters_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:generic_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_urls_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_nodes_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_weather_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_example_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_ruby_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_transaction_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_scalar_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_huelseries_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_parse_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_call_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_table_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_link_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_production_ftp_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_interface_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads1_index_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_tedprimary_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_method_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_generic_types_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:bugs_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_edison_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:network_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_test_run_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_router_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_pattern_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_huelshow_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_measurement_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_calls_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transfer_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_links_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:url_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_interfaces_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads1s_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_assembly_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_error_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_method_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_account_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_breaker_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_acquisition_stream_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_networks_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_frequency_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_pattern_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_production_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_host_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_load_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:urls_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_parameters_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transfers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:nodes_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_weather_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:example_type_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_scalar_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_huelseries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_parse_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_station_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_call_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:table_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_link_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:production_ftp_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_hosts_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads1_index_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_tedprimary_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_stream_method_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:generic_types_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_wired_location_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_example_types_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_test_run_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_router_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_stream_pattern_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_huelshow_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:load_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_measurement_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_production_ftps_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_calls_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transfer_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_links_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisition_interfaces_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_error_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_account_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_breaker_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_acquisition_stream_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:networks_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ofx_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_frequency_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_pattern_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:host_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_load_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_urls_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:transfers_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_weather_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_example_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_ruby_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_transaction_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_scalar_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_huelseries_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_parse_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_station_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_production_ftp_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_method_call_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_table_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_pattern_arguments_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hosts_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_loads1_index_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_tedprimary_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_bug_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_method_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_wired_location_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_edison_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:example_types_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_huelshow_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_test_run_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_router_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_pattern_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:production_ftps_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_method_calls_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_table_specs_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_links_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:acquisition_interfaces_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_loads1_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_assembly_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_error_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_stream_method_argument_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_account_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_edit_acquisition_stream_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:root_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_production_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:ofx_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:frequency_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_stream_pattern_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_acquisitions_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_load_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:urls_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_stream_parameter_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_transfers_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_node_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:new_weather_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:example_type_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_ruby_interface_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_transaction_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_scalar_argument_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_parse_spec_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_new_station_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:production_ftp_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_ofxes_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:table_spec_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:stream_pattern_arguments_path
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:hash_for_hosts_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:loads1_index_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:edit_tedprimary_url
+scope='instance'
+owner=#<Module:0xb65367e8>
+  invalid method:
+m=:destroy
+scope='instance'
+owner=#<Module:0xb6b09ef4>
+  invalid method:
+m=:interface_code?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:interface_code_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_id!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:created_at_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:name_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:interface_code
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_interface_code!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_library!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_return_code!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:interface_code_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:interface_code=
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_type!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_rescue_code!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_updated_at!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:interface_code_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_created_at!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:interface_code_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:rescue_code_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:reset_name!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:library_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code_changed?
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:return_code
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:updated_at_will_change!
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:type_was
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:interface_code_change
+scope='instance'
+owner=#<Module:0xb5f94d6c>
+  invalid method:
+m=:direction_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:direction_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:direction_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_id!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:direction?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:direction_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:direction
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_id=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id_was
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:name_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id_changed?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:direction=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id_change
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id?
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_direction!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_updated_at!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_parameter_type!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_parameter_id!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:stream_pattern_id=
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_created_at!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:ruby_type
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_name!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_stream_pattern_id!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:direction_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:updated_at_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:reset_ruby_type!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:parameter_type_will_change!
+scope='instance'
+owner=#<Module:0xb5f5b74c>
+  invalid method:
+m=:created_at_change
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated_was
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id_changed?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data_will_change!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id_was
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error_change
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id_change
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id=
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data_was
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:created_at_will_change!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:reset_acquisition_updated!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data=
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:created_at?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated_changed?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:reset_acquisition_stream_spec_id!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error_will_change!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:created_at_was
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url=
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id=
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id_will_change!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id_changed?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:reset_acquisition_data!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error=
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:created_at_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated_change
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data_changed?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error_was
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:created_at
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url_was
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:reset_url!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id_was
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id_change
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:reset_created_at!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url_change
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url_will_change!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:id_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_data_change
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:created_at_changed?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated_will_change!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url_before_type_cast
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url_changed?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:reset_error!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:created_at=
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_updated=
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:url?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:reset_id!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:acquisition_stream_spec_id_will_change!
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
+  invalid method:
+m=:error_changed?
+scope='instance'
+owner=#<Module:0xb5f2f6b0>
   invalid method:
 m=:clone
 scope='instance'
-owner=#<Class:0xb630d124>::SingletonClassMethods
+owner=#<Class:0xb62afab0>::SingletonClassMethods
   invalid method:
 m=:_load
 scope='instance'
-owner=#<Class:0xb630d124>::SingletonClassMethods
+owner=#<Class:0xb62afab0>::SingletonClassMethods
   invalid method:
 m=:process_action
 scope='instance'
@@ -12881,6 +14029,10 @@ m=:flunk
 scope='instance'
 owner=Test::Unit::Assertions
   invalid method:
+m=:assert_not_equal
+scope='instance'
+owner=Test::Unit::Assertions
+  invalid method:
 m=:assert
 scope='instance'
 owner=Test::Unit::Assertions
@@ -12910,10 +14062,6 @@ scope='instance'
 owner=Test::Unit::Assertions
   invalid method:
 m=:assert_raise
-scope='instance'
-owner=Test::Unit::Assertions
-  invalid method:
-m=:assert_not_equal
 scope='instance'
 owner=Test::Unit::Assertions
   invalid method:
@@ -13159,7 +14307,7 @@ owner=TrueClass
   invalid method:
 m=:url_for
 scope='singleton'
-owner=#<Module:0xb679be98>
+owner=#<Module:0xb673d910>
   invalid method:
 m=:abbrev
 scope='singleton'
@@ -17776,12 +18924,81 @@ owner=Zlib
 m=:adler32
 scope='singleton'
 owner=Zlib
-E
-Finished in 40.90198 seconds.
+FF............E....Account is a sequential id primary key.
+AcquisitionInterface is a sequential id primary key.
+AcquisitionStreamSpec is a sequential id primary key.
+Acquisition is a sequential id primary key.
+Breaker is a sequential id primary key.
+Bug is a sequential id primary key.
+Edison is a sequential id primary key.
+ErrorType is a sequential id primary key.
+ExampleType is a sequential id primary key.
+Frequency is a sequential id primary key.
+GenericColumn is a sequential id primary key.
+GenericType is a sequential id primary key.
+Host is a sequential id primary key.
+Huelshow is a sequential id primary key.
+Load is a sequential id primary key.
+Measurement is a sequential id primary key.
+Network is a sequential id primary key.
+Node is a sequential id primary key.
+Ofx is a sequential id primary key.
+ParseSpec is a sequential id primary key.
+ProductionFtp is a sequential id primary key.
+Url is a sequential id primary key.
+Port is a sequential id primary key.
+Router is a sequential id primary key.
+Production is a sequential id primary key.
+RubyInterface is a sequential id primary key.
+ScalarArgument is a sequential id primary key.
+Station is a sequential id primary key.
+StreamMethodArgument is a sequential id primary key.
+StreamMethodCall is a sequential id primary key.
+StreamMethod is a sequential id primary key.
+StreamParameter is a sequential id primary key.
+TableSpec is a sequential id primary key.
+Tedprimary is a sequential id primary key.
+StreamPatternArgument is a sequential id primary key.
+StreamPattern is a sequential id primary key.
+Weather is a sequential id primary key.
+WiredLocation is a sequential id primary key.
+TestRun is a sequential id primary key.
+Transaction is a sequential id primary key.
+Transfer is a sequential id primary key.
+StreamLink is a sequential id primary key.
+..
+Finished in 31.560432 seconds.
 
-  1) Error:
-test_attribute_ddl(GenericTableTest):
-NoMethodError: undefined method `to_sql' for #<ActiveRecord::ConnectionAdapters::SQLite3Adapter:0xb6d9bb2c>
-    test/unit/generic_table_test.rb:283:in `test_attribute_ddl'
+  1) Failure:
+test_attribute_ddl(GenericTableTest) [test/unit/generic_table_test.rb:274]:
+<#<MethodModel:0xb5d96b50
+ @mHash=
+  {:instance_variable_defined=>false,
+   :scope=>:class,
+   :exception=>
+    #<NoMethodError: undefined method `protected_method_defined?' for #<MethodModel:0xb5d96b50 ...>>,
+   :method=>#<Method: #<Class:0xb64ae514>.members>,
+   :protected=>nil,
+   :singleton=>false,
+   :private=>nil,
+   :arity=>0,
+   :owner=>#<Class:#<Class:0xb64ae514>>,
+   :name=>:members,
+   :source_location=>nil}>> expected to be an instance of
+<Hash> but was
+<MethodModel>.
 
-1 tests, 7 assertions, 0 failures, 1 errors
+  2) Failure:
+test_candidate_logical_keys_from_indexes(GenericTableTest) [test/unit/generic_table_test.rb:290]:
+<false> is not true.
+
+  3) Error:
+test_logical_attributes(GenericTableTest):
+NoMethodError: undefined method `to_sql' for #<Class:0xb61f2f64>
+    /app/models/generic_table.rb:245:in `attribute_type'
+    /app/models/generic_table.rb:260:in `logical_attributes'
+    /app/models/generic_table.rb:260:in `select'
+    /app/models/generic_table.rb:260:in `logical_attributes'
+    test/unit/generic_table_test.rb:321:in `test_logical_attributes'
+
+37 tests, 326 assertions, 2 failures, 1 errors

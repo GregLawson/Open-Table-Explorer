@@ -332,7 +332,7 @@ def Generic_Table.table_exists?(table_name)
 	TableSpec.connection.table_exists?(table_name)
 end #def
 def Generic_Table.rails_MVC_class?(table_name)
-	return Generic_Table.rails_MVC_classes.map {|c| c.name}.include?(table_name.to_s.classify)
+	return CodeBase.rails_MVC_classes.map {|c| c.name}.include?(table_name.to_s.classify)
 end #def
 def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/models/',extention='.rb')
 	if File.exists?(directory+model_file_basename+extention) then
@@ -342,21 +342,8 @@ def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/mode
 		return false
 	end #if
 end #def
-@@ALL_VIEW_DIRS||=Dir['app/views/*']
-def Generic_Table.rails_MVC_classes
-#	puts fixture_names.inspect
-	@@ALL_VIEW_DIRS.map do |view_dir|
-		model_filename=view_dir.sub(%r{^app/views/},'')
-		if is_generic_table_name?(model_filename.singularize) then
-			model_filename.classify.constantize
-		else
-#			puts "File.exists?(\"app/models/#{model_filename}\")=#{File.exists?('app/models/'+model_filename)}"
-			nil # discarded by later Array#compact
-		end #if
-	end.compact #map
-end #def
 def Generic_Table.generic_table_class_names
-	return model_classes.map { |klass| klass.name }
+	return CodeBase.rails_MVC_classes.map { |klass| klass.name }
 end #def
 
 

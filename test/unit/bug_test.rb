@@ -4,7 +4,7 @@ require 'test_helper'
 # move passing tests toward end
 class BugTest < ActiveSupport::TestCase
 fixtures :bugs
-def test_parse_bug
+def test_initialize
 	test_type=:unit
 	singular_table=:code_base
 	plural_table=singular_table.to_s.pluralize

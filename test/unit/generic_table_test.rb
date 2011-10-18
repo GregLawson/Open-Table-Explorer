@@ -257,7 +257,7 @@ test 'is_active_record_method' do
 	assert(TestTable.is_active_record_method?(:connection))
 end #is_active_record_method
 test 'logical_primary_key' do
-	Generic_Table.rails_MVC_classes.each do |model_class|
+	CodeBase.rails_MVC_classes.each do |model_class|
 		if self.respond_to?(:logical_primary_key) then
 			assert_not_empty(model_class.logical_primary_key)
 		end #if
@@ -271,8 +271,8 @@ def test_attribute_ddl
 #private	assert_equal('',@@default_connection.default_primary_key_type)
 #2 arguments	assert_equal([],@@default_connection.index_name)
 #too long	assert_equal([],@@default_connection.methods)
-	assert_instance_of(Hash,MethodModel.all.first)
-	assert_instance_of(Hash,MethodModel.first)
+	assert_instance_of(MethodModel,MethodModel.all.first)
+	assert_instance_of(MethodModel,MethodModel.first)
 	assert_instance_of(Array,MethodModel.first.keys)
 	assert_instance_of(Class,MethodModel.first[:owner])
 	assert_equal([{:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::ColumnDefinition},
@@ -289,7 +289,7 @@ def test_candidate_logical_keys_from_indexes
 #?	assert(Frequency.connection.index_exists?(:frequencies,:frequency_name))
 	assert(StreamPattern.connection.index_exists?(:stream_patterns,:id, :unique => true))
 #	assert(StreamPattern.index_exists?(:id))
-	Generic_Table.rails_MVC_classes.each do |model_class|
+	CodeBase.rails_MVC_classes.each do |model_class|
 		indexes=model_class.connection.indexes(model_class.name.tableize)
 #delay		assert_operator(indexes.size, :<, 2,"test_candidate_logical_keys_from_indexes=#{indexes.inspect}") 
 		if indexes.select{|i|i.unique}.size>=2 then
@@ -323,7 +323,7 @@ end #logical_attributes
 test 'is_logical_primary_key' do
 end #logical_primary_key
 test 'sequential_id' do
-	Generic_Table.rails_MVC_classes.each do |model_class|
+	CodeBase.rails_MVC_classes.each do |model_class|
 		if model_class.sequential_id? then
 			puts "#{model_class} is a sequential id primary key."
 		else
@@ -336,7 +336,7 @@ test 'logical_primary_key_value' do
 end #def
 test 'Inter-model associations' do
 #	puts "model_classes=#{model_classes.inspect}"
-	Generic_Table.rails_MVC_classes.each do |class_with_foreign_key|
+	CodeBase.rails_MVC_classes.each do |class_with_foreign_key|
 		if !class_with_foreign_key.module_included?(:Generic_Table) then
 			puts "#{class_with_foreign_key.name} does not include Generic_Table"
 		else
@@ -347,7 +347,7 @@ test 'Inter-model associations' do
 				elsif class_with_foreign_key.belongs_to_association?(foreign_key_association_name) then
 					puts "#{table_name_with_foreign_key} belongs_to #{foreign_key_association_name}"
 					if !Generic_Table.rails_MVC_class?(foreign_key_association_name) then
-						puts "#{foreign_key_association_name} is not a generic table in #{Generic_Table.rails_MVC_classes.map {|c| c.name}.inspect}."
+						puts "#{foreign_key_association_name} is not a generic table in #{CodeBase.rails_MVC_classes.map {|c| c.name}.inspect}."
 					elsif !class_with_foreign_key.module_included?(:Generic_Table) then
 						puts "#{class_with_foreign_key.name} does not include Generic_Table"
 					else
@@ -428,8 +428,8 @@ test "Generic Table" do
 	
 	assert(Generic_Table.rails_MVC_class?(:stream_pattern))
 	assert(Generic_Table.rails_MVC_class?(:stream_pattern))
-	assert_include('StreamMethod',Generic_Table.rails_MVC_classes.map {|c| c.name})
-	assert(Generic_Table.rails_MVC_classes.map {|c| c.name}.include?('StreamMethod'))
+	assert_include('StreamMethod',CodeBase.rails_MVC_classes.map {|c| c.name})
+	assert(CodeBase.rails_MVC_classes.map {|c| c.name}.include?('StreamMethod'))
 	assert(Generic_Table.rails_MVC_class?('StreamMethod'))
 end #test
 test "Association Progression" do

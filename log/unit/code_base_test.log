@@ -1,327 +1,83 @@
 Loaded suite test/unit/code_base_test
 Started
-........status=M, file=app/models/code_base.rb
+........status=M, file=app/controllers/bugs_controller.rb
+status=M, file=app/models/bug.rb
+status=M, file=app/models/code_base.rb
+status=M, file=app/models/generic_table.rb
 status=M, file=db/bugs.sql
 status=M, file=db/tests.sql
 status=M, file=lib/tasks/testing.rake
+status=M, file=lib/tasks/testing.rb
+status=M, file=log/functional/bugs_controller_test.log
+status=M, file=log/unit/bug_test.log
 status=MM, file=log/unit/code_base_test.log
-status=M, file=test/unit/code_base_test.rb
-status=??, file=tr_test.sh
+status=M, file=log/unit/generic_table_test.log
+status=M, file=log/unit/stream_link_test.log
+status=M, file=test/functional/bugs_controller_test.rb
+status=M, file=test/unit/bug_test.rb
+status=M, file=test/unit/generic_table_test.rb
+status=??, file=run.log
+app/controllers/bugs_controller.rb don't know when to stage.
+app/models/bug.rb not a controller source.
 db/bugs.sql don't know when to stage.
 db/tests.sql don't know when to stage.
 lib/tasks/testing.rake don't know when to stage.
-tr_test.sh don't know when to stage.
+lib/tasks/testing.rb don't know when to stage.
+run.log don't know when to stage.
 ......sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
 sources.size=7 
 sources[0]="test/unit/code_base_test.rb" 
 "log/unit/code_base_test.log" <- []
--rw-r--r-- 1 greg greg 795 Sep 22 02:48 log/unit/code_base_test.log
-sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/code_base_test.rb" 
-"log/unit/code_base_test.log" <- []
--rw-r--r-- 1 greg greg 1189 Sep 22 02:48 log/unit/code_base_test.log
-sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/code_base_test.rb" 
-"log/unit/code_base_test.log" <- []
--rw-r--r-- 1 greg greg 1584 Sep 22 02:48 log/unit/code_base_test.log
-log/functional/code_bases_controller_test.log does not exist.
-sources=["test/unit/code_basis_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_basis.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/code_basis_test.rb" 
-"log/unit/code_basis_test.log" <- []
--rw-r--r-- 1 greg greg 0 Sep 22 01:57 log/unit/code_basis_test.log
-sources=["test/unit/ofx_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/ofx.rb", "test/fixtures/ofxes.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/ofx_test.rb" 
-"log/unit/ofx_test.log" <- ["test/unit/ofx_test.rb"]
--rw-r--r-- 1 greg greg 123 Sep 22 01:53 log/unit/ofx_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1555 Sep 22 01:53 test/unit/ofx_test.rb
-log/unit/transaction_test.log does not exist.
-sources=["test/unit/test_run_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/test_run.rb", "test/fixtures/test_runs.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/test_run_test.rb" 
-"log/unit/test_run_test.log" <- ["test/unit/test_run_test.rb"]
--rw-r--r-- 1 greg greg 132 Sep 22 01:53 log/unit/test_run_test.log
-not up to date.
--rw-r--r-- 1 greg greg 3344 Sep 22 01:53 test/unit/test_run_test.rb
-sources=["test/unit/test_helper_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/test_helper.rb", "test/fixtures/test_helpers.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/test_helper_test.rb" 
-"log/unit/test_helper_test.log" <- ["test/unit/test_helper_test.rb"]
--rw-r--r-- 1 greg greg 1118 Sep 22 01:53 log/unit/test_helper_test.log
-not up to date.
--rw-r--r-- 1 greg greg 9635 Sep 22 01:53 test/unit/test_helper_test.rb
-sources=["test/unit/stream_method_argument_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/stream_method_argument.rb", "test/fixtures/stream_method_arguments.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/stream_method_argument_test.rb" 
-"log/unit/stream_method_argument_test.log" <- ["test/unit/stream_method_argument_test.rb"]
--rw-r--r-- 1 greg greg 137 Sep 22 01:53 log/unit/stream_method_argument_test.log
-not up to date.
--rw-r--r-- 1 greg greg 167 Sep 22 01:53 test/unit/stream_method_argument_test.rb
-sources=["test/unit/tedprimary_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/tedprimary.rb", "test/fixtures/tedprimaries.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/tedprimary_test.rb" 
-"log/unit/tedprimary_test.log" <- ["test/unit/tedprimary_test.rb"]
--rw-r--r-- 1 greg greg 125 Sep 22 01:53 log/unit/tedprimary_test.log
-not up to date.
--rw-r--r-- 1 greg greg 152 Sep 22 01:53 test/unit/tedprimary_test.rb
-log/unit/table_spec_test.log does not exist.
-sources=["test/unit/stream_pattern_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/stream_pattern.rb", "test/fixtures/stream_patterns.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/stream_pattern_test.rb" 
-"log/unit/stream_pattern_test.log" <- ["test/unit/stream_pattern_test.rb"]
--rw-r--r-- 1 greg greg 560 Sep 22 01:53 log/unit/stream_pattern_test.log
-not up to date.
--rw-r--r-- 1 greg greg 3168 Sep 22 01:53 test/unit/stream_pattern_test.rb
-sources=["test/unit/stream_pattern_argument_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/stream_pattern_argument.rb", "test/fixtures/stream_pattern_arguments.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/stream_pattern_argument_test.rb" 
-"log/unit/stream_pattern_argument_test.log" <- ["test/unit/stream_pattern_argument_test.rb"]
--rw-r--r-- 1 greg greg 141 Sep 22 01:53 log/unit/stream_pattern_argument_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1200 Sep 22 01:53 test/unit/stream_pattern_argument_test.rb
-log/unit/stream_parameter_test.log does not exist.
-sources=["test/unit/stream_method_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/stream_method.rb", "test/fixtures/stream_methods.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/stream_method_test.rb" 
-"log/unit/stream_method_test.log" <- ["test/unit/stream_method_test.rb"]
--rw-r--r-- 1 greg greg 1900 Sep 22 01:53 log/unit/stream_method_test.log
-not up to date.
--rw-r--r-- 1 greg greg 3161 Sep 22 01:53 test/unit/stream_method_test.rb
-sources=["test/unit/stream_method_call_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/stream_method_call.rb", "test/fixtures/stream_method_calls.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/stream_method_call_test.rb" 
-"log/unit/stream_method_call_test.log" <- ["test/unit/stream_method_call_test.rb"]
--rw-r--r-- 1 greg greg 133 Sep 22 01:53 log/unit/stream_method_call_test.log
-not up to date.
--rw-r--r-- 1 greg greg 163 Sep 22 01:53 test/unit/stream_method_call_test.rb
-log/unit/scalar_argument_test.log does not exist.
-log/unit/ruby_interface_test.log does not exist.
-sources=["test/unit/router_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/router.rb", "test/fixtures/routers.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/router_test.rb" 
-"log/unit/router_test.log" <- ["test/unit/router_test.rb"]
--rw-r--r-- 1 greg greg 780 Sep 22 01:53 log/unit/router_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1558 Sep 22 01:53 test/unit/router_test.rb
-sources=["test/unit/rake_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/rake.rb", "test/fixtures/rakes.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/rake_test.rb" 
-"log/unit/rake_test.log" <- ["test/unit/rake_test.rb"]
--rw-r--r-- 1 greg greg 117 Sep 22 01:53 log/unit/rake_test.log
-not up to date.
--rw-r--r-- 1 greg greg 395 Sep 22 01:53 test/unit/rake_test.rb
-sources=["test/unit/production_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/production.rb", "test/fixtures/productions.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/production_test.rb" 
-"log/unit/production_test.log" <- ["test/unit/production_test.rb"]
--rw-r--r-- 1 greg greg 125 Sep 22 01:53 log/unit/production_test.log
-not up to date.
--rw-r--r-- 1 greg greg 152 Sep 22 01:53 test/unit/production_test.rb
-sources=["test/unit/production_ftp_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/production_ftp.rb", "test/fixtures/production_ftps.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/production_ftp_test.rb" 
-"log/unit/production_ftp_test.log" <- ["test/unit/production_ftp_test.rb"]
--rw-r--r-- 1 greg greg 129 Sep 22 01:53 log/unit/production_ftp_test.log
-not up to date.
--rw-r--r-- 1 greg greg 160 Sep 22 01:53 test/unit/production_ftp_test.rb
-log/unit/parse_spec_test.log does not exist.
-sources=["test/unit/url_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/url.rb", "test/fixtures/urls.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/url_test.rb" 
-"log/unit/url_test.log" <- ["test/unit/url_test.rb"]
--rw-r--r-- 1 greg greg 751 Sep 22 01:53 log/unit/url_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1555 Sep 22 01:53 test/unit/url_test.rb
-sources=["test/unit/weather_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/weather.rb", "test/fixtures/weathers.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/weather_test.rb" 
-"log/unit/weather_test.log" <- ["test/unit/weather_test.rb"]
--rw-r--r-- 1 greg greg 122 Sep 22 01:53 log/unit/weather_test.log
-not up to date.
--rw-r--r-- 1 greg greg 149 Sep 22 01:53 test/unit/weather_test.rb
-sources=["test/unit/transfer_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/transfer.rb", "test/fixtures/transfers.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/transfer_test.rb" 
-"log/unit/transfer_test.log" <- ["test/unit/transfer_test.rb"]
--rw-r--r-- 1 greg greg 524 Sep 22 01:53 log/unit/transfer_test.log
-not up to date.
--rw-r--r-- 1 greg greg 7384 Sep 22 01:53 test/unit/transfer_test.rb
-sources=["test/unit/node_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/node.rb", "test/fixtures/nodes.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/node_test.rb" 
-"log/unit/node_test.log" <- ["test/unit/node_test.rb"]
--rw-r--r-- 1 greg greg 343 Sep 22 01:53 log/unit/node_test.log
-not up to date.
--rw-r--r-- 1 greg greg 2261 Sep 22 01:53 test/unit/node_test.rb
-log/unit/method_model_test.log does not exist.
-sources=["test/unit/measurement_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/measurement.rb", "test/fixtures/measurements.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/measurement_test.rb" 
-"log/unit/measurement_test.log" <- ["test/unit/measurement_test.rb"]
--rw-r--r-- 1 greg greg 133 Sep 22 01:53 log/unit/measurement_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1563 Sep 22 01:53 test/unit/measurement_test.rb
-log/unit/loads_test.log does not exist.
-log/unit/loads1_test.log does not exist.
-sources=["test/unit/huelshow_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/huelshow.rb", "test/fixtures/huelshows.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/huelshow_test.rb" 
-"log/unit/huelshow_test.log" <- ["test/unit/huelshow_test.rb"]
--rw-r--r-- 1 greg greg 129 Sep 22 01:53 log/unit/huelshow_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1560 Sep 22 01:53 test/unit/huelshow_test.rb
-sources=["test/unit/huelserie_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/huelserie.rb", "test/fixtures/huelseries.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/huelserie_test.rb" 
-"log/unit/huelserie_test.log" <- ["test/unit/huelserie_test.rb"]
--rw-r--r-- 1 greg greg 2018 Sep 22 01:53 log/unit/huelserie_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1561 Sep 22 01:53 test/unit/huelserie_test.rb
-sources=["test/unit/host_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/host.rb", "test/fixtures/hosts.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/host_test.rb" 
-"log/unit/host_test.log" <- ["test/unit/host_test.rb"]
--rw-r--r-- 1 greg greg 766 Sep 22 01:53 log/unit/host_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1556 Sep 22 01:53 test/unit/host_test.rb
-sources=["test/unit/global_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/global.rb", "test/fixtures/globals.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/global_test.rb" 
-"log/unit/global_test.log" <- ["test/unit/global_test.rb"]
--rw-r--r-- 1 greg greg 340 Sep 22 01:53 log/unit/global_test.log
-not up to date.
--rw-r--r-- 1 greg greg 8490 Sep 22 01:53 test/unit/global_test.rb
-sources=["test/unit/generic_type_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_type.rb", "test/fixtures/generic_types.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/generic_type_test.rb" 
-"log/unit/generic_type_test.log" <- ["test/unit/generic_type_test.rb"]
--rw-r--r-- 1 greg greg 127 Sep 22 01:53 log/unit/generic_type_test.log
-not up to date.
--rw-r--r-- 1 greg greg 158 Sep 22 01:53 test/unit/generic_type_test.rb
+-rw-r--r-- 1 greg greg 1382 Oct 15 08:16 log/unit/code_base_test.log
 sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
 sources.size=7 
 sources[0]="test/unit/generic_table_test.rb" 
-"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "test/test_helper.rb"]
--rw-r--r-- 1 greg greg 2118 Sep 22 01:53 log/unit/generic_table_test.log
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
 not up to date.
--rw-r--r-- 1 greg greg 26658 Sep 22 01:53 test/unit/generic_table_test.rb
+-rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
 not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
-sources=["test/unit/frequency_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/frequency.rb", "test/fixtures/frequencies.yml"] must be an Array of Strings(pathnames)
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+not up to date.
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
 sources.size=7 
-sources[0]="test/unit/frequency_test.rb" 
-"log/unit/frequency_test.log" <- ["test/unit/frequency_test.rb", "test/test_helper.rb", "test/fixtures/frequencies.yml"]
--rw-r--r-- 1 greg greg 999 Sep 22 01:53 log/unit/frequency_test.log
+sources[0]="test/unit/generic_table_test.rb" 
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
 not up to date.
--rw-r--r-- 1 greg greg 1671 Sep 22 01:53 test/unit/frequency_test.rb
+-rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
 not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
 not up to date.
--rw-r--r-- 1 greg greg 798 Sep 22 01:53 test/fixtures/frequencies.yml
-sources=["test/unit/example_type_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/example_type.rb", "test/fixtures/example_types.yml"] must be an Array of Strings(pathnames)
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+log/functional/generic_tables_controller_test.log does not exist.
+sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
 sources.size=7 
-sources[0]="test/unit/example_type_test.rb" 
-"log/unit/example_type_test.log" <- ["test/unit/example_type_test.rb", "test/test_helper.rb", "test/fixtures/example_types.yml"]
--rw-r--r-- 1 greg greg 126 Sep 22 01:53 log/unit/example_type_test.log
-not up to date.
--rw-r--r-- 1 greg greg 158 Sep 22 01:53 test/unit/example_type_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
-not up to date.
--rw-r--r-- 1 greg greg 956 Sep 22 01:53 test/fixtures/example_types.yml
-sources=["test/unit/error_type_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/error_type.rb", "test/fixtures/error_types.yml"] must be an Array of Strings(pathnames)
+sources[0]="test/unit/code_base_test.rb" 
+"log/unit/code_base_test.log" <- []
+-rw-r--r-- 1 greg greg 3399 Oct 15 08:16 log/unit/code_base_test.log
+log/functional/code_bases_controller_test.log does not exist.
+sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
 sources.size=7 
-sources[0]="test/unit/error_type_test.rb" 
-"log/unit/error_type_test.log" <- ["test/unit/error_type_test.rb", "test/test_helper.rb", "test/fixtures/error_types.yml"]
--rw-r--r-- 1 greg greg 130 Sep 22 01:53 log/unit/error_type_test.log
+sources[0]="test/unit/generic_table_test.rb" 
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
 not up to date.
--rw-r--r-- 1 greg greg 1561 Sep 22 01:53 test/unit/error_type_test.rb
+-rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
 not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
 not up to date.
--rw-r--r-- 1 greg greg 175 Sep 22 01:53 test/fixtures/error_types.yml
-sources=["test/unit/edison_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/edison.rb", "test/fixtures/edisons.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/edison_test.rb" 
-"log/unit/edison_test.log" <- ["test/unit/edison_test.rb", "test/test_helper.rb", "test/fixtures/edisons.yml"]
--rw-r--r-- 1 greg greg 773 Sep 22 01:53 log/unit/edison_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1558 Sep 22 01:53 test/unit/edison_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
-not up to date.
--rw-r--r-- 1 greg greg 10125 Sep 22 01:53 test/fixtures/edisons.yml
-sources=["test/unit/wired_location_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/wired_location.rb", "test/fixtures/wired_locations.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/wired_location_test.rb" 
-"log/unit/wired_location_test.log" <- ["test/unit/wired_location_test.rb"]
--rw-r--r-- 1 greg greg 1495 Sep 22 01:53 log/unit/wired_location_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1565 Sep 22 01:53 test/unit/wired_location_test.rb
-sources=["test/unit/bug_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/bug.rb", "test/fixtures/bugs.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/bug_test.rb" 
-"log/unit/bug_test.log" <- ["test/unit/bug_test.rb", "test/test_helper.rb", "test/fixtures/bugs.yml"]
--rw-r--r-- 1 greg greg 1570 Sep 22 01:53 log/unit/bug_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1550 Sep 22 01:53 test/unit/bug_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
-not up to date.
--rw-r--r-- 1 greg greg 4090 Sep 22 01:53 test/fixtures/bugs.yml
-sources=["test/unit/breaker_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/breaker.rb", "test/fixtures/breakers.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/breaker_test.rb" 
-"log/unit/breaker_test.log" <- ["test/unit/breaker_test.rb", "test/test_helper.rb", "test/fixtures/breakers.yml"]
--rw-r--r-- 1 greg greg 1411 Sep 22 01:53 log/unit/breaker_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1565 Sep 22 01:53 test/unit/breaker_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
-not up to date.
--rw-r--r-- 1 greg greg 3290 Sep 22 01:53 test/fixtures/breakers.yml
-sources=["test/unit/arel_readme_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/arel_readme.rb", "test/fixtures/arel_readmes.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/arel_readme_test.rb" 
-"log/unit/arel_readme_test.log" <- ["test/unit/arel_readme_test.rb", "test/test_helper.rb"]
--rw-r--r-- 1 greg greg 563 Sep 22 01:53 log/unit/arel_readme_test.log
-not up to date.
--rw-r--r-- 1 greg greg 268 Sep 22 01:53 test/unit/arel_readme_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 13092 Sep 22 01:53 test/test_helper.rb
-log/unit/acquisition_test.log does not exist.
-log/unit/acquisition_stream_spec_test.log does not exist.
-log/unit/acquisition_interface_test.log does not exist.
-log/unit/acquire_all_observer_test.log does not exist.
-log/unit/account_test.log does not exist.
-log/functional/accounts_controller_test.log does not exist.
-sources=["test/unit/url_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/url.rb", "test/fixtures/urls.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/url_test.rb" 
-"log/unit/url_test.log" <- ["test/unit/url_test.rb"]
--rw-r--r-- 1 greg greg 751 Sep 22 01:53 log/unit/url_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1555 Sep 22 01:53 test/unit/url_test.rb
-sources=["test/unit/wired_location_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/wired_location.rb", "test/fixtures/wired_locations.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/wired_location_test.rb" 
-"log/unit/wired_location_test.log" <- ["test/unit/wired_location_test.rb"]
--rw-r--r-- 1 greg greg 1495 Sep 22 01:53 log/unit/wired_location_test.log
-not up to date.
--rw-r--r-- 1 greg greg 1565 Sep 22 01:53 test/unit/wired_location_test.rb
-sources=["test/functional/huelshows_controller_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", nil, "test/fixtures/huelshows.yml", "app/views/huelshows/_form.html.erb", "app/views/huelshows/edit.html.erb", "app/views/huelshows/index.html.erb", "app/views/huelshows/new.html.erb", "app/views/huelshows/show.html.erb", "app/views/shared/_error_messages.html.erb", "app/views/shared/_multi-line.html.erb", "app/views/shared/_syntax_errors.html.erb", "app/controllers/huelshows_controller.rb", "app/helpers/huelshows_helper.rb"] must be an Array of Strings(pathnames)
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+sources=["test/functional/bugs_controller_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", nil, "test/fixtures/bugs.yml", "app/views/bugs/_form.html.erb", "app/views/bugs/edit.html.erb", "app/views/bugs/index.html.erb", "app/views/bugs/new.html.erb", "app/views/bugs/show.html.erb", "app/views/shared/_error_messages.html.erb", "app/views/shared/_multi-line.html.erb", "app/views/shared/_syntax_errors.html.erb", "app/controllers/bugs_controller.rb", "app/helpers/bugs_helper.rb"] must be an Array of Strings(pathnames)
 sources.size=17 
-sources[0]="test/functional/huelshows_controller_test.rb" 
+sources[0]="test/functional/bugs_controller_test.rb" 
 p=nil must be a String(pathnames)
 Esources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
 sources.size=2 
 sources[0]="/proc/bus" 
 .F.............
-Finished in 21.743452 seconds.
+Finished in 6.99315 seconds.
 
   1) Error:
 test_not_uptodate_order(TestingFilePatternsTest):
@@ -330,20 +86,20 @@ TypeError: can't convert nil into String
     app/models/code_base.rb:260:in `not_uptodate_sources'
     app/models/code_base.rb:260:in `select'
     app/models/code_base.rb:260:in `not_uptodate_sources'
-    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'
+    test/unit/code_base_test.rb:110:in `test_not_uptodate_order'
     app/models/code_base.rb:60:in `call'
     app/models/code_base.rb:60:in `prioritized_file_order'
     app/models/code_base.rb:54:in `each'
     app/models/code_base.rb:54:in `prioritized_file_order'
-    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'
+    test/unit/code_base_test.rb:102:in `test_not_uptodate_order'
 
   2) Failure:
 test_prioritized_file_order(TestingFilePatternsTest)
-    [/test/test_helper.rb:148:in `assert_not_empty'
-     test/unit/code_base_test.rb:64:in `test_prioritized_file_order'
-     test/unit/code_base_test.rb:61:in `each'
-     test/unit/code_base_test.rb:61:in `test_prioritized_file_order']:
+    [/test/test_helper.rb:159:in `assert_not_empty'
+     test/unit/code_base_test.rb:70:in `test_prioritized_file_order'
+     test/unit/code_base_test.rb:67:in `each'
+     test/unit/code_base_test.rb:67:in `test_prioritized_file_order']:
 "nil" is empty with value "nil".
 <nil> expected to not be nil.
 
-30 tests, 9905 assertions, 1 failures, 1 errors
+30 tests, 10264 assertions, 1 failures, 1 errors

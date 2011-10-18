@@ -1,14 +1,14 @@
 Loaded suite test/unit/stream_link_test
 Started
 .FF
-Finished in 1.404235 seconds.
+Finished in 0.47412 seconds.
 
   1) Failure:
 test_input_stream_method_argument(StreamLinkTest)
     [test/unit/stream_link_test.rb:62:in `test_input_stream_method_argument'
      test/unit/stream_link_test.rb:55:in `each'
      test/unit/stream_link_test.rb:55:in `test_input_stream_method_argument']:
-StreamMethodArgument.where('id=?',619791759)=[#<StreamMethodArgument id: 619791759, stream_method_id: 1, name: "acquisitions", ruby_type: "Acquisition", direction: "Output", parameter_id: 1, parameter_type: "Acquisition", created_at: "2011-09-28 22:09:58", updated_at: "2011-09-28 22:09:58">], sl.input_stream_method_argument_id=619791759, .
+StreamMethodArgument.where('id=?',619791759)=[#<StreamMethodArgument id: 619791759, stream_method_id: 1, name: "acquisitions", ruby_type: "Acquisition", direction: "Output", parameter_id: 1, parameter_type: "Acquisition", created_at: "2011-10-06 06:41:20", updated_at: "2011-10-06 06:41:20">], sl.input_stream_method_argument_id=619791759, .
 <"Input"> expected but was
 <"Output">.
 

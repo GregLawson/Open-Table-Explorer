@@ -8,6 +8,7 @@ report="TypeError: can't convert nil into String\n    app/models/code_base.rb:26
 error="TypeError: can't convert nil into String"
 trace="    app/models/code_base.rb:260:in `exist?'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    app/models/code_base.rb:260:in `select'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'\n    app/models/code_base.rb:60:in `call'\n    app/models/code_base.rb:60:in `prioritized_file_order'\n    app/models/code_base.rb:54:in `each'\n    app/models/code_base.rb:54:in `prioritized_file_order'\n    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'"
 error='TypeError: can't convert nil into String'
+not hash, not empty: test_type.class=Symbol, test_type=:unit, table=code_base, error=TypeError: can't convert nil into String
 number="2"
 error_type=Failure
 test="test_prioritized_file_order"
@@ -17,7 +18,9 @@ error="\"nil\" is empty with value \"nil\".\n<nil> expected to"
 trace="/test/test_helper.rb:148:in `assert_not_empty'\n     test/unit/code_base_test.rb:64:in `test_prioritized_file_order'\n     test/unit/code_base_test.rb:61:in `each'\n     test/unit/code_base_test.rb:61:in `test_prioritized_file_order'"
 error='"nil" is empty with value "nil".
 <nil> expected to'
+not hash, not empty: test_type.class=Symbol, test_type=:unit, table=code_base, error="nil" is empty with value "nil".
+<nil> expected to
 ..
-Finished in 1.050253 seconds.
+Finished in 10.800703 seconds.
 
 6 tests, 56 assertions, 0 failures, 0 errors
