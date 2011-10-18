@@ -8,6 +8,10 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 Parameters:
   name: Parameters
+Source:
+  name: Source
+Sink:
+  name: Sink
 Acquisition:
   name: Acquisition
 Parallel_Acquisition:
