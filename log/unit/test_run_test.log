@@ -1,8 +1,8 @@
 Loaded suite test/unit/test_run_test
 Started
 ...........true
-/home/greg/Desktop/git/development
+/home/greg/Desktop/git/Open-Table-Explorer
 ...
-Finished in 6.482818 seconds.
+Finished in 25.860717 seconds.
 
-14 tests, 7487 assertions, 0 failures, 0 errors
+14 tests, 7486 assertions, 0 failures, 0 errors
