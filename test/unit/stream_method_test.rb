@@ -10,27 +10,7 @@ require 'test_helper'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class StreamMethodTest < ActiveSupport::TestCase
-def setup
-	@testURL='http://192.168.3.193/api/LiveData.xml'
-	define_model_of_test # allow generic tests
-	assert_module_included(@model_class,Generic_Table)
-	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	define_association_names
-end #def
-def test_general_associations
-#	assert_general_associations(@table_name)
-end
-def test_id_equal
-	if @model_class.sequential_id? then
-	else
-		@my_fixtures.each_value do |ar_from_fixture|
-			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
-			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
-			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
-		end
-	end
-end #def
+fixtures :stream_methods
 def acq_and_rescue
 	stream=acquisition_stream_specs(@testURL.to_sym)
 	acq=ruby_interfaces(:HTTP)
@@ -81,4 +61,26 @@ test "code sizes" do
 	explain_assert_respond_to(acq,:interface_code_rows)
 	assert_not_nil(acq.interface_code_rows)
 end #test
+def setup
+	@testURL='http://192.168.3.193/api/LiveData.xml'
+	define_model_of_test # allow generic tests
+	assert_module_included(@model_class,Generic_Table)
+	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	define_association_names
+end #def
+def test_general_associations
+#	assert_general_associations(@table_name)
+end
+def test_id_equal
+	if @model_class.sequential_id? then
+	else
+		@my_fixtures.each_value do |ar_from_fixture|
+			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
+			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
+			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
+		end
+	end
+end #def
+
 end
