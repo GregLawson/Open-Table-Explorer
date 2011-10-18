@@ -23,3 +23,83 @@ db/bugs.sql don't know when to stage.
 db/tests.sql don't know when to stage.
 lib/tasks/testing.rake don't know when to stage.
 lib/tasks/testing.rb don't know when to stage.
+run.log don't know when to stage.
+......sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
+sources.size=7 
+sources[0]="test/unit/code_base_test.rb" 
+"log/unit/code_base_test.log" <- []
+-rw-r--r-- 1 greg greg 1382 Oct 15 08:16 log/unit/code_base_test.log
+sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
+sources.size=7 
+sources[0]="test/unit/generic_table_test.rb" 
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
+not up to date.
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+not up to date.
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
+sources.size=7 
+sources[0]="test/unit/generic_table_test.rb" 
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
+not up to date.
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+not up to date.
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+log/functional/generic_tables_controller_test.log does not exist.
+sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
+sources.size=7 
+sources[0]="test/unit/code_base_test.rb" 
+"log/unit/code_base_test.log" <- []
+-rw-r--r-- 1 greg greg 3399 Oct 15 08:16 log/unit/code_base_test.log
+log/functional/code_bases_controller_test.log does not exist.
+sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
+sources.size=7 
+sources[0]="test/unit/generic_table_test.rb" 
+"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
+-rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
+not up to date.
+-rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
+not up to date.
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+not up to date.
+-rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
+sources=["test/functional/bugs_controller_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", nil, "test/fixtures/bugs.yml", "app/views/bugs/_form.html.erb", "app/views/bugs/edit.html.erb", "app/views/bugs/index.html.erb", "app/views/bugs/new.html.erb", "app/views/bugs/show.html.erb", "app/views/shared/_error_messages.html.erb", "app/views/shared/_multi-line.html.erb", "app/views/shared/_syntax_errors.html.erb", "app/controllers/bugs_controller.rb", "app/helpers/bugs_helper.rb"] must be an Array of Strings(pathnames)
+sources.size=17 
+sources[0]="test/functional/bugs_controller_test.rb" 
+p=nil must be a String(pathnames)
+Esources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
+sources.size=2 
+sources[0]="/proc/bus" 
+.F.............
+Finished in 6.99315 seconds.
+
+  1) Error:
+test_not_uptodate_order(TestingFilePatternsTest):
+TypeError: can't convert nil into String
+    app/models/code_base.rb:260:in `exist?'
+    app/models/code_base.rb:260:in `not_uptodate_sources'
+    app/models/code_base.rb:260:in `select'
+    app/models/code_base.rb:260:in `not_uptodate_sources'
+    test/unit/code_base_test.rb:110:in `test_not_uptodate_order'
+    app/models/code_base.rb:60:in `call'
+    app/models/code_base.rb:60:in `prioritized_file_order'
+    app/models/code_base.rb:54:in `each'
+    app/models/code_base.rb:54:in `prioritized_file_order'
+    test/unit/code_base_test.rb:102:in `test_not_uptodate_order'
+
+  2) Failure:
+test_prioritized_file_order(TestingFilePatternsTest)
+    [/test/test_helper.rb:159:in `assert_not_empty'
+     test/unit/code_base_test.rb:70:in `test_prioritized_file_order'
+     test/unit/code_base_test.rb:67:in `each'
+     test/unit/code_base_test.rb:67:in `test_prioritized_file_order']:
+"nil" is empty with value "nil".
+<nil> expected to not be nil.
+
+30 tests, 10264 assertions, 1 failures, 1 errors
