@@ -322,7 +322,7 @@ def CodeBase.rails_MVC_classes
 #	puts fixture_names.inspect
 	@@ALL_VIEW_DIRS.map do |view_dir|
 		model_filename=view_dir.sub(%r{^app/views/},'')
-		if is_generic_table_name?(model_filename.singularize) then
+		if Generic_Table.is_generic_table_name?(model_filename.singularize) then
 			model_filename.classify.constantize
 		else
 #			puts "File.exists?(\"app/models/#{model_filename}\")=#{File.exists?('app/models/'+model_filename)}"
