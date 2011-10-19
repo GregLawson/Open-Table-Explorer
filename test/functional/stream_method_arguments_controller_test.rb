@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StreamMethodArgumentsControllerTest < ActionController::TestCase
+	fixtures :stream_method_arguments
   setup do
     @stream_method_argument = stream_method_arguments(:URL)
   end

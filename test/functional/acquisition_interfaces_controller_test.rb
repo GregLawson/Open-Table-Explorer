@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class AcquisitionInterfacesControllerTest < ActionController::TestCase
+fixtures :acquisition_interfaces
   def test_should_get_index
     get :index
     assert_response :success

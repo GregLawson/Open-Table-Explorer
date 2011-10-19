@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StreamMethodCallsControllerTest < ActionController::TestCase
+	fixtures :stream_method_calls
   setup do
     @stream_method_call = stream_method_calls(:one)
   end

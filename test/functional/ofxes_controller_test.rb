@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class OfxesControllerTest < ActionController::TestCase
+	fixtures :ofxs
   setup do
     @ofx = ofxes(:one)
   end

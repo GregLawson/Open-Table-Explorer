@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class RoutersControllerTest < ActionController::TestCase
+	fixtures :routers
   def test_should_get_index
     get :index
     assert_response :success

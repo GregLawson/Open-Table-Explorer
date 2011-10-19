@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StreamPatternArgumentsControllerTest < ActionController::TestCase
+	fixtures :stream_pattern_arguments
   setup do
     @stream_pattern_argument = stream_pattern_arguments(:URI)
   end

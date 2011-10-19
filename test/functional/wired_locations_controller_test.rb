@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class WiredLocationsControllerTest < ActionController::TestCase
+	fixtures :wired_locations
 def setup
 	@wired_location=wired_locations(:one)
 end #def

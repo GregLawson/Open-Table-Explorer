@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class FrequenciesControllerTest < ActionController::TestCase
+fixtures :frequencies
   def test_should_get_index
     get :index
     assert_response :success

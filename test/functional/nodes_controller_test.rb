@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class NodesControllerTest < ActionController::TestCase
+	fixtures :nodes
 def setup
 	@node=nodes(:one)
 end #def

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class LoadsControllerTest < ActionController::TestCase
+	fixtures :loads
    def setup
     @load = loads(:one)
   end

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ScalarArgumentsControllerTest < ActionController::TestCase
+	fixtures :scalar_arguments
   setup do
     @scalar_argument = scalar_arguments(:one)
   end

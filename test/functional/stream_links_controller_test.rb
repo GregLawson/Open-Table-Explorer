@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StreamLinksControllerTest < ActionController::TestCase
+	fixtures :stream_links
   setup do
     @stream_link = stream_links(:one)
   end

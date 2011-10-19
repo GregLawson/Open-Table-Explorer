@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class StreamMethodsControllerTest < ActionController::TestCase
+fixtures :stream_methods
   setup do
-    @stream_method = stream_methods(:one)
+    @stream_method = stream_methods(:HTTP)
   end
 
   test "should get index" do

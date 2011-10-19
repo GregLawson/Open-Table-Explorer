@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class TableSpecsControllerTest < ActionController::TestCase
+	fixtures :table_specs
   def test_should_get_index
     get :index
     assert_response :success

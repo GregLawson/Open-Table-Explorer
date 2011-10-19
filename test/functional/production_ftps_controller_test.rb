@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ProductionFtpsControllerTest < ActionController::TestCase
+	fixtures :production_ftps
   setup do
     @production_ftp = production_ftps(:one)
   end

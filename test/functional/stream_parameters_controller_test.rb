@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StreamParametersControllerTest < ActionController::TestCase
+	fixtures :stream_parameters
   setup do
     @stream_parameter = stream_parameters(:one)
   end

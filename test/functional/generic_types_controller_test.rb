@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class GenericTypesControllerTest < ActionController::TestCase
-  setup do
+fixtures :generic_types
+setup do
     @generic_type = generic_types(:one)
   end
 

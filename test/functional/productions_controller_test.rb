@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ProductionsControllerTest < ActionController::TestCase
+	fixtures :productions
   def test_should_get_index
     get :index
     assert_response :success

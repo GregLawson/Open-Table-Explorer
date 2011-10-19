@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class HuelshowsControllerTest < ActionController::TestCase
+	fixtures :huelshows
   setup do
     @huelshow = huelshows(:one)
   end

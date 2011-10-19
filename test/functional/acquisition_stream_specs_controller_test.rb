@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class AcquisitionStreamSpecsControllerTest < ActionController::TestCase
+fixtures :acquisition_stream_specs
   def test_should_get_index
     get :index
     assert_response :success

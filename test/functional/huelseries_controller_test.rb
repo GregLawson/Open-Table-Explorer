@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class HuelseriesControllerTest < ActionController::TestCase
-  setup do
-    @huelseries= huelseries(:one)
+fixtures :huelseries
+setup do
+@huelseries= huelseries(:one)
   end
 
   test "should get index" do

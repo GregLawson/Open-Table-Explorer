@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class BreakersControllerTest < ActionController::TestCase
+fixtures :breakers
  def setup
     @breaker = breakers(:one)
   end

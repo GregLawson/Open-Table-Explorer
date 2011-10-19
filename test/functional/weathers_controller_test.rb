@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class WeathersControllerTest < ActionController::TestCase
+	fixtures :weathers
 def setup
 	@weather=weathers(:one)
 end #def

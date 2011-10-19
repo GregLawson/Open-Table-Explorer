@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class TedprimariesControllerTest < ActionController::TestCase
+	fixtures :tedprimaries
   def test_should_get_index
     get :index
     assert_response :success

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
+fixtures :accounts
   test "should get index" do
     get :index
     assert_response :success

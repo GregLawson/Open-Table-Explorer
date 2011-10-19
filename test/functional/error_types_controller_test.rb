@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ErrorTypesControllerTest < ActionController::TestCase
+ fixtures :error_types
   setup do
     @error_type = error_types(:one)
   end

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ExampleTypesControllerTest < ActionController::TestCase
+fixtures :example_types
   def setup
     @example_type = example_types(:one)
   end

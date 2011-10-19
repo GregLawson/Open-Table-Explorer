@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class TestRunsControllerTest < ActionController::TestCase
+	fixtures :test_runs
   setup do
     @test_run = test_runs(:one)
   end

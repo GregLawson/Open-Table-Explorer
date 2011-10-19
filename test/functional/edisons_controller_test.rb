@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class EdisonsControllerTest < ActionController::TestCase
+ fixtures :edisons
    def setup
     @edison = edisons(:one)
   end

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StreamPatternsControllerTest < ActionController::TestCase
+	fixtures :stream_patterns
   setup do
     @stream_pattern = stream_patterns(:Acquisition)
   end

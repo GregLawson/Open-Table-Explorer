@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class RubyInterfacesControllerTest < ActionController::TestCase
+	fixtures :ruby_interfaces
   setup do
     @ruby_interface = ruby_interfaces(:HTTP)
   end

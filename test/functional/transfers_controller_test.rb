@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class TransfersControllerTest < ActionController::TestCase
+	fixtures :transfers
   def test_should_get_index
     get :index
     assert_response :success

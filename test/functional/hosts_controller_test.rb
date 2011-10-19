@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class HostsControllerTest < ActionController::TestCase
- def setup
-    @host = hosts(:one)
+fixtures :hosts
+def setup
+@host = hosts(:one)
  end
  def test_should_get_index
     get :index
