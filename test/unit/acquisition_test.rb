@@ -23,13 +23,13 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 end #test
-test "associations" do
+def test_associations
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
 end #test
-test "acquisition_stream_spec" do
+def test_acquisition_stream_spec
 	    assert_not_nil(acquisitions(:one))
 	    assert_association(acquisitions(:one),:acquisition_stream_spec)
 #	    assert_not_nil(acquisitions(:one).acquisition_stream_spec_id)

@@ -21,7 +21,7 @@ def setup
 #	define_association_names #38271 associations
 end #def
   # Replace this with your real tests.
-test 'association_names' do
+def test_association_names
   	assert_generic_table('StreamLink')
 	assert_equal_sets([:input_stream_method_argument_id,:output_stream_method_argument_id,:store_method_id,:next_method_id], StreamLink.foreign_key_names)
 	assert_equal_sets(["output_stream_method_argument", "next_method", "input_stream_method_argument", "store_method"],StreamLink.association_names)
@@ -31,7 +31,7 @@ test 'association_names' do
 		assert_not_nil(sl)
 	end #each
 end #association_names
-test "output_stream_method_argument" do
+def test_output_stream_method_argument
 	assert_equal(@@association_patterns, StreamLink.association_patterns(:output_stream_method_argument))
 
 	assert_foreign_key_name(StreamLink,:output_stream_method_argument_id)
@@ -47,7 +47,7 @@ test "output_stream_method_argument" do
 		assert_not_nil(sl.output_stream_method_argument)
 	end #each
 end #output_stream_method_argument
-test "input_stream_method_argument" do
+def test_input_stream_method_argument
 	assert_equal(@@association_patterns, StreamLink.association_patterns(:input_stream_method_argument))
 	assert_foreign_key_name(StreamLink,:output_stream_method_argument_id)
 	assert_association(StreamLink, :input_stream_method_argument)

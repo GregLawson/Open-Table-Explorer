@@ -20,7 +20,7 @@ rescue  StandardError => exception_raised
 	puts 'Error: ' + exception_raised.inspect + ' could not get data from '+stream.url
 	puts "$!=#{$!}"
 end #def	  
-test "interaction" do
+def test_interaction
 	acq=stream_methods(:HTTP)
 	assert_instance_of(StreamMethod,acq)
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
@@ -40,7 +40,7 @@ test "interaction" do
 	end #each_value
 
 end #test
-test "code sizes" do
+def test_code_sizes
 	acq=stream_methods(:HTTP)
 	code=acq.interface_code
 	if code.nil? || code.empty? then

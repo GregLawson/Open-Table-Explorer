@@ -61,7 +61,7 @@ def assert_relation(relation)
 	testCall(relation,:to_sql)
 	explain_assert_respond_to(relation,:each)	
 end #def
-test "each" do
+def test_each
 	transfers = Transfer.where(:amount => 100.0) # No Query
 	#~ assert_relation(transfers)
 	#~ transfers.each {|c| puts c.amount } # Fires "select * from cars where ..."
@@ -71,7 +71,7 @@ test "each" do
 		#~ puts t.inspect
 	#~ end # each
 end #test
-test "stable and working" do	
+def test_stable_and_working	
 	transfers=Transfer.transfers
 	
 	assert_kind_of(ActiveRecord::Relation,Transfer.scoped)
@@ -88,17 +88,17 @@ test "stable and working" do
 	#~ assert_equal(expected_sql,relational_algebra.to_sql)
 	#~ arel_methods=["where","having","from","group","project",'joins','order']
 end #test
-test "relations" do
+def test_relations
 #	assert_relation(Transfer.transfers)
 	#~ assert_relation(Transfer.scoped)
 	#~ assert_relation(Account.scoped.select(:open_tax_solver_line))
 	#~ assert_relation(Account.ots_line_values)
 	#~ assert_relation(Transfer.transfers_extended)
 end #test
-test "open_tax_solver" do
+def test_open_tax_solver
 	Transfer.open_tax_solver
 end #test
-test "join" do
+def test_join
 # Our relation variables(RelVars)
 T=Arel::Table.new(:transfers, :as => 'T')
 A =Arel::Table.new(:accounts, :as => 'A')
@@ -120,7 +120,7 @@ G=G.group(T[:account_id])
 #~ TL=G.project(G[:amount].as('logins'),G[:id].count.as('users')).group(G[:amount])
 
 end #test
-test "canonical" do
+def test_canonical
 	assert_match('#<Transfer id: 5, account: nil, amount: 13.55, posted: "2010-12-31"',fixtures('transfers')[5].canonicalName)
 	assert_match('Account ',Account.new.canonicalName)
 	assert_match('Transfer',Transfer.new.canonicalName)
@@ -137,7 +137,7 @@ def assert_association_value
 			puts ar_from_fixture.association_state(expected_association_symbol)
 			assert_nil(ar_from_fixture[expected_association_symbol.to_s+'_id']) # foreign key uninitialized
 end #def
-test "associated_to_s" do
+def test_associated_to_s
 		expected_association_symbol=:account
 		expected_association_class=expected_association_symbol.to_s.camelize.constantize
 		method_of_association=:name

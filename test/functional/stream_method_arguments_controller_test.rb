@@ -6,18 +6,18 @@ class StreamMethodArgumentsControllerTest < ActionController::TestCase
     @stream_method_argument = stream_method_arguments(:URL)
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:stream_method_arguments)
   end
 
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end
 
-  test "should create stream_method_argument" do
+def test_should_create_stream_method_argument
     assert_difference('StreamMethodArgument.count') do
       post :create, :stream_method_argument => @stream_method_argument.attributes
     end
@@ -25,22 +25,22 @@ class StreamMethodArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to stream_method_argument_path(assigns(:stream_method_argument))
   end
 
-  test "should show stream_method_argument" do
+def test_should_show_stream_method_argument
     get :show, :id => @stream_method_argument.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @stream_method_argument.to_param
     assert_response :success
   end
 
-  test "should update stream_method_argument" do
+def test_should_update_stream_method_argument
     put :update, :id => @stream_method_argument.to_param, :stream_method_argument => @stream_method_argument.attributes
     assert_redirected_to stream_method_argument_path(assigns(:stream_method_argument))
   end
 
-  test "should destroy stream_method_argument" do
+def test_should_destroy_stream_method_argument
     assert_difference('StreamMethodArgument.count', -1) do
       delete :destroy, :id => @stream_method_argument.to_param
     end

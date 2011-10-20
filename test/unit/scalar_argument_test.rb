@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ScalarArgumentTest < ActiveSupport::TestCase
   # Replace this with your real tests.
-  test "the truth" do
+def test_the truth
     assert true
   end
 end

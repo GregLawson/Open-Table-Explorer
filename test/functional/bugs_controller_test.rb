@@ -10,27 +10,27 @@ fixtures :bugs
 	@bug[:url]='unique key'
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:bugs)
   end #index
 
-  test "should show bug" do
+def test_should_show_bug
     get :show, :id => @bug.to_param
     assert_response :success
   end #show
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end #new
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @bug.to_param
     assert_response :success
   end #edit
 
 
-  test "should create bug" do
+def test_should_create_bug
     assert_difference('Bug.count') do
       post :create, :bug => @bug.attributes
     end
@@ -39,12 +39,12 @@ fixtures :bugs
   end #create
 
 
-  test "should update bug" do
+def test_should_update_bug
     put :update, :id => @bug.to_param, :bug => @bug.attributes
     assert_redirected_to bug_path(assigns(:bug))
   end #update
 
-  test "should destroy bug" do
+def test_should_destroy_bug
     assert_difference('Bug.count', -1) do
       delete :destroy, :id => @bug.to_param
     end

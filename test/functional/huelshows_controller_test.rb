@@ -6,18 +6,18 @@ class HuelshowsControllerTest < ActionController::TestCase
     @huelshow = huelshows(:one)
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:huelshows)
   end
 
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end
 
-  test "should create huelshow" do
+def test_should_create_huelshow
     assert_difference('Huelshow.count') do
 	    huelshow_attributes=@huelshow.attributes
 	    huelshow_attributes[:shortname]='test create record'
@@ -28,22 +28,22 @@ class HuelshowsControllerTest < ActionController::TestCase
     assert_redirected_to huelshow_path(assigns(:huelshow))
   end
 
-  test "should show huelshow" do
+def test_should_show_huelshow
     get :show, :id => @huelshow.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @huelshow.to_param
     assert_response :success
   end
 
-  test "should update huelshow" do
+def test_should_update_huelshow
     put :update, :id => @huelshow.to_param, :huelshow => @huelshow.attributes
     assert_redirected_to huelshow_path(assigns(:huelshow))
   end
 
-  test "should destroy huelshow" do
+def test_should_destroy_huelshow
     assert_difference('Huelshow.count', -1) do
       delete :destroy, :id => @huelshow.to_param
     end

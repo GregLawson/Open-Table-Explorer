@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ProductionFtpTest < ActiveSupport::TestCase
   # Replace this with your real tests.
-  test "the truth" do
+def test_the truth
     assert true
   end
 end

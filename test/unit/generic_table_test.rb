@@ -11,7 +11,7 @@ class GenericTableTest < ActiveSupport::TestCase
 def setup
 #	ActiveSupport::TestCase::fixtures :acquisition_stream_specs
 end #setup
-test 'association_refs' do
+def test_association_refs
 	class_reference=StreamPattern
 	association_reference=:stream_methods
 	assert_equal([class_reference, association_reference], association_refs(class_reference, association_reference) do |class_reference, association_reference|
@@ -19,17 +19,17 @@ test 'association_refs' do
 	end)
 	assert_equal([StreamPattern, :stream_methods], association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
 end #association_refs
-test 'header_html' do
+def test_header_html
 	association_refs do |class_reference, association_reference|
 		assert_not_empty(StreamPattern.column_names)
 		assert_equal('<tr><th>id</th><th>name</th><th>created_at</th><th>updated_at</th></tr>', StreamPattern.header_html)
 	end #each
 end #header_html
-test 'table_html' do
+def test_table_html
 	assert_not_nil(StreamPattern.table_html)
 	
 end #table_html
-test "foreign_key_names" do
+def test_foreign_key_names
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
 	special_columns=StreamPatternArgument.column_names-content_column_names
@@ -42,12 +42,12 @@ test "foreign_key_names" do
 
 	assert_foreign_key_name(StreamLink,:input_stream_method_argument_id)
 end #foreign_key_names
-test "foreign_key_association_names" do
+def test_foreign_key_association_names
 	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
 	assert_include('stream_pattern',StreamPatternArgument.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
 end #foreign_key_association_names
 
-test "associated_foreign_key_name" do
+def test_associated_foreign_key_name
 	many_to_one_foreign_keys=StreamPatternArgument.foreign_key_names
 	assert_not_empty(many_to_one_foreign_keys)
 	matchingAssNames=many_to_one_foreign_keys.select do |fk|
@@ -57,7 +57,7 @@ test "associated_foreign_key_name" do
 	assert_equal(1, matchingAssNames.size)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s+'_id',@@CLASS_WITH_FOREIGN_KEY.associated_foreign_key_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #associated_foreign_key_name
-test "associated_foreign_key_records" do
+def test_associated_foreign_key_records
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s+'_id',@@CLASS_WITH_FOREIGN_KEY.associated_foreign_key_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 	expected_association=@@CLASS_WITH_FOREIGN_KEY.where(@@FOREIGN_KEY_ASSOCIATION_SYMBOL.to_s+'_id' => @@FOREIGN_KEY_ASSOCIATION_INSTANCE[:id])
 	assert_equal(2,expected_association.count)
@@ -82,27 +82,27 @@ test "is_matching_association?" do
 	assert(@@CLASS_WITH_FOREIGN_KEY.is_matching_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #is_matching_association
 
-test 'association_methods' do
+def test_association_methods
 	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
 	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY
 
 	assert_equal_sets(["stream_pattern_arguments=", "validate_associated_records_for_stream_pattern_arguments","autosave_associated_records_for_stream_pattern_arguments", "stream_pattern_arguments"],class_reference.association_methods(association_reference))
 end #association_methods
 @@fk_association_patterns=Set.new([/^autosave_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/, /^validate_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/])
-test 'association_patterns' do
+def test_association_patterns
 	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
 	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY.to_sym
 	matchData=Regexp.new(association_reference.to_s).match(association_reference.to_s)
 	assert_equal("^([a-z0-9_]+)$",'^'+matchData.pre_match+'([a-z0-9_]+)'+matchData.post_match+'$')
 	assert_equal_sets(@@fk_association_patterns,class_reference.association_patterns(association_reference))
 end #association_patterns
-test 'match_association_patterns' do
+def test_match_association_patterns
 	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
 	association_name=@@TABLE_NAME_WITH_FOREIGN_KEY
 #	assert(class_reference.instance_respond_to?(association_name))
 	assert(class_reference.match_association_patterns?(association_name,association_name))
 end #match_association_patterns
-test 'is_association_patterns' do
+def test_is_association_patterns
 	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
 	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY
 	assert_equal_sets(@@fk_association_patterns,class_reference.association_patterns(association_reference))
@@ -110,7 +110,7 @@ test 'is_association_patterns' do
 	assert_empty(class_reference.association_patterns(association_reference)-@@fk_association_patterns)
 	assert(class_reference.is_association_patterns?(association_reference,@@fk_association_patterns))
 end #is_association_patterns
-test "is_association" do
+def test_is_association
 		class_reference=StreamLink
 		association_reference=:inputs
 	association_refs do |class_reference, association_reference|
@@ -123,7 +123,7 @@ test "is_association" do
 		assert(class_reference.is_association?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 	end #association_refs
 end #is_association
-test 'is_association_to_one' do
+def test_is_association_to_one
 	class_reference=StreamPatternArgument
 	association_reference=:stream_pattern
 	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_id').to_sym)
@@ -131,7 +131,7 @@ test 'is_association_to_one' do
 	assert(class_reference.is_association?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 	assert(class_reference.is_association_to_one?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 end #is_association_to_one
-test 'is_association_to_many' do
+def test_is_association_to_many
 	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
 	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY
 	explain_assert_respond_to(class_reference.new,(association_reference.to_s.singularize+'_ids').to_sym)
@@ -139,7 +139,7 @@ test 'is_association_to_many' do
 	assert(class_reference.is_association?(association_reference),"fail in is_association_to_many?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 	assert(class_reference.is_association_to_many?(association_reference),"fail is_association?, class_reference.inspect=#{class_reference.inspect},association_reference=#{association_reference}")
 end #is_association_to_many
-test 'is_polymorphic_association' do
+def test_is_polymorphic_association
 	@possible_nonpolymorphic_methods=Set.new(["create_stream_pattern", "stream_pattern=", "build_stream_pattern", "set_stream_pattern_target", "stream_pattern", "loaded_stream_pattern?", "autosave_associated_records_for_stream_pattern"])
 	assert_equal(@possible_nonpolymorphic_methods,Set.new(StreamPatternArgument.matching_instance_methods(:stream_pattern.to_s)))
 	@example_nonpolymorphic_patterns=Set.new([/^build_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/,/^autosave_associated_records_for_([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^loaded_([a-z0-9_]+)?$/, /^create_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/])
@@ -166,11 +166,11 @@ test 'is_polymorphic_association' do
 
 	assert(class_reference.is_polymorphic_association?(association_name))
 end #is_polymorphic_association
-test 'association_names_to_many' do
+def test_association_names_to_many
 	class_reference=StreamLink
 	assert(class_reference.instance_methods(false).select {|m| class_reference.is_association_to_many?(m)})
 end #test
-test 'association_names' do
+def test_association_names
 	class_reference=StreamLink
 	assert_not_empty(class_reference.instance_methods(false).select {|m| class_reference.is_association?(m)})
 	assert_not_include('bug_ids', TestRun.association_names_to_one)
@@ -180,7 +180,7 @@ test 'association_names' do
 	assert_not_include('bug_ids', TestRun.association_names)
 	assert_equal(['bugs'],TestRun.association_names)
 end #association_names
-test "has_many_association" do
+def test_has_many_association
 	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
 	assert(StreamMethod.has_many_association?(:stream_method_arguments),StreamMethod.association_grep('has_many',:stream_method_arguments))
 	assert(StreamMethod.has_many_association?('stream_method_arguments'),StreamMethod.association_grep('has_many','stream_method_arguments'))
@@ -199,7 +199,7 @@ test "has_many_association" do
 
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_instance_methods(/^has_/))
 end #test
-test "association_method_plurality" do
+def test_association_method_plurality
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
@@ -207,11 +207,11 @@ test "association_method_plurality" do
 	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_pattern))
 	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
 end #test
-test "association_class" do
+def test_association_class
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.class_of_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #test
-test "association_method_symbol" do
+def test_association_method_symbol
 	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_models))
 	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_model))
 	
@@ -237,7 +237,7 @@ def foreign_key_points_to_me?(ar_from_fixture,assName)
 			end #each
 	end #if
 end #def
-test 'association_to_type' do
+def test_association_to_type
 	class_reference=StreamLink
 	association_reference=:inputs
 	association_refs do |class_reference, association_reference|
@@ -249,14 +249,14 @@ test 'association_to_type' do
 		end #if
 	end #association_refs
 end #association_to_type
-test 'is_active_record_method' do
+def test_is_active_record_method
 	association_reference=:inputs
 	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
 	assert(!ActiveRecord::Base.instance_methods_from_class.include?(:parameter.to_s))
 	assert(!TestTable.is_active_record_method?(:parameter))
 	assert(TestTable.is_active_record_method?(:connection))
 end #is_active_record_method
-test 'logical_primary_key' do
+def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
 		if self.respond_to?(:logical_primary_key) then
 			assert_not_empty(model_class.logical_primary_key)
@@ -320,9 +320,9 @@ def test_logical_attributes
  {:name=>"varchar", :limit=>255}],Set.new(StreamPattern.connection.native_database_types.values))
 	assert_equal(['name'],StreamPattern.logical_attributes)
 end #logical_attributes
-test 'is_logical_primary_key' do
+def test_is_logical_primary_key
 end #logical_primary_key
-test 'sequential_id' do
+def test_sequential_id
 	CodeBase.rails_MVC_classes.each do |model_class|
 		if model_class.sequential_id? then
 			puts "#{model_class} is a sequential id primary key."
@@ -332,7 +332,7 @@ test 'sequential_id' do
 		end #if
 	end #each
 end # def
-test 'logical_primary_key_value' do
+def test_logical_primary_key_value
 end #def
 test 'Inter-model associations' do
 #	puts "model_classes=#{model_classes.inspect}"
@@ -391,7 +391,7 @@ def test_aaa
 	assert_association(acquisition_stream_spec,:acquisition_interface)
 #	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
 end
-test "Generic Table" do
+def test_Generic_Table
 	assert(GenericTableAssociatedModel.module_included?(Generic_Table))
 	assert_module_included(GenericTableAssociatedModel,Generic_Table)
 	
@@ -432,7 +432,7 @@ test "Generic Table" do
 	assert(CodeBase.rails_MVC_classes.map {|c| c.name}.include?('StreamMethod'))
 	assert(Generic_Table.rails_MVC_class?('StreamMethod'))
 end #test
-test "Association Progression" do
+def test_Association_Progression
 	assert(FullAssociatedModel.instance_respond_to?(:test_table))
 	assert(HalfAssociatedModel.instance_respond_to?(:test_table))
 	assert(!GenericTableAssociatedModel.instance_respond_to?(:test_table))
@@ -462,7 +462,7 @@ test "Association Progression" do
 	assert(association_class.is_association?(association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)) ,"#{association_class.inspect}.is_association?(#{association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)})")
 	assert(TestTable.is_matching_association?(:full_associated_models))
 end #test
-test "associated_to_s" do
+def test_associated_to_s
 	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
 
 	acquisition_stream_spec.associated_to_s(:acquisition_interface,:name)
@@ -508,7 +508,7 @@ test "associated_to_s" do
 #	end
 #	puts "acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)=#{acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)}"
 end #test
-test "matching associations" do
+def test_matching_associations
 	assert_equal(["frequency_id"],TableSpec.foreign_key_names)
 
 	assert_equal("Acquisition","acquisitions".classify)

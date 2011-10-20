@@ -23,9 +23,9 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 end #test
-test "aaa test new assertions" do  # aaa to output first
+def test_aaa_test_new_assertions  # aaa to output first
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('acquisition_interface'))
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('table_spec'))
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
@@ -40,11 +40,11 @@ test "aaa test new assertions" do  # aaa to output first
 	testCall(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
 end #test
 
-test "associations" do
+def test_associations
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:acquisition_interface)
 	assert_public_instance_method(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:table_spec)
 end #test
-test "acquisition_stream_spec" do
+def test_acquisition_stream_spec
 	    assert_not_nil(acquisitions(:one))
 	    assert_association(acquisitions(:one),:acquisition_stream_spec)
 #	    assert_not_nil(acquisitions(:one).acquisition_stream_spec_id)
@@ -68,7 +68,7 @@ end #test
 def test_scheme
 	testAnswer(acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym),:scheme,'http')
 end #test
-test "associated_to_s" do
+def test_associated_to_s
 		@my_fixtures.each_value do |acs|
 			acs=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
 			assert_include(ActiveRecord::Base,acs.class.ancestors)

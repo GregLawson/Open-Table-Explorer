@@ -31,10 +31,10 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 	assert_equal(@my_fixtures,fixtures(@table_name))	
 end #test
-test "aaa test new assertions" do  # aaa to output first
+def test_aaa_test_new_assertions_ # aaa to output first
 	@stream_pattern=StreamPattern.find_by_name('Acquisition')
 	assert_equal('Acquisition',@stream_pattern.name)
 	assert_not_nil(@stream_pattern.id)

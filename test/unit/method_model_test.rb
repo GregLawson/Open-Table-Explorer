@@ -51,7 +51,7 @@ def test_constantized
 	#~ pp MethodModel.all
 	#~ assert_not_nil(new('object_id',Object,:methods))
 end #constantized
-test "size" do
+def test_size
 end #test
 def test_classes
 	assert_kind_of(Enumerable::Enumerator,ObjectSpace.each_object(Module))
@@ -204,7 +204,7 @@ def test_ExclusionValidator
 	#~ puts "ExclusionValidator.inspect=#{ExclusionValidator.inspect}"
 	#~ puts " 'ExclusionValidator'.constantized.inspect=#{'ExclusionValidator'.constantized.inspect}"
 end #ExclusionValidator
-test 'matching methods' do
+def test_matching_methods
 	testClass=Acquisition
 	assert_instance_of(Array,testClass.matching_class_methods(//))
 	assert_instance_of(Array,testClass.matching_instance_methods(//))
@@ -232,7 +232,7 @@ def test_matching_methods_in_context
 #error message too long		assert_equal([testClass.canonicalName,testClass.matching_methods(//)],testClass.matching_methods_in_context(//)[0])
 #error message too long			assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
 end #def
-test "Acquisition Stream Spec modules" do
+def test_Acquisition_Stream_Spec_modules
 	assert(Generic_Table.module?)
 	assert(!AcquisitionStreamSpec.module?)
 	assert_equal([Generic_Table],AcquisitionStreamSpec.noninherited_modules)
@@ -241,7 +241,7 @@ test "Acquisition Stream Spec modules" do
 	assert(AcquisitionStreamSpec.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionStreamSpec,:Generic_Table)
 end #test
-test "Acquisition Interface modules" do
+def test_Acquisition_Interface_modules
 	assert(Generic_Table.module?)
 	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
 	assert_equal([],AcquisitionInterface.noninherited_modules) # because of STI Generic_Table is not directly included

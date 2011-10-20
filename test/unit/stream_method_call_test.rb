@@ -9,12 +9,12 @@ require 'test_helper'
 
 class StreamMethodCallTest < ActiveSupport::TestCase
   # Replace this with your real tests.
-test 'stream_links' do
+def test_stream_links
 	StreamMethodCall.find(:all).each do |smc|
 		assert(smc.inputs.exists?,"smc=#{smc.inspect}, smc.stream_links=#{smc.inputs.inspect} ")
 	end #each
 end #stream_links
-test 'EEG' do
+def test_EEG
 	streamCall=StreamMethodCall.first
 	assert_equal(64810937,streamCall.id)
 	assert_equal_sets(["stream_method","stream_links"], StreamMethodCall.association_names)
@@ -24,7 +24,7 @@ test 'EEG' do
 #	assert_equal([],StreamMethodArgument.where("stream_pattern='Acquisition'").name)
 	assert_equal('File',StreamMethod.first.name)
   end
-test 'fire' do
+def test_fire
 	StreamMethodCall.find(:all).each do |smc|
 		smc.fire
 	end #each

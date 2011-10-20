@@ -6,18 +6,18 @@ class ScalarArgumentsControllerTest < ActionController::TestCase
     @scalar_argument = scalar_arguments(:one)
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:scalar_arguments)
   end
 
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end
 
-  test "should create scalar_argument" do
+def test_should_create_scalar_argument
     assert_difference('ScalarArgument.count') do
       post :create, :scalar_argument => @scalar_argument.attributes
     end
@@ -25,22 +25,22 @@ class ScalarArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to scalar_argument_path(assigns(:scalar_argument))
   end
 
-  test "should show scalar_argument" do
+def test_should_show_scalar_argument
     get :show, :id => @scalar_argument.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @scalar_argument.to_param
     assert_response :success
   end
 
-  test "should update scalar_argument" do
+def test_should_update_scalar_argument
     put :update, :id => @scalar_argument.to_param, :scalar_argument => @scalar_argument.attributes
     assert_redirected_to scalar_argument_path(assigns(:scalar_argument))
   end
 
-  test "should destroy scalar_argument" do
+def test_should_destroy_scalar_argument
     assert_difference('ScalarArgument.count', -1) do
       delete :destroy, :id => @scalar_argument.to_param
     end

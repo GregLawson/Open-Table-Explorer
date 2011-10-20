@@ -27,7 +27,7 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 	assert_equal('TableSpec',@model_name)
 	assert_equal(TableSpec,@model_class)
 	assert_equal('table_specs',@table_name)
@@ -80,7 +80,7 @@ def test_associated_id_equal
 		end #each
 	end #each_value
 end #def
-test "association empty" do
+def test_association_empty
 #	assert_not_nil(acquisition_stream_specs,message)
 	frequencies.each do |associated_record|
 		puts "associated_record.inspect=#{associated_record.inspect}"

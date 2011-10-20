@@ -6,18 +6,18 @@ class OfxesControllerTest < ActionController::TestCase
     @ofx = ofxes(:one)
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:ofxes)
   end
 
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end
 
-  test "should create ofx" do
+def test_should_create_ofx
     assert_difference('Ofx.count') do
       post :create, :ofx => @ofx.attributes
     end
@@ -25,22 +25,22 @@ class OfxesControllerTest < ActionController::TestCase
     assert_redirected_to ofx_path(assigns(:ofx))
   end
 
-  test "should show ofx" do
+def test_should_show_ofx
     get :show, :id => @ofx.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @ofx.to_param
     assert_response :success
   end
 
-  test "should update ofx" do
+def test_should_update_ofx
     put :update, :id => @ofx.to_param, :ofx => @ofx.attributes
     assert_redirected_to ofx_path(assigns(:ofx))
   end
 
-  test "should destroy ofx" do
+def test_should_destroy_ofx
     assert_difference('Ofx.count', -1) do
       delete :destroy, :id => @ofx.to_param
     end

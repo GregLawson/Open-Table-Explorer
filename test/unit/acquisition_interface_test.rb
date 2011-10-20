@@ -22,7 +22,7 @@ rescue  StandardError => exception_raised
 	puts 'Error: ' + exception_raised.inspect + ' could not get data from '+stream.url
 	puts "$!=#{$!}"
 end #def	  
-test "acquisition" do
+def test_acquisition
 	stream=acquisition_stream_specs(@testURL.to_sym)
 	assert_not_nil(stream)
 	acq=acquisition_interfaces(:HTTP)
@@ -58,7 +58,7 @@ test "acquisition" do
 	assert_respond_to(stream,:associated_to_s)
 	assert_equal(stream.associated_to_s(:acquisition_interface,:name),"HTTP")
 end #test
-test "stream acquire" do
+def test_stream_acquire
 	stream=acquisition_stream_specs(@testURL.to_sym)
 	assert_not_nil(stream.acquire)
 	assert_not_nil(stream.id)
@@ -81,7 +81,7 @@ test "stream acquire" do
 	assert_instance_of(Fixnum,acquisition.acquisition_stream_spec_id)
 	assert_equal(stream.id,acquisition.acquisition_stream_spec_id)
 end #test
-test "default acquisition" do
+def test_default_acquisition
 	stream=acquisition_stream_specs(@testURL.to_sym)
 	acq=acquisition_interfaces(:HTTP)
 	acq.delta(stream)

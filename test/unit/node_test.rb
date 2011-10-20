@@ -24,14 +24,14 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 end #test
-test "aaa test new assertions" do  # aaa to output first
+def test_aaa_test_new_assertions_ # aaa to output first
 	assert_equal(@my_fixtures,fixtures(@table_name))
 	assert_association(Node,:branch)
 	assert_association(Node,:parent)
 end #test
-test "handle polymorphic" do
+def test_handle_polymorphic
 	class_reference=Node
 	association_reference=:branch
 	association_type=class_reference.association_to_type(association_reference)

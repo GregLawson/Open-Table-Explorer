@@ -53,7 +53,7 @@ def setup
 	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 #	define_association_names #38271 associations
 end #def
-test "fixture_function" do  # aaa to output first
+def test_fixture_function_ # aaa to output first
 #?	define_association_names #38271 associations
 #csv	assert_equal(@my_fixtures,fixtures(@table_name))
 end #test
@@ -70,9 +70,9 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 end #test
-test "aaa test new assertions" do  # aaa to output first
+def test_aaa_test_new_assertions  # aaa to output first
 #csv	assert_equal(@my_fixtures,fixtures('bugs'))
 end #test
 

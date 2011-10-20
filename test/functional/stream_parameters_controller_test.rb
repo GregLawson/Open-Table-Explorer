@@ -6,18 +6,18 @@ class StreamParametersControllerTest < ActionController::TestCase
     @stream_parameter = stream_parameters(:one)
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:stream_parameters)
   end
 
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end
 
-  test "should create stream_parameter" do
+def test_should_create_stream_parameter
     assert_difference('StreamParameter.count') do
       post :create, :stream_parameter => @stream_parameter.attributes
     end
@@ -25,22 +25,22 @@ class StreamParametersControllerTest < ActionController::TestCase
     assert_redirected_to stream_parameter_path(assigns(:stream_parameter))
   end
 
-  test "should show stream_parameter" do
+def test_should_show_stream_parameter
     get :show, :id => @stream_parameter.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @stream_parameter.to_param
     assert_response :success
   end
 
-  test "should update stream_parameter" do
+def test_should_update_stream_parameter
     put :update, :id => @stream_parameter.to_param, :stream_parameter => @stream_parameter.attributes
     assert_redirected_to stream_parameter_path(assigns(:stream_parameter))
   end
 
-  test "should destroy stream_parameter" do
+def test_should_destroy_stream_parameter
     assert_difference('StreamParameter.count', -1) do
       delete :destroy, :id => @stream_parameter.to_param
     end

@@ -6,18 +6,18 @@ class StreamLinksControllerTest < ActionController::TestCase
     @stream_link = stream_links(:one)
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:stream_links)
   end
 
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end
 
-  test "should create stream_link" do
+def test_should_create_stream_link
     assert_difference('StreamLink.count') do
       post :create, :stream_link => @stream_link.attributes
     end
@@ -25,22 +25,22 @@ class StreamLinksControllerTest < ActionController::TestCase
     assert_redirected_to stream_link_path(assigns(:stream_link))
   end
 
-  test "should show stream_link" do
+def test_should_show_stream_link
     get :show, :id => @stream_link.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @stream_link.to_param
     assert_response :success
   end
 
-  test "should update stream_link" do
+def test_should_update_stream_link
     put :update, :id => @stream_link.to_param, :stream_link => @stream_link.attributes
     assert_redirected_to stream_link_path(assigns(:stream_link))
   end
 
-  test "should destroy stream_link" do
+def test_should_destroy_stream_link
     assert_difference('StreamLink.count', -1) do
       delete :destroy, :id => @stream_link.to_param
     end

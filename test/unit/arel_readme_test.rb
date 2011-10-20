@@ -1,10 +1,10 @@
 require 'test_helper'
 class ArelReadmeTest < ActiveSupport::TestCase
-test "arel readme example #1" do
+def test_arel_readme_example #1
 	users = Table(:users)
 	users.to_sql
 end #test
-test "arel readme example #1 correction attempt" do
+def test_arel_readme_example #1 correction attempt
 	users = Arel::Table.new(:users)
 	users.to_sql
 end #test

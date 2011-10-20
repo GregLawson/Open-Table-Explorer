@@ -24,9 +24,9 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 end #test
-test "aaa test new assertions" do  # aaa to output first
+def test_aaa_test_new_assertions  # aaa to output first
 	assert_equal(@my_fixtures,fixtures(@table_name))
 end #test
 end #class

@@ -6,18 +6,18 @@ class UrlsControllerTest < ActionController::TestCase
     @url = urls(:one)
   end
 
-  test "should get index" do
+def test_should_get_index
     get :index
     assert_response :success
     assert_not_nil assigns(:urls)
   end
 
-  test "should get new" do
+def test_should_get_new
     get :new
     assert_response :success
   end
 
-  test "should create url" do
+def test_should_create_url
     assert_difference('Url.count') do
       post :create, :url => @url.attributes
     end
@@ -25,22 +25,22 @@ class UrlsControllerTest < ActionController::TestCase
     assert_redirected_to url_path(assigns(:url))
   end
 
-  test "should show url" do
+def test_should_show_url
     get :show, :id => @url.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+def test_should_get_edit
     get :edit, :id => @url.to_param
     assert_response :success
   end
 
-  test "should update url" do
+def test_should_update_url
     put :update, :id => @url.to_param, :url => @url.attributes
     assert_redirected_to url_path(assigns(:url))
   end
 
-  test "should destroy url" do
+def test_should_destroy_url
     assert_difference('Url.count', -1) do
       delete :destroy, :id => @url.to_param
     end
