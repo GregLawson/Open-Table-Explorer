@@ -1,105 +1,85 @@
 Loaded suite test/unit/code_base_test
 Started
-........status=M, file=app/controllers/bugs_controller.rb
-status=M, file=app/models/bug.rb
-status=M, file=app/models/code_base.rb
-status=M, file=app/models/generic_table.rb
+.E......status=M, file=app/models/code_base.rb
 status=M, file=db/bugs.sql
 status=M, file=db/tests.sql
-status=M, file=lib/tasks/testing.rake
-status=M, file=lib/tasks/testing.rb
-status=M, file=log/functional/bugs_controller_test.log
-status=M, file=log/unit/bug_test.log
+status=A, file=log/functional/stream_methods_controller_test.log
 status=MM, file=log/unit/code_base_test.log
-status=M, file=log/unit/generic_table_test.log
-status=M, file=log/unit/stream_link_test.log
+status=M, file=log/unit/test_run_test.log
+status=M, file=test/functional/accounts_controller_test.rb
 status=M, file=test/functional/bugs_controller_test.rb
+status=M, file=test/functional/error_types_controller_test.rb
+status=M, file=test/functional/example_types_controller_test.rb
+status=M, file=test/functional/generic_types_controller_test.rb
+status=M, file=test/functional/huelseries_controller_test.rb
+status=M, file=test/functional/huelshows_controller_test.rb
+status=M, file=test/functional/ofxes_controller_test.rb
+status=M, file=test/functional/production_ftps_controller_test.rb
+status=M, file=test/functional/ruby_interfaces_controller_test.rb
+status=M, file=test/functional/scalar_arguments_controller_test.rb
+status=M, file=test/functional/stream_links_controller_test.rb
+status=M, file=test/functional/stream_method_arguments_controller_test.rb
+status=M, file=test/functional/stream_method_calls_controller_test.rb
+status=M, file=test/functional/stream_methods_controller_test.rb
+status=M, file=test/functional/stream_parameters_controller_test.rb
+status=M, file=test/functional/stream_pattern_arguments_controller_test.rb
+status=M, file=test/functional/stream_patterns_controller_test.rb
+status=M, file=test/functional/test_runs_controller_test.rb
+status=M, file=test/functional/urls_controller_test.rb
+status=M, file=test/unit/account_test.rb
+status=M, file=test/unit/acquisition_interface_test.rb
+status=M, file=test/unit/acquisition_stream_spec_test.rb
+status=M, file=test/unit/acquisition_test.rb
+status=M, file=test/unit/arel_readme_test.rb
+status=M, file=test/unit/breaker_test.rb
 status=M, file=test/unit/bug_test.rb
+status=M, file=test/unit/code_base_test.rb
+status=M, file=test/unit/edison_test.rb
+status=M, file=test/unit/error_type_test.rb
+status=M, file=test/unit/example_type_test.rb
+status=M, file=test/unit/frequency_test.rb
 status=M, file=test/unit/generic_table_test.rb
-status=??, file=run.log
-app/controllers/bugs_controller.rb don't know when to stage.
-app/models/bug.rb not a controller source.
+status=M, file=test/unit/generic_type_test.rb
+status=M, file=test/unit/global_test.rb
+status=M, file=test/unit/host_test.rb
+status=M, file=test/unit/huelserie_test.rb
+status=M, file=test/unit/huelshow_test.rb
+status=M, file=test/unit/measurement_test.rb
+status=M, file=test/unit/method_model_test.rb
+status=M, file=test/unit/node_test.rb
+status=M, file=test/unit/ofx_test.rb
+status=M, file=test/unit/production_ftp_test.rb
+status=M, file=test/unit/router_test.rb
+status=M, file=test/unit/ruby_interface_test.rb
+status=M, file=test/unit/scalar_argument_test.rb
+status=M, file=test/unit/stream_link_test.rb
+status=M, file=test/unit/stream_method_argument_test.rb
+status=M, file=test/unit/stream_method_call_test.rb
+status=M, file=test/unit/stream_method_test.rb
+status=M, file=test/unit/stream_parameter_test.rb
+status=M, file=test/unit/stream_pattern_test.rb
+status=M, file=test/unit/table_spec_test.rb
+status=M, file=test/unit/test_helper_test.rb
+status=M, file=test/unit/test_run_test.rb
+status=M, file=test/unit/transfer_test.rb
+status=M, file=test/unit/url_test.rb
+status=M, file=test/unit/wired_location_test.rb
+status=??, file=Chat
+status=??, file=rake/
 db/bugs.sql don't know when to stage.
 db/tests.sql don't know when to stage.
-lib/tasks/testing.rake don't know when to stage.
-lib/tasks/testing.rb don't know when to stage.
-run.log don't know when to stage.
-......sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/code_base_test.rb" 
-"log/unit/code_base_test.log" <- []
--rw-r--r-- 1 greg greg 1382 Oct 15 08:16 log/unit/code_base_test.log
-sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/generic_table_test.rb" 
-"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
--rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
-not up to date.
--rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
-not up to date.
--rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
-sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/generic_table_test.rb" 
-"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
--rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
-not up to date.
--rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
-not up to date.
--rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
-log/functional/generic_tables_controller_test.log does not exist.
-sources=["test/unit/code_base_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/code_base.rb", "test/fixtures/code_bases.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/code_base_test.rb" 
-"log/unit/code_base_test.log" <- []
--rw-r--r-- 1 greg greg 3399 Oct 15 08:16 log/unit/code_base_test.log
-log/functional/code_bases_controller_test.log does not exist.
-sources=["test/unit/generic_table_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", "app/models/generic_table.rb", "test/fixtures/generic_tables.yml"] must be an Array of Strings(pathnames)
-sources.size=7 
-sources[0]="test/unit/generic_table_test.rb" 
-"log/unit/generic_table_test.log" <- ["test/unit/generic_table_test.rb", "app/models/generic_table.rb", "app/models/generic_table.rb"]
--rw-r--r-- 1 greg greg 392502 Oct 15 00:10 log/unit/generic_table_test.log
-not up to date.
--rw-r--r-- 1 greg greg 30807 Oct 15 00:22 test/unit/generic_table_test.rb
-not up to date.
--rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
-not up to date.
--rw-r--r-- 1 greg greg 24897 Oct 15 00:22 app/models/generic_table.rb
-sources=["test/functional/bugs_controller_test.rb", "db/schema.rb", "test/test_helper.rb", "app/models/global.rb", "app/models/generic_table.rb", nil, "test/fixtures/bugs.yml", "app/views/bugs/_form.html.erb", "app/views/bugs/edit.html.erb", "app/views/bugs/index.html.erb", "app/views/bugs/new.html.erb", "app/views/bugs/show.html.erb", "app/views/shared/_error_messages.html.erb", "app/views/shared/_multi-line.html.erb", "app/views/shared/_syntax_errors.html.erb", "app/controllers/bugs_controller.rb", "app/helpers/bugs_helper.rb"] must be an Array of Strings(pathnames)
-sources.size=17 
-sources[0]="test/functional/bugs_controller_test.rb" 
-p=nil must be a String(pathnames)
-Esources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
-sources.size=2 
-sources[0]="/proc/bus" 
-.F.............
-Finished in 6.99315 seconds.
-
-  1) Error:
-test_not_uptodate_order(TestingFilePatternsTest):
-TypeError: can't convert nil into String
-    app/models/code_base.rb:260:in `exist?'
-    app/models/code_base.rb:260:in `not_uptodate_sources'
-    app/models/code_base.rb:260:in `select'
-    app/models/code_base.rb:260:in `not_uptodate_sources'
-    test/unit/code_base_test.rb:110:in `test_not_uptodate_order'
-    app/models/code_base.rb:60:in `call'
-    app/models/code_base.rb:60:in `prioritized_file_order'
-    app/models/code_base.rb:54:in `each'
-    app/models/code_base.rb:54:in `prioritized_file_order'
-    test/unit/code_base_test.rb:102:in `test_not_uptodate_order'
-
-  2) Failure:
-test_prioritized_file_order(TestingFilePatternsTest)
-    [/test/test_helper.rb:159:in `assert_not_empty'
-     test/unit/code_base_test.rb:70:in `test_prioritized_file_order'
-     test/unit/code_base_test.rb:67:in `each'
-     test/unit/code_base_test.rb:67:in `test_prioritized_file_order']:
-"nil" is empty with value "nil".
-<nil> expected to not be nil.
-
-30 tests, 10264 assertions, 1 failures, 1 errors
+test/functional/bugs_controller_test.rb not up to date.
+test/functional/example_types_controller_test.rb not up to date.
+test/functional/generic_types_controller_test.rb not up to date.
+test/functional/ofxes_controller_test.rb not up to date.
+test/functional/production_ftps_controller_test.rb not up to date.
+test/functional/stream_method_arguments_controller_test.rb not up to date.
+test/functional/stream_methods_controller_test.rb not up to date.
+test/functional/stream_pattern_arguments_controller_test.rb not up to date.
+test/functional/stream_patterns_controller_test.rb not up to date.
+test/functional/test_runs_controller_test.rb not up to date.
+Target log/unit/account_test.log for file=test/unit/account_test.rb does not exist.
+Target log/unit/acquisition_interface_test.log for file=test/unit/acquisition_interface_test.rb does not exist.
+Target log/unit/acquisition_stream_spec_test.log for file=test/unit/acquisition_stream_spec_test.rb does not exist.
+Target log/unit/acquisition_test.log for file=test/unit/acquisition_test.rb does not exist.
+test/unit/bug_test.rb not up to date.

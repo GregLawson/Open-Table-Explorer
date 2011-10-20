@@ -25,7 +25,7 @@ def assert_logical_primary_key_defined(instance,message=nil)
 	assert_not_nil(instance['test_type'], message)
 	assert_not_nil(instance.model, message)
 end #assert_logical_primary_key_defined
-test 'initialize' do
+def test_initialize
 	testRun=TestRun.new
 	TestRun.column_names.each do |n|
 		assert_instance_of(String,n)
@@ -61,13 +61,13 @@ def test_log_file
 	testRun=TestRun.new(:unit,:code_base, :code_bases,nil)
 	assert_equal('log/unit/code_base_test.log',testRun.log_file)
 end #log_file
-test 'run' do
+def test_run
 #	TestRun.new(:unit, 'test_run').run
 end #run
 def test_shell
 	assert_not_empty(TestRun.shell('pwd'){|ok, res| puts ok,res})
 end #shell
-test 'ruby_run_and_log' do
+def test_ruby_run_and_log
 #	TestRun.ruby_run_and_log('/dev/null','/dev/null')
 end #ruby_run_and_log
 def test_file_bug_reports
@@ -146,7 +146,7 @@ def setup
 	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 #	define_association_names #38271 associations
 end #def
-test "fixture_function" do  # aaa to output first
+def test_fixture_function_ # aaa to output first
 	define_association_names #38271 associations
 	assert_equal(@my_fixtures,fixtures(@table_name))
 end #test
@@ -163,6 +163,6 @@ def test_id_equal
 		end
 	end
 end #def
-test "specific, stable and working" do
+def test_specific__stable_and_working
 end #test
 end #class

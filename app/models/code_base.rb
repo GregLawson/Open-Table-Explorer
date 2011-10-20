@@ -10,7 +10,7 @@ TABLE_FINDER_REGEXPS=[
 {:name => :edit_views, :example_file => 'app/views/acquisition_stream_specs/edit.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/edit[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :show_views, :example_file => 'app/views/acquisition_stream_specs/show.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/show[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :index_views, :example_file => 'app/views/acquisition_stream_specs/index.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/index[.]html[.]erb', :plural => true, :test_type => :controller},
-{:name => :shared_partials, :example_file => 'app/views/shared/_multi-line.html.erb', :Dir_glob =>  'app/views/shared/_[a-zA-Z0-9_-]*[.]html[.]erb', :plural => true, :test_type => :shared},
+{:name => :shared_partials, :example_file => 'app/views/shared/_multi-line.html.erb', :Dir_glob =>  'app/views/shared/_[a-zA-Z0-9_-]*[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :form_partials, :example_file => 'app/views/stream_patterns/_form.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_form[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :show_partials, :example_file => 'app/views/stream_patterns/_show_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_show_partial[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :index_partials, :example_file => 'app/views/stream_patterns/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_index_partial[.]html[.]erb', :plural => true, :test_type => :controller}
@@ -42,9 +42,33 @@ FILE_MOD_TIMES=ALL_TEST_FILES.map { |file_and_spec| { :file => file_and_spec[:fi
 
 AFFECTS_EVERYTHING=["db/schema.rb","test/test_helper.rb",'app/models/global.rb','app/models/generic_table.rb']
 AFFECTS_CONTROLLERS=Dir['app/views/shared/*']
+# priorities:
+# most recent modification time from prioritized_file_order
+# first test previously passed
+# short test run time
+def suggest_test_runs(file_and_spec)
+	singular_table=singular_table_from_file(file_and_spec[:file])
+	test_type=file_and_spec[:spec][:test_type].to_sym
+	case test_type
+	when :models
+		
+	when :unit_tests
+	when :functional_tests
+	when :unit_test_logs
+	when :functional_test_logs
+	when :new_views
+	when :edit_views
+	when :show_views
+	when :index_views
+	when :shared_partials
+	when :form_partials
+	when :show_partials
+	when :index_partials
 
-
-
+	else
+		raise "illegal test type=#{test_type}"
+	end #case	
+end #suggest_test_run
 def CodeBase.prioritized_file_order(&process_test)
 	file_type_pairs=CodeBase::FILE_MOD_TIMES.map do |file_and_spec|
 		singular_table=singular_table_from_file(file_and_spec[:file])
@@ -188,6 +212,23 @@ def CodeBase.singular_table_from_file(file)
 		end #if
 	end #if
 end #singular_table_from_file
+def suggest_test_run(file_and_spec)
+	test_type=file_and_spec[:spec][:test_type].to_sym
+	plural=file_and_spec[:spec][:plural].to_sym
+	singular_table=singular_table_from_file(file_and_spec[:file])
+	name_plurality=name_plurality_from_spec(match_spec)
+	case test_type
+	when :unit
+		TestRun.new(:unit,name_plurality[:singular], name_plurality[:plural])
+	when :controller
+		TestRun.new(:controller,name_plurality[:singular], name_plurality[:plural])
+	when :both
+		[TestRun.new(:unit,name_plurality[:singular], name_plurality[:plural]),
+		TestRun.new(:controller,name_plurality[:singular], name_plurality[:plural])]
+	else
+		raise "bad test_type=#{test_type}"
+	end #case
+end #suggest_test_run
 def CodeBase.name_plurality_from_spec(match_spec)
 	if match_spec.nil? || match_spec[:test_type]==:shared then
 		return  nil
@@ -199,7 +240,7 @@ def CodeBase.name_plurality_from_spec(match_spec)
 			{:singular =>  table_name, plural => table_name.pluralize}
 		end #if
 	end #if
-end #test_run_from_file
+end #name_plurality_from_spec
 def CodeBase.test_run_from_file(file)
 	match_spec=match_spec_from_file(file)
 	name_plurality=name_plurality_from_spec(match_spec)
@@ -329,5 +370,9 @@ def CodeBase.rails_MVC_classes
 			nil # discarded by later Array#compact
 		end #if
 	end.compact #map
-end #def
+end #rails_MVC_classes
 end #class CodeBase
+class MatchedFilename
+def initialize(filename)
+end #initialize
+end #MatchedFilename

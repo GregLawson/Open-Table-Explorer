@@ -12,7 +12,12 @@ require 'test_helper'
 require 'test/test_helper_test_tables.rb'
 class TestingFilePatternsTest < ActiveSupport::TestCase
 require 'lib/tasks/testing.rb'
-test 'file_glob' do
+def test_initialize
+	spec=CodeBase.new
+	assert_not_nil(spec)
+	assert_instance_of(spec,CodeBase)
+end #initialize
+def test_file_glob
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
 	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
@@ -22,7 +27,7 @@ test 'file_glob' do
 		assert_not_nil(CodeBase.file_glob(spec))
 	end #map
 end #file_glob
-test 'regexp' do
+def test_regexp
 #	assert_equal(%r{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
@@ -38,18 +43,20 @@ test 'regexp' do
 		assert_include(spec[:example_file],Dir[CodeBase.file_glob(spec)])
 	end #map
 end #regexp
-test 'files_from_spec' do
+def test_files_from_spec
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		instance=CodeBase.new(spec)
 		assert_not_empty(instance.files_from_spec)
 	end #each
 end #files_from_spec
-test 'all_model_specfic_files' do
+def test_all_model_specfic_files
 	assert_not_empty(CodeBase.all_model_specfic_files)
 	assert_instance_of(Array,CodeBase.all_model_specfic_files)
 	assert_instance_of(Hash,CodeBase.all_model_specfic_files[0])
 end #all_model_specfic_files
-test 'prioritized_file_order' do
+def test_suggest_test_runs
+end #suggest_test_run
+def test_prioritized_file_order
 	file_type_pairs=CodeBase::FILE_MOD_TIMES.map do |file_and_spec|
 		assert_not_empty(file_and_spec[:spec])
 		assert_instance_of(Regexp,CodeBase.regexp(file_and_spec[:spec]))
@@ -96,9 +103,9 @@ test 'prioritized_file_order' do
 	end #do
 	puts "Most recently modified file=#{CodeBase.prioritized_file_order.first}"
 end #prioritized_file_order
-test 'run_test' do
+def test_run_test
 end #run_test
-test 'not_uptodate_order' do
+def test_not_uptodate_order
 	CodeBase.prioritized_file_order do |target,sources|
 		if CodeBase.uptodate?(target,sources) then
 		else
@@ -130,23 +137,23 @@ def CodeBase.test_file(singular_table, test_type)
 end #test_file
 def CodeBase.model_file(singular_table)
 end #model_file
-test 'unit_sources' do
+def test_unit_sources
 end #unit_sources
-test 'controller_sources' do
+def test_controller_sources
 end #controller_sources
-test 'unit_target' do
+def test_unit_target
 end #unit_target
-test 'controller_target' do
+def test_controller_target
 end #controller_target
-test 'model_spec_symbols' do
+def test_model_spec_symbols
 	assert_not_empty(CodeBase.model_spec_symbols)
-	assert_equal_sets([:models, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views],CodeBase.model_spec_symbols)
+	assert_equal_sets([:models, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views, :shared_partials],CodeBase.model_spec_symbols)
 end #model_spec_symbols
-test 'spec_symbols' do
+def test_spec_symbols
 	assert_not_empty(CodeBase.spec_symbols)
 	assert_equal_sets([:models, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :shared_partials, :new_views, :show_views],CodeBase.spec_symbols)
 end #spec_symbols
-test 'complete_models' do
+def test_complete_models
 	list_of_model_sets=CodeBase.model_spec_symbols.map {|spec_name_symbol| CodeBase.models_from_spec(spec_name_symbol)}
 	assert_not_empty(list_of_model_sets)
 	assert_not_empty(CodeBase.models_from_spec(:models))
@@ -174,13 +181,13 @@ test 'complete_models' do
 	assert_not_empty(list_of_model_sets.reduce(:&))
 	assert_not_empty(CodeBase.complete_models)
 end #complete_models
-test 'spec_from_symbol' do
+def test_spec_from_symbol
 	spec_name_symbol=:models
 	index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
 	assert_instance_of(Fixnum,index)
 	assert_instance_of(Hash,CodeBase::TABLE_FINDER_REGEXPS[index])
 end #spec_from_symbol
-test 'models_from_spec' do
+def test_models_from_spec
 	CodeBase.model_spec_symbols.each do |spec_name_symbol|
 	#	spec_name_symbol=:models
 		index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
@@ -202,10 +209,10 @@ test 'models_from_spec' do
 		assert_include('stream_pattern',CodeBase.models_from_spec(spec_name_symbol))
 	end #each
 end #models_from_spec
-test 'match_spec_from_file' do
+def test_match_spec_from_file
 	assert('app/models/([a-zA-Z0-9_]*)[.]rb',CodeBase::match_spec_from_file('app/models/global.rb'))
 end #match_spec_from_file
-test 'singular_table_from_file' do
+def test_singular_table_from_file
 	assert('global',CodeBase::singular_table_from_file('app/models/global.rb'))
 	assert_equal('global',CodeBase.singular_table_from_file('app/models/global.rb'))
 	assert_equal('global',CodeBase.singular_table_from_file('test/unit/global_test.rb'))
@@ -223,21 +230,25 @@ test 'singular_table_from_file' do
 		end #if
 	end #each
 end #singular_table_from_file
-test 'name_plurality_from_file' do
+def test_suggest_test_run
+end #suggest_test_run
+def test_name_plurality_from_file
+end #name_plurality_from_spec
+def test_test_run_from_file
 end #test_run_from_file
-test 'test_type_from_source' do
+def test_test_type_from_source
 end #test_type_from_source
-test 'test_program_from_file' do
+def test_test_program_from_file
 end #test_program_from_file
-test 'uptodate' do
+def test_uptodate
 # uptodate if target > sources
 	target='/proc/bus' # changes often
 	sources=['/'] #changes slowly
 #	target='/dev/null'
 #	sources=['/home/greg/git/development/test/unit/code_base_test.rb']
-assert(CodeBase.uptodate?(target,sources))
+	assert(CodeBase.uptodate?(target,sources))
 end #uptodate
-test 'not_uptodate_sources' do
+def test_not_uptodate_sources
 # not uptodate if sources > target
 	sources=['/proc/bus', '/proc/bus']
 	target='/'
@@ -245,7 +256,7 @@ test 'not_uptodate_sources' do
 	assert(sources.all?{|s| s.instance_of?(String)} ,"sources=#{sources.inspect} must be an Array of Strings(pathnames)")
 #	assert(CodeBase.not_uptodate_sources(target,[]))
 end #not_uptodate_sources
-test "git_status" do
+def test_git_status
 	#~ assert_match('app/views/acquisition_stream_specs/_index_partial.html.erb',TABLE_FINDER_REGEXPS['app/views/acquisition_stream_specs/_index_partial.html.erb'])
 #	assert_equal('acquisition_stream_specs','app/views/acquisition_stream_specs/_index_partial.html.erb'.match(CodeBase.regexp(CodeBase::TABLE_FINDER_REGEXPS[5]))[1])
 	assert_equal('acquisition_stream_spec',CodeBase.singular_table_from_file('app/views/acquisition_stream_specs/_index_partial.html.erb'))
@@ -257,14 +268,20 @@ test "git_status" do
 	assert_equal(['global','unit'],CodeBase.test_type_from_source('test/unit/global_test.rb'))
 	assert_include('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
 end #git_status
-test 'why_not_stage_helper' do
+def test_why_not_stage_helper
 end #why_not_stage_helper
-test 'why_not_stage' do
+def test_why_not_stage
 	file='app/views/acquisition_stream_specs/_index_partial.html.erb'
 	assert_nothing_raised{CodeBase.why_not_stage(file,CodeBase.singular_table_from_file(file)) }
 #	assert_nothing_raised{CodeBase.why_not_stage_helper('app/views/acquisition_stream_specs/_index_partial.html.erb',target,sources,test_type)}
 end #why_not_stage_helper
-test 'example_files_exist' do
+def test_rails_MVC_classes
+	assert_include(StreamMethod,CodeBase.rails_MVC_classes)
+	assert_not_include(GenericTable,CodeBase.rails_MVC_classes)
+	assert_not_include(CodeBase,CodeBase.rails_MVC_classes)
+	assert_not_include(MethodModel,CodeBase.rails_MVC_classes)
+end #rails_MVC_classes
+def test_example_files_exist
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		example_file=spec[:example_file]
 		assert(File.exists?(example_file))
@@ -275,7 +292,7 @@ test 'example_files_exist' do
 		end #if
 	end #each_pair
 end #example_files_exist
-test 'example_files_match_regexp' do
+def test_example_files_match_regexp
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		example_file=spec[:example_file]
 		assert(example_file.match(CodeBase.regexp(spec)))
@@ -286,7 +303,7 @@ test 'example_files_match_regexp' do
 		assert_match(regexp,example_file,"example_file=#{example_file}, regexp=#{regexp}")
 	end #each
 end #example_files_match_regexp
-test 'globs_match_regexp' do
+def test_globs_match_regexp
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		files=Dir[CodeBase.file_glob(spec)]
 		if files.nil? then
@@ -299,6 +316,4 @@ test 'globs_match_regexp' do
 	end #each
 
 end #globs_match_regexp
-test 'stuck' do
-end #
 end #CodeBase
