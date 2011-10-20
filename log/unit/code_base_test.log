@@ -83,3 +83,83 @@ Target log/unit/acquisition_interface_test.log for file=test/unit/acquisition_in
 Target log/unit/acquisition_stream_spec_test.log for file=test/unit/acquisition_stream_spec_test.rb does not exist.
 Target log/unit/acquisition_test.log for file=test/unit/acquisition_test.rb does not exist.
 test/unit/bug_test.rb not up to date.
+test/unit/error_type_test.rb not up to date.
+test/unit/example_type_test.rb not up to date.
+test/unit/generic_type_test.rb not up to date.
+test/unit/global_test.rb not up to date.
+test/unit/huelshow_test.rb not up to date.
+test/unit/measurement_test.rb not up to date.
+test/unit/ofx_test.rb not up to date.
+test/unit/production_ftp_test.rb not up to date.
+Target log/unit/ruby_interface_test.log for file=test/unit/ruby_interface_test.rb does not exist.
+Target log/unit/scalar_argument_test.log for file=test/unit/scalar_argument_test.rb does not exist.
+test/unit/stream_method_argument_test.rb not up to date.
+test/unit/stream_method_test.rb not up to date.
+Target log/unit/stream_parameter_test.log for file=test/unit/stream_parameter_test.rb does not exist.
+Target log/unit/table_spec_test.log for file=test/unit/table_spec_test.rb does not exist.
+Chat don't know when to stage.
+rake/ don't know when to stage.
+..E..F.Esources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
+sources.size=2 
+sources[0]="/proc/bus" 
+.EE..F............
+Finished in 8.663691 seconds.
+
+  1) Error:
+test_complete_models(TestingFilePatternsTest):
+RuntimeError: file=app/views/shared/_syntax_errors.html.erb does not match regexp=(?-mix:^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$)
+    app/models/code_base.rb:179:in `models_from_spec'
+    app/models/code_base.rb:176:in `map'
+    app/models/code_base.rb:176:in `models_from_spec'
+    test/unit/code_base_test.rb:157:in `test_complete_models'
+    test/unit/code_base_test.rb:157:in `map'
+    test/unit/code_base_test.rb:157:in `test_complete_models'
+
+  2) Error:
+test_initialize(TestingFilePatternsTest):
+ArgumentError: wrong number of arguments (0 for 1)
+    test/unit/code_base_test.rb:16:in `initialize'
+    test/unit/code_base_test.rb:16:in `new'
+    test/unit/code_base_test.rb:16:in `test_initialize'
+
+  3) Failure:
+test_models_from_spec(TestingFilePatternsTest)
+    [test/unit/code_base_test.rb:200:in `test_models_from_spec'
+     test/unit/code_base_test.rb:197:in `map'
+     test/unit/code_base_test.rb:197:in `test_models_from_spec'
+     test/unit/code_base_test.rb:191:in `each'
+     test/unit/code_base_test.rb:191:in `test_models_from_spec']:
+file=app/views/shared/_syntax_errors.html.erb does not match regexp=(?-mix:^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$).
+<nil> expected to not be nil.
+
+  4) Error:
+test_not_uptodate_order(TestingFilePatternsTest):
+NoMethodError: undefined method `singularize' for nil:NilClass
+    app/models/code_base.rb:209:in `singular_table_from_file'
+    app/models/code_base.rb:74:in `prioritized_file_order'
+    app/models/code_base.rb:73:in `map'
+    app/models/code_base.rb:73:in `prioritized_file_order'
+    test/unit/code_base_test.rb:109:in `test_not_uptodate_order'
+
+  5) Error:
+test_prioritized_file_order(TestingFilePatternsTest):
+NoMethodError: undefined method `singularize' for nil:NilClass
+    app/models/code_base.rb:209:in `singular_table_from_file'
+    test/unit/code_base_test.rb:65:in `test_prioritized_file_order'
+    test/unit/code_base_test.rb:60:in `map'
+    test/unit/code_base_test.rb:60:in `test_prioritized_file_order'
+
+  6) Error:
+test_rails_MVC_classes(TestingFilePatternsTest):
+LoadError: Expected /home/greg/Desktop/git/development/app/models/generic_table.rb to define GenericTable
+    test/unit/code_base_test.rb:280:in `test_rails_MVC_classes'
+
+  7) Failure:
+test_singular_table_from_file(TestingFilePatternsTest)
+    [test/unit/code_base_test.rb:226:in `test_singular_table_from_file'
+     test/unit/code_base_test.rb:219:in `each'
+     test/unit/code_base_test.rb:219:in `test_singular_table_from_file']:
+match_spec[:matchData]=#<MatchData "app/views/shared/_multi-line.html.erb">.
+<nil> expected to not be nil.
+
+34 tests, 4825 assertions, 2 failures, 5 errors
