@@ -1,0 +1,2324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: ActiveRecord::Base</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../app/models/generic_table_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="app/models/generic_table.rb">app/models/generic_table.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link"><a href="../Object.html">Object</a></p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-associated_foreign_key_name">::associated_foreign_key_name</a></li>
+          
+          <li><a href="#method-c-association_class">::association_class</a></li>
+          
+          <li><a href="#method-c-association_grep">::association_grep</a></li>
+          
+          <li><a href="#method-c-association_macro_type">::association_macro_type</a></li>
+          
+          <li><a href="#method-c-association_method_plurality">::association_method_plurality</a></li>
+          
+          <li><a href="#method-c-association_method_symbol">::association_method_symbol</a></li>
+          
+          <li><a href="#method-c-association_methods">::association_methods</a></li>
+          
+          <li><a href="#method-c-association_names">::association_names</a></li>
+          
+          <li><a href="#method-c-association_names_to_many">::association_names_to_many</a></li>
+          
+          <li><a href="#method-c-association_names_to_one">::association_names_to_one</a></li>
+          
+          <li><a href="#method-c-association_patterns">::association_patterns</a></li>
+          
+          <li><a href="#method-c-association_to_type">::association_to_type</a></li>
+          
+          <li><a href="#method-c-association_type">::association_type</a></li>
+          
+          <li><a href="#method-c-attribute_ddl">::attribute_ddl</a></li>
+          
+          <li><a href="#method-c-attribute_type">::attribute_type</a></li>
+          
+          <li><a href="#method-c-belongs_to_association-3F">::belongs_to_association?</a></li>
+          
+          <li><a href="#method-c-candidate_logical_keys_from_indexes">::candidate_logical_keys_from_indexes</a></li>
+          
+          <li><a href="#method-c-class_of_name">::class_of_name</a></li>
+          
+          <li><a href="#method-c-foreign_key_association_names">::foreign_key_association_names</a></li>
+          
+          <li><a href="#method-c-foreign_key_names">::foreign_key_names</a></li>
+          
+          <li><a href="#method-c-has_many_association-3F">::has_many_association?</a></li>
+          
+          <li><a href="#method-c-header_html">::header_html</a></li>
+          
+          <li><a href="#method-c-is_active_record_method-3F">::is_active_record_method?</a></li>
+          
+          <li><a href="#method-c-is_association-3F">::is_association?</a></li>
+          
+          <li><a href="#method-c-is_association_patterns-3F">::is_association_patterns?</a></li>
+          
+          <li><a href="#method-c-is_association_to_many-3F">::is_association_to_many?</a></li>
+          
+          <li><a href="#method-c-is_association_to_one-3F">::is_association_to_one?</a></li>
+          
+          <li><a href="#method-c-is_logical_primary_key-3F">::is_logical_primary_key?</a></li>
+          
+          <li><a href="#method-c-is_matching_association-3F">::is_matching_association?</a></li>
+          
+          <li><a href="#method-c-is_polymorphic_association-3F">::is_polymorphic_association?</a></li>
+          
+          <li><a href="#method-c-logical_attributes">::logical_attributes</a></li>
+          
+          <li><a href="#method-c-match_association_patterns-3F">::match_association_patterns?</a></li>
+          
+          <li><a href="#method-c-model_file_name">::model_file_name</a></li>
+          
+          <li><a href="#method-c-model_grep">::model_grep</a></li>
+          
+          <li><a href="#method-c-name_symbol">::name_symbol</a></li>
+          
+          <li><a href="#method-c-sequential_id-3F">::sequential_id?</a></li>
+          
+          <li><a href="#method-c-table_html">::table_html</a></li>
+          
+          <li><a href="#method-i-associated_foreign_key_records">#associated_foreign_key_records</a></li>
+          
+          <li><a href="#method-i-column_html">#column_html</a></li>
+          
+          <li><a href="#method-i-logical_primary_key_value">#logical_primary_key_value</a></li>
+          
+          <li><a href="#method-i-row_html">#row_html</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../ActiveRecord.html">ActiveRecord</a></li>
+        
+          <li><a href="../ActiveRecord/Base.html">ActiveRecord::Base</a></li>
+        
+          <li><a href="../ActiveSupport.html">ActiveSupport</a></li>
+        
+          <li><a href="../ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+        
+          <li><a href="../GlobalTest.html">GlobalTest</a></li>
+        
+          <li><a href="../GlobalTest/TestClass.html">GlobalTest::TestClass</a></li>
+        
+          <li><a href="../Module.html">Module</a></li>
+        
+          <li><a href="../Module/MixinClassMethods.html">Module::MixinClassMethods</a></li>
+        
+          <li><a href="../TransferTest.html">TransferTest</a></li>
+        
+          <li><a href="../TransferTest/Transfer.html">TransferTest::Transfer</a></li>
+        
+          <li><a href="../Account.html">Account</a></li>
+        
+          <li><a href="../AccountTest.html">AccountTest</a></li>
+        
+          <li><a href="../AccountsController.html">AccountsController</a></li>
+        
+          <li><a href="../AccountsControllerTest.html">AccountsControllerTest</a></li>
+        
+          <li><a href="../AccountsHelper.html">AccountsHelper</a></li>
+        
+          <li><a href="../AcquireAllObserver.html">AcquireAllObserver</a></li>
+        
+          <li><a href="../AcquireAllObserverTest.html">AcquireAllObserverTest</a></li>
+        
+          <li><a href="../Acquisition.html">Acquisition</a></li>
+        
+          <li><a href="../AcquisitionInterface.html">AcquisitionInterface</a></li>
+        
+          <li><a href="../AcquisitionInterfaceTest.html">AcquisitionInterfaceTest</a></li>
+        
+          <li><a href="../AcquisitionInterfacesController.html">AcquisitionInterfacesController</a></li>
+        
+          <li><a href="../AcquisitionInterfacesControllerTest.html">AcquisitionInterfacesControllerTest</a></li>
+        
+          <li><a href="../AcquisitionInterfacesHelper.html">AcquisitionInterfacesHelper</a></li>
+        
+          <li><a href="../AcquisitionStreamSpec.html">AcquisitionStreamSpec</a></li>
+        
+          <li><a href="../AcquisitionStreamSpecTest.html">AcquisitionStreamSpecTest</a></li>
+        
+          <li><a href="../AcquisitionStreamSpecsController.html">AcquisitionStreamSpecsController</a></li>
+        
+          <li><a href="../AcquisitionStreamSpecsControllerTest.html">AcquisitionStreamSpecsControllerTest</a></li>
+        
+          <li><a href="../AcquisitionStreamSpecsHelper.html">AcquisitionStreamSpecsHelper</a></li>
+        
+          <li><a href="../AcquisitionsController.html">AcquisitionsController</a></li>
+        
+          <li><a href="../AcquisitionsControllerTest.html">AcquisitionsControllerTest</a></li>
+        
+          <li><a href="../AcquisitionsHelper.html">AcquisitionsHelper</a></li>
+        
+          <li><a href="../ApplicationController.html">ApplicationController</a></li>
+        
+          <li><a href="../ApplicationHelper.html">ApplicationHelper</a></li>
+        
+          <li><a href="../ArelReadmeTest.html">ArelReadmeTest</a></li>
+        
+          <li><a href="../Breaker.html">Breaker</a></li>
+        
+          <li><a href="../BreakerTest.html">BreakerTest</a></li>
+        
+          <li><a href="../BreakersController.html">BreakersController</a></li>
+        
+          <li><a href="../BreakersControllerTest.html">BreakersControllerTest</a></li>
+        
+          <li><a href="../BreakersHelper.html">BreakersHelper</a></li>
+        
+          <li><a href="../BrowsingTest.html">BrowsingTest</a></li>
+        
+          <li><a href="../Bug.html">Bug</a></li>
+        
+          <li><a href="../BugTest.html">BugTest</a></li>
+        
+          <li><a href="../BugsController.html">BugsController</a></li>
+        
+          <li><a href="../BugsControllerTest.html">BugsControllerTest</a></li>
+        
+          <li><a href="../BugsHelper.html">BugsHelper</a></li>
+        
+          <li><a href="../BugsHelperTest.html">BugsHelperTest</a></li>
+        
+          <li><a href="../Class.html">Class</a></li>
+        
+          <li><a href="../CodeBase.html">CodeBase</a></li>
+        
+          <li><a href="../Edison.html">Edison</a></li>
+        
+          <li><a href="../EdisonTest.html">EdisonTest</a></li>
+        
+          <li><a href="../EdisonsController.html">EdisonsController</a></li>
+        
+          <li><a href="../EdisonsControllerTest.html">EdisonsControllerTest</a></li>
+        
+          <li><a href="../EdisonsHelper.html">EdisonsHelper</a></li>
+        
+          <li><a href="../EmptyAssociatedModel.html">EmptyAssociatedModel</a></li>
+        
+          <li><a href="../EmptyClass.html">EmptyClass</a></li>
+        
+          <li><a href="../ErrorType.html">ErrorType</a></li>
+        
+          <li><a href="../ErrorTypeTest.html">ErrorTypeTest</a></li>
+        
+          <li><a href="../ErrorTypesController.html">ErrorTypesController</a></li>
+        
+          <li><a href="../ErrorTypesControllerTest.html">ErrorTypesControllerTest</a></li>
+        
+          <li><a href="../ErrorTypesHelper.html">ErrorTypesHelper</a></li>
+        
+          <li><a href="../ErrorTypesHelperTest.html">ErrorTypesHelperTest</a></li>
+        
+          <li><a href="../ExampleType.html">ExampleType</a></li>
+        
+          <li><a href="../ExampleTypeTest.html">ExampleTypeTest</a></li>
+        
+          <li><a href="../ExampleTypesController.html">ExampleTypesController</a></li>
+        
+          <li><a href="../ExampleTypesControllerTest.html">ExampleTypesControllerTest</a></li>
+        
+          <li><a href="../ExampleTypesHelper.html">ExampleTypesHelper</a></li>
+        
+          <li><a href="../ExampleTypesHelperTest.html">ExampleTypesHelperTest</a></li>
+        
+          <li><a href="../FrequenciesController.html">FrequenciesController</a></li>
+        
+          <li><a href="../FrequenciesControllerTest.html">FrequenciesControllerTest</a></li>
+        
+          <li><a href="../FrequenciesHelper.html">FrequenciesHelper</a></li>
+        
+          <li><a href="../Frequency.html">Frequency</a></li>
+        
+          <li><a href="../FrequencyTest.html">FrequencyTest</a></li>
+        
+          <li><a href="../FullAssociatedModel.html">FullAssociatedModel</a></li>
+        
+          <li><a href="../GenericAcquisition.html">GenericAcquisition</a></li>
+        
+          <li><a href="../GenericAcquisitionsController.html">GenericAcquisitionsController</a></li>
+        
+          <li><a href="../GenericAcquisitionsHelper.html">GenericAcquisitionsHelper</a></li>
+        
+          <li><a href="../GenericColumn.html">GenericColumn</a></li>
+        
+          <li><a href="../GenericColumnsController.html">GenericColumnsController</a></li>
+        
+          <li><a href="../GenericColumnsHelper.html">GenericColumnsHelper</a></li>
+        
+          <li><a href="../GenericRow.html">GenericRow</a></li>
+        
+          <li><a href="../GenericRowsController.html">GenericRowsController</a></li>
+        
+          <li><a href="../GenericRowsHelper.html">GenericRowsHelper</a></li>
+        
+          <li><a href="../GenericTableAssociatedModel.html">GenericTableAssociatedModel</a></li>
+        
+          <li><a href="../GenericTableTest.html">GenericTableTest</a></li>
+        
+          <li><a href="../GenericType.html">GenericType</a></li>
+        
+          <li><a href="../GenericTypeTest.html">GenericTypeTest</a></li>
+        
+          <li><a href="../GenericTypesController.html">GenericTypesController</a></li>
+        
+          <li><a href="../GenericTypesControllerTest.html">GenericTypesControllerTest</a></li>
+        
+          <li><a href="../GenericTypesHelper.html">GenericTypesHelper</a></li>
+        
+          <li><a href="../GenericTypesHelperTest.html">GenericTypesHelperTest</a></li>
+        
+          <li><a href="../Generic_Table.html">Generic_Table</a></li>
+        
+          <li><a href="../HalfAssociatedModel.html">HalfAssociatedModel</a></li>
+        
+          <li><a href="../HomeController.html">HomeController</a></li>
+        
+          <li><a href="../HomeControllerTest.html">HomeControllerTest</a></li>
+        
+          <li><a href="../HomeHelper.html">HomeHelper</a></li>
+        
+          <li><a href="../Host.html">Host</a></li>
+        
+          <li><a href="../HostTest.html">HostTest</a></li>
+        
+          <li><a href="../HostsController.html">HostsController</a></li>
+        
+          <li><a href="../HostsControllerTest.html">HostsControllerTest</a></li>
+        
+          <li><a href="../HostsHelper.html">HostsHelper</a></li>
+        
+          <li><a href="../HuelserieTest.html">HuelserieTest</a></li>
+        
+          <li><a href="../Huelseries.html">Huelseries</a></li>
+        
+          <li><a href="../HuelseriesController.html">HuelseriesController</a></li>
+        
+          <li><a href="../HuelseriesControllerTest.html">HuelseriesControllerTest</a></li>
+        
+          <li><a href="../HuelseriesHelper.html">HuelseriesHelper</a></li>
+        
+          <li><a href="../HuelseriesHelperTest.html">HuelseriesHelperTest</a></li>
+        
+          <li><a href="../Huelshow.html">Huelshow</a></li>
+        
+          <li><a href="../HuelshowTest.html">HuelshowTest</a></li>
+        
+          <li><a href="../HuelshowsController.html">HuelshowsController</a></li>
+        
+          <li><a href="../HuelshowsControllerTest.html">HuelshowsControllerTest</a></li>
+        
+          <li><a href="../HuelshowsHelper.html">HuelshowsHelper</a></li>
+        
+          <li><a href="../HuelshowsHelperTest.html">HuelshowsHelperTest</a></li>
+        
+          <li><a href="../Inline_Assertions.html">Inline_Assertions</a></li>
+        
+          <li><a href="../Inline_Assertions_Stubs.html">Inline_Assertions_Stubs</a></li>
+        
+          <li><a href="../Load.html">Load</a></li>
+        
+          <li><a href="../Loads.html">Loads</a></li>
+        
+          <li><a href="../Loads1.html">Loads1</a></li>
+        
+          <li><a href="../Loads1Test.html">Loads1Test</a></li>
+        
+          <li><a href="../Loads1sController.html">Loads1sController</a></li>
+        
+          <li><a href="../Loads1sHelper.html">Loads1sHelper</a></li>
+        
+          <li><a href="../LoadsController.html">LoadsController</a></li>
+        
+          <li><a href="../LoadsControllerTest.html">LoadsControllerTest</a></li>
+        
+          <li><a href="../LoadsHelper.html">LoadsHelper</a></li>
+        
+          <li><a href="../LoadsTest.html">LoadsTest</a></li>
+        
+          <li><a href="../Match_Addressing.html">Match_Addressing</a></li>
+        
+          <li><a href="../MatchedFilename.html">MatchedFilename</a></li>
+        
+          <li><a href="../Measurement.html">Measurement</a></li>
+        
+          <li><a href="../MeasurementTest.html">MeasurementTest</a></li>
+        
+          <li><a href="../MeasurementsController.html">MeasurementsController</a></li>
+        
+          <li><a href="../MeasurementsControllerTest.html">MeasurementsControllerTest</a></li>
+        
+          <li><a href="../MeasurementsHelper.html">MeasurementsHelper</a></li>
+        
+          <li><a href="../MethodModel.html">MethodModel</a></li>
+        
+          <li><a href="../Network.html">Network</a></li>
+        
+          <li><a href="../NetworksController.html">NetworksController</a></li>
+        
+          <li><a href="../NetworksHelper.html">NetworksHelper</a></li>
+        
+          <li><a href="../Nil_Class.html">Nil_Class</a></li>
+        
+          <li><a href="../NoDB.html">NoDB</a></li>
+        
+          <li><a href="../Node.html">Node</a></li>
+        
+          <li><a href="../NodeTest.html">NodeTest</a></li>
+        
+          <li><a href="../NodesController.html">NodesController</a></li>
+        
+          <li><a href="../NodesControllerTest.html">NodesControllerTest</a></li>
+        
+          <li><a href="../NodesHelper.html">NodesHelper</a></li>
+        
+          <li><a href="../Object.html">Object</a></li>
+        
+          <li><a href="../Ofx.html">Ofx</a></li>
+        
+          <li><a href="../OfxTest.html">OfxTest</a></li>
+        
+          <li><a href="../OfxesController.html">OfxesController</a></li>
+        
+          <li><a href="../OfxesControllerTest.html">OfxesControllerTest</a></li>
+        
+          <li><a href="../OfxesHelper.html">OfxesHelper</a></li>
+        
+          <li><a href="../OfxesHelperTest.html">OfxesHelperTest</a></li>
+        
+          <li><a href="../ParseSpec.html">ParseSpec</a></li>
+        
+          <li><a href="../ParseSpecTest.html">ParseSpecTest</a></li>
+        
+          <li><a href="../ParseSpecsController.html">ParseSpecsController</a></li>
+        
+          <li><a href="../ParseSpecsControllerTest.html">ParseSpecsControllerTest</a></li>
+        
+          <li><a href="../ParseSpecsHelper.html">ParseSpecsHelper</a></li>
+        
+          <li><a href="../Port.html">Port</a></li>
+        
+          <li><a href="../PortsController.html">PortsController</a></li>
+        
+          <li><a href="../PortsHelper.html">PortsHelper</a></li>
+        
+          <li><a href="../Production.html">Production</a></li>
+        
+          <li><a href="../ProductionFtp.html">ProductionFtp</a></li>
+        
+          <li><a href="../ProductionFtpTest.html">ProductionFtpTest</a></li>
+        
+          <li><a href="../ProductionFtpsController.html">ProductionFtpsController</a></li>
+        
+          <li><a href="../ProductionFtpsControllerTest.html">ProductionFtpsControllerTest</a></li>
+        
+          <li><a href="../ProductionFtpsHelper.html">ProductionFtpsHelper</a></li>
+        
+          <li><a href="../ProductionFtpsHelperTest.html">ProductionFtpsHelperTest</a></li>
+        
+          <li><a href="../ProductionTest.html">ProductionTest</a></li>
+        
+          <li><a href="../ProductionsController.html">ProductionsController</a></li>
+        
+          <li><a href="../ProductionsControllerTest.html">ProductionsControllerTest</a></li>
+        
+          <li><a href="../ProductionsHelper.html">ProductionsHelper</a></li>
+        
+          <li><a href="../RakeTest.html">RakeTest</a></li>
+        
+          <li><a href="../RegexpEdit.html">RegexpEdit</a></li>
+        
+          <li><a href="../RegexpParse.html">RegexpParse</a></li>
+        
+          <li><a href="../Router.html">Router</a></li>
+        
+          <li><a href="../RouterTest.html">RouterTest</a></li>
+        
+          <li><a href="../RoutersController.html">RoutersController</a></li>
+        
+          <li><a href="../RoutersControllerTest.html">RoutersControllerTest</a></li>
+        
+          <li><a href="../RoutersHelper.html">RoutersHelper</a></li>
+        
+          <li><a href="../RubyInterface.html">RubyInterface</a></li>
+        
+          <li><a href="../RubyInterfaceTest.html">RubyInterfaceTest</a></li>
+        
+          <li><a href="../RubyInterfacesController.html">RubyInterfacesController</a></li>
+        
+          <li><a href="../RubyInterfacesControllerTest.html">RubyInterfacesControllerTest</a></li>
+        
+          <li><a href="../RubyInterfacesHelper.html">RubyInterfacesHelper</a></li>
+        
+          <li><a href="../RubyInterfacesHelperTest.html">RubyInterfacesHelperTest</a></li>
+        
+          <li><a href="../ScalarArgument.html">ScalarArgument</a></li>
+        
+          <li><a href="../ScalarArgumentTest.html">ScalarArgumentTest</a></li>
+        
+          <li><a href="../ScalarArgumentsController.html">ScalarArgumentsController</a></li>
+        
+          <li><a href="../ScalarArgumentsControllerTest.html">ScalarArgumentsControllerTest</a></li>
+        
+          <li><a href="../ScalarArgumentsHelper.html">ScalarArgumentsHelper</a></li>
+        
+          <li><a href="../ScalarArgumentsHelperTest.html">ScalarArgumentsHelperTest</a></li>
+        
+          <li><a href="../Set.html">Set</a></li>
+        
+          <li><a href="../Squeeze_Display.html">Squeeze_Display</a></li>
+        
+          <li><a href="../Station.html">Station</a></li>
+        
+          <li><a href="../StationsController.html">StationsController</a></li>
+        
+          <li><a href="../StationsHelper.html">StationsHelper</a></li>
+        
+          <li><a href="../StreamLink.html">StreamLink</a></li>
+        
+          <li><a href="../StreamLinkTest.html">StreamLinkTest</a></li>
+        
+          <li><a href="../StreamLinksController.html">StreamLinksController</a></li>
+        
+          <li><a href="../StreamLinksControllerTest.html">StreamLinksControllerTest</a></li>
+        
+          <li><a href="../StreamLinksHelper.html">StreamLinksHelper</a></li>
+        
+          <li><a href="../StreamLinksHelperTest.html">StreamLinksHelperTest</a></li>
+        
+          <li><a href="../StreamMethod.html">StreamMethod</a></li>
+        
+          <li><a href="../StreamMethodArgument.html">StreamMethodArgument</a></li>
+        
+          <li><a href="../StreamMethodArgumentTest.html">StreamMethodArgumentTest</a></li>
+        
+          <li><a href="../StreamMethodArgumentsController.html">StreamMethodArgumentsController</a></li>
+        
+          <li><a href="../StreamMethodArgumentsControllerTest.html">StreamMethodArgumentsControllerTest</a></li>
+        
+          <li><a href="../StreamMethodArgumentsHelper.html">StreamMethodArgumentsHelper</a></li>
+        
+          <li><a href="../StreamMethodArgumentsHelperTest.html">StreamMethodArgumentsHelperTest</a></li>
+        
+          <li><a href="../StreamMethodCall.html">StreamMethodCall</a></li>
+        
+          <li><a href="../StreamMethodCallTest.html">StreamMethodCallTest</a></li>
+        
+          <li><a href="../StreamMethodCallsController.html">StreamMethodCallsController</a></li>
+        
+          <li><a href="../StreamMethodCallsControllerTest.html">StreamMethodCallsControllerTest</a></li>
+        
+          <li><a href="../StreamMethodCallsHelper.html">StreamMethodCallsHelper</a></li>
+        
+          <li><a href="../StreamMethodCallsHelperTest.html">StreamMethodCallsHelperTest</a></li>
+        
+          <li><a href="../StreamMethodTest.html">StreamMethodTest</a></li>
+        
+          <li><a href="../StreamMethodsController.html">StreamMethodsController</a></li>
+        
+          <li><a href="../StreamMethodsControllerTest.html">StreamMethodsControllerTest</a></li>
+        
+          <li><a href="../StreamMethodsHelper.html">StreamMethodsHelper</a></li>
+        
+          <li><a href="../StreamMethodsHelperTest.html">StreamMethodsHelperTest</a></li>
+        
+          <li><a href="../StreamParameter.html">StreamParameter</a></li>
+        
+          <li><a href="../StreamParameterTest.html">StreamParameterTest</a></li>
+        
+          <li><a href="../StreamParametersController.html">StreamParametersController</a></li>
+        
+          <li><a href="../StreamParametersControllerTest.html">StreamParametersControllerTest</a></li>
+        
+          <li><a href="../StreamParametersHelper.html">StreamParametersHelper</a></li>
+        
+          <li><a href="../StreamParametersHelperTest.html">StreamParametersHelperTest</a></li>
+        
+          <li><a href="../StreamPattern.html">StreamPattern</a></li>
+        
+          <li><a href="../StreamPatternArgument.html">StreamPatternArgument</a></li>
+        
+          <li><a href="../StreamPatternArgumentTest.html">StreamPatternArgumentTest</a></li>
+        
+          <li><a href="../StreamPatternArgumentsController.html">StreamPatternArgumentsController</a></li>
+        
+          <li><a href="../StreamPatternArgumentsControllerTest.html">StreamPatternArgumentsControllerTest</a></li>
+        
+          <li><a href="../StreamPatternArgumentsHelper.html">StreamPatternArgumentsHelper</a></li>
+        
+          <li><a href="../StreamPatternArgumentsHelperTest.html">StreamPatternArgumentsHelperTest</a></li>
+        
+          <li><a href="../StreamPatternTest.html">StreamPatternTest</a></li>
+        
+          <li><a href="../StreamPatternsController.html">StreamPatternsController</a></li>
+        
+          <li><a href="../StreamPatternsControllerTest.html">StreamPatternsControllerTest</a></li>
+        
+          <li><a href="../StreamPatternsHelper.html">StreamPatternsHelper</a></li>
+        
+          <li><a href="../StreamPatternsHelperTest.html">StreamPatternsHelperTest</a></li>
+        
+          <li><a href="../TableSpec.html">TableSpec</a></li>
+        
+          <li><a href="../TableSpecTest.html">TableSpecTest</a></li>
+        
+          <li><a href="../TableSpecsController.html">TableSpecsController</a></li>
+        
+          <li><a href="../TableSpecsControllerTest.html">TableSpecsControllerTest</a></li>
+        
+          <li><a href="../TableSpecsHelper.html">TableSpecsHelper</a></li>
+        
+          <li><a href="../TedprimariesController.html">TedprimariesController</a></li>
+        
+          <li><a href="../TedprimariesControllerTest.html">TedprimariesControllerTest</a></li>
+        
+          <li><a href="../TedprimariesHelper.html">TedprimariesHelper</a></li>
+        
+          <li><a href="../Tedprimary.html">Tedprimary</a></li>
+        
+          <li><a href="../TedprimaryTest.html">TedprimaryTest</a></li>
+        
+          <li><a href="../TestClass.html">TestClass</a></li>
+        
+          <li><a href="../TestHelperTest.html">TestHelperTest</a></li>
+        
+          <li><a href="../TestRun.html">TestRun</a></li>
+        
+          <li><a href="../TestRunTest.html">TestRunTest</a></li>
+        
+          <li><a href="../TestRunsController.html">TestRunsController</a></li>
+        
+          <li><a href="../TestRunsControllerTest.html">TestRunsControllerTest</a></li>
+        
+          <li><a href="../TestRunsHelper.html">TestRunsHelper</a></li>
+        
+          <li><a href="../TestRunsHelperTest.html">TestRunsHelperTest</a></li>
+        
+          <li><a href="../TestTable.html">TestTable</a></li>
+        
+          <li><a href="../Test_Acquisition.html">Test_Acquisition</a></li>
+        
+          <li><a href="../Test_Assertion.html">Test_Assertion</a></li>
+        
+          <li><a href="../Test_Generic.html">Test_Generic</a></li>
+        
+          <li><a href="../TestingFilePatternsTest.html">TestingFilePatternsTest</a></li>
+        
+          <li><a href="../Transaction.html">Transaction</a></li>
+        
+          <li><a href="../TransactionTest.html">TransactionTest</a></li>
+        
+          <li><a href="../TransactionsController.html">TransactionsController</a></li>
+        
+          <li><a href="../TransactionsHelper.html">TransactionsHelper</a></li>
+        
+          <li><a href="../Transfer.html">Transfer</a></li>
+        
+          <li><a href="../TransfersController.html">TransfersController</a></li>
+        
+          <li><a href="../TransfersControllerTest.html">TransfersControllerTest</a></li>
+        
+          <li><a href="../TransfersHelper.html">TransfersHelper</a></li>
+        
+          <li><a href="../Url.html">Url</a></li>
+        
+          <li><a href="../UrlTest.html">UrlTest</a></li>
+        
+          <li><a href="../UrlsController.html">UrlsController</a></li>
+        
+          <li><a href="../UrlsControllerTest.html">UrlsControllerTest</a></li>
+        
+          <li><a href="../UrlsHelper.html">UrlsHelper</a></li>
+        
+          <li><a href="../UrlsHelperTest.html">UrlsHelperTest</a></li>
+        
+          <li><a href="../Weather.html">Weather</a></li>
+        
+          <li><a href="../WeatherTest.html">WeatherTest</a></li>
+        
+          <li><a href="../WeathersController.html">WeathersController</a></li>
+        
+          <li><a href="../WeathersControllerTest.html">WeathersControllerTest</a></li>
+        
+          <li><a href="../WeathersHelper.html">WeathersHelper</a></li>
+        
+          <li><a href="../WiredLocation.html">WiredLocation</a></li>
+        
+          <li><a href="../WiredLocationTest.html">WiredLocationTest</a></li>
+        
+          <li><a href="../WiredLocationsController.html">WiredLocationsController</a></li>
+        
+          <li><a href="../WiredLocationsControllerTest.html">WiredLocationsControllerTest</a></li>
+        
+          <li><a href="../WiredLocationsHelper.html">WiredLocationsHelper</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">ActiveRecord::Base</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="associated_foreign_key_name-method" class="method-detail ">
+          <a name="method-c-associated_foreign_key_name"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">associated_foreign_key_name</span><span
+              class="method-args">(association_referenced_by_foreign_key)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="associated_foreign_key_name-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">associated_foreign_key_name</span>(<span class="ruby-identifier">association_referenced_by_foreign_key</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">association_referenced_by_foreign_key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Association #{association_referenced_by_foreign_key.to_s.singularize} is not an association of #{self.name}.&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-identifier">many_to_one_foreign_keys</span>=<span class="ruby-identifier">foreign_key_names</span>
+        <span class="ruby-identifier">matchingAssNames</span>=<span class="ruby-identifier">many_to_one_foreign_keys</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">fk</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">ass</span>=<span class="ruby-identifier">fk</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-4</span>].<span class="ruby-identifier">to_sym</span>
+                <span class="ruby-identifier">ass</span><span class="ruby-operator">==</span><span class="ruby-identifier">association_referenced_by_foreign_key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#end</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">matchingAssNames</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">0</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Association #{association_referenced_by_foreign_key} does not have a corresponding foreign key in association #{self.name}.&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">matchingAssNames</span>.<span class="ruby-identifier">first</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- associated_foreign_key_name-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- associated_foreign_key_name-method -->
+
+      
+        <div id="association_class-method" class="method-detail ">
+          <a name="method-c-association_class"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_class</span><span
+              class="method-args">(assName)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_class-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_class</span>(<span class="ruby-identifier">assName</span>)
+         <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">association_method_symbol</span>(<span class="ruby-identifier">assName</span>)) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;#{association_method_symbol(assName)} is not an association of #{self.name}.&quot;</span>
+        <span class="ruby-keyword">else</span>
+                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">class_of_name</span>(<span class="ruby-identifier">assName</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_class-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_class-method -->
+
+      
+        <div id="association_grep-method" class="method-detail ">
+          <a name="method-c-association_grep"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_grep</span><span
+              class="method-args">(model_regexp_string,association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_grep-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_grep</span>(<span class="ruby-identifier">model_regexp_string</span>,<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">model_grep</span>(<span class="ruby-node">&quot;^#{model_regexp_string} :#{association_name}&quot;</span> )
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_grep-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_grep-method -->
+
+      
+        <div id="association_macro_type-method" class="method-detail ">
+          <a name="method-c-association_macro_type"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_macro_type</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_macro_type-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 216</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_macro_type</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">if</span>  <span class="ruby-identifier">has_many_association?</span>(<span class="ruby-identifier">association_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-value">:has_many</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">belongs_to_association?</span>(<span class="ruby-identifier">association_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-value">:belongs_to</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-value">:neither_has_many_nor_belongs_to</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_macro_type-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_macro_type-method -->
+
+      
+        <div id="association_method_plurality-method" class="method-detail ">
+          <a name="method-c-association_method_plurality"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_method_plurality</span><span
+              class="method-args">(association_table_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_method_plurality-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 171</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_method_plurality</span>(<span class="ruby-identifier">association_table_name</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>(<span class="ruby-identifier">association_table_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>(<span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>(<span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">else</span> <span class="ruby-comment"># don't know what to do; most likely cure</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_method_plurality-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_method_plurality-method -->
+
+      
+        <div id="association_method_symbol-method" class="method-detail ">
+          <a name="method-c-association_method_symbol"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_method_symbol</span><span
+              class="method-args">(association_table_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_method_symbol-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 193</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_method_symbol</span>(<span class="ruby-identifier">association_table_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_method_plurality</span>(<span class="ruby-identifier">name_symbol</span>(<span class="ruby-identifier">association_table_name</span>))
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_method_symbol-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_method_symbol-method -->
+
+      
+        <div id="association_methods-method" class="method-detail ">
+          <a name="method-c-association_methods"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_methods</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_methods-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_methods</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">matching_instance_methods</span>(<span class="ruby-identifier">association_name</span>,<span class="ruby-keyword">false</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_methods-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_methods-method -->
+
+      
+        <div id="association_names-method" class="method-detail ">
+          <a name="method-c-association_names"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_names</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_names-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_names</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">is_association_to_one?</span>(<span class="ruby-identifier">m</span>) <span class="ruby-keyword">or</span> <span class="ruby-identifier">is_association_to_many?</span>(<span class="ruby-identifier">m</span>)}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_names-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_names-method -->
+
+      
+        <div id="association_names_to_many-method" class="method-detail ">
+          <a name="method-c-association_names_to_many"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_names_to_many</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_names_to_many-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 147</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_names_to_many</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">is_association_to_many?</span>(<span class="ruby-identifier">m</span>)}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_names_to_many-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_names_to_many-method -->
+
+      
+        <div id="association_names_to_one-method" class="method-detail ">
+          <a name="method-c-association_names_to_one"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_names_to_one</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_names_to_one-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_names_to_one</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">is_association_to_one?</span>(<span class="ruby-identifier">m</span>)}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_names_to_one-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_names_to_one-method -->
+
+      
+        <div id="association_patterns-method" class="method-detail ">
+          <a name="method-c-association_patterns"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_patterns</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_patterns-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_patterns</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-identifier">patterns</span>=<span class="ruby-identifier">association_methods</span>(<span class="ruby-identifier">association_name</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> 
+                <span class="ruby-identifier">matchData</span>=<span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">association_name</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">match</span>(<span class="ruby-identifier">n</span>)
+                <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'^'</span><span class="ruby-operator">+</span><span class="ruby-identifier">matchData</span>.<span class="ruby-identifier">pre_match</span><span class="ruby-operator">+</span><span class="ruby-string">'([a-z0-9_]+)'</span><span class="ruby-operator">+</span><span class="ruby-identifier">matchData</span>.<span class="ruby-identifier">post_match</span><span class="ruby-operator">+</span><span class="ruby-string">'$'</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#map</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">patterns</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_patterns-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_patterns-method -->
+
+      
+        <div id="association_to_type-method" class="method-detail ">
+          <a name="method-c-association_to_type"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_to_type</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_to_type-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 207</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_to_type</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_association_to_one?</span>(<span class="ruby-identifier">association_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-value">:to_one</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_association_to_many?</span>(<span class="ruby-identifier">association_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-value">:to_many</span>
+        <span class="ruby-keyword">else</span> 
+                <span class="ruby-keyword">return</span> <span class="ruby-value">:not_an_association</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_to_type-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_to_type-method -->
+
+      
+        <div id="association_type-method" class="method-detail ">
+          <a name="method-c-association_type"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_type</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_type-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 225</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">association_type</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">return</span> (<span class="ruby-identifier">association_to_type</span>(<span class="ruby-identifier">association_name</span>).<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">'_'</span><span class="ruby-operator">+</span><span class="ruby-identifier">association_macro_type</span>(<span class="ruby-identifier">association_name</span>).<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">to_sym</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_type-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_type-method -->
+
+      
+        <div id="attribute_ddl-method" class="method-detail ">
+          <a name="method-c-attribute_ddl"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">attribute_ddl</span><span
+              class="method-args">(attribute_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>def Base.logical_primary_key</p>
+
+<pre>return column_names</pre>
+
+<p>end logical_primary_key</p>
+            
+
+            
+            <div class="method-source-code" id="attribute_ddl-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 238</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">attribute_ddl</span>(<span class="ruby-identifier">attribute_name</span>)
+        <span class="ruby-identifier">table_sql</span>= <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_sql</span>
+        <span class="ruby-identifier">attribute_sql</span>=<span class="ruby-identifier">table_sql</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-identifier">attribute_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">attribute_sql</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- attribute_ddl-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- attribute_ddl-method -->
+
+      
+        <div id="attribute_type-method" class="method-detail ">
+          <a name="method-c-attribute_type"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">attribute_type</span><span
+              class="method-args">(attribute_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="attribute_type-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 244</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">attribute_type</span>(<span class="ruby-identifier">attribute_name</span>)
+        <span class="ruby-identifier">table_sql</span>= <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_sql</span>
+        <span class="ruby-identifier">attribute_sql</span>=<span class="ruby-identifier">table_sql</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-identifier">attribute_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">attribute_sql</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- attribute_type-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- attribute_type-method -->
+
+      
+        <div id="belongs_to_association-3F-method" class="method-detail ">
+          <a name="method-c-belongs_to_association-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">belongs_to_association?</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="belongs_to_association-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">belongs_to_association?</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">system</span>(<span class="ruby-identifier">association_grep</span>(<span class="ruby-string">'belongs_to'</span>,<span class="ruby-identifier">association_name</span>))
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- belongs_to_association-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- belongs_to_association-3F-method -->
+
+      
+        <div id="candidate_logical_keys_from_indexes-method" class="method-detail ">
+          <a name="method-c-candidate_logical_keys_from_indexes"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">candidate_logical_keys_from_indexes</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="candidate_logical_keys_from_indexes-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 249</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">candidate_logical_keys_from_indexes</span>
+        <span class="ruby-identifier">indexes</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">indexes</span> <span class="ruby-operator">!=</span> [] <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">indexes</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+                                <span class="ruby-identifier">i</span>.<span class="ruby-identifier">columns</span>
+                        <span class="ruby-keyword">end</span> <span class="ruby-comment">#map</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- candidate_logical_keys_from_indexes-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- candidate_logical_keys_from_indexes-method -->
+
+      
+        <div id="class_of_name-method" class="method-detail ">
+          <a name="method-c-class_of_name"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">class_of_name</span><span
+              class="method-args">(name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="class_of_name-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 196</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">class_of_name</span>(<span class="ruby-identifier">name</span>)
+         <span class="ruby-keyword">return</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- class_of_name-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- class_of_name-method -->
+
+      
+        <div id="foreign_key_association_names-method" class="method-detail ">
+          <a name="method-c-foreign_key_association_names"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">foreign_key_association_names</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="foreign_key_association_names-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">foreign_key_association_names</span>
+        <span class="ruby-identifier">foreign_key_names</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">fk</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fk</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/_id$/</span>,<span class="ruby-string">''</span>)}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- foreign_key_association_names-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- foreign_key_association_names-method -->
+
+      
+        <div id="foreign_key_names-method" class="method-detail ">
+          <a name="method-c-foreign_key_names"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">foreign_key_names</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="foreign_key_names-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">foreign_key_names</span>
+        <span class="ruby-identifier">content_column_names</span>=<span class="ruby-identifier">content_columns</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">name</span>}
+<span class="ruby-comment">#       puts &quot;@content_column_names.inspect=#{@content_column_names.inspect}&quot;</span>
+        <span class="ruby-identifier">special_columns</span>=<span class="ruby-identifier">column_names</span><span class="ruby-operator">-</span><span class="ruby-identifier">content_column_names</span>
+<span class="ruby-comment">#       puts &quot;@special_columns.inspect=#{@special_columns.inspect}&quot;</span>
+        <span class="ruby-identifier">possible_foreign_keys</span>=<span class="ruby-identifier">special_columns</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/_id$/</span> }
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">possible_foreign_keys</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- foreign_key_names-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- foreign_key_names-method -->
+
+      
+        <div id="has_many_association-3F-method" class="method-detail ">
+          <a name="method-c-has_many_association-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">has_many_association?</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="has_many_association-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 165</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">has_many_association?</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">system</span>(<span class="ruby-identifier">association_grep</span>(<span class="ruby-string">'has_many'</span>,<span class="ruby-identifier">association_name</span>))
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- has_many_association-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- has_many_association-3F-method -->
+
+      
+        <div id="header_html-method" class="method-detail ">
+          <a name="method-c-header_html"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">header_html</span><span
+              class="method-args">(column_order=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="header_html-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">header_html</span>(<span class="ruby-identifier">column_order</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">column_order</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">column_order</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">column_names</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-identifier">ret</span>=<span class="ruby-string">&quot;&lt;tr&gt;&quot;</span>
+        <span class="ruby-identifier">column_order</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">'&lt;th&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">header</span><span class="ruby-operator">+</span><span class="ruby-string">'&lt;/th&gt;'</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/tr&gt;&quot;</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- header_html-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- header_html-method -->
+
+      
+        <div id="is_active_record_method-3F-method" class="method-detail ">
+          <a name="method-c-is_active_record_method-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_active_record_method?</span><span
+              class="method-args">(method_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_active_record_method-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 228</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_active_record_method?</span>(<span class="ruby-identifier">method_name</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">instance_methods_from_class</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">method_name</span>.<span class="ruby-identifier">to_s</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_active_record_method-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_active_record_method-3F-method -->
+
+      
+        <div id="is_association-3F-method" class="method-detail ">
+          <a name="method-c-is_association-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_association?</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_association-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-comment"># Don’t create associations that have the same name as instance methods of ActiveRecord::Base.</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">instance_methods_from_class</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">association_name</span>.<span class="ruby-identifier">to_s</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;# Don’t create associations that have the same name (#{association_name.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class}).&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">association_name</span>.<span class="ruby-identifier">to_s</span>[<span class="ruby-value">-4</span>,<span class="ruby-value">4</span>]<span class="ruby-operator">==</span><span class="ruby-string">'_ids'</span> <span class="ruby-keyword">then</span> <span class="ruby-comment"># automatically generated</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>(<span class="ruby-identifier">association_name</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>((<span class="ruby-identifier">association_name</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">'='</span>).<span class="ruby-identifier">to_sym</span>)  <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_association-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_association-3F-method -->
+
+      
+        <div id="is_association_patterns-3F-method" class="method-detail ">
+          <a name="method-c-is_association_patterns-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_association_patterns?</span><span
+              class="method-args">(association_name,association_patterns)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_association_patterns-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_association_patterns?</span>(<span class="ruby-identifier">association_name</span>,<span class="ruby-identifier">association_patterns</span>)
+        (<span class="ruby-identifier">association_patterns</span>(<span class="ruby-identifier">association_name</span>)<span class="ruby-operator">-</span><span class="ruby-identifier">association_patterns</span>.<span class="ruby-identifier">to_a</span>).<span class="ruby-identifier">empty?</span><span class="ruby-operator">&amp;&amp;</span>
+        (<span class="ruby-identifier">association_patterns</span><span class="ruby-operator">-</span><span class="ruby-identifier">association_patterns</span>(<span class="ruby-identifier">association_name</span>).<span class="ruby-identifier">to_a</span>).<span class="ruby-identifier">empty?</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_association_patterns-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_association_patterns-3F-method -->
+
+      
+        <div id="is_association_to_many-3F-method" class="method-detail ">
+          <a name="method-c-is_association_to_many-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_association_to_many?</span><span
+              class="method-args">(assName)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_association_to_many-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_association_to_many?</span>(<span class="ruby-identifier">assName</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">assName</span>)  <span class="ruby-keyword">and</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>((<span class="ruby-identifier">assName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span><span class="ruby-operator">+</span><span class="ruby-string">'_ids'</span>).<span class="ruby-identifier">to_sym</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>((<span class="ruby-identifier">assName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span><span class="ruby-operator">+</span><span class="ruby-string">'_ids='</span>).<span class="ruby-identifier">to_sym</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_association_to_many-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_association_to_many-3F-method -->
+
+      
+        <div id="is_association_to_one-3F-method" class="method-detail ">
+          <a name="method-c-is_association_to_one-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_association_to_one?</span><span
+              class="method-args">(assName)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_association_to_one-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_association_to_one?</span>(<span class="ruby-identifier">assName</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">assName</span>)  <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>((<span class="ruby-identifier">assName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span><span class="ruby-operator">+</span><span class="ruby-string">'_ids'</span>).<span class="ruby-identifier">to_sym</span>) <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_respond_to?</span>((<span class="ruby-identifier">assName</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span><span class="ruby-operator">+</span><span class="ruby-string">'_ids='</span>).<span class="ruby-identifier">to_sym</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_association_to_one-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_association_to_one-3F-method -->
+
+      
+        <div id="is_logical_primary_key-3F-method" class="method-detail ">
+          <a name="method-c-is_logical_primary_key-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_logical_primary_key?</span><span
+              class="method-args">(attribute_names)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_logical_primary_key-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 262</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_logical_primary_key?</span>(<span class="ruby-identifier">attribute_names</span>)
+        <span class="ruby-identifier">quoted_primary_key</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:logical_primary_key</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-constant">Set</span>[<span class="ruby-identifier">logical_primary_key</span>]<span class="ruby-operator">==</span><span class="ruby-constant">Set</span>[<span class="ruby-identifier">attribute_names</span>] <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-identifier">attribute_names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attribute_name</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">attribute_name</span>=<span class="ruby-string">'id'</span> <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">column_names</span>.<span class="ruby-identifier">include</span>(<span class="ruby-identifier">attribute_name</span>.<span class="ruby-identifier">to_s</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#IF       </span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">count</span><span class="ruby-operator">==</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">count</span>(<span class="ruby-value">:distinct</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:select</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">attribute_names</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-comment"># if we get here</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_logical_primary_key-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_logical_primary_key-3F-method -->
+
+      
+        <div id="is_matching_association-3F-method" class="method-detail ">
+          <a name="method-c-is_matching_association-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_matching_association?</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_matching_association-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_matching_association?</span>(<span class="ruby-identifier">association_name</span>)
+         <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">association_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">association_class</span>=<span class="ruby-identifier">association_class</span>(<span class="ruby-identifier">association_name</span>)
+                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">association_class</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Association #{association_name.classify} is not a defined constant.&quot;</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                <span class="ruby-identifier">table_symbol</span>=<span class="ruby-identifier">association_class</span>.<span class="ruby-identifier">association_method_symbol</span>(<span class="ruby-keyword">self</span>)
+                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">association_class</span>.<span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">table_symbol</span>) <span class="ruby-keyword">then</span>
+                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">association_class</span>.<span class="ruby-identifier">is_association?</span>(<span class="ruby-identifier">association_method_symbol</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">singularize</span>.<span class="ruby-identifier">to_sym</span>))  <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">else</span>
+                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_matching_association-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_matching_association-3F-method -->
+
+      
+        <div id="is_polymorphic_association-3F-method" class="method-detail ">
+          <a name="method-c-is_polymorphic_association-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_polymorphic_association?</span><span
+              class="method-args">(association_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_polymorphic_association-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 141</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">is_polymorphic_association?</span>(<span class="ruby-identifier">association_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">is_association_patterns?</span>(<span class="ruby-identifier">association_name</span>,<span class="ruby-identifier">@@Example_polymorphic_patterns</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_polymorphic_association-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_polymorphic_association-3F-method -->
+
+      
+        <div id="logical_attributes-method" class="method-detail ">
+          <a name="method-c-logical_attributes"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">logical_attributes</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="logical_attributes-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 259</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">logical_attributes</span>
+        <span class="ruby-keyword">return</span> (<span class="ruby-identifier">column_names</span><span class="ruby-operator">-</span>[<span class="ruby-string">'id'</span>,<span class="ruby-string">'created_at'</span>,<span class="ruby-string">'updated_at'</span>]).<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span><span class="ruby-identifier">attribute_type</span>(<span class="ruby-identifier">name</span>)<span class="ruby-operator">!=</span><span class="ruby-value">:real</span>}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- logical_attributes-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- logical_attributes-method -->
+
+      
+        <div id="match_association_patterns-3F-method" class="method-detail ">
+          <a name="method-c-match_association_patterns-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">match_association_patterns?</span><span
+              class="method-args">(association_name,association_pattern)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="match_association_patterns-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">match_association_patterns?</span>(<span class="ruby-identifier">association_name</span>,<span class="ruby-identifier">association_pattern</span>)
+        <span class="ruby-identifier">patterns</span>=<span class="ruby-identifier">association_methods</span>(<span class="ruby-identifier">association_name</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> 
+                <span class="ruby-identifier">matchData</span>=<span class="ruby-identifier">association_pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">association_pattern</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#map</span>
+        
+        <span class="ruby-identifier">instance_respond_to?</span>(<span class="ruby-identifier">association_name</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- match_association_patterns-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- match_association_patterns-3F-method -->
+
+      
+        <div id="model_file_name-method" class="method-detail ">
+          <a name="method-c-model_file_name"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">model_file_name</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="model_file_name-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">model_file_name</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;app/models/#{name.tableize.singularize}.rb&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- model_file_name-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- model_file_name-method -->
+
+      
+        <div id="model_grep-method" class="method-detail ">
+          <a name="method-c-model_grep"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">model_grep</span><span
+              class="method-args">(model_regexp_string)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="model_grep-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 156</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">model_grep</span>(<span class="ruby-identifier">model_regexp_string</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">rails_MVC_class?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;#{self.name}.model_grep only works on Rails MVC.&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;grep \&quot;#{model_regexp_string}\&quot; #{model_file_name} &amp;&gt;/dev/null&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- model_grep-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- model_grep-method -->
+
+      
+        <div id="name_symbol-method" class="method-detail ">
+          <a name="method-c-name_symbol"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">name_symbol</span><span
+              class="method-args">(association_table_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="name_symbol-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 182</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">name_symbol</span>(<span class="ruby-identifier">association_table_name</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Class</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">to_sym</span>                                    
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">String</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_sym</span>                                          
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">else</span> <span class="ruby-comment"># other object</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_table_name</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- name_symbol-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- name_symbol-method -->
+
+      
+        <div id="sequential_id-3F-method" class="method-detail ">
+          <a name="method-c-sequential_id-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sequential_id?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="sequential_id-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 284</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">sequential_id?</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:logical_primary_key</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">logical_primary_key</span><span class="ruby-operator">==</span>[<span class="ruby-value">:created_at</span>] <span class="ruby-keyword">then</span> <span class="ruby-comment"># still sequential, not requred, default</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-comment"># better sequential key</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-comment"># logical primary key</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">else</span> <span class="ruby-comment"># default to sequential id if not specified</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>  
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sequential_id-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sequential_id-3F-method -->
+
+      
+        <div id="table_html-method" class="method-detail ">
+          <a name="method-c-table_html"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">table_html</span><span
+              class="method-args">(column_order=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="table_html-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">table_html</span>(<span class="ruby-identifier">column_order</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">column_order</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">column_order</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">column_names</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-identifier">ret</span>=<span class="ruby-string">&quot;&lt;table&gt;&quot;</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-identifier">header_html</span>(<span class="ruby-identifier">column_order</span>)
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-identifier">row</span>.<span class="ruby-identifier">row_html</span>(<span class="ruby-identifier">column_order</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/table&gt;&quot;</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- table_html-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- table_html-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="associated_foreign_key_records-method" class="method-detail ">
+          <a name="method-i-associated_foreign_key_records"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">associated_foreign_key_records</span><span
+              class="method-args">(association_with_foreign_key)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>find</p>
+            
+
+            
+            <div class="method-source-code" id="associated_foreign_key_records-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">associated_foreign_key_records</span>(<span class="ruby-identifier">association_with_foreign_key</span>)
+        <span class="ruby-identifier">class_with_foreign_key</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">association_class</span>(<span class="ruby-identifier">association_with_foreign_key</span>)
+        <span class="ruby-identifier">foreign_key_symbol</span>=<span class="ruby-identifier">class_with_foreign_key</span>.<span class="ruby-identifier">associated_foreign_key_name</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>)
+        <span class="ruby-identifier">associated_records</span>=<span class="ruby-identifier">class_with_foreign_key</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">foreign_key_symbol</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>[<span class="ruby-value">:id</span>])
+
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">associated_records</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- associated_foreign_key_records-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- associated_foreign_key_records-method -->
+
+      
+        <div id="column_html-method" class="method-detail ">
+          <a name="method-i-column_html"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">column_html</span><span
+              class="method-args">(column_symbol)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="column_html-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">column_html</span>(<span class="ruby-identifier">column_symbol</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>[<span class="ruby-identifier">column_symbol</span>].<span class="ruby-identifier">inspect</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- column_html-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- column_html-method -->
+
+      
+        <div id="logical_primary_key_value-method" class="method-detail ">
+          <a name="method-i-logical_primary_key_value"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">logical_primary_key_value</span><span
+              class="method-args">(delimiter=',')</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="logical_primary_key_value-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 295</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">logical_primary_key_value</span>(<span class="ruby-identifier">delimiter</span>=<span class="ruby-string">','</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">sequential_id?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:logical_primary_key</span>) <span class="ruby-keyword">then</span> <span class="ruby-comment"># still sequential, not requred, default</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>[<span class="ruby-value">:created_at</span>] <span class="ruby-comment"># better sequential key</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">id</span> <span class="ruby-comment"># logical primary key</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">logical_primary_key</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">logical_primary_key</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-keyword">self</span>[<span class="ruby-identifier">k</span>]}.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">delimiter</span>)
+                <span class="ruby-keyword">else</span> <span class="ruby-comment">#not array</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>[<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">logical_primary_key</span>]
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- logical_primary_key_value-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- logical_primary_key_value-method -->
+
+      
+        <div id="row_html-method" class="method-detail ">
+          <a name="method-i-row_html"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">row_html</span><span
+              class="method-args">(column_order=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="row_html-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">row_html</span>(<span class="ruby-identifier">column_order</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-string">&quot;&lt;tr&gt;&quot;</span>
+        <span class="ruby-identifier">column_order</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">'&lt;td&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">column_html</span>(<span class="ruby-identifier">col</span>).<span class="ruby-identifier">inspect</span><span class="ruby-operator">+</span><span class="ruby-string">'&lt;/td&gt;'</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/tr&gt;&quot;</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- row_html-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- row_html-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

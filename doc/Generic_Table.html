@@ -1,0 +1,2454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Module: Generic_Table</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="module">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./app/models/generic_table_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="app/models/generic_table.rb">app/models/generic_table.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-activeRecordTableNotCreatedYet-3F">::activeRecordTableNotCreatedYet?</a></li>
+          
+          <li><a href="#method-c-classDefiniton">::classDefiniton</a></li>
+          
+          <li><a href="#method-c-classReference">::classReference</a></li>
+          
+          <li><a href="#method-c-db2yaml">::db2yaml</a></li>
+          
+          <li><a href="#method-c-eval_constant">::eval_constant</a></li>
+          
+          <li><a href="#method-c-generic_table_class_names">::generic_table_class_names</a></li>
+          
+          <li><a href="#method-c-is_ActiveRecord_table-3F">::is_ActiveRecord_table?</a></li>
+          
+          <li><a href="#method-c-is_generic_table-3F">::is_generic_table?</a></li>
+          
+          <li><a href="#method-c-is_generic_table_name-3F">::is_generic_table_name?</a></li>
+          
+          <li><a href="#method-c-is_table-3F">::is_table?</a></li>
+          
+          <li><a href="#method-c-no_syntax_error-3F">::no_syntax_error?</a></li>
+          
+          <li><a href="#method-c-rails_MVC_class-3F">::rails_MVC_class?</a></li>
+          
+          <li><a href="#method-c-rubyClassName">::rubyClassName</a></li>
+          
+          <li><a href="#method-c-short_error_message">::short_error_message</a></li>
+          
+          <li><a href="#method-c-syntax_error">::syntax_error</a></li>
+          
+          <li><a href="#method-c-table_exists-3F">::table_exists?</a></li>
+          
+          <li><a href="#method-c-tables">::tables</a></li>
+          
+          <li><a href="#method-i-Match_and_strip">#Match_and_strip</a></li>
+          
+          <li><a href="#method-i-Require_Table">#Require_Table</a></li>
+          
+          <li><a href="#method-i-adaptiveAcquisition">#adaptiveAcquisition</a></li>
+          
+          <li><a href="#method-i-addColumn">#addColumn</a></li>
+          
+          <li><a href="#method-i-addPrefix">#addPrefix</a></li>
+          
+          <li><a href="#method-i-associated_to_s">#associated_to_s</a></li>
+          
+          <li><a href="#method-i-association_has_data">#association_has_data</a></li>
+          
+          <li><a href="#method-i-association_state">#association_state</a></li>
+          
+          <li><a href="#method-i-column_Definitions">#column_Definitions</a></li>
+          
+          <li><a href="#method-i-display">#display</a></li>
+          
+          <li><a href="#method-i-display_full_time">#display_full_time</a></li>
+          
+          <li><a href="#method-i-exclude">#exclude</a></li>
+          
+          <li><a href="#method-i-find_or_initialize">#find_or_initialize</a></li>
+          
+          <li><a href="#method-i-initFail">#initFail</a></li>
+          
+          <li><a href="#method-i-log">#log</a></li>
+          
+          <li><a href="#method-i-monitor">#monitor</a></li>
+          
+          <li><a href="#method-i-pg_table_exists-3F">#pg_table_exists?</a></li>
+          
+          <li><a href="#method-i-process">#process</a></li>
+          
+          <li><a href="#method-i-requireColumn">#requireColumn</a></li>
+          
+          <li><a href="#method-i-sample">#sample</a></li>
+          
+          <li><a href="#method-i-scaffold">#scaffold</a></li>
+          
+          <li><a href="#method-i-singularTableName">#singularTableName</a></li>
+          
+          <li><a href="#method-i-table2yaml">#table2yaml</a></li>
+          
+          <li><a href="#method-i-updateMaxTypeNum">#updateMaxTypeNum</a></li>
+          
+          <li><a href="#method-i-updates">#updates</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./ActiveRecord.html">ActiveRecord</a></li>
+        
+          <li><a href="./ActiveRecord/Base.html">ActiveRecord::Base</a></li>
+        
+          <li><a href="./ActiveSupport.html">ActiveSupport</a></li>
+        
+          <li><a href="./ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+        
+          <li><a href="./GlobalTest.html">GlobalTest</a></li>
+        
+          <li><a href="./GlobalTest/TestClass.html">GlobalTest::TestClass</a></li>
+        
+          <li><a href="./Module.html">Module</a></li>
+        
+          <li><a href="./Module/MixinClassMethods.html">Module::MixinClassMethods</a></li>
+        
+          <li><a href="./TransferTest.html">TransferTest</a></li>
+        
+          <li><a href="./TransferTest/Transfer.html">TransferTest::Transfer</a></li>
+        
+          <li><a href="./Account.html">Account</a></li>
+        
+          <li><a href="./AccountTest.html">AccountTest</a></li>
+        
+          <li><a href="./AccountsController.html">AccountsController</a></li>
+        
+          <li><a href="./AccountsControllerTest.html">AccountsControllerTest</a></li>
+        
+          <li><a href="./AccountsHelper.html">AccountsHelper</a></li>
+        
+          <li><a href="./AcquireAllObserver.html">AcquireAllObserver</a></li>
+        
+          <li><a href="./AcquireAllObserverTest.html">AcquireAllObserverTest</a></li>
+        
+          <li><a href="./Acquisition.html">Acquisition</a></li>
+        
+          <li><a href="./AcquisitionInterface.html">AcquisitionInterface</a></li>
+        
+          <li><a href="./AcquisitionInterfaceTest.html">AcquisitionInterfaceTest</a></li>
+        
+          <li><a href="./AcquisitionInterfacesController.html">AcquisitionInterfacesController</a></li>
+        
+          <li><a href="./AcquisitionInterfacesControllerTest.html">AcquisitionInterfacesControllerTest</a></li>
+        
+          <li><a href="./AcquisitionInterfacesHelper.html">AcquisitionInterfacesHelper</a></li>
+        
+          <li><a href="./AcquisitionStreamSpec.html">AcquisitionStreamSpec</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecTest.html">AcquisitionStreamSpecTest</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsController.html">AcquisitionStreamSpecsController</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsControllerTest.html">AcquisitionStreamSpecsControllerTest</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsHelper.html">AcquisitionStreamSpecsHelper</a></li>
+        
+          <li><a href="./AcquisitionsController.html">AcquisitionsController</a></li>
+        
+          <li><a href="./AcquisitionsControllerTest.html">AcquisitionsControllerTest</a></li>
+        
+          <li><a href="./AcquisitionsHelper.html">AcquisitionsHelper</a></li>
+        
+          <li><a href="./ApplicationController.html">ApplicationController</a></li>
+        
+          <li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+        
+          <li><a href="./ArelReadmeTest.html">ArelReadmeTest</a></li>
+        
+          <li><a href="./Breaker.html">Breaker</a></li>
+        
+          <li><a href="./BreakerTest.html">BreakerTest</a></li>
+        
+          <li><a href="./BreakersController.html">BreakersController</a></li>
+        
+          <li><a href="./BreakersControllerTest.html">BreakersControllerTest</a></li>
+        
+          <li><a href="./BreakersHelper.html">BreakersHelper</a></li>
+        
+          <li><a href="./BrowsingTest.html">BrowsingTest</a></li>
+        
+          <li><a href="./Bug.html">Bug</a></li>
+        
+          <li><a href="./BugTest.html">BugTest</a></li>
+        
+          <li><a href="./BugsController.html">BugsController</a></li>
+        
+          <li><a href="./BugsControllerTest.html">BugsControllerTest</a></li>
+        
+          <li><a href="./BugsHelper.html">BugsHelper</a></li>
+        
+          <li><a href="./BugsHelperTest.html">BugsHelperTest</a></li>
+        
+          <li><a href="./Class.html">Class</a></li>
+        
+          <li><a href="./CodeBase.html">CodeBase</a></li>
+        
+          <li><a href="./Edison.html">Edison</a></li>
+        
+          <li><a href="./EdisonTest.html">EdisonTest</a></li>
+        
+          <li><a href="./EdisonsController.html">EdisonsController</a></li>
+        
+          <li><a href="./EdisonsControllerTest.html">EdisonsControllerTest</a></li>
+        
+          <li><a href="./EdisonsHelper.html">EdisonsHelper</a></li>
+        
+          <li><a href="./EmptyAssociatedModel.html">EmptyAssociatedModel</a></li>
+        
+          <li><a href="./EmptyClass.html">EmptyClass</a></li>
+        
+          <li><a href="./ErrorType.html">ErrorType</a></li>
+        
+          <li><a href="./ErrorTypeTest.html">ErrorTypeTest</a></li>
+        
+          <li><a href="./ErrorTypesController.html">ErrorTypesController</a></li>
+        
+          <li><a href="./ErrorTypesControllerTest.html">ErrorTypesControllerTest</a></li>
+        
+          <li><a href="./ErrorTypesHelper.html">ErrorTypesHelper</a></li>
+        
+          <li><a href="./ErrorTypesHelperTest.html">ErrorTypesHelperTest</a></li>
+        
+          <li><a href="./ExampleType.html">ExampleType</a></li>
+        
+          <li><a href="./ExampleTypeTest.html">ExampleTypeTest</a></li>
+        
+          <li><a href="./ExampleTypesController.html">ExampleTypesController</a></li>
+        
+          <li><a href="./ExampleTypesControllerTest.html">ExampleTypesControllerTest</a></li>
+        
+          <li><a href="./ExampleTypesHelper.html">ExampleTypesHelper</a></li>
+        
+          <li><a href="./ExampleTypesHelperTest.html">ExampleTypesHelperTest</a></li>
+        
+          <li><a href="./FrequenciesController.html">FrequenciesController</a></li>
+        
+          <li><a href="./FrequenciesControllerTest.html">FrequenciesControllerTest</a></li>
+        
+          <li><a href="./FrequenciesHelper.html">FrequenciesHelper</a></li>
+        
+          <li><a href="./Frequency.html">Frequency</a></li>
+        
+          <li><a href="./FrequencyTest.html">FrequencyTest</a></li>
+        
+          <li><a href="./FullAssociatedModel.html">FullAssociatedModel</a></li>
+        
+          <li><a href="./GenericAcquisition.html">GenericAcquisition</a></li>
+        
+          <li><a href="./GenericAcquisitionsController.html">GenericAcquisitionsController</a></li>
+        
+          <li><a href="./GenericAcquisitionsHelper.html">GenericAcquisitionsHelper</a></li>
+        
+          <li><a href="./GenericColumn.html">GenericColumn</a></li>
+        
+          <li><a href="./GenericColumnsController.html">GenericColumnsController</a></li>
+        
+          <li><a href="./GenericColumnsHelper.html">GenericColumnsHelper</a></li>
+        
+          <li><a href="./GenericRow.html">GenericRow</a></li>
+        
+          <li><a href="./GenericRowsController.html">GenericRowsController</a></li>
+        
+          <li><a href="./GenericRowsHelper.html">GenericRowsHelper</a></li>
+        
+          <li><a href="./GenericTableAssociatedModel.html">GenericTableAssociatedModel</a></li>
+        
+          <li><a href="./GenericTableTest.html">GenericTableTest</a></li>
+        
+          <li><a href="./GenericType.html">GenericType</a></li>
+        
+          <li><a href="./GenericTypeTest.html">GenericTypeTest</a></li>
+        
+          <li><a href="./GenericTypesController.html">GenericTypesController</a></li>
+        
+          <li><a href="./GenericTypesControllerTest.html">GenericTypesControllerTest</a></li>
+        
+          <li><a href="./GenericTypesHelper.html">GenericTypesHelper</a></li>
+        
+          <li><a href="./GenericTypesHelperTest.html">GenericTypesHelperTest</a></li>
+        
+          <li><a href="./Generic_Table.html">Generic_Table</a></li>
+        
+          <li><a href="./HalfAssociatedModel.html">HalfAssociatedModel</a></li>
+        
+          <li><a href="./HomeController.html">HomeController</a></li>
+        
+          <li><a href="./HomeControllerTest.html">HomeControllerTest</a></li>
+        
+          <li><a href="./HomeHelper.html">HomeHelper</a></li>
+        
+          <li><a href="./Host.html">Host</a></li>
+        
+          <li><a href="./HostTest.html">HostTest</a></li>
+        
+          <li><a href="./HostsController.html">HostsController</a></li>
+        
+          <li><a href="./HostsControllerTest.html">HostsControllerTest</a></li>
+        
+          <li><a href="./HostsHelper.html">HostsHelper</a></li>
+        
+          <li><a href="./HuelserieTest.html">HuelserieTest</a></li>
+        
+          <li><a href="./Huelseries.html">Huelseries</a></li>
+        
+          <li><a href="./HuelseriesController.html">HuelseriesController</a></li>
+        
+          <li><a href="./HuelseriesControllerTest.html">HuelseriesControllerTest</a></li>
+        
+          <li><a href="./HuelseriesHelper.html">HuelseriesHelper</a></li>
+        
+          <li><a href="./HuelseriesHelperTest.html">HuelseriesHelperTest</a></li>
+        
+          <li><a href="./Huelshow.html">Huelshow</a></li>
+        
+          <li><a href="./HuelshowTest.html">HuelshowTest</a></li>
+        
+          <li><a href="./HuelshowsController.html">HuelshowsController</a></li>
+        
+          <li><a href="./HuelshowsControllerTest.html">HuelshowsControllerTest</a></li>
+        
+          <li><a href="./HuelshowsHelper.html">HuelshowsHelper</a></li>
+        
+          <li><a href="./HuelshowsHelperTest.html">HuelshowsHelperTest</a></li>
+        
+          <li><a href="./Inline_Assertions.html">Inline_Assertions</a></li>
+        
+          <li><a href="./Inline_Assertions_Stubs.html">Inline_Assertions_Stubs</a></li>
+        
+          <li><a href="./Load.html">Load</a></li>
+        
+          <li><a href="./Loads.html">Loads</a></li>
+        
+          <li><a href="./Loads1.html">Loads1</a></li>
+        
+          <li><a href="./Loads1Test.html">Loads1Test</a></li>
+        
+          <li><a href="./Loads1sController.html">Loads1sController</a></li>
+        
+          <li><a href="./Loads1sHelper.html">Loads1sHelper</a></li>
+        
+          <li><a href="./LoadsController.html">LoadsController</a></li>
+        
+          <li><a href="./LoadsControllerTest.html">LoadsControllerTest</a></li>
+        
+          <li><a href="./LoadsHelper.html">LoadsHelper</a></li>
+        
+          <li><a href="./LoadsTest.html">LoadsTest</a></li>
+        
+          <li><a href="./Match_Addressing.html">Match_Addressing</a></li>
+        
+          <li><a href="./MatchedFilename.html">MatchedFilename</a></li>
+        
+          <li><a href="./Measurement.html">Measurement</a></li>
+        
+          <li><a href="./MeasurementTest.html">MeasurementTest</a></li>
+        
+          <li><a href="./MeasurementsController.html">MeasurementsController</a></li>
+        
+          <li><a href="./MeasurementsControllerTest.html">MeasurementsControllerTest</a></li>
+        
+          <li><a href="./MeasurementsHelper.html">MeasurementsHelper</a></li>
+        
+          <li><a href="./MethodModel.html">MethodModel</a></li>
+        
+          <li><a href="./Network.html">Network</a></li>
+        
+          <li><a href="./NetworksController.html">NetworksController</a></li>
+        
+          <li><a href="./NetworksHelper.html">NetworksHelper</a></li>
+        
+          <li><a href="./Nil_Class.html">Nil_Class</a></li>
+        
+          <li><a href="./NoDB.html">NoDB</a></li>
+        
+          <li><a href="./Node.html">Node</a></li>
+        
+          <li><a href="./NodeTest.html">NodeTest</a></li>
+        
+          <li><a href="./NodesController.html">NodesController</a></li>
+        
+          <li><a href="./NodesControllerTest.html">NodesControllerTest</a></li>
+        
+          <li><a href="./NodesHelper.html">NodesHelper</a></li>
+        
+          <li><a href="./Object.html">Object</a></li>
+        
+          <li><a href="./Ofx.html">Ofx</a></li>
+        
+          <li><a href="./OfxTest.html">OfxTest</a></li>
+        
+          <li><a href="./OfxesController.html">OfxesController</a></li>
+        
+          <li><a href="./OfxesControllerTest.html">OfxesControllerTest</a></li>
+        
+          <li><a href="./OfxesHelper.html">OfxesHelper</a></li>
+        
+          <li><a href="./OfxesHelperTest.html">OfxesHelperTest</a></li>
+        
+          <li><a href="./ParseSpec.html">ParseSpec</a></li>
+        
+          <li><a href="./ParseSpecTest.html">ParseSpecTest</a></li>
+        
+          <li><a href="./ParseSpecsController.html">ParseSpecsController</a></li>
+        
+          <li><a href="./ParseSpecsControllerTest.html">ParseSpecsControllerTest</a></li>
+        
+          <li><a href="./ParseSpecsHelper.html">ParseSpecsHelper</a></li>
+        
+          <li><a href="./Port.html">Port</a></li>
+        
+          <li><a href="./PortsController.html">PortsController</a></li>
+        
+          <li><a href="./PortsHelper.html">PortsHelper</a></li>
+        
+          <li><a href="./Production.html">Production</a></li>
+        
+          <li><a href="./ProductionFtp.html">ProductionFtp</a></li>
+        
+          <li><a href="./ProductionFtpTest.html">ProductionFtpTest</a></li>
+        
+          <li><a href="./ProductionFtpsController.html">ProductionFtpsController</a></li>
+        
+          <li><a href="./ProductionFtpsControllerTest.html">ProductionFtpsControllerTest</a></li>
+        
+          <li><a href="./ProductionFtpsHelper.html">ProductionFtpsHelper</a></li>
+        
+          <li><a href="./ProductionFtpsHelperTest.html">ProductionFtpsHelperTest</a></li>
+        
+          <li><a href="./ProductionTest.html">ProductionTest</a></li>
+        
+          <li><a href="./ProductionsController.html">ProductionsController</a></li>
+        
+          <li><a href="./ProductionsControllerTest.html">ProductionsControllerTest</a></li>
+        
+          <li><a href="./ProductionsHelper.html">ProductionsHelper</a></li>
+        
+          <li><a href="./RakeTest.html">RakeTest</a></li>
+        
+          <li><a href="./RegexpEdit.html">RegexpEdit</a></li>
+        
+          <li><a href="./RegexpParse.html">RegexpParse</a></li>
+        
+          <li><a href="./Router.html">Router</a></li>
+        
+          <li><a href="./RouterTest.html">RouterTest</a></li>
+        
+          <li><a href="./RoutersController.html">RoutersController</a></li>
+        
+          <li><a href="./RoutersControllerTest.html">RoutersControllerTest</a></li>
+        
+          <li><a href="./RoutersHelper.html">RoutersHelper</a></li>
+        
+          <li><a href="./RubyInterface.html">RubyInterface</a></li>
+        
+          <li><a href="./RubyInterfaceTest.html">RubyInterfaceTest</a></li>
+        
+          <li><a href="./RubyInterfacesController.html">RubyInterfacesController</a></li>
+        
+          <li><a href="./RubyInterfacesControllerTest.html">RubyInterfacesControllerTest</a></li>
+        
+          <li><a href="./RubyInterfacesHelper.html">RubyInterfacesHelper</a></li>
+        
+          <li><a href="./RubyInterfacesHelperTest.html">RubyInterfacesHelperTest</a></li>
+        
+          <li><a href="./ScalarArgument.html">ScalarArgument</a></li>
+        
+          <li><a href="./ScalarArgumentTest.html">ScalarArgumentTest</a></li>
+        
+          <li><a href="./ScalarArgumentsController.html">ScalarArgumentsController</a></li>
+        
+          <li><a href="./ScalarArgumentsControllerTest.html">ScalarArgumentsControllerTest</a></li>
+        
+          <li><a href="./ScalarArgumentsHelper.html">ScalarArgumentsHelper</a></li>
+        
+          <li><a href="./ScalarArgumentsHelperTest.html">ScalarArgumentsHelperTest</a></li>
+        
+          <li><a href="./Set.html">Set</a></li>
+        
+          <li><a href="./Squeeze_Display.html">Squeeze_Display</a></li>
+        
+          <li><a href="./Station.html">Station</a></li>
+        
+          <li><a href="./StationsController.html">StationsController</a></li>
+        
+          <li><a href="./StationsHelper.html">StationsHelper</a></li>
+        
+          <li><a href="./StreamLink.html">StreamLink</a></li>
+        
+          <li><a href="./StreamLinkTest.html">StreamLinkTest</a></li>
+        
+          <li><a href="./StreamLinksController.html">StreamLinksController</a></li>
+        
+          <li><a href="./StreamLinksControllerTest.html">StreamLinksControllerTest</a></li>
+        
+          <li><a href="./StreamLinksHelper.html">StreamLinksHelper</a></li>
+        
+          <li><a href="./StreamLinksHelperTest.html">StreamLinksHelperTest</a></li>
+        
+          <li><a href="./StreamMethod.html">StreamMethod</a></li>
+        
+          <li><a href="./StreamMethodArgument.html">StreamMethodArgument</a></li>
+        
+          <li><a href="./StreamMethodArgumentTest.html">StreamMethodArgumentTest</a></li>
+        
+          <li><a href="./StreamMethodArgumentsController.html">StreamMethodArgumentsController</a></li>
+        
+          <li><a href="./StreamMethodArgumentsControllerTest.html">StreamMethodArgumentsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodArgumentsHelper.html">StreamMethodArgumentsHelper</a></li>
+        
+          <li><a href="./StreamMethodArgumentsHelperTest.html">StreamMethodArgumentsHelperTest</a></li>
+        
+          <li><a href="./StreamMethodCall.html">StreamMethodCall</a></li>
+        
+          <li><a href="./StreamMethodCallTest.html">StreamMethodCallTest</a></li>
+        
+          <li><a href="./StreamMethodCallsController.html">StreamMethodCallsController</a></li>
+        
+          <li><a href="./StreamMethodCallsControllerTest.html">StreamMethodCallsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodCallsHelper.html">StreamMethodCallsHelper</a></li>
+        
+          <li><a href="./StreamMethodCallsHelperTest.html">StreamMethodCallsHelperTest</a></li>
+        
+          <li><a href="./StreamMethodTest.html">StreamMethodTest</a></li>
+        
+          <li><a href="./StreamMethodsController.html">StreamMethodsController</a></li>
+        
+          <li><a href="./StreamMethodsControllerTest.html">StreamMethodsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodsHelper.html">StreamMethodsHelper</a></li>
+        
+          <li><a href="./StreamMethodsHelperTest.html">StreamMethodsHelperTest</a></li>
+        
+          <li><a href="./StreamParameter.html">StreamParameter</a></li>
+        
+          <li><a href="./StreamParameterTest.html">StreamParameterTest</a></li>
+        
+          <li><a href="./StreamParametersController.html">StreamParametersController</a></li>
+        
+          <li><a href="./StreamParametersControllerTest.html">StreamParametersControllerTest</a></li>
+        
+          <li><a href="./StreamParametersHelper.html">StreamParametersHelper</a></li>
+        
+          <li><a href="./StreamParametersHelperTest.html">StreamParametersHelperTest</a></li>
+        
+          <li><a href="./StreamPattern.html">StreamPattern</a></li>
+        
+          <li><a href="./StreamPatternArgument.html">StreamPatternArgument</a></li>
+        
+          <li><a href="./StreamPatternArgumentTest.html">StreamPatternArgumentTest</a></li>
+        
+          <li><a href="./StreamPatternArgumentsController.html">StreamPatternArgumentsController</a></li>
+        
+          <li><a href="./StreamPatternArgumentsControllerTest.html">StreamPatternArgumentsControllerTest</a></li>
+        
+          <li><a href="./StreamPatternArgumentsHelper.html">StreamPatternArgumentsHelper</a></li>
+        
+          <li><a href="./StreamPatternArgumentsHelperTest.html">StreamPatternArgumentsHelperTest</a></li>
+        
+          <li><a href="./StreamPatternTest.html">StreamPatternTest</a></li>
+        
+          <li><a href="./StreamPatternsController.html">StreamPatternsController</a></li>
+        
+          <li><a href="./StreamPatternsControllerTest.html">StreamPatternsControllerTest</a></li>
+        
+          <li><a href="./StreamPatternsHelper.html">StreamPatternsHelper</a></li>
+        
+          <li><a href="./StreamPatternsHelperTest.html">StreamPatternsHelperTest</a></li>
+        
+          <li><a href="./TableSpec.html">TableSpec</a></li>
+        
+          <li><a href="./TableSpecTest.html">TableSpecTest</a></li>
+        
+          <li><a href="./TableSpecsController.html">TableSpecsController</a></li>
+        
+          <li><a href="./TableSpecsControllerTest.html">TableSpecsControllerTest</a></li>
+        
+          <li><a href="./TableSpecsHelper.html">TableSpecsHelper</a></li>
+        
+          <li><a href="./TedprimariesController.html">TedprimariesController</a></li>
+        
+          <li><a href="./TedprimariesControllerTest.html">TedprimariesControllerTest</a></li>
+        
+          <li><a href="./TedprimariesHelper.html">TedprimariesHelper</a></li>
+        
+          <li><a href="./Tedprimary.html">Tedprimary</a></li>
+        
+          <li><a href="./TedprimaryTest.html">TedprimaryTest</a></li>
+        
+          <li><a href="./TestClass.html">TestClass</a></li>
+        
+          <li><a href="./TestHelperTest.html">TestHelperTest</a></li>
+        
+          <li><a href="./TestRun.html">TestRun</a></li>
+        
+          <li><a href="./TestRunTest.html">TestRunTest</a></li>
+        
+          <li><a href="./TestRunsController.html">TestRunsController</a></li>
+        
+          <li><a href="./TestRunsControllerTest.html">TestRunsControllerTest</a></li>
+        
+          <li><a href="./TestRunsHelper.html">TestRunsHelper</a></li>
+        
+          <li><a href="./TestRunsHelperTest.html">TestRunsHelperTest</a></li>
+        
+          <li><a href="./TestTable.html">TestTable</a></li>
+        
+          <li><a href="./Test_Acquisition.html">Test_Acquisition</a></li>
+        
+          <li><a href="./Test_Assertion.html">Test_Assertion</a></li>
+        
+          <li><a href="./Test_Generic.html">Test_Generic</a></li>
+        
+          <li><a href="./TestingFilePatternsTest.html">TestingFilePatternsTest</a></li>
+        
+          <li><a href="./Transaction.html">Transaction</a></li>
+        
+          <li><a href="./TransactionTest.html">TransactionTest</a></li>
+        
+          <li><a href="./TransactionsController.html">TransactionsController</a></li>
+        
+          <li><a href="./TransactionsHelper.html">TransactionsHelper</a></li>
+        
+          <li><a href="./Transfer.html">Transfer</a></li>
+        
+          <li><a href="./TransfersController.html">TransfersController</a></li>
+        
+          <li><a href="./TransfersControllerTest.html">TransfersControllerTest</a></li>
+        
+          <li><a href="./TransfersHelper.html">TransfersHelper</a></li>
+        
+          <li><a href="./Url.html">Url</a></li>
+        
+          <li><a href="./UrlTest.html">UrlTest</a></li>
+        
+          <li><a href="./UrlsController.html">UrlsController</a></li>
+        
+          <li><a href="./UrlsControllerTest.html">UrlsControllerTest</a></li>
+        
+          <li><a href="./UrlsHelper.html">UrlsHelper</a></li>
+        
+          <li><a href="./UrlsHelperTest.html">UrlsHelperTest</a></li>
+        
+          <li><a href="./Weather.html">Weather</a></li>
+        
+          <li><a href="./WeatherTest.html">WeatherTest</a></li>
+        
+          <li><a href="./WeathersController.html">WeathersController</a></li>
+        
+          <li><a href="./WeathersControllerTest.html">WeathersControllerTest</a></li>
+        
+          <li><a href="./WeathersHelper.html">WeathersHelper</a></li>
+        
+          <li><a href="./WiredLocation.html">WiredLocation</a></li>
+        
+          <li><a href="./WiredLocationTest.html">WiredLocationTest</a></li>
+        
+          <li><a href="./WiredLocationsController.html">WiredLocationsController</a></li>
+        
+          <li><a href="./WiredLocationsControllerTest.html">WiredLocationsControllerTest</a></li>
+        
+          <li><a href="./WiredLocationsHelper.html">WiredLocationsHelper</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="module">Generic_Table</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="activeRecordTableNotCreatedYet-3F-method" class="method-detail ">
+          <a name="method-c-activeRecordTableNotCreatedYet-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">activeRecordTableNotCreatedYet?</span><span
+              class="method-args">(obj)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="activeRecordTableNotCreatedYet-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 350</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">activeRecordTableNotCreatedYet?</span>(<span class="ruby-identifier">obj</span>)
+        <span class="ruby-keyword">return</span> (<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">inspect</span><span class="ruby-operator">=~</span><span class="ruby-regexp">/^[a-zA-Z0-9_]+\(Table doesn\'t exist\)/</span>)<span class="ruby-operator">==</span><span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- activeRecordTableNotCreatedYet-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- activeRecordTableNotCreatedYet-3F-method -->
+
+      
+        <div id="classDefiniton-method" class="method-detail ">
+          <a name="method-c-classDefiniton"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">classDefiniton</span><span
+              class="method-args">(model_class_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="classDefiniton-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 573</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">classDefiniton</span>(<span class="ruby-identifier">model_class_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;class #{Generic_Table.rubyClassName(model_class_name)}  &lt; ActiveRecord::Base\ninclude Generic_Table\nend&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- classDefiniton-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- classDefiniton-method -->
+
+      
+        <div id="classReference-method" class="method-detail ">
+          <a name="method-c-classReference"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">classReference</span><span
+              class="method-args">(model_class_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="classReference-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 576</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">classReference</span>(<span class="ruby-identifier">model_class_name</span>)
+        <span class="ruby-identifier">rubyClassName</span>=<span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">rubyClassName</span>(<span class="ruby-identifier">model_class_name</span>)
+        <span class="ruby-identifier">model_class_eval</span>=<span class="ruby-identifier">eval</span>(<span class="ruby-node">&quot;#{classDefiniton(rubyClassName)}\n#{rubyClassName}&quot;</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">model_class_eval</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- classReference-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- classReference-method -->
+
+      
+        <div id="db2yaml-method" class="method-detail ">
+          <a name="method-c-db2yaml"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">db2yaml</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="db2yaml-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 608</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">db2yaml</span>
+        <span class="ruby-identifier">skip_tables</span> = [<span class="ruby-string">&quot;schema_info&quot;</span>,<span class="ruby-string">&quot;tedprimaries&quot;</span>,<span class="ruby-string">&quot;weathers&quot;</span>]
+  (     <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">tables</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">skip_tables</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">table_name</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">table2yaml</span>(<span class="ruby-identifier">table_name</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- db2yaml-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- db2yaml-method -->
+
+      
+        <div id="eval_constant-method" class="method-detail ">
+          <a name="method-c-eval_constant"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">eval_constant</span><span
+              class="method-args">(constant_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="eval_constant-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 684</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">eval_constant</span>(<span class="ruby-identifier">constant_name</span>)
+        <span class="ruby-identifier">constant_name</span>.<span class="ruby-identifier">constantize</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">NameError</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- eval_constant-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- eval_constant-method -->
+
+      
+        <div id="generic_table_class_names-method" class="method-detail ">
+          <a name="method-c-generic_table_class_names"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">generic_table_class_names</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="generic_table_class_names-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 345</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">generic_table_class_names</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">rails_MVC_classes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">name</span> }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- generic_table_class_names-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- generic_table_class_names-method -->
+
+      
+        <div id="is_ActiveRecord_table-3F-method" class="method-detail ">
+          <a name="method-c-is_ActiveRecord_table-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_ActiveRecord_table?</span><span
+              class="method-args">(model_class_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_ActiveRecord_table-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 699</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">is_ActiveRecord_table?</span>(<span class="ruby-identifier">model_class_name</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">is_table?</span>(<span class="ruby-identifier">model_class_name</span>.<span class="ruby-identifier">tableize</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">model_class</span>=<span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">eval_constant</span>(<span class="ruby-identifier">model_class_name</span>.<span class="ruby-identifier">classify</span>)
+                <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>)
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_ActiveRecord_table-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_ActiveRecord_table-3F-method -->
+
+      
+        <div id="is_generic_table-3F-method" class="method-detail ">
+          <a name="method-c-is_generic_table-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_generic_table?</span><span
+              class="method-args">(model_class_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_generic_table-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 322</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">is_generic_table?</span>(<span class="ruby-identifier">model_class_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">model_class_name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/_ids$/</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">is_ActiveRecord_table?</span>(<span class="ruby-identifier">model_class_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">model_class</span>=<span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">eval_constant</span>(<span class="ruby-identifier">model_class_name</span>.<span class="ruby-identifier">classify</span>)
+                <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">module_included?</span>(<span class="ruby-constant">Generic_Table</span>)
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_generic_table-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_generic_table-3F-method -->
+
+      
+        <div id="is_generic_table_name-3F-method" class="method-detail ">
+          <a name="method-c-is_generic_table_name-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_generic_table_name?</span><span
+              class="method-args">(model_file_basename,directory='app/models/',extention='.rb')</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_generic_table_name-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 337</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">is_generic_table_name?</span>(<span class="ruby-identifier">model_file_basename</span>,<span class="ruby-identifier">directory</span>=<span class="ruby-string">'app/models/'</span>,<span class="ruby-identifier">extention</span>=<span class="ruby-string">'.rb'</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">directory</span><span class="ruby-operator">+</span><span class="ruby-identifier">model_file_basename</span><span class="ruby-operator">+</span><span class="ruby-identifier">extention</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">else</span>
+<span class="ruby-comment">#               puts &quot;File.exists?(\&quot;#{directory+model_file_basename+extention})\&quot;)=#{File.exists?(directory+model_file_basename+extention)}&quot;</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_generic_table_name-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_generic_table_name-3F-method -->
+
+      
+        <div id="is_table-3F-method" class="method-detail ">
+          <a name="method-c-is_table-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_table?</span><span
+              class="method-args">(table_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="is_table-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 689</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">is_table?</span>(<span class="ruby-identifier">table_name</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;table_name must include only [A-Za-z0-9_].&quot;</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">table_name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^[A-Za-z0-9_]+$/</span>).<span class="ruby-identifier">nil?</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">table_exists?</span>(<span class="ruby-identifier">table_name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-comment">#~ elsif Generic_Table.table_exists?(table_name.tableize) then</span>
+                <span class="ruby-comment">#~ return true</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_table-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_table-3F-method -->
+
+      
+        <div id="no_syntax_error-3F-method" class="method-detail ">
+          <a name="method-c-no_syntax_error-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">no_syntax_error?</span><span
+              class="method-args">(code)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="no_syntax_error-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 725</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">no_syntax_error?</span>(<span class="ruby-identifier">code</span>)
+        <span class="ruby-identifier">method_def</span>= <span class="ruby-node">&quot;def syntax_check_temp_method\n#{code}\nend\n&quot;</span>
+        <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">method_def</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">rescue</span>  <span class="ruby-constant">SyntaxError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception_raised</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- no_syntax_error-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- no_syntax_error-3F-method -->
+
+      
+        <div id="rails_MVC_class-3F-method" class="method-detail ">
+          <a name="method-c-rails_MVC_class-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rails_MVC_class?</span><span
+              class="method-args">(table_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="rails_MVC_class-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 334</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">rails_MVC_class?</span>(<span class="ruby-identifier">table_name</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">rails_MVC_classes</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span>}.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">classify</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rails_MVC_class-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rails_MVC_class-3F-method -->
+
+      
+        <div id="rubyClassName-method" class="method-detail ">
+          <a name="method-c-rubyClassName"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rubyClassName</span><span
+              class="method-args">(model_class_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="rubyClassName-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 568</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">rubyClassName</span>(<span class="ruby-identifier">model_class_name</span>)
+        <span class="ruby-identifier">model_class_name</span>=<span class="ruby-identifier">model_class_name</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>].<span class="ruby-identifier">upcase</span><span class="ruby-operator">+</span><span class="ruby-identifier">model_class_name</span>[<span class="ruby-value">1</span>,<span class="ruby-identifier">model_class_name</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>] <span class="ruby-comment"># ruby class names are constants and must start with a capital letter.</span>
+        <span class="ruby-comment"># remainng case is unchanged to allow camel casing to separate words for model names.</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">model_class_name</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rubyClassName-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rubyClassName-method -->
+
+      
+        <div id="short_error_message-method" class="method-detail ">
+          <a name="method-c-short_error_message"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">short_error_message</span><span
+              class="method-args">(code)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="short_error_message-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 717</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">short_error_message</span>(<span class="ruby-identifier">code</span>)
+        <span class="ruby-identifier">error_message</span>= <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">code</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">error_message</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">error_message</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">%{^\(eval\):\d+:in `syntax_error': compile error}</span>,<span class="ruby-string">''</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%{\(eval\):\d+: syntax error, }</span>,<span class="ruby-string">''</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%{\(eval\):\d+: }</span>,<span class="ruby-string">''</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- short_error_message-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- short_error_message-method -->
+
+      
+        <div id="syntax_error-method" class="method-detail ">
+          <a name="method-c-syntax_error"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">syntax_error</span><span
+              class="method-args">(code)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="syntax_error-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 710</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">code</span>)
+        <span class="ruby-identifier">method_def</span>= <span class="ruby-node">&quot;def syntax_check_temp_method\n#{code}\nend\n&quot;</span>
+        <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">method_def</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">rescue</span>  <span class="ruby-constant">SyntaxError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception_raised</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">exception_raised</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- syntax_error-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- syntax_error-method -->
+
+      
+        <div id="table_exists-3F-method" class="method-detail ">
+          <a name="method-c-table_exists-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">table_exists?</span><span
+              class="method-args">(table_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="table_exists-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 331</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">table_exists?</span>(<span class="ruby-identifier">table_name</span>)
+        <span class="ruby-constant">TableSpec</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">table_exists?</span>(<span class="ruby-identifier">table_name</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- table_exists-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- table_exists-3F-method -->
+
+      
+        <div id="tables-method" class="method-detail ">
+          <a name="method-c-tables"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">tables</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="tables-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 681</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">tables</span>
+        <span class="ruby-constant">TableSpec</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">tables</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- tables-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- tables-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="Match_and_strip-method" class="method-detail ">
+          <a name="method-i-Match_and_strip"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">Match_and_strip</span><span
+              class="method-args">(regexp=/=$/)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="Match_and_strip-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 676</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Match_and_strip</span>(<span class="ruby-identifier">regexp</span>=<span class="ruby-regexp">/=$/</span>)
+        <span class="ruby-identifier">matching_methods</span>(<span class="ruby-identifier">regexp</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">m</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-identifier">regexp</span>,<span class="ruby-string">''</span>)
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- Match_and_strip-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- Match_and_strip-method -->
+
+      
+        <div id="Require_Table-method" class="method-detail ">
+          <a name="method-i-Require_Table"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">Require_Table</span><span
+              class="method-args">(tableName=self.to_s)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="Require_Table-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 497</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Require_Table</span>(<span class="ruby-identifier">tableName</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_s</span>)
+<span class="ruby-comment">#       Global::log.info(&quot;in Require_Table self.class=#{self.class}&quot;)</span>
+<span class="ruby-comment">#       Global::log.info(&quot;in Require_Table self.to_s=#{self.to_s}&quot;)</span>
+<span class="ruby-comment">#       Global::log.info(&quot;in Require_Table tableName=#{tableName}&quot;)</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">pg_table_exists?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-comment">#return new</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Table #{tableName} does not exist. Enter following command in rails to create:&quot;</span>
+                <span class="ruby-comment">#puts Generic_Columns.scaffold(Generic_Columns.column_Definitions)</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">scaffold</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">column_Definitions</span>)
+<span class="ruby-comment">#               puts scaffold(self.column_Definitions)</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- Require_Table-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- Require_Table-method -->
+
+      
+        <div id="adaptiveAcquisition-method" class="method-detail ">
+          <a name="method-i-adaptiveAcquisition"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">adaptiveAcquisition</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="adaptiveAcquisition-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 457</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">adaptiveAcquisition</span>
+        <span class="ruby-identifier">notModifieds</span>=<span class="ruby-value">0</span>
+        <span class="ruby-identifier">done</span>=<span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-ivar">@acquisitionData</span>=<span class="ruby-identifier">acquire</span> 
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">acquisitionsUpdated?</span> <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">done</span>=<span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">notModifieds</span>=<span class="ruby-identifier">notModifieds</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">notModifieds</span>.<span class="ruby-identifier">modulo</span>(<span class="ruby-value">10</span>)<span class="ruby-operator">==</span><span class="ruby-value">0</span> <span class="ruby-keyword">then</span>
+<span class="ruby-comment">#                               Global::log.info(&quot;notModifieds=#{notModifieds}&quot;)</span>
+<span class="ruby-comment">#                               Global::log.info(&quot;@acquisitionData=#{@acquisitionData}&quot;)</span>
+                        <span class="ruby-keyword">else</span>
+<span class="ruby-comment">#                               Global::log.info(&quot;not updated&quot;)    </span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>   
+                <span class="ruby-comment">#sleep self[:interval]</span>
+                <span class="ruby-identifier">wait</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-keyword">until</span> <span class="ruby-identifier">done</span>
+<span class="ruby-comment">#       Global::log.info(&quot;notModifieds=#{notModifieds}&quot;)</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@acquisitionData</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- adaptiveAcquisition-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- adaptiveAcquisition-method -->
+
+      
+        <div id="addColumn-method" class="method-detail ">
+          <a name="method-i-addColumn"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">addColumn</span><span
+              class="method-args">(name,type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="addColumn-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 525</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">addColumn</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">type</span>)
+        <span class="ruby-identifier">sql</span>=<span class="ruby-node">&quot;ALTER TABLE  #{@table_name} ADD COLUMN #{name.downcase} #{type};&quot;</span>
+        <span class="ruby-identifier">errorMessage</span>=<span class="ruby-constant">DB</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-identifier">sql</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">errorMessage</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- addColumn-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- addColumn-method -->
+
+      
+        <div id="addPrefix-method" class="method-detail ">
+          <a name="method-i-addPrefix"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">addPrefix</span><span
+              class="method-args">(variableHash,prefix)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="addPrefix-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 548</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">addPrefix</span>(<span class="ruby-identifier">variableHash</span>,<span class="ruby-identifier">prefix</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">variableHash</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">ret</span>[<span class="ruby-node">&quot;#{prefix}#{key}&quot;</span>]=<span class="ruby-identifier">value</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- addPrefix-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- addPrefix-method -->
+
+      
+        <div id="associated_to_s-method" class="method-detail ">
+          <a name="method-i-associated_to_s"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">associated_to_s</span><span
+              class="method-args">(assName,method,*args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="associated_to_s-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 664</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">associated_to_s</span>(<span class="ruby-identifier">assName</span>,<span class="ruby-identifier">method</span>,*<span class="ruby-identifier">args</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>[<span class="ruby-identifier">assName</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">'_id'</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span> <span class="ruby-comment"># foreign key uninitialized</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-string">''</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">ass</span>=<span class="ruby-identifier">send</span>(<span class="ruby-identifier">assName</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">ass</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-string">''</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ass</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_sym</span>,*<span class="ruby-identifier">args</span>).<span class="ruby-identifier">to_s</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- associated_to_s-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- associated_to_s-method -->
+
+      
+        <div id="association_has_data-method" class="method-detail ">
+          <a name="method-i-association_has_data"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_has_data</span><span
+              class="method-args">(assName)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="association_has_data-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 661</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">association_has_data</span>(<span class="ruby-identifier">assName</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">association_state</span>(<span class="ruby-identifier">assName</span>)[<span class="ruby-regexp">/ and returns type /</span>,<span class="ruby-value">0</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_has_data-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_has_data-method -->
+
+      
+        <div id="association_state-method" class="method-detail ">
+          <a name="method-i-association_state"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">association_state</span><span
+              class="method-args">(assName)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Display attribute or method value from association even if association is
+nil</p>
+            
+
+            
+            <div class="method-source-code" id="association_state-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 615</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">association_state</span>(<span class="ruby-identifier">assName</span>)
+        <span class="ruby-keyword">case</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">association_to_type</span>(<span class="ruby-identifier">assName</span>)
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:to_one</span>
+                <span class="ruby-identifier">foreign_key_value</span>=<span class="ruby-keyword">self</span>[<span class="ruby-identifier">assName</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">'_id'</span>]
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">foreign_key_value</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span> <span class="ruby-comment"># foreign key uninitialized</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;Foreign key #{assName.to_s}_id defined as attribute but has nil value.&quot;</span>
+                <span class="ruby-comment">#~ elsif foreign_key_value.empty? then # foreign key uninitialized</span>
+                        <span class="ruby-comment">#~ return &quot;Foreign key #{assName.to_s}_id defined as attribute but has empty value.&quot;</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">ass</span>=<span class="ruby-identifier">send</span>(<span class="ruby-identifier">assName</span>)
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">ass</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect} but the association returns nil.&quot;</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect},#{ass.inspect} and returns type #{ass.class.name}.&quot;</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:to_many</span>
+                <span class="ruby-identifier">ass</span>=<span class="ruby-identifier">send</span>(<span class="ruby-identifier">assName</span>)
+                <span class="ruby-identifier">associations_foreign_key_name</span>=(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">singularize</span><span class="ruby-operator">+</span><span class="ruby-string">'_id'</span>).<span class="ruby-identifier">to_sym</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">ass</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil.&quot;</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">ass</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">ret</span>= <span class="ruby-node">&quot;Association #{assName} with foreign key #{associations_foreign_key_name} is empty; &quot;</span>
+                        <span class="ruby-keyword">case</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">association_class</span>(<span class="ruby-identifier">assName</span>).<span class="ruby-identifier">association_macro_type</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">singularize</span>)
+                        <span class="ruby-keyword">when</span> <span class="ruby-value">:has_many</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;but has many.&quot;</span>
+                        <span class="ruby-keyword">when</span> <span class="ruby-value">:belongs_to</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;but belongs_to.&quot;</span>
+                        <span class="ruby-keyword">when</span> <span class="ruby-value">:neither_has_many_nor_belongs_to</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;because neither_has_many_nor_belongs_to.&quot;</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;New return value from #{self.class.name}.association_macro_type(#{assName})=#{self.class.association_macro_type(assName)}.&quot;</span>
+                        <span class="ruby-keyword">end</span> <span class="ruby-comment">#case</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">associations_foreign_key_values</span>=<span class="ruby-identifier">ass</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">associations_foreign_key_name</span>) }.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">','</span>)
+                        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}.&quot;</span>
+                <span class="ruby-keyword">end</span>
+                
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:not_generic_table</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;#{self.class.name} does not recognize #{assName} as a generic table.&quot;</span>
+        <span class="ruby-keyword">when</span><span class="ruby-value">:not_an_association</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;#{self.class.name} does not recognize #{assName} as association.&quot;</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;New return value from #{self.class.name}.association_to_type(#{assName})=#{self.class.association_to_type(assName)}.&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- association_state-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- association_state-method -->
+
+      
+        <div id="column_Definitions-method" class="method-detail ">
+          <a name="method-i-column_Definitions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">column_Definitions</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="column_Definitions-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 436</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">column_Definitions</span>
+        <span class="ruby-identifier">adaptiveAcquisition</span>
+        <span class="ruby-identifier">names</span>=<span class="ruby-identifier">getNames</span>
+<span class="ruby-comment">#       Global::log.debug(&quot;names=#{names}&quot;)</span>
+        <span class="ruby-identifier">typeNums</span>=[] <span class="ruby-comment"># make it array, so array functons can be used</span>
+        <span class="ruby-identifier">numSamples</span>=<span class="ruby-value">0</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">typeNums</span>=<span class="ruby-identifier">updateMaxTypeNum</span>(<span class="ruby-identifier">typeNums</span>)
+                <span class="ruby-identifier">numSamples</span> = <span class="ruby-identifier">numSamples</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-keyword">until</span> <span class="ruby-identifier">streamEnd</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">numSamples</span><span class="ruby-operator">&gt;</span><span class="ruby-value">10</span>
+        <span class="ruby-ivar">@sqlTypes</span>=[]
+        <span class="ruby-identifier">ret</span>=[]
+        <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> 
+                <span class="ruby-ivar">@sqlTypes</span>.<span class="ruby-identifier">push</span>(<span class="ruby-constant">Import_Column</span>.<span class="ruby-identifier">row2ImportType</span>(<span class="ruby-identifier">typeNums</span>[<span class="ruby-identifier">i</span>]))
+<span class="ruby-comment">#               Global::log.info(&quot;#{names[i]} #{@sqlTypes[i]} \&quot;#{@sqlValues[i]}\&quot; #{typeNums[i]}&quot;)</span>
+                <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">push</span>([<span class="ruby-identifier">names</span>[<span class="ruby-identifier">i</span>],<span class="ruby-ivar">@sqlTypes</span>[<span class="ruby-identifier">i</span>]])
+<span class="ruby-comment">#               Global::log.info(&quot;ret=#{ret}&quot;)</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-comment">#       Global::log.info(&quot;ret=#{ret}&quot;)</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- column_Definitions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- column_Definitions-method -->
+
+      
+        <div id="display-method" class="method-detail ">
+          <a name="method-i-display"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">display</span><span
+              class="method-args">(exp)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="display-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 492</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">display</span>(<span class="ruby-identifier">exp</span>)
+ <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{exp}=&quot;</span>
+ <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{eval(exp)}&quot;</span>
+ <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{exp}=#{eval(exp)}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- display-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- display-method -->
+
+      
+        <div id="display_full_time-method" class="method-detail ">
+          <a name="method-i-display_full_time"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">display_full_time</span><span
+              class="method-args">(time)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="display_full_time-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 707</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">display_full_time</span>(<span class="ruby-identifier">time</span>)
+        <span class="ruby-identifier">time</span>.<span class="ruby-identifier">rfc2822</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- display_full_time-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- display_full_time-method -->
+
+      
+        <div id="exclude-method" class="method-detail ">
+          <a name="method-i-exclude"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">exclude</span><span
+              class="method-args">(variableHash,exclusionList=[])</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="exclude-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 555</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exclude</span>(<span class="ruby-identifier">variableHash</span>,<span class="ruby-identifier">exclusionList</span>=[])
+        <span class="ruby-identifier">ret</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">variableHash</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">exclusionList</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">key</span>)
+                        <span class="ruby-identifier">ret</span>[<span class="ruby-identifier">key</span>]=<span class="ruby-identifier">value</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- exclude-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- exclude-method -->
+
+      
+        <div id="find_or_initialize-method" class="method-detail ">
+          <a name="method-i-find_or_initialize"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">find_or_initialize</span><span
+              class="method-args">(findCriteria)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="find_or_initialize-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 480</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_or_initialize</span>(<span class="ruby-identifier">findCriteria</span>)
+        <span class="ruby-identifier">records</span>=<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,<span class="ruby-identifier">findCriteria</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">records</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">ret</span>= <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">findCriteria</span>)
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">records</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">1</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">records</span>[<span class="ruby-value">0</span>]
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">@@log</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;criteria not unque; records=#{records.inspect}&quot;</span>)
+                <span class="ruby-identifier">raise</span> 
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- find_or_initialize-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- find_or_initialize-method -->
+
+      
+        <div id="initFail-method" class="method-detail ">
+          <a name="method-i-initFail"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">initFail</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="initFail-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 563</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initFail</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Table does not exist. Enter following command in rails to create:&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">scaffold</span>
+        <span class="ruby-identifier">exit</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- initFail-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- initFail-method -->
+
+      
+        <div id="log-method" class="method-detail ">
+          <a name="method-i-log"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">log</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="log-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 390</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">log</span>
+<span class="ruby-keyword">begin</span>
+        <span class="ruby-identifier">sample</span>
+        <span class="ruby-identifier">wait</span>
+<span class="ruby-keyword">end</span> <span class="ruby-keyword">until</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- log-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- log-method -->
+
+      
+        <div id="monitor-method" class="method-detail ">
+          <a name="method-i-monitor"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">monitor</span><span
+              class="method-args">(keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="monitor-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 396</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">monitor</span>(<span class="ruby-identifier">keys</span>) <span class="ruby-comment"># update continously</span>
+<span class="ruby-comment">#       Global::log.info(&quot;in monitor self.name=#{self.name}&quot;)</span>
+        <span class="ruby-identifier">whoAmI</span>
+        <span class="ruby-comment">#generic_acquisitions</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">acquisitionData</span>=<span class="ruby-identifier">acquire</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">acquisitionsUpdated?</span>(<span class="ruby-identifier">acquisitionData</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">row</span>=<span class="ruby-identifier">find_or_initialize</span>(<span class="ruby-identifier">keys</span>)
+                        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">process</span>(<span class="ruby-identifier">acquisitionData</span>)
+                        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">printLog</span>
+                <span class="ruby-keyword">else</span>
+<span class="ruby-comment">#                       Global::log.info(acquisitionData)</span>
+                <span class="ruby-keyword">end</span>
+        
+                <span class="ruby-identifier">wait</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-keyword">until</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- monitor-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- monitor-method -->
+
+      
+        <div id="pg_table_exists-3F-method" class="method-detail ">
+          <a name="method-i-pg_table_exists-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">pg_table_exists?</span><span
+              class="method-args">(tableName=self.to_s.downcase)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="pg_table_exists-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 540</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pg_table_exists?</span>(<span class="ruby-identifier">tableName</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">downcase</span>)
+        <span class="ruby-identifier">sql</span>=<span class="ruby-node">&quot;select table_name from information_schema.tables where table_schema='public' AND table_name='#{tableName}';&quot;</span>
+<span class="ruby-comment">#       Global::log.debug(&quot;sql=#{sql}&quot;)</span>
+        <span class="ruby-identifier">res</span>  = <span class="ruby-identifier">find_by_sql</span>(<span class="ruby-identifier">sql</span>)
+<span class="ruby-comment">#       Global::log.info(&quot;res.size=#{res.size}&quot;)</span>
+        <span class="ruby-comment">#puts &quot;res=#{res}&quot;</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- pg_table_exists-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- pg_table_exists-3F-method -->
+
+      
+        <div id="process-method" class="method-detail ">
+          <a name="method-i-process"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">process</span><span
+              class="method-args">(acquisitionData)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="process-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 381</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">process</span>(<span class="ruby-identifier">acquisitionData</span>)
+        <span class="ruby-identifier">acqClasses</span>=<span class="ruby-constant">Generic_Acquisitions</span>.<span class="ruby-identifier">parse_classes</span>(<span class="ruby-identifier">m</span>)
+        <span class="ruby-identifier">acqClasses</span>.<span class="ruby-identifier">each</span> <span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ac</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">variableHashes</span>=<span class="ruby-identifier">ac</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">acquisitionData</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">updates</span>(<span class="ruby-identifier">variableHashes</span>)
+        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">row</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- process-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- process-method -->
+
+      
+        <div id="requireColumn-method" class="method-detail ">
+          <a name="method-i-requireColumn"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">requireColumn</span><span
+              class="method-args">(name,type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="requireColumn-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 530</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">requireColumn</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">type</span>)
+<span class="ruby-comment">#       Global::log.info(&quot;self.class=#{self.class}&quot;)</span>
+<span class="ruby-comment">#       Global::log.info(&quot;name=#{name}&quot;)</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_attribute?</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Column #{name} to be created with #{type}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">$VERBOSE</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">addColumn</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">type</span>)
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- requireColumn-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- requireColumn-method -->
+
+      
+        <div id="sample-method" class="method-detail ">
+          <a name="method-i-sample"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sample</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="sample-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 413</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sample</span>
+        <span class="ruby-ivar">@acqClasses</span>=<span class="ruby-constant">Generic_Acquisitions</span>.<span class="ruby-identifier">parse_classes</span>(<span class="ruby-identifier">m</span>)
+        <span class="ruby-ivar">@acqClasses</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ac</span><span class="ruby-operator">|</span>
+                <span class="ruby-ivar">@acquisitionData</span>=<span class="ruby-identifier">acquire</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#map</span>
+        <span class="ruby-ivar">@acquisitionData</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ad</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">acquisitionUpdated?</span>(<span class="ruby-identifier">ad</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">row</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">create</span>
+                        <span class="ruby-identifier">row</span>=<span class="ruby-identifier">process</span>(<span class="ruby-identifier">ad</span>)
+                        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">printLog</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">ad</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sample-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sample-method -->
+
+      
+        <div id="scaffold-method" class="method-detail ">
+          <a name="method-i-scaffold"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">scaffold</span><span
+              class="method-args">(columnDefs)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="scaffold-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 510</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">scaffold</span> (<span class="ruby-identifier">columnDefs</span>)
+<span class="ruby-comment">#       Global::log.info(&quot;singularTableName=#{singularTableName}&quot;)</span>
+<span class="ruby-comment">#       Global::log.info(&quot;in scaffold singularTableName=#{singularTableName}&quot;)</span>
+        <span class="ruby-identifier">rails</span>=<span class="ruby-node">&quot;script/generate scaffold #{singularTableName} &quot;</span>
+        <span class="ruby-identifier">columnDefs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span>  <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">rails</span>=<span class="ruby-node">&quot;#{rails} #{col[0]}:#{col[1]}&quot;</span>
+                <span class="ruby-comment">#puts rails</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">rails</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- scaffold-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- scaffold-method -->
+
+      
+        <div id="singularTableName-method" class="method-detail ">
+          <a name="method-i-singularTableName"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">singularTableName</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="singularTableName-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 520</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">singularTableName</span>
+<span class="ruby-comment">#       Global::log.info(&quot;in singularTableName self.class=#{self.class}&quot;)</span>
+<span class="ruby-comment">#       Global::log.info(&quot;in singularTableName self.to_s=#{self.to_s}&quot;)</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">chop</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- singularTableName-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- singularTableName-method -->
+
+      
+        <div id="table2yaml-method" class="method-detail ">
+          <a name="method-i-table2yaml"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">table2yaml</span><span
+              class="method-args">(table_name=self.class.name.tableize)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="table2yaml-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 581</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">table2yaml</span>(<span class="ruby-identifier">table_name</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>)
+        <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span> <span class="ruby-comment">#&quot;000&quot;</span>
+        <span class="ruby-identifier">limit</span>=<span class="ruby-value">100</span> <span class="ruby-comment"># too long slow all tests, too short give poor test coverage</span>
+        <span class="ruby-identifier">sql</span>  = <span class="ruby-node">&quot;SELECT * FROM %s LIMIT #{limit}&quot;</span>
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;test/fixtures/#{table_name}.yml.gen&quot;</span>, <span class="ruby-string">'w'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">data</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">limit</span>(<span class="ruby-identifier">limit</span>).<span class="ruby-identifier">all</span>
+<span class="ruby-comment">#               puts &quot;data.inspect=#{data.inspect}&quot;</span>
+                <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span> <span class="ruby-node">&quot;# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html&quot;</span>
+                 <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">inject</span>({}) { <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>, <span class="ruby-identifier">model_instance</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">i</span>=<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+                        <span class="ruby-identifier">fixture_attributes</span>=<span class="ruby-identifier">model_instance</span>.<span class="ruby-identifier">attributes</span>
+                        <span class="ruby-identifier">fixture_attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">'created_at'</span>)  <span class="ruby-comment"># automatically regenerated</span>
+                        <span class="ruby-identifier">fixture_attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">'updated_at'</span>)  <span class="ruby-comment"># automatically regenerated</span>
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">sequential_id?</span> <span class="ruby-keyword">then</span>
+                                <span class="ruby-identifier">primaryKeyValue</span>=<span class="ruby-identifier">i</span>
+                                <span class="ruby-identifier">fixture_attributes</span>[<span class="ruby-string">'id'</span>]=<span class="ruby-identifier">i</span>  <span class="ruby-comment"># automatically regenerated</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-identifier">primaryKeyValue</span>=<span class="ruby-identifier">model_instance</span>.<span class="ruby-identifier">logical_primary_key_value</span>
+                                <span class="ruby-identifier">fixture_attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">'id'</span>)  <span class="ruby-comment"># automatically regenerated</span>
+                        <span class="ruby-keyword">end</span>
+<span class="ruby-comment">#                       puts &quot;fixture_attributes.inspect=#{fixture_attributes.inspect}&quot;</span>
+<span class="ruby-comment">#                       puts &quot;fixture_attributes.to_yaml.inspect=#{fixture_attributes.to_yaml.inspect}&quot;</span>
+                        <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">primaryKeyValue</span>] = <span class="ruby-identifier">fixture_attributes</span>
+                        <span class="ruby-identifier">hash</span>
+                }.<span class="ruby-identifier">to_yaml</span>
+        <span class="ruby-keyword">end</span><span class="ruby-comment"># file open</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- table2yaml-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- table2yaml-method -->
+
+      
+        <div id="updateMaxTypeNum-method" class="method-detail ">
+          <a name="method-i-updateMaxTypeNum"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">updateMaxTypeNum</span><span
+              class="method-args">(maxTypeNums)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="updateMaxTypeNum-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 428</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">updateMaxTypeNum</span>(<span class="ruby-identifier">maxTypeNums</span>)
+        <span class="ruby-identifier">adaptiveAcquisition</span>
+        <span class="ruby-identifier">values</span>= <span class="ruby-identifier">getValues</span>
+        <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">maxTypeNums</span>[<span class="ruby-identifier">i</span>]=[<span class="ruby-constant">Import_Column</span>.<span class="ruby-identifier">firstMatch</span>(<span class="ruby-identifier">values</span>[<span class="ruby-identifier">i</span>]),<span class="ruby-identifier">maxTypeNums</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">i</span>,<span class="ruby-value">-1</span>)].<span class="ruby-identifier">max</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span>   <span class="ruby-identifier">maxTypeNums</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- updateMaxTypeNum-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- updateMaxTypeNum-method -->
+
+      
+        <div id="updates-method" class="method-detail ">
+          <a name="method-i-updates"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">updates</span><span
+              class="method-args">(variableHashes)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="updates-source">
+<pre>
+<span class="ruby-comment"># File app/models/generic_table.rb, line 353</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">updates</span>(<span class="ruby-identifier">variableHashes</span>)
+<span class="ruby-comment">#       Global::log.info(&quot;variableHashes.inspect=#{variableHashes.inspect}&quot;)</span>
+        <span class="ruby-identifier">variableHash</span>={} <span class="ruby-comment"># merge into single hash</span>
+        <span class="ruby-identifier">variableHashes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">vhs</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">vhs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">vh</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">variableHash</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">vh</span>)
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+<span class="ruby-comment">#       Global::log.info(&quot;variableHash.inspect=#{variableHash.inspect}&quot;)</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">variableHash</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">@@log</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-string">&quot;record already exists&quot;</span>)
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">row</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-comment">#               Global::log.info( &quot;variableHash['khhr_observation_time_rfc822']=#{variableHash['khhr_observation_time_rfc822']}&quot;)</span>
+                <span class="ruby-identifier">reportNull</span>(<span class="ruby-identifier">variableHash</span>)
+                <span class="ruby-identifier">row</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">variableHash</span>)
+                <span class="ruby-identifier">now</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">has_attribute?</span>(<span class="ruby-string">'created_at'</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-string">&quot;created_at&quot;</span>,<span class="ruby-identifier">now</span>)
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">has_attribute?</span>(<span class="ruby-string">'updated_at'</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-string">&quot;updated_at&quot;</span>,<span class="ruby-identifier">now</span>)
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                <span class="ruby-comment">#update_attribute(&quot;id&quot;,&quot;NULL&quot;) </span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment"># if else</span>
+        
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- updates-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- updates-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

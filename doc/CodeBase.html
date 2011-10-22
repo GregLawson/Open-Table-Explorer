@@ -1,0 +1,2177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: CodeBase</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./app/models/code_base_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="app/models/code_base.rb">app/models/code_base.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link"><a href="Object.html">Object</a></p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-all_model_specfic_files">::all_model_specfic_files</a></li>
+          
+          <li><a href="#method-c-complete_models">::complete_models</a></li>
+          
+          <li><a href="#method-c-controller_sources">::controller_sources</a></li>
+          
+          <li><a href="#method-c-controller_target">::controller_target</a></li>
+          
+          <li><a href="#method-c-file_glob">::file_glob</a></li>
+          
+          <li><a href="#method-c-gitStatus">::gitStatus</a></li>
+          
+          <li><a href="#method-c-git_add_successful">::git_add_successful</a></li>
+          
+          <li><a href="#method-c-match_spec_from_file">::match_spec_from_file</a></li>
+          
+          <li><a href="#method-c-model_file">::model_file</a></li>
+          
+          <li><a href="#method-c-model_spec_symbols">::model_spec_symbols</a></li>
+          
+          <li><a href="#method-c-models_from_spec">::models_from_spec</a></li>
+          
+          <li><a href="#method-c-name_plurality_from_spec">::name_plurality_from_spec</a></li>
+          
+          <li><a href="#method-c-new">::new</a></li>
+          
+          <li><a href="#method-c-not_uptodate_order">::not_uptodate_order</a></li>
+          
+          <li><a href="#method-c-not_uptodate_sources">::not_uptodate_sources</a></li>
+          
+          <li><a href="#method-c-prioritized_file_order">::prioritized_file_order</a></li>
+          
+          <li><a href="#method-c-rails_MVC_classes">::rails_MVC_classes</a></li>
+          
+          <li><a href="#method-c-regexp">::regexp</a></li>
+          
+          <li><a href="#method-c-run_test">::run_test</a></li>
+          
+          <li><a href="#method-c-singular_table_from_file">::singular_table_from_file</a></li>
+          
+          <li><a href="#method-c-spec_from_symbol">::spec_from_symbol</a></li>
+          
+          <li><a href="#method-c-spec_symbols">::spec_symbols</a></li>
+          
+          <li><a href="#method-c-test_file">::test_file</a></li>
+          
+          <li><a href="#method-c-test_program_from_file">::test_program_from_file</a></li>
+          
+          <li><a href="#method-c-test_run_from_file">::test_run_from_file</a></li>
+          
+          <li><a href="#method-c-test_type_from_source">::test_type_from_source</a></li>
+          
+          <li><a href="#method-c-unit_sources">::unit_sources</a></li>
+          
+          <li><a href="#method-c-unit_target">::unit_target</a></li>
+          
+          <li><a href="#method-c-uptodate-3F">::uptodate?</a></li>
+          
+          <li><a href="#method-c-why_not_stage">::why_not_stage</a></li>
+          
+          <li><a href="#method-c-why_not_stage_helper">::why_not_stage_helper</a></li>
+          
+          <li><a href="#method-i-files_from_spec">#files_from_spec</a></li>
+          
+          <li><a href="#method-i-suggest_test_run">#suggest_test_run</a></li>
+          
+          <li><a href="#method-i-suggest_test_runs">#suggest_test_runs</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./ActiveRecord.html">ActiveRecord</a></li>
+        
+          <li><a href="./ActiveRecord/Base.html">ActiveRecord::Base</a></li>
+        
+          <li><a href="./ActiveSupport.html">ActiveSupport</a></li>
+        
+          <li><a href="./ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+        
+          <li><a href="./GlobalTest.html">GlobalTest</a></li>
+        
+          <li><a href="./GlobalTest/TestClass.html">GlobalTest::TestClass</a></li>
+        
+          <li><a href="./Module.html">Module</a></li>
+        
+          <li><a href="./Module/MixinClassMethods.html">Module::MixinClassMethods</a></li>
+        
+          <li><a href="./TransferTest.html">TransferTest</a></li>
+        
+          <li><a href="./TransferTest/Transfer.html">TransferTest::Transfer</a></li>
+        
+          <li><a href="./Account.html">Account</a></li>
+        
+          <li><a href="./AccountTest.html">AccountTest</a></li>
+        
+          <li><a href="./AccountsController.html">AccountsController</a></li>
+        
+          <li><a href="./AccountsControllerTest.html">AccountsControllerTest</a></li>
+        
+          <li><a href="./AccountsHelper.html">AccountsHelper</a></li>
+        
+          <li><a href="./AcquireAllObserver.html">AcquireAllObserver</a></li>
+        
+          <li><a href="./AcquireAllObserverTest.html">AcquireAllObserverTest</a></li>
+        
+          <li><a href="./Acquisition.html">Acquisition</a></li>
+        
+          <li><a href="./AcquisitionInterface.html">AcquisitionInterface</a></li>
+        
+          <li><a href="./AcquisitionInterfaceTest.html">AcquisitionInterfaceTest</a></li>
+        
+          <li><a href="./AcquisitionInterfacesController.html">AcquisitionInterfacesController</a></li>
+        
+          <li><a href="./AcquisitionInterfacesControllerTest.html">AcquisitionInterfacesControllerTest</a></li>
+        
+          <li><a href="./AcquisitionInterfacesHelper.html">AcquisitionInterfacesHelper</a></li>
+        
+          <li><a href="./AcquisitionStreamSpec.html">AcquisitionStreamSpec</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecTest.html">AcquisitionStreamSpecTest</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsController.html">AcquisitionStreamSpecsController</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsControllerTest.html">AcquisitionStreamSpecsControllerTest</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsHelper.html">AcquisitionStreamSpecsHelper</a></li>
+        
+          <li><a href="./AcquisitionsController.html">AcquisitionsController</a></li>
+        
+          <li><a href="./AcquisitionsControllerTest.html">AcquisitionsControllerTest</a></li>
+        
+          <li><a href="./AcquisitionsHelper.html">AcquisitionsHelper</a></li>
+        
+          <li><a href="./ApplicationController.html">ApplicationController</a></li>
+        
+          <li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+        
+          <li><a href="./ArelReadmeTest.html">ArelReadmeTest</a></li>
+        
+          <li><a href="./Breaker.html">Breaker</a></li>
+        
+          <li><a href="./BreakerTest.html">BreakerTest</a></li>
+        
+          <li><a href="./BreakersController.html">BreakersController</a></li>
+        
+          <li><a href="./BreakersControllerTest.html">BreakersControllerTest</a></li>
+        
+          <li><a href="./BreakersHelper.html">BreakersHelper</a></li>
+        
+          <li><a href="./BrowsingTest.html">BrowsingTest</a></li>
+        
+          <li><a href="./Bug.html">Bug</a></li>
+        
+          <li><a href="./BugTest.html">BugTest</a></li>
+        
+          <li><a href="./BugsController.html">BugsController</a></li>
+        
+          <li><a href="./BugsControllerTest.html">BugsControllerTest</a></li>
+        
+          <li><a href="./BugsHelper.html">BugsHelper</a></li>
+        
+          <li><a href="./BugsHelperTest.html">BugsHelperTest</a></li>
+        
+          <li><a href="./Class.html">Class</a></li>
+        
+          <li><a href="./CodeBase.html">CodeBase</a></li>
+        
+          <li><a href="./Edison.html">Edison</a></li>
+        
+          <li><a href="./EdisonTest.html">EdisonTest</a></li>
+        
+          <li><a href="./EdisonsController.html">EdisonsController</a></li>
+        
+          <li><a href="./EdisonsControllerTest.html">EdisonsControllerTest</a></li>
+        
+          <li><a href="./EdisonsHelper.html">EdisonsHelper</a></li>
+        
+          <li><a href="./EmptyAssociatedModel.html">EmptyAssociatedModel</a></li>
+        
+          <li><a href="./EmptyClass.html">EmptyClass</a></li>
+        
+          <li><a href="./ErrorType.html">ErrorType</a></li>
+        
+          <li><a href="./ErrorTypeTest.html">ErrorTypeTest</a></li>
+        
+          <li><a href="./ErrorTypesController.html">ErrorTypesController</a></li>
+        
+          <li><a href="./ErrorTypesControllerTest.html">ErrorTypesControllerTest</a></li>
+        
+          <li><a href="./ErrorTypesHelper.html">ErrorTypesHelper</a></li>
+        
+          <li><a href="./ErrorTypesHelperTest.html">ErrorTypesHelperTest</a></li>
+        
+          <li><a href="./ExampleType.html">ExampleType</a></li>
+        
+          <li><a href="./ExampleTypeTest.html">ExampleTypeTest</a></li>
+        
+          <li><a href="./ExampleTypesController.html">ExampleTypesController</a></li>
+        
+          <li><a href="./ExampleTypesControllerTest.html">ExampleTypesControllerTest</a></li>
+        
+          <li><a href="./ExampleTypesHelper.html">ExampleTypesHelper</a></li>
+        
+          <li><a href="./ExampleTypesHelperTest.html">ExampleTypesHelperTest</a></li>
+        
+          <li><a href="./FrequenciesController.html">FrequenciesController</a></li>
+        
+          <li><a href="./FrequenciesControllerTest.html">FrequenciesControllerTest</a></li>
+        
+          <li><a href="./FrequenciesHelper.html">FrequenciesHelper</a></li>
+        
+          <li><a href="./Frequency.html">Frequency</a></li>
+        
+          <li><a href="./FrequencyTest.html">FrequencyTest</a></li>
+        
+          <li><a href="./FullAssociatedModel.html">FullAssociatedModel</a></li>
+        
+          <li><a href="./GenericAcquisition.html">GenericAcquisition</a></li>
+        
+          <li><a href="./GenericAcquisitionsController.html">GenericAcquisitionsController</a></li>
+        
+          <li><a href="./GenericAcquisitionsHelper.html">GenericAcquisitionsHelper</a></li>
+        
+          <li><a href="./GenericColumn.html">GenericColumn</a></li>
+        
+          <li><a href="./GenericColumnsController.html">GenericColumnsController</a></li>
+        
+          <li><a href="./GenericColumnsHelper.html">GenericColumnsHelper</a></li>
+        
+          <li><a href="./GenericRow.html">GenericRow</a></li>
+        
+          <li><a href="./GenericRowsController.html">GenericRowsController</a></li>
+        
+          <li><a href="./GenericRowsHelper.html">GenericRowsHelper</a></li>
+        
+          <li><a href="./GenericTableAssociatedModel.html">GenericTableAssociatedModel</a></li>
+        
+          <li><a href="./GenericTableTest.html">GenericTableTest</a></li>
+        
+          <li><a href="./GenericType.html">GenericType</a></li>
+        
+          <li><a href="./GenericTypeTest.html">GenericTypeTest</a></li>
+        
+          <li><a href="./GenericTypesController.html">GenericTypesController</a></li>
+        
+          <li><a href="./GenericTypesControllerTest.html">GenericTypesControllerTest</a></li>
+        
+          <li><a href="./GenericTypesHelper.html">GenericTypesHelper</a></li>
+        
+          <li><a href="./GenericTypesHelperTest.html">GenericTypesHelperTest</a></li>
+        
+          <li><a href="./Generic_Table.html">Generic_Table</a></li>
+        
+          <li><a href="./HalfAssociatedModel.html">HalfAssociatedModel</a></li>
+        
+          <li><a href="./HomeController.html">HomeController</a></li>
+        
+          <li><a href="./HomeControllerTest.html">HomeControllerTest</a></li>
+        
+          <li><a href="./HomeHelper.html">HomeHelper</a></li>
+        
+          <li><a href="./Host.html">Host</a></li>
+        
+          <li><a href="./HostTest.html">HostTest</a></li>
+        
+          <li><a href="./HostsController.html">HostsController</a></li>
+        
+          <li><a href="./HostsControllerTest.html">HostsControllerTest</a></li>
+        
+          <li><a href="./HostsHelper.html">HostsHelper</a></li>
+        
+          <li><a href="./HuelserieTest.html">HuelserieTest</a></li>
+        
+          <li><a href="./Huelseries.html">Huelseries</a></li>
+        
+          <li><a href="./HuelseriesController.html">HuelseriesController</a></li>
+        
+          <li><a href="./HuelseriesControllerTest.html">HuelseriesControllerTest</a></li>
+        
+          <li><a href="./HuelseriesHelper.html">HuelseriesHelper</a></li>
+        
+          <li><a href="./HuelseriesHelperTest.html">HuelseriesHelperTest</a></li>
+        
+          <li><a href="./Huelshow.html">Huelshow</a></li>
+        
+          <li><a href="./HuelshowTest.html">HuelshowTest</a></li>
+        
+          <li><a href="./HuelshowsController.html">HuelshowsController</a></li>
+        
+          <li><a href="./HuelshowsControllerTest.html">HuelshowsControllerTest</a></li>
+        
+          <li><a href="./HuelshowsHelper.html">HuelshowsHelper</a></li>
+        
+          <li><a href="./HuelshowsHelperTest.html">HuelshowsHelperTest</a></li>
+        
+          <li><a href="./Inline_Assertions.html">Inline_Assertions</a></li>
+        
+          <li><a href="./Inline_Assertions_Stubs.html">Inline_Assertions_Stubs</a></li>
+        
+          <li><a href="./Load.html">Load</a></li>
+        
+          <li><a href="./Loads.html">Loads</a></li>
+        
+          <li><a href="./Loads1.html">Loads1</a></li>
+        
+          <li><a href="./Loads1Test.html">Loads1Test</a></li>
+        
+          <li><a href="./Loads1sController.html">Loads1sController</a></li>
+        
+          <li><a href="./Loads1sHelper.html">Loads1sHelper</a></li>
+        
+          <li><a href="./LoadsController.html">LoadsController</a></li>
+        
+          <li><a href="./LoadsControllerTest.html">LoadsControllerTest</a></li>
+        
+          <li><a href="./LoadsHelper.html">LoadsHelper</a></li>
+        
+          <li><a href="./LoadsTest.html">LoadsTest</a></li>
+        
+          <li><a href="./Match_Addressing.html">Match_Addressing</a></li>
+        
+          <li><a href="./MatchedFilename.html">MatchedFilename</a></li>
+        
+          <li><a href="./Measurement.html">Measurement</a></li>
+        
+          <li><a href="./MeasurementTest.html">MeasurementTest</a></li>
+        
+          <li><a href="./MeasurementsController.html">MeasurementsController</a></li>
+        
+          <li><a href="./MeasurementsControllerTest.html">MeasurementsControllerTest</a></li>
+        
+          <li><a href="./MeasurementsHelper.html">MeasurementsHelper</a></li>
+        
+          <li><a href="./MethodModel.html">MethodModel</a></li>
+        
+          <li><a href="./Network.html">Network</a></li>
+        
+          <li><a href="./NetworksController.html">NetworksController</a></li>
+        
+          <li><a href="./NetworksHelper.html">NetworksHelper</a></li>
+        
+          <li><a href="./Nil_Class.html">Nil_Class</a></li>
+        
+          <li><a href="./NoDB.html">NoDB</a></li>
+        
+          <li><a href="./Node.html">Node</a></li>
+        
+          <li><a href="./NodeTest.html">NodeTest</a></li>
+        
+          <li><a href="./NodesController.html">NodesController</a></li>
+        
+          <li><a href="./NodesControllerTest.html">NodesControllerTest</a></li>
+        
+          <li><a href="./NodesHelper.html">NodesHelper</a></li>
+        
+          <li><a href="./Object.html">Object</a></li>
+        
+          <li><a href="./Ofx.html">Ofx</a></li>
+        
+          <li><a href="./OfxTest.html">OfxTest</a></li>
+        
+          <li><a href="./OfxesController.html">OfxesController</a></li>
+        
+          <li><a href="./OfxesControllerTest.html">OfxesControllerTest</a></li>
+        
+          <li><a href="./OfxesHelper.html">OfxesHelper</a></li>
+        
+          <li><a href="./OfxesHelperTest.html">OfxesHelperTest</a></li>
+        
+          <li><a href="./ParseSpec.html">ParseSpec</a></li>
+        
+          <li><a href="./ParseSpecTest.html">ParseSpecTest</a></li>
+        
+          <li><a href="./ParseSpecsController.html">ParseSpecsController</a></li>
+        
+          <li><a href="./ParseSpecsControllerTest.html">ParseSpecsControllerTest</a></li>
+        
+          <li><a href="./ParseSpecsHelper.html">ParseSpecsHelper</a></li>
+        
+          <li><a href="./Port.html">Port</a></li>
+        
+          <li><a href="./PortsController.html">PortsController</a></li>
+        
+          <li><a href="./PortsHelper.html">PortsHelper</a></li>
+        
+          <li><a href="./Production.html">Production</a></li>
+        
+          <li><a href="./ProductionFtp.html">ProductionFtp</a></li>
+        
+          <li><a href="./ProductionFtpTest.html">ProductionFtpTest</a></li>
+        
+          <li><a href="./ProductionFtpsController.html">ProductionFtpsController</a></li>
+        
+          <li><a href="./ProductionFtpsControllerTest.html">ProductionFtpsControllerTest</a></li>
+        
+          <li><a href="./ProductionFtpsHelper.html">ProductionFtpsHelper</a></li>
+        
+          <li><a href="./ProductionFtpsHelperTest.html">ProductionFtpsHelperTest</a></li>
+        
+          <li><a href="./ProductionTest.html">ProductionTest</a></li>
+        
+          <li><a href="./ProductionsController.html">ProductionsController</a></li>
+        
+          <li><a href="./ProductionsControllerTest.html">ProductionsControllerTest</a></li>
+        
+          <li><a href="./ProductionsHelper.html">ProductionsHelper</a></li>
+        
+          <li><a href="./RakeTest.html">RakeTest</a></li>
+        
+          <li><a href="./RegexpEdit.html">RegexpEdit</a></li>
+        
+          <li><a href="./RegexpParse.html">RegexpParse</a></li>
+        
+          <li><a href="./Router.html">Router</a></li>
+        
+          <li><a href="./RouterTest.html">RouterTest</a></li>
+        
+          <li><a href="./RoutersController.html">RoutersController</a></li>
+        
+          <li><a href="./RoutersControllerTest.html">RoutersControllerTest</a></li>
+        
+          <li><a href="./RoutersHelper.html">RoutersHelper</a></li>
+        
+          <li><a href="./RubyInterface.html">RubyInterface</a></li>
+        
+          <li><a href="./RubyInterfaceTest.html">RubyInterfaceTest</a></li>
+        
+          <li><a href="./RubyInterfacesController.html">RubyInterfacesController</a></li>
+        
+          <li><a href="./RubyInterfacesControllerTest.html">RubyInterfacesControllerTest</a></li>
+        
+          <li><a href="./RubyInterfacesHelper.html">RubyInterfacesHelper</a></li>
+        
+          <li><a href="./RubyInterfacesHelperTest.html">RubyInterfacesHelperTest</a></li>
+        
+          <li><a href="./ScalarArgument.html">ScalarArgument</a></li>
+        
+          <li><a href="./ScalarArgumentTest.html">ScalarArgumentTest</a></li>
+        
+          <li><a href="./ScalarArgumentsController.html">ScalarArgumentsController</a></li>
+        
+          <li><a href="./ScalarArgumentsControllerTest.html">ScalarArgumentsControllerTest</a></li>
+        
+          <li><a href="./ScalarArgumentsHelper.html">ScalarArgumentsHelper</a></li>
+        
+          <li><a href="./ScalarArgumentsHelperTest.html">ScalarArgumentsHelperTest</a></li>
+        
+          <li><a href="./Set.html">Set</a></li>
+        
+          <li><a href="./Squeeze_Display.html">Squeeze_Display</a></li>
+        
+          <li><a href="./Station.html">Station</a></li>
+        
+          <li><a href="./StationsController.html">StationsController</a></li>
+        
+          <li><a href="./StationsHelper.html">StationsHelper</a></li>
+        
+          <li><a href="./StreamLink.html">StreamLink</a></li>
+        
+          <li><a href="./StreamLinkTest.html">StreamLinkTest</a></li>
+        
+          <li><a href="./StreamLinksController.html">StreamLinksController</a></li>
+        
+          <li><a href="./StreamLinksControllerTest.html">StreamLinksControllerTest</a></li>
+        
+          <li><a href="./StreamLinksHelper.html">StreamLinksHelper</a></li>
+        
+          <li><a href="./StreamLinksHelperTest.html">StreamLinksHelperTest</a></li>
+        
+          <li><a href="./StreamMethod.html">StreamMethod</a></li>
+        
+          <li><a href="./StreamMethodArgument.html">StreamMethodArgument</a></li>
+        
+          <li><a href="./StreamMethodArgumentTest.html">StreamMethodArgumentTest</a></li>
+        
+          <li><a href="./StreamMethodArgumentsController.html">StreamMethodArgumentsController</a></li>
+        
+          <li><a href="./StreamMethodArgumentsControllerTest.html">StreamMethodArgumentsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodArgumentsHelper.html">StreamMethodArgumentsHelper</a></li>
+        
+          <li><a href="./StreamMethodArgumentsHelperTest.html">StreamMethodArgumentsHelperTest</a></li>
+        
+          <li><a href="./StreamMethodCall.html">StreamMethodCall</a></li>
+        
+          <li><a href="./StreamMethodCallTest.html">StreamMethodCallTest</a></li>
+        
+          <li><a href="./StreamMethodCallsController.html">StreamMethodCallsController</a></li>
+        
+          <li><a href="./StreamMethodCallsControllerTest.html">StreamMethodCallsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodCallsHelper.html">StreamMethodCallsHelper</a></li>
+        
+          <li><a href="./StreamMethodCallsHelperTest.html">StreamMethodCallsHelperTest</a></li>
+        
+          <li><a href="./StreamMethodTest.html">StreamMethodTest</a></li>
+        
+          <li><a href="./StreamMethodsController.html">StreamMethodsController</a></li>
+        
+          <li><a href="./StreamMethodsControllerTest.html">StreamMethodsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodsHelper.html">StreamMethodsHelper</a></li>
+        
+          <li><a href="./StreamMethodsHelperTest.html">StreamMethodsHelperTest</a></li>
+        
+          <li><a href="./StreamParameter.html">StreamParameter</a></li>
+        
+          <li><a href="./StreamParameterTest.html">StreamParameterTest</a></li>
+        
+          <li><a href="./StreamParametersController.html">StreamParametersController</a></li>
+        
+          <li><a href="./StreamParametersControllerTest.html">StreamParametersControllerTest</a></li>
+        
+          <li><a href="./StreamParametersHelper.html">StreamParametersHelper</a></li>
+        
+          <li><a href="./StreamParametersHelperTest.html">StreamParametersHelperTest</a></li>
+        
+          <li><a href="./StreamPattern.html">StreamPattern</a></li>
+        
+          <li><a href="./StreamPatternArgument.html">StreamPatternArgument</a></li>
+        
+          <li><a href="./StreamPatternArgumentTest.html">StreamPatternArgumentTest</a></li>
+        
+          <li><a href="./StreamPatternArgumentsController.html">StreamPatternArgumentsController</a></li>
+        
+          <li><a href="./StreamPatternArgumentsControllerTest.html">StreamPatternArgumentsControllerTest</a></li>
+        
+          <li><a href="./StreamPatternArgumentsHelper.html">StreamPatternArgumentsHelper</a></li>
+        
+          <li><a href="./StreamPatternArgumentsHelperTest.html">StreamPatternArgumentsHelperTest</a></li>
+        
+          <li><a href="./StreamPatternTest.html">StreamPatternTest</a></li>
+        
+          <li><a href="./StreamPatternsController.html">StreamPatternsController</a></li>
+        
+          <li><a href="./StreamPatternsControllerTest.html">StreamPatternsControllerTest</a></li>
+        
+          <li><a href="./StreamPatternsHelper.html">StreamPatternsHelper</a></li>
+        
+          <li><a href="./StreamPatternsHelperTest.html">StreamPatternsHelperTest</a></li>
+        
+          <li><a href="./TableSpec.html">TableSpec</a></li>
+        
+          <li><a href="./TableSpecTest.html">TableSpecTest</a></li>
+        
+          <li><a href="./TableSpecsController.html">TableSpecsController</a></li>
+        
+          <li><a href="./TableSpecsControllerTest.html">TableSpecsControllerTest</a></li>
+        
+          <li><a href="./TableSpecsHelper.html">TableSpecsHelper</a></li>
+        
+          <li><a href="./TedprimariesController.html">TedprimariesController</a></li>
+        
+          <li><a href="./TedprimariesControllerTest.html">TedprimariesControllerTest</a></li>
+        
+          <li><a href="./TedprimariesHelper.html">TedprimariesHelper</a></li>
+        
+          <li><a href="./Tedprimary.html">Tedprimary</a></li>
+        
+          <li><a href="./TedprimaryTest.html">TedprimaryTest</a></li>
+        
+          <li><a href="./TestClass.html">TestClass</a></li>
+        
+          <li><a href="./TestHelperTest.html">TestHelperTest</a></li>
+        
+          <li><a href="./TestRun.html">TestRun</a></li>
+        
+          <li><a href="./TestRunTest.html">TestRunTest</a></li>
+        
+          <li><a href="./TestRunsController.html">TestRunsController</a></li>
+        
+          <li><a href="./TestRunsControllerTest.html">TestRunsControllerTest</a></li>
+        
+          <li><a href="./TestRunsHelper.html">TestRunsHelper</a></li>
+        
+          <li><a href="./TestRunsHelperTest.html">TestRunsHelperTest</a></li>
+        
+          <li><a href="./TestTable.html">TestTable</a></li>
+        
+          <li><a href="./Test_Acquisition.html">Test_Acquisition</a></li>
+        
+          <li><a href="./Test_Assertion.html">Test_Assertion</a></li>
+        
+          <li><a href="./Test_Generic.html">Test_Generic</a></li>
+        
+          <li><a href="./TestingFilePatternsTest.html">TestingFilePatternsTest</a></li>
+        
+          <li><a href="./Transaction.html">Transaction</a></li>
+        
+          <li><a href="./TransactionTest.html">TransactionTest</a></li>
+        
+          <li><a href="./TransactionsController.html">TransactionsController</a></li>
+        
+          <li><a href="./TransactionsHelper.html">TransactionsHelper</a></li>
+        
+          <li><a href="./Transfer.html">Transfer</a></li>
+        
+          <li><a href="./TransfersController.html">TransfersController</a></li>
+        
+          <li><a href="./TransfersControllerTest.html">TransfersControllerTest</a></li>
+        
+          <li><a href="./TransfersHelper.html">TransfersHelper</a></li>
+        
+          <li><a href="./Url.html">Url</a></li>
+        
+          <li><a href="./UrlTest.html">UrlTest</a></li>
+        
+          <li><a href="./UrlsController.html">UrlsController</a></li>
+        
+          <li><a href="./UrlsControllerTest.html">UrlsControllerTest</a></li>
+        
+          <li><a href="./UrlsHelper.html">UrlsHelper</a></li>
+        
+          <li><a href="./UrlsHelperTest.html">UrlsHelperTest</a></li>
+        
+          <li><a href="./Weather.html">Weather</a></li>
+        
+          <li><a href="./WeatherTest.html">WeatherTest</a></li>
+        
+          <li><a href="./WeathersController.html">WeathersController</a></li>
+        
+          <li><a href="./WeathersControllerTest.html">WeathersControllerTest</a></li>
+        
+          <li><a href="./WeathersHelper.html">WeathersHelper</a></li>
+        
+          <li><a href="./WiredLocation.html">WiredLocation</a></li>
+        
+          <li><a href="./WiredLocationTest.html">WiredLocationTest</a></li>
+        
+          <li><a href="./WiredLocationsController.html">WiredLocationsController</a></li>
+        
+          <li><a href="./WiredLocationsControllerTest.html">WiredLocationsControllerTest</a></li>
+        
+          <li><a href="./WiredLocationsHelper.html">WiredLocationsHelper</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">CodeBase</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+      <!-- Constants -->
+      <div id="constants-list" class="section">
+        <h3 class="section-header">Constants</h3>
+        <dl>
+        
+          <dt><a name="AFFECTS_CONTROLLERS">AFFECTS_CONTROLLERS</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="AFFECTS_EVERYTHING">AFFECTS_EVERYTHING</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="ALL_TEST_FILES">ALL_TEST_FILES</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="FILE_MOD_TIMES">FILE_MOD_TIMES</a></dt>
+          
+          <dd class="description"><p>puts “<a
+href="CodeBase.html#ALL_TEST_FILES">ALL_TEST_FILES</a>=#{ALL_TEST_FILES.inspect}”</p></dd>
+          
+        
+          <dt><a name="TABLE_FINDER_REGEXPS">TABLE_FINDER_REGEXPS</a></dt>
+          
+          <dd class="description"><dl class="rdoc-list"><dt>name, example_file, Dir_glob, plural,test_type</dt>
+<dd></dd></dl></dd>
+          
+        
+        </dl>
+      </div>
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="all_model_specfic_files-method" class="method-detail ">
+          <a name="method-c-all_model_specfic_files"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">all_model_specfic_files</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="all_model_specfic_files-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">all_model_specfic_files</span>
+        <span class="ruby-constant">TABLE_FINDER_REGEXPS</span>.<span class="ruby-identifier">map</span>  <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span><span class="ruby-operator">|</span>
+                <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>).<span class="ruby-identifier">files_from_spec</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+                        { <span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">file</span>, <span class="ruby-value">:spec</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span> }
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#map</span>
+        <span class="ruby-keyword">end</span>.<span class="ruby-identifier">flatten</span> <span class="ruby-comment">#map</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- all_model_specfic_files-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- all_model_specfic_files-method -->
+
+      
+        <div id="complete_models-method" class="method-detail ">
+          <a name="method-c-complete_models"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">complete_models</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="complete_models-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">complete_models</span>
+        <span class="ruby-identifier">list_of_model_sets</span>=<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">model_spec_symbols</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">spec_name_symbol</span><span class="ruby-operator">|</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">models_from_spec</span>(<span class="ruby-identifier">spec_name_symbol</span>)}
+        <span class="ruby-identifier">list_of_model_sets</span>.<span class="ruby-identifier">reduce</span>(<span class="ruby-value">:&amp;</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- complete_models-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- complete_models-method -->
+
+      
+        <div id="controller_sources-method" class="method-detail ">
+          <a name="method-c-controller_sources"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">controller_sources</span><span
+              class="method-args">(singular_table)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="controller_sources-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 140</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">controller_sources</span>(<span class="ruby-identifier">singular_table</span>)
+        <span class="ruby-identifier">plural_table</span>=<span class="ruby-identifier">singular_table</span>.<span class="ruby-identifier">pluralize</span>
+        <span class="ruby-comment"># commn_sources apply to both unit and functional tests.</span>
+        <span class="ruby-identifier">common_sources</span>=<span class="ruby-constant">AFFECTS_EVERYTHING</span><span class="ruby-operator">+</span>[<span class="ruby-identifier">model_file</span>(<span class="ruby-identifier">singular_table</span>),<span class="ruby-node">&quot;test/fixtures/#{plural_table}.yml&quot;</span>]
+        <span class="ruby-identifier">sources</span>=<span class="ruby-identifier">common_sources</span><span class="ruby-operator">+</span><span class="ruby-constant">Dir</span>[<span class="ruby-node">&quot;app/views/#{plural_table}/*.html.erb&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-constant">AFFECTS_CONTROLLERS</span>
+        <span class="ruby-keyword">return</span> [<span class="ruby-node">&quot;test/functional/#{plural_table}_controller_test.rb&quot;</span>] <span class="ruby-operator">+</span><span class="ruby-identifier">sources</span><span class="ruby-operator">+</span>[<span class="ruby-node">&quot;app/controllers/#{plural_table}_controller.rb&quot;</span>,<span class="ruby-node">&quot;app/helpers/#{plural_table}_helper.rb&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- controller_sources-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- controller_sources-method -->
+
+      
+        <div id="controller_target-method" class="method-detail ">
+          <a name="method-c-controller_target"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">controller_target</span><span
+              class="method-args">(singular_table)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="controller_target-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">controller_target</span>(<span class="ruby-identifier">singular_table</span>)
+        <span class="ruby-identifier">plural_table</span>=<span class="ruby-identifier">singular_table</span>.<span class="ruby-identifier">pluralize</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;log/functional/#{plural_table}_controller_test.log&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- controller_target-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- controller_target-method -->
+
+      
+        <div id="file_glob-method" class="method-detail ">
+          <a name="method-c-file_glob"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">file_glob</span><span
+              class="method-args">(spec)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="file_glob-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">file_glob</span>(<span class="ruby-identifier">spec</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">spec</span>[<span class="ruby-value">:Dir_glob</span>].<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/(\()/</span>,<span class="ruby-string">''</span>).<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/(\))/</span>,<span class="ruby-string">''</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- file_glob-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- file_glob-method -->
+
+      
+        <div id="gitStatus-method" class="method-detail ">
+          <a name="method-c-gitStatus"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">gitStatus</span><span
+              class="method-args">(&process_status)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="gitStatus-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 303</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">gitStatus</span>(&amp;<span class="ruby-identifier">process_status</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-value">`git status --porcelain`</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> 
+                <span class="ruby-identifier">status</span>,<span class="ruby-identifier">file</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot; &quot;</span>)
+                <span class="ruby-identifier">process_status</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">status</span>,<span class="ruby-identifier">file</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- gitStatus-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- gitStatus-method -->
+
+      
+        <div id="git_add_successful-method" class="method-detail ">
+          <a name="method-c-git_add_successful"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">git_add_successful</span><span
+              class="method-args">(not_uptodate_sources)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="git_add_successful-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 309</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">git_add_successful</span>(<span class="ruby-identifier">not_uptodate_sources</span>)
+        <span class="ruby-identifier">not_uptodate_sources</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">sh</span> <span class="ruby-node">&quot;git add #{s}&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- git_add_successful-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- git_add_successful-method -->
+
+      
+        <div id="match_spec_from_file-method" class="method-detail ">
+          <a name="method-c-match_spec_from_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">match_spec_from_file</span><span
+              class="method-args">(file)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="match_spec_from_file-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">match_spec_from_file</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-constant">TABLE_FINDER_REGEXPS</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match_specs</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">matchData</span>=<span class="ruby-identifier">file</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">match_specs</span>[<span class="ruby-value">:Dir_glob</span>])
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">matchData</span> <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">match_specs</span>[<span class="ruby-value">:matchData</span>]=<span class="ruby-identifier">matchData</span> <span class="ruby-comment"># add match data found</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">match_specs</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-comment"># if no match</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- match_spec_from_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- match_spec_from_file-method -->
+
+      
+        <div id="model_file-method" class="method-detail ">
+          <a name="method-c-model_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">model_file</span><span
+              class="method-args">(singular_table)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="model_file-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">model_file</span>(<span class="ruby-identifier">singular_table</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;app/models/#{singular_table}.rb&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- model_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- model_file-method -->
+
+      
+        <div id="model_spec_symbols-method" class="method-detail ">
+          <a name="method-c-model_spec_symbols"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">model_spec_symbols</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="model_spec_symbols-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">model_spec_symbols</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">CodeBase</span><span class="ruby-operator">::</span><span class="ruby-constant">TABLE_FINDER_REGEXPS</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">:test_type</span>]<span class="ruby-operator">!=</span><span class="ruby-value">:shared</span>}.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">:name</span>]}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- model_spec_symbols-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- model_spec_symbols-method -->
+
+      
+        <div id="models_from_spec-method" class="method-detail ">
+          <a name="method-c-models_from_spec"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">models_from_spec</span><span
+              class="method-args">(spec_name_symbol)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="models_from_spec-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 169</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">models_from_spec</span>(<span class="ruby-identifier">spec_name_symbol</span>)
+        <span class="ruby-identifier">spec</span>=<span class="ruby-identifier">spec_from_symbol</span>(<span class="ruby-identifier">spec_name_symbol</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;models_from_spec called with spec=#{spec.inspect}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span>[<span class="ruby-value">:test_type</span>]<span class="ruby-operator">==</span><span class="ruby-value">:shared</span>
+        <span class="ruby-identifier">files</span>=<span class="ruby-constant">Dir</span>[<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">file_glob</span>(<span class="ruby-identifier">spec</span>)]
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">files</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;#{CodeBase.file_glob(spec)} does not match any files.&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-identifier">models</span>=<span class="ruby-identifier">files</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span><span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">model</span>=<span class="ruby-identifier">f</span>[<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">regexp</span>(<span class="ruby-identifier">spec</span>),<span class="ruby-value">1</span>]
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;file=#{f} does not match regexp=#{CodeBase.regexp(spec)}&quot;</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span>[<span class="ruby-value">:plural</span>] <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">model</span>=<span class="ruby-identifier">model</span>.<span class="ruby-identifier">singularize</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                <span class="ruby-identifier">model</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#map</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">models</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">models</span>)
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-constant">Set</span>[]
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- models_from_spec-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- models_from_spec-method -->
+
+      
+        <div id="name_plurality_from_spec-method" class="method-detail ">
+          <a name="method-c-name_plurality_from_spec"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">name_plurality_from_spec</span><span
+              class="method-args">(match_spec)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="name_plurality_from_spec-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 232</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">name_plurality_from_spec</span>(<span class="ruby-identifier">match_spec</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">match_spec</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:test_type</span>]<span class="ruby-operator">==</span><span class="ruby-value">:shared</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span>  <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">table_name</span>=<span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:matchData</span>][<span class="ruby-value">1</span>]
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:plural</span>] <span class="ruby-keyword">then</span>
+                        {<span class="ruby-value">:singular</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">singularize</span>, <span class="ruby-value">:plural</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">table_name</span>}
+                <span class="ruby-keyword">else</span>
+                        {<span class="ruby-value">:singular</span> =<span class="ruby-operator">&gt;</span>  <span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">plural</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">pluralize</span>}
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- name_plurality_from_spec-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- name_plurality_from_spec-method -->
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(hash)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">hash</span>)
+        <span class="ruby-ivar">@spec</span>=<span class="ruby-identifier">hash</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+        <div id="not_uptodate_order-method" class="method-detail ">
+          <a name="method-c-not_uptodate_order"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">not_uptodate_order</span><span
+              class="method-args">(&proc_update)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="not_uptodate_order-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">not_uptodate_order</span>(&amp;<span class="ruby-identifier">proc_update</span>)
+        <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">prioritized_file_order</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target</span>,<span class="ruby-identifier">sources</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;sources=#{sources.inspect} must be an Array of Strings(pathnames)&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Array</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;target=#{target.inspect} must be a Strings(pathnames)&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">target</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">String</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">uptodate?</span>(<span class="ruby-identifier">target</span>,<span class="ruby-identifier">sources</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-keyword">then</span>
+                                <span class="ruby-identifier">proc_update</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">target</span>,[])
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-identifier">not_uptodate_sources</span>=<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">not_uptodate_sources</span>(<span class="ruby-identifier">target</span>,<span class="ruby-identifier">sources</span>)
+                                <span class="ruby-identifier">proc_update</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">target</span>,<span class="ruby-identifier">not_uptodate_sources</span>)
+                        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#prioritized_file_order</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- not_uptodate_order-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- not_uptodate_order-method -->
+
+      
+        <div id="not_uptodate_sources-method" class="method-detail ">
+          <a name="method-c-not_uptodate_sources"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">not_uptodate_sources</span><span
+              class="method-args">(target,sources)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>determine which files should be staged if test is successful all files
+newer than previous test log. file must also have changed since last
+staging</p>
+            
+
+            
+            <div class="method-source-code" id="not_uptodate_sources-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 291</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">not_uptodate_sources</span>(<span class="ruby-identifier">target</span>,<span class="ruby-identifier">sources</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;sources=#{sources.inspect} must be an Array&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Array</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;sources=#{sources.inspect} must be an Array of Strings(pathnames)&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;sources.size=#{sources.size} &quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;sources[0]=#{sources[0].inspect} &quot;</span>
+        <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;p=#{p.inspect} must be a String(pathnames)&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">String</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;sources=#{sources.inspect} must be an Array of Strings(pathnames)&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">any?</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">String</span>)}
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;target=#{target.inspect} must be a String (pathnames)&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">target</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">String</span>)
+        <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-operator">||</span>  <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">s</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">uptodate?</span>(<span class="ruby-identifier">target</span>, [<span class="ruby-identifier">s</span>])}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- not_uptodate_sources-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- not_uptodate_sources-method -->
+
+      
+        <div id="prioritized_file_order-method" class="method-detail ">
+          <a name="method-c-prioritized_file_order"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">prioritized_file_order</span><span
+              class="method-args">(&process_test)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="prioritized_file_order-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">prioritized_file_order</span>(&amp;<span class="ruby-identifier">process_test</span>)
+        <span class="ruby-identifier">file_type_pairs</span>=<span class="ruby-constant">CodeBase</span><span class="ruby-operator">::</span><span class="ruby-constant">FILE_MOD_TIMES</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file_and_spec</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">singular_table</span>=<span class="ruby-identifier">singular_table_from_file</span>(<span class="ruby-identifier">file_and_spec</span>[<span class="ruby-value">:file</span>])
+                <span class="ruby-identifier">test_type</span>=<span class="ruby-identifier">file_and_spec</span>[<span class="ruby-value">:spec</span>][<span class="ruby-value">:test_type</span>].<span class="ruby-identifier">to_s</span>
+                [<span class="ruby-identifier">singular_table</span>,<span class="ruby-identifier">test_type</span>]
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#map</span>
+        <span class="ruby-identifier">file_type_pairs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file_and_type</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">singular_table</span>=<span class="ruby-identifier">file_and_type</span>[<span class="ruby-value">0</span>]
+                <span class="ruby-keyword">case</span> <span class="ruby-identifier">file_and_type</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_sym</span>
+                <span class="ruby-keyword">when</span> <span class="ruby-value">:unit</span>
+                        <span class="ruby-identifier">process_test</span>.<span class="ruby-identifier">call</span>(<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">unit_target</span>(<span class="ruby-identifier">singular_table</span>), <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">unit_sources</span>(<span class="ruby-identifier">singular_table</span>))
+                <span class="ruby-keyword">when</span> <span class="ruby-value">:controller</span>
+                        <span class="ruby-identifier">process_test</span>.<span class="ruby-identifier">call</span>(<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">controller_target</span>(<span class="ruby-identifier">singular_table</span>), <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">controller_sources</span>(<span class="ruby-identifier">singular_table</span>))
+                <span class="ruby-keyword">when</span> <span class="ruby-value">:both</span>
+                        <span class="ruby-identifier">process_test</span>.<span class="ruby-identifier">call</span>(<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">unit_target</span>(<span class="ruby-identifier">singular_table</span>), <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">unit_sources</span>(<span class="ruby-identifier">singular_table</span>)) <span class="ruby-operator">&amp;&amp;</span>
+                        <span class="ruby-identifier">process_test</span>.<span class="ruby-identifier">call</span>(<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">controller_target</span>(<span class="ruby-identifier">singular_table</span>), <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">controller_sources</span>(<span class="ruby-identifier">singular_table</span>))
+                <span class="ruby-keyword">when</span> <span class="ruby-value">:shared</span>
+                        <span class="ruby-comment"># some other file will trigger compilation</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;illegal test type=#{test_type}&quot;</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#case</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- prioritized_file_order-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- prioritized_file_order-method -->
+
+      
+        <div id="rails_MVC_classes-method" class="method-detail ">
+          <a name="method-c-rails_MVC_classes"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rails_MVC_classes</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="rails_MVC_classes-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 362</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">rails_MVC_classes</span>
+<span class="ruby-comment">#       puts fixture_names.inspect</span>
+        <span class="ruby-identifier">@@ALL_VIEW_DIRS</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">view_dir</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">model_filename</span>=<span class="ruby-identifier">view_dir</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">%{^app/views/}</span>,<span class="ruby-string">''</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-constant">Generic_Table</span>.<span class="ruby-identifier">is_generic_table_name?</span>(<span class="ruby-identifier">model_filename</span>.<span class="ruby-identifier">singularize</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">model_filename</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
+                <span class="ruby-keyword">else</span>
+<span class="ruby-comment">#                       puts &quot;File.exists?(\&quot;app/models/#{model_filename}\&quot;)=#{File.exists?('app/models/'+model_filename)}&quot;</span>
+                        <span class="ruby-keyword">nil</span> <span class="ruby-comment"># discarded by later Array#compact</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span>.<span class="ruby-identifier">compact</span> <span class="ruby-comment">#map</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rails_MVC_classes-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rails_MVC_classes-method -->
+
+      
+        <div id="regexp-method" class="method-detail ">
+          <a name="method-c-regexp"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">regexp</span><span
+              class="method-args">(spec)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="regexp-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">regexp</span>(<span class="ruby-identifier">spec</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-string">'^'</span><span class="ruby-operator">+</span><span class="ruby-identifier">spec</span>[<span class="ruby-value">:Dir_glob</span>]<span class="ruby-operator">+</span><span class="ruby-string">'$'</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">ret</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- regexp-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- regexp-method -->
+
+      
+        <div id="run_test-method" class="method-detail ">
+          <a name="method-c-run_test"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">run_test</span><span
+              class="method-args">(singular_table, test_type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="run_test-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">run_test</span>(<span class="ruby-identifier">singular_table</span>, <span class="ruby-identifier">test_type</span>)
+        <span class="ruby-keyword">case</span> <span class="ruby-identifier">test_type</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:unit</span>
+                <span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">ruby_run_and_log</span>(<span class="ruby-identifier">test_file</span>(<span class="ruby-identifier">singular_table</span>, <span class="ruby-identifier">test_type</span>),<span class="ruby-identifier">unit_target</span>(<span class="ruby-identifier">singular_table</span>))
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:controller</span>
+                <span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">ruby_run_and_log</span>(<span class="ruby-identifier">test_file</span>(<span class="ruby-identifier">singular_table</span>, <span class="ruby-identifier">test_type</span>),<span class="ruby-identifier">controller_target</span>(<span class="ruby-identifier">singular_table</span>))
+
+        <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unnown test_type=#{test_type} for singular_table=#{singular_table}&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#case</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- run_test-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- run_test-method -->
+
+      
+        <div id="singular_table_from_file-method" class="method-detail ">
+          <a name="method-c-singular_table_from_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">singular_table_from_file</span><span
+              class="method-args">(file)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="singular_table_from_file-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 202</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">singular_table_from_file</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">match_spec</span>=<span class="ruby-identifier">match_spec_from_file</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">match_spec</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:test_type</span>]<span class="ruby-operator">==</span><span class="ruby-value">:shared</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-keyword">return</span>  <span class="ruby-string">''</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">table_name</span>=<span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:matchData</span>][<span class="ruby-value">1</span>]
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:plural</span>] <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">singularize</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">table_name</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- singular_table_from_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- singular_table_from_file-method -->
+
+      
+        <div id="spec_from_symbol-method" class="method-detail ">
+          <a name="method-c-spec_from_symbol"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">spec_from_symbol</span><span
+              class="method-args">(spec_name_symbol)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="spec_from_symbol-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 164</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">spec_from_symbol</span>(<span class="ruby-identifier">spec_name_symbol</span>)
+        <span class="ruby-identifier">index</span>=<span class="ruby-constant">CodeBase</span><span class="ruby-operator">::</span><span class="ruby-constant">TABLE_FINDER_REGEXPS</span>.<span class="ruby-identifier">index</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">:name</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">spec_name_symbol</span>.<span class="ruby-identifier">to_sym</span>}
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;spec_name_symbol=#{spec_name_symbol} not found&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">CodeBase</span><span class="ruby-operator">::</span><span class="ruby-constant">TABLE_FINDER_REGEXPS</span>[<span class="ruby-identifier">index</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- spec_from_symbol-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- spec_from_symbol-method -->
+
+      
+        <div id="spec_symbols-method" class="method-detail ">
+          <a name="method-c-spec_symbols"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">spec_symbols</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="spec_symbols-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">spec_symbols</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">CodeBase</span><span class="ruby-operator">::</span><span class="ruby-constant">TABLE_FINDER_REGEXPS</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">:name</span>]}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- spec_symbols-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- spec_symbols-method -->
+
+      
+        <div id="test_file-method" class="method-detail ">
+          <a name="method-c-test_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_file</span><span
+              class="method-args">(singular_table, test_type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_file-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">test_file</span>(<span class="ruby-identifier">singular_table</span>, <span class="ruby-identifier">test_type</span>)
+        <span class="ruby-keyword">case</span> <span class="ruby-identifier">test_type</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:unit</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;test/unit/#{singular_table}_test.rb&quot;</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:controller</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;test/functional/#{plural_table}_controller_test.rb&quot;</span>
+        <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unnown test_type=#{test_type} for singular_table=#{singular_table}&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#case</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_file-method -->
+
+      
+        <div id="test_program_from_file-method" class="method-detail ">
+          <a name="method-c-test_program_from_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_program_from_file</span><span
+              class="method-args">(ruby_source)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_program_from_file-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 265</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">test_program_from_file</span>(<span class="ruby-identifier">ruby_source</span>)
+<span class="ruby-comment">#       singular_table=CodeBase.singular_table_from_file(ruby_source)</span>
+        <span class="ruby-identifier">test_type</span>=<span class="ruby-identifier">test_type_from_source</span>(<span class="ruby-identifier">ruby_source</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">test_file</span>(<span class="ruby-identifier">test_type</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">test_type</span>[<span class="ruby-value">1</span>])
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_program_from_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_program_from_file-method -->
+
+      
+        <div id="test_run_from_file-method" class="method-detail ">
+          <a name="method-c-test_run_from_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_run_from_file</span><span
+              class="method-args">(file)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_run_from_file-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 244</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">test_run_from_file</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">match_spec</span>=<span class="ruby-identifier">match_spec_from_file</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">name_plurality</span>=<span class="ruby-identifier">name_plurality_from_spec</span>(<span class="ruby-identifier">match_spec</span>)
+        <span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:test_type</span>],<span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:singular</span>], <span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:plural</span>])
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_run_from_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_run_from_file-method -->
+
+      
+        <div id="test_type_from_source-method" class="method-detail ">
+          <a name="method-c-test_type_from_source"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_type_from_source</span><span
+              class="method-args">(ruby_source)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_type_from_source-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 249</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">test_type_from_source</span>(<span class="ruby-identifier">ruby_source</span>)
+        <span class="ruby-identifier">path</span>=<span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">ruby_source</span>)
+        <span class="ruby-comment">#~ puts &quot;path=#{path.inspect}&quot;</span>
+        <span class="ruby-identifier">words</span>=<span class="ruby-identifier">path</span>.<span class="ruby-identifier">basename</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'_'</span>)
+<span class="ruby-comment">#       puts &quot;words=#{words.inspect}&quot;</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;not a test log or source pathname =#{path.inspect}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">words</span>[<span class="ruby-value">-1</span>][<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">3</span>]<span class="ruby-operator">!=</span><span class="ruby-string">'test'</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">words</span>[<span class="ruby-value">-2</span>]<span class="ruby-operator">==</span><span class="ruby-string">'controller'</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">test_type</span>=<span class="ruby-string">'functional'</span>
+                <span class="ruby-identifier">table</span>=<span class="ruby-identifier">words</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-3</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">'_'</span>)
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">test_type</span>=<span class="ruby-string">'unit'</span>
+                <span class="ruby-identifier">table</span>=<span class="ruby-identifier">words</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">'_'</span>)
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-comment">#~ puts &quot;test_type='#{test_type}'&quot;</span>
+        <span class="ruby-keyword">return</span> [<span class="ruby-identifier">table</span>,<span class="ruby-identifier">test_type</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_type_from_source-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_type_from_source-method -->
+
+      
+        <div id="unit_sources-method" class="method-detail ">
+          <a name="method-c-unit_sources"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">unit_sources</span><span
+              class="method-args">(singular_table)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="unit_sources-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 133</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">unit_sources</span>(<span class="ruby-identifier">singular_table</span>)
+        <span class="ruby-identifier">plural_table</span>=<span class="ruby-identifier">singular_table</span>.<span class="ruby-identifier">pluralize</span>
+        <span class="ruby-comment"># commn_sources apply to both unit and functional tests.</span>
+        <span class="ruby-identifier">model_file</span>=<span class="ruby-node">&quot;app/models/#{singular_table}.rb&quot;</span>
+        <span class="ruby-identifier">common_sources</span>=<span class="ruby-constant">AFFECTS_EVERYTHING</span><span class="ruby-operator">+</span>[<span class="ruby-identifier">model_file</span>,<span class="ruby-node">&quot;test/fixtures/#{plural_table}.yml&quot;</span>]
+        <span class="ruby-keyword">return</span> [<span class="ruby-node">&quot;test/unit/#{singular_table}_test.rb&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-identifier">common_sources</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- unit_sources-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- unit_sources-method -->
+
+      
+        <div id="unit_target-method" class="method-detail ">
+          <a name="method-c-unit_target"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">unit_target</span><span
+              class="method-args">(singular_table)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="unit_target-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 147</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">unit_target</span>(<span class="ruby-identifier">singular_table</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;log/unit/#{singular_table}_test.log&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- unit_target-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- unit_target-method -->
+
+      
+        <div id="uptodate-3F-method" class="method-detail ">
+          <a name="method-c-uptodate-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">uptodate?</span><span
+              class="method-args">(target,sources)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="uptodate-3F-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 270</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">uptodate?</span>(<span class="ruby-identifier">target</span>,<span class="ruby-identifier">sources</span>) 
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;sources=#{sources.inspect} must be an Array of Strings(pathnames)&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Array</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;target=#{target.inspect} must be a String (pathnames)&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">target</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">String</span>)
+        <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+                <span class="ruby-comment">#~ system (&quot;ls -l #{target}&quot;) {|ok, res| } # discard result if file doesn't exist</span>
+                <span class="ruby-comment">#~ system &quot;ls -l #{s}&quot;</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#def</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">s</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#def</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">target</span>)<span class="ruby-operator">&lt;</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">s</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#each</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- uptodate-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- uptodate-3F-method -->
+
+      
+        <div id="why_not_stage-method" class="method-detail ">
+          <a name="method-c-why_not_stage"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">why_not_stage</span><span
+              class="method-args">(file,singular_table)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>stage target and source files when all tests pass. stage model file and
+.yml files when BOTH unit and controller tests pass</p>
+            
+
+            
+            <div class="method-source-code" id="why_not_stage-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 348</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">why_not_stage</span>(<span class="ruby-identifier">file</span>,<span class="ruby-identifier">singular_table</span>)
+        <span class="ruby-identifier">match_spec</span>=<span class="ruby-identifier">match_spec_from_file</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">match_spec</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                <span class="ruby-identifier">singular_table</span>=<span class="ruby-constant">FILE_MOD_TIMES</span>[<span class="ruby-constant">FILE_MOD_TIMES</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">/</span><span class="ruby-value">2</span>][<span class="ruby-value">0</span>] <span class="ruby-comment"># pick average file, not too active, not too abandoned</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{file} don't know when to stage.&quot;</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">singular_table</span>=<span class="ruby-identifier">singular_table_from_file</span>(<span class="ruby-identifier">file</span>)
+                <span class="ruby-identifier">why_not_stage_helper</span>(<span class="ruby-identifier">file</span>,<span class="ruby-identifier">unit_target</span>(<span class="ruby-identifier">singular_table</span>),<span class="ruby-identifier">unit_sources</span>(<span class="ruby-identifier">singular_table</span>),<span class="ruby-value">:unit</span>)  <span class="ruby-keyword">if</span> <span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:test_type</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">:controller</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">controller_target</span>(<span class="ruby-identifier">singular_table</span>)) <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">why_not_stage_helper</span>(<span class="ruby-identifier">file</span>,<span class="ruby-identifier">controller_target</span>(<span class="ruby-identifier">singular_table</span>),<span class="ruby-identifier">controller_sources</span>(<span class="ruby-identifier">singular_table</span>),<span class="ruby-value">:controller</span>)  <span class="ruby-keyword">if</span> <span class="ruby-identifier">match_spec</span>[<span class="ruby-value">:test_type</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">:unit</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- why_not_stage-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- why_not_stage-method -->
+
+      
+        <div id="why_not_stage_helper-method" class="method-detail ">
+          <a name="method-c-why_not_stage_helper"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">why_not_stage_helper</span><span
+              class="method-args">(file,target,sources,test_type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>stage target and source files when all tests pass. stage model file and
+.yml files when BOTH unit and controller tests pass</p>
+            
+
+            
+            <div class="method-source-code" id="why_not_stage_helper-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 318</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">why_not_stage_helper</span>(<span class="ruby-identifier">file</span>,<span class="ruby-identifier">target</span>,<span class="ruby-identifier">sources</span>,<span class="ruby-identifier">test_type</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-keyword">then</span>
+                <span class="ruby-comment">#~ puts &quot;Target #{target}  does exist.&quot; </span>
+                <span class="ruby-keyword">if</span> <span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">log_passed?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-keyword">then</span>
+                        <span class="ruby-identifier">system</span> <span class="ruby-node">&quot;git add #{target}&quot;</span>
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">file</span><span class="ruby-operator">==</span><span class="ruby-identifier">target</span> <span class="ruby-keyword">then</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                        <span class="ruby-keyword">elsif</span>  <span class="ruby-identifier">uptodate?</span>(<span class="ruby-identifier">target</span>,[<span class="ruby-identifier">file</span>]) <span class="ruby-keyword">then</span>
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-keyword">then</span>
+                                        <span class="ruby-identifier">system</span> <span class="ruby-node">&quot;git add #{file}&quot;</span>
+                                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                                <span class="ruby-keyword">else</span>
+                                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{file} not a #{test_type} source.&quot;</span>
+                                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{file} not up to date.&quot;</span> 
+                        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Target #{target} for file=#{file} does not exist.&quot;</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#if</span>
+
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- why_not_stage_helper-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- why_not_stage_helper-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="files_from_spec-method" class="method-detail ">
+          <a name="method-i-files_from_spec"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">files_from_spec</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="files_from_spec-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">files_from_spec</span>
+        <span class="ruby-constant">Dir</span>[<span class="ruby-constant">CodeBase</span>.<span class="ruby-identifier">file_glob</span>(<span class="ruby-ivar">@spec</span>)]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- files_from_spec-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- files_from_spec-method -->
+
+      
+        <div id="suggest_test_run-method" class="method-detail ">
+          <a name="method-i-suggest_test_run"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">suggest_test_run</span><span
+              class="method-args">(file_and_spec)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="suggest_test_run-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">suggest_test_run</span>(<span class="ruby-identifier">file_and_spec</span>)
+        <span class="ruby-identifier">test_type</span>=<span class="ruby-identifier">file_and_spec</span>[<span class="ruby-value">:spec</span>][<span class="ruby-value">:test_type</span>].<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-identifier">plural</span>=<span class="ruby-identifier">file_and_spec</span>[<span class="ruby-value">:spec</span>][<span class="ruby-value">:plural</span>].<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-identifier">singular_table</span>=<span class="ruby-identifier">singular_table_from_file</span>(<span class="ruby-identifier">file_and_spec</span>[<span class="ruby-value">:file</span>])
+        <span class="ruby-identifier">name_plurality</span>=<span class="ruby-identifier">name_plurality_from_spec</span>(<span class="ruby-identifier">match_spec</span>)
+        <span class="ruby-keyword">case</span> <span class="ruby-identifier">test_type</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:unit</span>
+                <span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:unit</span>,<span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:singular</span>], <span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:plural</span>])
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:controller</span>
+                <span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:controller</span>,<span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:singular</span>], <span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:plural</span>])
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:both</span>
+                [<span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:unit</span>,<span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:singular</span>], <span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:plural</span>]),
+                <span class="ruby-constant">TestRun</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:controller</span>,<span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:singular</span>], <span class="ruby-identifier">name_plurality</span>[<span class="ruby-value">:plural</span>])]
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;bad test_type=#{test_type}&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#case</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- suggest_test_run-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- suggest_test_run-method -->
+
+      
+        <div id="suggest_test_runs-method" class="method-detail ">
+          <a name="method-i-suggest_test_runs"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">suggest_test_runs</span><span
+              class="method-args">(file_and_spec)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>priorities: most recent modification time from <a
+href="CodeBase.html#method-c-prioritized_file_order">prioritized_file_order</a>
+first test previously passed short test run time</p>
+            
+
+            
+            <div class="method-source-code" id="suggest_test_runs-source">
+<pre>
+<span class="ruby-comment"># File app/models/code_base.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">suggest_test_runs</span>(<span class="ruby-identifier">file_and_spec</span>)
+        <span class="ruby-identifier">singular_table</span>=<span class="ruby-identifier">singular_table_from_file</span>(<span class="ruby-identifier">file_and_spec</span>[<span class="ruby-value">:file</span>])
+        <span class="ruby-identifier">test_type</span>=<span class="ruby-identifier">file_and_spec</span>[<span class="ruby-value">:spec</span>][<span class="ruby-value">:test_type</span>].<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword">case</span> <span class="ruby-identifier">test_type</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:models</span>
+                
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:unit_tests</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:functional_tests</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:unit_test_logs</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:functional_test_logs</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:new_views</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:edit_views</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:show_views</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:index_views</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:shared_partials</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:form_partials</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:show_partials</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:index_partials</span>
+
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;illegal test type=#{test_type}&quot;</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#case      </span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- suggest_test_runs-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- suggest_test_runs-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

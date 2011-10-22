@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: AcquisitionInterfaceTest</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./test/unit/acquisition_interface_test_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="test/unit/acquisition_interface_test.rb">test/unit/acquisition_interface_test.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link"><a href="ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-i-acq_and_rescue">#acq_and_rescue</a></li>
+          
+          <li><a href="#method-i-setup">#setup</a></li>
+          
+          <li><a href="#method-i-test_acquisition">#test_acquisition</a></li>
+          
+          <li><a href="#method-i-test_default_acquisition">#test_default_acquisition</a></li>
+          
+          <li><a href="#method-i-test_id_equal">#test_id_equal</a></li>
+          
+          <li><a href="#method-i-test_scheme">#test_scheme</a></li>
+          
+          <li><a href="#method-i-test_stream_acquire">#test_stream_acquire</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./ActiveRecord.html">ActiveRecord</a></li>
+        
+          <li><a href="./ActiveRecord/Base.html">ActiveRecord::Base</a></li>
+        
+          <li><a href="./ActiveSupport.html">ActiveSupport</a></li>
+        
+          <li><a href="./ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+        
+          <li><a href="./GlobalTest.html">GlobalTest</a></li>
+        
+          <li><a href="./GlobalTest/TestClass.html">GlobalTest::TestClass</a></li>
+        
+          <li><a href="./Module.html">Module</a></li>
+        
+          <li><a href="./Module/MixinClassMethods.html">Module::MixinClassMethods</a></li>
+        
+          <li><a href="./TransferTest.html">TransferTest</a></li>
+        
+          <li><a href="./TransferTest/Transfer.html">TransferTest::Transfer</a></li>
+        
+          <li><a href="./Account.html">Account</a></li>
+        
+          <li><a href="./AccountTest.html">AccountTest</a></li>
+        
+          <li><a href="./AccountsController.html">AccountsController</a></li>
+        
+          <li><a href="./AccountsControllerTest.html">AccountsControllerTest</a></li>
+        
+          <li><a href="./AccountsHelper.html">AccountsHelper</a></li>
+        
+          <li><a href="./AcquireAllObserver.html">AcquireAllObserver</a></li>
+        
+          <li><a href="./AcquireAllObserverTest.html">AcquireAllObserverTest</a></li>
+        
+          <li><a href="./Acquisition.html">Acquisition</a></li>
+        
+          <li><a href="./AcquisitionInterface.html">AcquisitionInterface</a></li>
+        
+          <li><a href="./AcquisitionInterfaceTest.html">AcquisitionInterfaceTest</a></li>
+        
+          <li><a href="./AcquisitionInterfacesController.html">AcquisitionInterfacesController</a></li>
+        
+          <li><a href="./AcquisitionInterfacesControllerTest.html">AcquisitionInterfacesControllerTest</a></li>
+        
+          <li><a href="./AcquisitionInterfacesHelper.html">AcquisitionInterfacesHelper</a></li>
+        
+          <li><a href="./AcquisitionStreamSpec.html">AcquisitionStreamSpec</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecTest.html">AcquisitionStreamSpecTest</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsController.html">AcquisitionStreamSpecsController</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsControllerTest.html">AcquisitionStreamSpecsControllerTest</a></li>
+        
+          <li><a href="./AcquisitionStreamSpecsHelper.html">AcquisitionStreamSpecsHelper</a></li>
+        
+          <li><a href="./AcquisitionsController.html">AcquisitionsController</a></li>
+        
+          <li><a href="./AcquisitionsControllerTest.html">AcquisitionsControllerTest</a></li>
+        
+          <li><a href="./AcquisitionsHelper.html">AcquisitionsHelper</a></li>
+        
+          <li><a href="./ApplicationController.html">ApplicationController</a></li>
+        
+          <li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+        
+          <li><a href="./ArelReadmeTest.html">ArelReadmeTest</a></li>
+        
+          <li><a href="./Breaker.html">Breaker</a></li>
+        
+          <li><a href="./BreakerTest.html">BreakerTest</a></li>
+        
+          <li><a href="./BreakersController.html">BreakersController</a></li>
+        
+          <li><a href="./BreakersControllerTest.html">BreakersControllerTest</a></li>
+        
+          <li><a href="./BreakersHelper.html">BreakersHelper</a></li>
+        
+          <li><a href="./BrowsingTest.html">BrowsingTest</a></li>
+        
+          <li><a href="./Bug.html">Bug</a></li>
+        
+          <li><a href="./BugTest.html">BugTest</a></li>
+        
+          <li><a href="./BugsController.html">BugsController</a></li>
+        
+          <li><a href="./BugsControllerTest.html">BugsControllerTest</a></li>
+        
+          <li><a href="./BugsHelper.html">BugsHelper</a></li>
+        
+          <li><a href="./BugsHelperTest.html">BugsHelperTest</a></li>
+        
+          <li><a href="./Class.html">Class</a></li>
+        
+          <li><a href="./CodeBase.html">CodeBase</a></li>
+        
+          <li><a href="./Edison.html">Edison</a></li>
+        
+          <li><a href="./EdisonTest.html">EdisonTest</a></li>
+        
+          <li><a href="./EdisonsController.html">EdisonsController</a></li>
+        
+          <li><a href="./EdisonsControllerTest.html">EdisonsControllerTest</a></li>
+        
+          <li><a href="./EdisonsHelper.html">EdisonsHelper</a></li>
+        
+          <li><a href="./EmptyAssociatedModel.html">EmptyAssociatedModel</a></li>
+        
+          <li><a href="./EmptyClass.html">EmptyClass</a></li>
+        
+          <li><a href="./ErrorType.html">ErrorType</a></li>
+        
+          <li><a href="./ErrorTypeTest.html">ErrorTypeTest</a></li>
+        
+          <li><a href="./ErrorTypesController.html">ErrorTypesController</a></li>
+        
+          <li><a href="./ErrorTypesControllerTest.html">ErrorTypesControllerTest</a></li>
+        
+          <li><a href="./ErrorTypesHelper.html">ErrorTypesHelper</a></li>
+        
+          <li><a href="./ErrorTypesHelperTest.html">ErrorTypesHelperTest</a></li>
+        
+          <li><a href="./ExampleType.html">ExampleType</a></li>
+        
+          <li><a href="./ExampleTypeTest.html">ExampleTypeTest</a></li>
+        
+          <li><a href="./ExampleTypesController.html">ExampleTypesController</a></li>
+        
+          <li><a href="./ExampleTypesControllerTest.html">ExampleTypesControllerTest</a></li>
+        
+          <li><a href="./ExampleTypesHelper.html">ExampleTypesHelper</a></li>
+        
+          <li><a href="./ExampleTypesHelperTest.html">ExampleTypesHelperTest</a></li>
+        
+          <li><a href="./FrequenciesController.html">FrequenciesController</a></li>
+        
+          <li><a href="./FrequenciesControllerTest.html">FrequenciesControllerTest</a></li>
+        
+          <li><a href="./FrequenciesHelper.html">FrequenciesHelper</a></li>
+        
+          <li><a href="./Frequency.html">Frequency</a></li>
+        
+          <li><a href="./FrequencyTest.html">FrequencyTest</a></li>
+        
+          <li><a href="./FullAssociatedModel.html">FullAssociatedModel</a></li>
+        
+          <li><a href="./GenericAcquisition.html">GenericAcquisition</a></li>
+        
+          <li><a href="./GenericAcquisitionsController.html">GenericAcquisitionsController</a></li>
+        
+          <li><a href="./GenericAcquisitionsHelper.html">GenericAcquisitionsHelper</a></li>
+        
+          <li><a href="./GenericColumn.html">GenericColumn</a></li>
+        
+          <li><a href="./GenericColumnsController.html">GenericColumnsController</a></li>
+        
+          <li><a href="./GenericColumnsHelper.html">GenericColumnsHelper</a></li>
+        
+          <li><a href="./GenericRow.html">GenericRow</a></li>
+        
+          <li><a href="./GenericRowsController.html">GenericRowsController</a></li>
+        
+          <li><a href="./GenericRowsHelper.html">GenericRowsHelper</a></li>
+        
+          <li><a href="./GenericTableAssociatedModel.html">GenericTableAssociatedModel</a></li>
+        
+          <li><a href="./GenericTableTest.html">GenericTableTest</a></li>
+        
+          <li><a href="./GenericType.html">GenericType</a></li>
+        
+          <li><a href="./GenericTypeTest.html">GenericTypeTest</a></li>
+        
+          <li><a href="./GenericTypesController.html">GenericTypesController</a></li>
+        
+          <li><a href="./GenericTypesControllerTest.html">GenericTypesControllerTest</a></li>
+        
+          <li><a href="./GenericTypesHelper.html">GenericTypesHelper</a></li>
+        
+          <li><a href="./GenericTypesHelperTest.html">GenericTypesHelperTest</a></li>
+        
+          <li><a href="./Generic_Table.html">Generic_Table</a></li>
+        
+          <li><a href="./HalfAssociatedModel.html">HalfAssociatedModel</a></li>
+        
+          <li><a href="./HomeController.html">HomeController</a></li>
+        
+          <li><a href="./HomeControllerTest.html">HomeControllerTest</a></li>
+        
+          <li><a href="./HomeHelper.html">HomeHelper</a></li>
+        
+          <li><a href="./Host.html">Host</a></li>
+        
+          <li><a href="./HostTest.html">HostTest</a></li>
+        
+          <li><a href="./HostsController.html">HostsController</a></li>
+        
+          <li><a href="./HostsControllerTest.html">HostsControllerTest</a></li>
+        
+          <li><a href="./HostsHelper.html">HostsHelper</a></li>
+        
+          <li><a href="./HuelserieTest.html">HuelserieTest</a></li>
+        
+          <li><a href="./Huelseries.html">Huelseries</a></li>
+        
+          <li><a href="./HuelseriesController.html">HuelseriesController</a></li>
+        
+          <li><a href="./HuelseriesControllerTest.html">HuelseriesControllerTest</a></li>
+        
+          <li><a href="./HuelseriesHelper.html">HuelseriesHelper</a></li>
+        
+          <li><a href="./HuelseriesHelperTest.html">HuelseriesHelperTest</a></li>
+        
+          <li><a href="./Huelshow.html">Huelshow</a></li>
+        
+          <li><a href="./HuelshowTest.html">HuelshowTest</a></li>
+        
+          <li><a href="./HuelshowsController.html">HuelshowsController</a></li>
+        
+          <li><a href="./HuelshowsControllerTest.html">HuelshowsControllerTest</a></li>
+        
+          <li><a href="./HuelshowsHelper.html">HuelshowsHelper</a></li>
+        
+          <li><a href="./HuelshowsHelperTest.html">HuelshowsHelperTest</a></li>
+        
+          <li><a href="./Inline_Assertions.html">Inline_Assertions</a></li>
+        
+          <li><a href="./Inline_Assertions_Stubs.html">Inline_Assertions_Stubs</a></li>
+        
+          <li><a href="./Load.html">Load</a></li>
+        
+          <li><a href="./Loads.html">Loads</a></li>
+        
+          <li><a href="./Loads1.html">Loads1</a></li>
+        
+          <li><a href="./Loads1Test.html">Loads1Test</a></li>
+        
+          <li><a href="./Loads1sController.html">Loads1sController</a></li>
+        
+          <li><a href="./Loads1sHelper.html">Loads1sHelper</a></li>
+        
+          <li><a href="./LoadsController.html">LoadsController</a></li>
+        
+          <li><a href="./LoadsControllerTest.html">LoadsControllerTest</a></li>
+        
+          <li><a href="./LoadsHelper.html">LoadsHelper</a></li>
+        
+          <li><a href="./LoadsTest.html">LoadsTest</a></li>
+        
+          <li><a href="./Match_Addressing.html">Match_Addressing</a></li>
+        
+          <li><a href="./MatchedFilename.html">MatchedFilename</a></li>
+        
+          <li><a href="./Measurement.html">Measurement</a></li>
+        
+          <li><a href="./MeasurementTest.html">MeasurementTest</a></li>
+        
+          <li><a href="./MeasurementsController.html">MeasurementsController</a></li>
+        
+          <li><a href="./MeasurementsControllerTest.html">MeasurementsControllerTest</a></li>
+        
+          <li><a href="./MeasurementsHelper.html">MeasurementsHelper</a></li>
+        
+          <li><a href="./MethodModel.html">MethodModel</a></li>
+        
+          <li><a href="./Network.html">Network</a></li>
+        
+          <li><a href="./NetworksController.html">NetworksController</a></li>
+        
+          <li><a href="./NetworksHelper.html">NetworksHelper</a></li>
+        
+          <li><a href="./Nil_Class.html">Nil_Class</a></li>
+        
+          <li><a href="./NoDB.html">NoDB</a></li>
+        
+          <li><a href="./Node.html">Node</a></li>
+        
+          <li><a href="./NodeTest.html">NodeTest</a></li>
+        
+          <li><a href="./NodesController.html">NodesController</a></li>
+        
+          <li><a href="./NodesControllerTest.html">NodesControllerTest</a></li>
+        
+          <li><a href="./NodesHelper.html">NodesHelper</a></li>
+        
+          <li><a href="./Object.html">Object</a></li>
+        
+          <li><a href="./Ofx.html">Ofx</a></li>
+        
+          <li><a href="./OfxTest.html">OfxTest</a></li>
+        
+          <li><a href="./OfxesController.html">OfxesController</a></li>
+        
+          <li><a href="./OfxesControllerTest.html">OfxesControllerTest</a></li>
+        
+          <li><a href="./OfxesHelper.html">OfxesHelper</a></li>
+        
+          <li><a href="./OfxesHelperTest.html">OfxesHelperTest</a></li>
+        
+          <li><a href="./ParseSpec.html">ParseSpec</a></li>
+        
+          <li><a href="./ParseSpecTest.html">ParseSpecTest</a></li>
+        
+          <li><a href="./ParseSpecsController.html">ParseSpecsController</a></li>
+        
+          <li><a href="./ParseSpecsControllerTest.html">ParseSpecsControllerTest</a></li>
+        
+          <li><a href="./ParseSpecsHelper.html">ParseSpecsHelper</a></li>
+        
+          <li><a href="./Port.html">Port</a></li>
+        
+          <li><a href="./PortsController.html">PortsController</a></li>
+        
+          <li><a href="./PortsHelper.html">PortsHelper</a></li>
+        
+          <li><a href="./Production.html">Production</a></li>
+        
+          <li><a href="./ProductionFtp.html">ProductionFtp</a></li>
+        
+          <li><a href="./ProductionFtpTest.html">ProductionFtpTest</a></li>
+        
+          <li><a href="./ProductionFtpsController.html">ProductionFtpsController</a></li>
+        
+          <li><a href="./ProductionFtpsControllerTest.html">ProductionFtpsControllerTest</a></li>
+        
+          <li><a href="./ProductionFtpsHelper.html">ProductionFtpsHelper</a></li>
+        
+          <li><a href="./ProductionFtpsHelperTest.html">ProductionFtpsHelperTest</a></li>
+        
+          <li><a href="./ProductionTest.html">ProductionTest</a></li>
+        
+          <li><a href="./ProductionsController.html">ProductionsController</a></li>
+        
+          <li><a href="./ProductionsControllerTest.html">ProductionsControllerTest</a></li>
+        
+          <li><a href="./ProductionsHelper.html">ProductionsHelper</a></li>
+        
+          <li><a href="./RakeTest.html">RakeTest</a></li>
+        
+          <li><a href="./RegexpEdit.html">RegexpEdit</a></li>
+        
+          <li><a href="./RegexpParse.html">RegexpParse</a></li>
+        
+          <li><a href="./Router.html">Router</a></li>
+        
+          <li><a href="./RouterTest.html">RouterTest</a></li>
+        
+          <li><a href="./RoutersController.html">RoutersController</a></li>
+        
+          <li><a href="./RoutersControllerTest.html">RoutersControllerTest</a></li>
+        
+          <li><a href="./RoutersHelper.html">RoutersHelper</a></li>
+        
+          <li><a href="./RubyInterface.html">RubyInterface</a></li>
+        
+          <li><a href="./RubyInterfaceTest.html">RubyInterfaceTest</a></li>
+        
+          <li><a href="./RubyInterfacesController.html">RubyInterfacesController</a></li>
+        
+          <li><a href="./RubyInterfacesControllerTest.html">RubyInterfacesControllerTest</a></li>
+        
+          <li><a href="./RubyInterfacesHelper.html">RubyInterfacesHelper</a></li>
+        
+          <li><a href="./RubyInterfacesHelperTest.html">RubyInterfacesHelperTest</a></li>
+        
+          <li><a href="./ScalarArgument.html">ScalarArgument</a></li>
+        
+          <li><a href="./ScalarArgumentTest.html">ScalarArgumentTest</a></li>
+        
+          <li><a href="./ScalarArgumentsController.html">ScalarArgumentsController</a></li>
+        
+          <li><a href="./ScalarArgumentsControllerTest.html">ScalarArgumentsControllerTest</a></li>
+        
+          <li><a href="./ScalarArgumentsHelper.html">ScalarArgumentsHelper</a></li>
+        
+          <li><a href="./ScalarArgumentsHelperTest.html">ScalarArgumentsHelperTest</a></li>
+        
+          <li><a href="./Set.html">Set</a></li>
+        
+          <li><a href="./Squeeze_Display.html">Squeeze_Display</a></li>
+        
+          <li><a href="./Station.html">Station</a></li>
+        
+          <li><a href="./StationsController.html">StationsController</a></li>
+        
+          <li><a href="./StationsHelper.html">StationsHelper</a></li>
+        
+          <li><a href="./StreamLink.html">StreamLink</a></li>
+        
+          <li><a href="./StreamLinkTest.html">StreamLinkTest</a></li>
+        
+          <li><a href="./StreamLinksController.html">StreamLinksController</a></li>
+        
+          <li><a href="./StreamLinksControllerTest.html">StreamLinksControllerTest</a></li>
+        
+          <li><a href="./StreamLinksHelper.html">StreamLinksHelper</a></li>
+        
+          <li><a href="./StreamLinksHelperTest.html">StreamLinksHelperTest</a></li>
+        
+          <li><a href="./StreamMethod.html">StreamMethod</a></li>
+        
+          <li><a href="./StreamMethodArgument.html">StreamMethodArgument</a></li>
+        
+          <li><a href="./StreamMethodArgumentTest.html">StreamMethodArgumentTest</a></li>
+        
+          <li><a href="./StreamMethodArgumentsController.html">StreamMethodArgumentsController</a></li>
+        
+          <li><a href="./StreamMethodArgumentsControllerTest.html">StreamMethodArgumentsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodArgumentsHelper.html">StreamMethodArgumentsHelper</a></li>
+        
+          <li><a href="./StreamMethodArgumentsHelperTest.html">StreamMethodArgumentsHelperTest</a></li>
+        
+          <li><a href="./StreamMethodCall.html">StreamMethodCall</a></li>
+        
+          <li><a href="./StreamMethodCallTest.html">StreamMethodCallTest</a></li>
+        
+          <li><a href="./StreamMethodCallsController.html">StreamMethodCallsController</a></li>
+        
+          <li><a href="./StreamMethodCallsControllerTest.html">StreamMethodCallsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodCallsHelper.html">StreamMethodCallsHelper</a></li>
+        
+          <li><a href="./StreamMethodCallsHelperTest.html">StreamMethodCallsHelperTest</a></li>
+        
+          <li><a href="./StreamMethodTest.html">StreamMethodTest</a></li>
+        
+          <li><a href="./StreamMethodsController.html">StreamMethodsController</a></li>
+        
+          <li><a href="./StreamMethodsControllerTest.html">StreamMethodsControllerTest</a></li>
+        
+          <li><a href="./StreamMethodsHelper.html">StreamMethodsHelper</a></li>
+        
+          <li><a href="./StreamMethodsHelperTest.html">StreamMethodsHelperTest</a></li>
+        
+          <li><a href="./StreamParameter.html">StreamParameter</a></li>
+        
+          <li><a href="./StreamParameterTest.html">StreamParameterTest</a></li>
+        
+          <li><a href="./StreamParametersController.html">StreamParametersController</a></li>
+        
+          <li><a href="./StreamParametersControllerTest.html">StreamParametersControllerTest</a></li>
+        
+          <li><a href="./StreamParametersHelper.html">StreamParametersHelper</a></li>
+        
+          <li><a href="./StreamParametersHelperTest.html">StreamParametersHelperTest</a></li>
+        
+          <li><a href="./StreamPattern.html">StreamPattern</a></li>
+        
+          <li><a href="./StreamPatternArgument.html">StreamPatternArgument</a></li>
+        
+          <li><a href="./StreamPatternArgumentTest.html">StreamPatternArgumentTest</a></li>
+        
+          <li><a href="./StreamPatternArgumentsController.html">StreamPatternArgumentsController</a></li>
+        
+          <li><a href="./StreamPatternArgumentsControllerTest.html">StreamPatternArgumentsControllerTest</a></li>
+        
+          <li><a href="./StreamPatternArgumentsHelper.html">StreamPatternArgumentsHelper</a></li>
+        
+          <li><a href="./StreamPatternArgumentsHelperTest.html">StreamPatternArgumentsHelperTest</a></li>
+        
+          <li><a href="./StreamPatternTest.html">StreamPatternTest</a></li>
+        
+          <li><a href="./StreamPatternsController.html">StreamPatternsController</a></li>
+        
+          <li><a href="./StreamPatternsControllerTest.html">StreamPatternsControllerTest</a></li>
+        
+          <li><a href="./StreamPatternsHelper.html">StreamPatternsHelper</a></li>
+        
+          <li><a href="./StreamPatternsHelperTest.html">StreamPatternsHelperTest</a></li>
+        
+          <li><a href="./TableSpec.html">TableSpec</a></li>
+        
+          <li><a href="./TableSpecTest.html">TableSpecTest</a></li>
+        
+          <li><a href="./TableSpecsController.html">TableSpecsController</a></li>
+        
+          <li><a href="./TableSpecsControllerTest.html">TableSpecsControllerTest</a></li>
+        
+          <li><a href="./TableSpecsHelper.html">TableSpecsHelper</a></li>
+        
+          <li><a href="./TedprimariesController.html">TedprimariesController</a></li>
+        
+          <li><a href="./TedprimariesControllerTest.html">TedprimariesControllerTest</a></li>
+        
+          <li><a href="./TedprimariesHelper.html">TedprimariesHelper</a></li>
+        
+          <li><a href="./Tedprimary.html">Tedprimary</a></li>
+        
+          <li><a href="./TedprimaryTest.html">TedprimaryTest</a></li>
+        
+          <li><a href="./TestClass.html">TestClass</a></li>
+        
+          <li><a href="./TestHelperTest.html">TestHelperTest</a></li>
+        
+          <li><a href="./TestRun.html">TestRun</a></li>
+        
+          <li><a href="./TestRunTest.html">TestRunTest</a></li>
+        
+          <li><a href="./TestRunsController.html">TestRunsController</a></li>
+        
+          <li><a href="./TestRunsControllerTest.html">TestRunsControllerTest</a></li>
+        
+          <li><a href="./TestRunsHelper.html">TestRunsHelper</a></li>
+        
+          <li><a href="./TestRunsHelperTest.html">TestRunsHelperTest</a></li>
+        
+          <li><a href="./TestTable.html">TestTable</a></li>
+        
+          <li><a href="./Test_Acquisition.html">Test_Acquisition</a></li>
+        
+          <li><a href="./Test_Assertion.html">Test_Assertion</a></li>
+        
+          <li><a href="./Test_Generic.html">Test_Generic</a></li>
+        
+          <li><a href="./TestingFilePatternsTest.html">TestingFilePatternsTest</a></li>
+        
+          <li><a href="./Transaction.html">Transaction</a></li>
+        
+          <li><a href="./TransactionTest.html">TransactionTest</a></li>
+        
+          <li><a href="./TransactionsController.html">TransactionsController</a></li>
+        
+          <li><a href="./TransactionsHelper.html">TransactionsHelper</a></li>
+        
+          <li><a href="./Transfer.html">Transfer</a></li>
+        
+          <li><a href="./TransfersController.html">TransfersController</a></li>
+        
+          <li><a href="./TransfersControllerTest.html">TransfersControllerTest</a></li>
+        
+          <li><a href="./TransfersHelper.html">TransfersHelper</a></li>
+        
+          <li><a href="./Url.html">Url</a></li>
+        
+          <li><a href="./UrlTest.html">UrlTest</a></li>
+        
+          <li><a href="./UrlsController.html">UrlsController</a></li>
+        
+          <li><a href="./UrlsControllerTest.html">UrlsControllerTest</a></li>
+        
+          <li><a href="./UrlsHelper.html">UrlsHelper</a></li>
+        
+          <li><a href="./UrlsHelperTest.html">UrlsHelperTest</a></li>
+        
+          <li><a href="./Weather.html">Weather</a></li>
+        
+          <li><a href="./WeatherTest.html">WeatherTest</a></li>
+        
+          <li><a href="./WeathersController.html">WeathersController</a></li>
+        
+          <li><a href="./WeathersControllerTest.html">WeathersControllerTest</a></li>
+        
+          <li><a href="./WeathersHelper.html">WeathersHelper</a></li>
+        
+          <li><a href="./WiredLocation.html">WiredLocation</a></li>
+        
+          <li><a href="./WiredLocationTest.html">WiredLocationTest</a></li>
+        
+          <li><a href="./WiredLocationsController.html">WiredLocationsController</a></li>
+        
+          <li><a href="./WiredLocationsControllerTest.html">WiredLocationsControllerTest</a></li>
+        
+          <li><a href="./WiredLocationsHelper.html">WiredLocationsHelper</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">AcquisitionInterfaceTest</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="acq_and_rescue-method" class="method-detail ">
+          <a name="method-i-acq_and_rescue"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">acq_and_rescue</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="acq_and_rescue-source">
+<pre>
+<span class="ruby-comment"># File test/unit/acquisition_interface_test.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">acq_and_rescue</span>
+        <span class="ruby-identifier">stream</span>=<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-ivar">@testURL</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-identifier">acq</span>=<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-value">:HTTP</span>)
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interface_code_method</span>
+        <span class="ruby-identifier">assert</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">error</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_data</span>.<span class="ruby-identifier">nil?</span>)
+<span class="ruby-keyword">rescue</span>  <span class="ruby-constant">StandardError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception_raised</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">'Error: '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">exception_raised</span>.<span class="ruby-identifier">inspect</span> <span class="ruby-operator">+</span> <span class="ruby-string">' could not get data from '</span><span class="ruby-operator">+</span><span class="ruby-identifier">stream</span>.<span class="ruby-identifier">url</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;$!=#{$!}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- acq_and_rescue-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- acq_and_rescue-method -->
+
+      
+        <div id="setup-method" class="method-detail ">
+          <a name="method-i-setup"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">setup</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="setup-source">
+<pre>
+<span class="ruby-comment"># File test/unit/acquisition_interface_test.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setup</span>
+        <span class="ruby-ivar">@testURL</span>=<span class="ruby-string">'http://192.168.3.193/api/LiveData.xml'</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- setup-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- setup-method -->
+
+      
+        <div id="test_acquisition-method" class="method-detail ">
+          <a name="method-i-test_acquisition"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_acquisition</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_acquisition-source">
+<pre>
+<span class="ruby-comment"># File test/unit/acquisition_interface_test.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">test_acquisition</span>
+        <span class="ruby-identifier">stream</span>=<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-ivar">@testURL</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">stream</span>)
+        <span class="ruby-identifier">acq</span>=<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-value">:HTTP</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">AcquisitionInterface</span>,<span class="ruby-identifier">acq</span>)
+<span class="ruby-comment">#       puts &quot;acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}&quot;</span>
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">compile_code</span>
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>)
+        <span class="ruby-identifier">assert_respond_to</span>(<span class="ruby-identifier">acq</span>,<span class="ruby-value">:acquire</span>)
+
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">delta</span>(<span class="ruby-identifier">stream</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Acquisition</span>,<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">AcquisitionStreamSpec</span>,<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>,<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">ActiveModel</span><span class="ruby-operator">::</span><span class="ruby-constant">Errors</span>,<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">errors</span>)
+        <span class="ruby-identifier">assert_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">error</span>)
+        <span class="ruby-identifier">assert_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_data</span>)
+        <span class="ruby-identifier">acq_and_rescue</span>
+        <span class="ruby-identifier">assert_nothing_raised</span>{<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interface_code_method</span>}
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>)
+        <span class="ruby-identifier">assert_equal</span>({},<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">errors</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>)
+<span class="ruby-comment">#       assert_not_nil(acq.instance_variable_get(:stream))</span>
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">acquisition_stream_specs</span>)
+<span class="ruby-comment">#       assert_not_nil(acq.acquisition_stream_specs_ids)</span>
+<span class="ruby-comment">#       assert_equal(acq.acquisition_stream_spec.id,acq.acquisition_stream_spec_id)</span>
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">acquire</span>(<span class="ruby-identifier">stream</span>))
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>,<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        
+        <span class="ruby-identifier">assert_association</span>(<span class="ruby-identifier">stream</span>,<span class="ruby-value">:acquisition_interface</span>)
+        <span class="ruby-identifier">assert_respond_to</span>(<span class="ruby-identifier">stream</span>,<span class="ruby-value">:associated_to_s</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">associated_to_s</span>(<span class="ruby-value">:acquisition_interface</span>,<span class="ruby-value">:name</span>),<span class="ruby-string">&quot;HTTP&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_acquisition-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_acquisition-method -->
+
+      
+        <div id="test_default_acquisition-method" class="method-detail ">
+          <a name="method-i-test_default_acquisition"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_default_acquisition</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_default_acquisition-source">
+<pre>
+<span class="ruby-comment"># File test/unit/acquisition_interface_test.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">test_default_acquisition</span>
+        <span class="ruby-identifier">stream</span>=<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-ivar">@testURL</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-identifier">acq</span>=<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-value">:HTTP</span>)
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">delta</span>(<span class="ruby-identifier">stream</span>)
+
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interface_code</span>=<span class="ruby-string">'@interaction[:acquisition_data]=Net::HTTP.get(@stream.uri)'</span>
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">compile_code</span> <span class="ruby-comment"># recompile eval code</span>
+        <span class="ruby-identifier">assert_nothing_raised</span>{<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interface_code_method</span>}
+        <span class="ruby-identifier">assert</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">error</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_data</span>.<span class="ruby-identifier">nil?</span>)
+
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">return_code</span>=<span class="ruby-string">''</span>
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">compile_code</span> <span class="ruby-comment"># recompile eval code</span>
+        <span class="ruby-identifier">assert_nothing_raised</span>{<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">return_code_method</span>}
+
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">rescue_code</span>=<span class="ruby-string">''</span>
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">compile_code</span> <span class="ruby-comment"># recompile eval code</span>
+        <span class="ruby-identifier">assert_nothing_raised</span>{<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">rescue_code_method</span>}
+        <span class="ruby-identifier">assert_difference</span>(<span class="ruby-string">'Acquisition.count'</span>) <span class="ruby-keyword">do</span>
+                <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#assert</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Acquisition.count=#{Acquisition.count}&quot;</span>
+
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>,<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">acq</span>=<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-value">:Shell</span>)
+        <span class="ruby-identifier">stream</span>=<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-string">'/sbin/ifconfig'</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">delta</span>(<span class="ruby-identifier">stream</span>)
+
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interface_code</span>=<span class="ruby-string">'@interaction[:acquisition_data]=`#{@stream.schemelessUrl} 2&gt;&amp;1`'</span>
+        <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">compile_code</span> <span class="ruby-comment"># recompile eval code</span>
+        <span class="ruby-identifier">assert_nothing_raised</span>{<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interface_code_method</span>}
+        <span class="ruby-identifier">assert</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">error</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_data</span>.<span class="ruby-identifier">nil?</span>)
+
+        <span class="ruby-identifier">assert_difference</span>(<span class="ruby-string">'Acquisition.count'</span>) <span class="ruby-keyword">do</span>
+                <span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-comment">#assert</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Acquisition.count=#{Acquisition.count}&quot;</span>
+
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>,<span class="ruby-identifier">acq</span>.<span class="ruby-identifier">interaction</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_default_acquisition-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_default_acquisition-method -->
+
+      
+        <div id="test_id_equal-method" class="method-detail ">
+          <a name="method-i-test_id_equal"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_id_equal</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_id_equal-source">
+<pre>
+<span class="ruby-comment"># File test/unit/acquisition_interface_test.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">test_id_equal</span>
+                <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-value">:HTTP</span>).<span class="ruby-identifier">id</span>,<span class="ruby-constant">Fixtures</span><span class="ruby-operator">::</span><span class="ruby-identifier">identify</span>(<span class="ruby-value">:HTTP</span>),<span class="ruby-string">&quot;id != Fixtures::identify(:HTTP)&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_id_equal-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_id_equal-method -->
+
+      
+        <div id="test_scheme-method" class="method-detail ">
+          <a name="method-i-test_scheme"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_scheme</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_scheme-source">
+<pre>
+<span class="ruby-comment"># File test/unit/acquisition_interface_test.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">test_scheme</span>
+        <span class="ruby-identifier">testAnswer</span>(<span class="ruby-identifier">acquisition_interfaces</span>(<span class="ruby-value">:HTTP</span>),<span class="ruby-value">:scheme</span>,<span class="ruby-string">'http'</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_scheme-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_scheme-method -->
+
+      
+        <div id="test_stream_acquire-method" class="method-detail ">
+          <a name="method-i-test_stream_acquire"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">test_stream_acquire</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="test_stream_acquire-source">
+<pre>
+<span class="ruby-comment"># File test/unit/acquisition_interface_test.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">test_stream_acquire</span>
+        <span class="ruby-identifier">stream</span>=<span class="ruby-identifier">acquisition_stream_specs</span>(<span class="ruby-ivar">@testURL</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">acquire</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Fixnum</span>,<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>)
+
+        <span class="ruby-identifier">acquisition</span>=<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">acquire</span>
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Acquisition</span>,<span class="ruby-identifier">acquisition</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Fixnum</span>,<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>,<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        
+        <span class="ruby-identifier">acquisition</span>=<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">acquisition_interface</span>.<span class="ruby-identifier">acquire</span>(<span class="ruby-identifier">stream</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Acquisition</span>,<span class="ruby-identifier">acquisition</span>)
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Fixnum</span>,<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>,<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        
+        <span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>=<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span> <span class="ruby-comment"># not clear why this is nil after being set in acquisition_interface</span>
+        <span class="ruby-identifier">assert_not_nil</span>(<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Fixnum</span>,<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+        <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">stream</span>.<span class="ruby-identifier">id</span>,<span class="ruby-identifier">acquisition</span>.<span class="ruby-identifier">acquisition_stream_spec_id</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- test_stream_acquire-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- test_stream_acquire-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
