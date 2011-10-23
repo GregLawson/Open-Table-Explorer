@@ -141,9 +141,12 @@ task :full do
 		 singular_table=model_file[11..-4]
 		  full_unit_test(singular_table.pluralize)
 	  end #each
-	  sh 'rdoc'
+	  sh ' rdoc --op ../Open-Table-Explorer-github-pages/doc/ app test lib'
 	summarize
 end #task
+task :rdoc do
+	  sh 'bundle exec rdoc --op ../Open-Table-Explorer-github-pages/doc/ app test lib'
+end #rdoc
 task :view do
 	url = ENV["URL"]
 	view(url)
