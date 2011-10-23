@@ -2184,6 +2184,6 @@ parseTree[0..0].inspect=["*"]
 parsedString(parseTree[1..1]).inspect="."
 parsedString(parseTree[1..1])+parseTree[0]=.*
 .
-Finished in 1.165808 seconds.
+Finished in 1.285638 seconds.
 
 1 tests, 51 assertions, 0 failures, 0 errors

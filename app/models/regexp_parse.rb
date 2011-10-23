@@ -9,30 +9,49 @@ require 'app/models/inlineAssertions.rb'
 class RegexpParse
 attr_reader :regexp,:tokenIndex,:parseTree
 include Inline_Assertions
-@@OpeningBrackets='({['
-@@ClosingBrackets=')}]'
-@@PostfixOperators='+*?|'
-
 def self.OpeningBrackets
-	return @@OpeningBrackets
+	return '({['
 end #def
 def self.ClosingBrackets
-	return @@ClosingBrackets
+	return ')}]'
 end #def
 def self.PostfixOperators
-	return @@PostfixOperators
+	return '+*?|'
 end #def
 
 def restartParse # primarily for testing
 	@tokenIndex=@regexp.length-1
 	@parseTree=[]
 end #def
+# Parse regexp into 
 def initialize(regexp,preParse=true)
 	@regexp=regexp
 	restartParse
 	@parseTree=regexpTree if preParse
 	puts "@parseTree.inspect=#{@parseTree.inspect}" if regexp.size>5
-end #def
+end #initialize
+# Takes embedded array format parsed tree and displays equivalent regexp string 
+def parsedString(parseTree=@parseTree)
+	if parseTree.nil? then
+		return ''
+	elsif parseTree.length==2 && parseTree[0].instance_of?(String) && self.class.PostfixOperators.index(parseTree[0]) then
+		puts "parseTree.inspect=#{parseTree.inspect}"
+		puts "parseTree[1..1].inspect=#{parseTree[1..1].inspect}"
+		puts "parseTree[0..0].inspect=#{parseTree[0..0].inspect}"
+		puts "parsedString(parseTree[1..1]).inspect=#{parsedString(parseTree[1..1]).inspect}"
+		puts "parsedString(parseTree[1..1])+parseTree[0]=#{parsedString(parseTree[1..1])+parseTree[0]}"
+		return parsedString(parseTree[1..1])+parseTree[0]
+	else
+		return parseTree.collect do |pt| 
+			if pt.instance_of?(Array) then
+				parsedString(pt)
+			else
+				pt
+			end
+		end.join('')
+	end
+end #parsedString
+
 def nextToken
 	if beyondString? then
 		raise RuntimeError, "method nextToken called after end of regexp."
@@ -52,26 +71,6 @@ def rest
 		return @regexp[0..@tokenIndex]
 	end #if
 end #def
-def parsedString(parseTree=@parseTree)
-	if parseTree.nil? then
-		return ''
-	elsif parseTree.length==2 && parseTree[0].instance_of?(String) && @@PostfixOperators.index(parseTree[0]) then
-		puts "parseTree.inspect=#{parseTree.inspect}"
-		puts "parseTree[1..1].inspect=#{parseTree[1..1].inspect}"
-		puts "parseTree[0..0].inspect=#{parseTree[0..0].inspect}"
-		puts "parsedString(parseTree[1..1]).inspect=#{parsedString(parseTree[1..1]).inspect}"
-		puts "parsedString(parseTree[1..1])+parseTree[0]=#{parsedString(parseTree[1..1])+parseTree[0]}"
-		return parsedString(parseTree[1..1])+parseTree[0]
-	else
-		return parseTree.collect do |pt| 
-			if pt.instance_of?(Array) then
-				parsedString(pt)
-			else
-				pt
-			end
-		end.join('')
-	end
-end #def
 def advanceToken(increment)
 	@tokenIndex=@tokenIndex+increment
 end #def
@@ -87,11 +86,11 @@ def curlyTree(regexp)
 end #def
 def parseOneTerm
 	ch=nextToken
-	index=@@ClosingBrackets.index(ch)
+	index=self.class.ClosingBrackets.index(ch)
 	if index then
-		return  regexpTree(@@OpeningBrackets[index].chr) << ch
+		return  regexpTree(self.class.OpeningBrackets[index].chr) << ch
 	else
-		index=@@PostfixOperators.index(ch)
+		index=self.class.PostfixOperators.index(ch)
 		if index then
 			return  [ch,parseOneTerm]
 		else

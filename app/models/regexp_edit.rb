@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'regexp_parse.rb'
+# There is a rails method that does this; forgot name
 module Squeeze_Display
 @@Max_Context=100
 @@Max_Lines=5
@@ -40,7 +41,7 @@ def matchDisplay(regexp)
 	end
 end #def
 end #module
-module Match_Addressng
+module Match_Addressing
 def matchRescued(regexp)
 	begin
 		matchData=Regexp.new(regexp,Regexp::MULTILINE).match(@dataToParse)
@@ -61,7 +62,7 @@ end #module
 class RegexpEdit < RegexpParse
 attr_reader :dataToParse
 include Squeeze_Display
-include Match_Addressng
+include Match_Addressing
 def initialize(regexp,dataToParse,preParse=true)
 	super(regexp,preParse)
 	@dataToParse=dataToParse
@@ -98,7 +99,7 @@ def mergeMatches(parseTree,matches)
 end #def
 def matchedTreeArray(parseTree=@parseTree)
 	# Global::log.info("parsing matchedTreeArray #{parseTree.inspect}")
-	if @@PostfixOperators.index(parseTree[0]) then
+	if self.class.PostfixOperators.index(parseTree[0]) then
 		# Global::log.info("parseTree.inspect=#{parseTree.inspect}")
 		# Global::log.info("parseTree[1..1].inspect=#{parseTree[1..1].inspect}")
 		# Global::log.info("parseTree[0..0].inspect=#{parseTree[0..0].inspect}")
@@ -116,7 +117,7 @@ def matchedTreeArray(parseTree=@parseTree)
 		end
 	end
 end #def
-
+# Searches for all subregexp that matches
 def consecutiveMatches(parseTree,increment,startPos,endPos)
 	# Global::log.info("consecutiveMatches begins with parseTree=#{parseTree},increment=#{increment},startPos=#{startPos},endPos=#{endPos}")
 #	assert(startPos<=endPos)
@@ -139,6 +140,7 @@ def consecutiveMatches(parseTree,increment,startPos,endPos)
 		return ret
 	end #if
 end #def
+# Find one consecutive match
 def consecutiveMatch(parseTree,increment,startPos,endPos)
 #	# Global::log.info("consecutiveMatch begins with parseTree.inspect=#{parseTree.inspect},increment=#{increment},startPos=#{startPos},endPos=#{endPos}")
 #	assert(startPos<=endPos)

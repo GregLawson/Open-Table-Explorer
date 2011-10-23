@@ -48,7 +48,13 @@ parsedString(parseTree[1..1]).inspect="."
 parsedString(parseTree[1..1])+parseTree[0]=.*
 message=Regexp parse error: regexp=KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE,rest=,parseTree.inspect=["K", "C", "E", "T", ["*", ["[", "^", "\n", "]"]], "<", "/", "t", "r", ">", ["*", "\\s"], ["(", "<", "t", "r", ["*", "."], "<", "/", "t", "r", ">", ")"], ["*", "."], "K", "V", "I", "E"].
-.
-Finished in 0.041296 seconds.
+.@parseTree.inspect=[["(", "<", "t", "r", ["*", "."], "<", "/", "t", "r", ">", ")"]]
+parseTree.inspect=["*", "."]
+parseTree[1..1].inspect=["."]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="."
+parsedString(parseTree[1..1])+parseTree[0]=.*
+..
+Finished in 0.084135 seconds.
 
-1 tests, 61 assertions, 0 failures, 0 errors
+3 tests, 62 assertions, 0 failures, 0 errors
