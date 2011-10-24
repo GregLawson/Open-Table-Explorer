@@ -2,7 +2,7 @@
 #    Copyright (C) 2011 by Greg Lawson                                      
 #    <GregLawson@gmail.com>                                                             
 #
-# Copyright: See COPYING file that comes with this distribution
+# Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
 require 'test_helper'
@@ -10,73 +10,73 @@ require 'test_helper'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
-class TestingFilePatternsTest < ActiveSupport::TestCase
+class CodeBaseTest < ActiveSupport::TestCase
 require 'lib/tasks/testing.rb'
 def test_initialize
 	spec=CodeBase.new
 	assert_not_nil(spec)
 	assert_instance_of(spec,CodeBase)
 end #initialize
-def test_file_glob
+def test_pathname_glob
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
 	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
 	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
 		assert_not_nil(spec)
-		assert_not_nil(spec[:example_file])
-		assert_not_nil(CodeBase.file_glob(spec))
+		assert_not_nil(spec[:example_pathname])
+		assert_not_nil(CodeBase.pathname_glob(spec))
 	end #map
-end #file_glob
+end #pathname_glob
 def test_regexp
 #	assert_equal(%r{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
 	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
-	assert_equal('app/models/[a-zA-Z0-9_]*[.]rb',CodeBase.file_glob(spec))
+	assert_equal('app/models/[a-zA-Z0-9_]*[.]rb',CodeBase.pathname_glob(spec))
 	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
 		assert_not_nil(spec)
-		assert_not_nil(spec[:example_file])
-		assert_not_nil(CodeBase.file_glob(spec))
-		assert_not_nil(Dir[CodeBase.file_glob(spec)])
-#		assert_not_empty(Dir[CodeBase.file_glob(spec)],"Dir[#{CodeBase.file_glob(spec)}]=#{Dir[CodeBase.file_glob(spec)]}")
-		assert_dir_include(spec[:example_file],CodeBase.file_glob(spec))
-		assert_include(spec[:example_file],Dir[CodeBase.file_glob(spec)])
+		assert_not_nil(spec[:example_pathname])
+		assert_not_nil(CodeBase.pathname_glob(spec))
+		assert_not_nil(Dir[CodeBase.pathname_glob(spec)])
+#		assert_not_empty(Dir[CodeBase.pathname_glob(spec)],"Dir[#{CodeBase.pathname_glob(spec)}]=#{Dir[CodeBase.pathname_glob(spec)]}")
+		assert_dir_include(spec[:example_pathname],CodeBase.pathname_glob(spec))
+		assert_include(spec[:example_pathname],Dir[CodeBase.pathname_glob(spec)])
 	end #map
 end #regexp
-def test_files_from_spec
+def test_pathnames_from_spec
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 		instance=CodeBase.new(spec)
-		assert_not_empty(instance.files_from_spec)
+		assert_not_empty(instance.pathnames_from_spec)
 	end #each
-end #files_from_spec
-def test_all_model_specfic_files
-	assert_not_empty(CodeBase.all_model_specfic_files)
-	assert_instance_of(Array,CodeBase.all_model_specfic_files)
-	assert_instance_of(Hash,CodeBase.all_model_specfic_files[0])
-end #all_model_specfic_files
+end #pathnames_from_spec
+def test_all_model_specfic_pathnames
+	assert_not_empty(CodeBase.all_model_specfic_pathnames)
+	assert_instance_of(Array,CodeBase.all_model_specfic_pathnames)
+	assert_instance_of(Hash,CodeBase.all_model_specfic_pathnames[0])
+end #all_model_specfic_pathnames
 def test_suggest_test_runs
 end #suggest_test_run
-def test_prioritized_file_order
-	file_type_pairs=CodeBase::FILE_MOD_TIMES.map do |file_and_spec|
-		assert_not_empty(file_and_spec[:spec])
-		assert_instance_of(Regexp,CodeBase.regexp(file_and_spec[:spec]))
-		assert_include(file_and_spec[:spec][:test_type],[:unit,:controller,:both,:shared])
-		if file_and_spec[:spec][:test_type]!=:shared then
-			singular_table=CodeBase.singular_table_from_file(file_and_spec[:file])
+def test_prioritized_pathname_order
+	pathname_type_pairs=CodeBase::FILE_MOD_TIMES.map do |pathname_and_spec|
+		assert_not_empty(pathname_and_spec[:spec])
+		assert_instance_of(Regexp,CodeBase.regexp(pathname_and_spec[:spec]))
+		assert_include(pathname_and_spec[:spec][:test_type],[:unit,:controller,:both,:shared])
+		if pathname_and_spec[:spec][:test_type]!=:shared then
+			singular_table=CodeBase.singular_table_from_pathname(pathname_and_spec[:pathname])
 			assert_not_nil(singular_table)
-			assert_not_empty(singular_table,"file_and_spec=#{file_and_spec.inspect}")
-			assert_not_nil(file_and_spec[:file][CodeBase.regexp(file_and_spec[:spec]),1],"file_and_spec=#{file_and_spec.inspect}")
-			assert_not_empty(file_and_spec[:file][CodeBase.regexp(file_and_spec[:spec]),1],"file_and_spec=#{file_and_spec.inspect}")
+			assert_not_empty(singular_table,"pathname_and_spec=#{pathname_and_spec.inspect}")
+			assert_not_nil(pathname_and_spec[:pathname][CodeBase.regexp(pathname_and_spec[:spec]),1],"pathname_and_spec=#{pathname_and_spec.inspect}")
+			assert_not_empty(pathname_and_spec[:pathname][CodeBase.regexp(pathname_and_spec[:spec]),1],"pathname_and_spec=#{pathname_and_spec.inspect}")
 		end #if
-		assert_not_nil(file_and_spec[:spec][:test_type])
-		[singular_table,file_and_spec[:spec][:test_type].to_s]
+		assert_not_nil(pathname_and_spec[:spec][:test_type])
+		[singular_table,pathname_and_spec[:spec][:test_type].to_s]
 	end #map
-	file_type_pairs.each do |file_and_type|
-		assert_instance_of(Array,file_and_type)
-		singular_table=file_and_type[0]
+	pathname_type_pairs.each do |pathname_and_type|
+		assert_instance_of(Array,pathname_and_type)
+		singular_table=pathname_and_type[0]
 		assert_not_empty(singular_table)
-		assert_not_empty(file_and_type[1])
-		case file_and_type[1].to_sym
+		assert_not_empty(pathname_and_type[1])
+		case pathname_and_type[1].to_sym
 		when :unit
 			assert_not_empty(CodeBase.unit_target(singular_table))
 			assert_not_empty(CodeBase.unit_sources(singular_table))
@@ -91,22 +91,22 @@ def test_prioritized_file_order
 			assert_not_empty(CodeBase.controller_sources(singular_table))
 #			process_test.call(CodeBase.controller_target(singular_table), CodeBase.controller_sources(singular_table))
 		when :shared
-			# some other file will trigger compilation
+			# some other pathname will trigger compilation
 		else
 			raise "illegal test type=#{test_type}"
 		end #case
 	end #each
-	puts "Most recently modified file=#{CodeBase.prioritized_file_order{|t,s|[t,s]}.first}"
-	CodeBase.prioritized_file_order do |target,sources|
+	puts "Most recently modified pathname=#{CodeBase.prioritized_pathname_order{|t,s|[t,s]}.first}"
+	CodeBase.prioritized_pathname_order do |target,sources|
 		assert_not_nil(target)
 		assert_not_nil(sources)
 	end #do
-	puts "Most recently modified file=#{CodeBase.prioritized_file_order.first}"
-end #prioritized_file_order
+	puts "Most recently modified pathname=#{CodeBase.prioritized_pathname_order.first}"
+end #prioritized_pathname_order
 def test_run_test
 end #run_test
 def test_not_uptodate_order
-	CodeBase.prioritized_file_order do |target,sources|
+	CodeBase.prioritized_pathname_order do |target,sources|
 		if CodeBase.uptodate?(target,sources) then
 		else
 			if !File.exist?(target) then
@@ -116,7 +116,7 @@ def test_not_uptodate_order
 				assert_not_empty(sources)
 				not_uptodate_sources=CodeBase.not_uptodate_sources(target,sources)
 				puts "#{target.inspect} <- #{not_uptodate_sources.inspect}"
-				system ("ls -l #{target}")  # discard result if file doesn't exist
+				system ("ls -l #{target}")  # discard result if pathname doesn't exist
 				not_uptodate_sources.each do |s|
 					if !CodeBase.uptodate?(target, [s])  then
 						puts "not up to date."
@@ -131,12 +131,12 @@ def test_not_uptodate_order
 	end #do
 	CodeBase.not_uptodate_order do 
 	end #not_uptodate_order
-	puts "Most recently modified up to date file=#{CodeBase.not_uptodate_order{|t,s|[t,s]}.first}"
+	puts "Most recently modified up to date pathname=#{CodeBase.not_uptodate_order{|t,s|[t,s]}.first}"
 end #not_uptodate_order
-def CodeBase.test_file(singular_table, test_type)
-end #test_file
-def CodeBase.model_file(singular_table)
-end #model_file
+def CodeBase.test_pathname(singular_table, test_type)
+end #test_pathname
+def CodeBase.model_pathname(singular_table)
+end #model_pathname
 def test_unit_sources
 end #unit_sources
 def test_controller_sources
@@ -192,54 +192,54 @@ def test_models_from_spec
 	#	spec_name_symbol=:models
 		index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
 		spec=CodeBase.spec_from_symbol(spec_name_symbol)
-		files=Dir[CodeBase.file_glob(spec)]
-		assert_not_empty(files)
-		models=files.map do |f| 
+		pathnames=Dir[CodeBase.pathname_glob(spec)]
+		assert_not_empty(pathnames)
+		models=pathnames.map do |f| 
 			assert_instance_of(Regexp, CodeBase.regexp(spec))
 			model=f[CodeBase.regexp(spec),1]
-			assert_not_nil(model,"file=#{f} does not match regexp=#{CodeBase.regexp(spec)}")
+			assert_not_nil(model,"pathname=#{f} does not match regexp=#{CodeBase.regexp(spec)}")
 			assert_not_empty(model)
 			assert_instance_of(String,f[CodeBase.regexp(spec),1])
 			assert_not_empty(f[CodeBase.regexp(spec),1])
 		end #map
-		models=files.map {|f| f[CodeBase.regexp(spec),1] }
+		models=pathnames.map {|f| f[CodeBase.regexp(spec),1] }
 		assert_not_empty(models)
 		assert_match(/^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$/,'app/views/shared/_error_messages.html.erb')
 		assert_not_empty(CodeBase.models_from_spec(spec_name_symbol))
 		assert_include('stream_pattern',CodeBase.models_from_spec(spec_name_symbol))
 	end #each
 end #models_from_spec
-def test_match_spec_from_file
-	assert('app/models/([a-zA-Z0-9_]*)[.]rb',CodeBase::match_spec_from_file('app/models/global.rb'))
-end #match_spec_from_file
-def test_singular_table_from_file
-	assert('global',CodeBase::singular_table_from_file('app/models/global.rb'))
-	assert_equal('global',CodeBase.singular_table_from_file('app/models/global.rb'))
-	assert_equal('global',CodeBase.singular_table_from_file('test/unit/global_test.rb'))
+def test_match_spec_from_pathname
+	assert('app/models/([a-zA-Z0-9_]*)[.]rb',CodeBase::match_spec_from_pathname('app/models/global.rb'))
+end #match_spec_from_pathname
+def test_singular_table_from_pathname
+	assert('global',CodeBase::singular_table_from_pathname('app/models/global.rb'))
+	assert_equal('global',CodeBase.singular_table_from_pathname('app/models/global.rb'))
+	assert_equal('global',CodeBase.singular_table_from_pathname('test/unit/global_test.rb'))
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
 
-		example_file=spec[:example_file]
-		match_spec=CodeBase.match_spec_from_file(example_file)
+		example_pathname=spec[:example_pathname]
+		match_spec=CodeBase.match_spec_from_pathname(example_pathname)
 		assert_not_nil(match_spec)
 		assert_not_nil(match_spec[:matchData])
-		if spec[:test_type]!=:shared then
+		if match_spec.nil? || match_spec[:test_type]==:shared then
 			assert_not_nil(match_spec[:matchData][1],"match_spec[:matchData]=#{match_spec[:matchData].inspect}")
 			table_name=match_spec[:matchData][1]
 			assert_not_nil(table_name)
-			assert_not_empty(CodeBase.singular_table_from_file(example_file),"example_file=#{example_file}")
+			assert_not_empty(CodeBase.singular_table_from_pathname(example_pathname),"example_pathname=#{example_pathname}")
 		end #if
 	end #each
-end #singular_table_from_file
+end #singular_table_from_pathname
 def test_suggest_test_run
 end #suggest_test_run
-def test_name_plurality_from_file
+def test_name_plurality_from_pathname
 end #name_plurality_from_spec
-def test_test_run_from_file
-end #test_run_from_file
+def test_test_run_from_pathname
+end #test_run_from_pathname
 def test_test_type_from_source
 end #test_type_from_source
-def test_test_program_from_file
-end #test_program_from_file
+def test_test_program_from_pathname
+end #test_program_from_pathname
 def test_uptodate
 # uptodate if target > sources
 	target='/proc/bus' # changes often
@@ -259,59 +259,59 @@ end #not_uptodate_sources
 def test_git_status
 	#~ assert_match('app/views/acquisition_stream_specs/_index_partial.html.erb',TABLE_FINDER_REGEXPS['app/views/acquisition_stream_specs/_index_partial.html.erb'])
 #	assert_equal('acquisition_stream_specs','app/views/acquisition_stream_specs/_index_partial.html.erb'.match(CodeBase.regexp(CodeBase::TABLE_FINDER_REGEXPS[5]))[1])
-	assert_equal('acquisition_stream_spec',CodeBase.singular_table_from_file('app/views/acquisition_stream_specs/_index_partial.html.erb'))
-	assert_equal('global',CodeBase.singular_table_from_file('app/models/global.rb'))
-	assert_not_nil(CodeBase.gitStatus{|status,file| puts "status=#{status}, file=#{file}"})
-	file='app/views/acquisition_stream_specs/_index_partial.html.erb'
-	assert_not_empty(CodeBase.singular_table_from_file(file))
-	assert_nothing_raised{CodeBase.gitStatus{|status,file| CodeBase.why_not_stage(file,CodeBase.singular_table_from_file(file)) }}
+	assert_equal('acquisition_stream_spec',CodeBase.singular_table_from_pathname('app/views/acquisition_stream_specs/_index_partial.html.erb'))
+	assert_equal('global',CodeBase.singular_table_from_pathname('app/models/global.rb'))
+	assert_not_nil(CodeBase.gitStatus{|status,pathname| puts "status=#{status}, pathname=#{pathname}"})
+	pathname='app/views/acquisition_stream_specs/_index_partial.html.erb'
+	assert_not_empty(CodeBase.singular_table_from_pathname(pathname))
+	assert_nothing_raised{CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,CodeBase.singular_table_from_pathname(pathname)) }}
 	assert_equal(['global','unit'],CodeBase.test_type_from_source('test/unit/global_test.rb'))
 	assert_include('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
 end #git_status
 def test_why_not_stage_helper
 end #why_not_stage_helper
 def test_why_not_stage
-	file='app/views/acquisition_stream_specs/_index_partial.html.erb'
-	assert_nothing_raised{CodeBase.why_not_stage(file,CodeBase.singular_table_from_file(file)) }
+	pathname='app/views/acquisition_stream_specs/_index_partial.html.erb'
+	assert_nothing_raised{CodeBase.why_not_stage(pathname,CodeBase.singular_table_from_pathname(pathname)) }
 #	assert_nothing_raised{CodeBase.why_not_stage_helper('app/views/acquisition_stream_specs/_index_partial.html.erb',target,sources,test_type)}
 end #why_not_stage_helper
 def test_rails_MVC_classes
 	assert_include(StreamMethod,CodeBase.rails_MVC_classes)
-	assert_not_include(GenericTable,CodeBase.rails_MVC_classes)
+	assert_not_include(Generic_Table,CodeBase.rails_MVC_classes)
 	assert_not_include(CodeBase,CodeBase.rails_MVC_classes)
 	assert_not_include(MethodModel,CodeBase.rails_MVC_classes)
 end #rails_MVC_classes
-def test_example_files_exist
+def test_example_pathnames_exist
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
-		example_file=spec[:example_file]
-		assert(File.exists?(example_file))
-		if !example_file.match(CodeBase.regexp(spec)) then
-			puts "#{example_file} not \n#{regexp.inspect}"
+		example_pathname=spec[:example_pathname]
+		assert(File.exists?(example_pathname))
+		if !example_pathname.match(CodeBase.regexp(spec)) then
+			puts "#{example_pathname} not \n#{regexp.inspect}"
 		else
-			#~ puts "#{example_file} matches \n#{regexp.inspect}"
+			#~ puts "#{example_pathname} matches \n#{regexp.inspect}"
 		end #if
 	end #each_pair
-end #example_files_exist
-def test_example_files_match_regexp
+end #example_pathnames_exist
+def test_example_pathnames_match_regexp
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
-		example_file=spec[:example_file]
-		assert(example_file.match(CodeBase.regexp(spec)))
+		example_pathname=spec[:example_pathname]
+		assert(example_pathname.match(CodeBase.regexp(spec)))
 	end #each_pair
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
-		example_file=spec[:example_file]
+		example_pathname=spec[:example_pathname]
 		regexp=CodeBase.regexp(spec)
-		assert_match(regexp,example_file,"example_file=#{example_file}, regexp=#{regexp}")
+		assert_match(regexp,example_pathname,"example_pathname=#{example_pathname}, regexp=#{regexp}")
 	end #each
-end #example_files_match_regexp
+end #example_pathnames_match_regexp
 def test_globs_match_regexp
 	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
-		files=Dir[CodeBase.file_glob(spec)]
-		if files.nil? then
-			raise "#{CodeBase.file_glob(spec)} does not match any files."
+		pathnames=Dir[CodeBase.pathname_glob(spec)]
+		if pathnames.nil? then
+			raise "#{CodeBase.pathname_glob(spec)} does not match any pathnames."
 		end #if
 		regexp=CodeBase.regexp(spec)
-		files.each do |file|
-			assert_match(regexp,file,"file=#{file}, regexp=#{regexp}")
+		pathnames.each do |pathname|
+			assert_match(regexp,pathname,"pathname=#{pathname}, regexp=#{regexp}")
 		end #each
 	end #each
 

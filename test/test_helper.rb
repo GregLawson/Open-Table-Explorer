@@ -261,7 +261,9 @@ def define_model_of_test
 	@model_name=self.class.name.sub(/Test$/, '').sub(/Controller$/, '')
  	@table_name=@model_name.tableize
 	@model_class=eval(@model_name)
+	@model_class=@model_name.constantize
 	assert_instance_of(Class,@model_class)
+	assert_kind_of(ActiveRecord::Base,@model_class)
 	assert_kind_of(ActiveRecord::Base,@model_class.new)
 end #def
 MESSAGE_CONTEXT="In define_association_names of test_helper.rb, "

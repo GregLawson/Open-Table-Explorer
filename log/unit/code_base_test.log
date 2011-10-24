@@ -1,113 +1,37 @@
 Loaded suite test/unit/code_base_test
 Started
-.E......status=M, file=app/models/code_base.rb
-status=M, file=db/bugs.sql
-status=M, file=db/tests.sql
-status=A, file=log/functional/stream_methods_controller_test.log
-status=MM, file=log/unit/code_base_test.log
-status=M, file=log/unit/test_run_test.log
-status=M, file=test/functional/accounts_controller_test.rb
-status=M, file=test/functional/bugs_controller_test.rb
-status=M, file=test/functional/error_types_controller_test.rb
-status=M, file=test/functional/example_types_controller_test.rb
-status=M, file=test/functional/generic_types_controller_test.rb
-status=M, file=test/functional/huelseries_controller_test.rb
-status=M, file=test/functional/huelshows_controller_test.rb
-status=M, file=test/functional/ofxes_controller_test.rb
-status=M, file=test/functional/production_ftps_controller_test.rb
-status=M, file=test/functional/ruby_interfaces_controller_test.rb
-status=M, file=test/functional/scalar_arguments_controller_test.rb
-status=M, file=test/functional/stream_links_controller_test.rb
-status=M, file=test/functional/stream_method_arguments_controller_test.rb
-status=M, file=test/functional/stream_method_calls_controller_test.rb
-status=M, file=test/functional/stream_methods_controller_test.rb
-status=M, file=test/functional/stream_parameters_controller_test.rb
-status=M, file=test/functional/stream_pattern_arguments_controller_test.rb
-status=M, file=test/functional/stream_patterns_controller_test.rb
-status=M, file=test/functional/test_runs_controller_test.rb
-status=M, file=test/functional/urls_controller_test.rb
-status=M, file=test/unit/account_test.rb
-status=M, file=test/unit/acquisition_interface_test.rb
-status=M, file=test/unit/acquisition_stream_spec_test.rb
-status=M, file=test/unit/acquisition_test.rb
-status=M, file=test/unit/arel_readme_test.rb
-status=M, file=test/unit/breaker_test.rb
-status=M, file=test/unit/bug_test.rb
-status=M, file=test/unit/code_base_test.rb
-status=M, file=test/unit/edison_test.rb
-status=M, file=test/unit/error_type_test.rb
-status=M, file=test/unit/example_type_test.rb
-status=M, file=test/unit/frequency_test.rb
-status=M, file=test/unit/generic_table_test.rb
-status=M, file=test/unit/generic_type_test.rb
-status=M, file=test/unit/global_test.rb
-status=M, file=test/unit/host_test.rb
-status=M, file=test/unit/huelserie_test.rb
-status=M, file=test/unit/huelshow_test.rb
-status=M, file=test/unit/measurement_test.rb
-status=M, file=test/unit/method_model_test.rb
-status=M, file=test/unit/node_test.rb
-status=M, file=test/unit/ofx_test.rb
-status=M, file=test/unit/production_ftp_test.rb
-status=M, file=test/unit/router_test.rb
-status=M, file=test/unit/ruby_interface_test.rb
-status=M, file=test/unit/scalar_argument_test.rb
-status=M, file=test/unit/stream_link_test.rb
-status=M, file=test/unit/stream_method_argument_test.rb
-status=M, file=test/unit/stream_method_call_test.rb
-status=M, file=test/unit/stream_method_test.rb
-status=M, file=test/unit/stream_parameter_test.rb
-status=M, file=test/unit/stream_pattern_test.rb
-status=M, file=test/unit/table_spec_test.rb
-status=M, file=test/unit/test_helper_test.rb
-status=M, file=test/unit/test_run_test.rb
-status=M, file=test/unit/transfer_test.rb
-status=M, file=test/unit/url_test.rb
-status=M, file=test/unit/wired_location_test.rb
-status=??, file=Chat
-status=??, file=rake/
+.E....status=M, pathname=app/models/code_base.rb
+status=M, pathname=app/models/regexp_edit.rb
+status=M, pathname=app/models/regexp_parse.rb
+status=M, pathname=db/bugs.sql
+status=M, pathname=db/tests.sql
+status=M, pathname=lib/tasks/testing.rake
+status=MM, pathname=log/unit/code_base_test.log
+status=M, pathname=log/unit/regexp_edit_test.log
+status=M, pathname=log/unit/regexp_parse_test.log
+status=MM, pathname=test/unit/code_base_test.rb
+status=A, pathname=test/unit/regexp_parse_test.rb
+status=??, pathname=Chat
+status=??, pathname=doc/app/
+status=??, pathname=rake/
+status=??, pathname=script/rdoc.sh
+app/models/regexp_edit.rb not up to date.
 db/bugs.sql don't know when to stage.
 db/tests.sql don't know when to stage.
-test/functional/bugs_controller_test.rb not up to date.
-test/functional/example_types_controller_test.rb not up to date.
-test/functional/generic_types_controller_test.rb not up to date.
-test/functional/ofxes_controller_test.rb not up to date.
-test/functional/production_ftps_controller_test.rb not up to date.
-test/functional/stream_method_arguments_controller_test.rb not up to date.
-test/functional/stream_methods_controller_test.rb not up to date.
-test/functional/stream_pattern_arguments_controller_test.rb not up to date.
-test/functional/stream_patterns_controller_test.rb not up to date.
-test/functional/test_runs_controller_test.rb not up to date.
-Target log/unit/account_test.log for file=test/unit/account_test.rb does not exist.
-Target log/unit/acquisition_interface_test.log for file=test/unit/acquisition_interface_test.rb does not exist.
-Target log/unit/acquisition_stream_spec_test.log for file=test/unit/acquisition_stream_spec_test.rb does not exist.
-Target log/unit/acquisition_test.log for file=test/unit/acquisition_test.rb does not exist.
-test/unit/bug_test.rb not up to date.
-test/unit/error_type_test.rb not up to date.
-test/unit/example_type_test.rb not up to date.
-test/unit/generic_type_test.rb not up to date.
-test/unit/global_test.rb not up to date.
-test/unit/huelshow_test.rb not up to date.
-test/unit/measurement_test.rb not up to date.
-test/unit/ofx_test.rb not up to date.
-test/unit/production_ftp_test.rb not up to date.
-Target log/unit/ruby_interface_test.log for file=test/unit/ruby_interface_test.rb does not exist.
-Target log/unit/scalar_argument_test.log for file=test/unit/scalar_argument_test.rb does not exist.
-test/unit/stream_method_argument_test.rb not up to date.
-test/unit/stream_method_test.rb not up to date.
-Target log/unit/stream_parameter_test.log for file=test/unit/stream_parameter_test.rb does not exist.
-Target log/unit/table_spec_test.log for file=test/unit/table_spec_test.rb does not exist.
+lib/tasks/testing.rake don't know when to stage.
 Chat don't know when to stage.
+doc/app/ don't know when to stage.
 rake/ don't know when to stage.
+script/rdoc.sh don't know when to stage.
 ..E..F.Esources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
 sources.size=2 
 sources[0]="/proc/bus" 
-.EE..F............
-Finished in 8.663691 seconds.
+...E................
+Finished in 9.60836 seconds.
 
   1) Error:
-test_complete_models(TestingFilePatternsTest):
-RuntimeError: file=app/views/shared/_syntax_errors.html.erb does not match regexp=(?-mix:^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$)
+test_complete_models(CodeBaseTest):
+RuntimeError: pathname=app/views/shared/_syntax_errors.html.erb does not match regexp=(?-mix:^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$)
     app/models/code_base.rb:179:in `models_from_spec'
     app/models/code_base.rb:176:in `map'
     app/models/code_base.rb:176:in `models_from_spec'
@@ -116,50 +40,37 @@ RuntimeError: file=app/views/shared/_syntax_errors.html.erb does not match regex
     test/unit/code_base_test.rb:157:in `test_complete_models'
 
   2) Error:
-test_initialize(TestingFilePatternsTest):
+test_initialize(CodeBaseTest):
 ArgumentError: wrong number of arguments (0 for 1)
     test/unit/code_base_test.rb:16:in `initialize'
     test/unit/code_base_test.rb:16:in `new'
     test/unit/code_base_test.rb:16:in `test_initialize'
 
   3) Failure:
-test_models_from_spec(TestingFilePatternsTest)
+test_models_from_spec(CodeBaseTest)
     [test/unit/code_base_test.rb:200:in `test_models_from_spec'
      test/unit/code_base_test.rb:197:in `map'
      test/unit/code_base_test.rb:197:in `test_models_from_spec'
      test/unit/code_base_test.rb:191:in `each'
      test/unit/code_base_test.rb:191:in `test_models_from_spec']:
-file=app/views/shared/_syntax_errors.html.erb does not match regexp=(?-mix:^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$).
+pathname=app/views/shared/_syntax_errors.html.erb does not match regexp=(?-mix:^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$).
 <nil> expected to not be nil.
 
   4) Error:
-test_not_uptodate_order(TestingFilePatternsTest):
+test_not_uptodate_order(CodeBaseTest):
 NoMethodError: undefined method `singularize' for nil:NilClass
-    app/models/code_base.rb:209:in `singular_table_from_file'
-    app/models/code_base.rb:74:in `prioritized_file_order'
+    app/models/code_base.rb:209:in `singular_table_from_pathname'
+    app/models/code_base.rb:74:in `prioritized_pathname_order'
     app/models/code_base.rb:73:in `map'
-    app/models/code_base.rb:73:in `prioritized_file_order'
+    app/models/code_base.rb:73:in `prioritized_pathname_order'
     test/unit/code_base_test.rb:109:in `test_not_uptodate_order'
 
   5) Error:
-test_prioritized_file_order(TestingFilePatternsTest):
+test_prioritized_pathname_order(CodeBaseTest):
 NoMethodError: undefined method `singularize' for nil:NilClass
-    app/models/code_base.rb:209:in `singular_table_from_file'
-    test/unit/code_base_test.rb:65:in `test_prioritized_file_order'
+    app/models/code_base.rb:209:in `singular_table_from_pathname'
+    test/unit/code_base_test.rb:65:in `test_prioritized_pathname_order'
     test/unit/code_base_test.rb:60:in `map'
-    test/unit/code_base_test.rb:60:in `test_prioritized_file_order'
+    test/unit/code_base_test.rb:60:in `test_prioritized_pathname_order'
 
-  6) Error:
-test_rails_MVC_classes(TestingFilePatternsTest):
-LoadError: Expected /home/greg/Desktop/git/development/app/models/generic_table.rb to define GenericTable
-    test/unit/code_base_test.rb:280:in `test_rails_MVC_classes'
-
-  7) Failure:
-test_singular_table_from_file(TestingFilePatternsTest)
-    [test/unit/code_base_test.rb:226:in `test_singular_table_from_file'
-     test/unit/code_base_test.rb:219:in `each'
-     test/unit/code_base_test.rb:219:in `test_singular_table_from_file']:
-match_spec[:matchData]=#<MatchData "app/views/shared/_multi-line.html.erb">.
-<nil> expected to not be nil.
-
-34 tests, 4825 assertions, 2 failures, 5 errors
+34 tests, 4798 assertions, 1 failures, 4 errors

@@ -24,7 +24,7 @@ def restartParse # primarily for testing
 	@parseTree=[]
 end #def
 # Parse regexp into 
-def initialize(regexp,preParse=true)
+def initialize(regexp=nil,preParse=true)
 	@regexp=regexp
 	restartParse
 	@parseTree=regexpTree if preParse
