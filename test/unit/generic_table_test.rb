@@ -193,12 +193,13 @@ def test_has_many_association
 		assert_public_instance_method(ar_from_fixture,assName.to_s.singularize.to_sym)
 	end #if
 
-	ASSNAME=ar_from_fixture.class.association_method_symbol(assName)
-
-	assert_public_instance_method(ar_from_fixture,ASSNAME)
+	association_name=ar_from_fixture.class.association_method_symbol(assName)
+	assert_public_instance_method(ar_from_fixture,association_name)
+#	ASSNAME=ar_from_fixture.class.association_method_symbol(assName)
+#	assert_public_instance_method(ar_from_fixture,ASSNAME)
 
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_instance_methods(/^has_/))
-end #test
+end #test_has_many_association
 def test_association_method_plurality
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
