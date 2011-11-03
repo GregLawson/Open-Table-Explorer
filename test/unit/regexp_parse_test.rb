@@ -103,7 +103,7 @@ def setup
 #	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 #	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 end #def
-def test_test_name_correct
+def test_zero_parameter_new
 	assert_nothing_raised{RegexpParse.new} # 0 arguments
 	assert_not_nil(@model_class)
 end #test_name_correct

@@ -26,9 +26,11 @@ end #def
 # Parse regexp into 
 def initialize(regexp=nil,preParse=true)
 	@regexp=regexp
-	restartParse
-	@parseTree=regexpTree if preParse
-	puts "@parseTree.inspect=#{@parseTree.inspect}" if regexp.size>5
+	if !regexp.nil? then
+		restartParse
+		@parseTree=regexpTree if preParse
+		puts "@parseTree.inspect=#{@parseTree.inspect}" if regexp.size>5
+	end #if
 end #initialize
 # Takes embedded array format parsed tree and displays equivalent regexp string 
 def parsedString(parseTree=@parseTree)
