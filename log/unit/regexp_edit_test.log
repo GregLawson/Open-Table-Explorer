@@ -3,6 +3,7 @@
 @parseTree.inspect=[]
 Loaded suite test/unit/regexp_edit_test
 Started
+@model_class is not a ActiveRecord::Base.
 parseTree.inspect=["*", ["[", "^", "\n", "]"]]
 parseTree[1..1].inspect=[["[", "^", "\n", "]"]]
 parseTree[0..0].inspect=["*"]
@@ -2183,7 +2184,8 @@ parseTree[1..1].inspect=["."]
 parseTree[0..0].inspect=["*"]
 parsedString(parseTree[1..1]).inspect="."
 parsedString(parseTree[1..1])+parseTree[0]=.*
+.@model_class is not a ActiveRecord::Base.
 .
-Finished in 1.285638 seconds.
+Finished in 1.183976 seconds.
 
-1 tests, 51 assertions, 0 failures, 0 errors
+2 tests, 57 assertions, 0 failures, 0 errors

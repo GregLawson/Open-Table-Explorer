@@ -3,43 +3,62 @@
 @parseTree.inspect=[]
 Loaded suite test/unit/regexp_parse_test
 Started
-FFFF
-Finished in 0.613793 seconds.
+@model_class is not a ActiveRecord::Base.
+parseTree.inspect=["*", "a"]
+parseTree[1..1].inspect=["a"]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="a"
+parsedString(parseTree[1..1])+parseTree[0]=a*
+message=Regexp parse error: regexp=K,rest=K,parseTree.inspect=[].
+message=Regexp parse error: regexp=K,rest=,parseTree.inspect=["K"].
+parseTree.inspect=["*", "."]
+parseTree[1..1].inspect=["."]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="."
+parsedString(parseTree[1..1])+parseTree[0]=.*
+message=Regexp parse error: regexp=KC,rest=KC,parseTree.inspect=[].
+message=Regexp parse error: regexp=KC,rest=,parseTree.inspect=["K", "C"].
+parseTree.inspect=["*", "."]
+parseTree[1..1].inspect=["."]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="."
+parsedString(parseTree[1..1])+parseTree[0]=.*
+message=Regexp parse error: regexp=KCET[^
+]*</tr>\s*(<tr.*</tr>).*KVIE,rest=KCET[^
+]*</tr>\s*(<tr.*</tr>).*KVIE,parseTree.inspect=[].
+parseTree.inspect=["*", ["[", "^", "\n", "]"]]
+parseTree[1..1].inspect=[["[", "^", "\n", "]"]]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="[^\n]"
+parsedString(parseTree[1..1])+parseTree[0]=[^
+]*
+parseTree.inspect=["*", "\\s"]
+parseTree[1..1].inspect=["\\s"]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="\\s"
+parsedString(parseTree[1..1])+parseTree[0]=\s*
+parseTree.inspect=["*", "."]
+parseTree[1..1].inspect=["."]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="."
+parsedString(parseTree[1..1])+parseTree[0]=.*
+parseTree.inspect=["*", "."]
+parseTree[1..1].inspect=["."]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="."
+parsedString(parseTree[1..1])+parseTree[0]=.*
+message=Regexp parse error: regexp=KCET[^
+]*</tr>\s*(<tr.*</tr>).*KVIE,rest=,parseTree.inspect=["K", "C", "E", "T", ["*", ["[", "^", "\n", "]"]], "<", "/", "t", "r", ">", ["*", "\\s"], ["(", "<", "t", "r", ["*", "."], "<", "/", "t", "r", ">", ")"], ["*", "."], "K", "V", "I", "E"].
+.@model_class is not a ActiveRecord::Base.
+@parseTree.inspect=[["(", "<", "t", "r", ["*", "."], "<", "/", "t", "r", ">", ")"]]
+parseTree.inspect=["*", "."]
+parseTree[1..1].inspect=["."]
+parseTree[0..0].inspect=["*"]
+parsedString(parseTree[1..1]).inspect="."
+parsedString(parseTree[1..1])+parseTree[0]=.*
+.@model_class is not a ActiveRecord::Base.
+.@model_class is not a ActiveRecord::Base.
+.
+Finished in 0.09659 seconds.
 
-  1) Failure:
-test_editor(Test_Generic)
-    [/test/test_helper.rb:266:in `define_model_of_test'
-     test/unit/regexp_parse_test.rb:101:in `setup']:
-<Test_Generic>
-expected to be kind_of?
-<ActiveRecord::Base> but was
-<Class>.
-
-  2) Failure:
-test_initialize(Test_Generic)
-    [/test/test_helper.rb:266:in `define_model_of_test'
-     test/unit/regexp_parse_test.rb:101:in `setup']:
-<Test_Generic>
-expected to be kind_of?
-<ActiveRecord::Base> but was
-<Class>.
-
-  3) Failure:
-test_parsedString(Test_Generic)
-    [/test/test_helper.rb:266:in `define_model_of_test'
-     test/unit/regexp_parse_test.rb:101:in `setup']:
-<Test_Generic>
-expected to be kind_of?
-<ActiveRecord::Base> but was
-<Class>.
-
-  4) Failure:
-test_test_name_correct(Test_Generic)
-    [/test/test_helper.rb:266:in `define_model_of_test'
-     test/unit/regexp_parse_test.rb:101:in `setup']:
-<Test_Generic>
-expected to be kind_of?
-<ActiveRecord::Base> but was
-<Class>.
-
-4 tests, 8 assertions, 4 failures, 0 errors
+4 tests, 72 assertions, 0 failures, 0 errors
