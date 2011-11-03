@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'app/models/generic_table.rb'
 require 'app/models/bug.rb'
 class TestRun  < ActiveRecord::Base
