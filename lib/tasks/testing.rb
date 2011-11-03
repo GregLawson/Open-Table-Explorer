@@ -1,26 +1,3 @@
-def full_unit_test(plural_table,test)
-	singular_table=plural_table.singularize
-	stop=TestRun.ruby_run_and_log("test/unit/#{singular_table}_test.rb", "log/unit/#{singular_table}_test.log")
-	return stop if stop
-	stop=TestRun.ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) # only?
-	return stop
-end #def
-def unit_test(plural_table,test=nil)
-	singular_table=plural_table.singularize
-	target="log/unit/#{singular_table}_test.log"
-	sources=CodeBase.unit_sources(singular_table)
-	not_uptodate_sources=sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, s)}
-	stop=TestRun.ruby_run_and_log("test/unit/#{singular_table}_test.rb", target,test)
-	if !stop then
-		CodeBase.git_add_successful(not_uptodate_sources)
-	end #if
-	return stop
-end #unit_test
-def controller_test(plural_table,test=nil)
-	singular_table=plural_table.singularize
-	stop=TestRun.ruby_run_and_log("test/functional/#{plural_table}_controller_test.rb", "log/functional/#{plural_table}_controller_test.log",test) #
-	return stop
-end #controller_test
 def conditional_build(target, sources)
 	sources.each do |s|
 		if !File.exist?(s) then
