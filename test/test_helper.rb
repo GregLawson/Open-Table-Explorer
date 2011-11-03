@@ -207,7 +207,8 @@ end #def
 def assert_include(element,list,message=nil)
 #	if message.nil? then
 		message=build_message(message, "? is not in list ?", element,list.inspect)
-#	end #if  
+#	end #if 
+	raise "Second argument of assert_include must be an Array" if !list.instance_of?(Array) 
 	assert(list.include?(element),message)
 end #def
 def assert_dir_include(filename,glob)
@@ -244,6 +245,10 @@ def assert_array_of(obj, type)
 	end #each
 	assert_block("obj=#{obj.inspect} must be an Array of Strings(pathnames)") {obj.all?{|s| s.instance_of?(String)}}
 end #array_of
+def assert_attribute_of(obj, symbol, type)
+	assert_block("obj[:#{symbol}]=#{obj[symbol].inspect} must be of type #{type}, but is of type #{obj[symbol].class} obj=#{obj.inspect}") {obj[symbol].instance_of?(type)}
+end #array_of
+
 def assert_has_instance_methods(model_class,message=nil)
 	message=build_message(message, "? has no public instance methods.", model_class.canonicalName)   
 	assert_block(message){!model_class.instance_methods(false).empty?}
@@ -258,13 +263,18 @@ end #def
 
 # does not require any fixtures
 def define_model_of_test 
-	@model_name=self.class.name.sub(/Test$/, '').sub(/Controller$/, '')
+	@test_name=self.class.name
+	assert_equal('Test',@test_name[-4..-1],"@test_name='#{@test_name}' does not follow the default naming convention.")
+	@model_name=@test_name.sub(/Test$/, '').sub(/Controller$/, '')
  	@table_name=@model_name.tableize
 	@model_class=eval(@model_name)
 	@model_class=@model_name.constantize
 	assert_instance_of(Class,@model_class)
-	assert_kind_of(ActiveRecord::Base,@model_class)
-	assert_kind_of(ActiveRecord::Base,@model_class.new)
+	if !@model_class.instance_of?(ActiveRecord::Base) then
+		puts "@model_class is not a ActiveRecord::Base."
+	end #if
+#	assert_kind_of(ActiveRecord::Base,@model_class)
+#	assert_kind_of(ActiveRecord::Base,@model_class.new)
 end #def
 MESSAGE_CONTEXT="In define_association_names of test_helper.rb, "
 def define_association_names
