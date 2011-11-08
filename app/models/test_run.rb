@@ -64,18 +64,27 @@ def test_file
 	else raise "Unnown self[:test_type]=#{self[:test_type]} for singular_table=#{singular_table}"
 	end #case
 end #test_file
+# log_file => String
+# Filename of log file from test run
 def log_file
+	if self[:test].nil? then
+		test_suffix=''
+	else
+		test_suffix=".#{self[:test]}"
+	end #if
 	case self[:test_type].to_sym
 	when :unit
-		return CodeBase.unit_target(@singular_table)
+		return CodeBase.unit_target(@singular_table.to_s+test_suffix)
 	when :controller
-		return CodeBase.controller_target(@plural_table)
+		return CodeBase.controller_target(@plural_table.to_s+test_suffix)
 	else raise "Unnown self[:test_type]=#{self[:test_type]} for singular_table=#{singular_table}"
 	end #case
 end #log_file
+# Unconditionally run the test
 def run
 	TestRun.ruby_run_and_log(test_file,log_file,self[:test])
 end #run
+# Run a shell
 def TestRun.shell(command, &proc)
 #	puts "command='#{command}'"
 	output=`#{command}`
@@ -91,6 +100,7 @@ def TestRun.shell(command, &proc)
 		return nil
 	end #if
 end #shell
+# Run rubyinterpreter passing arguments
 def TestRun.ruby(args, &proc)
 	shell("ruby #{args}",&proc)
 end #ruby
@@ -140,7 +150,7 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 		stop=true
 	else
 		sysout,run_time=TestRun.parse_header(header)
-#		puts "sysout='#{sysout}'"
+		puts "sysout='#{sysout.inspect}'"
 		puts "run_time='#{run_time}'"
 		tests,assertions,failures,tests_stop_on_error=TestRun.parse_summary(summary)
 		#~ puts "failures+tests_stop_on_error=#{failures+tests_stop_on_error}"
@@ -154,7 +164,7 @@ def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 	if !errors.nil? then
 		errors.each do |error|
 			Bug.new(test_type,table,error)
-			puts "error='#{error}'"
+#			puts "error='#{error}'"
 		end #each
 	end #if 
 #	puts "ARGF.argv.inspect=#{ARGF.argv.inspect}"
