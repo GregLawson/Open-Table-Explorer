@@ -25,7 +25,7 @@ include NoDB
 ]
 # Initializes a spec from a hash
 def initialize(hash=nil)
-	super(hash)
+	super
 end #initialize
 # Returns all specs
 def CodeBase.all
@@ -132,19 +132,19 @@ def CodeBase.controller_target(singular_table)
 	return "log/functional/#{plural_table}_controller_test.log"
 end #controller_target
 def CodeBase.model_spec_symbols
-	return @@TABLE_FINDER_REGEXPS.select {|s| s[:test_type]!=:shared}.map {|s| s[:name]}
+	return CodeBase.all.select {|s| s[:test_type]!=:shared}.map {|s| s[:name]}
 end #model_spec_symbols
 def CodeBase.spec_symbols
-	return @@TABLE_FINDER_REGEXPS.map {|s| s[:name]}
+	return CodeBase.all.map {|s| s[:name]}
 end #spec_symbols
 def CodeBase.complete_models
 	list_of_model_sets=CodeBase.model_spec_symbols.map {|spec_name_symbol| CodeBase.models_from_spec(spec_name_symbol)}
 	list_of_model_sets.reduce(:&)
 end #complete_models
 def CodeBase.spec_from_symbol(spec_name_symbol)
-	index=@@TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
+	index=CodeBase.all.index {|s| s[:name]==spec_name_symbol.to_sym}
 	raise "spec_name_symbol=#{spec_name_symbol} not found" if index.nil?
-	return @@TABLE_FINDER_REGEXPS[index]
+	return CodeBase.all[index]
 end #spec_from_symbol
 def CodeBase.models_from_spec(spec_name_symbol)
 	spec=spec_from_symbol(spec_name_symbol)
@@ -170,7 +170,7 @@ def CodeBase.models_from_spec(spec_name_symbol)
 	end #if
 end #models_from_spec
 def CodeBase.match_spec_from_pathname(pathname)
-	@@TABLE_FINDER_REGEXPS.each do |match_specs|
+	CodeBase.all.each do |match_specs|
 		matchData=pathname.match(match_specs[:Dir_glob])
 		if matchData then
 			match_specs[:matchData]=matchData # add match data found

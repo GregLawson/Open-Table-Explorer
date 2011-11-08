@@ -25,33 +25,33 @@ def test_all
 	assert_instance_of(CodeBase,CodeBase.all[0])
 end #all
 def test_pathname_glob
-	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
+	spec=CodeBase.all[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
-	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
-	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
+	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},spec.regexp)
+	CodeBase.all.map do |spec| 
 		assert_not_nil(spec)
 		assert_not_nil(spec[:example_pathname])
-		assert_not_nil(CodeBase.pathname_glob(spec))
+		assert_not_nil(spec.pathname_glob)
 	end #map
 end #pathname_glob
 def test_regexp
 #	assert_equal(%r{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
-	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
+	spec=CodeBase.all[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
-	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp(spec))
-	assert_equal('app/models/[a-zA-Z0-9_]*[.]rb',CodeBase.pathname_glob(spec))
-	CodeBase::TABLE_FINDER_REGEXPS.map do |spec| 
+	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},spec.regexp)
+	assert_equal('app/models/[a-zA-Z0-9_]*[.]rb',spec.pathname_glob)
+	CodeBase.all.map do |spec| 
 		assert_not_nil(spec)
 		assert_not_nil(spec[:example_pathname])
-		assert_not_nil(CodeBase.pathname_glob(spec))
-		assert_not_nil(Dir[CodeBase.pathname_glob(spec)])
-#		assert_not_empty(Dir[CodeBase.pathname_glob(spec)],"Dir[#{CodeBase.pathname_glob(spec)}]=#{Dir[CodeBase.pathname_glob(spec)]}")
-		assert_dir_include(spec[:example_pathname],CodeBase.pathname_glob(spec))
-		assert_include(spec[:example_pathname],Dir[CodeBase.pathname_glob(spec)])
+		assert_not_nil(spec.pathname_glob)
+		assert_not_nil(Dir[spec.pathname_glob])
+#		assert_not_empty(Dir[spec.pathname_glob],"Dir[#{spec.pathname_glob}]=#{Dir[spec.pathname_glob]}")
+		assert_dir_include(spec[:example_pathname],spec.pathname_glob)
+		assert_include(spec[:example_pathname],Dir[spec.pathname_glob])
 	end #map
 end #regexp
 def test_pathnames_from_spec
-	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
+	CodeBase.all.each do |spec|
 		instance=CodeBase.new(spec)
 		assert_not_empty(instance.pathnames_from_spec)
 	end #each
@@ -173,26 +173,26 @@ def test_complete_models
 end #complete_models
 def test_spec_from_symbol
 	spec_name_symbol=:models
-	index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
+	index=CodeBase.all.index {|s| s[:name]==spec_name_symbol.to_sym}
 	assert_instance_of(Fixnum,index)
-	assert_instance_of(Hash,CodeBase::TABLE_FINDER_REGEXPS[index])
+	assert_instance_of(Hash,CodeBase.all[index])
 end #spec_from_symbol
 def test_models_from_spec
 	CodeBase.model_spec_symbols.each do |spec_name_symbol|
 	#	spec_name_symbol=:models
-		index=CodeBase::TABLE_FINDER_REGEXPS.index {|s| s[:name]==spec_name_symbol.to_sym}
+		index=CodeBase.all.index {|s| s[:name]==spec_name_symbol.to_sym}
 		spec=CodeBase.spec_from_symbol(spec_name_symbol)
-		pathnames=Dir[CodeBase.pathname_glob(spec)]
+		pathnames=Dir[spec.pathname_glob]
 		assert_not_empty(pathnames)
 		models=pathnames.map do |f| 
-			assert_instance_of(Regexp, CodeBase.regexp(spec))
-			model=f[CodeBase.regexp(spec),1]
-			assert_not_nil(model,"pathname=#{f} does not match regexp=#{CodeBase.regexp(spec)}")
+			assert_instance_of(Regexp, spec.regexp)
+			model=f[spec.regexp,1]
+			assert_not_nil(model,"pathname=#{f} does not match regexp=#{spec.regexp}")
 			assert_not_empty(model)
-			assert_instance_of(String,f[CodeBase.regexp(spec),1])
-			assert_not_empty(f[CodeBase.regexp(spec),1])
+			assert_instance_of(String,f[spec.regexp,1])
+			assert_not_empty(f[spec.regexp,1])
 		end #map
-		models=pathnames.map {|f| f[CodeBase.regexp(spec),1] }
+		models=pathnames.map {|f| f[spec.regexp,1] }
 		assert_not_empty(models)
 		assert_match(/^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$/,'app/views/shared/_error_messages.html.erb')
 		assert_not_empty(CodeBase.models_from_spec(spec_name_symbol))
@@ -206,7 +206,7 @@ def test_singular_table_from_pathname
 	assert('global',CodeBase::singular_table_from_pathname('app/models/global.rb'))
 	assert_equal('global',CodeBase.singular_table_from_pathname('app/models/global.rb'))
 	assert_equal('global',CodeBase.singular_table_from_pathname('test/unit/global_test.rb'))
-	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
+	CodeBase.all.each do |spec|
 
 		example_pathname=spec[:example_pathname]
 		match_spec=CodeBase.match_spec_from_pathname(example_pathname)
@@ -244,7 +244,7 @@ def test_not_uptodate_sources
 end #not_uptodate_sources
 def test_git_status
 	#~ assert_match('app/views/acquisition_stream_specs/_index_partial.html.erb',TABLE_FINDER_REGEXPS['app/views/acquisition_stream_specs/_index_partial.html.erb'])
-#	assert_equal('acquisition_stream_specs','app/views/acquisition_stream_specs/_index_partial.html.erb'.match(CodeBase.regexp(CodeBase::TABLE_FINDER_REGEXPS[5]))[1])
+#	assert_equal('acquisition_stream_specs','app/views/acquisition_stream_specs/_index_partial.html.erb'.match(CodeBase.regexp(CodeBase.all[5]))[1])
 	assert_equal('acquisition_stream_spec',CodeBase.singular_table_from_pathname('app/views/acquisition_stream_specs/_index_partial.html.erb'))
 	assert_equal('global',CodeBase.singular_table_from_pathname('app/models/global.rb'))
 	assert_not_nil(CodeBase.gitStatus{|status,pathname| puts "status=#{status}, pathname=#{pathname}"})
@@ -268,10 +268,10 @@ def test_rails_MVC_classes
 	assert_not_include(MethodModel,CodeBase.rails_MVC_classes)
 end #rails_MVC_classes
 def test_example_pathnames_exist
-	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
+	CodeBase.all.each do |spec|
 		example_pathname=spec[:example_pathname]
 		assert(File.exists?(example_pathname))
-		if !example_pathname.match(CodeBase.regexp(spec)) then
+		if !example_pathname.match(spec.regexp) then
 			puts "#{example_pathname} not \n#{regexp.inspect}"
 		else
 			#~ puts "#{example_pathname} matches \n#{regexp.inspect}"
@@ -279,23 +279,23 @@ def test_example_pathnames_exist
 	end #each_pair
 end #example_pathnames_exist
 def test_example_pathnames_match_regexp
-	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
+	CodeBase.all.each do |spec|
 		example_pathname=spec[:example_pathname]
-		assert(example_pathname.match(CodeBase.regexp(spec)))
+		assert(example_pathname.match(spec.regexp))
 	end #each_pair
-	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
+	CodeBase.all.each do |spec|
 		example_pathname=spec[:example_pathname]
-		regexp=CodeBase.regexp(spec)
+		regexp=spec.regexp
 		assert_match(regexp,example_pathname,"example_pathname=#{example_pathname}, regexp=#{regexp}")
 	end #each
 end #example_pathnames_match_regexp
 def test_globs_match_regexp
-	CodeBase::TABLE_FINDER_REGEXPS.each do |spec|
-		pathnames=Dir[CodeBase.pathname_glob(spec)]
+	CodeBase.all.each do |spec|
+		pathnames=Dir[spec.pathname_glob]
 		if pathnames.nil? then
-			raise "#{CodeBase.pathname_glob(spec)} does not match any pathnames."
+			raise "#{spec.pathname_glob} does not match any pathnames."
 		end #if
-		regexp=CodeBase.regexp(spec)
+		regexp=spec.regexp
 		pathnames.each do |pathname|
 			assert_match(regexp,pathname,"pathname=#{pathname}, regexp=#{regexp}")
 		end #each
@@ -316,7 +316,7 @@ def test_MatchedPathName
 	assert_attribute_of(matched_path_name, :pathname, String)
 	assert_attribute_of(matched_path_name, :matchData, MatchData)
 	assert_attribute_of(matched_path_name[:spec], :name, Symbol)
-	assert_attribute_of(MatchedPathName.new(@@Test_pathname), :spec, ActiveSupport::HashWithIndifferentAccess)
+	assert_attribute_of(MatchedPathName.new(@@Test_pathname), :spec, CodeBase)
 	CodeBase.all.each do |spec|
 		assert_not_nil(spec)
 		assert_instance_of(CodeBase, spec)
@@ -364,6 +364,8 @@ def test_suggest_test_runs
 	test_runs=matched_path_name.suggest_test_runs
 	assert_not_empty(test_runs)
 end #suggest_test_runs
+def schedule_tests
+end #schedule_tests
 def test_name_plurality
 	assert_not_nil(CodeBase.spec_from_symbol(:shared_partials))
 	assert_not_nil(CodeBase.spec_from_symbol(:models))
