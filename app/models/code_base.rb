@@ -1,4 +1,12 @@
-class CodeBase < ActiveSupport::HashWithIndifferentAccess
+###########################################################################
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson@gmail.com>                                                             
+#
+# Copyright: See COPYING pathname that comes with this distribution
+#
+###########################################################################
+class CodeBase
+include NoDB
 # [name, example_pathname, Dir_glob, plural,test_type]
 @@TABLE_FINDER_REGEXPS=[
 {:name => :models, :example_pathname => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
@@ -315,8 +323,10 @@ def CodeBase.rails_MVC_classes
 	end.compact #map
 end #rails_MVC_classes
 end #class CodeBase
-class MatchedPathName  < ActiveSupport::HashWithIndifferentAccess
+class MatchedPathName
+include NoDB
 def initialize(pathname, specified_spec=nil)
+	super()
 	self[:pathname]=pathname
 	self[:mtime] = File.mtime(pathname)
 	if specified_spec.nil? then
@@ -339,7 +349,10 @@ def assert_no_attributes(obj)
 end #
 def assert_has_attributes(obj)
 	assert_not_equal(0, obj.size)
-end #
+end #assert_has_attributes
+# Returns all matched files.
+# Candidates for new test run (including shared files)
+# Called by all_tests
 def MatchedPathName.all
 	CodeBase.all.map  do |spec|
 		spec.pathnames_from_spec.map do |pathname|
@@ -347,12 +360,15 @@ def MatchedPathName.all
 		end #map
 	end.flatten.sort! {|x,y| y[:mtime] <=> x[:mtime] } #map
 end #all
+# called by suggest_test_runs for ambiguous (shared)
 FILE_MOD_TIMES=MatchedPathName.all.map { |pathname_and_spec| { :pathname => pathname_and_spec[:pathname],:mtime => File.mtime(pathname_and_spec[:pathname]), :spec => pathname_and_spec[:spec]}}.sort! {|x,y| y[:mtime] <=> x[:mtime] } # sort on pathname mod times
 def MatchedPathName.all_tests(test_type)
 	test_matches= all.select {|match| match[:test_type]=test_type}
 	ret=test_matches.map {|m| m.suggest_test_runs}.flatten
 	return ret
 end #all_tests
+# Returns TestRun or array of TestRuns for ambiguous
+# Suggest test order to run after file modified
 def suggest_test_runs
 	name_plurality=self[:spec].name_plurality
 	test_type=self[:spec][:test_type].to_sym
@@ -372,6 +388,22 @@ def suggest_test_runs
 	end #case
 	end #if
 end #suggest_test_runs
+def MatchedPathName.test_schedule
+	MatchedPathName.all.suggest_test_runs.each do |candidate| 
+		if candidate.instance_of?(Array) then
+			ret=candidate.first{|tr| tr.up_to_date?}
+		else
+			!candidate.up_to_date?
+		end #if
+	end #
+end #test_schedule
+def MatchedPathName.schedule_tests
+	MatchedPathName.test_schedule.each do |tr|
+		if !tr.up_to_date? then #test updated earlier in this iteration
+			tr.run
+		end #if
+	end #each
+end #schedule_tests
 def name_plurality
 	if self.nil? || self[:test_type]==:shared then
 		return  nil

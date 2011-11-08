@@ -1,6 +1,20 @@
 Loaded suite test/unit/code_base_test
 Started
-
-Finished in 0.000589 seconds.
-
-0 tests, 0 assertions, 0 failures, 0 errors
+.....E..EEstatus=MM, pathname=app/models/code_base.rb
+status=M, pathname=app/models/generic_table.rb
+status=M, pathname=app/models/method_model.rb
+status=M, pathname=app/models/test_run.rb
+status=M, pathname=db/bugs.sql
+status=M, pathname=db/tests.sql
+status=M, pathname=log/full/rake_test.log
+status=MM, pathname=log/unit/code_base_test.log
+status=M, pathname=log/unit/generic_table_test.log
+status=M, pathname=log/unit/method_model_test.log
+status=MM, pathname=test/unit/code_base_test.rb
+status=M, pathname=test/unit/generic_table_test.rb
+status=M, pathname=test/unit/method_model_test.rb
+status=??, pathname=Chat
+status=??, pathname=log/unit/code_base.test_MatchedPathName_test.log
+status=??, pathname=log/unit/method_model.test_all_instance_methods_test.log
+status=??, pathname=log/unit/method_model.test_all_test.log
+status=??, pathname=log/unit/method_model.test_find_by_name_test.log

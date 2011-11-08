@@ -12,11 +12,18 @@ require 'test_helper'
 require 'test/test_helper_test_tables.rb'
 class CodeBaseTest < ActiveSupport::TestCase
 require 'lib/tasks/testing.rb'
+@@Test_pathname='app/models/code_base.rb'
+
 def test_initialize
 	spec=CodeBase.new
 	assert_not_nil(spec)
-	assert_instance_of(spec,CodeBase)
+	assert_instance_of(CodeBase, spec)
 end #initialize
+def test_all
+	assert_not_empty(CodeBase.all)
+	assert_instance_of(Array,CodeBase.all)
+	assert_instance_of(CodeBase,CodeBase.all[0])
+end #all
 def test_pathname_glob
 	spec=CodeBase::TABLE_FINDER_REGEXPS[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
@@ -49,34 +56,17 @@ def test_pathnames_from_spec
 		assert_not_empty(instance.pathnames_from_spec)
 	end #each
 end #pathnames_from_spec
-def test_all_model_specfic_pathnames
-	assert_not_empty(CodeBase.all_model_specfic_pathnames)
-	assert_instance_of(Array,CodeBase.all_model_specfic_pathnames)
-	assert_instance_of(Hash,CodeBase.all_model_specfic_pathnames[0])
-end #all_model_specfic_pathnames
-def test_suggest_test_runs
-end #suggest_test_run
+def test_attribute_assignment
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_instance_of(CodeBase, matched_path_name[:spec])
+end #[]=
 def test_prioritized_pathname_order
-	pathname_type_pairs=CodeBase::FILE_MOD_TIMES.map do |pathname_and_spec|
-		assert_not_empty(pathname_and_spec[:spec])
-		assert_instance_of(Regexp,CodeBase.regexp(pathname_and_spec[:spec]))
-		assert_include(pathname_and_spec[:spec][:test_type],[:unit,:controller,:both,:shared])
-		if pathname_and_spec[:spec][:test_type]!=:shared then
-			singular_table=CodeBase.singular_table_from_pathname(pathname_and_spec[:pathname])
-			assert_not_nil(singular_table)
-			assert_not_empty(singular_table,"pathname_and_spec=#{pathname_and_spec.inspect}")
-			assert_not_nil(pathname_and_spec[:pathname][CodeBase.regexp(pathname_and_spec[:spec]),1],"pathname_and_spec=#{pathname_and_spec.inspect}")
-			assert_not_empty(pathname_and_spec[:pathname][CodeBase.regexp(pathname_and_spec[:spec]),1],"pathname_and_spec=#{pathname_and_spec.inspect}")
-		end #if
-		assert_not_nil(pathname_and_spec[:spec][:test_type])
-		[singular_table,pathname_and_spec[:spec][:test_type].to_s]
-	end #map
-	pathname_type_pairs.each do |pathname_and_type|
-		assert_instance_of(Array,pathname_and_type)
-		singular_table=pathname_and_type[0]
+	MatchedPathName.all.each do |matched_path_name|
+		assert_instance_of(Array,matched_path_name)
+		singular_table=matched_path_name[0]
 		assert_not_empty(singular_table)
-		assert_not_empty(pathname_and_type[1])
-		case pathname_and_type[1].to_sym
+		assert_not_empty(matched_path_name[1])
+		case matched_path_name[1].to_sym
 		when :unit
 			assert_not_empty(CodeBase.unit_target(singular_table))
 			assert_not_empty(CodeBase.unit_sources(singular_table))
@@ -133,7 +123,7 @@ def test_not_uptodate_order
 	end #not_uptodate_order
 	puts "Most recently modified up to date pathname=#{CodeBase.not_uptodate_order{|t,s|[t,s]}.first}"
 end #not_uptodate_order
-def CodeBase.test_pathname(singular_table, test_type)
+def test_test_pathname
 end #test_pathname
 def CodeBase.model_pathname(singular_table)
 end #model_pathname
@@ -230,10 +220,6 @@ def test_singular_table_from_pathname
 		end #if
 	end #each
 end #singular_table_from_pathname
-def test_suggest_test_run
-end #suggest_test_run
-def test_name_plurality_from_pathname
-end #name_plurality_from_spec
 def test_test_run_from_pathname
 end #test_run_from_pathname
 def test_test_type_from_source
@@ -317,3 +303,72 @@ def test_globs_match_regexp
 
 end #globs_match_regexp
 end #CodeBase
+class CodeBaseTest < ActiveSupport::TestCase
+require 'lib/tasks/testing.rb'
+def test_MatchedPathName
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_equal(@@Test_pathname,matched_path_name[:pathname])
+	assert_equal(@@Test_pathname,matched_path_name['pathname'])
+	assert_equal(@@Test_pathname,matched_path_name[:matchData][0])
+	assert_equal(:models,matched_path_name[:spec][:name])
+	assert_instance_of(MatchedPathName,matched_path_name)
+
+	assert_attribute_of(matched_path_name, :pathname, String)
+	assert_attribute_of(matched_path_name, :matchData, MatchData)
+	assert_attribute_of(matched_path_name[:spec], :name, Symbol)
+	assert_attribute_of(MatchedPathName.new(@@Test_pathname), :spec, ActiveSupport::HashWithIndifferentAccess)
+	CodeBase.all.each do |spec|
+		assert_not_nil(spec)
+		assert_instance_of(CodeBase, spec)
+		matchData=@@Test_pathname.match(spec[:Dir_glob])
+		if matchData then
+			matched_path_name[:matchData]=matchData # add match data found
+			matched_path_name[:spec]=spec
+			assert_instance_of(CodeBase, spec)
+			spec2=spec
+			assert_instance_of(CodeBase, spec2)
+			assert_instance_of(CodeBase, matched_path_name[:spec])
+			assert_attribute_of(matched_path_name, :spec, CodeBase)
+		end #if
+	end #each
+
+	assert_attribute_of(MatchedPathName.new('/dev/null', matched_path_name[:spec]), :spec, CodeBase)
+	assert_attribute_of(MatchedPathName.new(@@Test_pathname, matched_path_name[:spec]), :spec, CodeBase)
+	assert_attribute_of(matched_path_name, :spec, CodeBase)
+
+	matched_path_name=MatchedPathName.new(@@Test_pathname, matched_path_name[:spec])
+	assert_instance_of(MatchedPathName,matched_path_name)
+	assert_instance_of(CodeBase,matched_path_name[:spec])
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_instance_of(CodeBase,matched_path_name[:spec])
+end #initialize MatchedPathName
+def test_all_model_specfic_pathnames
+end #all_model_specfic_pathnames
+def test_all_model_specfic_pathnames
+	assert_instance_of(Array,MatchedPathName.all)
+	assert_instance_of(MatchedPathName,MatchedPathName.all[0])
+	all=MatchedPathName.all
+	assert_not_empty(all)
+end #all
+def test_all_tests
+	ret=MatchedPathName.all.select {|match| match[:test_type]=:unit}
+	assert_not_empty(ret)
+	assert_not_empty(MatchedPathName.all.select {|match| match[:test_type]=:unit})
+	assert_not_empty(MatchedPathName.all.select {|match| match[:test_type]=:controller})
+	assert_not_empty(MatchedPathName.all.select {|match| match[:test_type]=:both})
+end #all_tests
+def test_suggest_test_runs
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_instance_of(MatchedPathName,matched_path_name[:spec])
+	assert_not_nil(matched_path_name)
+	test_runs=matched_path_name.suggest_test_runs
+	assert_not_empty(test_runs)
+end #suggest_test_runs
+def test_name_plurality
+	assert_not_nil(CodeBase.spec_from_symbol(:shared_partials))
+	assert_not_nil(CodeBase.spec_from_symbol(:models))
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_equal('code_base',matched_path_name.name_plurality[:singular])
+	assert_equal('code_bases',matched_path_name.name_plurality[:plural])
+end #name_plurality
+end #MatchedPathName
