@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2010 by Greg Lawson                                      
+#    Copyright (C) 2010-2011 by Greg Lawson                                      
 #    <GregLawson@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -20,16 +20,15 @@ def self.PostfixOperators
 end #def
 
 def restartParse # primarily for testing
-	@tokenIndex=@regexp.length-1
+	@tokenIndex=@regexp.length-1 # start at end
 	@parseTree=[]
 end #def
-# Parse regexp into 
+# Parse regexp into parse tree for editing
 def initialize(regexp=nil,preParse=true)
-	@regexp=regexp
+	@regexp=regexp.to_s #string, canonical by new?
 	if !regexp.nil? then
 		restartParse
 		@parseTree=regexpTree if preParse
-		puts "@parseTree.inspect=#{@parseTree.inspect}" if regexp.size>5
 	end #if
 end #initialize
 # Takes embedded array format parsed tree and displays equivalent regexp string 
