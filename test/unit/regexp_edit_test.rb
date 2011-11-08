@@ -9,6 +9,10 @@ require 'test/unit'
 #require 'regexp_edit.rb'
 require 'test_helper'
 
+def explain_assert_match(regexp, string)
+	message="regexp=#{regexp}, string='#{string}'"
+	assert_match(regexp, string, message)
+end #
 def regexpTest(editor)
 	editor.restartParse
 	testCall(editor,:regexpTree)
@@ -16,7 +20,6 @@ def regexpTest(editor)
 	parseTree=editor.regexpTree
 	assert_not_nil(parseTree)
 	assert(parseTree.size>0)
-	assert_respond_to(editor,:consecutiveMatches)
 	assert_respond_to(editor,:consecutiveMatches)
 	assert_not_nil(editor.consecutiveMatches(parseTree,+1,0,0))
 	assert(editor.consecutiveMatches(parseTree,+1,0,0).size>0)
@@ -32,6 +35,7 @@ class RegexpEditTest < ActiveSupport::TestCase
 WhiteSpacePattern=' '
 WhiteSpace=' '
 WhiteEditor=RegexpEdit.new(WhiteSpacePattern,WhiteSpace,false)	
+
 Keditor=RegexpEdit.new('K','K')
 KCeditor=RegexpEdit.new('KC','KC',false)
 RowsRegexp='(<tr.*</tr>)'
@@ -80,29 +84,17 @@ KCETeditor=RegexpEdit.new('KCET[^
   (8:00 - 10:00 PM)</td>
  </tr>',false)
 
-def test_editor
+def test_initialize
 	assert_match(WhiteSpacePattern,WhiteSpace)
 	Keditor.restartParse
 	assert_equal(WhiteSpacePattern,WhiteEditor.nextToken)
-	explain_assert_respond_to(self,:testAnswer)
-
+	
+end #initialize
+def test_matchSubTree
 	testAnswer(KCETeditor,:matchSubTree,['a'],['a'])
-	testAnswer(KCETeditor,:consecutiveMatch,0..1,['K','C'],+1,0,0)
-	testAnswer(KCETeditor,:consecutiveMatches,[0..1],['K','C'],+1,0,0)
-	assert_equal(['K','C'],KCETeditor.matchedTreeArray(['K','C']))
 	assert_equal(['K','C'],KCETeditor.matchSubTree(['K','C']))
-
-	assert_equal(0..0,KCETeditor.consecutiveMatch(['K','xyz'],+1,0,0))
-	assert_equal([0..0],KCETeditor.consecutiveMatches(['K','xyz'],+1,0,0))
-	assert_equal(['K'],KCETeditor.matchedTreeArray(['K','xyz']))
 	assert_equal(['K'],KCETeditor.matchSubTree(['K','xyz']))
-
-	assert_equal([0..0,2..2],KCETeditor.consecutiveMatches(['K','xyz','C'],+1,0,0))
-	assert_nil(KCETeditor.consecutiveMatch(['K','xyz','C'],-1,1,1))
-	assert_equal(2..2,KCETeditor.consecutiveMatch(['K','xyz','C'],-1,2,2))
-	assert_equal(['K','C'],KCETeditor.matchedTreeArray(['K','xyz','C']))
 	assert_equal(['K','C'],KCETeditor.matchSubTree(['K','xyz','C']))
-
 	KCETeditor.restartParse
 	parseTree=KCETeditor.regexpTree
 	assert_not_nil(KCETeditor.matchRescued(KCETeditor.parsedString(KCETeditor.matchSubTree(parseTree))))
@@ -125,6 +117,59 @@ def test_editor
 	"E"]
 # debug made not to pass for now.
 	assert_not_equal(expectedParse,KCETeditor.matchSubTree(parseTree))
+
+end #matchSubTree
+def test_mergeMatches
+	string_to_parse='KxyzC'
+	kCeditor=RegexpEdit.new('KC',string_to_parse,false)
+	candidateParseTree=['K', 'C']
+	assert_equal(kCeditor.regexpTree,candidateParseTree)
+	matches=[0..0,1..1]
+	assert_operator(matches.size,:>=,2)
+	assert_operator(matches[0].end,:<,matches[1].begin)
+	assert_operator(matches.size, :<=, 2)
+
+	assert_instance_of(Array, [matches[0]])
+	matchesForRecursion=matches[1..-1]
+	assert_not_empty(matchesForRecursion)
+	assert_equal(1..1, matchesForRecursion[0])
+	assert_not_empty(candidateParseTree[matchesForRecursion[0]])
+	workingParseTree=kCeditor.mergeMatches(candidateParseTree, matchesForRecursion)
+	assert_not_nil(workingParseTree)
+	assert_instance_of(Array, workingParseTree)
+	assert_instance_of(Array, [matches[0]]+workingParseTree)
+
+
+	mergedParseTree=kCeditor.mergeMatches(candidateParseTree,matches)
+	assert_not_nil(mergedParseTree)
+	assert_equal(['K', ['*','.'], 'C'],mergedParseTree)
+	assert_match([mergedParseTree,string_to_parse)
+end #mergeMatches
+def test_matchedTreeArray
+	assert_equal(['K','C'],KCETeditor.matchedTreeArray(['K','C']))
+	assert_equal(['K'],KCETeditor.matchedTreeArray(['K','xyz']))
+	assert_equal(['K','C'],KCETeditor.matchedTreeArray(['K','xyz','C']))
+	parseTree=['K','C']
+end #matchedTreeArray
+def test_consecutiveMatches
+	testAnswer(KCETeditor,:consecutiveMatches,[0..1],['K','C'],+1,0,0)
+	assert_equal([0..0],KCETeditor.consecutiveMatches(['K','xyz'],+1,0,0))
+	assert_equal([0..0,2..2],KCETeditor.consecutiveMatches(['K','xyz','C'],+1,0,0))
+end #consecutiveMatches
+def test_consecutiveMatch
+	explain_assert_respond_to(self,:testAnswer)
+	testAnswer(KCETeditor,:consecutiveMatch,0..1,['K','C'],+1,0,0)
+
+	assert_equal(0..0,KCETeditor.consecutiveMatch(['K','xyz'],+1,0,0))
+
+	assert_nil(KCETeditor.consecutiveMatch(['K','xyz','C'],-1,1,1))
+	assert_equal(2..2,KCETeditor.consecutiveMatch(['K','xyz','C'],-1,2,2))
+end #consecutiveMatch
+def test_editor
+
+
+	KCETeditor.restartParse
+	parseTree=KCETeditor.regexpTree
 	regexpTest(KCETeditor)
 end #def
 def setup
