@@ -1,24 +1,4 @@
 # Provide ActiveRecord methods to classes with no Database
-module NoDB
-attr_reader :attributes
-include ActiveModel
-def initialize
-	@attributes=ActiveSupport::HashWithIndifferentAccess.new
-	
-end #initialize
-def [](attribute_name)
-	@attributes[attribute_name]
-end #[]
-def []=(attribute_name, value)
-	@attributes[attribute_name]=value
-end #[]
-def has_key?(key_name)
-	return @attributes.has_key?(key_name)
-end #has_key?
-def keys
-	return @attributes.keys
-end #keys
-end #
 class MethodModel  #<ActiveRecord::Base
 include NoDB
 attr_reader :init_path
@@ -28,7 +8,7 @@ def self.method_query(m, owner)
 		begin
 			theMethod=object.method(m.to_sym)
 			return theMethod
-		rescue ArgumentError => exc
+		rescue ArgumentError, NameError => exc
 			puts "exc=#{exc}, object=#{object.inspect}"
 		end #begin
 		end #if
@@ -129,7 +109,8 @@ def self.all_methods
 		ret << m
 	end #each_object
 	ret=ret.sort{|x,y| (x.name)<=>(y.name)}
-	return ret.uniq
+	ret=ret.map {|method| new(method)}
+	return ret #.uniq
 end #methods
 def self.classes
 	ret=[]
@@ -160,7 +141,7 @@ def self.all_singleton_methods
 	return classes_and_modules.map { |c| c.singleton_methods(false).map { |m| new(m,c,:singleton) } }.flatten
 end #all_singleton_methods
 def self.all
-	@@ALL||=(all_methods.map {|method| new(method)})
+	@@ALL||=(all_methods+all_instance_methods+all_class_methods+all_singleton_methods)
 	return @@ALL
 end #all
 def self.first
