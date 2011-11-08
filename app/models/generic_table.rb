@@ -1,5 +1,28 @@
 require 'app/models/global.rb'
 #require 'lib/tasks/testing_file_patterns.rb'
+module NoDB
+attr_reader :attributes
+include ActiveModel
+def initialize(hash=nil)
+	if hash.nil? then
+		@attributes=ActiveSupport::HashWithIndifferentAccess.new
+	else
+		@attributes=ActiveSupport::HashWithIndifferentAccess.new(hash)
+	end #if
+end #initialize
+def [](attribute_name)
+	@attributes[attribute_name]
+end #[]
+def []=(attribute_name, value)
+	@attributes[attribute_name]=value
+end #[]
+def has_key?(key_name)
+	return @attributes.has_key?(key_name)
+end #has_key?
+def keys
+	return @attributes.keys
+end #keys
+end #
 module ActiveRecord
 class Base
 def column_html(column_symbol)

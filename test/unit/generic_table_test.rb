@@ -288,6 +288,7 @@ def test_attribute_ddl
 end #attribute_ddl
 def test_candidate_logical_keys_from_indexes
 #?	assert(Frequency.connection.index_exists?(:frequencies,:frequency_name))
+	assert_not_nil(StreamPattern.connection)
 	assert(StreamPattern.connection.index_exists?(:stream_patterns,:id, :unique => true))
 #	assert(StreamPattern.index_exists?(:id))
 	CodeBase.rails_MVC_classes.each do |model_class|
