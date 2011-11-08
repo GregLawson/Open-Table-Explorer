@@ -1,26 +1,48 @@
 Loaded suite test/unit/bug_test
 Started
-....number="1"
+@model_class is not a ActiveRecord::Base.
+.@model_class is not a ActiveRecord::Base.
+.@model_class is not a ActiveRecord::Base.
+.@model_class is not a ActiveRecord::Base.
+.@model_class is not a ActiveRecord::Base.
+number="1"
 error_type=Error
-test="test_not_uptodate_order"
-klass="TestingFilePatternsTest"
-report="TypeError: can't convert nil into String\n    app/models/code_base.rb:260:in `exist?'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    app/models/code_base.rb:260:in `select'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'\n    app/models/code_base.rb:60:in `call'\n    app/models/code_base.rb:60:in `prioritized_file_order'\n    app/models/code_base.rb:54:in `each'\n    app/models/code_base.rb:54:in `prioritized_file_order'\n    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'"
-error="TypeError: can't convert nil into String"
-trace="    app/models/code_base.rb:260:in `exist?'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    app/models/code_base.rb:260:in `select'\n    app/models/code_base.rb:260:in `not_uptodate_sources'\n    test/unit/code_base_test.rb:104:in `test_not_uptodate_order'\n    app/models/code_base.rb:60:in `call'\n    app/models/code_base.rb:60:in `prioritized_file_order'\n    app/models/code_base.rb:54:in `each'\n    app/models/code_base.rb:54:in `prioritized_file_order'\n    test/unit/code_base_test.rb:96:in `test_not_uptodate_order'"
-error='TypeError: can't convert nil into String'
-not hash, not empty: test_type.class=Symbol, test_type=:unit, table=code_base, error=TypeError: can't convert nil into String
+test="test_complete_models"
+klass="CodeBaseTest"
+report="NoMethodError: undefined method `pathname_glob' for CodeBase:Class\n    app/models/code_base.rb:152:in `models_from_spec'\n    test/unit/code_base_test.rb:147:in `test_complete_models'\n    test/unit/code_base_test.rb:147:in `map'\n    test/unit/code_base_test.rb:147:in `test_complete_models'"
+error='"NoMethodError: undefined method `pathname_glob' for CodeBase:Class"'
+trace="    app/models/code_base.rb:152:in `models_from_spec'\n    test/unit/code_base_test.rb:147:in `test_complete_models'\n    test/unit/code_base_test.rb:147:in `map'\n    test/unit/code_base_test.rb:147:in `test_complete_models'"
+error='NoMethodError: undefined method `pathname_glob' for CodeBase:Class'
+not hash, not empty: test_type.class=Symbol, test_type=:unit, table=code_base, error=NoMethodError: undefined method `pathname_glob' for CodeBase:Class
 number="2"
+error_type=Error
+test="test_git_status"
+klass="CodeBaseTest"
+report="NoMethodError: undefined method `new' for MatchData:Class\n    app/models/code_base.rb:49:in `[]='\n    app/models/code_base.rb:176:in `match_spec_from_pathname'\n    app/models/code_base.rb:173:in `each'\n    app/models/code_base.rb:173:in `match_spec_from_pathname'\n    app/models/code_base.rb:183:in `singular_table_from_pathname'\n    test/unit/code_base_test.rb:248:in `test_git_status'"
+error='"NoMethodError: undefined method `new' for MatchData:Class"'
+trace="    app/models/code_base.rb:49:in `[]='\n    app/models/code_base.rb:176:in `match_spec_from_pathname'\n    app/models/code_base.rb:173:in `each'\n    app/models/code_base.rb:173:in `match_spec_from_pathname'\n    app/models/code_base.rb:183:in `singular_table_from_pathname'\n    test/unit/code_base_test.rb:248:in `test_git_status'"
+error='NoMethodError: undefined method `new' for MatchData:Class'
+not hash, not empty: test_type.class=Symbol, test_type=:unit, table=code_base, error=NoMethodError: undefined method `new' for MatchData:Class
+number="3"
 error_type=Failure
-test="test_prioritized_file_order"
-klass="TestingFilePatternsTest"
-report="    [/test/test_helper.rb:148:in `assert_not_empty'\n     test/unit/code_base_test.rb:64:in `test_prioritized_file_order'\n     test/unit/code_base_test.rb:61:in `each'\n     test/unit/code_base_test.rb:61:in `test_prioritized_file_order']:\n\"nil\" is empty with value \"nil\".\n<nil> expected to not be nil."
-error="\"nil\" is empty with value \"nil\".\n<nil> expected to"
-trace="/test/test_helper.rb:148:in `assert_not_empty'\n     test/unit/code_base_test.rb:64:in `test_prioritized_file_order'\n     test/unit/code_base_test.rb:61:in `each'\n     test/unit/code_base_test.rb:61:in `test_prioritized_file_order'"
-error='"nil" is empty with value "nil".
-<nil> expected to'
-not hash, not empty: test_type.class=Symbol, test_type=:unit, table=code_base, error="nil" is empty with value "nil".
-<nil> expected to
-..
-Finished in 10.800703 seconds.
+test="test_globs_match_regexp"
+klass="CodeBaseTest"
+report="    [test/unit/code_base_test.rb:300:in `test_globs_match_regexp'\n     test/unit/code_base_test.rb:299:in `each'\n     test/unit/code_base_test.rb:299:in `test_globs_match_regexp'\n     test/unit/code_base_test.rb:293:in `each'\n     test/unit/code_base_test.rb:293:in `test_globs_match_regexp']:\npathname=log/unit/method_model.test_all_test.log, regexp=(?-mix:^log\\/unit\\/([a-zA-Z0-9_]*)_test[.]log$).\n<\"log/unit/method_model.test_all_test.log\"> expected to be =~\n</^log\\/unit\\/([a-zA-Z0-9_]*)_test[.]log$/>."
+error='"pathname=log/unit/method_model.test_all_test.log, "'
+trace='"test/unit/code_base_test.rb:300:in `test_globs_match_regexp'\n     test/unit/code_base_test.rb:299:in `each'\n     test/unit/code_base_test.rb:299:in `test_globs_match_regexp'\n     test/unit/code_base_test.rb:293:in `each'\n     test/unit/code_base_test.rb:293:in `test_globs_match_regexp'"'
+E@model_class is not a ActiveRecord::Base.
+.
+Finished in 1.175035 seconds.
 
-6 tests, 56 assertions, 0 failures, 0 errors
+  1) Error:
+test_initialize(BugTest):
+NameError: undefined local variable or method `context' for #<BugTest:0xb7321ce0>
+    test/unit/bug_test.rb:32:in `test_initialize'
+    test/unit/bug_test.rb:28:in `scan'
+    test/unit/bug_test.rb:28:in `test_initialize'
+    test/unit/bug_test.rb:14:in `scan'
+    test/unit/bug_test.rb:14:in `test_initialize'
+    test/unit/bug_test.rb:13:in `each'
+    test/unit/bug_test.rb:13:in `test_initialize'
+
+6 tests, 56 assertions, 0 failures, 1 errors

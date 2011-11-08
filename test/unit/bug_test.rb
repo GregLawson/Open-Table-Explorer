@@ -5,43 +5,57 @@ require 'test_helper'
 class BugTest < ActiveSupport::TestCase
 fixtures :bugs
 def test_initialize
+	assert_not_nil(Bug.new())
 	test_type=:unit
 	singular_table=:code_base
 	plural_table=singular_table.to_s.pluralize
 	testRun=TestRun.new(test_type,singular_table, plural_table,nil)
 	header,errors,summary=TestRun.parse_log_file(testRun.log_file)
 	errors.each do |error|
-	error.scan(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m) do |number,error_type,test,klass,report|
-		puts "number=#{number.inspect}"
-		puts "error_type=#{error_type}"
-		puts "test=#{test.inspect}"
-		puts "klass=#{klass.inspect}"
-		puts "report=#{report.inspect}"
-		url="rake testing:#{test_type}_test TABLE=#{singular_table} TEST=#{test}"
-		if error_type=='Error' then
-			report.scan(/^([^\n]*)\n(.*)$/m) do |error,trace|
-				puts "error=#{error.inspect}"
-				puts "trace=#{trace.inspect}"
-				open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{trace}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-			end #scan
-		elsif error_type=='Failure' then
-			report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m) do |trace,error|
+		match_data=(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m).match(error)
+		@number,@error_type,@test,@klass,@report=match_data[1..-1]
+		puts "number=#{@number.inspect}"
+		puts "error_type=#{@error_type}"
+		puts "test=#{@test.inspect}"
+		puts "klass=#{@klass.inspect}"
+		puts "report=#{@report.inspect}"
+		@url="rake testing:#{@test_type}_test TABLE=#{singular_table} TEST=#{@test}"
+		if @error_type=='Error' then
+			match_data=/^([^\n]*)\n(.*)$/m.match(@report)
+			assert_not_nil(match_data)
+			@error,@trace=match_data[1..-1]
+			@context=@trace.split("\n")
+	#		puts "error='#{@error.inspect}'"
+	#		puts "trace=#{@trace.inspect}"
+	#		open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{trace}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
+		elsif @error_type=='Failure' then
+			@error,@trace=@report.scan(/^\s*[\[]([^\]]+)[\]]:\n(.*)$/m)
+				@context=@trace.split("\n")
 				error=error.slice(0,50)
-				puts "error=#{error.inspect}"
-				puts "trace=#{trace.inspect}"
+				puts "error='#{@error.inspect}'"
+				puts "trace='#{@trace.inspect}'"
+				puts "context='#{@context.inspect}'"
 				open('db/bugs.sql',"a" ) {|f| f.write("insert into bugs(url,error,context,created_at,updated_at) values('#{url}','#{error.tr("'",'`')}','#{trace}','#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }						
-			end #scan
 		else
-			puts "pre_match=#{s.pre_match}"
-			puts "post_match=#{s.post_match}"
-			puts "before #{s.rest}"
+			puts "error='#{@error.inspect}'"
+#			puts "pre_match=#{match_data.pre_match}"
+#			puts "post_match=#{match_data.post_match}"
+#			puts "before #{match_data.rest}"
 		end #if
-		assert_not_nil(error_type)
-		assert_include(error_type,['Error','Failure'])
-	end #scan
-		puts "error='#{error}'"
-		assert_not_nil(Bug.new(test_type,singular_table,error))
-	assert_not_nil(Bug.new())
+		assert_not_nil(@error_type)
+		assert_include(@error_type,['Error','Failure'])
+	puts "@error='#{@error}'"
+	bug=Bug.new(test_type,singular_table,error)
+	assert_not_nil(bug)
+	assert_not_nil(bug[:id])
+	assert_not_nil(bug[:gui])
+	assert_not_nil(bug[:resolution])
+	assert_not_nil(bug[:created_at])
+	assert_not_nil(bug[:updated_at])
+	assert_not_nil(bug[:error_type_id])
+	asert_equal(@url,bug[:url])
+	asert_equal(@error,bug[:error])
+	asert_equal(@context,bug[:context])	
 	end #each
 	
 end #parse_bug
