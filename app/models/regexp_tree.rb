@@ -6,9 +6,9 @@
 #
 ###########################################################################
 # parse tree internal format is nested Arrays.
-# Postfix operators and brackets are stat embeddded arrays
+# Postfix operators and brackets start embeddded arrays
 require 'app/models/inlineAssertions.rb'
-class RegexpParse
+class RegexpTree
 attr_reader :regexp,:tokenIndex,:parseTree
 include Inline_Assertions
 def self.OpeningBrackets
@@ -27,17 +27,30 @@ def restartParse! # primarily for testing
 end #def
 # Parse regexp into parse tree for editing
 def initialize(regexp=nil,preParse=true)
-	@regexp=regexp.to_s #string, canonical by new?
-	if !regexp.nil? then
+	if regexp.instance_of?(Array) then
+		@regexp=regexp.to_s #nested Arrays
 		restartParse!
-		@parseTree=regexpTree! if preParse
+		@parseTree=regexp
+		
+	else
+		@regexp=regexp.to_s #string
+		if !regexp.nil? then
+			restartParse!
+			@parseTree=regexpTree! if preParse
+		end #if
 	end #if
 end #initialize
+def [](index)
+	return RegexpTree.new(@parseTree[index])
+end #[]index
+def ==(other)
+	return self.regexp==other.regexp  &&self.parseTree==other.parseTree # &&self.tokenIndex==other.tokenIndex
+end #==
 # Takes embedded array format parsed tree and displays equivalent regexp string 
-def RegexpParse.to_s(parseTree)
+def RegexpTree.to_s(parseTree)
 	if parseTree.nil? then
 		return ''
-	elsif parseTree.length==2 && parseTree[0].instance_of?(String) && RegexpParse.PostfixOperators.index(parseTree[0]) then
+	elsif parseTree.length==2 && parseTree[0].instance_of?(String) && RegexpTree.PostfixOperators.index(parseTree[0]) then
 		puts "parseTree.inspect=#{parseTree.inspect}"
 		puts "parseTree[1..1].inspect=#{parseTree[1..1].inspect}"
 		puts "parseTree[0..0].inspect=#{parseTree[0..0].inspect}"
@@ -57,7 +70,7 @@ def RegexpParse.to_s(parseTree)
 	end
 end #to_s
 def to_s
-	return RegexpParse.to_s(@parseTree)
+	return RegexpTree.to_s(@parseTree)
 end #to_s
 # the useful inverse function of new. String to regexp
 def to_regexp
@@ -127,7 +140,7 @@ def regexpTree!(terminator=nil)
 end #regexpTree!
 def conservationOfCharacters(parseTree)
 	message="Regexp parse error: regexp=#{@regexp},rest=#{rest},parseTree.inspect=#{parseTree.inspect}."
-	assert_equal(@regexp,rest+RegexpParse.to_s(parseTree),message)
+	assert_equal(@regexp,rest+RegexpTree.to_s(parseTree),message)
 	puts "message=#{message}"
 end #def
 # not used
