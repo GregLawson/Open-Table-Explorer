@@ -1,11 +1,10 @@
 ###########################################################################
-#    Copyright (C) 2010 by Greg Lawson                                      
+#    Copyright (C) 2010-2011 by Greg Lawson                                      
 #    <GregLawson@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'regexp_parse.rb'
 # There is a rails method that does this; forgot name
 module Squeeze_Display
 @@Max_Context=100
@@ -45,7 +44,7 @@ module Match_Addressing
 # Rescue bad regexp and return nil
 def matchRescued(regexp)
 	begin
-		matchData=Regexp.new(regexp,Regexp::MULTILINE).match(@dataToParse)
+		matchData=Regexp.new(regexp.to_s,Regexp::MULTILINE).match(@dataToParse)
 	rescue RegexpError
 		# Global::log.info("bad  regexp=#{regexp}")
 		return nil
@@ -61,7 +60,7 @@ def numMatches(parseTree)
 end #def
 end #module
 # For a fixed string compute parse tree or sub trees that match
-class RegexpEdit < RegexpParse
+class RegexpEdit < RegexpTree
 attr_reader :dataToParse
 include Squeeze_Display
 include Match_Addressing
@@ -69,13 +68,22 @@ def initialize(regexp,dataToParse,preParse=true)
 	super(regexp,preParse)
 	@dataToParse=dataToParse
 end #initialize
-# 
+def RegexpEdit.explain_assert_match(regexp, string, message=nil)
+	message="regexp=#{regexp}, string='#{string}'"
+	match_data=regexp.match(string)
+	if match_data.nil? then
+		regexp_tree=RegexpEdit.new(regexp, string)
+		message=message+"regexp_tree.matchSubTree=#{regexp_tree.matchSubTree.inspect}"
+	end #if
+	assert_match(regexp, string, message)
+end #assert_match
+# Top level incremental match of regexp tree to data
 # parseTree - array of parsed tree to test for match
 # calls matchRescued, matchedTreeArray depending
 def matchSubTree(parseTree=@parseTree)
 	if parseTree.nil? then
 		return ''
-	elsif matchRescued(parsedString(parseTree)) then
+	elsif matchRescued(parseTree) then
 		return parseTree
 	elsif parseTree.instance_of?(Array) then 
 		matchedTreeArray(parseTree)
@@ -107,14 +115,11 @@ end #mergeMatches
 # calls consecutiveMatches, mergeMatches
 # parseTree - array of parsed tree to test for match
 def matchedTreeArray(parseTree=@parseTree)
-	# Global::log.info("parsing matchedTreeArray #{parseTree.inspect}")
 	if self.class.PostfixOperators.index(parseTree[0]) then
 		# Global::log.info("parseTree.inspect=#{parseTree.inspect}")
 		# Global::log.info("parseTree[1..1].inspect=#{parseTree[1..1].inspect}")
 		# Global::log.info("parseTree[0..0].inspect=#{parseTree[0..0].inspect}")
-		# Global::log.info("parsedString(parseTree[1..1]).inspect=#{parsedString(parseTree[1..1]).inspect}")
-		# Global::log.info("parsedString(parseTree[1..1])+parseTree[0]=#{parsedString(parseTree[1..1])+parseTree[0]}")
-		return parsedString(parseTree[1..1])+parseTree[0]
+		return (parseTree[1..1]+parseTree[0]).to_s
 	else
 		matches= consecutiveMatches(parseTree,+1,0,0)
 		if matches.size==0 then
@@ -165,8 +170,8 @@ def consecutiveMatch(parseTree,increment,startPos,endPos)
 #	# Global::log.info("consecutiveMatch begins with parseTree.inspect=#{parseTree.inspect},increment=#{increment},startPos=#{startPos},endPos=#{endPos}")
 #	assert(startPos<=endPos)
 	begin # until
-		matchData=matchRescued(parsedString(parseTree[startPos..endPos]))
-#		matchDisplay(parsedString(parseTree[startPos..endPos])) #if $VERBOSE
+		matchData=matchRescued(parseTree[startPos..endPos])
+#		matchDisplay(parseTree[startPos..endPos]to_s) #if $VERBOSE
 		if matchData then
 			# Global::log.info("matchData startPos=#{startPos}, endPos=#{endPos}")
 			lastMatch=(startPos..endPos) # best so far
