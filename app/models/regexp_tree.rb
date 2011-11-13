@@ -44,33 +44,40 @@ def [](index)
 	return RegexpTree.new(@parseTree[index])
 end #[]index
 def ==(other)
-	return self.regexp==other.regexp  &&self.parseTree==other.parseTree # &&self.tokenIndex==other.tokenIndex
+	return self.parseTree==other.parseTree # self.regexp==other.regexp &&self.tokenIndex==other.tokenIndex
 end #==
+def +(other)
+	return RegexpTree.new(self.parseTree+other.parseTree)
+end #+
 # Takes embedded array format parsed tree and displays equivalent regexp string 
-def RegexpTree.to_s(parseTree)
-	if parseTree.nil? then
+def postfix_operator?
+	if @parseTree.nil? then
+		return false
+	else
+		return @parseTree.length==2 && @parseTree[0].instance_of?(String) && RegexpTree.PostfixOperators.index(@parseTree[0])	
+	end #if
+end #postfix_operator
+def to_s
+	if @parseTree.nil? then
 		return ''
-	elsif parseTree.length==2 && parseTree[0].instance_of?(String) && RegexpTree.PostfixOperators.index(parseTree[0]) then
-		puts "parseTree.inspect=#{parseTree.inspect}"
-		puts "parseTree[1..1].inspect=#{parseTree[1..1].inspect}"
-		puts "parseTree[0..0].inspect=#{parseTree[0..0].inspect}"
-		puts "to_s(parseTree[1..1]).inspect=#{to_s(parseTree[1..1]).inspect}"
-		puts "to_s(parseTree[1..1])+parseTree[0]=#{to_s(parseTree[1..1])+parseTree[0]}"
-		return to_s(parseTree[1..1])+parseTree[0]
-	elsif parseTree.instance_of?(Array) then
-		return parseTree.collect do |pt| 
+	elsif postfix_operator? then
+#		puts "@parseTree.inspect=#{@parseTree.inspect}"
+#		puts "@parseTree[1..1].inspect=#{@parseTree[1..1].inspect}"
+#		puts "@parseTree[0..0].inspect=#{@parseTree[0..0].inspect}"
+#		puts "@parseTree[1..1].inspect=#{@parseTree[1..1].inspect}"
+#		puts "to_s(@parseTree[1..1])+@parseTree[0]=#{to_s(@parseTree[1..1])+@parseTree[0]}"
+		return RegexpTree.new(@parseTree[1..-1]).to_s+@parseTree[0]
+	elsif @parseTree.instance_of?(Array) then
+		return @parseTree.collect do |pt| 
 			if pt.instance_of?(Array) then
-				to_s(pt)
+				RegexpTree.new(pt).to_s
 			else
 				pt
 			end
 		end.join('')
 	else
-		return parseTree
+		return @parseTree
 	end
-end #to_s
-def to_s
-	return RegexpTree.to_s(@parseTree)
 end #to_s
 # the useful inverse function of new. String to regexp
 def to_regexp
@@ -132,17 +139,20 @@ end #parseOneTerm!
 def regexpTree!(terminator=nil)
 	ret=[]
 	begin
-		term=parseOneTerm!
-		ret << term
-	end until beyondString? || term==terminator
+		if !beyondString? then
+			term=parseOneTerm!
+			ret << term
+		end #if
+	end until term==terminator
 #not recursive	conservationOfCharacters(ret.reverse)
 	return ret.reverse
 end #regexpTree!
-def conservationOfCharacters(parseTree)
+# test 
+def conservationOfCharacters
 	message="Regexp parse error: regexp=#{@regexp},rest=#{rest},parseTree.inspect=#{parseTree.inspect}."
-	assert_equal(@regexp,rest+RegexpTree.to_s(parseTree),message)
+	assert_equal(@regexp,(RegexpTree.new(rest)+RegexpTree.new(@parseTree)).to_s,message)
 	puts "message=#{message}"
-end #def
+end #conservationOfCharacters
 # not used
 def removeParens!(regexp)
 	regexp.gsub(/([^\\])([)()])/,'\1')

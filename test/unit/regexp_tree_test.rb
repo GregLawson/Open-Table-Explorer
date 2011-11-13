@@ -20,7 +20,7 @@ def regexpParserTest(parser)
 	assert(!parser.beyondString?)
 	assert(parser.rest.length>0)
 	assert(parser.rest==parser.regexp)
-	parser.conservationOfCharacters([])	
+	parser.conservationOfCharacters	
 #	Test after a little parsing.
 	assert_not_nil(parser.nextToken!)
 	assert(parser.rest!=parser.regexp)
@@ -33,7 +33,7 @@ def regexpParserTest(parser)
 	assert_not_nil(parser.regexpTree!)
 	assert(parser.rest=='')
 	parser.restartParse!
-	parser.conservationOfCharacters(parser.regexpTree!)	
+	parser.conservationOfCharacters	
 	parser.restartParse!
 	assert(parser.regexpTree!.size>0)
 	assert(parser.beyondString?)
@@ -114,15 +114,19 @@ def test_index
 #	explain_assert_equal(nil,@@CONSTANT_PARSE_TREE[0])
 	explain_assert_equal(RegexpTree.new(['K']),@@CONSTANT_PARSE_TREE[0])
 end #[]index
-def test_class_to_s
-	assert_equal('a',RegexpTree.to_s(['a']))
-	assert_equal('a*',RegexpTree.to_s(['*','a']))
-end #to_s
+def test_postfix_operator
+	postfix_tree=RegexpTree.new(['*',','])
+	assert_not_nil(postfix_tree)
+	assert(postfix_tree.postfix_operator?,"postfix_tree.parseTree.length=#{postfix_tree.parseTree.length}")
+end #postfix_operator
 def test_to_s
 
 
 	assert_equal(['K'],@@CONSTANT_PARSE_TREE.parseTree)
 	assert_equal('K',@@CONSTANT_PARSE_TREE.to_s)
+	assert_equal('.*',RegexpTree.new('.*').to_s)
+	assert_equal('K.*C',RegexpTree.new('K.*C').to_s)
+	assert_equal('K.*C',RegexpTree.new('K.*C').to_s)
 end #to_s
 def test_to_regexp
 	assert_equal(/.*/,RegexpTree.new('.*').to_regexp)
@@ -168,6 +172,12 @@ def test_regexpTree
 	assert_equal(['K','C'],KCeditor.regexpTree!)
 	assert_equal(["(", "<", "t", "r", ["*", "."], "<", "/", "t", "r", ">"],RowsEditor.regexpTree!('('))
 end #regexpTree!
+def test_conservationOfCharacters
+	regexp='K.*C'
+	test_tree=RegexpTree.new(regexp)
+	assert_equal(regexp,test_tree.to_s)
+	test_tree.conservationOfCharacters
+end #conservationOfCharacters
 def test_editor
 	assert_instance_of(String,['*','a'][1])
 	assert_equal(0,'*+?'.index(['*','a'][0]))
