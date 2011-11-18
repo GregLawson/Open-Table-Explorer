@@ -17,7 +17,7 @@ class ActiveSupport::TestCase
 #  fixtures :all
 
   # Add more helper methods to be used by all tests here...
-require 'test_helper_assert_generic_table.rb'
+require 'test/test_helper_assert_generic_table.rb'
 # flexible access to all fixtures
 def fixtures(table_name)
 	table_name=table_name.to_s
@@ -208,7 +208,7 @@ def assert_include(element,list,message=nil)
 #	if message.nil? then
 		message=build_message(message, "? is not in list ?", element,list.inspect)
 #	end #if 
-	raise "Second argument of assert_include must be an Array" if !list.instance_of?(Array) 
+	raise "Second argument of assert_include must be an Array" if !(list.instance_of?(Array) || list.instance_of?(Set))
 	assert(list.include?(element),message)
 end #def
 def assert_dir_include(filename,glob)
@@ -270,9 +270,10 @@ def define_model_of_test
 	@model_class=eval(@model_name)
 	@model_class=@model_name.constantize
 	assert_instance_of(Class,@model_class)
-	if !@model_class.instance_of?(ActiveRecord::Base) then
-		puts "@model_class is not a ActiveRecord::Base."
+	if !Generic_Table.is_ActiveRecord_table?(@model_class.name) then
+		puts "#{@model_class} is not a ActiveRecord::Base."
 	end #if
+	assert_ActiveRecord_table(@model_class.name)
 #	assert_kind_of(ActiveRecord::Base,@model_class)
 #	assert_kind_of(ActiveRecord::Base,@model_class.new)
 end #def
