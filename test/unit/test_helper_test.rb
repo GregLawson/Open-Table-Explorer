@@ -1,5 +1,7 @@
-require 'test_helper'
+require 'test/test_helper'
 class TestHelperTest < ActiveSupport::TestCase
+fixtures :stream_patterns
+fixtures :table_specs
 require 'test/test_helper_test_tables.rb'
 def test_fixtures
 	table_name='table_specs'
