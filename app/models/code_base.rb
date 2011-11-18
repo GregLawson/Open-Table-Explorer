@@ -12,7 +12,7 @@ include NoDB
 {:name => :models, :example_pathname => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
 {:name => :unit_tests, :example_pathname => 'test/unit/global_test.rb', :Dir_glob =>  'test/unit/([a-zA-Z0-9_]*)_test[.]rb', :plural => false, :test_type => :unit},
 {:name => :functional_tests, :example_pathname => 'test/functional/stream_patterns_controller_test.rb', :Dir_glob =>  'test/functional/([a-zA-Z0-9_]*)_controller_test[.]rb', :plural => true, :test_type => :controller},
-{:name => :unit_test_logs, :example_pathname => 'log/unit/generic_table_test.log', :Dir_glob =>  'log/unit/([a-zA-Z0-9_]*)_test[.]log', :plural => false, :test_type => :unit},
+{:name => :unit_test_logs, :example_pathname => 'log/unit/generic_table_test.log', :Dir_glob =>  'log/unit/([a-zA-Z0-9_]*)([.a-zA-Z0-9_]*)_test[.]log', :plural => false, :test_type => :unit},
 {:name => :functional_test_logs, :example_pathname => 'log/functional/stream_patterns_controller_test.log', :Dir_glob =>  'log/functional/([a-zA-Z0-9_]*)_controller_test[.]log', :plural => true, :test_type => :controller},
 {:name => :new_views, :example_pathname => 'app/views/acquisition_stream_specs/new.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/new[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :edit_views, :example_pathname => 'app/views/acquisition_stream_specs/edit.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/edit[.]html[.]erb', :plural => true, :test_type => :controller},
@@ -32,71 +32,32 @@ def CodeBase.all
 	return @@TABLE_FINDER_REGEXPS.map {|spec| CodeBase.new(spec)}
 end #all
 # Returns a file glob to find pathname, removing parenthesis
+# golbs are defined at http://www.ruby-doc.org/core-1.9.3/Dir.html#method-c-glob
 def pathname_glob
 	ret=self[:Dir_glob].sub(/(\()/,'').sub(/(\))/,'')
 	return ret
 end #pathname_glob
 # Returns a Regexp to extract model names from pathname, keeping parenthesis
+# Regexp syntax is defined at http://www.ruby-doc.org/core-1.9.3/Regexp.html
+# specify as a regexp with added parenthesis for model name (and test) capture
+# globs are less powerful than regexp, so to make them convertable, we specify regexps and convert to globs then match with regexp
+# implementation currently incomplete
+# [a-z]* does not glob any word but any string starting with a letter!
 def regexp
 	ret='^'+self[:Dir_glob]+'$'
 	return Regexp.new(ret)
 end #regexp
 # Find array of pathnames that match CodeBase spec
-def pathnames_from_spec
-	Dir[pathname_glob]
-end #pathnames_from_spec
+def pathnames
+	Dir[pathname_glob].select do |pathname|
+		regexp.match(pathname)
+	end #select
+end #pathnames
 def []=(name, attribute)
 	self[name]=attribute.class.new(attribute)
 end #[]=
 AFFECTS_EVERYTHING=["db/schema.rb","test/test_helper.rb",'app/models/global.rb','app/models/generic_table.rb']
 AFFECTS_CONTROLLERS=Dir['app/views/shared/*']
-# priorities:
-# most recent modification time from prioritized_pathname_order
-# first test previously passed
-# short test run time
-def CodeBase.prioritized_pathname_order(&process_test)
-	MatchedPathName.all.each do |matched_path_name|
-		singular_table=matched_path_name[0]
-		case matched_path_name[1].to_sym
-		when :unit
-			process_test.call(CodeBase.unit_target(singular_table), CodeBase.unit_sources(singular_table))
-		when :controller
-			process_test.call(CodeBase.controller_target(singular_table), CodeBase.controller_sources(singular_table))
-		when :both
-			process_test.call(CodeBase.unit_target(singular_table), CodeBase.unit_sources(singular_table)) &&
-			process_test.call(CodeBase.controller_target(singular_table), CodeBase.controller_sources(singular_table))
-		when :shared
-			# some other pathname will trigger compilation
-		else
-			raise "illegal test type=#{test_type}"
-		end #case
-	end #each
-end #prioritized_pathname_order
-def CodeBase.run_test(singular_table, test_type)
-	case test_type
-	when :unit
-		TestRun.ruby_run_and_log(test_pathname(singular_table, test_type),unit_target(singular_table))
-	when :controller
-		TestRun.ruby_run_and_log(test_pathname(singular_table, test_type),controller_target(singular_table))
-
-	else raise "Unnown test_type=#{test_type} for singular_table=#{singular_table}"
-	end #case
-end #run_test
-def CodeBase.not_uptodate_order(&proc_update)
-	CodeBase.prioritized_pathname_order do |target,sources|
-		raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.instance_of?(Array)
-		raise "target=#{target.inspect} must be a Strings(pathnames)" unless target.instance_of?(String)
-		if CodeBase.uptodate?(target,sources) then
-		else
-			if !File.exist?(target) then
-				proc_update.call(target,[])
-			else
-				not_uptodate_sources=CodeBase.not_uptodate_sources(target,sources)
-				proc_update.call(target,not_uptodate_sources)
-			end #if
-		end #if
-	end #prioritized_pathname_order
-end #not_uptodate_order
 
 def CodeBase.test_pathname(singular_table, test_type)
 	case test_type.to_sym
@@ -137,28 +98,23 @@ end #model_spec_symbols
 def CodeBase.spec_symbols
 	return CodeBase.all.map {|s| s[:name]}
 end #spec_symbols
-def CodeBase.complete_models
-	list_of_model_sets=CodeBase.model_spec_symbols.map {|spec_name_symbol| CodeBase.models_from_spec(spec_name_symbol)}
-	list_of_model_sets.reduce(:&)
-end #complete_models
-def CodeBase.spec_from_symbol(spec_name_symbol)
+# like ActiveRecord method
+def CodeBase.find_by_name(spec_name_symbol)
 	index=CodeBase.all.index {|s| s[:name]==spec_name_symbol.to_sym}
 	raise "spec_name_symbol=#{spec_name_symbol} not found" if index.nil?
 	return CodeBase.all[index]
-end #spec_from_symbol
-def CodeBase.models_from_spec(spec_name_symbol)
-	spec=spec_from_symbol(spec_name_symbol)
-	raise "models_from_spec called with spec=#{spec.inspect}" if spec[:test_type]==:shared
-	pathnames=Dir[CodeBase.pathname_glob(spec)]
+end #find_by_name
+# for given spec return models
+def models
 	if pathnames.nil? then
-		raise "#{CodeBase.pathname_glob(spec)} does not match any pathnames."
+		raise "#{spec.pathname_glob} does not match any pathnames."
 	end #if
 	models=pathnames.map do|f|
-		model=f[CodeBase.regexp(spec),1]
+		model=f[self.regexp,1]
 		if model.nil? then
-			raise "pathname=#{f} does not match regexp=#{CodeBase.regexp(spec)}"
+			raise "pathname=#{f} does not match regexp=#{self.regexp}"
 		end #if
-		if spec[:plural] then
+		if self[:plural] then
 			model=model.singularize
 		end #if
 		model
@@ -168,19 +124,9 @@ def CodeBase.models_from_spec(spec_name_symbol)
 	else
 		return Set[]
 	end #if
-end #models_from_spec
-def CodeBase.match_spec_from_pathname(pathname)
-	CodeBase.all.each do |match_specs|
-		matchData=pathname.match(match_specs[:Dir_glob])
-		if matchData then
-			match_specs[:matchData]=matchData # add match data found
-			return match_specs
-		end #if
-	end #each
-	return nil # if no match
-end #match_spec_from_pathname
+end #models
 def CodeBase.singular_table_from_pathname(pathname)
-	match_spec=match_spec_from_pathname(pathname)
+	match_spec=MatchedPathName.new(pathname)
 	if match_spec.nil? || match_spec[:test_type]==:shared then
 		return  ''
 	else
@@ -193,7 +139,7 @@ def CodeBase.singular_table_from_pathname(pathname)
 	end #if
 end #singular_table_from_pathname
 def CodeBase.test_run_from_pathname(pathname)
-	match_spec=match_spec_from_pathname(pathname)
+	match_spec=MatchedPathName.new(pathname)
 	name_plurality=name_plurality(match_spec)
 	TestRun.new(match_spec[:test_type],name_plurality[:singular], name_plurality[:plural])
 end #test_run_from_pathname
@@ -261,7 +207,7 @@ def CodeBase.git_add_successful(not_uptodate_sources)
 	not_uptodate_sources.each do |s|
 		sh "git add #{s}"
 	end #each
-
+	sh "git-cola"
 end #def
 
 # stage target and source pathnames when all tests pass.
@@ -297,7 +243,7 @@ end #why_not_stage_helper
 # stage target and source pathnames when all tests pass.
 # stage model pathname and .yml pathnames when BOTH unit and controller tests pass
 def CodeBase.why_not_stage(pathname,singular_table)
-	match_spec=match_spec_from_pathname(pathname)
+	match_spec=MatchedPathName.new(pathname)
 	if match_spec.nil? then
 		singular_table=FILE_MOD_TIMES[FILE_MOD_TIMES.size/2][0] # pick average pathname, not too active, not too abandoned
 		puts "#{pathname} don't know when to stage."
@@ -308,7 +254,7 @@ def CodeBase.why_not_stage(pathname,singular_table)
 			why_not_stage_helper(pathname,controller_target(singular_table),controller_sources(singular_table),:controller)  if match_spec[:test_type] != :unit
 		end #if
 	end #if
-end #example_pathnames_exist
+end #why_not_stage
 @@ALL_VIEW_DIRS||=Dir['app/views/*']
 def CodeBase.rails_MVC_classes
 #	puts fixture_names.inspect
@@ -323,7 +269,7 @@ def CodeBase.rails_MVC_classes
 	end.compact #map
 end #rails_MVC_classes
 end #class CodeBase
-class MatchedPathName
+class MatchedPathName #< CodeBase
 include NoDB
 def initialize(pathname, specified_spec=nil)
 	super()
@@ -355,7 +301,7 @@ end #assert_has_attributes
 # Called by all_tests
 def MatchedPathName.all
 	CodeBase.all.map  do |spec|
-		spec.pathnames_from_spec.map do |pathname|
+		spec.pathnames.map do |pathname|
 			MatchedPathName.new(pathname, spec)
 		end #map
 	end.flatten.sort! {|x,y| y[:mtime] <=> x[:mtime] } #map
@@ -370,7 +316,7 @@ end #all_tests
 # Returns TestRun or array of TestRuns for ambiguous
 # Suggest test order to run after file modified
 def suggest_test_runs
-	name_plurality=self[:spec].name_plurality
+#	name_plurality=self[:spec].name_plurality
 	test_type=self[:spec][:test_type].to_sym
 	if self[:matchData].nil? then
 		all_tests=MatchedPathName.all_tests(test_type)
@@ -388,6 +334,10 @@ def suggest_test_runs
 	end #case
 	end #if
 end #suggest_test_runs
+# priorities:
+# most recent modification time
+# first test previously passed
+# short test run time
 def MatchedPathName.test_schedule
 	MatchedPathName.all.suggest_test_runs.each do |candidate| 
 		if candidate.instance_of?(Array) then
@@ -404,16 +354,44 @@ def MatchedPathName.schedule_tests
 		end #if
 	end #each
 end #schedule_tests
-def name_plurality
-	if self.nil? || self[:test_type]==:shared then
-		return  nil
-	else
-		table_name=self[:matchData][1]
-		if self[:plural] then
-			{:singular => table_name.singularize, :plural => table_name}
-		else
-			{:singular =>  table_name, :plural => table_name.pluralize}
-		end #if
-	end #if
-end #name_plurality
+def model
+end #model
 end #MatchedPathName
+
+class ModelName
+include NoDB
+def initialize(model_name, plurality=nil)
+	super()
+	if model_name.instance_of?(MatchedPathName) then
+		plurality=model_name[:plurality]
+		model_name=model_name.model
+	end #if
+	case plurality
+	when nil
+		self[:singular]=model_name.singularize
+		self[:plural]=model_name.pluralize
+	when :singular
+		self[:singular]=model_name
+		self[:plural]=nil
+	when :plural
+		self[:singular]=nil
+		self[:plural]=model_name
+	else
+		raise "unexpected value of plurality=#{plurality}"
+	end
+end #initialize
+def singular
+	if self[:singular].nil? then
+		return self[:plural].singularize
+	else
+		return self[:singular]
+	end #if
+end #singular
+def plural
+	if self[:plural].nil? then
+		return self[:singular].pluralize
+	else
+		return self[:plural]
+	end #if
+end #plural
+end #ModelName
