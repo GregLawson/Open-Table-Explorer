@@ -125,45 +125,6 @@ def models
 		return Set[]
 	end #if
 end #models
-def CodeBase.singular_table_from_pathname(pathname)
-	match_spec=MatchedPathName.new(pathname)
-	if match_spec.nil? || match_spec[:test_type]==:shared then
-		return  ''
-	else
-		table_name=match_spec[:matchData][1]
-		if match_spec[:plural] then
-			return table_name.singularize
-		else
-			return table_name
-		end #if
-	end #if
-end #singular_table_from_pathname
-def CodeBase.test_run_from_pathname(pathname)
-	match_spec=MatchedPathName.new(pathname)
-	name_plurality=name_plurality(match_spec)
-	TestRun.new(match_spec[:test_type],name_plurality[:singular], name_plurality[:plural])
-end #test_run_from_pathname
-def CodeBase.test_type_from_source(ruby_source)
-	path=Pathname.new(ruby_source)
-	#~ puts "path=#{path.inspect}"
-	words=path.basename.to_s.split('_')
-#	puts "words=#{words.inspect}"
-	raise "not a test log or source pathname =#{path.inspect}" if words[-1][0..3]!='test'
-	if words[-2]=='controller' then
-		test_type='functional'
-		table=words[0..-3].join('_')
-	else
-		test_type='unit'
-		table=words[0..-2].join('_')
-	end #if
-	#~ puts "test_type='#{test_type}'"
-	return [table,test_type]
-end #test_type_from_source
-def CodeBase.test_program_from_pathname(ruby_source)
-#	singular_table=CodeBase.singular_table_from_pathname(ruby_source)
-	test_type=test_type_from_source(ruby_source)
-	return CodeBase.test_pathname(test_type[0], test_type[1])
-end #test_program_from_pathname
 def CodeBase.uptodate?(target,sources) 
 	raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.instance_of?(Array)
 	raise "target=#{target.inspect} must be a String (pathnames)" unless target.instance_of?(String)
@@ -269,7 +230,7 @@ def CodeBase.rails_MVC_classes
 	end.compact #map
 end #rails_MVC_classes
 end #class CodeBase
-class MatchedPathName #< CodeBase
+class MatchedPathName # not < CodeBase see self[:spec]
 include NoDB
 def initialize(pathname, specified_spec=nil)
 	super()
@@ -316,19 +277,19 @@ end #all_tests
 # Returns TestRun or array of TestRuns for ambiguous
 # Suggest test order to run after file modified
 def suggest_test_runs
-#	name_plurality=self[:spec].name_plurality
+#	model_name=model
 	test_type=self[:spec][:test_type].to_sym
 	if self[:matchData].nil? then
 		all_tests=MatchedPathName.all_tests(test_type)
 	else
 	case self[:spec][:test_type].to_sym
 	when :unit
-			TestRun.new(:unit,name_plurality[:singular], name_plurality[:plural])
+			TestRun.new(:unit,model_name[:singular_model_name], model_name[:plural])
 	when :controller
-		TestRun.new(:controller,name_plurality[:singular], name_plurality[:plural])
+		TestRun.new(:controller,model_name[:singular_model_name], model_name[:plural])
 	when :both
-		[TestRun.new(:unit,name_plurality[:singular], name_plurality[:plural]),
-		TestRun.new(:controller,name_plurality[:singular], name_plurality[:plural])]
+		[TestRun.new(:unit,model_name[:singular_model_name], model_name[:plural]),
+		TestRun.new(:controller,model_name[:singular_model_name], model_name[:plural])]
 	else
 		raise "bad test_type=#{test_type}"
 	end #case
@@ -354,8 +315,20 @@ def MatchedPathName.schedule_tests
 		end #if
 	end #each
 end #schedule_tests
-def model
-end #model
+# model name string captured from pathname
+def matched_model_name
+	return model=self[:matchData][1]
+end #matched_model_name
+# model name plurality based on which spec was matched
+def matched_model_name_plurality
+	return model=self[:spec][:plural]
+end #matched_model_name_plurality
+def model_name
+	return model=ModelName.new(self)
+end #model_name
+def test_name
+	return model=self[:matchData][2]
+end #test_name
 end #MatchedPathName
 
 class ModelName
@@ -363,35 +336,44 @@ include NoDB
 def initialize(model_name, plurality=nil)
 	super()
 	if model_name.instance_of?(MatchedPathName) then
-		plurality=model_name[:plurality]
-		model_name=model_name.model
+		plurality=model_name[:spec][:plural]
+		model_name=model_name.matched_model_name
 	end #if
 	case plurality
 	when nil
-		self[:singular]=model_name.singularize
-		self[:plural]=model_name.pluralize
-	when :singular
-		self[:singular]=model_name
-		self[:plural]=nil
-	when :plural
-		self[:singular]=nil
-		self[:plural]=model_name
+		self[:singular_model_name]=model_name.singularize
+		self[:plural_model_name]=model_name.pluralize
+	when false
+		self[:singular_model_name]=model_name
+		self[:plural_model_name]=nil
+	when true
+		self[:singular_model_name]=nil
+		self[:plural_model_name]=model_name
 	else
 		raise "unexpected value of plurality=#{plurality}"
 	end
 end #initialize
-def singular
-	if self[:singular].nil? then
-		return self[:plural].singularize
+def singular_model_name
+	if self[:singular_model_name].nil? then
+		return find_model_name(false)
 	else
-		return self[:singular]
+		return self[:singular_model_name]
 	end #if
 end #singular
-def plural
-	if self[:plural].nil? then
-		return self[:singular].pluralize
+def plural_model_name
+	if self[:plural_model_name].nil? then
+		return find_model_name(true)
 	else
-		return self[:plural]
+		return self[:plural_model_name]
 	end #if
 end #plural
+def verify_model_name?(model_name, plurality)
+end #
+def find_model_name(plural)
+	if plural then
+		return self[:singular_model_name].pluralize
+	else
+		return self[:plural_model_name].singularize	
+	end #if
+end #find_model_name
 end #ModelName

@@ -121,30 +121,6 @@ def test_models
 		assert_include('stream_pattern',spec.models)
 	end #each
 end #models
-def test_singular_table_from_pathname
-	assert('global',CodeBase::singular_table_from_pathname('app/models/global.rb'))
-	assert_equal('global',CodeBase.singular_table_from_pathname('app/models/global.rb'))
-	assert_equal('global',CodeBase.singular_table_from_pathname('test/unit/global_test.rb'))
-	CodeBase.all.each do |spec|
-
-		example_pathname=spec[:example_pathname]
-		match_spec=MatchedPathName.new(example_pathname)
-		assert_not_nil(match_spec)
-		assert_not_nil(match_spec[:matchData])
-		if match_spec.nil? || match_spec[:test_type]==:shared then
-			assert_not_nil(match_spec[:matchData][1],"match_spec[:matchData]=#{match_spec[:matchData].inspect}")
-			table_name=match_spec[:matchData][1]
-			assert_not_nil(table_name)
-			assert_not_empty(CodeBase.singular_table_from_pathname(example_pathname),"example_pathname=#{example_pathname}")
-		end #if
-	end #each
-end #singular_table_from_pathname
-def test_test_run_from_pathname
-end #test_run_from_pathname
-def test_test_type_from_source
-end #test_type_from_source
-def test_test_program_from_pathname
-end #test_program_from_pathname
 def test_uptodate
 # uptodate if target > sources
 	target='/proc/bus' # changes often
@@ -164,8 +140,6 @@ end #not_uptodate_sources
 def test_git_status
 	#~ assert_match('app/views/acquisition_stream_specs/_index_partial.html.erb',TABLE_FINDER_REGEXPS['app/views/acquisition_stream_specs/_index_partial.html.erb'])
 #	assert_equal('acquisition_stream_specs','app/views/acquisition_stream_specs/_index_partial.html.erb'.match(CodeBase.regexp(CodeBase.all[5]))[1])
-	assert_equal('acquisition_stream_spec',CodeBase.singular_table_from_pathname('app/views/acquisition_stream_specs/_index_partial.html.erb'))
-	assert_equal('global',CodeBase.singular_table_from_pathname('app/models/global.rb'))
 	assert_not_nil(CodeBase.gitStatus{|status,pathname| puts "status=#{status}, pathname=#{pathname}"})
 	pathname='app/views/acquisition_stream_specs/_index_partial.html.erb'
 	assert_not_empty(CodeBase.singular_table_from_pathname(pathname))
@@ -179,7 +153,6 @@ def test_why_not_stage_helper
 end #why_not_stage_helper
 def test_why_not_stage
 	pathname='app/views/acquisition_stream_specs/_index_partial.html.erb'
-	assert_nothing_raised{CodeBase.why_not_stage(pathname,CodeBase.singular_table_from_pathname(pathname)) }
 #	assert_nothing_raised{CodeBase.why_not_stage_helper('app/views/acquisition_stream_specs/_index_partial.html.erb',target,sources,test_type)}
 end #why_not_stage_helper
 def test_rails_MVC_classes
@@ -265,7 +238,7 @@ def test_MatchedPathName
 	matched_path_name=MatchedPathName.new(@@Test_pathname)
 	assert_instance_of(CodeBase,matched_path_name[:spec])
 end #initialize MatchedPathName
-def test_all_model_specfic_pathnames
+def test_all
 	assert_instance_of(Array,MatchedPathName.all)
 	assert_instance_of(MatchedPathName,MatchedPathName.all[0])
 	all=MatchedPathName.all
@@ -285,26 +258,46 @@ def test_suggest_test_runs
 	test_runs=matched_path_name.suggest_test_runs
 	assert_not_empty(test_runs)
 end #suggest_test_runs
+def test_test_schedule
+end #test_schedule
 def schedule_tests
 end #schedule_tests
-def test_name_plurality
-	assert_not_nil(CodeBase.find_by_name(:shared_partials))
-	assert_not_nil(CodeBase.find_by_name(:models))
+def test_matched_model_name
 	matched_path_name=MatchedPathName.new(@@Test_pathname)
-	assert_equal('code_base',matched_path_name.name_plurality[:singular])
-	assert_equal('code_bases',matched_path_name.name_plurality[:plural])
-end #name_plurality
+	assert_equal('code_base', matched_path_name.matched_model_name)
+end #matched_model_name
+def test_matched_model_name_plurality
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_equal(false, matched_path_name.matched_model_name_plurality)
+end #matched_model_name_plurality
+def test_model_name
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_equal('code_base', matched_path_name.model_name.singular_model_name)
+	assert_equal('code_bases', matched_path_name.model_name.plural_model_name)
+end #model_name
+def test_test_name
+end #test_name
 end #MatchedPathName
 class ModelNameTest < ActiveSupport::TestCase
+@@Test_pathname='app/models/code_base.rb'
 def test_ModelNames
-	assert_equal('code_base', ModelName.new('code_base', :singular)[:singular])
-	assert_equal('code_bases', ModelName.new('code_bases', :plural)[:plural])
+	assert_equal('code_base', ModelName.new('code_base', false).singular_model_name)
+	assert_equal('code_bases', ModelName.new('code_bases', true)[:plural_model_name])
+	assert_equal('code_bases', ModelName.new('code_bases', true).plural_model_name)
 end #initialize
+def test_name_plurality
+end #name_plurality
 def test_singular
-	assert_equal('code_base', ModelName.new('code_bases', :plural).singular)
+	assert_equal('test_run', ModelName.new('test_runs', true).singular_model_name)
+	assert_equal('code_bases', ModelName.new('code_base', false).plural_model_name)
+	assert_equal('code_base', ModelName.new('code_bases', true).singular_model_name)
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_equal('code_base',ModelName.new(matched_path_name).singular_model_name)
 
 end #singular
 def test_plural
-	assert_equal('code_bases', ModelName.new('code_base', :singular).plural)
+	assert_equal('code_bases', ModelName.new('code_base', false).plural_model_name)
+	matched_path_name=MatchedPathName.new(@@Test_pathname)
+	assert_equal('code_bases',ModelName.new(matched_path_name).plural_model_name)
 end #plural
 end #class ModelNameTest
