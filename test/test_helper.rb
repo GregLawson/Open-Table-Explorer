@@ -273,7 +273,7 @@ def define_model_of_test
 	if !Generic_Table.is_ActiveRecord_table?(@model_class.name) then
 		puts "#{@model_class} is not a ActiveRecord::Base."
 	end #if
-	assert_ActiveRecord_table(@model_class.name)
+#	assert_ActiveRecord_table(@model_class.name)
 #	assert_kind_of(ActiveRecord::Base,@model_class)
 #	assert_kind_of(ActiveRecord::Base,@model_class.new)
 end #def
