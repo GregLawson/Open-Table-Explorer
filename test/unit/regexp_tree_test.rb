@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test_helper'
+require 'test/test_helper'
 # executed in alphabetical orer? Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
@@ -39,7 +39,7 @@ def regexpParserTest(parser)
 	assert(parser.beyondString?)
 end #def
 class RegexpTreeTest < ActiveSupport::TestCase
-require 'test_helper'
+require 'test/test_helper'
 WhiteSpacePattern=' '
 WhiteEditor=RegexpTree.new(WhiteSpacePattern,false)	
 @@CONSTANT_PARSE_TREE=RegexpTree.new('K')
