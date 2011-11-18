@@ -143,7 +143,7 @@ def regexpTree!(terminator=nil)
 			term=parseOneTerm!
 			ret << term
 		else
-			return ret
+			return ret.reverse
 		end #if
 	end until term==terminator
 #not recursive	conservationOfCharacters(ret.reverse)
