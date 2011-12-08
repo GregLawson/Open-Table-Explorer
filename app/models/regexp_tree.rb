@@ -50,34 +50,70 @@ def +(other)
 	return RegexpTree.new(self.parseTree+other.parseTree)
 end #+
 # Takes embedded array format parsed tree and displays equivalent regexp string 
-def postfix_operator?
-	if @parseTree.nil? then
+def leaf_apply(parseTree=@parseTree, &visit_proc)
+	if parseTree.nil? then
+		return []
+	elsif parseTree.instance_of?(Array) then
+		return parseTree.collect do |sub_tree| 
+			leaf_apply(sub_tree){|p| visit_proc.call(p){|s| visit_proc.call(s)}}
+		end
+	else
+		return visit_proc.call(parseTree, &visit_proc)
+	end #if
+end #leaf_apply
+def branch_apply(parseTree=@parseTree, &visit_proc)
+	if parseTree.instance_of?(Array) then
+		parseTree= parseTree.collect do |sub_tree| 
+			branch_apply(sub_tree){|p| visit_proc.call(p){|s| visit_proc.call(s)}}
+		end
+		return visit_proc.call(parseTree, &visit_proc)
+	else
+		return parseTree
+	end #if
+end #branch_apply
+def postfix_expression?(parseTree=@parseTree)
+	if postfix_operator?(parseTree) then
+		return true
+	elsif parseTree.instance_of?(Array) then
+		if postfix_operator?(parseTree[0]) then
+			return true
+		elsif parseTree.size==1 then # only postfix_expression
+			return postfix_expression?(parseTree[0])
+		else
+			return false # extra stuff
+		end #if
+	else
+		return false #not postfix chars
+	end #if
+end #postfix_expression
+def postfix_operator?(parseTree)
+	if parseTree.nil? then
 		return false
 	else
-		return @parseTree.length==2 && @parseTree[0].instance_of?(String) && RegexpTree.PostfixOperators.index(@parseTree[0])	
+		return parseTree.instance_of?(String) && RegexpTree.PostfixOperators.index(parseTree)	
 	end #if
 end #postfix_operator
-def to_s
-	if @parseTree.nil? then
+def postfix_operator_walk(parseTree=@parseTree, &visit_proc)
+	if parseTree.nil? then
 		return ''
-	elsif postfix_operator? then
-#		puts "@parseTree.inspect=#{@parseTree.inspect}"
-#		puts "@parseTree[1..1].inspect=#{@parseTree[1..1].inspect}"
-#		puts "@parseTree[0..0].inspect=#{@parseTree[0..0].inspect}"
-#		puts "@parseTree[1..1].inspect=#{@parseTree[1..1].inspect}"
-#		puts "to_s(@parseTree[1..1])+@parseTree[0]=#{to_s(@parseTree[1..1])+@parseTree[0]}"
-		return RegexpTree.new(@parseTree[1..-1]).to_s+@parseTree[0]
-	elsif @parseTree.instance_of?(Array) then
-		return @parseTree.collect do |pt| 
-			if pt.instance_of?(Array) then
-				RegexpTree.new(pt).to_s
-			else
-				pt
-			end
-		end.join('')
+	elsif parseTree.instance_of?(Array) then
+		if postfix_expression?(parseTree) then
+			return visit_proc.call(parseTree, &visit_proc)
+		else
+			return parseTree.collect do |sub_tree| 
+				postfix_operator_walk(sub_tree){|p| visit_proc.call(p){|s| visit_proc.call(s)}}
+			end.join('')
+		end
 	else
-		return @parseTree
-	end
+		return parseTree
+	end #if
+end #postfix_operator_walk
+def to_filename_glob(parseTree=@parseTree)
+	postfix_operator_walk(parseTree){|p| '*'}
+end #to_filename_glob
+def to_s(parseTree=@parseTree)
+	visit_proc=Proc.new{|parseTree| postfix_operator_walk(parseTree[1..-1], &visit_proc)+postfix_operator_walk(parseTree[0], &visit_proc)}
+	postfix_operator_walk(parseTree, &visit_proc)
 end #to_s
 # the useful inverse function of new. String to regexp
 def to_regexp

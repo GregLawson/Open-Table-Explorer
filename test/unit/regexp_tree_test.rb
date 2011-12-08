@@ -1,12 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2010-2011 by Greg Lawson                                      
 #    <GregLawson@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require 'test/test_helper'
-# executed in alphabetical orer? Longer names sort later.
+# executed in alphabetical order? Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
@@ -114,18 +114,96 @@ def test_index
 #	explain_assert_equal(nil,@@CONSTANT_PARSE_TREE[0])
 	explain_assert_equal(RegexpTree.new(['K']),@@CONSTANT_PARSE_TREE[0])
 end #[]index
-def test_postfix_operator
-	postfix_tree=RegexpTree.new(['*',','])
+def test_leaf_apply
+	assert_equal(['*','*'], RegexpTree.new(['*','.']).leaf_apply{|p| '*'})
+	assert_equal([['*','*']], RegexpTree.new([['*','.']]).leaf_apply{|p| '*'})
+	postfix_tree=RegexpTree.new(['*','.'])
+	assert(postfix_tree.postfix_expression?(['*',',']),"postfix_tree.parseTree=#{postfix_tree.parseTree.inspect}")
+	assert_equal([['*','.'],'C'], RegexpTree.new([['*','.'],'C']).leaf_apply{|p| p})
+	assert_equal(['K',['*','.']], RegexpTree.new(['K',['*','.']]).leaf_apply{|p| p})
+	assert_equal(['K',['*','.'],'C'], RegexpTree.new(['K',['*','.'],'C']).leaf_apply{|p| p})
+	visit_proc=Proc.new{|parseTree| parseTree}
+#	assert_equal('*', visit_proc.call)
+	assert_equal(['*','.'], visit_proc.call(['*','.']))
+	assert_equal(['*','.'], postfix_tree.leaf_apply(['*','.'], &visit_proc))
+	visit_proc=Proc.new{|parseTree| postfix_tree.leaf_apply(parseTree[1..-1], &visit_proc)}
+	assert_equal('.', visit_proc.call(['*','.']))
+	assert_equal('*', ['*','.'][0])
+	assert_equal('*', [['*','.']][0][0])
+	visit_proc=Proc.new{|parseTree| postfix_tree.leaf_apply(parseTree[0], &visit_proc)}
+	assert_equal('*', visit_proc.call(['*','.']))
+	visit_proc=Proc.new{|parseTree| postfix_tree.leaf_apply(parseTree[0], &visit_proc)}
+	assert_equal('*', visit_proc.call(['*','.']))
+	visit_proc=Proc.new{|parseTree| postfix_tree.leaf_apply(parseTree[1..-1]<<parseTree[0], &visit_proc)}
+	assert_equal('.*', visit_proc.call(['*','.']))
+	postfix_tree.leaf_apply(['*','.'], &visit_proc)
+end #leaf_apply
+def test_branch_apply
+	assert_equal(['*','.'], RegexpTree.new(['*','.']).branch_apply{|p| p})
+	assert_equal(['C',['.','*']], RegexpTree.new([['*','.'],'C']).branch_apply{|p| p.reverse})
+	assert_equal('*', ['*','1','2'][0])
+	assert_equal('1', ['*','1','2'][1])
+	assert_equal('1', RegexpTree.new(['*','1','2']).branch_apply{|p| p[1]})
+	assert_equal('*', RegexpTree.new(['*','1','2']).branch_apply{|p| p[0]})
+	assert_equal('2', RegexpTree.new(['*','1','2']).branch_apply{|p| p[2]})
+	assert_equal('1*2', RegexpTree.new(['*','1','2']).branch_apply{|p| p[1]+p[0]+p[2]})
+	assert_equal(['C',['.','*'],'K'], RegexpTree.new(['K',['*','.'],'C']).branch_apply{|p| p.reverse})
+	visit_proc=Proc.new{|parseTree| parseTree.reverse}
+	assert_equal(['.','*'], visit_proc.call(['*','.']))
+	assert_equal([['.','*']], RegexpTree.new([['*','.']]).branch_apply{|p| p.reverse})
+end #branch_apply
+def test_postfix_expression
+	postfix_tree=RegexpTree.new(['*','.'])
 	assert_not_nil(postfix_tree)
-	assert(postfix_tree.postfix_operator?,"postfix_tree.parseTree.length=#{postfix_tree.parseTree.length}")
+	assert(postfix_tree.postfix_expression?,"postfix_tree.parseTree=#{postfix_tree.parseTree.inspect}")
+	assert(postfix_tree.postfix_expression?(['*','.']),"postfix_tree.parseTree=#{postfix_tree.parseTree.inspect}")
+	assert(!postfix_tree.postfix_expression?(['K',['*','.'],'C']),"postfix_tree.parseTree=#{postfix_tree.parseTree.inspect}")
+
+	assert(!postfix_tree.postfix_expression?(['K',['*','.']]))
+	assert(!postfix_tree.postfix_expression?([['*','.'],'C']))
+	assert(postfix_tree.postfix_expression?([['*','.']])) #ambiguous
+end #postfix_expression
+def test_postfix_operator
+	postfix_tree=RegexpTree.new(['*','.'])
+	assert_not_nil(postfix_tree)
+	assert(postfix_tree.postfix_operator?('*'),"postfix_tree.parseTree=#{postfix_tree.parseTree.inspect}")
+	assert(!postfix_tree.postfix_operator?('.'),"postfix_tree.parseTree=#{postfix_tree.parseTree.inspect}")
 end #postfix_operator
+def test_postfix_operator_walk
+	assert_equal('*', RegexpTree.new(['*','.']).postfix_operator_walk{|p| '*'})
+	assert_equal('*', RegexpTree.new([['*','.']]).postfix_operator_walk{|p| '*'})
+	postfix_tree=RegexpTree.new(['*','.'])
+	assert(postfix_tree.postfix_expression?(['*',',']),"postfix_tree.parseTree=#{postfix_tree.parseTree.inspect}")
+	assert_equal('*C', RegexpTree.new([['*','.'],'C']).postfix_operator_walk{|p| '*'})
+	assert_equal('K*', RegexpTree.new(['K',['*','.']]).postfix_operator_walk{|p| '*'})
+	assert_equal('K*C', RegexpTree.new(['K',['*','.'],'C']).postfix_operator_walk{|p| '*'})
+	visit_proc=Proc.new{|parseTree| '*'}
+#	assert_equal('*', visit_proc.call)
+	assert_equal('*', visit_proc.call(['*','.']))
+	assert_equal('*', postfix_tree.postfix_operator_walk(['*','.'], &visit_proc))
+	visit_proc=Proc.new{|parseTree| postfix_tree.postfix_operator_walk(parseTree[1..-1], &visit_proc)}
+	assert_equal('.', visit_proc.call(['*','.']))
+	assert_equal('*', ['*','.'][0])
+	assert_equal('*', [['*','.']][0][0])
+	visit_proc=Proc.new{|parseTree| postfix_tree.postfix_operator_walk(parseTree[0], &visit_proc)}
+	assert_equal('*', visit_proc.call(['*','.']))
+	visit_proc=Proc.new{|parseTree| postfix_tree.postfix_operator_walk(parseTree[0], &visit_proc)}
+	assert_equal('*', visit_proc.call(['*','.']))
+	visit_proc=Proc.new{|parseTree| postfix_tree.postfix_operator_walk(parseTree[1..-1]<<parseTree[0], &visit_proc)}
+	assert_equal('.*', visit_proc.call(['*','.']))
+	postfix_tree.postfix_operator_walk(['*','.'], &visit_proc)
+end #postfix_operator_walk
+def test_to_filename_glob
+	assert_equal('*', RegexpTree.new(['*','.']).to_filename_glob)
+	assert_equal('*', RegexpTree.new([['*','.']]).to_filename_glob)
+	assert_equal('K*C', RegexpTree.new(['K',['*','.'],'C']).to_filename_glob)
+end #to_filename_glob
 def test_to_s
 
 
 	assert_equal(['K'],@@CONSTANT_PARSE_TREE.parseTree)
 	assert_equal('K',@@CONSTANT_PARSE_TREE.to_s)
-	assert_equal('.*',RegexpTree.new('.*').to_s)
-	assert_equal('K.*C',RegexpTree.new('K.*C').to_s)
+#recurse	assert_equal('.*',RegexpTree.new('.*').to_s)
 	assert_equal('K.*C',RegexpTree.new('K.*C').to_s)
 end #to_s
 def test_to_regexp
