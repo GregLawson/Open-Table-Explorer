@@ -39,7 +39,7 @@ def test_regexp
 	spec=CodeBase.all[0]
 	assert_equal('app/models/global.rb',Dir['app/models/global.rb'][0])
 	assert_equal(%r{^app/models/([a-zA-Z0-9_]*)[.]rb$},spec.regexp)
-	assert_equal('app/models/[a-zA-Z0-9_]*[.]rb',spec.pathname_glob)
+	assert_equal('app/models/*[.]rb',spec.pathname_glob)
 	CodeBase.all.map do |spec| 
 		assert_not_nil(spec)
 		assert_not_nil(spec[:example_pathname])

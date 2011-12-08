@@ -34,7 +34,8 @@ end #all
 # Returns a file glob to find pathname, removing parenthesis
 # golbs are defined at http://www.ruby-doc.org/core-1.9.3/Dir.html#method-c-glob
 def pathname_glob
-	ret=self[:Dir_glob].sub(/(\()/,'').sub(/(\))/,'')
+	ret=RegexpTree.new(self[:Dir_glob]).to_filename_glob
+#	ret=self[:Dir_glob].sub(/(\()/,'').sub(/(\))/,'')
 	return ret
 end #pathname_glob
 # Returns a Regexp to extract model names from pathname, keeping parenthesis
