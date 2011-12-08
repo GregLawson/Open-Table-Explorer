@@ -6,11 +6,11 @@
 #
 ###########################################################################
 require 'test/unit'
-require 'test_helper'
+require 'test/test_helper'
 
 def regexpTest(editor)
 	editor.restartParse!
-	testCall(editor,:regexpTree)
+	testCall(editor,:regexpTree!)
 	editor.restartParse!
 	parseTree=editor.regexpTree!
 	assert_not_nil(parseTree)
@@ -94,7 +94,9 @@ def test_assert_match
 	regexp_tree=RegexpEdit.new(regexp, string)
 	new_tree=regexp_tree.matchSubTree
 	assert_equal(["K",['*','.'],"C"],new_tree)
-	assert_equal("K.*C",new_tree.to_s)
+	assert_equal('K.*C',RegexpTree.new('K.*C').to_s)
+	assert_equal('K.*C',RegexpTree.new(["K",['*','.'],"C"]).to_s)
+#Array does not reverse postfix operators	assert_equal("K.*C",new_tree.to_s)
 	assert_equal("K.*C",Regexp.new("K.*C").source)
 	assert_match(/K.*C/, string)
 	assert_match(RegexpTree.new("K.*C").to_regexp, string)
@@ -108,10 +110,10 @@ def test_matchSubTree
 	testAnswer(KCETeditor,:matchSubTree,['a'],['a'])
 	assert_equal(['K','C'],KCETeditor.matchSubTree(['K','C']))
 	assert_equal(['K'],KCETeditor.matchSubTree(['K','xyz']))
-	assert_equal(['K','C'],KCETeditor.matchSubTree(['K','xyz','C']))
-	KCETeditor.restartParse!!
+	assert_equal(['K',['*', '.'], 'C'],KCETeditor.matchSubTree(['K','xyz','C']))
+	KCETeditor.restartParse!
 	parseTree=KCETeditor.regexpTree!
-	assert_not_nil(KCETeditor.matchRescued(KCETeditor.to_s(KCETeditor.matchSubTree(parseTree))))
+	assert_not_nil(KCETeditor.matchRescued(RegexpTree.new(KCETeditor.matchSubTree(parseTree)).to_s))
 	expectedParse=["K",
 	"C",
 	"E",
@@ -182,7 +184,7 @@ end #consecutiveMatch
 def test_editor
 
 
-	KCETeditor.restartParse!!
+	KCETeditor.restartParse!
 	parseTree=KCETeditor.regexpTree!
 	regexpTest(KCETeditor)
 end #def
