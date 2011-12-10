@@ -5,6 +5,7 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
+require 'app/models/regexp_tree.rb' # make usable under rake
 class CodeBase
 include NoDB
 # [name, example_pathname, Dir_glob, plural,test_type]
