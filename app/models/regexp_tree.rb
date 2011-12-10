@@ -8,7 +8,7 @@
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets start embeddded arrays
 require 'app/models/inlineAssertions.rb'
-class RegexpTree
+class RegexpTree < NestedArray
 attr_reader :regexp,:tokenIndex,:parseTree
 include Inline_Assertions
 def self.OpeningBrackets
@@ -50,27 +50,6 @@ def +(other)
 	return RegexpTree.new(self.parseTree+other.parseTree)
 end #+
 # Takes embedded array format parsed tree and displays equivalent regexp string 
-def leaf_apply(parseTree=@parseTree, &visit_proc)
-	if parseTree.nil? then
-		return []
-	elsif parseTree.instance_of?(Array) then
-		return parseTree.collect do |sub_tree| 
-			leaf_apply(sub_tree){|p| visit_proc.call(p){|s| visit_proc.call(s)}}
-		end
-	else
-		return visit_proc.call(parseTree, &visit_proc)
-	end #if
-end #leaf_apply
-def branch_apply(parseTree=@parseTree, &visit_proc)
-	if parseTree.instance_of?(Array) then
-		parseTree= parseTree.collect do |sub_tree| 
-			branch_apply(sub_tree){|p| visit_proc.call(p){|s| visit_proc.call(s)}}
-		end
-		return visit_proc.call(parseTree, &visit_proc)
-	else
-		return parseTree
-	end #if
-end #branch_apply
 def postfix_expression?(parseTree=@parseTree)
 	if postfix_operator?(parseTree) then
 		return true
@@ -93,6 +72,15 @@ def postfix_operator?(parseTree)
 		return parseTree.instance_of?(String) && RegexpTree.PostfixOperators.index(parseTree)	
 	end #if
 end #postfix_operator
+def new_postfix_operator_walk(&visit_proc)
+	map_branches do |branching|
+		if postfix_expression?(branching) then
+			visit_proc.call(branching)
+		else
+			branching
+		end
+	end #map_branches
+end #new_postfix_operator_walk
 def postfix_operator_walk(parseTree=@parseTree, &visit_proc)
 	if parseTree.nil? then
 		return ''
