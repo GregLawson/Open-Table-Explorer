@@ -52,5 +52,8 @@ def test_map_branches
 	visit_proc=Proc.new{|parseTree| parseTree.reverse}
 	assert_equal(['.','*'], visit_proc.call(['*','.']))
 	assert_equal([['.','*']], NestedArray.new([['*','.']]).map_branches{|p| p.reverse})
+	assert_equal(sequence.reverse, RegexpTree.new(sequence).new_postfix_operator_walk(&reverse_proc))
+	assert_equal(Asymmetrical_Tree, reverse_proc.call(Asymmetrical_Tree))
+	assert_equal(Asymmetrical_Tree.flatten.reverse, reverse_proc.call(Asymmetrical_Tree).flatten)
 end #map_branches
 end #NestedArray
