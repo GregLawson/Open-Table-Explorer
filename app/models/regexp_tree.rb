@@ -8,115 +8,36 @@
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets start embeddded arrays
 require 'app/models/inlineAssertions.rb'
-class RegexpTree < NestedArray
-attr_reader :regexp,:tokenIndex,:parseTree
-include Inline_Assertions
-def self.OpeningBrackets
-	return '({['
-end #OpeningBrackets
-def self.ClosingBrackets
-	return ')}]'
-end #ClosingBrackets
-def self.PostfixOperators
-	return '+*?|'
-end #def
-
+class RegexpParser
+attr_reader :regexp_string,:tokenIndex,:parseTree
+def initialize(regexp_string)
+	raise "RegexpParser.new currently only handles String arguments. regexp_string=#{regexp_string.inspect}" unless regexp_string.kind_of?(String)
+	@regexp_string=regexp_string
+	restartParse!
+	@parseTree=regexpTree!
+end #initialize
+def to_a
+	return @parseTree
+end #to_a
+def to_s
+	return to_a.join
+end #to_s
 def restartParse! # primarily for testing
-	@tokenIndex=@regexp.length-1 # start at end
+	if @regexp_string.nil? then
+		@tokenIndex=-1 # start at end
+	else
+		@tokenIndex=@regexp_string.length-1 # start at end
+	end #if
 	@parseTree=[]
 end #def
-# Parse regexp into parse tree for editing
-def initialize(regexp=nil,preParse=true)
-	if regexp.instance_of?(Array) then
-		@regexp=regexp.to_s #nested Arrays
-		restartParse!
-		@parseTree=regexp
-		
-	else
-		@regexp=regexp.to_s #string
-		if !regexp.nil? then
-			restartParse!
-			@parseTree=regexpTree! if preParse
-		end #if
-	end #if
-end #initialize
-def [](index)
-	return RegexpTree.new(@parseTree[index])
-end #[]index
-def ==(other)
-	return self.parseTree==other.parseTree # self.regexp==other.regexp &&self.tokenIndex==other.tokenIndex
-end #==
-def +(other)
-	return RegexpTree.new(self.parseTree+other.parseTree)
-end #+
-# Takes embedded array format parsed tree and displays equivalent regexp string 
-def postfix_expression?(parseTree=@parseTree)
-	if postfix_operator?(parseTree) then
-		return true
-	elsif parseTree.instance_of?(Array) then
-		if postfix_operator?(parseTree[0]) then
-			return true
-		elsif parseTree.size==1 then # only postfix_expression
-			return postfix_expression?(parseTree[0])
-		else
-			return false # extra stuff
-		end #if
-	else
-		return false #not postfix chars
-	end #if
-end #postfix_expression
-def postfix_operator?(parseTree)
-	if parseTree.nil? then
-		return false
-	else
-		return parseTree.instance_of?(String) && RegexpTree.PostfixOperators.index(parseTree)	
-	end #if
-end #postfix_operator
-def new_postfix_operator_walk(&visit_proc)
-	map_branches do |branching|
-		if postfix_expression?(branching) then
-			visit_proc.call(branching)
-		else
-			branching
-		end
-	end #map_branches
-end #new_postfix_operator_walk
-def postfix_operator_walk(parseTree=@parseTree, &visit_proc)
-	if parseTree.nil? then
-		return ''
-	elsif parseTree.instance_of?(Array) then
-		if postfix_expression?(parseTree) then
-			return visit_proc.call(parseTree, &visit_proc)
-		else
-			return parseTree.collect do |sub_tree| 
-				postfix_operator_walk(sub_tree){|p| visit_proc.call(p){|s| visit_proc.call(s)}}
-			end.join('')
-		end
-	else
-		return parseTree
-	end #if
-end #postfix_operator_walk
-def to_filename_glob(parseTree=@parseTree)
-	postfix_operator_walk(parseTree){|p| '*'}
-end #to_filename_glob
-def to_s(parseTree=@parseTree)
-	visit_proc=Proc.new{|parseTree| postfix_operator_walk(parseTree[1..-1], &visit_proc)+postfix_operator_walk(parseTree[0], &visit_proc)}
-	postfix_operator_walk(parseTree, &visit_proc)
-end #to_s
-# the useful inverse function of new. String to regexp
-def to_regexp
-	ret=to_s
-	ret=Regexp.new(ret)
-	return ret
-end #to_regexp
 def nextToken!
 	if beyondString? then
-		raise RuntimeError, "method nextToken! called after end of regexp."
-	elsif @tokenIndex>1 && @regexp[@tokenIndex-1..@tokenIndex-1]=='\\' then
-		ret='\\'+@regexp[@tokenIndex..@tokenIndex]
+		raise RuntimeError, "method nextToken! called after end of regexp_string."
+	elsif @tokenIndex>1 && @regexp_string[@tokenIndex-1..@tokenIndex-1]=='\\' then
+		ret='\\'+@regexp_string[@tokenIndex..@tokenIndex]
 		@tokenIndex=@tokenIndex-2
 	else
-		ret=@regexp[@tokenIndex..@tokenIndex]
+		ret=@regexp_string[@tokenIndex..@tokenIndex]
 		@tokenIndex=@tokenIndex-1
 	end
 	return ret
@@ -125,20 +46,20 @@ def rest
 	if beyondString? then
 		return ''
 	else
-		return @regexp[0..@tokenIndex]
+		return @regexp_string[0..@tokenIndex]
 	end #if
 end #rest
 def advanceToken!(increment)
 	@tokenIndex=@tokenIndex+increment
-end #def
+end #advanceToken!
 # test if parsing has gone beyond end of string and should stop
 def beyondString?(testPos=@tokenIndex)
-	testPos<0 || testPos>@regexp.length-1
+	@regexp_string.nil? || testPos<0 || testPos>@regexp_string.length-1
 end
 # handle {2,3}-style specification of repetitions
 # not currently used, since numbers are not interpreted
 # currently handled identically to parenthesis and square brackets
-def curlyTree!(regexp)
+def curlyTree!(regexp_string)
 	remaining=rest
 	matchData=/\{(\d*)(,(\d*))?\}/.match(remaining)
 	increment=matchData[1].length+matchData[2].length+1
@@ -148,13 +69,13 @@ end #curlyTree
 # parse matching brackets, postfix operator, or single character
 def parseOneTerm!
 	ch=nextToken!
-	index=self.class.ClosingBrackets.index(ch)
+	index=RegexpTree.ClosingBrackets.index(ch)
 	if index then
-		return  regexpTree!(self.class.OpeningBrackets[index].chr) << ch
+		return  regexpTree!(RegexpTree.OpeningBrackets[index].chr) << ch
 	else
-		index=self.class.PostfixOperators.index(ch)
+		index=RegexpTree.PostfixOperators.index(ch)
 		if index then
-			return  [ch,parseOneTerm!]
+			return  [parseOneTerm!, ch]
 		else
 			return ch
 		end #if
@@ -175,12 +96,105 @@ def regexpTree!(terminator=nil)
 end #regexpTree!
 # test 
 def conservationOfCharacters
-	message="Regexp parse error: regexp=#{@regexp},rest=#{rest},parseTree.inspect=#{parseTree.inspect}."
-	assert_equal(@regexp,(RegexpTree.new(rest)+RegexpTree.new(@parseTree)).to_s,message)
+	message="Regexp parse error: regexp_string=#{@regexp_string},rest=#{rest},parseTree.inspect=#{parseTree.inspect}."
+	raise message if @regexp_string!=(rest+@parseTree.to_s)
 	puts "message=#{message}"
 end #conservationOfCharacters
-# not used
-def removeParens!(regexp)
-	regexp.gsub(/([^\\])([)()])/,'\1')
+
+end #RegexpParser
+class RegexpTree < NestedArray
+include Inline_Assertions
+def self.OpeningBrackets
+	return '({['
+end #OpeningBrackets
+def self.ClosingBrackets
+	return ')}]'
+end #ClosingBrackets
+def self.PostfixOperators
+	return '+*?|'
 end #def
+
+# Parse regexp_string into parse tree for editing
+def initialize(initial_value=[])
+	if initial_value.kind_of?(Array) then #nested Arrays
+		super(initial_value)
+		
+	elsif initial_value.instance_of?(String) then 
+		super(RegexpParser.new(initial_value).to_a)
+	elsif initial_value.instance_of?(RegexpParser) then 
+		super(initial_value.to_a)
+	else
+		raise "unexpected initial_value=#{initial_value.inspect}"
+	end #if
+end #initialize
+def [](index)
+	if super(index).kind_of?(Array) then
+		return RegexpTree.new(super(index))
+	else
+		return at(index)
+	end #if
+end #[]index
+#def ==(other)
+#	return self.to_a==other.to_a # self.to_a==other.to_a &&self.tokenIndex==other.tokenIndex
+#end #==
+def +(other)
+	return RegexpTree.new(self.to_a+other.to_a)
+end #+
+def to_a
+	return self
+end #to_a
+
+# Takes embedded array format parsed tree and displays equivalent to_s string 
+def postfix_expression?
+	if RegexpTree.postfix_operator?(self[-1]) then
+		return true
+	else
+		return false #not postfix chars
+	end #if
+end #postfix_expression
+def RegexpTree.postfix_operator?(parseTree)
+	if parseTree.instance_of?(String) then
+		RegexpTree.PostfixOperators.index(parseTree)	
+	else
+		return false
+	end #if
+end #postfix_operator
+def postfix_operator_walk(&visit_proc)
+	# recurse on subtrees first so transformations ripple up generally
+	# postfix expresion should not change operator
+	branching=RegexpTree.new(self.map do |sub_tree|
+		if sub_tree.kind_of?(Array) then
+			RegexpTree.new(sub_tree).postfix_operator_walk(&visit_proc)
+		else # leaf string
+			sub_tree
+		end #if
+	end) #map and RegexpTree.new
+#OK	raise "Unexpected #{self.inspect}.postfix_expression?=#{postfix_expression?} != #{branching.inspect}.postfix_expression?=#{RegexpTree.new(branching).postfix_expression?}"  unless postfix_expression? == RegexpTree.new(branching).postfix_expression?
+	if branching.postfix_expression? then #postfixes trickle up
+		new_branching=visit_proc.call(branching)
+			
+	else
+		new_branching=branching
+	end
+	new_branching
+	
+	return new_branching
+end #postfix_operator_walk
+def to_filename_glob
+	ret=postfix_operator_walk{|p| '*'}
+	if ret.kind_of?(Array) then
+		ret=ret.flatten.join
+	end #if
+	return ret
+end #to_filename_glob
+def to_s
+	to_a.join
+end #to_s
+# the useful inverse function of new. String to regexp
+def to_regexp
+	ret=to_s
+	ret=Regexp.new(ret)
+	return ret
+end #to_regexp
+# not used
 end #class
