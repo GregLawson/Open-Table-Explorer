@@ -64,8 +64,8 @@ class RegexpEdit < RegexpTree
 attr_reader :dataToParse
 include Squeeze_Display
 include Match_Addressing
-def initialize(regexp,dataToParse,preParse=true)
-	super(regexp,preParse)
+def initialize(regexp,dataToParse)
+	super(regexp)
 	@dataToParse=dataToParse
 end #initialize
 def RegexpEdit.explain_assert_match(regexp, string, message=nil)

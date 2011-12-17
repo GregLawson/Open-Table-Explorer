@@ -9,10 +9,10 @@ require 'test/unit'
 require 'test/test_helper'
 
 def regexpTest(editor)
-	editor.restartParse!
-	testCall(editor,:regexpTree!)
-	editor.restartParse!
-	parseTree=editor.regexpTree!
+#	editor.restartParse!
+#	testCall(editor,:regexpTree!)
+#	editor.restartParse!
+#	parseTree=editor.regexpTree!
 	assert_not_nil(parseTree)
 	assert(parseTree.size>0)
 	assert_respond_to(editor,:consecutiveMatches)
@@ -29,12 +29,12 @@ class RegexpEditTest < ActiveSupport::TestCase
 #include Test_Helpers
 WhiteSpacePattern=' '
 WhiteSpace=' '
-WhiteEditor=RegexpEdit.new(WhiteSpacePattern,WhiteSpace,false)	
+WhiteEditor=RegexpEdit.new(WhiteSpacePattern,WhiteSpace)	
 
 Keditor=RegexpEdit.new('K','K')
-KCeditor=RegexpEdit.new('KC','KC',false)
+KCeditor=RegexpEdit.new('KC','KC')
 RowsRegexp='(<tr.*</tr>)'
-RowsEditor=RegexpEdit.new(RowsRegexp,'',false)
+RowsEditor=RegexpEdit.new(RowsRegexp,'')
 RowsEdtor2=RegexpEdit.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td height=14 class=xl33 width=39>&nbsp;</td>
   <td class=xl32 width=68>Date</td>
@@ -42,7 +42,7 @@ RowsEdtor2=RegexpEdit.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td class=xl33 width=60>Series</td>
   <td class=xl33 width=54>Show #</td>
   <td class=xl33 width=200>Title</td>
- </tr>',false)
+ </tr>')
 KCETeditor=RegexpEdit.new('KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE','<tr height=16>
   <td height=16 class=xl29> </td>
@@ -77,11 +77,11 @@ KCETeditor=RegexpEdit.new('KCET[^
   <td height=13 class=xl24></td>
   <td colspan=5 class=xl84>KVIE / Sacramento   Tuesdays (7:00 PM); Thursday
   (8:00 - 10:00 PM)</td>
- </tr>',false)
+ </tr>')
 def test_initialize
 	assert_match(WhiteSpacePattern,WhiteSpace)
-	Keditor.restartParse!
-	assert_equal(WhiteSpacePattern,WhiteEditor.nextToken!)
+#	Keditor.restartParse!
+#	assert_equal(WhiteSpacePattern,WhiteEditor.nextToken!)
 	
 end #initialize
 # test match and explain mismatch
@@ -111,9 +111,9 @@ def test_matchSubTree
 	assert_equal(['K','C'],KCETeditor.matchSubTree(['K','C']))
 	assert_equal(['K'],KCETeditor.matchSubTree(['K','xyz']))
 	assert_equal(['K',['*', '.'], 'C'],KCETeditor.matchSubTree(['K','xyz','C']))
-	KCETeditor.restartParse!
-	parseTree=KCETeditor.regexpTree!
-	assert_not_nil(KCETeditor.matchRescued(RegexpTree.new(KCETeditor.matchSubTree(parseTree)).to_s))
+#	KCETeditor.restartParse!
+#	parseTree=KCETeditor.regexpTree!
+	assert_not_nil(KCETeditor.matchRescued(RegexpTree.new(KCETeditor.matchSubTree(KCETeditor.to_regexp)).to_s))
 	expectedParse=["K",
 	"C",
 	"E",
@@ -137,9 +137,9 @@ def test_matchSubTree
 end #matchSubTree
 def test_mergeMatches
 	string_to_parse='KxyzC'
-	kCeditor=RegexpEdit.new('KC',string_to_parse,false)
+	kCeditor=RegexpEdit.new('KC',string_to_parse)
 	candidateParseTree=['K', 'C']
-	assert_equal(kCeditor.regexpTree!,candidateParseTree)
+#	assert_equal(kCeditor.regexpTree!,candidateParseTree)
 	matches=[0..0,1..1]
 	assert_operator(matches.size,:>=,2)
 	assert_operator(matches[0].end,:<,matches[1].begin)
@@ -184,8 +184,8 @@ end #consecutiveMatch
 def test_editor
 
 
-	KCETeditor.restartParse!
-	parseTree=KCETeditor.regexpTree!
+#	KCETeditor.restartParse!
+#	parseTree=KCETeditor.regexpTree!
 	regexpTest(KCETeditor)
 end #def
 def setup
