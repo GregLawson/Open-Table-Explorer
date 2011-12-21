@@ -65,10 +65,11 @@ def assert_associated_foreign_key(obj,assName)
 	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #def
 
-
+# assert that an association named association_reference exists  in class class_reference as well as an association named class_reference.name  exists  in class association_reference
 def assert_matching_association(klass,association_name)
 	assert(klass.is_matching_association?(association_name))
 end #matching_association
+# assert that an association named association_reference exists  in class class_reference
 def assert_association(class_reference,association_reference, message=nil)
 	message=build_message(message, "Class=? association=?", class_reference.inspect, association_reference.inspect)	
 	if class_reference.kind_of?(Class) then
@@ -90,7 +91,7 @@ def assert_association(class_reference,association_reference, message=nil)
 	end #if
 	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
 	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")
-	assert(klass.is_association?(association_reference),build_message(message, "fail is_association, klass.inspect=?,association_reference=?",klass.inspect,association_reference))
+	assert(klass.is_association?(association_reference),build_message(message, "klass.name=? does not have an association ? but does have associations =?",klass.name,association_reference,klass.association_names))
 end #def
 
 def assert_association_to_one(class_reference,assName)
