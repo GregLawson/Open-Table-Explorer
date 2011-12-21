@@ -11,7 +11,8 @@ def canonicalName
 	return 'nil'
 end #def
 end #class
-require 'test_helper'
+require 'test/test_helper'
+require 'test/test_helper_test_tables.rb'
 class GlobalTest < ActiveSupport::TestCase
 class TestClass
 def self.classMethod
@@ -40,17 +41,17 @@ def test_set_inspect
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},/,set.set_inspect)
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},(?-mix:1),\/1\/>, <Regexp #[0-9-]+\{4408\},(?-mix:3),\/3\/>/,set.set_inspect)
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},(?-mix:1),\/1\/>, <Regexp #[0-9-]+\{4408\},(?-mix:3),\/3\/>/,set.set_inspect)
-end #test
+end #set_inspect
 def test_instance_methods_from_class
 	assert_include('full_associated_models',['full_associated_models'])
 	assert_include('full_associated_models',TestTable.instance_methods_from_class)
-end #test
+end #instance_methods_from_class
 def test_instance_respond_to
 	assert(TestTable.instance_respond_to?(:full_associated_models))
 	assert(TestTable.respond_to?(:instance_respond_to?))
-end #test
+end #instance_respond_to
 def test_similar_methods
-end #test
+end #similar_methods
 def test_matching_instance_methods
 	testClass=TestClass
 	assert_instance_of(Array,testClass.matching_instance_methods(//))
@@ -58,7 +59,7 @@ def test_matching_instance_methods
 	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/),false)
 	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/),true)
 	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/))
-end #test
+end #matching_instance_methods
 def test_matching_class_methods
 	testClass=TestClass
 	assert_instance_of(Array,testClass.matching_class_methods(//))
@@ -77,18 +78,18 @@ def test_object_identities
 	assert_match(/[0-9-]+\{4\},#<StreamPattern:0x[a-f0-9]+>,#<StreamPattern id: nil, name: nil, created_at: nil, updated_at: nil>>/,StreamPattern.new.object_identities)
 	assert_match(/[0-9-]+\{4\},#<StreamPattern:0x[a-f0-9]+>,#<StreamPattern id: nil, name: nil, created_at: nil, updated_at: nil>>/,StreamPattern.new.object_identities)
 	assert_match(/<StreamPattern #[0-9-]+\{4\},#<StreamPattern:0x[a-f0-9]+>,#<StreamPattern id: nil, name: nil, created_at: nil, updated_at: nil>>/,StreamPattern.new.object_identities)
-end #test
+end #object_identities
 def test_objectKind
 	assert_equal('nil',nil.objectKind)
 	assert_equal("Class Fixnum has no superclass.",3.objectKind)
-end #test
+end #objectKind
 def test_objectClass
 	assert_equal('Symbol',:cat.objectClass)
 	assert_equal('NilClass',nil.objectClass)
 	assert_equal('Module Generic_Table',Generic_Table.objectClass)
 	assert_equal("Fixnum",3.objectClass)
 	assert_equal("Regexp",/3/.objectClass)
-end #test
+end #objectClass
 def test_objectName
 	assert_equal('cat',:cat.objectName)
 end #test
@@ -100,25 +101,25 @@ def test_noninherited_public_instance_methods
 	assert_equal(['publicInstanceMethod'],TestClass.public_instance_methods(false))
 	assert_equal(Set.new(['publicInstanceMethod','protectedInstanceMethod']),Set.new(TestClass.instance_methods(false)))
 	assert_equal(['publicInstanceMethod'],TestClass.new.noninherited_public_instance_methods)
-end #test
+end #noninherited_public_instance_methods
 def test_noninherited_public_class_methods
 	assert_equal(Class,TestClass.class)
 	assert_equal(Object,TestClass.superclass)
 	assert_equal(['classMethod'],TestClass.methods-TestClass.superclass.methods)
 #	assert_equal(['classMethod'],TestClass.class.public_instance_methods)
 	assert_equal(['classMethod'],TestClass.new.noninherited_public_class_methods)
-end #test
+end #noninherited_public_class_methods
 def test_whoAmI
 	assert_equal('Symbol :cat',:cat.whoAmI)
-end #test
+end #whoAmI
 def test_relationship
 
 	assert_nil(TestClass.relationship(:cat))
-end #test
+end #relationship
 def test_module
 	assert(!StreamPattern.module?)
 	assert(Generic_Table.module?)
-end #test
+end #module
 def test_noninherited_modules
 	assert(Generic_Table.module?)
 	assert(!AcquisitionStreamSpec.module?)
@@ -132,7 +133,7 @@ def test_noninherited_modules
 	assert_include(Generic_Table,AcquisitionInterface.ancestors-[AcquisitionInterface])
 	assert_equal([Generic_Table],AcquisitionInterface.ancestors-[AcquisitionInterface,RubyInterface]-AcquisitionInterface.superclass.superclass.ancestors)
 	assert_equal([],AcquisitionInterface.noninherited_modules) # stI at work
-end #test
+end #noninherited_modules
 def test_module_included
 	assert(StreamPattern.module_included?(:Generic_Table))
 end #test

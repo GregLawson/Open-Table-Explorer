@@ -9,28 +9,28 @@
 class Set
 def set_inspect
 	return "#{inspect}; #{map {|h| h.object_identities}.join(', ')}"
-end #def
+end #set_inspect
 
 end #class
 class Module
 def instance_methods_from_class(all=false)
 	return self.instance_methods(all)
-end #def
+end #instance_methods_from_class
 def instance_respond_to?(method_name)
 	return instance_methods_from_class.include?(method_name.to_s)
-end #def
+end #instance_respond_to
 def similar_methods(symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize
 	table='^'+symbol.to_s.tableize
 	return (matching_instance_methods(singular) + matching_instance_methods(plural) + matching_instance_methods(table)).uniq
-end #def
+end #similar_methods
 def matching_instance_methods(regexp,all=false)
 	if regexp.instance_of?(Symbol) then
 		regexp=regexp.to_s
 	end #if
 	instance_methods_from_class(all).select {|m| m[Regexp.new(regexp),0] }
-end #def
+end #matching_instance_methods
 def matching_class_methods(regexp,all=false)
 	if regexp.instance_of?(Symbol) then
 		regexp=regexp.to_s
@@ -47,7 +47,7 @@ class Object
 #~ } #define_class_methods
 def object_identities
 	return "<#{objectClass} \##{object_id}{#{hash}},#{to_s},#{inspect}>"
-end #def
+end #object_identities
 def objectKind
 	if nil? then
 		return "nil"
@@ -65,7 +65,7 @@ def objectKind
 		end
 	end
 
-end
+end  #objectKind
 def objectClass(verbose=false)
 	if nil? then
 		return "NilClass"
@@ -81,7 +81,7 @@ def objectClass(verbose=false)
 		end
 	end
 
-end
+end #objectClass
 def objectName(verbose=false)
 	if nil? then
 		return "#{obj} is nil."
@@ -164,10 +164,10 @@ end
 def noninherited_public_instance_methods
 	puts "noninherited_public_instance_methods in class Object called"
 	return self.class.public_instance_methods(false)
-end
+end #noninherited_public_instance_methods
 def noninherited_public_class_methods
 	self.class.methods-self.class.superclass.methods
-end
+end #noninherited_public_class_methods
 def whoAmI(verbose=false)
 	obj=self
 #	puts("obj=#{obj}") if verbose
@@ -215,7 +215,7 @@ def whoAmI(verbose=false)
 		end
 	end
 
-end #def
+end #whoAmI
 def relationship(obj=self)
 	puts "self is #{self.whoAmI}"
 	puts "obj is #{obj.whoAmI}"
@@ -264,17 +264,17 @@ def relationship(obj=self)
 	else
 		puts "Can't figure out relation between #{obj.inspect} and #{self.inspect}"
 	end #if
-end #def
+end #relationship
 def module?
 	self.class.name=='Module'
-end #def
+end #module
 def noninherited_modules
 	if module? then
 		return ancestors-[self]
 	else
 		return ancestors-[self]-superclass.ancestors
 	end #if
-end #def
+end #noninherited_modules
 def module_included?(symbol)
 	if symbol.kind_of?(Class) then
 		ancestors.map{|a| a.name}.include?(symbol.name)
