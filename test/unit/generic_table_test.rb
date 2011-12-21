@@ -1,9 +1,11 @@
-require 'test_helper'
-# executed in alphabetical orer? Longer names sort later.
+require 'test/test_helper'
+# executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
+@@table_name='stream_patterns'
+fixtures @@table_name.to_sym
 	fixtures :table_specs
 	fixtures :acquisition_stream_specs
 	fixtures :acquisition_interfaces
@@ -72,7 +74,7 @@ def test_associated_foreign_key_records
 	assert_equal(expected_association,@@FOREIGN_KEY_ASSOCIATION_INSTANCE.associated_foreign_key_records(@@TABLE_NAME_WITH_FOREIGN_KEY))
 	assert_equal(2,@@FOREIGN_KEY_ASSOCIATION_INSTANCE.associated_foreign_key_records(@@TABLE_NAME_WITH_FOREIGN_KEY).count)
 end #associated_foreign_key_records
-test "is_matching_association?" do
+def test_is_matching_association
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 #	 association_class=@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	 association_class=@@FOREIGN_KEY_ASSOCIATION_CLASS.association_class(@@TABLE_NAME_WITH_FOREIGN_KEY)
@@ -166,10 +168,12 @@ def test_is_polymorphic_association
 
 	assert(class_reference.is_polymorphic_association?(association_name))
 end #is_polymorphic_association
+def test_association_names_to_one
+end #association_names_to_one
 def test_association_names_to_many
 	class_reference=StreamLink
 	assert(class_reference.instance_methods(false).select {|m| class_reference.is_association_to_many?(m)})
-end #test
+end #association_names_to_many
 def test_association_names
 	class_reference=StreamLink
 	assert_not_empty(class_reference.instance_methods(false).select {|m| class_reference.is_association?(m)})
@@ -180,6 +184,30 @@ def test_association_names
 	assert_not_include('bug_ids', TestRun.association_names)
 	assert_equal(['bugs'],TestRun.association_names)
 end #association_names
+def test_model_file_name
+end #model_file_name
+def test_model_grep_command
+	assert_equal('grep "belongs_to" app/models/stream_pattern.rb &>/dev/null', StreamPattern.model_grep_command('belongs_to'))
+end #model_grep_command
+def test_model_grep
+	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep('has_many'))
+	assert_equal("has_many :stream_methods\n", StreamPattern.model_grep("has_many :stream_methods"))
+end #model_grep
+def test_association_grep_pattern
+	assert_equal("has_many :stream_methods\n", "#{StreamPattern.association_grep_pattern('has_many',:stream_methods)}")
+	assert_equal('', StreamPattern.association_grep('belongs_to',:stream_methods))
+end #association_grep_command
+def test_association_macro_type
+	macro='^[has_manyoneblgtd]+'
+	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep(macro))
+	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.association_grep('^([has_manyoneblgtd]+)', :stream_methods))
+	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_methods))
+	assert_equal(:belongs_to, StreamPattern.association_macro_type('belongs_to',:stream_methods))
+end #association_macro_type
+def test_association_grep
+	assert_equal('has_many :stream_methods\n', `#{StreamPattern.association_grep_command('has_many',:stream_methods)}`)
+	assert_equal('', StreamPattern.association_grep('belongs_to',:stream_methods))
+end #association_grep
 def test_has_many_association
 	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
 	assert(StreamMethod.has_many_association?(:stream_method_arguments),StreamMethod.association_grep('has_many',:stream_method_arguments))
@@ -200,6 +228,12 @@ def test_has_many_association
 
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_instance_methods(/^has_/))
 end #test_has_many_association
+def test_belongs_to_association
+	assert(StreamMethod.belongs_to_association?(:stream_patterns))
+end #belongs_to_association
+def test_has_one_association
+	assert(Acquisition.has_one_association?(:stream_patterns))
+end #has_one_association
 def test_association_method_plurality
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
@@ -207,11 +241,9 @@ def test_association_method_plurality
 	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
 	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_pattern))
 	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
-end #test
-def test_association_class
-	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
-	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.class_of_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
-end #test
+end #association_method_plurality
+def test_name_symbol
+end #name_symbol
 def test_association_method_symbol
 	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_models))
 	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_model))
@@ -222,7 +254,14 @@ def test_association_method_symbol
 	 association_class=@@FOREIGN_KEY_ASSOCIATION_CLASS.association_class(@@TABLE_NAME_WITH_FOREIGN_KEY)
 	assert_equal(association_class,@@CLASS_WITH_FOREIGN_KEY)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
-end #test
+end #association_method_symbol
+def test_class_of_name
+	assert_equal(StreamPattern, StreamPatternArgument.class_of_name(:stream_patterns))
+end #class_of_name
+def test_association_class
+	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.class_of_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+end #association_class
 
 def foreign_key_points_to_me?(ar_from_fixture,assName)
 	associated_records=testCallResult(ar_from_fixture,assName)
@@ -237,7 +276,7 @@ def foreign_key_points_to_me?(ar_from_fixture,assName)
 				assert_equal(ar_from_fixture.id,associated_foreign_key_id(associated_records,fk.to_sym),"assert_foreign_key_points_to_me: associated_records=#{associated_records.inspect},ar_from_fixture=#{ar_from_fixture.inspect},assName=#{assName}")
 			end #each
 	end #if
-end #def
+end #foreign_key_points_to_me
 def test_association_to_type
 	class_reference=StreamLink
 	association_reference=:inputs
@@ -250,6 +289,21 @@ def test_association_to_type
 		end #if
 	end #association_refs
 end #association_to_type
+def test_association_macro_type2
+	assert_equal(:belongs_to,StreamMethod.association_macro_type(:stream_patterns))
+	assert_equal(:has_many,StreamPattern.association_macro_type(:stream_methods))
+	assert_equal(:has_one,Acquisition.association_macro_type(:acquisition_stream_spec))
+	assert_equal(:neither_has_many_nor_belongs_to,StreamPattern.association_macro_type(:stream_patterns))
+end #association_macro_type
+def test_association_type
+	types=[] # nothing found yet
+	tables.each do |table|
+		associations.each do |association_name|
+			types << table.association_type(association_name)
+		end #associations
+	end #tables
+	assert_equal([], types.uniq)
+end #association_type
 def test_is_active_record_method
 	association_reference=:inputs
 	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
@@ -268,6 +322,8 @@ end #logical_primary_key
 @@default_connection=StreamPattern.connection
 def test_attribute_ddl
 	assert(@@default_connection.table_exists?(:stream_patterns))
+	assert_equal([], ActiveRecord::ConnectionAdapters::ColumnDefinition.methods(false))
+	assert_equal([], MethodModel.all.select{|m| m.owner==''})
 	assert_equal('integer',@@default_connection.type_to_sql(:integer))
 #private	assert_equal('',@@default_connection.default_primary_key_type)
 #2 arguments	assert_equal([],@@default_connection.index_name)
@@ -382,10 +438,8 @@ def test_aaa
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('acquisition_interface'))
 	assert(AcquisitionStreamSpec.instance_methods(false).include?('table_spec'))
 	assert_public_instance_method(acquisition_stream_spec,:acquisition_interface)
-	assert_raise(Test::Unit::AssertionFailedError) {assert_public_instance_method(acquisition_stream_spec,:acquisition_interfaces) }
-	assert_raise(Test::Unit::AssertionFailedError) { assert_public_instance_method(acquisition_stream_spec,:cabbage) }
-	assert_equal(Fixtures::identify(:HTTP),acquisition_interfaces(:HTTP).id)
-	assert_equal(Fixtures::identify(:HTTP),acquisition_stream_spec.acquisition_interface_id)
+
+assert_equal(Fixtures::identify(:HTTP),acquisition_stream_spec.acquisition_interface_id)
 	assert_equal(acquisition_stream_spec.acquisition_interface_id,acquisition_interfaces(:HTTP).id)
 	assert_equal(acquisition_stream_spec.scheme,acquisition_interfaces(:HTTP).scheme)
 	assert_equal(acquisition_stream_spec.scheme,acquisition_stream_spec.acquisition_interface.scheme)
