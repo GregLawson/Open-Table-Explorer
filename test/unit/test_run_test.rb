@@ -7,7 +7,7 @@
 ###########################################################################
 require 'test/test_helper'
 require 'active_support' # for singularize and pluralize
-# executed in alphabetical orer? Longer names sort later.
+# executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class TestRunTest < ActiveSupport::TestCase

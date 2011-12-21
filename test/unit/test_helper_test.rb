@@ -1,6 +1,7 @@
 require 'test/test_helper'
 class TestHelperTest < ActiveSupport::TestCase
-fixtures :stream_patterns
+@@table_name='stream_patterns'
+fixtures @@table_name.to_sym
 fixtures :table_specs
 require 'test/test_helper_test_tables.rb'
 def test_fixtures
@@ -137,7 +138,7 @@ def test_unknown
 end #test
 def test_assert_association_to_one
 	class_reference=StreamMethodArgument
-	association_reference=:parameter
+	association_reference=:stream_method
 	assert_association(class_reference,association_reference)
 	assert_association_to_one(class_reference,association_reference)
 	
@@ -178,9 +179,7 @@ def test_assert_associations
 	assert_associations(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,@@CLASS_WITH_FOREIGN_KEY)
 end #test
 def test_assert_general_associations
-	fixture_names.each do |table_name|
-		assert_general_associations(table_name)
-	end #each
+	assert_general_associations(@@table_name)
 end #test
 def test_other_association
 	model_class=TableSpec

@@ -5,24 +5,29 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test_helper'
-# executed in alphabetical orer? Longer names sort later.
+require 'test/test_helper'
+# executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class StreamPatternTest < ActiveSupport::TestCase
+@@test_name=self.name
+@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+@@table_name=@@model_name.tableize
+ 
+fixtures @@table_name.to_sym
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests
 	assert_module_included(@model_class,Generic_Table)
-	explain_assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
 end #def
 def test_general_associations
 	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	if @model_class.new.sequential_id? then
+	if @model_class.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
 			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
@@ -34,14 +39,14 @@ end #def
 def test_specific__stable_and_working
 	assert_equal(@my_fixtures,fixtures(@table_name))	
 end #test
+def test_all
+	@fullTable=StreamPatternArgument.all
+	assert_operator(@fullTable.size, :>, 0)
+end #all
 def test_aaa_test_new_assertions_ # aaa to output first
 	@stream_pattern=StreamPattern.find_by_name('Acquisition')
 	assert_equal('Acquisition',@stream_pattern.name)
 	assert_not_nil(@stream_pattern.id)
-	@fullTable=StreamPatternArgument.all
-	assert_equal(2,@fullTable.size)
-	#~ puts "@stream_pattern.id=#{@stream_pattern.id}"
-	#~ puts "@fullTable=#{@fullTable.inspect}"
 	@association=StreamPatternArgument.find_all_by_stream_pattern_id(@stream_pattern.id )
 	assert_equal(2,@association.size)
 
