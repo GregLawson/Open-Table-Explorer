@@ -8,4 +8,4 @@ test/fixtures/*.yml.gen
 Gemfile.lock
 scite.session
 /rake/ruby/1.8/*
-
+*~
