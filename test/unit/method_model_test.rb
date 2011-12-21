@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'test/test_helper'
 class MethodModelTest < ActiveSupport::TestCase
 def assert_method_model_initialized(m,owner,scope)
 	assert_instance_of(Class, owner)

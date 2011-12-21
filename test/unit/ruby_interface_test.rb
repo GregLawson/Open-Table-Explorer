@@ -1,20 +1,20 @@
-require 'test_helper'
-# executed in alphabetical orer? Longer names sort later.
+require 'test/test_helper'
+# executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class RubyInterfaceTest < ActiveSupport::TestCase
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test
-	explain_assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class.new,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
 end #def
 def test_general_associations
 	assert_general_associations(@table_name)
 end
 def test_id_equal
-	if @model_class.new.sequential_id? then
+	if @model_class.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
 			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."

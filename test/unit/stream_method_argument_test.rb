@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test_helper'
+require 'test/test_helper'
 
 class StreamMethodArgumentTest < ActiveSupport::TestCase
   # Replace this with your real tests.

@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'test/test_helper'
-# executed in alphabetical orer? Longer names sort later.
+# executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'

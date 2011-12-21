@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'test/test_helper'
 class ArelReadmeTest < ActiveSupport::TestCase
 def test_arel_readme_example #1
 	users = Table(:users)

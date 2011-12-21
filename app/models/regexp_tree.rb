@@ -102,6 +102,7 @@ def conservationOfCharacters
 end #conservationOfCharacters
 
 end #RegexpParser
+require 'app/models/nested_array.rb'
 class RegexpTree < NestedArray
 include Inline_Assertions
 def self.OpeningBrackets
