@@ -7,6 +7,6 @@
 ###########################################################################
 class StreamMethodArgument < ActiveRecord::Base # like the arguments of a methed def
 include Generic_Table
-has_many :stream_methods
+belongs_to :stream_method
 has_many :stream_links
 end #class
