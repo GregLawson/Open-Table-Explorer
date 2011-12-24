@@ -282,4 +282,41 @@ def test_Acquisition_Interface_modules
 	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test
 
+def test_attribute_ddl
+	assert(@@default_connection.table_exists?(:stream_patterns))
+	assert_equal([], ActiveRecord::ConnectionAdapters::ColumnDefinition.methods(false))
+	assert_equal([], MethodModel.all.select{|m| m.owner==''})
+	assert_equal('integer',@@default_connection.type_to_sql(:integer))
+#private	assert_equal('',@@default_connection.default_primary_key_type)
+#2 arguments	assert_equal([],@@default_connection.index_name)
+#too long	assert_equal([],@@default_connection.methods)
+	assert_instance_of(MethodModel,MethodModel.all.first)
+	assert_instance_of(MethodModel,MethodModel.first)
+	assert_instance_of(Array,MethodModel.first.keys)
+	assert_instance_of(Class,MethodModel.first[:owner])
+	assert_equal([{:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::ColumnDefinition},
+ {:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::TableDefinition},
+ {:scope=>:class, :owner=>ActiveRecord::Relation},
+ {:scope=>:class, :owner=>Arel::Nodes::Node},
+ {:scope=>:class, :owner=>Arel::TreeManager}],MethodModel.owners_of(:to_sql))
+	table_sql= @@default_connection.to_sql
+	assert_not_empty(table_sql)
+	attribute_sql=table_sql.grep(attribute_name)
+	assert_not_empty(attribute_sql)
+end #attribute_ddl
+def test_logical_attributes
+	assert_equal(Set[{:name=>"float"},
+ {:name=>"datetime"},
+ {:name=>"decimal"},
+ "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+ {:name=>"datetime"},
+ {:name=>"blob"},
+ {:name=>"boolean"},
+ {:name=>"date"},
+ {:name=>"time"},
+ {:name=>"text"},
+ {:name=>"integer"},
+ {:name=>"varchar", :limit=>255}],Set.new(StreamPattern.connection.native_database_types.values))
+	assert_equal(['name'],StreamPattern.logical_attributes)
+end #logical_attributes
 end #test class
