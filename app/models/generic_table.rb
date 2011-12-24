@@ -186,14 +186,16 @@ def Base.model_grep(model_regexp_string)
 	return `#{model_grep_command(model_regexp_string)}`
 end #model_grep
 def Base.association_grep_pattern(model_regexp_string,association_name)
-	return model_grep("^#{model_regexp_string} :#{association_name}$" )
+	return "#{model_regexp_string} :#{association_name}$"
 end #association_grep_command
+ASSOCIATION_MACRO_LETTERS='[has_manyoneblgtd]'
+ASSOCIATION_MACRO_PATTERN="^#{ASSOCIATION_MACRO_LETTERS}#{ASSOCIATION_MACRO_LETTERS}*\s*"
 def Base.association_macro_type(association_name)
-	hits=association_grep('^([has_manyoneblgtd]+)', association_name)
-	return hits.grep('^([has_manyoneblgtd]+)')
-end #association_grep
+	hits=association_grep(ASSOCIATION_MACRO_PATTERN, association_name)
+	return hits.match("(#{ASSOCIATION_MACRO_PATTERN})")[1].trim.to_sym
+end #association_macro_type
 def Base.association_grep(model_regexp_string,association_name)
-	return `#{association_grep_pattern(model_regexp_string,association_name)}`
+	return model_grep(association_grep_pattern(model_regexp_string,association_name))
 end #association_grep
 def Base.has_many_association?(association_name)
 	return system(association_grep('has_many',association_name))

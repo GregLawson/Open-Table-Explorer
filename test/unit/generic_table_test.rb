@@ -192,21 +192,29 @@ end #model_grep_command
 def test_model_grep
 	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep('has_many'))
 	assert_equal("has_many :stream_methods\n", StreamPattern.model_grep("has_many :stream_methods"))
+	macro='^[has_manyoneblgtd]* '
+	assert_equal("has_many :stream_methods\n", StreamPattern.model_grep("has_many :stream_methods"))
+	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep(macro))
 end #model_grep
 def test_association_grep_pattern
-	assert_equal("has_many :stream_methods\n", "#{StreamPattern.association_grep_pattern('has_many',:stream_methods)}")
+	assert_equal("has_many :stream_methods$", StreamPattern.association_grep_pattern('has_many',:stream_methods))
 	assert_equal('', StreamPattern.association_grep('belongs_to',:stream_methods))
 end #association_grep_command
 def test_association_macro_type
 	macro='^[has_manyoneblgtd]+'
-	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep(macro))
-	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.association_grep('^([has_manyoneblgtd]+)', :stream_methods))
+	assert_match(Regexp.new(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN),"has_many :stream_pattern_arguments\nhas_many :stream_methods\n")
+ 	assert_equal("has_many :stream_methods\n", StreamPattern.association_grep(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
 	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_methods))
 	assert_equal(:belongs_to, StreamPattern.association_macro_type('belongs_to',:stream_methods))
 end #association_macro_type
 def test_association_grep
-	assert_equal('has_many :stream_methods\n', `#{StreamPattern.association_grep_command('has_many',:stream_methods)}`)
-	assert_equal('', StreamPattern.association_grep('belongs_to',:stream_methods))
+	assert_equal('has_many :stream_methods$', StreamPattern.association_grep_pattern('has_many',:stream_methods))
+	assert_equal('belongs_to :stream_methods$', StreamPattern.association_grep_pattern('belongs_to',:stream_methods))
+	assert_equal("has_many :stream_methods\n", StreamPattern.association_grep('has_many',:stream_methods))
+	assert_equal("", StreamPattern.association_grep('belongs_to',:stream_methods))
+	assert_equal("^[has_manyoneblgtd][has_manyoneblgtd]* * :stream_methods$", StreamPattern.association_grep_pattern(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
+	assert_equal("^[has_manyoneblgtd][has_manyoneblgtd]* * :stream_methods$", StreamPattern.association_grep_pattern(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
+	assert_equal("has_many :stream_methods\n", StreamPattern.association_grep(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
 end #association_grep
 def test_has_many_association
 	assert_equal('app/models/stream_method.rb',StreamMethod.model_file_name)
@@ -320,28 +328,6 @@ def test_logical_primary_key
 	end #each
 end #logical_primary_key
 @@default_connection=StreamPattern.connection
-def test_attribute_ddl
-	assert(@@default_connection.table_exists?(:stream_patterns))
-	assert_equal([], ActiveRecord::ConnectionAdapters::ColumnDefinition.methods(false))
-	assert_equal([], MethodModel.all.select{|m| m.owner==''})
-	assert_equal('integer',@@default_connection.type_to_sql(:integer))
-#private	assert_equal('',@@default_connection.default_primary_key_type)
-#2 arguments	assert_equal([],@@default_connection.index_name)
-#too long	assert_equal([],@@default_connection.methods)
-	assert_instance_of(MethodModel,MethodModel.all.first)
-	assert_instance_of(MethodModel,MethodModel.first)
-	assert_instance_of(Array,MethodModel.first.keys)
-	assert_instance_of(Class,MethodModel.first[:owner])
-	assert_equal([{:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::ColumnDefinition},
- {:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::TableDefinition},
- {:scope=>:class, :owner=>ActiveRecord::Relation},
- {:scope=>:class, :owner=>Arel::Nodes::Node},
- {:scope=>:class, :owner=>Arel::TreeManager}],MethodModel.owners_of(:to_sql))
-	table_sql= @@default_connection.to_sql
-	assert_not_empty(table_sql)
-	attribute_sql=table_sql.grep(attribute_name)
-	assert_not_empty(attribute_sql)
-end #attribute_ddl
 def test_candidate_logical_keys_from_indexes
 #?	assert(Frequency.connection.index_exists?(:frequencies,:frequency_name))
 	assert_not_nil(StreamPattern.connection)
@@ -363,21 +349,6 @@ def test_candidate_logical_keys_from_indexes
 		end #if
 	end #each
 end #candidate_logical_keys_from_indexes
-def test_logical_attributes
-	assert_equal(Set[{:name=>"float"},
- {:name=>"datetime"},
- {:name=>"decimal"},
- "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
- {:name=>"datetime"},
- {:name=>"blob"},
- {:name=>"boolean"},
- {:name=>"date"},
- {:name=>"time"},
- {:name=>"text"},
- {:name=>"integer"},
- {:name=>"varchar", :limit=>255}],Set.new(StreamPattern.connection.native_database_types.values))
-	assert_equal(['name'],StreamPattern.logical_attributes)
-end #logical_attributes
 def test_is_logical_primary_key
 end #logical_primary_key
 def test_sequential_id
