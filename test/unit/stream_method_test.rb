@@ -20,27 +20,35 @@ rescue  StandardError => exception_raised
 	puts 'Error: ' + exception_raised.inspect + ' could not get data from '+stream.url
 	puts "$!=#{$!}"
 end #def	  
-def test_interaction
+def test_gui_name
 	acq=stream_methods(:HTTP)
-	assert_instance_of(StreamMethod,acq)
-#	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
-	acq.compile_code
-	assert_not_nil(acq)
-	@my_fixtures.each_value do |acq|
-		assert_instance_of(StreamMethod,acq)
-#		puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
-		acq.compile_code
-		#~ if acq.errors.empty? then
-			#~ puts "No error in acq=#{acq.interface_code.inspect}"
-		#~ else
-			#~ puts "acq.errors=#{acq.errors.inspect} for acq=#{acq.interface_code.inspect}"
-		#~ end #if
-		assert_not_nil(acq)
-		assert(!acq.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
-	end #each_value
-
-end #test
-def test_code_sizes
+	assert_equal("@input", acq.gui_name('input'))
+end #gui_name
+def test_instance_name_reference
+	acq=stream_methods(:HTTP)
+	assert_equal("self[:input]", acq.instance_name_reference('input'))
+end #gui_name
+def test_default_method
+	acq=stream_methods(:HTTP)
+	assert_equal('@acquisition=@uri', acq.default_method)
+end #default_method
+def test_map_io
+	acq=stream_methods(:HTTP)
+	code=acq.default_method
+	name='uri'
+	assert_equal('@acquisition=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	name='acquisition'
+	assert_equal('self[:acquisition]=@uri', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	name='uri'
+	code=code.gsub(acq.gui_name(name), acq.instance_name_reference(name))
+	assert_equal('@acquisition=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	name='acquisition'
+	code=code.gsub(acq.gui_name(name), acq.instance_name_reference(name))
+	assert_equal('self[:acquisition]=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	assert_equal('', acq.map_io(''))
+	assert_equal('self[:acquisition]=self[:uri]', acq.map_io(acq.default_method))
+end #map_io
+def test_eval_method
 	acq=stream_methods(:HTTP)
 	code=acq.interface_code
 	if code.nil? || code.empty? then
@@ -53,6 +61,7 @@ def test_code_sizes
 	end #if
 	assert_operator(rows,:>,0)
 	assert_operator(cols,:>,0)
+	acq.compile_code!
 	explain_assert_respond_to(acq,:interface_code_method)
 	assert_include('interface_code_method',acq.methods(true))
 #	acq.eval_method(:interface_code,'')
@@ -60,7 +69,97 @@ def test_code_sizes
 	assert_include('interface_code_rows',acq.singleton_methods(true))
 	explain_assert_respond_to(acq,:interface_code_rows)
 	assert_not_nil(acq.interface_code_rows)
-end #test
+end #eval_method
+def test_compile_code
+	acq=stream_methods(:HTTP)
+	assert_instance_of(StreamMethod,acq)
+#	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
+	acq.compile_code!
+	assert_not_nil(acq)
+	@my_fixtures.each_value do |acq|
+		assert_instance_of(StreamMethod,acq)
+#		puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
+		acq.compile_code!
+		#~ if acq.self[:errorz]=self[:errorz].empty? then
+			#~ puts "No error in acq=#{acq.interface_code.inspect}"
+		#~ else
+			#~ puts "acq.self[:errorz]=self[:errorz]=#{acq.self[:errorz]=self[:errorz].inspect} for acq=#{acq.interface_code.inspect}"
+		#~ end #if
+		assert_not_nil(acq)
+		assert(!acq.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
+	end #each_value
+end #compile_code
+def test_input_stream_names
+	acq=stream_methods(:HTTP)
+	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
+	stream_inputs=stream_pattern_arguments.select{|a| a.direction=='Input'}
+	assert_equal(['URI'], stream_inputs.map{|a| a.name})
+	assert_equal(['uri'], acq.input_stream_names)
+
+end #input_stream_names
+def test_output_stream_names
+	acq=stream_methods(:HTTP)
+	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
+	stream_outputs=stream_pattern_arguments.select{|a| a.direction=='Output'}
+	assert_equal(['Acquisition'], stream_outputs.map{|a| a.name})
+	assert_equal(['acquisition'], acq.output_stream_names)
+
+end #output_stream_names
+def test_fire
+	acq=stream_methods(:HTTP)
+	assert_instance_of(StreamMethod,acq)
+#	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
+	acq.compile_code!
+	acq[:uri]='http://192.168.100.1'
+	assert(acq.has_attribute?(:uri))
+	assert(!acq.has_attribute?(:errors))
+	assert_equal(ActiveModel::Errors.new('err'), acq.errors)
+	assert_equal([], acq.errors.full_messages)
+	assert(!acq.has_attribute?(:error))
+	assert(!acq.has_attribute?(:error2))
+
+	firing=acq.fire!
+	assert(firing.has_attribute?(:errorz))
+	assert_equal('#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>', firing[:error2])
+	assert_equal([], firing[:errorz])
+	assert_equal("[]", firing.errorz.inspect)
+	assert_instance_of(ActiveModel::Errors, firing.errors)
+	assert_instance_of(Array, firing.errors.full_messages)
+	assert_equal(ActiveModel::Errors.new('err'), firing.errors)
+	assert_instance_of(StreamMethod, firing)
+	assert_kind_of(StreamMethod, firing)
+	assert_equal(firing, acq)
+	assert_equal('http://192.168.100.1', firing.uri)
+
+	assert_equal('', firing[:acquisition], "firing=#{firing.inspect}, acq=#{acq.inspect}")
+	assert_equal([], firing.methods(false).inspect)
+	assert_equal('', firing.instance_variables.inspect)
+	assert(firing.has_attribute?(:errors))
+	assert(firing.has_attribute?(:acquisition))
+end #fire
+def test_errors
+	acq=stream_methods(:HTTP)
+	assert(!acq.has_attribute?(:errors))
+	assert_instance_of(ActiveModel::Errors, acq.errors)
+	assert_instance_of(Array, acq.errors.full_messages)
+	assert_equal({}, acq.errors)
+	assert_equal([], acq.errors.full_messages)
+	acq.errors.add(:acquisition,"is bad.")
+	assert_equal(["Acquisition is bad."], acq.errors.full_messages)
+#fails	assert_equal({[:acquisition, ["is bad."]]=>nil}, acq.errors)
+#fails	assert_equal({[:acquisition, ["is bad."]]=>nil}.inspect, acq.errors.to_hash.inspect)
+	acq.errors.add(:errors,"is worse.")
+	assert_equal(2, acq.errors.count)
+	assert_equal(["is bad."], acq.errors[:acquisition])
+	assert_equal(["is worse."], acq.errors[:errors])
+	assert_equal([:acquisition, :errors], acq.errors.keys)
+	assert_equal("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<errors>\n  <error>Acquisition is bad.</error>\n  <error>Errors is worse.</error>\n</errors>\n", acq.errors.to_xml)
+#fails	assert_equal({[:acquisition, ["is bad."]]=>nil, [:errors, ["is worse."]]=>nil}, acq.errors.as_json)
+	assert_equal(["Acquisition is bad.", "Errors is worse."], acq.errors.full_messages)
+	assert_equal(["Acquisition is bad.", "Errors is worse."], acq.errors.to_a)
+	acq.errors.clear      
+	assert_equal(0, acq.errors.count)
+end #errors
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests
@@ -81,6 +180,6 @@ def test_id_equal
 			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
 		end
 	end
-end #def
+end #test_id_equal
 
 end #
