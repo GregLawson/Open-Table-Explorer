@@ -17,20 +17,28 @@ end #initialize
 def Specification.all
 # [name, specification, spec_kind, spec_id, parent, broader]
 	patterns=StreamPattern.all.map{|s| {:name => s.name, :spec_kind => :StreamPattern}}
-	methods=StreamMethod.all.map{|s| {:name => s.name, :spec_kind => :StreamMethod, :parent => s.stream_pattern.name.to_s}}
-	regexps=ExampleType.all.map{|s| {:name => s.import_class, :spec_kind => :ExampleType, :parent => s.stream_pattern.name.to_s}}
-	regexps=GenericType.all.map{|s| {:name => s.import_class, :spec_kind => :ExampleType, :parent => s.stream_pattern.name.to_s}}
-	specifications=patterns+methods+regexps+[
-		{:name => :Acquisitions, :spec_kind => :StreamPattern},
-		{:name => :Shell, 	:spec_kind => :StreamMethod, 	:parent => :Acquisitions, :broader => :both},
+	methods=StreamMethod.all.map do |s|
+		spec={:name => s.name, :spec_kind => :StreamMethod}
+		if !s.stream_pattern.nil? then
+			spec[:parent]= s.stream_pattern.name.to_s
+		end #if
+		spec
+	end #map
+	regexps=ExampleType.all.map{|s| {:name => s.import_class, :spec_kind => :ExampleType}}
+	regexps=GenericType.all.map{|s| {:name => s.import_class, :spec_kind => :ExampleType}}
+	urls=Url.all.map{|s| {:name => s.href, :spec_kind => :Url}}
+
+	specifications=patterns+methods+regexps+urls+[
+		{:name => :Acquisitions, :spec_kind => StreamPattern},
+		{:name => :Shell, 	:spec_kind => StreamMethod, 	:parent => :Acquisitions, :broader => :both},
 		{:name => :Ifconfig,	:spec_kind => StreamMethodCall, :parent => :Shell, :specification => 'ifconfig'},
-		{:name => :Nmap, 	:spec_kind =>  StreamMethodCall, :parent => :Shell, specification => "nmap -sP", },
-		{:name => :Parsers, 	:spec_kind => :StreamPattern},
-		{:name => :Regexp, 	:spec_kind => :StreamMethod, 	:parent => :Parsers, :broader => :both},
+		{:name => :Nmap, 	:spec_kind =>  StreamMethodCall, :parent => :Shell, :specification => "nmap -sP", },
+		{:name => :Parsers, 	:spec_kind => StreamPattern},
+		{:name => :Regexp, 	:spec_kind => StreamMethod, 	:parent => :Parsers, :broader => :both},
 		{:name => :Hosts,	:spec_kind => StreamMethodCall, :parent => :Nmap, :specification => 'ifconfig'}
 		]
 	return specifications.map do |spec| 
-		new_attributes={:spec_id =>  spec[:spec_kind].constantize.find_by_name(spec[:name])}
+		new_attributes={:spec_id =>  spec[:spec_kind].find_by_name(spec[:name])}
 		
 		hash=spec.merge(Specification.new(new_attributes))
 	end #map
