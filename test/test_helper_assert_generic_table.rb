@@ -85,7 +85,7 @@ def assert_association(class_reference,association_reference, message=nil)
 	end #if
 	assert_instance_of(Symbol,association_reference,build_message(message, "assert_association"))
 	if klass.module_included?(Generic_Table) then
-		association_type=klass.association_to_type(association_reference)
+		association_type=klass.association_arity(association_reference)
 		assert_not_nil(association_type, message)
 		assert_include(association_type,[:to_one,:to_many,:not_an_association],build_message(message, "In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}"))
 	end #if
@@ -113,10 +113,10 @@ def assert_association_to_many(class_reference,assName)
 	assert(!class_reference.is_association_to_one?(assName),"fail !is_association_to_one?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}")
 end #association_to_many
 def assert_has_many_association(class_reference, association_name)
-	assert(system(class_reference.association_grep('has_many',association_name)))
+	assert(class_reference.association_grep('has_many',association_name))
 end #def
 def assert_belongs_to_association(class_reference, association_name)
-	assert(system(class_reference.association_grep('belongs_to',association_name)))
+	assert(class_reference.association_grep('belongs_to',association_name))
 end #def
 def assert_belongs_to(table_name1,table_name2)
 	model_class=Generic_Table.eval_constant(table_name1.classify)
