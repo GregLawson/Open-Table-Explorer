@@ -41,10 +41,10 @@ def test_id_equal
 			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
 		end
 	end
-end #def
+end #id_equal
 def test_specific__stable_and_working
-end #test
+end #specific__stable_and_working
 def test_aaa_test_new_assertions_ # aaa to output first
 	assert_equal(fixtures(@table_name), @my_fixtures)
-end #test
+end #aaa_test_new_assertions
 end #class
