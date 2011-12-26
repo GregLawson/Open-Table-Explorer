@@ -205,7 +205,11 @@ def test_association_macro_type
 	assert_match(Regexp.new(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN),"has_many :stream_pattern_arguments\nhas_many :stream_methods\n")
  	assert_equal("has_many :stream_methods\n", StreamPattern.association_grep(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
 	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_methods))
-	assert_equal(:belongs_to, StreamPattern.association_macro_type('belongs_to',:stream_methods))
+	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_methods))
+	assert_equal(:has_many,StreamPattern.association_macro_type(:stream_methods))
+	assert_equal(:has_one,Acquisition.association_macro_type(:acquisition_stream_spec))
+	assert_equal(:belongs_to,StreamMethod.association_macro_type(:stream_pattern))
+	assert_nil(StreamMethod.association_macro_type(:stream_patterns))
 end #association_macro_type
 def test_association_grep
 	assert_equal('has_many :stream_methods$', StreamPattern.association_grep_pattern('has_many',:stream_methods))
@@ -264,11 +268,11 @@ def test_association_method_symbol
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #association_method_symbol
 def test_class_of_name
-	assert_equal(StreamPattern, StreamPatternArgument.class_of_name(:stream_patterns))
+	assert_equal(StreamPattern, Generic_Table.class_of_name(:stream_patterns))
 end #class_of_name
 def test_association_class
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
-	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.class_of_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,Generic_Table.class_of_name(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #association_class
 
 def foreign_key_points_to_me?(ar_from_fixture,assName)
@@ -285,32 +289,51 @@ def foreign_key_points_to_me?(ar_from_fixture,assName)
 			end #each
 	end #if
 end #foreign_key_points_to_me
-def test_association_to_type
+def test_association_arity
 	class_reference=StreamLink
 	association_reference=:inputs
 	association_refs do |class_reference, association_reference|
 		assert_association_to_one(class_reference,association_reference)
 		if class_reference.module_included?(Generic_Table) then
-			association_type=class_reference.association_to_type(association_reference)
+			association_type=class_reference.association_arity(association_reference)
 			assert_not_nil(association_type)
 			assert_include(association_type,[:to_one,:to_many])
 		end #if
 	end #association_refs
-end #association_to_type
+end #association_arity
 def test_association_macro_type2
-	assert_equal(:belongs_to,StreamMethod.association_macro_type(:stream_patterns))
-	assert_equal(:has_many,StreamPattern.association_macro_type(:stream_methods))
-	assert_equal(:has_one,Acquisition.association_macro_type(:acquisition_stream_spec))
-	assert_equal(:neither_has_many_nor_belongs_to,StreamPattern.association_macro_type(:stream_patterns))
-end #association_macro_type
+	assert_equal(:belongs_to,StreamMethod.association_macro_type2(:stream_pattern))
+	assert_equal(:belongs_to,StreamMethod.association_macro_type2(:stream_patterns))
+	assert_equal(:has_many,StreamPattern.association_macro_type2(:stream_methods))
+	assert_equal(:has_one,Acquisition.association_macro_type2(:acquisition_stream_spec))
+	assert_equal(:neither_has_many_nor_belongs_to,StreamPattern.association_macro_type2(:stream_patterns))
+end #association_macro_type2
+def warn_association_type(table, association_name)
+	klass=Generic_Table.class_of_name(table)
+	new_type= klass.association_type(association_name)
+	assert_associations(table, association_name)
+	if new_type==:to_many_ || new_type==:to_one_ then
+		puts "table=#{table.inspect}, association_name=#{association_name.inspect}, new_type=#{new_type.inspect}"
+		puts klass.association_arity(association_name)
+		puts klass.association_macro_type(association_name)
+
+		puts Generic_Table.class_of_name(association_name).association_arity(table)
+		puts Generic_Table.class_of_name(association_name).association_macro_type(table)
+
+	end #if
+	return new_type
+end #warn_association_type
 def test_association_type
+	assert_equal(:to_one_belongs_to, StreamMethod.association_type(:stream_pattern))
+	warn_association_type(StreamMethod, :stream_pattern)
 	types=[] # nothing found yet
-	tables.each do |table|
-		associations.each do |association_name|
-			types << table.association_type(association_name)
+	Generic_Table.generic_table_class_names.each do |table|
+		klass=Generic_Table.class_of_name(table)
+		klass.association_names.each do |association_name|
+			types << warn_association_type(table, association_name)
 		end #associations
 	end #tables
-	assert_equal([], types.uniq)
+	assert_equal([:to_many_has_many, :to_one_, :to_one_belongs_to, :to_one_has_one, :to_many_], types.uniq)
 end #association_type
 def test_is_active_record_method
 	association_reference=:inputs
@@ -466,20 +489,20 @@ def test_Association_Progression
 	assert(!EmptyAssociatedModel.instance_respond_to?(:test_table))
 	assert(!EmptyClass.new.respond_to?(:test_table))
 
-	assert_equal(:to_one, FullAssociatedModel.association_to_type(:test_table))
-	assert_equal(:to_one, HalfAssociatedModel.association_to_type(:test_table))
-	assert_equal(:not_an_association, GenericTableAssociatedModel.association_to_type(:test_table))
-	assert_equal(:not_an_association, EmptyAssociatedModel.association_to_type(:test_table))
+	assert_equal(:to_one, FullAssociatedModel.association_arity(:test_table))
+	assert_equal(:to_one, HalfAssociatedModel.association_arity(:test_table))
+	assert_equal(:not_an_association, GenericTableAssociatedModel.association_arity(:test_table))
+	assert_equal(:not_an_association, EmptyAssociatedModel.association_arity(:test_table))
 	
 	assert(TestTable.instance_respond_to?(:full_associated_models))
 	assert(!TestTable.instance_respond_to?(:half_associated_model))
 	assert(!TestTable.instance_respond_to?(:generic_table_associated_model))
 	assert(!TestTable.instance_respond_to?(:empty_associated_model))
 
-	assert_equal(:to_many,TestTable.association_to_type(:full_associated_models))
-	assert_equal(:not_an_association,TestTable.association_to_type(:half_associated_model))
-	assert_equal(:not_an_association,TestTable.association_to_type(:generic_table_associated_model))
-	assert_equal(:not_an_association,TestTable.association_to_type(:empty_associated_model))
+	assert_equal(:to_many,TestTable.association_arity(:full_associated_models))
+	assert_equal(:not_an_association,TestTable.association_arity(:half_associated_model))
+	assert_equal(:not_an_association,TestTable.association_arity(:generic_table_associated_model))
+	assert_equal(:not_an_association,TestTable.association_arity(:empty_associated_model))
 
 	assert(TestTable.is_association?(:full_associated_models))
 	assert_equal('test_tables',TestTable.table_name)
