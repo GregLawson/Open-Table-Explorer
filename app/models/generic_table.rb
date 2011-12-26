@@ -186,25 +186,29 @@ def Base.model_grep(model_regexp_string)
 	return `#{model_grep_command(model_regexp_string)}`
 end #model_grep
 def Base.association_grep_pattern(model_regexp_string,association_name)
-	return "#{model_regexp_string} :#{association_name}$"
+	return "#{model_regexp_string} :#{association_name}" # no end of line $, so that polymorphic associations are found.
 end #association_grep_command
 ASSOCIATION_MACRO_LETTERS='[has_manyoneblgtd]'
 ASSOCIATION_MACRO_PATTERN="^#{ASSOCIATION_MACRO_LETTERS}#{ASSOCIATION_MACRO_LETTERS}*\s*"
 def Base.association_macro_type(association_name)
 	hits=association_grep(ASSOCIATION_MACRO_PATTERN, association_name)
-	return hits.match("(#{ASSOCIATION_MACRO_PATTERN})")[1].trim.to_sym
+	if hits.empty? then
+		return nil
+	else
+		return hits.match("(#{ASSOCIATION_MACRO_PATTERN})")[1].sub(/\s*$/, '').to_sym
+	end #if
 end #association_macro_type
 def Base.association_grep(model_regexp_string,association_name)
 	return model_grep(association_grep_pattern(model_regexp_string,association_name))
 end #association_grep
 def Base.has_many_association?(association_name)
-	return system(association_grep('has_many',association_name))
+	return association_grep('has_many',association_name)
 end #has_many_association
 def Base.belongs_to_association?(association_name)
-	return system(association_grep('belongs_to',association_name))
+	return association_grep('^belongs_to',association_name)
 end #belongs_to_association
 def Base.has_one_association?(association_name)
-	return system(association_grep('has_one',association_name))
+	return association_grep('^has_one',association_name)
 end #has_one_association
 def Base.association_method_plurality(association_table_name)
 	if self.instance_respond_to?(association_table_name) then
@@ -222,7 +226,7 @@ def Base.name_symbol(association_table_name)
 	if association_table_name.kind_of?(Class) then
 		return association_table_name.name.tableize.to_sym					
 	elsif association_table_name.kind_of?(String) then
-		return association_table_name.to_sym						
+		return association_table_name.tableize.to_sym						
 	elsif association_table_name.kind_of?(Symbol) then
 		return association_table_name.to_sym
 	else # other object
@@ -232,18 +236,16 @@ end #name_symbol
 def Base.association_method_symbol(association_table_name)
 	return association_method_plurality(name_symbol(association_table_name))
 end #association_method_symbol
-def Base.class_of_name(name)
-	 return name.to_s.classify.constantize
-end #class_of_name
+# return class when passed a symbol reference
 def Base.association_class(assName)
 	 if !is_association?(association_method_symbol(assName)) then
 		raise "#{association_method_symbol(assName)} is not an association of #{self.name}."
 	else
-		 return class_of_name(assName)
+		 return Generic_Table.class_of_name(assName)
 	end #if
 end #association_class
 # returns :to_one, :to_many, or :not_an_association
-def Base.association_to_type(association_name)
+def Base.association_arity(association_name)
 	if is_association_to_one?(association_name) then
 		return :to_one
 	elsif is_association_to_many?(association_name) then
@@ -251,7 +253,8 @@ def Base.association_to_type(association_name)
 	else 
 		return :not_an_association
 	end #if
-end #association_to_type
+end #association_arity
+# Figures out association type from pattern of method names
 # returns :has_many, :belongs_to, or :neither_has_many_nor_belongs_to
 def Base.association_macro_type2(association_name)
 	if belongs_to_association?(association_name) then
@@ -263,10 +266,10 @@ def Base.association_macro_type2(association_name)
 	else
 		return :neither_has_many_nor_belongs_to
 	end #if
-end #association_macro_type
-# concatenate association_to_type and association_macro_type
+end #association_macro_type2
+# concatenate association_arity and association_macro_type
 def Base.association_type(association_name)
-	return (association_to_type(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym
+	return (association_arity(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym
 end #association_type
 def Base.is_active_record_method?(method_name)
 	if ActiveRecord::Base.instance_methods_from_class(true).include?(method_name.to_s) then
@@ -362,6 +365,9 @@ require 'app/models/IncludeModuleClassMethods.rb'
  }
 define_class_methods {
 } # define_class_methods
+def Generic_Table.class_of_name(name)
+	 return name.to_s.classify.constantize
+end #class_of_name
 def Generic_Table.is_generic_table?(model_class_name)
 	return false if (model_class_name =~ /_ids$/)
 	if Generic_Table.is_ActiveRecord_table?(model_class_name) then
@@ -656,7 +662,7 @@ def self.db2yaml
 end #def
 # Display attribute or method value from association even if association is nil
 def association_state(assName)
-	case self.class.association_to_type(assName)
+	case self.class.association_arity(assName)
 	when :to_one
 		foreign_key_value=self[assName.to_s+'_id']
 		if foreign_key_value.nil? then # foreign key uninitialized
@@ -698,7 +704,7 @@ def association_state(assName)
 	when:not_an_association
 		return "#{self.class.name} does not recognize #{assName} as association."
 	else
-		return "New return value from #{self.class.name}.association_to_type(#{assName})=#{self.class.association_to_type(assName)}."
+		return "New return value from #{self.class.name}.association_arity(#{assName})=#{self.class.association_arity(assName)}."
 	end #if
 end #def
 def association_has_data(assName)
@@ -720,9 +726,6 @@ def Match_and_strip(regexp=/=$/)
 	matching_methods(regexp).map do |m|
 		m.sub(regexp,'')
 	end
-end #def
-def Generic_Table.tables
-	TableSpec.new.tables
 end #def
 def Generic_Table.eval_constant(constant_name)
 	constant_name.constantize
