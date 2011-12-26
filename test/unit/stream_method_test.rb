@@ -105,8 +105,9 @@ def test_output_stream_names
 	assert_equal(['acquisition'], acq.output_stream_names)
 
 end #output_stream_names
-def test_fire
+def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	acq=stream_methods(:HTTP)
+	acq[:interface_code]=interface_code
 	assert_instance_of(StreamMethod,acq)
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
@@ -115,27 +116,29 @@ def test_fire
 	assert(!acq.has_attribute?(:errors))
 	assert_equal(ActiveModel::Errors.new('err'), acq.errors)
 	assert_equal([], acq.errors.full_messages)
-	assert(!acq.has_attribute?(:error))
-	assert(!acq.has_attribute?(:error2))
 
 	firing=acq.fire!
-	assert(firing.has_attribute?(:errorz))
-	assert_equal('#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>', firing[:error2])
-	assert_equal([], firing[:errorz])
-	assert_equal("[]", firing.errorz.inspect)
+	assert_equal(interface_code_errors, firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
+	assert_equal(acquisition_errors, firing.errors[:acquisition])
+	assert_not_empty(firing.errors)
+	assert_not_empty(firing.errors.inspect)
 	assert_instance_of(ActiveModel::Errors, firing.errors)
 	assert_instance_of(Array, firing.errors.full_messages)
-	assert_equal(ActiveModel::Errors.new('err'), firing.errors)
 	assert_instance_of(StreamMethod, firing)
 	assert_kind_of(StreamMethod, firing)
 	assert_equal(firing, acq)
 	assert_equal('http://192.168.100.1', firing.uri)
-
-	assert_equal('', firing[:acquisition], "firing=#{firing.inspect}, acq=#{acq.inspect}")
-	assert_equal([], firing.methods(false).inspect)
-	assert_equal('', firing.instance_variables.inspect)
-	assert(firing.has_attribute?(:errors))
-	assert(firing.has_attribute?(:acquisition))
+	firing.errors.clear # so we can run more tests
+end #fire_check
+def test_fire
+	acq=stream_methods(:HTTP)
+	fire_check(acq.interface_code, ['#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>'], ['is empty.'])
+	fire_check(acq.default_method, [], [])
+	assert_equal("http://192.168.100.1", acq[:acquisition])
+	@my_fixtures.each_pair do |key, sm|
+		assert_instance_of(StreamMethod, sm)
+		fire_check(sm.default_method, [], [])
+	end #each
 end #fire
 def test_errors
 	acq=stream_methods(:HTTP)
