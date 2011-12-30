@@ -10,6 +10,24 @@ fixtures @@table_name.to_sym
 	fixtures :acquisition_stream_specs
 	fixtures :acquisition_interfaces
 	fixtures :acquisitions
+def test_NoDB
+end #NoDB
+def test_column_html
+	assert_equal('Acquisition', StreamPattern.find_by_name('Acquisition').column_html(:name))
+end #column_html
+def test_row_html
+	assert_match(/tr/, StreamPattern.find_by_name('Acquisition').row_html)
+end #row_html
+def test_header_html
+		assert_not_empty(StreamPattern.column_names)
+		assert_equal('<tr><th>id</th><th>name</th><th>created_at</th><th>updated_at</th></tr>', StreamPattern.header_html)
+	association_refs do |class_reference, association_reference|
+	end #each
+end #header_html
+def test_table_html
+	assert_not_nil(StreamPattern.table_html)
+	
+end #table_html
 def test_association_refs
 	class_reference=StreamPattern
 	association_reference=:stream_methods
@@ -18,16 +36,6 @@ def test_association_refs
 	end)
 	assert_equal([StreamPattern, :stream_methods], association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
 end #association_refs
-def test_header_html
-	association_refs do |class_reference, association_reference|
-		assert_not_empty(StreamPattern.column_names)
-		assert_equal('<tr><th>id</th><th>name</th><th>created_at</th><th>updated_at</th></tr>', StreamPattern.header_html)
-	end #each
-end #header_html
-def test_table_html
-	assert_not_nil(StreamPattern.table_html)
-	
-end #table_html
 def test_foreign_key_names
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
@@ -238,11 +246,15 @@ def test_has_many_association
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_instance_methods(/^has_/))
 end #has_many_association
 def test_belongs_to_association
+	assert_equal('', StreamMethod.association_grep('^belongs_to',:stream_patterns))
+	assert_equal(:belongs_to, StreamMethod.association_macro_type(:stream_pattern))
+	assert_equal(:belongs_to, StreamMethod.association_macro_type(:stream_patterns))
 	assert(StreamMethod.belongs_to_association?(:stream_patterns))
 	assert(StreamMethod.belongs_to_association?(:stream_pattern))
 	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_method))
 	assert(StreamPattern.has_many_association?(:stream_method))
-	assert(!StreamPattern.belongs_to_association?(:stream_methods))
+	assert_equal('', StreamPattern.association_grep('^belongs_to',:stream_methods))
+	assert(!StreamPattern.belongs_to_association?(:stream_methods),"")
 	assert(!StreamPattern.belongs_to_association?(:stream_method))
 
 end #belongs_to_association

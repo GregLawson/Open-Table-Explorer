@@ -9,7 +9,7 @@ def initialize(hash=nil)
 	else
 		@attributes=ActiveSupport::HashWithIndifferentAccess.new(hash)
 	end #if
-end #initialize
+end #NoDB
 def [](attribute_name)
 	@attributes[attribute_name]
 end #[]
@@ -205,7 +205,7 @@ def Base.has_many_association?(association_name)
 	return association_grep('has_many',association_name)
 end #has_many_association
 def Base.belongs_to_association?(association_name)
-	return association_grep('^belongs_to',association_name)
+	return association_grep('^belongs_to',association_name)!=''
 end #belongs_to_association
 def Base.has_one_association?(association_name)
 	return association_grep('^has_one',association_name)
