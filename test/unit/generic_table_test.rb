@@ -10,9 +10,6 @@ fixtures @@table_name.to_sym
 	fixtures :acquisition_stream_specs
 	fixtures :acquisition_interfaces
 	fixtures :acquisitions
-def setup
-#	ActiveSupport::TestCase::fixtures :acquisition_stream_specs
-end #setup
 def test_association_refs
 	class_reference=StreamPattern
 	association_reference=:stream_methods
@@ -239,9 +236,15 @@ def test_has_many_association
 #	assert_public_instance_method(ar_from_fixture,ASSNAME)
 
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_instance_methods(/^has_/))
-end #test_has_many_association
+end #has_many_association
 def test_belongs_to_association
 	assert(StreamMethod.belongs_to_association?(:stream_patterns))
+	assert(StreamMethod.belongs_to_association?(:stream_pattern))
+	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_method))
+	assert(StreamPattern.has_many_association?(:stream_method))
+	assert(!StreamPattern.belongs_to_association?(:stream_methods))
+	assert(!StreamPattern.belongs_to_association?(:stream_method))
+
 end #belongs_to_association
 def test_has_one_association
 	assert(Acquisition.has_one_association?(:stream_patterns))
@@ -341,7 +344,7 @@ def test_is_active_record_method
 	assert(!ActiveRecord::Base.instance_methods_from_class.include?(:parameter.to_s))
 	assert(!TestTable.is_active_record_method?(:parameter))
 	assert(TestTable.is_active_record_method?(:connection))
-end #is_active_record_method
+end #active_record_method
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
 		if self.respond_to?(:logical_primary_key) then
@@ -575,5 +578,8 @@ def test_matching_associations
 	assert_association(Frequency.new,"table_specs")
 	assert_equal('frequencies',Frequency.table_name)
 	assert(TableSpec.is_association?(Frequency.table_name.singularize))
-end #test
+end #matching_associations
+def setup
+#	ActiveSupport::TestCase::fixtures :acquisition_stream_specs
+end #setup
 end #test class
