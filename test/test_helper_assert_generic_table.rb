@@ -42,6 +42,9 @@ def assert_foreign_key_name(class_reference, foreign_key_name)
 	end #if
 	assert_block("foreign_key_name=#{foreign_key_name} is not a foreign key of class_reference=#{class_reference.inspect}"){class_reference.foreign_key_names.include?(foreign_key_name)}
 end #foreign_key_names
+def assert_foreign_key_association_names(class_reference,association_reference)
+	assert_include(association_reference.to_s,class_reference.foreign_key_association_names)
+end #foreign_key_association_names
 def assert_associated_foreign_key_name(class_reference,assName)
 	if !class_reference.kind_of?(Class) then
 		class_reference=class_reference.class
@@ -64,11 +67,12 @@ def assert_associated_foreign_key(obj,assName)
 	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
 	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #associated_foreign_key_records
-
 # assert that an association named association_reference exists  in class class_reference as well as an association named class_reference.name  exists  in class association_reference
 def assert_matching_association(klass,association_name)
 	assert(klass.is_matching_association?(association_name))
 end #matching_association
+def assert_association_methods
+end #association_methods
 # assert that an association named association_reference exists  in class class_reference
 def assert_association(class_reference,association_reference, message=nil)
 	message=build_message(message, "Class=? association=?", class_reference.inspect, association_reference.inspect)	
@@ -127,18 +131,20 @@ def assert_association_many_to_one(ar_from_fixture,assName)
 	assert_instance_of(Symbol,assName,"assert_association_many_to_one")
 	assert_association_to_one(ar_from_fixture,assName)
 end #association_many_to_one
+def assert_model_grep(model_reference,grep_pattern)
+	assert_not_equal("", model_reference.model_grep(grep_pattern), "grep_pattern=#{grep_pattern}")
+end #model_grep
 def assert_has_many_association(class_reference, association_name)
 	assert(class_reference.association_grep('has_many',association_name))
 end #has_many_association
-def assert_belongs_to(table_name1,table_name2)
-	model_class=Generic_Table.eval_constant(table_name1.classify)
-	assert_not_nil(model_class,"model_class #{table_name1.classify} is not a defined constant.")
-	if  model_class.is_association_to_one?(table_name2) then
-		assert_include(table_name2,model_class.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
-	end #if
-end #belongs_to_association
-def assert_belongs_to_association(class_reference, association_name)
-	assert(class_reference.association_grep('belongs_to',association_name))
+def assert_belongs_to_association(model_class,association_name)
+	assert_instance_of(Class, model_class)
+	assert_instance_of(Class, model_class, "model_class=#{model_class.inspect} is of type #{model_class.class.name} but should be Class.")
+	correct_plurality=model_class.association_method_plurality(association_name)
+	assert_association(model_class, correct_plurality)
+	assert_association(model_class,association_name, "plurality should be #{correct_plurality}")
+	assert_association_to_one(model_class,association_name)
+	assert_include(association_name.to_s,model_class.foreign_key_association_names)
 end #belongs_to_association
 def assert_associations(ass1,ass2,message=nil)
 	message=build_message(message, "ass1=? ass2=?", ass1.inspect, ass2.inspect)	
