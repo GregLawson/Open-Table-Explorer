@@ -142,7 +142,7 @@ def +(other)
 	return RegexpTree.new(self.to_a+other.to_a)
 end #+
 def to_a
-	return self
+	return Array.new(self)
 end #to_a
 
 # Takes embedded array format parsed tree and displays equivalent to_s string 
