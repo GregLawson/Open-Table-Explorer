@@ -1,9 +1,11 @@
 require 'app/models/global.rb'
 #require 'lib/tasks/testing_file_patterns.rb'
-module NoDB
+module NoDB # provide duck-typed ActiveRecord like functions.
 attr_reader :attributes
 include ActiveModel
 def initialize(hash=nil)
+
+
 	if hash.nil? then
 		@attributes=ActiveSupport::HashWithIndifferentAccess.new
 	else
@@ -29,6 +31,9 @@ def column_html(column_symbol)
 	return self[column_symbol].inspect
 end #column_html
 def row_html(column_order=nil)
+	if column_order.nil? then
+		column_order=self.class.column_names
+	end #if
 	ret="<tr>"
 	column_order.each do |col|
 		ret+='<td>'+column_html(col).inspect+'</td>'
@@ -60,6 +65,7 @@ def Base.table_html(column_order=nil)
 	ret+="</table>"
 	return ret
 end #table_html
+# List names of all foreign keys.
 def Base.foreign_key_names
 	content_column_names=content_columns.collect {|m| m.name}
 #	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
@@ -68,6 +74,7 @@ def Base.foreign_key_names
 	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
 	return possible_foreign_keys
 end #foreign_key_names
+# list names of the associations having foreign keys.
 def Base.foreign_key_association_names
 	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
 end #foreign_key_association_names
@@ -85,7 +92,7 @@ def Base.associated_foreign_key_name(association_referenced_by_foreign_key)
 	end #if
 	return matchingAssNames.first
 end #associated_foreign_key_name
-# find 
+# find records pointed to by foreign key.
 def associated_foreign_key_records(association_with_foreign_key)
 	class_with_foreign_key=self.class.association_class(association_with_foreign_key)
 	foreign_key_symbol=class_with_foreign_key.associated_foreign_key_name(self.class.name.tableize)
@@ -93,6 +100,7 @@ def associated_foreign_key_records(association_with_foreign_key)
 
 	return associated_records
 end #associated_foreign_key_records
+# Does association have me as one of its associations?
 def Base.is_matching_association?(association_name)
 	 if is_association?(association_name) then
 		association_class=association_class(association_name)
@@ -111,6 +119,7 @@ def Base.is_matching_association?(association_name)
 		return false
 	end #if
 end #is_matching_association
+# return automagically created methods for an association.
 def Base.association_methods(association_name)
 	return matching_instance_methods(association_name,false)
 end #association_methods
@@ -189,7 +198,7 @@ def Base.association_grep_pattern(model_regexp_string,association_name)
 	return "#{model_regexp_string} :#{association_name}" # no end of line $, so that polymorphic associations are found.
 end #association_grep_command
 ASSOCIATION_MACRO_LETTERS='[has_manyoneblgtd]'
-ASSOCIATION_MACRO_PATTERN="^#{ASSOCIATION_MACRO_LETTERS}#{ASSOCIATION_MACRO_LETTERS}*\s*"
+ASSOCIATION_MACRO_PATTERN="^#{ASSOCIATION_MACRO_LETTERS}#{ASSOCIATION_MACRO_LETTERS}*\s\s*"
 def Base.association_macro_type(association_name)
 	hits=association_grep(ASSOCIATION_MACRO_PATTERN, association_name)
 	if hits.empty? then
@@ -204,12 +213,34 @@ end #association_grep
 def Base.has_many_association?(association_name)
 	return association_grep('has_many',association_name)
 end #has_many_association
+# expects a singular association name
 def Base.belongs_to_association?(association_name)
 	return association_grep('^belongs_to',association_name)!=''
 end #belongs_to_association
 def Base.has_one_association?(association_name)
 	return association_grep('^has_one',association_name)
 end #has_one_association
+# Returns model name in a canonical form from Class or string, ...
+# The return value is canonical in that multiple possible inputs produce the same output.
+# always returns a plural, whereas a macro may have a singular argument.
+# Generally returns association_table_name.class.name.tableize.to_sym for any object.
+# tableize handles some pluralizing, but symbols are unchanged
+#routine is meant to handle usual cases in Rails method naming not pathological cases.
+# Does not assume an association.
+# This flexibility should not be overused. 
+# It is intended for finding inverse associations and allowing assertion error messages to suggest what you might have intended.
+def Base.name_symbol(model_name)
+	if model_name.kind_of?(Class) then
+		return model_name.name.tableize.to_sym					
+	elsif model_name.kind_of?(String) then
+		return model_name.tableize.to_sym						
+	elsif model_name.kind_of?(Symbol) then
+		return model_name.to_sym
+	else # other object
+		return model_name.class.name.tableize.to_sym
+	end #if
+end #name_symbol
+# checks whether association symbol exists or if a singular or plural name exists.
 def Base.association_method_plurality(association_table_name)
 	if self.instance_respond_to?(association_table_name) then
 		return association_table_name.to_sym
@@ -221,18 +252,7 @@ def Base.association_method_plurality(association_table_name)
 		return association_table_name.to_s.pluralize.to_sym
 	end #if
 end #association_method_plurality
-# return association name symbol from Class or string, ...
-def Base.name_symbol(association_table_name)
-	if association_table_name.kind_of?(Class) then
-		return association_table_name.name.tableize.to_sym					
-	elsif association_table_name.kind_of?(String) then
-		return association_table_name.tableize.to_sym						
-	elsif association_table_name.kind_of?(Symbol) then
-		return association_table_name.to_sym
-	else # other object
-		return association_table_name.class.name.tableize.to_sym
-	end #if
-end #name_symbol
+# For convenience handles both type and plurality.
 def Base.association_method_symbol(association_table_name)
 	return association_method_plurality(name_symbol(association_table_name))
 end #association_method_symbol
@@ -254,19 +274,6 @@ def Base.association_arity(association_name)
 		return :not_an_association
 	end #if
 end #association_arity
-# Figures out association type from pattern of method names
-# returns :has_many, :belongs_to, or :neither_has_many_nor_belongs_to
-def Base.association_macro_type2(association_name)
-	if belongs_to_association?(association_name) then
-		return :belongs_to
-	elsif  has_many_association?(association_name) then
-		return :has_many
-	elsif has_one_association?(association_name) then
-		return :has_one
-	else
-		return :neither_has_many_nor_belongs_to
-	end #if
-end #association_macro_type2
 # concatenate association_arity and association_macro_type
 def Base.association_type(association_name)
 	return (association_arity(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym

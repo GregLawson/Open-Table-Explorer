@@ -13,7 +13,7 @@ fixtures @@table_name.to_sym
 def test_NoDB
 end #NoDB
 def test_column_html
-	assert_equal('Acquisition', StreamPattern.find_by_name('Acquisition').column_html(:name))
+	assert_equal("\"Acquisition\"", StreamPattern.find_by_name('Acquisition').column_html(:name))
 end #column_html
 def test_row_html
 	assert_match(/tr/, StreamPattern.find_by_name('Acquisition').row_html)
@@ -26,6 +26,7 @@ def test_header_html
 end #header_html
 def test_table_html
 	assert_not_nil(StreamPattern.table_html)
+	assert_match(%r{<table>.*</table>}, StreamPattern.table_html)
 	
 end #table_html
 def test_association_refs
@@ -52,6 +53,7 @@ end #foreign_key_names
 def test_foreign_key_association_names
 	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
 	assert_include('stream_pattern',StreamPatternArgument.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
+	assert_foreign_key_association_names(StreamMethod,:stream_pattern)
 end #foreign_key_association_names
 
 def test_associated_foreign_key_name
@@ -197,32 +199,35 @@ end #model_grep_command
 def test_model_grep
 	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep('has_many'))
 	assert_equal("has_many :stream_methods\n", StreamPattern.model_grep("has_many :stream_methods"))
-	macro='^[has_manyoneblgtd]* '
-	assert_equal("has_many :stream_methods\n", StreamPattern.model_grep("has_many :stream_methods"))
-	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep(macro))
+	assert_equal("has_many :stream_pattern_arguments\nhas_many :stream_methods\n", StreamPattern.model_grep(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN))
+	assert_model_grep(StreamPattern, 'has_many')
+	assert_model_grep(StreamPattern,"has_many :stream_methods")
+	assert_model_grep(StreamPattern, ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN)
 end #model_grep
 def test_association_grep_pattern
-	assert_equal("has_many :stream_methods$", StreamPattern.association_grep_pattern('has_many',:stream_methods))
+	assert_equal("has_many :stream_methods", StreamPattern.association_grep_pattern('has_many',:stream_methods))
 	assert_equal('', StreamPattern.association_grep('belongs_to',:stream_methods))
 end #association_grep_command
 def test_association_macro_type
-	macro='^[has_manyoneblgtd]+'
 	assert_match(Regexp.new(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN),"has_many :stream_pattern_arguments\nhas_many :stream_methods\n")
+ 	assert_model_grep(StreamPattern, :stream_methods)
+ 	assert_model_grep(StreamPattern, ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN)
+ 	assert_model_grep(StreamPattern, ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN+' *:stream_methods')
  	assert_equal("has_many :stream_methods\n", StreamPattern.association_grep(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
-	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_methods))
 	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_methods))
 	assert_equal(:has_many,StreamPattern.association_macro_type(:stream_methods))
 	assert_equal(:has_one,Acquisition.association_macro_type(:acquisition_stream_spec))
-	assert_equal(:belongs_to,StreamMethod.association_macro_type(:stream_pattern))
+	assert_equal(:belongs_to, StreamMethod.association_macro_type(:stream_pattern))
 	assert_nil(StreamMethod.association_macro_type(:stream_patterns))
+	assert_equal(:belongs_to, StreamMethod.association_macro_type(:stream_pattern))
 end #association_macro_type
 def test_association_grep
-	assert_equal('has_many :stream_methods$', StreamPattern.association_grep_pattern('has_many',:stream_methods))
-	assert_equal('belongs_to :stream_methods$', StreamPattern.association_grep_pattern('belongs_to',:stream_methods))
+	assert_equal('has_many :stream_methods', StreamPattern.association_grep_pattern('has_many',:stream_methods))
+	assert_equal('belongs_to :stream_methods', StreamPattern.association_grep_pattern('belongs_to',:stream_methods))
 	assert_equal("has_many :stream_methods\n", StreamPattern.association_grep('has_many',:stream_methods))
 	assert_equal("", StreamPattern.association_grep('belongs_to',:stream_methods))
-	assert_equal("^[has_manyoneblgtd][has_manyoneblgtd]* * :stream_methods$", StreamPattern.association_grep_pattern(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
-	assert_equal("^[has_manyoneblgtd][has_manyoneblgtd]* * :stream_methods$", StreamPattern.association_grep_pattern(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
+	assert_equal("^[has_manyoneblgtd][has_manyoneblgtd]*  * :stream_methods", StreamPattern.association_grep_pattern(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
+	assert_equal("^[has_manyoneblgtd][has_manyoneblgtd]*  * :stream_methods", StreamPattern.association_grep_pattern(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
 	assert_equal("has_many :stream_methods\n", StreamPattern.association_grep(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN, :stream_methods))
 end #association_grep
 def test_has_many_association
@@ -246,10 +251,10 @@ def test_has_many_association
 #	assert_equal_sets(["has_one", "has_many", "has_and_belongs_to_many"],Frequency.new.matching_instance_methods(/^has_/))
 end #has_many_association
 def test_belongs_to_association
-	assert_equal('', StreamMethod.association_grep('^belongs_to',:stream_patterns))
+	assert_equal("belongs_to :stream_pattern\n", StreamMethod.association_grep('',:stream_pattern))
+	assert_belongs_to_association(StreamMethod,:stream_pattern)
+	assert_raises(Test::Unit::AssertionFailedError){assert_belongs_to_association(StreamMethod,:stream_patterns)}
 	assert_equal(:belongs_to, StreamMethod.association_macro_type(:stream_pattern))
-	assert_equal(:belongs_to, StreamMethod.association_macro_type(:stream_patterns))
-	assert(StreamMethod.belongs_to_association?(:stream_patterns))
 	assert(StreamMethod.belongs_to_association?(:stream_pattern))
 	assert_equal(:has_many, StreamPattern.association_macro_type(:stream_method))
 	assert(StreamPattern.has_many_association?(:stream_method))
@@ -261,6 +266,17 @@ end #belongs_to_association
 def test_has_one_association
 	assert(Acquisition.has_one_association?(:stream_patterns))
 end #has_one_association
+def test_name_symbol
+	assert_equal(:stream_methods, StreamPattern.name_symbol(StreamMethod))
+	assert_equal(:stream_methods, StreamPattern.name_symbol('stream_methods'))
+	assert_equal(:stream_methods, StreamPattern.name_symbol('stream_method'))
+	assert_equal(:stream_methods, StreamPattern.name_symbol('StreamMethod'))
+	assert_equal(:oxen, StreamPattern.name_symbol('ox'))
+	assert_equal(:bases, StreamPattern.name_symbol('base'))
+	assert_equal(:ox, StreamPattern.name_symbol(:ox))
+	assert_equal(:base, StreamPattern.name_symbol(:base))
+	assert_equal(:stream_methods, StreamPattern.name_symbol(:stream_methods))
+end #name_symbol
 def test_association_method_plurality
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
 	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
@@ -269,8 +285,6 @@ def test_association_method_plurality
 	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_pattern))
 	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
 end #association_method_plurality
-def test_name_symbol
-end #name_symbol
 def test_association_method_symbol
 	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_models))
 	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_model))
@@ -316,13 +330,6 @@ def test_association_arity
 		end #if
 	end #association_refs
 end #association_arity
-def test_association_macro_type2
-	assert_equal(:belongs_to,StreamMethod.association_macro_type2(:stream_pattern))
-	assert_equal(:belongs_to,StreamMethod.association_macro_type2(:stream_patterns))
-	assert_equal(:has_many,StreamPattern.association_macro_type2(:stream_methods))
-	assert_equal(:has_one,Acquisition.association_macro_type2(:acquisition_stream_spec))
-	assert_equal(:neither_has_many_nor_belongs_to,StreamPattern.association_macro_type2(:stream_patterns))
-end #association_macro_type2
 def warn_association_type(table, association_name)
 	klass=Generic_Table.class_of_name(table)
 	new_type= klass.association_type(association_name)
