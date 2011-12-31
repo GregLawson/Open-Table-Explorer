@@ -68,7 +68,7 @@ def test_matching_class_methods
 	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),false)
 	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),true)
 	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/))
-end #test
+end #matching_class_methods
 
 def test_object_identities
 	assert_match('<StreamPattern',StreamPattern.new.object_identities)
