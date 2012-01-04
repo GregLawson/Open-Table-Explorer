@@ -244,6 +244,7 @@ def test_to_filename_glob
 	assert_equal('*', RegexpTree.new(['.','*']).to_filename_glob)
 	assert_equal('*', RegexpTree.new([['.','*']]).to_filename_glob)
 	assert_equal('K*C', RegexpTree.new(['K',['.','*'],'C']).to_filename_glob)
+	assert_equal('app/models/*[.]rb', RegexpTree.new('app/models/([a-zA-Z0-9_]*)[.]rb').to_filename_glob)
 end #to_filename_glob
 def test_to_s
 
