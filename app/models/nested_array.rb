@@ -24,7 +24,7 @@ def map_recursive(&visit_proc)
 		end #if
 	end
 end #map_recursive
-def map_branches(parseTree=@parseTree, &visit_proc)
+def map_branches(&visit_proc)
 	visited_subtrees= self.map do |sub_tree| 
 		if sub_tree.kind_of?(Array) then
 			NestedArray.new(sub_tree).map_branches{|p| visit_proc.call(p)}

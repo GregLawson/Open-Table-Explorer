@@ -12,6 +12,10 @@ require 'test/test_helper'
 require 'test/test_helper_test_tables.rb'
 require 'app/models/inlineAssertions.rb'
 class NestedArrayTest  < ActiveSupport::TestCase
+Asymmetrical_Tree_Array=[['1','2'],'3']
+Asymmetrical_Tree=RegexpTree.new(Asymmetrical_Tree_Array)
+Reverse_proc=Proc.new{|parseTree| parseTree.reverse}
+
 def test_NestedArray
 	assert_not_nil(NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']))
@@ -49,11 +53,10 @@ def test_map_branches
 	assert_equal('2', NestedArray.new(['*','1','2']).map_branches{|p| p[2]})
 	assert_equal('1*2', NestedArray.new(['*','1','2']).map_branches{|p| p[1]+p[0]+p[2]})
 	assert_equal(['C',['.','*'],'K'], NestedArray.new(['K',['*','.'],'C']).map_branches{|p| p.reverse})
-	visit_proc=Proc.new{|parseTree| parseTree.reverse}
-	assert_equal(['.','*'], visit_proc.call(['*','.']))
+	assert_equal(['C',['.','*'],'K'], NestedArray.new(['K',['*','.'],'C']).map_branches(&Reverse_proc))
+	assert_equal(['.','*'], Reverse_proc.call(['*','.']))
 	assert_equal([['.','*']], NestedArray.new([['*','.']]).map_branches{|p| p.reverse})
-	assert_equal(sequence.reverse, RegexpTree.new(sequence).new_postfix_operator_walk(&reverse_proc))
-	assert_equal(Asymmetrical_Tree, reverse_proc.call(Asymmetrical_Tree))
-	assert_equal(Asymmetrical_Tree.flatten.reverse, reverse_proc.call(Asymmetrical_Tree).flatten)
+	assert_equal(Asymmetrical_Tree.reverse, Reverse_proc.call(Asymmetrical_Tree))
+	assert_equal(Asymmetrical_Tree.flatten.reverse, Asymmetrical_Tree.map_branches(&Reverse_proc).flatten)
 end #map_branches
 end #NestedArray
