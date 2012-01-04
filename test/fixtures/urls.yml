@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  Cable Modem: Cable Modem
+  href: Cable Modem
   url: http://192.168.100.1
   cache_path: MyString
   last_cache: 2011-01-07 14:14:44
