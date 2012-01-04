@@ -1,142 +1,46 @@
 Loaded suite test/unit/code_base_test
 Started
-.....E....EF.E.E.Esources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
+.......status=M, pathname=app/models/test_run.rb
+status=M, pathname=config/database.yml
+status=M, pathname=db/bugs.sql
+status=M, pathname=log/unit/code_base_test.log
+status=M, pathname=log/unit/stream_method_test.log
+status=M, pathname=log/unit/test_run_test.log
+status=M, pathname=test/fixtures/urls.yml
+E....Fsources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
 sources.size=2 
 sources[0]="/proc/bus" 
-..EF...EF.F.......F.
-Finished in 5.322421 seconds.
+..F.F...................F
+Finished in 2.933266 seconds.
 
   1) Error:
-test_complete_models(CodeBaseTest):
-NoMethodError: undefined method `pathname_glob' for CodeBase:Class
-    app/models/code_base.rb:152:in `models_from_spec'
-    test/unit/code_base_test.rb:147:in `test_complete_models'
-    test/unit/code_base_test.rb:147:in `map'
-    test/unit/code_base_test.rb:147:in `test_complete_models'
-
-  2) Error:
 test_git_status(CodeBaseTest):
-NoMethodError: undefined method `new' for MatchData:Class
-    app/models/code_base.rb:49:in `[]='
-    app/models/code_base.rb:176:in `match_spec_from_pathname'
-    app/models/code_base.rb:173:in `each'
-    app/models/code_base.rb:173:in `match_spec_from_pathname'
-    app/models/code_base.rb:183:in `singular_table_from_pathname'
-    test/unit/code_base_test.rb:248:in `test_git_status'
+NoMethodError: undefined method `singular_table_from_pathname' for CodeBase:Class
+    test/unit/code_base_test.rb:145:in `test_git_status'
+
+  2) Failure:
+test_models(CodeBaseTest)
+    [/test/test_helper.rb:205:in `assert_overlap'
+     test/unit/code_base_test.rb:101:in `test_models']:
+enum1=#<Set: {}> does not overlap enum2=#<Set: {}>
 
   3) Failure:
-test_globs_match_regexp(CodeBaseTest)
-    [test/unit/code_base_test.rb:300:in `test_globs_match_regexp'
-     test/unit/code_base_test.rb:299:in `each'
-     test/unit/code_base_test.rb:299:in `test_globs_match_regexp'
-     test/unit/code_base_test.rb:293:in `each'
-     test/unit/code_base_test.rb:293:in `test_globs_match_regexp']:
-pathname=log/unit/method_model.test_all_test.log, regexp=(?-mix:^log\/unit\/([a-zA-Z0-9_]*)_test[.]log$).
-<"log/unit/method_model.test_all_test.log"> expected to be =~
-</^log\/unit\/([a-zA-Z0-9_]*)_test[.]log$/>.
+test_pathnames(CodeBaseTest)
+    [/test/test_helper.rb:160:in `assert_not_empty'
+     test/unit/code_base_test.rb:55:in `test_pathnames'
+     test/unit/code_base_test.rb:54:in `each'
+     test/unit/code_base_test.rb:54:in `test_pathnames']:
+No pathnames found for spec=#<CodeBase:0xb5eef22c @attributes={"name"=>:models, "test_type"=>:both, "plural"=>false, "example_pathname"=>"app/models/global.rb", "Dir_glob"=>"app/models/([a-zA-Z0-9_]*)[.]rb"}>.
+"Array instance" is empty with value "[]".
 
-  4) Error:
-test_match_spec_from_pathname(CodeBaseTest):
-NoMethodError: undefined method `new' for MatchData:Class
-    app/models/code_base.rb:49:in `[]='
-    app/models/code_base.rb:176:in `match_spec_from_pathname'
-    app/models/code_base.rb:173:in `each'
-    app/models/code_base.rb:173:in `match_spec_from_pathname'
-    test/unit/code_base_test.rb:203:in `test_match_spec_from_pathname'
+  4) Failure:
+test_regexp(CodeBaseTest) [test/unit/code_base_test.rb:42]:
+<"app/models/*[.]rb"> expected but was
+<"app/models/(*)[.]rb">.
 
-  5) Error:
-test_models_from_spec(CodeBaseTest):
-NoMethodError: undefined method `pathname_glob' for CodeBase:Class
-    app/models/code_base.rb:152:in `models_from_spec'
-    test/unit/code_base_test.rb:198:in `test_models_from_spec'
-    test/unit/code_base_test.rb:181:in `each'
-    test/unit/code_base_test.rb:181:in `test_models_from_spec'
+  5) Failure:
+test_singular(ModelNameTest) [test/unit/code_base_test.rb:293]:
+<"code_base"> expected but was
+<"code_basis">.
 
-  6) Error:
-test_not_uptodate_order(CodeBaseTest):
-NoMethodError: undefined method `to_sym' for nil:NilClass
-    app/models/code_base.rb:60:in `prioritized_pathname_order'
-    app/models/code_base.rb:58:in `each'
-    app/models/code_base.rb:58:in `prioritized_pathname_order'
-    test/unit/code_base_test.rb:99:in `test_not_uptodate_order'
-
-  7) Error:
-test_pathnames_from_spec(CodeBaseTest):
-NoMethodError: private method `sub' called for #<CodeBase:0xb5f84e80>
-    app/models/code_base.rb:36:in `pathname_glob'
-    app/models/code_base.rb:46:in `pathnames_from_spec'
-    test/unit/code_base_test.rb:56:in `test_pathnames_from_spec'
-    test/unit/code_base_test.rb:54:in `each'
-    test/unit/code_base_test.rb:54:in `test_pathnames_from_spec'
-
-  8) Failure:
-test_prioritized_pathname_order(CodeBaseTest)
-    [test/unit/code_base_test.rb:65:in `test_prioritized_pathname_order'
-     test/unit/code_base_test.rb:64:in `each'
-     test/unit/code_base_test.rb:64:in `test_prioritized_pathname_order']:
-<#<MatchedPathName:0xb5f705e8
- @attributes=
-  {"mtime"=>Fri Nov 04 07:25:14 -0700 2011,
-   "spec"=>
-    #<CodeBase:0xb5f7fc8c
-     @attributes=
-      {"test_type"=>:unit,
-       "name"=>:unit_test_logs,
-       "plural"=>false,
-       "example_pathname"=>"log/unit/generic_table_test.log",
-       "Dir_glob"=>"log/unit/([a-zA-Z0-9_]*)_test[.]log"}>,
-   "matchData"=>nil,
-   "pathname"=>"log/unit/code_base_test.log"}>> expected to be an instance of
-<Array> but was
-<MatchedPathName>.
-
-  9) Error:
-test_singular_table_from_pathname(CodeBaseTest):
-NoMethodError: undefined method `new' for MatchData:Class
-    app/models/code_base.rb:49:in `[]='
-    app/models/code_base.rb:176:in `match_spec_from_pathname'
-    app/models/code_base.rb:173:in `each'
-    app/models/code_base.rb:173:in `match_spec_from_pathname'
-    app/models/code_base.rb:183:in `singular_table_from_pathname'
-    test/unit/code_base_test.rb:206:in `test_singular_table_from_pathname'
-
- 10) Failure:
-test_spec_from_symbol(CodeBaseTest) [test/unit/code_base_test.rb:178]:
-<#<CodeBase:0xb5d93748
- @attributes=
-  {"test_type"=>:both,
-   "name"=>:models,
-   "plural"=>false,
-   "example_pathname"=>"app/models/global.rb",
-   "Dir_glob"=>"app/models/([a-zA-Z0-9_]*)[.]rb"}>> expected to be an instance of
-<Hash> but was
-<CodeBase>.
-
- 11) Failure:
-test_suggest_test_runs(CodeBaseTest) [test/unit/code_base_test.rb:362]:
-<#<CodeBase:0xb5d7dec0
- @attributes=
-  {"test_type"=>:both,
-   "name"=>:models,
-   "plural"=>false,
-   "example_pathname"=>"app/models/global.rb",
-   "Dir_glob"=>"app/models/([a-zA-Z0-9_]*)[.]rb"}>> expected to be an instance of
-<MatchedPathName> but was
-<CodeBase>.
-
- 12) Failure:
-test_why_not_stage(CodeBaseTest) [test/unit/code_base_test.rb:261]:
-Exception raised:
-Class: <NoMethodError>
-Message: <"undefined method `new' for MatchData:Class">
----Backtrace---
-app/models/code_base.rb:49:in `[]='
-app/models/code_base.rb:176:in `match_spec_from_pathname'
-app/models/code_base.rb:173:in `each'
-app/models/code_base.rb:173:in `match_spec_from_pathname'
-app/models/code_base.rb:183:in `singular_table_from_pathname'
-test/unit/code_base_test.rb:261:in `test_why_not_stage'
-test/unit/code_base_test.rb:261:in `test_why_not_stage'
----------------
-
-38 tests, 842 assertions, 5 failures, 7 errors
+38 tests, 249 assertions, 4 failures, 1 errors

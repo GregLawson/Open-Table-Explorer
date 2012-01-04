@@ -33,6 +33,7 @@ def test_pathname_glob
 		assert_not_nil(spec[:example_pathname])
 		assert_not_nil(spec.pathname_glob)
 	end #map
+	assert_equal('app/models/*[.]rb',spec.pathname_glob)
 end #pathname_glob
 def test_regexp
 #	assert_equal(%r{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
