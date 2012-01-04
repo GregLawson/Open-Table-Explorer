@@ -38,8 +38,14 @@ test:
   #min_messages: warning
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: energy_production
-  username: greg
-  password:
+#  adapter: postgresql
+#  encoding: unicode
+#  database: energy_production
+#  username: greg
+#  password:
+
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
