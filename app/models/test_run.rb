@@ -104,6 +104,10 @@ end #shell
 def TestRun.ruby(args, &proc)
 	shell("ruby #{args}",&proc)
 end #ruby
+def ruby_run_and_log
+	TestRun.ruby_run_and_log(test_file,log_file,self[:test])
+end #ruby_run_and_log
+
 def TestRun.ruby_run_and_log(ruby_source,log_file,test=nil)
 	if test.nil? then
 		ruby_test=ruby_source
@@ -142,6 +146,9 @@ rescue SyntaxError => exception_raised
 	puts  '-SyntaxError Error: ' + exception_raised.inspect 
 	return true
 end #ruby_run_and_log
+def file_bug_reports
+	TestRun.file_bug_reports(test_file,log_file,self[:test])
+end #file_bug_reports
 def TestRun.file_bug_reports(ruby_source,log_file,test=nil)
 	table,test_type=CodeBase.test_type_from_source(ruby_source)
 	header,errors,summary=parse_log_file(log_file)
