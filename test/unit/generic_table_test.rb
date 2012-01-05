@@ -193,6 +193,16 @@ def test_association_names
 end #association_names
 def test_model_file_name
 end #model_file_name
+def test_grep_command
+	assert_equal("grep \"#{ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN}\" -r {app/models/,test/unit/}*.rb ", ActiveRecord::Base::grep_command(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN))
+	assert_equal("", `#{ActiveRecord::Base::grep_command(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN)}`)
+end #grep_command
+def test_grep_all_associations_command
+	assert_equal("grep \"#{ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN}\" \"app/models/*.rb\"", TestRun.grep_all_associations_command)
+end #grep_all_associations_command
+def test_all_associations
+	assert_equal("", ActiveRecord::Base.all_associations)
+end #all_associations
 def test_model_grep_command
 	assert_equal('grep "belongs_to" app/models/stream_pattern.rb &>/dev/null', StreamPattern.model_grep_command('belongs_to'))
 end #model_grep_command
