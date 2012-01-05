@@ -223,7 +223,7 @@ def test_postfix_operator_walk
 	assert_equal(Sequence, RegexpTree.new(Sequence).postfix_operator_walk(&Echo_proc))
 	assert_equal(Asymmetrical_Tree, RegexpTree.new(Asymmetrical_Tree).postfix_operator_walk{|p| p})
 
-	assert_equal('*', RegexpTree.new([['.','*']]).postfix_operator_walk{|p| '*'})
+	assert_equal(['*'], RegexpTree.new([['.','*']]).postfix_operator_walk{|p| '*'})
 	assert(Postfix_tree.postfix_expression?,"Postfix_tree=#{Postfix_tree.inspect}")
 	assert_equal(['*', 'C'], RegexpTree.new([['.','*'],'C']).postfix_operator_walk{|p| '*'})
 	assert_equal('*', Constant_proc.call(['.','*']))
@@ -239,12 +239,24 @@ def test_postfix_operator_walk
 	visit_proc=Proc.new{|parseTree| parseTree[1..-1]<<parseTree[0]}
 	assert_equal(['*', '.'], visit_proc.call(Postfix_tree))
 	assert_equal(['*', '.'], Postfix_tree.postfix_operator_walk(&visit_proc))
+	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
+	assert_equal('test/*[.]r*', Test_Pattern.to_filename_glob)
 end #postfix_operator_walk
+Test_Pattern_Array=["t", "e", "s", "t", "/",
+	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
+	 	["[", ".", "]"],
+	 	"r",
+		[["[", "a", "-", "z", "]"], "*"]]
+Test_Pattern=RegexpTree.new(Test_Pattern_Array)
 def test_to_filename_glob
 	assert_equal('*', RegexpTree.new(['.','*']).to_filename_glob)
 	assert_equal('*', RegexpTree.new([['.','*']]).to_filename_glob)
 	assert_equal('K*C', RegexpTree.new(['K',['.','*'],'C']).to_filename_glob)
 	assert_equal('app/models/*[.]rb', RegexpTree.new('app/models/([a-zA-Z0-9_]*)[.]rb').to_filename_glob)
+	assert_equal(Test_Pattern_Array, RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_a)
+	assert_equal(Test_Pattern_Array, Test_Pattern.map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))})
+	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
+	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_filename_glob)
 end #to_filename_glob
 def test_to_s
 

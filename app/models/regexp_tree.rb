@@ -171,7 +171,7 @@ def postfix_operator_walk(&visit_proc)
 		end #if
 	end) #map and RegexpTree.new
 #OK	raise "Unexpected #{self.inspect}.postfix_expression?=#{postfix_expression?} != #{branching.inspect}.postfix_expression?=#{RegexpTree.new(branching).postfix_expression?}"  unless postfix_expression? == RegexpTree.new(branching).postfix_expression?
-	if branching.postfix_expression? then #postfixes trickle up
+	if postfix_expression? then #postfixes trickle up
 		new_branching=visit_proc.call(branching)
 			
 	else
@@ -182,7 +182,8 @@ def postfix_operator_walk(&visit_proc)
 	return new_branching
 end #postfix_operator_walk
 def to_filename_glob
-	ret=postfix_operator_walk{|p| '*'}
+	ret=map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))}
+	ret=ret.postfix_operator_walk{|p| '*'}
 	if ret.kind_of?(Array) then
 		ret=ret.flatten.join
 	end #if
