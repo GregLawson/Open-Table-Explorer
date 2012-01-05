@@ -35,6 +35,8 @@ def test_pathname_glob
 	end #map
 	spec=CodeBase.all[0]
 	assert_equal('app/models/*[.]rb',spec.pathname_glob)
+	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_filename_glob)
+	assert_equal('test/*[.]r*', CodeBase.find_by_name(:testing).pathname_glob)
 end #pathname_glob
 def test_regexp
 #	assert_equal(%r{^app/models/([a-z][a-zA-Z0-9_]*)[.]rb$},CodeBase.regexp('app/models/([a-z][a-zA-Z0-9_]*)[.]rb'))
@@ -75,11 +77,11 @@ def test_controller_target
 end #controller_target
 def test_model_spec_symbols
 	assert_not_empty(CodeBase.model_spec_symbols)
-	assert_equal_sets([:models, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views, :shared_partials],CodeBase.model_spec_symbols)
+	assert_equal_sets([:models, :testing, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views, :shared_partials],CodeBase.model_spec_symbols)
 end #model_spec_symbols
 def test_spec_symbols
 	assert_not_empty(CodeBase.spec_symbols)
-	assert_equal_sets([:models, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :shared_partials, :new_views, :show_views],CodeBase.spec_symbols)
+	assert_equal_sets([:models, :testing, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :shared_partials, :new_views, :show_views],CodeBase.spec_symbols)
 end #spec_symbols
 def test_find_by_name
 	assert_not_nil(CodeBase.find_by_name(:models))
@@ -92,18 +94,38 @@ def test_find_by_name
 	assert_not_nil(CodeBase.find_by_name(:show_partials))
 	assert_not_nil(CodeBase.find_by_name(:edit_views))
 	assert_not_nil(CodeBase.find_by_name(:index_views))
-	assert_raise(RuntimeError,'shared_partials has no models.'){assert_not_nil(CodeBase.find_by_name(:shared_partials).models)}
+	assert_not_nil(CodeBase.find_by_name(:shared_partials).models, 'shared_partials has no models.')
 	assert_not_nil(CodeBase.find_by_name(:new_views))
 	assert_not_nil(CodeBase.find_by_name(:show_views))
 	assert_not_nil(CodeBase.find_by_name(:unit_test_logs))
 	assert_not_nil(CodeBase.find_by_name(:unit_test_logs))
+
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:models))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:unit_tests))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:functional_tests))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:unit_test_logs))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:functional_test_logs))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:index_partials))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:form_partials))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:show_partials))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:edit_views))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:index_views))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:shared_partials), 'shared_partials has no models.')
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:new_views))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:show_views))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:unit_test_logs))
+	assert_instance_of(CodeBase, CodeBase.find_by_name(:unit_test_logs))
 end #find_by_name
+def pathnames_with_models?
+	assert_equal(false, CodeBase.find_by_name(:index_partials).pathnames_with_models?)
+	assert_equal(false, CodeBase.find_by_name(:testing).pathnames_with_models?)
+end #pathnames_with_models
 def test_models
 #	assert_equal(Set[],CodeBase.find_by_name(:unit_test_logs).models)
 	assert_overlap(CodeBase.find_by_name(:functional_tests).models,CodeBase.find_by_name(:unit_test_logs).models)
 	assert_overlap(CodeBase.find_by_name(:unit_test_logs).models,CodeBase.find_by_name(:functional_test_logs).models)
 	assert_overlap(CodeBase.find_by_name(:functional_test_logs).models,CodeBase.find_by_name(:index_partials).models)
-	assert_overlap(CodeBase.find_by_name(:index_partials),CodeBase.find_by_name(:models))
+	assert_overlap(CodeBase.find_by_name(:index_partials).models,CodeBase.find_by_name(:models).models)
 	assert_overlap(CodeBase.find_by_name(:models).models,CodeBase.find_by_name(:unit_tests).models)
 	assert_overlap(CodeBase.find_by_name(:unit_tests).models,CodeBase.find_by_name(:functional_tests).models)
 	CodeBase.all.each do |spec|
@@ -112,15 +134,19 @@ def test_models
 		models=pathnames.map do |f| 
 			assert_instance_of(Regexp, spec.regexp)
 			model=f[spec.regexp,1]
-			assert_not_nil(model,"pathname=#{f} does not match regexp=#{spec.regexp}")
-			assert_not_empty(model)
-			assert_instance_of(String,f[spec.regexp,1])
-			assert_not_empty(f[spec.regexp,1])
+			if model.nil? then
+				assert_include(spec[:name], [:shared_partials,:testing])
+			else
+				assert_instance_of(String,f[spec.regexp,1])
+				assert_not_nil(model,"pathname=#{f} does not match regexp=#{spec.regexp}")
+				assert_not_empty(model)
+				assert_not_empty(f[spec.regexp,1])
+				assert_include('stream_pattern',spec.models)
+			end #if
 		end #map
 		models=pathnames.map {|f| f[spec.regexp,1] }
 		assert_not_empty(models)
 		assert_match(/^app\/views\/shared\/_[a-zA-Z0-9_-]*[.]html[.]erb$/,'app/views/shared/_error_messages.html.erb')
-		assert_include('stream_pattern',spec.models)
 	end #each
 end #models
 def test_uptodate
@@ -145,6 +171,14 @@ def test_git_status
 	assert_not_nil(CodeBase.gitStatus{|status,pathname| puts "status=#{status}, pathname=#{pathname}"})
 	pathname='app/views/acquisition_stream_specs/_index_partial.html.erb'
 	assert_not_empty(MatchedPathName.new(pathname).model_name.singular_model_name)
+	CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name)
+	CodeBase.gitStatus{|status,pathname| pathname}
+	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)}
+	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)}.each {|p| assert_not_nil(p[:spec], "p=#{p.inspect}")}
+	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)[:spec][:plural]}
+	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname).model_name}
+	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname).model_name.singular_model_name }
+	CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }
 	assert_nothing_raised{CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }}
 	assert_equal('global',MatchedPathName.new('test/unit/global_test.rb').model_name.singular_model_name)
 	assert_include('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
@@ -292,6 +326,8 @@ def test_ModelNames
 	assert_equal('code_base', ModelName.new('code_base', false).singular_model_name)
 	assert_equal('code_bases', ModelName.new('code_bases', true)[:plural_model_name])
 	assert_equal('code_bases', ModelName.new('code_bases', true).plural_model_name)
+	assert_equal('code_bases', ModelName.new(MatchedPathName.new(@@Test_pathname), true).plural_model_name)
+	
 end #initialize
 def test_singular_model_name
 	assert_equal('test_run', ModelName.new('test_runs', true).singular_model_name)

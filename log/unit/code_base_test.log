@@ -6,3 +6,34 @@ status=MM, pathname=log/unit/code_base_test.log
 status=M, pathname=log/unit/stream_method_test.log
 status=M, pathname=test/test_helper.rb
 status=MM, pathname=test/unit/code_base_test.rb
+log/unit/stream_method_test.log not up to date.
+F.....sources=["/proc/bus", "/proc/bus"] must be an Array of Strings(pathnames)
+sources.size=2 
+sources[0]="/proc/bus" 
+..........................F
+Finished in 19.144777 seconds.
+
+  1) Failure:
+test_git_status(CodeBaseTest) [test/unit/code_base_test.rb:171]:
+Exception raised:
+Class: <NoMethodError>
+Message: <"You have a nil object when you didn't expect it!\nYou might have expected an instance of ActiveRecord::Base.\nThe error occurred while evaluating nil.[]">
+---Backtrace---
+app/models/code_base.rb:344:in `initialize'
+app/models/code_base.rb:332:in `new'
+app/models/code_base.rb:332:in `model_name'
+test/unit/code_base_test.rb:171:in `test_git_status'
+app/models/code_base.rb:169:in `call'
+app/models/code_base.rb:169:in `gitStatus'
+app/models/code_base.rb:167:in `each'
+app/models/code_base.rb:167:in `gitStatus'
+test/unit/code_base_test.rb:171:in `test_git_status'
+test/unit/code_base_test.rb:171:in `test_git_status'
+---------------
+
+  2) Failure:
+test_singular_model_name(ModelNameTest) [test/unit/code_base_test.rb:324]:
+<"code_base"> expected but was
+<"code_basis">.
+
+41 tests, 4674 assertions, 2 failures, 0 errors

@@ -11,6 +11,7 @@ include NoDB
 # [name, example_pathname, Dir_glob, plural,test_type]
 @@TABLE_FINDER_REGEXPS=[
 {:name => :models, :example_pathname => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
+{:name => :testing, :example_pathname => 'test/test_helper.rb', :Dir_glob =>  'test/[a-zA-Z0-9_]*[.]r[a-z]*', :plural => nil, :test_type => :both},
 {:name => :unit_tests, :example_pathname => 'test/unit/global_test.rb', :Dir_glob =>  'test/unit/([a-zA-Z0-9_]*)_test[.]rb', :plural => false, :test_type => :unit},
 {:name => :functional_tests, :example_pathname => 'test/functional/stream_patterns_controller_test.rb', :Dir_glob =>  'test/functional/([a-zA-Z0-9_]*)_controller_test[.]rb', :plural => true, :test_type => :controller},
 {:name => :unit_test_logs, :example_pathname => 'log/unit/generic_table_test.log', :Dir_glob =>  'log/unit/([a-zA-Z0-9_]*)([.a-zA-Z0-9_]*)_test[.]log', :plural => false, :test_type => :unit},
@@ -19,7 +20,7 @@ include NoDB
 {:name => :edit_views, :example_pathname => 'app/views/acquisition_stream_specs/edit.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/edit[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :show_views, :example_pathname => 'app/views/acquisition_stream_specs/show.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/show[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :index_views, :example_pathname => 'app/views/acquisition_stream_specs/index.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/index[.]html[.]erb', :plural => true, :test_type => :controller},
-{:name => :shared_partials, :example_pathname => 'app/views/shared/_multi-line.html.erb', :Dir_glob =>  'app/views/shared/_[a-zA-Z0-9_-]*[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :shared_partials, :example_pathname => 'app/views/shared/_multi-line.html.erb', :Dir_glob =>  'app/views/shared/_[a-zA-Z0-9_-]*[.]html[.]erb', :plural => nil, :test_type => :controller},
 {:name => :form_partials, :example_pathname => 'app/views/stream_patterns/_form.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_form[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :show_partials, :example_pathname => 'app/views/stream_patterns/_show_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_show_partial[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :index_partials, :example_pathname => 'app/views/stream_patterns/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_index_partial[.]html[.]erb', :plural => true, :test_type => :controller}
@@ -164,7 +165,7 @@ def CodeBase.not_uptodate_sources(target, sources)
 	sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, [s])}
 end #not_uptodate_sources
 def CodeBase.gitStatus(&process_status)
-	return `git status --porcelain`.split("\n").each do |line| 
+	return `git status --porcelain`.split("\n").map do |line| 
 		status,pathname=line.split(" ")
 		process_status.call(status,pathname)
 	end #each
