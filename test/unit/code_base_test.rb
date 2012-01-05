@@ -33,6 +33,7 @@ def test_pathname_glob
 		assert_not_nil(spec[:example_pathname])
 		assert_not_nil(spec.pathname_glob)
 	end #map
+	spec=CodeBase.all[0]
 	assert_equal('app/models/*[.]rb',spec.pathname_glob)
 end #pathname_glob
 def test_regexp
@@ -143,11 +144,13 @@ def test_git_status
 #	assert_equal('acquisition_stream_specs','app/views/acquisition_stream_specs/_index_partial.html.erb'.match(CodeBase.regexp(CodeBase.all[5]))[1])
 	assert_not_nil(CodeBase.gitStatus{|status,pathname| puts "status=#{status}, pathname=#{pathname}"})
 	pathname='app/views/acquisition_stream_specs/_index_partial.html.erb'
-	assert_not_empty(CodeBase.singular_table_from_pathname(pathname))
-	assert_nothing_raised{CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,CodeBase.singular_table_from_pathname(pathname)) }}
-	assert_equal(['global','unit'],CodeBase.test_type_from_source('test/unit/global_test.rb'))
+	assert_not_empty(MatchedPathName.new(pathname).model_name.singular_model_name)
+	assert_nothing_raised{CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }}
+	assert_equal('global',MatchedPathName.new('test/unit/global_test.rb').model_name.singular_model_name)
 	assert_include('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
 end #git_status
+def test_git_add_successful
+end #git_add_successful
 def test_why_not_stage_helper
 	pathname='app/views/acquisition_stream_specs/_index_partial.html.erb'
 #	assert_nothing_raised{CodeBase.why_not_stage_helper('app/views/acquisition_stream_specs/_index_partial.html.erb',target,sources,test_type)}
@@ -239,6 +242,10 @@ def test_MatchedPathName
 	matched_path_name=MatchedPathName.new(@@Test_pathname)
 	assert_instance_of(CodeBase,matched_path_name[:spec])
 end #initialize MatchedPathName
+def test_ssert_no_attributes
+end #assert_no_attributes
+def test_assert_has_attributes
+end #assert_has_attributes
 def test_all
 	assert_instance_of(Array,MatchedPathName.all)
 	assert_instance_of(MatchedPathName,MatchedPathName.all[0])
@@ -286,19 +293,19 @@ def test_ModelNames
 	assert_equal('code_bases', ModelName.new('code_bases', true)[:plural_model_name])
 	assert_equal('code_bases', ModelName.new('code_bases', true).plural_model_name)
 end #initialize
-def test_name_plurality
-end #name_plurality
-def test_singular
+def test_singular_model_name
 	assert_equal('test_run', ModelName.new('test_runs', true).singular_model_name)
 	assert_equal('code_bases', ModelName.new('code_base', false).plural_model_name)
 	assert_equal('code_base', ModelName.new('code_bases', true).singular_model_name)
 	matched_path_name=MatchedPathName.new(@@Test_pathname)
 	assert_equal('code_base',ModelName.new(matched_path_name).singular_model_name)
 
-end #singular
-def test_plural
+end #singular_model_name
+def test_plural_model_name
 	assert_equal('code_bases', ModelName.new('code_base', false).plural_model_name)
 	matched_path_name=MatchedPathName.new(@@Test_pathname)
 	assert_equal('code_bases',ModelName.new(matched_path_name).plural_model_name)
-end #plural
-end #class ModelNameTest
+end #plural_model_name
+def test_find_model_name
+end #find_model_name
+end #ModelName

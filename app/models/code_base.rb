@@ -106,26 +106,29 @@ def CodeBase.find_by_name(spec_name_symbol)
 	raise "spec_name_symbol=#{spec_name_symbol} not found" if index.nil?
 	return CodeBase.all[index]
 end #find_by_name
+def pathnames_with_models?
+	pathnames.all? do|f|
+		self.regexp.match(f).size>1
+	end #select
+end #pathnames_with_models
 # for given spec return models
 def models
-	if pathnames.nil? then
-		raise "#{spec.pathname_glob} does not match any pathnames."
-	end #if
-	models=pathnames.map do|f|
-		model=f[self.regexp,1]
-		if model.nil? then
-			raise "pathname=#{f} does not match regexp=#{self.regexp}"
-		end #if
-		if self[:plural] then
-			model=model.singularize
-		end #if
-		model
-	end #map
-	if models.instance_of?(Array) then
+	if pathnames_with_models? then
+		models=pathnames.map do|f|
+			model=f[self.regexp,1]
+			if model.nil? then
+				raise "pathname=#{f} does not match regexp=#{self.regexp}"
+			end #if
+			if self[:plural] then
+				model=model.singularize
+			end #if
+			model
+		end #map
 		return Set.new(models)
 	else
 		return Set[]
 	end #if
+	
 end #models
 def CodeBase.uptodate?(target,sources) 
 	raise "sources=#{sources.inspect} must be an Array of Strings(pathnames)" unless sources.instance_of?(Array)
@@ -148,7 +151,7 @@ end #uptodate
 # determine which pathnames should be staged if test is successful
 # all pathnames newer than previous test log.
 # pathname must also have changed since last staging
-def CodeBase.not_uptodate_sources(target,sources)
+def CodeBase.not_uptodate_sources(target, sources)
 	raise "sources=#{sources.inspect} must be an Array" unless sources.instance_of?(Array)
 	puts "sources=#{sources.inspect} must be an Array of Strings(pathnames)"
 	puts "sources.size=#{sources.size} "
@@ -171,7 +174,7 @@ def CodeBase.git_add_successful(not_uptodate_sources)
 		sh "git add #{s}"
 	end #each
 	sh "git-cola"
-end #def
+end #git_add_successful
 
 # stage target and source pathnames when all tests pass.
 # stage model pathname and .yml pathnames when BOTH unit and controller tests pass
@@ -211,7 +214,7 @@ def CodeBase.why_not_stage(pathname,singular_table)
 		singular_table=FILE_MOD_TIMES[FILE_MOD_TIMES.size/2][0] # pick average pathname, not too active, not too abandoned
 		puts "#{pathname} don't know when to stage."
 	else
-		singular_table=singular_table_from_pathname(pathname)
+		singular_table=MatchedPathName.new(pathname).model_name.singular_model_name
 		why_not_stage_helper(pathname,unit_target(singular_table),unit_sources(singular_table),:unit)  if match_spec[:test_type] != :controller
 		if File.exists?(controller_target(singular_table)) then
 			why_not_stage_helper(pathname,controller_target(singular_table),controller_sources(singular_table),:controller)  if match_spec[:test_type] != :unit
@@ -255,7 +258,7 @@ def initialize(pathname, specified_spec=nil)
 end #initialize MatchedPathName
 def assert_no_attributes(obj)
 	assert_equal(0, obj.size)
-end #
+end #assert_no_attributes
 def assert_has_attributes(obj)
 	assert_not_equal(0, obj.size)
 end #assert_has_attributes
@@ -361,14 +364,14 @@ def singular_model_name
 	else
 		return self[:singular_model_name]
 	end #if
-end #singular
+end #singular_model_name
 def plural_model_name
 	if self[:plural_model_name].nil? then
 		return find_model_name(true)
 	else
 		return self[:plural_model_name]
 	end #if
-end #plural
+end #plural_model_name
 def verify_model_name?(model_name, plurality)
 end #
 def find_model_name(plural)
