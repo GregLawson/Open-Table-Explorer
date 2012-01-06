@@ -188,12 +188,6 @@ end #model_file_name
 def Base.grep_command(content_regexp_string, filename_regexp_string='-r {app/models/,test/unit/}*.rb', redirection='')
 	return "grep \"#{content_regexp_string}\" #{filename_regexp_string} #{redirection}"
 end #grep_command
-def Base.grep_all_associations_command
-	return grep_command(ASSOCIATION_MACRO_PATTERN, 'app/models/*.rb')
-end #grep_all_associations_command
-def Base.all_associations
-	return `#{grep_all_associations_command}`.split("\n").map{|l| /([a-z_.]*):(.*)/.match(l)[1..2]}
-end #all_associations
 def Base.model_grep_command(model_regexp_string)
 	if !Generic_Table.rails_MVC_class?(self.name) then
 		raise "#{self.name}.model_grep only works on Rails MVC."
@@ -207,7 +201,16 @@ def Base.association_grep_pattern(model_regexp_string,association_name)
 	return "#{model_regexp_string} :#{association_name}" # no end of line $, so that polymorphic associations are found.
 end #association_grep_command
 ASSOCIATION_MACRO_LETTERS='[has_manyoneblgtd]'
-ASSOCIATION_MACRO_PATTERN="^[hb]#{ASSOCIATION_MACRO_LETTERS}#{ASSOCIATION_MACRO_LETTERS}*\s\s*"
+ASSOCIATION_MACRO_PATTERN="^[hb]#{ASSOCIATION_MACRO_LETTERS}*\s\s*"
+def Base.grep_all_associations_command
+	return grep_command(ASSOCIATION_MACRO_PATTERN, 'app/models/*.rb')
+end #grep_all_associations_command
+def Base.all_associations
+	regexp='([a-z_.]*):('+ASSOCIATION_MACRO_PATTERN[1..-1]+')(.*)'
+	return `#{grep_all_associations_command}`.split("\n").map do |l| 
+		Regexp.new(regexp).match(l)[1..-1]
+		end #map
+end #all_associations
 def Base.association_macro_type(association_name)
 	hits=association_grep(ASSOCIATION_MACRO_PATTERN, association_name)
 	if hits.empty? then
