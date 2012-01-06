@@ -197,12 +197,6 @@ def test_grep_command
 	assert_equal("grep \"#{ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN}\" -r {app/models/,test/unit/}*.rb ", ActiveRecord::Base::grep_command(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN))
 	assert_equal("", `#{ActiveRecord::Base::grep_command(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN)}`)
 end #grep_command
-def test_grep_all_associations_command
-	assert_equal("grep \"#{ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN}\" \"app/models/*.rb\"", TestRun.grep_all_associations_command)
-end #grep_all_associations_command
-def test_all_associations
-	assert_equal("", ActiveRecord::Base.all_associations)
-end #all_associations
 def test_model_grep_command
 	assert_equal('grep "belongs_to" app/models/stream_pattern.rb &>/dev/null', StreamPattern.model_grep_command('belongs_to'))
 end #model_grep_command
@@ -218,6 +212,12 @@ def test_association_grep_pattern
 	assert_equal("has_many :stream_methods", StreamPattern.association_grep_pattern('has_many',:stream_methods))
 	assert_equal('', StreamPattern.association_grep('belongs_to',:stream_methods))
 end #association_grep_command
+def test_grep_all_associations_command
+	assert_equal("grep \"#{ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN}\" \"app/models/*.rb\"", TestRun.grep_all_associations_command)
+end #grep_all_associations_command
+def test_all_associations
+	assert_equal("", ActiveRecord::Base.all_associations)
+end #all_associations
 def test_association_macro_type
 	assert_match(Regexp.new(ActiveRecord::Base::ASSOCIATION_MACRO_PATTERN),"has_many :stream_pattern_arguments\nhas_many :stream_methods\n")
  	assert_model_grep(StreamPattern, :stream_methods)
