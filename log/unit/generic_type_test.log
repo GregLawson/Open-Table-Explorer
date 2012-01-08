@@ -1,6 +1,64 @@
 Loaded suite test/unit/generic_type_test
 Started
-.
-Finished in 13.125316 seconds.
+EE.t=#<GenericType id: 40969848, generalize_id: 316735336, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:digit:]]", ruby_conversion: "str">
+t=#<GenericType id: 66155796, generalize_id: 155518428, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:word:]]", ruby_conversion: "str">
+t=#<GenericType id: 155518428, generalize_id: 289069820, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:graph:]]", ruby_conversion: "str">
+t=#<GenericType id: 163351614, generalize_id: 289069820, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:cntrl:]]", ruby_conversion: "str">
+t=#<GenericType id: 245005091, generalize_id: 283130221, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:lower:]]", ruby_conversion: "str">
+t=#<GenericType id: 280124395, generalize_id: 1017386147, import_class: "Timestamp_Column", rails_type: "timestamp", data_regexp: "([0-9]{1,4}/|[ADFJMNOS][a-z]+ )[0-9][0-9][, /][0-9]...", ruby_conversion: "Time.parse(str)">
+t=#<GenericType id: 283130221, generalize_id: 813864743, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:alpha:]]", ruby_conversion: "str">
+t=#<GenericType id: 289069820, generalize_id: 1017386147, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:ascii:]]", ruby_conversion: "str">
+t=#<GenericType id: 316735336, generalize_id: 813864743, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:xdigit:]]", ruby_conversion: "str">
+t=#<GenericType id: 324883020, generalize_id: 1017386147, import_class: "Macaddr_Column", rails_type: "string", data_regexp: "[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){3}", ruby_conversion: "str.upcase">
+t=#<GenericType id: 366378086, generalize_id: 289069820, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:print:]]", ruby_conversion: "str">
+t=#<GenericType id: 429183187, generalize_id: 1017386147, import_class: "Integer_Column", rails_type: "integer", data_regexp: "[0-9]+", ruby_conversion: "str.to_i">
+t=#<GenericType id: 587939655, generalize_id: 1017386147, import_class: "Float_Column", rails_type: "float", data_regexp: "[0-9]*\\.[0-9]+", ruby_conversion: "str.to_f">
+t=#<GenericType id: 630538859, generalize_id: 1017386147, import_class: "Time_Column", rails_type: "time", data_regexp: "[0-9]+:[0-9.]+( ?[PApa][Mm])?", ruby_conversion: "Time.parse(str)">
+t=#<GenericType id: 682644240, generalize_id: 1017386147, import_class: "NULL_Column", rails_type: "nil", data_regexp: "\\s*", ruby_conversion: "nil">
+t=#<GenericType id: 695386426, generalize_id: 289069820, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:space:]]", ruby_conversion: "str">
+t=#<GenericType id: 702694257, generalize_id: 1017386147, import_class: "Inet_Column", rails_type: "inet", data_regexp: "[0-9.]{1,3}\\.[0-9.]{1,3}\\.[0-9.]{1,3}\\.[0-9.]{1,3}(...", ruby_conversion: "IPAddr.new(str)">
+t=#<GenericType id: 703566959, generalize_id: 703566959, import_class: "Text_Column", rails_type: "text", data_regexp: ".+", ruby_conversion: "str">
+t=#<GenericType id: 778035101, generalize_id: 283130221, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:upper:]]", ruby_conversion: "str">
+t=#<GenericType id: 813864743, generalize_id: 289069820, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:alnum:]]", ruby_conversion: "str">
+t=#<GenericType id: 954215447, generalize_id: 155518428, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:punct:]]", ruby_conversion: "str">
+t=#<GenericType id: 1009501285, generalize_id: 695386426, import_class: "VARCHAR_Column", rails_type: nil, data_regexp: "[[:blank:]]", ruby_conversion: "str">
+t=#<GenericType id: 1017386147, generalize_id: 703566959, import_class: "VARCHAR_Column", rails_type: "string", data_regexp: ".{1,255}", ruby_conversion: "str">
+t=#<GenericType id: 1072750748, generalize_id: 1017386147, import_class: "Boolean_Column", rails_type: "boolean", data_regexp: "[Ff][Aa][Ll][Ss]", ruby_conversion: "eval(str.downcase)">
+E
+Finished in 0.321906 seconds.
 
-1 tests, 1 assertions, 0 failures, 0 errors
+  1) Error:
+test_ancestors(GenericTypeTest):
+NoMethodError: undefined method `generalize' for "#<GenericType:0xb5d9d61c>":GenericType
+    app/models/example_type.rb:14:in `valid_parent?'
+    app/models/generic_type.rb:13:in `ancestors'
+    app/models/generic_type.rb:13:in `ancestors'
+    app/models/generic_type.rb:13:in `select'
+    app/models/generic_type.rb:13:in `ancestors'
+    test/unit/generic_type_test.rb:17:in `test_ancestors'
+    test/unit/generic_type_test.rb:17:in `each'
+    test/unit/generic_type_test.rb:17:in `any?'
+    test/unit/generic_type_test.rb:17:in `test_ancestors'
+
+  2) Error:
+test_descendants(GenericTypeTest):
+NoMethodError: undefined method `generalize' for "#<GenericType:0xb5d7be18>":GenericType
+    app/models/example_type.rb:14:in `valid_parent?'
+    app/models/generic_type.rb:20:in `descendants'
+    app/models/generic_type.rb:20:in `descendants'
+    app/models/generic_type.rb:20:in `select'
+    app/models/generic_type.rb:20:in `descendants'
+    test/unit/generic_type_test.rb:45:in `test_descendants'
+    test/unit/generic_type_test.rb:45:in `each'
+    test/unit/generic_type_test.rb:45:in `any?'
+    test/unit/generic_type_test.rb:45:in `test_descendants'
+
+  3) Error:
+test_generalize(GenericTypeTest):
+NoMethodError: undefined method `generalize' for #<GenericType:0xb5d1d1b0>
+    test/unit/generic_type_test.rb:35:in `test_generalize'
+    test/unit/generic_type_test.rb:35:in `each'
+    test/unit/generic_type_test.rb:35:in `any?'
+    test/unit/generic_type_test.rb:35:in `test_generalize'
+
+4 tests, 34 assertions, 0 failures, 3 errors
