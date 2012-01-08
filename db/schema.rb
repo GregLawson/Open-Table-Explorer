@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926213934) do
+ActiveRecord::Schema.define(:version => 20120107110924) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -94,20 +94,20 @@ ActiveRecord::Schema.define(:version => 20110926213934) do
     t.datetime "updated_at"
   end
 
+  create_table "example_Types", :force => true do |t|
+    t.string  "example_string",  :null => false
+    t.string  "inspect_value",   :null => false
+    t.integer "generic_type_id"
+  end
+
+  add_index "example_Types", ["example_string"], :name => "Unique_examples", :unique => true
+
   create_table "example_acquisitions", :force => true do |t|
     t.string  "acquisition_data"
     t.integer "acquisition_id",   :null => false
   end
 
   add_index "example_acquisitions", ["acquisition_data", "id"], :name => "No_Redundant_Examples", :unique => true
-
-  create_table "example_types", :force => true do |t|
-    t.string "import_class",   :null => false
-    t.string "example_string", :null => false
-    t.string "inspect_value",  :null => false
-  end
-
-  add_index "example_types", ["example_string", "import_class"], :name => "Unique_examples", :unique => true
 
   create_table "frequencies", :force => true do |t|
     t.string   "frequency_name"
@@ -157,14 +157,14 @@ ActiveRecord::Schema.define(:version => 20110926213934) do
   end
 
   create_table "generic_types", :force => true do |t|
-    t.integer "search_sequence", :null => false
+    t.integer "generalize_id",   :null => false
     t.string  "import_class",    :null => false
     t.string  "rails_type"
     t.string  "data_regexp",     :null => false
     t.string  "ruby_conversion", :null => false
   end
 
-  add_index "generic_types", ["data_regexp"], :name => "generic_types_data_regexp_key", :unique => true
+  add_index "generic_types", ["data_regexp"], :name => "altered_generic_types_data_regexp_key", :unique => true
 
   create_table "hosts", :force => true do |t|
     t.text     "nmap"
