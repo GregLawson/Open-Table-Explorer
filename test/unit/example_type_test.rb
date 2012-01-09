@@ -6,36 +6,38 @@ def test_generic_type
 		assert_not_nil(t.generic_type)
 	end #each
 end #generic_type
-def test_valid?
+def test_valid_context
 	ExampleType.all.each do |t|
-		assert_not_nil(t.valid?, "t=#{t.inspect}")
+		assert_not_nil(t.valid_context?, "t=#{t.inspect}")
 	end #each
-end #valid?
-def test_valid_self
+end #valid_context
+def test_valid
 	example_type=ExampleType.all[0]
 	assert_not_nil(example_type)
 	assert_not_nil(example_type.generic_type, "example_type=#{example_type.inspect}")
 	assert_not_nil(example_type.generic_type.generalize)
 	assert_not_nil(example_type.generic_type.generalize[:data_regexp])
 	assert_not_nil(example_type[:example_string])
-	assert(example_type.valid_self?(example_type[:example_string]))
+	assert(example_type.valid?(example_type[:example_string]))
 	ExampleType.all.each do |t|
-		assert_not_nil(t.valid_self?, "t=#{t.inspect}")
+		assert_not_nil(t.valid?, "t=#{t.inspect}")
 	end #each
-end #valid_self?
-def test_valid_generalization
+end #valid
+def test_which_generic_type
 	ExampleType.all.each do |t|
-		assert_instance_of(String, t[:example_string])
-		assert_not_nil(t.generic_type)
-		assert_not_nil(t.generic_type.generalize)
-		assert_not_nil(t.generic_type.generalize[:data_regexp])
-		assert(Regexp.new(t.generic_type.generalize[:data_regexp]).match(t[:example_string]), "t=#{t.inspect}, t.generic_type=#{t.generic_type.inspect}, t.generic_type.generalize=#{t.generic_type.generalize.inspect}")
-		assert_not_nil(t.valid_generalization?, "t=#{t.inspect}, t.generic_type=#{t.generic_type.inspect}, t.generic_type=#{t.generic_type.inspect}")
+		t.assert_generic_type(:generalize, "t=#{t.inspect}, t.generic_type=#{t.generic_type.inspect}, t.generic_type=#{t.generic_type.inspect}")
 	end #each
-end #valid_generalization?
-def test_valid_specialization
+end #which_generic_type
+def test_assert_generic_type
 	ExampleType.all.each do |t|
-		assert_not_nil(t.valid_specialization?, "t=#{t.inspect}")
+		t.assert_generic_type(nil, 'example not valid')
+		t.assert_generic_type(:generalize, 'generalize not valid')
+		t.assert_generic_type(:specialize, 'specialize not valid')
 	end #each
-end #valid_specialization?
+end #generic_type
+def test_example_type_valid
+	ExampleType.all.each do |t|
+		t.assert_example_type_valid(:specialize, "t=#{t.inspect}")
+	end #each
+end #example_type_valid
 end #ExampleType
