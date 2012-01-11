@@ -11,9 +11,9 @@ end #valid_context
 def valid?(association=nil)
 	gt=which_generic_type(association)
 	if gt.is_a?(Array) then #specialize
-		gt.all? do |g|
+		gt.all? do |g|	# specializations
 			data_regexp=g[:data_regexp]
-			Regexp.new(data_regexp).match(self[:example_string])
+			!Regexp.new(data_regexp).match(self[:example_string])
 		end #all
 	else
 		data_regexp=gt[:data_regexp]
