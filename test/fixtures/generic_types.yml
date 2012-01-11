@@ -1,10 +1,4 @@
 --- 
-Integer_Column: 
-  data_regexp: "[0-9]+"
-  generalize: VARCHAR_Column
-  rails_type: integer
-  import_class: Integer_Column
-  ruby_conversion: str.to_i
 Text_Column: 
   data_regexp: .*
   generalize: Text_Column
@@ -17,6 +11,12 @@ VARCHAR_Column:
   rails_type: string
   import_class: VARCHAR_Column
   ruby_conversion: str
+Integer_Column: 
+  data_regexp: "[0-9]+"
+  generalize: VARCHAR_Column
+  rails_type: integer
+  import_class: Integer_Column
+  ruby_conversion: str.to_i
 Float_Column: 
   data_regexp: "[0-9]*\\.[0-9]+"
   generalize: VARCHAR_Column
@@ -29,12 +29,6 @@ Macaddr_Column:
   rails_type: string
   import_class: Macaddr_Column
   ruby_conversion: str.upcase
-Boolean_Column: 
-  data_regexp: "[Tt][Rr][Uu][Ee]"
-  generalize: VARCHAR_Column
-  rails_type: boolean
-  import_class: Boolean_Column
-  ruby_conversion: TrueClass
 Time_Column: 
   data_regexp: "[0-9]+:[0-9.]+( ?[PApa][Mm])?"
   generalize: VARCHAR_Column
@@ -54,7 +48,13 @@ NULL_Column:
   import_class: NULL_Column
   ruby_conversion: nil
 Boolean_Column: 
-  data_regexp: "[Ff][Aa][Ll][Ss]"
+  data_regexp: "[Tt][Rr][Uu][Ee]"
+  generalize: VARCHAR_Column
+  rails_type: boolean
+  import_class: Boolean_Column
+  ruby_conversion: TrueClass
+Boolean_Column: 
+  data_regexp: "[Ff][Aa][Ll][Ss][Ee]"
   generalize: VARCHAR_Column
   rails_type: boolean
   import_class: Boolean_Column

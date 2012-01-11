@@ -1,38 +1,103 @@
 --- 
-one: 
-  
-  generic_type: Float_Column
-  inspect_value: "12.34"
-  example_string: "12.34"
-example_types_002: 
-  
-  generic_type: Inet_Column
-  inspect_value: 1.2.3.4
-  example_string: 1.2.3.4
-example_types_003: 
+Integer_Column: 
   
   generic_type: Integer_Column
   inspect_value: "1234"
   example_string: "1234"
-example_types_004: 
+Float_Column: 
   
-  generic_type: NULL_Column
-  inspect_value: "NULL"
-  example_string: " "
-example_types_005: 
+  generic_type: Float_Column
+  inspect_value: "12.34"
+  example_string: "12.34"
+Macaddr_Column: 
   generic_type: Macaddr_Column
   inspect_value: 1A:2B:3C:4D
   example_string: 1a:2B:3C:4d
-example_types_006: 
+Time_Column: 
   
   generic_type: Time_Column
   inspect_value: 12:34:00 PM
   example_string: 12:34PM
-example_types_007: 
+Timestamp_Column: 
   generic_type: Timestamp_Column
   inspect_value: Mon, 21 Dec 1953 12:34:00 -0800
   example_string: 12/21/1953 12:34PM
-example_types_008: 
+  
+Timestamp_Column: 
   generic_type: Timestamp_Column
   inspect_value: Mon, 21 Dec 1953 12:34:00 -0800
   example_string: Dec 21,1953 12:34PM
+NULL_Column: 
+  
+  generic_type: NULL_Column
+  inspect_value: "NULL"
+  example_string: " "
+Boolean_Column: 
+  generic_type: Boolean_Column
+  inspect_value: false
+  example_string: false
+Boolean_Column2: 
+  generic_type: NULL_Column
+  inspect_value: "NULL"
+  example_string: " "
+Inet_Column:
+  generic_type: Inet_Column
+  inspect_value: 1.2.3.4
+  example_string: 1.2.3.4
+alnum:
+  generic_type: alnum
+  inspect_value: a
+  example_string: a
+alpha:
+  generic_type: alpha
+  inspect_value: a
+  example_string: a
+blank:
+  generic_type: blank
+  inspect_value: " "
+  example_string: " "
+cntrl:
+  generic_type: cntrl
+  inspect_value: \n
+  example_string: \n
+digit:
+  generic_type: digit
+  inspect_value: 9
+  example_string: 9
+graph:
+  generic_type: graph
+  inspect_value: a
+  example_string: a
+lower:
+  generic_type: lower
+  inspect_value: a
+  example_string: a
+print:
+  generic_type: print
+  inspect_value: a
+  example_string: a
+punct:
+  generic_type: punct
+  inspect_value: %
+  example_string: %
+space:
+  generic_type: space
+  inspect_value: " "
+  example_string: " "
+upper:
+  generic_type: upper
+  inspect_value: Z
+  example_string: Z
+xdigit:
+  generic_type: xdigit
+  inspect_value: a
+  example_string: a
+word:
+  generic_type: word
+  inspect_value: a
+  example_string: a
+ascii:
+  generic_type: ascii
+  inspect_value: a
+  example_string: a
+ 
