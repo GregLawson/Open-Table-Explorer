@@ -1,7 +1,8 @@
 class GenericType < ActiveRecord::Base
 include Generic_Table
 has_many :example_types
-has_many :specialize, :class_name => "GenericType"
+has_many :specialize, :class_name => "GenericType",
+    :foreign_key => "generalize_id"
 belongs_to :generalize, :class_name => "GenericType",
     :foreign_key => "generalize_id"
 
