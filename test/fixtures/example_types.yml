@@ -18,7 +18,7 @@ example_types_004:
   
   generic_type: NULL_Column
   inspect_value: "NULL"
-  example_string: ""
+  example_string: " "
 example_types_005: 
   generic_type: Macaddr_Column
   inspect_value: 1A:2B:3C:4D
