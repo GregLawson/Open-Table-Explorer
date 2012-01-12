@@ -68,7 +68,7 @@ Inet_Column:
 
 alnum:
   data_regexp: "[[:alnum:]]" #- Alphabetic and numeric character
-  generalize: ascii
+  generalize: word
   import_class: alnum
   ruby_conversion: str
 alpha:
@@ -93,7 +93,7 @@ digit:
   ruby_conversion: str
 graph:
   data_regexp: "[[:graph:]]" # Non-blank character (excludes spaces, control characters, and similar)
-  generalize: ascii
+  generalize: print
   import_class: graph
   ruby_conversion: str
 lower:
@@ -127,12 +127,12 @@ xdigit:
   import_class: xdigit
   ruby_conversion: str
 word:
-  data_regexp: "[[:word:]]" # A character in one of the following Unicode general categories Letter, Mark, Number, <i>Connector_Punctuation<i/i>
+  data_regexp: "\w" # A character in one of the following Unicode general categories Letter, Mark, Number, <i>Connector_Punctuation<i/i>
   generalize: graph
   import_class: word
   ruby_conversion: str
 ascii:
-  data_regexp: "[[:ascii:]]"
-  generalize: word
+  data_regexp: "[\\x00-\\xff]"
+  generalize: VARCHAR_Column
   import_class: ascii
   ruby_conversion: str
