@@ -198,5 +198,15 @@ def to_regexp
 	ret=Regexp.new(ret)
 	return ret
 end #to_regexp
-# not used
+Ascii_characters=(0..255).to_a.map { |i| i.chr}
+def self.string_of_matching_chars(regexp)
+	Ascii_characters.select do |char|
+		if regexp.match(char) then
+			char
+		else
+			nil
+		end #if
+	end #select
+	
+end #string_of_matching_chars
 end #class

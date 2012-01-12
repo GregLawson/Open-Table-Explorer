@@ -5,14 +5,13 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require 'test/test_helper.rb'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
 require 'app/models/inlineAssertions.rb'
 class RegexpTreeTest < ActiveSupport::TestCase
-require 'test/test_helper'
 require 'app/models/regexp_tree.rb'
 WhiteSpacePattern=' '
 WhiteEditor=RegexpParser.new(WhiteSpacePattern)	
@@ -269,6 +268,33 @@ end #to_s
 def test_to_regexp
 	assert_equal(/.*/,RegexpTree.new('.*').to_regexp)
 end #to_regexp
+def test_string_of_matching_chars
+	regexp=Regexp.new('\d')
+	char='9'
+	assert_match(regexp, char)
+	ascii_characters=(0..255).to_a.map { |i| i.chr}
+	assert_equal(256, ascii_characters.size)
+	assert_equal(['1','2','3'], ("\x31".."\x33").to_a)
+	assert_equal(['A','B','C'], ("\x41".."\x43").to_a)
+	assert_equal(['Q','R','S'], ("\x51".."\x53").to_a)
+	assert_equal(['a','b','c'], ("\x61".."\x63").to_a)
+	matches=(("\x31".."\x33").to_a.select do |char|
+		if regexp.match(char) then
+			char
+		else
+			nil
+		end #if
+	end) #select
+	assert_equal('123', matches.join)
+	assert_match(/[a-z]/, 'a')
+	assert_equal('123', RegexpTree.string_of_matching_chars(Regexp.new('[1-3]')).join)
+	assert_equal('123', RegexpTree.string_of_matching_chars(Regexp.new(/[1-3]/)).join)
+	assert_equal('0123456789', RegexpTree.string_of_matching_chars(Regexp.new(/\d/)).join)
+	assert_equal('0123456789', RegexpTree.string_of_matching_chars(/[0-9]/).join)
+	assert_equal('abcdefghijklmnopqrstuvwxyz'.upcase, RegexpTree.string_of_matching_chars(/[A-Z]/).join)
+	assert_equal('abcdefghijklmnopqrstuvwxyz', RegexpTree.string_of_matching_chars(/[a-z]/).join)
+	assert_equal('abcdefghijklmnopqrstuvwxyz', RegexpTree.string_of_matching_chars(Regexp.new('[a-z]')).join)
+end #string_of_matching_chars
 def test_editor
 	regexpParserTest(KCeditor)
 	
