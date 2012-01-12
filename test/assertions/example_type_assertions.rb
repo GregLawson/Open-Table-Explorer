@@ -4,6 +4,15 @@ class ExampleType < ActiveRecord::Base
 include Test::Unit::Assertions
 require 'rails/test_help'
 
+# Specialization should have fewer choices and match fewer sequential characters
+# To support automatic testing example should distinguish specializations by
+def assert_specialization_does_not_match
+	generalization=generic_type.generalize
+	assert_not_nil(generalization)
+		Regexp.new(generic_type[:data_regexp]).match(self[:example_string])
+		assert_not_equal($~[0], self[:example_string], "self=#{self.inspect} is a specialization that does not match #{generic_type.inspect}")
+
+end #assert_specialization_does_not_match
 def assert_generic_type(association=nil, message=nil)
 	message=build_message(message, "example_type=?, association=?", self, association.inspect) 
 	case association
