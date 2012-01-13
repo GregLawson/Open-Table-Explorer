@@ -1,17 +1,30 @@
+# 1a) a regexp should match all examples from itself down the specialization tree.
+# 1b) an example should match its regexp and all generalization regexps above if
+# 2) an example should not match at least one of its specialization regexps
+# 3) example  strings should not equal specialization examples
+# 4) specialization regexps have fewer choices (including case) or more restricted repetition
 require 'test/test_helper'
 class ExampleType < ActiveRecord::Base
 # Assertions (validations)
 include Test::Unit::Assertions
 require 'rails/test_help'
+# 2) an example should not match at least one of its specialization regexps
 
 # Specialization should have fewer choices and match fewer sequential characters
 # To support automatic testing example should distinguish specializations by
 def assert_specialization_does_not_match
-	generalization=generic_type.generalize
-	assert_not_nil(generalization)
-		Regexp.new(generic_type[:data_regexp]).match(self[:example_string])
-		assert_not_equal($~[0], self[:example_string], "self=#{self.inspect} is a specialization that does not match #{generic_type.inspect}")
-
+	specializations=generic_type.one_level_specializations
+	assert_not_nil(specializations)
+	if !specializations.empty? then
+		suggestions=RegexpTree.string_of_matching_chars(Regexp.new(generic_type[:data_regexp]))-specializations.map{|s| RegexpTree.string_of_matching_chars(Regexp.new(s[:data_regexp]))}.flatten.sort.uniq
+		assert(specializations.any? do |s|
+			if Regexp.new(s[:data_regexp]).match(self[:example_string]) then
+				$~[0]!=self[:example_string] #full match
+			else
+				true #no match
+			end #if
+		end, "example_string=#{self[:example_string].inspect} of import_class=#{generic_type[:import_class]},should not match at least one of specializations=#{specializations.inspect}, sugestions=#{suggestions}") #any
+	end #if
 end #assert_specialization_does_not_match
 def assert_generic_type(association=nil, message=nil)
 	message=build_message(message, "example_type=?, association=?", self, association.inspect) 

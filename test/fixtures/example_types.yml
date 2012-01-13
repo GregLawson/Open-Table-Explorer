@@ -46,16 +46,20 @@ Inet_Column_0:
   example_string: 1.2.3.4
 alnum_0:
   generic_type: alnum
-  inspect_value: a
-  example_string: a
+  inspect_value: z
+  example_string: z
+alnum_1:
+  generic_type: alnum
+  inspect_value: 8
+  example_string: 8
 alpha_0:
   generic_type: alpha
   inspect_value: b
   example_string: b
 blank_0:
   generic_type: blank
-  inspect_value: " "
-  example_string: " "
+  inspect_value: '\t'
+  example_string: '\t'
 cntrl_0:
   generic_type: cntrl
   inspect_value: "\n"
@@ -74,8 +78,8 @@ lower_0:
   example_string: d
 print_0:
   generic_type: print
-  inspect_value: i
-  example_string: i
+  inspect_value: ' '
+  example_string: ' '
 punct_0:
   generic_type: punct
   inspect_value: "%"
@@ -96,6 +100,10 @@ word_0:
   generic_type: word
   inspect_value: g
   example_string: g
+word_1:
+  generic_type: word
+  inspect_value: _
+  example_string: _
 ascii_0:
   generic_type: ascii
   inspect_value: h

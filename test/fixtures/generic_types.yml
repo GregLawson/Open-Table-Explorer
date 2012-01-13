@@ -131,6 +131,11 @@ word:
   generalize: graph
   import_class: word
   ruby_conversion: str
+underscore:
+  data_regexp: '_' 
+  generalize: word
+  import_class: underscore
+  ruby_conversion: str
 ascii:
   data_regexp: "[\\x00-\\xff]"
   generalize: VARCHAR_Column

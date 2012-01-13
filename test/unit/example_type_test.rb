@@ -88,15 +88,27 @@ def test_which_generic_type
 	end #each
 end #which_generic_type
 def test_assert_specialization_does_not_match
-	GenericType.all.each do |s|
-		if s.generalize.nil? then
-			puts "s.generalize_id=#{s.generalize_id}, s=#{s.inspect} is not a specialization"
+	example=ExampleType.find_by_example_string('*')
+	regexp=GenericType.find_by_import_class('word')
+	assert_equal(regexp.generalize, example.generic_type)
+	assert_no_match(Regexp.new(regexp[:data_regexp]), example[:example_string])
+	specializations=example.generic_type.one_level_specializations
+	assert_not_empty(specializations)
+	assert(specializations.any? do |s|
+		if Regexp.new(s[:data_regexp]).match(example[:example_string]) then
+			$~[0]!=example[:example_string]
 		else
-			s.example_types.each do |e|
-				e.assert_specialization_does_not_match
-				puts "e=#{e.inspect} is a specialization"
-			end #each
+				true #no match
 		end #if
+	end, "import_class=#{example.generic_type[:import_class]}, self=#{example.inspect}, specializations=#{specializations.inspect}") #any
+	if Regexp.new(regexp[:data_regexp]).match(example[:example_string]) then
+		assert_not_equal($~[0], example[:example_string])
+	else
+		# no match
+	end #if
+	puts "import_class=#{example.generic_type[:import_class]}, self=#{example.inspect}, specializations=#{specializations.inspect}"
+	ExampleType.all.each do |e|
+		e.assert_specialization_does_not_match
 	end #each
 end #assert_specialization_does_not_match
 def test_assert_generic_type
