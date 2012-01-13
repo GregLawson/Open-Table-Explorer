@@ -127,7 +127,7 @@ xdigit:
   import_class: xdigit
   ruby_conversion: str
 word:
-  data_regexp: "\w" # A character in one of the following Unicode general categories Letter, Mark, Number, <i>Connector_Punctuation<i/i>
+  data_regexp: '\w' # A character in one of the following Unicode general categories Letter, Mark, Number, <i>Connector_Punctuation<i/i>
   generalize: graph
   import_class: word
   ruby_conversion: str

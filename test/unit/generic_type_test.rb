@@ -1,18 +1,7 @@
 require 'test/test_helper'
 
+require 'test/assertions/generic_type_assertions.rb'
 class GenericTypeTest < ActiveSupport::TestCase
-def test_example_types
-    assert_not_nil(GenericType.all)
-    assert_not_nil(GenericType.all[0])
-    
-    GenericType.all.each do |t| 
-    	assert_not_nil(t.example_types)
-	t.example_types.each do |e|
-		assert_match(Regexp.new(t.data_regexp), e.example_string)
-	end #each
-#	assert_equal([], t.example_types.map{|t| t.attributes})
-    end #each
-end #example_types
 def test_generalizations
 	assert_instance_of(GenericType, GenericType.find_by_import_class('digit'))
 	assert_equal(["Text_Column", "VARCHAR_Column", "ascii", "print", "graph", "word", "alnum", "xdigit"], GenericType.find_by_import_class('digit').generalizations.map{|g| g.import_class})
@@ -78,6 +67,15 @@ def test_generalize
 	end #each
 	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
 end #generalize
-def test_descendants
-end #descendants
+def test_assert_specialized_examples
+	regexp=GenericType.find_by_import_class('word')[:data_regexp]
+	assert_equal(2, regexp.size)
+	assert_equal('\w', regexp)
+	assert_equal(/\w/, Regexp.new(regexp))
+#	assert_equal('\w', RegexpTree.string_of_matching_chars(/\w/))
+	assert_match(Regexp.new(regexp), 'd')
+	GenericType.all.each do |g|
+		g.assert_specialized_examples
+	end #each
+end #assert_specialized_examples
 end #GenericType

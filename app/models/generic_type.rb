@@ -1,3 +1,8 @@
+# 1a) a regexp should match all examples from itself down the specialization tree.
+# 1b) an example should match its regexp and all generalization regexps above if
+# 2) an example should not match at least one of its specialization regexps
+# 3) example  strings should not equal specialization examples
+# 4) specialization regexps have fewer choices (including case) or more restricted repetition
 class GenericType < ActiveRecord::Base
 include Generic_Table
 has_many :example_types
@@ -5,6 +10,7 @@ has_many :specialize, :class_name => "GenericType",
     :foreign_key => "generalize_id"
 belongs_to :generalize, :class_name => "GenericType",
     :foreign_key => "generalize_id"
+require 'test/assertions/ruby_assertions.rb'
 
 def generalizations
 	if generalize==self then
@@ -38,8 +44,4 @@ def specializations
 		return specialize.map{|s| s.specializations}.flatten + one_level_specializations
 	end #if
 end #specializations
-def descendants(candidates=GenericType.all)
-	candidates.select {|c| c.example_types.all?{|e| !e.valid_parent?(e[:example_string])}}
-  
-end #descendants
 end #GenericType
