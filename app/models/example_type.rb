@@ -8,35 +8,6 @@ include Generic_Table
 require 'test/assertions/ruby_assertions.rb'
 belongs_to :generic_type
 # find Array of more general types (tree ancestors)
-def valid_context?
-	valid? && valid?(:generalize) && valid?(:specialize)
-end #valid_context
-def valid?(association=nil)
-	gt=which_generic_type(association)
-	if gt.nil? then
-		return true # edge condition
-	elsif gt.is_a?(Array) then #specialize
-		if gt.empty? then
-			return true # edge condition
-		else
-			return gt.any? do |g|	# specializations
-				data_regexp=g[:data_regexp]
-				if !Regexp.new(data_regexp).match(self[:example_string]) then
-					true
-				else
-					$~[0] == self[:example_string] # full string matched
-				end #if
-			end #all
-		end #if
-	else
-		data_regexp=gt[:data_regexp]
-		if Regexp.new(data_regexp).match(self[:example_string]) then
-			$~[0] == self[:example_string] # full string matched
-		else
-			return false
-		end #if
-	end #if
-end #valid
 def which_generic_type(association=nil)
 	return case association
 	when nil
