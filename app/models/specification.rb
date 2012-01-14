@@ -1,6 +1,6 @@
 ###########################################################################
 #    Copyright (C) 2011 by Greg Lawson                                      
-#    <GregLawson@gmail.com>                                                             
+#    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING pathname that comes with this distribution
 #
