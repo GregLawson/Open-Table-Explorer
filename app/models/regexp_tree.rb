@@ -6,7 +6,7 @@
 #
 ###########################################################################
 # parse tree internal format is nested Arrays.
-# Postfix operators and brackets start embeddded arrays
+# Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
 class RegexpParser
 attr_reader :regexp_string,:tokenIndex,:parseTree
