@@ -186,7 +186,11 @@ def Base.model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
 end #model_file_name
 def Base.grep_command(content_regexp_string, filename_regexp_string='-r {app/models/,test/unit/}*.rb', redirection='')
-	return "grep \"#{content_regexp_string}\" #{filename_regexp_string} #{redirection}"
+	if redirection.empty? then
+		return "grep \"#{content_regexp_string}\" #{filename_regexp_string}"
+	else
+		return "grep \"#{content_regexp_string}\" #{filename_regexp_string} #{redirection}"
+	end #if
 end #grep_command
 def Base.model_grep_command(model_regexp_string)
 	if !Generic_Table.rails_MVC_class?(self.name) then
@@ -198,7 +202,7 @@ def Base.model_grep(model_regexp_string)
 	return `#{model_grep_command(model_regexp_string)}`
 end #model_grep
 def Base.association_grep_pattern(model_regexp_string,association_name)
-	return "#{model_regexp_string} :#{association_name}" # no end of line $, so that polymorphic associations are found.
+	return "#{model_regexp_string}:#{association_name}" # no end of line $, so that polymorphic associations are found.
 end #association_grep_command
 ASSOCIATION_MACRO_LETTERS='[has_manyoneblgtd]'
 ASSOCIATION_MACRO_PATTERN="^[hb]#{ASSOCIATION_MACRO_LETTERS}*\s\s*"
