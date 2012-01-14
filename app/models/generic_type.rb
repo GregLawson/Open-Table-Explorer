@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 # 1a) a regexp should match all examples from itself down the specialization tree.
 # 1b) an example should match its regexp and all generalization regexps above if
 # 2) an example should not match at least one of its specialization regexps
