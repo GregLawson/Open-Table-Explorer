@@ -24,7 +24,7 @@ def Specification.all
 		end #if
 		spec
 	end #map
-	regexps=ExampleType.all.map{|s| {:name => s.import_class, :spec_kind => :ExampleType}}
+	regexps=ExampleType.all.map{|s| {:name => s.generic_type.import_class, :spec_kind => :ExampleType}}
 	regexps=GenericType.all.map{|s| {:name => s.import_class, :spec_kind => :ExampleType}}
 	urls=Url.all.map{|s| {:name => s.href, :spec_kind => :Url}}
 
