@@ -11,7 +11,24 @@ def set_inspect
 	return "#{inspect}; #{map {|h| h.object_identities}.join(', ')}"
 end #set_inspect
 
-end #class
+end #Set
+class Object
+def enumerate_single(enumerator_method, &proc)
+	result=[self].enumerate(enumerator_method, &proc) #simulate array
+	if result.instance_of?(Array) then # map
+		return result[0] #discard simulated array
+	else # reduction method (not map)
+		return result
+	end #if
+end #enumerate_single
+def enumerate(enumerator_method, &proc)
+	if instance_of?(Array) then
+		method(enumerator_method).call(&proc)
+	else
+		enumerate_single(enumerator_method, &proc)		
+	end #if
+end #enumerate
+end #Object
 class Module
 def instance_methods_from_class(all=false)
 	return self.instance_methods(all)
@@ -19,6 +36,7 @@ end #instance_methods_from_class
 def instance_respond_to?(method_name)
 	return instance_methods_from_class.include?(method_name.to_s)
 end #instance_respond_to
+# misspelled?
 def similar_methods(symbol)
 	singular='^'+symbol.to_s.singularize
 	plural='^'+symbol.to_s.pluralize

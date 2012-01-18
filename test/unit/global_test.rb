@@ -42,6 +42,26 @@ def test_set_inspect
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},(?-mix:1),\/1\/>, <Regexp #[0-9-]+\{4408\},(?-mix:3),\/3\/>/,set.set_inspect)
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},(?-mix:1),\/1\/>, <Regexp #[0-9-]+\{4408\},(?-mix:3),\/3\/>/,set.set_inspect)
 end #set_inspect
+def test_enumerate_single
+	atom=/5/
+	single=atom.enumerate_single(:map){|e| e}
+	assert_not_nil(single)
+	assert_equal(5, 5.enumerate_single(:map){|e| e})
+	assert_equal(5, 5.enumerate_single(:select){|e| e==5})
+	assert_equal(nil, 5.enumerate_single(:select){|e| e==6})
+	assert_equal(false, 5.enumerate_single(:all?){|e| e==6})
+	assert_equal(true, 5.enumerate_single(:all?){|e| e==5})
+end #enumerate_single
+def test_enumerate
+	atom=[/5/]
+	single=atom.enumerate(:map){|e| e}
+	assert_not_nil(single)
+	assert_equal([5], [5].enumerate(:map){|e| e})
+	assert_equal([5], [5].enumerate(:select){|e| e==5})
+	assert_equal([], [5].enumerate(:select){|e| e==6})
+	assert_equal(false, [5].enumerate(:all?){|e| e==6})
+	assert_equal(true, [5].enumerate(:all?){|e| e==5})
+end #enumerate
 def test_instance_methods_from_class
 	assert_include('full_associated_models',['full_associated_models'])
 	assert_include('full_associated_models',TestTable.instance_methods_from_class)
@@ -51,6 +71,7 @@ def test_instance_respond_to
 	assert(TestTable.respond_to?(:instance_respond_to?))
 end #instance_respond_to
 def test_similar_methods
+#?	assert_not_empty(TestTable.similar_methods(:assert_fixture_name))
 end #similar_methods
 def test_matching_instance_methods
 	testClass=TestClass
