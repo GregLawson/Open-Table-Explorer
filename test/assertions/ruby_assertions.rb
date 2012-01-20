@@ -11,7 +11,7 @@ def testCallResult(obj,methodName,*arguments)
 	explain_assert_respond_to(obj,methodName)
 	m=obj.method(methodName)
 	return m.call(*arguments)
-end #def
+end #testCallResult
 def testCall(obj,methodName,*arguments)
 	result=testCallResult(obj,methodName,*arguments)
 	assert_not_nil(result)
@@ -59,21 +59,21 @@ def explain_assert_respond_to(obj,methodName,message='')
 			assert_respond_to(obj,methodName,message)
 		end
 	end
-end
+end #explain_assert_respond_to
 def assert_not_empty(object,message=nil)
 	message=build_message(message, "? is empty with value ?.", object.canonicalName,object.inspect)   
 	assert_not_nil(object,message)
 	assert_block(message){!object.empty?}
-end #def
+end #assert_not_empty
 def assert_empty(object,message=nil)
 	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
 	assert_block(message){object.empty? || object==Set[nil]}
-end #def
+end #assert_empty
 def assert_flat_set(set)
 	set.to_a.each do |e|
 		assert(!e.instance_of?(Set))
 	end
-end #def
+end #assert_flat_set
 def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
 	if expected_enumeration.instance_of?(Set) then
 		expected_set=expected_enumeration
@@ -106,7 +106,7 @@ def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
 		raise "#{message}"
 		assert_equal(expected_set,actual_set,message)
 	end #if
-end #def
+end #assert_equal_sets
 def assert_overlap(enum1,enum2)
 	assert_not_empty(enum1)
 	assert_not_empty(enum2)
@@ -118,14 +118,14 @@ def assert_include(element,list,message=nil)
 #	end #if 
 	raise "Second argument of assert_include must be an Array" if !(list.instance_of?(Array) || list.instance_of?(Set))
 	assert(list.include?(element),message)
-end #def
+end #assert_include
 def assert_dir_include(filename,glob)
 	assert_include(filename,Dir[glob],"Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
-end #def
+end #assert_dir_include
 def assert_not_include(element,list,message=nil)
 	message=build_message(message, "? is in list ?", element,list)   
 	assert_block(message){!list.include?(element)}
-end #def
+end #assert_not_include
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
@@ -142,7 +142,7 @@ def assert_public_instance_method(obj,methodName,message='')
 		message+="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
 	end #if
 	assert_respond_to( obj, methodName,message)
-end #def
+end #assert_public_instance_method
 def assert_array_of(obj, type)
 	assert_block("obj=#{obj.inspect} must be an Array") {obj.instance_of?(Array)}
 	puts "obj=#{obj.inspect} must be an Array of Strings(pathnames)"

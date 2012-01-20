@@ -10,7 +10,12 @@ require 'test/test_helper'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class StreamMethodTest < ActiveSupport::TestCase
-fixtures :stream_methods
+@@test_name=self.name
+#        assert_equal('Test',@@test_name[-4..-1],"@test_name='#{@test_name}' does not follow the default naming convention.")
+@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+@@table_name=@@model_name.tableize
+ 
+fixtures @@table_name.to_sym
 def acq_and_rescue
 	stream=acquisition_stream_specs(@testURL.to_sym)
 	acq=ruby_interfaces(:HTTP)
@@ -185,4 +190,4 @@ def test_id_equal
 	end
 end #test_id_equal
 
-end #
+end #StreamMethod

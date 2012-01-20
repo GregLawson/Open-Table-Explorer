@@ -84,12 +84,12 @@ def fixtures(table_name)
 		fixture_hash[fixture_label]=ar_from_fixture
 	end #each
 	return fixture_hash
-end #def
+end #fixtures
 
 # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
 def fixture_names
 	@loaded_fixtures.keys
-end #def
+end #fixture_names
 def assert_fixture_name(table_name)
 	assert_include(table_name.to_s,fixture_names)
 	assert_not_nil(@loaded_fixtures[table_name.to_s],"table_name=#{table_name.inspect}, fixture_names=#{fixture_names.inspect}")
