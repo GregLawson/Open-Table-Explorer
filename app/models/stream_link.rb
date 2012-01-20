@@ -15,4 +15,7 @@ belongs_to :store_method, :class_name => "StreamMethod",
 	:foreign_key => "store_method_id"
 belongs_to :next_method, :class_name => "StreamMethod",
 	:foreign_key => "next_method_id"
-end
+def self.logical_primary_key
+	return [:input_stream_method_argument_id, :output_stream_method_argument_id]
+end #logical_key
+end #StreamLink
