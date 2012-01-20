@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING pathname that comes with this distribution
@@ -14,8 +14,15 @@ def initialize(hash)
 	super(hash)
 end #initialize
 # Returns all specs
-def Specification.all
 # [name, specification, spec_kind, spec_id, parent, broader]
+# name = often logical key
+# specification = string (regexp, url, html parse tree path)
+# spec_kind = symbol of class name of polymorphic embedded class
+# spec_id = foreign key for each polymorhic record
+# parent = tree of specs
+#       levels= Patterns, Methods, Specs (regexp, url, etc.)
+# broader= probably GenericType.generalize
+def Specification.all
 	patterns=StreamPattern.all.map{|s| {:name => s.name, :spec_kind => :StreamPattern}}
 	methods=StreamMethod.all.map do |s|
 		spec={:name => s.name, :spec_kind => :StreamMethod}
@@ -24,10 +31,10 @@ def Specification.all
 		end #if
 		spec
 	end #map
-	regexps=ExampleType.all.map{|s| {:name => s.generic_type.import_class, :spec_kind => :ExampleType}}
-	regexps=GenericType.all.map{|s| {:name => s.import_class, :spec_kind => :ExampleType}}
+#	regexps=ExampleType.all.map{|s| {:name => s.generic_type.import_class, :spec_kind => :ExampleType}}
+	regexps=GenericType.all.map{|s| {:name => s.import_class, :spec_kind => :GenericType}}
 	urls=Url.all.map{|s| {:name => s.href, :spec_kind => :Url}}
-
+	# 
 	specifications=patterns+methods+regexps+urls+[
 		{:name => :Acquisitions, :spec_kind => :StreamPattern},
 		{:name => :Shell, 	:spec_kind => :StreamMethod, 	:parent => :Acquisitions, :broader => :both},
@@ -45,7 +52,7 @@ def Specification.all
 			puts "No find_by_name, id in spec=#{spec.inspect}"
 		end #if
 		
-		hash=spec.merge(Specification.new(new_attributes).attributes)
+		hash=Specification.new(spec.merge(new_attributes))
 	end #map
 end #all
 def []=(name, attribute)
@@ -64,5 +71,4 @@ end #
 def assert_has_attributes(obj)
 	assert_not_equal(0, obj.size)
 end #assert_has_attributes
-\
 end #Specification
