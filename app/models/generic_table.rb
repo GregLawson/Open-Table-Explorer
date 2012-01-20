@@ -65,7 +65,7 @@ def Base.table_html(column_order=nil)
 	ret+="</table>"
 	return ret
 end #table_html
-# List names of all foreign keys.
+# List names (as Strings) of all foreign keys.
 def Base.foreign_key_names
 	content_column_names=content_columns.collect {|m| m.name}
 #	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
@@ -74,6 +74,19 @@ def Base.foreign_key_names
 	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
 	return possible_foreign_keys
 end #foreign_key_names
+def Base.is_foreign_key_name?(symbol)
+	return foreign_key_names.include?(symbol.to_s) && is_association?(symbol)
+end #foreign_key_name
+# translate foreign_key into asociation name
+# Example: foreign_Key_to_association_name(:fk_id)=='fk' association
+def Base.foreign_key_to_association_name(foreign_key)
+	foreign_key.to_s.sub(/_id$/,'')
+end #foreign_key_to_association_name
+# translate foreign_key into asociation
+# Example: foreign_Key_to_association(:fk_id)==fk association
+def foreign_key_to_association(foreign_key)
+	method(Base.foreign_key_to_association_name(foreign_key)).call
+end #foreign_Key_to_association
 # list names of the associations having foreign keys.
 def Base.foreign_key_association_names
 	foreign_key_names.map {|fk| fk.sub(/_id$/,'')}
@@ -231,7 +244,7 @@ def Base.has_many_association?(association_name)
 end #has_many_association
 # expects a singular association name
 def Base.belongs_to_association?(association_name)
-	return association_grep('^belongs_to',association_name)!=''
+	return association_grep('^belongs_to ',association_name)!=''
 end #belongs_to_association
 def Base.has_one_association?(association_name)
 	return association_grep('^has_one',association_name)
@@ -302,8 +315,12 @@ def Base.is_active_record_method?(method_name)
 	end #if
 end #is_active_record_method
 #def Base.logical_primary_key
-#	return column_names
+#	return logical_attributes
 #end #logical_primary_key
+
+def Base.logical_primary_key
+	return (column_names-['id','created_at','updated_at'])
+end #logical_primary_key
 def Base.attribute_ddl(attribute_name)
 	table_sql= self.to_sql
 	attribute_sql=table_sql.grep(attribute_name)
@@ -351,7 +368,7 @@ def Base.is_logical_primary_key?(attribute_names)
 end #logical_primary_key
 
 def Base.sequential_id?
-	if self.respond_to?(:logical_primary_key) then
+	if public_methods(false).include?('logical_primary_key') then
 		if logical_primary_key==[:created_at] then # still sequential, not requred, default
 			return true # better sequential key
 		else
@@ -360,7 +377,25 @@ def Base.sequential_id?
 	else # default to sequential id if not specified
 		return true  
 	end #if
-end # def
+end # sequential_id
+def logical_primary_key_recursive_value(delimiter=',')
+	if self.class.sequential_id? then
+		return logical_primary_key_value
+	else
+		self.class.logical_primary_key.enumerate(:map) do |e| 
+			if self.class.is_foreign_key_name?(e) then
+				association=foreign_key_to_association(e)
+				if association.nil? then
+					nil
+				else
+					association.logical_primary_key_recursive_value 
+				end #if
+			else
+				self[e]
+			end #if
+		end #enumerate
+	end #if
+end #logical_primary_key_recursive_value
 def logical_primary_key_value(delimiter=',')
 	if self.class.sequential_id? then
 		if self.respond_to?(:logical_primary_key) then # still sequential, not requred, default
@@ -375,7 +410,7 @@ def logical_primary_key_value(delimiter=',')
 			return self[self.class.logical_primary_key]
 		end #if
 	end #if
-end #def
+end #logical_primary_key_value
 
 
 end #class Base
