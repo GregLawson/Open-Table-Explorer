@@ -1,12 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-1:
+acquisitions,URL: #
   input_stream_method_argument: URL
   output_stream_method_argument: acquisitions
   store_method_id: 
   next_method_id: 
 
-2:
+name_value_pairs,acquisitions: #
   input_stream_method_argument: acquisitions
   output_stream_method_argument: name_value_pairs
   store_method_id: 

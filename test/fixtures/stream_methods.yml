@@ -107,7 +107,7 @@ Data_Table:
   interface_code: @input.find_by_sql(@sql)
   return_code: 
   rescue_code: 
-  stream_pattern: Query_output
+  stream_pattern: Query_Output
 
 GLM:
   name: Store

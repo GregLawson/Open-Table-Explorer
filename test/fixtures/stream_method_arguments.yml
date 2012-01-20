@@ -8,15 +8,29 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 URL:
-  stream_method_id: 1
+  stream_method: File
   name: URL
   ruby_type: URI
   direction: Input
   parameter_id: 1
-  parameter_type: ScalarArgument
+  parameter_type: URL
 
 acquisitions:
-  stream_method_id: 1
+  stream_method: File
+  name: acquisitions
+  ruby_type: Acquisition
+  direction: Output
+  parameter_id: 1
+  parameter_type: Acquisition
+acquisitions:
+  stream_method: Regexp
+  name: acquisitions
+  ruby_type: Acquisition
+  direction: Output
+  parameter_id: 1
+  parameter_type: GenericType
+name_value_pairs:
+  stream_method: Regexp
   name: acquisitions
   ruby_type: Acquisition
   direction: Output
