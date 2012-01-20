@@ -3,15 +3,22 @@
 one:
   href: Cable Modem
   url: http://192.168.100.1
-  cache_path: MyString
+  cache_path: 
   last_cache: 2011-01-07 14:14:44
   error: MyString
   context: MyString
 
-two:
-  href: MyString
-  url: MyString
-  cache_path: MyString
+EEG1:
+  href: EEG
+  url: file:/home/greg/Desktop/Downloads/emotive/qdot-emokit-2fa5e40/python/logfile.txt
+  cache_path: 
+  last_cache: 2011-01-07 14:14:44
+  error: MyString
+  context: MyString
+EEG2:
+  href: EEG2
+  url: file:/home/greg/Desktop/Downloads/logfile.xls
+  cache_path: 
   last_cache: 2011-01-07 14:14:44
   error: MyString
   context: MyString
