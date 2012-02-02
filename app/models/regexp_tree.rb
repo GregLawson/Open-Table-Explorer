@@ -181,14 +181,21 @@ def postfix_operator_walk(&visit_proc)
 	
 	return new_branching
 end #postfix_operator_walk
-def to_filename_glob
+# file name glob (suitible for Dir[]) most like regexp.
+# often matches more filenames than regexp (see pathnames)
+def to_pathname_glob
 	ret=map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))}
 	ret=ret.postfix_operator_walk{|p| '*'}
 	if ret.kind_of?(Array) then
 		ret=ret.flatten.join
 	end #if
 	return ret
-end #to_filename_glob
+end #to_pathname_glob
+def pathnames
+	Dir[to_pathname_glob].select do |pathname|
+		to_regexp.match(pathname)
+	end #select
+end #pathnames
 def to_s
 	to_a.join
 end #to_s
