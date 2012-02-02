@@ -17,38 +17,6 @@ fixtures @@table_name.to_sym
 fixtures :stream_method_arguments
 #assert_fixture_name(@@table_name)
 @@my_fixtures=fixtures(@@table_name)
-def setup
-	ActiveSupport::TestCase::fixtures :stream_method_arguments
-	@testURL='http://192.168.3.193/api/LiveData.xml'
-	define_model_of_test # allow generic tests
-	assert_module_included(@model_class,Generic_Table)
-	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-#	define_association_names #38271 associations
-end #def
-def test_id_equal
-	assert_fixture_name(@@table_name)
-	assert(!@model_class.sequential_id?, "@model_class=#{@model_class}, should not be a sequential_id.")
-	assert_instance_of(Hash, fixtures(@@table_name))
-	assert_instance_of(Array, @@my_fixtures)
-	@@my_fixtures=fixtures(@@table_name)
-	assert_instance_of(Hash, @@my_fixtures)
-	if @model_class.sequential_id? then
-	else
-		fixtures(:stream_method_arguments).each_pair do |key, ar_from_fixture|
-			assert(Fixtures::identify(key), ar_from_fixture.id)
-			puts "'#{key}', #{ar_from_fixture.id}"
-		end #each
-		@@my_fixtures.each_pair do |key, ar_from_fixture|
-			message="Check that logical key (#{ar_from_fixture.class.logical_primary_key.inspect}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label(#{key}) for record."
-			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
-			puts "'#{key}', #{ar_from_fixture.inspect}"
-			assert(Fixtures::identify(key), ar_from_fixture.id)
-			assert_equal(ar_from_fixture.logical_primary_key_recursive_value, key,message)
-			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_recursive_value),ar_from_fixture.id,message)
-		end
-	end
-end #id_equal
 def test_association_names
   	assert_generic_table('StreamLink')
 	assert_equal_sets([:input_stream_method_argument_id,:output_stream_method_argument_id,:store_method_id,:next_method_id], StreamLink.foreign_key_names)
@@ -97,4 +65,36 @@ def test_store_method
 end #store_method
 def test_next_method
 end #next_method
+def setup
+	ActiveSupport::TestCase::fixtures :stream_method_arguments
+	@testURL='http://192.168.3.193/api/LiveData.xml'
+	define_model_of_test # allow generic tests
+	assert_module_included(@model_class,Generic_Table)
+	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+#	define_association_names #38271 associations
+end #def
+def test_id_equal
+	assert_fixture_name(@@table_name)
+	assert(!@model_class.sequential_id?, "@model_class=#{@model_class}, should not be a sequential_id.")
+	assert_instance_of(Hash, fixtures(@@table_name))
+	assert_instance_of(Array, @@my_fixtures)
+	@@my_fixtures=fixtures(@@table_name)
+	assert_instance_of(Hash, @@my_fixtures)
+	if @model_class.sequential_id? then
+	else
+		fixtures(:stream_method_arguments).each_pair do |key, ar_from_fixture|
+			assert(Fixtures::identify(key), ar_from_fixture.id)
+			puts "'#{key}', #{ar_from_fixture.id}"
+		end #each
+		@@my_fixtures.each_pair do |key, ar_from_fixture|
+			message="Check that logical key (#{ar_from_fixture.class.logical_primary_key.inspect}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label(#{key}) for record."
+			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
+			puts "'#{key}', #{ar_from_fixture.inspect}"
+			assert(Fixtures::identify(key), ar_from_fixture.id)
+			assert_equal(ar_from_fixture.logical_primary_key_recursive_value, key,message)
+			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_recursive_value),ar_from_fixture.id,message)
+		end
+	end
+end #id_equal
 end #StreamLink
