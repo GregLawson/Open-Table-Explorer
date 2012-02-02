@@ -22,3 +22,73 @@ EEG2:
   last_cache: 2011-01-07 14:14:44
   error: 
   context: Acquisition
+ifconfig: 
+  url: shell:/sbin/ifconfig
+  href: ifconfig
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+KHHR: 
+  url: http://www.weather.gov/xml/current_obs/KHHR.xml
+  href: KHHR
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+calgold Schedule: 
+  url: http://www.calgold.com/Schedule.asp
+  href: calgold Schedule
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+sunnywebbox: 
+  url: sunnywebbox
+  href: sunnywebbox
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+production log: 
+  url: "file: log/production.log"
+  href: production log
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+US_1040_template: 
+  url: file:/home/greg/Desktop/Database/Finance/Taxes 2010/OpenTaxSolver2010_8.03/examples_and_templates/US_1040/US_1040_template.dat
+  href: US_1040_template
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+KLAX: 
+  url: http://www.weather.gov/xml/current_obs/KLAX.xml
+  href: KLAX
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+nmap: 
+  url: nmap 172.31.42.100-132
+  href: nmap
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+router5:
+  url: http://172.31.42.121/cgi-bin/webif.sh
+  href: router5
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
+TED5000:
+  url: http://172.31.42.193/api/LiveData.xml
+  href: TED5000
+  cache_path: 
+  last_cache: 
+  error: 
+  context: Acquisition
