@@ -178,6 +178,11 @@ def test_general_associations
 #	assert_general_associations(@table_name)
 end
 def test_id_equal
+	assert_fixture_name(@@table_name)
+	assert(!@model_class.sequential_id?, "@model_class=#{@model_class}, should not be a sequential_id.")
+	assert_instance_of(Hash, fixtures(@@table_name))
+	@@my_fixtures=fixtures(@@table_name)
+	assert_instance_of(Hash, @@my_fixtures)
 	if @model_class.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
