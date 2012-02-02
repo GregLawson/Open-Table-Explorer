@@ -12,6 +12,7 @@ require 'test/test_helper'
 class StreamLinkTest < ActiveSupport::TestCase
 @@test_name=self.name
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+@@model_class=@@model_name.constantize
 @@table_name=@@model_name.tableize
 fixtures @@table_name.to_sym
 fixtures :stream_method_arguments
@@ -92,7 +93,7 @@ def test_id_equal
 			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
 			puts "'#{key}', #{ar_from_fixture.inspect}"
 			assert(Fixtures::identify(key), ar_from_fixture.id)
-			assert_equal(ar_from_fixture.logical_primary_key_recursive_value, key,message)
+			assert_equal(ar_from_fixture.logical_primary_key_recursive_value.join(','), key.to_s,message)
 			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_recursive_value),ar_from_fixture.id,message)
 		end #each_pair
 	end #if
