@@ -15,5 +15,8 @@ def initialize(hash)
 	super(hash)
 end #initialize
 def EEG.all
+	file=Url.where("href='EEG2'").first.url
+	file_method=StreamMethod.find_by_name('File')
+
 end #all
 end #EEG
