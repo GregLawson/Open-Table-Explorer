@@ -12,8 +12,9 @@ require 'test/test_helper'
 class EEGTest < ActiveSupport::TestCase
 @@test_name=self.name
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+@@model_class=@@model_name.constantize
 @@table_name=@@model_name.tableize
-fixtures @@table_name.to_sym
+#file not fixture fixtures @@table_name.to_sym
 def test_initialize
 end #initialize
 def test_all
@@ -25,7 +26,32 @@ def test_all
 	assert_not_empty(Url.where("href='EEG2'").first.url)
 	file=Url.where("href='EEG2'").first.url
 	assert_not_empty(file)
-	assert_equal('File',StreamMethod.find_by_name('File').name)
+	file_method=StreamMethod.find_by_name('File')
+	assert_equal('File',file_method.name)
+	file_method[:uri]=file
+	assert_instance_of(String, file_method[:uri])
+	assert(file_method.has_attribute?(:uri))
+	file_method.compile_code!
+	assert(!file_method.has_attribute?(:errors))
+	assert_equal(ActiveModel::Errors.new('err'), file_method.errors)
+	assert_equal([], file_method.errors.full_messages)
+	firing=file_method.fire!
+	
+	assert_equal([], firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
+	assert_equal([], firing.errors[:acquisition])
+	assert_not_empty(firing.errors)
+	assert_not_empty(firing.errors.inspect)
+	assert_instance_of(ActiveModel::Errors, firing.errors)
+	assert_instance_of(Array, firing.errors.full_messages)
+	assert_instance_of(StreamMethod, firing)
+	assert_kind_of(StreamMethod, firing)
+	assert_equal(firing, file_method)
+
+	assert_instance_of(Array, file_method[:acquisition])
+	all=EEG.all
+	assert_equal([], all)
+	assert_instance_of(Array, all)
+	assert_not_empty(all)
 end #all
 def test_associations
 	assert_equal("695672806",StreamPattern.find_by_name('Acquisition').id.inspect)

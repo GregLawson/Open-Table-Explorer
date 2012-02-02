@@ -17,6 +17,8 @@ end #initialize
 def EEG.all
 	file=Url.where("href='EEG2'").first.url
 	file_method=StreamMethod.find_by_name('File')
-
+	file_method[:uri]=file
+	file_method.fire!
+	return file_method[:acquisition]
 end #all
 end #EEG
