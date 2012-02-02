@@ -109,18 +109,18 @@ def test_output_stream_names
 
 end #output_stream_names
 def fire_check(interface_code, interface_code_errors, acquisition_errors)
-	acq=stream_methods(:HTTP)
-	acq[:interface_code]=interface_code
-	assert_instance_of(StreamMethod,acq)
-#	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
-	acq.compile_code!
-	acq[:uri]='http://192.168.100.1'
-	assert(acq.has_attribute?(:uri))
-	assert(!acq.has_attribute?(:errors))
-	assert_equal(ActiveModel::Errors.new('err'), acq.errors)
-	assert_equal([], acq.errors.full_messages)
+	stream_method=StreamMethod.new
+	stream_method[:interface_code]=interface_code
+	assert_instance_of(StreamMethod,stream_method)
+#	puts "stream_method.matching_methods(/code/).inspect=#{stream_method.matching_methods(/code/).inspect}"
+	stream_method.compile_code!
+	stream_method[:uri]='http://192.168.100.1'
+	assert(stream_method.has_attribute?(:uri))
+	assert(!stream_method.has_attribute?(:errors))
+	assert_equal(ActiveModel::Errors.new('err'), stream_method.errors)
+	assert_equal([], stream_method.errors.full_messages)
 
-	firing=acq.fire!
+	firing=stream_method.fire!
 	assert_equal(interface_code_errors, firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
 	assert_equal(acquisition_errors, firing.errors[:acquisition])
 	assert_not_empty(firing.errors)
@@ -129,7 +129,7 @@ def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	assert_instance_of(Array, firing.errors.full_messages)
 	assert_instance_of(StreamMethod, firing)
 	assert_kind_of(StreamMethod, firing)
-	assert_equal(firing, acq)
+	assert_equal(firing, stream_method)
 	assert_equal('http://192.168.100.1', firing.uri)
 	firing.errors.clear # so we can run more tests
 end #fire_check
