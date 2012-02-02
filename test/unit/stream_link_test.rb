@@ -94,7 +94,7 @@ def test_id_equal
 			assert(Fixtures::identify(key), ar_from_fixture.id)
 			assert_equal(ar_from_fixture.logical_primary_key_recursive_value, key,message)
 			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_recursive_value),ar_from_fixture.id,message)
-		end
-	end
+		end #each_pair
+	end #if
 end #id_equal
 end #StreamLink
