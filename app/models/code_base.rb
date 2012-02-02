@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING pathname that comes with this distribution
@@ -9,6 +9,7 @@ require 'app/models/regexp_tree.rb' # make usable under rake
 class CodeBase
 include NoDB
 # [name, example_pathname, Dir_glob, plural,test_type]
+# plural can be  true false or nil (not model specific)
 @@TABLE_FINDER_REGEXPS=[
 {:name => :models, :example_pathname => 'app/models/global.rb', :Dir_glob =>  'app/models/([a-zA-Z0-9_]*)[.]rb', :plural => false, :test_type => :both},
 {:name => :testing, :example_pathname => 'test/test_helper.rb', :Dir_glob =>  'test/[a-zA-Z0-9_]*[.]r[a-z]*', :plural => nil, :test_type => :both},
@@ -23,7 +24,8 @@ include NoDB
 {:name => :shared_partials, :example_pathname => 'app/views/shared/_multi-line.html.erb', :Dir_glob =>  'app/views/shared/_[a-zA-Z0-9_-]*[.]html[.]erb', :plural => nil, :test_type => :controller},
 {:name => :form_partials, :example_pathname => 'app/views/stream_patterns/_form.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_form[.]html[.]erb', :plural => true, :test_type => :controller},
 {:name => :show_partials, :example_pathname => 'app/views/stream_patterns/_show_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_show_partial[.]html[.]erb', :plural => true, :test_type => :controller},
-{:name => :index_partials, :example_pathname => 'app/views/stream_patterns/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_index_partial[.]html[.]erb', :plural => true, :test_type => :controller}
+{:name => :index_partials, :example_pathname => 'app/views/stream_patterns/_index_partial.html.erb', :Dir_glob =>  'app/views/([a-z_]*)/_index_partial[.]html[.]erb', :plural => true, :test_type => :controller},
+{:name => :controllers, :example_pathname => 'app/controllers/stream_patterns_controller.rb', :Dir_glob =>  'app/controllers/([a-z0-9_]*)_controller[.]rb', :plural => true, :test_type => :controller}
 ]
 # Initializes a spec from a hash
 def initialize(hash=nil)
@@ -36,7 +38,7 @@ end #all
 # Returns a file glob to find pathname, removing parenthesis
 # golbs are defined at http://www.ruby-doc.org/core-1.9.3/Dir.html#method-c-glob
 def pathname_glob
-	ret=RegexpTree.new(self[:Dir_glob]).to_filename_glob
+	ret=RegexpTree.new(self[:Dir_glob]).to_pathname_glob
 #	ret=self[:Dir_glob].sub(/(\()/,'').sub(/(\))/,'')
 	return ret
 end #pathname_glob
@@ -96,7 +98,7 @@ def CodeBase.controller_target(singular_table)
 	return "log/functional/#{plural_table}_controller_test.log"
 end #controller_target
 def CodeBase.model_spec_symbols
-	return CodeBase.all.select {|s| s[:test_type]!=:shared}.map {|s| s[:name]}
+	return CodeBase.all.select {|s| s[:test_type]!=:both}.map {|s| s[:name]}
 end #model_spec_symbols
 def CodeBase.spec_symbols
 	return CodeBase.all.map {|s| s[:name]}
@@ -165,9 +167,10 @@ def CodeBase.not_uptodate_sources(target, sources)
 	sources.select {|s| !File.exist?(target) ||  File.exist?(s) && !uptodate?(target, [s])}
 end #not_uptodate_sources
 def CodeBase.gitStatus(&process_status)
-	return `git status --porcelain`.split("\n").map do |line| 
-		status,pathname=line.split(" ")
-		process_status.call(status,pathname)
+	modified_files=`git ls-files --modified`.split("\n") - `git ls-files --deleted`.split("\n")
+	return modified_files.map do |pathname| 
+#		status,pathname=line.split(" ")
+		process_status.call('M',pathname)
 	end #each
 end #gitStatus
 def CodeBase.git_add_successful(not_uptodate_sources)
@@ -359,6 +362,18 @@ def initialize(model_name, plurality=nil)
 		raise "unexpected value of plurality=#{plurality}"
 	end
 end #initialize
+def self.all
+	controller_spec=CodeBase.find_by_name(:controllers)
+	controller_pathnames=controller_spec.pathnames
+	pattern='(\w+)\.all'
+	regexp=Regexp.new(pattern)
+	delimiter="\n"
+	grep_matches=Generic_Table.grep(controller_pathnames, pattern, delimiter).map do |h|
+		model_name=ModelName.new(h[:match].tableize, :singular)
+		model_name[:plural_model_name]=h[:pathname]
+	end #map
+	return grep_matches
+end #ModelName_all
 def singular_model_name
 	if self[:singular_model_name].nil? then
 		return find_model_name(false)
@@ -382,4 +397,17 @@ def find_model_name(plural)
 		return self[:plural_model_name].singularize	
 	end #if
 end #find_model_name
+def grep_controller_scaffold_variables(plural_model_name)
+	pattern='(\w+)\.all'
+	controller_spec=CodeBase.find_by_name(:controllers)
+	controller_pathnames=controller_spec.pathnames
+	pattern='(\w+)\.all'
+	regexp=Regexp.new(pattern)
+	delimiter="\n"
+	grep_matches=Generic_Table.grep(controller_pathnames, regexp, delimiter).map do |h|
+		model_name=ModelName.new(h[:match].tableize, :singular)
+		model_name[:plural_model_name]=h[:pathname]
+	end #map
+	return grep_matches
+end #grep_controller_scaffold_variables
 end #ModelName

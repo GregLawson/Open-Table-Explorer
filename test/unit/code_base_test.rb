@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING pathname that comes with this distribution
@@ -35,7 +35,7 @@ def test_pathname_glob
 	end #map
 	spec=CodeBase.all[0]
 	assert_equal('app/models/*[.]rb',spec.pathname_glob)
-	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_filename_glob)
+	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_pathname_glob)
 	assert_equal('test/*[.]r*', CodeBase.find_by_name(:testing).pathname_glob)
 end #pathname_glob
 def test_regexp
@@ -77,11 +77,11 @@ def test_controller_target
 end #controller_target
 def test_model_spec_symbols
 	assert_not_empty(CodeBase.model_spec_symbols)
-	assert_equal_sets([:models, :testing, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views, :shared_partials],CodeBase.model_spec_symbols)
+	assert_equal_sets([:unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views, :shared_partials, :controllers],CodeBase.model_spec_symbols)
 end #model_spec_symbols
 def test_spec_symbols
 	assert_not_empty(CodeBase.spec_symbols)
-	assert_equal_sets([:models, :testing, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :shared_partials, :new_views, :show_views],CodeBase.spec_symbols)
+	assert_equal_sets([:models, :testing, :unit_tests, :functional_tests, :unit_test_logs, :functional_test_logs,:index_partials, :form_partials, :show_partials, :edit_views, :index_views, :new_views, :show_views, :shared_partials, :controllers],CodeBase.spec_symbols)
 end #spec_symbols
 def test_find_by_name
 	assert_not_nil(CodeBase.find_by_name(:models))
@@ -119,6 +119,7 @@ end #find_by_name
 def pathnames_with_models?
 	assert_equal(false, CodeBase.find_by_name(:index_partials).pathnames_with_models?)
 	assert_equal(false, CodeBase.find_by_name(:testing).pathnames_with_models?)
+	assert_equal(true, CodeBase.find_by_name(:models).pathnames_with_models?)
 end #pathnames_with_models
 def test_models
 #	assert_equal(Set[],CodeBase.find_by_name(:unit_test_logs).models)
@@ -135,7 +136,7 @@ def test_models
 			assert_instance_of(Regexp, spec.regexp)
 			model=f[spec.regexp,1]
 			if model.nil? then
-				assert_include(spec[:name], [:shared_partials,:testing])
+				assert_include(spec[:name], [:shared_partials,:testing], "model should not (regexp=#{spec.regexp}) be embedded in pathname (#{f}).")
 			else
 				assert_instance_of(String,f[spec.regexp,1])
 				assert_not_nil(model,"pathname=#{f} does not match regexp=#{spec.regexp}")
@@ -174,12 +175,12 @@ def test_git_status
 	CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name)
 	CodeBase.gitStatus{|status,pathname| pathname}
 	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)}
-	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)}.each {|p| assert_not_nil(p[:spec], "p=#{p.inspect}")}
-	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)[:spec][:plural]}
-	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname).model_name}
-	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname).model_name.singular_model_name }
-	CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }
-	assert_nothing_raised{CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }}
+#.gitignore	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)}.each {|p| assert_not_nil(p[:spec], "p=#{p.inspect}")}
+#	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname)[:spec][:plural]}
+#	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname).model_name}
+#	CodeBase.gitStatus{|status,pathname| MatchedPathName.new(pathname).model_name.singular_model_name }
+#	CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }
+#	assert_nothing_raised{CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }}
 	assert_equal('global',MatchedPathName.new('test/unit/global_test.rb').model_name.singular_model_name)
 	assert_include('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
 end #git_status
@@ -228,8 +229,8 @@ def test_globs_match_regexp
 			raise "#{spec.pathname_glob} does not match any pathnames."
 		end #if
 		regexp=spec.regexp
-		pathnames.each do |pathname|
-			assert_match(regexp,pathname,"pathname=#{pathname}, regexp=#{regexp}")
+		spec.pathnames.each do |pathname| # regexp matching pathnames
+			assert_match(regexp,pathname,"pathname=#{pathname} matches fileglob=#{spec.pathname_glob} but not regexp=#{regexp}")
 		end #each
 	end #each
 
@@ -329,6 +330,24 @@ def test_ModelNames
 	assert_equal('code_bases', ModelName.new(MatchedPathName.new(@@Test_pathname), true).plural_model_name)
 	
 end #initialize
+def test_ModelName_all
+	controller_spec=CodeBase.find_by_name(:controllers)
+	controller_pathnames=controller_spec.pathnames
+	assert_not_empty(controller_pathnames)
+#	pattern='(\w+)\.all'
+	pattern='(\w+)all'
+	regexp=Regexp.new(pattern)
+	delimiter="\n"
+	grep_matches=Generic_Table.grep(controller_pathnames, pattern, delimiter).map do |h|
+		model_name=ModelName.new(h[:match].tableize, :singular)
+		model_name[:plural_model_name]=h[:pathname]
+	end #map
+	assert_instance_of(Array, grep_matches)
+	assert_equal([], grep_matches)
+	assert_instance_of(Array, ModelName.all)
+	assert_equal([], ModelName.all)
+
+end #ModelName_all
 def test_singular_model_name
 	assert_equal('test_run', ModelName.new('test_runs', true).singular_model_name)
 	assert_equal('code_bases', ModelName.new('code_base', false).plural_model_name)
@@ -344,4 +363,34 @@ def test_plural_model_name
 end #plural_model_name
 def test_find_model_name
 end #find_model_name
+def test_grep_controller_scaffold_variables
+	plural_model_name='urls'
+	spec=CodeBase.find_by_name(:controllers)
+	controller_pathnames=spec.pathnames
+	file_regexp='app/controllers/urls_controller.rb'
+	pattern='(\w+)\.all'
+	regexp=Regexp.new(pattern)
+	delimiter="\n"
+
+	model_name=ModelName.new(plural_model_name, true)
+	assert_equal([{:match => 'Url'}], Generic_Table.grep("([A-Za-z0-9_]+)\.all", spec.regexp))
+
+	ps=RegexpTree.new(file_regexp).pathnames
+	p=ps.first
+	assert_equal([p], ps)
+	assert_instance_of(String, p)
+	l=IO.read(p).split(delimiter).first
+	assert_instance_of(String, l)
+	matchData=regexp.match(l)
+	assert_instance_of(Hash, {:pathname => p, :match => 'Url'})
+	if matchData then
+		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
+	end #if
+	grep_matches=Generic_Table.grep(file_regexp, pattern)
+	assert_instance_of(Array, grep_matches)
+	assert_equal([{:match=>"Url", :pathname=>"app/controllers/urls_controller.rb"}], grep_matches)
+	assert_instance_of(Hash, grep_matches[0])
+	assert_equal(file_regexp, grep_matches[0][:pathname])
+	assert_equal('Url', grep_matches[0][:match])
+end #grep_controller_scaffold_variables
 end #ModelName
