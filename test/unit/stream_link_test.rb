@@ -11,10 +11,8 @@ require 'test/test_helper'
 # move passing tests toward end
 class StreamLinkTest < ActiveSupport::TestCase
 @@test_name=self.name
-#        assert_equal('Test',@@test_name[-4..-1],"@test_name='#{@test_name}' does not follow the default naming convention.")
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
 @@table_name=@@model_name.tableize
- 
 fixtures @@table_name.to_sym
 fixtures :stream_method_arguments
 #assert_fixture_name(@@table_name)
