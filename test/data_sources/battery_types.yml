@@ -1,0 +1,116 @@
+AA,Duracell: 
+  Brand: Duracell
+  Size:  AA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 1700
+AA,Kenwood: 
+  Brand: Kenwood
+  Size:  AA
+  Chemistry: NiCd
+  Rated_capacity_mAh: 700
+AA,NEXcell:
+  Brand: NEXcell 
+  Size:  AA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 2600
+AA,Panasonic: 
+  Brand: Panasonic: 
+  Size:  AA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 2300
+AA,PowerRock:
+  Brand: PowerRock: 
+  Size:  AA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 2500
+AA,SAFT America: 
+  Brand: SAFT America
+  Size:  AA
+  Chemistry: NiCd
+  Rated_capacity_mAh:
+AA,Sony: 
+  Brand: Sony
+  Size:  AA
+  Chemistry: NiCd
+  Rated_capacity_mAh: 800
+AA,Spike: 
+  Brand: Spike
+  Size:  AA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 1800
+AA,Power2000: 
+  Brand: Power2000
+  Size:  AA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 1800
+AA,Sanyo: 
+  Brand: Sanyo
+  Size:  AA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 1850
+AAA,energyON:
+  Brand: energyON
+  Size: AAA
+  Chemistry: NiMH low self-discharge
+  Rated_capacity_mAh: 800
+AAA,Chicago Electric:
+  brand: Chicago Electric
+  Size: AAA
+  chemistry: NiMH
+  Rated_capacity_mAh: 900
+AAA,NEXcell: 
+  Brand: NEXcell
+  Size:  AA
+  Chemistry: NiCd
+  Rated_capacity_mAh:
+AAA,Sanyo Cadalca: 
+  Brand: Sanyo Cadalca
+  Size:  AAA
+  Chemistry: NiCd
+  Rated_capacity_mAh: 250
+AAA,Panasonic NiCd: 
+  Brand: Panasonic
+  Size:  AAA
+  Chemistry: NiCd
+  Rated_capacity_mAh: 250
+AAA,Panasonic: 
+  Brand: Panasonic
+  Size:  AAA
+  Chemistry: NiMH
+  Rated_capacity_mAh: 780
+AAA,PowerRock:  
+  brand: PowerRock
+  chemistry: NiMH
+  Size: AAA
+  Rated_capacity_mAh: 900
+AAA,PowerRock:  
+  brand: PowerRock
+  chemistry: NiMH
+  Size: AAA
+  Rated_capacity_mAh: 1000
+C,NEXcell:
+  brand: NEXcell
+  size: C
+  chemistry: NiMH
+  Rated_capacity_mAh: 4500
+C,Chicago Electric:
+  brand: Chicago Electric
+  size: C
+  chemistry: NiMH
+  Rated_capacity_mAh: 2500
+C,energyON:
+  Brand: energyON
+  Size: C
+  Chemistry: NiMH low self-discharge
+  Rated_capacity_mAh: 4500
+D,SAFT America-Nicad Brand: 
+  Brand: SAFT America-Nicad Brand
+  Size:  D
+  Chemistry: NiCd
+  Rated_capacity_mAh:
+D,SAFT America-Infinity Brand: 
+  Brand: SAFT America-Infinity Brand
+  Size:  D
+  Chemistry: NiCd
+  Rated_capacity_mAh:
+
