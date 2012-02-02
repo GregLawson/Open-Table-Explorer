@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -110,7 +110,7 @@ Data_Table:
   stream_pattern: Query_Output
 
 GLM:
-  name: Store
+  name: GLM
   library: r
   interface_code: @input.r_execute('GLM')
   return_code: 
