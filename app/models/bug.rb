@@ -1,6 +1,8 @@
 require "app/models/generic_table.rb"
 class Bug < ActiveRecord::Base
 has_many :test_runs
+belongs_to :error_type
+
 include Generic_Table
 def logical_primary_key
 	return :url
