@@ -15,10 +15,12 @@ def initialize(hash)
 	super(hash)
 end #initialize
 def EEG.all
-	file=Url.where("href='EEG2'").first.url
+	uri=Url.where("href='EEG2'").first
 	file_method=StreamMethod.find_by_name('File')
-	file_method[:uri]=file
-	file_method.fire!
-	return file_method[:acquisition]
+	file_method[:uri]=uri
+	file_method.compile_code!
+	firing=file_method.fire!
+#	split_method=StreamMethod.find_by_name('Split')
+	return firing[:acquisition]
 end #all
 end #EEG

@@ -19,17 +19,15 @@ def test_initialize
 end #initialize
 def test_all
 	assert_include('href', Url.column_names)
-	file=Url.first.url
-	assert_not_empty(file)
 	assert_not_empty(Url.where("href='EEG2'"),"Url.all=#{Url.all.inspect}")
 	assert_not_nil(Url.where("href='EEG2'").first)
 	assert_not_empty(Url.where("href='EEG2'").first.url)
-	file=Url.where("href='EEG2'").first.url
-	assert_not_empty(file)
+	uri=Url.where("href='EEG2'").first
+	assert_not_nil(uri)
 	file_method=StreamMethod.find_by_name('File')
 	assert_equal('File',file_method.name)
-	file_method[:uri]=file
-	assert_instance_of(String, file_method[:uri])
+	file_method[:uri]=uri
+	assert_instance_of(Url, file_method[:uri])
 	assert(file_method.has_attribute?(:uri))
 	file_method.compile_code!
 	assert(!file_method.has_attribute?(:errors))
@@ -46,11 +44,10 @@ def test_all
 	assert_instance_of(StreamMethod, firing)
 	assert_kind_of(StreamMethod, firing)
 	assert_equal(firing, file_method)
-
-	assert_instance_of(Array, file_method[:acquisition])
+	assert_not_empty(file_method[:acquisition])
+	assert_instance_of(String, file_method[:acquisition])
 	all=EEG.all
-	assert_equal([], all)
-	assert_instance_of(Array, all)
+	assert_instance_of(String, all)
 	assert_not_empty(all)
 end #all
 def test_associations
