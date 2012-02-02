@@ -9,6 +9,10 @@ require 'test/test_helper'
 
 require 'test/assertions/generic_type_assertions.rb'
 class GenericTypeTest < ActiveSupport::TestCase
+@@test_name=self.name
+@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+@@table_name=@@model_name.tableize
+fixtures @@table_name.to_sym
 def test_generalizations
 	assert_instance_of(GenericType, GenericType.find_by_import_class('digit'))
 	assert_equal(["Text_Column", "VARCHAR_Column", "ascii", "print", "graph", "word", "alnum", "xdigit"], GenericType.find_by_import_class('digit').generalizations.map{|g| g.import_class})

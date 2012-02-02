@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -13,7 +13,6 @@ class StreamPatternTest < ActiveSupport::TestCase
 @@test_name=self.name
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
 @@table_name=@@model_name.tableize
- 
 fixtures @@table_name.to_sym
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'

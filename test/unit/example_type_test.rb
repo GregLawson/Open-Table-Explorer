@@ -1,6 +1,17 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'test/test_helper'
 require 'test/assertions/example_type_assertions.rb'
 class ExampleTypeTest < ActiveSupport::TestCase
+@@test_name=self.name
+@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+@@table_name=@@model_name.tableize
+fixtures @@table_name.to_sym
 def test_generic_type
 	ExampleType.all.each do |t|
 		message= "t=#{t.inspect}, t.generic_type=#{t.generic_type.inspect}"

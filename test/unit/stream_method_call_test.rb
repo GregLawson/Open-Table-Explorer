@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -8,7 +8,10 @@
 require 'test/test_helper'
 
 class StreamMethodCallTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
+@@test_name=self.name
+@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+@@table_name=@@model_name.tableize
+fixtures @@table_name.to_sym
 def test_stream_links
 	streamCall=StreamMethodCall.first
 	assert_equal(64810937,streamCall.id)
