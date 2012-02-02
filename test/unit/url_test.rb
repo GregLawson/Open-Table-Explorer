@@ -17,10 +17,12 @@ class UrlTest < ActiveSupport::TestCase
 fixtures @@table_name.to_sym
 @@my_fixtures=fixtures(@@table_name)
 def test_find_by_name
+ 	assert_equal('EEG', Url.find_by_name('EEG').href)
 end #find_by_name
 def test_parsedURI
 end #def
 def test_schemelessUrl
+ 	assert_equal('/home/greg/Desktop/Downloads/emotive/qdot-emokit-2fa5e40/python/logfile.txt', Url.find_by_name('EEG').schemelessUrl)
 end #schemelessUrl
 def test_uriComponent
 end #end
