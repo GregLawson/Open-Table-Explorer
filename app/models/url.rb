@@ -27,7 +27,7 @@ def parsedURI
 end #def
 def schemelessUrl
 	return URI.unescape(URI.escape(self[:url]).split(':').last)
-end #def
+end #schemelessUrl
 def uriComponent(componentName)
 	ret=@uri.select(componentName)
 	if ret.class==Array then
@@ -53,8 +53,5 @@ def uriHash
 end #def
 def scheme
 	return @uri.scheme
-end #def
-def schemelessUrl
-	return URI.unescape(URI.escape(self[:url]).split(':').last)
 end #def
 end #Url
