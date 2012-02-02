@@ -65,6 +65,24 @@ def Base.table_html(column_order=nil)
 	ret+="</table>"
 	return ret
 end #table_html
+# apply block to an association
+def Base.association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
+	if class_reference.kind_of?(Class) then
+		klass=class_reference
+	else
+		klass=class_reference.class
+	end #if
+	association_reference=association_reference.to_sym
+	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
+	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
+#	assert_kind_of(ActiveRecord::Base,class_reference)
+	assert_ActiveRecord_table(class_reference.name)
+	block.call(class_reference, association_reference)
+end #association_refs
+# transform association name into association records for instance
+def name_to_association(association_name)
+	method(association_name).call
+end #name_to_association
 # List names (as Strings) of all foreign keys.
 def Base.foreign_key_names
 	content_column_names=content_columns.collect {|m| m.name}
@@ -75,7 +93,7 @@ def Base.foreign_key_names
 	return possible_foreign_keys
 end #foreign_key_names
 def Base.is_foreign_key_name?(symbol)
-	return foreign_key_names.include?(symbol.to_s) && is_association?(symbol)
+	return foreign_key_names.include?(symbol.to_s) && is_association?(Base.foreign_key_to_association_name(symbol))
 end #foreign_key_name
 # translate foreign_key into asociation name
 # Example: foreign_Key_to_association_name(:fk_id)=='fk' association
@@ -85,7 +103,7 @@ end #foreign_key_to_association_name
 # translate foreign_key into asociation
 # Example: foreign_Key_to_association(:fk_id)==fk association
 def foreign_key_to_association(foreign_key)
-	method(Base.foreign_key_to_association_name(foreign_key)).call
+	name_to_association(Base.foreign_key_to_association_name(foreign_key))
 end #foreign_Key_to_association
 # list names of the associations having foreign keys.
 def Base.foreign_key_association_names
@@ -167,15 +185,15 @@ def Base.is_association?(association_name)
 		return false
 	end
 end #is_association
-def Base.is_association_to_one?(assName)
-	if is_association?(assName)  and !self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and !self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+def Base.is_association_to_one?(association_name)
+	if is_association?(association_name)  and !self.instance_respond_to?((association_name.to_s.singularize+'_ids').to_sym) and !self.instance_respond_to?((association_name.to_s.singularize+'_ids=').to_sym) then
 		return true
 	else
 		return false
 	end
 end #association_to_one
-def Base.is_association_to_many?(assName)
-	if is_association?(assName)  and self.instance_respond_to?((assName.to_s.singularize+'_ids').to_sym) and self.instance_respond_to?((assName.to_s.singularize+'_ids=').to_sym) then
+def Base.is_association_to_many?(association_name)
+	if is_association?(association_name)  and self.instance_respond_to?((association_name.to_s.singularize+'_ids').to_sym) and self.instance_respond_to?((association_name.to_s.singularize+'_ids=').to_sym) then
 		return true
 	else
 		return false
@@ -285,14 +303,71 @@ end #association_method_plurality
 def Base.association_method_symbol(association_table_name)
 	return association_method_plurality(name_symbol(association_table_name))
 end #association_method_symbol
-# return class when passed a symbol reference
-def Base.association_class(assName)
-	 if !is_association?(association_method_symbol(assName)) then
-		raise "#{association_method_symbol(assName)} is not an association of #{self.name}."
+# return association's default_class name
+# can be used as a boolean test
+def Base.association_default_class_name?(association_name)
+	default_association_class_name=association_name.to_s.classify
+	if eval("defined? #{default_association_class_name}") then
+		return default_association_class_name
 	else
-		 return Generic_Table.class_of_name(assName)
+		return nil # not default class name
+	end #if
+end #
+# return class when passed a symbol reference
+def Base.association_class(association_name)
+	 if !is_association?(association_method_symbol(association_name)) then
+		raise "#{association_method_symbol(association_name)} is not an association of #{self.name}."
+	elsif is_polymorphic_association?(association_name) then
+		raise "Polymorphic associations #{association_method_symbol(association_name)} of #{self.name} do not have a single class.. Need instance not class method "
+	else
+		default_class_defined=association_default_class_name?(association_name)
+		if default_class_defined then
+			return Generic_Table.class_of_name(association_default_class_name?(association_name))
+		else
+			all_parents=all
+			all_association_classes=all_parents.map do |bc|
+				bc.association_class(association_name)
+			end.flatten.uniq #map
+			if all_association_classes.size==1 then
+				return all_association_classes[0] # remove Array
+			else
+				return all_association_classes # polymorphic? impossible?
+			end #if
+		end #if
+	end #if
+end #Base_association_class
+def association_class(association_name)
+	 if !self.class.is_association?(self.class.association_method_symbol(association_name)) then
+		raise "#{association_method_symbol(association_name)} is not an association of #{self.name}."
+	else
+		association=name_to_association(association_name)
+		if association.instance_of?(Array) then
+			classes=association.enumerate(:map){|r| r.class}.uniq
+			if classes.size==1 then
+				return classes[0] # remove Array
+			else
+				return classes # polymorphic? impossible?
+			end #if
+		else
+	
+			return association.enumerate(:map){|r| r.class}
+		end #if
 	end #if
 end #association_class
+def foreign_key_points_to_me?(ar_from_fixture,association_name)
+	associated_records=testCallResult(ar_from_fixture,association_name)
+	if associated_records.instance_of?(Array) then
+		associated_records.each do |ar|
+			fkAssName=ar_from_fixture.class.name.tableize.singularize
+			fk=ar.class.associated_foreign_key_name(fkAssName.to_s.to_sym)
+			@associated_foreign_key_id=ar[fk]
+		end #each
+	else # single record
+			ar.class.associated_foreign_key_name(associated_records,association_name).each do |fk|
+				assert_equal(ar_from_fixture.id,associated_foreign_key_id(associated_records,fk.to_sym),"assert_foreign_key_points_to_me: associated_records=#{associated_records.inspect},ar_from_fixture=#{ar_from_fixture.inspect},association_name=#{association_name}")
+			end #each
+	end #if
+end #foreign_key_points_to_me
 # returns :to_one, :to_many, or :not_an_association
 def Base.association_arity(association_name)
 	if is_association_to_one?(association_name) then
@@ -378,11 +453,32 @@ def Base.sequential_id?
 		return true  
 	end #if
 end # sequential_id
+def self.logical_primary_key_recursive
+	if sequential_id? then
+		return logical_primary_key
+	else
+		foreign_keys=logical_primary_key.map do |e| 
+			if is_foreign_key_name?(e) then
+				association_name=foreign_key_to_association_name(e)
+				association=self.first.foreign_key_to_association(association_name)
+				if association.nil? then
+					nil
+				else
+					association.class.logical_primary_key_recursive
+				end #if
+			else
+				e.to_sym
+			end #if
+		end #map
+		{self.name => foreign_keys}
+	end #if
+end #logical_primary_key_recursive
+# logical key with each foeign key replaced by logical key value pointed to
 def logical_primary_key_recursive_value(delimiter=',')
 	if self.class.sequential_id? then
 		return logical_primary_key_value
 	else
-		self.class.logical_primary_key.enumerate(:map) do |e| 
+		self.class.logical_primary_key.map do |e| 
 			if self.class.is_foreign_key_name?(e) then
 				association=foreign_key_to_association(e)
 				if association.nil? then
@@ -393,7 +489,7 @@ def logical_primary_key_recursive_value(delimiter=',')
 			else
 				self[e]
 			end #if
-		end #enumerate
+		end #map
 	end #if
 end #logical_primary_key_recursive_value
 def logical_primary_key_value(delimiter=',')
@@ -415,16 +511,48 @@ end #logical_primary_key_value
 
 end #class Base
 end #module ActiveRecord
-
+class String
+def single_grep(context, pattern)
+	regexp=Regexp.new(pattern)
+	matchData=regexp.match(self)
+	if matchData then
+		ActiveSupport::HashWithIndifferentAccess.new(:context => context, :matchData => matchData)
+	else
+		nil #don't select line for return
+	end #if
+end #single_grep
+end #String
+module Enumerable
+def nested_grep(context, pattern)
+	map do |e|
+		e.single_grep(context, pattern)
+	end.compact #map
+end #nested_grep
+def files_grep(pattern, delimiter="\n")
+	map do |p|
+		IO.read(p).split(delimiter).map do |l|
+			l.single_grep(p, pattern)
+		end.compact #grep
+	end.flatten #map
+end #files_grep
+end #Enumerable
 module Generic_Table
 require 'app/models/IncludeModuleClassMethods.rb'
- mixin_class_methods { |klass|
- puts "Module Acquisition has been included by #{klass}" if $VERBOSE
- }
-define_class_methods {
-} # define_class_methods
+def Generic_Table.grep(file_regexp, pattern, delimiter="\n")
+	regexp=Regexp.new(pattern)
+	RegexpTree.new(file_regexp).pathnames.map do |p|
+		IO.read(p).split(delimiter).map do |l|
+			matchData=regexp.match(l)
+			if matchData then
+				{:pathname => p, :match => matchData[1]}
+			else
+				nil #don't select line for return
+			end #if
+		end.compact #grep
+	end.flatten #map
+end #grep
 def Generic_Table.class_of_name(name)
-	 return name.to_s.classify.constantize
+	 return name.to_s.constantize
 end #class_of_name
 def Generic_Table.is_generic_table?(model_class_name)
 	return false if (model_class_name =~ /_ids$/)
@@ -719,30 +847,30 @@ def self.db2yaml
 	end #each
 end #def
 # Display attribute or method value from association even if association is nil
-def association_state(assName)
-	case self.class.association_arity(assName)
+def association_state(association_name)
+	case self.class.association_arity(association_name)
 	when :to_one
-		foreign_key_value=self[assName.to_s+'_id']
+		foreign_key_value=self[association_name.to_s+'_id']
 		if foreign_key_value.nil? then # foreign key uninitialized
-			return "Foreign key #{assName.to_s}_id defined as attribute but has nil value."
+			return "Foreign key #{association_name.to_s}_id defined as attribute but has nil value."
 		#~ elsif foreign_key_value.empty? then # foreign key uninitialized
-			#~ return "Foreign key #{assName.to_s}_id defined as attribute but has empty value."
+			#~ return "Foreign key #{association_name.to_s}_id defined as attribute but has empty value."
 		else
-			ass=send(assName)
+			ass=send(association_name)
 			if ass.nil? then
-				return "Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect} but the association returns nil."
+				return "Foreign key #{association_name.to_s}_id has value #{foreign_key_value.inspect} but the association returns nil."
 			else
-				return "Foreign key #{assName.to_s}_id has value #{foreign_key_value.inspect},#{ass.inspect} and returns type #{ass.class.name}."
+				return "Foreign key #{association_name.to_s}_id has value #{foreign_key_value.inspect},#{ass.inspect} and returns type #{ass.class.name}."
 			end
 		end
 	when :to_many
-		ass=send(assName)
+		ass=send(association_name)
 		associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
 		if ass.nil? then
-			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
+			return "Association #{association_name}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
 		elsif ass.empty? then
-			ret= "Association #{assName} with foreign key #{associations_foreign_key_name} is empty; "
-			case self.class.association_class(assName).association_macro_type(self.class.name.tableize.singularize)
+			ret= "Association #{association_name} with foreign key #{associations_foreign_key_name} is empty; "
+			case self.class.association_class(association_name).association_macro_type(self.class.name.tableize.singularize)
 			when :has_many
 				return ret+"but has many."
 			when :belongs_to
@@ -750,29 +878,29 @@ def association_state(assName)
 			when :neither_has_many_nor_belongs_to
 				return ret+"because neither_has_many_nor_belongs_to."
 			else
-				return "New return value from #{self.class.name}.association_macro_type(#{assName})=#{self.class.association_macro_type(assName)}."
+				return "New return value from #{self.class.name}.association_macro_type(#{association_name})=#{self.class.association_macro_type(association_name)}."
 			end #case
 		else
 			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
-			return "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
+			return "Association #{association_name}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
 		end
 		
 	when :not_generic_table
-		return "#{self.class.name} does not recognize #{assName} as a generic table."
+		return "#{self.class.name} does not recognize #{association_name} as a generic table."
 	when:not_an_association
-		return "#{self.class.name} does not recognize #{assName} as association."
+		return "#{self.class.name} does not recognize #{association_name} as association."
 	else
-		return "New return value from #{self.class.name}.association_arity(#{assName})=#{self.class.association_arity(assName)}."
+		return "New return value from #{self.class.name}.association_arity(#{association_name})=#{self.class.association_arity(association_name)}."
 	end #if
 end #def
-def association_has_data(assName)
-	return association_state(assName)[/ and returns type /,0]
+def association_has_data(association_name)
+	return association_state(association_name)[/ and returns type /,0]
 end #def
-def associated_to_s(assName,method,*args)
-	if self[assName.to_s+'_id'].nil? then # foreign key uninitialized
+def associated_to_s(association_name,method,*args)
+	if self[association_name.to_s+'_id'].nil? then # foreign key uninitialized
 		return ''
 	else
-		ass=send(assName)
+		ass=send(association_name)
 		if ass.nil? then
 			return ''
 		else

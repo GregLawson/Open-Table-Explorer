@@ -20,19 +20,6 @@ def all_foreign_key_associations(&block)
 		end #each
 	end #each
 end #all_associations
-def association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
-	if class_reference.kind_of?(Class) then
-		klass=class_reference
-	else
-		klass=class_reference.class
-	end #if
-	association_reference=association_reference.to_sym
-	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
-	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
-#	assert_kind_of(ActiveRecord::Base,class_reference)
-	assert_ActiveRecord_table(class_reference.name)
-	block.call(class_reference, association_reference)
-end #association_refs
 def assert_foreign_key_name(class_reference, foreign_key_name)
 	if !class_reference.kind_of?(Class) then
 		class_reference=class_reference.class
@@ -151,10 +138,10 @@ def assert_associations(ass1,ass2,message=nil)
 	class1=ass1.to_s.classify.constantize # must succeed
 	association_symbol2=class1.association_method_symbol(ass2)
 	assert_association(class1,association_symbol2, message)
-	class2=association_symbol2.to_s.classify.constantize
-	assert_kind_of(Class,class1.association_class(ass2), message)
-	assert_kind_of(Symbol,class2.association_method_symbol(ass1), message)
-	if !class1.is_polymorphic_association?(ass2) then
+	if class1.association_default_class_name?(ass2) then
+		class2=class1.association_class(association_symbol2)
+		assert_kind_of(Class,class1.association_class(ass2), message)
+		assert_kind_of(Symbol,class2.association_method_symbol(ass1), message)
 		assert_association(class1.association_class(ass2),class2.association_method_symbol(ass1), message)
 	end #if
 end #assert_associations
