@@ -11,6 +11,9 @@ has_many :stream_method_calls
 has_many :stream_method_arguments
 belongs_to :stream_pattern
 has_many :urls
+def self.logical_primary_key
+	return [:name]
+end #logical_key
 #after_initialize :compile_code!
 # functions of ActiveRecord  instances
 def initialize(hash=nil)

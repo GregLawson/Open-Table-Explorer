@@ -9,4 +9,8 @@ class StreamMethodArgument < ActiveRecord::Base # like the arguments of a methed
 include Generic_Table
 belongs_to :stream_method
 has_many :stream_links
+def self.logical_primary_key
+	return [:stream_method_id, :name]
+end #logical_key
+
 end #class
