@@ -13,9 +13,23 @@ class UrlTest < ActiveSupport::TestCase
 @@test_name=self.name
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
 @@model_class=@@model_name.constantize
-@@table_name=@@model_name.tableize
+@@table_name=@@model_name.tableize			
 fixtures @@table_name.to_sym
 @@my_fixtures=fixtures(@@table_name)
+def test_find_by_name
+end #find_by_name
+def test_parsedURI
+end #def
+def test_schemelessUrl
+end #schemelessUrl
+def test_uriComponent
+end #end
+def test_uriArray
+end #def
+def test_uriHash
+end #def
+def test_scheme
+end #def
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests
