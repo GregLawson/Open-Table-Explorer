@@ -12,6 +12,15 @@ def test_testCallResult
 	#~ testAnswer(self,:testMethod,'nice result')
 	#~ assert_public_instance_method(table_specs(:ifconfig),:acquisition_stream_specs)
 end #testCallResult
+def testMethod
+	return 'nice result'
+end #def
+def test_testCall
+end #testCall
+def test_testAnswer
+end #testAnswer
+def test_explain_assert_equal
+end #explain_assert_equal
 def test_explain_assert_respond_to
 	assert_raise(Test::Unit::AssertionFailedError){explain_assert_respond_to(TestClass,:sequential_id?)}
 #	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")

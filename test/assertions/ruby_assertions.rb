@@ -24,13 +24,24 @@ def testCall(obj,methodName,*arguments)
 		assert(!result.acquisition_data.empty? || !result.error.empty?) 
 	end
 	return result
-end #def
+end #testCall
 def testAnswer(obj,methodName,answer,*arguments)
 	result=testCallResult(obj,methodName,*arguments)	
 	assert_equal(answer,result)
 	return result
-end #def
-
+end #testAnswer
+def explain_assert_equal(expected, actual, context=nil)
+	message=build_message(context, "actual and expected convert to_s differently (why are you calling the explain version).")
+	assert_equal(expected.to_s, actual.to_s, message)
+	message=build_message(context, "actual and expected convert to_s the same, but inspect differently (perhaps diffent classes).")
+	assert_equal(expected.inspect, actual.inspect, message)
+	message=build_message(context, "actual and expected have different class names")
+	assert_equal(expected.class.name, actual.class.name, message)
+	message=build_message(context, "actual and expected are different classes even though they have the same class names (is this even possible\?).")
+	assert_equal(expected.class, actual.class, message)
+	message=build_message(context, "actual and expected are different, even though both text representations (to_s and inspect)are identical ()diiferent addresses or hashes\?.")
+	assert_equal(expected, actual, message)
+end #explain_assert_equal
 def explain_assert_respond_to(obj,methodName,message='')
 	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
