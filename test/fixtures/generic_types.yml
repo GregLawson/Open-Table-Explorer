@@ -141,3 +141,8 @@ ascii:
   generalize: VARCHAR_Column
   import_class: ascii
   ruby_conversion: str
+tab:
+  data_regexp: "\\t"
+  generalize: cntrl
+  import_class: tab
+  ruby_conversion: str
