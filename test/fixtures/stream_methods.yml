@@ -42,11 +42,11 @@ File:
   return_code: 
   stream_pattern: Acquisition
 
-Delmited:
-  name: Delmited
+Delimited:
+  name: Delimited
   library: 
-  interface_code:  |
-     @parsed_data= @acquisition.split(@selection)
+  interface_code:
+     @parsed= @unparsed.split(@selection)
   return_code: 
   rescue_code: 
   stream_pattern: Parse
