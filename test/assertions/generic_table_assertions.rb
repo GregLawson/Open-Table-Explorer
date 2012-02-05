@@ -28,7 +28,7 @@ def assert_foreign_key_name(class_reference, foreign_key_name)
 		foreign_key_name=foreign_key_name.to_s
 	end #if
 	assert_block("foreign_key_name=#{foreign_key_name} is not a foreign key of class_reference=#{class_reference.inspect}"){class_reference.foreign_key_names.include?(foreign_key_name)}
-end #foreign_key_names
+end #assert_foreign_key_name
 def assert_foreign_key_association_names(class_reference,association_reference)
 	assert_include(association_reference.to_s,class_reference.foreign_key_association_names)
 end #foreign_key_association_names
@@ -83,7 +83,7 @@ def assert_association(class_reference,association_reference, message=nil)
 	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
 	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")
 	assert(klass.is_association?(association_reference),build_message(message, "klass.name=? does not have an association ? but does have associations =?",klass.name,association_reference,klass.association_names))
-end #is_association
+end #assert_association
 
 def assert_association_to_one(class_reference,assName)
 	if !class_reference.kind_of?(Class) then
@@ -174,22 +174,22 @@ end #assert_not_active_record_method
 def assert_table_exists(table_name)
 	message="#{'table_name'.titleize} #{table_name} does not exist as a database table."
 	assert_block(message){Generic_Table.table_exists?(table_name)}
-end #def
+end #assert_table_exists
 def assert_table(table_name)
 	message="#{'table_name'.titleize} #{table_name} does not exist and may be misspelled."
 	assert_block(message){Generic_Table.is_table?(table_name)}
-end #table
+end #assert_table
 def assert_ActiveRecord_table(model_class_name)
 	assert_table(model_class_name.tableize)
 	message="#{'model_class_name'.titleize} #{model_class_name} is not an ActiveRecord table."
 	assert_block(message){Generic_Table.is_ActiveRecord_table?(model_class_name)}
-end #def
+end #assert_ActiveRecord_table
 def assert_generic_table(model_class_name)
 	assert_no_match(/_ids$/,model_class_name,"Table name should not end in _ids to avoid confusion with to many associations.")
 	assert_ActiveRecord_table(model_class_name)
 	message="#{'model_class_name'.titleize} #{model_class_name} is not a Generic Table."
 	assert_block(message){Generic_Table.is_generic_table?(model_class_name)}
-end #def
+end #assert_generic_table
 def assert_matching_association(table_reference,association_name)
 	table_class=Generic_Table.class_of_name(table_reference)
 	assert_association(table_class,association_name)
