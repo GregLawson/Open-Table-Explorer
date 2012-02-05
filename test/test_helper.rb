@@ -148,6 +148,26 @@ def define_association_names
 	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
 	@possible_foreign_keys=@model_class.foreign_key_names
 end #def
-
-
+def self.set_class_variables
+	@@test_name=self.name
+	@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
+	@@model_class=@@model_name.constantize
+	@@table_name=@@model_name.tableize
+	fixtures @@table_name.to_sym
+end #set_class_variables
+def assert_class_variables_defined
+	assert_fixture_name(@@table_name)
+	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert_instance_of(Hash, fixtures(@@table_name))
+	@@my_fixtures=fixtures(@@table_name)
+	assert_instance_of(Hash, @@my_fixtures)
+end #assert_class_variables_defined
+def assert_id_and_logical_primary_key(ar_from_fixture, key)
+	message="Check that logical key (#{ar_from_fixture.class.logical_primary_key.inspect}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label(#{key}) for record."
+	message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
+	puts "'#{key}', #{ar_from_fixture.inspect}"
+	assert(Fixtures::identify(key), ar_from_fixture.id)
+	assert_equal(ar_from_fixture.logical_primary_key_recursive_value.join(','), key.to_s,message)
+	assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_recursive_value),ar_from_fixture.id,message)
+end #assert_id_and_logical_primary_key
 end #class

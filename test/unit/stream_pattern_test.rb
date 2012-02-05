@@ -10,10 +10,7 @@ require 'test/test_helper'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class StreamPatternTest < ActiveSupport::TestCase
-@@test_name=self.name
-@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
-@@table_name=@@model_name.tableize
-fixtures @@table_name.to_sym
+set_class_variables
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests
@@ -26,15 +23,14 @@ def test_general_associations
 	assert_general_associations(@table_name)
 end #test
 def test_id_equal
+	assert_class_variables_defined
 	if @model_class.sequential_id? then
 	else
-		@my_fixtures.each_value do |ar_from_fixture|
-			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
-			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
-			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
-		end
-	end
-end #def
+		@@my_fixtures.each_pair do |key, ar_from_fixture|
+			assert_id_and_logical_primary_key(ar_from_fixture, key)
+		end #each_pair
+	end #if
+end #test_id_equal
 def test_specific__stable_and_working
 	assert_equal(@my_fixtures,fixtures(@table_name))	
 end #test
@@ -51,7 +47,7 @@ def test_aaa_test_new_assertions_ # aaa to output first
 
 	if Generic_Table.is_generic_table?(@stream_pattern.class.name) then 
 		assert(@stream_pattern.class.is_matching_association?(:stream_pattern_arguments))
-		assert_equal(:to_many,@stream_pattern.class.association_to_type(:stream_pattern_arguments)) 
+		assert_equal(:to_many,@stream_pattern.class.association_arity(:stream_pattern_arguments)) 
 		assert_equal(:has_many,@stream_pattern.class.association_macro_type(:stream_pattern_arguments)) 
 		assert_equal(:to_many_has_many,@stream_pattern.class.association_type(:stream_pattern_arguments) )
 #		assert_equal("Association stream_pattern_arguments with foreign key stream_pattern_id is empty; but belongs_to.",@stream_pattern.association_state(:stream_pattern_arguments) )
