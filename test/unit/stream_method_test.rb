@@ -30,7 +30,7 @@ end #gui_name
 def test_instance_name_reference
 	acq=stream_methods(:HTTP)
 	assert_equal("self[:input]", acq.instance_name_reference('input'))
-end #gui_name
+end #instance_name_reference
 def test_default_method
 	acq=stream_methods(:HTTP)
 	assert_equal('@acquisition=@uri', acq.default_method)
@@ -79,19 +79,56 @@ def test_compile_code
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
 	assert_not_nil(acq)
-	@my_fixtures.each_value do |acq|
-		assert_instance_of(StreamMethod,acq)
-#		puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
-		acq.compile_code!
-		#~ if acq.self[:errorz]=self[:errorz].empty? then
-			#~ puts "No error in acq=#{acq.interface_code.inspect}"
+	@my_fixtures.each_value do |sm|
+		assert_instance_of(StreamMethod,sm)
+#		puts "sm.matching_methods(/code/).inspect=#{sm.matching_methods(/code/).inspect}"
+		sm.compile_code!
+		#~ if sm.self[:errorz]=self[:errorz].empty? then
+			#~ puts "No error in sm=#{sm.interface_code.inspect}"
 		#~ else
-			#~ puts "acq.self[:errorz]=self[:errorz]=#{acq.self[:errorz]=self[:errorz].inspect} for acq=#{acq.interface_code.inspect}"
+			#~ puts "sm.self[:errorz]=self[:errorz]=#{sm.self[:errorz]=self[:errorz].inspect} for sm=#{sm.interface_code.inspect}"
 		#~ end #if
-		assert_not_nil(acq)
-		assert(!acq.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
+		assert_not_nil(sm)
+		assert(!sm.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{sm.canonicalName}.")
+		assert_empty(sm.syntax_errors?)
 	end #each_value
 end #compile_code
+def test_syntax_error
+	sm=stream_methods(:HTTP)
+	sm.compile_code!
+	assert_empty(sm.syntax_errors?)
+	sm=stream_methods(:HTTP)
+	sm.interface_code='***'
+	sm.compile_code!
+	assert_instance_of(ActiveModel::Errors, sm.errors)
+	assert_instance_of(Array, sm.errors.keys)
+	assert_instance_of(Array, sm.errors.values)
+	assert_instance_of(Symbol, sm.errors.keys[0])
+	assert_equal([:interface_code], sm.errors.keys)
+	assert_instance_of(Array, sm.errors.values[0])
+	assert_instance_of(String, sm.errors.values[0][0])
+	assert_equal(expected_errors, sm.errors)
+	expected_error_message="SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"
+	expected_errors=ActiveSupport::OrderedHash[[:interface_code, ["SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"]], nil]
+	assert_not_nil(expected_errors)
+	explain_assert_equal(expected_errors, '')
+	explain_assert_equal(expected_errors, sm.errors)
+	assert_equal([expected_error_message], sm.errors[:interface_code],"interface_code=#{sm[:interface_code]}")
+	assert_equal([expected_error_message], sm.syntax_errors?)
+	assert_not_empty(sm.syntax_errors?)
+	sm.rescue_code='***'
+	sm.compile_code!
+	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
+	assert_instance_of(String, sm.errors[:rescue_code][0],"rescue_code=#{sm[:rescue_code]}")
+	assert_equal([expected_error_message], sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
+	assert_equal([expected_error_message], sm.syntax_errors?)
+	assert_not_empty(sm.syntax_errors?)
+	sm.interface_code='***'
+	sm.compile_code!
+	assert_equal([expected_error_message], sm.errors[:return_code],"return_code=#{sm[:return_code]}")
+	assert_equal([expected_error_message], sm.syntax_errors?)
+	assert_not_empty(sm.syntax_errors?)
+end #syntax_error
 def test_input_stream_names
 	acq=stream_methods(:HTTP)
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
@@ -114,7 +151,7 @@ def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	assert_instance_of(StreamMethod,stream_method)
 #	puts "stream_method.matching_methods(/code/).inspect=#{stream_method.matching_methods(/code/).inspect}"
 	stream_method.compile_code!
-	stream_method[:uri]='http://192.168.100.1'
+	stream_method[:uri]=Url.find_by_name('Cable Modem')
 	assert(stream_method.has_attribute?(:uri))
 	assert(!stream_method.has_attribute?(:errors))
 	assert_equal(ActiveModel::Errors.new('err'), stream_method.errors)

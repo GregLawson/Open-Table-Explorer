@@ -24,7 +24,7 @@ def gui_name(name)
 end #gui_name
 def instance_name_reference(name)
 	return "self[:#{name}]"
-end #gui_name
+end #instance_name_reference
 def default_method
 	rhs=case input_stream_names.size
 	when 0 
@@ -74,7 +74,7 @@ def eval_method(name,code)
 	method_def= "def #{name}_method\n#{map_io(code)}\nend\n"
 	return instance_eval(method_def)
 rescue  SyntaxError => exception_raised
-	self[:errorz]=self[:errorz].add(name, 'SyntaxError: ' + exception_raised.inspect, options = {}) 
+	errors.add(name, 'SyntaxError: ' + exception_raised.inspect, options = {}) 
 	return nil
 #~ else
 	#~ self[:errorz]=self[:errorz].add(name, "Not subclass of SyntaxError: " + "couldn't compile string #{method_def} in context of a ruby_class object.")
@@ -85,6 +85,7 @@ end #eval_method
 		acquireBody+="errors.add(:acquisition,'Error: ' + exception_raised.inspect + 'could not get data from '+uri.inspect)"
 @@Default_Rescue_Code=acquireBody
 def compile_code!
+	errors.clear # since code has presumably changed, old errors are irrelevant
 	if library.nil? then
 		eval_method('interface_code',interface_code)
 	else
@@ -102,6 +103,21 @@ def compile_code!
 		eval_method('rescue_code',"rescue #{rescue_code}\n")
 	end
 end #compile_code
+# syntax errors aggregated here
+# errors in general see http://api.rubyonrails.org/classes/ActiveModel/Errors.html
+def syntax_errors?
+	errors[:interface_code] || errors[:return_code] || errors[:rescue_code]
+
+end #syntax_error
+def short_error_message
+	error_message= syntax_error?
+	if error_message.nil? then
+		return nil
+	else
+		return error_message.sub(%r{^\(eval\):\d+:in `syntax_error': compile error},'').gsub(%r{\(eval\):\d+: syntax error, },'').gsub(%r{\(eval\):\d+: },'')
+	end #if
+end #def
+
 def input_stream_names
 	if stream_pattern.nil? then
 		return [] # pattern undefined
