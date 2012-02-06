@@ -7,70 +7,70 @@
 ###########################################################################
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-Parameters:
+Parameters,Value:
   stream_pattern: Parameters
   name: Value
   ruby_type: String
   direction: Output
   parameter_type: Stream
 
-URI:
+Acquisition,URI:
   stream_pattern: Acquisition
   name: URI
   ruby_type: String
   direction: Input
   parameter_type: Stream
 
-Acquisition:
+Acquisition,Acquisition:
   stream_pattern: Acquisition
   name: Acquisition
   ruby_type: Acquisition
   direction: Output
   parameter_type: Stream
 
-Unparsed_String:
+Parse,Unparsed_String:
   stream_pattern: Parse
   name: Unparsed_String
   ruby_type: String
   direction: Input
   parameter_type: Stream
 
-Parsed_Data:
+Storage,Parsed_Data:
   stream_pattern: Storage
   name: Parsed_Data
   ruby_type: Array
   direction: Input
   parameter_type: Stream
 
-Headers:
+Storage,Headers:
   stream_pattern: Storage
   name: Headers
   ruby_type: Array
   direction: Input
   parameter_type: Stream
 
-Model_Class:
+Storage,Model_Class:
   stream_pattern: Storage
   name: Model_Class
   ruby_type: String
   direction: Input
   parameter_type: Stream
 
-Name_Value_Pairs:
+Storage,Name_Value_Pairs:
   stream_pattern: Storage
   name: Name_Value_Pairs
   ruby_type: Array
   direction: Output
   parameter_type: Stream
 
-Query:
+R_Report,Query:
   stream_pattern: R_Report
   name: Query
   ruby_type: String
   direction: Input
   parameter_type: Stream
 
-R_Report:
+R_Report,Report:
   stream_pattern: R_Report
   name: Report
   ruby_type: String
