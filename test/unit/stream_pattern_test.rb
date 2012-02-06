@@ -23,13 +23,7 @@ def test_general_associations
 	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	assert_class_variables_defined
-	if @model_class.sequential_id? then
-	else
-		@@my_fixtures.each_pair do |key, ar_from_fixture|
-			assert_id_and_logical_primary_key(ar_from_fixture, key)
-		end #each_pair
-	end #if
+	assert_test_id_equal
 end #test_id_equal
 def test_specific__stable_and_working
 	assert_equal(@my_fixtures,fixtures(@table_name))	
