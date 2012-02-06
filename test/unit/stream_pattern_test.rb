@@ -23,6 +23,7 @@ def test_general_associations
 	assert_general_associations(@table_name)
 end #test
 def test_id_equal
+	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
 	assert_test_id_equal
 end #test_id_equal
 def test_specific__stable_and_working
