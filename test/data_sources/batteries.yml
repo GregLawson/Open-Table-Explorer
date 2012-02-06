@@ -143,6 +143,21 @@ AA,45:
 AA,46:
   number: 46
   battery_type_id: AA,NEXcell
+AA,47:
+  number: 47
+  battery_type_id: AA,PowerRock
+AA,48:
+  number: 48
+  battery_type_id: AA,PowerRock
+AA,49:
+  number: 49
+  battery_type_id: AA,Power2000
+AA,51:
+  number: 51
+  battery_type_id: AA,Duracell
+AA,52:
+  number: 52
+  battery_type_id: AA,Duracell
 --- 
 AAA,0:
   number:0 
