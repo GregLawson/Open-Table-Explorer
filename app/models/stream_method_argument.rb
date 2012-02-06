@@ -13,4 +13,4 @@ def self.logical_primary_key
 	return [:stream_method_id, :name]
 end #logical_key
 
-end #class
+end #StreamMethodArgument

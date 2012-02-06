@@ -7,32 +7,23 @@
 ###########################################################################
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-URL:
+File,URL:
   stream_method: File
   name: URL
   ruby_type: URI
   direction: Input
-  parameter_id: 1
-  parameter_type: URL
-
-acquisitions:
+File,acquisitions:
   stream_method: File
   name: acquisitions
   ruby_type: Acquisition
   direction: Output
-  parameter_id: 1
-  parameter_type: Acquisition
-acquisitions:
+Regexp,acquisitions:
   stream_method: Regexp
   name: acquisitions
   ruby_type: Acquisition
   direction: Output
-  parameter_id: 1
-  parameter_type: GenericType
-name_value_pairs:
+Regexp,name_value_pairs:
   stream_method: Regexp
-  name: acquisitions
+  name: name_value_pairs
   ruby_type: Acquisition
   direction: Output
-  parameter_id: 1
-  parameter_type: Acquisition
