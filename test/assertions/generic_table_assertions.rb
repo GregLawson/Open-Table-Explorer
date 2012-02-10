@@ -54,6 +54,20 @@ def assert_associated_foreign_key(obj,assName)
 	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
 	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #associated_foreign_key_records
+def assert_foreign_keys_not_nil(class_reference)
+	class_reference.foreign_key_association_names.each do |fka|
+		assert_foreign_key_not_nil(class_reference, fka)
+	end #each
+end #assert_foreign_keys_not_nil
+def assert_foreign_key_not_nil(class_reference, association_name)
+	class_reference.association_class(association_name)
+	possible_foreign_key_values=r.association_class(association_name).all.map do |fkacr|
+		fkacr.logical_primary_key_recursive_value.join(',')
+	end.uniq #map
+	message="Foreign key #{association_name} is nil. Should be of type #{fk.logical_primary_key_recursive}"
+	message+=possible_foreign_key_values.join(';')
+	assert_not_nil(foreign_key_value(association_name), message)
+end #assert_foreign_keys_not_nil
 # assert that an association named association_reference exists  in class class_reference as well as an association named class_reference.name  exists  in class association_reference
 def assert_matching_association(klass,association_name)
 	assert(klass.is_matching_association?(association_name))

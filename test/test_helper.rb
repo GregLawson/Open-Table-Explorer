@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-12 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -17,9 +17,10 @@ class ActiveSupport::TestCase
 #  fixtures :all
 
   # Add more helper methods to be used by all tests here...
+require 'test/assertions/fixture_assertions.rb'
 require 'test/assertions/generic_table_assertions.rb'
-# flexible access to all fixtures
-def fixtures(table_name)
+# access to any fixture by name
+def fixtures?(table_name)
 	table_name=table_name.to_s
 	assert_fixture_name(table_name)
 	assert_not_empty(fixture_labels(table_name))
@@ -84,16 +85,12 @@ def fixtures(table_name)
 		fixture_hash[fixture_label]=ar_from_fixture
 	end #each
 	return fixture_hash
-end #fixtures
+end #fixtures?
 
 # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
 def fixture_names
 	@loaded_fixtures.keys
 end #fixture_names
-def assert_fixture_name(table_name)
-	assert_include(table_name.to_s,fixture_names)
-	assert_not_nil(@loaded_fixtures[table_name.to_s],"table_name=#{table_name.inspect}, fixture_names=#{fixture_names.inspect}")
-end #def
 def fixture_labels(table_name)
 	@fixture_labels=@loaded_fixtures[table_name.to_s].collect do |fix|
 #		puts "fix.at(0)=#{fix.at(0).inspect}"
@@ -123,7 +120,7 @@ def define_association_names
 	assert_model_class(@model_name)
 	assert_fixture_name(@table_name)
 	assert_not_nil(@loaded_fixtures)
-	@my_fixtures=fixtures(@table_name)
+	@my_fixtures=fixtures?(@table_name)
 	@fixture_labels=fixture_labels(@table_name)
 	@assignable_ids=@model_class.instance_methods(false).grep(/_ids=$/ )
 	@assignable=(@model_class.instance_methods(false).grep(/=$/ )-@assignable_ids).collect {|m| m[0..-2] }
@@ -148,35 +145,12 @@ def define_association_names
 	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
 	@possible_foreign_keys=@model_class.foreign_key_names
 end #def
-def self.set_class_variables
-	@@test_name=self.name
-	@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
-	@@model_class=@@model_name.constantize
+def self.set_class_variables(model_name=self.name.sub(/Test$/, '').sub(/Controller$/, ''))
+#class	assert_instance_of(TestHelperTest, self)
+	@@model_name=model_name.to_s
 	@@table_name=@@model_name.tableize
+#	require "test/unit/#{@@table_name.singularize}_test.rb"
+	@@model_class=@@model_name.constantize
 	fixtures @@table_name.to_sym
 end #set_class_variables
-def assert_class_variables_defined
-	assert_fixture_name(@@table_name)
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
-	assert_instance_of(Hash, fixtures(@@table_name))
-	@@my_fixtures=fixtures(@@table_name)
-	assert_instance_of(Hash, @@my_fixtures)
-end #assert_class_variables_defined
-def assert_id_and_logical_primary_key(ar_from_fixture, key)
-	message="Check that logical key (#{ar_from_fixture.class.logical_primary_key.inspect} => #{ar_from_fixture.class.logical_primary_key_recursive.inspect}) value (#{ar_from_fixture.logical_primary_key_value} => #{ar_from_fixture.logical_primary_key_recursive_value.inspect}) exactly matches yaml label(#{key}) for record."
-	assert_equal(ar_from_fixture.logical_primary_key_recursive_value.join(','), key.to_s,message)
-	message=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
-#	puts "'#{key}', #{ar_from_fixture.inspect}"
-#	assert(Fixtures::identify(key), ar_from_fixture.id)
-	assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_recursive_value.join(',')),ar_from_fixture.id,message)
-end #assert_id_and_logical_primary_key
-def assert_test_id_equal
-	assert_class_variables_defined
-	if @@model_class.sequential_id? then
-	else
-		@@my_fixtures.each_pair do |key, ar_from_fixture|
-			assert_id_and_logical_primary_key(ar_from_fixture, key)
-		end #each_pair
-	end #if
-end #
 end #class
