@@ -53,6 +53,7 @@ def Base.header_html(column_order=nil)
 	ret+="</tr>"
 	return ret
 end #header_html
+# Produce default HTML for ActiveRecord model
 def Base.table_html(column_order=nil)
 	if column_order.nil? then
 		column_order=self.column_names
@@ -123,6 +124,9 @@ def Base.associated_foreign_key_name(association_referenced_by_foreign_key)
 	end #if
 	return matchingAssNames.first
 end #associated_foreign_key_name
+def foreign_key_value(association_name)
+	return self[association_name.to_s+'_id']
+end #foreign_key_value
 # find records pointed to by foreign key.
 def associated_foreign_key_records(association_with_foreign_key)
 	class_with_foreign_key=self.class.association_class(association_with_foreign_key)
@@ -850,7 +854,7 @@ end #def
 def association_state(association_name)
 	case self.class.association_arity(association_name)
 	when :to_one
-		foreign_key_value=self[association_name.to_s+'_id']
+		foreign_key_value=foreign_key_value(association_name)
 		if foreign_key_value.nil? then # foreign key uninitialized
 			return "Foreign key #{association_name.to_s}_id defined as attribute but has nil value."
 		#~ elsif foreign_key_value.empty? then # foreign key uninitialized
