@@ -1,7 +1,17 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 class Host < ActiveRecord::Base
 include Generic_Table
 has_many :ports
 has_many :routers
+def self.logical_primary_key
+	return [name]
+end #logical_primary_key
 def self.Column_Definitions
 	return [['ip','inet'],
 	['nmap','text'],
