@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'test/test_helper'
 class RubyAssertionsTest < ActiveSupport::TestCase
 @@table_name='stream_patterns'
