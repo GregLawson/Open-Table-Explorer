@@ -225,11 +225,11 @@ def assert_has_associations(model_class,message='')
 	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
 	assert_block(message){!model_class.association_names.empty?}	
 end #has_associations
-def assert_module_included(klass,moduleName)
-#The assertion upon which all other assertions are based. Passes if the block yields true.
-  assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
-    klass.module_included?(moduleName)
-end #assert_module_included
+def assert_model_class(model_name)
+	a_fixture_record=fixtures(model_name.tableize).values.first
+	assert_kind_of(ActiveRecord::Base,a_fixture_record)
+	theClass=a_fixture_record.class
+	assert_equal(theClass,Generic_Table.eval_constant(model_name))
+end #assert_model_class
 
-end #def
-
+end #or else syntax errors

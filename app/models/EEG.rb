@@ -19,8 +19,13 @@ def EEG.all
 	file_method=StreamMethod.find_by_name('File')
 	file_method[:uri]=uri
 	file_method.compile_code!
-	firing=file_method.fire!
-#	split_method=StreamMethod.find_by_name('Split')
-	return firing[:acquisition]
+	file_method.fire!
+	delimited_method=StreamMethod.find_by_name('Delimited')
+	delimited_method[:unparsed]=file_method[:acquisition]
+	selection=GenericType.find_by_name('tab')
+	delimited_method[:selection]=selection
+	delimited_method.compile_code!
+	delimited_method.fire!
+	return delimited_method[:parsed]
 end #all
 end #EEG

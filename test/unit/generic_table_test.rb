@@ -95,6 +95,26 @@ def test_associated_foreign_key_records
 	assert_equal(expected_association,@@FOREIGN_KEY_ASSOCIATION_INSTANCE.associated_foreign_key_records(@@TABLE_NAME_WITH_FOREIGN_KEY))
 	assert_equal(2,@@FOREIGN_KEY_ASSOCIATION_INSTANCE.associated_foreign_key_records(@@TABLE_NAME_WITH_FOREIGN_KEY).count)
 end #associated_foreign_key_records
+def test_assert_foreign_keys_not_nil
+	class_reference=StreamLink
+	assert_equal(['input_stream_method_argument_id','output_stream_method_argument_id',"store_method_id","next_method_id"], class_reference.foreign_key_names)
+	assert_foreign_keys_not_nil(class_reference)
+end #assert_foreign_keys_not_nil
+# display possible foreign key values when nil foreign keys values are found
+def test_assert_foreign_key_not_nil
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_association(class_reference, association_name)
+	class_reference.all.each do |r|
+		possible_foreign_key_values=r.association_class(association_name).all.map do |fkacr|
+			fkacr.logical_primary_key_recursive_value.join(',')
+		end.uniq #map
+		assert_not_empty(possible_foreign_key_values, "as no foreign keys.")
+		message=possible_foreign_key_values.join(';')
+
+		assert_not_nil(r.foreign_key_value(association_name), message)
+	end #each
+end #assert_foreign_keys_not_nil
 def test_is_matching_association
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 #	 association_class=@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
@@ -427,9 +447,15 @@ end #logical_primary_key
 def test_sequential_id
 	assert_include('logical_primary_key', StreamLink.public_methods(false))
 	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.methods.inspect}, should not be a sequential_id.")
+	model_class=Host
+	assert_equal([:name], model_class.logical_primary_key)
+	model_class.logical_primary_key.each do |k|
+		assert_include(k.to_s, model_class.column_names)
+	end #each
 	CodeBase.rails_MVC_classes.each do |model_class|
 		if model_class.sequential_id? then
 			puts "#{model_class} is a sequential id primary key."
+			assert_operator(model_class.max-model_class.min, :<, 100000)
 		else
 			puts "#{model_class.name} has logical primary key of #{model_class.logical_primary_key.inspect} is not a sequential id."
 			if model_class.logical_primary_key.is_a?(Array) then
