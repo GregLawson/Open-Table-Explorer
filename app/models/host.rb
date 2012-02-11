@@ -10,7 +10,7 @@ include Generic_Table
 has_many :ports
 has_many :routers
 def self.logical_primary_key
-	return [name]
+	return [:name]
 end #logical_primary_key
 def self.Column_Definitions
 	return [['ip','inet'],
