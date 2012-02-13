@@ -400,12 +400,13 @@ def Base.is_active_record_method?(method_name)
 		return false
 	end #if
 end #is_active_record_method
-#def Base.logical_primary_key
-#	return logical_attributes
-#end #logical_primary_key
 
 def Base.logical_primary_key
-	return (column_names-['id','created_at','updated_at'])
+	if logical_attributes.include?(:name) then
+		return [:name]
+	else
+		return (column_names-['id','created_at','updated_at'])
+	end #if
 end #logical_primary_key
 def Base.attribute_ddl(attribute_name)
 	table_sql= self.to_sql
@@ -414,9 +415,7 @@ def Base.attribute_ddl(attribute_name)
 end #attribute_ddl
 
 def Base.attribute_type(attribute_name)
-	table_sql= self.to_sql
-	attribute_sql=table_sql.grep(attribute_name)
-	return attribute_sql
+	return first[attribute_name].class
 end #attribute_type
 def Base.candidate_logical_keys_from_indexes
 	indexes=self.connection.indexes(self.name.tableize)
