@@ -18,6 +18,9 @@ has_many :specialize, :class_name => "GenericType",
 belongs_to :generalize, :class_name => "GenericType",
     :foreign_key => "generalize_id"
 require 'test/assertions/ruby_assertions.rb'
+def self.logical_primary_key
+	return [:import_class]
+end #logical_primary_key
 def GenericType.find_by_name(name)
 	return GenericType.find_by_import_class(name)
 end #find_by_name
