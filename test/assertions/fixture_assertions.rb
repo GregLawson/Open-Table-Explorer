@@ -15,11 +15,9 @@ def assert_fixture_name(table_name)
 end #def
 def assert_class_variables_defined
 	assert_fixture_name(@@table_name)
-	assert_instance_of(Hash, fixtures(@@table_name))
-	assert_instance_of(Hash, @@my_fixtures)
+	assert_instance_of(Hash, fixtures?(@@table_name))
 end #assert_class_variables_defined
 def assert_fixture_labels
-	assert_instance_of(TestHelperTest, self)
 	assert_kind_of(ActiveSupport::TestCase, self)
 #	assert_include('@@my_fixtures',ActiveSupport::TestCase.class_variables)
 #	assert_include('@@my_fixtures',self.class_variables)
@@ -36,7 +34,7 @@ def assert_test_id_equal
 	assert_class_variables_defined
 	if @@model_class.sequential_id? then
 	else
-		assert_fixture_labels(ar_from_fixture, key)
+		assert_fixture_labels
 	end #if
 end #assert_test_id_equal
 # assert string is the name of an ActiveRecord model and a fixture
