@@ -9,10 +9,11 @@ require 'test/test_helper'
 
 require 'test/assertions/generic_type_assertions.rb'
 class GenericTypeTest < ActiveSupport::TestCase
-@@test_name=self.name
-@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
-@@table_name=@@model_name.tableize
-fixtures @@table_name.to_sym
+set_class_variables
+def test_id_equal
+	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert_test_id_equal
+end #id_equal
 def test_generalizations
 	assert_instance_of(GenericType, GenericType.find_by_import_class('digit'))
 	assert_equal(["Text_Column", "VARCHAR_Column", "ascii", "print", "graph", "word", "alnum", "xdigit"], GenericType.find_by_import_class('digit').generalizations.map{|g| g.import_class})
@@ -52,10 +53,10 @@ def test_one_level_specializations
 	end #each
 	assert_include('Integer_Column', GenericType.find_by_import_class("VARCHAR_Column").one_level_specializations.map{|a| a.import_class})
 	assert_not_include('Integer_Column', GenericType.find_by_import_class("Text_Column").one_level_specializations.map{|a| a.import_class})
-	assert_equal(["cntl", "print", "space"], GenericType.find_by_import_class('ascii').one_level_specializations.map{|g| g.import_class})
+	assert_equal(["cntrl", "print", "space"], GenericType.find_by_import_class('ascii').one_level_specializations.map{|g| g.import_class})
 end #one_level_specializations
 def test_specializations
-	assert_equal(["tab", "lower", "upper", "digit", "alpha", "xdigit", 'underscore', "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('ascii').specializations.map{|g| g.import_class})
+	assert_equal(["tab", "lower", "upper", "digit", "alpha", "xdigit", 'underscore', "alnum", "word", "punct", "graph", "blank", "cntrl", "print", "space"], GenericType.find_by_import_class('ascii').specializations.map{|g| g.import_class})
 	most_general=GenericType.find_by_import_class('Text_Column')
 #	assert_equal(["lower", "upper", "digit", "alpha", "xdigit", "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('Text_Column').specializations.map{|g| g.import_class})
 
