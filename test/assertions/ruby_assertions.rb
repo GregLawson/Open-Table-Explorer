@@ -6,6 +6,8 @@
 #
 ###########################################################################
 
+# File of rby assertions not requiring ActiveRecord or fixtures
+
 def testCallResult(obj,methodName,*arguments)
 	assert_instance_of(Symbol,methodName,"testCallResult caller=#{caller.inspect}")
 	explain_assert_respond_to(obj,methodName)
