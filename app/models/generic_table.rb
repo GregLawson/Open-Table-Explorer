@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'app/models/global.rb'
 #require 'lib/tasks/testing_file_patterns.rb'
 module NoDB # provide duck-typed ActiveRecord like functions.
