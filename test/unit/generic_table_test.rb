@@ -472,10 +472,12 @@ def test_sequential_id
 		assert_include(k.to_s, model_class.column_names)
 	end #each
 	CodeBase.rails_MVC_classes.each do |model_class|
+		id_range=model_class.max-model_class.min
 		if model_class.sequential_id? then
 			puts "#{model_class} is a sequential id primary key."
-			assert_operator(model_class.max-model_class.min, :<, 100000)
+			assert_operator(id_range, :<, 100000)
 		else
+			assert_operator(id_range, :<, 100000), "#{table_name}.yml probably defines id rather than letting Fixtures define it as a hash.")
 			
 			model_class.all.each do |record|
 				message="record.logical_primary_key_value=#{record.logical_primary_key_value}, record.class.logical_primary_key_recursive=#{record.class.logical_primary_key_recursive.inspect}, "
