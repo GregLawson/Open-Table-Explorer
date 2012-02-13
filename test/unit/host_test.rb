@@ -30,7 +30,4 @@ def test_id_equal
 	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
 	assert_test_id_equal
 end #id_equal
-def test_aaa_test_new_assertions_ # aaa to output first
-	assert_equal(fixtures(@table_name), @my_fixtures)
-end #aaa_test_new_assertions
 end #class
