@@ -154,11 +154,4 @@ def self.set_class_variables(model_name=self.name.sub(/Test$/, '').sub(/Controll
 	@@model_class=@@model_name.constantize
 	fixtures @@table_name.to_sym
 end #set_class_variables
-# assert string is the name of an ActiveRecord model and a fixture
-def assert_model_class(model_name)
-	a_fixture_record=fixtures?(model_name.tableize).values.first
-	assert_kind_of(ActiveRecord::Base,a_fixture_record)
-	theClass=a_fixture_record.class
-	assert_equal(theClass,Generic_Table.eval_constant(model_name))
-end #assert_model_class
 end #ActiveSupport::TestCase
