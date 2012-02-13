@@ -55,7 +55,7 @@ def test_one_level_specializations
 	assert_equal(["cntl", "print", "space"], GenericType.find_by_import_class('ascii').one_level_specializations.map{|g| g.import_class})
 end #one_level_specializations
 def test_specializations
-	assert_equal(["lower", "upper", "digit", "alpha", "xdigit", 'underscore', "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('ascii').specializations.map{|g| g.import_class})
+	assert_equal(["tab", "lower", "upper", "digit", "alpha", "xdigit", 'underscore', "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('ascii').specializations.map{|g| g.import_class})
 	most_general=GenericType.find_by_import_class('Text_Column')
 #	assert_equal(["lower", "upper", "digit", "alpha", "xdigit", "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('Text_Column').specializations.map{|g| g.import_class})
 
