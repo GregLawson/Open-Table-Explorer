@@ -421,12 +421,20 @@ def test_is_active_record_method
 end #active_record_method
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
-		if self.respond_to?(:logical_primary_key) then
+		if model_class.respond_to?(:logical_primary_key) then
 			assert_not_empty(model_class.logical_primary_key)
+		else
+			assert_respond_to(model_class, :logical_primary_key)
 		end #if
 
 	end #each
 end #logical_primary_key
+def test_attribute_type
+	assert_equal(String, StreamPattern.attribute_type(:name))
+	table_sql= self.to_sql
+	attribute_sql=table_sql.grep(attribute_name)
+	return attribute_sql
+end #attribute_type
 @@default_connection=StreamPattern.connection
 def test_candidate_logical_keys_from_indexes
 #?	assert(Frequency.connection.index_exists?(:frequencies,:frequency_name))
@@ -449,6 +457,10 @@ def test_candidate_logical_keys_from_indexes
 		end #if
 	end #each
 end #candidate_logical_keys_from_indexes
+def test_logical_attributes
+	assert_equal([:name], StreamPattern.logical_attributes)
+	assert_not_nil(column_names-['id','created_at','updated_at']).select {|n|attribute_type(name)!=:real}
+end #logical_attributes
 def test_is_logical_primary_key
 end #logical_primary_key
 def test_sequential_id
@@ -464,6 +476,14 @@ def test_sequential_id
 			puts "#{model_class} is a sequential id primary key."
 			assert_operator(model_class.max-model_class.min, :<, 100000)
 		else
+			
+			model_class.all.each do |record|
+				message="record.logical_primary_key_value=#{record.logical_primary_key_value}, record.class.logical_primary_key_recursive=#{record.class.logical_primary_key_recursive.inspect}, "
+				message+=" identify != id. record.inspect=#{record.inspect} "
+				assert_equal(Fixtures::identify(record.logical_primary_key_recursive_value.join(',')),record.id,message)
+			end #each_pair
+
+			
 			puts "#{model_class.name} has logical primary key of #{model_class.logical_primary_key.inspect} is not a sequential id."
 			if model_class.logical_primary_key.is_a?(Array) then
 				model_class.logical_primary_key.each do |k|
