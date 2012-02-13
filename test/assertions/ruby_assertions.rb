@@ -175,8 +175,9 @@ end #assert_has_instance_methods
 
 def assert_module_included(klass,moduleName)
 #The assertion upon which all other assertions are based. Passes if the block yields true.
-#  assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
-    klass.module_included?(moduleName)
+	assert_block "Module #{moduleName} not included in #{klass.canonicalName} context.Modules actually included=#{klass.ancestors.inspect}. klass.module_included?(moduleName)=#{klass.module_included?(moduleName)}" do
+    		klass.module_included?(moduleName)
+	end #assert_block
 end #assert_module_included
 
 
