@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'app/models/regexp_tree.rb' # make usable under rake
-class EEG
+class Eeg
 include Generic_Table
 include NoDB
 
@@ -14,7 +14,7 @@ include NoDB
 def initialize(hash)
 	super(hash)
 end #initialize
-def EEG.all
+def self.all
 	uri=Url.where("href='EEG2'").first
 	file_method=StreamMethod.find_by_name('File')
 	file_method[:uri]=uri
