@@ -19,10 +19,9 @@ def setup
 	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
 end #setup
-def test_fixture_function_ # aaa to output first
-#?	define_association_names #38271 associations
-#csv	assert_equal(@my_fixtures,fixtures(@table_name))
-end #test
+def test_all
+	uri=Url.where("href='nmap_local_network'").first
+end #all
 def test_general_associations
 #more fixtures need to be loaded?	assert_general_associations(@table_name)
 end #test
@@ -30,4 +29,4 @@ def test_id_equal
 	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
 	assert_test_id_equal
 end #id_equal
-end #class
+end #Host
