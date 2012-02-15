@@ -95,7 +95,7 @@ def fixture_labels(table_name)
 	end #collect
 end #def
 
-# does not require any fixtures
+# set up variables
 def define_model_of_test 
 	@test_name=self.class.name
 	assert_equal('Test',@test_name[-4..-1],"@test_name='#{@test_name}' does not follow the default naming convention.")
@@ -142,12 +142,13 @@ def define_association_names
 	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
 	@possible_foreign_keys=@model_class.foreign_key_names
 end #def
-def self.set_class_variables(model_name=self.name.sub(/Test$/, '').sub(/Controller$/, ''))
+# allow customization for tests without models (test_helper_test.rb) and without .yml fixtures (EEG).
+def self.set_class_variables(model_name=self.name.sub(/Test$/, '').sub(/Controller$/, ''), fixture_load=true)
 #class	assert_instance_of(TestHelperTest, self)
 	@@model_name=model_name.to_s
 	@@table_name=@@model_name.tableize
 #	require "test/unit/#{@@table_name.singularize}_test.rb"
-	@@model_class=@@model_name.constantize
-	fixtures @@table_name.to_sym
+	fixtures @@table_name.to_sym if fixture_load
+	@@model_class=Generic_Table.class_of_name(@@model_name)
 end #set_class_variables
 end #ActiveSupport::TestCase
