@@ -72,5 +72,5 @@ end #def
 def test_id_equal
 	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
 	assert_test_id_equal
-end #id_equal
+end #test_id_equal
 end #StreamLink
