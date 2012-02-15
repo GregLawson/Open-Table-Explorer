@@ -463,6 +463,10 @@ def test_logical_attributes
 end #logical_attributes
 def test_is_logical_primary_key
 end #logical_primary_key
+def test_one_pass_statistics
+	bug_statistics=Bug.one_pass_statistics(:id)
+	assert_equal(0, bug_statistics[:min])
+end #one_pass_statistics
 def test_sequential_id
 	assert_include('logical_primary_key', StreamLink.public_methods(false))
 	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.methods.inspect}, should not be a sequential_id.")
@@ -472,15 +476,20 @@ def test_sequential_id
 		assert_include(k.to_s, model_class.column_names)
 	end #each
 	CodeBase.rails_MVC_classes.each do |model_class|
-		id_range=model_class.max-model_class.min
+		assert_instance_of(Class, model_class)
+		assert_respond_to(model_class, :minimum)
+		id_range=model_class.maximum(:id)-model_class.minimum(:id)
 		if model_class.sequential_id? then
 			puts "#{model_class} is a sequential id primary key."
-			assert_operator(id_range, :<, 100000)
+			message="model_class.maximum(:id)=#{model_class.maximum(:id)}-model_class.minimum(:id)=#{model_class.minimum(:id)}"
+			message+="model_class=#{model_class.inspect}, id_range=#{id_range}, possibly failed to specified id in fixture so Rails generated one from the CRC of the fixture label"
+			assert_operator(id_range, :<, 100000, message)
 		else
-			assert_operator(id_range, :<, 100000), "#{table_name}.yml probably defines id rather than letting Fixtures define it as a hash.")
+			assert_operator(id_range, :>, 100000, "#{model_class.name}.yml probably defines id rather than letting Fixtures define it as a hash.")
 			
 			model_class.all.each do |record|
-				message="record.logical_primary_key_value=#{record.logical_primary_key_value}, record.class.logical_primary_key_recursive=#{record.class.logical_primary_key_recursive.inspect}, "
+				message="record.class.logical_primary_key=#{record.class.logical_primary_key.inspect} recursively expands to record.class.logical_primary_key_recursive=#{record.class.logical_primary_key_recursive.inspect}, "
+				message+="record.logical_primary_key_value=#{record.logical_primary_key_value} expands to record.logical_primary_key_recursive_value=#{record.logical_primary_key_recursive_value.inspect}, "
 				message+=" identify != id. record.inspect=#{record.inspect} "
 				assert_equal(Fixtures::identify(record.logical_primary_key_recursive_value.join(',')),record.id,message)
 			end #each_pair
@@ -600,6 +609,31 @@ def test_grep
 	assert_equal(file_regexp, grep_matches[0][:pathname])
 	assert_equal('Url', grep_matches[0][:match])
 end #grep
+def test_class_of_name
+	assert_nil(Generic_Table.class_of_name('junk'))
+	assert_equal(StreamPattern, Generic_Table.class_of_name('StreamPattern'))
+end #class_of_name
+def test_is_generic_table
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.is_generic_table?('EEG'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.is_generic_table?('MethodModel'))}
+	assert(Generic_Table.is_generic_table?(StreamPattern))
+end #def
+def test_table_exists
+	assert(Generic_Table.rails_MVC_class?(StreamPattern))
+end #table_exists
+def test_rails_MVC_class
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('junk'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('TestHelper'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('EEG'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('MethodModel'))}
+	assert(Generic_Table.rails_MVC_class?(StreamPattern))
+end #rails_MVC_class
+def test_is_generic_table_name
+end #is_generic_table_name
+def Generic_Table.generic_table_class_names
+end #generic_table_class_names
+def test_activeRecordTableNotCreatedYet?
+end #activeRecordTableNotCreatedYet
 test 'Inter-model associations' do
 #	puts "model_classes=#{model_classes.inspect}"
 	CodeBase.rails_MVC_classes.each do |class_with_foreign_key|
