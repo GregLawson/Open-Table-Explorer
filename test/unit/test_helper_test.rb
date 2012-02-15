@@ -8,9 +8,6 @@
 require 'test/test_helper'
 #puts "self=#{self.inspect}, methods=#{methods.inspect}"
 class TestHelperTest < ActiveSupport::TestCase
-def test_class
-	assert_instance_of(TestHelperTest, self)
-end #test_class
 set_class_variables(:StreamPattern)
 fixtures :table_specs
 fixtures :stream_links
@@ -19,6 +16,9 @@ fixtures :stream_links
 #assert_fixture_name(:stream_links)
 #@@my_fixtures=fixtures?(:stream_links)
 require 'test/test_helper_test_tables.rb'
+def test_class
+	assert_instance_of(TestHelperTest, self)
+end #test_class
 def test_fixtures
 	assert_kind_of(ActiveSupport::TestCase, self)
 	table_name='table_specs'
@@ -39,6 +39,8 @@ def setup
 #	define_association_names
 end
 def test_assert_class_variables_defined
+	assert_model_class('EEG')
+	assert_model_class('Eeg')
 end #assert_class_variables_defined
-end #class
+end #TestHelperTest
 
