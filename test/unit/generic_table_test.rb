@@ -128,6 +128,7 @@ def test_assert_foreign_key_not_nil
 		assert_not_nil(r.foreign_key_value(association_name), message)
 	end #each
 	assert_foreign_key_not_nil(ar_from_fixture, :input_stream_method_argument)
+	assert_foreign_key_not_nil(StreamLink.first, :input_stream_method_argument, StreamMethodArgument)
 end #assert_foreign_keys_not_nil
 def test_is_matching_association
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
