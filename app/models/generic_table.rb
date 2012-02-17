@@ -1,3 +1,4 @@
+
 ###########################################################################
 #    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
@@ -348,8 +349,10 @@ def Base.association_class(association_name)
 	end #if
 end #Base_association_class
 def association_class(association_name)
-	 if !self.class.is_association?(self.class.association_method_symbol(association_name)) then
-		raise "#{association_method_symbol(association_name)} is not an association of #{self.name}."
+	 if !self.kind_of?(ActiveRecord::Base) then
+		raise "#{self.class.name} is not an ActiveRecord::Base."
+	 elsif !self.class.is_association?(self.class.association_method_symbol(association_name)) then
+		raise "#{self.class.association_method_symbol(association_name)} is not an association of #{self.name}."
 	else
 		association=name_to_association(association_name)
 		if association.instance_of?(Array) then
