@@ -166,6 +166,10 @@ def assert_array_of(obj, type)
 	end #each
 	assert_block("obj=#{obj.inspect} must be an Array of Strings(pathnames)") {obj.all?{|s| s.instance_of?(String)}}
 end #array_of
+def assert_single_element_array(obj)
+	assert_instance_of(Array, obj, "assert_single_element_array expects an Array. ")
+	assert_equal(1, obj.size)
+end #assert_single_element_array
 def assert_attribute_of(obj, symbol, type)
 	assert_block("obj[:#{symbol}]=#{obj[symbol].inspect} must be of type #{type}, but is of type #{obj[symbol].class} obj=#{obj.inspect}") {obj[symbol].instance_of?(type)}
 end #assert_attribute_of
