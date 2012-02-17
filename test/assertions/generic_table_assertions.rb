@@ -68,9 +68,11 @@ def assert_foreign_keys_not_nil(class_reference)
 		assert_foreign_key_not_nil(class_reference, fka)
 	end #each
 end #assert_foreign_keys_not_nil
-def assert_foreign_key_not_nil(class_reference, association_name)
-	class_reference.association_class(association_name)
-	possible_foreign_key_values=r.association_class(association_name).all.map do |fkacr|
+def assert_foreign_key_not_nil(class_reference, association_name, association_class=class_reference.association_class(association_name))
+	assert_association(class_reference, association_name)
+	assert_not_empty(association_class)
+	assert_not_nil(association_class)
+	possible_foreign_key_values=association_class_name.all.map do |fkacr|
 		fkacr.logical_primary_key_recursive_value.join(',')
 	end.uniq #map
 	message="Foreign key #{association_name} is nil. Should be of type #{fk.logical_primary_key_recursive}"
