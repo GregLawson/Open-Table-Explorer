@@ -324,7 +324,7 @@ def Base.association_default_class_name?(association_name)
 	else
 		return nil # not default class name
 	end #if
-end #
+end #association_default_class_name
 # return class when passed a symbol reference
 def Base.association_class(association_name)
 	 if !is_association?(association_method_symbol(association_name)) then
