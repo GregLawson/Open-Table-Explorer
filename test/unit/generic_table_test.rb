@@ -354,6 +354,12 @@ def test_association_method_symbol
 	assert_equal(association_class,@@CLASS_WITH_FOREIGN_KEY)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #association_method_symbol
+def test_association_default_class_name
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_nil(class_reference.association_default_class_name?(association_name))
+	assert_equal("StreamPattern", StreamPatternArgument.association_default_class_name?(:stream_pattern))
+end #association_default_class_name
 def test_Base_association_class
 	assert_equal(StreamPattern, StreamMethod.association_class(:stream_patterns))
 	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
