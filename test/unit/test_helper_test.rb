@@ -42,5 +42,20 @@ def test_assert_class_variables_defined
 	assert_model_class('EEG')
 	assert_model_class('Eeg')
 end #assert_class_variables_defined
+def test_assert_fixture_label
+	assert_model_class(@@model_name)
+	assert_not_empty(fixtures?(@@table_name))
+	assert_not_empty(fixtures?(@@table_name).to_a[0])
+	fixture_as_array=fixtures?(@@table_name).to_a[0]
+	fixture_label=fixture_as_array[0]
+	ar_from_fixture=fixture_as_array[1]
+	assert_instance_of(StreamLink, ar_from_fixture)
+	assert_not_nil(StreamLink.association_class(:input_stream_method_argument))
+	assert_association(ar_from_fixture.class, :input_stream_method_argument)
+	assert_association(ar_from_fixture.class, :output_stream_method_argument)
+	assert_foreign_key_not_nil(ar_from_fixture, :input_stream_method_argument)
+	assert_foreign_key_not_nil(ar_from_fixture, :output_stream_method_argument)
+	assert_fixture_label(fixture_label, ar_from_fixture)
+end #assert_fixture_label
 end #TestHelperTest
 
