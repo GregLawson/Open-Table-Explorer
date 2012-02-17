@@ -45,6 +45,12 @@ def test_association_refs
 	end)
 	assert_equal([StreamPattern, :stream_methods], ActiveRecord::Base.association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
 end #association_refs
+def test_name_to_association
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	obj=class_reference.first
+	assert_not_nil(obj.name_to_association(association_name), "obj=#{obj.inspect}, StreamMethodArgument.all=#{StreamMethodArgument.all.inspect}")
+end #name_to_association
 def test_foreign_key_names
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
