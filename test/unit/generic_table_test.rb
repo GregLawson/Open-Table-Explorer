@@ -118,16 +118,18 @@ def test_assert_foreign_key_not_nil
 	class_reference=StreamLink
 	association_name='input_stream_method_argument'
 	assert_association(class_reference, association_name)
+	assert_not_nil(class_reference.association_class(association_name))
+	association_class=StreamMethodArgument	
 	class_reference.all.each do |r|
-		possible_foreign_key_values=r.association_class(association_name).all.map do |fkacr|
+		assert_not_nil(association_class)
+		possible_foreign_key_values=association_class.all.map do |fkacr|
 			fkacr.logical_primary_key_recursive_value.join(',')
 		end.uniq #map
 		assert_not_empty(possible_foreign_key_values, "as no foreign keys.")
-		message=possible_foreign_key_values.join(';')
+		message=possible_foreign_key_values.join("\n")
 
 		assert_not_nil(r.foreign_key_value(association_name), message)
 	end #each
-	assert_foreign_key_not_nil(ar_from_fixture, :input_stream_method_argument)
 	assert_foreign_key_not_nil(StreamLink.first, :input_stream_method_argument, StreamMethodArgument)
 end #assert_foreign_keys_not_nil
 def test_is_matching_association
