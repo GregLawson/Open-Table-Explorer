@@ -13,6 +13,11 @@ class StreamLinkTest < ActiveSupport::TestCase
 set_class_variables
 fixtures :stream_method_arguments
 #	ActiveSupport::TestCase::fixtures :stream_method_arguments
+def test_logical_primary_key
+end #logical_key
+def test_fire
+	
+end #fire
 def test_association_names
   	assert_generic_table('StreamLink')
 	assert_equal_sets([:input_stream_method_argument_id,:output_stream_method_argument_id,:store_method_id,:next_method_id], StreamLink.foreign_key_names)
@@ -72,5 +77,5 @@ end #def
 def test_id_equal
 	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
 	assert_test_id_equal
-end #id_equal
+end #test_id_equal
 end #StreamLink

@@ -84,7 +84,7 @@ blank:
 cntrl:
   data_regexp: "[[:cntrl:]]" # Control character
   generalize: ascii
-  import_class: cntl
+  import_class: cntrl
   ruby_conversion: str
 digit:
   data_regexp: "[[:digit:]]" # Digit

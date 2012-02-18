@@ -69,11 +69,14 @@ KLAX:
   href: KLAX
   cache_path: 
   last_cache: 
+nmap_local_network:
+  url: shell:nmap -sP 172.31.42.100-110
+  href: nmap_local_network
   error: 
   context: Acquisition
-nmap: 
-  url: nmap 172.31.42.100-132
-  href: nmap
+nmap_local_network_0: 
+  url: shell:nmap -sP 172.31.42.100-132
+  href: nmap_local_network_0
   cache_path: 
   last_cache: 
   error: 

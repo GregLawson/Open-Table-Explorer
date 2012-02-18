@@ -1,3 +1,11 @@
+
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'app/models/global.rb'
 #require 'lib/tasks/testing_file_patterns.rb'
 module NoDB # provide duck-typed ActiveRecord like functions.
@@ -316,7 +324,7 @@ def Base.association_default_class_name?(association_name)
 	else
 		return nil # not default class name
 	end #if
-end #
+end #association_default_class_name
 # return class when passed a symbol reference
 def Base.association_class(association_name)
 	 if !is_association?(association_method_symbol(association_name)) then
@@ -341,8 +349,10 @@ def Base.association_class(association_name)
 	end #if
 end #Base_association_class
 def association_class(association_name)
-	 if !self.class.is_association?(self.class.association_method_symbol(association_name)) then
-		raise "#{association_method_symbol(association_name)} is not an association of #{self.name}."
+	 if !self.kind_of?(ActiveRecord::Base) then
+		raise "#{self.class.name} is not an ActiveRecord::Base."
+	 elsif !self.class.is_association?(self.class.association_method_symbol(association_name)) then
+		raise "#{self.class.association_method_symbol(association_name)} is not an association of #{self.name}."
 	else
 		association=name_to_association(association_name)
 		if association.instance_of?(Array) then
@@ -353,7 +363,6 @@ def association_class(association_name)
 				return classes # polymorphic? impossible?
 			end #if
 		else
-	
 			return association.enumerate(:map){|r| r.class}
 		end #if
 	end #if
@@ -393,12 +402,13 @@ def Base.is_active_record_method?(method_name)
 		return false
 	end #if
 end #is_active_record_method
-#def Base.logical_primary_key
-#	return logical_attributes
-#end #logical_primary_key
 
 def Base.logical_primary_key
-	return (column_names-['id','created_at','updated_at'])
+	if logical_attributes.include?(:name) then
+		return [:name]
+	else
+		return (column_names-['id','created_at','updated_at'])
+	end #if
 end #logical_primary_key
 def Base.attribute_ddl(attribute_name)
 	table_sql= self.to_sql
@@ -407,9 +417,7 @@ def Base.attribute_ddl(attribute_name)
 end #attribute_ddl
 
 def Base.attribute_type(attribute_name)
-	table_sql= self.to_sql
-	attribute_sql=table_sql.grep(attribute_name)
-	return attribute_sql
+	return first[attribute_name].class
 end #attribute_type
 def Base.candidate_logical_keys_from_indexes
 	indexes=self.connection.indexes(self.name.tableize)
@@ -445,7 +453,45 @@ def Base.is_logical_primary_key?(attribute_names)
 	end #if
 	return true # if we get here
 end #logical_primary_key
-
+# from http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+# Skewness is defined at http://en.wikipedia.org/wiki/Skewness
+# kurtosis is defined at http://en.wikipedia.org/wiki/Kurtosis
+def Base.one_pass_statistics(column_name)
+    n = 0
+    mean = 0
+    m2 = 0
+    m3 = 0
+    m4 = 0
+    min=nil; max=nil
+    all.each do |row|
+        x=row[column_name]
+        n1 = n
+        n = n + 1
+        delta = x - mean
+        delta_n = delta / n
+        delta_n2 = delta_n * delta_n
+        term1 = delta * delta_n * n1
+        mean = mean + delta_n
+        if n==1 then
+	    min=x # value for nil
+	    max=x # value for nil
+	else
+            m4 = m4 + term1 * delta_n2 * (n*n - 3*n + 3) + 6 * delta_n2 * m2 - 4 * delta_n * m3
+            m3 = m3 + term1 * delta_n * (n - 2) - 3 * delta_n * m2
+            m2 = m2 + delta*(x - mean)
+	    min=(x<min ? x : min)  # value for not nil
+    	    max=(x<max ? max : x)
+	end #if
+    end #each
+    {
+    :variance_n => m2/n,
+    :variance => m2/(n - 1), 
+    :skewness=> Math::sqrt(n)*m3/(m2**(3/2)),
+    :kurtosis => (n*m4) / (m2*m2) - 3,
+    :min => min,
+    :max => max
+    }
+end #one_pass_statistics
 def Base.sequential_id?
 	if public_methods(false).include?('logical_primary_key') then
 		if logical_primary_key==[:created_at] then # still sequential, not requred, default
@@ -557,6 +603,8 @@ def Generic_Table.grep(file_regexp, pattern, delimiter="\n")
 end #grep
 def Generic_Table.class_of_name(name)
 	 return name.to_s.constantize
+rescue
+	return nil
 end #class_of_name
 def Generic_Table.is_generic_table?(model_class_name)
 	return false if (model_class_name =~ /_ids$/)
@@ -569,10 +617,10 @@ def Generic_Table.is_generic_table?(model_class_name)
 end #def
 def Generic_Table.table_exists?(table_name)
 	TableSpec.connection.table_exists?(table_name)
-end #def
+end #table_exists
 def Generic_Table.rails_MVC_class?(table_name)
-	return CodeBase.rails_MVC_classes.map {|c| c.name}.include?(table_name.to_s.classify)
-end #def
+	return CodeBase.rails_MVC_classes.map{|c| c.name}.include?(table_name.to_s.classify)
+end #rails_MVC_class
 def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/models/',extention='.rb')
 	if File.exists?(directory+model_file_basename+extention) then
 		return true
@@ -580,15 +628,15 @@ def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/mode
 #		puts "File.exists?(\"#{directory+model_file_basename+extention})\")=#{File.exists?(directory+model_file_basename+extention)}"
 		return false
 	end #if
-end #def
+end #is_generic_table_name
 def Generic_Table.generic_table_class_names
 	return CodeBase.rails_MVC_classes.map { |klass| klass.name }
-end #def
+end #generic_table_class_names
 
 
 def Generic_Table.activeRecordTableNotCreatedYet?(obj)
 	return (obj.class.inspect=~/^[a-zA-Z0-9_]+\(Table doesn\'t exist\)/)==0
-end #def
+end #activeRecordTableNotCreatedYet
 def updates(variableHashes)
 #	Global::log.info("variableHashes.inspect=#{variableHashes.inspect}")
 	variableHash={} # merge into single hash

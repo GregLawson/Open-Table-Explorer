@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'test/test_helper'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
@@ -38,6 +45,12 @@ def test_association_refs
 	end)
 	assert_equal([StreamPattern, :stream_methods], ActiveRecord::Base.association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
 end #association_refs
+def test_name_to_association
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	obj=class_reference.first
+	assert_not_nil(obj.name_to_association(association_name), "obj=#{obj.inspect}, StreamMethodArgument.all=#{StreamMethodArgument.all.inspect}")
+end #name_to_association
 def test_foreign_key_names
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
@@ -105,15 +118,19 @@ def test_assert_foreign_key_not_nil
 	class_reference=StreamLink
 	association_name='input_stream_method_argument'
 	assert_association(class_reference, association_name)
+	assert_not_nil(class_reference.association_class(association_name))
+	association_class=StreamMethodArgument	
 	class_reference.all.each do |r|
-		possible_foreign_key_values=r.association_class(association_name).all.map do |fkacr|
+		assert_not_nil(association_class)
+		possible_foreign_key_values=association_class.all.map do |fkacr|
 			fkacr.logical_primary_key_recursive_value.join(',')
 		end.uniq #map
 		assert_not_empty(possible_foreign_key_values, "as no foreign keys.")
-		message=possible_foreign_key_values.join(';')
+		message=possible_foreign_key_values.join("\n")
 
 		assert_not_nil(r.foreign_key_value(association_name), message)
 	end #each
+	assert_foreign_key_not_nil(StreamLink.first, :input_stream_method_argument, StreamMethodArgument)
 end #assert_foreign_keys_not_nil
 def test_is_matching_association
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
@@ -340,6 +357,12 @@ def test_association_method_symbol
 	assert_equal(association_class,@@CLASS_WITH_FOREIGN_KEY)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 end #association_method_symbol
+def test_association_default_class_name
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_nil(class_reference.association_default_class_name?(association_name))
+	assert_equal("StreamPattern", StreamPatternArgument.association_default_class_name?(:stream_pattern))
+end #association_default_class_name
 def test_Base_association_class
 	assert_equal(StreamPattern, StreamMethod.association_class(:stream_patterns))
 	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
@@ -351,6 +374,14 @@ def test_Base_association_class
 
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	all_parents=class_reference.all
+	all_association_classes=all_parents.map do |bc|
+		bc.association_class(association_name)
+	end.flatten.uniq #map
+	assert_instance_of(Array, all_association_classes)
+	assert_single_element_array(all_association_classes)
 end #Base_association_class
 def test_association_class
 	assert_equal(StreamPattern, StreamMethod.first.association_class(:stream_pattern))
@@ -362,6 +393,23 @@ def test_association_class
 
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_association(class_reference, association_name)
+	instance=class_reference.first
+	association=instance.name_to_association(association_name)
+	assert_instance_of(StreamMethodArgument, association)
+	if association.instance_of?(Array) then
+		classes=association.enumerate(:map){|r| r.class}.uniq
+		if classes.size==1 then
+			assert_single_element_array(association)
+		else
+			assert_instance_of(Array, association)
+		end #if
+	else
+		assert_instance_of(Class, association.enumerate(:map){|r| r.class})
+	end #if
+	assert_equal(StreamMethodArgument, class_reference.first.association_class(association_name))
 end #association_class
 
 def test_foreign_key_points_to_me
@@ -414,12 +462,20 @@ def test_is_active_record_method
 end #active_record_method
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
-		if self.respond_to?(:logical_primary_key) then
+		if model_class.respond_to?(:logical_primary_key) then
 			assert_not_empty(model_class.logical_primary_key)
+		else
+			assert_respond_to(model_class, :logical_primary_key)
 		end #if
 
 	end #each
 end #logical_primary_key
+def test_attribute_type
+	assert_equal(String, StreamPattern.attribute_type(:name))
+	table_sql= self.to_sql
+	attribute_sql=table_sql.grep(attribute_name)
+	return attribute_sql
+end #attribute_type
 @@default_connection=StreamPattern.connection
 def test_candidate_logical_keys_from_indexes
 #?	assert(Frequency.connection.index_exists?(:frequencies,:frequency_name))
@@ -442,8 +498,16 @@ def test_candidate_logical_keys_from_indexes
 		end #if
 	end #each
 end #candidate_logical_keys_from_indexes
+def test_logical_attributes
+	assert_equal([:name], StreamPattern.logical_attributes)
+	assert_not_nil(column_names-['id','created_at','updated_at']).select {|n|attribute_type(name)!=:real}
+end #logical_attributes
 def test_is_logical_primary_key
 end #logical_primary_key
+def test_one_pass_statistics
+	bug_statistics=Bug.one_pass_statistics(:id)
+	assert_equal(0, bug_statistics[:min])
+end #one_pass_statistics
 def test_sequential_id
 	assert_include('logical_primary_key', StreamLink.public_methods(false))
 	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.methods.inspect}, should not be a sequential_id.")
@@ -453,10 +517,29 @@ def test_sequential_id
 		assert_include(k.to_s, model_class.column_names)
 	end #each
 	CodeBase.rails_MVC_classes.each do |model_class|
+		assert_instance_of(Class, model_class)
+		assert_respond_to(model_class, :minimum)
+		id_range=model_class.maximum(:id)-model_class.minimum(:id)
 		if model_class.sequential_id? then
 			puts "#{model_class} is a sequential id primary key."
+<<<<<<< HEAD
 			assert_operator(model_class.max-model_class.min, :<, 100000)
+=======
+			message="model_class.maximum(:id)=#{model_class.maximum(:id)}-model_class.minimum(:id)=#{model_class.minimum(:id)}"
+			message+="model_class=#{model_class.inspect}, id_range=#{id_range}, possibly failed to specified id in fixture so Rails generated one from the CRC of the fixture label"
+			assert_operator(id_range, :<, 100000, message)
+>>>>>>> headless
 		else
+			assert_operator(id_range, :>, 100000, "#{model_class.name}.yml probably defines id rather than letting Fixtures define it as a hash.")
+			
+			model_class.all.each do |record|
+				message="record.class.logical_primary_key=#{record.class.logical_primary_key.inspect} recursively expands to record.class.logical_primary_key_recursive=#{record.class.logical_primary_key_recursive.inspect}, "
+				message+="record.logical_primary_key_value=#{record.logical_primary_key_value} expands to record.logical_primary_key_recursive_value=#{record.logical_primary_key_recursive_value.inspect}, "
+				message+=" identify != id. record.inspect=#{record.inspect} "
+				assert_equal(Fixtures::identify(record.logical_primary_key_recursive_value.join(',')),record.id,message)
+			end #each_pair
+
+			
 			puts "#{model_class.name} has logical primary key of #{model_class.logical_primary_key.inspect} is not a sequential id."
 			if model_class.logical_primary_key.is_a?(Array) then
 				model_class.logical_primary_key.each do |k|
@@ -571,6 +654,31 @@ def test_grep
 	assert_equal(file_regexp, grep_matches[0][:pathname])
 	assert_equal('Url', grep_matches[0][:match])
 end #grep
+def test_class_of_name
+	assert_nil(Generic_Table.class_of_name('junk'))
+	assert_equal(StreamPattern, Generic_Table.class_of_name('StreamPattern'))
+end #class_of_name
+def test_is_generic_table
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.is_generic_table?('EEG'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.is_generic_table?('MethodModel'))}
+	assert(Generic_Table.is_generic_table?(StreamPattern))
+end #def
+def test_table_exists
+	assert(Generic_Table.rails_MVC_class?(StreamPattern))
+end #table_exists
+def test_rails_MVC_class
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('junk'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('TestHelper'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('EEG'))}
+	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.rails_MVC_class?('MethodModel'))}
+	assert(Generic_Table.rails_MVC_class?(StreamPattern))
+end #rails_MVC_class
+def test_is_generic_table_name
+end #is_generic_table_name
+def Generic_Table.generic_table_class_names
+end #generic_table_class_names
+def test_activeRecordTableNotCreatedYet?
+end #activeRecordTableNotCreatedYet
 test 'Inter-model associations' do
 #	puts "model_classes=#{model_classes.inspect}"
 	CodeBase.rails_MVC_classes.each do |class_with_foreign_key|

@@ -1,3 +1,12 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+
+# File of ActiveRecord and NoDB assertions.
 # Favorite test case for associations
 @@CLASS_WITH_FOREIGN_KEY=StreamPatternArgument
 @@FOREIGN_KEY_ASSOCIATION_CLASS=StreamPattern
@@ -54,19 +63,22 @@ def assert_associated_foreign_key(obj,assName)
 	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
 	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #associated_foreign_key_records
-def assert_foreign_keys_not_nil(class_reference)
-	class_reference.foreign_key_association_names.each do |fka|
-		assert_foreign_key_not_nil(class_reference, fka)
+def assert_foreign_keys_not_nil(obj)
+	obj.foreign_key_association_names.each do |fka|
+		assert_foreign_key_not_nil(obj.class, fka)
 	end #each
 end #assert_foreign_keys_not_nil
-def assert_foreign_key_not_nil(class_reference, association_name)
-	class_reference.association_class(association_name)
-	possible_foreign_key_values=r.association_class(association_name).all.map do |fkacr|
+def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))
+	assert_association(obj.class, association_name)
+	assert_not_nil(association_class)
+	assert_not_nil(association_class)
+	possible_foreign_key_values=association_class.all.map do |fkacr|
 		fkacr.logical_primary_key_recursive_value.join(',')
 	end.uniq #map
-	message="Foreign key #{association_name} is nil. Should be of type #{fk.logical_primary_key_recursive}"
-	message+=possible_foreign_key_values.join(';')
-	assert_not_nil(foreign_key_value(association_name), message)
+	message="Foreign key association #{association_name} is nil.\nShould be of type #{association_class.name}\n"
+	message+=possible_foreign_key_values.join("\n")
+	message+="\nEdit file #{obj.class.name.tableize}.yml so that foreign key #{association_name}_id has one of the above values."
+	assert_not_nil(obj.name_to_association(association_name), message)
 end #assert_foreign_keys_not_nil
 # assert that an association named association_reference exists  in class class_reference as well as an association named class_reference.name  exists  in class association_reference
 def assert_matching_association(klass,association_name)
@@ -225,11 +237,4 @@ def assert_has_associations(model_class,message='')
 	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
 	assert_block(message){!model_class.association_names.empty?}	
 end #has_associations
-def assert_model_class(model_name)
-	a_fixture_record=fixtures(model_name.tableize).values.first
-	assert_kind_of(ActiveRecord::Base,a_fixture_record)
-	theClass=a_fixture_record.class
-	assert_equal(theClass,Generic_Table.eval_constant(model_name))
-end #assert_model_class
 
-end #or else syntax errors

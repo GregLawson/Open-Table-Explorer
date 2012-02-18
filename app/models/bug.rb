@@ -4,8 +4,8 @@ has_many :test_runs
 belongs_to :error_type
 
 include Generic_Table
-def logical_primary_key
-	return :url
+def self.logical_primary_key
+	return [:created_at]
 end #def
 def initialize(test_type=nil,table=nil,error=nil)
 	if test_type==nil then

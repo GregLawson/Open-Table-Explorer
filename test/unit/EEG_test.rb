@@ -9,11 +9,8 @@ require 'test/test_helper'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class EEGTest < ActiveSupport::TestCase
-@@test_name=self.name
-@@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
-@@model_class=@@model_name.constantize
-@@table_name=@@model_name.tableize
+class EegTest < ActiveSupport::TestCase
+set_class_variables('Eeg', false)
 #file not fixture fixtures @@table_name.to_sym
 def test_initialize
 end #initialize
@@ -53,6 +50,7 @@ def test_all
 	assert_not_nil(selection)
 	delimited_method[:selection]=selection
 	delimited_method.compile_code!
+	assert_equal([], delimited_method.errors[:interface_code],"interface_code=#{delimited_method[:interface_code]}")
 	delimited_method.fire!
 	assert_equal([], delimited_method.errors[:interface_code],"interface_code=#{delimited_method[:interface_code]}")
 	assert_equal([], delimited_method.errors[:acquisition])
@@ -74,4 +72,8 @@ def test_associations
 	assert_equal('Acquisition',StreamPatternArgument.where("name='Acquisition'").first[:name])
 #	assert_equal([],StreamMethodArgument.where("stream_pattern='Acquisition'").name)
 end #test_associations
+def test_id_equal
+	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert_test_id_equal
+end #id_equal
 end #EEG

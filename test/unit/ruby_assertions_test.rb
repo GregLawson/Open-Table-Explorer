@@ -121,6 +121,9 @@ def test_assert_array_of
 	assert_raise(Test::Unit::AssertionFailedError){assert_array_of([[]], String)}
 	assert_array_of([], String)
 end #array_of
+def test_assert_single_element_array
+	assert_single_element_array([3])	
+end #assert_single_element_array
 
 end #class
 

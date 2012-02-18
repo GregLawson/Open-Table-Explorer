@@ -6,6 +6,7 @@
 #
 ###########################################################################
 
+# File for general test and fixture methods
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'test/assertions/ruby_assertions.rb'
@@ -78,10 +79,6 @@ def fixtures?(table_name)
 	#	puts " ar_from_fixture.class.table_name.inspect=#{ ar_from_fixture.class.table_name.inspect}"
 	#	puts " ar_from_fixture.class.name.inspect=#{ ar_from_fixture.class.name.inspect}"
 		assert_not_nil(ar_from_fixture['id'],"ar_from_fixture.id is nil. From hash=#{fixture_data.to_hash.inspect} into in ar_from_fixture.inspect=#{ar_from_fixture.inspect}")
-		if ar_from_fixture.class.sequential_id? then
-		else
-			assert_equal(Fixtures::identify(fixture_label),ar_from_fixture.id,"#{table_name}.yml probably defines id rather than letting Fixtures define it as a hash.")
-		end #if
 		fixture_hash[fixture_label]=ar_from_fixture
 	end #each
 	return fixture_hash
@@ -98,7 +95,7 @@ def fixture_labels(table_name)
 	end #collect
 end #def
 
-# does not require any fixtures
+# set up variables
 def define_model_of_test 
 	@test_name=self.class.name
 	assert_equal('Test',@test_name[-4..-1],"@test_name='#{@test_name}' does not follow the default naming convention.")
@@ -145,12 +142,13 @@ def define_association_names
 	#~ puts "@special_columns.inspect=#{@special_columns.inspect}"
 	@possible_foreign_keys=@model_class.foreign_key_names
 end #def
-def self.set_class_variables(model_name=self.name.sub(/Test$/, '').sub(/Controller$/, ''))
+# allow customization for tests without models (test_helper_test.rb) and without .yml fixtures (EEG).
+def self.set_class_variables(model_name=self.name.sub(/Test$/, '').sub(/Controller$/, ''), fixture_load=true)
 #class	assert_instance_of(TestHelperTest, self)
 	@@model_name=model_name.to_s
 	@@table_name=@@model_name.tableize
 #	require "test/unit/#{@@table_name.singularize}_test.rb"
-	@@model_class=@@model_name.constantize
-	fixtures @@table_name.to_sym
+	fixtures @@table_name.to_sym if fixture_load
+	@@model_class=Generic_Table.class_of_name(@@model_name)
 end #set_class_variables
-end #class
+end #ActiveSupport::TestCase
