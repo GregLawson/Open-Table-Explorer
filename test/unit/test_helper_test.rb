@@ -8,7 +8,7 @@
 require 'test/test_helper'
 #puts "self=#{self.inspect}, methods=#{methods.inspect}"
 class TestHelperTest < ActiveSupport::TestCase
-set_class_variables(:StreamPattern)
+set_class_variables(:StreamLink)
 fixtures :table_specs
 fixtures :stream_links
 #assert_respond_to(ActiveSupport::TestCase, :assert_fixture_name)
