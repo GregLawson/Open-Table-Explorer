@@ -1,13 +1,8 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-acquisitions,URL: #
-  input_stream_method_argument: URL
-  output_stream_method_argument: acquisitions
+File,acquisitions,Regexp,acquisitions: #
+  input_stream_method_argument: File,acquisitions
+  output_stream_method_argument: Regexp,acquisitions
   store_method_id: 
   next_method_id: 
 
-name_value_pairs,acquisitions: #
-  input_stream_method_argument: acquisitions
-  output_stream_method_argument: name_value_pairs
-  store_method_id: 
-  next_method_id: 
