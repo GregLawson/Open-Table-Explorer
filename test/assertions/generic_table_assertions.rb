@@ -68,16 +68,17 @@ def assert_foreign_keys_not_nil(class_reference)
 		assert_foreign_key_not_nil(class_reference, fka)
 	end #each
 end #assert_foreign_keys_not_nil
-def assert_foreign_key_not_nil(class_reference, association_name, association_class=class_reference.association_class(association_name))
-	assert_association(class_reference, association_name)
-	assert_not_empty(association_class)
+def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))
+	assert_association(obj.class, association_name)
 	assert_not_nil(association_class)
-	possible_foreign_key_values=association_class_name.all.map do |fkacr|
+	assert_not_nil(association_class)
+	possible_foreign_key_values=association_class.all.map do |fkacr|
 		fkacr.logical_primary_key_recursive_value.join(',')
 	end.uniq #map
-	message="Foreign key #{association_name} is nil. Should be of type #{fk.logical_primary_key_recursive}"
-	message+=possible_foreign_key_values.join(';')
-	assert_not_nil(foreign_key_value(association_name), message)
+	message="Foreign key association #{association_name} is nil.\nShould be of type #{association_class.name}\n"
+	message+=possible_foreign_key_values.join("\n")
+	message+="\nEdit file #{obj.class.name.tableize}.yml so that foreign key #{association_name}_id has one of the above values."
+	assert_not_nil(obj.name_to_association(association_name), message)
 end #assert_foreign_keys_not_nil
 # assert that an association named association_reference exists  in class class_reference as well as an association named class_reference.name  exists  in class association_reference
 def assert_matching_association(klass,association_name)
