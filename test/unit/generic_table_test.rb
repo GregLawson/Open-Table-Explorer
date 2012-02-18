@@ -393,6 +393,23 @@ def test_association_class
 
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_association(class_reference, association_name)
+	instance=class_reference.first
+	association=instance.name_to_association(association_name)
+	assert_instance_of(StreamMethodArgument, association)
+	if association.instance_of?(Array) then
+		classes=association.enumerate(:map){|r| r.class}.uniq
+		if classes.size==1 then
+			assert_single_element_array(association)
+		else
+			assert_instance_of(Array, association)
+		end #if
+	else
+		assert_instance_of(Class, association.enumerate(:map){|r| r.class})
+	end #if
+	assert_equal(StreamMethodArgument, class_reference.first.association_class(association_name))
 end #association_class
 
 def test_foreign_key_points_to_me
