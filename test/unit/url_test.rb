@@ -36,6 +36,8 @@ def test_stream_method
 	stream_method= StreamMethod.find_by_name(scheme_name)
 	assert_not_nil(@@test_url_record.stream_method)
 end #stream_method
+def implicit_stream_link
+end #implicit_stream_link
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests

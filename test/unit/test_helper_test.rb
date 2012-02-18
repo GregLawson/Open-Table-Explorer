@@ -38,10 +38,6 @@ def setup
 	@@my_fixtures=fixtures?(@@table_name)
 #	define_association_names
 end
-def test_assert_class_variables_defined
-	assert_model_class('EEG')
-	assert_model_class('Eeg')
-end #assert_class_variables_defined
 def test_assert_fixture_label
 	assert_model_class(@@model_name)
 	assert_not_empty(fixtures?(@@table_name))

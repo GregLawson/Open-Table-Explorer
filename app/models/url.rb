@@ -59,4 +59,7 @@ def stream_method
 	scheme_name=scheme_name[0..0].upcase+scheme_name[1..-1]
 	return StreamMethod.find_by_name(scheme_name)
 end #stream_method
+def implicit_stream_link
+	return StreamLink.new
+end #implicit_stream_link
 end #Url

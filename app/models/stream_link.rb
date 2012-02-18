@@ -18,4 +18,6 @@ belongs_to :next_method, :class_name => "StreamMethod",
 def self.logical_primary_key
 	return [:input_stream_method_argument_id, :output_stream_method_argument_id]
 end #logical_key
+def fire!
+end #fire
 end #StreamLink

@@ -63,9 +63,9 @@ def assert_associated_foreign_key(obj,assName)
 	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
 	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #associated_foreign_key_records
-def assert_foreign_keys_not_nil(class_reference)
-	class_reference.foreign_key_association_names.each do |fka|
-		assert_foreign_key_not_nil(class_reference, fka)
+def assert_foreign_keys_not_nil(obj)
+	obj.foreign_key_association_names.each do |fka|
+		assert_foreign_key_not_nil(obj.class, fka)
 	end #each
 end #assert_foreign_keys_not_nil
 def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))

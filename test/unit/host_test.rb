@@ -21,6 +21,12 @@ def setup
 end #setup
 def test_all
 	uri=Url.where("href='nmap_local_network'").first
+	assert_not_nil(uri)
+	file_method=StreamMethod.find_by_name('Shell')
+	file_method[:uri]=uri
+	file_method.compile_code!
+	firing=file_method.fire!
+	assert_equal([], firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
 end #all
 def test_general_associations
 #more fixtures need to be loaded?	assert_general_associations(@table_name)
