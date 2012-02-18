@@ -374,6 +374,14 @@ def test_Base_association_class
 
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	all_parents=class_reference.all
+	all_association_classes=all_parents.map do |bc|
+		bc.association_class(association_name)
+	end.flatten.uniq #map
+	assert_instance_of(Array, all_association_classes)
+	assert_single_element_array(all_association_classes)
 end #Base_association_class
 def test_association_class
 	assert_equal(StreamPattern, StreamMethod.first.association_class(:stream_pattern))
