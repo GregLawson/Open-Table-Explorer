@@ -363,7 +363,6 @@ def association_class(association_name)
 				return classes # polymorphic? impossible?
 			end #if
 		else
-	
 			return association.enumerate(:map){|r| r.class}
 		end #if
 	end #if
