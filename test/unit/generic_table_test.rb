@@ -584,7 +584,7 @@ def test_logical_primary_key_recursive_value
 	input_stream_method_argument=link.foreign_key_to_association(:input_stream_method_argument_id)
 	assert_not_nil(input_stream_method_argument)
 	assert_equal({"StreamMethodArgument"=>[{"StreamMethod"=>[:name]}, :name]}, input_stream_method_argument.class.logical_primary_key_recursive)
-	assert_equal([["Regexp"], "acquisitions"], input_stream_method_argument.logical_primary_key_recursive_value)
+	assert_equal([["File"], "acquisitions"], input_stream_method_argument.logical_primary_key_recursive_value)
 	output_stream_method_argument=link.foreign_key_to_association(:output_stream_method_argument_id)
 	assert_not_nil(output_stream_method_argument)
 	assert_not_equal(input_stream_method_argument, output_stream_method_argument)
