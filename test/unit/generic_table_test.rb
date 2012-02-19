@@ -522,13 +522,9 @@ def test_sequential_id
 		id_range=model_class.maximum(:id)-model_class.minimum(:id)
 		if model_class.sequential_id? then
 			puts "#{model_class} is a sequential id primary key."
-<<<<<<< HEAD
-			assert_operator(model_class.max-model_class.min, :<, 100000)
-=======
 			message="model_class.maximum(:id)=#{model_class.maximum(:id)}-model_class.minimum(:id)=#{model_class.minimum(:id)}"
 			message+="model_class=#{model_class.inspect}, id_range=#{id_range}, possibly failed to specified id in fixture so Rails generated one from the CRC of the fixture label"
 			assert_operator(id_range, :<, 100000, message)
->>>>>>> headless
 		else
 			assert_operator(id_range, :>, 100000, "#{model_class.name}.yml probably defines id rather than letting Fixtures define it as a hash.")
 			
