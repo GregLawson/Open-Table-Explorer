@@ -657,7 +657,7 @@ end #class_of_name
 def test_is_generic_table
 	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.is_generic_table?('EEG'))}
 	assert_raises(Test::Unit::AssertionFailedError){assert(Generic_Table.is_generic_table?('MethodModel'))}
-	assert(Generic_Table.is_generic_table?(StreamPattern))
+	assert(Generic_Table.is_generic_table?('StreamPattern'))
 end #def
 def test_table_exists
 	assert(Generic_Table.rails_MVC_class?(StreamPattern))
