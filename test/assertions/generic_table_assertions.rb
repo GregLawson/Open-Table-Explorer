@@ -68,6 +68,7 @@ def assert_foreign_keys_not_nil(obj)
 		assert_foreign_key_not_nil(obj.class, fka)
 	end #each
 end #assert_foreign_keys_not_nil
+# display possible foreign key values when nil foreign keys values are found
 def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))
 	assert_association(obj.class, association_name)
 	assert_not_nil(association_class)
