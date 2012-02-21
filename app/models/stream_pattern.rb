@@ -9,7 +9,7 @@ class StreamPattern < ActiveRecord::Base
 include Generic_Table
 has_many :stream_pattern_arguments
 has_many :stream_methods
-def self.logical_primary_key
-	return [:name]
-end #logical_key
+#def self.logical_primary_key
+#	return [:name]
+#end #logical_key
 end
