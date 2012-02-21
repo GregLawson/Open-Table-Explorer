@@ -515,6 +515,8 @@ def Base.one_pass_statistics(column_name)
     m3 = 0
     m4 = 0
     min=nil; max=nil
+	max_key, min_key = nil # declare scope outside loop!
+    has_id=column_names.include?('id')
     all.each do |row|
         x=row[column_name]
         n1 = n
@@ -527,21 +529,46 @@ def Base.one_pass_statistics(column_name)
         if n==1 then
 	    min=x # value for nil
 	    max=x # value for nil
+	    if has_id then
+		    min_key=row.id
+		    max_key=row.id
+	    else
+		    min_key=row.logical_primary_key_value_recursive
+		    max_key=row.logical_primary_key_value_recursive
+	    end #if
 	else
             m4 = m4 + term1 * delta_n2 * (n*n - 3*n + 3) + 6 * delta_n2 * m2 - 4 * delta_n * m3
             m3 = m3 + term1 * delta_n * (n - 2) - 3 * delta_n * m2
             m2 = m2 + delta*(x - mean)
-	    min=(x<min ? x : min)  # value for not nil
-    	    max=(x<max ? max : x)
+	    if x<min then
+	    	min=x
+		if has_id then
+		    min_key=row.id
+	    	else
+		    min_key=row.logical_primary_key_value_recursive
+	    	end #if
+	    end #if  # value for not nil
+	    if x>max then
+	    	max=x
+		if has_id then
+			max_key=row.id
+		else
+			max_key=row.logical_primary_key_value_recursive
+		end #if
+	    end #if  # value for not nil
 	end #if
     end #each
+    return nil if n==0
     {
     :variance_n => m2/n,
     :variance => m2/(n - 1), 
     :skewness=> Math::sqrt(n)*m3/(m2**(3/2)),
     :kurtosis => (n*m4) / (m2*m2) - 3,
     :min => min,
-    :max => max
+    :max => max,
+    :min_key => min_key,
+    :max_key => max_key,
+    :has_id => has_id
     }
 end #one_pass_statistics
 def Base.sequential_id?
