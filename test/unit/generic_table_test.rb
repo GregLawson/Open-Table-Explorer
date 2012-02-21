@@ -516,9 +516,24 @@ def test_candidate_logical_keys_from_indexes
 		end #if
 	end #each
 end #candidate_logical_keys_from_indexes
+def test_analog
+	assert(!StreamPattern.analog?(:name))
+	assert(StreamPattern.analog?(:created_at))
+	assert(StreamPattern.analog?(:updated_at))
+	CodeBase.rails_MVC_classes.each do |model_class|
+		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
+		assert_not_empty(logical_attributes)
+		logical_attributes.each do |attribute_name|
+			model_class.analog?(attribute_name)
+#			!model_class.analog?(name)})
+		 end #each
+	end #each
+end #analog
 def test_logical_attributes
-	assert_equal([:name], StreamPattern.logical_attributes)
-	assert_not_nil(column_names-['id','created_at','updated_at']).select {|n|attribute_type(name)!=:real}
+	CodeBase.rails_MVC_classes.each do |model_class|
+		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
+		assert_not_empty(logical_attributes)
+	end #each
 end #logical_attributes
 def test_is_logical_primary_key
 end #logical_primary_key

@@ -455,8 +455,34 @@ def Base.candidate_logical_keys_from_indexes
 			return nil
 		end #if
 end #candidate_logical_keys_from_indexes
+# Is attribute an analog (versus digital value)
+# default logical primary keys ignore analog values
+# Statistical procedures will treat these attributes as continuous
+# override for specific classes
+# by default the following are considered analog:
+#  Float
+#  Time
+#  DateTime
+#  id for sequential_id?
+def Base.analog?(attribute_name)
+	if [Float, Bignum, DateTime, Time].include?(attribute_ruby_type(attribute_name)) then
+		return true
+	elsif [String, Symbol].include?(attribute_ruby_type(attribute_name)) then
+		return false
+	elsif ['created_at','updated_at'].include?(attribute_name.to_s) then
+		return true
+	elsif attribute_name.to_sym==:id then
+		if defaulted_primary_logical_key? then
+			return logical_attributes==[]
+		else #overridden logical primary key
+			return logical_primary_key.include?(:id)
+		end #if
+	else
+		return false
+	end #if
+end #analog
 def Base.logical_attributes
-	return (column_names-['id','created_at','updated_at']).select {|n|attribute_type(name)!=:real}
+	return (column_names-History_columns).select {|name| !analog?(name)} # avoid :id recursion
 end #logical_attributes
 def Base.is_logical_primary_key?(attribute_names)
 	quoted_primary_key
