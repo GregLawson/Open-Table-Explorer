@@ -95,3 +95,15 @@ TED5000:
   last_cache: 
   error: 
   context: Acquisition
+ntp_kerninfo:
+  url: shell:ntpdc -c kerninfo
+  href: ntp_kerninfo
+dpkg_list:
+  href: dpkg_list
+  url: shell:dpkg -l
+dpkg_descriptions:
+  url: file:/var/lib/dpkg/status
+  href: dpkg_descriptions
+dpkg_available:
+  href: dpkg_available
+  url: file:/var/lib/dpkg/available
