@@ -571,6 +571,14 @@ def Base.one_pass_statistics(column_name)
     :has_id => has_id
     }
 end #one_pass_statistics
+History_columns=['updated_at', 'created_at', 'id']
+def Base.history_type?
+	history_type=[] # nothing yet
+	History_columns.each do |history_column|
+		history_type << history_column if column_names.include?(history_column) 
+	end #each
+	return history_type
+end #history_type
 def Base.sequential_id?
 	if public_methods(false).include?('logical_primary_key') then
 		if logical_primary_key==[:created_at] then # still sequential, not requred, default

@@ -597,6 +597,12 @@ def test_one_pass_statistics
     	assert_not_nil(bug_statistics)
 	assert_equal(0, bug_statistics[:min])
 end #one_pass_statistics
+def test_history_type
+	history_types_used=CodeBase.rails_MVC_classes.map do |model_class|
+		model_class.history_type?
+	end.uniq #map.uniq
+	assert_equal([["id"], ["updated_at", "created_at", "id"], ["created_at", "id"]], history_types_used)
+end #history_type
 def test_sequential_id
 	assert_include('logical_primary_key', StreamLink.public_methods(false))
 	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.methods.inspect}, should not be a sequential_id.")
