@@ -535,6 +535,10 @@ def test_analog
 	end #each
 end #analog
 def test_logical_attributes
+	column_symbols=StreamPattern.column_names.map {|name| name.to_sym}
+
+	assert_equal([:name], column_symbols-ActiveRecord::Base::History_columns)
+	assert_equal([:name], StreamPattern.logical_attributes)
 	CodeBase.rails_MVC_classes.each do |model_class|
 		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
 		assert_not_empty(logical_attributes)
