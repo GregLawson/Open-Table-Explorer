@@ -445,7 +445,9 @@ def test_association_type
 	assert_equal(:to_one_belongs_to, StreamMethod.association_type(:stream_pattern))
 	warn_association_type(StreamMethod, :stream_pattern)
 	types=[] # nothing found yet
-	Generic_Table.generic_table_class_names.each do |table|
+	mvc_names=CodeBase.rails_MVC_classes.map { |klass| klass.name }
+	assert_not_nil(mvc_names)
+	mvc_names.each do |table|
 		klass=Generic_Table.class_of_name(table)
 		klass.association_names.each do |association_name|
 			types << warn_association_type(table, association_name)
@@ -766,8 +768,6 @@ def test_rails_MVC_class
 end #rails_MVC_class
 def test_is_generic_table_name
 end #is_generic_table_name
-def Generic_Table.generic_table_class_names
-end #generic_table_class_names
 def test_activeRecordTableNotCreatedYet?
 end #activeRecordTableNotCreatedYet
 test 'Inter-model associations' do

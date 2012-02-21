@@ -402,7 +402,6 @@ def Base.is_active_record_method?(method_name)
 		return false
 	end #if
 end #is_active_record_method
-
 # Whether primay logical key has been overridden 
 # or ActiveRecord::Base.logical_primary_key is used.
 # nil returned if overridden.
@@ -716,9 +715,6 @@ def Generic_Table.is_generic_table_name?(model_file_basename,directory='app/mode
 		return false
 	end #if
 end #is_generic_table_name
-def Generic_Table.generic_table_class_names
-	return CodeBase.rails_MVC_classes.map { |klass| klass.name }
-end #generic_table_class_names
 
 
 def Generic_Table.activeRecordTableNotCreatedYet?(obj)
