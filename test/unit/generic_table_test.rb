@@ -460,6 +460,10 @@ def test_is_active_record_method
 	assert(!TestTable.is_active_record_method?(:parameter))
 	assert(TestTable.is_active_record_method?(:connection))
 end #active_record_method
+def test_defaulted_primary_logical_key
+	assert(StreamPattern.defaulted_primary_logical_key?, "StreamPattern should use the default :name logical_primary_key.")
+	assert(Url.defaulted_primary_logical_key?, "Url uses :href rather than default :name.")
+end #defaulted_primary_logical_key
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
 		if model_class.respond_to?(:logical_primary_key) then

@@ -403,6 +403,17 @@ def Base.is_active_record_method?(method_name)
 	end #if
 end #is_active_record_method
 
+# Whether primay logical key has been overridden 
+# or ActiveRecord::Base.logical_primary_key is used.
+# nil returned if overridden.
+# true returned otherwise.
+def Base.defaulted_primary_logical_key?
+	 if methods(false).include?('logical_primary_key') then
+	 	return nil
+	 else
+	 	return true
+	 end #if
+end #defaulted_primary_logical_key
 def Base.logical_primary_key
 	if logical_attributes.include?(:name) then
 		return [:name]
