@@ -534,10 +534,12 @@ def test_analog
 		 end #each
 	end #each
 end #analog
-def test_logical_attributes
+def test_column_symbols
 	column_symbols=StreamPattern.column_names.map {|name| name.to_sym}
 
 	assert_equal([:name], column_symbols-ActiveRecord::Base::History_columns)
+end #column_symbols
+def test_logical_attributes
 	assert_equal([:name], StreamPattern.logical_attributes)
 	CodeBase.rails_MVC_classes.each do |model_class|
 		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
@@ -610,7 +612,7 @@ def test_history_type
 	history_types_used=CodeBase.rails_MVC_classes.map do |model_class|
 		model_class.history_type?
 	end.uniq #map.uniq
-	assert_equal([["id"], ["updated_at", "created_at", "id"], ["created_at", "id"]], history_types_used)
+	assert_equal([[:id], [:updated_at, :created_at, :id], [:created_at, :id]], history_types_used)
 end #history_type
 def test_sequential_id
 	assert_include('logical_primary_key', StreamLink.public_methods(false))

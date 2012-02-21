@@ -480,8 +480,10 @@ def Base.analog?(attribute_name)
 		return false
 	end #if
 end #analog
+def Base.column_symbols
+	return column_names.map {|name| name.to_sym}
+end #column_symbols
 def Base.logical_attributes
-	column_symbols=column_names.map {|name| name.to_sym}
 	return (column_symbols-History_columns).select {|name| !analog?(name)} # avoid :id recursion
 end #logical_attributes
 def Base.is_logical_primary_key?(attribute_names)
@@ -575,7 +577,7 @@ History_columns=[:updated_at, :created_at, :id]
 def Base.history_type?
 	history_type=[] # nothing yet
 	History_columns.each do |history_column|
-		history_type << history_column if column_names.include?(history_column) 
+		history_type << history_column if column_symbols.include?(history_column) 
 	end #each
 	return history_type
 end #history_type
