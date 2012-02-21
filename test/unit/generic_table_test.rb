@@ -440,6 +440,8 @@ def warn_association_type(table, association_name)
 
 	end #if
 	return new_type
+rescue  StandardError => exception_raised
+	return "#{table}::#{association_name}" #exception_raised.to_s
 end #warn_association_type
 def test_association_type
 	assert_equal(:to_one_belongs_to, StreamMethod.association_type(:stream_pattern))
@@ -453,7 +455,8 @@ def test_association_type
 			types << warn_association_type(table, association_name)
 		end #associations
 	end #tables
-	assert_equal([:to_many_has_many, :to_one_, :to_one_belongs_to, :to_one_has_one, :to_many_], types.uniq)
+	association_types= types.uniq
+	assert_empty(association_types-[:to_many_has_many, :to_one_belongs_to, :to_one_has_one])
 end #association_type
 def test_is_active_record_method
 	association_reference=:inputs
