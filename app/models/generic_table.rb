@@ -439,9 +439,12 @@ def Base.attribute_ddl(attribute_name)
 	return attribute_sql
 end #attribute_ddl
 
-def Base.attribute_type(attribute_name)
+def Base.attribute_ruby_type(attribute_name)
 	return first[attribute_name].class
-end #attribute_type
+end #attribute_ruby_type
+def Base.attribute_rails_type(attribute_name)
+	return first[attribute_name].class
+end #attribute_rails_type
 def Base.candidate_logical_keys_from_indexes
 	indexes=self.connection.indexes(self.name.tableize)
 		if indexes != [] then

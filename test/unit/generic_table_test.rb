@@ -474,12 +474,26 @@ def test_logical_primary_key
 
 	end #each
 end #logical_primary_key
-def test_attribute_type
-	assert_equal(String, StreamPattern.attribute_type(:name))
+def test_attribute_ddl
+end #attribute_ddl
+def test_attribute_ruby_type
+	assert_equal(String, StreamPattern.attribute_ruby_type(:name))
+	assert_equal(Float, Weather.attribute_ruby_type(:khhr_wind_mph))
+	CodeBase.rails_MVC_classes.each do |model_class|
+		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
+		assert_not_empty(logical_attributes)
+		logical_attributes.each do |attribute_name|
+			assert_not_nil(model_class.first, "model_class=#{model_class.inspect} has no records.")
+			assert_not_nil(model_class.attribute_ruby_type(attribute_name))
+#			!model_class.analog?(name)})
+		 end #each
+	end #each
+end #attribute_ruby_type
+def test_attribute_rails_type
 	table_sql= self.to_sql
 	attribute_sql=table_sql.grep(attribute_name)
 	return attribute_sql
-end #attribute_type
+end #attribute_rails_type
 @@default_connection=StreamPattern.connection
 def test_candidate_logical_keys_from_indexes
 #?	assert(Frequency.connection.index_exists?(:frequencies,:frequency_name))
