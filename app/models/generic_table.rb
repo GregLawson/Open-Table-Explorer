@@ -418,7 +418,19 @@ def Base.logical_primary_key
 	if logical_attributes.include?(:name) then
 		return [:name]
 	else
-		return (column_names-['id','created_at','updated_at'])
+		candidate_logical_primary_key=logical_attributes
+		if !candidate_logical_primary_key.empty? then
+			return candidate_logical_primary_key
+		else
+			model_history_type=history_type?
+			if model_history_type==[] then
+				raise "Can't find a default primary logical key in #{self.inspect}."
+			else
+				return model_history_type[0..0] # first prioritized column
+			end #if
+			return [:id]
+		end #if
+		return logical_attributes
 	end #if
 end #logical_primary_key
 def Base.attribute_ddl(attribute_name)

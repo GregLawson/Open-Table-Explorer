@@ -466,7 +466,7 @@ def test_defaulted_primary_logical_key
 end #defaulted_primary_logical_key
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
-		if model_class.respond_to?(:logical_primary_key) then
+		if model_class.defaulted_primary_logical_key? then
 			assert_not_empty(model_class.logical_primary_key)
 		else
 			assert_respond_to(model_class, :logical_primary_key)
