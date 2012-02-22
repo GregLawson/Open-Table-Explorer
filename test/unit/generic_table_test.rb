@@ -646,11 +646,17 @@ def test_sequential_id
 	CodeBase.rails_MVC_classes.each do |model_class|
 		assert_instance_of(Class, model_class)
 		assert_respond_to(model_class, :minimum)
-		id_range=model_class.maximum(:id)-model_class.minimum(:id)
+		statistics=model_class.one_pass_statistics(:id)
+		id_range=statistics[:max]-statistics[:min]
 		if model_class.sequential_id? then
-			puts "#{model_class} is a sequential id primary key."
-			message="model_class.maximum(:id)=#{model_class.maximum(:id)}-model_class.minimum(:id)=#{model_class.minimum(:id)}"
-			message+="model_class=#{model_class.inspect}, id_range=#{id_range}, possibly failed to specified id in fixture so Rails generated one from the CRC of the fixture label"
+			message= "#{model_class} has a sequential id primary key.\n"
+			message+=" Statistics=#{statistics.inspect}\n"
+			if statistics[:skewness] > 0 then
+				message+=" Maximum #{:id} record=#{model_class.find(statistics[:max_key]).inspect}\n"
+			else
+				message+=" Minimum #{:id} record=#{model_class.find(statistics[:min_key]).inspect}\n"
+			end #if
+			message+=", id_range=#{id_range}, possibly failed to specified id in fixture so Rails generated one from the CRC of the fixture label"
 			assert_operator(id_range, :<, 100000, message)
 		else
 			assert_operator(id_range, :>, 100000, "#{model_class.name}.yml probably defines id rather than letting Fixtures define it as a hash.")
