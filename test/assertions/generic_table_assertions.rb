@@ -120,7 +120,7 @@ def assert_association_to_one(class_reference,assName)
 	assert_association(class_reference,assName)
 	assert(!class_reference.is_association_to_many?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.class.similar_methods(assName).inspect}")
 	assert(class_reference.is_association_to_one?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.similar_methods(assName).inspect}")
-end #assert_association_to_one
+end #is_association_to_one
 def assert_association_to_many(class_reference,assName)
 	if !class_reference.kind_of?(Class) then
 		class_reference=class_reference.class
