@@ -677,7 +677,7 @@ def test_sequential_id
 end # sequential_id
 def test_logical_primary_key_recursive
 	assert_include('logical_primary_key', StreamLink.public_methods(false))
-	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.methods.inspect}, should not be a sequential_id.")
+	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.column_symbols.inspect}, should not be a sequential_id.")
 	assert(StreamLink.is_foreign_key_name?(:input_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
 	assert(StreamLink.is_foreign_key_name?(:output_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
 	link=StreamLink.first
@@ -699,7 +699,7 @@ def test_logical_primary_key_recursive
 end #logical_primary_key_recursive
 def test_logical_primary_key_recursive_value
 	assert_include('logical_primary_key', StreamLink.public_methods(false))
-	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.methods.inspect}, should not be a sequential_id.")
+	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.column_symbols.inspect}, should not be a sequential_id.")
 	assert_equal([:input_stream_method_argument_id, :output_stream_method_argument_id], StreamLink.logical_primary_key)
 	assert(StreamLink.is_foreign_key_name?(:input_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
 	assert(StreamLink.is_foreign_key_name?(:output_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
