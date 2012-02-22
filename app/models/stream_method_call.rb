@@ -8,7 +8,11 @@
 class StreamMethodCall < ActiveRecord::Base # like a method call
 include Generic_Table
 belongs_to :stream_method
+has_many :stream_parameters
 has_many :stream_links
+def self.logical_primary_key
+	return [:id]
+end #logical_primary_key
 def StreamMethodCall.find_by_name(name)
 	StreamMethodCall.find_by_stream_method(name)
 end #find_by_name
