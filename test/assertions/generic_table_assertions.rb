@@ -160,6 +160,12 @@ def assert_belongs_to_association(model_class,association_name)
 	assert_association_to_one(model_class,association_name)
 	assert_include(association_name.to_s,model_class.foreign_key_association_names)
 end #belongs_to_association
+def assert_defaulted_primary_logical_key(class_reference)
+	message="#{class_reference.name} uses "
+	message+="#{class_reference.logical_primary_key.inspect} rather than default "
+#	message+="#{class_reference.superclass.logical_primary_key.inspect}"
+	assert(class_reference.defaulted_primary_logical_key?, message)
+end #defaulted_primary_logical_key
 def assert_associations(ass1,ass2,message=nil)
 	message=build_message(message, "ass1=? ass2=?", ass1.inspect, ass2.inspect)	
 	class1=ass1.to_s.classify.constantize # must succeed

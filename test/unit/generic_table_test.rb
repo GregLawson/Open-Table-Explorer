@@ -467,7 +467,10 @@ def test_is_active_record_method
 end #active_record_method
 def test_defaulted_primary_logical_key
 	assert(StreamPattern.defaulted_primary_logical_key?, "StreamPattern should use the default :name logical_primary_key.")
-	assert(Url.defaulted_primary_logical_key?, "Url uses :href rather than default :name.")
+	assert_not_empty(StreamPattern.column_symbols)
+	assert_defaulted_primary_logical_key(StreamPattern)
+	assert_defaulted_primary_logical_key(Url)
+	assert_nil(Url.defaulted_primary_logical_key?, "Url uses :href rather than default :name.")
 end #defaulted_primary_logical_key
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
