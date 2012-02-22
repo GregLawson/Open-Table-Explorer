@@ -625,7 +625,7 @@ def test_one_pass_statistics
     end #each
 	bug_statistics=Bug.one_pass_statistics(:id)
     	assert_not_nil(bug_statistics)
-	assert_equal(0, bug_statistics[:min])
+	assert_equal(1, bug_statistics[:min])
 end #one_pass_statistics
 def test_history_type
 	history_types_used=CodeBase.rails_MVC_classes.map do |model_class|
