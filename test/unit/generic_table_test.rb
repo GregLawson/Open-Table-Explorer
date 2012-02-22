@@ -478,9 +478,23 @@ end #default_logical_primary_key
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
 		if model_class.defaulted_primary_logical_key? then
-			assert_not_empty(model_class.logical_primary_key)
+			assert_not_empty(model_class.default_logical_primary_key)
 		else
-			assert_respond_to(model_class, :logical_primary_key)
+			message="model_class.name=#{model_class.name}, "
+			message+="model_class.column_symbols=#{model_class.column_symbols.inspect}"
+			message+="model_class.logical_primary_key=#{model_class.logical_primary_key.inspect}"
+			assert_empty(model_class.logical_primary_key-model_class.column_symbols, message)
+			if model_class.sequential_id? then
+				message="model_class.name=#{model_class.name}, "
+				message+="model_class.column_symbols=#{model_class.column_symbols.inspect}"
+				message+="model_class.logical_primary_key=#{model_class.logical_primary_key.inspect}"
+				assert_empty(model_class.logical_primary_key-model_class.history_type?, message)
+			else
+				message="model_class.name=#{model_class.name}, "
+				message+="model_class.logical_primary_key=#{model_class.logical_primary_key.inspect}"
+				message+="model_class.logical_attributes=#{model_class.logical_attributes.inspect}"
+				assert_empty(model_class.logical_primary_key-model_class.logical_attributes, message)
+			end #if
 		end #if
 
 	end #each
