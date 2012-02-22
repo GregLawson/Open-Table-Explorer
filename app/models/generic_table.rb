@@ -586,15 +586,9 @@ def Base.history_type?
 	return history_type
 end #history_type
 def Base.sequential_id?
-	if public_methods(false).include?('logical_primary_key') then
-		if logical_primary_key==[:created_at] then # still sequential, not requred, default
-			return true # better sequential key
-		else
-			return false # logical primary key
-		end
-	else # default to sequential id if not specified
-		return true  
-	end #if
+	history_types_not_in_logical_key= history_type?-logical_primary_key
+	return history_types_not_in_logical_key!=history_type?
+
 end # sequential_id
 def self.logical_primary_key_recursive
 	if sequential_id? then

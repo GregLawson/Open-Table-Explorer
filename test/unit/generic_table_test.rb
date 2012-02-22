@@ -635,8 +635,10 @@ def test_history_type
 	assert_equal([[:id], [:updated_at, :created_at, :id], [:created_at, :id]], history_types_used)
 end #history_type
 def test_sequential_id
-	assert_include('logical_primary_key', StreamLink.public_methods(false))
-	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.methods.inspect}, should not be a sequential_id.")
+	class_reference=StreamLink
+	history_types_not_in_logical_key= class_reference.history_type?-class_reference.logical_primary_key
+	assert_equal( history_types_not_in_logical_key, class_reference.history_type?)
+	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.column_symbols.inspect}, should not be a sequential_id.")
 	model_class=Host
 	assert_equal([:name], model_class.logical_primary_key)
 	model_class.logical_primary_key.each do |k|
