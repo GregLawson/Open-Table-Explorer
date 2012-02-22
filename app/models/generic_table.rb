@@ -566,13 +566,15 @@ def Base.one_pass_statistics(column_name)
     end #each
     return nil if n==0
     {
+    :n => n,
     :variance_n => m2/n,
     :variance => m2/(n - 1), 
     :skewness=> Math::sqrt(n)*m3/(m2**(3/2)),
     :kurtosis => (n*m4) / (m2*m2) - 3,
     :min => min,
-    :max => max,
     :min_key => min_key,
+    :mean => mean,
+    :max => max,
     :max_key => max_key,
     :has_id => has_id
     }
