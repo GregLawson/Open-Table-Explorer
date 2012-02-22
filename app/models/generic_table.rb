@@ -413,7 +413,7 @@ def Base.defaulted_primary_logical_key?
 	 	return true
 	 end #if
 end #defaulted_primary_logical_key
-def Base.logical_primary_key
+def Base.default_logical_primary_key
 	if logical_attributes.include?(:name) then
 		return [:name]
 	else
@@ -431,6 +431,10 @@ def Base.logical_primary_key
 		end #if
 		return logical_attributes
 	end #if
+end #default_logical_primary_key
+# Override if default is wrong.
+def Base.logical_primary_key
+	return default_logical_primary_key
 end #logical_primary_key
 def Base.attribute_ddl(attribute_name)
 	table_sql= self.to_sql

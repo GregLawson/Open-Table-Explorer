@@ -472,6 +472,9 @@ def test_defaulted_primary_logical_key
 	assert_defaulted_primary_logical_key(Url)
 	assert_nil(Url.defaulted_primary_logical_key?, "Url uses :href rather than default :name.")
 end #defaulted_primary_logical_key
+def test_default_logical_primary_key
+	assert_equal([:name], model_class.default_logical_primary_key)
+end #default_logical_primary_key
 def test_logical_primary_key
 	CodeBase.rails_MVC_classes.each do |model_class|
 		if model_class.defaulted_primary_logical_key? then
