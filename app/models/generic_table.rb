@@ -35,6 +35,7 @@ end #keys
 end #
 module ActiveRecord
 class Base
+include ActionView::Helpers::UrlHelper
 def self.column_order
 	ret=logical_primary_key
 	ret+=column_symbols-logical_primary_key-[:id]
@@ -42,7 +43,7 @@ def self.column_order
 end #column_order
 def column_html(column_symbol)
 	if self.class.foreign_key_names.map{|n|n.to_sym}.include?(column_symbol) then
-		return self[column_symbol]
+		return self[column_symbol].to_s
 	else
 		return self[column_symbol].to_s
 	end #if
@@ -56,7 +57,7 @@ def row_html(column_order=nil)
 		ret+='<td>'+column_html(col)+'</td>'
 	end #each
 	
-	ret+="<td><%= link_to 'Show', stream_method %></td>"
+	ret+='<td>'+link_to('Show', self.class.name.tableize+'/'+self[:id].to_s)+'</td>'
     	ret+="<td><%= link_to 'Edit', edit_stream_method_path(stream_method) %></td>"
     	ret+="<td><%= link_to 'Destroy', stream_method, :confirm => 'Are you sure?', :method => :delete %></td>"
 
