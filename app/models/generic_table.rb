@@ -35,12 +35,17 @@ end #keys
 end #
 module ActiveRecord
 class Base
+def self.column_order
+	ret=logical_primary_key
+	ret+=column_symbols-logical_primary_key-[:id]
+	return ret
+end #column_order
 def column_html(column_symbol)
 	return self[column_symbol].inspect
 end #column_html
 def row_html(column_order=nil)
 	if column_order.nil? then
-		column_order=self.class.column_names
+		column_order=self.class.column_order
 	end #if
 	ret="<tr>"
 	column_order.each do |col|
@@ -52,11 +57,11 @@ def row_html(column_order=nil)
 end #row_html
 def Base.header_html(column_order=nil)
 	if column_order.nil? then
-		column_order=self.column_names
+		column_order=self.column_order
 	end #if
 	ret="<tr>"
 	column_order.each do |header|
-		ret+='<th>'+header+'</th>'
+		ret+='<th>'+header.to_s+'</th>'
 	end #each
 	ret+="</tr>"
 	return ret
@@ -64,7 +69,7 @@ end #header_html
 # Produce default HTML for ActiveRecord model
 def Base.table_html(column_order=nil)
 	if column_order.nil? then
-		column_order=self.column_names
+		column_order=self.column_order
 	end #if
 	ret="<table>"
 	ret+=header_html(column_order)
