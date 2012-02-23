@@ -95,9 +95,7 @@ end #name_to_association
 # List names (as Strings) of all foreign keys.
 def Base.foreign_key_names
 	content_column_names=content_columns.collect {|m| m.name}
-#	puts "@content_column_names.inspect=#{@content_column_names.inspect}"
 	special_columns=column_names-content_column_names
-#	puts "@special_columns.inspect=#{@special_columns.inspect}"
 	possible_foreign_keys=special_columns.select { |m| m =~ /_id$/ }
 	return possible_foreign_keys
 end #foreign_key_names
