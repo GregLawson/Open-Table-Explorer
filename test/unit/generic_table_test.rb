@@ -21,10 +21,17 @@ fixtures @@table_name.to_sym
 def test_NoDB
 end #NoDB
 def test_column_html
-	assert_equal("\"Acquisition\"", StreamPattern.find_by_name('Acquisition').column_html(:name))
+	assert_equal("Acquisition", StreamPattern.find_by_name('Acquisition').column_html(:name))
 end #column_html
 def test_row_html
-	assert_match(/tr/, StreamPattern.find_by_name('Acquisition').row_html)
+	acq=StreamPattern.find_by_name('Acquisition')
+	assert_equal("Acquisition", acq.column_html(:name))
+	expected_td_html="<td>Acquisition</td>"
+	assert_equal(expected_td_html, '<td>'+acq.column_html(:name)+'</td>')
+	assert_match(/tr/, acq.row_html)
+	expected_html="<tr><td>Acquisition</td>"
+	expected_html_length=expected_html.length
+	assert_equal(expected_html, acq.row_html[0,expected_html_length])
 end #row_html
 def test_header_html
 		assert_not_empty(StreamPattern.column_names)

@@ -41,7 +41,11 @@ def self.column_order
 	return ret
 end #column_order
 def column_html(column_symbol)
-	return self[column_symbol].inspect
+	if self.class.foreign_key_names.map{|n|n.to_sym}.include?(column_symbol) then
+		return self[column_symbol]
+	else
+		return self[column_symbol].to_s
+	end #if
 end #column_html
 def row_html(column_order=nil)
 	if column_order.nil? then
@@ -49,8 +53,14 @@ def row_html(column_order=nil)
 	end #if
 	ret="<tr>"
 	column_order.each do |col|
-		ret+='<td>'+column_html(col).inspect+'</td>'
+		ret+='<td>'+column_html(col)+'</td>'
 	end #each
+	
+	ret+="<td><%= link_to 'Show', stream_method %></td>"
+    	ret+="<td><%= link_to 'Edit', edit_stream_method_path(stream_method) %></td>"
+    	ret+="<td><%= link_to 'Destroy', stream_method, :confirm => 'Are you sure?', :method => :delete %></td>"
+
+	
 	ret+="</tr>"
 	return ret
 
