@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -7,10 +7,10 @@
 ###########################################################################
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-1:
+1,File,Url:
   stream_method_call_id: 1
-  stream_method_argument_id: 1
+  stream_method_argument_id: File,Url
 
-2:
+1,File,Acquisition:
   stream_method_call_id: 1
-  stream_method_argument_id: 1
+  stream_method_argument_id: File,Acquisition
