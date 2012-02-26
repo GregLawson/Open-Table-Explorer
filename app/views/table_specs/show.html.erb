@@ -1,28 +1,52 @@
+<p id="notice"><%= notice %></p>
+ <%= render :partial =>"shared/error_messages.html.erb", :locals => { :record => @table_spec } %>
 <p>
   <b>Id:</b>
-  <%=h @table_spec.id %>
+  <%= @table_spec.id.inspect %>
 </p>
-
+<%= render :partial =>'table_specs/show_partial', :locals => { :@table_spec => @table_spec } %>
+<% if Generic_Table.is_generic_table?(@table_spec.class.name) then %>
+<% require 'global.rb' %>
+<% if @table_spec.association_has_data(:frequency) then %>
+<%= render :partial =>'frequency/index_partial', :locals => { :@frequency => @table_spec.frequency } %>
+<% else %>
 <p>
-  <b>Merge:</b>
-  <%=h @table_spec.merge %>
+  <b>@table_spec.class.is_matching_association?(:frequency):</b>
+  <%= @table_spec.class.is_matching_association?(:frequency) %>
 </p>
-
 <p>
-  <b>File caching:</b>
-  <%=h @table_spec.file_caching %>
+  <b>@table_spec.class.association_arity(:frequency):</b>
+  <%= @table_spec.class.association_arity(:frequency) %>
 </p>
-
 <p>
-  <b>Model class name:</b>
-  <%=h @table_spec.model_class_name %>
+  <b>@table_spec.class.association_macro_type(:frequency):</b>
+  <%= @table_spec.class.association_macro_type(:frequency) %>
 </p>
-
 <p>
-  <b>Frequency:</b>
-  <%=h @table_spec.frequency_id %>
+  <b>@table_spec.class.association_arity(:frequency):</b>
+  <%= @table_spec.class.association_arity(:frequency) %>
 </p>
-
-
-<%= link_to 'Edit', edit_table_spec_path(@table_spec) %> |
-<%= link_to 'Back', table_specs_path %>
+<p>
+  <b>@table_spec.association_state(:frequency):</b>
+  <%= @table_spec.association_state(:frequency) %>
+</p>
+<% @matching_records=Frequency.where(:id => @table_spec.frequency_id ) %>
+<% if @matching_records.size>0 then %>
+<H1><B>No data in associaton. Listing all data of model with matching Id.</B></H1>
+<%= render :partial =>'frequency/index_partial', :locals => { :@frequency => @matching_records } %>
+<% else %>
+<H1><B>No data in associaton. Listing all data of model.</B></H1>
+< render :partial =>'frequency/index_partial', :locals => { :@frequency => Frequency.all } 
+<% end #if %>
+<%= @table_spec.frequency.inspect  %>
+<P>@table_spec.class.association_names=
+<%= @table_spec.class.association_names.inspect %>
+<P> system(@table_spec.class.association_grep('has_many',:frequency)) 
+<%= system(@table_spec.class.association_grep('has_many',:frequency)) %>
+<P> system(Frequency.association_grep('belongs_to',:table_specs)) 
+<%= system(Frequency.association_grep('belongs_to',:table_specs)) %>
+<% end #if %>
+<% end #if %>
+<h1>Listing stream_methods</h1>
+< %= simple_format(TableSpec.select('name').table_html)=%>
+<%= simple_format(@table_spec.stream_methods.table_html)=%>

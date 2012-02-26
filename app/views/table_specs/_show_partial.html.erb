@@ -1,0 +1,28 @@
+<p>
+  <b>Id:</b>
+  <%=h @table_spec.id %>
+</p>
+
+<p>
+  <b>Merge:</b>
+  <%=h @table_spec.merge %>
+</p>
+
+<p>
+  <b>File caching:</b>
+  <%=h @table_spec.file_caching %>
+</p>
+
+<p>
+  <b>Model class name:</b>
+  <%=h @table_spec.model_class_name %>
+</p>
+
+<p>
+  <b>Frequency:</b>
+  <%=h @table_spec.frequency_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_table_spec_path(@table_spec) %> |
+<%= link_to 'Back', table_specs_path %>
