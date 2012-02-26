@@ -41,9 +41,18 @@ def self.column_order
 	ret+=column_symbols-logical_primary_key-[:id]
 	return ret
 end #column_order
+# Calculate rails relative route to this record
+def rails_route(action=nil)
+	route=self.class.name.tableize+'/'+self[:id].to_s
+	if action.nil? then
+		return route
+	else
+		return route+'/'+action.to_s
+	end #if
+end #route
 def column_html(column_symbol)
 	if self.class.foreign_key_names.map{|n|n.to_sym}.include?(column_symbol) then
-		return self[column_symbol].to_s
+		return link_to(self[column_symbol].to_s, foreign_key_to_association(column_symbol).rails_route)
 	else
 		return self[column_symbol].to_s
 	end #if
@@ -56,10 +65,9 @@ def row_html(column_order=nil)
 	column_order.each do |col|
 		ret+='<td>'+column_html(col)+'</td>'
 	end #each
-	
-	ret+='<td>'+link_to('Show', self.class.name.tableize+'/'+self[:id].to_s)+'</td>'
-    	ret+="<td><%= link_to 'Edit', edit_stream_method_path(stream_method) %></td>"
-    	ret+="<td><%= link_to 'Destroy', stream_method, :confirm => 'Are you sure?', :method => :delete %></td>"
+	ret+='<td>'+link_to('Show', rails_route)+'</td>'
+    	ret+='<td>'+link_to('Edit', rails_route(:edit))+'</td>'
+    	ret+='<td>'+link_to('Destroy', rails_route, :confirm => 'Are you sure?', :method => :delete)+'</td>'
 
 	
 	ret+="</tr>"
@@ -72,7 +80,7 @@ def Base.header_html(column_order=nil)
 	end #if
 	ret="<tr>"
 	column_order.each do |header|
-		ret+='<th>'+header.to_s+'</th>'
+		ret+='<th>'+header.to_s.humanize+'</th>'
 	end #each
 	ret+="</tr>"
 	return ret
@@ -98,10 +106,6 @@ def Base.association_refs(class_reference=@@example_class_reference, association
 		klass=class_reference.class
 	end #if
 	association_reference=association_reference.to_sym
-	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
-	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
-#	assert_kind_of(ActiveRecord::Base,class_reference)
-	assert_ActiveRecord_table(class_reference.name)
 	block.call(class_reference, association_reference)
 end #association_refs
 # transform association name into association records for instance
