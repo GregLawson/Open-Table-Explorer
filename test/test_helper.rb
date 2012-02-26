@@ -148,7 +148,9 @@ def self.set_class_variables(model_name=self.name.sub(/Test$/, '').sub(/Controll
 	@@model_name=model_name.to_s
 	@@table_name=@@model_name.tableize
 #	require "test/unit/#{@@table_name.singularize}_test.rb"
-	fixtures @@table_name.to_sym if fixture_load
+	if File.exists?("test/fixtures/#{@@table_name}.yml") then
+		fixtures @@table_name.to_sym if fixture_load
+	end #if
 	@@model_class=Generic_Table.class_of_name(@@model_name)
 end #set_class_variables
 end #ActiveSupport::TestCase
