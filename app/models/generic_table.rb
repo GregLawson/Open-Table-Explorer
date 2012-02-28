@@ -32,15 +32,12 @@ end #has_key?
 def keys
 	return @attributes.keys
 end #keys
-end #
-module ActiveRecord
-class Base
-include ActionView::Helpers::UrlHelper
-def self.column_order
-	ret=logical_primary_key
-	ret+=column_symbols-logical_primary_key-[:id]
-	return ret
-end #column_order
+end #NoDB
+#class GenericColumn
+#end #GenericColumns
+module GenericAssociation
+end #GenericAssociations
+module GenericHtml
 # Calculate rails relative route to this record
 def rails_route(action=nil)
 	route=self.class.name.tableize+'/'+self[:id].to_s
@@ -49,7 +46,7 @@ def rails_route(action=nil)
 	else
 		return route+'/'+action.to_s
 	end #if
-end #route
+end #rails_route
 def column_html(column_symbol)
 	if self.class.foreign_key_names.map{|n|n.to_sym}.include?(column_symbol) then
 		return link_to(self[column_symbol].to_s, foreign_key_to_association(column_symbol).rails_route)
@@ -74,7 +71,14 @@ def row_html(column_order=nil)
 	return ret
 
 end #row_html
-def Base.header_html(column_order=nil)
+# For HTML
+module ClassMethods
+def column_order
+	ret=logical_primary_key
+	ret+=column_symbols-logical_primary_key-[:id]
+	return ret
+end #column_order
+def header_html(column_order=nil)
 	if column_order.nil? then
 		column_order=self.column_order
 	end #if
@@ -86,7 +90,7 @@ def Base.header_html(column_order=nil)
 	return ret
 end #header_html
 # Produce default HTML for ActiveRecord model
-def Base.table_html(column_order=nil)
+def table_html(column_order=nil)
 	if column_order.nil? then
 		column_order=self.column_order
 	end #if
@@ -98,6 +102,15 @@ def Base.table_html(column_order=nil)
 	ret+="</table>"
 	return ret
 end #table_html
+end #GenericHtml::ClassMethods
+end #GenericHtml
+module ActiveRecord
+class Base
+#include GenericColumn
+include GenericAssociation
+include GenericHtml
+extend GenericHtml::ClassMethods
+include ActionView::Helpers::UrlHelper
 # apply block to an association
 def Base.association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
 	if class_reference.kind_of?(Class) then

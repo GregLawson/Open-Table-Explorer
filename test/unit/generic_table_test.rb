@@ -20,14 +20,21 @@ fixtures @@table_name.to_sym
 	fixtures :acquisitions
 def test_NoDB
 end #NoDB
+def test_rails_route
+end #rails_route
 def test_column_html
-	assert_equal("Acquisition", StreamPattern.find_by_name('Acquisition').column_html(:name))
-end #column_html
-def test_row_html
 	acq=StreamPattern.find_by_name('Acquisition')
 	assert_equal("Acquisition", acq.column_html(:name))
 	expected_td_html="<td>Acquisition</td>"
 	assert_equal(expected_td_html, '<td>'+acq.column_html(:name)+'</td>')
+	assert_instance_of(StreamPattern, acq)
+	assert_kind_of(ActiveRecord::Base, acq)
+	assert_equal(ActiveRecord::Base, acq.class.superclass)
+	assert_kind_of(ActiveRecord::Base, acq)
+	assert_equal([Generic_Table, GenericTableAssertions, GenericHtml, GenericAssociation], acq.class.included_modules.select {|m| m.name[0..6]=='Generic'})
+end #column_html
+def test_row_html
+	acq=StreamPattern.find_by_name('Acquisition')
 	assert_match(/tr/, acq.row_html)
 	expected_html="<tr><td>Acquisition</td>"
 	expected_html_length=expected_html.length
@@ -35,11 +42,12 @@ def test_row_html
 end #row_html
 def test_header_html
 		assert_not_empty(StreamPattern.column_names)
-		assert_equal('<tr><th>id</th><th>name</th><th>created_at</th><th>updated_at</th></tr>', StreamPattern.header_html)
+		assert_equal('<tr><th>Name</th><th>Created at</th><th>Updated at</th></tr>', StreamPattern.header_html)
 	ActiveRecord::Base.association_refs do |class_reference, association_reference|
 	end #each
 end #header_html
 def test_table_html
+	explain_assert_respond_to(StreamPattern, :table_html)
 	assert_not_nil(StreamPattern.table_html)
 	assert_match(%r{<table>.*</table>}, StreamPattern.table_html)
 	
