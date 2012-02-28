@@ -107,3 +107,15 @@ dpkg_descriptions:
 dpkg_available:
   href: dpkg_available
   url: file:/var/lib/dpkg/available
+nmblookup_dell2:
+  href: nmblookup_dell2
+  url: shell: nmblookup -A Dell2
+partitions:
+  href: partitions
+  url: file:/proc/partitions
+usb_devices:
+  href: usb_devices
+  url: file: /proc/bus/usb/devices
+smbclient_dell2:
+  href: smbclient_dell2
+  url: smbclient -N -L DELL2 -I Dell2 -W WORKGROUP -g
