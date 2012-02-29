@@ -320,14 +320,91 @@ def logical_primary_key_value(delimiter=',')
 		end #if
 	end #if
 end #logical_primary_key_value
+def association_has_data(association_name)
+	return association_state(association_name)[/ and returns type /,0]
+end #def
+def associated_to_s(association_name,method,*args)
+	if self[association_name.to_s+'_id'].nil? then # foreign key uninitialized
+		return ''
+	else
+		ass=send(association_name)
+		if ass.nil? then
+			return ''
+		else
+			return ass.send(method.to_sym,*args).to_s
+		end
+	end
+end #def
 end #GenericAssociation
+module GenericGrep
+module ClassMethods
+def grep_command(content_regexp_string, filename_regexp_string='-r {app/models/,test/unit/}*.rb', redirection='')
+	if redirection.empty? then
+		return "grep \"#{content_regexp_string}\" #{filename_regexp_string}"
+	else
+		return "grep \"#{content_regexp_string}\" #{filename_regexp_string} #{redirection}"
+	end #if
+end #grep_command
+def model_grep_command(model_regexp_string)
+	if !Generic_Table.rails_MVC_class?(self.name) then
+		raise "#{self.name}.model_grep only works on Rails MVC."
+	end #if
+	return "grep \"#{model_regexp_string}\" #{model_file_name} &>/dev/null"
+end #model_grep_command
+def model_grep(model_regexp_string)
+	return `#{model_grep_command(model_regexp_string)}`
+end #model_grep
+def association_grep_pattern(model_regexp_string,association_name)
+	return "#{model_regexp_string}:#{association_name}" # no end of line $, so that polymorphic associations are found.
+end #association_grep_command
+ASSOCIATION_MACRO_LETTERS='[has_manyoneblgtd]'
+ASSOCIATION_MACRO_PATTERN="^[hb]#{ASSOCIATION_MACRO_LETTERS}*\s\s*"
+def grep_all_associations_command
+	return grep_command(ASSOCIATION_MACRO_PATTERN, 'app/models/*.rb')
+end #grep_all_associations_command
+def all_associations
+	regexp='([a-z_.]*):('+ASSOCIATION_MACRO_PATTERN[1..-1]+')(.*)'
+	return `#{grep_all_associations_command}`.split("\n").map do |l| 
+		Regexp.new(regexp).match(l)[1..-1]
+		end #map
+end #all_associations
+def association_macro_type(association_name)
+	hits=association_grep(ASSOCIATION_MACRO_PATTERN, association_name)
+	if hits.empty? then
+		return nil
+	else
+		return hits.match("(#{ASSOCIATION_MACRO_PATTERN})")[1].sub(/\s*$/, '').to_sym
+	end #if
+end #association_macro_type
+def association_grep(model_regexp_string,association_name)
+	return model_grep(association_grep_pattern(model_regexp_string,association_name))
+end #association_grep
+def has_many_association?(association_name)
+	return association_grep('has_many',association_name)
+end #has_many_association
+# expects a singular association name
+def belongs_to_association?(association_name)
+	return association_grep('^belongs_to ',association_name)!=''
+end #belongs_to_association
+def has_one_association?(association_name)
+	return association_grep('^has_one',association_name)
+end #has_one_association
+# concatenate association_arity and association_macro_type
+def association_type(association_name)
+	return (association_arity(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym
+end #association_type
+end #GenericGrep::ClassMethods
+end #GenericGrep
 module ActiveRecord
+
 class Base
 #include GenericColumn
 include GenericAssociation
 extend GenericAssociation::ClassMethods
 include GenericHtml
 extend GenericHtml::ClassMethods
+include GenericGrep
+extend GenericGrep::ClassMethods
 include ActionView::Helpers::UrlHelper
 # apply block to an association
 def Base.association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
@@ -342,61 +419,6 @@ end #association_refs
 def Base.model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
 end #model_file_name
-def Base.grep_command(content_regexp_string, filename_regexp_string='-r {app/models/,test/unit/}*.rb', redirection='')
-	if redirection.empty? then
-		return "grep \"#{content_regexp_string}\" #{filename_regexp_string}"
-	else
-		return "grep \"#{content_regexp_string}\" #{filename_regexp_string} #{redirection}"
-	end #if
-end #grep_command
-def Base.model_grep_command(model_regexp_string)
-	if !Generic_Table.rails_MVC_class?(self.name) then
-		raise "#{self.name}.model_grep only works on Rails MVC."
-	end #if
-	return "grep \"#{model_regexp_string}\" #{model_file_name} &>/dev/null"
-end #model_grep_command
-def Base.model_grep(model_regexp_string)
-	return `#{model_grep_command(model_regexp_string)}`
-end #model_grep
-def Base.association_grep_pattern(model_regexp_string,association_name)
-	return "#{model_regexp_string}:#{association_name}" # no end of line $, so that polymorphic associations are found.
-end #association_grep_command
-ASSOCIATION_MACRO_LETTERS='[has_manyoneblgtd]'
-ASSOCIATION_MACRO_PATTERN="^[hb]#{ASSOCIATION_MACRO_LETTERS}*\s\s*"
-def Base.grep_all_associations_command
-	return grep_command(ASSOCIATION_MACRO_PATTERN, 'app/models/*.rb')
-end #grep_all_associations_command
-def Base.all_associations
-	regexp='([a-z_.]*):('+ASSOCIATION_MACRO_PATTERN[1..-1]+')(.*)'
-	return `#{grep_all_associations_command}`.split("\n").map do |l| 
-		Regexp.new(regexp).match(l)[1..-1]
-		end #map
-end #all_associations
-def Base.association_macro_type(association_name)
-	hits=association_grep(ASSOCIATION_MACRO_PATTERN, association_name)
-	if hits.empty? then
-		return nil
-	else
-		return hits.match("(#{ASSOCIATION_MACRO_PATTERN})")[1].sub(/\s*$/, '').to_sym
-	end #if
-end #association_macro_type
-def Base.association_grep(model_regexp_string,association_name)
-	return model_grep(association_grep_pattern(model_regexp_string,association_name))
-end #association_grep
-def Base.has_many_association?(association_name)
-	return association_grep('has_many',association_name)
-end #has_many_association
-# expects a singular association name
-def Base.belongs_to_association?(association_name)
-	return association_grep('^belongs_to ',association_name)!=''
-end #belongs_to_association
-def Base.has_one_association?(association_name)
-	return association_grep('^has_one',association_name)
-end #has_one_association
-# concatenate association_arity and association_macro_type
-def Base.association_type(association_name)
-	return (association_arity(association_name).to_s+'_'+association_macro_type(association_name).to_s).to_sym
-end #association_type
 def Base.is_active_record_method?(method_name)
 	if ActiveRecord::Base.instance_methods_from_class(true).include?(method_name.to_s) then
 		return true
@@ -998,21 +1020,6 @@ def association_state(association_name)
 	else
 		return "New return value from #{self.class.name}.association_arity(#{association_name})=#{self.class.association_arity(association_name)}."
 	end #if
-end #def
-def association_has_data(association_name)
-	return association_state(association_name)[/ and returns type /,0]
-end #def
-def associated_to_s(association_name,method,*args)
-	if self[association_name.to_s+'_id'].nil? then # foreign key uninitialized
-		return ''
-	else
-		ass=send(association_name)
-		if ass.nil? then
-			return ''
-		else
-			return ass.send(method.to_sym,*args).to_s
-		end
-	end
 end #def
 def Match_and_strip(regexp=/=$/)
 	matching_methods(regexp).map do |m|
