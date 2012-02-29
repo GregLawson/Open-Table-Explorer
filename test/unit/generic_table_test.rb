@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require 'test_helper.rb'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
@@ -18,7 +18,37 @@ fixtures @@table_name.to_sym
 	fixtures :acquisition_stream_specs
 	fixtures :acquisition_interfaces
 	fixtures :acquisitions
+assert_equal([GenericTableTest], Module.nesting)
+assert_not_include(GenericGrep, self.included_modules)
+assert_equal('constant', defined? GenericGrep)
 ASSOCIATION_MACRO_PATTERN=GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN
+assert_equal('constant', defined? ColumnGroup)
+assert(ColumnGroup)
+assert_instance_of(Module, ColumnGroup)
+assert_equal([ColumnGroup], ColumnGroup.ancestors)
+assert_empty(ColumnGroup.included_modules)
+assert_equal('constant', defined? ColumnGroup::ClassMethods)
+
+assert_not_include(ColumnGroup, self.included_modules)
+include ColumnGroup
+assert_include(ColumnGroup, self.included_modules)
+assert_empty(ColumnGroup.included_modules)
+
+include ColumnGroup::ClassMethods
+assert_equal('constant', defined? ColumnGroup::ClassMethods)
+assert_equal([ColumnGroup::ClassMethods], ColumnGroup::ClassMethods.ancestors)
+
+assert_equal('constant', defined? History_columns)
+assert_equal('constant', defined? ClassMethods::History_columns)
+assert_equal('constant', defined? ColumnGroup::ClassMethods::History_columns)
+assert_include('History_columns', ColumnGroup::ClassMethods.constants)
+assert_empty(ColumnGroup.included_modules)
+assert_not_include(ClassMethods, ColumnGroup.included_modules)
+
+assert_equal(['History_columns'], Module.constants.grep(/History/))
+assert_not_empty(Module.constants)
+assert_not_empty(ColumnGroup.constants)
+History_columns=ColumnGroup::ClassMethods::History_columns
 def test_NoDB
 end #NoDB
 def test_foreign_key_names
@@ -499,7 +529,7 @@ def test_attribute_ruby_type
 	assert_equal(String, StreamPattern.attribute_ruby_type(:name))
 	assert_equal(Float, Weather.attribute_ruby_type(:khhr_wind_mph))
 	CodeBase.rails_MVC_classes.each do |model_class|
-		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
+		logical_attributes=model_class.column_names-History_columns
 		assert_not_empty(logical_attributes)
 		logical_attributes.each do |attribute_name|
 			assert_not_nil(model_class.first, "model_class=#{model_class.inspect} has no records.")
@@ -540,7 +570,7 @@ def test_analog
 	assert(StreamPattern.analog?(:created_at))
 	assert(StreamPattern.analog?(:updated_at))
 	CodeBase.rails_MVC_classes.each do |model_class|
-		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
+		logical_attributes=model_class.column_names-History_columns
 		assert_not_empty(logical_attributes)
 		logical_attributes.each do |attribute_name|
 			model_class.analog?(attribute_name)
@@ -551,12 +581,12 @@ end #analog
 def test_column_symbols
 	column_symbols=StreamPattern.column_names.map {|name| name.to_sym}
 
-	assert_equal([:name], column_symbols-ActiveRecord::Base::History_columns)
+	assert_equal([:name], column_symbols-History_columns)
 end #column_symbols
 def test_logical_attributes
 	assert_equal([:name], StreamPattern.logical_attributes)
 	CodeBase.rails_MVC_classes.each do |model_class|
-		logical_attributes=model_class.column_names-ActiveRecord::Base::History_columns
+		logical_attributes=model_class.column_names-History_columns
 		assert_not_empty(logical_attributes)
 	end #each
 end #logical_attributes
