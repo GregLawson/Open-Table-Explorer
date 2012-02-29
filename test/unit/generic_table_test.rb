@@ -20,52 +20,6 @@ fixtures @@table_name.to_sym
 	fixtures :acquisitions
 def test_NoDB
 end #NoDB
-def test_rails_route
-end #rails_route
-def test_column_html
-	acq=StreamPattern.find_by_name('Acquisition')
-	assert_equal("Acquisition", acq.column_html(:name))
-	expected_td_html="<td>Acquisition</td>"
-	assert_equal(expected_td_html, '<td>'+acq.column_html(:name)+'</td>')
-	assert_instance_of(StreamPattern, acq)
-	assert_kind_of(ActiveRecord::Base, acq)
-	assert_equal(ActiveRecord::Base, acq.class.superclass)
-	assert_kind_of(ActiveRecord::Base, acq)
-	assert_equal([Generic_Table, GenericTableAssertions, GenericHtml, GenericAssociation], acq.class.included_modules.select {|m| m.name[0..6]=='Generic'})
-end #column_html
-def test_row_html
-	acq=StreamPattern.find_by_name('Acquisition')
-	assert_match(/tr/, acq.row_html)
-	expected_html="<tr><td>Acquisition</td>"
-	expected_html_length=expected_html.length
-	assert_equal(expected_html, acq.row_html[0,expected_html_length])
-end #row_html
-def test_header_html
-		assert_not_empty(StreamPattern.column_names)
-		assert_equal('<tr><th>Name</th><th>Created at</th><th>Updated at</th></tr>', StreamPattern.header_html)
-	ActiveRecord::Base.association_refs do |class_reference, association_reference|
-	end #each
-end #header_html
-def test_table_html
-	explain_assert_respond_to(StreamPattern, :table_html)
-	assert_not_nil(StreamPattern.table_html)
-	assert_match(%r{<table>.*</table>}, StreamPattern.table_html)
-	
-end #table_html
-def test_association_refs
-	class_reference=StreamPattern
-	association_reference=:stream_methods
-	assert_equal([class_reference, association_reference], ActiveRecord::Base.association_refs(class_reference, association_reference) do |class_reference, association_reference|
-		[class_reference, association_reference]
-	end)
-	assert_equal([StreamPattern, :stream_methods], ActiveRecord::Base.association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
-end #association_refs
-def test_name_to_association
-	class_reference=StreamLink
-	association_name='input_stream_method_argument'
-	obj=class_reference.first
-	assert_not_nil(obj.name_to_association(association_name), "obj=#{obj.inspect}, StreamMethodArgument.all=#{StreamMethodArgument.all.inspect}")
-end #name_to_association
 def test_foreign_key_names
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)
@@ -89,9 +43,6 @@ end #foreign_key_name
 def test_foreign_key_to_association_name
 	assert_equal('parameter', ActiveRecord::Base.foreign_key_to_association_name(:parameter_id))
 end #foreign_key_to_association_name
-def test_foreign_Key_to_association
-	assert_not_nil(StreamMethod.first.foreign_key_to_association(:stream_pattern_id))
-end #foreign_Key_to_association
 def test_foreign_key_association_names
 	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
 	assert_include('stream_pattern',StreamPatternArgument.foreign_key_names.map {|fk| fk.sub(/_id$/,'')})
@@ -123,30 +74,6 @@ def test_associated_foreign_key_records
 	assert_equal(expected_association,@@FOREIGN_KEY_ASSOCIATION_INSTANCE.associated_foreign_key_records(@@TABLE_NAME_WITH_FOREIGN_KEY))
 	assert_equal(2,@@FOREIGN_KEY_ASSOCIATION_INSTANCE.associated_foreign_key_records(@@TABLE_NAME_WITH_FOREIGN_KEY).count)
 end #associated_foreign_key_records
-def test_assert_foreign_keys_not_nil
-	class_reference=StreamLink
-	assert_equal(['input_stream_method_argument_id','output_stream_method_argument_id',"store_method_id","next_method_id"], class_reference.foreign_key_names)
-	assert_foreign_keys_not_nil(class_reference)
-end #assert_foreign_keys_not_nil
-# display possible foreign key values when nil foreign keys values are found
-def test_assert_foreign_key_not_nil
-	class_reference=StreamLink
-	association_name='input_stream_method_argument'
-	assert_association(class_reference, association_name)
-	assert_not_nil(class_reference.association_class(association_name))
-	association_class=StreamMethodArgument	
-	class_reference.all.each do |r|
-		assert_not_nil(association_class)
-		possible_foreign_key_values=association_class.all.map do |fkacr|
-			fkacr.logical_primary_key_recursive_value.join(',')
-		end.uniq #map
-		assert_not_empty(possible_foreign_key_values, "as no foreign keys.")
-		message=possible_foreign_key_values.join("\n")
-
-		assert_not_nil(r.foreign_key_value(association_name), message)
-	end #each
-	assert_foreign_key_not_nil(StreamLink.first, :input_stream_method_argument, StreamMethodArgument)
-end #assert_foreign_keys_not_nil
 def test_is_matching_association
 	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
 #	 association_class=@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
@@ -155,7 +82,10 @@ def test_is_matching_association
 	assert_not_nil(association_class)
 	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
 	assert(@@CLASS_WITH_FOREIGN_KEY.is_matching_association?(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
-end #is_matching_association
+	assert(TableSpec.is_matching_association?(:frequency))
+	assert_matching_association(TableSpec, :frequency)
+
+end #matching_association
 
 def test_association_methods
 	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
@@ -257,6 +187,152 @@ def test_association_names
 	assert_not_include('bug_ids', TestRun.association_names)
 	assert_equal(['bugs'],TestRun.association_names)
 end #association_names
+def test_name_symbol
+	assert_equal(:stream_methods, StreamPattern.name_symbol(StreamMethod))
+	assert_equal(:stream_methods, StreamPattern.name_symbol('stream_methods'))
+	assert_equal(:stream_methods, StreamPattern.name_symbol('stream_method'))
+	assert_equal(:stream_methods, StreamPattern.name_symbol('StreamMethod'))
+	assert_equal(:oxen, StreamPattern.name_symbol('ox'))
+	assert_equal(:bases, StreamPattern.name_symbol('base'))
+	assert_equal(:ox, StreamPattern.name_symbol(:ox))
+	assert_equal(:base, StreamPattern.name_symbol(:base))
+	assert_equal(:stream_methods, StreamPattern.name_symbol(:stream_methods))
+end #name_symbol
+def test_association_method_plurality
+	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
+	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
+	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_pattern))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
+end #association_method_plurality
+def test_association_method_symbol
+	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_models))
+	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_model))
+	
+	assert_public_instance_method(StreamPatternArgument.new,:stream_pattern)
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_pattern))
+	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_patterns))
+	 association_class=@@FOREIGN_KEY_ASSOCIATION_CLASS.association_class(@@TABLE_NAME_WITH_FOREIGN_KEY)
+	assert_equal(association_class,@@CLASS_WITH_FOREIGN_KEY)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+end #association_method_symbol
+def test_association_default_class_name
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_nil(class_reference.association_default_class_name?(association_name))
+	assert_equal("StreamPattern", StreamPatternArgument.association_default_class_name?(:stream_pattern))
+end #association_default_class_name
+def test_Base_association_class
+	assert_equal(StreamPattern, StreamMethod.association_class(:stream_patterns))
+	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
+	assert_equal(GenericType, GenericType.find_by_import_class('Integer_Column').generalize.class)
+	assert_equal(GenericType, GenericType.find_by_import_class('alnum').specialize[0].class)
+	assert_equal(Array, GenericType.find_by_import_class('alnum').specialize.class)
+	assert_equal(GenericType, GenericType.association_class(:generalize))
+	assert_equal(GenericType, GenericType.association_class(:specialize))
+
+	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	all_parents=class_reference.all
+	all_association_classes=all_parents.map do |bc|
+		bc.association_class(association_name)
+	end.flatten.uniq #map
+	assert_instance_of(Array, all_association_classes)
+	assert_single_element_array(all_association_classes)
+end #Base_association_class
+def test_association_arity
+	class_reference=StreamLink
+	association_reference=:inputs
+	ActiveRecord::Base.association_refs do |class_reference, association_reference|
+		assert_association_to_one(class_reference,association_reference)
+		if class_reference.module_included?(Generic_Table) then
+			association_type=class_reference.association_arity(association_reference)
+			assert_not_nil(association_type)
+			assert_include(association_type,[:to_one,:to_many])
+		end #if
+	end #association_refs
+end #association_arity
+def test_name_to_association
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	obj=class_reference.first
+	assert_not_nil(obj.name_to_association(association_name), "obj=#{obj.inspect}, StreamMethodArgument.all=#{StreamMethodArgument.all.inspect}")
+end #name_to_association
+def test_foreign_Key_to_association
+	assert_not_nil(StreamMethod.first.foreign_key_to_association(:stream_pattern_id))
+end #foreign_Key_to_association
+def test_association_class
+	assert_equal(StreamPattern, StreamMethod.first.association_class(:stream_pattern))
+	integerColumn=GenericType.find_by_import_class('Integer_Column')
+	alnum=GenericType.find_by_import_class('alnum')
+	assert_equal(Array, alnum.specialize.class)
+	assert_equal(GenericType, integerColumn.association_class(:generalize))
+	assert_equal(GenericType, alnum.association_class(:specialize))
+
+	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
+	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_association(class_reference, association_name)
+	instance=class_reference.first
+	association=instance.name_to_association(association_name)
+	assert_instance_of(StreamMethodArgument, association)
+	if association.instance_of?(Array) then
+		classes=association.enumerate(:map){|r| r.class}.uniq
+		if classes.size==1 then
+			assert_single_element_array(association)
+		else
+			assert_instance_of(Array, association)
+		end #if
+	else
+		assert_instance_of(Class, association.enumerate(:map){|r| r.class})
+	end #if
+	assert_equal(StreamMethodArgument, class_reference.first.association_class(association_name))
+end #association_class
+
+def test_foreign_key_points_to_me
+end #foreign_key_points_to_me
+def test_logical_primary_key_recursive_value
+	assert_include('logical_primary_key', StreamLink.public_methods(false))
+	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.column_symbols.inspect}, should not be a sequential_id.")
+	assert_equal([:input_stream_method_argument_id, :output_stream_method_argument_id], StreamLink.logical_primary_key)
+	assert(StreamLink.is_foreign_key_name?(:input_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
+	assert(StreamLink.is_foreign_key_name?(:output_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
+	link=StreamLink.first
+	assert_not_equal(link[:input_stream_method_argument_id], link[:output_stream_method_argument_id])
+	input_stream_method_argument=link.foreign_key_to_association(:input_stream_method_argument_id)
+	assert_not_nil(input_stream_method_argument)
+	assert_equal({"StreamMethodArgument"=>[{"StreamMethod"=>[:name]}, :name]}, input_stream_method_argument.class.logical_primary_key_recursive)
+	assert_equal([["File"], "acquisitions"], input_stream_method_argument.logical_primary_key_recursive_value)
+	output_stream_method_argument=link.foreign_key_to_association(:output_stream_method_argument_id)
+	assert_not_nil(output_stream_method_argument)
+	assert_not_equal(input_stream_method_argument, output_stream_method_argument)
+	assert_equal([["Regexp"], "acquisitions"], output_stream_method_argument.logical_primary_key_recursive_value)
+	StreamLink.all.each do |link|
+		assert_equal(4, link.logical_primary_key_recursive_value.flatten.size)
+		assert_not_equal(link[:input_stream_method_argument_id], link[:output_stream_method_argument_id])
+	end #each
+end #logical_primary_key_recursive_value
+def test_logical_primary_key_value
+end #logical_primary_key_value
+def test_association_refs
+	class_reference=StreamPattern
+	association_reference=:stream_methods
+	ActiveRecord::Base.association_refs(class_reference, association_reference) do |class_reference, association_reference|
+	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
+	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
+#	assert_kind_of(ActiveRecord::Base,class_reference)
+	assert_ActiveRecord_table(class_reference.name)
+		assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
+		assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
+	#	assert_kind_of(ActiveRecord::Base,class_reference)
+		assert_ActiveRecord_table(class_reference.name)
+	end #association_refs
+	assert_equal([StreamPattern, :stream_methods], ActiveRecord::Base.association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
+end #association_refs
 def test_model_file_name
 end #model_file_name
 def test_grep_command
@@ -342,105 +418,6 @@ end #belongs_to_association
 def test_has_one_association
 	assert(Acquisition.has_one_association?(:stream_patterns))
 end #has_one_association
-def test_name_symbol
-	assert_equal(:stream_methods, StreamPattern.name_symbol(StreamMethod))
-	assert_equal(:stream_methods, StreamPattern.name_symbol('stream_methods'))
-	assert_equal(:stream_methods, StreamPattern.name_symbol('stream_method'))
-	assert_equal(:stream_methods, StreamPattern.name_symbol('StreamMethod'))
-	assert_equal(:oxen, StreamPattern.name_symbol('ox'))
-	assert_equal(:bases, StreamPattern.name_symbol('base'))
-	assert_equal(:ox, StreamPattern.name_symbol(:ox))
-	assert_equal(:base, StreamPattern.name_symbol(:base))
-	assert_equal(:stream_methods, StreamPattern.name_symbol(:stream_methods))
-end #name_symbol
-def test_association_method_plurality
-	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_models))
-	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
-	assert_equal(:full_associated_models,TestTable.association_method_plurality(:full_associated_model))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_pattern))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_plurality(:stream_patterns))
-end #association_method_plurality
-def test_association_method_symbol
-	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_models))
-	assert_equal(:full_associated_models,TestTable.association_method_symbol(:full_associated_model))
-	
-	assert_public_instance_method(StreamPatternArgument.new,:stream_pattern)
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_pattern))
-	assert_equal(:stream_pattern,StreamPatternArgument.association_method_symbol(:stream_patterns))
-	 association_class=@@FOREIGN_KEY_ASSOCIATION_CLASS.association_class(@@TABLE_NAME_WITH_FOREIGN_KEY)
-	assert_equal(association_class,@@CLASS_WITH_FOREIGN_KEY)
-	assert_equal(@@FOREIGN_KEY_ASSOCIATION_SYMBOL,association_class.association_method_symbol(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
-end #association_method_symbol
-def test_association_default_class_name
-	class_reference=StreamLink
-	association_name='input_stream_method_argument'
-	assert_nil(class_reference.association_default_class_name?(association_name))
-	assert_equal("StreamPattern", StreamPatternArgument.association_default_class_name?(:stream_pattern))
-end #association_default_class_name
-def test_Base_association_class
-	assert_equal(StreamPattern, StreamMethod.association_class(:stream_patterns))
-	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
-	assert_equal(GenericType, GenericType.find_by_import_class('Integer_Column').generalize.class)
-	assert_equal(GenericType, GenericType.find_by_import_class('alnum').specialize[0].class)
-	assert_equal(Array, GenericType.find_by_import_class('alnum').specialize.class)
-	assert_equal(GenericType, GenericType.association_class(:generalize))
-	assert_equal(GenericType, GenericType.association_class(:specialize))
-
-	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
-	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
-	class_reference=StreamLink
-	association_name='input_stream_method_argument'
-	all_parents=class_reference.all
-	all_association_classes=all_parents.map do |bc|
-		bc.association_class(association_name)
-	end.flatten.uniq #map
-	assert_instance_of(Array, all_association_classes)
-	assert_single_element_array(all_association_classes)
-end #Base_association_class
-def test_association_class
-	assert_equal(StreamPattern, StreamMethod.first.association_class(:stream_pattern))
-	integerColumn=GenericType.find_by_import_class('Integer_Column')
-	alnum=GenericType.find_by_import_class('alnum')
-	assert_equal(Array, alnum.specialize.class)
-	assert_equal(GenericType, integerColumn.association_class(:generalize))
-	assert_equal(GenericType, alnum.association_class(:specialize))
-
-	 assert_association(@@CLASS_WITH_FOREIGN_KEY,@@FOREIGN_KEY_ASSOCIATION_SYMBOL)
-	assert_equal(@@FOREIGN_KEY_ASSOCIATION_CLASS,@@CLASS_WITH_FOREIGN_KEY.association_class(@@FOREIGN_KEY_ASSOCIATION_SYMBOL))
-	class_reference=StreamLink
-	association_name='input_stream_method_argument'
-	assert_association(class_reference, association_name)
-	instance=class_reference.first
-	association=instance.name_to_association(association_name)
-	assert_instance_of(StreamMethodArgument, association)
-	if association.instance_of?(Array) then
-		classes=association.enumerate(:map){|r| r.class}.uniq
-		if classes.size==1 then
-			assert_single_element_array(association)
-		else
-			assert_instance_of(Array, association)
-		end #if
-	else
-		assert_instance_of(Class, association.enumerate(:map){|r| r.class})
-	end #if
-	assert_equal(StreamMethodArgument, class_reference.first.association_class(association_name))
-end #association_class
-
-def test_foreign_key_points_to_me
-end #foreign_key_points_to_me
-def test_association_arity
-	class_reference=StreamLink
-	association_reference=:inputs
-	ActiveRecord::Base.association_refs do |class_reference, association_reference|
-		assert_association_to_one(class_reference,association_reference)
-		if class_reference.module_included?(Generic_Table) then
-			association_type=class_reference.association_arity(association_reference)
-			assert_not_nil(association_type)
-			assert_include(association_type,[:to_one,:to_many])
-		end #if
-	end #association_refs
-end #association_arity
 def warn_association_type(table, association_name)
 	klass=Generic_Table.class_of_name(table)
 	new_type= klass.association_type(association_name)
@@ -719,29 +696,6 @@ def test_logical_primary_key_recursive
 	assert_equal([:input_stream_method_argument_id, :output_stream_method_argument_id], StreamLink.logical_primary_key)
 	assert_equal({"StreamLink" => [{"StreamMethodArgument" => [{"StreamMethod"=>[:name]}, :name]}, {"StreamMethodArgument" => [{"StreamMethod"=>[:name]}, :name]}]}, StreamLink.logical_primary_key_recursive)
 end #logical_primary_key_recursive
-def test_logical_primary_key_recursive_value
-	assert_include('logical_primary_key', StreamLink.public_methods(false))
-	assert(!StreamLink.sequential_id?, "StreamLink=#{StreamLink.column_symbols.inspect}, should not be a sequential_id.")
-	assert_equal([:input_stream_method_argument_id, :output_stream_method_argument_id], StreamLink.logical_primary_key)
-	assert(StreamLink.is_foreign_key_name?(:input_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
-	assert(StreamLink.is_foreign_key_name?(:output_stream_method_argument_id), "StreamLink=#{StreamLink.inspect}")
-	link=StreamLink.first
-	assert_not_equal(link[:input_stream_method_argument_id], link[:output_stream_method_argument_id])
-	input_stream_method_argument=link.foreign_key_to_association(:input_stream_method_argument_id)
-	assert_not_nil(input_stream_method_argument)
-	assert_equal({"StreamMethodArgument"=>[{"StreamMethod"=>[:name]}, :name]}, input_stream_method_argument.class.logical_primary_key_recursive)
-	assert_equal([["File"], "acquisitions"], input_stream_method_argument.logical_primary_key_recursive_value)
-	output_stream_method_argument=link.foreign_key_to_association(:output_stream_method_argument_id)
-	assert_not_nil(output_stream_method_argument)
-	assert_not_equal(input_stream_method_argument, output_stream_method_argument)
-	assert_equal([["Regexp"], "acquisitions"], output_stream_method_argument.logical_primary_key_recursive_value)
-	StreamLink.all.each do |link|
-		assert_equal(4, link.logical_primary_key_recursive_value.flatten.size)
-		assert_not_equal(link[:input_stream_method_argument_id], link[:output_stream_method_argument_id])
-	end #each
-end #logical_primary_key_recursive_value
-def test_logical_primary_key_value
-end #logical_primary_key_value
 def test_single_grep
 	pattern='(\w+)\.all'
 	regexp=Regexp.new(pattern)
