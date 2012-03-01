@@ -8,31 +8,6 @@
 require 'app/models/global.rb'
 require 'app/models/generic_table_html.rb'
 #require 'lib/tasks/testing_file_patterns.rb'
-module NoDB # provide duck-typed ActiveRecord like functions.
-attr_reader :attributes
-include ActiveModel
-def initialize(hash=nil)
-
-
-	if hash.nil? then
-		@attributes=ActiveSupport::HashWithIndifferentAccess.new
-	else
-		@attributes=ActiveSupport::HashWithIndifferentAccess.new(hash)
-	end #if
-end #NoDB
-def [](attribute_name)
-	@attributes[attribute_name]
-end #[]
-def []=(attribute_name, value)
-	@attributes[attribute_name]=value
-end #[]
-def has_key?(key_name)
-	return @attributes.has_key?(key_name)
-end #has_key?
-def keys
-	return @attributes.keys
-end #keys
-end #NoDB
 module ColumnGroup
 module ClassMethods
 def defaulted_primary_logical_key?
@@ -698,4 +673,30 @@ def display_full_time(time)
 end #def
 
 end # module
+module NoDB # provide duck-typed ActiveRecord like functions.
+attr_reader :attributes
+include Generic_Table
+include ActiveModel
+def initialize(hash=nil)
+
+
+	if hash.nil? then
+		@attributes=ActiveSupport::HashWithIndifferentAccess.new
+	else
+		@attributes=ActiveSupport::HashWithIndifferentAccess.new(hash)
+	end #if
+end #NoDB
+def [](attribute_name)
+	@attributes[attribute_name]
+end #[]
+def []=(attribute_name, value)
+	@attributes[attribute_name]=value
+end #[]
+def has_key?(key_name)
+	return @attributes.has_key?(key_name)
+end #has_key?
+def keys
+	return @attributes.keys
+end #keys
+end #NoDB
 
