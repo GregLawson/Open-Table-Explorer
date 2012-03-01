@@ -6,16 +6,14 @@
 #
 ###########################################################################
 require 'app/models/global.rb'
-require 'app/models/generic_table_html.rb'
-#require 'lib/tasks/testing_file_patterns.rb'
 module ActiveRecord
 
 class Base
 #include GenericColumn
 include GenericTableAssociation
 extend GenericTableAssociation::ClassMethods
-include GenericHtml
-extend GenericHtml::ClassMethods
+include GenericTableHtml
+extend GenericTableHtml::ClassMethods
 include GenericGrep
 extend GenericGrep::ClassMethods
 include ColumnGroup
