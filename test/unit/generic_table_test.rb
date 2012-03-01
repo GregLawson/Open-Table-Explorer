@@ -12,6 +12,7 @@ require 'test_helper.rb'
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
 include Generic_Table
+include GenericTableAssertions
 @@table_name='stream_patterns'
 	fixtures :table_specs
 	fixtures :acquisition_stream_specs
@@ -22,23 +23,6 @@ assert_equal('constant', defined? GenericGrep)
 ASSOCIATION_MACRO_PATTERN=GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN
 def test_NoDB
 end #NoDB
-def test_association_refs
-	class_reference=StreamPattern
-	association_reference=:stream_methods
-	ActiveRecord::Base.association_refs(class_reference, association_reference) do |class_reference, association_reference|
-	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
-	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
-#	assert_kind_of(ActiveRecord::Base,class_reference)
-	assert_ActiveRecord_table(class_reference.name)
-		assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
-		assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
-	#	assert_kind_of(ActiveRecord::Base,class_reference)
-		assert_ActiveRecord_table(class_reference.name)
-	end #association_refs
-	assert_equal([StreamPattern, :stream_methods], ActiveRecord::Base.association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
-end #association_refs
-def test_model_file_name
-end #model_file_name
 def test_grep_command
 	assert_equal("grep \"#{ASSOCIATION_MACRO_PATTERN}\" -r {app/models/,test/unit/}*.rb", ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN))
 	assert_equal("", `#{ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN)}`)
@@ -154,6 +138,23 @@ def test_association_type
 	association_types= types.uniq
 	assert_empty(association_types-[:to_many_has_many, :to_one_belongs_to, :to_one_has_one])
 end #association_type
+def test_association_refs
+	class_reference=StreamPattern
+	association_reference=:stream_methods
+	ActiveRecord::Base.association_refs(class_reference, association_reference) do |class_reference, association_reference|
+	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
+	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
+#	assert_kind_of(ActiveRecord::Base,class_reference)
+	assert_ActiveRecord_table(class_reference.name)
+		assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
+		assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
+	#	assert_kind_of(ActiveRecord::Base,class_reference)
+		assert_ActiveRecord_table(class_reference.name)
+	end #association_refs
+	assert_equal([StreamPattern, :stream_methods], ActiveRecord::Base.association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
+end #association_refs
+def test_model_file_name
+end #model_file_name
 def test_is_active_record_method
 	association_reference=:inputs
 	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
@@ -242,46 +243,6 @@ def test_is_generic_table_name
 end #is_generic_table_name
 def test_activeRecordTableNotCreatedYet?
 end #activeRecordTableNotCreatedYet
-test 'Inter-model associations' do
-#	puts "model_classes=#{model_classes.inspect}"
-	CodeBase.rails_MVC_classes.each do |class_with_foreign_key|
-		if !class_with_foreign_key.module_included?(:Generic_Table) then
-			puts "#{class_with_foreign_key.name} does not include Generic_Table"
-		else
-			table_name_with_foreign_key=class_with_foreign_key.name
-			class_with_foreign_key.foreign_key_association_names.each do |foreign_key_association_name|
-				if !class_with_foreign_key.is_association?(foreign_key_association_name) then
-					puts "#{foreign_key_association_name} is not an association of #{class_with_foreign_key.name}"
-				elsif class_with_foreign_key.belongs_to_association?(foreign_key_association_name) then
-					puts "#{table_name_with_foreign_key} belongs_to #{foreign_key_association_name}"
-					if !Generic_Table.rails_MVC_class?(foreign_key_association_name) then
-						puts "#{foreign_key_association_name} is not a generic table in #{CodeBase.rails_MVC_classes.map {|c| c.name}.inspect}."
-					elsif !class_with_foreign_key.module_included?(:Generic_Table) then
-						puts "#{class_with_foreign_key.name} does not include Generic_Table"
-					else
-						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
-							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
-						else
-							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
-						end #if
-					end #if
-				else
-					if !class_with_foreign_key.module_included?(:Generic_Table) then
-						puts "#{class_with_foreign_key.name} does not include Generic_Table"
-					else
-						puts "#{table_name_with_foreign_key} does not have a belongs_to #{foreign_key_association_name}"
-						if foreign_key_association_name.classify.constantize.has_many_association?(table_name_with_foreign_key) then
-							puts "#{foreign_key_association_name} has_many #{table_name_with_foreign_key}"
-						else
-							puts "#{foreign_key_association_name} does not has_many #{table_name_with_foreign_key}"					
-						end #if
-					end #if
-				end #if
-	#			fixtures(table_name)
-			end #each
-		end #if
-	end #each
-end #test
 def test_aaa
 	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
 
@@ -338,101 +299,8 @@ def test_Generic_Table
 	assert(CodeBase.rails_MVC_classes.map {|c| c.name}.include?('StreamMethod'))
 	assert(Generic_Table.rails_MVC_class?('StreamMethod'))
 end #test
-def test_Association_Progression
-	assert(FullAssociatedModel.instance_respond_to?(:test_table))
-	assert(HalfAssociatedModel.instance_respond_to?(:test_table))
-	assert(!GenericTableAssociatedModel.instance_respond_to?(:test_table))
-	assert(!EmptyAssociatedModel.instance_respond_to?(:test_table))
-	assert(!EmptyClass.new.respond_to?(:test_table))
-
-	assert_equal(:to_one, FullAssociatedModel.association_arity(:test_table))
-	assert_equal(:to_one, HalfAssociatedModel.association_arity(:test_table))
-	assert_equal(:not_an_association, GenericTableAssociatedModel.association_arity(:test_table))
-	assert_equal(:not_an_association, EmptyAssociatedModel.association_arity(:test_table))
-	
-	assert(TestTable.instance_respond_to?(:full_associated_models))
-	assert(!TestTable.instance_respond_to?(:half_associated_model))
-	assert(!TestTable.instance_respond_to?(:generic_table_associated_model))
-	assert(!TestTable.instance_respond_to?(:empty_associated_model))
-
-	assert_equal(:to_many,TestTable.association_arity(:full_associated_models))
-	assert_equal(:not_an_association,TestTable.association_arity(:half_associated_model))
-	assert_equal(:not_an_association,TestTable.association_arity(:generic_table_associated_model))
-	assert_equal(:not_an_association,TestTable.association_arity(:empty_associated_model))
-
-	assert(TestTable.is_association?(:full_associated_models))
-	assert_equal('test_tables',TestTable.table_name)
-	#~ assert(FullAssociatedModel.is_association?(TestTable.table_name),"FullAssociatedModel.is_association?(#{TestTable.table_name})")
-	assert(FullAssociatedModel.is_association?(:test_table))
-	association_class=TestTable.association_class(:full_associated_models)
-	assert(association_class.is_association?(association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)) ,"#{association_class.inspect}.is_association?(#{association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)})")
-	assert(TestTable.is_matching_association?(:full_associated_models))
-end #test
-def test_associated_to_s
-	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
-
-	acquisition_stream_spec.associated_to_s(:acquisition_interface,:name)
-	assert_instance_of(String,acquisition_stream_spec.associated_to_s(:acquisition_interface,:name))
-	assert_respond_to(acquisition_stream_spec,:associated_to_s)
-	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
-	acquisitions(:one).acquisition_stream_spec_id=nil
-	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
-	acquisitions(:one).acquisition_stream_spec_id=0
-
-	assert_not_nil(acquisition_stream_spec)
-#	puts acquisition_stream_spec.matching_instance_methods(/table_spec/).inspect
-#	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
-	assert_respond_to(acquisition_stream_spec,:table_spec)
-	meth=acquisition_stream_spec.method(:table_spec)
-	
-	assert_not_empty(StreamPatternArgument.foreign_key_names)
-	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
-	assert_include('stream_pattern',StreamPatternArgument.foreign_key_association_names)
-	
-
-	#~ explain_assert_respond_to(TestTable.new,:generic_table_associated_model)
-	#~ explain_assert_respond_to(TestTable.new,:stream_method_id)
-	#~ assert_association(TestTable.new,:generic_table_associated_model)
-	#~ assert_association_to_one(TestTable.new,:generic_table_associated_model)
-	#~ ass=TestTable.send(:stream_method_id)
-	#~ assert_not_nil(ass)
-	#~ associations_foreign_key_name=(TestTable.name.tableize.singularize+'_id').to_sym
-	#~ assert_include(associations_foreign_key_name,TestTable.foreign_key_association_names)
-	#~ associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
-	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) })
-	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) }.uniq)
-	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(','))
-	#~ assert_not_empty(associations_foreign_key_values, "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values} and returns type #{ass.class.name}.")
-
-	
-#	assert_not_nil(meth.call)
-#	ass=acquisition_stream_spec.send(:table_spec)
-#	if ass.nil? then
-#		return ''
-#	else
-#		return ass.send(:model_class_name,*args).to_s
-#	end
-#	puts "acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)=#{acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)}"
-end #test
-def test_matching_associations
-	assert_equal(["frequency_id"],TableSpec.foreign_key_names)
-
-	assert_equal("Acquisition","acquisitions".classify)
-	assert_equal("Acquisition",Acquisition.name)
-	assert_equal("acquisitions",Acquisition.table_name)
-	assert_equal("Acquisition".tableize,"acquisitions")
-	assert(Generic_Table.table_exists?("acquisitions".tableize))
-	
-
-	assert_respond_to(TableSpec.new,:frequency)
-	assert_nil(TableSpec.new.frequency)
-	assert_association(TableSpec.new,"frequency")
-	assert(TableSpec.is_matching_association?("frequency"))
-	assert_association(Frequency.new,"table_specs")
-	assert_equal('frequencies',Frequency.table_name)
-	assert(TableSpec.is_association?(Frequency.table_name.singularize))
-end #matching_associations
 def setup
 #	ActiveSupport::TestCase::fixtures :acquisition_stream_specs
 end #setup
+
 end #test class
