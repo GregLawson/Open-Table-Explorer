@@ -43,7 +43,7 @@ def test_column_html
 	assert_kind_of(ActiveRecord::Base, acq)
 	assert_equal(ActiveRecord::Base, acq.class.superclass)
 	assert_kind_of(ActiveRecord::Base, acq)
-	assert_equal([Generic_Table, GenericTableAssertions, GenericHtml, GenericAssociation], acq.class.included_modules.select {|m| m.name[0..6]=='Generic'})
+	assert_equal([Generic_Table, GenericTableAssertions, GenericGrep, GenericTableHtml, GenericTableAssociation], acq.class.included_modules.select {|m| m.name[0..6]=='Generic'})
 end #column_html
 def test_row_html
 	acq=StreamPattern.find_by_name('Acquisition')
@@ -52,4 +52,4 @@ def test_row_html
 	expected_html_length=expected_html.length
 	assert_equal(expected_html, acq.row_html[0,expected_html_length])
 end #row_html
-end #GenericHtml
+end #GenericTableHtml

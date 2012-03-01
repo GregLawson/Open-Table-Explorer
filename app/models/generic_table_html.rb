@@ -7,7 +7,7 @@
 #
 ###########################################################################
 require 'app/models/global.rb'
-module GenericHtml
+module GenericTableHtml
 module ClassMethods
 # column order for default html generation
 def column_order
@@ -39,7 +39,7 @@ def table_html(column_order=nil)
 	ret+="</table>"
 	return ret
 end #table_html
-end #GenericHtml::ClassMethods
+end #GenericTableHtml::ClassMethods
 # Calculate rails relative route to this record
 def rails_route(action=nil)
 	route=self.class.name.tableize+'/'+self[:id].to_s
@@ -73,4 +73,4 @@ def row_html(column_order=nil)
 	return ret
 
 end #row_html
-end #GenericHtml
+end #GenericTableHtml
