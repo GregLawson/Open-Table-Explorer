@@ -43,6 +43,10 @@ def test_is_active_record_method
 	assert(!TestTable.is_active_record_method?(:parameter))
 	assert(TestTable.is_active_record_method?(:connection))
 end #active_record_method
+#end #class Base
+#end #module ActiveRecord
+def test_grep
+end #grep
 def test_class_of_name
 	assert_nil(Generic_Table.class_of_name('junk'))
 	assert_equal(StreamPattern, Generic_Table.class_of_name('StreamPattern'))

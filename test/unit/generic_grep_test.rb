@@ -9,6 +9,18 @@ require 'test_helper.rb'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
+def test_single_grep
+	assert_equal({}, 'a pattern '.single_grep('context', /pattern/))
+end #single_grep
+#end #String
+#module Enumerable
+def test_nested_grep
+	assert_equal({}, ['1', '2'].nested_grep('unnested context', /[2-3]/))
+end #nested_grep
+def test_files_grep
+	test_file='test/unit/generic_table_test.rb'
+	assert_equal({}, [test_file].files_grep(test_file, /[2-3]/))
+end #files_grep
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
 include Generic_Table

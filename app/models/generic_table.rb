@@ -115,31 +115,6 @@ end #one_pass_statistics
 
 end #class Base
 end #module ActiveRecord
-class String
-def single_grep(context, pattern)
-	regexp=Regexp.new(pattern)
-	matchData=regexp.match(self)
-	if matchData then
-		ActiveSupport::HashWithIndifferentAccess.new(:context => context, :matchData => matchData)
-	else
-		nil #don't select line for return
-	end #if
-end #single_grep
-end #String
-module Enumerable
-def nested_grep(context, pattern)
-	map do |e|
-		e.single_grep(context, pattern)
-	end.compact #map
-end #nested_grep
-def files_grep(pattern, delimiter="\n")
-	map do |p|
-		IO.read(p).split(delimiter).map do |l|
-			l.single_grep(p, pattern)
-		end.compact #grep
-	end.flatten #map
-end #files_grep
-end #Enumerable
 module Generic_Table
 require 'app/models/IncludeModuleClassMethods.rb'
 def Generic_Table.grep(file_regexp, pattern, delimiter="\n")

@@ -6,6 +6,36 @@
 #
 ###########################################################################
 require 'app/models/global.rb'
+class String
+# Low level single line match. Called by nested_grep
+def single_grep(context, pattern)
+	regexp=Regexp.new(pattern)
+	matchData=regexp.match(self)
+	if matchData then
+		ActiveSupport::HashWithIndifferentAccess.new(:context => context, :matchData => matchData)
+	else
+		nil #don't select line for return
+	end #if
+end #single_grep
+end #String
+module Enumerable
+# Chainable grep of enumeration
+def nested_grep(context, pattern)
+	map do |e|
+		e.single_grep(context, pattern)
+	end.compact #map
+end #nested_grep
+# grep through multiple files
+# Enumeration is list of filenames to grep
+# files opened
+def files_grep(pattern, delimiter="\n")
+	map do |p|
+		IO.read(p).split(delimiter).map do |l|
+			l.single_grep(p, pattern)
+		end.compact #grep
+	end.flatten #map
+end #files_grep
+end #Enumerable
 module GenericGrep
 module ClassMethods
 def grep_command(content_regexp_string, filename_regexp_string='-r {app/models/,test/unit/}*.rb', redirection='')
