@@ -6,19 +6,16 @@
 #
 ###########################################################################
 require 'app/models/global.rb'
-module ActiveRecord
-
-class Base
-#include GenericColumn
-include GenericTableAssociation
-extend GenericTableAssociation::ClassMethods
+# Methods in common bettween ActiveRecord::Base and NoDB
+module Common
+module ClassMethods
+include GenericTableHtml::ClassMethods
+include GenericGrep::ClassMethods
+include ColumnGroup::ClassMethods
+end #ClassMethods
 include GenericTableHtml
-extend GenericTableHtml::ClassMethods
 include GenericGrep
-extend GenericGrep::ClassMethods
 include ColumnGroup
-extend ColumnGroup::ClassMethods
-include ActionView::Helpers::UrlHelper
 # apply block to an association
 def Base.association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
 	if class_reference.kind_of?(Class) then
@@ -29,7 +26,8 @@ def Base.association_refs(class_reference=@@example_class_reference, association
 	association_reference=association_reference.to_sym
 	block.call(class_reference, association_reference)
 end #association_refs
-def Base.model_file_name
+module ClassMethods
+def model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
 end #model_file_name
 def Base.is_active_record_method?(method_name)
@@ -111,6 +109,16 @@ def Base.one_pass_statistics(column_name)
     :has_id => has_id
     }
 end #one_pass_statistics
+end #ClassMethods
+end #Common
+module ActiveRecord
+
+class Base
+include Common
+extend Common::ClassMethods
+include GenericTableAssociation
+extend GenericTableAssociation::ClassMethods
+include ActionView::Helpers::UrlHelper
 
 
 end #class Base
@@ -508,6 +516,8 @@ module NoDB # provide duck-typed ActiveRecord like functions.
 attr_reader :attributes
 include Generic_Table
 include ActiveModel
+include Common
+extend Common::ClassMethods
 def initialize(hash=nil)
 
 
