@@ -145,66 +145,6 @@ def test_logical_attributes
 end #logical_attributes
 def test_is_logical_primary_key
 end #logical_primary_key
-def test_one_pass_statistics
-	model_class=Bug
-	column_name=:id
-    	n = 0
-    	min=nil; max=nil
-	max_key, min_key = nil # declare scope outside loop!
-	assert(model_class.column_names.include?('id'))
-    	has_id=model_class.column_names.include?('id')
-    	model_class.all.each do |row|
-        x=row[column_name]
-        n = n + 1
-        if n==1 then
-	    min=x # value for nil
-	    max=x # value for nil
-	    if has_id then
-		    min_key=row.id
-		    max_key=row.id
-	    else
-		    min_key=row.logical_primary_key_value_recursive
-		    max_key=row.logical_primary_key_value_recursive
-	    end #if
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(min_key)
-	    assert_not_nil(max_key)
-	else
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(max_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
-	    assert_not_nil(min_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
-	    if x<min then
-	    	min=x
-		if has_id then
-		    min_key=row.id
-	    	else
-		    min_key=row.logical_primary_key_value_recursive
-	    	end #if
-	    end #if  # value for not nil
-	    if x>max then
-	    	max=x
-		if has_id then
-			max_key=row.id
-		else
-			max_key=row.logical_primary_key_value_recursive
-		end #if
-	    end #if  # value for not nil
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(min_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
-	    assert_not_nil(max_key)
-	end #if
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(min_key)
-	    assert_not_nil(max_key)
-    end #each
-	bug_statistics=Bug.one_pass_statistics(:id)
-    	assert_not_nil(bug_statistics)
-	assert_equal(1, bug_statistics[:min])
-end #one_pass_statistics
 def test_history_type
 	history_types_used=CodeBase.rails_MVC_classes.map do |model_class|
 		model_class.history_type?
