@@ -12,21 +12,48 @@ module ClassMethods
 include GenericTableHtml::ClassMethods
 include GenericGrep::ClassMethods
 include ColumnGroup::ClassMethods
-end #ClassMethods
-include GenericTableHtml
-include GenericGrep
-include ColumnGroup
 # apply block to an association
 def Base.association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
 	if class_reference.kind_of?(Class) then
 		klass=class_reference
 	else
 		klass=class_reference.class
+def sample_burst(sample_type, start, spacing, consecutive)
+	if consecutive>spacing then
+		raise "consecutive(#{consecutive})>spacing(#{spacing})"
 	end #if
 	association_reference=association_reference.to_sym
 	block.call(class_reference, association_reference)
 end #association_refs
 module ClassMethods
+	case sample_type
+	when :first, :random
+		return all[start, consecutive]
+	when :last
+		return all[start+spacing-consecutive, consecutive]
+	else
+		raise "Unknown sample type=#{sample_type}. Expected values are :first, :Last."
+	end #case
+end #sample_burst
+def sample(samples_wanted=100, sample_type=:first, consecutive=1)
+	size=all.size
+	samples_returned=[samples_wanted, size].min
+	bursts=(samples_returned/consecutive).ceil
+	spacing=(size/bursts).ceil
+	ret=(0..bursts-1).map do |burst|
+		burst_start=burst*spacing
+		case sample_type
+		when :first, :last
+			sample_burst(sample_type, burst_start, spacing, consecutive)
+		when :random
+			burst_start=rand(samples_returned)
+			sample_burst(sample_type, burst_start, spacing, consecutive)
+		else
+			raise "Unknown sample type=#{sample_type}. Expected values are :first, :random, :last"
+		end #case
+	end #map burst
+	return ret #[0..samples_returned-1]
+end #sample
 def model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
 end #model_file_name
@@ -197,7 +224,7 @@ def process(acquisitionData)
 end
 def log
 begin
-	sample
+	acquire
 	wait
 end until false
 end # method log
@@ -218,7 +245,7 @@ def monitor(keys) # update continously
 		wait
 	end until false
 end # method monitor
-def sample
+def acquire
 	@acqClasses=Generic_Acquisitions.parse_classes(m)
 	@acqClasses.map do |ac|
 		@acquisitionData=acquire

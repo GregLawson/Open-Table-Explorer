@@ -17,6 +17,52 @@ include GenericTableAssertions
 	fixtures :table_specs
 	fixtures :acquisition_stream_specs
 	fixtures :acquisition_interfaces
+TEST_SIZE=10
+TEST_START=5
+TEST_STEP=-1
+TEST_ARRAY=(TEST_START..TEST_START+TEST_SIZE-1).map{|i| TEST_STEP*i}.to_a
+class TestData < Array
+	extend Common::ClassMethods
+def self.all
+	return TEST_ARRAY
+end #all
+end #TestData
+def test_sample_burst
+	assert_equal(TEST_ARRAY, TestData.all)
+	assert_equal(TEST_ARRAY, TestData.sample_burst(:first, 0, 10, 10))
+	assert_equal(TEST_ARRAY[0,1], TestData.sample_burst(:first, 0, 10, 1))
+	assert_equal(TEST_ARRAY, TestData.sample_burst(:last, 0, 10, 10))
+	assert_equal(TEST_ARRAY, TestData.sample_burst(:random, 0, 10, 10))
+end #sample_burst
+def test_sample
+	samples_wanted=100
+	sample_type=:first
+	consecutive=1
+	size=TestData.all.size
+	samples_returned=[samples_wanted, size].min
+	assert_equal(TEST_SIZE, samples_returned)
+	bursts=(samples_returned/consecutive).ceil
+	assert_equal(samples_returned, bursts)
+	spacing=(size/bursts).ceil
+	assert_equal(1, spacing)
+	ret=(0..bursts-1).map do |burst|
+		burst_start=burst*spacing
+		TestData.sample_burst(sample_type, burst_start, spacing, consecutive)
+	end #burst.times
+	assert_equal(samples_returned, ret.size)
+	assert_equal(TEST_ARRAY, TestData.all)
+	assert_equal(TEST_ARRAY, ret.flatten)
+	assert_equal(TEST_ARRAY, ret.flatten[0..samples_returned-1])
+	assert_equal(TEST_ARRAY, TestData.sample(TEST_SIZE, :first, 1).flatten)
+	assert_equal(TEST_ARRAY, TestData.sample(TEST_SIZE, :last, 1).flatten)
+	assert_equal(TEST_ARRAY, TestData.sample(samples_wanted, sample_type, consecutive).flatten)
+	assert_equal(TEST_ARRAY, TestData.sample.flatten)
+	assert_equal(size, TestData.sample.size, "TestData.sample=#{TestData.sample}")
+	many_random=(0..3).map do |i|
+		TestData.sample(TEST_SIZE, :random, 1)
+	end #map
+	assert_equal(TEST_ARRAY, many_random.flatten.sort.uniq.reverse)
+end #sample
 def test_model_file_name
 end #model_file_name
 def test_one_pass_statistics
@@ -79,6 +125,13 @@ def test_one_pass_statistics
     	assert_not_nil(bug_statistics)
 	assert_equal(1, bug_statistics[:min])
 end #one_pass_statistics
+def test_is_active_record_method
+	association_reference=:inputs
+	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
+	assert(!ActiveRecord::Base.instance_methods_from_class.include?(:parameter.to_s))
+	assert(!TestTable.is_active_record_method?(:parameter))
+	assert(TestTable.is_active_record_method?(:connection))
+end #active_record_method
 def test_association_refs
 	class_reference=StreamPattern
 	association_reference=:stream_methods
@@ -94,13 +147,6 @@ def test_association_refs
 	end #association_refs
 	assert_equal([StreamPattern, :stream_methods], ActiveRecord::Base.association_refs(StreamPattern, :stream_methods) { |class_reference, association_reference| [class_reference, association_reference]})
 end #association_refs
-def test_is_active_record_method
-	association_reference=:inputs
-	assert(ActiveRecord::Base.instance_methods_from_class.include?(:connection.to_s))
-	assert(!ActiveRecord::Base.instance_methods_from_class.include?(:parameter.to_s))
-	assert(!TestTable.is_active_record_method?(:parameter))
-	assert(TestTable.is_active_record_method?(:connection))
-end #active_record_method
 #end #class Base
 #end #module ActiveRecord
 def test_grep
