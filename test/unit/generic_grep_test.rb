@@ -197,7 +197,7 @@ def test_grep
 	if matchData then
 		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
 	end #if
-	grep_matches=Generic_Table.grep(file_regexp, pattern)
+	grep_matches=GenericGrep::ClassMethods.grep(file_regexp, pattern)
 	assert_instance_of(Array, grep_matches)
 	assert_equal([{:match=>"Url", :pathname=>"app/controllers/urls_controller.rb"}], grep_matches)
 	assert_instance_of(Hash, grep_matches[0])

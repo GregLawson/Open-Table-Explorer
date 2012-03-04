@@ -125,19 +125,6 @@ end #class Base
 end #module ActiveRecord
 module Generic_Table
 require 'app/models/IncludeModuleClassMethods.rb'
-def Generic_Table.grep(file_regexp, pattern, delimiter="\n")
-	regexp=Regexp.new(pattern)
-	RegexpTree.new(file_regexp).pathnames.map do |p|
-		IO.read(p).split(delimiter).map do |l|
-			matchData=regexp.match(l)
-			if matchData then
-				{:pathname => p, :match => matchData[1]}
-			else
-				nil #don't select line for return
-			end #if
-		end.compact #grep
-	end.flatten #map
-end #grep
 def Generic_Table.class_of_name(name)
 	 return name.to_s.constantize
 rescue
