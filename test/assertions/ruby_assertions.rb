@@ -170,6 +170,12 @@ def assert_single_element_array(obj)
 	assert_instance_of(Array, obj, "assert_single_element_array expects an Array. ")
 	assert_equal(1, obj.size)
 end #assert_single_element_array
+# assert regexp is properly formatted
+def assert_regexp(regexp)
+	Regexp.new(regexp)
+rescue RegexpError => exception
+	assert_block("regexp=#{regexp.inspect}, exception=#{exception.inspect}"){false}
+end #assert_regexp
 def assert_attribute_of(obj, symbol, type)
 	assert_block("obj[:#{symbol}]=#{obj[symbol].inspect} must be of type #{type}, but is of type #{obj[symbol].class} obj=#{obj.inspect}") {obj[symbol].instance_of?(type)}
 end #assert_attribute_of
