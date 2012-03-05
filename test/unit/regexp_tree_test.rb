@@ -260,6 +260,29 @@ end #to_pathname_glob
 def test_pathnames
 	assert_include('app/models', RegexpTree.new('app/.*').pathnames)
 end #pathnames
+def test_grep
+	file_regexp='app/controllers/urls_controller.rb'
+	pattern='(\w+)\.all'
+	delimiter="\n"
+	regexp=Regexp.new(pattern)
+	ps=RegexpTree.new(file_regexp).pathnames
+	p=ps.first
+	assert_equal([p], ps)
+	assert_instance_of(String, p)
+	l=IO.read(p).split(delimiter).first
+	assert_instance_of(String, l)
+	matchData=regexp.match(l)
+	assert_instance_of(Hash, {:pathname => p, :match => 'Url'})
+	if matchData then
+		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
+	end #if
+	grep_matches=RegexpTree.new(file_regexp).grep(pattern)
+	assert_instance_of(Array, grep_matches)
+	assert_equal("app/controllers/urls_controller.rb", grep_matches[0][:context])
+	assert_equal("Url", grep_matches[0][:matchData][1])
+	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, grep_matches[0])
+	assert_equal(file_regexp, grep_matches[0][:context])
+end #grep
 def test_to_s
 
 

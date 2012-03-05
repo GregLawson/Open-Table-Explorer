@@ -40,7 +40,7 @@ end #single_grep
 def test_nested_grep
 	pattern='(\w+)\.all'
 	file_regexp=['app/controllers/urls_controller.rb']
-	assert_equal([], file_regexp.nested_grep(file_regexp, pattern))
+	assert_equal([], file_regexp.nested_grep(pattern, file_regexp))
 end #nested_grep
 def test_files_grep
 	test_file='test/unit/generic_table_test.rb'
@@ -58,29 +58,6 @@ def test_files_grep
 #		assert_equal(matchData[1], p[:matchData][1])
 	end #each
 end #files_grep
-def test_grep
-	file_regexp='app/controllers/urls_controller.rb'
-	pattern='(\w+)\.all'
-	delimiter="\n"
-	regexp=Regexp.new(pattern)
-	ps=RegexpTree.new(file_regexp).pathnames
-	p=ps.first
-	assert_equal([p], ps)
-	assert_instance_of(String, p)
-	l=IO.read(p).split(delimiter).first
-	assert_instance_of(String, l)
-	matchData=regexp.match(l)
-	assert_instance_of(Hash, {:pathname => p, :match => 'Url'})
-	if matchData then
-		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
-	end #if
-	grep_matches=StreamPattern.grep(file_regexp, pattern)
-	assert_instance_of(Array, grep_matches)
-	assert_equal([{:match=>"Url", :pathname=>"app/controllers/urls_controller.rb"}], grep_matches)
-	assert_instance_of(Hash, grep_matches[0])
-	assert_equal(file_regexp, grep_matches[0][:pathname])
-	assert_equal('Url', grep_matches[0][:match])
-end #grep
 def test_grep_command
 	assert_equal("grep \"#{ASSOCIATION_MACRO_PATTERN}\" -r {app/models/,test/unit/}*.rb", ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN))
 	assert_equal("", `#{ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN)}`)

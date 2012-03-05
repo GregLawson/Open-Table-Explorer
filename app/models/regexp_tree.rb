@@ -196,6 +196,9 @@ def pathnames
 		to_regexp.match(pathname)
 	end #select
 end #pathnames
+def grep(pattern, delimiter="\n")
+	pathnames.files_grep(pattern, delimiter="\n")
+end #grep
 def to_s
 	to_a.join
 end #to_s
