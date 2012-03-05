@@ -76,7 +76,7 @@ def test_compile_code
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
 	assert_not_nil(acq)
-	@my_fixtures.each_value do |sm|
+	StreamMethod.all.each_value do |sm|
 		assert_instance_of(StreamMethod,sm)
 #		puts "sm.matching_methods(/code/).inspect=#{sm.matching_methods(/code/).inspect}"
 		sm.compile_code!
@@ -104,10 +104,10 @@ def test_syntax_error
 	assert_equal([:interface_code], sm.errors.keys)
 	assert_instance_of(Array, sm.errors.values[0])
 	assert_instance_of(String, sm.errors.values[0][0])
-	assert_equal(expected_errors, sm.errors)
 	expected_error_message="SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"
 	expected_errors=ActiveSupport::OrderedHash[[:interface_code, ["SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"]], nil]
 	assert_not_nil(expected_errors)
+	assert_equal(expected_errors, sm.errors)
 	explain_assert_equal(expected_errors, '')
 	explain_assert_equal(expected_errors, sm.errors)
 	assert_equal([expected_error_message], sm.errors[:interface_code],"interface_code=#{sm[:interface_code]}")
