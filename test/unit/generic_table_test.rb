@@ -58,7 +58,7 @@ def test_sample
 	assert_equal(TEST_ARRAY, TestData.sample(samples_wanted, sample_type, consecutive).flatten)
 	assert_equal(TEST_ARRAY, TestData.sample.flatten)
 	assert_equal(size, TestData.sample.size, "TestData.sample=#{TestData.sample}")
-	many_random=(0..3).map do |i|
+	many_random=(0..4).map do |i|
 		TestData.sample(TEST_SIZE, :random, 1)
 	end #map
 	assert_equal(TEST_ARRAY, many_random.flatten.sort.uniq.reverse)
