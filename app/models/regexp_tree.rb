@@ -181,6 +181,18 @@ def postfix_operator_walk(&visit_proc)
 	
 	return new_branching
 end #postfix_operator_walk
+def self.macro_expansion?(parseTree)
+	macro=parseTree[0] #first and only in test case list
+	return false if '[' != macro[0]
+	return false if ']' != macro[-1]
+	inner_brackets=macro[1..-2][0]
+	return false if '[' != inner_brackets[0]
+	return false if ']' != inner_brackets[-1]
+	inner_colons=inner_brackets[1..-2] # not another nested array
+	return false if ':' != inner_colons[0]
+	return false if ':' != inner_colons[-1]
+	return	true
+end #macro_expansion?
 # file name glob (suitible for Dir[]) most like regexp.
 # often matches more filenames than regexp (see pathnames)
 def to_pathname_glob
