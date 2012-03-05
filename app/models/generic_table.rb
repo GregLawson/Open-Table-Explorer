@@ -71,7 +71,7 @@ end #is_active_record_method
 # from http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
 # Skewness is defined at http://en.wikipedia.org/wiki/Skewness
 # kurtosis is defined at http://en.wikipedia.org/wiki/Kurtosis
-def Base.one_pass_statistics(column_name)
+def one_pass_statistics(column_name)
     n = 0
     mean = 0
     m2 = 0
