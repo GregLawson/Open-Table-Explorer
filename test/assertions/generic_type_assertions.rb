@@ -20,6 +20,7 @@ require 'rails/test_help'
 # To support automatic testing example should distinguish specializations by
 # 1a) a regexp should match all examples from itself down the specialization tree.
 def assert_specialized_examples
+	assert_regexp(self[:data_regexp])
 	specializations.each do |s|
 		s.example_types.each do |e|
 			suggestions= RegexpTree.string_of_matching_chars(self[:data_regexp])
