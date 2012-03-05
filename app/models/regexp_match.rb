@@ -11,7 +11,6 @@ def matchRescued(regexp)
 	begin
 		matchData=Regexp.new(regexp.to_s,Regexp::MULTILINE).match(@dataToParse)
 	rescue RegexpError
-		# Global::log.info("bad  regexp=#{regexp}")
 		return nil
 	end
 end
