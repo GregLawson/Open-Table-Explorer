@@ -19,20 +19,23 @@ def single_grep(context, pattern)
 end #single_grep
 end #String
 module Enumerable
+# Upgrade core grep with optional context
+# If argument missing act just like core grep
+# if context argument prsent, return it in a hash with answer
+# Allows behavior like Unix command line grep with file glob,
+# except now allows regexp with is more powerful.
 # Chainable grep of enumeration
-def nested_grep(context, pattern)
+def nested_grep(pattern, context)
 	map do |e|
 		e.single_grep(context, pattern)
 	end.compact #map
 end #nested_grep
 # grep through multiple files
-# Enumeration is list of filenames to grep
+# Enumeration is list of filenames to grep (e.g. Dir[*.rb])
 # files opened
 def files_grep(pattern, delimiter="\n")
 	map do |p|
-		IO.read(p).split(delimiter).map do |l|
-			l.single_grep(p, pattern)
-		end.compact #grep
+		IO.read(p).split(delimiter).nested_grep(pattern, p)
 	end.flatten #map
 end #files_grep
 end #Enumerable
