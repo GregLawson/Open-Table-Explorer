@@ -9,18 +9,6 @@ require 'test_helper.rb'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-def test_single_grep
-	assert_equal({}, 'a pattern '.single_grep('context', /pattern/))
-end #single_grep
-#end #String
-#module Enumerable
-def test_nested_grep
-	assert_equal({}, ['1', '2'].nested_grep('unnested context', /[2-3]/))
-end #nested_grep
-def test_files_grep
-	test_file='test/unit/generic_table_test.rb'
-	assert_equal({}, [test_file].files_grep(test_file, /[2-3]/))
-end #files_grep
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
 include Generic_Table
@@ -31,6 +19,68 @@ assert_equal([GenericTableTest], Module.nesting)
 assert_not_include(GenericGrep, self.included_modules)
 assert_equal('constant', defined? GenericGrep)
 ASSOCIATION_MACRO_PATTERN=GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN
+def test_single_grep
+	pattern='(\w+)\.all'
+	regexp=Regexp.new(pattern)
+	line='Url.all'
+	context=line
+	matchData=regexp.match(line)
+	if matchData then
+		ActiveSupport::HashWithIndifferentAccess.new(:context => context, :matchData => matchData)
+	else
+		nil #don't select line for return
+	end #if
+	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, line.single_grep(line, pattern))
+	assert_equal("Url.all", line.single_grep(line, pattern)[:context])
+#	assert_equal(matchData, line.single_grep(line, pattern)[:matchData])
+	assert_equal(matchData[1], line.single_grep(line, pattern)[:matchData][1])
+end #single_grep
+#end #String
+#module Enumerable
+def test_nested_grep
+	pattern='(\w+)\.all'
+	file_regexp=['app/controllers/urls_controller.rb']
+	assert_equal([], file_regexp.nested_grep(file_regexp, pattern))
+end #nested_grep
+def test_files_grep
+	test_file='test/unit/generic_table_test.rb'
+	assert_equal([], [test_file].files_grep(test_file, /[2-3]/))
+	pattern='(\w+)\.all'
+	file_regexp=['app/controllers/urls_controller.rb']
+	pathnames=RegexpTree.new(file_regexp).pathnames
+	assert_instance_of(Array, pathnames)
+	assert_module_included(Array, Enumerable)
+	pathnames.files_grep(pattern).each do |p|
+		assert_instance_of(ActiveSupport::HashWithIndifferentAccess, p)
+		assert_equal(file_regexp[0], p[:context])
+	#	assert_equal(matchData, pathnames.files_grep(pattern)[:matchData])
+#		matchData=regexp.match(line)
+#		assert_equal(matchData[1], p[:matchData][1])
+	end #each
+end #files_grep
+def test_grep
+	file_regexp='app/controllers/urls_controller.rb'
+	pattern='(\w+)\.all'
+	delimiter="\n"
+	regexp=Regexp.new(pattern)
+	ps=RegexpTree.new(file_regexp).pathnames
+	p=ps.first
+	assert_equal([p], ps)
+	assert_instance_of(String, p)
+	l=IO.read(p).split(delimiter).first
+	assert_instance_of(String, l)
+	matchData=regexp.match(l)
+	assert_instance_of(Hash, {:pathname => p, :match => 'Url'})
+	if matchData then
+		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
+	end #if
+	grep_matches=StreamPattern.grep(file_regexp, pattern)
+	assert_instance_of(Array, grep_matches)
+	assert_equal([{:match=>"Url", :pathname=>"app/controllers/urls_controller.rb"}], grep_matches)
+	assert_instance_of(Hash, grep_matches[0])
+	assert_equal(file_regexp, grep_matches[0][:pathname])
+	assert_equal('Url', grep_matches[0][:match])
+end #grep
 def test_grep_command
 	assert_equal("grep \"#{ASSOCIATION_MACRO_PATTERN}\" -r {app/models/,test/unit/}*.rb", ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN))
 	assert_equal("", `#{ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN)}`)
@@ -146,63 +196,5 @@ def test_association_type
 	association_types= types.uniq
 	assert_empty(association_types-[:to_many_has_many, :to_one_belongs_to, :to_one_has_one])
 end #association_type
-def test_single_grep
-	pattern='(\w+)\.all'
-	regexp=Regexp.new(pattern)
-	line='Url.all'
-	context=line
-	matchData=regexp.match(line)
-	if matchData then
-		ActiveSupport::HashWithIndifferentAccess.new(:context => context, :matchData => matchData)
-	else
-		nil #don't select line for return
-	end #if
-	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, line.single_grep(line, pattern))
-	assert_equal("Url.all", line.single_grep(line, pattern)[:context])
-#	assert_equal(matchData, line.single_grep(line, pattern)[:matchData])
-	assert_equal(matchData[1], line.single_grep(line, pattern)[:matchData][1])
-end #single_grep
-def test_nested_grep
-	pattern='(\w+)\.all'
-	file_regexp=['app/controllers/urls_controller.rb']
-	assert_equal([], file_regexp.nested_grep(file_regexp, pattern))
-end #nested_grep
-def test_files_grep
-	pattern='(\w+)\.all'
-	file_regexp=['app/controllers/urls_controller.rb']
-	pathnames=RegexpTree.new(file_regexp).pathnames
-	assert_instance_of(Array, pathnames)
-	assert_module_included(Array, Enumerable)
-	pathnames.files_grep(pattern).each do |p|
-		assert_instance_of(ActiveSupport::HashWithIndifferentAccess, p)
-		assert_equal(file_regexp[0], p[:context])
-	#	assert_equal(matchData, pathnames.files_grep(pattern)[:matchData])
-#		matchData=regexp.match(line)
-#		assert_equal(matchData[1], p[:matchData][1])
-	end #each
-end #files_grep
-def test_grep
-	file_regexp='app/controllers/urls_controller.rb'
-	pattern='(\w+)\.all'
-	delimiter="\n"
-	regexp=Regexp.new(pattern)
-	ps=RegexpTree.new(file_regexp).pathnames
-	p=ps.first
-	assert_equal([p], ps)
-	assert_instance_of(String, p)
-	l=IO.read(p).split(delimiter).first
-	assert_instance_of(String, l)
-	matchData=regexp.match(l)
-	assert_instance_of(Hash, {:pathname => p, :match => 'Url'})
-	if matchData then
-		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
-	end #if
-	grep_matches=GenericGrep::ClassMethods.grep(file_regexp, pattern)
-	assert_instance_of(Array, grep_matches)
-	assert_equal([{:match=>"Url", :pathname=>"app/controllers/urls_controller.rb"}], grep_matches)
-	assert_instance_of(Hash, grep_matches[0])
-	assert_equal(file_regexp, grep_matches[0][:pathname])
-	assert_equal('Url', grep_matches[0][:match])
-end #grep
 
 end #test class
