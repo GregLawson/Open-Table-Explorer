@@ -90,4 +90,15 @@ def test_assert_specialized_examples
 		g.assert_specialized_examples
 	end #each
 end #assert_specialized_examples
+def test_most_specialized
+	start=GenericType.find_by_name('text')
+	assert_regexp(start[:data_regexp])
+	string_to_match='123'
+	if start.match(string_to_match) then
+		one_level_specializations.map do |specialization|
+			specialization.most_specialized(string_to_match, specialization)
+		end #map
+	end #if
+	assert_equal('Integer_Column', GenericType::most_specialized('123'))
+end #most_specialized
 end #GenericType

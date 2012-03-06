@@ -56,4 +56,11 @@ def specializations
 		return specialize.map{|s| s.specializations}.flatten + one_level_specializations
 	end #if
 end #specializations
+def self.most_specialized(string_to_match, start=GenericType.find_by_name('text'))
+	if start.match(string_to_match) then
+		one_level_specializations.map do |specialization|
+			specialization.most_specialized(string_to_match, specialization)
+		end #map
+	end #if
+end #most_specialized
 end #GenericType
