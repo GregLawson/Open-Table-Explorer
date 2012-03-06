@@ -95,6 +95,11 @@ def test_conservationOfCharacters
 	assert_equal(test_tree.regexp_string, test_tree.rest+test_tree.parseTree.to_s)
 	test_tree.conservationOfCharacters
 end #conservationOfCharacters
+#end #RegexpParser
+def test_String_to_a
+	assert_equal(['a', 'b', 'c'],'abc'.to_a)
+	assert_not_equal(['b', 'b', 'c'],'abc'.to_a)
+end #to_a
 def regexpParserTest(parser)
 	assert_respond_to(parser,:parseOneTerm!)
 #	Now test after full parse.
@@ -181,7 +186,7 @@ def test_index
 	assert_equal(arg1, arg2)
 	arg2=Array
 end #[]index
-def test_to_a
+def test_RegexpTree_to_a
 	assert_equal(Asymmetrical_Tree_Array, Asymmetrical_Tree.to_a)
 
 end #to_a

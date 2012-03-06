@@ -103,6 +103,16 @@ end #conservationOfCharacters
 
 end #RegexpParser
 require 'app/models/nested_array.rb'
+class String #add to_a
+# Convert String to Array of one character Strings
+def to_a(format='a', packed_length=1)
+	array_length=size/packed_length
+	ret=(0..array_length-1).to_a.map do |i|
+		self[i*packed_length,packed_length].unpack(format)[0]
+	end #map
+	return ret
+end #to_a
+end #String
 class RegexpTree < NestedArray
 include Inline_Assertions
 def self.OpeningBrackets
