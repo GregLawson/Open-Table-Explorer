@@ -95,6 +95,16 @@ def test_assert_specialized_examples
 		g.assert_specialized_examples
 	end #each
 end #assert_specialized_examples
+def test_expansion_termination
+	xdigit_type=GenericType.find_by_name('xdigit')
+	regexp=xdigit_type[:data_regexp]
+	assert_regexp(regexp)
+	parse=RegexpTree.new(regexp)[0]
+	macro_name=RegexpTree.macro_call?(parse)
+	assert_instance_of(String, macro_name)
+	assert_equal(xdigit_type[:import_class], macro_name)
+	assert_block("xdigit_type=#{xdigit_type.inspect}.\n regexp=#{regexp}, parse=#{parse.inspect}\n macro_name=#{macro_name}"){xdigit_type.expansion_termination?}
+end #expansion_termination
 def test_most_specialized
 	start=GenericType.find_by_name('text')
 	assert_regexp(start[:data_regexp])

@@ -56,6 +56,12 @@ def specializations
 		return specialize.map{|s| s.specializations}.flatten + one_level_specializations
 	end #if
 end #specializations
+def expansion_termination?
+	regexp=self[:data_regexp]
+	parse=RegexpTree.new(regexp)[0]
+	macro_name=RegexpTree.macro_call?(parse)
+	self[:import_class]==macro_name
+end #expansion_termination
 def self.most_specialized(string_to_match, start=GenericType.find_by_name('text'))
 	if start.match(string_to_match) then
 		one_level_specializations.map do |specialization|
