@@ -24,7 +24,7 @@ Float_Column:
   import_class: Float_Column
   ruby_conversion: str.to_f
 Macaddr_Column: 
-  data_regexp: "[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){3}"
+  data_regexp: "[[:xdigit:]]{2}([[:xdigit:]]){3}"
   generalize: VARCHAR_Column
   rails_type: string
   import_class: Macaddr_Column
