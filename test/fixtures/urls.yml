@@ -119,3 +119,12 @@ usb_devices:
 smbclient_dell2:
   href: smbclient_dell2
   url: smbclient -N -L DELL2 -I Dell2 -W WORKGROUP -g
+ode_to_Joy:
+  href: ode_to_Joy
+  url: http://www.google.com/webhp?hl=en&tab=iw#hl=en&gs_nf=1&cp=13&gs_id=1j&xhr=t&q=ode+to+joy+midi&pf=p&sclient=psy-ab&pbx=1&oq=ode+to+joy+mi&aq=0&aqi=g4&aql=&gs_sm=&gs_upl=&gs_l=&bav=on.2,or.r_gc.r_pw.r_qf.,cf.osb&fp=eae0767434189f9e&biw=1576&bih=1003
+solar_data_warehouse:
+  href: solar_data_warehouse
+  url: http://www.solardatawarehouse.com/Data.aspx
+solar_data_lmu:
+  href: solar_data_lmu
+  url: http://www.nrel.gov/midc/apps/daily.pl?site=LMU&start=20100406&yr=2012&mo=3&dy=4
