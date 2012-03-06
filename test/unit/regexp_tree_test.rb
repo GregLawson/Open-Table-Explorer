@@ -259,21 +259,21 @@ def test_macro_call
 	inner_colons=inner_brackets[1..-2] # not another nested array
 	assert_equal(':', inner_colons[0])
 	assert_equal(':', inner_colons[-1])
-Test_Pattern_Array=["t", "e", "s", "t", "/",
 	assert_equal('alnum', RegexpTree.macro_call?(parseTree[0]))
 end #macro_call?
+Nested_Test_Array=["t", "e", "s", "t", "/",
 	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
 	 	["[", ".", "]"],
 	 	"r",
 		[["[", "a", "-", "z", "]"], "*"]]
-Test_Pattern=RegexpTree.new(Test_Pattern_Array)
+Test_Pattern=RegexpTree.new(Nested_Test_Array)
 def test_to_filename_glob
 	assert_equal('*', RegexpTree.new(['.','*']).to_pathname_glob)
 	assert_equal('*', RegexpTree.new([['.','*']]).to_pathname_glob)
 	assert_equal('K*C', RegexpTree.new(['K',['.','*'],'C']).to_pathname_glob)
 	assert_equal('app/models/*[.]rb', RegexpTree.new('app/models/([a-zA-Z0-9_]*)[.]rb').to_pathname_glob)
-	assert_equal(Test_Pattern_Array, RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_a)
-	assert_equal(Test_Pattern_Array, Test_Pattern.map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))})
+	assert_equal(Nested_Test_Array, RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_a)
+	assert_equal(Nested_Test_Array, Test_Pattern.map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))})
 	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
 	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_pathname_glob)
 end #to_pathname_glob
