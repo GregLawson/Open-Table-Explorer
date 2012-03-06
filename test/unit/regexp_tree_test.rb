@@ -241,7 +241,7 @@ def test_postfix_operator_walk
 	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
 	assert_equal('test/*[.]r*', Test_Pattern.to_pathname_glob)
 end #postfix_operator_walk
-def test_macro_expansion
+def test_macro_call
 	parseTree=RegexpTree.new("[[:alnum:]]")
 	assert_equal([["[", ["[", ":", "a", "l", "n", "u", "m", ":", "]"], "]"]], parseTree)
 	macro=parseTree[0] #first and only in test case list
@@ -254,9 +254,9 @@ def test_macro_expansion
 	inner_colons=inner_brackets[1..-2] # not another nested array
 	assert_equal(':', inner_colons[0])
 	assert_equal(':', inner_colons[-1])
-	assert(RegexpTree.macro_expansion?(parseTree))
-end #macro_expansion?
 Test_Pattern_Array=["t", "e", "s", "t", "/",
+	assert_equal('alnum', RegexpTree.macro_call?(parseTree[0]))
+end #macro_call?
 	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
 	 	["[", ".", "]"],
 	 	"r",
