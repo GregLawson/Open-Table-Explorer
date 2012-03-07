@@ -10,10 +10,10 @@ require 'test/test_helper'
 require 'test/assertions/generic_type_assertions.rb'
 class GenericTypeTest < ActiveSupport::TestCase
 set_class_variables
-def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
-	assert_test_id_equal
-end #id_equal
+def test_logical_primary_key
+#	first=GenericType.first
+	assert_equal(:import_class, GenericType.logical_primary_key)
+end #logical_primary_key
 def test_find_by_name
 	macro_name='lower'
 	macro_generic_type=GenericType.find_by_name(macro_name)
@@ -105,6 +105,33 @@ def test_expansion_termination
 	assert_equal(xdigit_type[:import_class], macro_name)
 	assert_block("xdigit_type=#{xdigit_type.inspect}.\n regexp=#{regexp}, parse=#{parse.inspect}\n macro_name=#{macro_name}"){xdigit_type.expansion_termination?}
 end #expansion_termination
+def test_expand
+	parent=GenericType.find_by_name('Macaddr_Column')
+	regexp=parent[:data_regexp]
+	assert_regexp(regexp)
+	parse=RegexpTree.new(regexp)
+	macro_name=RegexpTree.macro_call?(parse)
+	assert_not_equal(macro_name, parent[:import_class])
+	expansion=parse.map_branches do |branch|
+		macro_name=RegexpTree.macro_call?(branch)
+		if macro_name then
+			assert_not_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.import_class}.inspect}")
+			all_macro_names= GenericType.all.map{|t| t.import_class}
+			assert_include(macro_name, all_macro_names)
+			macro_generic_type=GenericType.find_by_name(macro_name)
+			assert_not_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{all_macro_names.inspect}")
+			macro_call=macro_generic_type[:data_regexp]
+			assert_not_nil(macro_call, "")
+			assert_not_equal(macro_call, regexp)
+			assert_equal(macro_name, macro_generic_type[:import_class])
+			assert_equal(branch, macro_generic_type.expand, "macro_name=#{macro_name},\n")
+			macro_generic_type.expand
+		else
+			branch
+		end #if
+	end #map_branches
+	assert_equal(expansion, parse.map_branches{|branch|branch})
+end #expand
 def test_most_specialized
 	start=GenericType.find_by_name('text')
 	assert_regexp(start[:data_regexp])
@@ -115,5 +142,10 @@ def test_most_specialized
 		end #map
 	end #if
 	assert_equal('Integer_Column', GenericType::most_specialized('123'))
+	assert_equal('Macaddr_Column', GenericType::most_specialized('12:34:56:78'))
 end #most_specialized
+def test_id_equal
+	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert_test_id_equal
+end #id_equal
 end #GenericType

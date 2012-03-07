@@ -62,6 +62,23 @@ def expansion_termination?
 	macro_name=RegexpTree.macro_call?(parse)
 	self[:import_class]==macro_name
 end #expansion_termination
+def expand
+	parse=RegexpTree.new(self[:data_regexp])
+	if expansion_termination? then
+		return parse[0] # terminates recursion
+	else # possible expansions
+		parse.map_branches do |branch|
+			macro_name=RegexpTree.macro_call?(branch)
+			if macro_name then
+				macro_generic_type=GenericType.find_by_name(macro_name)
+				macro_call=macro_generic_type[:data_regexp]
+				macro_generic_type.expand
+			else
+				branch
+			end #if
+		end #map_branches
+	end #if possible expansions
+end #expand
 def self.most_specialized(string_to_match, start=GenericType.find_by_name('text'))
 	if start.match(string_to_match) then
 		one_level_specializations.map do |specialization|
