@@ -15,6 +15,9 @@ end #initialize
 def to_s
 	return self.to_a.join
 end #to_s
+# Apply block to each leaf.
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
 def map_recursive(&visit_proc)
 	return self.map do |sub_tree| 
 		if sub_tree.kind_of?(Array) then
@@ -24,6 +27,15 @@ def map_recursive(&visit_proc)
 		end #if
 	end
 end #map_recursive
+# Apply block to each non-node or branching node
+# Provides a postfix walk
+# Two passes:
+# 1) Recursively visit descendants
+# 2) Visit branching nodes (Arrays)
+# Desirable since result tree is constructed bottom-up
+# Descendants have the block applied before they are reassembled into a tree.
+# Branching node block can take into account changes in subtrees.
+
 def map_branches(&visit_proc)
 	visited_subtrees= self.map do |sub_tree| 
 		if sub_tree.kind_of?(Array) then

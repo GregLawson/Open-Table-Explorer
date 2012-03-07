@@ -5,18 +5,23 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require 'test_helper'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-require 'test/test_helper_test_tables.rb'
-require 'app/models/inlineAssertions.rb'
+#require 'test/test_helper_test_tables.rb'
 class NestedArrayTest  < ActiveSupport::TestCase
 Asymmetrical_Tree_Array=[['1','2'],'3']
 Asymmetrical_Tree=RegexpTree.new(Asymmetrical_Tree_Array)
+Nested_Test_Array=["t", "e", "s", "t", "/",
+	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
+	 	["[", ".", "]"],
+	 	"r",
+		[["[", "a", "-", "z", "]"], "*"]]
+Echo_proc=Proc.new{|parseTree| parseTree}
 Reverse_proc=Proc.new{|parseTree| parseTree.reverse}
 
-def test_NestedArray
+def test_initialize
 	assert_not_nil(NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']).to_a)
@@ -26,8 +31,7 @@ def test_to_s
 	assert_equal('123',NestedArray.new([1,[2,3]]).to_s)
 end #to_s
 def test_map_recursive
-	echo_proc=Proc.new{|parseTree| parseTree}
-	assert_equal(['*','.'], echo_proc.call(['*','.']))
+	assert_equal(['*','.'], Echo_proc.call(['*','.']))
 	assert_equal(['1','2'], NestedArray.new(['1','2']).map_recursive{|p| p})
 	assert_equal(['String','String'], NestedArray.new(['1','2']).map_recursive{|p| p.class.name})
 	assert_equal(['?1','?2'], NestedArray.new(['1','2']).map_recursive{|p| '?'+p})
@@ -39,9 +43,10 @@ def test_map_recursive
 	assert_equal(['K',['*','.']], NestedArray.new(['K',['*','.']]).map_recursive{|p| p})
 	assert_equal(['K',['*','.'],'C'], NestedArray.new(['K',['*','.'],'C']).map_recursive{|p| p})
 	visit_proc=Proc.new{|parseTree| parseTree}
-#	assert_equal('*', echo_proc.call)
-	assert_equal(['*','.'], echo_proc.call(['*','.']))
-	assert_equal(['*','.'], NestedArray.new(['*','.']).map_recursive(&echo_proc))
+#	assert_equal('*', Echo_proc.call)
+	assert_equal(['*','.'], Echo_proc.call(['*','.']))
+	assert_equal(['*','.'], NestedArray.new(['*','.']).map_recursive(&Echo_proc))
+	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_recursive(&Echo_proc))
 end #map_recursive
 def test_map_branches
 	assert_equal(['*','.'], NestedArray.new(['*','.']).map_branches{|p| p})
@@ -58,5 +63,6 @@ def test_map_branches
 	assert_equal([['.','*']], NestedArray.new([['*','.']]).map_branches{|p| p.reverse})
 	assert_equal(Asymmetrical_Tree.reverse, Reverse_proc.call(Asymmetrical_Tree))
 	assert_equal(Asymmetrical_Tree.flatten.reverse, Asymmetrical_Tree.map_branches(&Reverse_proc).flatten)
+	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_branches(&Echo_proc))
 end #map_branches
 end #NestedArray
