@@ -6,6 +6,11 @@ require 'active_support' # for singularize and pluralize
 # syntax http://rake.rubyforge.org/
 require 'lib/tasks/testing.rb'
 require 'app/models/global.rb'
+require 'app/models/regexp_parser.rb'
+require 'app/models/generic_table_html.rb'
+require 'app/models/generic_table_association.rb'
+require 'app/models/generic_grep.rb'
+require 'app/models/column_group.rb'
 require 'app/models/generic_table.rb'
 require 'app/models/code_base.rb'
 require 'app/models/test_run.rb'
