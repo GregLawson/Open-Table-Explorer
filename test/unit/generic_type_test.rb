@@ -12,7 +12,7 @@ class GenericTypeTest < ActiveSupport::TestCase
 set_class_variables
 def test_logical_primary_key
 #	first=GenericType.first
-	assert_equal(:import_class, GenericType.logical_primary_key)
+	assert_equal([:import_class], GenericType.logical_primary_key)
 end #logical_primary_key
 def test_find_by_name
 	macro_name='lower'
@@ -70,31 +70,6 @@ def test_specializations
 		assert_instance_of(Array, g.specializations)
 	end #each
 end #specializations
-def test_generalize
-	GenericType.all.each do |t|
-		assert_not_equal(t[:generalize_id], 0, "t=#{t.inspect}")
-	end #each
-	
-	assert(GenericType.all.any? {|t| !t.generalize.nil?})
-	GenericType.all.each do |t|
-		assert_instance_of(GenericType, t)
-		if !t.generalize.nil? then
-			assert_instance_of(GenericType, t.generalize)
-		end #if
-	end #each
-	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
-end #generalize
-def test_assert_specialized_examples
-	regexp=GenericType.find_by_import_class('word')[:data_regexp]
-	assert_equal(2, regexp.size)
-	assert_equal('\w', regexp)
-	assert_equal(/\w/, Regexp.new(regexp))
-#	assert_equal('\w', RegexpTree.string_of_matching_chars(/\w/))
-	assert_match(Regexp.new(regexp), 'd')
-	GenericType.all.each do |g|
-		g.assert_specialized_examples
-	end #each
-end #assert_specialized_examples
 def test_expansion_termination
 	xdigit_type=GenericType.find_by_name('xdigit')
 	regexp=xdigit_type[:data_regexp]
@@ -132,18 +107,82 @@ def test_expand
 	end #map_branches
 	assert_equal(expansion, parse.map_branches{|branch|branch})
 end #expand
-def test_most_specialized
-	start=GenericType.find_by_name('text')
-	assert_regexp(start[:data_regexp])
+def test_match
+	start=GenericType.find_by_name('Text_Column')
+	regexp=Regexp.new(start.expand.join)
+	assert_regexp(regexp)
 	string_to_match='123'
-	if start.match(string_to_match) then
-		one_level_specializations.map do |specialization|
-			specialization.most_specialized(string_to_match, specialization)
-		end #map
+	assert_match(regexp, string_to_match)
+	assert_not_nil(start.match?(string_to_match))
+end #match
+def test_specializations_that_match
+	start=GenericType.find_by_name('Text_Column')
+	regexp=Regexp.new(start[:data_regexp])
+	assert_regexp(regexp)
+	string_to_match='123'
+	message="start=#{start}, start.match?(string_to_match)=#{start.match?(string_to_match)}"
+	assert_block(message){start.match?(string_to_match)}
+	start.one_level_specializations.map do |specialization|
+		assert(specialization.match?(string_to_match))
+		if specialization.match?(string_to_match) then
+			[specialization, specialization.specializations_that_match?(string_to_match)]
+		else
+			nil
+		end #if
+	end.compact.uniq.flatten #map
+	assert_equal([], start.specializations_that_match?(string_to_match))
+end #specializations_that_match
+def test_most_specialized
+	start=GenericType.find_by_name('Text_Column')
+	regexp=Regexp.new(start[:data_regexp])
+	assert_regexp(regexp)
+	string_to_match='123'
+	assert_match(regexp, string_to_match)
+	most_specialized=if start.match?(string_to_match) then
+		start.one_level_specializations.map do |specialization|
+			if specialization.match?(string_to_match) then
+				specs=specialization.most_specialized?(string_to_match)
+				assert_equal([], specs)
+				specs
+			else
+				nil
+			end #if
+		end.compact.uniq #map
+	else
+		start.generalize.most_specialized?(string_to_match)
 	end #if
-	assert_equal('Integer_Column', GenericType::most_specialized('123'))
-	assert_equal('Macaddr_Column', GenericType::most_specialized('12:34:56:78'))
+	assert_instance_of(Array, most_specialized)
+	assert_instance_of(GenericType, most_specialized[0])
+	assert_equal('Integer_Column', most_specialized[:import_class])
+	assert_instance_of(GenericType, start.most_specialized?('123'))
+	assert_equal('Integer_Column', start.most_specialized?('123'))
+	assert_equal('Macaddr_Column', start.most_specialized?('12:34:56:78'))
 end #most_specialized
+def test_generalize
+	GenericType.all.each do |t|
+		assert_not_equal(t[:generalize_id], 0, "t=#{t.inspect}")
+	end #each
+	
+	assert(GenericType.all.any? {|t| !t.generalize.nil?})
+	GenericType.all.each do |t|
+		assert_instance_of(GenericType, t)
+		if !t.generalize.nil? then
+			assert_instance_of(GenericType, t.generalize)
+		end #if
+	end #each
+	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
+end #generalize
+def test_assert_specialized_examples
+	regexp=GenericType.find_by_import_class('word')[:data_regexp]
+	assert_equal(2, regexp.size)
+	assert_equal('\w', regexp)
+	assert_equal(/\w/, Regexp.new(regexp))
+#	assert_equal('\w', RegexpTree.string_of_matching_chars(/\w/))
+	assert_match(Regexp.new(regexp), 'd')
+	GenericType.all.each do |g|
+		g.assert_specialized_examples
+	end #each
+end #assert_specialized_examples
 def test_id_equal
 	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
 	assert_test_id_equal

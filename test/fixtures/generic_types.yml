@@ -30,13 +30,13 @@ Macaddr_Column:
   import_class: Macaddr_Column
   ruby_conversion: str.upcase
 Time_Column: 
-  data_regexp: "[0-9]+:[0-9.]+( ?[PApa][Mm])?"
+  data_regexp: "[0-9]+:[0-9.]+(\s?[PApa][Mm])?"
   generalize: VARCHAR_Column
   rails_type: time
   import_class: Time_Column
   ruby_conversion: Time.parse(str)
 Timestamp_Column: 
-  data_regexp: ([0-9]{1,4}/|[ADFJMNOS][a-z]+ )[0-9][0-9][, /][0-9]{2,4}( [0-9]+:[0-9.]+( ?[PApa][Mm])?)?
+  data_regexp: ([0-9]{1,4}/|[ADFJMNOS][a-z]+ )[0-9][0-9][, /][0-9]{2,4}( [0-9]+:[0-9.]+(\s?[PApa][Mm])?)?
   generalize: VARCHAR_Column
   rails_type: timestamp
   import_class: Timestamp_Column

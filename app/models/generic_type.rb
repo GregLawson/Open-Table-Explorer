@@ -79,11 +79,24 @@ def expand
 		end #map_branches
 	end #if possible expansions
 end #expand
-def self.most_specialized(string_to_match, start=GenericType.find_by_name('text'))
-	if start.match(string_to_match) then
-		one_level_specializations.map do |specialization|
-			specialization.most_specialized(string_to_match, specialization)
-		end #map
+def match?(string_to_match)
+	regexp=Regexp.new('^'+expand.join+'$',Regexp::EXTENDED | Regexp::MULTILINE)
+	return regexp.match(string_to_match)
+end #match
+def specializations_that_match?(string_to_match)
+	one_level_specializations.map do |specialization|
+		if specialization.match?(string_to_match) then
+			[specialization[:import_class], specialization.specializations_that_match?(string_to_match)]
+		else
+			nil
+		end #if
+	end .compact.uniq.flatten #map
+end #specializations_that_match
+def most_specialized?(string_to_match)
+	if match?(string_to_match) then
+		specializations_that_match?(string_to_match)
+	else
+		generalize.most_specialized?(string_to_match)
 	end #if
-end #most_specialized
+end #most_specialized?
 end #GenericType
