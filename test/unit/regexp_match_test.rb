@@ -78,6 +78,7 @@ def test_initialize
 #	assert_equal(WhiteSpacePattern,White_Match.nextToken!)
 	
 end #initialize
+Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 # test match and explain mismatch
 def test_assert_match
 	regexp='KC'
@@ -99,6 +100,15 @@ def test_assert_match
 	assert_match(new_regexp, string)
 #?	assert_equal("K\.\*C",Regexp.escape("K.*C"))
 #?	assert_equal("K.*C",Regexp.new("K.*C").to_s)
+	mac_example='12:34:56:78'
+	assert_match(/[[:xdigit:]]{2}:/, mac_example)
+	assert_match(/[[:xdigit:]]{2}(:[[:xdigit:]]{2}){3}/, mac_example)
+	data_regexp=Macaddr_Column[:data_regexp]
+	assert_match(Regexp.new(data_regexp), mac_example)
+	assert_match(data_regexp, mac_example)
+	mac_match=RegexpMatch.new(data_regexp, mac_example)
+	assert_equal([], mac_match.matchSubTree)
+	assert_equal([Macaddr_Column], start.most_specialized?(mac_example))
 	
 end #assert_match
 def test_matchSubTree

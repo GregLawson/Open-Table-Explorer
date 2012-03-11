@@ -32,7 +32,7 @@ def initialize(regexp,dataToParse)
 	@dataToParse=dataToParse
 end #initialize
 # Top level incremental match of regexp tree to data
-# parseTree - array of parsed tree to test for match
+# self - array of parsed tree to test for match
 # calls matchRescued, matchedTreeArray depending
 def matchSubTree
 	if empty? then
