@@ -79,19 +79,32 @@ def expand
 		end #map_branches
 	end #if possible expansions
 end #expand
+# Matches string from beginning against expanded Regexp
+# Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
+# Calls expand above.
 def match?(string_to_match)
 	regexp=Regexp.new('^'+expand.join+'$',Regexp::EXTENDED | Regexp::MULTILINE)
 	return regexp.match(string_to_match)
 end #match
+# Find specializations that match recursively
+# Multiple specializations that match at the same level are probably not handled correcly yet.
 def specializations_that_match?(string_to_match)
 	one_level_specializations.map do |specialization|
 		if specialization.match?(string_to_match) then
-			[specialization[:import_class], specialization.specializations_that_match?(string_to_match)]
+			[specialization, specialization.specializations_that_match?(string_to_match)]
 		else
 			nil
 		end #if
 	end .compact.uniq.flatten #map
 end #specializations_that_match
+# Recursively search where in the tree a string matches
+# Returns an array of GenericType instances.
+# The last element of the array matched.
+# The receiving object is a GenericType instance used as an starting place in the tree.
+# If the receiving object matched it will be the first element in returned array.
+# If the string doesn't match the receiving object, generalize is returned.
+# If start matches, the returned array will be the ordered array of matching specializations.
+# Calls match? and specializations_that_match? above
 def most_specialized?(string_to_match)
 	if match?(string_to_match) then
 		specializations_that_match?(string_to_match)

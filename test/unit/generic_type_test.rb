@@ -115,8 +115,12 @@ def test_match
 	assert_match(regexp, string_to_match)
 	assert_not_nil(start.match?(string_to_match))
 end #match
+Integer_Column=GenericType.find_by_name('Integer_Column')
+VARCHAR_Column=GenericType.find_by_name('VARCHAR_Column')
+Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 def test_specializations_that_match
 	start=GenericType.find_by_name('Text_Column')
+
 	regexp=Regexp.new(start[:data_regexp])
 	assert_regexp(regexp)
 	string_to_match='123'
@@ -130,7 +134,7 @@ def test_specializations_that_match
 			nil
 		end #if
 	end.compact.uniq.flatten #map
-	assert_equal([], start.specializations_that_match?(string_to_match))
+	assert_equal([VARCHAR_Column, Integer_Column], start.specializations_that_match?(string_to_match))
 end #specializations_that_match
 def test_most_specialized
 	start=GenericType.find_by_name('Text_Column')
@@ -139,24 +143,20 @@ def test_most_specialized
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
 	most_specialized=if start.match?(string_to_match) then
-		start.one_level_specializations.map do |specialization|
-			if specialization.match?(string_to_match) then
-				specs=specialization.most_specialized?(string_to_match)
-				assert_equal([], specs)
-				specs
-			else
-				nil
-			end #if
-		end.compact.uniq #map
+		start.specializations_that_match?(string_to_match)
 	else
 		start.generalize.most_specialized?(string_to_match)
 	end #if
 	assert_instance_of(Array, most_specialized)
 	assert_instance_of(GenericType, most_specialized[0])
-	assert_equal('Integer_Column', most_specialized[:import_class])
-	assert_instance_of(GenericType, start.most_specialized?('123'))
-	assert_equal('Integer_Column', start.most_specialized?('123'))
-	assert_equal('Macaddr_Column', start.most_specialized?('12:34:56:78'))
+	assert_equal([VARCHAR_Column, Integer_Column], most_specialized)
+	assert_instance_of(Array, start.most_specialized?('123'))
+	assert_instance_of(GenericType, start.most_specialized?('123')[0])
+	assert_equal([VARCHAR_Column, Integer_Column], start.most_specialized?('123'))
+	mac_example='12:34:56:78'
+	mac_match=RegexpMatch.new(Macaddr_Column[:data_regexp], mac_example)
+	assert_equal([], mac_match.matchSubTree)
+	assert_equal([Macaddr_Column], start.most_specialized?(mac_example))
 end #most_specialized
 def test_generalize
 	GenericType.all.each do |t|
