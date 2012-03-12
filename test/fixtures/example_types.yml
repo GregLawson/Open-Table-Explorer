@@ -59,7 +59,7 @@ alpha_0:
 blank_0:
   generic_type: blank
   inspect_value: '\t'
-  example_string: '\t'
+  example_string: "\t"
 cntrl_0:
   generic_type: cntrl
   inspect_value: "\n"
