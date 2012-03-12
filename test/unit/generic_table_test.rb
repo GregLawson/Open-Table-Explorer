@@ -27,6 +27,12 @@ def self.all
 	return TEST_ARRAY
 end #all
 end #TestData
+def test_column_symbols
+	assert_include('sample', BatteryMeasurement.methods)
+	wanted_columns=[:multimeter_id, :id, :created_at, :updated_at, :load_current_ma, :battery_id, :load_current_mA, :voltage, :status, :closed_circuit_current_ma]
+	column_names=@@model_class.column_symbols
+	assert_equal([], column_names-wanted_columns, "Unwanted columns:")
+end #column_symbols
 def test_sample_burst
 	assert_equal(TEST_ARRAY, TestData.all)
 	assert_equal(TEST_ARRAY, TestData.sample_burst(:first, 0, 10, 10))

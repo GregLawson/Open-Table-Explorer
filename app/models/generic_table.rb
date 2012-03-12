@@ -18,6 +18,11 @@ def Base.association_refs(class_reference=@@example_class_reference, association
 		klass=class_reference
 	else
 		klass=class_reference.class
+def self.column_symbols
+	column_names=sample.map do |r|
+		r.keys.map {|name| name.downcase.to_sym}
+	end.flatten.uniq #map
+end #column_symbols
 def sample_burst(sample_type, start, spacing, consecutive)
 	if consecutive>spacing then
 		raise "consecutive(#{consecutive})>spacing(#{spacing})"
