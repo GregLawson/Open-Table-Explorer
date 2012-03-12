@@ -128,3 +128,9 @@ solar_data_warehouse:
 solar_data_lmu:
   href: solar_data_lmu
   url: http://www.nrel.gov/midc/apps/daily.pl?site=LMU&start=20100406&yr=2012&mo=3&dy=4
+partitions:
+  href: partitions
+  url: file:/proc/partitions
+uuids:
+  href: uuids
+  url: shell:ls -l /dev/disk/by_uuid/*
