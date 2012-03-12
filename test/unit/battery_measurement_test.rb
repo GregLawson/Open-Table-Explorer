@@ -13,5 +13,7 @@ end #initialize
 def test_all
 	records=@@model_class.all
 	assert_not_empty(records)
+	assert_instance_of(Array, records)
+	assert_kind_of(Hash, records.first)
 end #all
 end #BatteryTest
