@@ -1,6 +1,7 @@
 # 1a) a regexp should match all examples from itself down the specialization tree.
 # 1b) an example should match its regexp and all generalization regexps above if
-# 2) an example should not match at least one of its specialization regexps
+# 2) an example should match zero or one of its specialization regexps
+# 2b) 
 # 3) example  strings should not equal specialization examples
 # 4) specialization regexps have fewer choices (including case) or more restricted repetition
 require 'test/test_helper'
