@@ -154,11 +154,12 @@ def test_most_specialized
 	assert_instance_of(GenericType, start.most_specialized?('123')[0])
 	assert_equal([VARCHAR_Column, Integer_Column], start.most_specialized?('123'))
 	mac_example='12:34:56:78'
-	mac_match=RegexpMatch.new(Macaddr_Column[:data_regexp], mac_example)
-	assert_equal([], mac_match.matchSubTree)
-	assert_equal([Macaddr_Column], start.most_specialized?(mac_example))
+	regexp=Macaddr_Column[:data_regexp]
+	mac_match=RegexpMatch.new(regexp, mac_example)
+	assert_equal([VARCHAR_Column, Macaddr_Column], start.most_specialized?(mac_example))
 end #most_specialized
 def test_generalize
+	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
 	GenericType.all.each do |t|
 		assert_not_equal(t[:generalize_id], 0, "t=#{t.inspect}")
 	end #each
@@ -170,7 +171,6 @@ def test_generalize
 			assert_instance_of(GenericType, t.generalize)
 		end #if
 	end #each
-	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
 end #generalize
 def test_assert_specialized_examples
 	regexp=GenericType.find_by_import_class('word')[:data_regexp]
