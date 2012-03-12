@@ -23,8 +23,10 @@ def assert_specialized_examples
 	assert_regexp(self[:data_regexp])
 	specializations.each do |s|
 		s.example_types.each do |e|
-			suggestions= RegexpTree.string_of_matching_chars(self[:data_regexp])
-			message= "self[:data_regexp]=#{self[:data_regexp].inspect}, s.example_types=#{e[:example_string].inspect}, suggestions=#{suggestions.inspect}"
+			regexp=self[:data_regexp]
+			assert_regexp(regexp)
+			suggestions= RegexpMatch.string_of_matching_chars(regexp)
+			message= "self[:data_regexp]=#{self[:data_regexp].inspect}, s.example_types=#{e[:example_string].inspect} of #{e.generic_type.inspect}, suggestions=#{suggestions.inspect}"
 			assert_match(Regexp.new(self[:data_regexp]), e[:example_string], message)
 		end #each
 	end #each
