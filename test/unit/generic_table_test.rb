@@ -12,7 +12,7 @@ require 'test_helper.rb'
 require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
 include Generic_Table
-include GenericTableAssertions
+#include GenericTableAssertions
 @@table_name='stream_patterns'
 	fixtures :table_specs
 	fixtures :acquisition_stream_specs
