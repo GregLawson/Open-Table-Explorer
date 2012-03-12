@@ -12,12 +12,6 @@ module ClassMethods
 include GenericTableHtml::ClassMethods
 include GenericGrep::ClassMethods
 include ColumnGroup::ClassMethods
-# apply block to an association
-def Base.association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
-	if class_reference.kind_of?(Class) then
-		klass=class_reference
-	else
-		klass=class_reference.class
 def self.column_symbols
 	column_names=sample.map do |r|
 		r.keys.map {|name| name.downcase.to_sym}
@@ -27,10 +21,6 @@ def sample_burst(sample_type, start, spacing, consecutive)
 	if consecutive>spacing then
 		raise "consecutive(#{consecutive})>spacing(#{spacing})"
 	end #if
-	association_reference=association_reference.to_sym
-	block.call(class_reference, association_reference)
-end #association_refs
-module ClassMethods
 	case sample_type
 	when :first, :random
 		return all[start, consecutive]
@@ -62,13 +52,6 @@ end #sample
 def model_file_name
 	return "app/models/#{name.tableize.singularize}.rb"
 end #model_file_name
-def Base.is_active_record_method?(method_name)
-	if ActiveRecord::Base.instance_methods_from_class(true).include?(method_name.to_s) then
-		return true
-	else
-		return false
-	end #if
-end #is_active_record_method
 # Whether primay logical key has been overridden 
 # or ActiveRecord::Base.logical_primary_key is used.
 # nil returned if overridden.
