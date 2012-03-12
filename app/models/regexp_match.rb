@@ -7,15 +7,15 @@
 ###########################################################################
 module Match_Addressing
 # Rescue bad regexp and return nil
-def matchRescued(regexp)
+def matchRescued(regexp, string_to_match)
 	begin
-		matchData=Regexp.new(regexp.to_s,Regexp::MULTILINE).match(@dataToParse)
+		matchData=Regexp.new(regexp.to_s,Regexp::MULTILINE).match(string_to_match)
 	rescue RegexpError
 		return nil
 	end
 end
-def numMatches(parseTree)
-	matchData=Regexp.new(parseTree[0,i],Regexp::MULTILINE).match(@dataToParse)
+def numMatches(parseTree, string_to_match)
+	matchData=Regexp.new(parseTree[0,i],Regexp::MULTILINE).match(string_to_match)
 	if matchData.nil? then 
 		return 0
 	else
@@ -26,7 +26,7 @@ end #module
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch < RegexpTree
 attr_reader :dataToParse
-include Match_Addressing
+extend Match_Addressing
 def initialize(regexp,dataToParse)
 	super(regexp)
 	@dataToParse=dataToParse
@@ -146,6 +146,14 @@ def consecutiveMatch(increment,startPos,endPos)
 		return lastMatch
 	end #if
 end #consecutiveMatch
-
-
+def self.string_of_matching_chars(regexp)
+	Ascii_characters.select do |char|
+		if matchRescued(regexp, char) then
+			char
+		else
+			nil
+		end #if
+	end #select
+	
+end #string_of_matching_chars
 end #class

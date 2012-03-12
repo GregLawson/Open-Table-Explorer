@@ -105,10 +105,8 @@ def test_assert_match
 	assert_match(/[[:xdigit:]]{2}(:[[:xdigit:]]{2}){3}/, mac_example)
 	data_regexp=Macaddr_Column[:data_regexp]
 	assert_match(Regexp.new(data_regexp), mac_example)
-	assert_match(data_regexp, mac_example)
+#	assert_match(data_regexp, mac_example)
 	mac_match=RegexpMatch.new(data_regexp, mac_example)
-	assert_equal([], mac_match.matchSubTree)
-	assert_equal([Macaddr_Column], start.most_specialized?(mac_example))
 	
 end #assert_match
 def test_matchSubTree
@@ -187,6 +185,33 @@ def test_consecutiveMatch
 	assert(matchData)
 	assert_equal(2..2,matchFail.consecutiveMatch(-1,2,2))
 end #consecutiveMatch
+def test_string_of_matching_chars
+	regexp=Regexp.new('\d')
+	char='9'
+	assert_match(regexp, char)
+	ascii_characters=(0..255).to_a.map { |i| i.chr}
+	assert_equal(256, ascii_characters.size)
+	assert_equal(['1','2','3'], ("\x31".."\x33").to_a)
+	assert_equal(['A','B','C'], ("\x41".."\x43").to_a)
+	assert_equal(['Q','R','S'], ("\x51".."\x53").to_a)
+	assert_equal(['a','b','c'], ("\x61".."\x63").to_a)
+	matches=(("\x31".."\x33").to_a.select do |char|
+		if regexp.match(char) then
+			char
+		else
+			nil
+		end #if
+	end) #select
+	assert_equal('123', matches.join)
+	assert_match(/[a-z]/, 'a')
+	assert_equal('123', RegexpMatch.string_of_matching_chars(Regexp.new('[1-3]')).join)
+	assert_equal('123', RegexpMatch.string_of_matching_chars(Regexp.new(/[1-3]/)).join)
+	assert_equal('0123456789', RegexpMatch.string_of_matching_chars(Regexp.new(/\d/)).join)
+	assert_equal('0123456789', RegexpMatch.string_of_matching_chars(/[0-9]/).join)
+	assert_equal('abcdefghijklmnopqrstuvwxyz'.upcase, RegexpMatch.string_of_matching_chars(/[A-Z]/).join)
+	assert_equal('abcdefghijklmnopqrstuvwxyz', RegexpMatch.string_of_matching_chars(/[a-z]/).join)
+	assert_equal('abcdefghijklmnopqrstuvwxyz', RegexpMatch.string_of_matching_chars(Regexp.new('[a-z]')).join)
+end #string_of_matching_chars
 def test_editor
 
 

@@ -138,14 +138,4 @@ def to_regexp
 end #to_regexp
 Ascii_characters=(0..255).to_a.map { |i| i.chr}
 #y caller
-def self.string_of_matching_chars(regexp)
-	Ascii_characters.select do |char|
-		if regexp.match(char) then
-			char
-		else
-			nil
-		end #if
-	end #select
-	
-end #string_of_matching_chars
 end #class
