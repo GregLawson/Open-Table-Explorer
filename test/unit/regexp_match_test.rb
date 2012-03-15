@@ -114,7 +114,7 @@ def test_matchSubTree
 	candidateParseTree=RegexpMatch.new('KC',string_to_parse)
 	assert_equal(['K',['.', '*'],'C'],candidateParseTree.matchSubTree)
 	assert_equal(['K'],RegexpMatch.new('K',string_to_parse).matchSubTree)
-	assert_not_nil(KCETeditor.matchRescued(RegexpTree.new(KCETeditor.matchSubTree)))
+	assert_not_nil(RegexpMatch.matchRescued(RegexpTree.new(KCETeditor.matchSubTree), KCETeditor.dataToParse))
 	expectedParse=["K",
 	"C",
 	"E",
@@ -180,7 +180,7 @@ def test_consecutiveMatch
 	assert_nil(matchFail.consecutiveMatch(-1,1,1))
 	startPos=2
 	endPos=2
-	matchData=matchFail.matchRescued(matchFail[startPos..endPos])
+	matchData=RegexpMatch.matchRescued(matchFail[startPos..endPos], matchFail.dataToParse)
 	assert_equal(['C'], matchFail[startPos..endPos])
 	assert(matchData)
 	assert_equal(2..2,matchFail.consecutiveMatch(-1,2,2))

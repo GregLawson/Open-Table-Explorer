@@ -5,9 +5,19 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# Class methods
 module Match_Addressing
 # Rescue bad regexp and return nil
 def matchRescued(regexp, string_to_match)
+	if regexp.instance_of?(String) then
+		regexp=Regexp.new(regexp, Regexp::MULTILINE)
+	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
+		regexp=Regexp.new(regexp.to_s, Regexp::MULTILINE)
+	elsif !regexp.instance_of?(Regexp) then
+		raise "Unexpected regexp.class=#{regexp.class}."
+	end #if
+	raise "regexp=#{regexp.inspect} must be Regexp." unless regexp.instance_of?(Regexp)
+	raise "string_to_match=#{string_to_match.inspect} must be String." unless string_to_match.instance_of?(String)
 	begin
 		matchData=Regexp.new(regexp.to_s,Regexp::MULTILINE).match(string_to_match)
 	rescue RegexpError
@@ -37,7 +47,7 @@ end #initialize
 def matchSubTree
 	if empty? then
 		return ''
-	elsif matchRescued(to_regexp) then
+	elsif RegexpMatch.matchRescued(to_regexp, @dataToParse) then
 		return self
 	elsif kind_of?(Array) then 
 		matchedTreeArray
@@ -123,7 +133,7 @@ def consecutiveMatch(increment,startPos,endPos)
 #	# Global::log.info("consecutiveMatch begins with self.inspect=#{self.inspect},increment=#{increment},startPos=#{startPos},endPos=#{endPos}")
 #	assert(startPos<=endPos)
 	begin # until
-		matchData=matchRescued(self[startPos..endPos])
+		matchData=RegexpMatch.matchRescued(self[startPos..endPos], @dataToParse)
 #		matchDisplay(self[startPos..endPos]to_s) #if $VERBOSE
 		if matchData then
 			# Global::log.info("matchData startPos=#{startPos}, endPos=#{endPos}")
@@ -148,7 +158,7 @@ def consecutiveMatch(increment,startPos,endPos)
 end #consecutiveMatch
 def self.string_of_matching_chars(regexp)
 	Ascii_characters.select do |char|
-		if matchRescued(regexp, char) then
+		if RegexpMatch.matchRescued(regexp, char) then
 			char
 		else
 			nil
