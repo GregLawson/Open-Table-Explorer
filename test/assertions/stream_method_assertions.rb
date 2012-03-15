@@ -6,13 +6,15 @@
 #
 ###########################################################################
 require 'test/test_helper'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
+class String
+def to_exact_regexp
+	return Regexp.new(Regexp.escape(self))
+end #to_exact_regexp
+end #String
 class StreamMethod < ActiveRecord::Base
 include Test::Unit::Assertions
 require 'rails/test_help'
-def assert_no_syntax_error(code)
+def self.assert_no_syntax_error(code)
 	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
 	instance_eval(method_def)
 	return true
@@ -98,6 +100,38 @@ def assert_compile_code
 		assert(!acq.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
 	end #each_value
 end #compile_code
+def assert_syntax_error(field=nil, expected_error_message_regexp=nil)
+	assert_instance_of(ActiveModel::Errors, errors)
+	assert_instance_of(Array, errors.keys)
+	assert_instance_of(Array, errors.values)
+	if field.nil? then
+		assert_syntax_error(:interface_code)
+		assert_syntax_error(:rescue_code)
+		assert_syntax_error(:return_code)
+		assert_empty(syntax_errors?)
+	elsif expected_error_message_regexp.nil? then
+		assert_empty(errors[field],"errors[#{field}]=#{errors[field]}")
+	else
+		message="errors[#{field}]=#{errors[field]}"
+		assert_instance_of(ActiveModel::Errors, errors, message)
+		assert_instance_of(Array, errors.keys, message)
+		assert_instance_of(Array, errors.values, message)
+		assert_instance_of(Symbol, errors.keys[0], message)
+		assert_include(field, errors.keys, message)
+		assert_instance_of(Array, errors.values[0], message)
+		assert_instance_of(String, errors.values[0][0], message)
+		assert_not_nil(syntax_errors?, message)
+		assert_instance_of(Array, errors[field], message)
+		assert_equal(1, errors[field].size, message)
+		assert_operator(1, :<=, errors.size, message)
+		errors[field].each do |error|
+			assert_instance_of(String, error, message)
+			assert_match(expected_error_message_regexp, error, message)
+		end #each
+	end #if
+	expected_errors=ActiveSupport::OrderedHash[[:interface_code, ["SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"]], nil]
+	assert_not_nil(expected_errors)
+end #assert_no_syntax_error
 def assert_input_stream_names
 	acq=stream_methods(:HTTP)
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
@@ -114,19 +148,31 @@ def assert_output_stream_names
 	assert_equal(['acquisition'], acq.output_stream_names)
 
 end #output_stream_names
-def fire_check(interface_code, interface_code_errors, acquisition_errors)
-	stream_method=StreamMethod.new
-	stream_method[:interface_code]=interface_code
-	assert_instance_of(StreamMethod,stream_method)
-#	puts "stream_method.matching_methods(/code/).inspect=#{stream_method.matching_methods(/code/).inspect}"
-	stream_method.compile_code!
-	stream_method[:uri]='http://192.168.100.1'
-	assert(stream_method.has_attribute?(:uri))
-	assert(!stream_method.has_attribute?(:errors))
-	assert_equal(ActiveModel::Errors.new('err'), stream_method.errors)
-	assert_equal([], stream_method.errors.full_messages)
+def assert_field_firing_error(field=nil, expected_error_message_regexp=nil)
+	assert_syntax_error(field, expected_error_message_regexp)
+	assert_instance_of(ActiveModel::Errors, errors)
+	assert_instance_of(Array, errors.keys)
+	assert_instance_of(Array, errors.values)
+	if field.nil? then
+		assert_syntax_error(:interface_code)
+		assert_syntax_error(:rescue_code)
+		assert_syntax_error(:return_code)
+		assert_empty(syntax_errors?)
+	elsif expected_error_message_regexp.nil? then
+		assert_empty(errors[field],"errors[#{field}]=#{errors[field]}")
+	else
+	end #if
+	self[:interface_code]=interface_code
+	assert_instance_of(StreamMethod,self)
+#	puts "self.matching_methods(/code/).inspect=#{self.matching_methods(/code/).inspect}"
+	self.compile_code!
+	self[:uri]='http://192.168.100.1'
+	assert(self.has_attribute?(:uri))
+	assert(!self.has_attribute?(:errors))
+	assert_equal(ActiveModel::Errors.new('err'), self.errors)
+	assert_equal([], self.errors.full_messages)
 
-	firing=stream_method.fire!
+	firing=self.fire!
 	assert_equal(interface_code_errors, firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
 	assert_equal(acquisition_errors, firing.errors[:acquisition])
 	assert_not_empty(firing.errors)
@@ -135,10 +181,10 @@ def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	assert_instance_of(Array, firing.errors.full_messages)
 	assert_instance_of(StreamMethod, firing)
 	assert_kind_of(StreamMethod, firing)
-	assert_equal(firing, stream_method)
+	assert_equal(firing, self)
 	assert_equal('http://192.168.100.1', firing.uri)
 	firing.errors.clear # so we can run more tests
-end #fire_check
+end #assert_field_firing_error
 def assert_fire
 	acq=stream_methods(:HTTP)
 	fire_check(acq.interface_code, ['#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>'], ['is empty.'])

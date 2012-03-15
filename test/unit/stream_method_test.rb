@@ -6,10 +6,22 @@
 #
 ###########################################################################
 require 'test/test_helper'
+require 'test/assertions/stream_method_assertions.rb'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class StreamMethodTest < ActiveSupport::TestCase
+def test_to_exact_regexp
+	unambiguous_string=%{abc0123}
+	assert_match(Regexp.new(unambiguous_string), unambiguous_string)
+	assert_equal(unambiguous_string, Regexp.new(unambiguous_string).source)
+	assert_match(unambiguous_string.to_exact_regexp, unambiguous_string)
+	ambiguous_string=%{()[]{}.?+*}
+	assert_match(Regexp.new(Regexp.escape(ambiguous_string)), ambiguous_string)
+	assert_equal(Regexp.escape(ambiguous_string), Regexp.new(Regexp.escape(ambiguous_string)).source)
+	assert_match(Regexp.new(Regexp.escape(ambiguous_string)), ambiguous_string)
+	assert_match(ambiguous_string.to_exact_regexp, ambiguous_string)
+end #to_exact_regexp
 set_class_variables
 def acq_and_rescue
 	stream=acquisition_stream_specs(@testURL.to_sym)
@@ -71,12 +83,14 @@ def test_eval_method
 	assert_not_nil(acq.interface_code_rows)
 end #eval_method
 def test_compile_code
+# test one case
 	acq=stream_methods(:HTTP)
 	assert_instance_of(StreamMethod,acq)
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
 	assert_not_nil(acq)
-	StreamMethod.all.each_value do |sm|
+# test all cases
+	StreamMethod.all.each do |sm|
 		assert_instance_of(StreamMethod,sm)
 #		puts "sm.matching_methods(/code/).inspect=#{sm.matching_methods(/code/).inspect}"
 		sm.compile_code!
@@ -91,40 +105,59 @@ def test_compile_code
 	end #each_value
 end #compile_code
 def test_syntax_error
-	sm=stream_methods(:HTTP)
+	sm=stream_methods(:HTTP).clone
 	sm.compile_code!
-	assert_empty(sm.syntax_errors?)
-	sm=stream_methods(:HTTP)
+	assert_empty(sm.errors.keys)
+	sm.assert_syntax_error
+
+	sm=stream_methods(:HTTP).clone # reinitialize from fixture
 	sm.interface_code='***'
 	sm.compile_code!
-	assert_instance_of(ActiveModel::Errors, sm.errors)
-	assert_instance_of(Array, sm.errors.keys)
-	assert_instance_of(Array, sm.errors.values)
-	assert_instance_of(Symbol, sm.errors.keys[0])
-	assert_equal([:interface_code], sm.errors.keys)
-	assert_instance_of(Array, sm.errors.values[0])
-	assert_instance_of(String, sm.errors.values[0][0])
-	expected_error_message="SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"
-	expected_errors=ActiveSupport::OrderedHash[[:interface_code, ["SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"]], nil]
-	assert_not_nil(expected_errors)
+	expected_interface_error_message= %{SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>}
+	expected_errors=ActiveModel::Errors.new(self)
+	expected_errors.add(:interface_code, expected_interface_error_message)
 	assert_equal(expected_errors, sm.errors)
-	explain_assert_equal(expected_errors, '')
-	explain_assert_equal(expected_errors, sm.errors)
-	assert_equal([expected_error_message], sm.errors[:interface_code],"interface_code=#{sm[:interface_code]}")
-	assert_equal([expected_error_message], sm.syntax_errors?)
-	assert_not_empty(sm.syntax_errors?)
+	sm.assert_syntax_error(:rescue_code)
+	sm.assert_syntax_error(:return_code)
+	sm.assert_syntax_error(:interface_code, expected_interface_error_message.to_exact_regexp)
+#	assert_equal(expected_errors, sm.errors)
+	assert_equal([expected_interface_error_message], sm.errors[:interface_code],"interface_code=#{sm[:interface_code]}")
+	assert_equal([expected_interface_error_message], sm.syntax_errors?)
+# try different error
+	sm=stream_methods(:HTTP).clone # reinitialize from fixture
+	sm.return_code='***'
+	sm.compile_code!
+#	assert_equal('***', sm.interface_code)
+	sm.assert_syntax_error(:interface_code)
+	sm.assert_syntax_error(:rescue_code)
+	expected_return_error_message= %{SyntaxError: #<SyntaxError: (eval):3:in `eval_method': compile error\n(eval):2: syntax error, unexpected tPOW>}
+	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
+	sm.assert_syntax_error(:return_code, expected_return_error_message.to_exact_regexp)
+# try third error
+	sm=stream_methods(:HTTP).clone # reinitialize from fixture
 	sm.rescue_code='***'
 	sm.compile_code!
+#	assert_equal('***', sm.interface_code)
+	sm.assert_syntax_error(:interface_code)
+	sm.assert_syntax_error(:return_code)
+	expected_rescue_error_message= %{SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):2: syntax error, unexpected tPOW, expecting kTHEN or ':' or '\\n' or ';'\nrescue ***\n         ^>}
 	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
+	sm.assert_syntax_error(:rescue_code, expected_rescue_error_message.to_exact_regexp)
 	assert_instance_of(String, sm.errors[:rescue_code][0],"rescue_code=#{sm[:rescue_code]}")
-	assert_equal([expected_error_message], sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
-	assert_equal([expected_error_message], sm.syntax_errors?)
-	assert_not_empty(sm.syntax_errors?)
+	assert_equal([expected_rescue_error_message], sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
+# try multiple errors
 	sm.interface_code='***'
 	sm.compile_code!
-	assert_equal([expected_error_message], sm.errors[:return_code],"return_code=#{sm[:return_code]}")
-	assert_equal([expected_error_message], sm.syntax_errors?)
-	assert_not_empty(sm.syntax_errors?)
+	sm.assert_syntax_error(:return_code)
+	sm.assert_syntax_error(:interface_code, expected_interface_error_message.to_exact_regexp)
+	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
+	sm.assert_syntax_error(:rescue_code, expected_rescue_error_message.to_exact_regexp)
+# now check all stream_methods
+	StreamMethod.all.each  do |sm|
+		sm.compile_code!
+#		assert_empty(sm.errors.keys)
+		sm.assert_syntax_error
+	end #each
 end #syntax_error
 def test_input_stream_names
 	acq=stream_methods(:HTTP)
@@ -144,6 +177,7 @@ def test_output_stream_names
 end #output_stream_names
 def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	stream_method=StreamMethod.new
+	stream_method.assert_field_firing_error
 	stream_method[:interface_code]=interface_code
 	assert_instance_of(StreamMethod,stream_method)
 #	puts "stream_method.matching_methods(/code/).inspect=#{stream_method.matching_methods(/code/).inspect}"
@@ -169,6 +203,15 @@ def fire_check(interface_code, interface_code_errors, acquisition_errors)
 end #fire_check
 def test_fire
 	acq=stream_methods(:HTTP)
+	acq.assert_syntax_error # make sure there are no lingering (uninitialized) errors
+	acq.compile_code!
+	acq.assert_syntax_error # asume compilation errors have been all taken care of , earlier
+	acq[:uri]=Url.find_by_name('Cable Modem')
+	firing=acq.fire!
+	acq.assert_syntax_error(:rescue_code)
+	acq.assert_syntax_error(:return_code)
+	expected_interface_error_message=%{#<NoMethodError: undefined method `uri' for #<Url:0xb5f22960>>}
+	acq.assert_syntax_error(:interface_code, expected_interface_error_message.to_exact_regexp)
 	fire_check(acq.interface_code, ['#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>'], ['is empty.'])
 	fire_check(acq.default_method, [], [])
 	assert_equal("http://192.168.100.1", acq[:acquisition])
