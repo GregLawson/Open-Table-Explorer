@@ -12,11 +12,6 @@ module ClassMethods
 include GenericTableHtml::ClassMethods
 include GenericGrep::ClassMethods
 include ColumnGroup::ClassMethods
-def self.column_symbols
-	column_names=sample.map do |r|
-		r.keys.map {|name| name.downcase.to_sym}
-	end.flatten.uniq #map
-end #column_symbols
 def sample_burst(sample_type, start, spacing, consecutive)
 	if consecutive>spacing then
 		raise "consecutive(#{consecutive})>spacing(#{spacing})"
@@ -30,6 +25,10 @@ def sample_burst(sample_type, start, spacing, consecutive)
 		raise "Unknown sample type=#{sample_type}. Expected values are :first, :Last."
 	end #case
 end #sample_burst
+# return a statified or random sample
+# returns a nested array of sample records
+# Usually you will want sample.flatten
+# The nested structure is available for plotting (say different colors) to see locality and trends.
 def sample(samples_wanted=100, sample_type=:first, consecutive=1)
 	size=all.size
 	samples_returned=[samples_wanted, size].min
@@ -124,6 +123,14 @@ def one_pass_statistics(column_name)
     :has_id => has_id
     }
 end #one_pass_statistics
+# To detect collisions between attributes as methods and ActiveRecord methods.
+def is_active_record_method?(method_name)
+	if ActiveRecord::Base.instance_methods_from_class(true).include?(method_name.to_s) then
+		return true
+	else
+		return false
+	end #if
+end #is_active_record_method
 end #ClassMethods
 end #Common
 module ActiveRecord
@@ -520,6 +527,14 @@ include Generic_Table
 include ActiveModel
 include Common
 extend Common::ClassMethods
+module ClassMethods
+include Common::ClassMethods
+def column_symbols
+	column_names=sample.flatten.map do |r|
+		r.keys.map {|name| name.downcase.to_sym}
+	end.flatten.uniq #map
+end #column_symbols
+end #ClassMethods
 def initialize(hash=nil)
 
 

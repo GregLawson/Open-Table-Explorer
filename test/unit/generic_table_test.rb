@@ -13,6 +13,7 @@ require 'test/test_helper_test_tables.rb'
 class GenericTableTest < ActiveSupport::TestCase
 include Generic_Table
 #include GenericTableAssertions
+set_class_variables BatteryMeasurement
 @@table_name='stream_patterns'
 	fixtures :table_specs
 	fixtures :acquisition_stream_specs
@@ -27,12 +28,6 @@ def self.all
 	return TEST_ARRAY
 end #all
 end #TestData
-def test_column_symbols
-	assert_include('sample', BatteryMeasurement.methods)
-	wanted_columns=[:multimeter_id, :id, :created_at, :updated_at, :load_current_ma, :battery_id, :load_current_mA, :voltage, :status, :closed_circuit_current_ma]
-	column_names=@@model_class.column_symbols
-	assert_equal([], column_names-wanted_columns, "Unwanted columns:")
-end #column_symbols
 def test_sample_burst
 	assert_equal(TEST_ARRAY, TestData.all)
 	assert_equal(TEST_ARRAY, TestData.sample_burst(:first, 0, 10, 10))
@@ -68,6 +63,12 @@ def test_sample
 		TestData.sample(TEST_SIZE, :random, 1)
 	end #map
 	assert_equal(TEST_ARRAY, many_random.flatten.sort.uniq.reverse)
+	BatteryMeasurement.all.each do |r|
+		assert_instance_of(Hash, r)
+	end #each
+	BatteryMeasurement.sample.flatten.each do |r|
+		assert_instance_of(Hash, r)
+	end #each
 end #sample
 def test_model_file_name
 end #model_file_name
@@ -141,7 +142,7 @@ end #active_record_method
 def test_association_refs
 	class_reference=StreamPattern
 	association_reference=:stream_methods
-	ActiveRecord::Base.association_refs(class_reference, association_reference) do |class_reference, association_reference|
+	class_reference.association_refs(class_reference, association_reference) do |class_reference, association_reference|
 	assert_instance_of(Symbol,association_reference,"In association_refs, association_reference=#{association_reference} must be a Symbol.")
 	assert_instance_of(Class,class_reference,"In test_is_association, class_reference=#{class_reference} must be a Class.")
 #	assert_kind_of(ActiveRecord::Base,class_reference)
@@ -241,5 +242,16 @@ def setup
 end #setup
 def test_NoDB
 end #NoDB
+def test_column_symbols
+	assert_include('sample', BatteryMeasurement.methods(true)) # checks immediate class and included modules
+	sample=BatteryMeasurement.sample
+	column_symbols=sample.flatten.map do |r|
+		assert_instance_of(Hash, r)
+		r.keys.map {|name| name.downcase.to_sym}
+	end.flatten.uniq #map
+	column_symbols=@@model_class.column_symbols
+	wanted_columns=[:multimeter_id, :id, :created_at, :updated_at, :load_current_ma, :battery_id, :load_current_mA, :voltage, :status, :closed_circuit_current_ma]
+	assert_equal([], column_symbols-wanted_columns, "Unwanted columns:")
+end #column_symbols
 
 end #test class
