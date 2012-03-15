@@ -100,14 +100,14 @@ def assert_compile_code
 		assert(!acq.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
 	end #each_value
 end #compile_code
-def assert_syntax_error(field=nil, expected_error_message_regexp=nil)
+def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
 	assert_instance_of(ActiveModel::Errors, errors)
 	assert_instance_of(Array, errors.keys)
 	assert_instance_of(Array, errors.values)
 	if field.nil? then
-		assert_syntax_error(:interface_code)
-		assert_syntax_error(:rescue_code)
-		assert_syntax_error(:return_code)
+		assert_active_model_error(:interface_code)
+		assert_active_model_error(:rescue_code)
+		assert_active_model_error(:return_code)
 		assert_empty(syntax_errors?)
 	elsif expected_error_message_regexp.nil? then
 		assert_empty(errors[field],"errors[#{field}]=#{errors[field]}")
@@ -149,19 +149,7 @@ def assert_output_stream_names
 
 end #output_stream_names
 def assert_field_firing_error(field=nil, expected_error_message_regexp=nil)
-	assert_syntax_error(field, expected_error_message_regexp)
-	assert_instance_of(ActiveModel::Errors, errors)
-	assert_instance_of(Array, errors.keys)
-	assert_instance_of(Array, errors.values)
-	if field.nil? then
-		assert_syntax_error(:interface_code)
-		assert_syntax_error(:rescue_code)
-		assert_syntax_error(:return_code)
-		assert_empty(syntax_errors?)
-	elsif expected_error_message_regexp.nil? then
-		assert_empty(errors[field],"errors[#{field}]=#{errors[field]}")
-	else
-	end #if
+	assert_active_model_error(field, expected_error_message_regexp)
 	self[:interface_code]=interface_code
 	assert_instance_of(StreamMethod,self)
 #	puts "self.matching_methods(/code/).inspect=#{self.matching_methods(/code/).inspect}"

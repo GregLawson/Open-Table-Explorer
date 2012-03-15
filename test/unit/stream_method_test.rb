@@ -108,7 +108,7 @@ def test_syntax_error
 	sm=stream_methods(:HTTP).clone
 	sm.compile_code!
 	assert_empty(sm.errors.keys)
-	sm.assert_syntax_error
+	sm.assert_active_model_error
 
 	sm=stream_methods(:HTTP).clone # reinitialize from fixture
 	sm.interface_code='***'
@@ -117,9 +117,9 @@ def test_syntax_error
 	expected_errors=ActiveModel::Errors.new(self)
 	expected_errors.add(:interface_code, expected_interface_error_message)
 	assert_equal(expected_errors, sm.errors)
-	sm.assert_syntax_error(:rescue_code)
-	sm.assert_syntax_error(:return_code)
-	sm.assert_syntax_error(:interface_code, expected_interface_error_message.to_exact_regexp)
+	sm.assert_active_model_error(:rescue_code)
+	sm.assert_active_model_error(:return_code)
+	sm.assert_active_model_error(:interface_code, expected_interface_error_message.to_exact_regexp)
 #	assert_equal(expected_errors, sm.errors)
 	assert_equal([expected_interface_error_message], sm.errors[:interface_code],"interface_code=#{sm[:interface_code]}")
 	assert_equal([expected_interface_error_message], sm.syntax_errors?)
@@ -128,35 +128,35 @@ def test_syntax_error
 	sm.return_code='***'
 	sm.compile_code!
 #	assert_equal('***', sm.interface_code)
-	sm.assert_syntax_error(:interface_code)
-	sm.assert_syntax_error(:rescue_code)
+	sm.assert_active_model_error(:interface_code)
+	sm.assert_active_model_error(:rescue_code)
 	expected_return_error_message= %{SyntaxError: #<SyntaxError: (eval):3:in `eval_method': compile error\n(eval):2: syntax error, unexpected tPOW>}
 	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
-	sm.assert_syntax_error(:return_code, expected_return_error_message.to_exact_regexp)
+	sm.assert_active_model_error(:return_code, expected_return_error_message.to_exact_regexp)
 # try third error
 	sm=stream_methods(:HTTP).clone # reinitialize from fixture
 	sm.rescue_code='***'
 	sm.compile_code!
 #	assert_equal('***', sm.interface_code)
-	sm.assert_syntax_error(:interface_code)
-	sm.assert_syntax_error(:return_code)
+	sm.assert_active_model_error(:interface_code)
+	sm.assert_active_model_error(:return_code)
 	expected_rescue_error_message= %{SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):2: syntax error, unexpected tPOW, expecting kTHEN or ':' or '\\n' or ';'\nrescue ***\n         ^>}
 	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
-	sm.assert_syntax_error(:rescue_code, expected_rescue_error_message.to_exact_regexp)
+	sm.assert_active_model_error(:rescue_code, expected_rescue_error_message.to_exact_regexp)
 	assert_instance_of(String, sm.errors[:rescue_code][0],"rescue_code=#{sm[:rescue_code]}")
 	assert_equal([expected_rescue_error_message], sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
 # try multiple errors
 	sm.interface_code='***'
 	sm.compile_code!
-	sm.assert_syntax_error(:return_code)
-	sm.assert_syntax_error(:interface_code, expected_interface_error_message.to_exact_regexp)
+	sm.assert_active_model_error(:return_code)
+	sm.assert_active_model_error(:interface_code, expected_interface_error_message.to_exact_regexp)
 	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
-	sm.assert_syntax_error(:rescue_code, expected_rescue_error_message.to_exact_regexp)
+	sm.assert_active_model_error(:rescue_code, expected_rescue_error_message.to_exact_regexp)
 # now check all stream_methods
 	StreamMethod.all.each  do |sm|
 		sm.compile_code!
 #		assert_empty(sm.errors.keys)
-		sm.assert_syntax_error
+		sm.assert_active_model_error
 	end #each
 end #syntax_error
 def test_input_stream_names
@@ -177,6 +177,7 @@ def test_output_stream_names
 end #output_stream_names
 def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	stream_method=StreamMethod.new
+	stream_method.assert_active_model_error(field, expected_error_message_regexp)
 	stream_method.assert_field_firing_error
 	stream_method[:interface_code]=interface_code
 	assert_instance_of(StreamMethod,stream_method)
@@ -203,15 +204,15 @@ def fire_check(interface_code, interface_code_errors, acquisition_errors)
 end #fire_check
 def test_fire
 	acq=stream_methods(:HTTP)
-	acq.assert_syntax_error # make sure there are no lingering (uninitialized) errors
+	acq.assert_active_model_error # make sure there are no lingering (uninitialized) errors
 	acq.compile_code!
-	acq.assert_syntax_error # asume compilation errors have been all taken care of , earlier
+	acq.assert_active_model_error # asume compilation errors have been all taken care of , earlier
 	acq[:uri]=Url.find_by_name('Cable Modem')
 	firing=acq.fire!
-	acq.assert_syntax_error(:rescue_code)
-	acq.assert_syntax_error(:return_code)
+	acq.assert_active_model_error(:rescue_code)
+	acq.assert_active_model_error(:return_code)
 	expected_interface_error_message=%{#<NoMethodError: undefined method `uri' for #<Url:0xb5f22960>>}
-	acq.assert_syntax_error(:interface_code, expected_interface_error_message.to_exact_regexp)
+	acq.assert_active_model_error(:interface_code, expected_interface_error_message.to_exact_regexp)
 	fire_check(acq.interface_code, ['#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>'], ['is empty.'])
 	fire_check(acq.default_method, [], [])
 	assert_equal("http://192.168.100.1", acq[:acquisition])
