@@ -15,5 +15,8 @@ def test_all
 	assert_not_empty(records)
 	assert_instance_of(Array, records)
 	assert_kind_of(Hash, records.first)
+	BatteryMeasurement.all.each do |r|
+		assert_instance_of(Hash, r)
+	end #each
 end #all
 end #BatteryTest
