@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'app/models/global.rb'
+#require 'test/assertions/generic_table_assertions.rb'
 # Methods in common bettween ActiveRecord::Base and NoDB
 module Common
 module ClassMethods
@@ -132,6 +133,9 @@ def is_active_record_method?(method_name)
 	end #if
 end #is_active_record_method
 end #ClassMethods
+include GenericTableHtml
+include GenericGrep
+include ColumnGroup
 end #Common
 module ActiveRecord
 
