@@ -134,3 +134,33 @@ partitions:
 uuids:
   href: uuids
   url: shell:ls -l /dev/disk/by_uuid/*
+scsi:
+  href: scsi
+  url:file:/proc/scsi/scsi
+disk-by-path:
+  href: disk-by-path
+  url: shell:ls -l /dev/disk/by-path/* 
+scsi-model:
+  href: scsi-model
+  url: shell:head /sys/bus/scsi/devices/[0-9]*/{model,vendor}
+driver:
+  href: driver
+  url: shell:head /sys/bus/*/drivers/*/*/interface
+uevent2:
+  href: uevent2
+  url: shell:head /sys/*/*/uevent
+uevent3:
+  href: uevent3
+  url: shell:head /sys/*/*/*/uevent
+uevent4:
+  href: uevent4
+  url: shell:head /sys/*/*/*/*/uevent
+uevent5:
+  href: uevent5
+  url: shell:head /sys/*/*/*/*/*/uevent
+uevent6:
+  href: uevent6
+  url: shell:head /sys/*/*/*/*/*/*/uevent
+uevent7module:
+  href: uevent7module
+  url: shell:head /sys/module/*/*/*/*/*/*/uevent
