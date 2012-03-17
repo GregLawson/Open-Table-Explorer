@@ -10,16 +10,16 @@ module Match_Addressing
 # Rescue bad regexp and return nil
 def matchRescued(regexp, string_to_match)
 	if regexp.instance_of?(String) then
-		regexp=Regexp.new(regexp, Regexp::MULTILINE)
+		regexp=Regexp.new(regexp, Regexp::EXTENDED | Regexp::MULTILINE)
 	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=Regexp.new(regexp.to_s, Regexp::MULTILINE)
+		regexp=Regexp.new(regexp.to_s,Regexp::EXTENDED | Regexp::MULTILINE)
 	elsif !regexp.instance_of?(Regexp) then
 		raise "Unexpected regexp.class=#{regexp.class}."
 	end #if
 	raise "regexp=#{regexp.inspect} must be Regexp." unless regexp.instance_of?(Regexp)
 	raise "string_to_match=#{string_to_match.inspect} must be String." unless string_to_match.instance_of?(String)
 	begin
-		matchData=Regexp.new(regexp.to_s,Regexp::MULTILINE).match(string_to_match)
+		matchData=regexp.match(string_to_match)
 	rescue RegexpError
 		return nil
 	end
