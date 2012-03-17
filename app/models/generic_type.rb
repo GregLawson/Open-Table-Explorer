@@ -84,28 +84,28 @@ end #expand
 # Calls expand above.
 def match_exact?(string_to_match)
 	regexp=Regexp.new('^'+expand.join+'$',Regexp::EXTENDED | Regexp::MULTILINE)
-	return regexp.match(string_to_match)
+	return RegexpMatch.matchRescued(regexp, string_to_match)
 end #match
 # Matches string from beginning against expanded Regexp
 # Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
 # Calls expand above.
 def match_start?(string_to_match)
 	regexp=Regexp.new('^'+expand.join,Regexp::EXTENDED | Regexp::MULTILINE)
-	return regexp.match(string_to_match)
+	return RegexpMatch.matchRescued(regexp, string_to_match)
 end #match_start
 # Matches expanded regexp from start of string
 # Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
 # Calls expand above.
 def match_end?(string_to_match)
 	regexp=Regexp.new(expand.join+'$',Regexp::EXTENDED | Regexp::MULTILINE)
-	return regexp.match(string_to_match)
+	return RegexpMatch.matchRescued(regexp, string_to_match)
 end #match_end
 # Matches expanded regexp anywhere in string
 # Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
 # Calls expand above.
 def match_any?(string_to_match)
 	regexp=Regexp.new(expand.join,Regexp::EXTENDED | Regexp::MULTILINE)
-	return regexp.match(string_to_match)
+	return RegexpMatch.matchRescued(regexp, string_to_match)
 end #match_any
 # Find specializations that match recursively
 # Multiple specializations that match at the same level are probably not handled correcly yet.
