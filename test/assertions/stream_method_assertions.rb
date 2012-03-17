@@ -101,6 +101,9 @@ def assert_compile_code
 	end #each_value
 end #compile_code
 def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
+	if expected_error_message_regexp.instance_of?(String) then
+		expected_error_message_regexp=expected_error_message_regexp.to_exact_regexp
+	end #if
 	assert_instance_of(ActiveModel::Errors, errors)
 	assert_instance_of(Array, errors.keys)
 	assert_instance_of(Array, errors.values)
@@ -112,7 +115,7 @@ def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
 	elsif expected_error_message_regexp.nil? then
 		assert_empty(errors[field],"errors[#{field}]=#{errors[field]}")
 	else
-		message="errors[#{field}]=#{errors[field]}"
+		message="errors[#{field}]=#{errors[field]}\nfull_messages=#{errors.full_messages.inspect}"
 		assert_instance_of(ActiveModel::Errors, errors, message)
 		assert_instance_of(Array, errors.keys, message)
 		assert_instance_of(Array, errors.values, message)
@@ -126,6 +129,11 @@ def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
 		assert_operator(1, :<=, errors.size, message)
 		errors[field].each do |error|
 			assert_instance_of(String, error, message)
+			if !expected_error_message_regexp.match(error) then
+				match=RegexpMatch.new(expected_error_message_regexp.source, error)
+				new_regexp_tree=match.matchSubTree
+				message=build_message(message, "?", new_regexp_tree.to_s)
+			end #if
 			assert_match(expected_error_message_regexp, error, message)
 		end #each
 	end #if
