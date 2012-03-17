@@ -164,3 +164,7 @@ uevent6:
 uevent7module:
   href: uevent7module
   url: shell:head /sys/module/*/*/*/*/*/*/uevent
+requires:
+  href: requires
+  url: shell:grep  "require" {app/models,test/unit}/*.rb
+
