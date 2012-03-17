@@ -79,18 +79,39 @@ def expand
 		end #map_branches
 	end #if possible expansions
 end #expand
-# Matches string from beginning against expanded Regexp
+# Matches expanded regexp against full string
 # Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
 # Calls expand above.
-def match?(string_to_match)
+def match_exact?(string_to_match)
 	regexp=Regexp.new('^'+expand.join+'$',Regexp::EXTENDED | Regexp::MULTILINE)
 	return regexp.match(string_to_match)
 end #match
+# Matches string from beginning against expanded Regexp
+# Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
+# Calls expand above.
+def match_start?(string_to_match)
+	regexp=Regexp.new('^'+expand.join,Regexp::EXTENDED | Regexp::MULTILINE)
+	return regexp.match(string_to_match)
+end #match_start
+# Matches expanded regexp from start of string
+# Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
+# Calls expand above.
+def match_end?(string_to_match)
+	regexp=Regexp.new(expand.join+'$',Regexp::EXTENDED | Regexp::MULTILINE)
+	return regexp.match(string_to_match)
+end #match_end
+# Matches expanded regexp anywhere in string
+# Sets EXTENDED format (whitespace and comments) and MULTILINE (newlines are just another character)
+# Calls expand above.
+def match_any?(string_to_match)
+	regexp=Regexp.new(expand.join,Regexp::EXTENDED | Regexp::MULTILINE)
+	return regexp.match(string_to_match)
+end #match_any
 # Find specializations that match recursively
 # Multiple specializations that match at the same level are probably not handled correcly yet.
 def specializations_that_match?(string_to_match)
 	one_level_specializations.map do |specialization|
-		if specialization.match?(string_to_match) then
+		if specialization.match_exact?(string_to_match) then
 			[specialization, specialization.specializations_that_match?(string_to_match)]
 		else
 			nil
@@ -104,9 +125,9 @@ end #specializations_that_match
 # If the receiving object matched it will be the first element in returned array.
 # If the string doesn't match the receiving object, generalize is returned.
 # If start matches, the returned array will be the ordered array of matching specializations.
-# Calls match? and specializations_that_match? above
+# Calls match_exact? and specializations_that_match? above
 def most_specialized?(string_to_match)
-	if match?(string_to_match) then
+	if match_exact?(string_to_match) then
 		specializations_that_match?(string_to_match)
 	else
 		generalize.most_specialized?(string_to_match)

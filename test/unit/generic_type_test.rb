@@ -107,56 +107,76 @@ def test_expand
 	end #map_branches
 	assert_equal(expansion, parse.map_branches{|branch|branch})
 end #expand
+Start=GenericType.find_by_name('Text_Column')
+
 def test_match
-	start=GenericType.find_by_name('Text_Column')
-	regexp=Regexp.new(start.expand.join)
+	regexp=Regexp.new(Start.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(start.match?(string_to_match))
+	assert_not_nil(Start.match_exact?(string_to_match))
 end #match
+def test_match_Start
+	regexp=Regexp.new(Start.expand.join)
+	assert_regexp(regexp)
+	string_to_match='123'
+	assert_match(regexp, string_to_match)
+	assert_not_nil(Start.match_start?(string_to_match))
+end #match_start
+def test_match_end
+	regexp=Regexp.new(Start.expand.join)
+	assert_regexp(regexp)
+	string_to_match='123'
+	assert_match(regexp, string_to_match)
+	assert_not_nil(Start.match_end?(string_to_match))
+end #match_end
+def test_match_any
+	regexp=Regexp.new(Start.expand.join)
+	assert_regexp(regexp)
+	string_to_match='123'
+	assert_match(regexp, string_to_match)
+	assert_not_nil(Start.match_any?(string_to_match))
+end #match_any
 Integer_Column=GenericType.find_by_name('Integer_Column')
 VARCHAR_Column=GenericType.find_by_name('VARCHAR_Column')
 Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 def test_specializations_that_match
-	start=GenericType.find_by_name('Text_Column')
 
-	regexp=Regexp.new(start[:data_regexp])
+	regexp=Regexp.new(Start[:data_regexp])
 	assert_regexp(regexp)
 	string_to_match='123'
-	message="start=#{start}, start.match?(string_to_match)=#{start.match?(string_to_match)}"
-	assert_block(message){start.match?(string_to_match)}
-	start.one_level_specializations.map do |specialization|
-		assert(specialization.match?(string_to_match))
-		if specialization.match?(string_to_match) then
+	message="Start=#{Start}, Start.match_exact?(string_to_match)=#{Start.match_exact?(string_to_match)}"
+	assert_block(message){Start.match_exact?(string_to_match)}
+	Start.one_level_specializations.map do |specialization|
+		assert(specialization.match_exact?(string_to_match))
+		if specialization.match_exact?(string_to_match) then
 			[specialization, specialization.specializations_that_match?(string_to_match)]
 		else
 			nil
 		end #if
 	end.compact.uniq.flatten #map
-	assert_equal([VARCHAR_Column, Integer_Column], start.specializations_that_match?(string_to_match))
+	assert_equal([VARCHAR_Column, Integer_Column], Start.specializations_that_match?(string_to_match))
 end #specializations_that_match
 def test_most_specialized
-	start=GenericType.find_by_name('Text_Column')
-	regexp=Regexp.new(start[:data_regexp])
+	regexp=Regexp.new(Start[:data_regexp])
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	most_specialized=if start.match?(string_to_match) then
-		start.specializations_that_match?(string_to_match)
+	most_specialized=if Start.match_exact?(string_to_match) then
+		Start.specializations_that_match?(string_to_match)
 	else
-		start.generalize.most_specialized?(string_to_match)
+		Start.generalize.most_specialized?(string_to_match)
 	end #if
 	assert_instance_of(Array, most_specialized)
 	assert_instance_of(GenericType, most_specialized[0])
 	assert_equal([VARCHAR_Column, Integer_Column], most_specialized)
-	assert_instance_of(Array, start.most_specialized?('123'))
-	assert_instance_of(GenericType, start.most_specialized?('123')[0])
-	assert_equal([VARCHAR_Column, Integer_Column], start.most_specialized?('123'))
+	assert_instance_of(Array, Start.most_specialized?('123'))
+	assert_instance_of(GenericType, Start.most_specialized?('123')[0])
+	assert_equal([VARCHAR_Column, Integer_Column], Start.most_specialized?('123'))
 	mac_example='12:34:56:78'
 	regexp=Macaddr_Column[:data_regexp]
 	mac_match=RegexpMatch.new(regexp, mac_example)
-	assert_equal([VARCHAR_Column, Macaddr_Column], start.most_specialized?(mac_example))
+	assert_equal([VARCHAR_Column, Macaddr_Column], Start.most_specialized?(mac_example))
 end #most_specialized
 def test_generalize
 	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
