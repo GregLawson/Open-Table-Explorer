@@ -20,7 +20,17 @@
 	@@example_class_reference=@@CLASS_WITH_FOREIGN_KEY
 	@@example_association_reference=@@FOREIGN_KEY_ASSOCIATION_SYMBOL
 
-# assertions testing single global (Object) methods
+module GenericTableAssertions
+include Test::Unit
+def association_refs(class_reference=@@example_class_reference, association_reference=@@example_association_reference, &block)
+	if class_reference.kind_of?(Class) then
+		klass=class_reference
+	else
+		klass=class_reference.class
+	end #if
+	association_reference=association_reference.to_sym
+	block.call(class_reference, association_reference)
+end #association_refs
 # assertions testing single generic_table methods
 def all_foreign_key_associations(&block)
 	Generic_Table.rails_MVC_classes.each do |class_with_foreign_key|
@@ -63,28 +73,6 @@ def assert_associated_foreign_key(obj,assName)
 	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
 	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #associated_foreign_key_records
-def assert_foreign_keys_not_nil(obj)
-	obj.foreign_key_association_names.each do |fka|
-		assert_foreign_key_not_nil(obj.class, fka)
-	end #each
-end #assert_foreign_keys_not_nil
-# display possible foreign key values when nil foreign keys values are found
-def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))
-	assert_association(obj.class, association_name)
-	assert_not_nil(association_class)
-	assert_not_nil(association_class)
-	possible_foreign_key_values=association_class.all.map do |fkacr|
-		fkacr.logical_primary_key_recursive_value.join(',')
-	end.uniq #map
-	message="Foreign key association #{association_name} is nil.\nShould be of type #{association_class.name}\n"
-	message+=possible_foreign_key_values.join("\n")
-	message+="\nEdit file #{obj.class.name.tableize}.yml so that foreign key #{association_name}_id has one of the above values."
-	assert_not_nil(obj.name_to_association(association_name), message)
-end #assert_foreign_keys_not_nil
-# assert that an association named association_reference exists  in class class_reference as well as an association named class_reference.name  exists  in class association_reference
-def assert_matching_association(klass,association_name)
-	assert(klass.is_matching_association?(association_name))
-end #matching_association
 def assert_association_methods
 end #association_methods
 # assert that an association named association_reference exists  in class class_reference
@@ -223,6 +211,7 @@ def assert_generic_table(model_class_name)
 	message="#{'model_class_name'.titleize} #{model_class_name} is not a Generic Table."
 	assert_block(message){Generic_Table.is_generic_table?(model_class_name)}
 end #assert_generic_table
+# assert that an association named association_reference exists  in class class_reference as well as an association named class_reference.name  exists  in class association_reference
 def assert_matching_association(table_reference,association_name)
 	table_class=Generic_Table.class_of_name(table_reference)
 	assert_association(table_class,association_name)
@@ -244,4 +233,36 @@ def assert_has_associations(model_class,message='')
 	message=build_message(message, "? has no associations. #{model_class.name}.rb is missing has_* or belongs_to macros.", model_class.canonicalName)   
 	assert_block(message){!model_class.association_names.empty?}	
 end #has_associations
+end #Module GenericTableAssertions
+module ActiveRecord
+class Base
+include Test::Unit
+include GenericTableAssertions
+# All records and all foreign keys are not nil
+def Base.assert_foreign_keys_not_nil
+	all.each do |record|
+		record.assert_foreign_keys_not_nil
+	end #each
+end #assert_foreign_keys_not_nil
+# All foreign keys of instance are not nil
+def assert_foreign_keys_not_nil
+	self.class.foreign_key_association_names.each do |fka|
+		assert_foreign_key_not_nil(self.class, fka)
+	end #each
+end #assert_foreign_keys_not_nil
+# display possible foreign key values when nil foreign keys values are found
+def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))
+	assert_association(obj.class, association_name)
+	assert_not_nil(association_class)
+	assert_not_nil(association_class)
+	possible_foreign_key_values=association_class.all.map do |fkacr|
+		fkacr.logical_primary_key_recursive_value.join(',')
+	end.uniq #map
+	message="Foreign key association #{association_name} is nil.\nShould be of type #{association_class.name}\n"
+	message+=possible_foreign_key_values.join("\n")
+	message+="\nEdit file #{obj.class.name.tableize}.yml so that foreign key #{association_name}_id has one of the above values."
+	assert_not_nil(obj.name_to_association(association_name), message)
+end #assert_foreign_key_not_nil
+end #Base
+end #ActiveRecord
 
