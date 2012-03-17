@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'app/models/global.rb'
-#require 'test/assertions/generic_table_assertions.rb'
+#require 'test/assertions/generic_table_assertions.rb' # in test_helper?
 # Methods in common bettween ActiveRecord::Base and NoDB
 module Common
 module ClassMethods

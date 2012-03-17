@@ -19,7 +19,7 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 require 'test/assertions/fixture_assertions.rb'
-require 'test/assertions/generic_table_assertions.rb'
+#require 'test/assertions/generic_table_assertions.rb'
 # access to any fixture by name
 def fixtures?(table_name)
 	table_name=table_name.to_s
