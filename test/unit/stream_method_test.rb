@@ -11,6 +11,7 @@ require 'test/assertions/stream_method_assertions.rb'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class StreamMethodTest < ActiveSupport::TestCase
+set_class_variables
 def test_to_exact_regexp
 	unambiguous_string=%{abc0123}
 	assert_match(Regexp.new(unambiguous_string), unambiguous_string)
@@ -22,7 +23,6 @@ def test_to_exact_regexp
 	assert_match(Regexp.new(Regexp.escape(ambiguous_string)), ambiguous_string)
 	assert_match(ambiguous_string.to_exact_regexp, ambiguous_string)
 end #to_exact_regexp
-set_class_variables
 def acq_and_rescue
 	stream=acquisition_stream_specs(@testURL.to_sym)
 	acq=ruby_interfaces(:HTTP)
@@ -244,17 +244,6 @@ def test_errors
 	acq.errors.clear      
 	assert_equal(0, acq.errors.count)
 end #errors
-def setup
-	@testURL='http://192.168.3.193/api/LiveData.xml'
-	define_model_of_test # allow generic tests
-	assert_module_included(@model_class,Generic_Table)
-	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	define_association_names
-end #def
-def test_general_associations
-#	assert_general_associations(@table_name)
-end
 def test_id_equal
 	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
 	assert_test_id_equal
