@@ -63,12 +63,13 @@ end #initialize
 # calls matchRescued, matchedTreeArray depending
 def matchSubTree
 	if empty? then
-		return ''
+		return ['.','*']
 	elsif RegexpMatch.matchRescued(to_regexp, @dataToParse) then
 		return self
 	elsif kind_of?(Array) then 
 		matchedTreeArray
 	else
+		raise "How did I get here?"
 		return nil
 	end #if
 end #matchSubTree
@@ -104,7 +105,7 @@ def matchedTreeArray
 		return (self[1..1]+self[0]).to_s
 	else
 		matches= consecutiveMatches(+1,0,0)
-		if matches.size==0 then
+		if matches.nil? || matches.empty? then
 			return nil
 		elsif matches.size==1 then
 			return self[matches[0]]
