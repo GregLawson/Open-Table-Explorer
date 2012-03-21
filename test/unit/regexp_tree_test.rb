@@ -62,31 +62,6 @@ end #OpeningBrackets
 def test_ClosingBrackets
 	assert_equal(0,RegexpTree.ClosingBrackets.index(')'))
 end #ClosingBrackets
-def explain_assert_block(message="assert_block failed.") # :yields: 
-  _wrap_assertion do
-  if message.instance_of?(String) then
-    exception=message.to_s
-  elsif message.instance_of?(Test::Unit::Assertions::AssertionMessage) then
-    exception='how do I get past to_s bug?'	
-  else
-    message="assert_block failed. message.class=#{message.class}"
-    exception=message.to_s
-  end #if
-    if (! yield)
-      raise exception
-      raise message.to_s
-      raise Test::Unit::AssertionFailedError.new(message.to_s)
-    end
-  end
-end
-def explain_assert_equal(expected, actual, message=nil)
-  full_message = build_message(message, "<?> expected but was<?>.", expected, actual)
-  puts "actual=#{actual.inspect}"
-  puts "expected=#{expected.inspect}"
-  puts "expected == actual=#{expected == actual}"
-  condition=expected == actual
-  explain_assert_block(full_message) { condition }
-end #explain_assert_equal
 def test_initialize
 	assert_not_nil(@@CONSTANT_PARSE_TREE.regexp_string)
 	assert_equal(['K'],@@CONSTANT_PARSE_TREE.to_a)
@@ -96,6 +71,9 @@ def test_initialize
 	assert_equal([['1', '2'], '3'], Asymmetrical_Tree.to_a)
 	assert_equal(Asymmetrical_Tree_Array.flatten, Asymmetrical_Tree.to_a.flatten)
 	assert_equal(Sequence, Asymmetrical_Tree_Array.flatten)
+	assert_not_nil(RegexpTree.new(['.']))
+	assert_not_nil(RegexpTree.new('.'))
+	assert_not_nil(RegexpTree.new(/./))
 end #initialize
 def test_index
 	assert_instance_of(RegexpTree,Asymmetrical_Tree)

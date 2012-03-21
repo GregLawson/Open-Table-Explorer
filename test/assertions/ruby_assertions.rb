@@ -44,6 +44,24 @@ def explain_assert_equal(expected, actual, context=nil)
 	message=build_message(context, "actual and expected are different, even though both text representations (to_s and inspect)are identical ()diiferent addresses or hashes\?.")
 	assert_equal(expected, actual, message)
 end #explain_assert_equal
+# needed to get past to_s bug
+def explain_assert_block(message="assert_block failed.") # :yields: 
+  _wrap_assertion do
+  if message.instance_of?(String) then
+    exception=message.to_s
+  elsif message.instance_of?(Test::Unit::Assertions::AssertionMessage) then
+    exception='how do I get past to_s bug?'	
+  else
+    message="assert_block failed. message.class=#{message.class}"
+    exception=message.to_s
+  end #if
+    if (! yield)
+      raise exception
+      raise message.to_s
+      raise Test::Unit::AssertionFailedError.new(message.to_s)
+    end
+  end
+end #explain_assert_block
 def explain_assert_respond_to(obj,methodName,message='')
 	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
