@@ -6,11 +6,6 @@
 #
 ###########################################################################
 require 'test/test_helper'
-class String
-def to_exact_regexp
-	return Regexp.new(Regexp.escape(self))
-end #to_exact_regexp
-end #String
 class StreamMethod < ActiveRecord::Base
 include Test::Unit::Assertions
 require 'rails/test_help'

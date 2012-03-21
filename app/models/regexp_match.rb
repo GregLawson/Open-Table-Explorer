@@ -5,6 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+class String
+def to_exact_regexp
+	return Regexp.new(Regexp.escape(self))
+end #to_exact_regexp
+end #String
 # Class methods
 module Match_Addressing
 # Rescue bad regexp and return nil
