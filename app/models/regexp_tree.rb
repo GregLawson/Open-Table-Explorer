@@ -32,16 +32,19 @@ def self.PostfixOperators
 end #def
 
 # Parse regexp_string into parse tree for editing
-def initialize(initial_value=[])
-	if initial_value.kind_of?(Array) then #nested Arrays
-		super(initial_value)
+def initialize(regexp=[])
+	if regexp.kind_of?(Array) then #nested Arrays
+		super(regexp)
 		
-	elsif initial_value.instance_of?(String) then 
-		super(RegexpParser.new(initial_value).to_a)
-	elsif initial_value.instance_of?(RegexpParser) then 
-		super(initial_value.to_a)
+	elsif regexp.instance_of?(String) then 
+		super(RegexpParser.new(regexp).to_a)
+	elsif regexp.instance_of?(RegexpParser) then 
+		super(regexp.to_a)
+	elsif regexp.instance_of?(Regexp) then 
+		super()
+		super(RegexpParser.new(regexp.source).to_a)
 	else
-		raise "unexpected initial_value=#{initial_value.inspect}"
+		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
 end #initialize
 def [](index)
