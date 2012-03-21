@@ -167,4 +167,9 @@ uevent7module:
 requires:
   href: requires
   url: shell:grep  "require" {app/models,test/unit}/*.rb
-
+inchem:
+  href: inchem
+  url: http://www.inchem.org/documents/pims/chemical/organlea.htm#SubSectionTitle:7.2.1 Human data
+meetup:
+  href: meetup
+  url: http://www.meetup.com/meetup_api/
