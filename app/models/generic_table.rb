@@ -8,11 +8,14 @@
 require 'app/models/global.rb'
 #require 'test/assertions/generic_table_assertions.rb' # in test_helper?
 # Methods in common bettween ActiveRecord::Base and NoDB
-module Common
+module Generic_Table
 module ClassMethods
 include GenericTableHtml::ClassMethods
 include GenericGrep::ClassMethods
 include ColumnGroup::ClassMethods
+def nesting
+	return Module.nesting
+end #nesting
 def sample_burst(sample_type, start, spacing, consecutive)
 	if consecutive>spacing then
 		raise "consecutive(#{consecutive})>spacing(#{spacing})"
@@ -136,12 +139,12 @@ end #ClassMethods
 include GenericTableHtml
 include GenericGrep
 include ColumnGroup
-end #Common
+end #Generic_Table
 module ActiveRecord
 
 class Base
-include Common
-extend Common::ClassMethods
+include Generic_Table
+extend Generic_Table::ClassMethods
 include GenericTableAssociation
 extend GenericTableAssociation::ClassMethods
 include ActionView::Helpers::UrlHelper
@@ -149,7 +152,7 @@ include ActionView::Helpers::UrlHelper
 
 end #class Base
 end #module ActiveRecord
-module Generic_Table
+module Common
 require 'app/models/IncludeModuleClassMethods.rb'
 def Generic_Table.class_of_name(name)
 	 return name.to_s.constantize
@@ -527,12 +530,11 @@ end #def
 end # module
 module NoDB # provide duck-typed ActiveRecord like functions.
 attr_reader :attributes
+include ActiveModel # trying to fufil Rails 3 promise that ActiveModel would allow non-AActiveRecord classes to share methods.
 include Generic_Table
-include ActiveModel
-include Common
-extend Common::ClassMethods
+extend Generic_Table::ClassMethods
 module ClassMethods
-include Common::ClassMethods
+include Generic_Table::ClassMethods
 def column_symbols
 	column_names=sample.flatten.map do |r|
 		r.keys.map {|name| name.downcase.to_sym}
