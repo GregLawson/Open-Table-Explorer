@@ -18,7 +18,15 @@ def test_initialize
 	testRun=TestRun.new(test_type,singular_table, plural_table,nil)
 	header,errors,summary=TestRun.parse_log_file(testRun.log_file)
 	errors.each do |error|
-		match_data=(/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m).match(error)
+		assert_not_nil(error)
+		assert_not_empty(error)
+		assert_instance_of(String, error)
+		regexp=/  ([0-9]+)[)] ([A-Za-z]+):\n(test_[a-z_]*)[(]([a-zA-Z]+)[)]:?\n(.*)$/m
+		regexp_source=regexp.source
+		match_data=(regexp).match(error)
+		regexp_tree=RegexpMatch.new(regexp_source, error)
+		assert_equal([], regexp_tree.matchSubTree)
+		assert_not_nil(match_data, "error=#{error.inspect}")
 		@number,@error_type,@test,@klass,@report=match_data[1..-1]
 		puts "number=#{@number.inspect}"
 		puts "error_type=#{@error_type}"
