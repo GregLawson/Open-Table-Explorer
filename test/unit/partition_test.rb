@@ -11,6 +11,12 @@ set_class_variables
 def test_initialize
 end #initialize
 def test_all
+	url=Url.find_by_name('partitions')
+	assert_not_nil(url)
+	stream_method=url.stream_method
+	assert_not_nil(stream_method)
+	stream_method.compile_code!
+	stream_method.fire!
 	records=@@model_class.all
 	assert_not_empty(records)
 end #all
