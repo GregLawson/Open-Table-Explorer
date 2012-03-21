@@ -128,11 +128,14 @@ def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
 		assert_equal(1, errors[field].size, message)
 		assert_operator(1, :<=, errors.size, message)
 		errors[field].each do |error|
+			RegexpMatch.explain_assert_match(expected_error_message_regexp, error, message)
 			assert_instance_of(String, error, message)
 			if !expected_error_message_regexp.match(error) then
+#				puts(expected_error_message_regexp.source, error)
 				match=RegexpMatch.new(expected_error_message_regexp.source, error)
 				new_regexp_tree=match.matchSubTree
-				message=build_message(message, "?", new_regexp_tree.to_s)
+				assert_match(new_regexp_tree.to_regexp, error, message)
+				message=build_message(message, "expected_error_message_regexp.source=? did not match ? but new_regexp_tree=? should match", expected_error_message_regexp.source, error, new_regexp_tree.to_s)
 			end #if
 			assert_match(expected_error_message_regexp, error, message)
 		end #each
