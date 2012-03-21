@@ -4,6 +4,7 @@ has_many :test_runs
 belongs_to :error_type
 
 include Generic_Table
+extend Generic_Table::ClassMethods
 def self.logical_primary_key
 	return [:created_at]
 end #def
