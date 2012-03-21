@@ -239,38 +239,13 @@ end #Module GenericTableAssertions
 module ActiveRecord
 class Base
 include Test::Unit
-include GenericTableAssertions
+include GenericTableAssertion
 # All records and all foreign keys are not nil
 def Base.assert_foreign_keys_not_nil
 	all.each do |record|
 		record.assert_foreign_keys_not_nil
 	end #each
 end #assert_foreign_keys_not_nil
-# Is attribute an numerical (analog) (versus categorical (digital) value)
-# default logical primary keys ignore analog values
-# Statistical procedures will treat these attributes as continuous
-# override for specific classes
-# by default the following are considered analog:
-#  Float
-#  Time
-#  DateTime
-#  id for sequential_id?
-def Base.assert_numerical(attribute_name)
-	message=build_message(message, "numerical self=?, attribute_name=?", self.inspect, attribute_name)
-	assert_block(message){numerical?(attribute_name)}
-end #numerical
-def Base.assert_probably_numerical(attribute_name)
-	message=build_message(message, "probably_numerical self=?, attribute_name=?", self.inspect, attribute_name)
-	assert_block(message){probably_numerical?(attribute_name)}
-end #probably_numerical
-def Base.assert_categorical(attribute_name)
-	message=build_message(message, "categorical self=?, attribute_name=?", self.inspect, attribute_name)
-	assert_block(message){categorical?(attribute_name)}
-end #categorical
-def Base.assert_probably_categorical(attribute_name, message)
-	message=build_message(message, "probably_categorical self=?, attribute_name=?", self.inspect, attribute_name)
-	assert_block(message){probably_categorical?(attribute_name)}
-end #probably_categorical
 # All foreign keys of instance are not nil
 def assert_foreign_keys_not_nil
 	self.class.foreign_key_association_names.each do |fka|
