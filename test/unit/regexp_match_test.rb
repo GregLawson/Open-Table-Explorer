@@ -6,7 +6,10 @@
 #
 ###########################################################################
 require 'test/test_helper'
-
+class RegexpMatch < RegexpTree # reopen class to add assertions
+include RegexpMatchAssertions
+extend RegexpMatchAssertions::ClassMethods
+end #RegexpMatch
 def regexpTest(editor)
 	assert_respond_to(editor,:consecutiveMatches)
 	assert_not_nil(editor.consecutiveMatches(+1,0,0))
