@@ -10,20 +10,32 @@ module Match_Addressing
 # Rescue bad regexp and return nil
 def matchRescued(regexp, string_to_match)
 	if regexp.instance_of?(String) then
-		regexp=Regexp.new(regexp, Regexp::EXTENDED | Regexp::MULTILINE)
+		regexp=regexp_rescued(regexp)
 	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=Regexp.new(regexp.to_s,Regexp::EXTENDED | Regexp::MULTILINE)
+		regexp=regexp_rescued(regexp.to_s)
 	elsif !regexp.instance_of?(Regexp) then
 		raise "Unexpected regexp.class=#{regexp.class}."
 	end #if
-	raise "regexp=#{regexp.inspect} must be Regexp." unless regexp.instance_of?(Regexp)
 	raise "string_to_match=#{string_to_match.inspect} must be String." unless string_to_match.instance_of?(String)
-	begin
-		matchData=regexp.match(string_to_match)
-	rescue RegexpError
-		return nil
-	end
+	if regexp.nil? then
+		return false
+	else
+		raise "regexp=#{regexp.inspect} must be Regexp." unless regexp.instance_of?(Regexp)
+		begin
+			matchData=regexp.match(string_to_match)
+		rescue RegexpError
+			raise "is this ever executed? regexp=#{regexp.inspect}, string_to_match=#{string_to_match.inspect}"
+			return nil
+		end #begin/rescue
+	end #if
 end
+# Rescue bad regexp and return nil
+# Example regexp with unbalanced bracketing characters
+def regexp_rescued(regexp_string, options=Regexp::EXTENDED | Regexp::MULTILINE)
+	return Regexp.new(regexp_string, options)
+rescue RegexpError
+	return nil
+end #regexp_rescued
 def numMatches(parseTree, string_to_match)
 	matchData=Regexp.new(parseTree[0,i],Regexp::MULTILINE).match(string_to_match)
 	if matchData.nil? then 
@@ -71,7 +83,8 @@ def mergeMatches(matches)
 	elsif matches.size==2 then # no overlap w/2 matches
 		return self[matches[0]]+[['.','*']]+self[matches[1]]
 	else # no overlap w/ 3 or more matches
-		 return self[matches[0]]+[['.','*']]+mergeMatches(self,matches[1..-1]) # recursive for >2 matches
+		puts "matches=#{matches.inspect}"
+		 return self[matches[0]]+[['.','*']]+mergeMatches(matches[1..-1]) # recursive for >2 matches
 	end #end	
 
 end #mergeMatches
@@ -129,6 +142,7 @@ end #consecutiveMatches
 # increment - usually +1 or -1 to deterine direction and start/end
 # startPos - array index into parsedTree to start (inclusive)
 # endPos - array index into parsedTree to end (inclusive)
+# returns when incremented from startPos/endPos past endPos/startPos
 def consecutiveMatch(increment,startPos,endPos)
 #	# Global::log.info("consecutiveMatch begins with self.inspect=#{self.inspect},increment=#{increment},startPos=#{startPos},endPos=#{endPos}")
 #	assert(startPos<=endPos)
