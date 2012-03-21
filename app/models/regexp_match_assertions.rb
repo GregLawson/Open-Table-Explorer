@@ -40,22 +40,27 @@ def matchDisplay(regexp)
 	end
 end #def
 end #module
-class RegexpMatch < RegexpTree
+module RegexpMatchAssertions
 # Assertions (validations)
 include Test::Unit::Assertions
 require 'rails/test_help'
 include Squeeze_Display
 include Match_Addressing
+module ClassMethods
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
+	assert_instance_of(String, string, message)
 	match_data=regexp.match(string)
 	if match_data.nil? then
 		regexp_tree=RegexpMatch.new(regexp, string)
-		message=message+"regexp_tree.matchSubTree=#{regexp_tree.matchSubTree.inspect}"
+		new_regexp_tree=regexp_tree.matchSubTree
+		assert_match(new_regexp_tree.to_regexp, string, message)
+		message=build_message(message, "regexp.source=? did not match ? but new_regexp_tree=? should match", regexp.source, string, new_regexp_tree.to_s)
 	end #if
 	assert_match(regexp, string, message)
 end #assert_match
 def RegexpMatch.assert_match_array(regexp, string, message=nil)
 	 string.instance_of?(Enumeration)
 end #
-end #class
+end #ClassMethods
+end #RegexpMatchAssertions
