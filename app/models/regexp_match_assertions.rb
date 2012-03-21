@@ -49,11 +49,13 @@ include Match_Addressing
 module ClassMethods
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
-	assert_instance_of(String, string, message)
+	assert_not_nil(regexp, message)
+	assert_not_nil(string, message)
 	match_data=regexp.match(string)
 	if match_data.nil? then
 		regexp_tree=RegexpMatch.new(regexp, string)
 		new_regexp_tree=regexp_tree.matchSubTree
+		assert_not_empty?(new_regexp_tree)
 		assert_match(new_regexp_tree.to_regexp, string, message)
 		message=build_message(message, "regexp.source=? did not match ? but new_regexp_tree=? should match", regexp.source, string, new_regexp_tree.to_s)
 	end #if
@@ -61,6 +63,13 @@ def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 end #assert_match
 def RegexpMatch.assert_match_array(regexp, string, message=nil)
 	 string.instance_of?(Enumeration)
-end #
+end #assert_match_array
+def assert_mergeable(string1, string2)
+	regexp=string1.to_exact_regexp
+	RegexpMatch.explain_assert_match(regexp, string2)
+# now try the reverse
+	regexp=string2.to_exact_regexp
+	RegexpMatch.explain_assert_match(regexp, string1)
+end #assert_mergeable
 end #ClassMethods
 end #RegexpMatchAssertions

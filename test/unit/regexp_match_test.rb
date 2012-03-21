@@ -6,10 +6,12 @@
 #
 ###########################################################################
 require 'test/test_helper'
+
 class RegexpMatch < RegexpTree # reopen class to add assertions
 include RegexpMatchAssertions
 extend RegexpMatchAssertions::ClassMethods
 end #RegexpMatch
+
 def regexpTest(editor)
 	assert_respond_to(editor,:consecutiveMatches)
 	assert_not_nil(editor.consecutiveMatches(+1,0,0))
@@ -137,7 +139,20 @@ def test_matchSubTree
 	"E"]
 # debug made not to pass for now.
 	assert_not_equal(expectedParse,KCETeditor.matchSubTree)
-
+	
+	RegexpMatch.assert_mergeable('a', 'a')
+	string1='a'
+	string2='b'
+	alternative=RegexpMatch.new(string1, string2)
+	assert_nil(alternative.matchedTreeArray)
+	assert_nil(alternative.matchSubTree)
+	RegexpMatch.assert_mergeable('a', 'b')
+	RegexpMatch.assert_mergeable(%{<Url:0xb5f22960>}, %{<Url:0xb5ce4e3c>})
+	string=%{\#<NoMethodError:\ undefined\ method\ `uri'\ for\ \#<Url:0xb5f22960>}
+	regexp=string.to_exact_regexp
+	string2=%{\#<NoMethodError:\ undefined\ method\ `uri'\ for\ \#<Url:0xb5ce4e3c>}
+	RegexpMatch.explain_assert_match(regexp, string2)
+	RegexpMatch.assert_mergeable(string, string2)
 end #matchSubTree
 def test_mergeMatches
 	string_to_parse='KxC'
