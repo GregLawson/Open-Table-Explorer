@@ -60,7 +60,7 @@ def candidate_logical_keys_from_indexes
 			return nil
 		end #if
 end #candidate_logical_keys_from_indexes
-# Is attribute an analog (versus digital value)
+# Is attribute an numerical (analog) (versus categorical (digital) value)
 # default logical primary keys ignore analog values
 # Statistical procedures will treat these attributes as continuous
 # override for specific classes
@@ -69,12 +69,46 @@ end #candidate_logical_keys_from_indexes
 #  Time
 #  DateTime
 #  id for sequential_id?
-def analog?(attribute_name)
-	if [Float, Bignum, DateTime, Time].include?(attribute_ruby_type(attribute_name)) then
+def numerical?(attribute_name)
+	if ['created_at','updated_at'].include?(attribute_name.to_s) then
 		return true
-	elsif [String, Symbol].include?(attribute_ruby_type(attribute_name)) then
+	elsif [Float, Bignum, DateTime, Time].include?(attribute_ruby_type(attribute_name)) then
+		return true
+	elsif categorical?(attribute_name) then
 		return false
-	elsif ['created_at','updated_at'].include?(attribute_name.to_s) then
+	else
+		return false
+	end #if
+end #numerical
+def probably_numerical?(attribute_name)
+	if [Date].include?(attribute_ruby_type(attribute_name)) then
+		return true
+	else
+		return false
+	end #if
+end #probably_numerical
+def categorical?(attribute_name)
+	if [Symbol].include?(attribute_ruby_type(attribute_name)) then
+		return true
+	elsif foreign_key_names.include?(attribute_name.to_s) then
+		parent=association_class(foreign_key_to_association_name(attribute_name))
+		return !parent.sequential_id?
+	elsif defaulted_primary_logical_key? then
+		if attribute_name.to_sym==:id then
+			return logical_attributes==[]
+		else
+			return false
+		end #if
+	else #overridden logical primary key
+		if attribute_name.to_sym==:id then
+			return !sequential_id?
+		else
+			return logical_primary_key.include?(attribute_name)
+		end #if
+	end #if
+end #categorical
+def probably_categorical?(attribute_name)
+	if [String, NilClass].include?(attribute_ruby_type(attribute_name)) then
 		return true
 	elsif attribute_name.to_sym==:id then
 		if defaulted_primary_logical_key? then
@@ -85,12 +119,12 @@ def analog?(attribute_name)
 	else
 		return false
 	end #if
-end #analog
+end #probably_categorical
 def column_symbols
 	return column_names.map {|name| name.to_sym}
 end #column_symbols
 def logical_attributes
-	return (column_symbols-History_columns).select {|name| !analog?(name)} # avoid :id recursion
+	return (column_symbols-History_columns).select {|name| !numerical?(name)} # avoid :id recursion
 end #logical_attributes
 def is_logical_primary_key?(attribute_names)
 	quoted_primary_key

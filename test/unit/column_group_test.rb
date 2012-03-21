@@ -10,10 +10,13 @@ require 'test_helper.rb'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
+#require 'test/assertions/generic_table_assertions'
 class ColumnGroupTest < ActiveSupport::TestCase
 include Generic_Table
-include GenericTableAssertions
+include GenericTableAssertion
+include GenericTableAssertion::KernelMethods
 @@table_name='stream_patterns'
+assert_include(ColumnGroup, self.included_modules)
 assert_equal('constant', defined? ColumnGroup)
 assert(ColumnGroup)
 assert_instance_of(Module, ColumnGroup)
@@ -21,29 +24,30 @@ assert_equal([ColumnGroup], ColumnGroup.ancestors)
 assert_empty(ColumnGroup.included_modules)
 assert_equal('constant', defined? ColumnGroup::ClassMethods)
 
-assert_not_include(ColumnGroup, self.included_modules)
-include ColumnGroup
+#include ColumnGroup
 assert_include(ColumnGroup, self.included_modules)
 assert_empty(ColumnGroup.included_modules)
 
-include ColumnGroup::ClassMethods
+#include ColumnGroup::ClassMethods
 assert_equal('constant', defined? ColumnGroup::ClassMethods)
 assert_equal([ColumnGroup::ClassMethods], ColumnGroup::ClassMethods.ancestors)
 
-assert_equal('constant', defined? History_columns)
-assert_equal('constant', defined? ClassMethods::History_columns)
+#assert_equal('constant', defined? History_columns)
+#assert_equal('constant', defined? ClassMethods::History_columns)
 assert_equal('constant', defined? ColumnGroup::ClassMethods::History_columns)
 assert_include('History_columns', ColumnGroup::ClassMethods.constants)
 assert_empty(ColumnGroup.included_modules)
 assert_not_include(ClassMethods, ColumnGroup.included_modules)
 
-assert_equal(['History_columns'], Module.constants.grep(/History/))
+#assert_equal(['History_columns'], Module.constants.grep(/History/))
 assert_not_empty(Module.constants)
 assert_not_empty(ColumnGroup.constants)
 History_columns=ColumnGroup::ClassMethods::History_columns
 def test_defaulted_primary_logical_key
 	assert(StreamPattern.defaulted_primary_logical_key?, "StreamPattern should use the default :name logical_primary_key.")
 	assert_not_empty(StreamPattern.column_symbols)
+	assert_include('Generic_Table', self.class.included_modules.map{|m| m.name})
+	assert_module_included(self.class, Generic_Table)
 	assert_defaulted_primary_logical_key(StreamPattern)
 	assert_nil(Url.defaulted_primary_logical_key?, "Url uses :href rather than default :name.")
 end #defaulted_primary_logical_key
@@ -87,7 +91,7 @@ def test_attribute_ruby_type
 		logical_attributes.each do |attribute_name|
 			assert_not_nil(model_class.first, "model_class=#{model_class.inspect} has no records.")
 			assert_not_nil(model_class.attribute_ruby_type(attribute_name))
-#			!model_class.analog?(name)})
+#			!model_class.numerical?(name)})
 		 end #each
 	end #each
 end #attribute_ruby_type
@@ -118,19 +122,60 @@ def test_candidate_logical_keys_from_indexes
 		end #if
 	end #each
 end #candidate_logical_keys_from_indexes
-def test_analog
-	assert(!StreamPattern.analog?(:name))
-	assert(StreamPattern.analog?(:created_at))
-	assert(StreamPattern.analog?(:updated_at))
+def test_numerical
+	assert(!StreamPattern.numerical?(:name))
+	assert(StreamPattern.numerical?(:created_at))
+	assert(StreamPattern.numerical?(:updated_at))
+	bug_module_names= Bug.included_modules.map{|m| m.name}.grep(/Generic/)
+	assert_include(Generic_Table, Bug.included_modules)
+	assert_include(GenericTableAssertion, Bug.included_modules)
+	assert_include(GenericTableAssociation, Bug.included_modules)
+	assert_include(GenericGrep, Bug.included_modules)
+	assert_include(GenericTableHtml, Bug.included_modules)
+	assert_equal([ColumnGroupTest], Module.nesting)
+	assert_equal([Generic_Table::ClassMethods, Generic_Table], Bug.nesting)
+	assert_include(:assert_numerical.to_s, Bug.methods(false))
+	Bug.assert_numerical(:id)
 	CodeBase.rails_MVC_classes.each do |model_class|
 		logical_attributes=model_class.column_names-History_columns
 		assert_not_empty(logical_attributes)
 		logical_attributes.each do |attribute_name|
-			model_class.analog?(attribute_name)
-#			!model_class.analog?(name)})
+			model_class.numerical?(attribute_name)
+#			!model_class.numerical?(name)})
 		 end #each
 	end #each
-end #analog
+end #numerical
+def test_probably_numerical
+end #probably_numerical
+def test_categorical
+	assert(!GenericType.defaulted_primary_logical_key?)
+	assert(GenericType.categorical?(:id))
+	assert(GenericType.categorical?(:import_class))
+	attribute_name=:generalize_id
+	assert_include(attribute_name.to_s, GenericType.foreign_key_names)
+	assert(GenericType.foreign_key_names.include?(attribute_name.to_s))
+	parent=GenericType.association_class(GenericType.foreign_key_to_association_name(attribute_name))
+	parent_keys=parent.logical_primary_key_recursive
+	assert_not_nil(GenericType.association_class(GenericType.foreign_key_to_association_name(attribute_name)))
+	assert(!parent.sequential_id?)
+	assert(GenericType.categorical?(attribute_name), "parent_keys=#{parent_keys.inspect}")
+	assert(!StreamPattern.categorical?(:created_at))
+	assert(!StreamPattern.categorical?(:updated_at))
+	CodeBase.rails_MVC_classes.each do |model_class|
+		model_class.column_names.each do |attribute_name|
+			classifications=[]
+			classifications.push(:numerical) if model_class.numerical?(attribute_name)
+			classifications.push(:categorical) if model_class.categorical?(attribute_name)
+			classifications.push(:probably_numerical) if model_class.probably_numerical?(attribute_name)
+			classifications.push(:probably_categorical) if model_class.probably_categorical?(attribute_name)
+			assert_not_empty(classifications, "model_class=#{model_class.inspect}, attribute_name=#{attribute_name}, model_class.logical_primary_key=#{model_class.logical_primary_key.inspect}")
+			assert_equal(1, classifications.size, "classifications=#{classifications.inspect}")
+		end #each
+	end #each
+end #categorical
+def test_probably_categorical
+	assert(StreamPattern.probably_categorical?(:name))
+end #probably_categorical
 def test_column_symbols
 	column_symbols=StreamPattern.column_names.map {|name| name.to_sym}
 
