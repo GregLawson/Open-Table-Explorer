@@ -107,16 +107,16 @@ def matchedTreeArray
 			return self[matches[0]]
 		else
 			return mergeMatches(matches)
-		end
-	end
+		end #if
+	end #if
 end #matchedTreeArray
 # Searches for all subregexp that matches
+# returns Array of Ranges of those subregexps
 # calls consecutiveMatch
 # increment - usually +1 or -1 to deterine direction and start/end
 # startPos - array index into parsedTree to start (inclusive)
 # endPos - array index into parsedTree to end (inclusive)
 def consecutiveMatches(increment,startPos,endPos)
-	# Global::log.info("consecutiveMatches begins with self=#{self},increment=#{increment},startPos=#{startPos},endPos=#{endPos}")
 #	assert(startPos<=endPos)
 	ret=[] # nothing found yet
 	begin
