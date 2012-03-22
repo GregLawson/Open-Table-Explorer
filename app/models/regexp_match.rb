@@ -87,13 +87,11 @@ def mergeMatches(matches)
 
 end #mergeMatches
 # accounts for arrays (subtrees) in parse tree
-# calls consecutiveMatches, mergeMatches
-# self - array of parsed tree to test for match
+# returns regexp string that should match
+# calls consecutiveMatches to find matches
+# calls mergeMatches to reduce multiple matches to one regexp string
 def matchedTreeArray
 	if self.class.PostfixOperators.index(self[0]) then
-		# Global::log.info("self.inspect=#{self.inspect}")
-		# Global::log.info("self[1..1].inspect=#{self[1..1].inspect}")
-		# Global::log.info("self[0..0].inspect=#{self[0..0].inspect}")
 		return (self[1..1]+self[0]).to_s
 	else
 		matches= consecutiveMatches(+1,0,0)
