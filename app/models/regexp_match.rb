@@ -41,14 +41,6 @@ def regexp_rescued(regexp_string, options=Regexp::EXTENDED | Regexp::MULTILINE)
 rescue RegexpError
 	return nil
 end #regexp_rescued
-def numMatches(parseTree, string_to_match)
-	matchData=Regexp.new(parseTree[0,i],Regexp::MULTILINE).match(string_to_match)
-	if matchData.nil? then 
-		return 0
-	else
-		return matchData.size
-	end #if
-end #def
 end #module
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch < RegexpTree
