@@ -11,6 +11,11 @@ require 'app/models/inlineAssertions.rb'
 require 'app/models/nested_array.rb'
 class String #add to_a
 # Convert String to Array of one character Strings
+# Why would this be useful? It doesn't distinquish Regexp special characters
+# It was designed for unpacking binary data into Arrays
+# See http://ruby-doc.org/core-1.9.3/String.html#method-i-unpack
+# it could be a check on parsing:
+# string.to_a=string.to_regexp_exact.source
 def to_a(format='a', packed_length=1)
 	array_length=size/packed_length
 	ret=(0..array_length-1).to_a.map do |i|
