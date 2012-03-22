@@ -173,7 +173,7 @@ def test_mergeMatches
 	assert_not_empty(candidateParseTree[matchesForRecursion[0]])
 	workingParseTree=candidateParseTree.mergeMatches(matchesForRecursion)
 	assert_not_nil(workingParseTree)
-	assert_instance_of(RegexpTree, workingParseTree)
+	assert_instance_of(RegexpMatch, workingParseTree)
 	assert_instance_of(Array, [matches[0]]+workingParseTree)
 
 

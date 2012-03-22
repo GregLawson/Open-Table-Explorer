@@ -72,18 +72,18 @@ def matchSubTree
 	end #if
 end #matchSubTree
 # Combines match alternatives?
-# returns a parse tree that should match
-# parseTree - array of parsed tree to test for match
+# returns a RegexpMatch parse tree that should match
+# matches - array of Range matches
 def mergeMatches(matches)
 	if matches.size==0 then
-		return nil
+		return RegexpMatch.new(['.', '*'], dataToParse)
 	elsif matches.size==1 then
-		return self[matches[0]]
+		return RegexpMatch.new(self[matches[0]], dataToParse)
 	elsif matches[0].end>=matches[1].begin then #overlap
 		prefix=matches[0].begin..matches[1].begin-1
 		suffix=matches[0].end+1..matches[1].end
 		overlap= matches[1].begin..matches[0].end
-		return [self[prefix],['|',self[overlap]],self[suffix],mergeMatches(matches[1..-1])]
+		return RegexpMatch.new([self[prefix],[self[overlap], '|'],self[suffix],mergeMatches(matches[1..-1])], dataToParse)
 	elsif matches.size==2 then # no overlap w/2 matches
 		return self[matches[0]]+[['.','*']]+self[matches[1]]
 	else # no overlap w/ 3 or more matches
