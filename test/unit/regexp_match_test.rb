@@ -147,6 +147,7 @@ def test_matchSubTree
 	string1='a'
 	string2='b'
 	alternative=RegexpMatch.new(string1, string2)
+	assert_empty(alternative.consecutiveMatches(+1,0,0))
 	assert_nil(alternative.matchedTreeArray)
 	assert_not_nil(alternative.matchSubTree)
 	RegexpMatch.assert_mergeable('a', 'b')

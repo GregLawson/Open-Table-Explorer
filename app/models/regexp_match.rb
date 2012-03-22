@@ -111,7 +111,7 @@ def matchedTreeArray
 	end #if
 end #matchedTreeArray
 # Searches for all subregexp that matches
-# returns Array of Ranges of those subregexps
+# returns Array of Ranges of those subregexps ([] if no matches)
 # calls consecutiveMatch
 # increment - usually +1 or -1 to deterine direction and start/end
 # startPos - array index into parsedTree to start (inclusive)
@@ -130,12 +130,7 @@ def consecutiveMatches(increment,startPos,endPos)
 		increment=increment*-1 #reverse scan
 #	assert(startPos<=endPos)
 	end until startPos<0 || endPos>=self.size
-	# Global::log.info("ret=#{ret.inspect}")# if $DEBUG
-	if ret==[] then
-		return nil
-	else
-		return ret
-	end #if
+	return ret
 end #consecutiveMatches
 # Find one consecutive match
 # returns lastMatch (matching range in parseTree) or nil (no match)
