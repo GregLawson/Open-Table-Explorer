@@ -145,7 +145,7 @@ def test_matchSubTree
 	string2='b'
 	alternative=RegexpMatch.new(string1, string2)
 	assert_nil(alternative.matchedTreeArray)
-	assert_nil(alternative.matchSubTree)
+	assert_not_nil(alternative.matchSubTree)
 	RegexpMatch.assert_mergeable('a', 'b')
 	RegexpMatch.assert_mergeable(%{<Url:0xb5f22960>}, %{<Url:0xb5ce4e3c>})
 	string=%{\#<NoMethodError:\ undefined\ method\ `uri'\ for\ \#<Url:0xb5f22960>}
@@ -155,6 +155,10 @@ def test_matchSubTree
 	RegexpMatch.assert_mergeable(string, string2)
 end #matchSubTree
 def test_mergeMatches
+	candidateParseTree=RegexpMatch.new('a','b')
+	matches=[]
+	new_regexp=candidateParseTree.mergeMatches(matches)
+	assert_match(new_regexp.to_regexp, candidateParseTree.dataToParse)
 	string_to_parse='KxC'
 	candidateParseTree=RegexpMatch.new('KC',string_to_parse)
 	matches=[0..0,1..1]
