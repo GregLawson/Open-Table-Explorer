@@ -119,6 +119,9 @@ def test_matchSubTree
 	candidateParseTree=RegexpMatch.new('KC',string_to_parse)
 	assert_equal(['K',['.', '*'],'C'],candidateParseTree.matchSubTree)
 	assert_equal(['K'],RegexpMatch.new('K',string_to_parse).matchSubTree)
+	explain_assert_respond_to(RegexpMatch,:explain_assert_match)
+	RegexpMatch.methods.grep(/explain_assert_match/)
+	RegexpMatch.explain_assert_match(KCETeditor.matchSubTree, KCETeditor.dataToParse)
 	assert_not_nil(RegexpMatch.matchRescued(RegexpTree.new(KCETeditor.matchSubTree), KCETeditor.dataToParse))
 	expectedParse=["K",
 	"C",
