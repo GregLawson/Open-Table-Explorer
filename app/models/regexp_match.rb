@@ -12,15 +12,21 @@ end #to_exact_regexp
 end #String
 # Class methods
 module Match_Addressing
-# Rescue bad regexp and return nil
-def matchRescued(regexp, string_to_match)
+def canonical_regexp(regexp)
 	if regexp.instance_of?(String) then
 		regexp=regexp_rescued(regexp)
 	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
 		regexp=regexp_rescued(regexp.to_s)
+	elsif regexp.nil? then
+		return //
 	elsif !regexp.instance_of?(Regexp) then
 		raise "Unexpected regexp.class=#{regexp.class}."
 	end #if
+	return regexp
+end #canonical_regexp
+# Rescue bad regexp and return nil
+def matchRescued(regexp, string_to_match)
+	regexp=canonical_regexp(regexp)
 	raise "string_to_match=#{string_to_match.inspect} must be String." unless string_to_match.instance_of?(String)
 	if regexp.nil? then
 		return false

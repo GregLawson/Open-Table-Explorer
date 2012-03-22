@@ -50,6 +50,7 @@ module ClassMethods
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
 	assert_not_nil(regexp, message)
+	regexp=RegexpMatch.canonical_regexp(regexp)
 	assert_not_nil(string, message)
 	match_data=regexp.match(string)
 	if match_data.nil? then
