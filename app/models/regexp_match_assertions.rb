@@ -55,7 +55,7 @@ def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	if match_data.nil? then
 		regexp_tree=RegexpMatch.new(regexp, string)
 		new_regexp_tree=regexp_tree.matchSubTree
-		assert_not_empty?(new_regexp_tree)
+		assert_not_empty(new_regexp_tree)
 		assert_match(new_regexp_tree.to_regexp, string, message)
 		message=build_message(message, "regexp.source=? did not match ? but new_regexp_tree=? should match", regexp.source, string, new_regexp_tree.to_s)
 	end #if
