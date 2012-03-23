@@ -173,3 +173,6 @@ inchem:
 meetup:
   href: meetup
   url: http://www.meetup.com/meetup_api/
+zipcodes:
+  href: zipcodes
+  url: http://www.zipskinny.com/index.php?zip=90250
