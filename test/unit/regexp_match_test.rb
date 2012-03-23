@@ -28,6 +28,16 @@ set_class_variables(RegexpMatchTest,false)
 #require 'test/unit'
 #include Test_Helpers
 #require 'test/assertions/ruby_assertions.rb'
+RegexpMatch.assert_mergeable('a', 'a')
+string1='a'
+string2='b'
+Alternative=RegexpMatch.new(string1, string2)
+string1=%{<Url:0xb5f22960>}
+string2=%{<Url:0xb5ce4e3c>}
+Addresses=RegexpMatch.new(string1, string2)
+Deletion=RegexpMatch.new('KxC', 'KC')
+Insertion=RegexpMatch.new('KC', 'KxC')
+
 WhiteSpacePattern=' '
 WhiteSpace=' '
 White_Match=RegexpMatch.new(WhiteSpacePattern,WhiteSpace)	
@@ -144,13 +154,8 @@ def test_matchSubTree
 # debug made not to pass for now.
 	assert_not_equal(expectedParse,KCETeditor.matchSubTree)
 	
-	RegexpMatch.assert_mergeable('a', 'a')
-	string1='a'
-	string2='b'
-	alternative=RegexpMatch.new(string1, string2)
-	assert_empty(alternative.consecutiveMatches(+1,0,0))
-	assert_nil(alternative.matchedTreeArray)
-	assert_not_nil(alternative.matchSubTree)
+	assert_not_nil(Alternative.matchSubTree)
+	assert_not_empty(Alternative.matchSubTree)
 	RegexpMatch.assert_mergeable('a', 'b')
 	RegexpMatch.assert_mergeable(%{<Url:0xb5f22960>}, %{<Url:0xb5ce4e3c>})
 	string=%{\#<NoMethodError:\ undefined\ method\ `uri'\ for\ \#<Url:0xb5f22960>}
@@ -188,8 +193,9 @@ def test_mergeMatches
 	assert_match(RegexpTree.new(mergedParseTree).to_regexp,string_to_parse)
 end #mergeMatches
 def test_matchedTreeArray
-	matchFail=RegexpMatch.new('KxC', 'KC')
-	assert_equal(['K', [".", "*"],'C'],matchFail.matchedTreeArray)
+	assert_not_empty(Alternative.matchedTreeArray)
+	assert_equal(['K', [".", "*"],'C'],Insertion.matchedTreeArray)
+	assert_equal(['K', 'C'],Deletion.matchedTreeArray)
 end #matchedTreeArray
 def test_match_branch
 	matches=Addresses.consecutiveMatches(+1,0,0)
@@ -238,25 +244,44 @@ def test_map_consecutiveMatches
  		{:data_to_match=>"ce4e3c>", :regexp=>/>/, :matched_data=>">"}], Addresses.map_consecutiveMatches(matches))
 end #map_consecutiveMatches
 def test_consecutiveMatches
-	matchFail=RegexpMatch.new('KxC', 'KC')
-	assert_equal([0..0,2..2],matchFail.consecutiveMatches(+1,0,0))
+	assert_empty(Alternative.consecutiveMatches(+1,0,0))
+	assert_equal([0..0,2..2],Deletion.consecutiveMatches(+1,0,0))
+	assert_equal([0..0,1..1],Insertion.consecutiveMatches(+1,0,0))
+	matches=Addresses.consecutiveMatches(+1,0,0)
+	Addresses.assert_consecutiveMatches(matches)
+	assert_equal([0..8, 15..15], matches)
+	matched_regexp=matches.map do |m|
+		Addresses[m].to_s
+	end #map
+	assert_equal(['<Url:0xb5', '>'], matched_regexp)
+
 end #consecutiveMatches
 def test_consecutiveMatch
-#fail	assert_respond_to(self,:testAnswer)
-#	explain_assert_respond_to(self,:testAnswer)
-#	testAnswer(KCETeditor,:consecutiveMatch,0..1,+1,0,0)
-	matchFail=RegexpMatch.new('KxC', 'KC')
-	assert_equal(['K','x','C'],matchFail.to_a)
+	assert_equal(['K','x','C'],Deletion.to_a)
+	assert_equal(['K','C'],Insertion.to_a)
 
-	assert_equal(0..0,matchFail.consecutiveMatch(+1,0,0))
+	assert_equal(0..0,Deletion.consecutiveMatch(+1,0,0))
+	assert_equal(0..0,Insertion.consecutiveMatch(+1,0,0))
 
-	assert_nil(matchFail.consecutiveMatch(-1,1,1))
+	assert_nil(Deletion.consecutiveMatch(-1,1,1))
 	startPos=2
 	endPos=2
-	matchData=RegexpMatch.matchRescued(matchFail[startPos..endPos], matchFail.dataToParse)
-	assert_equal(['C'], matchFail[startPos..endPos])
+	matchData=RegexpMatch.matchRescued(Deletion[startPos..endPos], Deletion.dataToParse)
+	assert_equal(['C'], Deletion[startPos..endPos])
 	assert(matchData)
-	assert_equal(2..2,matchFail.consecutiveMatch(-1,2,2))
+	assert_equal(2..2,Deletion.consecutiveMatch(-1,2,2))
+	assert_equal(2..2,Insertion.consecutiveMatch(-1,2,2))
+	match1=Addresses.consecutiveMatch(+1,0,0)
+	Addresses.assert_consecutiveMatch(match1)
+	assert_equal(0..8, match1)
+	match2=Addresses.consecutiveMatch(+1,9)
+	assert_nil(match2)
+#	assert_equal(14..14, match2)
+	assert_nil(Addresses.consecutiveMatch(+1,9, 15))
+	assert_nil(Addresses.consecutiveMatch(+1,9))
+	match3=Addresses.consecutiveMatch(+1,15)
+	Addresses.assert_match(match3, match2)
+	assert_equal(15..15, match3)
 end #consecutiveMatch
 def test_string_of_matching_chars
 	regexp=Regexp.new('\d')
