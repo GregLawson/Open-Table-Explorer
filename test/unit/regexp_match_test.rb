@@ -24,6 +24,7 @@ def regexpTest(editor)
 	assert_operator(editor.matchSubTree.size,:>,0)
 end #def
 class RegexpMatchTest < ActiveSupport::TestCase
+set_class_variables(RegexpMatchTest,false)
 #require 'test/unit'
 #include Test_Helpers
 #require 'test/assertions/ruby_assertions.rb'
@@ -291,14 +292,8 @@ def test_editor
 #	parseTree=KCETeditor.regexpTree!
 	regexpTest(KCETeditor)
 end #def
-def setup
-	define_model_of_test # allow generic tests
-#	assert_module_included(@model_class,Generic_Table)
-#	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-#	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-end #def
 def test_zero_parameter_new
 	assert_nothing_raised{RegexpTree.new} # 0 arguments
-	assert_not_nil(@model_class)
+	assert_not_nil(@@model_class)
 end #test_name_correct
 end #test class
