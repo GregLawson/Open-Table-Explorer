@@ -93,7 +93,7 @@ def mergeMatches(matches)
 
 end #mergeMatches
 # accounts for arrays (subtrees) in parse tree
-# returns regexp string that should match
+# returns RegexpMatch that should match
 # calls consecutiveMatches to find matches
 # calls mergeMatches to reduce multiple matches to one regexp string
 def matchedTreeArray
@@ -153,11 +153,12 @@ def consecutiveMatches(increment,startPos,endPos)
 		if matchRange then
 			startPos=endPos=matchRange.end+1
 			ret << matchRange
-		else
-			startPos=endPos=endPos+1
+		else #nil = no match
+			startPos=endPos=endPos+1 
 		end #if
-		increment=increment*-1 #reverse scan
-#	assert(startPos<=endPos)
+		increment=increment*-1 #reverse scan. even/odd scans in different directions
+# 		can a backward scan ever find a match?
+	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
 	end until startPos<0 || endPos>=self.size
 	return ret
 end #consecutiveMatches
@@ -169,14 +170,11 @@ end #consecutiveMatches
 # startPos - array index into parsedTree to start (inclusive)
 # endPos - array index into parsedTree to end (inclusive)
 # returns when incremented from startPos/endPos past endPos/startPos
-def consecutiveMatch(increment,startPos,endPos)
-#	# Global::log.info("consecutiveMatch begins with self.inspect=#{self.inspect},increment=#{increment},startPos=#{startPos},endPos=#{endPos}")
-#	assert(startPos<=endPos)
+def consecutiveMatch(increment=+1,startPos=0,endPos=self.size)
+	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
 	begin # until
 		matchData=RegexpMatch.matchRescued(self[startPos..endPos], @dataToParse)
-#		matchDisplay(self[startPos..endPos]to_s) #if $VERBOSE
 		if matchData then
-			# Global::log.info("matchData startPos=#{startPos}, endPos=#{endPos}")
 			lastMatch=(startPos..endPos) # best so far
 			if increment>0 then
 				endPos=endPos+increment
@@ -184,12 +182,13 @@ def consecutiveMatch(increment,startPos,endPos)
 				startPos=startPos+increment
 			end
 		else
+			if !lastMatch.nil? then
+				raise "startPos=#{startPos}>endPos=#{endPos}" if lastMatch.begin<startPos || lastMatch.end>endPos
+			end #if
 			return lastMatch
 		end
-#	assert(startPos<=endPos)
+	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
 	end until startPos<0 || endPos>=self.size
-	# Global::log.info("startPos=#{startPos}")# if $DEBUG
-	# Global::log.info("endPos=#{endPos}") #if $DEBUG
 	if lastMatch.nil? then
 		return nil
 	else
@@ -206,4 +205,4 @@ def self.string_of_matching_chars(regexp)
 	end #select
 	
 end #string_of_matching_chars
-end #class
+end #RegexpMatch

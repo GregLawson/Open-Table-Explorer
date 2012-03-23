@@ -61,7 +61,7 @@ def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 		message=build_message(message, "regexp.source=? did not match ? but new_regexp_tree=? should match", regexp.source, string, new_regexp_tree.to_s)
 	end #if
 	assert_match(regexp, string, message)
-end #assert_match
+end #explain_assert_match
 def RegexpMatch.assert_match_array(regexp, string, message=nil)
 	 string.instance_of?(Enumeration)
 end #assert_match_array
@@ -73,7 +73,7 @@ def assert_mergeable(string1, string2)
 	RegexpMatch.explain_assert_match(regexp, string1)
 end #assert_mergeable
 end #ClassMethods
-end #RegexpMatchAssertionsdef assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
+def assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
 	regexp=branch.to_regexp
 	matchData=regexp.match(data_to_match)
 	ret={:regexp => regexp, :data_to_match => data_to_match}
