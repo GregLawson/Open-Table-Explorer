@@ -110,6 +110,35 @@ def matchedTreeArray
 		end #if
 	end #if
 end #matchedTreeArray
+def match_branch(branch=self, data_to_match=@dataToParse)
+	
+	regexp=branch.to_regexp
+	matchData=regexp.match(data_to_match)
+	ret={:regexp => regexp, :data_to_match => data_to_match}
+	if matchData.nil? then
+		ret[:matched_data]= nil
+
+	else
+		ret[:matched_data]= matchData[0]
+		data_to_match=matchData.post_match
+	end #if
+	ret
+end #match_branch
+def map_consecutiveMatches(matches, data_to_match=@dataToParse)
+	matched_regexp=matches.map do |m|
+		regexp=self[m].to_regexp
+		matchData=regexp.match(data_to_match)
+		ret={:regexp => regexp, :data_to_match => data_to_match}
+		if matchData.nil? then
+			ret[:matched_data]= nil
+		else
+			ret[:matched_data]= matchData[0]
+			data_to_match=matchData.post_match
+		end #if
+		ret
+	end #map
+end #map_consecutiveMatches
+
 # Searches for all subregexp that matches
 # returns Array of Ranges of those subregexps ([] if no matches)
 # calls consecutiveMatch

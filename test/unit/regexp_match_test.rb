@@ -190,6 +190,52 @@ def test_matchedTreeArray
 	matchFail=RegexpMatch.new('KxC', 'KC')
 	assert_equal(['K', [".", "*"],'C'],matchFail.matchedTreeArray)
 end #matchedTreeArray
+def test_match_branch
+	matches=Addresses.consecutiveMatches(+1,0,0)
+	data_to_match=Addresses.dataToParse
+	startPos=0
+	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
+	assert_equal({:data_to_match=>"<Url:0xb5ce4e3c>", :regexp=>/0/, :matched_data=>"0"}, branch_match, "Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}")
+	startPos=6
+	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
+	assert_equal({:matched_data=>nil, :data_to_match=>"xb5ce4e3c>", :regexp=>/0/}, branch_match, "Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}")
+end #match_branch
+def test_map_consecutiveMatches
+	matches=Addresses.consecutiveMatches(+1,0,0)
+	assert_instance_of(Array, matches)
+	data_to_match=Addresses.dataToParse
+	assert_not_empty(data_to_match)
+	startPos=0
+	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos, -1])
+#	assert_equal({/0/ => nil}, branch_match, "Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}")
+	assert_not_empty(data_to_match)
+	matched_regexp=matches.map do |m|
+		message="m=#{m}, Addresses[m]=#{Addresses[m]}, data_to_match=#{data_to_match}"
+		assert_not_empty(data_to_match, message)
+		Addresses.assert_match_branch(Addresses[m], data_to_match)
+		branch_match=Addresses.match_branch(Addresses[m], data_to_match)
+		assert_not_nil(branch_match)
+		matched_data=branch_match[:matched_data]
+		if matched_data.nil? || matched_data.size==0 then
+		else
+			assert_not_nil(matched_data, "Addresses[m]=#{Addresses[m]}, data_to_match=#{data_to_match}")
+			assert_not_empty(data_to_match, message)
+			data_to_match=data_to_match[matched_data.size..-1]
+			message2= message+", matched_data=#{matched_data}"
+			message2+=", data_to_match[#{matched_data.size}"
+#			message2+=", -1]=#{data_to_match[matched_data.size, -1]}"
+			assert_not_empty(data_to_match, message2)
+		end #if
+		assert_not_equal(data_to_match, Addresses.dataToParse)
+		branch_match
+	end #map
+	assert_equal(matched_regexp, Addresses.map_consecutiveMatches(matches))
+	assert_equal([{:data_to_match=>"<Url:0xb5ce4e3c>",
+		  :regexp=>/<Url:0xb5/,
+		  :matched_data=>"<Url:0xb5"},
+		{:data_to_match=>"ce4e3c>", :regexp=>/0/, :matched_data=>nil},
+ 		{:data_to_match=>"ce4e3c>", :regexp=>/>/, :matched_data=>">"}], Addresses.map_consecutiveMatches(matches))
+end #map_consecutiveMatches
 def test_consecutiveMatches
 	matchFail=RegexpMatch.new('KxC', 'KC')
 	assert_equal([0..0,2..2],matchFail.consecutiveMatches(+1,0,0))

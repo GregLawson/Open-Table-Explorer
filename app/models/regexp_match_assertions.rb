@@ -73,4 +73,36 @@ def assert_mergeable(string1, string2)
 	RegexpMatch.explain_assert_match(regexp, string1)
 end #assert_mergeable
 end #ClassMethods
-end #RegexpMatchAssertions
+end #RegexpMatchAssertionsdef assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
+	regexp=branch.to_regexp
+	matchData=regexp.match(data_to_match)
+	ret={:regexp => regexp, :data_to_match => data_to_match}
+	if matchData.nil? then
+		ret[:matched_data]= nil
+
+	else
+		ret[:matched_data]= matchData[0]
+		data_to_match=matchData.post_match
+	end #if
+	message=build_message(message, "ret=?", ret)
+	assert_not_nil(ret[:data_to_match], message)
+end #match_branch
+def assert_consecutiveMatches(matches)
+	assert_instance_of(Array, matches)
+	previous_match=nil
+	matched_regexp=matches.map do |m|
+		assert_consecutiveMatch(m, previous_match)
+		previous_match=m # save for next iteration
+	end #map
+end #consecutiveMatches
+def assert_consecutiveMatch(match, previous_match=nil)
+	assert_instance_of(Range, match)
+	
+	assert_operator(match.begin, :<=, match.end)
+	if !previous_match.nil? then
+		assert_operator(previous_match.end, :<=, match.begin)
+		assert_match(self[match].to_regexp, @dataToParse)
+	else
+	end #if
+end #consecutiveMatch
+end #RegexpMatch
