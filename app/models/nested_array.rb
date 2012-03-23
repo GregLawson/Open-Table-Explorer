@@ -27,7 +27,7 @@ def map_recursive(&visit_proc)
 		end #if
 	end
 end #map_recursive
-# Apply block to each non-node or branching node
+# Apply block to each non-leaf or branching node
 # Provides a postfix walk
 # Two passes:
 # 1) Recursively visit descendants
