@@ -74,16 +74,7 @@ def assert_mergeable(string1, string2)
 end #assert_mergeable
 end #ClassMethods
 def assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
-	regexp=branch.to_regexp
-	matchData=regexp.match(data_to_match)
-	ret={:regexp => regexp, :data_to_match => data_to_match}
-	if matchData.nil? then
-		ret[:matched_data]= nil
-
-	else
-		ret[:matched_data]= matchData[0]
-		data_to_match=matchData.post_match
-	end #if
+	ret=match_branch(branch, data_to_match)
 	message=build_message(message, "ret=?", ret)
 	assert_not_nil(ret[:data_to_match], message)
 end #match_branch
