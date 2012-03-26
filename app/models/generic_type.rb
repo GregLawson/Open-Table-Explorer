@@ -21,6 +21,9 @@ require 'test/assertions/ruby_assertions.rb'
 def self.logical_primary_key
 	return [:import_class]
 end #logical_primary_key
+def name
+	return self[:import_class]
+end #name
 def GenericType.find_by_name(name)
 	return GenericType.find_by_import_class(name)
 end #find_by_name
@@ -60,7 +63,7 @@ def expansion_termination?
 	regexp=self[:data_regexp]
 	parse=RegexpTree.new(regexp)[0]
 	macro_name=RegexpTree.macro_call?(parse)
-	self[:import_class]==macro_name
+	self.name==macro_name
 end #expansion_termination
 def expand
 	parse=RegexpTree.new(self[:data_regexp])

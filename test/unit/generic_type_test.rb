@@ -17,14 +17,15 @@ end #logical_primary_key
 def test_find_by_name
 	macro_name='lower'
 	macro_generic_type=GenericType.find_by_name(macro_name)
-	assert_not_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{GenericType.all.map{|t| t.import_class}.inspect}")
+	assert_not_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{GenericType.all.map{|t| t.name}.inspect}")
+	assert_equal(macro_name, macro_generic_type.name, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{GenericType.all.map{|t| t.name}.inspect}")
 end #find_by_name
 def test_generalizations
 	assert_instance_of(GenericType, GenericType.find_by_import_class('digit'))
-	assert_equal(["Text_Column", "VARCHAR_Column", "ascii", "print", "graph", "word", "alnum", "xdigit"], GenericType.find_by_import_class('digit').generalizations.map{|g| g.import_class})
+	assert_equal(["Text_Column", "VARCHAR_Column", "ascii", "print", "graph", "word", "alnum", "xdigit"], GenericType.find_by_import_class('digit').generalizations.map{|g| g.name})
 	assert(GenericType.all.any? {|g| !g.generalizations.empty?})
-	assert_include("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.import_class})
-	assert_include("Text_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.import_class})
+	assert_include("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
+	assert_include("Text_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
 	GenericType.all.each do |t|
 		assert_instance_of(GenericType, t)
 		assert_instance_of(Array, t.generalizations)
@@ -32,7 +33,7 @@ def test_generalizations
 			assert_instance_of(GenericType, t.generalizations[0])
 		end #if
 	end #each
-	assert_equal_sets(["VARCHAR_Column", "Text_Column"], GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.import_class})
+	assert_equal_sets(["VARCHAR_Column", "Text_Column"], GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
 end #generalizations
 def test_most_general
 	most_general=GenericType.find_by_import_class('Text_Column')
@@ -56,16 +57,16 @@ def test_one_level_specializations
 			assert_instance_of(GenericType, t.one_level_specializations[0])
 		end #if
 	end #each
-	assert_include('Integer_Column', GenericType.find_by_import_class("VARCHAR_Column").one_level_specializations.map{|a| a.import_class})
-	assert_not_include('Integer_Column', GenericType.find_by_import_class("Text_Column").one_level_specializations.map{|a| a.import_class})
-	assert_equal(["cntrl", "print", "space"], GenericType.find_by_import_class('ascii').one_level_specializations.map{|g| g.import_class})
+	assert_include('Integer_Column', GenericType.find_by_import_class("VARCHAR_Column").one_level_specializations.map{|a| a.name})
+	assert_not_include('Integer_Column', GenericType.find_by_import_class("Text_Column").one_level_specializations.map{|a| a.name})
+	assert_equal(["cntrl", "print", "space"], GenericType.find_by_import_class('ascii').one_level_specializations.map{|g| g.name})
 end #one_level_specializations
 def test_specializations
-	assert_equal(["tab", "lower", "upper", "digit", "alpha", "xdigit", 'underscore', "alnum", "word", "punct", "graph", "blank", "cntrl", "print", "space"], GenericType.find_by_import_class('ascii').specializations.map{|g| g.import_class})
+	assert_equal(["tab", "lower", "upper", "digit", "alpha", "xdigit", 'underscore', "alnum", "word", "punct", "graph", "blank", "cntrl", "print", "space"], GenericType.find_by_import_class('ascii').specializations.map{|g| g.name})
 	most_general=GenericType.find_by_import_class('Text_Column')
-#	assert_equal(["lower", "upper", "digit", "alpha", "xdigit", "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('Text_Column').specializations.map{|g| g.import_class})
+#	assert_equal(["lower", "upper", "digit", "alpha", "xdigit", "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('Text_Column').specializations.map{|g| g.name})
 
-#	assert_equal(["lower", "upper", "digit", "alpha", "xdigit", "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('Text_Column').specializations.map{|g| g.import_class})
+#	assert_equal(["lower", "upper", "digit", "alpha", "xdigit", "alnum", "word", "punct", "graph", "blank", "cntl", "print", "space"], GenericType.find_by_import_class('Text_Column').specializations.map{|g| g.name})
 	GenericType.all.each do |g|
 		assert_instance_of(Array, g.specializations)
 	end #each
@@ -77,8 +78,8 @@ def test_expansion_termination
 	parse=RegexpTree.new(regexp)[0]
 	macro_name=RegexpTree.macro_call?(parse)
 	assert_instance_of(String, macro_name)
-	assert_equal(xdigit_type[:import_class], macro_name)
-	assert_block("xdigit_type=#{xdigit_type.inspect}.\n regexp=#{regexp}, parse=#{parse.inspect}\n macro_name=#{macro_name}"){xdigit_type.expansion_termination?}
+	assert_equal(Xdigit.name, macro_name)
+	assert_block("Xdigit=#{Xdigit.inspect}.\n regexp=#{regexp}, parse=#{parse.inspect}\n macro_name=#{macro_name}"){Xdigit.expansion_termination?}
 end #expansion_termination
 def test_expand
 	parent=GenericType.find_by_name('Macaddr_Column')
@@ -86,19 +87,19 @@ def test_expand
 	assert_regexp(regexp)
 	parse=RegexpTree.new(regexp)
 	macro_name=RegexpTree.macro_call?(parse)
-	assert_not_equal(macro_name, parent[:import_class])
+	assert_not_equal(macro_name, Macaddr.name)
 	expansion=parse.map_branches do |branch|
 		macro_name=RegexpTree.macro_call?(branch)
 		if macro_name then
-			assert_not_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.import_class}.inspect}")
-			all_macro_names= GenericType.all.map{|t| t.import_class}
+			assert_not_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.name}.inspect}")
+			all_macro_names= GenericType.all.map{|t| t.name}
 			assert_include(macro_name, all_macro_names)
 			macro_generic_type=GenericType.find_by_name(macro_name)
 			assert_not_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{all_macro_names.inspect}")
 			macro_call=macro_generic_type[:data_regexp]
 			assert_not_nil(macro_call, "")
 			assert_not_equal(macro_call, regexp)
-			assert_equal(macro_name, macro_generic_type[:import_class])
+			assert_equal(macro_name, macro_generic_type.name)
 			assert_equal(branch, macro_generic_type.expand, "macro_name=#{macro_name},\n")
 			macro_generic_type.expand
 		else
@@ -179,7 +180,7 @@ def test_most_specialized
 	assert_equal([VARCHAR_Column, Macaddr_Column], Start.most_specialized?(mac_example))
 end #most_specialized
 def test_generalize
-	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.import_class)
+	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.name)
 	GenericType.all.each do |t|
 		assert_not_equal(t[:generalize_id], 0, "t=#{t.inspect}")
 	end #each
