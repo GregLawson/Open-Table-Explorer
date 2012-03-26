@@ -10,6 +10,16 @@ require 'test/test_helper'
 require 'test/assertions/generic_type_assertions.rb'
 class GenericTypeTest < ActiveSupport::TestCase
 set_class_variables
+Text=GenericType.find_by_name('Text_Column')
+Ascii=GenericType.find_by_name('ascii')
+Alpha=GenericType.find_by_name('alpha')
+Alnum=GenericType.find_by_name('alnum')
+Digit=GenericType.find_by_name('digit')
+Lower=GenericType.find_by_name('lower')
+Xdigit=GenericType.find_by_name('xdigit')
+Macaddr=GenericType.find_by_name('Macaddr_Column')
+Integer=GenericType.find_by_name('Integer_Column')
+VARCHAR_Column=GenericType.find_by_name('VARCHAR_Column')
 def test_logical_primary_key
 #	first=GenericType.first
 	assert_equal([:import_class], GenericType.logical_primary_key)
@@ -72,8 +82,7 @@ def test_specializations
 	end #each
 end #specializations
 def test_expansion_termination
-	xdigit_type=GenericType.find_by_name('xdigit')
-	regexp=xdigit_type[:data_regexp]
+	regexp=Xdigit[:data_regexp]
 	assert_regexp(regexp)
 	parse=RegexpTree.new(regexp)[0]
 	macro_name=RegexpTree.macro_call?(parse)
@@ -82,8 +91,7 @@ def test_expansion_termination
 	assert_block("Xdigit=#{Xdigit.inspect}.\n regexp=#{regexp}, parse=#{parse.inspect}\n macro_name=#{macro_name}"){Xdigit.expansion_termination?}
 end #expansion_termination
 def test_expand
-	parent=GenericType.find_by_name('Macaddr_Column')
-	regexp=parent[:data_regexp]
+	regexp=Macaddr[:data_regexp]
 	assert_regexp(regexp)
 	parse=RegexpTree.new(regexp)
 	macro_name=RegexpTree.macro_call?(parse)
@@ -108,47 +116,43 @@ def test_expand
 	end #map_branches
 	assert_equal(expansion, parse.map_branches{|branch|branch})
 end #expand
-Start=GenericType.find_by_name('Text_Column')
 
 def test_match
-	regexp=Regexp.new(Start.expand.join)
+	regexp=Regexp.new(Text.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Start.match_exact?(string_to_match))
+	assert_not_nil(Text.match_exact?(string_to_match))
 end #match
 def test_match_Start
-	regexp=Regexp.new(Start.expand.join)
+	regexp=Regexp.new(Text.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Start.match_start?(string_to_match))
+	assert_not_nil(Text.match_start?(string_to_match))
 end #match_start
 def test_match_end
-	regexp=Regexp.new(Start.expand.join)
+	regexp=Regexp.new(Text.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Start.match_end?(string_to_match))
+	assert_not_nil(Text.match_end?(string_to_match))
 end #match_end
 def test_match_any
-	regexp=Regexp.new(Start.expand.join)
+	regexp=Regexp.new(Text.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Start.match_any?(string_to_match))
+	assert_not_nil(Text.match_any?(string_to_match))
 end #match_any
-Integer_Column=GenericType.find_by_name('Integer_Column')
-VARCHAR_Column=GenericType.find_by_name('VARCHAR_Column')
-Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 def test_specializations_that_match
 
-	regexp=Regexp.new(Start[:data_regexp])
+	regexp=Regexp.new(Text[:data_regexp])
 	assert_regexp(regexp)
 	string_to_match='123'
-	message="Start=#{Start}, Start.match_exact?(string_to_match)=#{Start.match_exact?(string_to_match)}"
-	assert_block(message){Start.match_exact?(string_to_match)}
-	Start.one_level_specializations.map do |specialization|
+	message="Text=#{Text}, Text.match_exact?(string_to_match)=#{Text.match_exact?(string_to_match)}"
+	assert_block(message){Text.match_exact?(string_to_match)}
+	ret=Text.one_level_specializations.map do |specialization|
 		assert(specialization.match_exact?(string_to_match))
 		if specialization.match_exact?(string_to_match) then
 			[specialization, specialization.specializations_that_match?(string_to_match)]
@@ -156,29 +160,44 @@ def test_specializations_that_match
 			nil
 		end #if
 	end.compact.uniq.flatten #map
-	assert_equal([VARCHAR_Column, Integer_Column], Start.specializations_that_match?(string_to_match))
+	assert_equal([[VARCHAR_Column, [Integer]]], ret, NestedArray.new(ret).map_recursive{|s| s.name}.inspect)
+	assert_instance_of(NestedArray, Text.specializations_that_match?(string_to_match))
+	assert_equal([[Alpha, Lower, Xdigit]], Alnum.specializations_that_match?('c'), Alnum.specializations_that_match?('c').map_recursive{|s| s.name}.inspect)
+	assert_equal([[Alpha, Lower, Xdigit]], Ascii.specializations_that_match?('c'), Ascii.specializations_that_match?('c').map_recursive{|s| s.name}.inspect)
+	assert_equal([[VARCHAR_Column], [[Integer]]], Text.specializations_that_match?(string_to_match), Text.specializations_that_match?(string_to_match).map_recursive{|s| s.name}.inspect)
 end #specializations_that_match
 def test_most_specialized
-	regexp=Regexp.new(Start[:data_regexp])
+	Lower.assert_most_specialized('l', 'lower')
+	Digit.assert_most_specialized('c', 'xdigit')
+	Lower.assert_most_specialized('9', 'xdigit')
+end #most_specialized
+def test_common_matches
+	regexp=Regexp.new(Text[:data_regexp])
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	most_specialized=if Start.match_exact?(string_to_match) then
-		Start.specializations_that_match?(string_to_match)
+	most_specialized=if Text.match_exact?(string_to_match) then
+		Text.specializations_that_match?(string_to_match)
 	else
-		Start.generalize.most_specialized?(string_to_match)
+		Text.generalize.most_specialized?(string_to_match)
 	end #if
 	assert_instance_of(Array, most_specialized)
 	assert_instance_of(GenericType, most_specialized[0])
-	assert_equal([VARCHAR_Column, Integer_Column], most_specialized)
-	assert_instance_of(Array, Start.most_specialized?('123'))
-	assert_instance_of(GenericType, Start.most_specialized?('123')[0])
-	assert_equal([VARCHAR_Column, Integer_Column], Start.most_specialized?('123'))
+	assert_equal([VARCHAR_Column, Integer], most_specialized)
+	assert_instance_of(Array, Text.most_specialized?('123'))
+	assert_instance_of(GenericType, Text.most_specialized?('123')[0])
+	assert_equal([VARCHAR_Column, Integer], Text.most_specialized?('123'))
 	mac_example='12:34:56:78'
-	regexp=Macaddr_Column[:data_regexp]
+	regexp=Macaddr[:data_regexp]
 	mac_match=RegexpMatch.new(regexp, mac_example)
-	assert_equal([VARCHAR_Column, Macaddr_Column], Start.most_specialized?(mac_example))
-end #most_specialized
+	assert_equal([VARCHAR_Column, Macaddr], Text.most_specialized?(mac_example))
+	assert_equal([Xdigit, Digit], Lower.most_specialized?('9'))
+	assert_equal([Xdigit, Lower], Text.most_specialized?('c'), Text.most_specialized?('c').map{|m|m.name}.inspect) # ambiguous
+	assert_not_empty(Digit.most_specialized?('c'))
+	assert_equal([Xdigit, Lower], Digit.most_specialized?('c'))
+	Digit.assert_most_specialized('c', 'xdigit')
+	Lower.assert_most_specialized('9', 'xdigit')
+end #common_matches
 def test_generalize
 	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.name)
 	GenericType.all.each do |t|
