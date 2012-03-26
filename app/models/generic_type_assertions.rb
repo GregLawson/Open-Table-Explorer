@@ -11,11 +11,12 @@ require 'test/test_helper'
 # 2) an example should not match at least one of its specialization regexps
 # 3) example  strings should not equal specialization examples
 # 4) specialization regexps have fewer choices (including case) or more restricted repetition
-class GenericType < ActiveRecord::Base
+module GenericTypeAssertions
 # Assertions (validations)
 include Test::Unit::Assertions
 require 'rails/test_help'
-
+module ClassMethods
+end #module ClassMethods
 # Specialization should have fewer choices and match fewer sequential characters
 # To support automatic testing example should distinguish specializations by
 # 1a) a regexp should match all examples from itself down the specialization tree.
@@ -31,4 +32,17 @@ def assert_specialized_examples
 		end #each
 	end #each
 end #assert_specialized_examples
-end #GenericType
+def assert_most_specialized(string, name)
+	most_specialized=self
+	message="most_specialized=#{most_specialized.inspect}"
+	message+="\n most_specialized.most_specialized?(string)=#{most_specialized.most_specialized?(string).map{|s|s.import_class}.inspect}"
+	message+="\n string=#{string}"
+	assert_not_nil(most_specialized, message)
+	assert_not_nil(most_specialized.most_specialized?(string), message)
+	assert_instance_of(Array, most_specialized.most_specialized?(string), message)
+	assert_not_empty(most_specialized.most_specialized?(string), message)
+	assert_not_nil(most_specialized.most_specialized?(string)[-1], message)
+	most_specialized=most_specialized.most_specialized?(string)[-1]
+	assert_equal(name, most_specialized[:import_class], message)
+end #most_specialized
+end #GenericTypeAssertions
