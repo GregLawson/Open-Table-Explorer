@@ -121,6 +121,9 @@ def specializations_that_match?(string_to_match)
 		end #if
 	end .compact.uniq.flatten #map
 end #specializations_that_match
+def most_specialized?(string_to_match)
+	common_matches?(string_to_match)[0]
+end #most_specialized
 # Recursively search where in the tree a string matches
 # Returns an array of GenericType instances.
 # The last element of the array matched.
@@ -129,11 +132,15 @@ end #specializations_that_match
 # If the string doesn't match the receiving object, generalize is returned.
 # If start matches, the returned array will be the ordered array of matching specializations.
 # Calls match_exact? and specializations_that_match? above
-def most_specialized?(string_to_match)
+def common_matches?(string_to_match)
 	if match_exact?(string_to_match) then
-		specializations_that_match?(string_to_match)
+		if unspecialized? then
+			return NestedArray.new(self)
+		else
+			specializations_that_match?(string_to_match)
+		end #if
 	else
 		generalize.most_specialized?(string_to_match)
 	end #if
-end #most_specialized?
+end #common_matches
 end #GenericType
