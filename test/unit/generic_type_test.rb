@@ -7,7 +7,11 @@
 ###########################################################################
 require 'test/test_helper'
 
-require 'test/assertions/generic_type_assertions.rb'
+class GenericType < ActiveRecord::Base
+include GenericTypeAssertions
+extend GenericTypeAssertions::ClassMethods
+end #class GenericType < ActiveRecord::Base
+
 class GenericTypeTest < ActiveSupport::TestCase
 set_class_variables
 Text=GenericType.find_by_name('Text_Column')
@@ -159,7 +163,8 @@ def test_specializations_that_match
 		else
 			nil
 		end #if
-	end.compact.uniq.flatten #map
+	end.compact.uniq #map
+	assert_equal(ret, ret.compact)
 	assert_equal([[VARCHAR_Column, [Integer]]], ret, NestedArray.new(ret).map_recursive{|s| s.name}.inspect)
 	assert_instance_of(NestedArray, Text.specializations_that_match?(string_to_match))
 	assert_equal([[Alpha, Lower, Xdigit]], Alnum.specializations_that_match?('c'), Alnum.specializations_that_match?('c').map_recursive{|s| s.name}.inspect)

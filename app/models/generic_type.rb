@@ -111,15 +111,22 @@ def match_any?(string_to_match)
 	return RegexpMatch.matchRescued(regexp, string_to_match)
 end #match_any
 # Find specializations that match recursively
+# Returns an (nested?) Array of GenericType
+# Least specialized comes first
 # Multiple specializations that match at the same level are probably not handled correcly yet.
 def specializations_that_match?(string_to_match)
-	one_level_specializations.map do |specialization|
+	ret=one_level_specializations.map do |specialization|
 		if specialization.match_exact?(string_to_match) then
-			[specialization, specialization.specializations_that_match?(string_to_match)]
+			if specialization.unspecialized? then
+				specialization
+			else
+				[specialization, specialization.specializations_that_match?(string_to_match)]
+			end #if
 		else
 			nil
 		end #if
-	end .compact.uniq.flatten #map
+	end .compact.uniq #map
+	return NestedArray.new(ret)
 end #specializations_that_match
 def most_specialized?(string_to_match)
 	common_matches?(string_to_match)[0]
