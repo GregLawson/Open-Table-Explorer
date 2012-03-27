@@ -110,6 +110,60 @@ def matchedTreeArray
 		end #if
 	end #if
 end #matchedTreeArray
+def canonical_repetion_tree(min, max)
+	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
+end #canonical_repetion_tree
+def concise_repetion_node(min, max)
+	if min==0 then
+		if max==1 then
+			return '?'
+		elsif max.nil? then
+			return '*'
+		else
+			return canonical_repetion_tree(min, max)
+		end #if
+	elsif min==1 then
+		if max==1 then
+			return ''
+		elsif max.nil? then
+			return '+'
+		else
+			return canonical_repetion_tree(min, max)
+		end #if
+	else
+		return canonical_repetion_tree(min, max)
+	end #if
+	return RegexpTree.new(['{', [min.to_s, max.to_s], '}'])
+end #concise_repetion_node
+def repetition_length(node=self, data_to_match=@dataToParse)
+	if !node.kind_of?(Array) then
+		if node=='' then
+			return [0, 0]
+		elsif node=='*' then
+			return [0, nil]
+		elsif node=='+' then
+			return [1, nil]
+		elsif node=='?' then
+			return [0, 1]
+		else
+			[1,1]
+		end #if
+	elsif post_op=node.postfix_expression? then
+		if post_op=='*' then
+			return [0, nil]
+		elsif post_op=='+' then
+			return [1, nil]
+		elsif post_op=='?' then
+			return [0, 1]
+		else
+			[4,5]
+		end #if
+	elsif node[-1]=='}' then
+		[node[1][0].to_i, node[1][1].to_i]
+	else
+		[data_to_match.length, data_to_match.length]
+	end #if
+end #repetition_length
 def match_branch(branch=self, data_to_match=@dataToParse)
 	
 	regexp=branch.to_regexp

@@ -197,6 +197,27 @@ def test_matchedTreeArray
 	assert_equal(['K', [".", "*"],'C'],Insertion.matchedTreeArray)
 	assert_equal(['K', 'C'],Deletion.matchedTreeArray)
 end #matchedTreeArray
+Repetition_1_2=["{", ["1", ",", "2"], "}"]
+def test_canonical_repetion_tree
+	assert_equal(Repetition_1_2, Addresses.canonical_repetion_tree(1,2))
+end #canonical_repetion_tree
+def test_concise_repetion_node
+	Addresses.assert_equal('', Addresses.concise_repetion_node(1, 1))
+	Addresses.assert_equal("+", Addresses.concise_repetion_node(1, nil))
+	Addresses.assert_equal("?", Addresses.concise_repetion_node(0, 1))
+	Addresses.assert_equal("*", Addresses.concise_repetion_node(0, nil))
+	Addresses.assert_equal(Repetition_1_2, Addresses.concise_repetion_node(1,2))
+end #concise_repetion_node
+def test_repetition_length
+	Addresses.assert_equal([1, nil], Addresses.repetition_length('+'))
+	Addresses.assert_equal([0, 1], Addresses.repetition_length('?'))
+	Addresses.assert_equal([0, nil], Addresses.repetition_length('*'))
+	Addresses.assert_equal(Repetition_1_2, Addresses.concise_repetion_node(1,2))
+	Addresses.assert_equal([0, 0], Addresses.repetition_length(''))
+	Addresses.assert_equal([1, 1], Addresses.repetition_length('.'))
+	Addresses.assert_equal(["{", ["1", ',', "2"], "}"], Addresses.concise_repetion_node(1,2))
+	assert_equal([16, 16], Addresses.repetition_length)
+end #repetition_length
 def test_match_branch
 	matches=Addresses.consecutiveMatches(+1,0,0)
 	data_to_match=Addresses.dataToParse
