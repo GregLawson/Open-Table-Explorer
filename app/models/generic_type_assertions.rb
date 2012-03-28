@@ -17,6 +17,35 @@ include Test::Unit::Assertions
 require 'rails/test_help'
 module ClassMethods
 end #module ClassMethods
+def assert_specializations_that_match(names, search_string)
+	if names.instance_of?(Array) then
+		names=NestedArray.new(names)
+	end #if
+	assert_instance_of(String, search_string)
+	common_matches=specializations_that_match?(search_string)
+	common_names=common_matches.map_recursive{|m|m.name.to_sym}
+#	assert_equal(names.flatten.compact, common_names.flatten.compact)
+	assert_equal(names, common_names)
+end #specializations_that_match
+def assert_most_specialized(names, string)
+	most_specialized=self
+	message="most_specialized=#{most_specialized.inspect}"
+	message+="\n most_specialized.most_specialized?(string)=#{most_specialized.most_specialized?(string).inspect}"
+	message+="\n string=#{string}"
+	assert_not_nil(most_specialized, message)
+	assert_not_nil(most_specialized.most_specialized?(string), message)
+	assert_kind_of(Array, most_specialized.most_specialized?(string), message)
+	assert_not_nil(most_specialized.most_specialized?(string), message)
+	most_specialized=most_specialized.most_specialized?(string)
+	assert_equal(names, most_specialized.map{|m| m.name.to_sym}, message)
+end #most_specialized
+def assert_common_matches(names, search_string)
+	common_matches=common_matches?(search_string)
+	assert_not_nil(common_matches, "search_string=#{search_string}, name=#{name}")
+	common_names=common_matches.map_recursive{|m|m.name.to_sym}
+	assert_equal(names.flatten.compact, common_names.flatten.compact)
+	assert_equal(names, common_names)
+end #common_matches
 # Specialization should have fewer choices and match fewer sequential characters
 # To support automatic testing example should distinguish specializations by
 # 1a) a regexp should match all examples from itself down the specialization tree.
@@ -32,17 +61,4 @@ def assert_specialized_examples
 		end #each
 	end #each
 end #assert_specialized_examples
-def assert_most_specialized(string, name)
-	most_specialized=self
-	message="most_specialized=#{most_specialized.inspect}"
-	message+="\n most_specialized.most_specialized?(string)=#{most_specialized.most_specialized?(string).map{|s|s.import_class}.inspect}"
-	message+="\n string=#{string}"
-	assert_not_nil(most_specialized, message)
-	assert_not_nil(most_specialized.most_specialized?(string), message)
-	assert_instance_of(Array, most_specialized.most_specialized?(string), message)
-	assert_not_empty(most_specialized.most_specialized?(string), message)
-	assert_not_nil(most_specialized.most_specialized?(string)[-1], message)
-	most_specialized=most_specialized.most_specialized?(string)[-1]
-	assert_equal(name, most_specialized[:import_class], message)
-end #most_specialized
 end #GenericTypeAssertions

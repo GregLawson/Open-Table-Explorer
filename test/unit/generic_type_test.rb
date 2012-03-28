@@ -167,41 +167,79 @@ def test_specializations_that_match
 	assert_equal(ret, ret.compact)
 	assert_equal([[VARCHAR_Column, [Integer]]], ret, NestedArray.new(ret).map_recursive{|s| s.name}.inspect)
 	assert_instance_of(NestedArray, Text.specializations_that_match?(string_to_match))
-	assert_equal([[Alpha, Lower, Xdigit]], Alnum.specializations_that_match?('c'), Alnum.specializations_that_match?('c').map_recursive{|s| s.name}.inspect)
-	assert_equal([[Alpha, Lower, Xdigit]], Ascii.specializations_that_match?('c'), Ascii.specializations_that_match?('c').map_recursive{|s| s.name}.inspect)
-	assert_equal([[VARCHAR_Column], [[Integer]]], Text.specializations_that_match?(string_to_match), Text.specializations_that_match?(string_to_match).map_recursive{|s| s.name}.inspect)
+	assert(Lower.unspecialized?)
+	assert(!Alpha.unspecialized?)
+	assert(!Xdigit.unspecialized?)
+#	Ascii.assert_specializations_that_match([[:alpha, [:lower, :xdigit]]], 'c')
+	Alnum.assert_specializations_that_match([:alpha, [:lower], :xdigit], 'c')
+	Alnum.assert_specializations_that_match([:alpha, [:lower], :xdigit], 'c')
+	assert_equal([:alpha, [:lower], :xdigit], Alnum.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}, Alnum.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}.inspect)
+	assert_equal([:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]], Ascii.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}, Ascii.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}.inspect)
+	assert_equal([:VARCHAR_Column, [:Integer_Column]], Text.specializations_that_match?(string_to_match).map_recursive{|s| s.name.to_sym}, Text.specializations_that_match?(string_to_match).map_recursive{|s| s.name.to_sym}.inspect)
 end #specializations_that_match
-def test_most_specialized
-	Lower.assert_most_specialized('l', 'lower')
-	Digit.assert_most_specialized('c', 'xdigit')
-	Lower.assert_most_specialized('9', 'xdigit')
+def test_possibilities
+	common_matches=	common_matches=Ascii.common_matches?('c')
+	assert_kind_of(Array, common_matches)
+	assert_kind_of(Array, common_matches[1])
+	message="common_matches=#{common_matches.inspect}"
+	alternatives=NestedArray.new([Lower, Xdigit])
+	assert_equal(alternatives, Ascii.possibilities?(alternatives))
+	tail=NestedArray.new([Alpha, [Lower]])
+	assert_equal([:lower], Ascii.possibilities?(tail).map{|s| s.name.to_sym})
+	fork=NestedArray.new([Alpha, [Lower], Xdigit])
+	assert_equal([:lower, :xdigit], Ascii.possibilities?(fork).map{|s| s.name.to_sym})
+	ambiguity=NestedArray.new([Alnum, [Alpha, [Lower], Xdigit]])
+	assert_equal([:lower, :xdigit], Ascii.possibilities?(ambiguity).map{|s| s.name.to_sym})
+	assert_equal([:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]], Ascii.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}, Ascii.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}.inspect)
+	assert_equal([:alpha, [:lower], :xdigit], Alnum.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}, Alnum.specializations_that_match?('c').map_recursive{|s| s.name.to_sym}.inspect)
+	assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map{|p|p.name.to_sym}, message)
+	assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches[1]).map{|p|p.name.to_sym}, message)
+	assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map{|p|p.name.to_sym}, message)
+
+
+end #possibilities
+def test_c
+	Lower.assert_common_matches([:lower], 'l')
+	Lower.assert_most_specialized([:lower], 'l')
+	Digit.assert_common_matches([:xdigit], 'c')
+	Digit.assert_most_specialized([:xdigit], 'c')
+	Ascii.assert_common_matches([:ascii, [:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]]], 'c')
+	common_matches=Ascii.common_matches?('c')
+	assert_kind_of(Array, common_matches)
+	assert_kind_of(Array, common_matches[1])
+	assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map{|p|p.name.to_sym})
+	most_specialized=Ascii.most_specialized?('c', common_matches[1])
+	assert_kind_of(Array, most_specialized)
+	assert_equal([:lower, :xdigit], most_specialized.map{|p|p.name.to_sym})
+	assert_equal([:lower, :xdigit], Ascii.possibilities?(most_specialized).map{|p|p.name.to_sym})
+	Ascii.assert_most_specialized([:lower, :xdigit], 'c')
+	Lower.assert_common_matches([:alnum, [:xdigit, [:digit]]], '9')
+	Lower.assert_most_specialized([:digit], '9')
+	assert_equal([Digit], Lower.most_specialized?('9'))
+	assert_equal([Lower, Xdigit], Text.most_specialized?('c'), Text.most_specialized?('c').map{|m|m.name}.inspect) # ambiguous
+	assert_not_empty(Digit.most_specialized?('c'))
+	assert_equal([Xdigit], Digit.most_specialized?('c'))
+	Digit.assert_most_specialized([:xdigit], 'c')
 end #most_specialized
 def test_common_matches
 	regexp=Regexp.new(Text[:data_regexp])
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	most_specialized=if Text.match_exact?(string_to_match) then
+	common_matches=if Text.match_exact?(string_to_match) then
 		Text.specializations_that_match?(string_to_match)
 	else
-		Text.generalize.most_specialized?(string_to_match)
+		Text.generalize.common_matches?(string_to_match)
 	end #if
-	assert_instance_of(Array, most_specialized)
-	assert_instance_of(GenericType, most_specialized[0])
-	assert_equal([VARCHAR_Column, Integer], most_specialized)
-	assert_instance_of(Array, Text.most_specialized?('123'))
-	assert_instance_of(GenericType, Text.most_specialized?('123')[0])
-	assert_equal([VARCHAR_Column, Integer], Text.most_specialized?('123'))
+	assert_instance_of(NestedArray, common_matches)
+	Digit.assert_common_matches([:xdigit], 'c')
+	assert_equal([VARCHAR_Column, [Integer]], common_matches)
+	assert_instance_of(NestedArray, Text.common_matches?('123'))
+	assert_equal([Text, [VARCHAR_Column, [Integer]]], Text.common_matches?('123'))
 	mac_example='12:34:56:78'
 	regexp=Macaddr[:data_regexp]
 	mac_match=RegexpMatch.new(regexp, mac_example)
-	assert_equal([VARCHAR_Column, Macaddr], Text.most_specialized?(mac_example))
-	assert_equal([Xdigit, Digit], Lower.most_specialized?('9'))
-	assert_equal([Xdigit, Lower], Text.most_specialized?('c'), Text.most_specialized?('c').map{|m|m.name}.inspect) # ambiguous
-	assert_not_empty(Digit.most_specialized?('c'))
-	assert_equal([Xdigit, Lower], Digit.most_specialized?('c'))
-	Digit.assert_most_specialized('c', 'xdigit')
-	Lower.assert_most_specialized('9', 'xdigit')
+	assert_equal([Text, [VARCHAR_Column, [Macaddr]]], Text.common_matches?(mac_example))
 end #common_matches
 def test_generalize
 	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.name)

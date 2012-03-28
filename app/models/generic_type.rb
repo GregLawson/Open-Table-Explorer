@@ -18,6 +18,8 @@ has_many :specialize, :class_name => "GenericType",
 belongs_to :generalize, :class_name => "GenericType",
     :foreign_key => "generalize_id"
 require 'test/assertions/ruby_assertions.rb'
+#def initialize(generic_type)
+#end #initialize
 def self.logical_primary_key
 	return [:import_class]
 end #logical_primary_key
@@ -115,12 +117,17 @@ end #match_any
 # Least specialized comes first
 # Multiple specializations that match at the same level are probably not handled correcly yet.
 def specializations_that_match?(string_to_match)
-	ret=one_level_specializations.map do |specialization|
+	ret=[]
+	one_level_specializations.map do |specialization|
 		if specialization.match_exact?(string_to_match) then
 			if specialization.unspecialized? then
-				specialization
+				ret.push(specialization)
 			else
-				[specialization, specialization.specializations_that_match?(string_to_match)]
+				ret.push(specialization)
+				specializations=specialization.specializations_that_match?(string_to_match)
+				if !specializations.empty? then
+					ret.push(specializations)
+				end #if
 			end #if
 		else
 			nil
@@ -128,8 +135,23 @@ def specializations_that_match?(string_to_match)
 	end .compact.uniq #map
 	return NestedArray.new(ret)
 end #specializations_that_match
-def most_specialized?(string_to_match)
-	common_matches?(string_to_match)[0]
+def possibilities?(common_matches)
+	if common_matches.instance_of?(GenericType) then
+		common_matches
+	elsif common_matches.kind_of?(Array) then
+		if common_matches[1].kind_of?(Array) then
+			possibilities?(common_matches[1])+possibilities?(common_matches[2..-1])
+		else
+			common_matches
+		end #if
+	end #if
+end #possibilities
+def most_specialized?(string_to_match, common_matches=common_matches?(string_to_match))
+	if common_matches.include?(self) then
+		possibilities?(common_matches)
+	else
+		possibilities?([self, common_matches])
+	end#if
 end #most_specialized
 # Recursively search where in the tree a string matches
 # Returns an array of GenericType instances.
@@ -142,12 +164,17 @@ end #most_specialized
 def common_matches?(string_to_match)
 	if match_exact?(string_to_match) then
 		if unspecialized? then
-			return NestedArray.new(self)
+			return NestedArray.new([self])
 		else
-			specializations_that_match?(string_to_match)
+			specializations=specializations_that_match?(string_to_match)
+			if specializations.empty? then
+				NestedArray.new([self])
+			else
+				NestedArray.new([self] << specializations)
+			end #if
 		end #if
 	else
-		generalize.most_specialized?(string_to_match)
+		generalize.common_matches?(string_to_match)
 	end #if
 end #common_matches
 end #GenericType
