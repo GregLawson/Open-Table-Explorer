@@ -178,7 +178,7 @@ def test_specializations_that_match
 	assert_equal([:VARCHAR_Column, [:Integer_Column]], Text.specializations_that_match?(string_to_match).map_recursive{|s| s.name.to_sym}, Text.specializations_that_match?(string_to_match).map_recursive{|s| s.name.to_sym}.inspect)
 end #specializations_that_match
 def test_possibilities
-	common_matches=	common_matches=Ascii.common_matches?('c')
+	common_matches=Ascii.common_matches?('c')
 	assert_kind_of(Array, common_matches)
 	assert_kind_of(Array, common_matches[1])
 	message="common_matches=#{common_matches.inspect}"
@@ -195,10 +195,13 @@ def test_possibilities
 	assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map{|p|p.name.to_sym}, message)
 	assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches[1]).map{|p|p.name.to_sym}, message)
 	assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map{|p|p.name.to_sym}, message)
-
-
+	Ascii.assert_possibilities([:lower, :xdigit], 'c')
+	Lower.assert_possibilities([:lower], 'c')
+	Ascii.assert_possibilities([:digit], '9')
+	Lower.assert_possibilities([:digit], '9')
+	Digit.assert_possibilities([:xdigit], 'c')
 end #possibilities
-def test_c
+def test_most_specialized
 	Lower.assert_common_matches([:lower], 'l')
 	Lower.assert_most_specialized([:lower], 'l')
 	Digit.assert_common_matches([:xdigit], 'c')

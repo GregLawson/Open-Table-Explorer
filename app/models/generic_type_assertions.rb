@@ -27,6 +27,12 @@ def assert_specializations_that_match(names, search_string)
 #	assert_equal(names.flatten.compact, common_names.flatten.compact)
 	assert_equal(names, common_names)
 end #specializations_that_match
+def assert_possibilities(names, string)
+	common_matches=common_matches?(string)
+	assert_instance_of(NestedArray, common_matches)
+	message="common_matches=#{common_matches.inspect}"
+	assert_equal(names, possibilities?(common_matches).map{|p|p.name.to_sym}, message)
+end #possibilities
 def assert_most_specialized(names, string)
 	most_specialized=self
 	message="most_specialized=#{most_specialized.inspect}"
