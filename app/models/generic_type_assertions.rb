@@ -31,7 +31,10 @@ def assert_possibilities(names, string)
 	common_matches=common_matches?(string)
 	assert_instance_of(NestedArray, common_matches)
 	message="common_matches=#{common_matches.inspect}"
-	assert_equal(names, possibilities?(common_matches).map{|p|p.name.to_sym}, message)
+	possibilities=possibilities?(common_matches)
+	assert_instance_of(Array, possibilities)
+	possibility_names=possibilities.map{|p|p.name.to_sym}
+	assert_equal(names, possibility_names, message)
 end #possibilities
 def assert_most_specialized(names, string)
 	most_specialized=self

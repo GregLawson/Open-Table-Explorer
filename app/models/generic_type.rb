@@ -140,9 +140,9 @@ def possibilities?(common_matches)
 		common_matches
 	elsif common_matches.kind_of?(Array) then
 		if common_matches[1].kind_of?(Array) then
-			possibilities?(common_matches[1])+possibilities?(common_matches[2..-1])
+			Array.new(possibilities?(common_matches[1])+possibilities?(common_matches[2..-1]))
 		else
-			common_matches
+			Array.new(common_matches)
 		end #if
 	end #if
 end #possibilities
