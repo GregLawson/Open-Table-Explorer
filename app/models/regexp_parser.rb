@@ -15,13 +15,7 @@ def initialize(regexp_string)
 	@regexp_string=regexp_string
 	restartParse!
 	@parseTree=regexpTree!
-	@parseTree=@parseTree.map_branches do |branch|
-		if branch.size==1 && branch[0].kind_of?(Array) then
-			NestedArray.new(branch[0]) # remove redundant brankets
-		else
-			NestedArray.new(branch)
-		end #if
-	end #map_branches
+	@parseTree=@parseTree.merge_single_element_arrays?
 end #initialize
 def to_a
 	return @parseTree
