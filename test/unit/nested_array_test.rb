@@ -65,4 +65,8 @@ def test_map_branches
 	assert_equal(Asymmetrical_Tree.flatten.reverse, Asymmetrical_Tree.map_branches(&Reverse_proc).flatten)
 	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_branches(&Echo_proc))
 end #map_branches
+def test_merge_single_element_arrays
+	assert_equal(['.','*'], NestedArray.new([['.','*']]).merge_single_element_arrays!)
+	assert_equal(['a'], NestedArray.new(['a']).merge_single_element_arrays!)
+end #merge_single_element_arrays
 end #NestedArray

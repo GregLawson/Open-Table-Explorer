@@ -46,4 +46,14 @@ def map_branches(&visit_proc)
 	end
 	return visit_proc.call(visited_subtrees, &visit_proc)
 end #map_branches
+def merge_single_element_arrays!
+	map_branches do |branch| # visit all in postfix order
+		if branch.size==1 && branch[0].kind_of?(Array) then
+			NestedArray.new(branch[0]) # remove redundant brankets
+		else
+			NestedArray.new(branch)
+		end #if
+	end #map_branches
+
+end #merge_single_element_arrays
 end #NestedArray
