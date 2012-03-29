@@ -20,15 +20,18 @@ belongs_to :generalize, :class_name => "GenericType",
 require 'test/assertions/ruby_assertions.rb'
 #def initialize(generic_type)
 #end #initialize
+def GenericType.find_by_name(name)
+	return GenericType.find_by_import_class(name)
+end #find_by_name
+# Define some constants, after find_by_name redefinition
+Text=find_by_name('Text_Column')
+Ascii=find_by_name('ascii')
 def self.logical_primary_key
 	return [:import_class]
 end #logical_primary_key
 def name
 	return self[:import_class]
 end #name
-def GenericType.find_by_name(name)
-	return GenericType.find_by_import_class(name)
-end #find_by_name
 def generalizations
 	if generalize==self then
 		return []
