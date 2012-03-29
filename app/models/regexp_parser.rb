@@ -15,6 +15,13 @@ def initialize(regexp_string)
 	@regexp_string=regexp_string
 	restartParse!
 	@parseTree=regexpTree!
+	@parseTree=@parseTree.map_branches do |branch|
+		if branch.size==1 && branch[0].kind_of?(Array) then
+			NestedArray.new(branch[0]) # remove redundant brankets
+		else
+			NestedArray.new(branch)
+		end #if
+	end #map_branches
 end #initialize
 def to_a
 	return @parseTree
@@ -28,7 +35,7 @@ def restartParse! # primarily for testing
 	else
 		@tokenIndex=@regexp_string.length-1 # start at end
 	end #if
-	@parseTree=[]
+	@parseTree=NestedArray.new([])
 end #def
 def nextToken!
 	if beyondString? then
@@ -75,14 +82,14 @@ def parseOneTerm!
 	else
 		index=RegexpTree.PostfixOperators.index(ch)
 		if index then
-			return  [parseOneTerm!, ch]
+			return  NestedArray.new([parseOneTerm!, ch])
 		else
 			return ch
 		end #if
 	end #if
 end #parseOneTerm!
 def regexpTree!(terminator=nil)
-	ret=[]
+	ret=NestedArray.new([])
 	begin
 		if !beyondString? then
 			term=parseOneTerm!

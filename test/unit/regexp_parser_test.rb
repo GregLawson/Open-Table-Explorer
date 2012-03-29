@@ -26,13 +26,16 @@ RowsEditor=RegexpParser.new(RowsRegexp)
 RowsEdtor2=RegexpParser.new('\s*(<tr.*</tr>)')
 KCETeditor=RegexpParser.new('KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE')
-def test_RegexpParser
+def test_initialize
 	regexp_string='K.*C'
 	test_tree=RegexpParser.new(regexp_string)
 	assert_equal(regexp_string,test_tree.to_s)
 	assert_not_nil(test_tree.regexp_string)
 	assert_not_nil(RegexpParser.new(test_tree.rest).to_s)
 #	assert_not_nil(RegexpParser.new(nil))
+	assert_instance_of(NestedArray, RegexpParser.new('.*').parseTree)
+	assert_equal(2, RegexpParser.new('.*').parseTree.size)
+	assert_equal(['.','*'], RegexpParser.new('.*').parseTree)
 end #initialize
 def test_RegexpParser_to_a
 	assert_equal(['K','C'], KCeditor.to_a)
