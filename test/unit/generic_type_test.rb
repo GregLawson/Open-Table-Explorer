@@ -14,8 +14,8 @@ end #class GenericType < ActiveRecord::Base
 
 class GenericTypeTest < ActiveSupport::TestCase
 set_class_variables
-Text=GenericType.find_by_name('Text_Column')
-Ascii=GenericType.find_by_name('ascii')
+Text=GenericType::Text
+Ascii=GenericType::Ascii
 Alpha=GenericType.find_by_name('alpha')
 Alnum=GenericType.find_by_name('alnum')
 Digit=GenericType.find_by_name('digit')
