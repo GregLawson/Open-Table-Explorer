@@ -244,11 +244,19 @@ def test_match_branch
 	matches=Addresses.consecutiveMatches(+1,0,0)
 	data_to_match=Addresses.dataToParse
 	startPos=0
+	Addresses.assert_match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
-	assert_equal({:data_to_match=>"<Url:0xb5ce4e3c>", :regexp=>/0/, :matched_data=>"0"}, branch_match, "Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}")
+	message="Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}"
+	assert_equal("<Url:0xb5ce4e3c>", branch_match[:data_to_match], message)
+	assert_equal(/0/, branch_match[:regexp], message)
+	assert_equal('0', branch_match[:matched_data][0], message)
 	startPos=6
 	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
-	assert_equal({:matched_data=>nil, :data_to_match=>"xb5ce4e3c>", :regexp=>/0/}, branch_match, "Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}")
+	message="Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}"
+	assert_equal("xb5ce4e3c>", branch_match[:data_to_match], message)
+	assert_equal(/0/, branch_match[:regexp], message)
+	assert_nil(branch_match[:matched_data], message)
+	Addresses.assert_match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 end #match_branch
 def test_map_consecutiveMatches
 	matches=Addresses.consecutiveMatches(+1,0,0)
