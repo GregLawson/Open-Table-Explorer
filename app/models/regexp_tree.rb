@@ -127,6 +127,18 @@ def to_s
 	to_a.join
 end #to_s
 # the useful inverse function of new. String to regexp
+def canonical_regexp(regexp)
+	if regexp.instance_of?(String) then
+		regexp=RegexpTree.regexp_rescued(regexp)
+	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
+		regexp=RegexpTree.regexp_rescued(regexp.to_s)
+	elsif regexp.nil? then
+		return //
+	elsif !regexp.instance_of?(Regexp) then
+		raise "Unexpected regexp.class=#{regexp.class}."
+	end #if
+	return regexp
+end #canonical_regexp
 def to_regexp(options=Default_options)
 	regexp_string=to_s
 	regexp=RegexpTree.regexp_rescued(regexp_string, options)
@@ -136,6 +148,38 @@ end #to_regexp
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 #y caller
+def repetition_length(node=self)
+	if !node.kind_of?(Array) then
+		if node=='' then
+			return [0, 0]
+		elsif node=='*' then
+			return [0, nil]
+		elsif node=='+' then
+			return [1, nil]
+		elsif node=='?' then
+			return [0, 1]
+		else
+			[1,1]
+		end #if
+	elsif post_op=node.postfix_expression? then
+		if post_op=='*' then
+			return [0, nil]
+		elsif post_op=='+' then
+			return [1, nil]
+		elsif post_op=='?' then
+			return [0, 1]
+		else
+			[4,5]
+		end #if
+	elsif node[-1]=='}' then
+		[node[1][0].to_i, node[1][1].to_i]
+	else
+		[node.length, node.length]
+	end #if
+end #repetition_length
+def canonical_repetion_tree(min, max)
+	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
+end #canonical_repetion_tree
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
 def RegexpTree.regexp_rescued(regexp_string, options=Default_options)

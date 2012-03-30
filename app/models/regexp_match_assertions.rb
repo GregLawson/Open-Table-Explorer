@@ -50,14 +50,15 @@ module ClassMethods
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
 	assert_not_nil(regexp, message)
-	regexp=RegexpMatch.canonical_regexp(regexp)
+	regexp=RegexpTree.canonical_regexp(regexp)
 	assert_not_nil(string, message)
 	match_data=regexp.match(string)
 	if match_data.nil? then
 		regexp_tree=RegexpMatch.new(regexp, string)
 		new_regexp_tree=regexp_tree.matchSubTree
 		assert_not_empty(new_regexp_tree)
-		assert_match(new_regexp_tree.to_regexp, string, message)
+		regexp=RegexpMatch.canonical_regexp(new_regexp_tree)
+		assert_match(regexp, string, message)
 		message=build_message(message, "regexp.source=? did not match ? but new_regexp_tree=? should match", regexp.source, string, new_regexp_tree.to_s)
 	end #if
 	assert_match(regexp, string, message)
