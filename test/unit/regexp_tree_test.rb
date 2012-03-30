@@ -225,6 +225,44 @@ end #to_s
 def test_to_regexp
 	assert_equal(/.*/,RegexpTree.new('.*').to_regexp)
 end #to_regexp
+def test_repeated_pattern
+
+	assert_equal(['.','*'], RegexpTree.new('.*'))
+	assert(RegexpTree.new('.*').postfix_expression?)
+	assert_equal(['.'], RegexpTree.new('.*').repeated_pattern)
+	assert_equal(['.'], RegexpTree.new('.+').repeated_pattern)
+	assert_equal(['.'], RegexpTree.new('.?').repeated_pattern)
+	assert_equal(['a'], RegexpTree.new('a'))
+	assert_equal(['a'], RegexpTree.new('a').repeated_pattern)
+	assert_equal(['.'], RegexpTree.new('.').repeated_pattern)
+	assert_equal([".", ["{", "3", ",", "4", "}"]], RegexpTree.new('.{3,4}'))
+	assert_equal(['.'], RegexpTree.new('.{3,4}').repeated_pattern)
+end #repeated_pattern
+def test_repetition_length
+	Sequence.assert_equal([1, nil], Sequence.repetition_length('+'))
+	Sequence.assert_equal([0, 1], Sequence.repetition_length('?'))
+	Sequence.assert_equal([0, nil], Sequence.repetition_length('*'))
+	Sequence.assert_equal(Repetition_1_2, Sequence.concise_repetion_node(1,2))
+	Sequence.assert_equal([0, 0], Sequence.repetition_length(''))
+	Sequence.assert_equal([1, 1], Sequence.repetition_length('.'))
+	Sequence.assert_equal(["{", ["1", ',', "2"], "}"], Sequence.concise_repetion_node(1,2))
+	assert_equal([3, 3], Sequence.repetition_length)
+end #repetition_length
+def test_merge_to_repetition
+	branch=RegexpTree.new([['a','?'], ['a']])
+	assert_equal(['a',['{',['1',',','2'], '}']], branch.merge_to_repetition)
+end #merge_to_repetition
+Repetition_1_2=["{", ["1", ",", "2"], "}"]
+def test_canonical_repetion_tree
+	assert_equal(Repetition_1_2, Sequence.canonical_repetion_tree(1,2))
+end #canonical_repetion_tree
+def test_concise_repetion_node
+	Sequence.assert_equal('', Sequence.concise_repetion_node(1, 1))
+	Sequence.assert_equal("+", Sequence.concise_repetion_node(1, nil))
+	Sequence.assert_equal("?", Sequence.concise_repetion_node(0, 1))
+	Sequence.assert_equal("*", Sequence.concise_repetion_node(0, nil))
+	Sequence.assert_equal(Repetition_1_2, Sequence.concise_repetion_node(1,2))
+end #concise_repetion_node
 def test_editor
 	regexpParserTest(KCeditor)
 	
