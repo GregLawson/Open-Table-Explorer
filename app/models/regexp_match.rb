@@ -10,7 +10,7 @@ module Match_Addressing
 # Rescue bad regexp and return nil
 def matchRescued(regexp, string_to_match)
 	regexp=canonical_regexp(regexp)
-	raise "string_to_match=#{string_to_match.inspect} must be String." unless string_to_match.instance_of?(String)
+	raise "string_to_match='#{string_to_match.inspect}' of class #{string_to_match.class.name} must be String." unless string_to_match.instance_of?(String)
 	if regexp.nil? then
 		return false
 	else
