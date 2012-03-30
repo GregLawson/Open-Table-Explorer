@@ -223,7 +223,7 @@ def test_to_s
 	assert_equal('K.*C',RegexpTree.new('K.*C').to_s)
 end #to_s
 def test_to_regexp
-	assert_equal(/.*/,RegexpTree.new('.*').to_regexp)
+	assert_equal(/.*/mx,RegexpTree.new('.*').to_regexp)
 end #to_regexp
 def test_repeated_pattern
 
