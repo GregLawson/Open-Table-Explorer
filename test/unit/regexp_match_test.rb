@@ -218,6 +218,49 @@ def test_repetition_length
 	Addresses.assert_equal(["{", ["1", ',', "2"], "}"], Addresses.concise_repetion_node(1,2))
 	assert_equal([16, 16], Addresses.repetition_length)
 end #repetition_length
+def test_generalize
+	minimax=RegexpMatch.new('[[:print:]]{16,16}', Addresses.dataToParse)
+	branch=Addresses
+	data_to_match=Addresses.dataToParse
+	most_specialized=Digit
+	c='c'
+	Lower.assert_most_specialized([:lower], 'l')
+	Lower.assert_most_specialized([:digit], '9')
+	Digit.assert_most_specialized([:xdigit], 'c')
+		message="most_specialized=#{most_specialized.inspect}"
+		message+=", most_specialized.most_specialized?(c)=#{most_specialized.most_specialized?(c)}"
+		message+=", c=#{c}"
+ 		assert_not_nil(most_specialized, message)
+		assert_not_nil(most_specialized.most_specialized?(c), message)
+		assert_instance_of(Array, most_specialized.most_specialized?(c), message)
+		assert_not_empty(most_specialized.most_specialized?(c), message)
+		assert_not_nil(most_specialized.most_specialized?(c)[-1], message)
+	most_specialized=most_specialized.most_specialized?(c)[-1]
+		assert_not_nil(most_specialized.most_specialized?(c)[-1], message)
+		assert_not_nil(most_specialized, message)
+		message="most_specialized=#{most_specialized.inspect}"
+		message+=", most_specialized.most_specialized?(c)=#{most_specialized.most_specialized?(c)}"
+		message+=", c=#{c}"
+		assert_not_nil(most_specialized, message)
+	
+	most_specialized=[GenericType.find_by_name('ascii')]
+		assert_instance_of(Array, most_specialized)
+	data_to_match.each_char do |c|
+		ret=most_specialized.each do |m|
+			message="m=#{m.inspect}"
+			assert_instance_of(GenericType, m)
+			assert_kind_of(Array, m.most_specialized?(c))
+			message+=", m.most_specialized?(c)=#{m.most_specialized?(c)}"
+			message+=", c=#{c}"
+			assert_not_nil(m, message)
+			most_specialized=m.most_specialized?(c)
+			assert_kind_of(Array, most_specialized)
+			assert_not_nil(most_specialized, message)
+		end #each
+	end #each_char
+	assert_equal(minimax.to_s, Addresses.generalize.to_s)
+	assert_equal(/<Url:0xb[[:xdigit:]]{7,7}>/, Addresses.generalize.to_regexp)
+end #generalize
 def test_match_branch
 	matches=Addresses.consecutiveMatches(+1,0,0)
 	data_to_match=Addresses.dataToParse
