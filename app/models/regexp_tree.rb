@@ -154,7 +154,8 @@ def to_regexp(options=Default_options)
 
 	return regexp
 end #to_regexp
-Ascii_characters=(0..255).to_a.map { |i| i.chr}
+Ascii_characters=(0..127).to_a.map { |i| i.chr}
+Binary_bytes=(0..255).to_a.map { |i| i.chr}
 #y caller
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
