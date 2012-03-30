@@ -7,6 +7,11 @@
 ###########################################################################
 require 'test/test_helper'
 
+class GenericType < ActiveRecord::Base
+include GenericTypeAssertions
+extend GenericTypeAssertions::ClassMethods
+end #class GenericType < ActiveRecord::Base
+
 class RegexpMatch < RegexpTree # reopen class to add assertions
 include RegexpMatchAssertions
 extend RegexpMatchAssertions::ClassMethods
