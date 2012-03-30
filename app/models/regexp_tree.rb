@@ -192,6 +192,28 @@ end #repetition_length
 def canonical_repetion_tree(min, max)
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
 end #canonical_repetion_tree
+def concise_repetion_node(min, max)
+	if min==0 then
+		if max==1 then
+			return '?'
+		elsif max.nil? then
+			return '*'
+		else
+			return canonical_repetion_tree(min, max)
+		end #if
+	elsif min==1 then
+		if max==1 then
+			return ''
+		elsif max.nil? then
+			return '+'
+		else
+			return canonical_repetion_tree(min, max)
+		end #if
+	else
+		return canonical_repetion_tree(min, max)
+	end #if
+	return RegexpTree.new(['{', [min.to_s, max.to_s], '}'])
+end #concise_repetion_node
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
 def RegexpTree.regexp_rescued(regexp_string, options=Default_options)
