@@ -5,11 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class String
-def to_exact_regexp
-	return Regexp.new(Regexp.escape(self))
-end #to_exact_regexp
-end #String
 # Class methods
 module Match_Addressing
 def canonical_regexp(regexp)
@@ -40,13 +35,6 @@ def matchRescued(regexp, string_to_match)
 		end #begin/rescue
 	end #if
 end
-# Rescue bad regexp and return nil
-# Example regexp with unbalanced bracketing characters
-def regexp_rescued(regexp_string, options=Regexp::EXTENDED | Regexp::MULTILINE)
-	return Regexp.new(regexp_string, options)
-rescue RegexpError
-	return nil
-end #regexp_rescued
 end #module
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch < RegexpTree

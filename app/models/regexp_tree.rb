@@ -9,7 +9,16 @@
 # Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
 require 'app/models/nested_array.rb'
-class String #add to_a
+class RegexpTree < NestedArray
+Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+end #RegexpTree
+class String
+# Create Regexp that exactly matches String.
+# Special Regexp characters are escaped
+# Other special cases may exist like '<'
+def to_exact_regexp(options=RegexpTree::Default_options)
+	return Regexp.new(Regexp.escape(self), options)
+end #to_exact_regexp
 # Convert String to Array of one character Strings
 # Why would this be useful? It doesn't distinquish Regexp special characters
 # It was designed for unpacking binary data into Arrays
@@ -24,7 +33,7 @@ def to_a(format='a', packed_length=1)
 	return ret
 end #to_a
 end #String
-class RegexpTree < NestedArray
+class RegexpTree < NestedArray # reopen
 include Inline_Assertions
 def self.OpeningBrackets
 	return '({['
@@ -35,9 +44,9 @@ end #ClosingBrackets
 def self.PostfixOperators
 	return '+*?|'
 end #def
-
+#raise "" unless self.constants.include?('Default_options')
 # Parse regexp_string into parse tree for editing
-def initialize(regexp=[])
+def initialize(regexp=[], options=Default_options)
 	if regexp.kind_of?(Array) then #nested Arrays
 		super(regexp)
 		
@@ -139,11 +148,25 @@ def to_s
 	to_a.join
 end #to_s
 # the useful inverse function of new. String to regexp
-def to_regexp
-	ret=to_s
-	ret=Regexp.new(ret)
-	return ret
+def to_regexp(options=Default_options)
+	regexp_string=to_s
+	regexp=RegexpTree.regexp_rescued(regexp_string, options)
+
+	return regexp
 end #to_regexp
 Ascii_characters=(0..255).to_a.map { |i| i.chr}
 #y caller
+# Rescue bad regexp and return nil
+# Example regexp with unbalanced bracketing characters
+def RegexpTree.regexp_rescued(regexp_string, options=Default_options)
+	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
+	return Regexp.new(regexp_string, options)
+rescue RegexpError
+	return nil
+end #regexp_rescued
+def regexp_error(regexp_string, options=Default_options)
+	return Regexp.new(regexp_string, options)
+rescue RegexpError => exception
+	return exception
+end #regexp_error
 end #class
