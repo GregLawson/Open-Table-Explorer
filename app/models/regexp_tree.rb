@@ -148,6 +148,18 @@ end #to_regexp
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 #y caller
+# 
+# Returns a RegexpTree object?
+def repeated_pattern(node=self)
+	if post_op=node.postfix_expression? then
+		return [node[0]]
+	elsif node[-1]=='}' then
+		node[0]
+	else
+		node
+	end #if
+end #repeated_pattern
+# returns pair of min and max repetitions of a RegexpTree
 def repetition_length(node=self)
 	if !node.kind_of?(Array) then
 		if node=='' then
