@@ -120,15 +120,18 @@ end #concise_repetion_node
 	end #if
 end #repetition_length
 def match_branch(branch=self, data_to_match=@dataToParse)
-	
-	regexp=branch.to_regexp
+	if branch.instance_of?(String) then
+		regexp=branch.to_exact_regexp
+	else
+		regexp=branch.to_regexp
+	end #if
 	matchData=regexp.match(data_to_match)
 	ret={:regexp => regexp, :data_to_match => data_to_match}
 	if matchData.nil? then
 		ret[:matched_data]= nil
 
 	else
-		ret[:matched_data]= matchData[0]
+		ret[:matched_data]= matchData
 		data_to_match=matchData.post_match
 	end #if
 	ret

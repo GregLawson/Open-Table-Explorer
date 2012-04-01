@@ -248,22 +248,24 @@ def test_generalize
 	assert_equal(/<Url:0xb[[:xdigit:]]{7,7}>/, Addresses.generalize.to_regexp)
 end #generalize
 def test_match_branch
-	matches=Addresses.consecutiveMatches(+1,0,0)
+	matches=[0..8, 15..15]
 	data_to_match=Addresses.dataToParse
 	startPos=0
 	Addresses.assert_match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 	message="Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}"
+	message+="\nbranch_match=#{branch_match.inspect}"
+
 	assert_equal("<Url:0xb5ce4e3c>", branch_match[:data_to_match], message)
-	assert_equal(/0/, branch_match[:regexp], message)
-	assert_equal('0', branch_match[:matched_data][0], message)
+	assert_equal(/>/mx, branch_match[:regexp], message)
+	assert_equal('>', branch_match[:matched_data][0], message)
 	startPos=6
 	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 	message="Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}"
 	assert_equal("xb5ce4e3c>", branch_match[:data_to_match], message)
-	assert_equal(/0/, branch_match[:regexp], message)
-	assert_nil(branch_match[:matched_data], message)
-	Addresses.assert_match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
+	assert_equal(/>/mx, branch_match[:regexp], message)
+	assert_equal('>', branch_match[:matched_data][0], message)
+#	Addresses.assert_match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 end #match_branch
 def test_map_consecutiveMatches
 	matches=Addresses.consecutiveMatches(+1,0,0)
