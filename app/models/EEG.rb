@@ -8,6 +8,7 @@
 require 'app/models/regexp_tree.rb' # make usable under rake
 class Eeg
 include Generic_Table
+extend Generic_Table::ClassMethods
 include NoDB
 
 # Initializes EEG from a hash
