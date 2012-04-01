@@ -234,10 +234,10 @@ def test_repetition_length
 	Sequence.assert_equal([1, nil], Sequence.repetition_length('+'))
 	Sequence.assert_equal([0, 1], Sequence.repetition_length('?'))
 	Sequence.assert_equal([0, nil], Sequence.repetition_length('*'))
-	Sequence.assert_equal(Repetition_1_2, Sequence.concise_repetion_node(1,2))
+	Sequence.assert_equal(Repetition_1_2, RegexpTree.concise_repetion_node(1,2))
 	Sequence.assert_equal([0, 0], Sequence.repetition_length(''))
 	Sequence.assert_equal([1, 1], Sequence.repetition_length('.'))
-	Sequence.assert_equal(["{", ["1", ',', "2"], "}"], Sequence.concise_repetion_node(1,2))
+	Sequence.assert_equal(["{", ["1", ',', "2"], "}"], RegexpTree.concise_repetion_node(1,2))
 	assert_equal([3, 3], Sequence.repetition_length)
 end #repetition_length
 def test_merge_to_repetition
@@ -278,9 +278,9 @@ def test_merge_to_repetition
 	assert_equal(merged_pattern, branch.merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1]))
 	assert_equal(merged_pattern, branch.merge_to_repetition)
 end #merge_to_repetition
-Repetition_1_2=["{", ["1", ",", "2"], "}"]
+Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
 def test_canonical_repetion_tree
-	assert_equal(Repetition_1_2, Sequence.canonical_repetion_tree(1,2))
+	assert_equal(Repetition_1_2, RegexpTree.canonical_repetion_tree(1,2))
 end #canonical_repetion_tree
 def test_concise_repetion_node
 	Sequence.assert_equal('', RegexpTree.concise_repetion_node(1, 1))

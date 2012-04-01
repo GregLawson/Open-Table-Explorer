@@ -213,6 +213,7 @@ def merge_to_repetition(branch=self)
 		end #if
 	end #if
 end #merge_to_repetition
+def self.canonical_repetion_tree(min, max)
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
 end #canonical_repetion_tree
 def self.concise_repetion_node(min, max)
