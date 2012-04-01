@@ -11,8 +11,7 @@ require 'test_helper'
 # move passing tests toward end
 #require 'test/test_helper_test_tables.rb'
 class NestedArrayTest  < ActiveSupport::TestCase
-Asymmetrical_Tree_Array=[['1','2'],'3']
-Asymmetrical_Tree=RegexpTree.new(Asymmetrical_Tree_Array)
+Asymmetrical_Tree_Array=NestedArray.new([['1','2'],'3'])
 Nested_Test_Array=["t", "e", "s", "t", "/",
 	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
 	 	["[", ".", "]"],
@@ -26,6 +25,12 @@ def test_initialize
 	assert_equal(['K'], NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']).to_a)
 end #initialize
+def test_index
+	assert_instance_of(NestedArray,Asymmetrical_Tree_Array)
+	assert_respond_to(Asymmetrical_Tree_Array, :[])
+	assert_not_nil(Asymmetrical_Tree_Array[0])
+	assert_instance_of(NestedArray, Asymmetrical_Tree_Array[0])
+end #[]index
 def test_to_s
 	assert_equal('123',NestedArray.new([1,2,3]).to_s)
 	assert_equal('123',NestedArray.new([1,[2,3]]).to_s)
@@ -47,6 +52,9 @@ def test_map_recursive
 	assert_equal(['*','.'], Echo_proc.call(['*','.']))
 	assert_equal(['*','.'], NestedArray.new(['*','.']).map_recursive(&Echo_proc))
 	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_recursive(&Echo_proc))
+	Asymmetrical_Tree_Array.map_recursive() do |leaf|
+		assert_instance_of(String, leaf)
+	end #map_recursive
 end #map_recursive
 def test_map_branches
 	assert_equal(['*','.'], NestedArray.new(['*','.']).map_branches{|p| p})
@@ -61,9 +69,12 @@ def test_map_branches
 	assert_equal(['C',['.','*'],'K'], NestedArray.new(['K',['*','.'],'C']).map_branches(&Reverse_proc))
 	assert_equal(['.','*'], Reverse_proc.call(['*','.']))
 	assert_equal([['.','*']], NestedArray.new([['*','.']]).map_branches{|p| p.reverse})
-	assert_equal(Asymmetrical_Tree.reverse, Reverse_proc.call(Asymmetrical_Tree))
-	assert_equal(Asymmetrical_Tree.flatten.reverse, Asymmetrical_Tree.map_branches(&Reverse_proc).flatten)
+	assert_equal(Asymmetrical_Tree_Array.reverse, Reverse_proc.call(Asymmetrical_Tree_Array))
+	assert_equal(Asymmetrical_Tree_Array.flatten.reverse, Asymmetrical_Tree_Array.map_branches(&Reverse_proc).flatten)
 	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_branches(&Echo_proc))
+	Asymmetrical_Tree_Array.map_branches() do |leaf|
+		assert_instance_of(Array, leaf)
+	end #map_branches
 end #map_branches
 def test_merge_single_element_arrays
 	assert_equal(['.','*'], NestedArray.new([['.','*']]).merge_single_element_arrays?)
