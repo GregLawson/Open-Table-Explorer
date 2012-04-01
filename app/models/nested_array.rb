@@ -58,6 +58,8 @@ def map_branches(&visit_proc)
 	end
 	return visit_proc.call(visited_subtrees, &visit_proc)
 end #map_branches
+# Probably less confusing as !
+# The method makes no sense as a question
 def merge_single_element_arrays?
 	map_branches do |branch| # visit all in postfix order
 		if branch.size==1 && branch[0].kind_of?(Array) then
