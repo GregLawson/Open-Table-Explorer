@@ -150,9 +150,11 @@ Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 #y caller
 # 
-# Returns a RegexpTree object?
+# Returns a RegexpTree object
 def repeated_pattern(node=self)
-	if post_op=node.postfix_expression? then
+	if !node.kind_of?(Array) then # argument is not an Array
+		return RegexpTree.new([node])
+	elsif post_op=node.postfix_expression? then
 		return [node[0]]
 	elsif node[-1]=='}' then
 		node[0]
