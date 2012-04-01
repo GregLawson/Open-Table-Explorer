@@ -51,18 +51,26 @@ def to_a
 end #to_a
 
 # Takes embedded array format parsed tree and displays equivalent to_s string 
-def postfix_expression?
-	if RegexpTree.postfix_operator?(self[-1]) then
-		return true
+def postfix_expression?(branch=self)
+	if branch.postfix_operator?(branch[-1]) then
+		return branch[-1]
 	else
-		return false #not postfix chars
+		return nil #not postfix chars
 	end #if
 end #postfix_expression
-def RegexpTree.postfix_operator?(parseTree)
+def bracket_operator?(parseTree=self)
+	if parseTree.kind_of?(Array) && parseTree[-1]=='}' then
+		return parseTree 
+	else
+		return nil	
+	end #if
+end #bracket_operator
+# returns node such as ['*'] or ["{", "3", ",", "4", "}"]
+def postfix_operator?(parseTree=self)
 	if parseTree.instance_of?(String) then
 		RegexpTree.PostfixOperators.index(parseTree)	
 	else
-		return false
+		bracket_operator?(parseTree)
 	end #if
 end #postfix_operator
 def postfix_operator_walk(&visit_proc)

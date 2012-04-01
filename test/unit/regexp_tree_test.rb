@@ -99,8 +99,8 @@ def test_postfix_operator
 	assert_instance_of(String,['*','a'][1])
 	assert_equal(0,'*+?'.index(['*','a'][0]))
 	assert_not_nil(Postfix_tree)
-	assert(RegexpTree.postfix_operator?('*'),"Postfix_tree.to_s=#{Postfix_tree.to_s.inspect}")
-	assert(!RegexpTree.postfix_operator?('.'),"Postfix_tree=#{Postfix_tree.inspect}")
+	assert(Postfix_tree.postfix_operator?('*'),"Postfix_tree.to_s=#{Postfix_tree.to_s.inspect}")
+	assert(!Postfix_tree.postfix_operator?('.'),"Postfix_tree=#{Postfix_tree.inspect}")
 end #postfix_operator
 def test_postfix_operator_walk
 	assert_equal(['1', '2', '3'], Asymmetrical_Tree.to_a.flatten)
