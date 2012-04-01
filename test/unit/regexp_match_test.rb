@@ -33,6 +33,8 @@ set_class_variables(RegexpMatchTest,false)
 #require 'test/unit'
 #include Test_Helpers
 #require 'test/assertions/ruby_assertions.rb'
+Digit=GenericType.find_by_name('digit')
+Lower=GenericType.find_by_name('lower')
 RegexpMatch.assert_mergeable('a', 'a')
 string1='a'
 string2='b'
