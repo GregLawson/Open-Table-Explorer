@@ -95,6 +95,12 @@ def test_postfix_expression
 	assert(!RegexpTree.new([['.','*'],'C']).postfix_expression?,"Postfix_tree=#{Postfix_tree.inspect}")
 	assert(!RegexpTree.new([['.','*']]).postfix_expression?,"Postfix_tree=#{Postfix_tree.inspect}")
 end #postfix_expression
+def test_bracket_operator
+	assert_equal([".", ["{", "3", ",", "4", "}"]], RegexpTree.new('.{3,4}'))
+	assert_equal(["{", "3", ",", "4", "}"], RegexpTree.new('.{3,4}')[-1].bracket_operator?)
+	assert(!RegexpTree.new('.*').bracket_operator?)
+	assert(!RegexpTree.new('.').bracket_operator?)
+end #bracket_operator
 def test_postfix_operator
 	assert_instance_of(String,['*','a'][1])
 	assert_equal(0,'*+?'.index(['*','a'][0]))
