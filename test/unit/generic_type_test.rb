@@ -101,7 +101,7 @@ def test_expand
 	macro_name=RegexpTree.macro_call?(parse)
 	assert_not_equal(macro_name, Macaddr.name)
 	expansion=parse.map_branches do |branch|
-		macro_name=RegexpTree.macro_call?(branch)
+		macro_name=branch.macro_call?()
 		if macro_name then
 			assert_not_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.name}.inspect}")
 			all_macro_names= GenericType.all.map{|t| t.name}

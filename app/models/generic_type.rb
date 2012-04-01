@@ -66,8 +66,8 @@ def specializations
 end #specializations
 def expansion_termination?
 	regexp=self[:data_regexp]
-	parse=RegexpTree.new(regexp)[0]
-	macro_name=RegexpTree.macro_call?(parse)
+	parse=RegexpTree.new(regexp)
+	macro_name=parse.macro_call?
 	self.name==macro_name
 end #expansion_termination
 def expand
@@ -76,7 +76,7 @@ def expand
 		return parse[0] # terminates recursion
 	else # possible expansions
 		parse.map_branches do |branch|
-			macro_name=RegexpTree.macro_call?(branch)
+			macro_name=parse.macro_call?(branch)
 			if macro_name then
 				macro_generic_type=GenericType.find_by_name(macro_name)
 				macro_call=macro_generic_type[:data_regexp]
