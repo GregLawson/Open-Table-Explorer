@@ -150,19 +150,14 @@ def test_postfix_operator_walk
 	assert_equal('test/*[.]r*', Test_Pattern.to_pathname_glob)
 end #postfix_operator_walk
 def test_macro_call
-	parseTree=RegexpTree.new("[[:alnum:]]")
-	assert_equal([["[", ["[", ":", "a", "l", "n", "u", "m", ":", "]"], "]"]], parseTree)
-	macro=parseTree[0] #first and only in test case list
-	assert_equal(parseTree[0], parseTree[-1])
+	macro=RegexpTree.new("[:alnum:]")
+	assert_equal(["[", ":", "a", "l", "n", "u", "m", ":", "]"], macro)
 	assert_equal('[', macro[0])
 	assert_equal(']', macro[-1])
-	inner_brackets=macro[1..-2][0]
-	assert_equal('[', inner_brackets[0], "macro=#{macro}, inner_brackets=#{inner_brackets}(#{inner_brackets.inspect}), , inner_brackets[0]=#{inner_brackets[0]}.")
-	assert_equal(']', inner_brackets[-1])
-	inner_colons=inner_brackets[1..-2] # not another nested array
+	inner_colons=macro[1..-2] # not another nested array
 	assert_equal(':', inner_colons[0])
 	assert_equal(':', inner_colons[-1])
-	assert_equal('alnum', RegexpTree.macro_call?(parseTree[0]))
+	assert_equal('alnum', macro.macro_call?)
 end #macro_call?
 Test_Pattern_Array=["t", "e", "s", "t", "/",
 	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],

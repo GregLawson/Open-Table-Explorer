@@ -8,11 +8,9 @@
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
-require 'app/models/nested_array.rb'
+#require 'app/models/nested_array.rb'
 class RegexpTree < NestedArray
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
-end #RegexpTree
-class RegexpTree < NestedArray # reopen
 include Inline_Assertions
 def self.OpeningBrackets
 	return '({['
@@ -94,14 +92,10 @@ def postfix_operator_walk(&visit_proc)
 	
 	return new_branching
 end #postfix_operator_walk
-def self.macro_call?(parseTree)
-	macro=parseTree #first and only in test case list
+def macro_call?(macro=self)
 	return false if '[' != macro[0]
 	return false if ']' != macro[-1]
-	inner_brackets=macro[1..-2][0]
-	return false if '[' != inner_brackets[0]
-	return false if ']' != inner_brackets[-1]
-	inner_colons=inner_brackets[1..-2] # not another nested array
+	inner_colons=macro[1..-2] # not another nested array
 	return false if ':' != inner_colons[0]
 	return false if ':' != inner_colons[-1]
 	return	inner_colons[1..-2].join
