@@ -122,7 +122,7 @@ def to_s
 	to_a.join
 end #to_s
 # the useful inverse function of new. String to regexp
-def canonical_regexp(regexp)
+def self.canonical_regexp(regexp)
 	if regexp.instance_of?(String) then
 		regexp=RegexpTree.regexp_rescued(regexp)
 	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
