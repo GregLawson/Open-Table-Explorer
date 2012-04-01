@@ -83,20 +83,6 @@ def test_initialize
 	assert_not_nil(RegexpTree.new('.'))
 	assert_not_nil(RegexpTree.new(/./))
 end #initialize
-def test_index
-	assert_instance_of(RegexpTree,Asymmetrical_Tree)
-	assert_respond_to(Asymmetrical_Tree, :[])
-	assert_not_nil(Asymmetrical_Tree[0])
-	assert_instance_of(RegexpTree,Asymmetrical_Tree[0])
-	assert_not_nil(RegexpTree.new(['K']))
-	assert_instance_of(RegexpTree,RegexpTree.new(['K']))
-	assert_instance_of(String,RegexpTree.new(['K'])[0])
-	assert_equal(RegexpTree,RegexpTree)
-	arg1=RegexpTree
-	arg2=RegexpTree
-	assert_equal(arg1, arg2)
-	arg2=Array
-end #[]index
 def test_RegexpTree_to_a
 	assert_equal(Asymmetrical_Tree_Array, Asymmetrical_Tree.to_a)
 

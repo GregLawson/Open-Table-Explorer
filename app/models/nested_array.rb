@@ -12,8 +12,20 @@ class NestedArray < Array # tree or matrix, whatever
 def initialize(array=[])
 	super(array)
 end #initialize
+# Makes sure all descendant classes return the proper nested type.
+# Calls super [] and if an Array is returned promotes it to self's class
+# If returned object is not an Array (e.g. leaf node) retun it unchanged.
+def [](index)
+	if super(index).kind_of?(Array) then
+		return self.class.new(super(index))
+	else
+		return at(index)
+	end #if
+end #[]index
+# Should apply to_s to each element before returning
+# Use map_recursive
 def to_s
-	return self.to_a.join
+	return map_recursive{|leaf| leaf.to_s}.flatten.join
 end #to_s
 # Apply block to each leaf.
 # Nesting structure remains the same.

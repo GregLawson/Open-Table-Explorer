@@ -40,13 +40,6 @@ def initialize(regexp=[], options=Default_options)
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
 end #initialize
-def [](index)
-	if super(index).kind_of?(Array) then
-		return RegexpTree.new(super(index))
-	else
-		return at(index)
-	end #if
-end #[]index
 #def ==(other)
 #	return self.to_a==other.to_a # self.to_a==other.to_a &&self.tokenIndex==other.tokenIndex
 #end #==
