@@ -51,7 +51,7 @@ end #map_recursive
 def map_branches(&visit_proc)
 	visited_subtrees= self.map do |sub_tree| 
 		if sub_tree.kind_of?(Array) then
-			NestedArray.new(sub_tree).map_branches{|p| visit_proc.call(p)}
+			self.class.new(sub_tree).map_branches{|p| visit_proc.call(p)}
 		else
 			sub_tree
 		end #if
