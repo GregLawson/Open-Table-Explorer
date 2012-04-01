@@ -241,8 +241,42 @@ def test_repetition_length
 	assert_equal([3, 3], Sequence.repetition_length)
 end #repetition_length
 def test_merge_to_repetition
-	branch=RegexpTree.new([['a','?'], ['a']])
-	assert_equal(['a',['{',['1',',','2'], '}']], branch.merge_to_repetition)
+	side=['a']
+	branch=RegexpTree.new([side, side])
+	first=branch[0]
+	second=branch[1]
+	assert_equal(first, second)
+	first_repetition=branch.repetition_length(first)
+	second_repetition=branch.repetition_length(second)
+	merged_repetition=RegexpTree.concise_repetion_node(first_repetition[0]+second_repetition[0], first_repetition[1]+second_repetition[1])
+	assert_equal(["{", ["2", ",", "2"], "}"], merged_repetition)
+	assert_equal(['a'], first.repeated_pattern)
+	assert_equal([2, 2], [first_repetition[0]+second_repetition[0], first_repetition[1]+second_repetition[1]])
+	assert_equal(['{',['2',',','2'], '}'], merged_repetition)
+	assert_instance_of(RegexpTree, first.repeated_pattern)
+	branch.merge_to_repetition([first.repeated_pattern, merged_repetition])
+	assert_equal(['a',['{',['2',',','2'], '}']], branch.merge_to_repetition)
+	branch=RegexpTree.new('a?a')
+	assert_instance_of(RegexpTree, branch)
+	assert_equal([["a", "?"], "a"], branch)
+	first=branch[0]
+	second=branch[1]
+	assert_instance_of(RegexpTree, first)
+	assert_instance_of(String, second)
+	assert_equal(['a'], branch.repeated_pattern(first))
+	assert_equal(['a'], branch.repeated_pattern(second))
+	first_repetition=branch.repetition_length(first)
+	second_repetition=branch.repetition_length(second)
+	assert_equal([1, 2], [first_repetition[0]+second_repetition[0], first_repetition[1]+second_repetition[1]])
+	assert_equal(['a'], branch.repeated_pattern(first))
+	assert_equal(['a'], branch.repeated_pattern(second))
+	merged_repetition=RegexpTree.concise_repetion_node(first_repetition[0]+second_repetition[0], first_repetition[1]+second_repetition[1])
+	assert_equal(["{", ["1", ",", "2"], "}"], merged_repetition)
+	assert_equal([], branch[2..-1])
+	merged_pattern=['a',['{',['1',',','2'], '}']]
+	assert_equal(merged_pattern, first.repeated_pattern << merged_repetition)
+	assert_equal(merged_pattern, branch.merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1]))
+	assert_equal(merged_pattern, branch.merge_to_repetition)
 end #merge_to_repetition
 Repetition_1_2=["{", ["1", ",", "2"], "}"]
 def test_canonical_repetion_tree

@@ -192,7 +192,27 @@ def repetition_length(node=self)
 		[node.length, node.length]
 	end #if
 end #repetition_length
-def canonical_repetion_tree(min, max)
+# recursive merging of consecutive identical pairs
+def merge_to_repetition(branch=self)
+	if branch.instance_of?(Array) then
+		branch=RegexpTree.new(branch)
+	end #if
+	if branch.size<2 then # terminate recursion
+		return branch
+	else
+# puts "branch=#{branch}"
+		first=branch[0]
+		second=branch[1]
+		if branch.repeated_pattern(first)==branch.repeated_pattern(second) then
+			first_repetition=branch.repetition_length(first)
+			second_repetition=branch.repetition_length(second)
+			merged_repetition=RegexpTree.concise_repetion_node(first_repetition[0]+second_repetition[0], first_repetition[1]+second_repetition[1])
+			merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1])
+		else # couldn't merge first element
+			[first]+merge_to_repetition(branch[1..-1])	# shorten string to ensure recursion termination
+		end #if
+	end #if
+end #merge_to_repetition
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
 end #canonical_repetion_tree
 def self.concise_repetion_node(min, max)
