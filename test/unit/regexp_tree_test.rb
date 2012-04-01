@@ -243,11 +243,12 @@ def test_canonical_repetion_tree
 	assert_equal(Repetition_1_2, Sequence.canonical_repetion_tree(1,2))
 end #canonical_repetion_tree
 def test_concise_repetion_node
-	Sequence.assert_equal('', Sequence.concise_repetion_node(1, 1))
-	Sequence.assert_equal("+", Sequence.concise_repetion_node(1, nil))
-	Sequence.assert_equal("?", Sequence.concise_repetion_node(0, 1))
-	Sequence.assert_equal("*", Sequence.concise_repetion_node(0, nil))
-	Sequence.assert_equal(Repetition_1_2, Sequence.concise_repetion_node(1,2))
+	Sequence.assert_equal('', RegexpTree.concise_repetion_node(1, 1))
+	Sequence.assert_equal("+", RegexpTree.concise_repetion_node(1, nil))
+	Sequence.assert_equal("?", RegexpTree.concise_repetion_node(0, 1))
+	Sequence.assert_equal("*", RegexpTree.concise_repetion_node(0, nil))
+	Sequence.assert_equal(Repetition_1_2, RegexpTree.concise_repetion_node(1,2))
+	assert_equal(['{',['2',',','2'], '}'], RegexpTree.concise_repetion_node(2, 2))
 end #concise_repetion_node
 def test_editor
 	regexpParserTest(KCeditor)

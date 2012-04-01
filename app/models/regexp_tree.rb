@@ -193,7 +193,7 @@ end #repetition_length
 def canonical_repetion_tree(min, max)
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
 end #canonical_repetion_tree
-def concise_repetion_node(min, max)
+def self.concise_repetion_node(min, max)
 	if min==0 then
 		if max==1 then
 			return '?'
