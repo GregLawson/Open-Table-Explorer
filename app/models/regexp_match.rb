@@ -32,6 +32,9 @@ def initialize(regexp,dataToParse)
 	super(regexp)
 	@dataToParse=dataToParse
 end #initialize
+def promote(value)
+	return RegexpMatch.new(value, @dataToParse)
+end #promote
 # Top level incremental match of regexp tree to data
 # self - array of parsed tree to test for match
 # calls matchRescued, matchedTreeArray depending

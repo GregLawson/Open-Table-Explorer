@@ -12,13 +12,17 @@ class NestedArray < Array # tree or matrix, whatever
 def initialize(array=[])
 	super(array)
 end #initialize
+# new object, but of type of self
+def promote(value)
+	return self.class.new(value)
+end #promote
 # Makes sure all descendant classes return the proper nested type.
 # Calls super [] and if an Array is returned promotes it to self's class
 # If returned object is not an Array (e.g. leaf node) retun it unchanged.
 def [](index)
 	if super(index).kind_of?(Array) then
-		return self.class.new(super(index))
-	else
+		return promote(super(index))
+	else # unnested node
 		return at(index)
 	end #if
 end #[]index
@@ -63,9 +67,9 @@ end #map_branches
 def merge_single_element_arrays?
 	map_branches do |branch| # visit all in postfix order
 		if branch.size==1 && branch[0].kind_of?(Array) then
-			NestedArray.new(branch[0]) # remove redundant brankets
+			self.class.new(branch[0]) # remove redundant brankets
 		else
-			NestedArray.new(branch)
+			self.class.new(branch)
 		end #if
 	end #map_branches
 
