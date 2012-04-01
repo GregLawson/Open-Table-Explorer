@@ -176,3 +176,15 @@ meetup:
 zipcodes:
   href: zipcodes
   url: http://www.zipskinny.com/index.php?zip=90250
+patchworknation:
+  href: patchworknation
+  url: http://www.patchworknation.org
+arpwatch:
+  href: arpwatch
+  href: file:/var/lib/arpwatch/arp.dat
+bewaterwise:
+  href: bewaterwise
+  url: http://www.mwdh2o.com/DocSvcsPubs/widgets/Public_Widgets/WI-small/wwi.html 
+cimis:
+  href: cmis
+  url: http://wwwcimis.water.ca.gov/cimis/sampDailyReport.do?src=samp
