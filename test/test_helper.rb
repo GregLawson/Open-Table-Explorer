@@ -111,8 +111,8 @@ def define_model_of_test
 #	assert_kind_of(ActiveRecord::Base,@model_class)
 #	assert_kind_of(ActiveRecord::Base,@model_class.new)
 end #def
-MESSAGE_CONTEXT="In define_association_names of test_helper.rb, "
 def define_association_names
+	message="In define_association_names of test_helper.rb, "
 	define_model_of_test
 	assert_model_class(@model_name)
 	assert_fixture_name(@table_name)
@@ -123,8 +123,8 @@ def define_association_names
 	@assignable=(@model_class.instance_methods(false).grep(/=$/ )-@assignable_ids).collect {|m| m[0..-2] }
 	@assignable_ids_to_many=@model_class.instance_methods(false).grep(/_ids=$/ ).collect {|m| m[0..-6] }
 	@ids_to_many=@model_class.instance_methods(false).grep(/_ids$/ ).collect {|m| m[0..-5] }
-	assert_has_instance_methods(@model_class,MESSAGE_CONTEXT)
-	assert_has_associations(@model_class,MESSAGE_CONTEXT)
+	assert_has_instance_methods(@model_class,message)
+	assert_has_associations(@model_class,message)
 #	puts "@model_class.instance_methods(false)=#{@model_class.instance_methods(false).inspect}"
 	assert_not_empty(@model_class.instance_methods(false).grep(/=$/ ))
 	#~ puts "@model_class.instance_methods(false).grep(/=$/ )=#{@model_class.instance_methods(false).grep(/=$/ ).inspect}"
