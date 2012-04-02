@@ -38,9 +38,13 @@ def initialize(regexp=[], options=Default_options)
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
 end #initialize
-#def ==(other)
-#	return self.to_a==other.to_a # self.to_a==other.to_a &&self.tokenIndex==other.tokenIndex
-#end #==
+def <=>(other)
+	if self==other then
+		return 0
+	else
+	end #if
+	return self.to_a==other.to_a # self.to_a==other.to_a &&self.tokenIndex==other.tokenIndex
+end #<=>
 def +(other)
 	return RegexpTree.new(self.to_a+other.to_a)
 end #+
