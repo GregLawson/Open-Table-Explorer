@@ -188,3 +188,9 @@ bewaterwise:
 cimis:
   href: cmis
   url: http://wwwcimis.water.ca.gov/cimis/sampDailyReport.do?src=samp
+sunlight_foundation:
+  href: sunlight_foundation
+  url: http://sunlightfoundation.com/
+independent_expenditures:
+  href: independent_expenditures
+  url: http://reporting.sunlightfoundation.com/outside-spending/independent-expenditures/
