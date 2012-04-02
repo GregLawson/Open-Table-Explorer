@@ -36,9 +36,26 @@ def test_initialize
 	assert_instance_of(NestedArray, RegexpParser.new('.*').parseTree)
 	assert_equal(2, RegexpParser.new('.*').parseTree.size)
 	assert_equal(['.','*'], RegexpParser.new('.*').parseTree)
+	assert_regexp_parser(WhiteEditor)
+	assert_regexp_parser(@@CONSTANT_PARSE_TREE)
+	assert_regexp_parser(KCeditor)
+	assert_regexp_parser(RowsEditor)
+	assert_regexp_parser(RowsEdtor2)
+	assert_regexp_parser(KCETeditor)
 end #initialize
-def test_RegexpParser_to_a
-	assert_equal(['K','C'], KCeditor.to_a)
+def assert_regexp_parser(parser)
+	message="parser=#{parser.inspect}"
+	assert_not_nil(parser.regexp_string, message)
+	assert_not_nil(parser.parseTree, message)
+	assert_not_nil(parser.tokenIndex, message)
+	assert_equal(-1, parser.tokenIndex, message)
+	assert_equal(parser.regexp_string, parser.parseTree.to_s, message)
+	assert_equal(parser.regexp_string, parser.parseTree.to_a.join, message)
+end #assert_regexp_parser
+def test_to_a
+	assert_regexp_parser(@@CONSTANT_PARSE_TREE)
+	assert_equal(['K'], @@CONSTANT_PARSE_TREE.parseTree, "KCeditor=#{KCeditor.inspect}")
+	assert_equal(['K'], @@CONSTANT_PARSE_TREE.to_a, "KCeditor=#{KCeditor.inspect}")
 end #to_a
 def test_RegexpParser_to_s
 	assert_equal('KC', KCeditor.to_s)
