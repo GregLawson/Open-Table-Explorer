@@ -77,11 +77,11 @@ end #mergeMatches
 # calls mergeMatches to reduce multiple matches to one regexp string
 def matchedTreeArray
 	if self.class.PostfixOperators.index(self[0]) then
-		return (self[1..1]+self[0]).to_s
+		return self.to_s
 	else
 		matches= consecutiveMatches(+1,0,0)
 		if matches.nil? || matches.empty? then
-			return nil
+			return ['.', '*']
 		elsif matches.size==1 then
 			return self[matches[0]]
 		else
