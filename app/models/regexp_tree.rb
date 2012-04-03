@@ -61,7 +61,7 @@ def +(other)
 	return RegexpTree.new(self.to_a+other.to_a)
 end #+
 def to_a
-	return Array.new(self)
+	return NestedArray.new(self)
 end #to_a
 # is RegexpTree a character class?
 def character_class?(branch=self)
