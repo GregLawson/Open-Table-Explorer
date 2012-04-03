@@ -71,10 +71,27 @@ def test_initialize
 	assert_not_nil(RegexpTree.new('.'))
 	assert_not_nil(RegexpTree.new(/./))
 end #initialize
+def test_compare
+	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
+end #<=>
 def test_RegexpTree_to_a
 	assert_equal(Asymmetrical_Tree_Array, Asymmetrical_Tree.to_a)
 
 end #to_a
+def test_character_class
+	character_class=RegexpTree.new('[a]')
+	assert_kind_of(Array, character_class)
+	assert_instance_of(RegexpTree, character_class.character_class?)
+	assert_equal('[a]', character_class.character_class?.to_s)
+	promoted_character_class=RegexpTree.new('a')
+	assert_kind_of(RegexpTree, promoted_character_class)
+	assert_not_equal(character_class, promoted_character_class)
+	assert_equal(['a'], promoted_character_class)
+	assert_instance_of(RegexpTree, promoted_character_class)
+	assert_equal(1, promoted_character_class.length)
+	assert_equal(character_class.character_class?, promoted_character_class.character_class?)
+	assert_instance_of(RegexpTree, promoted_character_class.character_class?)
+end #character_class
 def test_postfix_expression
 	assert_not_nil(Postfix_tree)
 	assert(Postfix_tree.postfix_expression?,"Postfix_tree=#{Postfix_tree.inspect}")
@@ -273,6 +290,38 @@ def test_concise_repetion_node
 	Sequence.assert_equal(Repetition_1_2, RegexpTree.concise_repetion_node(1,2))
 	assert_equal(['{',['2',',','2'], '}'], RegexpTree.concise_repetion_node(2, 2))
 end #concise_repetion_node
+Tree123=RegexpTree.new('[1-3]')
+def test_string_of_matching_chars
+	regexp=Regexp.new('\d')
+	char='9'
+	assert_match(regexp, char)
+	ascii_characters=(0..255).to_a.map { |i| i.chr}
+	assert_equal(256, ascii_characters.size)
+	assert_equal(['1','2','3'], ("\x31".."\x33").to_a)
+	assert_equal(['A','B','C'], ("\x41".."\x43").to_a)
+	assert_equal(['Q','R','S'], ("\x51".."\x53").to_a)
+	assert_equal(['a','b','c'], ("\x61".."\x63").to_a)
+	matches=(("\x31".."\x33").to_a.select do |char|
+		if regexp.match(char) then
+			char
+		else
+			nil
+		end #if
+	end) #select
+	assert_equal('123', matches.join)
+	assert_match(/[a-z]/, 'a')
+	assert_instance_of(RegexpTree, Tree123.string_of_matching_chars)
+	assert_instance_of(String, Tree123.string_of_matching_chars[0])
+	assert_equal(['[', '1', '-', '3', ']'], Tree123)
+	assert_equal(['[', '1', '-', '3', ']'], Tree123.to_a)
+	assert_equal(['[', '1', '2', '3', ']'], Tree123.string_of_matching_chars)
+	assert_equal('[123]', Tree123.string_of_matching_chars.join)
+	assert_equal('[0123456789]', Tree123.string_of_matching_chars(/[0-9]/).join)
+	assert_equal('[0123456789]', Tree123.string_of_matching_chars(/[0-9]/).join)
+	assert_equal('[abcdefghijklmnopqrstuvwxyz]'.upcase, Tree123.string_of_matching_chars(/[A-Z]/).join)
+	assert_equal('[abcdefghijklmnopqrstuvwxyz]', Tree123.string_of_matching_chars(/[a-z]/).join)
+	assert_equal('[abcdefghijklmnopqrstuvwxyz]', Tree123.string_of_matching_chars(Regexp.new('[a-z]')).join)
+end #string_of_matching_chars
 def test_editor
 	regexpParserTest(KCeditor)
 	

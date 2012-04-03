@@ -42,8 +42,8 @@ def <=>(other)
 	if self==other then
 		return 0
 	else
+		return nil
 	end #if
-	return self.to_a==other.to_a # self.to_a==other.to_a &&self.tokenIndex==other.tokenIndex
 end #<=>
 def +(other)
 	return RegexpTree.new(self.to_a+other.to_a)
@@ -51,7 +51,18 @@ end #+
 def to_a
 	return Array.new(self)
 end #to_a
-
+# is RegexpTree a character class?
+def character_class?(branch=self)
+	if branch.kind_of?(Array) && branch[0]=='['  && branch[-1]==']' then
+		return branch.string_of_matching_chars 
+	elsif branch.kind_of?(Array)  && branch.size==1 && branch[0].instance_of?(String) && branch[0].size==1then
+		return branch.string_of_matching_chars(branch) # single character
+	elsif branch.kind_of?(String) && branch.length==1 then
+		return branch.string_of_matching_chars(branch) # single character
+	else
+		return nil	
+	end #if
+end #character_class
 # Takes embedded array format parsed tree and displays equivalent to_s string 
 def postfix_expression?(branch=self)
 	if branch.postfix_operator?(branch[-1]) then
@@ -238,6 +249,17 @@ def self.concise_repetion_node(min, max)
 end #concise_repetion_node
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
+def string_of_matching_chars(regexp=self)
+	char_array=Ascii_characters.select do |char|
+		if RegexpMatch.matchRescued(regexp, char) then
+			char
+		else
+			nil
+		end #if
+	end #select
+	
+	return RegexpTree.new(['[']+char_array+[']'])
+end #string_of_matching_chars
 def RegexpTree.regexp_rescued(regexp_string, options=Default_options)
 	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
 	return Regexp.new(regexp_string, options)
