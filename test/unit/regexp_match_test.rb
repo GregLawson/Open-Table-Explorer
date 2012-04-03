@@ -339,9 +339,11 @@ def test_consecutiveMatch
 #	assert_equal(14..14, match2)
 	assert_nil(Addresses.consecutiveMatch(+1,9, 15))
 	assert_nil(Addresses.consecutiveMatch(+1,9))
+	Addresses.assert_consecutiveMatch(match2, match1)
 	match3=Addresses.consecutiveMatch(+1,15)
 	Addresses.assert_match(match3, match2)
 	assert_equal(15..15, match3)
+	Addresses.assert_consecutiveMatch(match3, match2)
 end #consecutiveMatch
 def test_string_of_matching_chars
 	regexp=Regexp.new('\d')
