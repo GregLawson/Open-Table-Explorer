@@ -10,6 +10,7 @@
 require 'app/models/inlineAssertions.rb'
 #require 'app/models/nested_array.rb'
 class RegexpTree < NestedArray
+include Comparable
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 include Inline_Assertions
 def self.OpeningBrackets
@@ -39,10 +40,21 @@ def initialize(regexp=[], options=Default_options)
 	end #if
 end #initialize
 def <=>(other)
-	if self==other then
+	if self.to_s==other.to_s then # avoid recursion
 		return 0
 	else
-		return nil
+		my_cc=self.character_class?[1..-2]
+		other_cc=other.character_class?[1..-2]
+		intersection=my_cc & other_cc
+		if my_cc.to_s==other_cc.to_s then
+			return 0
+		elsif intersection==my_cc then
+			return -1
+		elsif intersection==other_cc then
+			return 1
+		else
+			return nil
+		end #if
 	end #if
 end #<=>
 def +(other)

@@ -210,14 +210,4 @@ def consecutiveMatch(increment=+1,startPos=0,endPos=self.size)
 		return lastMatch
 	end #if
 end #consecutiveMatch
-def self.string_of_matching_chars(regexp)
-	Ascii_characters.select do |char|
-		if RegexpMatch.matchRescued(regexp, char) then
-			char
-		else
-			nil
-		end #if
-	end #select
-	
-end #string_of_matching_chars
 end #RegexpMatch

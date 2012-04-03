@@ -73,6 +73,23 @@ def test_initialize
 end #initialize
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
+	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))
+	my_cc=RegexpTree.new('[ab]').character_class?
+	other_cc=RegexpTree.new('[a]').character_class?
+	intersection=my_cc & other_cc
+	assert_not_equal(my_cc, intersection)
+	assert_equal(other_cc, intersection)
+	assert_equal(1, my_cc <=> other_cc)
+	assert_operator(my_cc, :>, other_cc)
+	
+	
+	my_cc=RegexpTree.new('[[:print:]]').character_class?[1..-2]
+	assert_equal(95, my_cc.to_s.length)
+	other_cc=RegexpTree.new('[[:xdigit:]]').character_class?[1..-2]
+	intersection=my_cc & other_cc
+	assert_not_equal(my_cc, intersection)
+	assert_equal(other_cc, intersection)
+	assert_operator(RegexpTree.new('[[:print:]]'), :>, RegexpTree.new('[[:xdigit:]]'))
 end #<=>
 def test_RegexpTree_to_a
 	assert_equal(Asymmetrical_Tree_Array, Asymmetrical_Tree.to_a)
@@ -321,6 +338,8 @@ def test_string_of_matching_chars
 	assert_equal('[abcdefghijklmnopqrstuvwxyz]'.upcase, Tree123.string_of_matching_chars(/[A-Z]/).join)
 	assert_equal('[abcdefghijklmnopqrstuvwxyz]', Tree123.string_of_matching_chars(/[a-z]/).join)
 	assert_equal('[abcdefghijklmnopqrstuvwxyz]', Tree123.string_of_matching_chars(Regexp.new('[a-z]')).join)
+	assert_match(/[[:print:]]/, 'a')
+	assert_equal(95, RegexpTree.new('[[:print:]]').string_of_matching_chars[1..-2].length)
 end #string_of_matching_chars
 def test_editor
 	regexpParserTest(KCeditor)
