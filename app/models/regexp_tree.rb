@@ -53,7 +53,23 @@ def <=>(other)
 		elsif intersection==other_cc then
 			return 1
 		else
-			return nil
+			my_repeated_pattern=self.repeated_pattern
+			other_repeated_pattern=other.repeated_pattern
+			if my_repeated_pattern!=other_repeated_pattern then
+				return nil # 
+			else
+				my_repetition_length=self.repetition_length
+				other_repetition_length=other.repetition_length
+				if my_repetition_length==other_repetition_length then
+					return 0
+				elsif my_repetition_length[0]<=other_repetition_length[0] &&  my_repetition_length[1]>=other_repetition_length[1] then
+					return 1
+				elsif my_repetition_length[1]<=other_repetition_length[1] &&  my_repetition_length[0]>=other_repetition_length[0] then
+					return -1
+				else
+					return nil
+				end #if
+			end #if
 		end #if
 	end #if
 end #<=>
