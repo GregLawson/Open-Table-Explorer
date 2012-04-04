@@ -235,10 +235,11 @@ def repeated_pattern(node=self)
 	end #if
 end #repeated_pattern
 # returns pair of min and max repetitions of a RegexpTree
+# max can be nil to signify unlimited repetitions
 def repetition_length(node=self)
 	if !node.kind_of?(Array) then
 		if node=='' then
-			return [0, 0]
+			return [1, 1]
 		elsif node=='*' then
 			return [0, nil]
 		elsif node=='+' then
@@ -246,7 +247,7 @@ def repetition_length(node=self)
 		elsif node=='?' then
 			return [0, 1]
 		else
-			[1,1]
+			raise "unexpected node=#{node}"
 		end #if
 	elsif post_op=node.postfix_expression? then
 		if post_op=='*' then
@@ -256,7 +257,7 @@ def repetition_length(node=self)
 		elsif post_op=='?' then
 			return [0, 1]
 		else
-			[4,5]
+			raise "unexpected post_op=#{post_op}"
 		end #if
 	elsif node[-1]=='}' then
 		[node[1][0].to_i, node[1][1].to_i]
@@ -305,6 +306,8 @@ def self.concise_repetion_node(min, max)
 		else
 			return canonical_repetion_tree(min, max)
 		end #if
+	elsif min==max then
+		return RegexpTree.new(['{', [min.to_s], '}'])
 	else
 		return canonical_repetion_tree(min, max)
 	end #if
@@ -334,4 +337,4 @@ def regexp_error(regexp_string, options=Default_options)
 rescue RegexpError => exception
 	return exception
 end #regexp_error
-end #class
+end #RegexpTree
