@@ -75,6 +75,30 @@ def test_initialize
 	assert_not_nil(RegexpTree.new('.'))
 	assert_not_nil(RegexpTree.new(/./))
 end #initialize
+def test_compare_repetitions
+	my_self=RegexpTree.new('.+')
+	my_self.assert_specialized_repetitions('.+')
+end #compare_repetitions
+def test_compare_character_class
+	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
+	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))
+	my_cc=RegexpTree.new('[ab]').character_class?
+	other_cc=RegexpTree.new('[a]').character_class?
+	intersection=my_cc & other_cc
+	assert_not_equal(my_cc, intersection)
+	assert_equal(other_cc, intersection)
+	assert_equal(1, my_cc.compare_character_class?(other_cc))
+	my_cc.assert_specialized_by(other_cc)
+
+	
+	my_cc=RegexpTree.new('[[:print:]]').character_class?[1..-2]
+	assert_equal(95, my_cc.to_s.length)
+	other_cc=RegexpTree.new('[[:xdigit:]]').character_class?[1..-2]
+	intersection=my_cc & other_cc
+	assert_not_equal(my_cc, intersection)
+	assert_equal(other_cc, intersection)
+	assert_equal(1, RegexpTree.new('[[:print:]]').compare_character_class?(RegexpTree.new('[[:xdigit:]]')))
+end #compare_character_class
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
 	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))
@@ -85,7 +109,8 @@ def test_compare
 	assert_equal(other_cc, intersection)
 	assert_equal(1, my_cc <=> other_cc)
 	assert_operator(my_cc, :>, other_cc)
-	
+	my_cc.assert_specialized_by(other_cc)
+
 	
 	my_cc=RegexpTree.new('[[:print:]]').character_class?[1..-2]
 	assert_equal(95, my_cc.to_s.length)
@@ -94,6 +119,7 @@ def test_compare
 	assert_not_equal(my_cc, intersection)
 	assert_equal(other_cc, intersection)
 	assert_operator(RegexpTree.new('[[:print:]]'), :>, RegexpTree.new('[[:xdigit:]]'))
+	RegexpTree.new('[[:print:]]').assert_specialized_by(RegexpTree.new('[[:xdigit:]]'))
 end #<=>
 def test_RegexpTree_to_a
 	assert_equal(Asymmetrical_Tree_Array, Asymmetrical_Tree.to_a)

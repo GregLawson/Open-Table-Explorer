@@ -39,19 +39,54 @@ def initialize(regexp=[], options=Default_options)
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
 end #initialize
+def compare_repetitions?(other)
+	my_repeated_pattern=self.repeated_pattern
+	other_repeated_pattern=other.repeated_pattern
+	if my_repeated_pattern!=other_repeated_pattern then
+		return nil # 
+	else
+		my_repetition_length=self.repetition_length
+		other_repetition_length=other.repetition_length
+		if my_repetition_length==other_repetition_length then
+			return 0
+		elsif my_repetition_length[0]<=other_repetition_length[0] then
+			if my_repetition_length.nil? && other_repetition_length.nil? then
+			elsif my_repetition_length[1]>=other_repetition_length[1] then
+				return 1
+			end #if
+		elsif my_repetition_length[1]<=other_repetition_length[1] &&  my_repetition_length[0]>=other_repetition_length[0] then
+			return -1
+		else
+			return nil
+		end #if
+	end #if
+
+end #compare_repetitions
+def compare_character_class?(other)
+	my_cc=self.character_class?
+	return nil if my_cc.nil?
+	my_chars=my_cc[1..-2]
+	other_cc=other.character_class?
+	return nil if other_cc.nil?
+	other_chars=other_cc[1..-2]
+	intersection=my_chars & other_chars
+	if my_chars.to_s==other_chars.to_s then
+		return 0
+	elsif intersection==my_chars then
+		return -1
+	elsif intersection==other_chars then
+		return 1
+	else
+		return nil
+	end #if
+end #compare_character_class
 def <=>(other)
 	if self.to_s==other.to_s then # avoid recursion
 		return 0
 	else
-		my_cc=self.character_class?[1..-2]
-		other_cc=other.character_class?[1..-2]
-		intersection=my_cc & other_cc
-		if my_cc.to_s==other_cc.to_s then
-			return 0
-		elsif intersection==my_cc then
-			return -1
-		elsif intersection==other_cc then
-			return 1
+		cc_comparison=compare_character_class?(other)
+		if !cc_comparison.nil? then
+			return cc_comparison
 		else
 			my_repeated_pattern=self.repeated_pattern
 			other_repeated_pattern=other.repeated_pattern
