@@ -25,6 +25,33 @@ def <=>(other)
 		return nil
 	end #if
 end #compare
+def canonical_repetion_tree(min=self[:min], max=self[:max])
+	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
+end #canonical_repetion_tree
+def concise_repetion_node(min=self[:min], max=self[:max])
+	if min==0 then
+		if max==1 then
+			return '?'
+		elsif max.nil? then
+			return '*'
+		else
+			return canonical_repetion_tree(min, max)
+		end #if
+	elsif min==1 then
+		if max==1 then
+			return ''
+		elsif max.nil? then
+			return '+'
+		else
+			return canonical_repetion_tree(min, max)
+		end #if
+	elsif min==max then
+		return RegexpTree.new(['{', [min.to_s], '}'])
+	else
+		return canonical_repetion_tree(min, max)
+	end #if
+	return RegexpTree.new(['{', [min.to_s, max.to_s], '}'])
+end #concise_repetion_node
 end #RepetitionLength
 class RegexpTree < NestedArray
 include Comparable
@@ -303,33 +330,6 @@ def merge_to_repetition(branch=self)
 		end #if
 	end #if
 end #merge_to_repetition
-def self.canonical_repetion_tree(min, max)
-	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
-end #canonical_repetion_tree
-def self.concise_repetion_node(min, max)
-	if min==0 then
-		if max==1 then
-			return '?'
-		elsif max.nil? then
-			return '*'
-		else
-			return canonical_repetion_tree(min, max)
-		end #if
-	elsif min==1 then
-		if max==1 then
-			return ''
-		elsif max.nil? then
-			return '+'
-		else
-			return canonical_repetion_tree(min, max)
-		end #if
-	elsif min==max then
-		return RegexpTree.new(['{', [min.to_s], '}'])
-	else
-		return canonical_repetion_tree(min, max)
-	end #if
-	return RegexpTree.new(['{', [min.to_s, max.to_s], '}'])
-end #concise_repetion_node
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
 def string_of_matching_chars(regexp=self)

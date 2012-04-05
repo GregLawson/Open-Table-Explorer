@@ -34,9 +34,21 @@ def test_RepetitionLength_initialize
 	assert_nil(Any_repetition[:max])
 	
 end #initialize
-def test_compare
+def test_RepetitionLength_compare
 	assert_equal(RepetitionLength.new(1, nil), RepetitionLength.new(1, nil))
 end #compare
+Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
+def test_canonical_repetion_tree
+	assert_equal(Repetition_1_2, RegexpTree.canonical_repetion_node(1,2))
+end #canonical_repetion_node
+def test_concise_repetion_node
+	assert_equal('', RepetitionLength.new(1, 1).concise_repetion_node)
+	assert_equal("+", RepetitionLength.new(1, nil).concise_repetion_node)
+	assert_equal("?", RepetitionLength.new(0, 1).concise_repetion_node)
+	assert_equal("*", RepetitionLength.new(0, nil).concise_repetion_node)
+	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetion_node)
+	assert_equal(['{',['2'], '}'], RepetitionLength.new(2, 2).concise_repetion_node)
+end #concise_repetion_node
 def regexpParserTest(parser)
 	assert_respond_to(parser,:parseOneTerm!)
 #	Now test after full parse.
@@ -89,7 +101,7 @@ def test_initialize
 end #initialize
 def test_compare_repetitions
 	my_self=RegexpTree.new('.+')
-	my_self.assert_specialized_repetitions('.+')
+	my_self.assert_specialized_repetitions('.?')
 end #compare_repetitions
 def test_compare_character_class
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
@@ -337,18 +349,6 @@ def test_merge_to_repetition
 	assert_equal(merged_pattern, branch.merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1]))
 	assert_equal(merged_pattern, branch.merge_to_repetition)
 end #merge_to_repetition
-Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
-def test_canonical_repetion_tree
-	assert_equal(Repetition_1_2, RegexpTree.canonical_repetion_tree(1,2))
-end #canonical_repetion_tree
-def test_concise_repetion_node
-	Sequence.assert_equal('', RegexpTree.concise_repetion_node(1, 1))
-	Sequence.assert_equal("+", RegexpTree.concise_repetion_node(1, nil))
-	Sequence.assert_equal("?", RegexpTree.concise_repetion_node(0, 1))
-	Sequence.assert_equal("*", RegexpTree.concise_repetion_node(0, nil))
-	Sequence.assert_equal(Repetition_1_2, RegexpTree.concise_repetion_node(1,2))
-	assert_equal(['{',['2',',','2'], '}'], RegexpTree.concise_repetion_node(2, 2))
-end #concise_repetion_node
 Tree123=RegexpTree.new('[1-3]')
 def test_string_of_matching_chars
 	regexp=Regexp.new('\d')
