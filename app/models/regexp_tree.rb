@@ -8,7 +8,24 @@
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
-#require 'app/models/nested_array.rb'
+class RepetitionLength < ActiveSupport::HashWithIndifferentAccess
+include Comparable
+def initialize(min, max)
+	self[:min]=min
+	self[:max]=max
+end #initialize
+def <=>(other)
+ 	if self[:min]==other[:min] && self[:max]==other[:max]
+		return 0
+	elsif self[:min]<=other[:min] && self[:max]>=other[:max]
+		return 1
+	elsif other[:min]<=self[:min] && other[:max]>=self[:max]
+		return -1
+	else
+		return nil
+	end #if
+end #compare
+end #RepetitionLength
 class RegexpTree < NestedArray
 include Comparable
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE

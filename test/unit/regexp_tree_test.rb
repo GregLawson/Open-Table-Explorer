@@ -25,6 +25,18 @@ set_class_variables
 KCeditor=RegexpParser.new('KC')
 KCETeditor=RegexpParser.new('KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE')
+One_to_ten=RepetitionLength.new(1, 10)
+Any_repetition=RepetitionLength.new(0, nil)
+def test_RepetitionLength_initialize
+	assert_equal(1, One_to_ten[:min])
+	assert_equal(10, One_to_ten[:max])
+	assert_equal(0, Any_repetition[:min])
+	assert_nil(Any_repetition[:max])
+	
+end #initialize
+def test_compare
+	assert_equal(RepetitionLength.new(1, nil), RepetitionLength.new(1, nil))
+end #compare
 def regexpParserTest(parser)
 	assert_respond_to(parser,:parseOneTerm!)
 #	Now test after full parse.
