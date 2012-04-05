@@ -35,7 +35,13 @@ def test_RepetitionLength_initialize
 	
 end #initialize
 def test_RepetitionLength_compare
+	assert(nil == nil)
 	assert_equal(RepetitionLength.new(1, nil), RepetitionLength.new(1, nil))
+	assert_equal(RepetitionLength.new(1, 3), RepetitionLength.new(1, 3))
+	assert_operator(RepetitionLength.new(1, 4), :>, RepetitionLength.new(1, 3))
+	assert_operator(RepetitionLength.new(0, 3), :>, RepetitionLength.new(1, 3))
+	assert_operator(RepetitionLength.new(0, nil), :>, RepetitionLength.new(1, nil))
+	assert_operator(RepetitionLength.new(1, nil), :>, RepetitionLength.new(1, 3))
 end #compare
 Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
 def test_canonical_repetion_tree

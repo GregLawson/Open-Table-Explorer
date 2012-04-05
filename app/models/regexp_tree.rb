@@ -15,16 +15,29 @@ def initialize(min, max)
 	self[:max]=max
 end #initialize
 def <=>(other)
- 	if self[:min]==other[:min] && self[:max]==other[:max]
+ 	if self[:min]==other[:min] && self[:max]==other[:max] then
 		return 0
-	elsif self[:min]<=other[:min] && self[:max]>=other[:max]
+	elsif self[:min]<=other[:min] && (self[:max].nil? || self[:max]>=other[:max]) then
 		return 1
-	elsif other[:min]<=self[:min] && other[:max]>=self[:max]
+	elsif other[:min]<=self[:min] && (other[:max].nil? || other[:max]>=self[:max]) then
 		return -1
 	else
 		return nil
 	end #if
 end #compare
+# intersect 
+def &(other)
+	if self[:min]==other[:min] && self[:max]==other[:max]
+		return self
+	elsif self[:min]<=other[:min] && self[:max]>=other[:max]
+		return other
+	elsif other[:min]<=self[:min] && other[:max]>=self[:max]
+		return self
+	else
+		return nil
+	end #if
+
+end #intersect
 def canonical_repetion_tree(min=self[:min], max=self[:max])
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
 end #canonical_repetion_tree
