@@ -302,14 +302,14 @@ def test_repeated_pattern
 	assert_equal(['.'], RegexpTree.new('.{3,4}').repeated_pattern)
 end #repeated_pattern
 def test_repetition_length
-	Sequence.assert_equal([1, nil], Sequence.repetition_length('+'))
-	Sequence.assert_equal([0, 1], Sequence.repetition_length('?'))
-	Sequence.assert_equal([0, nil], Sequence.repetition_length('*'))
-	Sequence.assert_equal(Repetition_1_2, RegexpTree.concise_repetion_node(1,2))
-	Sequence.assert_equal([0, 0], Sequence.repetition_length(''))
-	Sequence.assert_equal([1, 1], Sequence.repetition_length('.'))
-	Sequence.assert_equal(["{", ["1", ',', "2"], "}"], RegexpTree.concise_repetion_node(1,2))
-	assert_equal([3, 3], Sequence.repetition_length)
+	assert_equal({"max"=>nil, "min"=>1}, Sequence.repetition_length('+'))
+	assert_equal({"max"=>1, "min"=>0}, Sequence.repetition_length('?'))
+	assert_equal({"max"=>nil, "min"=>0}, Sequence.repetition_length('*'))
+	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetion_node)
+	assert_equal({"max"=>0, "min"=>0}, RegexpTree.new('').repetition_length)
+	assert_equal({"max"=>1, "min"=>1}, RegexpTree.new('.').repetition_length)
+	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetion_node)
+	assert_equal({"max"=>3, "min"=>3}, Sequence.repetition_length)
 end #repetition_length
 def test_merge_to_repetition
 	side=['a']

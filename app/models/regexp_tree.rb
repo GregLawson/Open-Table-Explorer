@@ -283,30 +283,30 @@ end #repeated_pattern
 def repetition_length(node=self)
 	if !node.kind_of?(Array) then
 		if node=='' then
-			return [1, 1]
+			return RepetitionLength.new(1, 1)
 		elsif node=='*' then
-			return [0, nil]
+			return RepetitionLength.new(0, nil)
 		elsif node=='+' then
-			return [1, nil]
+			return RepetitionLength.new(1, nil)
 		elsif node=='?' then
-			return [0, 1]
+			return RepetitionLength.new(0, 1)
 		else
 			raise "unexpected node=#{node}"
 		end #if
 	elsif post_op=node.postfix_expression? then
 		if post_op=='*' then
-			return [0, nil]
+			return RepetitionLength.new(0, nil)
 		elsif post_op=='+' then
-			return [1, nil]
+			return RepetitionLength.new(1, nil)
 		elsif post_op=='?' then
-			return [0, 1]
+			return RepetitionLength.new(0, 1)
 		else
 			raise "unexpected post_op=#{post_op}"
 		end #if
 	elsif node[-1]=='}' then
-		[node[1][0].to_i, node[1][1].to_i]
+		RepetitionLength.new(node[1][0].to_i, node[1][1].to_i)
 	else
-		[node.length, node.length]
+		RepetitionLength.new(node.length, node.length)
 	end #if
 end #repetition_length
 # recursive merging of consecutive identical pairs
