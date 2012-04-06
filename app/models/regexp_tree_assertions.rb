@@ -18,16 +18,25 @@ def assert_specialized_repetitions(other)
 	end #if
 	assert_kind_of(RegexpTree, self)
 	assert_kind_of(RegexpTree, other)
-	message="In self=#{self.inspect}assert_other_by(other=#{other.inspect})"
+	message="In assert_specialized_repetitions, self=#{self.inspect} is not more specialized than (other=#{other.inspect})"
 	my_repeated_pattern=self.repeated_pattern
 	other_repeated_pattern=other.repeated_pattern
 	assert_equal(my_repeated_pattern, other_repeated_pattern)
 	my_repetition_length=self.repetition_length
 	other_repetition_length=other.repetition_length
+	assert_not_nil(my_repetition_length)
+	assert_not_nil(other_repetition_length)
+	assert_not_nil(my_repetition_length[:min])
+	assert_not_nil(other_repetition_length[:min])
 	assert_not_equal(my_repetition_length, other_repetition_length)
-	assert(my_repetition_length[0]<=other_repetition_length[0])
-	assert(my_repetition_length[1]>=other_repetition_length[1])
-	assert(my_repetition_length[0]<=other_repetition_length[0] &&  my_repetition_length[1]>=other_repetition_length[1])
+	assert_operator(my_repetition_length[:min], :<=, other_repetition_length[:max])
+	if !my_repetition_length[:max].nil? then
+		if other_repetition_length[:max].nil?
+			raise message
+		else
+			assert(my_repetition_length[:max]>=other_repetition_length[:max])
+		end #if
+	end #if
 end #compare_repetitions
 def assert_specialized_character_class(specialized)
 	if !specialized.kind_of?(RegexpTree) then

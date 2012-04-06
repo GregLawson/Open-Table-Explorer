@@ -13,6 +13,8 @@ include Comparable
 def initialize(min, max)
 	self[:min]=min
 	self[:max]=max
+	raise "min must not be nil." if min.nil? 
+	raise "min=#{min} must be less than or equal to max=#{max}." if !max.nil? && min > max
 end #initialize
 def <=>(other)
  	if self[:min]==other[:min] && self[:max]==other[:max] then
@@ -127,12 +129,12 @@ def compare_repetitions?(other)
 		other_repetition_length=other.repetition_length
 		if my_repetition_length==other_repetition_length then
 			return 0
-		elsif my_repetition_length[0]<=other_repetition_length[0] then
-			if my_repetition_length.nil? && other_repetition_length.nil? then
-			elsif my_repetition_length[1]>=other_repetition_length[1] then
+		elsif my_repetition_length[:min]<=other_repetition_length[:min] then
+			if my_repetition_length[:max].nil? then
+			elsif my_repetition_length[:max]>=other_repetition_length[:max] then
 				return 1
 			end #if
-		elsif my_repetition_length[1]<=other_repetition_length[1] &&  my_repetition_length[0]>=other_repetition_length[0] then
+		elsif my_repetition_length[:max]<=other_repetition_length[:max] &&  my_repetition_length[:min]>=other_repetition_length[:min] then
 			return -1
 		else
 			return nil
@@ -175,9 +177,9 @@ def <=>(other)
 				other_repetition_length=other.repetition_length
 				if my_repetition_length==other_repetition_length then
 					return 0
-				elsif my_repetition_length[0]<=other_repetition_length[0] &&  my_repetition_length[1]>=other_repetition_length[1] then
+				elsif my_repetition_length[:min]<=other_repetition_length[:min] &&  my_repetition_length[:max]>=other_repetition_length[:max] then
 					return 1
-				elsif my_repetition_length[1]<=other_repetition_length[1] &&  my_repetition_length[0]>=other_repetition_length[0] then
+				elsif my_repetition_length[:max]<=other_repetition_length[:max] &&  my_repetition_length[:min]>=other_repetition_length[:min] then
 					return -1
 				else
 					return nil
@@ -357,7 +359,7 @@ def merge_to_repetition(branch=self)
 		if branch.repeated_pattern(first)==branch.repeated_pattern(second) then
 			first_repetition=branch.repetition_length(first)
 			second_repetition=branch.repetition_length(second)
-			merged_repetition=RegexpTree.concise_repetion_node(first_repetition[0]+second_repetition[0], first_repetition[1]+second_repetition[1])
+			merged_repetition=RegexpTree.concise_repetion_node(first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max])
 			merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1])
 		else # couldn't merge first element
 			[first]+merge_to_repetition(branch[1..-1])	# shorten string to ensure recursion termination
