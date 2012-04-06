@@ -194,3 +194,6 @@ sunlight_foundation:
 independent_expenditures:
   href: independent_expenditures
   url: http://reporting.sunlightfoundation.com/outside-spending/independent-expenditures/
+usb_devices:
+  href: usb_devices
+  url: shell:head /sys/bus/usb/devices/[0-9]*/{manufacturer,product}
