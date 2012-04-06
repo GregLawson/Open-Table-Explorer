@@ -25,19 +25,40 @@ def <=>(other)
 		return nil
 	end #if
 end #compare
-# intersect 
+# intersection. If neither is a subset of the other return nil 
 def &(other)
-	if self[:min]==other[:min] && self[:max]==other[:max]
-		return self
-	elsif self[:min]<=other[:min] && self[:max]>=other[:max]
-		return other
-	elsif other[:min]<=self[:min] && other[:max]>=self[:max]
-		return self
+	min= [self[:min], other[:min]].max
+	max=if self[:max].nil? then
+		other[:max]
 	else
-		return nil
+		case self[:max] <=> other[:max]
+		when 1,0
+			other[:max]
+		when -1
+			self[:max]
+		when nil
+			return nil	
+		end #case
 	end #if
-
+	RepetitionLength.new(min, max)
 end #intersect
+# Union. Unlike set union disjoint sets return a spanning set.
+def |(other)
+	min= [self[:min], other[:min]].min
+	max=if self[:max].nil? then
+		nil
+	else
+		case self[:max] <=> other[:max]
+		when 1,0
+			self[:max]
+		when -1
+			other[:max]
+		when nil
+			max=[self[:max], ther[:max]].max	
+		end #case
+	end #if
+	RepetitionLength.new(min, max)
+end #union / generalization
 def canonical_repetion_tree(min=self[:min], max=self[:max])
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
 end #canonical_repetion_tree

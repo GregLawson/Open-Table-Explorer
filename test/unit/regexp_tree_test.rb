@@ -43,6 +43,18 @@ def test_RepetitionLength_compare
 	assert_operator(RepetitionLength.new(0, nil), :>, RepetitionLength.new(1, nil))
 	assert_operator(RepetitionLength.new(1, nil), :>, RepetitionLength.new(1, 3))
 end #compare
+Any=RegexpTree.new('.*')
+Many=RegexpTree.new('.+')
+Any_length=Any.repetition_length
+Many_length=Many.repetition_length
+def test_intersect
+	assert_include('&', RepetitionLength.instance_methods(false))
+	assert_equal({"max"=>nil, "min"=>1}, Any_length.&(Many_length))
+	assert_equal({"max"=>nil, "min"=>1}, Any_length & Many_length)
+end #intersect
+def test_union
+	assert_equal({"max"=>nil, "min"=>0}, Any_length | Many_length)
+end #union / generalization
 Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
 def test_canonical_repetion_tree
 	assert_equal(Repetition_1_2, RegexpTree.canonical_repetion_node(1,2))
