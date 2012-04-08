@@ -67,6 +67,10 @@ def assert_specialized_character_class(specialized)
 	intersection=my_chars & specialized_chars
 	assert_equal(intersection, specialized_chars)
 end #assert_specialized_character_class
+def assert_anchors_specialized_by(other)
+	other=RegexpTree.canonical_regexp_tree(other)
+	assert_operator(Anchoring.new(self), :>, Anchoring.new(other))
+end #compare_anchors
 def assert_specialized_by(specialized)
 	if !specialized.kind_of?(RegexpTree) then
 		specialized=RegexpTree.new(specialized)

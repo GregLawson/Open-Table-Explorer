@@ -171,6 +171,11 @@ def test_compare_character_class
 	assert_equal(other_cc, intersection)
 	assert_equal(1, RegexpTree.new('[[:print:]]').compare_character_class?(RegexpTree.new('[[:xdigit:]]')))
 end #compare_character_class
+def test_compare_anchors
+	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Start_anchor))
+	No_anchor.assert_anchors_specialized_by(Start_anchor)
+	RegexpTree.new('a').assert_anchors_specialized_by('^a')
+end #compare_anchors
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
 	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))

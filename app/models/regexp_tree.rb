@@ -338,6 +338,18 @@ def self.canonical_regexp(regexp)
 	end #if
 	return regexp
 end #canonical_regexp
+def self.canonical_regexp_tree(regexp)
+	if regexp.instance_of?(String) then
+		regexp=RegexpTree.new(regexp)
+	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
+		regexp=RegexpTree.new(regexp.to_s)
+	elsif regexp.nil? then
+		return //
+	elsif !regexp.instance_of?(Regexp) then
+		raise "Unexpected regexp.class=#{regexp.class}."
+	end #if
+	return regexp
+end #canonical_regexp_tree
 def to_regexp(options=Default_options)
 	regexp_string=to_s
 	regexp=RegexpTree.regexp_rescued(regexp_string, options)
