@@ -203,6 +203,51 @@ def test_RegexpTree_to_a
 	assert_equal(Asymmetrical_Tree_Array, Asymmetrical_Tree.to_a)
 
 end #to_a
+Alternatives_4=RegexpTree.new('a|b|c|d')
+Nested_alternatives=RegexpTree.new('(a|b)(c|d)')
+def test_alternatives
+	# Pre-conditions
+	assert_equal([["a", "|"], ["b", "|"], ["c", "|"], "d"], Alternatives_4)
+	assert_equal([["(", ["a", "|"], "b", ")"], ["(", ["c", "|"], "d", ")"]], Nested_alternatives)
+	#line by line known test case (particular invariant conditions)
+	# Unroll recursion
+	# 
+	branch=RegexpTree.new('a|b|c')
+	assert_equal([["a", "|"], ["b", "|"], "c"], branch)
+	assert_kind_of(Array, branch)
+	assert_equal(branch[0].size, 2)
+	assert_equal(branch[0][-1], '|')
+	lhs=branch[0][0]
+	assert_equal('a', lhs)
+	assert_equal([["b", "|"], 'c'], branch[1..-1])
+	# terminal recursion
+	branch2=branch[1..-1]
+	assert_equal([["b", "|"], "c"], branch2)
+	assert_kind_of(Array, branch2)
+	assert_equal(branch2[0].size, 2)
+	assert_equal(branch2[0][-1], '|')
+	lhs=branch2[0][0]
+	assert_equal('b', lhs)
+	assert_equal(['c'], branch2[1..-1])
+	rhs=branch.alternatives?(branch2[1..-1])
+	assert_not_nil(rhs)
+	assert_equal(['c'], rhs)
+	assert_equal(['b', 'c'], ([lhs] + rhs).sort)
+	
+	lhs=branch[0][0]
+	assert_equal('a', lhs)
+	assert_equal([["b", "|"], 'c'], branch[1..-1])
+	rhs=branch.alternatives?(branch[1..-1])
+	assert_not_nil(rhs)
+	assert_equal(['b', 'c'], rhs)
+	assert_equal(['a', 'b', 'c'], ([lhs] + rhs).sort)
+	#test known cases of method (post conditions)
+	assert_equal(['a', 'b'], RegexpTree.new('a|b').alternatives?)
+	assert_equal(['a', 'b', 'c'], RegexpTree.new('a|b|c').alternatives?)
+	assert_equal(['a', 'b', 'c', 'd'], Alternatives_4.alternatives?)
+	assert_equal(Nested_alternatives, Nested_alternatives.alternatives?)
+	assert_nil(RegexpTree.new('a').alternatives?('a'))
+end #alternatives
 def test_character_class
 	character_class=RegexpTree.new('[a]')
 	assert_kind_of(Array, character_class)

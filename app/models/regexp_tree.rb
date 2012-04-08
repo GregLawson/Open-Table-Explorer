@@ -247,6 +247,24 @@ end #+
 def to_a
 	return NestedArray.new(self)
 end #to_a
+# Returns flattened list of alternatives
+# Or nil if no alternatives
+# If passed a non-array recursion terminates and branch is returned.
+def alternatives?(branch=self)
+	if !branch.kind_of?(Array) then
+		nil # terminate recursion with last alternative
+	elsif branch[0].size==2 && branch[0][-1]=='|' then
+		lhs=branch[0][0]
+		rhs=alternatives?(branch[1..-1])
+		if rhs.nil? then
+			[lhs] 
+		else
+			([lhs] + rhs).sort
+		end #if
+	else
+		branch # no alternatives here
+	end #if
+end #alternatives
 # is RegexpTree a character class?
 def character_class?(branch=self)
 	if branch.kind_of?(Array) && branch[0]=='['  && branch[-1]==']' then
