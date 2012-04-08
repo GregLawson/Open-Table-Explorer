@@ -5,7 +5,7 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
-require 'app/models/regexp_tree.rb' # make usable under rake
+#require 'app/models/regexp_tree.rb' # make usable under rake
 class Eeg
 include Generic_Table
 extend Generic_Table::ClassMethods
