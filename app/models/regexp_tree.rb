@@ -8,6 +8,50 @@
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
+class Anchoring < ActiveSupport::HashWithIndifferentAccess
+attr_reader :start_base, :end_base
+def initialize(regexp_tree)
+	@start_base=0
+	@end_base=-1
+	self[:start_anchor]=if regexp_tree[0]=='^' then
+		@start_base=1
+		'^'
+	else
+		nil
+	end #if
+	self[:end_anchor]=if regexp_tree[-1]=='$' then
+		@end_base=-2
+		'$'
+	else
+		nil
+	end #if
+	self[:base_regexp]=regexp_tree[@start_base..@end_base]
+end #initialize
+def compare_anchor(other, key)
+	if self[key]==other[key] then
+		return 0
+	elsif other[key] then 
+		return 1
+	elsif self[key] then 
+		return -1
+	else
+		return nil
+	end #if
+end #compare_anchor
+def <=>(other)
+	comparison_case=[compare_anchor(other, :start_anchor), compare_anchor(other, :end_anchor)]
+	case comparison_case
+	when [0,0]
+		return 0
+	when [0,1], [1,1]
+		return 1
+	when [0,-1], [-1,-1]
+		return -1
+	else
+		raise "In Anchoring.<=> Unexpected case=#{comparison_case}"
+	end #case
+end #<=>
+end #Anchoring
 class RepetitionLength < ActiveSupport::HashWithIndifferentAccess
 include Comparable
 def initialize(min, max)

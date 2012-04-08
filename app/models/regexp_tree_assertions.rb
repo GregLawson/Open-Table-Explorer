@@ -12,6 +12,19 @@ include Test::Unit::Assertions
 require 'rails/test_help'
 module ClassMethods
 end #ClassMethods
+def assert_anchoring
+	anchoring=Anchoring.new(self)
+#	explain_assert_respond_to(anchoring, :default_message)
+#	explain_assert_respond_to(Test::Unit::Assertions, :default_message)
+#	message=anchoring.default_message
+	message=""
+	assert_include(anchoring.start_base, [0,1])
+	assert_include(anchoring.end_base, [-1,-2])
+	assert_not_empty(self[0..-1])
+	assert_not_empty(self[anchoring.start_base..anchoring.end_base])
+	assert_not_empty(anchoring[:base_regexp], message)
+	assert_equal([anchoring[:start_anchor], anchoring[:base_regexp], anchoring[:end_anchor]].compact.to_s, self.to_s, message)
+end #anchoring
 def assert_specialized_repetitions(other)
 	if !other.kind_of?(RegexpTree) then
 		other=RegexpTree.new(other)
