@@ -102,10 +102,10 @@ def objectClass(verbose=false)
 end #objectClass
 def objectName(verbose=false)
 	if nil? then
-		return "#{obj} is nil."
+		return "#{obj.inspect} is nil."
 	elsif self.class.name=='Symbol' then
 		#puts "find_symbol(obj)=#{find_symbol(obj)}"
-		return "#{to_s}"
+		return ":#{to_s}"
 	elsif self.class.name=='Module' then
 		puts("name=#{name}")
 		puts("nesting.inspect=#{nesting.inspect}")
@@ -116,7 +116,7 @@ def objectName(verbose=false)
 		if respond_to?(:name) then
 			puts("name=#{name}")
 		else
-			return "to_s=#{to_s} has no name."
+			return "inspect=#{inspect} has no name."
 		end
 	end
 
@@ -174,7 +174,7 @@ def canonicalName(verbose=false)
 				return "obj Class #{name} has no superclass."
 			end
 		else
-			return "to_s=#{to_s} has no name."
+			return "inspect=#{inspect} has no name."
 		end
 	end
 
