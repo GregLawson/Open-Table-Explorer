@@ -175,6 +175,7 @@ def test_compare_anchors
 	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Start_anchor))
 	No_anchor.assert_anchors_specialized_by(Start_anchor)
 	RegexpTree.new('a').assert_anchors_specialized_by('^a')
+	assert_equal(1, No_anchor.compare_anchors?(Start_anchor))
 end #compare_anchors
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)

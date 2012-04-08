@@ -206,6 +206,13 @@ def compare_character_class?(other)
 		return nil
 	end #if
 end #compare_character_class
+def compare_anchors?(other)
+	if self.to_s == other.to_s then
+		return 0
+	else
+		Anchoring.new(self) <=> Anchoring.new(other)
+	end #if
+end #compare_anchors
 def <=>(other)
 	if self.to_s==other.to_s then # avoid recursion
 		return 0
