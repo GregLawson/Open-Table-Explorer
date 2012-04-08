@@ -78,7 +78,18 @@ def explain_assert_respond_to(obj,methodName,message='')
 			end #if
 		end #if
 		assert_respond_to(obj,methodName,message)
-	else # not class
+	elsif obj.instance_of?(Module) then
+		if obj.instance_methods(true).include?(methodName.to_s) then
+			message= "It's an instance method of module #{obj.name}. Other instance methods=#{obj.instance_methods.inspect}"
+		else
+			if obj.instance_methods(false).empty? then
+				message="#{message1}; has no noninherited class methods."
+			else
+				message="#{message1}; noninherited class methods= #{obj.instance_methods(false).inspect}"
+			end #if
+		end #if
+		assert_respond_to(obj,methodName,message)
+	else # not Class, Module. Instance?
 		noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 #		assert_equal(obj.class.public_instance_methods,obj.public_class_methods)
 		if obj.respond_to?(methodName.to_s) then
@@ -87,6 +98,7 @@ def explain_assert_respond_to(obj,methodName,message='')
 			#~ message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj).inspect}"
 		else
 			message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods.inspect}"
+			message=" obj.class.included_modules=#{obj.class.included_modules}"
 			assert_respond_to(obj,methodName,message)
 		end
 	end
