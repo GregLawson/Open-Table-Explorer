@@ -252,17 +252,26 @@ end #to_a
 # If passed a non-array recursion terminates and branch is returned.
 def alternatives?(branch=self)
 	if !branch.kind_of?(Array) then
-		nil # terminate recursion with last alternative
-	elsif branch[0].size==2 && branch[0][-1]=='|' then
-		lhs=branch[0][0]
-		rhs=alternatives?(branch[1..-1])
-		if rhs.nil? then
-			[lhs] 
-		else
-			([lhs] + rhs).sort
-		end #if
+		nil # no alternatives possible
 	else
-		branch # no alternatives here
+		cc_comparison=branch.character_class?
+		if cc_comparison then
+			cc_comparison[1..-2]
+		elsif branch[0].size==2 && branch[0][-1]=='|' then
+			lhs=branch[0][0]
+			rhs=alternatives?(branch[1..-1])
+			if rhs.nil? then
+				[lhs] 
+			else
+				([lhs] + rhs).sort
+			end #if
+		else
+			if branch.instance_of?(String) && branch.length==1 then
+				branch # # terminate recursion with last alternative
+			else
+				nil
+			end #if
+		end #if
 	end #if
 end #alternatives
 # is RegexpTree a character class?

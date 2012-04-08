@@ -210,6 +210,14 @@ def test_alternatives
 	assert_equal([["a", "|"], ["b", "|"], ["c", "|"], "d"], Alternatives_4)
 	assert_equal([["(", ["a", "|"], "b", ")"], ["(", ["c", "|"], "d", ")"]], Nested_alternatives)
 	#line by line known test case (particular invariant conditions)
+	# character class test
+	branch=RegexpTree.new('[0-2]')
+	assert_kind_of(Array, branch)
+	
+	cc_comparison=branch.character_class?
+	assert_not_nil(cc_comparison)
+	assert_equal(RegexpTree.new('[012]'), cc_comparison)
+	assert_equal(['0', '1', '2'], cc_comparison[1..-2])
 	# Unroll recursion
 	# 
 	branch=RegexpTree.new('a|b|c')
