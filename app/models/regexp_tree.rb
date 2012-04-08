@@ -9,6 +9,7 @@
 # Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
 class Anchoring < ActiveSupport::HashWithIndifferentAccess
+include Comparable
 attr_reader :start_base, :end_base
 def initialize(regexp_tree)
 	@start_base=0
@@ -43,12 +44,13 @@ def <=>(other)
 	case comparison_case
 	when [0,0]
 		return 0
-	when [0,1], [1,1]
+	when [0,1], [1,1], [1,0] #specialized and equal
 		return 1
-	when [0,-1], [-1,-1]
+	when [0,-1], [-1,-1] #specialized and equal
 		return -1
+	when [-1,1], [1,-1] #disagreement
 	else
-		raise "In Anchoring.<=> Unexpected case=#{comparison_case}"
+		raise "In Anchoring.<=> Unexpected case=#{comparison_case.inspect},self=#{self.inspect}, other=#{other.inspect}"
 	end #case
 end #<=>
 end #Anchoring

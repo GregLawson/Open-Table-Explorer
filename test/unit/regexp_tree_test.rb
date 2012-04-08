@@ -49,6 +49,14 @@ def test_Anchoring_initialize
 	assert_nil(Anchoring.new(Start_anchor)[:end_anchor])
 	assert_equal(End_anchor_regexp, Anchoring.new(End_anchor)[:end_anchor])
 end #anchoring
+def test_compare_anchor
+	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Start_anchor))
+	assert_operator(Anchoring.new(Start_anchor), :>, Anchoring.new(Both_anchor))
+	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(End_anchor))
+	assert_operator(Anchoring.new(End_anchor), :>, Anchoring.new(Both_anchor))
+	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Both_anchor))
+	assert_nil(Anchoring.new(Start_anchor) <=> Anchoring.new(End_anchor))
+end #compare_anchor
 def test_RepetitionLength_initialize
 	assert_equal(1, One_to_ten[:min])
 	assert_equal(10, One_to_ten[:max])
