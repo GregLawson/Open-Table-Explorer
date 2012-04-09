@@ -94,8 +94,8 @@ def test_union
 end #union / generalization
 Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
 def test_canonical_repetion_tree
-	assert_equal(Repetition_1_2, RegexpTree.canonical_repetion_node(1,2))
-end #canonical_repetion_node
+	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).canonical_repetion_tree)
+end #canonical_repetion_tree
 def test_concise_repetion_node
 	assert_equal('', RepetitionLength.new(1, 1).concise_repetion_node)
 	assert_equal("+", RepetitionLength.new(1, nil).concise_repetion_node)
