@@ -214,6 +214,7 @@ def compare_anchors?(other)
 	end #if
 end #compare_anchors
 def <=>(other)
+	anchor_comparison=compare_anchors?(other)
 	if self.to_s==other.to_s then # avoid recursion
 		return 0
 	else
@@ -221,22 +222,15 @@ def <=>(other)
 		if !cc_comparison.nil? then
 			return cc_comparison
 		else
-			my_repeated_pattern=self.repeated_pattern
-			other_repeated_pattern=other.repeated_pattern
-			if my_repeated_pattern!=other_repeated_pattern then
-				return nil # 
+			repetition_comparison=compare_repetitions?(other)
+			if !repetition_comparison.nil? then
+				return repetition_comparison
+			end #if
+			sequence_comparison=compare_sequence?(other)
+			if !sequence_comparison.nil? then
+				return sequence_comparison
 			else
-				my_repetition_length=self.repetition_length
-				other_repetition_length=other.repetition_length
-				if my_repetition_length==other_repetition_length then
-					return 0
-				elsif my_repetition_length[:min]<=other_repetition_length[:min] &&  my_repetition_length[:max]>=other_repetition_length[:max] then
-					return 1
-				elsif my_repetition_length[:max]<=other_repetition_length[:max] &&  my_repetition_length[:min]>=other_repetition_length[:min] then
-					return -1
-				else
-					return nil
-				end #if
+				return nil
 			end #if
 		end #if
 	end #if
