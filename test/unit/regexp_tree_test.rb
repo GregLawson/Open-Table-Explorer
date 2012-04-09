@@ -73,6 +73,13 @@ def test_RepetitionLength_compare
 	assert_operator(RepetitionLength.new(0, nil), :>, RepetitionLength.new(1, nil))
 	assert_operator(RepetitionLength.new(1, nil), :>, RepetitionLength.new(1, 3))
 end #compare
+def test_plus
+	rep=RepetitionLength.new(1, 2)
+	other=RepetitionLength.new(1, 2)
+	assert_equal({"max"=>4, "min"=>2}, rep+other)
+	assert_equal({"max"=>nil, "min"=>2}, rep+RepetitionLength.new(1, nil))
+	assert_equal({"max"=>nil, "min"=>2}, RepetitionLength.new(1, nil)+rep)
+end #plus
 Any=RegexpTree.new('.*')
 Many=RegexpTree.new('.+')
 Any_length=Any.repetition_length

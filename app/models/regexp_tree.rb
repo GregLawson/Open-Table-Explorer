@@ -73,6 +73,15 @@ def <=>(other)
 		return nil
 	end #if
 end #compare
+# calculate sum for merging sequential repetitions
+def +(other)
+	if self[:max].nil? || other[:max].nil? then
+		max=nil # infinity+ anything == infinity
+	else
+		max=self[:max]+other[:max]
+	end #if
+	return RepetitionLength.new(self[:min]+other[:min], max)
+end #plus
 # intersection. If neither is a subset of the other return nil 
 def &(other)
 	min= [self[:min], other[:min]].max
