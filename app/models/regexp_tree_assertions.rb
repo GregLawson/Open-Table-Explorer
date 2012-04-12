@@ -6,6 +6,18 @@
 #
 ###########################################################################
 # There is a rails method that does this; forgot name
+module Test::Unit::Assertions
+def default_message
+	message="Module.nesting=#{Module.nesting.inspect}"
+	message+=" Class #{self.class.name}"
+	message+=" unknown method"
+	message+=" self=#{self.inspect}"
+	message+=" local_variables=#{local_variables.inspect}"
+	message+=" instance_variables=#{instance_variables.inspect}"
+	message+=" callers=#{callers}"
+	return message
+end #default_message
+end #Test::Unit::Assertions
 module RegexpTreeAssertions
 # Assertions (validations)
 include Test::Unit::Assertions
@@ -24,7 +36,7 @@ def assert_anchoring
 	assert_not_empty(self[anchoring.start_base..anchoring.end_base])
 	assert_not_empty(anchoring[:base_regexp], message)
 	assert_equal([anchoring[:start_anchor], anchoring[:base_regexp], anchoring[:end_anchor]].compact.to_s, self.to_s, message)
-end #anchoring
+end #anchor
 def assert_specialized_repetitions(other)
 	if !other.kind_of?(RegexpTree) then
 		other=RegexpTree.new(other)
@@ -66,11 +78,23 @@ def assert_specialized_character_class(specialized)
 	specialized_chars=specialized_cc[1..-2]
 	intersection=my_chars & specialized_chars
 	assert_equal(intersection, specialized_chars)
-end #assert_specialized_character_class
+end #compare_character_class
 def assert_anchors_specialized_by(other)
 	other=RegexpTree.canonical_regexp_tree(other)
 	assert_operator(Anchoring.new(self), :>, Anchoring.new(other))
 end #compare_anchors
+def assert_sequence_specialized_by(other)
+	assert_kind_of(Array, self)
+	assert_kind_of(Array, other)
+	self.each_with_index do |node, i|
+		if i-1 <= other.length then
+			comparison=node <=> other[i]
+			assert_not_nil(comparison, "comparison of #{node.inspect} to #{other[i]} should not be nil.")
+			assert_operator(comparison, :>=, 0)
+		end #if
+	end #each
+	assert_equal(1, compare_sequence?(other))
+end #sequence_comparison
 def assert_specialized_by(specialized)
 	if !specialized.kind_of?(RegexpTree) then
 		specialized=RegexpTree.new(specialized)

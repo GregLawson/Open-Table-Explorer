@@ -49,6 +49,7 @@ def <=>(other)
 	when [0,-1], [-1,-1] #specialized and equal
 		return -1
 	when [-1,1], [1,-1] #disagreement
+		nil
 	else
 		raise "In Anchoring.<=> Unexpected case=#{comparison_case.inspect},self=#{self.inspect}, other=#{other.inspect}"
 	end #case
@@ -175,6 +176,7 @@ def initialize(regexp=[], options=Default_options)
 	end #if
 end #initialize
 def compare_repetitions?(other)
+	return nil if other.instance_of?(String)
 	my_repeated_pattern=self.repeated_pattern
 	other_repeated_pattern=other.repeated_pattern
 	if my_repeated_pattern!=other_repeated_pattern then
@@ -198,6 +200,7 @@ def compare_repetitions?(other)
 
 end #compare_repetitions
 def compare_character_class?(other)
+	return nil if other.instance_of?(String)
 	my_cc=self.character_class?
 	return nil if my_cc.nil?
 	my_chars=my_cc[1..-2]
@@ -221,7 +224,38 @@ def compare_anchors?(other)
 	else
 		Anchoring.new(self) <=> Anchoring.new(other)
 	end #if
-end #compare_anchors
+end #anchoring
+def compare_sequence?(other)
+	return nil if other.instance_of?(String)
+	if self.length==1 || other.length==1 then
+		comparison=self[0] <=> other[0]
+		if self.length > other.length then
+			return -1
+		elsif self.length == other.length then
+			return comparison
+		else
+			return 1
+		end #if
+	else
+		comparison=self[0] <=> other[0]
+		comparison1=self[1..-1] <=> other[1..-1]
+		if comparison.nil? || comparison1.nil? then
+			return nil # part incomparable
+		else case [comparison, comparison1]
+		when [0,0]
+			0
+		when [1,1], [0,1], [1,0]
+			1
+		when [-1,-1], [0,-1], [-1,0]
+			-1
+		when  [1,-1], [-1,1]
+			nil
+		else
+			raise "bad case"
+		end #case
+		end #if
+	end #if
+end #sequence_comparison
 def <=>(other)
 	anchor_comparison=compare_anchors?(other)
 	if self.to_s==other.to_s then # avoid recursion
@@ -421,6 +455,8 @@ def repetition_length(node=self)
 			return RepetitionLength.new(1, nil)
 		elsif node=='?' then
 			return RepetitionLength.new(0, 1)
+		elsif node.length==1 then
+			return RepetitionLength.new(1, 1)
 		else
 			raise "unexpected node=#{node}"
 		end #if
@@ -452,9 +488,9 @@ def merge_to_repetition(branch=self)
 		first=branch[0]
 		second=branch[1]
 		if branch.repeated_pattern(first)==branch.repeated_pattern(second) then
-			first_repetition=branch.repetition_length(first)
+			first_repetition=first.repetition_length
 			second_repetition=branch.repetition_length(second)
-			merged_repetition=RegexpTree.concise_repetion_node(first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max])
+			merged_repetition=(first_repetition+second_repetition).concise_repetion_node
 			merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1])
 		else # couldn't merge first element
 			[first]+merge_to_repetition(branch[1..-1])	# shorten string to ensure recursion termination

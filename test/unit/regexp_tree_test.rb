@@ -56,7 +56,7 @@ def test_compare_anchor
 	assert_operator(Anchoring.new(End_anchor), :>, Anchoring.new(Both_anchor))
 	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Both_anchor))
 	assert_nil(Anchoring.new(Start_anchor) <=> Anchoring.new(End_anchor))
-end #compare_anchor
+end #anchor
 def test_RepetitionLength_initialize
 	assert_equal(1, One_to_ten[:min])
 	assert_equal(10, One_to_ten[:max])
@@ -184,6 +184,10 @@ def test_compare_anchors
 	RegexpTree.new('a').assert_anchors_specialized_by('^a')
 	assert_equal(1, No_anchor.compare_anchors?(Start_anchor))
 end #compare_anchors
+def test_sequence_comparison
+	assert_equal(1, RegexpTree.new('ab').compare_sequence?(RegexpTree.new('abc')))
+	RegexpTree.new('ab').assert_sequence_specialized_by(RegexpTree.new('abc'))	
+end #sequence_comparison
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
 	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))
@@ -270,7 +274,8 @@ def test_character_class
 	assert_equal('[a]', character_class.character_class?.to_s)
 	promoted_character_class=RegexpTree.new('a')
 	assert_kind_of(RegexpTree, promoted_character_class)
-	assert_not_equal(character_class, promoted_character_class)
+	assert_equal(0, character_class <=> promoted_character_class)
+	assert_equal(character_class, promoted_character_class)
 	assert_equal(['a'], promoted_character_class)
 	assert_instance_of(RegexpTree, promoted_character_class)
 	assert_equal(1, promoted_character_class.length)
@@ -426,21 +431,22 @@ def test_repetition_length
 	assert_equal({"max"=>3, "min"=>3}, Sequence.repetition_length)
 end #repetition_length
 def test_merge_to_repetition
+	# first line by line test case
 	side=['a']
 	branch=RegexpTree.new([side, side])
 	first=branch[0]
 	second=branch[1]
 	assert_equal(first, second)
-	first_repetition=branch.repetition_length(first)
-	second_repetition=branch.repetition_length(second)
-	merged_repetition=RegexpTree.concise_repetion_node(first_repetition[0]+second_repetition[0], first_repetition[1]+second_repetition[:max])
-	assert_equal(["{", ["2", ",", "2"], "}"], merged_repetition)
+	first_repetition=first.repetition_length
+	second_repetition=second.repetition_length
+	merged_repetition=(first_repetition+second_repetition).concise_repetion_node
+	assert_equal(["{", ["2"], "}"], merged_repetition)
 	assert_equal(['a'], first.repeated_pattern)
 	assert_equal([2, 2], [first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max]])
-	assert_equal(['{',['2',',','2'], '}'], merged_repetition)
 	assert_instance_of(RegexpTree, first.repeated_pattern)
-	branch.merge_to_repetition([first.repeated_pattern, merged_repetition])
-	assert_equal(['a',['{',['2',',','2'], '}']], branch.merge_to_repetition)
+	branch.merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1])
+	assert_equal(['a',['{',['2'], '}']], branch.merge_to_repetition)
+	# second line by line test case
 	branch=RegexpTree.new('a?a')
 	assert_instance_of(RegexpTree, branch)
 	assert_equal([["a", "?"], "a"], branch)
@@ -450,12 +456,12 @@ def test_merge_to_repetition
 	assert_instance_of(String, second)
 	assert_equal(['a'], branch.repeated_pattern(first))
 	assert_equal(['a'], branch.repeated_pattern(second))
-	first_repetition=branch.repetition_length(first)
+	first_repetition=first.repetition_length
 	second_repetition=branch.repetition_length(second)
 	assert_equal([1, 2], [first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max]])
 	assert_equal(['a'], branch.repeated_pattern(first))
 	assert_equal(['a'], branch.repeated_pattern(second))
-	merged_repetition=RegexpTree.concise_repetion_node(first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max])
+	merged_repetition=(first_repetition+second_repetition).concise_repetion_node
 	assert_equal(["{", ["1", ",", "2"], "}"], merged_repetition)
 	assert_equal([], branch[2..-1])
 	merged_pattern=['a',['{',['1',',','2'], '}']]
