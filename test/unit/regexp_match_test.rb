@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'test/test_helper'
-
+# Ensure assertions are included in classes.
 class GenericType < ActiveRecord::Base
 include GenericTypeAssertions
 extend GenericTypeAssertions::ClassMethods
@@ -17,7 +17,7 @@ include RegexpMatchAssertions
 extend RegexpMatchAssertions::ClassMethods
 end #RegexpMatch
 
-class RegexpMatchTest < ActiveSupport::TestCase
+class RegexpMatchTest < ActiveSupport::TestCase #file context
 set_class_variables(RegexpMatchTest,false)
 #require 'test/unit'
 #include Test_Helpers

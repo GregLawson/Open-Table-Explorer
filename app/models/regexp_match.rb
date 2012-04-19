@@ -29,6 +29,8 @@ def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
 		end #begin/rescue
 	end #if
 end #match_data?
+# return superclass instance converted to RegexpMatch
+# Used by [] and other methods shared with superclasses
 def promote(value)
 	return RegexpMatch.new(value, @dataToParse)
 end #promote
