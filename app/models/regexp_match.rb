@@ -119,6 +119,7 @@ end #concise_repetion_node
 		[data_to_match.length, data_to_match.length]
 	end #if
 end #repetition_length
+# Rescues bad regexps, returns {:regexp => nil}
 def match_branch(branch=self, data_to_match=@dataToParse)
 	if branch.instance_of?(String) then
 		regexp=branch.to_exact_regexp
@@ -126,14 +127,19 @@ def match_branch(branch=self, data_to_match=@dataToParse)
 		regexp=branch.to_regexp
 	end #if
 	matchData=regexp.match(data_to_match)
-	ret={:regexp => regexp, :data_to_match => data_to_match}
-	if matchData.nil? then
-		ret[:matched_data]= nil
-
+	if matchData then
+		ret=RegexpMatch.new(branch, matchData[0])
 	else
-		ret[:matched_data]= matchData
-		data_to_match=matchData.post_match
+		ret=RegexpMatch.new(branch, data_to_match)
 	end #if
+#	ret={:regexp => regexp, :data_to_match => data_to_match}
+#	if matchData.nil? then
+#		ret[:matched_data]= nil
+
+#	else
+#		ret[:matched_data]= matchData
+#		data_to_match=matchData.post_match
+#	end #if
 	ret
 end #match_branch
 def map_consecutiveMatches(matches, data_to_match=@dataToParse)

@@ -45,7 +45,7 @@ module RegexpMatchAssertions
 include Test::Unit::Assertions
 require 'rails/test_help'
 include Squeeze_Display
-include Match_Addressing
+#include Match_Addressing
 def assert_regexp_match(regexp_match=self)
 	assert_respond_to(regexp_match,:consecutiveMatches)
 	assert_not_nil(regexp_match.consecutiveMatches(+1,0,0))
@@ -88,7 +88,7 @@ end #ClassMethods
 def assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
 	ret=match_branch(branch, data_to_match)
 	message=build_message(message, "ret=?", ret)
-	assert_not_nil(ret[:data_to_match], message)
+	assert_not_nil(ret.dataToParse, message)
 end #match_branch
 def assert_consecutiveMatches(matches)
 	assert_instance_of(Array, matches)
@@ -108,4 +108,5 @@ def assert_consecutiveMatch(match, previous_match=nil)
 	else
 	end #if
 end #consecutiveMatch
+
 end #RegexpMatch
