@@ -126,12 +126,8 @@ def inspect
 	end #if
 end #inspect
 		end #if
-	elsif node[-1]=='}' then
-		[node[1][0].to_i, node[1][1].to_i]
 	else
-		[data_to_match.length, data_to_match.length]
 	end #if
-end #repetition_length
 # Rescues bad regexps, returns {:regexp => nil}
 def match_branch(branch=self, data_to_match=@dataToParse)
 	if branch.instance_of?(String) then
