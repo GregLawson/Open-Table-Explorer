@@ -108,13 +108,23 @@ def generalize(branch=self, data_to_match=@dataToParse)
 		return 	RegexpMatch.new(['[[:print:]]', concise_repetion_node(branch.repetition_length[0], data_to_match.size)], data_to_match)
 	end #if
 end #generalize
+def inspect
+	if @match_data then
+		"RegexpMatch: #{self.to_regexp} matches '#{@dataToParse}'."
 	else
-		return canonical_repetion_tree(min, max)
-	end #if
-	return RegexpTree.new(['{', [min.to_s, max.to_s], '}'])
-end #concise_repetion_node
+		if self[0].kind_of?(RegexpMatch) then
+			map do |match| 
+				if kind_of?(RegexpMatch) then
+					match.inspect
+				else
+					match
+				end #if
+			end #map
 		else
-			[4,5]
+			"RegexpMatch: #{self.to_regexp} does not match '#{@dataToParse}'."
+		end #if
+	end #if
+end #inspect
 		end #if
 	elsif node[-1]=='}' then
 		[node[1][0].to_i, node[1][1].to_i]
