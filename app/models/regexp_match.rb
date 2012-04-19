@@ -135,19 +135,19 @@ def match_branch(branch=self, data_to_match=@dataToParse)
 	else
 		regexp=branch.to_regexp
 	end #if
-	matchData=regexp.match(data_to_match)
-	if matchData then
-		ret=RegexpMatch.new(branch, matchData[0])
-	else
+	@match_data=regexp.match(data_to_match)
+	if @match_data then
+		ret=RegexpMatch.new(branch, @match_data[0])
+	else #no match
 		ret=RegexpMatch.new(branch, data_to_match)
 	end #if
 #	ret={:regexp => regexp, :data_to_match => data_to_match}
-#	if matchData.nil? then
+#	if match_data.nil? then
 #		ret[:matched_data]= nil
 
 #	else
-#		ret[:matched_data]= matchData
-#		data_to_match=matchData.post_match
+#		ret[:matched_data]= match_data
+#		data_to_match=match_data.post_match
 #	end #if
 	ret
 end #match_branch
