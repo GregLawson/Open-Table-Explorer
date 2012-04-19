@@ -28,6 +28,7 @@ RegexpMatch.assert_mergeable('a', 'a')
 string1='a'
 string2='b'
 Alternative=RegexpMatch.new(string1, string2)
+Matches=RegexpMatch.new(string1, string1)
 string1=%{<Url:0xb5f22960>}
 string2=%{<Url:0xb5ce4e3c>}
 Addresses=RegexpMatch.new(string1, string2)

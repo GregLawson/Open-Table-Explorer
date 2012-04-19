@@ -7,11 +7,12 @@
 ###########################################################################
 # Class methods
 # For a fixed string compute parse tree or sub trees that match
-class RegexpMatch < RegexpTree
-attr_reader :dataToParse
+class RegexpMatch < RegexpTree #file context
+attr_reader :dataToParse, :matched_data
 def initialize(regexp,dataToParse)
 	super(regexp)
 	@dataToParse=dataToParse
+	@match_data=self.to_regexp.match(@dataToParse)
 end #initialize
 # Rescue bad regexp and return nil
 def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
