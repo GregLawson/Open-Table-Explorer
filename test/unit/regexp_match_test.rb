@@ -129,7 +129,7 @@ def test_matchSubTree
 	explain_assert_respond_to(RegexpMatch,:explain_assert_match)
 	RegexpMatch.methods.grep(/explain_assert_match/)
 	RegexpMatch.explain_assert_match(KCETeditor.matchSubTree, KCETeditor.dataToParse)
-	assert_not_nil(RegexpMatch.matchRescued(RegexpTree.new(KCETeditor.matchSubTree), KCETeditor.dataToParse))
+	assert_not_nil(RegexpMatch.match_data?(RegexpTree.new(KCETeditor.matchSubTree), KCETeditor.dataToParse))
 	expectedParse=["K",
 	"C",
 	"E",
@@ -315,7 +315,7 @@ def test_consecutiveMatch
 	assert_nil(Deletion.consecutiveMatch(-1,1,1))
 	startPos=2
 	endPos=2
-	matchData=RegexpMatch.matchRescued(Deletion[startPos..endPos], Deletion.dataToParse)
+	matchData=RegexpMatch.match_data?(Deletion[startPos..endPos], Deletion.dataToParse)
 	assert_equal(['C'], Deletion[startPos..endPos])
 	assert(matchData)
 	assert_equal(2..2,Deletion.consecutiveMatch(-1,2,2))

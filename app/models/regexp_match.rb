@@ -6,9 +6,15 @@
 #
 ###########################################################################
 # Class methods
-module Match_Addressing
+# For a fixed string compute parse tree or sub trees that match
+class RegexpMatch < RegexpTree
+attr_reader :dataToParse
+def initialize(regexp,dataToParse)
+	super(regexp)
+	@dataToParse=dataToParse
+end #initialize
 # Rescue bad regexp and return nil
-def matchRescued(regexp, string_to_match)
+def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
 	regexp=canonical_regexp(regexp)
 	raise "string_to_match='#{string_to_match.inspect}' of class #{string_to_match.class.name} must be String." unless string_to_match.instance_of?(String)
 	if regexp.nil? then
@@ -22,26 +28,17 @@ def matchRescued(regexp, string_to_match)
 			return nil
 		end #begin/rescue
 	end #if
-end
-end #module
-# For a fixed string compute parse tree or sub trees that match
-class RegexpMatch < RegexpTree
-attr_reader :dataToParse
-extend Match_Addressing
-def initialize(regexp,dataToParse)
-	super(regexp)
-	@dataToParse=dataToParse
-end #initialize
+end #match_data?
 def promote(value)
 	return RegexpMatch.new(value, @dataToParse)
 end #promote
 # Top level incremental match of regexp tree to data
 # self - array of parsed tree to test for match
-# calls matchRescued, matchedTreeArray depending
+# calls match_data?, matchedTreeArray depending
 def matchSubTree
 	if empty? then
 		return ['.','*']
-	elsif RegexpMatch.matchRescued(to_regexp, @dataToParse) then
+	elsif RegexpMatch.match_data?(to_regexp, @dataToParse) then
 		return self
 	elsif kind_of?(Array) then 
 		matchedTreeArray
@@ -179,7 +176,7 @@ def consecutiveMatches(increment,startPos,endPos)
 end #consecutiveMatches
 # Find one consecutive match
 # returns lastMatch (matching range in parseTree) or nil (no match)
-# calls matchRescued, matchDisplay
+# calls match_data?, matchDisplay
 # parseTree - array of parsed tree to test for match
 # increment - usually +1 or -1 to deterine direction and start/end
 # startPos - array index into parsedTree to start (inclusive)
@@ -188,7 +185,7 @@ end #consecutiveMatches
 def consecutiveMatch(increment=+1,startPos=0,endPos=self.size)
 	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
 	begin # until
-		matchData=RegexpMatch.matchRescued(self[startPos..endPos], @dataToParse)
+		matchData=RegexpMatch.match_data?(self[startPos..endPos], @dataToParse)
 		if matchData then
 			lastMatch=(startPos..endPos) # best so far
 			if increment>0 then
