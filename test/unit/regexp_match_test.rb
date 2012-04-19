@@ -17,17 +17,6 @@ include RegexpMatchAssertions
 extend RegexpMatchAssertions::ClassMethods
 end #RegexpMatch
 
-def regexpTest(editor)
-	assert_respond_to(editor,:consecutiveMatches)
-	assert_not_nil(editor.consecutiveMatches(+1,0,0))
-	assert(editor.consecutiveMatches(+1,0,0).size>0)
-	assert_respond_to(editor,:matchedTreeArray)
-	assert_not_nil(editor.matchedTreeArray)
-	assert_operator(editor.matchedTreeArray.size,:>,0)
-	assert_respond_to(editor,:matchedTreeArray)
-	assert_not_nil(editor.matchSubTree)
-	assert_operator(editor.matchSubTree.size,:>,0)
-end #def
 class RegexpMatchTest < ActiveSupport::TestCase
 set_class_variables(RegexpMatchTest,false)
 #require 'test/unit'
@@ -373,11 +362,7 @@ def test_string_of_matching_chars
 	assert_equal('abcdefghijklmnopqrstuvwxyz', RegexpMatch.string_of_matching_chars(Regexp.new('[a-z]')).join)
 end #string_of_matching_chars
 def test_editor
-
-
-#	KCETeditor.restartParse!
-#	parseTree=KCETeditor.regexpTree!
-	regexpTest(KCETeditor)
+	assert_regexp_match(KCETeditor)
 end #def
 def test_zero_parameter_new
 	assert_nothing_raised{RegexpTree.new} # 0 arguments

@@ -46,6 +46,17 @@ include Test::Unit::Assertions
 require 'rails/test_help'
 include Squeeze_Display
 include Match_Addressing
+def assert_regexp_match(regexp_match=self)
+	assert_respond_to(regexp_match,:consecutiveMatches)
+	assert_not_nil(regexp_match.consecutiveMatches(+1,0,0))
+	assert(regexp_match.consecutiveMatches(+1,0,0).size>0)
+	assert_respond_to(regexp_match,:matchedTreeArray)
+	assert_not_nil(regexp_match.matchedTreeArray)
+	assert_operator(regexp_match.matchedTreeArray.size,:>,0)
+	assert_respond_to(regexp_match,:matchedTreeArray)
+	assert_not_nil(regexp_match.matchSubTree)
+	assert_operator(regexp_match.matchSubTree.size,:>,0)
+end #def
 module ClassMethods
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
