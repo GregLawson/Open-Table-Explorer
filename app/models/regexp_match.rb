@@ -23,7 +23,7 @@ def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
 	else
 		raise "regexp=#{regexp.inspect} must be Regexp." unless regexp.instance_of?(Regexp)
 		begin
-			matchData=regexp.match(string_to_match)
+			regexp.match(string_to_match)
 		rescue RegexpError
 			raise "is this ever executed? regexp=#{regexp.inspect}, string_to_match=#{string_to_match.inspect}"
 			return nil
