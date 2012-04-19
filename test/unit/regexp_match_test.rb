@@ -237,6 +237,13 @@ def test_generalize
 	assert_equal(minimax.to_s, Addresses.generalize.to_s)
 	assert_equal(/<Url:0xb[[:xdigit:]]{7,7}>/, Addresses.generalize.to_regexp)
 end #generalize
+def test_inspect
+	assert_instance_of(RegexpMatch, Addresses)
+	assert_instance_of(String, Addresses[0])
+	assert_equal("RegexpMatch: (?mx-i:a) matches 'a'.", Matches.inspect)
+	assert_equal("RegexpMatch: (?mx-i:<Url:0xb5f22960>) does not match '<Url:0xb5ce4e3c>'.", Addresses.inspect)
+
+end #inspect
 def test_match_branch
 	matches=[0..8, 15..15]
 	data_to_match=Addresses.dataToParse

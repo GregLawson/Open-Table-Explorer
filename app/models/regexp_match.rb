@@ -115,7 +115,7 @@ def inspect
 		if self[0].kind_of?(RegexpMatch) then
 			map do |match| 
 				if kind_of?(RegexpMatch) then
-					match.inspect
+					match.inspect+"\n"
 				else
 					match
 				end #if
