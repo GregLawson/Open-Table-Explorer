@@ -22,7 +22,6 @@ set_class_variables(RegexpMatchTest,false)
 include RegexpMatchAssertions::ClassMethods
 Digit=GenericType.find_by_name('digit')
 Lower=GenericType.find_by_name('lower')
-RegexpMatch.assert_mergeable('a', 'a')
 string1='a'
 string2='b'
 Alternative=RegexpMatch.new(string1, string2)

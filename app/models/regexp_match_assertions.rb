@@ -30,13 +30,6 @@ end #explain_assert_match
 def RegexpMatch.assert_match_array(regexp, string, message=nil)
 	 string.instance_of?(Enumeration)
 end #assert_match_array
-def assert_mergeable(string1, string2)
-	regexp=string1.to_exact_regexp
-	RegexpMatch.explain_assert_match(regexp, string2)
-# now try the reverse
-	regexp=string2.to_exact_regexp
-	RegexpMatch.explain_assert_match(regexp, string1)
-end #assert_mergeable
 def assert_regexp_match(regexp_match=self)
 	assert_respond_to(regexp_match,:consecutiveMatches)
 	assert_not_nil(regexp_match.consecutiveMatches(+1,0,0))
