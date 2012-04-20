@@ -6,10 +6,10 @@
 #
 ###########################################################################
 module RegexpMatchAssertions #file context
-# Assertions (validations)
 include Test::Unit::Assertions
 require 'rails/test_help'
 #include Squeeze_Display
+# Assertions (validations)
 module ClassMethods
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
