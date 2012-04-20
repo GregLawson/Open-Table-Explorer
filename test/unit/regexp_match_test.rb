@@ -68,9 +68,12 @@ def test_map_matches
 	if matched_data.nil? || matched_data.size==0 then
 		if branch.kind_of?(Array) then
 			start_match=0
-		branch.map do |subTree|
-			branch.map_matches(subTree, data_to_match[start_match..-1])
-		end #map
+			branch.map do |subTree|
+				branch.map_matches(subTree, data_to_match[start_match..-1])
+			end #map
+		else # no match, not kind of Array
+			RegexpMatch.new(branch, data_to_match)
+		end #if
 	else
 		data_to_match=matched_data.post_match
 		return branch_match # successful match
@@ -102,7 +105,7 @@ def test_match_branch
 	assert_equal('>', branch_match.dataToParse, message)
 #	Addresses.assert_match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 end #match_branch
-end #DEBUG
+# end #DEBUG
 def test_map_consecutiveMatches
 	matches=Addresses.consecutiveMatches(+1,0,0)
 	assert_instance_of(Array, matches)
