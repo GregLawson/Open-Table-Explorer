@@ -53,60 +53,6 @@ end #match_data?
 def promote(value)
 	return RegexpMatch.new(value, @dataToParse)
 end #promote
-# Top level incremental match of regexp tree to data
-# self - array of parsed tree to test for match
-# calls match_data?, matchedTreeArray depending
-def matchSubTree
-	if empty? then
-		return ['.','*']
-	elsif RegexpMatch.match_data?(to_regexp, @dataToParse) then
-		return self
-	elsif kind_of?(Array) then 
-		matchedTreeArray
-	else
-		raise "How did I get here?"
-		return nil
-	end #if
-end #matchSubTree
-# Combines match alternatives?
-# returns a RegexpMatch parse tree that should match
-# matches - array of Range matches
-def mergeMatches(matches)
-	if matches.size==0 then
-		return RegexpMatch.new(['.', '*'], dataToParse)
-	elsif matches.size==1 then
-		return RegexpMatch.new(self[matches[0]], dataToParse)
-	elsif matches[0].end>=matches[1].begin then #overlap
-		prefix=matches[0].begin..matches[1].begin-1
-		suffix=matches[0].end+1..matches[1].end
-		overlap= matches[1].begin..matches[0].end
-		return RegexpMatch.new(RegexpTree.new([self[prefix],[self[overlap], '|'],self[suffix],mergeMatches(matches[1..-1])]), dataToParse)
-	elsif matches.size==2 then # no overlap w/2 matches
-		return self[matches[0]]+[['.','*']]+self[matches[1]]
-	else # no overlap w/ 3 or more matches
-		puts "matches=#{matches.inspect}"
-		 return self[matches[0]]+[['.','*']]+mergeMatches(matches[1..-1]) # recursive for >2 matches
-	end #end	
-
-end #mergeMatches
-# accounts for arrays (subtrees) in parse tree
-# returns RegexpMatch that should match
-# calls consecutiveMatches to find matches
-# calls mergeMatches to reduce multiple matches to one regexp string
-def matchedTreeArray
-	if self.class.PostfixOperators.index(self[0]) then
-		return self.to_s
-	else
-		matches= consecutiveMatches(+1,0,0)
-		if matches.nil? || matches.empty? then
-			return ['.', '*']
-		elsif matches.size==1 then
-			return self[matches[0]]
-		else
-			return mergeMatches(matches)
-		end #if
-	end #if
-end #matchedTreeArray
 def inspect
 	if @match_data then
 		"RegexpMatch: #{self.to_regexp} matches '#{@dataToParse}'."
@@ -124,9 +70,25 @@ def inspect
 		end #if
 	end #if
 end #inspect
+def map_matches(branch=self, data_to_match=@dataToParse)
+	branch_match=match_branch(branch, data_to_match)
+	matched_data=branch_match.matched_data
+	if matched_data.nil? || matched_data.size==0 then
+		if branch.kind_of?(Array) then
+			start_match=-1 #preindex to 0
+			ret=branch.map do |subTree|
+				start_match=start_match+1
+				map_matches(subTree, data_to_match[start_match..-1])
+			end #map
+			RegexpMatch.new(ret, data_to_match)
+		else # end recursion
+			branch_match
 		end #if
 	else
+		data_to_match=matched_data.post_match
+		return branch_match # successful match
 	end #if
+end #map_matches
 # Rescues bad regexps, returns {:regexp => nil}
 def match_branch(branch=self, data_to_match=@dataToParse)
 	if branch.instance_of?(String) then
