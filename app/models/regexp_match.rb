@@ -107,25 +107,6 @@ def matchedTreeArray
 		end #if
 	end #if
 end #matchedTreeArray
-# Generalize RegexpTree branch so that it matches dataToMatch
-# with as fewer generalizations as possible.
-def generalize(branch=self, data_to_match=@dataToParse)
-	if branch.kind_of?(Array) then
-		branches=branch.map do |sub_tree| # look at each character
-			map_matches(sub_tree, data_to_match)
-			# should shorten data_to_match!
-		end #map
-		return 	RegexpMatch.new([branches, concise_repetion_node(branch.repetition_length[0], data_to_match.size)], data_to_match)
-	else # not Array, probably single character Strings
-		most_specialized=[GenericType.find_by_name('ascii')]
-			data_to_match.each_char do |c|
-				ret=most_specialized.each do |m|
-					most_specialized=m.most_specialized?(c)
-				end #
-			end #each_char
-		return 	RegexpMatch.new(['[[:print:]]', concise_repetion_node(branch.repetition_length[0], data_to_match.size)], data_to_match)
-	end #if
-end #generalize
 def inspect
 	if @match_data then
 		"RegexpMatch: #{self.to_regexp} matches '#{@dataToParse}'."
