@@ -9,10 +9,28 @@
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch < RegexpTree #file context
 attr_reader :dataToParse, :matched_data
+# Normal new- 
+#	regexp is a RegexpTree and 
+#	dataToParse is a String that may or may not match
+# Partial match
+#	regexp is an Array of RegexpMatches that partially match dataToParse and 
+#	dataToParse is the String union of that may or may not match
+# better explanation needed here, see tests.
 def initialize(regexp,dataToParse)
-	super(regexp)
-	@dataToParse=dataToParse
-	@match_data=self.to_regexp.match(@dataToParse)
+	if regexp.instance_of?(Array) then
+		if regexp[0].instance_of?(RegexpMatch) then # Array of matches
+			super(regexp)
+			@dataToParse=dataToParse
+			@match_data=self.to_regexp.match(@dataToParse)
+			raise "Expect only partial matches but @match_data=#{@match_data.inspect}" unless @match_data.nil?
+		else
+			raise "Unexpected Array does not contain only RegexpMatch, regexp=#{regexp.inspect}."
+		end #if
+	else
+		super(regexp)
+		@dataToParse=dataToParse
+		@match_data=self.to_regexp.match(@dataToParse)
+	end #if
 end #initialize
 # Rescue bad regexp and return nil
 def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
@@ -62,7 +80,7 @@ def mergeMatches(matches)
 		prefix=matches[0].begin..matches[1].begin-1
 		suffix=matches[0].end+1..matches[1].end
 		overlap= matches[1].begin..matches[0].end
-		return RegexpMatch.new([self[prefix],[self[overlap], '|'],self[suffix],mergeMatches(matches[1..-1])], dataToParse)
+		return RegexpMatch.new(RegexpTree.new([self[prefix],[self[overlap], '|'],self[suffix],mergeMatches(matches[1..-1])]), dataToParse)
 	elsif matches.size==2 then # no overlap w/2 matches
 		return self[matches[0]]+[['.','*']]+self[matches[1]]
 	else # no overlap w/ 3 or more matches

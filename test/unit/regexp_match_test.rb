@@ -108,7 +108,6 @@ def test_match_branch
 	assert_equal('>', branch_match.dataToParse, message)
 #	Addresses.assert_match_branch(Addresses[matches[1]], data_to_match[startPos..-1])
 end #match_branch
-# end #DEBUG
 def test_map_consecutiveMatches
 	matches=Addresses.consecutiveMatches(+1,0,0)
 	assert_instance_of(Array, matches)
