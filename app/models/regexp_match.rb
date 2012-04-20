@@ -24,7 +24,7 @@ def initialize(regexp,dataToParse)
 			@match_data=self.to_regexp.match(@dataToParse)
 			raise "Expect only partial matches but @match_data=#{@match_data.inspect}" unless @match_data.nil?
 		else
-			raise "Unexpected Array does not contain only RegexpMatch, regexp=#{regexp.inspect}."
+			raise "Unexpected Array does not contain only RegexpMatch, regexp.class=#{regexp.class.name}."
 		end #if
 	else
 		super(regexp)
