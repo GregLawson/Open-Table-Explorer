@@ -19,6 +19,7 @@ end #RegexpMatch
 
 class RegexpMatchTest < ActiveSupport::TestCase #file context
 set_class_variables(RegexpMatchTest,false)
+include RegexpMatchAssertions::ClassMethods
 Digit=GenericType.find_by_name('digit')
 Lower=GenericType.find_by_name('lower')
 RegexpMatch.assert_mergeable('a', 'a')
@@ -29,6 +30,8 @@ Matches=RegexpMatch.new(string1, string1)
 string1=%{<Url:0xb5f22960>}
 string2=%{<Url:0xb5ce4e3c>}
 Addresses=RegexpMatch.new(string1, string2)
+Deletion=RegexpMatch.new('KxC', 'KC')
+Insertion=RegexpMatch.new('KC', 'KxC')
 
 WhiteSpacePattern=' '
 WhiteSpace=' '
@@ -185,7 +188,7 @@ def test_consecutiveMatch
 	Addresses.assert_consecutiveMatch(match3, match2)
 end #consecutiveMatch
 def test_editor
-	assert_regexp_match(KCETeditor)
+	assert_regexp_match(Deletion)
 end #def
 def test_zero_parameter_new
 	assert_nothing_raised{RegexpTree.new} # 0 arguments
