@@ -188,33 +188,48 @@ def consecutiveMatches(increment,startPos,endPos)
 	end until startPos<0 || endPos>=self.size
 	return ret
 end #consecutiveMatches
-# Find one consecutive match
+# Find one consecutive match in one direction
 # returns lastMatch (matching range in parseTree) or nil (no match)
-# calls match_data?, matchDisplay
-# parseTree - array of parsed tree to test for match
+# calls match_data?
+# self - assumed to be a sequence. array of parsed tree to test for match
 # increment - usually +1 or -1 to deterine direction and start/end
-# startPos - array index into parsedTree to start (inclusive)
-# endPos - array index into parsedTree to end (inclusive)
+# +1 searches for prefixes (if they exist) or first match
+# -1 searches for suffixes (if they exist) or last match
+# other values can speed the search at the cost of granularity (could implement binary search?)
+# The next two parameters are only useful to limit search
+# start_limit - array index into parsedTree to start (inclusive)
+# end_limit - array index into parsedTree to end (inclusive)
 # returns when incremented from startPos/endPos past endPos/startPos
-def consecutiveMatch(increment=+1,startPos=0,endPos=self.size)
+def consecutiveMatch(increment=+1, start_limit=0, end_limit=self.size-1)
+	if increment==1 then
+		startPos=endPos=start_limit
+	else
+		startPos=endPos=end_limit
+	end #if
+	raise "start_limit=#{start_limit}>end_limit=#{end_limit}" if start_limit>end_limit
 	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
 	begin # until
 		matchData=RegexpMatch.match_data?(self[startPos..endPos], @dataToParse)
-		if matchData then
+		if matchData then # expand selection
 			lastMatch=(startPos..endPos) # best so far
 			if increment>0 then
 				endPos=endPos+increment
 			else
-				startPos=startPos+increment
+				c=startPos+increment
 			end
-		else
-			if !lastMatch.nil? then
-				raise "startPos=#{startPos}>endPos=#{endPos}" if lastMatch.begin<startPos || lastMatch.end>endPos
+		else # non-match
+			if lastMatch.nil? then # no matches yet
+				if increment>0 then
+					startPos=endPos=startPos+increment
+				else
+					startPos=endPos=endPos+increment
+				end
+			else #after match
+				return lastMatch
 			end #if
-			return lastMatch
 		end
 	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
-	end until startPos<0 || endPos>=self.size
+	end until startPos<start_limit || endPos>=end_limit
 	if lastMatch.nil? then
 		return nil
 	else

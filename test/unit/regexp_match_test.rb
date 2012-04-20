@@ -161,9 +161,11 @@ def test_consecutiveMatch
 	assert_equal(['K','x','C'],Deletion.to_a)
 	assert_equal(['K','C'],Insertion.to_a)
 
-	assert_equal(0..0,Deletion.consecutiveMatch(+1,0,0))
-	assert_equal(0..0,Insertion.consecutiveMatch(+1,0,0))
-
+	assert_equal(0..0, Deletion.consecutiveMatch(+1))
+	assert_nil(Deletion.consecutiveMatch(+1, 1, 1))
+	assert_equal(2..2, Deletion.consecutiveMatch(-1))
+	assert_equal(0..0, Insertion.consecutiveMatch(+1,0,0))
+	assert_equal(2..2, Deletion.consecutiveMatch(-1,0,2))
 	assert_nil(Deletion.consecutiveMatch(-1,1,1))
 	startPos=2
 	endPos=2
@@ -172,17 +174,18 @@ def test_consecutiveMatch
 	assert(matchData)
 	assert_equal(2..2,Deletion.consecutiveMatch(-1,2,2))
 	assert_equal(2..2,Insertion.consecutiveMatch(-1,2,2))
-	match1=Addresses.consecutiveMatch(+1,0,0)
+	match1=Addresses.consecutiveMatch(+1)
 	Addresses.assert_consecutiveMatch(match1)
 	assert_equal(0..8, match1)
 	match2=Addresses.consecutiveMatch(+1,9)
-	assert_nil(match2)
+	assert_not_nil(match2)
 #	assert_equal(14..14, match2)
-	assert_nil(Addresses.consecutiveMatch(+1,9, 15))
-	assert_nil(Addresses.consecutiveMatch(+1,9))
+	assert_equal(14..14, Addresses.consecutiveMatch(+1,9, 15))
+	assert_equal(14..14, Addresses.consecutiveMatch(+1,9))
+	assert_not_nil(match1)
 	Addresses.assert_consecutiveMatch(match2, match1)
 	match3=Addresses.consecutiveMatch(+1,15)
-	Addresses.assert_match(match3, match2)
+	Addresses.assert_consecutiveMatch(match3, match2)
 	assert_equal(15..15, match3)
 	Addresses.assert_consecutiveMatch(match3, match2)
 end #consecutiveMatch
