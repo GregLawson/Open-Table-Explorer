@@ -177,7 +177,7 @@ def consecutiveMatch(increment=+1, start_limit=0, end_limit=self.size-1)
 			if increment>0 then
 				endPos=endPos+increment
 			else
-				c=startPos+increment
+				startPos=startPos+increment
 			end
 		else # non-match
 			if lastMatch.nil? then # no matches yet
@@ -191,7 +191,7 @@ def consecutiveMatch(increment=+1, start_limit=0, end_limit=self.size-1)
 			end #if
 		end
 	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
-	end until startPos<start_limit || endPos>=end_limit
+	end until startPos<start_limit || endPos>end_limit
 	if lastMatch.nil? then
 		return nil
 	else

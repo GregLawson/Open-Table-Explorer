@@ -187,6 +187,11 @@ def test_consecutiveMatch
 	Addresses.assert_consecutiveMatch(match3, match2)
 	assert_equal(15..15, match3)
 	Addresses.assert_consecutiveMatch(match3, match2)
+	assert_equal(2..2, Deletion.consecutiveMatch(-1, 1, 2))
+	assert_no_match(RegexpTree.new(Deletion[1]).to_regexp, Deletion.dataToParse)
+	assert_match(RegexpTree.new(Deletion[2..2]).to_regexp, Deletion.dataToParse)
+	assert_equal(2..2, Deletion.consecutiveMatch(+1, 2, 2))
+	assert_equal(2..2, Deletion.consecutiveMatch(+1, 1, 2))
 end #consecutiveMatch
 def test_editor
 	assert_regexp_match(Deletion)
