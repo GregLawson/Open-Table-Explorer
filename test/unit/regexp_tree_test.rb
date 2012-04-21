@@ -407,6 +407,7 @@ end #to_s
 def test_to_regexp
 	assert_equal(/.*/mx,RegexpTree.new('.*').to_regexp)
 end #to_regexp
+Quantified_repetition=RegexpTree.new([".", ["{", "3", ",", "4", "}"]])
 def test_repeated_pattern
 
 	assert_equal(['.','*'], RegexpTree.new('.*'))
@@ -417,8 +418,14 @@ def test_repeated_pattern
 	assert_equal(['a'], RegexpTree.new('a'))
 	assert_equal(['a'], RegexpTree.new('a').repeated_pattern)
 	assert_equal(['.'], RegexpTree.new('.').repeated_pattern)
-	assert_equal([".", ["{", "3", ",", "4", "}"]], RegexpTree.new('.{3,4}'))
+	assert_equal(Quantified_repetition, RegexpTree.new('.{3,4}'))
 	assert_equal(['.'], RegexpTree.new('.{3,4}').repeated_pattern)
+	assert_equal('*', Any.postfix_expression?)
+	assert_instance_of(RegexpTree, Any.repeated_pattern('a'))
+	assert_instance_of(RegexpTree, Any.repeated_pattern)
+	assert_instance_of(RegexpTree, Quantified_repetition.repeated_pattern)
+	assert_instance_of(RegexpTree, Sequence.repeated_pattern)
+	assert_equal(['.'], Any.repeated_pattern)
 end #repeated_pattern
 def test_repetition_length
 	assert_equal({"max"=>nil, "min"=>1}, Sequence.repetition_length('+'))
