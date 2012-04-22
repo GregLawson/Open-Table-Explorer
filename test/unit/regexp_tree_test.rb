@@ -150,6 +150,7 @@ def test_probability_space_size
 
 
 end #probability_space_size
+
 def test_OpeningBrackets
 	assert_equal('(',RegexpTree.OpeningBrackets[RegexpTree.ClosingBrackets.index(')')].chr)
 end #OpeningBrackets
@@ -242,8 +243,8 @@ def test_alternatives
 	
 	cc_comparison=branch.character_class?
 	assert_not_nil(cc_comparison)
-	assert_equal(RegexpTree.new('[012]'), cc_comparison)
-	assert_equal(['0', '1', '2'], cc_comparison[1..-2])
+	assert_equal(['0','1','2'], cc_comparison)
+	assert_equal(['0', '1', '2'], cc_comparison)
 	# Unroll recursion
 	# 
 	branch=RegexpTree.new('a|b|c')
@@ -281,6 +282,10 @@ def test_alternatives
 	assert_equal(['a', 'b', 'c', 'd'], Alternatives_4.alternatives?)
 	assert_nil(Nested_alternatives.alternatives?)
 	assert_equal(['a'], RegexpTree.new('a').alternatives?('a'))
+	assert_equal(['.'], Any.repeated_pattern)
+	assert_instance_of(Array, RegexpTree.new('.').character_class?)
+	assert_instance_of(Array, RegexpTree.new('.').alternatives?)
+	assert_instance_of(Array, Any.repeated_pattern.alternatives?)
 end #alternatives
 def test_character_class
 	character_class=RegexpTree.new('[a]')
@@ -295,7 +300,7 @@ def test_character_class
 	assert_instance_of(RegexpTree, promoted_character_class)
 	assert_equal(1, promoted_character_class.length)
 	assert_equal(character_class.character_class?, promoted_character_class.character_class?)
-	assert_instance_of(RegexpTree, promoted_character_class.character_class?)
+	assert_instance_of(Array, promoted_character_class.character_class?)
 end #character_class
 def test_postfix_expression
 	assert_not_nil(Postfix_tree)
@@ -309,6 +314,7 @@ def test_bracket_operator
 	assert_equal([".", ["{", "3", ",", "4", "}"]], RegexpTree.new('.{3,4}'))
 	assert_equal(["{", "3", ",", "4", "}"], RegexpTree.new('.{3,4}')[-1].bracket_operator?)
 	assert(!RegexpTree.new('.*').bracket_operator?)
+
 	assert(!RegexpTree.new('.').bracket_operator?)
 end #bracket_operator
 def test_postfix_operator

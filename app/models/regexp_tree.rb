@@ -214,10 +214,10 @@ def compare_character_class?(other)
 	return nil if other.instance_of?(String)
 	my_cc=self.character_class?
 	return nil if my_cc.nil?
-	my_chars=my_cc[1..-2]
+	my_chars=my_cc
 	other_cc=other.character_class?
 	return nil if other_cc.nil?
-	other_chars=other_cc[1..-2]
+	other_chars=other_cc
 	intersection=my_chars & other_chars
 	if my_chars.to_s==other_chars.to_s then
 		return 0
@@ -311,7 +311,7 @@ def alternatives?(branch=self)
 	else
 		cc_comparison=branch.character_class?
 		if cc_comparison then
-			cc_comparison[1..-2]
+			cc_comparison
 		elsif branch[0].size==2 && branch[0][-1]=='|' then
 			lhs=branch[0][0]
 			rhs=alternatives?(branch[1..-1])
@@ -330,6 +330,7 @@ def alternatives?(branch=self)
 	end #if
 end #alternatives
 # is RegexpTree a character class?
+# compatible with alternatives? and string_of_matching_chars
 def character_class?(branch=self)
 	if branch.kind_of?(Array) && branch[0]=='['  && branch[-1]==']' then
 		return branch.string_of_matching_chars 
