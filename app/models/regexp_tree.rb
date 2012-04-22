@@ -454,9 +454,9 @@ Binary_bytes=(0..255).to_a.map { |i| i.chr}
 # Returns a RegexpTree object
 def repeated_pattern(node=self)
 	if !node.kind_of?(Array) then # argument is not an Array
-		return RegexpTree.new([node])
+		return RegexpTree.new(node)
 	elsif post_op=node.postfix_expression? then
-		return RegexpTree.new([node[0]])
+		return RegexpTree.new(node[0])
 	elsif node[-1]=='}' then
 		node[0]
 	else

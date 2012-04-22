@@ -446,7 +446,8 @@ def test_repeated_pattern
 	assert_instance_of(RegexpTree, Any.repeated_pattern)
 	assert_instance_of(RegexpTree, Quantified_repetition.repeated_pattern)
 	assert_instance_of(RegexpTree, Sequence.repeated_pattern)
-	assert_equal(['.'], Any.repeated_pattern)
+	assert_equal(Binary_range, Any.repeated_pattern.to_s[1..-2])
+	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
 end #repeated_pattern
 def test_repetition_length
 	assert_equal({"max"=>nil, "min"=>1}, Sequence.repetition_length('+'))
