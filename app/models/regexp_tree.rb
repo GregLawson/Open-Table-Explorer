@@ -508,15 +508,15 @@ end #merge_to_repetition
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
 def string_of_matching_chars(regexp=self)
-	char_array=Ascii_characters.select do |char|
-		if RegexpMatch.matchRescued(regexp, char) then
+	char_array=Binary_bytes.select do |char|
+		if RegexpMatch.match_data?(regexp, char) then
 			char
 		else
 			nil
 		end #if
 	end #select
 	
-	return RegexpTree.new(['[']+char_array+[']'])
+	return RegexpTree.new(char_array)
 end #string_of_matching_chars
 def RegexpTree.regexp_rescued(regexp_string, options=Default_options)
 	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
