@@ -153,6 +153,12 @@ class RegexpTree < NestedArray
 include Comparable
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 include Inline_Assertions
+def probability_space_regexp
+	RegexpTree.new(@probability_space_regexp)
+end #probability_space_regexp
+def probability_space_size
+	probability_space_regexp.repeated_pattern.string_of_matching_chars.size
+end #probability_space_size
 def self.OpeningBrackets
 	return '({['
 end #OpeningBrackets
@@ -178,6 +184,7 @@ def initialize(regexp=[], options=Default_options)
 	else
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
+	@probability_space_regexp='[[:print:]]+'
 end #initialize
 def compare_repetitions?(other)
 	return nil if other.instance_of?(String)
