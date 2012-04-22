@@ -533,7 +533,9 @@ def test_string_of_matching_chars
 	assert_match(/[[:print:]]/, 'a')
 	assert_equal(95, RegexpTree.new('[[:print:]]').string_of_matching_chars.length)
 	assert_equal(194, RegexpTree.new('.').string_of_matching_chars.length)
-	assert_equal(256, RegexpTree.new("[#{RegexpTree::Binary_range}]").string_of_matching_chars.length)
+	assert_equal(256, RegexpTree.new("[#{Binary_range}]").string_of_matching_chars.length)
+	assert_equal(256, Any.string_of_matching_chars.length)
+	assert_instance_of(Array, Any.repeated_pattern.string_of_matching_chars)
 end #string_of_matching_chars
 def test_editor
 	regexpParserTest(KCeditor)
