@@ -511,7 +511,7 @@ def test_string_of_matching_chars
 	end) #select
 	assert_equal('123', matches.join)
 	assert_match(/[a-z]/, 'a')
-	assert_instance_of(RegexpTree, Tree123.string_of_matching_chars)
+	assert_instance_of(Array, Tree123.string_of_matching_chars)
 	assert_instance_of(String, Tree123.string_of_matching_chars[0])
 	assert_equal(['[', '1', '-', '3', ']'], Tree123)
 	assert_equal(['[', '1', '-', '3', ']'], Tree123.to_a)
