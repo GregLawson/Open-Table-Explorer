@@ -284,11 +284,18 @@ end #+
 def to_a
 	return NestedArray.new(self)
 end #to_a
-# Returns flattened list of alternatives
+# Returns flattened(?) list of alternatives
+# flattening removes the tree structure of the | operator
+# since | (choice like addition) is associative and transitive
+# Does not change distribution of sequence over choice
+# as that could lead to combinoric explosion
 # Or nil if no alternatives
 # If passed a non-array recursion terminates and branch is returned.
+# Converts character classes to alternatives
 def alternatives?(branch=self)
-	if !branch.kind_of?(Array) then
+	if branch.kind_of?(String) then
+		[branch]
+	elsif !branch.kind_of?(Array) then
 		nil # no alternatives possible
 	else
 		cc_comparison=branch.character_class?

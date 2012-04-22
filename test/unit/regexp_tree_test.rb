@@ -265,7 +265,7 @@ def test_alternatives
 	assert_equal(['a', 'b', 'c'], RegexpTree.new('a|b|c').alternatives?)
 	assert_equal(['a', 'b', 'c', 'd'], Alternatives_4.alternatives?)
 	assert_nil(Nested_alternatives.alternatives?)
-	assert_nil(RegexpTree.new('a').alternatives?('a'))
+	assert_equal(['a'], RegexpTree.new('a').alternatives?('a'))
 end #alternatives
 def test_character_class
 	character_class=RegexpTree.new('[a]')
