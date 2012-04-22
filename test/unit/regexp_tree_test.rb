@@ -93,17 +93,17 @@ def test_union
 	assert_equal({"max"=>nil, "min"=>0}, Any_length | Many_length)
 end #union / generalization
 Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
-def test_canonical_repetion_tree
-	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).canonical_repetion_tree)
-end #canonical_repetion_tree
-def test_concise_repetion_node
-	assert_equal('', RepetitionLength.new(1, 1).concise_repetion_node)
-	assert_equal("+", RepetitionLength.new(1, nil).concise_repetion_node)
-	assert_equal("?", RepetitionLength.new(0, 1).concise_repetion_node)
-	assert_equal("*", RepetitionLength.new(0, nil).concise_repetion_node)
-	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetion_node)
-	assert_equal(['{',['2'], '}'], RepetitionLength.new(2, 2).concise_repetion_node)
-end #concise_repetion_node
+def test_canonical_repetition_tree
+	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).canonical_repetition_tree)
+end #canonical_repetition_tree
+def test_concise_repetition_node
+	assert_equal('', RepetitionLength.new(1, 1).concise_repetition_node)
+	assert_equal("+", RepetitionLength.new(1, nil).concise_repetition_node)
+	assert_equal("?", RepetitionLength.new(0, 1).concise_repetition_node)
+	assert_equal("*", RepetitionLength.new(0, nil).concise_repetition_node)
+	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetition_node)
+	assert_equal(['{',['2'], '}'], RepetitionLength.new(2, 2).concise_repetition_node)
+end #concise_repetition_node
 def regexpParserTest(parser)
 	assert_respond_to(parser,:parseOneTerm!)
 #	Now test after full parse.
@@ -431,10 +431,10 @@ def test_repetition_length
 	assert_equal({"max"=>nil, "min"=>1}, Sequence.repetition_length('+'))
 	assert_equal({"max"=>1, "min"=>0}, Sequence.repetition_length('?'))
 	assert_equal({"max"=>nil, "min"=>0}, Sequence.repetition_length('*'))
-	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetion_node)
+	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetition_node)
 	assert_equal({"max"=>0, "min"=>0}, RegexpTree.new('').repetition_length)
 	assert_equal({"max"=>1, "min"=>1}, RegexpTree.new('.').repetition_length)
-	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetion_node)
+	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetition_node)
 	assert_equal({"max"=>3, "min"=>3}, Sequence.repetition_length)
 end #repetition_length
 def test_merge_to_repetition
@@ -446,7 +446,7 @@ def test_merge_to_repetition
 	assert_equal(first, second)
 	first_repetition=first.repetition_length
 	second_repetition=second.repetition_length
-	merged_repetition=(first_repetition+second_repetition).concise_repetion_node
+	merged_repetition=(first_repetition+second_repetition).concise_repetition_node
 	assert_equal(["{", ["2"], "}"], merged_repetition)
 	assert_equal(['a'], first.repeated_pattern)
 	assert_equal([2, 2], [first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max]])
@@ -468,7 +468,7 @@ def test_merge_to_repetition
 	assert_equal([1, 2], [first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max]])
 	assert_equal(['a'], branch.repeated_pattern(first))
 	assert_equal(['a'], branch.repeated_pattern(second))
-	merged_repetition=(first_repetition+second_repetition).concise_repetion_node
+	merged_repetition=(first_repetition+second_repetition).concise_repetition_node
 	assert_equal(["{", ["1", ",", "2"], "}"], merged_repetition)
 	assert_equal([], branch[2..-1])
 	merged_pattern=['a',['{',['1',',','2'], '}']]

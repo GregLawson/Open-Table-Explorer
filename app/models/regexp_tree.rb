@@ -117,17 +117,21 @@ def |(other)
 	end #if
 	RepetitionLength.new(min, max)
 end #union / generalization
-def canonical_repetion_tree(min=self[:min], max=self[:max])
+def canonical_repetition_tree(min=self[:min], max=self[:max])
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
-end #canonical_repetion_tree
-def concise_repetion_node(min=self[:min], max=self[:max])
+end #canonical_repetition_tree
+# Return a RegexpTree node for self
+# Concise means to use abbreviations like '*', '+', ''
+# rather than the canonical {n,m}
+# If no repetition returns '' equivalent to {1,1}
+def concise_repetition_node(min=self[:min], max=self[:max])
 	if min==0 then
 		if max==1 then
 			return '?'
 		elsif max.nil? then
 			return '*'
 		else
-			return canonical_repetion_tree(min, max)
+			return canonical_repetition_tree(min, max)
 		end #if
 	elsif min==1 then
 		if max==1 then
@@ -135,15 +139,15 @@ def concise_repetion_node(min=self[:min], max=self[:max])
 		elsif max.nil? then
 			return '+'
 		else
-			return canonical_repetion_tree(min, max)
+			return canonical_repetition_tree(min, max)
 		end #if
 	elsif min==max then
 		return RegexpTree.new(['{', [min.to_s], '}'])
 	else
-		return canonical_repetion_tree(min, max)
+		return canonical_repetition_tree(min, max)
 	end #if
 	return RegexpTree.new(['{', [min.to_s, max.to_s], '}'])
-end #concise_repetion_node
+end #concise_repetition_node
 end #RepetitionLength
 class RegexpTree < NestedArray
 include Comparable
@@ -498,7 +502,7 @@ def merge_to_repetition(branch=self)
 		if branch.repeated_pattern(first)==branch.repeated_pattern(second) then
 			first_repetition=first.repetition_length
 			second_repetition=branch.repetition_length(second)
-			merged_repetition=(first_repetition+second_repetition).concise_repetion_node
+			merged_repetition=(first_repetition+second_repetition).concise_repetition_node
 			merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1])
 		else # couldn't merge first element
 			[first]+merge_to_repetition(branch[1..-1])	# shorten string to ensure recursion termination
