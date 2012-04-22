@@ -284,9 +284,9 @@ def test_alternatives
 end #alternatives
 def test_character_class
 	character_class=RegexpTree.new('[a]')
-	assert_kind_of(Array, character_class)
-	assert_instance_of(RegexpTree, character_class.character_class?)
-	assert_equal('[a]', character_class.character_class?.to_s)
+	assert_instance_of(RegexpTree, character_class)
+	assert_instance_of(Array, character_class.character_class?)
+	assert_equal('a', character_class.character_class?.to_s)
 	promoted_character_class=RegexpTree.new('a')
 	assert_kind_of(RegexpTree, promoted_character_class)
 	assert_equal(0, character_class <=> promoted_character_class)
