@@ -509,6 +509,7 @@ def test_string_of_matching_chars
 	assert_equal('[abcdefghijklmnopqrstuvwxyz]', Tree123.string_of_matching_chars(Regexp.new('[a-z]')).join)
 	assert_match(/[[:print:]]/, 'a')
 	assert_equal(95, RegexpTree.new('[[:print:]]').string_of_matching_chars[1..-2].length)
+	assert_equal(256, RegexpTree.new("[#{RegexpTree::Binary_range}]").string_of_matching_chars.length)
 end #string_of_matching_chars
 def test_editor
 	regexpParserTest(KCeditor)
