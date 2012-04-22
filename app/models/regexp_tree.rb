@@ -295,7 +295,7 @@ end #+
 def to_a
 	return NestedArray.new(self)
 end #to_a
-# Returns flattened(?) list of alternatives
+# Returns flattened(?) Array of alternatives
 # flattening removes the tree structure of the | operator
 # since | (choice like addition) is associative and transitive
 # Does not change distribution of sequence over choice
@@ -516,8 +516,6 @@ def merge_to_repetition(branch=self)
 		end #if
 	end #if
 end #merge_to_repetition
-# Rescue bad regexp and return nil
-# Example regexp with unbalanced bracketing characters
 def string_of_matching_chars(regexp=self)
 	char_array=Binary_bytes.select do |char|
 		if RegexpMatch.match_data?(regexp, char) then
@@ -529,6 +527,8 @@ def string_of_matching_chars(regexp=self)
 	
 	return char_array
 end #string_of_matching_chars
+# Rescue bad regexp and return nil
+# Example regexp with unbalanced bracketing characters
 def RegexpTree.regexp_rescued(regexp_string, options=Default_options)
 	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
 	return Regexp.new(regexp_string, options)
