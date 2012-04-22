@@ -447,7 +447,6 @@ def to_regexp(options=Default_options)
 	return regexp
 end #to_regexp
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
-Binary_range='\000-\377'
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 #y caller
 # 

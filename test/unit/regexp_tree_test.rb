@@ -80,8 +80,9 @@ def test_plus
 	assert_equal({"max"=>nil, "min"=>2}, rep+RepetitionLength.new(1, nil))
 	assert_equal({"max"=>nil, "min"=>2}, RepetitionLength.new(1, nil)+rep)
 end #plus
-Any=RegexpTree.new('.*')
-Many=RegexpTree.new('.+')
+Binary_range='\000-\377'
+Any=RegexpTree.new("[#{Binary_range}]*")
+Many=RegexpTree.new('[#{Binary_range}]+')
 Any_length=Any.repetition_length
 Many_length=Many.repetition_length
 def test_intersect
