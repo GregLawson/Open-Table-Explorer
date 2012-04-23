@@ -302,6 +302,12 @@ def test_character_class
 	assert_equal(1, promoted_character_class.length)
 	assert_equal(character_class.character_class?, promoted_character_class.character_class?)
 	assert_instance_of(Array, promoted_character_class.character_class?)
+	assert_equal(256, Any.string_of_matching_chars.length)
+	assert_instance_of(Array, Any.repeated_pattern.string_of_matching_chars)
+	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
+	assert_equal(256, Any.repeated_pattern.character_class?.size)
+	assert_instance_of(Array, Any.repeated_pattern.character_class?)
+	assert_instance_of(Array, Any.repeated_pattern.alternatives?)
 end #character_class
 def test_postfix_expression
 	assert_not_nil(Postfix_tree)
