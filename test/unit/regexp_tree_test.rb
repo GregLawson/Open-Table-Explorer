@@ -138,18 +138,19 @@ Postfix_tree=RegexpTree.new(['.','*'])
 Echo_proc=Proc.new{|parseTree| parseTree}
 Constant_proc=Proc.new{|parseTree| '*'}
 def test_probability_space_regexp
+	assert_equal(RegexpTree.new('[abc]{1,10}'), Alternative_ab_of_abc_10.probability_space_regexp)
 end #probability_space_regexp
 def test_probability_space_size
-	assert_equal(95, Any.probability_space_size)
+	assert_equal(256, Any.probability_space_size)
 	assert_equal(95, Many.probability_space_size)
-	assert_equal(95, Postfix_tree.probability_space_size)
+	assert_equal(256, Dot_star.probability_space_size)
 	assert_equal(95, Asymmetrical_Tree.probability_space_size)
 
 	assert_equal(95, No_anchor.probability_space_size)
 	assert_equal(95, Start_anchor.probability_space_size)
 	assert_equal(95, End_anchor.probability_space_size)
 	assert_equal(95, Both_anchor.probability_space_size)
-
+	assert_equal(3, Alternative_ab_of_abc_10.probability_space_size)
 
 end #probability_space_size
 
