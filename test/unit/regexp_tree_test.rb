@@ -205,6 +205,18 @@ def test_sequence_comparison
 	assert_equal(1, RegexpTree.new('ab').compare_sequence?(RegexpTree.new('abc')))
 	RegexpTree.new('ab').assert_sequence_specialized_by(RegexpTree.new('abc'))	
 end #sequence_comparison
+def test_alternatives_intersect
+	rhs=Many.repeated_pattern
+	lhs=Any.repeated_pattern
+	assert_equal(Binary_range, rhs.to_s)
+	lhs_alternatives=lhs.alternatives?
+	rhs_alternatives=rhs.alternatives?
+	assert_instance_of(Array, lhs_alternatives)
+	assert_instance_of(Array, rhs_alternatives)
+	alternatives=lhs_alternatives & rhs_alternatives
+	assert_instance_of(Array, alternatives)
+	assert_equal(RegexpTree::Binary_bytes, lhs.alternatives_intersect(rhs))
+end #alternatives_intersect
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
 	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))

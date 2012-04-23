@@ -267,6 +267,15 @@ def compare_sequence?(other)
 		end #if
 	end #if
 end #sequence_comparison
+# inputs are RegexpTree
+# pass only alternatives not sequences or repetitions
+# return alternative Array not RegexpTree
+def alternatives_intersect(rhs)
+	lhs_alternatives=self.alternatives?
+	rhs_alternatives=rhs.alternatives?
+	alternatives=lhs_alternatives & rhs_alternatives
+	alternatives
+end #alternatives_intersect
 def <=>(other)
 	anchor_comparison=compare_anchors?(other)
 	if self.to_s==other.to_s then # avoid recursion
