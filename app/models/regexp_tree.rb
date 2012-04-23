@@ -159,6 +159,35 @@ end #probability_space_regexp
 def probability_space_size
 	probability_space_regexp.repeated_pattern.string_of_matching_chars.size
 end #probability_space_size
+# Probability for a single matched repetitions of an alternative (single character)
+# Here the probability distribution is 
+# assumed uniform across the probability space
+# ranges from zero for an impossible match (usually avoided)
+# to 1 for certain match like /.*/ (actually Any is more accurate)
+# returns nil if indeterminate (e.g. nested repetitions)
+# (call probability_range or RegexpMatch#probability instead)
+def probability_of_repetition(repetition, branch=self)
+	alternative_list=alternatives?(branch.repeated_pattern) # kludge for now
+	if alternative_list.nil? then
+		return nil
+	else
+		alternatives=alternative_list.size
+	end  #if
+	character_probability=alternatives/probability_space_size
+	if repetition==0 then
+		probability=1.0
+	elsif repetition.nil? then # infinit repetition
+		if character_probability==1.0 then
+			probability=1.0
+		else
+			probability=0.0
+		end #if
+	else
+		probability=character_probability**repetition
+	end #if
+	raise "probability_space_regexp=#{probability_space_regexp} is probably too restrictive for branch=#{branch.inspect}" if probability>1.0
+	return probability
+end #probability_of_repetition
 def self.OpeningBrackets
 	return '({['
 end #OpeningBrackets
@@ -170,7 +199,7 @@ def self.PostfixOperators
 end #def
 #raise "" unless self.constants.include?('Default_options')
 # Parse regexp_string into parse tree for editing
-def initialize(regexp=[], options=Default_options)
+def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Default_options)
 	if regexp.kind_of?(Array) then #nested Arrays
 		super(regexp)
 		
@@ -184,7 +213,7 @@ def initialize(regexp=[], options=Default_options)
 	else
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
-	@probability_space_regexp='[[:print:]]+'
+	@probability_space_regexp=probability_space_regexp
 end #initialize
 def compare_repetitions?(other)
 	return nil if other.instance_of?(String)

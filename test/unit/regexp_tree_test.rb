@@ -81,7 +81,8 @@ def test_plus
 	assert_equal({"max"=>nil, "min"=>2}, RepetitionLength.new(1, nil)+rep)
 end #plus
 Binary_range='[\000-\377]'
-Any=RegexpTree.new("#{Binary_range}*")
+Any_binary_string="#{Binary_range}*"
+Any=RegexpTree.new(Any_binary_string, Any_binary_string)
 Many=RegexpTree.new("#{Binary_range}+")
 Any_length=Any.repetition_length
 Many_length=Many.repetition_length
@@ -152,6 +153,22 @@ def test_probability_space_size
 
 end #probability_space_size
 
+def test_probability_of_repetition
+	rhs=Any
+	alternative_list=rhs.repeated_pattern.alternatives? # kludge for now
+	assert_not_nil(alternative_list)
+	alternatives=alternative_list.size
+	assert_equal(256, alternatives)
+	character_probability=alternatives/rhs.probability_space_size
+	assert_equal(1.0, character_probability)
+	length=0
+	assert_equal(0, length)
+	assert_equal(1.0, rhs.probability_of_repetition(0))
+	assert_equal(1.0, rhs.probability_of_repetition(1))
+	assert_equal(1.0, rhs.probability_of_repetition(nil))
+
+	assert_equal(1/95, No_anchor.probability_of_repetition(1))
+end #probability_of_repetition
 def test_OpeningBrackets
 	assert_equal('(',RegexpTree.OpeningBrackets[RegexpTree.ClosingBrackets.index(')')].chr)
 end #OpeningBrackets
