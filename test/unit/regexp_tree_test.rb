@@ -170,6 +170,18 @@ def test_probability_of_repetition
 
 	assert_equal(1/95, No_anchor.probability_of_repetition(1))
 end #probability_of_repetition
+def test_probability_of_sequence
+	branch=No_anchor
+	assert_equal(0, 1/95)
+	assert_not_equal(0, 1.0/95)
+	
+	assert_equal(1.0/95, No_anchor.probability_of_sequence)
+	assert_equal((1.0/95)**3, Asymmetrical_Tree.probability_of_sequence)
+	assert_not_equal((1.0/95), Asymmetrical_Tree.probability_of_sequence)
+	assert_equal(1.0/95, Start_anchor.probability_of_sequence)
+	assert_equal(1.0/95, End_anchor.probability_of_sequence)
+	assert_equal(1.0/95, Both_anchor.probability_of_sequence)
+end #probability_of_sequence
 def test_OpeningBrackets
 	assert_equal('(',RegexpTree.OpeningBrackets[RegexpTree.ClosingBrackets.index(')')].chr)
 end #OpeningBrackets

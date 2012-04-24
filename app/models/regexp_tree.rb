@@ -188,6 +188,19 @@ def probability_of_repetition(repetition, branch=self)
 	raise "probability_space_regexp=#{probability_space_regexp} is probably too restrictive for branch=#{branch.inspect}" if probability>1.0
 	return probability
 end #probability_of_repetition
+# branch must be a RegexpTree sequence
+def probability_of_sequence(branch=self)
+	raise "probability_of_sequence branch=#{branch.inspect} must be a kind of Array" unless branch.kind_of?(Array)
+	branch.unanchor.reduce(1) do |product, element| 
+		if element.instance_of?(String) then
+			product * probability_of_repetition(1, element) 
+		elsif element.kind_of?(Array) then
+			product * probability_of_sequence(RegexpTree.new(element)) 
+		else
+			product * probability_of_repetition(element.repetition_length, element.repeated_pattern) 
+		end #if
+	end #reduce
+end #probability_of_sequence
 def self.OpeningBrackets
 	return '({['
 end #OpeningBrackets
