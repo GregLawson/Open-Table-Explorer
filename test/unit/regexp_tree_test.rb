@@ -81,7 +81,7 @@ end #plus
 Binary_range='[\000-\377]'
 Any_binary_string="#{Binary_range}*"
 Any=RegexpTree.new(Any_binary_string, Any_binary_string)
-Many=RegexpTree.new("#{Binary_range}+")
+Many=RegexpTree.new(".+", ".+")
 Any_length=Any.repetition_length
 Many_length=Many.repetition_length
 def test_intersect
@@ -135,6 +135,8 @@ Sequence=RegexpTree.new(Asymmetrical_Tree.to_a.flatten)
 Dot_star=RegexpTree.new(['.','*'], Any_binary_string)
 Echo_proc=Proc.new{|parseTree| parseTree}
 Constant_proc=Proc.new{|parseTree| '*'}
+Alternative_ab_of_abc_10=RegexpTree.new('a|b', '[abc]{1,10}')
+
 def test_probability_space_regexp
 	assert_equal(RegexpTree.new('[abc]{1,10}'), Alternative_ab_of_abc_10.probability_space_regexp)
 end #probability_space_regexp
@@ -215,9 +217,9 @@ def test_compare_character_class
 	my_cc.assert_specialized_by(other_cc)
 
 	
-	my_cc=RegexpTree.new('[[:print:]]').character_class?[1..-2]
+	my_cc=RegexpTree.new('[[:print:]]').character_class?
 	assert_equal(95, my_cc.to_s.length)
-	other_cc=RegexpTree.new('[[:xdigit:]]').character_class?[1..-2]
+	other_cc=RegexpTree.new('[[:xdigit:]]').character_class?
 	intersection=my_cc & other_cc
 	assert_not_equal(my_cc, intersection)
 	assert_equal(other_cc, intersection)
@@ -251,6 +253,9 @@ def test_alternatives_intersect
 	assert_instance_of(Array, alternatives)
 	assert_equal(RegexpTree::Binary_bytes, lhs.alternatives_intersect(rhs))
 end #alternatives_intersect
+A=RegexpTree.new('a')
+B=RegexpTree.new('b')
+Ab=RegexpTree.new('ab')
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
 	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))
@@ -264,9 +269,9 @@ def test_compare
 	my_cc.assert_specialized_by(other_cc)
 
 	
-	my_cc=RegexpTree.new('[[:print:]]').character_class?[1..-2]
+	my_cc=RegexpTree.new('[[:print:]]').character_class?
 	assert_equal(95, my_cc.to_s.length)
-	other_cc=RegexpTree.new('[[:xdigit:]]').character_class?[1..-2]
+	other_cc=RegexpTree.new('[[:xdigit:]]').character_class?
 	intersection=my_cc & other_cc
 	assert_not_equal(my_cc, intersection)
 	assert_equal(other_cc, intersection)
@@ -585,7 +590,7 @@ def test_string_of_matching_chars
 	assert_match(/[[:print:]]/, 'a')
 	assert_equal(95, RegexpTree.new('[[:print:]]').string_of_matching_chars.length)
 	assert_equal(194, RegexpTree.new('.').string_of_matching_chars.length)
-	assert_equal(256, RegexpTree.new("[#{Binary_range}]").string_of_matching_chars.length)
+	assert_equal(256, RegexpTree.new("#{Binary_range}").string_of_matching_chars.length)
 	assert_equal(256, Any.string_of_matching_chars.length)
 	assert_instance_of(Array, Any.repeated_pattern.string_of_matching_chars)
 end #string_of_matching_chars
