@@ -144,12 +144,21 @@ def test_map_consecutiveMatches
  		{:data_to_match=>"ce4e3c>", :regexp=>/>/, :matched_data=>">"}], Addresses.map_consecutiveMatches(matches))
 end #map_consecutiveMatches
 def test_consecutiveMatches
-	assert_empty(Alternative.consecutiveMatches(+1,0,0))
-	assert_equal([0..0,2..2],Deletion.consecutiveMatches(+1,0,0))
-	assert_equal([0..0,1..1],Insertion.consecutiveMatches(+1,0,0))
-	matches=Addresses.consecutiveMatches(+1,0,0)
+	assert_empty(Alternative.consecutiveMatches(+1))
+	assert_equal(2..2, Deletion.consecutiveMatch(-1, 1, 2))
+	assert_equal(2..2, Deletion.consecutiveMatch(+1, 1, 2))
+	assert_equal([2..2],Deletion.consecutiveMatches(+1, 1, 2))
+	assert_equal([0..0,2..2],Deletion.consecutiveMatches(+1))
+	assert_equal([0..0,1..1],Insertion.consecutiveMatches(+1))
+	matches=Addresses.consecutiveMatches(+1)
 	Addresses.assert_consecutiveMatches(matches)
-	assert_equal([0..8, 15..15], matches)
+	regexp_match_array=matches.map{|r| Addresses[r]}
+	assert_instance_of(Array, regexp_match_array)
+	assert_kind_of(Array, regexp_match_array[matches[0]])
+	assert_instance_of(String, Addresses.dataToParse)
+	regexp_matches=RegexpMatch.new(regexp_match_array, Addresses.dataToParse)
+	message="regexp_matches=#{regexp_matches.inspect}"
+	assert_equal([0..8, 15..15], matches, message)
 	matched_regexp=matches.map do |m|
 		Addresses[m].to_s
 	end #map

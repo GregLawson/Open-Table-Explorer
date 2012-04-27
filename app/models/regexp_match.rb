@@ -131,23 +131,30 @@ end #map_consecutiveMatches
 # returns Array of Ranges of those subregexps ([] if no matches)
 # calls consecutiveMatch
 # increment - usually +1 or -1 to deterine direction and start/end
-# startPos - array index into parsedTree to start (inclusive)
-# endPos - array index into parsedTree to end (inclusive)
-def consecutiveMatches(increment,startPos,endPos)
-#	assert(startPos<=endPos)
+# +1 searches for prefixes (if they exist) or first match
+# -1 searches for suffixes (if they exist) or last match
+# other values can speed the search at the cost of granularity (could implement binary search?)
+# The next two parameters are only useful to limit search
+# start_limit - array index into parsedTree to start (inclusive)
+# end_limit - array index into parsedTree to end (inclusive)
+# returns when incremented from startPos/endPos past endPos/startPos
+def consecutiveMatches(increment=+1, start_limit=0, end_limit=self.size-1)
+	if increment==1 then
+		startPos=endPos=start_limit
+	else
+		startPos=endPos=end_limit
+	end #if
 	ret=[] # nothing found yet
 	begin
-		matchRange=consecutiveMatch(increment,startPos,endPos)
+		matchRange=consecutiveMatch(increment,startPos,end_limit)
 		if matchRange then
 			startPos=endPos=matchRange.end+1
 			ret << matchRange
 		else #nil = no match
-			startPos=endPos=endPos+1 
+			return ret 
 		end #if
-		increment=increment*-1 #reverse scan. even/odd scans in different directions
-# 		can a backward scan ever find a match?
 	raise "startPos=#{startPos}>endPos=#{endPos}" if startPos>endPos
-	end until startPos<0 || endPos>=self.size
+	end until startPos<0 || startPos>end_limit || endPos>self.size
 	return ret
 end #consecutiveMatches
 # Find one consecutive match in one direction
