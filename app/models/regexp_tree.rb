@@ -10,6 +10,8 @@
 require 'app/models/inlineAssertions.rb'
 class Anchoring < ActiveSupport::HashWithIndifferentAccess
 include Comparable
+Start_anchor_regexp='^' #should be \S or start of String
+End_anchor_regexp='$' #should be \s or end of String
 attr_reader :start_base, :end_base
 def initialize(regexp_tree)
 	@start_base=0

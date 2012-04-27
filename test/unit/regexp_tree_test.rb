@@ -28,12 +28,10 @@ KCETeditor=RegexpParser.new('KCET[^
 One_to_ten=RepetitionLength.new(1, 10)
 Any_repetition=RepetitionLength.new(0, nil)
 Anchor_root_test_case='a'
-Start_anchor_regexp='^' #should be \S or start of String
-End_anchor_regexp='$' #should be \s or end of String
 No_anchor=RegexpTree.new(Anchor_root_test_case)
-Start_anchor=RegexpTree.new(Start_anchor_regexp+Anchor_root_test_case)
-End_anchor=RegexpTree.new(Anchor_root_test_case+End_anchor_regexp)
-Both_anchor=RegexpTree.new(Start_anchor_regexp+Anchor_root_test_case+End_anchor_regexp)
+Start_anchor=RegexpTree.new(Anchoring::Start_anchor_regexp+Anchor_root_test_case)
+End_anchor=RegexpTree.new(Anchor_root_test_case+Anchoring::End_anchor_regexp)
+Both_anchor=RegexpTree.new(Anchoring::Start_anchor_regexp+Anchor_root_test_case+Anchoring::End_anchor_regexp)
 def test_Anchoring_initialize
 	No_anchor.assert_anchoring
 	Start_anchor.assert_anchoring
@@ -44,10 +42,10 @@ def test_Anchoring_initialize
 	assert_equal(No_anchor, Anchoring.new(Start_anchor)[:base_regexp])
 	assert_equal(No_anchor, Anchoring.new(End_anchor)[:base_regexp])
 	assert_equal(No_anchor, Anchoring.new(Both_anchor)[:base_regexp])
-	assert_equal(Start_anchor_regexp, Anchoring.new(Start_anchor)[:start_anchor])
+	assert_equal(Anchoring::Start_anchor_regexp, Anchoring.new(Start_anchor)[:start_anchor])
 	assert_nil(Anchoring.new(No_anchor)[:start_anchor])
 	assert_nil(Anchoring.new(Start_anchor)[:end_anchor])
-	assert_equal(End_anchor_regexp, Anchoring.new(End_anchor)[:end_anchor])
+	assert_equal(Anchoring::End_anchor_regexp, Anchoring.new(End_anchor)[:end_anchor])
 end #anchoring
 def test_compare_anchor
 	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Start_anchor))
