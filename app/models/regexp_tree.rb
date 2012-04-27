@@ -309,6 +309,37 @@ def compare_sequence?(other)
 		end #if
 	end #if
 end #sequence_comparison
+# cases for binary operators &, <=>, | 
+def binary_case?(branch=self)
+	lhs_case=self.case?
+	rhs_case=case?(rhs)
+	case [lhs_case, rhs_case]
+	when [RegexpTree, String]
+	else
+	end #case
+end #binary_case
+# Expect to eventually replace with inheritance
+# Or use in parser (or post-parser initialization) to set classes correcly.
+# Need more uniform subclasses
+# Is there a useful hierarchy?
+def case?(branch=self)
+	if branch.instance_of?(String) then
+		String # commonly termination condition
+	elsif postfix_expression? then
+		if alternatives? then
+			:Alternatives
+		else
+			RepetitionLength
+		end #if
+	else #sequence
+		anchoring=Anchoring.new(branch)
+		if anchoring[:start_anchor].nil? && anchoring[:end_anchor].nil? then unachored sequence
+			RegexpTree
+		else # anchored
+			Anchoring
+		end #if
+	end #if
+end #case
 # inputs are RegexpTree
 # pass only alternatives not sequences or repetitions
 # return alternative Array not RegexpTree

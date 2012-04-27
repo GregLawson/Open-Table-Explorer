@@ -235,6 +235,12 @@ def test_sequence_comparison
 	assert_equal(1, RegexpTree.new('ab').compare_sequence?(RegexpTree.new('abc')))
 	RegexpTree.new('ab').assert_sequence_specialized_by(RegexpTree.new('abc'))	
 end #sequence_comparison
+def binary_case?(branch=self)
+end #binary_case
+def test_case
+	assert_equal(Anchoring, Both_anchor.case?)
+	assert_equal(RepetitionLength, Any.case?)
+end #case
 def test_alternatives_intersect
 	rhs=Many.repeated_pattern
 	lhs=Any.repeated_pattern
