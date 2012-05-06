@@ -16,17 +16,17 @@ def test_UnboundedFixnum_initialize
 	assert_not_nil(UnboundedFixnum::Inf)
 	assert_not_nil(UnboundedFixnum::Neg_inf)
 end #UnboundedFixnum_initialize
-def test_unbounded
-	assert_nil(UnboundedFixnum.new(1).unbounded?)
-	assert(UnboundedFixnum.new(nil,+1).unbounded?)
-	assert(UnboundedFixnum::Inf.unbounded?)
-	assert(UnboundedFixnum::Neg_inf.unbounded?)
-end #unbounded
+def test_UnboundedFixnum_promote
+	assert_equal(UnboundedFixnum.new(1), UnboundedFixnum.promote(1))
+	assert_equal(UnboundedFixnum::Inf, UnboundedFixnum.promote(UnboundedFixnum::Inf))
+end #promote
 def test_UnboundedFixnum_compare
 	assert_operator(UnboundedFixnum::Neg_inf, :<, UnboundedFixnum::Inf)
 	assert_operator(UnboundedFixnum.new(1), :<, UnboundedFixnum::Inf)
 	assert_operator(UnboundedFixnum::Neg_inf, :<, UnboundedFixnum.new(1))
 	assert_operator(UnboundedFixnum::Neg_inf, :<, 1)
+	assert_operator(UnboundedFixnum.new(1), :<=, UnboundedFixnum.new(1))
+	assert_equal(0, UnboundedFixnum.new(1) <=> UnboundedFixnum.new(1))
 end #UnboundedFixnum_compare
 def test_UnboundedFixnum_plus
 	assert_equal(UnboundedFixnum.new(2), UnboundedFixnum.new(1)+UnboundedFixnum.new(1))

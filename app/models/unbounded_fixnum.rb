@@ -7,38 +7,45 @@
 ###########################################################################
 # Extention of FixNum class to unbounded limits
 # nil means unbounded (i.e. infinity)
-class UnboundedFixnum #< Fixnum # blocks new
+class UnboundedFixnum < Numeric # Fixnum blocks new
 include Comparable
 attr_reader :sign
 def initialize(number, sign= 0<=>number)
 	raise "In UnboundedFixnum.new infinities must have a sign" if number.nil? && sign.nil?
-#	else
-#		super(number)
-#	end #if
-	@fixnum=number
-	@sign=sign
+	if number.instance_of?(UnboundedFixnum) then
+		@fixnum=number.to_i
+		@sign=number.sign
+	else	
+		@fixnum=number
+		@sign=sign
+	end #if
 end #UnboundedFixnum_initialize
 Inf=UnboundedFixnum.new(nil,+1)
 Neg_inf=UnboundedFixnum.new(nil,-1)
+# or coerce
+def UnboundedFixnum.promote(other)
+	if other.instance_of?(UnboundedFixnum) then
+		other
+	else
+		UnboundedFixnum.new(other)
+	end #if
+end #promote
+def integer? # for Numeric Class
+	return true 
+end #integer
+def to_i
+	return @fixnum
+end #to_i
 def unbounded?
 	if @fixnum.nil? then
-		return @sign
+		@sign
 	else
 		nil
 	end #if
 end #unbounded
-def to_i
-	return @fixnum
-end #to_i
 def <=>(rhs)
-	if !rhs.instance_of?(UnboundedFixnum) then
-		rhs=UnboundedFixnum.new(rhs)
-		rhs_unbounded=rhs.unbounded?
-	else
-		rhs_unbounded=rhs.unbounded?
-	end #if
-	lhs_unbounded=self.unbounded?
-	case [lhs_unbounded, rhs_unbounded] 
+	rhs=UnboundedFixnum.promote(rhs)
+	case [self.unbounded?, rhs.unbounded?] 
 	when [nil,nil]
 		return self.to_i <=> rhs.to_i
 	when [+1,+1], [-1,-1]
