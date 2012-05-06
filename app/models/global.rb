@@ -121,13 +121,14 @@ def objectName(verbose=false)
 	end
 
 end
-def canonicalName(verbose=false)
+def canonicalName
 	#~ puts "inspect=#{inspect}"
 	#~ puts "respond_to?(:to_s)=#{respond_to?(:to_s)}"
 	if nil? then
 		return "nil"
+	elsif instance_of?(Class) then
+		return "Class #{name}"
 	elsif self.class.name=='Symbol' then
-		#puts "find_symbol(obj)=#{find_symbol(obj)}"
 		return "Symbol :#{to_s}"
 	elsif self.class.name=='Module' then
 		if name=='' then
@@ -141,8 +142,6 @@ def canonicalName(verbose=false)
 		return "ActiveRecord::Base subclass #{self.class.name}"		
 	elsif Generic_Table.activeRecordTableNotCreatedYet?(self) then
 		return "Active_Record #{self.class.inspect}"
-	elsif instance_of?(Class) then
-		return "Class #{name}"
 	elsif instance_of?(Array) then
 		return "Array instance"
 	elsif kind_of?(Account) then
@@ -162,13 +161,8 @@ def canonicalName(verbose=false)
 			return "#{self.class.name}.!to_s[/#<ActiveRecord::Relation:/] is not nil"
 		end
 	else
-		#~ puts "to_s=#{to_s}"
-		#~ puts "obj=#{inspect}"
 		if respond_to?(:name) then
-			puts("name=#{name}") if verbose
 			if respond_to?(:superclass) then
-				puts("superclass=#{superclass}") if verbose
-				puts("superclass.name=#{superclass.name}") if verbose
 				return "Class #{name} subclass of #{superclass.name}"
 			else
 				return "obj Class #{name} has no superclass."

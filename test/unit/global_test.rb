@@ -112,7 +112,7 @@ def test_objectClass
 	assert_equal("Regexp",/3/.objectClass)
 end #objectClass
 def test_objectName
-	assert_equal('cat',:cat.objectName)
+	assert_equal(':cat',:cat.objectName)
 end #test
 def test_canonical_name
 	assert_equal('Symbol :cat',:cat.canonicalName)
