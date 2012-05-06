@@ -18,7 +18,7 @@ def initialize(min, max)
 		max=UnboundedFixnum.new(max)
 	end #if
 	super(min, max)
-	raise "min=#{min} must be less than or equal to max=#{max}." if !max.nil? && min > max
+	raise "min=#{min.inspect} must be less than or equal to max=#{max.inspect}." if min > max
 end #initialize
 Any_range=UnboundedRange.new(0, UnboundedFixnum::Inf)
 Many_range=UnboundedRange.new(1, UnboundedFixnum::Inf)

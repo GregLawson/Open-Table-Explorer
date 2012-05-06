@@ -10,7 +10,7 @@
 class UnboundedFixnum < Numeric # Fixnum blocks new
 include Comparable
 attr_reader :sign
-def initialize(number, sign= 0<=>number)
+def initialize(number, sign=nil)
 	raise "In UnboundedFixnum.new infinities must have a sign" if number.nil? && sign.nil?
 	if number.instance_of?(UnboundedFixnum) then
 		@fixnum=number.to_i
@@ -69,9 +69,9 @@ def +(rhs)
 		return UnboundedFixnum.new(self.to_i + rhs.to_i)
 	when [+1,+1], [-1,-1]
 		return self
-	when [nil,+1], [-1, nil]
+	when [nil,-1], [-1, nil]
 		return UnboundedFixnum::Neg_inf
-	when [nil,-1], [+1, nil]
+	when [nil,+1], [+1, nil]
 		return UnboundedFixnum::Inf
 	when [-1,+1], [+1,-1]
 		return nil # could be any value

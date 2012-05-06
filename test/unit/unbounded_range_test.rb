@@ -61,15 +61,16 @@ def test_plus
 	rep=UnboundedRange.new(1, 2)
 	rhs=UnboundedRange.new(1, 2)
 	assert_equal(rep+rhs, 2..4)
-	assert_equal(2..UnboundedFixnum::Inf, rep+UnboundedRange.new(1, UnboundedFixnum::Inf))
-	assert_equal(2..UnboundedFixnum::Inf, UnboundedRange.new(1, UnboundedFixnum::Inf)+rep)
+	assert_equal(UnboundedRange.new(2, UnboundedFixnum::Inf), UnboundedRange.new(1, UnboundedFixnum::Inf)+rep)
+	assert_equal(UnboundedFixnum::Inf, rep.last+UnboundedFixnum::Inf, "UnboundedFixnum::Inf=#{UnboundedFixnum::Inf.inspect}, rep.last+UnboundedFixnum::Inf=#{(rep.last+UnboundedFixnum::Inf).inspect}")
+	assert_equal(UnboundedRange.new(2, UnboundedFixnum::Inf), rep+UnboundedRange.new(1, UnboundedFixnum::Inf))
 end #plus
 def test_intersect
 	assert_include('&', UnboundedRange.instance_methods(false))
 	assert_equal(UnboundedRange::Many_range, UnboundedRange::Any_range.&(UnboundedRange::Many_range))
-	assert_equal(1..UnboundedFixnum::Inf, UnboundedRange::Any_range & UnboundedRange::Many_range)
+	assert_equal(UnboundedRange::Many_range, UnboundedRange::Any_range & UnboundedRange::Many_range)
 end #intersect
 def test_union
-	assert_equal(0..UnboundedFixnum::Inf, UnboundedRange::Any_range | UnboundedRange::Many_range)
+	assert_equal(UnboundedRange::Any_range, UnboundedRange::Any_range | UnboundedRange::Many_range)
 end #union / generalization
 end #UnboundedRangeTest
