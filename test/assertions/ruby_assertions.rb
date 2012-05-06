@@ -66,7 +66,7 @@ def explain_assert_respond_to(obj,methodName,message='')
 	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
 	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
-	message1=message+"Object #{obj.canonicalName(false)} of class='#{obj.class}' does not respond to method :#{methodName}"
+	message1=message+"Object #{obj.canonicalName} of class='#{obj.class}' does not respond to method :#{methodName}"
 	if obj.instance_of?(Class) then
 		if obj.instance_methods(true).include?(methodName.to_s) then
 			message= "It's an instance, not a class method."
@@ -74,7 +74,7 @@ def explain_assert_respond_to(obj,methodName,message='')
 			if obj.instance_methods(false).empty? then
 				message="#{message1}; has no noninherited class methods."
 			else
-				message="#{message1}; noninherited class methods= #{obj.instance_methods(false).inspect}"
+				message="#{message1}; noninherited instance methods= #{obj.instance_methods(false).inspect}"
 			end #if
 		end #if
 		assert_respond_to(obj,methodName,message)
@@ -110,7 +110,9 @@ def assert_not_empty(object,message=nil)
 end #assert_not_empty
 def assert_empty(object,message=nil)
 	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
-	assert_block(message){object.empty? || object==Set[nil]}
+	if !object.nil?  then # nil is empty
+		assert_block(message){object.empty? || object==Set[nil]}
+	end #if
 end #assert_empty
 def assert_flat_set(set)
 	set.to_a.each do |e|
