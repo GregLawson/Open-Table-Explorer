@@ -9,7 +9,19 @@
 # Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
 class RegexpParser
+module ClassMethods
+def OpeningBrackets
+	return '({['
+end #OpeningBrackets
+def ClosingBrackets
+	return ')}]'
+end #ClosingBrackets
+def PostfixOperators
+	return '+*?|'
+end #PostfixOperators
+end #ClassMethods
 attr_reader :regexp_string,:tokenIndex,:parseTree
+extend ClassMethods
 def initialize(regexp_string)
 	raise "RegexpParser.new currently only handles String arguments. regexp_string=#{regexp_string.inspect}" unless regexp_string.kind_of?(String)
 	@regexp_string=regexp_string
@@ -70,11 +82,11 @@ end #curlyTree
 # parse matching brackets, postfix operator, or single character
 def parseOneTerm!
 	ch=nextToken!
-	index=RegexpTree.ClosingBrackets.index(ch)
+	index=RegexpParser.ClosingBrackets.index(ch)
 	if index then
-		return  regexpTree!(RegexpTree.OpeningBrackets[index].chr) << ch
+		return  regexpTree!(RegexpParser.OpeningBrackets[index].chr) << ch
 	else
-		index=RegexpTree.PostfixOperators.index(ch)
+		index=RegexpParser.PostfixOperators.index(ch)
 		if index then
 			return  NestedArray.new([parseOneTerm!, ch])
 		else
