@@ -9,26 +9,26 @@
 # nil means unbounded (i.e. infinity)
 class UnboundedFixnum < Numeric # Fixnum blocks new
 include Comparable
-attr_reader :sign
-# sign is only needed for number==nil
-def initialize(number, sign=nil)
-	raise "In UnboundedFixnum.new infinities must have a sign" if number.nil? && sign.nil?
+attr_reader :infinity_sign
+# infinity_sign is only needed for number==nil
+def initialize(number, infinity_sign=nil)
+	raise "In UnboundedFixnum.new infinities must have a infinity_sign" if number.nil? && infinity_sign.nil?
 	if number.instance_of?(UnboundedFixnum) then
 		@fixnum=number.to_i
-		@sign=number.sign
+		@infinity_sign=number.infinity_sign
 	else	
 		@fixnum=number
-		@sign=sign
+		@infinity_sign=infinity_sign
 	end #if
 end #UnboundedFixnum_initialize
 Inf=UnboundedFixnum.new(nil,+1)
 Neg_inf=UnboundedFixnum.new(nil,-1)
 # or coerce
-def UnboundedFixnum.promote(other, sign=nil)
+def UnboundedFixnum.promote(other, infinity_sign=nil)
 	if other.instance_of?(UnboundedFixnum) then
-		UnboundedFixnum.new(other.to_i, other.sign)
+		UnboundedFixnum.new(other.to_i, other.infinity_sign)
 	else
-		UnboundedFixnum.new(other, sign)
+		UnboundedFixnum.new(other, infinity_sign)
 	end #if
 end #promote
 def integer? # for Numeric Class
@@ -39,7 +39,7 @@ def to_i
 end #to_i
 def unbounded?
 	if @fixnum.nil? then
-		@sign
+		@infinity_sign
 	else
 		nil
 	end #if
