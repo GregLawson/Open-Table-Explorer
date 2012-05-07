@@ -10,6 +10,7 @@
 class UnboundedFixnum < Numeric # Fixnum blocks new
 include Comparable
 attr_reader :sign
+# sign is only needed for number==nil
 def initialize(number, sign=nil)
 	raise "In UnboundedFixnum.new infinities must have a sign" if number.nil? && sign.nil?
 	if number.instance_of?(UnboundedFixnum) then
@@ -23,11 +24,11 @@ end #UnboundedFixnum_initialize
 Inf=UnboundedFixnum.new(nil,+1)
 Neg_inf=UnboundedFixnum.new(nil,-1)
 # or coerce
-def UnboundedFixnum.promote(other)
+def UnboundedFixnum.promote(other, sign=nil)
 	if other.instance_of?(UnboundedFixnum) then
-		other
+		UnboundedFixnum.new(other.to_i, other.sign)
 	else
-		UnboundedFixnum.new(other)
+		UnboundedFixnum.new(other, sign)
 	end #if
 end #promote
 def integer? # for Numeric Class
