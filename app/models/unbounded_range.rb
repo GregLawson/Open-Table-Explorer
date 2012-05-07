@@ -11,12 +11,8 @@
 class UnboundedRange < Range
 include Comparable
 def initialize(min, max)
-	if !min.instance_of?(UnboundedFixnum) then
-		min=UnboundedFixnum.new(min)
-	end #if
-	if !max.instance_of?(UnboundedFixnum) then
-		max=UnboundedFixnum.new(max)
-	end #if
+	min=UnboundedFixnum.promote(min, -1)
+	max=UnboundedFixnum.promote(max, +1)
 	super(min, max)
 	raise "min=#{min.inspect} must be less than or equal to max=#{max.inspect}." if min > max
 end #initialize
@@ -27,7 +23,7 @@ def UnboundedRange.promote(rhs)
 #	if rhs.instance_of?(UnboundedRange) then
 #		self
 #	elsif rhs.instance_of?(Range)
-		UnboundedRange.new(UnboundedFixnum.new(rhs.first), UnboundedFixnum.new(rhs.last))
+		UnboundedRange.new(UnboundedFixnum.promote(rhs.first, -1), UnboundedFixnum.promote(rhs.last, +1))
 #	end #if
 end #promote
 def <=>(rhs)

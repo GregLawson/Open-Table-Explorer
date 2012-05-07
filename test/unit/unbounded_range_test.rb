@@ -26,6 +26,7 @@ def test_UnboundedRange_promote
 	assert_equal(UnboundedRange::Many_range, UnboundedRange.promote(UnboundedRange.new(1, UnboundedFixnum::Inf)))
 	assert_equal(UnboundedRange::Many_range, UnboundedRange.new(1, UnboundedFixnum::Inf))
 	assert_equal(UnboundedRange.promote(UnboundedRange.new(1, UnboundedFixnum::Inf)), UnboundedRange::Many_range)
+	assert_equal(UnboundedRange::Many_range, UnboundedRange.new(1, nil))
 end #promote
 def test_UnboundedRange_compare
 	lhs=UnboundedRange::Many_range
