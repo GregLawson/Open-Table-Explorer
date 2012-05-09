@@ -79,7 +79,6 @@ def test_concise_repetition_node
 	assert_equal(Repetition_1_2, RepetitionLength.new('.', 1,2).concise_repetition_node)
 	assert_equal(['{',['2'], '}'], RepetitionLength.new('.', 2, 2).concise_repetition_node)
 end #concise_repetition_node
-def test_repeated_pattern
 def test_probability_range
 	assert_equal(1.0, Any.probability_of_repetition(1))
 	assert_not_nil(Any.probability_of_repetition(1))
@@ -87,24 +86,6 @@ def test_probability_range
 	assert_equal(0..1.0, RegexpTree::Dot_star.probability_range)
 	assert_equal(1.0/95..1.0/95, Asymmetrical_Tree.probability_range)
 
-	assert_equal(['.','*'], RegexpTree.new('.*'))
-	assert(RegexpTree.new('.*').postfix_expression?)
-	assert_equal(['.'], RegexpTree.new('.*').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.+').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.?').repeated_pattern)
-	assert_equal(['a'], RegexpTree.new('a'))
-	assert_equal(['a'], RegexpTree.new('a').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.').repeated_pattern)
-	assert_equal(Quantified_repetition, RegexpTree.new('.{3,4}'))
-	assert_equal(['.'], RegexpTree.new('.{3,4}').repeated_pattern)
-	assert_equal('*', Any.postfix_expression?)
-	assert_instance_of(RegexpTree, Any.repeated_pattern('a'))
-	assert_instance_of(RegexpTree, Any.repeated_pattern)
-	assert_instance_of(RegexpTree, Quantified_repetition.repeated_pattern)
-	assert_instance_of(RegexpTree, RegexpTreeTest::Sequence.repeated_pattern)
-	assert_equal(Binary_range, Any.repeated_pattern.to_s)
-	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
-end #repeated_pattern
 	assert_equal(1.0/95..1.0/95, No_anchor.probability_range)
 	assert_equal(1.0/95..1.0/95, Start_anchor.probability_range)
 	assert_equal(1.0/95..1.0/95, End_anchor.probability_range)
