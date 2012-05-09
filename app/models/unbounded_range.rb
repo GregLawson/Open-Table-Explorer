@@ -18,6 +18,7 @@ def initialize(min, max)
 end #initialize
 Any_range=UnboundedRange.new(0, UnboundedFixnum::Inf)
 Many_range=UnboundedRange.new(1, UnboundedFixnum::Inf)
+Once=UnboundedRange.new(1, 1)
 # Promote (specialize inherited type)  
 def UnboundedRange.promote(rhs)
 #	if rhs.instance_of?(UnboundedRange) then

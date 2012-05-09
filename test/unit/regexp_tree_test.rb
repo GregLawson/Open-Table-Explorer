@@ -25,8 +25,6 @@ set_class_variables
 KCeditor=RegexpParser.new('KC')
 KCETeditor=RegexpParser.new('KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE')
-One_to_ten=RepetitionLength.new(1, 10)
-Any_repetition=RepetitionLength.new(0, nil)
 Anchor_root_test_case='a'
 No_anchor=RegexpTree.new(Anchor_root_test_case)
 Start_anchor=RegexpTree.new(Anchoring::Start_anchor_regexp+Anchor_root_test_case)
@@ -55,55 +53,6 @@ def test_compare_anchor
 	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Both_anchor))
 	assert_nil(Anchoring.new(Start_anchor) <=> Anchoring.new(End_anchor))
 end #anchor
-def test_RepetitionLength_initialize
-	assert_equal(1, One_to_ten[:min])
-	assert_equal(10, One_to_ten[:max])
-	assert_equal(0, Any_repetition[:min])
-	assert_nil(Any_repetition[:max])
-	
-end #initialize
-def test_RepetitionLength_compare
-	assert(nil == nil)
-	assert_equal(RepetitionLength.new(1, nil), RepetitionLength.new(1, nil))
-	assert_equal(RepetitionLength.new(1, 3), RepetitionLength.new(1, 3))
-	assert_operator(RepetitionLength.new(1, 4), :>, RepetitionLength.new(1, 3))
-	assert_operator(RepetitionLength.new(0, 3), :>, RepetitionLength.new(1, 3))
-	assert_operator(RepetitionLength.new(0, nil), :>, RepetitionLength.new(1, nil))
-	assert_operator(RepetitionLength.new(1, nil), :>, RepetitionLength.new(1, 3))
-end #compare
-def test_plus
-	rep=RepetitionLength.new(1, 2)
-	other=RepetitionLength.new(1, 2)
-	assert_equal({"max"=>4, "min"=>2}, rep+other)
-	assert_equal({"max"=>nil, "min"=>2}, rep+RepetitionLength.new(1, nil))
-	assert_equal({"max"=>nil, "min"=>2}, RepetitionLength.new(1, nil)+rep)
-end #plus
-Binary_range='[\000-\377]'
-Any_binary_string="#{Binary_range}*"
-Any=RegexpTree.new(Any_binary_string, Any_binary_string)
-Many=RegexpTree.new(".+", ".+")
-Any_length=Any.repetition_length
-Many_length=Many.repetition_length
-def test_intersect
-	assert_include('&', RepetitionLength.instance_methods(false))
-	assert_equal({"max"=>nil, "min"=>1}, Any_length.&(Many_length))
-	assert_equal({"max"=>nil, "min"=>1}, Any_length & Many_length)
-end #intersect
-def test_union
-	assert_equal({"max"=>nil, "min"=>0}, Any_length | Many_length)
-end #union / generalization
-Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
-def test_canonical_repetition_tree
-	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).canonical_repetition_tree)
-end #canonical_repetition_tree
-def test_concise_repetition_node
-	assert_equal('', RepetitionLength.new(1, 1).concise_repetition_node)
-	assert_equal("+", RepetitionLength.new(1, nil).concise_repetition_node)
-	assert_equal("?", RepetitionLength.new(0, 1).concise_repetition_node)
-	assert_equal("*", RepetitionLength.new(0, nil).concise_repetition_node)
-	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetition_node)
-	assert_equal(['{',['2'], '}'], RepetitionLength.new(2, 2).concise_repetition_node)
-end #concise_repetition_node
 def regexpParserTest(parser)
 	assert_respond_to(parser,:parseOneTerm!)
 #	Now test after full parse.
@@ -517,45 +466,6 @@ def test_repetition_length
 	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetition_node)
 	assert_equal({"max"=>3, "min"=>3}, Sequence.repetition_length)
 end #repetition_length
-def test_merge_to_repetition
-	# first line by line test case
-	side=['a']
-	branch=RegexpTree.new([side, side])
-	first=branch[0]
-	second=branch[1]
-	assert_equal(first, second)
-	first_repetition=first.repetition_length
-	second_repetition=second.repetition_length
-	merged_repetition=(first_repetition+second_repetition).concise_repetition_node
-	assert_equal(["{", ["2"], "}"], merged_repetition)
-	assert_equal(['a'], first.repeated_pattern)
-	assert_equal([2, 2], [first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max]])
-	assert_instance_of(RegexpTree, first.repeated_pattern)
-	branch.merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1])
-	assert_equal(['a',['{',['2'], '}']], branch.merge_to_repetition)
-	# second line by line test case
-	branch=RegexpTree.new('a?a')
-	assert_instance_of(RegexpTree, branch)
-	assert_equal([["a", "?"], "a"], branch)
-	first=branch[0]
-	second=branch[1]
-	assert_instance_of(RegexpTree, first)
-	assert_instance_of(String, second)
-	assert_equal(['a'], branch.repeated_pattern(first))
-	assert_equal(['a'], branch.repeated_pattern(second))
-	first_repetition=first.repetition_length
-	second_repetition=branch.repetition_length(second)
-	assert_equal([1, 2], [first_repetition[:min]+second_repetition[:min], first_repetition[:max]+second_repetition[:max]])
-	assert_equal(['a'], branch.repeated_pattern(first))
-	assert_equal(['a'], branch.repeated_pattern(second))
-	merged_repetition=(first_repetition+second_repetition).concise_repetition_node
-	assert_equal(["{", ["1", ",", "2"], "}"], merged_repetition)
-	assert_equal([], branch[2..-1])
-	merged_pattern=['a',['{',['1',',','2'], '}']]
-	assert_equal(merged_pattern, first.repeated_pattern << merged_repetition)
-	assert_equal(merged_pattern, branch.merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1]))
-	assert_equal(merged_pattern, branch.merge_to_repetition)
-end #merge_to_repetition
 Tree123=RegexpTree.new('[1-3]')
 def test_string_of_matching_chars
 	regexp=Regexp.new('\d')
