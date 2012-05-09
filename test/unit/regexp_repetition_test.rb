@@ -80,6 +80,12 @@ def test_concise_repetition_node
 	assert_equal(['{',['2'], '}'], RepetitionLength.new('.', 2, 2).concise_repetition_node)
 end #concise_repetition_node
 def test_repeated_pattern
+def test_probability_range
+	assert_equal(1.0, Any.probability_of_repetition(1))
+	assert_not_nil(Any.probability_of_repetition(1))
+	assert_equal(1.0..1.0, Many.probability_range)
+	assert_equal(0..1.0, RegexpTree::Dot_star.probability_range)
+	assert_equal(1.0/95..1.0/95, Asymmetrical_Tree.probability_range)
 
 	assert_equal(['.','*'], RegexpTree.new('.*'))
 	assert(RegexpTree.new('.*').postfix_expression?)
@@ -99,6 +105,45 @@ def test_repeated_pattern
 	assert_equal(Binary_range, Any.repeated_pattern.to_s)
 	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
 end #repeated_pattern
+	assert_equal(1.0/95..1.0/95, No_anchor.probability_range)
+	assert_equal(1.0/95..1.0/95, Start_anchor.probability_range)
+	assert_equal(1.0/95..1.0/95, End_anchor.probability_range)
+	assert_equal(1.0/95..1.0/95, Both_anchor.probability_range)
+end #probability_range
+def test_probability_of_repetition
+	rhs=Any
+	alternative_list=rhs.repeated_pattern.alternatives? # kludge for now
+	assert_not_nil(alternative_list)
+	alternatives=alternative_list.size
+	assert_equal(256, alternatives)
+	character_probability=alternatives/rhs.probability_space_size
+	assert_equal(1.0, character_probability)
+	length=0
+	assert_equal(0, length)
+	assert_equal(1.0, rhs.probability_of_repetition(0))
+	assert_equal(1.0, rhs.probability_of_repetition(1))
+	assert_equal(1.0, rhs.probability_of_repetition(nil))
+# 0 repetitions always match
+	assert_equal(1.0, No_anchor.probability_of_repetition(1))
+	assert_equal(1.0, Start_anchor.probability_of_repetition(1))
+	assert_equal(1.0, End_anchor.probability_of_repetition(1))
+	assert_equal(1.0, Both_anchor.probability_of_repetition(1))
+# 1
+	assert_equal(1.0/95, No_anchor.probability_of_repetition(1))
+	assert_equal(1.0/95, Start_anchor.probability_of_repetition(1))
+	assert_equal(1.0/95, End_anchor.probability_of_repetition(1))
+	assert_equal(1.0/95, Both_anchor.probability_of_repetition(1))
+# 2
+	assert_equal(1.0/95, No_anchor.probability_of_repetition(1))
+	assert_equal(1.0/95, Start_anchor.probability_of_repetition(1))
+	assert_equal(1.0/95, End_anchor.probability_of_repetition(1))
+	assert_equal(1.0/95, Both_anchor.probability_of_repetition(1))
+# nil , unanchored always matches
+	assert_equal(1.0, No_anchor.probability_of_repetition(1))
+	assert_equal(1.0, Start_anchor.probability_of_repetition(1))
+	assert_equal(1.0, End_anchor.probability_of_repetition(1))
+	assert_equal(1.0/95, Both_anchor.probability_of_repetition(1))
+end #probability_of_repetition
 def test_merge_to_repetition
 	# first line by line test case
 	side=['a']
