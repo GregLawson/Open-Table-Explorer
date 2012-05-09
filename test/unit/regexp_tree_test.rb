@@ -435,26 +435,6 @@ def test_to_regexp
 	assert_equal(/.*/mx,RegexpTree.new('.*').to_regexp)
 end #to_regexp
 Quantified_repetition=RegexpTree.new([".", ["{", "3", ",", "4", "}"]])
-def test_repeated_pattern
-
-	assert_equal(['.','*'], RegexpTree.new('.*'))
-	assert(RegexpTree.new('.*').postfix_expression?)
-	assert_equal(['.'], RegexpTree.new('.*').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.+').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.?').repeated_pattern)
-	assert_equal(['a'], RegexpTree.new('a'))
-	assert_equal(['a'], RegexpTree.new('a').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.').repeated_pattern)
-	assert_equal(Quantified_repetition, RegexpTree.new('.{3,4}'))
-	assert_equal(['.'], RegexpTree.new('.{3,4}').repeated_pattern)
-	assert_equal('*', Any.postfix_expression?)
-	assert_instance_of(RegexpTree, Any.repeated_pattern('a'))
-	assert_instance_of(RegexpTree, Any.repeated_pattern)
-	assert_instance_of(RegexpTree, Quantified_repetition.repeated_pattern)
-	assert_instance_of(RegexpTree, Sequence.repeated_pattern)
-	assert_equal(Binary_range, Any.repeated_pattern.to_s[1..-2])
-	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
-end #repeated_pattern
 Tree123=RegexpTree.new('[1-3]')
 def test_string_of_matching_chars
 	regexp=Regexp.new('\d')
@@ -512,4 +492,24 @@ def test_repetition_length
 	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetition_node)
 	assert_equal({"end"=>3, "min"=>3}, RegexpTreeTest::Sequence.repetition_length)
 end #repetition_length
+def test_repeated_pattern
+
+	assert_equal(['.','*'], RegexpTree.new('.*'))
+	assert(RegexpTree.new('.*').postfix_expression?)
+	assert_equal(['.'], RegexpTree.new('.*').repeated_pattern)
+	assert_equal(['.'], RegexpTree.new('.+').repeated_pattern)
+	assert_equal(['.'], RegexpTree.new('.?').repeated_pattern)
+	assert_equal(['a'], RegexpTree.new('a'))
+	assert_equal(['a'], RegexpTree.new('a').repeated_pattern)
+	assert_equal(['.'], RegexpTree.new('.').repeated_pattern)
+	assert_equal(Quantified_repetition, RegexpTree.new('.{3,4}'))
+	assert_equal(['.'], RegexpTree.new('.{3,4}').repeated_pattern)
+	assert_equal('*', Any.postfix_expression?)
+	assert_instance_of(RegexpTree, Any.repeated_pattern('a'))
+	assert_instance_of(RegexpTree, Any.repeated_pattern)
+	assert_instance_of(RegexpTree, Quantified_repetition.repeated_pattern)
+	assert_instance_of(RegexpTree, RegexpTreeTest::Sequence.repeated_pattern)
+	assert_equal(Binary_range, Any.repeated_pattern.to_s)
+	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
+end #repeated_pattern
 end #RegexpTreeTest
