@@ -81,7 +81,6 @@ end #def
 Asymmetrical_Tree_Array=[['1','2'],'3']
 Asymmetrical_Tree=RegexpTree.new(Asymmetrical_Tree_Array)
 Sequence=RegexpTree.new(Asymmetrical_Tree.to_a.flatten)
-Dot_star=RegexpTree.new(['.','*'], Any_binary_string)
 Echo_proc=Proc.new{|parseTree| parseTree}
 Constant_proc=Proc.new{|parseTree| '*'}
 Alternative_ab_of_abc_10=RegexpTree.new('a|b', '[abc]{1,10}')
@@ -91,8 +90,8 @@ def test_probability_space_regexp
 end #probability_space_regexp
 def test_probability_space_size
 	assert_equal(256, Any.probability_space_size)
-	assert_equal(95, Many.probability_space_size)
-	assert_equal(256, Dot_star.probability_space_size)
+	assert_equal(194, Many.probability_space_size)
+	assert_equal(256, RegexpTree::Dot_star.probability_space_size)
 	assert_equal(95, Asymmetrical_Tree.probability_space_size)
 
 	assert_equal(95, No_anchor.probability_space_size)
@@ -310,12 +309,12 @@ def test_character_class
 	assert_instance_of(Array, Any.repeated_pattern.alternatives?)
 end #character_class
 def test_postfix_expression
-	assert_not_nil(Dot_star)
-	assert(Dot_star.postfix_expression?,"Dot_star=#{Dot_star.inspect}")
-	assert(!RegexpTree.new(['K',['.','*'],'C']).postfix_expression?,"Dot_star=#{Dot_star.inspect}")
-	assert(!RegexpTree.new(['K',['.','*']]).postfix_expression?,"Dot_star=#{Dot_star.inspect}")
-	assert(!RegexpTree.new([['.','*'],'C']).postfix_expression?,"Dot_star=#{Dot_star.inspect}")
-	assert(!RegexpTree.new([['.','*']]).postfix_expression?,"Dot_star=#{Dot_star.inspect}")
+	assert_not_nil(RegexpTree::Dot_star)
+	assert(RegexpTree::Dot_star.postfix_expression?,"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
+	assert(!RegexpTree.new(['K',['.','*'],'C']).postfix_expression?,"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
+	assert(!RegexpTree.new(['K',['.','*']]).postfix_expression?,"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
+	assert(!RegexpTree.new([['.','*'],'C']).postfix_expression?,"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
+	assert(!RegexpTree.new([['.','*']]).postfix_expression?,"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
 end #postfix_expression
 def test_bracket_operator
 	assert_equal([".", ["{", "3", ",", "4", "}"]], RegexpTree.new('.{3,4}'))
@@ -327,9 +326,9 @@ end #bracket_operator
 def test_postfix_operator
 	assert_instance_of(String,['*','a'][1])
 	assert_equal(0,'*+?'.index(['*','a'][0]))
-	assert_not_nil(Dot_star)
-	assert(Dot_star.postfix_operator?('*'),"Dot_star.to_s=#{Dot_star.to_s.inspect}")
-	assert(!Dot_star.postfix_operator?('.'),"Dot_star=#{Dot_star.inspect}")
+	assert_not_nil(RegexpTree::Dot_star)
+	assert(RegexpTree::Dot_star.postfix_operator?('*'),"RegexpTree::Dot_star.to_s=#{RegexpTree::Dot_star.to_s.inspect}")
+	assert(!RegexpTree::Dot_star.postfix_operator?('.'),"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
 end #postfix_operator
 def test_postfix_operator_walk
 	assert_equal(['1', '2', '3'], Asymmetrical_Tree.to_a.flatten)
@@ -342,33 +341,33 @@ def test_postfix_operator_walk
 
 	assert_not_nil(RegexpTree.new(Asymmetrical_Tree))
 
-	assert_kind_of(Array, Dot_star)
-	assert_equal(['.','*'], Dot_star)
-	assert_equal(Dot_star[-1], '*')
-	assert_not_equal(Dot_star[0].class, Array)
-	assert_equal(Dot_star, Dot_star.postfix_operator_walk(&Echo_proc))
-	assert_equal(Dot_star, Dot_star.postfix_operator_walk{|p| p})
-	assert_equal(['.', '*'], RegexpTree.new(Dot_star).postfix_operator_walk(&Echo_proc))
+	assert_kind_of(Array, RegexpTree::Dot_star)
+	assert_equal(['.','*'], RegexpTree::Dot_star)
+	assert_equal(RegexpTree::Dot_star[-1], '*')
+	assert_not_equal(RegexpTree::Dot_star[0].class, Array)
+	assert_equal(RegexpTree::Dot_star, RegexpTree::Dot_star.postfix_operator_walk(&Echo_proc))
+	assert_equal(RegexpTree::Dot_star, RegexpTree::Dot_star.postfix_operator_walk{|p| p})
+	assert_equal(['.', '*'], RegexpTree.new(RegexpTree::Dot_star).postfix_operator_walk(&Echo_proc))
 	assert_equal(Sequence, RegexpTree.new(Sequence).postfix_operator_walk(&Constant_proc))
 	assert_equal(Sequence, RegexpTree.new(Sequence).postfix_operator_walk(&Echo_proc))
 	assert_equal(Asymmetrical_Tree, RegexpTree.new(Asymmetrical_Tree).postfix_operator_walk{|p| p})
 
 	assert_equal(['*'], RegexpTree.new([['.','*']]).postfix_operator_walk{|p| '*'})
-	assert(Dot_star.postfix_expression?,"Dot_star=#{Dot_star.inspect}")
+	assert(RegexpTree::Dot_star.postfix_expression?,"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
 	assert_equal(['*', 'C'], RegexpTree.new([['.','*'],'C']).postfix_operator_walk{|p| '*'})
 	assert_equal('*', Constant_proc.call(['.','*']))
-	assert_equal('*', Dot_star.postfix_operator_walk(&Constant_proc))
-	assert_equal(['*'], Proc.new{|parseTree| parseTree[1..-1]}.call(Dot_star))
-	assert_equal(RegexpTree, Proc.new{|parseTree| parseTree[1..-1].class}.call(Dot_star))
+	assert_equal('*', RegexpTree::Dot_star.postfix_operator_walk(&Constant_proc))
+	assert_equal(['*'], Proc.new{|parseTree| parseTree[1..-1]}.call(RegexpTree::Dot_star))
+	assert_equal(RegexpTree, Proc.new{|parseTree| parseTree[1..-1].class}.call(RegexpTree::Dot_star))
 	visit_proc=Proc.new{|parseTree| parseTree[1..-1]}
-	assert_equal(['*'], visit_proc.call(Dot_star))
+	assert_equal(['*'], visit_proc.call(RegexpTree::Dot_star))
 	assert_equal('.', ['.','*'][0])
 	assert_equal('.', [['.','*']][0][0])
 	visit_proc=Proc.new{|parseTree| parseTree[0]}
-	assert_equal('.', visit_proc.call(Dot_star))
+	assert_equal('.', visit_proc.call(RegexpTree::Dot_star))
 	visit_proc=Proc.new{|parseTree| parseTree[1..-1]<<parseTree[0]}
-	assert_equal(['*', '.'], visit_proc.call(Dot_star))
-	assert_equal(['*', '.'], Dot_star.postfix_operator_walk(&visit_proc))
+	assert_equal(['*', '.'], visit_proc.call(RegexpTree::Dot_star))
+	assert_equal(['*', '.'], RegexpTree::Dot_star.postfix_operator_walk(&visit_proc))
 	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
 	assert_equal('test/*[.]r*', Test_Pattern.to_pathname_glob)
 end #postfix_operator_walk
