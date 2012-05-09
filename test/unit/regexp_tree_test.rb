@@ -455,16 +455,6 @@ def test_repeated_pattern
 	assert_equal(Binary_range, Any.repeated_pattern.to_s[1..-2])
 	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
 end #repeated_pattern
-def test_repetition_length
-	assert_equal({"max"=>nil, "min"=>1}, Sequence.repetition_length('+'))
-	assert_equal({"max"=>1, "min"=>0}, Sequence.repetition_length('?'))
-	assert_equal({"max"=>nil, "min"=>0}, Sequence.repetition_length('*'))
-	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetition_node)
-	assert_equal({"max"=>0, "min"=>0}, RegexpTree.new('').repetition_length)
-	assert_equal({"max"=>1, "min"=>1}, RegexpTree.new('.').repetition_length)
-	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetition_node)
-	assert_equal({"max"=>3, "min"=>3}, Sequence.repetition_length)
-end #repetition_length
 Tree123=RegexpTree.new('[1-3]')
 def test_string_of_matching_chars
 	regexp=Regexp.new('\d')
@@ -512,4 +502,14 @@ def test_zero_parameter_new
 	assert_nothing_raised{RegexpTree.new} # 0 arguments
 	assert_not_nil(@@model_class)
 end #test_name_correct
-end #test class
+def test_repetition_length
+	assert_equal({"end"=>nil, "min"=>1}, RegexpTreeTest::Sequence.repetition_length('+'))
+	assert_equal({"end"=>1, "min"=>0}, RegexpTreeTest::Sequence.repetition_length('?'))
+	assert_equal({"end"=>nil, "min"=>0}, RegexpTreeTest::Sequence.repetition_length('*'))
+	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetition_node)
+	assert_equal({"end"=>0, "min"=>0}, RegexpTree.new('').repetition_length)
+	assert_equal({"end"=>1, "min"=>1}, RegexpTree.new('.').repetition_length)
+	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetition_node)
+	assert_equal({"end"=>3, "min"=>3}, RegexpTreeTest::Sequence.repetition_length)
+end #repetition_length
+end #RegexpTreeTest

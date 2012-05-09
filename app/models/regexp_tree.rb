@@ -459,58 +459,6 @@ def repeated_pattern(node=self)
 end #repeated_pattern
 # returns pair of min and max repetitions of a RegexpTree
 # max can be nil to signify unlimited repetitions
-def repetition_length(node=self)
-	if !node.kind_of?(Array) then
-		if node=='' then
-			return RepetitionLength.new(1, 1)
-		elsif node=='*' then
-			return RepetitionLength.new(0, nil)
-		elsif node=='+' then
-			return RepetitionLength.new(1, nil)
-		elsif node=='?' then
-			return RepetitionLength.new(0, 1)
-		elsif node.length==1 then
-			return RepetitionLength.new(1, 1)
-		else
-			raise "unexpected node=#{node}"
-		end #if
-	elsif post_op=node.postfix_expression? then
-		if post_op=='*' then
-			return RepetitionLength.new(0, nil)
-		elsif post_op=='+' then
-			return RepetitionLength.new(1, nil)
-		elsif post_op=='?' then
-			return RepetitionLength.new(0, 1)
-		else
-			raise "unexpected post_op=#{post_op}"
-		end #if
-	elsif node[-1]=='}' then
-		RepetitionLength.new(node[1][0].to_i, node[1][1].to_i)
-	else
-		RepetitionLength.new(node.length, node.length)
-	end #if
-end #repetition_length
-# recursive merging of consecutive identical pairs
-def merge_to_repetition(branch=self)
-	if branch.instance_of?(Array) then
-		branch=RegexpTree.new(branch)
-	end #if
-	if branch.size<2 then # terminate recursion
-		return branch
-	else
-# puts "branch=#{branch}"
-		first=branch[0]
-		second=branch[1]
-		if branch.repeated_pattern(first)==branch.repeated_pattern(second) then
-			first_repetition=first.repetition_length
-			second_repetition=branch.repetition_length(second)
-			merged_repetition=(first_repetition+second_repetition).concise_repetition_node
-			merge_to_repetition(first.repeated_pattern << merged_repetition+branch[2..-1])
-		else # couldn't merge first element
-			[first]+merge_to_repetition(branch[1..-1])	# shorten string to ensure recursion termination
-		end #if
-	end #if
-end #merge_to_repetition
 def string_of_matching_chars(regexp=self)
 	char_array=Binary_bytes.select do |char|
 		if RegexpMatch.match_data?(regexp, char) then
