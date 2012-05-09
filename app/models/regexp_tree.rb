@@ -416,20 +416,6 @@ Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 #y caller
 # 
-# Returns a RegexpTree object
-def repeated_pattern(node=self)
-	if !node.kind_of?(Array) then # argument is not an Array
-		return RegexpTree.new(node)
-	elsif post_op=node.postfix_expression? then
-		return RegexpTree.new(node[0])
-	elsif node[-1]=='}' then
-		node[0]
-	else
-		node
-	end #if
-end #repeated_pattern
-# returns pair of min and max repetitions of a RegexpTree
-# max can be nil to signify unlimited repetitions
 def string_of_matching_chars(regexp=self)
 	char_array=Binary_bytes.select do |char|
 		if RegexpMatch.match_data?(regexp, char) then
@@ -454,4 +440,49 @@ def regexp_error(regexp_string, options=Default_options)
 rescue RegexpError => exception
 	return exception
 end #regexp_error
+# returns pair of min and end repetitions of a RegexpTree
+# end can be nil to signify unlimited repetitions
+def repetition_length(node=self)
+	if !node.kind_of?(Array) then
+		if node=='' then
+			return UnboundedRange.new(1, 1)
+		elsif node=='*' then
+			return UnboundedRange.new(0, nil)
+		elsif node=='+' then
+			return UnboundedRange.new(1, nil)
+		elsif node=='?' then
+			return UnboundedRange.new(0, 1)
+		elsif node.length==1 then
+			return UnboundedRange.new(1, 1)
+		else
+			raise "unexpected node=#{node}"
+		end #if
+	elsif post_op=node.postfix_expression? then
+		if post_op=='*' then
+			return UnboundedRange.new(0, nil)
+		elsif post_op=='+' then
+			return UnboundedRange.new(1, nil)
+		elsif post_op=='?' then
+			return UnboundedRange.new(0, 1)
+		else
+			raise "unexpected post_op=#{post_op}"
+		end #if
+	elsif node[-1]=='}' then
+		UnboundedRange.new(node[1][0].to_i, node[1][1].to_i)
+	else
+		UnboundedRange.new(node.length, node.length)
+	end #if
+end #repetition_length
+# Returns a RegexpTree object
+def repeated_pattern(node=self)
+	if !node.kind_of?(Array) then # argument is not an Array
+		return RegexpTree.new(node)
+	elsif post_op=node.postfix_expression? then
+		return RegexpTree.new(node[0])
+	elsif node[-1]=='}' then
+		node[0]
+	else
+		node
+	end #if
+end #repeated_pattern
 end #RegexpTree
