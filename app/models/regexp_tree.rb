@@ -85,15 +85,6 @@ def probability_of_sequence(branch=self)
 		end #if
 	end #reduce
 end #probability_of_sequence
-def self.OpeningBrackets
-	return '({['
-end #OpeningBrackets
-def self.ClosingBrackets
-	return ')}]'
-end #ClosingBrackets
-def self.PostfixOperators
-	return '+*?|'
-end #def
 #raise "" unless self.constants.include?('Default_options')
 # Parse regexp_string into parse tree for editing
 def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Default_options)
