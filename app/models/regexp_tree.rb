@@ -60,6 +60,41 @@ end #Anchoring
 class RegexpTree < NestedArray
 include Comparable
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+#raise "" unless self.constants.include?('Default_options')
+# Parse regexp_string into parse tree for editing
+def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Default_options)
+	if regexp.kind_of?(Array) then #nested Arrays
+		super(regexp)
+		
+	elsif regexp.instance_of?(String) then 
+		super(RegexpParser.new(regexp).to_a)
+	elsif regexp.instance_of?(RegexpParser) then 
+		super(regexp.to_a)
+	elsif regexp.instance_of?(Regexp) then 
+		super()
+		super(RegexpParser.new(regexp.source).to_a)
+	else
+		raise "unexpected regexp=#{regexp.inspect}"
+	end #if
+	@probability_space_regexp=probability_space_regexp
+#	@anchor=Anchoring.new(self) infinite recursion
+end #initialize
+def RegexpTree.promote(node)
+	if node.kind_of?(RegexpTree) then #nested Arrays
+		node
+	elsif node.kind_of?(Array) then #nested Arrays
+		RegexpTree.new(node)
+		
+	elsif node.instance_of?(String) then 
+		RegexpTree.new(RegexpParser.new(node).to_a)
+	elsif node.instance_of?(RegexpParser) then 
+		RegexpTree.new(node.to_a)
+	elsif node.instance_of?(Regexp) then 
+		RegexpTree.new(RegexpParser.new(node.source).to_a)
+	else
+		raise "unexpected node=#{node.inspect}"
+	end #if
+end #RegexpTree.promote
 Binary_range='[\000-\377]'
 Any_binary_string="#{Binary_range}*"
 Any=RegexpTree.new(Any_binary_string, Any_binary_string)
@@ -85,19 +120,6 @@ def probability_of_sequence(branch=self)
 		end #if
 	end #reduce
 end #probability_of_sequence
-#raise "" unless self.constants.include?('Default_options')
-# Parse regexp_string into parse tree for editing
-def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Default_options)
-	if regexp.kind_of?(Array) then #nested Arrays
-		super(regexp)
-		
-	elsif regexp.instance_of?(String) then 
-		super(RegexpParser.new(regexp).to_a)
-	elsif regexp.instance_of?(RegexpParser) then 
-		super(regexp.to_a)
-	elsif regexp.instance_of?(Regexp) then 
-		super()
-		super(RegexpParser.new(regexp.source).to_a)
 	else
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
