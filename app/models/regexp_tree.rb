@@ -95,6 +95,30 @@ def RegexpTree.promote(node)
 		raise "unexpected node=#{node.inspect}"
 	end #if
 end #RegexpTree.promote
+def self.canonical_regexp(regexp)
+	if regexp.instance_of?(String) then
+		regexp=RegexpTree.regexp_rescued(regexp)
+	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
+		regexp=RegexpTree.regexp_rescued(regexp.to_s)
+	elsif regexp.nil? then
+		return //
+	elsif !regexp.instance_of?(Regexp) then
+		raise "Unexpected regexp.class=#{regexp.class}."
+	end #if
+	return regexp
+end #canonical_regexp
+def self.canonical_regexp_tree(regexp)
+	if regexp.instance_of?(String) then
+		regexp=RegexpTree.new(regexp)
+	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
+		regexp=RegexpTree.new(regexp.to_s)
+	elsif regexp.nil? then
+		return //
+	elsif !regexp.instance_of?(Regexp) then
+		raise "Unexpected regexp.class=#{regexp.class.inspect}."
+	end #if
+	return regexp
+end #canonical_regexp_tree
 Binary_range='[\000-\377]'
 Any_binary_string="#{Binary_range}*"
 include Inline_Assertions
@@ -391,31 +415,6 @@ end #grep
 def to_s
 	to_a.join
 end #to_s
-# the useful inverse function of new. String to regexp
-def self.canonical_regexp(regexp)
-	if regexp.instance_of?(String) then
-		regexp=RegexpTree.regexp_rescued(regexp)
-	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=RegexpTree.regexp_rescued(regexp.to_s)
-	elsif regexp.nil? then
-		return //
-	elsif !regexp.instance_of?(Regexp) then
-		raise "Unexpected regexp.class=#{regexp.class}."
-	end #if
-	return regexp
-end #canonical_regexp
-def self.canonical_regexp_tree(regexp)
-	if regexp.instance_of?(String) then
-		regexp=RegexpTree.new(regexp)
-	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=RegexpTree.new(regexp.to_s)
-	elsif regexp.nil? then
-		return //
-	elsif !regexp.instance_of?(Regexp) then
-		raise "Unexpected regexp.class=#{regexp.class}."
-	end #if
-	return regexp
-end #canonical_regexp_tree
 def to_regexp(options=Default_options)
 	regexp_string=to_s
 	regexp=RegexpTree.regexp_rescued(regexp_string, options)
