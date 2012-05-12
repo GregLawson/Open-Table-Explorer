@@ -43,6 +43,9 @@ def <=>(other)
 	else
 		return nil
 	end #if
+Any=RegexpRepetition.new(RegexpTree::Any_binary_string, nil, nil, RegexpTree::Any_binary_string)
+Many=RegexpRepetition.new(".+", nil, nil, ".+")
+Dot_star=RegexpRepetition.new(['.','*'], nil, nil, RegexpTree::Any_binary_string)
 end #compare
 # calculate sum for merging sequential repetitions
 def +(other)

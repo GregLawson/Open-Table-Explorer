@@ -97,9 +97,6 @@ def RegexpTree.promote(node)
 end #RegexpTree.promote
 Binary_range='[\000-\377]'
 Any_binary_string="#{Binary_range}*"
-Any=RegexpTree.new(Any_binary_string, Any_binary_string)
-Many=RegexpTree.new(".+", ".+")
-Dot_star=RegexpTree.new(['.','*'], Any_binary_string)
 include Inline_Assertions
 def probability_space_regexp
 	RegexpTree.new(@probability_space_regexp)
