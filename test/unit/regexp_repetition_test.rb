@@ -14,76 +14,82 @@ class RegexpTree < NestedArray # reopen class to add assertions
 include RegexpTreeAssertions
 extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
-class RepetitionLengthTest < ActiveSupport::TestCase
+class RegexpRepetitionTest < ActiveSupport::TestCase
 set_class_variables
-One_to_ten=RepetitionLength.new('.', 1, 10)
-One_a=RepetitionLength.new('a', UnboundedRange::Once)
-Any_repetition=RepetitionLength.new('.', 0, nil)
-def test_RepetitionLength_initialize
+One_to_ten=RegexpRepetition.new('.', 1, 10)
+One_a=RegexpRepetition.new('a', UnboundedRange::Once)
+Any_repetition=RegexpRepetition.new(RegexpTree::Any_binary_string, 0, nil)
+def test_RegexpRepetition_initialize
 	assert_equal(One_to_ten.repetition_length, 1..10)
 	assert_instance_of(UnboundedRange, One_a.repetition_length)
-	assert_instance_of(UnboundedRange, RepetitionLength.new('b+').repetition_length)
+	assert_instance_of(UnboundedRange, RegexpRepetition.new('b+').repetition_length)
 	assert_instance_of(UnboundedRange, Any_repetition.repetition_length)
 	assert_equal(UnboundedRange::Once, One_a.repetition_length)
 	assert_equal(One_a.repetition_length, 1..1)
+ 	assert_not_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
 end #initialize
-def test_RepetitionLength_compare
+def test_RegexpRepetition_compare
 	assert(nil == nil)
-	assert_equal(RepetitionLength.new('.', 1, nil), RepetitionLength.new('.', 1, nil))
-	assert_equal(RepetitionLength.new('.', 1, 3), RepetitionLength.new('.', 1, 3))
-	assert_operator(RepetitionLength.new('.', 1, 4), :>, RepetitionLength.new('.', 1, 3))
-	assert_operator(RepetitionLength.new('.', 0, 3), :>, RepetitionLength.new('.', 1, 3))
-	assert_operator(RepetitionLength.new('.', 0, nil), :>, RepetitionLength.new('.', 1, nil))
-	assert_operator(RepetitionLength.new('.', 1, nil), :>, RepetitionLength.new('.', 1, 3))
+	lhs=RegexpRepetition::Dot_star
+	rhs=RegexpRepetition::Many
+ 	assert_not_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
+ 	assert_not_nil(lhs.repeated_pattern)
+ 	assert_instance_of(RegexpRepetition, lhs)
+	assert_instance_of(RegexpRepetition, rhs)
+ 	assert_kind_of(RegexpTree, lhs.repeated_pattern)
+	assert_kind_of(RegexpTree, rhs.repeated_pattern)
+	lhs_length=lhs.repetition_length
+	rhs_length=rhs.repetition_length
+	assert_equal(UnboundedFixnum::Inf, lhs_length.last)
+	assert_equal(UnboundedFixnum::Inf, rhs_length.last)
+	assert_equal(lhs_length.first, 0)
+	assert_equal(rhs_length.first, 1, "rhs_length.first=#{rhs_length.first.inspect}")
+	base_compare=lhs.repeated_pattern <=> rhs.repeated_pattern
+ 	assert_operator(lhs.repetition_length.first, :<=, rhs.repetition_length.first, "lhs.repetition_length=#{lhs.repetition_length.inspect} rhs.repetition_length=#{rhs.repetition_length.inspect}")
+ 	assert_operator(lhs.repetition_length.last, :>=, rhs.repetition_length.last, "lhs.repetition_length=#{lhs.repetition_length.inspect} rhs.repetition_length=#{rhs.repetition_length.inspect}")
+ 	assert_operator(lhs.repetition_length, :>=, rhs.repetition_length, "lhs.repetition_length=#{lhs.repetition_length.inspect} rhs.repetition_length=#{rhs.repetition_length.inspect}")
+ 	length_compare=lhs.repetition_length <=> rhs.repetition_length
+	assert(base_compare.nonzero? || length_compare)
+	assert_operator(lhs, :>, rhs)
+	assert_equal(RegexpRepetition.new('.', 1, 3), RegexpRepetition.new('.', 1, 3))
+	assert_operator(RegexpRepetition.new('.', 1, 4), :>, RegexpRepetition.new('.', 1, 3))
+	assert_operator(RegexpRepetition.new('.', 0, 3), :>, RegexpRepetition.new('.', 1, 3))
+	assert_operator(RegexpRepetition.new('.', 0, nil), :>, RegexpRepetition.new('.', 1, nil))
+	assert_operator(RegexpRepetition.new('.', 1, nil), :>, RegexpRepetition.new('.', 1, 3))
+	assert_operator(RegexpRepetition::Any, :>, RegexpRepetition::Many)
+	assert_operator(RegexpRepetition::Any, :>, RegexpRepetition::Dot_star)
+	assert_operator(RegexpRepetition::Dot_star, :>, RegexpRepetition::Many)
 end #compare
-def test_plus
-	rep=RepetitionLength.new('.', 1, 2)
-	other=RepetitionLength.new('.', 1, 2)
-	assert_equal({"max"=>4, "min"=>2}, rep+other)
-	assert_equal({"max"=>nil, "min"=>2}, rep+RepetitionLength.new('.', 1, nil))
-	assert_equal({"max"=>nil, "min"=>2}, RepetitionLength.new('.', 1, nil)+rep)
-end #plus
-Any_length=RegexpTree::Any.repetition_length
-Many_length=RegexpTree::Many.repetition_length
+Any_length=Any_repetition.repetition_length
+Many_length=RegexpRepetition::Many.repetition_length
 def test_intersect
-	assert_include('&', RepetitionLength.instance_methods(false))
-	assert_equal({"max"=>nil, "min"=>1}, Any_length.&(Many_length))
+	assert_include('&', RegexpRepetition.instance_methods(false))
+	assert_equal(UnboundedRange::Any_range, Any_length.&(Many_length))
 	assert_equal({"max"=>nil, "min"=>1}, Any_length & Many_length)
 end #intersect
 def test_union
-	assert_equal({"max"=>nil, "min"=>0}, Any_length | Many_length)
+	assert_equal(UnboundedRange::Any_range, UnboundedRange::Any_range | UnboundedRange::Many_range)
 end #union / generalization
 Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
-def test_canonical_repetition_tree
-	assert_equal(Repetition_1_2, RepetitionLength.new('.', 1,2).canonical_repetition_tree)
-end #canonical_repetition_tree
-One_to_ten=RepetitionLength.new('.', 1, 10)
-Any_repetition=RepetitionLength.new('.', 0, nil)
+One_to_ten=RegexpRepetition.new('.', 1, 10)
+Any_repetition=RegexpRepetition.new('.', 0, nil)
 Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
 def test_canonical_repetition_tree
-	assert_equal(Repetition_1_2, RepetitionLength.new('.', 1,2).canonical_repetition_tree)
+	assert_equal(Repetition_1_2, RegexpRepetition.new('.', 1,2).canonical_repetition_tree)
 end #canonical_repetition_tree
 def test_concise_repetition_node
-	assert_equal('', RepetitionLength.new('.', 1, 1).concise_repetition_node)
-	assert_equal("+", RepetitionLength.new('.', 1, nil).concise_repetition_node)
-	assert_equal("?", RepetitionLength.new('.', 0, 1).concise_repetition_node)
-	assert_equal("*", RepetitionLength.new('.', 0, nil).concise_repetition_node)
-	assert_equal(Repetition_1_2, RepetitionLength.new('.', 1,2).concise_repetition_node)
-	assert_equal(['{',['2'], '}'], RepetitionLength.new('.', 2, 2).concise_repetition_node)
-end #concise_repetition_node
-def test_concise_repetition_node
-	assert_equal('', RepetitionLength.new('.', 1, 1).concise_repetition_node)
-	assert_equal("+", RepetitionLength.new('.', 1, nil).concise_repetition_node)
-	assert_equal("?", RepetitionLength.new('.', 0, 1).concise_repetition_node)
-	assert_equal("*", RepetitionLength.new('.', 0, nil).concise_repetition_node)
-	assert_equal(Repetition_1_2, RepetitionLength.new('.', 1,2).concise_repetition_node)
-	assert_equal(['{',['2'], '}'], RepetitionLength.new('.', 2, 2).concise_repetition_node)
+	assert_equal('', RegexpRepetition.new('.', 1, 1).concise_repetition_node)
+	assert_equal("+", RegexpRepetition.new('.', 1, nil).concise_repetition_node)
+	assert_equal("?", RegexpRepetition.new('.', 0, 1).concise_repetition_node)
+	assert_equal("*", RegexpRepetition.new('.', 0, nil).concise_repetition_node)
+	assert_equal(Repetition_1_2, RegexpRepetition.new('.', 1,2).concise_repetition_node)
+	assert_equal(['{',['2'], '}'], RegexpRepetition.new('.', 2, 2).concise_repetition_node)
 end #concise_repetition_node
 def test_probability_range
-	assert_equal(1.0, Any.probability_of_repetition(1))
-	assert_not_nil(Any.probability_of_repetition(1))
+	assert_equal(1.0, Any_repetition.probability_of_repetition(1))
+	assert_not_nil(Any_repetition.probability_of_repetition(1))
 	assert_equal(1.0..1.0, Many.probability_range)
-	assert_equal(0..1.0, RegexpTree::Dot_star.probability_range)
+	assert_equal(0..1.0, RegexpRepetition::Dot_star.probability_range)
 	assert_equal(1.0/95..1.0/95, Asymmetrical_Tree.probability_range)
 
 	assert_equal(1.0/95..1.0/95, No_anchor.probability_range)
@@ -92,7 +98,7 @@ def test_probability_range
 	assert_equal(1.0/95..1.0/95, Both_anchor.probability_range)
 end #probability_range
 def test_probability_of_repetition
-	rhs=Any
+	rhs=Any_repetition
 	alternative_list=rhs.repeated_pattern.alternatives? # kludge for now
 	assert_not_nil(alternative_list)
 	alternatives=alternative_list.size

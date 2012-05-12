@@ -5,142 +5,102 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class RepetitionLength < RegexpTree
+class RegexpRepetition < RegexpTree
 include Comparable
 attr_reader :repeated_pattern,:repetition_length
-# RepetitionLength.new(RegexpTree)
-# RepetitionLength.new(RegexpTree, UnboundedRange)
-# RepetitionLength.new(RegexpTree, min, max)
+# RegexpRepetition.new(RegexpTree)
+# RegexpRepetition.new(RegexpTree, UnboundedRange)
+# RegexpRepetition.new(RegexpTree, min, max)
 # Ambiguity of nil for third prameter: missing or infinity?
 # Resolved by checking second parameter for numric or Range to resolve ambiguity
-def initialize(branch, min=nil, max=nil)
-	branch=RepetitionLength.promote(branch)
+def initialize(branch, min=nil, max=nil, probability_space_regexp='[[:print:]]+', options=Default_options)
+	branch=RegexpRepetition.promote(branch)
+	@repeated_pattern=branch.repeated_pattern
 	if !max.nil? then # all arguments provided
-		super(branch.repeated_pattern)
 		@repetition_length=UnboundedRange.new(min, max)
 		raise "min must not be nil." if min.nil? 
 	elsif !min.nil? then # only one length argument
 		if min.kind_of?(Range) then
-			super(branch.repeated_pattern)
 			@repetition_length=min
 		else #third parameter specified as nil/infinity
-			super(branch.repeated_pattern)
 			@repetition_length=UnboundedRange.new(min, max)
 			raise "min must not be nil." if min.nil? 
 		end #if
 	else # implicit length
-		super(branch.repeated_pattern)
 		@repetition_length=branch.repetition_length
 	end #if
 end #initialize
-def <=>(other)
- 	if @begin==other.begin && @end==other.end && self.repeated_pattern==other.repeated_pattern then
-		return 0
-	elsif @begin<=other.begin && (@end.nil? || @end>=other.end) then
-		return 1
-	elsif other.begin<=@begin && (other.end.nil? || other.end>=@end) then
-		return -1
-	else
-		return nil
-	end #if
 Any=RegexpRepetition.new(RegexpTree::Any_binary_string, nil, nil, RegexpTree::Any_binary_string)
 Many=RegexpRepetition.new(".+", nil, nil, ".+")
 Dot_star=RegexpRepetition.new(['.','*'], nil, nil, RegexpTree::Any_binary_string)
+
+def <=>(rhs)
+	lhs=self
+ 	base_compare=lhs.repeated_pattern <=> rhs.repeated_pattern
+ 	length_compare=lhs.repetition_length <=> rhs.repetition_length
+	return base_compare.nonzero? || length_compare
 end #compare
-# calculate sum for merging sequential repetitions
-def +(other)
-	if @end.nil? || other.end.nil? then
-		max=nil # infinity+ anything == infinity
-	else
-		max=@end+other.end
-	end #if
-	return RepetitionLength.new(@begin+other.begin, max)
-end #plus
-# intersection. If neither is a subset of the other return nil 
-def &(other)
-	min= [@begin, other.begin].max
+# intersection. If neither is a subset of the rhs return nil 
+def &(rhs)
+	min= [@begin, rhs.begin].max
 	max=if @end.nil? then
-		other.end
+		rhs.end
 	else
-		case @end <=> other.end
+		case @end <=> rhs.end
 		when 1,0
-			other.end
+			rhs.end
 		when -1
 			@end
 		when nil
 			return nil	
 		end #case
 	end #if
-	RepetitionLength.new(min, max)
+	RegexpRepetition.new(min, max)
 end #intersect
 # Union. Unlike set union disjoint sets return a spanning set.
-def |(other)
-	min= [@begin, other.begin].min
+def |(rhs)
+	min= [@begin, rhs.begin].min
 	max=if @end.nil? then
 		nil
 	else
-		case @end <=> other.end
+		case @end <=> rhs.end
 		when 1,0
 			@end
 		when -1
-			other.end
+			rhs.end
 		when nil
 			max=[@end, ther.end].max	
 		end #case
 	end #if
-	RepetitionLength.new(min, max)
+	RegexpRepetition.new(min, max)
 end #union / generalization
 # the useful inverse function of new. String to regexp
-def self.canonical_regexp(regexp)
-	if regexp.instance_of?(String) then
-		regexp=RegexpTree.regexp_rescued(regexp)
-	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=RegexpTree.regexp_rescued(regexp.to_s)
-	elsif regexp.nil? then
-		return //
-	elsif !regexp.instance_of?(Regexp) then
-		raise "Unexpected regexp.class=#{regexp.class}."
-	end #if
-	return regexp
-end #canonical_regexp
-def self.canonical_regexp_tree(regexp)
-	if regexp.instance_of?(String) then
-		regexp=RegexpTree.new(regexp)
-	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=RegexpTree.new(regexp.to_s)
-	elsif regexp.nil? then
-		return //
-	elsif !regexp.instance_of?(Regexp) then
-		raise "Unexpected regexp.class=#{regexp.class}."
-	end #if
-	return regexp
-end #canonical_regexp_tree
-def canonical_repetition_tree(min=@begin, max=@end)
+def canonical_repetition_tree(min=self.repetition_length.begin, max=self.repetition_length.end)
 	return RegexpTree.new(['{', [min.to_s, ',', max.to_s], '}'])
 end #canonical_repetition_tree
 # Return a RegexpTree node for self
 # Concise means to use abbreviations like '*', '+', ''
 # rather than the canonical {n,m}
 # If no repetition returns '' equivalent to {1,1}
-def concise_repetition_node(min=@begin, max=@end)
-	if min==0 then
-		if max==1 then
+def concise_repetition_node(min=self.repetition_length.begin, max=self.repetition_length.end)
+	if min.to_i==0 then
+		if max.to_i==1 then
 			return '?'
-		elsif max.nil? then
+		elsif max==UnboundedFixnum::Inf then
 			return '*'
 		else
 			return canonical_repetition_tree(min, max)
 		end #if
-	elsif min==1 then
+	elsif min.to_i==1 then
 		if max==1 then
 			return ''
-		elsif max.nil? then
+		elsif max==UnboundedFixnum::Inf then
 			return '+'
 		else
 			return canonical_repetition_tree(min, max)
 		end #if
 	elsif min==max then
-		return RegexpTree.new(['{', [min.to_s], '}'])
+		return RegexpTree.new(['{', [min.to_i.to_s], '}'])
 	else
 		return canonical_repetition_tree(min, max)
 	end #if
@@ -159,7 +119,7 @@ end #probability_range
 # Here the probability distribution is 
 # assumed uniform across the probability space
 # ranges from zero for an impossible match (usually avoided)
-# to 1 for certain match like /.*/ (actually Any is more accurate)
+# to 1 for certain match like /.*/ (actually Any_repetition is more accurate)
 # returns nil if indeterminate (e.g. nested repetitions)
 # (call probability_range or RegexpMatch#probability instead)
 # match_length (of random characters) is useful in unanchored cases
@@ -221,4 +181,4 @@ def merge_to_repetition(branch=self)
 		end #if
 	end #if
 end #merge_to_repetition
-end #RepetitionLength
+end #RegexpRepetition
