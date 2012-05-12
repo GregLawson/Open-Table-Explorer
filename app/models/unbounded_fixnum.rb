@@ -31,6 +31,16 @@ def UnboundedFixnum.promote(other, infinity_sign=nil)
 		UnboundedFixnum.new(other, infinity_sign)
 	end #if
 end #promote
+def to_s
+	case self
+	when Inf
+		return 'Inf'
+	when Neg_inf
+		return 'Neg_inf'
+	else
+		return @fixnum
+	end #case
+end #inspect
 def integer? # for Numeric Class
 	return true 
 end #integer
