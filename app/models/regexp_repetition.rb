@@ -42,20 +42,10 @@ def <=>(rhs)
 end #compare
 # intersection. If neither is a subset of the rhs return nil 
 def &(rhs)
-	min= [@begin, rhs.begin].max
-	max=if @end.nil? then
-		rhs.end
-	else
-		case @end <=> rhs.end
-		when 1,0
-			rhs.end
-		when -1
-			@end
-		when nil
-			return nil	
-		end #case
-	end #if
-	RegexpRepetition.new(min, max)
+	lhs=self
+ 	base=lhs.repeated_pattern & rhs.repeated_pattern
+ 	length=lhs.repetition_length & rhs.repetition_length
+	return RegexpRepetition.new(base, length)
 end #intersect
 # Union. Unlike set union disjoint sets return a spanning set.
 def |(rhs)
@@ -109,7 +99,7 @@ end #probability_range
 # Here the probability distribution is 
 # assumed uniform across the probability space
 # ranges from zero for an impossible match (usually avoided)
-# to 1 for certain match like /.*/ (actually Any_repetition is more accurate)
+# to 1 for certain match like /.*/ (actually RegexpRepetition::Any is more accurate)
 # returns nil if indeterminate (e.g. nested repetitions)
 # (call probability_range or RegexpMatch#probability instead)
 # match_length (of random characters) is useful in unanchored cases
