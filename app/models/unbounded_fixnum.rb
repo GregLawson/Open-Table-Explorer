@@ -40,6 +40,9 @@ def to_s
 	else
 		return @fixnum
 	end #case
+end #to_s
+def inspect
+	return to_s
 end #inspect
 def integer? # for Numeric Class
 	return true 
