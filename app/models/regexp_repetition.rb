@@ -59,20 +59,10 @@ def &(rhs)
 end #intersect
 # Union. Unlike set union disjoint sets return a spanning set.
 def |(rhs)
-	min= [@begin, rhs.begin].min
-	max=if @end.nil? then
-		nil
-	else
-		case @end <=> rhs.end
-		when 1,0
-			@end
-		when -1
-			rhs.end
-		when nil
-			max=[@end, ther.end].max	
-		end #case
-	end #if
-	RegexpRepetition.new(min, max)
+	lhs=self
+ 	base=lhs.repeated_pattern | rhs.repeated_pattern
+ 	length=lhs.repetition_length | rhs.repetition_length
+	return RegexpRepetition.new(base, length)
 end #union / generalization
 # the useful inverse function of new. String to regexp
 def canonical_repetition_tree(min=self.repetition_length.begin, max=self.repetition_length.end)

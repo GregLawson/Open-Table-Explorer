@@ -64,8 +64,15 @@ Any_length=Any_repetition.repetition_length
 Many_length=RegexpRepetition::Many.repetition_length
 def test_intersect
 	assert_include('&', RegexpRepetition.instance_methods(false))
-	assert_equal(UnboundedRange::Any_range, Any_length.&(Many_length))
-	assert_equal({"max"=>nil, "min"=>1}, Any_length & Many_length)
+	lhs=RegexpRepetition::Any
+	rhs=RegexpRepetition::Many
+ 	assert_equal(RegexpTree::Binary_range, lhs.repeated_pattern)
+ 	assert_equal('.', rhs.repeated_pattern)
+ 	base=lhs.repeated_pattern & rhs.repeated_pattern
+ 	length=lhs.repetition_length & rhs.repetition_length
+	assert_equal(RegexpRepetition::Many, RegexpRepetition.new(base, length))
+	assert_equal(RegexpRepetition::Many, RegexpRepetition::Any.&(RegexpRepetition::Many))
+	assert_equal(RegexpRepetition::Once, RegexpRepetition::Once & RegexpRepetition::Any)
 end #intersect
 def test_union
 	assert_equal(UnboundedRange::Any_range, UnboundedRange::Any_range | UnboundedRange::Many_range)
