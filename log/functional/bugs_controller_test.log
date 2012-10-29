@@ -1,7 +1,0 @@
-Loaded suite test/functional/bugs_controller_test
-Started
-hash parameter=error_type_idcreated_atSat Oct 15 06:57:50 UTC 2011resolutionupdated_atSat Oct 15 06:57:50 UTC 2011urlunique keyguiid516212065contextall new and edit submits? but only in production.errorActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
-.......
-Finished in 0.833276 seconds.
-
-7 tests, 31 assertions, 0 failures, 0 errors
