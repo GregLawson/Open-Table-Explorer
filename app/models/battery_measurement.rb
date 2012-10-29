@@ -9,8 +9,7 @@ class BatteryMeasurement
 include NoDB
 extend NoDB::ClassMethods
 def self.all
-	fixtures = YAML::load( File.open('test/data_sources/battery_measurements.yml' ) )
-	fixtures.values #map
+	data_source_yaml.values #map
 end #all
 def self.column_remap
 end #column_remap

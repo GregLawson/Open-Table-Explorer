@@ -19,4 +19,7 @@ def test_all
 		assert_instance_of(Hash, r)
 	end #each
 end #all
+def test_dump
+	BatteryMeasurement.dump
+end #test_dump
 end #BatteryTest

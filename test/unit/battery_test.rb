@@ -13,13 +13,15 @@ class BatteryTest < ActiveSupport::TestCase
 @@test_name=self.name
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
 @@table_name=@@model_name.tableize
-fixtures @@table_name.to_sym
+#nodb fixtures @@table_name.to_sym
 def test_initialize
 end #initialize
 def test_all
 end #all
 def test_Battery
 	assert_include('href', Url.column_names)
+	assert_not_nil(Url.where("href='EEG2'"))
+	assert_not_nil(Url.where("href='EEG2'").first)
 	file=Url.where("href='EEG2'").first.url
 	assert_not_empty(file)
 	assert_equal('File',StreamMethod.find_by_name('File').name)
