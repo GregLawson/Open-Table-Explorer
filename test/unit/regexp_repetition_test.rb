@@ -16,21 +16,19 @@ extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
 class RegexpRepetitionTest < ActiveSupport::TestCase
 set_class_variables
-One_to_ten=RegexpRepetition.new('.', 1, 10)
-One_a=RegexpRepetition.new('a', UnboundedRange::Once)
 def test_RegexpRepetition_initialize
 	assert_equal(One_to_ten.repetition_length, 1..10)
 	assert_instance_of(UnboundedRange, One_a.repetition_length)
 	assert_instance_of(UnboundedRange, RegexpRepetition.new('b+').repetition_length)
-	assert_instance_of(UnboundedRange, RegexpRepetition::Any.repetition_length)
+	assert_instance_of(UnboundedRange, RegexpRepetition::TestCases::Any.repetition_length)
 	assert_equal(UnboundedRange::Once, One_a.repetition_length)
 	assert_equal(One_a.repetition_length, 1..1)
  	assert_not_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
 end #initialize
 def test_RegexpRepetition_compare
 	assert(nil == nil)
-	lhs=RegexpRepetition::Dot_star
-	rhs=RegexpRepetition::Many
+	lhs=RegexpRepetition::TestCases::Dot_star
+	rhs=RegexpRepetition::TestCases::Many
  	assert_not_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
  	assert_not_nil(lhs.repeated_pattern)
  	assert_instance_of(RegexpRepetition, lhs)
@@ -55,45 +53,45 @@ def test_RegexpRepetition_compare
 	assert_operator(RegexpRepetition.new('.', 0, 3), :>, RegexpRepetition.new('.', 1, 3))
 	assert_operator(RegexpRepetition.new('.', 0, nil), :>, RegexpRepetition.new('.', 1, nil))
 	assert_operator(RegexpRepetition.new('.', 1, nil), :>, RegexpRepetition.new('.', 1, 3))
-	assert_operator(RegexpRepetition::Any, :>, RegexpRepetition::Many)
-	assert_operator(RegexpRepetition::Any, :>, RegexpRepetition::Dot_star)
-	assert_operator(RegexpRepetition::Dot_star, :>, RegexpRepetition::Many)
+	assert_operator(RegexpRepetition::TestCases::Any, :>, RegexpRepetition::TestCases::Many)
+	assert_operator(RegexpRepetition::TestCases::Any, :>, RegexpRepetition::TestCases::Dot_star)
+	assert_operator(RegexpRepetition::TestCases::Dot_star, :>, RegexpRepetition::TestCases::Many)
 end #compare
-Any_length=RegexpRepetition::Any.repetition_length
-Many_length=RegexpRepetition::Many.repetition_length
 def test_intersect
 	assert_include('&', RegexpRepetition.instance_methods(false))
-	lhs=RegexpRepetition::Any
-	rhs=RegexpRepetition::Many
- 	assert_equal(RegexpTree::Binary_range, lhs.repeated_pattern)
- 	assert_equal('.', rhs.repeated_pattern)
+	lhs=RegexpRepetition::TestCases::Any
+	rhs=RegexpRepetition::TestCases::Many
+	rhs=RegexpRepetition.promote(rhs)
+ 	assert_equal(RegexpParse::TestCases::Any_binary_char_string, lhs.repeated_pattern.to_s)
+ 	assert_equal(RegexpRepetition.new('.'), RegexpRepetition.new('.') & RegexpParse::TestCases::Any_binary_char_string)
+ 	assert_equal(RegexpTree.new('.'), RegexpTree.new('.') & rhs.repeated_pattern)
  	base=lhs.repeated_pattern & rhs.repeated_pattern
  	length=lhs.repetition_length & rhs.repetition_length
-	assert_equal(RegexpRepetition::Many, RegexpRepetition.new(base, length))
-	assert_equal(RegexpRepetition::Many, RegexpRepetition::Any.&(RegexpRepetition::Many))
-	assert_equal(RegexpRepetition::Once, RegexpRepetition::Once & RegexpRepetition::Any)
+	assert_equal(RegexpRepetition::TestCases::Many, RegexpRepetition.new(base, length))
+	assert_equal(RegexpRepetition::TestCases::Many, RegexpRepetition::TestCases::Any.&(RegexpRepetition::TestCases::Many))
+	assert_equal(UnboundedRange::Once, UnboundedRange::Once & RegexpRepetition::TestCases::Any)
 end #intersect
 def test_union
 	assert_equal(UnboundedRange::Any_range, UnboundedRange::Any_range | UnboundedRange::Many_range)
 end #union / generalization
-Repetition_1_2=RegexpTree.new(["{", ["1", ",", "2"], "}"])
 One_to_ten=RegexpRepetition.new('.', 1, 10)
 def test_canonical_repetition_tree
-	assert_equal(Repetition_1_2, RegexpRepetition.new('.', 1,2).canonical_repetition_tree)
+	assert_equal(UnboundedRange::Repetition_1_2, RegexpRepetition.new('.', 1,2).canonical_repetition_tree)
 end #canonical_repetition_tree
 def test_concise_repetition_node
 	assert_equal('', RegexpRepetition.new('.', 1, 1).concise_repetition_node)
 	assert_equal("+", RegexpRepetition.new('.', 1, nil).concise_repetition_node)
 	assert_equal("?", RegexpRepetition.new('.', 0, 1).concise_repetition_node)
 	assert_equal("*", RegexpRepetition.new('.', 0, nil).concise_repetition_node)
-	assert_equal(Repetition_1_2, RegexpRepetition.new('.', 1,2).concise_repetition_node)
+	assert_equal(UnboundedRange::Repetition_1_2, RegexpRepetition.new('.', 1,2).concise_repetition_node)
+	assert_equal(["{", ["1", ',', "2"], "}"], RegexpRepetition.new('.', 1,2).concise_repetition_node)
 	assert_equal(['{',['2'], '}'], RegexpRepetition.new('.', 2, 2).concise_repetition_node)
 end #concise_repetition_node
 def test_probability_range
-	assert_equal(1.0, RegexpRepetition::Any.probability_of_repetition(1))
-	assert_not_nil(RegexpRepetition::Any.probability_of_repetition(1))
+	assert_equal(1.0, RegexpRepetition::TestCases::Any.probability_of_repetition(1))
+	assert_not_nil(RegexpRepetition::TestCases::Any.probability_of_repetition(1))
 	assert_equal(1.0..1.0, Many.probability_range)
-	assert_equal(0..1.0, RegexpRepetition::Dot_star.probability_range)
+	assert_equal(0..1.0, RegexpRepetition::TestCases::Dot_star.probability_range)
 	assert_equal(1.0/95..1.0/95, Asymmetrical_Tree.probability_range)
 
 	assert_equal(1.0/95..1.0/95, No_anchor.probability_range)
@@ -102,7 +100,7 @@ def test_probability_range
 	assert_equal(1.0/95..1.0/95, Both_anchor.probability_range)
 end #probability_range
 def test_probability_of_repetition
-	rhs=RegexpRepetition::Any
+	rhs=RegexpRepetition::TestCases::Any
 	alternative_list=rhs.repeated_pattern.alternatives? # kludge for now
 	assert_not_nil(alternative_list)
 	alternatives=alternative_list.size
