@@ -5,7 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
+require_relative '../../app/models/regexp_tree.rb'
+require_relative '../../app/models/regexp_match_assertions.rb'
+#require '/home/greg/Desktop/git/no_rails/test/assertions/regexp_tree.rb'
 # Ensure assertions are included in classes.
 class GenericType < ActiveRecord::Base
 include GenericTypeAssertions

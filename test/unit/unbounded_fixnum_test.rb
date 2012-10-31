@@ -5,8 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test_helper'
-class UnboundedFixnumTest < ActiveSupport::TestCase
+require_relative 'test_environment'
+require_relative '../../app/models/unbounded_fixnum.rb'
+require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
 def test_UnboundedFixnum_initialize
 	assert_not_nil(UnboundedFixnum)
 	assert_instance_of(Class, UnboundedFixnum)

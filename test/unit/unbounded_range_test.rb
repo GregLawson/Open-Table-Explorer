@@ -5,8 +5,19 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test_helper'
-class UnboundedRangeTest < ActiveSupport::TestCase
+require_relative 'test_environment'
+require_relative '../../app/models/unbounded_range.rb'
+require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
+class UnboundedFixnum  # reopen class to add assertions
+include UnboundedFixnum::Assertions
+extend UnboundedFixnum::Assertions::ClassMethods
+end #UnboundedFixnum
+class UnboundedRange  # reopen class to add assertions
+include UnboundedRange::Assertions
+#extend UnboundedRange::Assertions::ClassMethods
+end #UnboundedRange
+class UnboundedRangeTest < TestCase
 One_to_ten=UnboundedRange.new(1, 10)
 Any_repetition=UnboundedRange.new(0, UnboundedFixnum::Inf)
 def test_UnboundedRange_initialize

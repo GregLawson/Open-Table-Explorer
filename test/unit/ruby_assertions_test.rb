@@ -5,14 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
-class RubyAssertionsTest < ActiveSupport::TestCase
-@@table_name='stream_patterns'
-fixtures @@table_name.to_sym
-fixtures :table_specs
-require 'test/test_helper_test_tables.rb'
-
-def test_testCallResult
+require_relative 'test_environment'
+require_relative '../assertions/ruby_assertions.rb'
 	#~ explain_assert_respond_to(self,:testMethod)
 	testCallResult(self,:testMethod)
 	testCall(self,:testMethod)
