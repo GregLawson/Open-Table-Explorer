@@ -18,6 +18,7 @@ include UnboundedRange::Assertions
 #extend UnboundedRange::Assertions::ClassMethods
 end #UnboundedRange
 class UnboundedRangeTest < TestCase
+include UnboundedRange::Constants
 One_to_ten=UnboundedRange.new(1, 10)
 Any_repetition=UnboundedRange.new(0, UnboundedFixnum::Inf)
 def test_UnboundedRange_initialize
@@ -39,9 +40,15 @@ def test_UnboundedRange_promote
 	assert_equal(UnboundedRange.promote(UnboundedRange.new(1, UnboundedFixnum::Inf)), UnboundedRange::Many_range)
 	assert_equal(UnboundedRange::Many_range, UnboundedRange.new(1, nil))
 end #promote
-def test_UnboundedRange_compare
+def test_compare
 	lhs=UnboundedRange::Many_range
 	rhs=UnboundedRange.new(1, UnboundedFixnum::Inf)
+	lhs.assert_post_conditions
+	rhs.assert_post_conditions
+	promotion=UnboundedRange.promote(rhs)
+	promotion.assert_post_conditions
+	lhs.assert_unbounded_range_equal(promotion)
+	assert_equal(rhs, promotion)
 	assert_equal(rhs, UnboundedRange.promote(rhs))
 	rhs=UnboundedRange.promote(rhs)
 	assert((rhs.last<=lhs.last))
@@ -68,6 +75,7 @@ def test_UnboundedRange_compare
 	assert_operator(UnboundedRange.new(0, 3), :>, UnboundedRange.new(1, 3))
 	assert_operator(UnboundedRange.new(0, UnboundedFixnum::Inf), :>, UnboundedRange.new(1, UnboundedFixnum::Inf))
 	assert_operator(UnboundedRange.new(1, UnboundedFixnum::Inf), :>, UnboundedRange.new(1, 3))
+	Once.assert_compare(0, Once)
 end #compare
 def test_plus
 	rep=UnboundedRange.new(1, 2)
@@ -78,11 +86,45 @@ def test_plus
 	assert_equal(UnboundedRange.new(2, UnboundedFixnum::Inf), rep+UnboundedRange.new(1, UnboundedFixnum::Inf))
 end #plus
 def test_intersect
-	assert_include('&', UnboundedRange.instance_methods(false))
+	assert_respond_to(self, :assert_include)
+	assert_include(UnboundedRange.instance_methods(false), :&)
 	assert_equal(UnboundedRange::Many_range, UnboundedRange::Any_range.&(UnboundedRange::Many_range))
 	assert_equal(UnboundedRange::Many_range, UnboundedRange::Any_range & UnboundedRange::Many_range)
 end #intersect
 def test_union
 	assert_equal(UnboundedRange::Any_range, UnboundedRange::Any_range | UnboundedRange::Many_range)
 end #union / generalization
+def assert_post_conditions
+	Any_range.assert_post_conditions
+	Many_range.assert_post_conditions
+	Optional.assert_post_conditions
+	Repetition_1_2.assert_post_conditions
+	Once.assert_post_conditions
+end #assert_post_conditions
+def test_assert_compare
+	Any_range.assert_compare(1, Many_range)
+	Any_range.assert_compare(1, Optional)
+	Any_range.assert_compare(1, Repetition_1_2)
+	Any_range.assert_compare(1, Once)
+	Many_range.assert_compare(1, Repetition_1_2)
+	Many_range.assert_compare(1, Once)
+	Optional.assert_compare(1, Once)
+	Repetition_1_2.assert_compare(1, Once)
+	Once.assert_compare(0, Once)
+end #assert_operator
+def test_assert_operator
+# roughly sort from general to speccific ranges
+	assert_operator(Any_range, :>, Many_range)
+	assert_operator(Many_range, :>, Repetition_1_2)
+	assert_operator(Optional, :>, Once)
+	assert_operator(Repetition_1_2, :>, Once)
+	assert_operator(Once, :>=, Once)
+end #assert_operator
+def test_assert_unbounded_range_equal
+	assert_respond_to(self, :assert_include)
+	assert_include(UnboundedRange::Assertions.instance_methods(false), :assert_unbounded_range_equal)
+	UnboundedRange::Any_range.assert_unbounded_range_equal(UnboundedRange::Any_range)
+	UnboundedRange::Any_range.assert_unbounded_range_equal(UnboundedRange.new(0, UnboundedFixnum::Inf))
+	UnboundedRange.new(0, UnboundedFixnum::Inf).assert_unbounded_range_equal(UnboundedRange.new(0, UnboundedFixnum::Inf))
+end #assert_unbounded_range_equal
 end #UnboundedRangeTest
