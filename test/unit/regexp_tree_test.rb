@@ -17,19 +17,6 @@ extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
 class RegexpTreeTest < ActiveSupport::TestCase
 set_class_variables
-@@CONSTANT_PARSE_TREE=RegexpParser.new('K')
-@@keditor=@@CONSTANT_PARSE_TREE.clone
-@@CONSTANT_PARSE_TREE.freeze
-	assert_equal(['K'],@@CONSTANT_PARSE_TREE.to_a)
-
-KCeditor=RegexpParser.new('KC')
-KCETeditor=RegexpParser.new('KCET[^
-]*</tr>\s*(<tr.*</tr>).*KVIE')
-Anchor_root_test_case='a'
-No_anchor=RegexpTree.new(Anchor_root_test_case)
-Start_anchor=RegexpTree.new(Anchoring::Start_anchor_regexp+Anchor_root_test_case)
-End_anchor=RegexpTree.new(Anchor_root_test_case+Anchoring::End_anchor_regexp)
-Both_anchor=RegexpTree.new(Anchoring::Start_anchor_regexp+Anchor_root_test_case+Anchoring::End_anchor_regexp)
 def test_Anchoring_initialize
 	No_anchor.assert_anchoring
 	Start_anchor.assert_anchoring
@@ -78,19 +65,13 @@ def regexpParserTest(parser)
 	assert(parser.regexpTree!.size>0)
 	assert(parser.beyondString?)
 end #def
-Asymmetrical_Tree_Array=[['1','2'],'3']
-Asymmetrical_Tree=RegexpTree.new(Asymmetrical_Tree_Array)
-Sequence=RegexpTree.new(Asymmetrical_Tree.to_a.flatten)
-Echo_proc=Proc.new{|parseTree| parseTree}
-Constant_proc=Proc.new{|parseTree| '*'}
-Alternative_ab_of_abc_10=RegexpTree.new('a|b', '[abc]{1,10}')
 
 def test_probability_space_regexp
 	assert_equal(RegexpTree.new('[abc]{1,10}'), Alternative_ab_of_abc_10.probability_space_regexp)
 end #probability_space_regexp
 def test_probability_space_size
-	assert_equal(256, Any.probability_space_size)
-	assert_equal(194, Many.probability_space_size)
+	assert_equal(256, RegexpTree::Any.probability_space_size)
+	assert_equal(194, RegexpTree::Many.probability_space_size)
 	assert_equal(256, RegexpTree::Dot_star.probability_space_size)
 	assert_equal(95, Asymmetrical_Tree.probability_space_size)
 
@@ -113,6 +94,18 @@ def test_probability_of_sequence
 	assert_equal(1.0/95, End_anchor.probability_of_sequence)
 	assert_equal(1.0/95, Both_anchor.probability_of_sequence)
 end #probability_of_sequence
+def test_probability_of_alternatives
+	assert_equal(3, [1,2].reduce {|sum, e| sum + e })
+	summation=['a','b'].reduce(0) do |sum, e| 
+		assert_instance_of(String, e)
+		assert_instance_of(Fixnum, sum)
+		sum + e.size 
+	end #reduce
+	assert_equal(2, summation)
+	assert_equal(2, ['a','b'].reduce(0) {|sum, e| sum + e.size })
+	branch=Alternative_ab_of_abc_10
+	assert_equal(2.0/3, branch.probability_of_alternatives)
+end #probability_of_alternatives
 def test_OpeningBrackets
 	assert_equal('(',RegexpTree.OpeningBrackets[RegexpTree.ClosingBrackets.index(')')].chr)
 end #OpeningBrackets
@@ -127,7 +120,6 @@ def test_initialize
 	assert_equal(['K'], RegexpTree.new('K').to_a)
 	assert_equal([['1', '2'], '3'], Asymmetrical_Tree.to_a)
 	assert_equal(Asymmetrical_Tree_Array.flatten, Asymmetrical_Tree.to_a.flatten)
-	assert_equal(Sequence, Asymmetrical_Tree_Array.flatten)
 	assert_not_nil(RegexpTree.new(['.']))
 	assert_not_nil(RegexpTree.new('.'))
 	assert_not_nil(RegexpTree.new(/./))
@@ -165,17 +157,13 @@ end #compare_anchors
 def test_sequence_comparison
 	assert_equal(1, RegexpTree.new('ab').compare_sequence?(RegexpTree.new('abc')))
 	RegexpTree.new('ab').assert_sequence_specialized_by(RegexpTree.new('abc'))	
+	RegexpTree.new('ab').assert_sequence_specialized_by(RegexpTree.new('abc'))	
 end #sequence_comparison
-def binary_case?(branch=self)
-end #binary_case
-def test_case
-	assert_equal(Anchoring, Both_anchor.case?)
-	assert_equal(RepetitionLength, Any.case?)
-end #case
 def test_alternatives_intersect
-	rhs=Many.repeated_pattern
-	lhs=Any.repeated_pattern
-	assert_equal(Binary_range, rhs.to_s)
+	rhs=RegexpTree::Many.repeated_pattern
+	lhs=RegexpTree::Any.repeated_pattern
+	assert_equal('.', rhs.to_s)
+	assert_equal(RegexpParse::TestCases::Any_binary_char_string, lhs.to_s)
 	lhs_alternatives=lhs.alternatives?
 	rhs_alternatives=rhs.alternatives?
 	assert_instance_of(Array, lhs_alternatives)
@@ -187,6 +175,23 @@ end #alternatives_intersect
 A=RegexpTree.new('a')
 B=RegexpTree.new('b')
 Ab=RegexpTree.new('ab')
+def test_sequence_intersect
+#	alternatives=Ab.alternatives?
+	lhs=Ab
+	rhs=A
+	assert_nil(lhs.alternatives?)
+	assert_empty(lhs.alternatives?)
+	assert_not_nil(rhs.alternatives?)
+	assert_not_empty(rhs.alternatives?)
+	assert_instance_of(String, rhs[0])
+	assert_nil(lhs.alternatives?)
+#	assert_include(rhs[0], lhs.alternatives?)
+	assert_equal(rhs, lhs.sequence_intersect(A))
+	assert_equal(B, Ab.sequence_intersect(B))
+end #sequence_intersect
+def test_RegexpTree_intersection
+	assert_equal(RegexpTree::Many, RegexpTree::Any & RegexpTree::Many)
+end #intersection
 def test_compare
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
 	assert_operator(RegexpTree.new('a'), :==, RegexpTree.new('a'))
@@ -265,10 +270,10 @@ def test_alternatives
 	assert_equal(['a', 'b', 'c', 'd'], Alternatives_4.alternatives?)
 	assert_nil(Nested_alternatives.alternatives?)
 	assert_equal(['a'], RegexpTree.new('a').alternatives?('a'))
-	assert_equal(['.'], Any.repeated_pattern)
+	assert_equal(['.'], RegexpTree::Any.repeated_pattern)
 	assert_instance_of(Array, RegexpTree.new('.').character_class?)
 	assert_instance_of(Array, RegexpTree.new('.').alternatives?)
-	assert_instance_of(Array, Any.repeated_pattern.alternatives?)
+	assert_instance_of(Array, RegexpTree::Any.repeated_pattern.alternatives?)
 end #alternatives
 def test_character_class
 	character_class=RegexpTree.new('[a]')
@@ -284,12 +289,12 @@ def test_character_class
 	assert_equal(1, promoted_character_class.length)
 	assert_equal(character_class.character_class?, promoted_character_class.character_class?)
 	assert_instance_of(Array, promoted_character_class.character_class?)
-	assert_equal(256, Any.string_of_matching_chars.length)
-	assert_instance_of(Array, Any.repeated_pattern.string_of_matching_chars)
-	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
-	assert_equal(256, Any.repeated_pattern.character_class?.size)
-	assert_instance_of(Array, Any.repeated_pattern.character_class?)
-	assert_instance_of(Array, Any.repeated_pattern.alternatives?)
+	assert_equal(256, RegexpTree::Any.string_of_matching_chars.length)
+	assert_instance_of(Array, RegexpTree::Any.repeated_pattern.string_of_matching_chars)
+	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], RegexpTree::Any.repeated_pattern)
+	assert_equal(256, RegexpTree::Any.repeated_pattern.character_class?.size)
+	assert_instance_of(Array, RegexpTree::Any.repeated_pattern.character_class?)
+	assert_instance_of(Array, RegexpTree::Any.repeated_pattern.alternatives?)
 end #character_class
 def test_postfix_expression
 	assert_not_nil(RegexpTree::Dot_star)
@@ -313,57 +318,6 @@ def test_postfix_operator
 	assert(RegexpTree::Dot_star.postfix_operator?('*'),"RegexpTree::Dot_star.to_s=#{RegexpTree::Dot_star.to_s.inspect}")
 	assert(!RegexpTree::Dot_star.postfix_operator?('.'),"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
 end #postfix_operator
-def test_postfix_operator_walk
-	assert_equal(['1', '2', '3'], Asymmetrical_Tree.to_a.flatten)
-	assert_equal([['1', '2'], '3'], Asymmetrical_Tree.to_a)
-	assert_equal('*', Constant_proc.call(Sequence))
-	assert_equal(Sequence, Echo_proc.call(Sequence))
-	assert_equal(Asymmetrical_Tree, Echo_proc.call(Asymmetrical_Tree))
-	reverse_proc=Proc.new{|parseTree| parseTree.reverse}
-	assert_equal(Sequence.to_a.reverse, reverse_proc.call(Sequence))
-
-	assert_not_nil(RegexpTree.new(Asymmetrical_Tree))
-
-	assert_kind_of(Array, RegexpTree::Dot_star)
-	assert_equal(['.','*'], RegexpTree::Dot_star)
-	assert_equal(RegexpTree::Dot_star[-1], '*')
-	assert_not_equal(RegexpTree::Dot_star[0].class, Array)
-	assert_equal(RegexpTree::Dot_star, RegexpTree::Dot_star.postfix_operator_walk(&Echo_proc))
-	assert_equal(RegexpTree::Dot_star, RegexpTree::Dot_star.postfix_operator_walk{|p| p})
-	assert_equal(['.', '*'], RegexpTree.new(RegexpTree::Dot_star).postfix_operator_walk(&Echo_proc))
-	assert_equal(Sequence, RegexpTree.new(Sequence).postfix_operator_walk(&Constant_proc))
-	assert_equal(Sequence, RegexpTree.new(Sequence).postfix_operator_walk(&Echo_proc))
-	assert_equal(Asymmetrical_Tree, RegexpTree.new(Asymmetrical_Tree).postfix_operator_walk{|p| p})
-
-	assert_equal(['*'], RegexpTree.new([['.','*']]).postfix_operator_walk{|p| '*'})
-	assert(RegexpTree::Dot_star.postfix_expression?,"RegexpTree::Dot_star=#{RegexpTree::Dot_star.inspect}")
-	assert_equal(['*', 'C'], RegexpTree.new([['.','*'],'C']).postfix_operator_walk{|p| '*'})
-	assert_equal('*', Constant_proc.call(['.','*']))
-	assert_equal('*', RegexpTree::Dot_star.postfix_operator_walk(&Constant_proc))
-	assert_equal(['*'], Proc.new{|parseTree| parseTree[1..-1]}.call(RegexpTree::Dot_star))
-	assert_equal(RegexpTree, Proc.new{|parseTree| parseTree[1..-1].class}.call(RegexpTree::Dot_star))
-	visit_proc=Proc.new{|parseTree| parseTree[1..-1]}
-	assert_equal(['*'], visit_proc.call(RegexpTree::Dot_star))
-	assert_equal('.', ['.','*'][0])
-	assert_equal('.', [['.','*']][0][0])
-	visit_proc=Proc.new{|parseTree| parseTree[0]}
-	assert_equal('.', visit_proc.call(RegexpTree::Dot_star))
-	visit_proc=Proc.new{|parseTree| parseTree[1..-1]<<parseTree[0]}
-	assert_equal(['*', '.'], visit_proc.call(RegexpTree::Dot_star))
-	assert_equal(['*', '.'], RegexpTree::Dot_star.postfix_operator_walk(&visit_proc))
-	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
-	assert_equal('test/*[.]r*', Test_Pattern.to_pathname_glob)
-end #postfix_operator_walk
-def test_macro_call
-	macro=RegexpTree.new("[:alnum:]")
-	assert_equal(["[", ":", "a", "l", "n", "u", "m", ":", "]"], macro)
-	assert_equal('[', macro[0])
-	assert_equal(']', macro[-1])
-	inner_colons=macro[1..-2] # not another nested array
-	assert_equal(':', inner_colons[0])
-	assert_equal(':', inner_colons[-1])
-	assert_equal('alnum', macro.macro_call?)
-end #macro_call?
 Test_Pattern_Array=["t", "e", "s", "t", "/",
 	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
 	 	["[", ".", "]"],
@@ -417,45 +371,6 @@ end #to_s
 def test_to_regexp
 	assert_equal(/.*/mx,RegexpTree.new('.*').to_regexp)
 end #to_regexp
-Quantified_repetition=RegexpTree.new([".", ["{", "3", ",", "4", "}"]])
-Tree123=RegexpTree.new('[1-3]')
-def test_string_of_matching_chars
-	regexp=Regexp.new('\d')
-	char='9'
-	assert_match(regexp, char)
-	ascii_characters=(0..255).to_a.map { |i| i.chr}
-	assert_equal(256, ascii_characters.size)
-	assert_equal(['1','2','3'], ("\x31".."\x33").to_a)
-	assert_equal(['A','B','C'], ("\x41".."\x43").to_a)
-	assert_equal(['Q','R','S'], ("\x51".."\x53").to_a)
-	assert_equal(['a','b','c'], ("\x61".."\x63").to_a)
-	matches=(("\x31".."\x33").to_a.select do |char|
-		if regexp.match(char) then
-			char
-		else
-			nil
-		end #if
-	end) #select
-	assert_equal('123', matches.join)
-	assert_match(/[a-z]/, 'a')
-	assert_instance_of(Array, Tree123.string_of_matching_chars)
-	assert_instance_of(String, Tree123.string_of_matching_chars[0])
-	assert_equal(['[', '1', '-', '3', ']'], Tree123)
-	assert_equal(['[', '1', '-', '3', ']'], Tree123.to_a)
-	assert_equal(['1', '2', '3'], Tree123.string_of_matching_chars)
-	assert_equal('123', Tree123.string_of_matching_chars.join)
-	assert_equal('0123456789', Tree123.string_of_matching_chars(/[0-9]/).join)
-	assert_equal('0123456789', Tree123.string_of_matching_chars(/[0-9]/).join)
-	assert_equal('abcdefghijklmnopqrstuvwxyz'.upcase, Tree123.string_of_matching_chars(/[A-Z]/).join)
-	assert_equal('abcdefghijklmnopqrstuvwxyz', Tree123.string_of_matching_chars(/[a-z]/).join)
-	assert_equal('abcdefghijklmnopqrstuvwxyz', Tree123.string_of_matching_chars(Regexp.new('[a-z]')).join)
-	assert_match(/[[:print:]]/, 'a')
-	assert_equal(95, RegexpTree.new('[[:print:]]').string_of_matching_chars.length)
-	assert_equal(194, RegexpTree.new('.').string_of_matching_chars.length)
-	assert_equal(256, RegexpTree.new("#{Binary_range}").string_of_matching_chars.length)
-	assert_equal(256, Any.string_of_matching_chars.length)
-	assert_instance_of(Array, Any.repeated_pattern.string_of_matching_chars)
-end #string_of_matching_chars
 def test_editor
 	regexpParserTest(KCeditor)
 	
@@ -465,34 +380,4 @@ def test_zero_parameter_new
 	assert_nothing_raised{RegexpTree.new} # 0 arguments
 	assert_not_nil(@@model_class)
 end #test_name_correct
-def test_repetition_length
-	assert_equal({"end"=>nil, "min"=>1}, RegexpTreeTest::Sequence.repetition_length('+'))
-	assert_equal({"end"=>1, "min"=>0}, RegexpTreeTest::Sequence.repetition_length('?'))
-	assert_equal({"end"=>nil, "min"=>0}, RegexpTreeTest::Sequence.repetition_length('*'))
-	assert_equal(Repetition_1_2, RepetitionLength.new(1,2).concise_repetition_node)
-	assert_equal({"end"=>0, "min"=>0}, RegexpTree.new('').repetition_length)
-	assert_equal({"end"=>1, "min"=>1}, RegexpTree.new('.').repetition_length)
-	assert_equal(["{", ["1", ',', "2"], "}"], RepetitionLength.new(1,2).concise_repetition_node)
-	assert_equal({"end"=>3, "min"=>3}, RegexpTreeTest::Sequence.repetition_length)
-end #repetition_length
-def test_repeated_pattern
-
-	assert_equal(['.','*'], RegexpTree.new('.*'))
-	assert(RegexpTree.new('.*').postfix_expression?)
-	assert_equal(['.'], RegexpTree.new('.*').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.+').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.?').repeated_pattern)
-	assert_equal(['a'], RegexpTree.new('a'))
-	assert_equal(['a'], RegexpTree.new('a').repeated_pattern)
-	assert_equal(['.'], RegexpTree.new('.').repeated_pattern)
-	assert_equal(Quantified_repetition, RegexpTree.new('.{3,4}'))
-	assert_equal(['.'], RegexpTree.new('.{3,4}').repeated_pattern)
-	assert_equal('*', Any.postfix_expression?)
-	assert_instance_of(RegexpTree, Any.repeated_pattern('a'))
-	assert_instance_of(RegexpTree, Any.repeated_pattern)
-	assert_instance_of(RegexpTree, Quantified_repetition.repeated_pattern)
-	assert_instance_of(RegexpTree, RegexpTreeTest::Sequence.repeated_pattern)
-	assert_equal(Binary_range, Any.repeated_pattern.to_s)
-	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any.repeated_pattern)
-end #repeated_pattern
 end #RegexpTreeTest
