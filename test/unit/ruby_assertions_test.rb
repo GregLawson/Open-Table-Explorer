@@ -12,19 +12,20 @@ class RubyAssertionsTest < TestCase
 #fixtures @@table_name.to_sym
 #fixtures :table_specs
 #require 'test/test_helper_test_tables.rb'
+def test_assert_call_result
 	#~ explain_assert_respond_to(self,:testMethod)
-	testCallResult(self,:testMethod)
-	testCall(self,:testMethod)
-	#~ testAnswer(self,:testMethod,'nice result')
+	assert_call_result(self,:testMethod)
+	assert_call(self,:testMethod)
+	#~ assert_answer(self,:testMethod,'nice result')
 	#~ assert_public_instance_method(table_specs(:ifconfig),:acquisition_stream_specs)
-end #testCallResult
+end #assert_call_result
 def testMethod
 	return 'nice result'
 end #def
-def test_testCall
-end #testCall
-def test_testAnswer
-end #testAnswer
+def test_assert_call
+end #assert_call
+def test_assert_answer
+end #assert_answer
 def test_explain_assert_equal
 end #explain_assert_equal
 def test_explain_assert_respond_to
