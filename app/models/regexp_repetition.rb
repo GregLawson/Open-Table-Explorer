@@ -14,8 +14,12 @@ attr_reader :repeated_pattern,:repetition_length
 # Ambiguity of nil for third prameter: missing or infinity?
 # Resolved by checking second parameter for numric or Range to resolve ambiguity
 def initialize(branch, min=nil, max=nil, probability_space_regexp='[[:print:]]+', options=Default_options)
-	branch=RegexpRepetition.promote(branch)
-	@repeated_pattern=branch.repeated_pattern
+	if branch.instance_of?(RegexpParse) then
+		@repeated_pattern=branch.repeated_pattern
+		@repetition_length=branch.repetition_length
+	else
+		branch=RegexpRepetition.promote(branch)
+	end #if	
 	if !max.nil? then # all arguments provided
 		@repetition_length=UnboundedRange.new(min, max)
 		raise "min must not be nil." if min.nil? 
@@ -30,9 +34,16 @@ def initialize(branch, min=nil, max=nil, probability_space_regexp='[[:print:]]+'
 		@repetition_length=branch.repetition_length
 	end #if
 end #initialize
-Any=RegexpRepetition.new(RegexpTree::Any_binary_string, nil, nil, RegexpTree::Any_binary_string)
-Many=RegexpRepetition.new(".+", nil, nil, ".+")
-Dot_star=RegexpRepetition.new(['.','*'], nil, nil, RegexpTree::Any_binary_string)
+class TestCases
+Any=RegexpRepetition.new(RegexpParse::TestCases::Any_binary_char, 0, UnboundedFixnum::Inf, RegexpParse::TestCases::Any_binary_string)
+Many=RegexpRepetition.new(RegexpParse::TestCases::Any_binary_char, 1, UnboundedFixnum::Inf, ".+")
+Dot_star=RegexpRepetition.new(['.'], 0, UnboundedFixnum::Inf, RegexpParse::TestCases::Any_binary_string)
+One_to_ten=RegexpRepetition.new('.', 1, 10)
+One_a=RegexpRepetition.new('a', UnboundedRange::Once)
+Any_length=Any.repetition_length
+Many_length=Many.repetition_length
+Quantified_repetition=RegexpTree.new([".", ["{", "3", ",", "4", "}"]])
+end #TestCases
 
 def <=>(rhs)
 	lhs=self
@@ -43,6 +54,7 @@ end #compare
 # intersection. If neither is a subset of the rhs return nil 
 def &(rhs)
 	lhs=self
+	rhs=RegexpRepetition.promote(rhs)
  	base=lhs.repeated_pattern & rhs.repeated_pattern
  	length=lhs.repetition_length & rhs.repetition_length
 	return RegexpRepetition.new(base, length)
@@ -99,7 +111,7 @@ end #probability_range
 # Here the probability distribution is 
 # assumed uniform across the probability space
 # ranges from zero for an impossible match (usually avoided)
-# to 1 for certain match like /.*/ (actually RegexpRepetition::Any is more accurate)
+# to 1 for certain match like /.*/ (actually RegexpRepetition::TestCases::Any is more accurate)
 # returns nil if indeterminate (e.g. nested repetitions)
 # (call probability_range or RegexpMatch#probability instead)
 # match_length (of random characters) is useful in unanchored cases

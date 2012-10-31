@@ -243,7 +243,7 @@ def association_class(association_name)
 	end #if
 end #association_class
 def foreign_key_points_to_me?(ar_from_fixture,association_name)
-	associated_records=testCallResult(ar_from_fixture,association_name)
+	associated_records=assert_call_result(ar_from_fixture,association_name)
 	if associated_records.instance_of?(Array) then
 		associated_records.each do |ar|
 			fkAssName=ar_from_fixture.class.name.tableize.singularize

@@ -5,16 +5,17 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative 'test_environment'
+require_relative '../assertions/ruby_assertions.rb'
+#require_relative '../test_helper_test_tables.rb'
 # contains mostly functions created for testing / debugging but not dependant on ActiveRecord
 class Nil_Class
 def canonicalName
 	return 'nil'
 end #def
 end #class
-require 'test/test_helper'
-require 'test/test_helper_test_tables.rb'
-class GlobalTest < ActiveSupport::TestCase
-class TestClass
+class GlobalTest < TestCase
+class TestClass < Object
 def self.classMethod
 end #def
 public
@@ -67,8 +68,8 @@ def test_instance_methods_from_class
 	assert_include('full_associated_models',TestTable.instance_methods_from_class)
 end #instance_methods_from_class
 def test_instance_respond_to
-	assert(TestTable.instance_respond_to?(:full_associated_models))
-	assert(TestTable.respond_to?(:instance_respond_to?))
+	assert(TestClass.respond_to?(:instance_respond_to?))
+	assert(TestClass.instance_respond_to?(:instance_respond_to?), "TestClass.instance_methods_from_class=#{TestClass.instance_methods_from_class}")
 end #instance_respond_to
 def test_similar_methods
 #?	assert_not_empty(TestTable.similar_methods(:assert_fixture_name))
@@ -76,19 +77,19 @@ end #similar_methods
 def test_matching_instance_methods
 	testClass=TestClass
 	assert_instance_of(Array,testClass.matching_instance_methods(//))
-	assert_equal(['classMethod'],testClass.public_methods(false).select {|m| m[Regexp.new('M'),0] })
-	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/),false)
-	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/),true)
-	assert_equal(['publicInstanceMethod'],testClass.matching_instance_methods(/publicInstanceMethod/))
+	assert_equal([:classMethod],testClass.public_methods(false).select {|m| m[Regexp.new('M'),0] })
+	assert_equal([:publicInstanceMethod],testClass.matching_instance_methods(/publicInstanceMethod/),false)
+	assert_equal([:publicInstanceMethod],testClass.matching_instance_methods(/publicInstanceMethod/),true)
+	assert_equal([:publicInstanceMethod],testClass.matching_instance_methods(/publicInstanceMethod/))
 end #matching_instance_methods
 def test_matching_class_methods
 	testClass=TestClass
 	assert_instance_of(Array,testClass.matching_class_methods(//))
-	assert_equal(['classMethod'],testClass.public_methods(false).select {|m| m[Regexp.new('M'),0] })
-	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),false)
-	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),false)
-	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/),true)
-	assert_equal(['classMethod'],testClass.matching_class_methods(/classMethod/))
+	assert_equal([:classMethod],testClass.public_methods(false).select {|m| m[Regexp.new('M'),0] })
+	assert_equal([:classMethod],testClass.matching_class_methods(/classMethod/),false)
+	assert_equal([:classMethod],testClass.matching_class_methods(/classMethod/),false)
+	assert_equal([:classMethod],testClass.matching_class_methods(/classMethod/),true)
+	assert_equal([:classMethod],testClass.matching_class_methods(/classMethod/))
 end #matching_class_methods
 
 def test_object_identities
@@ -119,16 +120,16 @@ def test_canonical_name
 	assert_equal('nil',nil.canonicalName)
 end #test
 def test_noninherited_public_instance_methods
-	assert_equal(['publicInstanceMethod'],TestClass.public_instance_methods(false))
+	assert_equal([:publicInstanceMethod],TestClass.public_instance_methods(false))
 	assert_equal(Set.new(['publicInstanceMethod','protectedInstanceMethod']),Set.new(TestClass.instance_methods(false)))
-	assert_equal(['publicInstanceMethod'],TestClass.new.noninherited_public_instance_methods)
+	assert_equal([:publicInstanceMethod],TestClass.new.noninherited_public_instance_methods)
 end #noninherited_public_instance_methods
 def test_noninherited_public_class_methods
 	assert_equal(Class,TestClass.class)
 	assert_equal(Object,TestClass.superclass)
-	assert_equal(['classMethod'],TestClass.methods-TestClass.superclass.methods)
-#	assert_equal(['classMethod'],TestClass.class.public_instance_methods)
-	assert_equal(['classMethod'],TestClass.new.noninherited_public_class_methods)
+	assert_equal([:classMethod],TestClass.methods-TestClass.superclass.methods)
+#	assert_equal([:classMethod],TestClass.class.public_instance_methods)
+	assert_equal([:classMethod],TestClass.new.noninherited_public_class_methods)
 end #noninherited_public_class_methods
 def test_whoAmI
 	assert_equal('Symbol :cat',:cat.whoAmI)

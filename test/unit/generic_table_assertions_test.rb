@@ -1,5 +1,15 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+
 require 'test/test_helper'
+require 'app/models/generic_table_assertion.rb'
 class GenericTableAssertionTest < ActiveSupport::TestCase
+include GenericTableAssertion::KernelMethods
 @@table_name='stream_patterns'
 fixtures @@table_name.to_sym
 fixtures :table_specs

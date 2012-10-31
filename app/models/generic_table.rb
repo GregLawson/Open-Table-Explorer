@@ -527,10 +527,10 @@ def display_full_time(time)
 	time.rfc2822
 end #def
 
-end # module
+end # Generic_Table
 module NoDB # provide duck-typed ActiveRecord like functions.
 attr_reader :attributes
-include ActiveModel # trying to fufil Rails 3 promise that ActiveModel would allow non-AActiveRecord classes to share methods.
+include ActiveModel # trying to fulfill Rails 3 promise that ActiveModel would allow non-ActiveRecord classes to share methods.
 include Generic_Table
 extend Generic_Table::ClassMethods
 module ClassMethods
@@ -540,27 +540,92 @@ def column_symbols
 		r.keys.map {|name| name.downcase.to_sym}
 	end.flatten.uniq #map
 end #column_symbols
-end #ClassMethods
-def initialize(hash=nil)
-
-
-	if hash.nil? then
-		@attributes=ActiveSupport::HashWithIndifferentAccess.new
+def table_class
+	return self
+end #NoDB.table_class
+def table_name
+	return table_class.name.tableize
+end #NoDB.table_name
+def default_names(values_or_size, prefix='Col_')
+	if values_or_size.instance_of?(Array) then
+		size=values_or_size.size
+	elsif values_or_size.instance_of?(Fixnum) then
+		size=values_or_size
 	else
-		@attributes=ActiveSupport::HashWithIndifferentAccess.new(hash)
+		raise "values_or_size=#{values_or_size.inspect} is a #{values_or_size.class} not an Array or Fixnum."
 	end #if
-end #NoDB
+	Array.new(size) {|i| prefix+i.to_s}
+end #default_names
+def insert_sql(record)
+	values=record.values.map do |value|
+		if value.instance_of?(String) then
+			"'"+value.to_s+"'"
+		else
+			value
+		end #if
+	end #map
+	return "INSERT INTO #{self.table_name}(#{get_field_names.join(',')}) VALUES(#{values.join(',')});\n"
+end #insert_sql
+def dump
+	all.map do |record|
+		values=insert_sql(record)
+	end #map
+end #dump
+def data_source_yaml(yaml_table_name=table_name)
+	yaml = YAML::load( File.open("test/data_sources/#{yaml_table_name}.yml" ) )
+end #data_source_yaml
+def get_field_names
+	feild_names=all.first.keys
+end #field_names
+end #ClassMethods
+# NoDB.new(value_array, name_array, type_array) -specified values, names, and types
+# NoDB.new(value_array, type_array) - values with default names and specified types (arrayish)
+# NoDB.new(value_array) - values with default names and types
+# NoDB.new(value_name_hash, type_array) -specified values (Hash.values), names (Hash.keys) and types
+# NoDB.new(value_name_hash)-specified values (Hash.values), names (Hash.keys), and types
+# NoDB.new - empty object no attributes, no values, no names, no types. All can be added.
+DEFAULT_TYPE=String
+def initialize(values=nil, names=nil, types=nil)
+	if values.nil? then
+		@attributes=ActiveSupport::HashWithIndifferentAccess.new
+		@types={}
+	elsif values.instance_of?(Array) then
+		if names.instance_of?(Array) then
+			if !names.all?{|n| n.instance_of?(String)|n.instance_of?(Symbol)} then
+				names=self.class.default_names(values)
+			end #if
+		else #missing names
+			names=self.class.default_names(values)
+		end #if
+		@attributes=Hash[[names, values].transpose]
+		@types=types || names
+	elsif values.instance_of?(Hash) then
+		@attributes=values
+		@types=types || names
+	else
+		raised "confused about arguments to NoDB.initialize."
+	end #if
+end #NoDB initialize
 def [](attribute_name)
 	@attributes[attribute_name]
 end #[]
 def []=(attribute_name, value)
 	@attributes[attribute_name]=value
-end #[]
+end #[]=
 def has_key?(key_name)
 	return @attributes.has_key?(key_name)
 end #has_key?
 def keys
 	return @attributes.keys
 end #keys
+def table_class
+	return self.class
+end #table_class
+def table_name
+	return table_class.table_name
+end #table_name
+def clone
+	return self.new(@attributes.clone, @types.clone)
+end #clone
 end #NoDB
 

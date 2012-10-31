@@ -57,6 +57,20 @@ def unbounded?
 		nil
 	end #if
 end #unbounded
+def eql?(rhs)
+	lhs=self
+ 	if lhs.unbounded? && rhs.unbounded? then
+		true
+ 	elsif lhs.to_i == rhs.to_i then
+		true
+	else
+		false
+	end #if
+end #equal
+# no coercion of argument as in Numeric
+def ==(rhs)
+	eql?(rhs)
+end #==
 def <=>(rhs)
 	rhs=UnboundedFixnum.promote(rhs)
 	case [self.unbounded?, rhs.unbounded?] 

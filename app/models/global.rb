@@ -33,8 +33,8 @@ class Module
 def instance_methods_from_class(all=false)
 	return self.instance_methods(all)
 end #instance_methods_from_class
-def instance_respond_to?(method_name)
-	return instance_methods_from_class.include?(method_name.to_s)
+def instance_respond_to?(method_name, all=false)
+	return instance_methods_from_class(all).include?(method_name.to_sym)
 end #instance_respond_to
 # misspelled?
 def similar_methods(symbol)

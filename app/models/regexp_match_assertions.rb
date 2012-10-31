@@ -5,9 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/regexp_match.rb'
 module RegexpMatchAssertions #file context
+require 'test/unit'
 include Test::Unit::Assertions
-require 'rails/test_help'
+#require 'rails/test_help'
 #include Squeeze_Display
 # Assertions (validations)
 module ClassMethods

@@ -5,17 +5,35 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'test/unit'
+require_relative '../../app/models/global.rb'
+module Test
+module Unit
+module Assertions
+# File of ruby assertions not requiring ActiveRecord or fixtures
+def assert_pre_conditions
+	#puts "assert_pre_conditions called."
+	assert_equal('Test::Unit::Assertions', self.name)
+	assert_equal('Module', self.class.name)
+	assert_equal([Test::Unit::Assertions, Test::Unit, Test], Module.nesting)
+	assert_equal([MiniTest::Assertions], self.included_modules)
+	assert_equal([Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel], self.class.included_modules)
+	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
+	assert_include(self.methods(true), :explain_assert_respond_to)
+	assert_not_include(self.methods(false), :explain_assert_respond_to)
+	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
+	assert_equal([:nesting, :constants], self.class.methods(false))
+	#puts "self.class.methods(true)=#{self.class.methods(true)}"
+end #assert_pre_conditions
 
-# File of rby assertions not requiring ActiveRecord or fixtures
-
-def testCallResult(obj,methodName,*arguments)
-	assert_instance_of(Symbol,methodName,"testCallResult caller=#{caller.inspect}")
+def assert_call_result(obj,methodName,*arguments)
+	assert_instance_of(Symbol,methodName,"assert_call_result caller=#{caller.inspect}")
 	explain_assert_respond_to(obj,methodName)
 	m=obj.method(methodName)
 	return m.call(*arguments)
-end #testCallResult
-def testCall(obj,methodName,*arguments)
-	result=testCallResult(obj,methodName,*arguments)
+end #assert_call_result
+def assert_call(obj,methodName,*arguments)
+	result=assert_call_result(obj,methodName,*arguments)
 	assert_not_nil(result)
 	message="\n#{obj.canonicalName}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
 	if result.instance_of?(Array) then
@@ -26,12 +44,12 @@ def testCall(obj,methodName,*arguments)
 		assert(!result.acquisition_data.empty? || !result.error.empty?) 
 	end
 	return result
-end #testCall
-def testAnswer(obj,methodName,answer,*arguments)
-	result=testCallResult(obj,methodName,*arguments)	
+end #assert_call
+def assert_answer(obj,methodName,answer,*arguments)
+	result=assert_call_result(obj,methodName,*arguments)	
 	assert_equal(answer,result)
 	return result
-end #testAnswer
+end #assert_answer
 def explain_assert_equal(expected, actual, context=nil)
 	message=build_message(context, "actual and expected convert to_s differently (why are you calling the explain version).")
 	assert_equal(expected.to_s, actual.to_s, message)
@@ -98,7 +116,7 @@ def explain_assert_respond_to(obj,methodName,message='')
 			#~ message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods(obj).inspect}"
 		else
 			message="#{message1}; noninherited instance methods= #{obj.noninherited_public_instance_methods.inspect}"
-			message=" obj.class.included_modules=#{obj.class.included_modules}"
+			message=" obj.class.included_modules=#{obj.class.included_modules.inspect}"
 			assert_respond_to(obj,methodName,message)
 		end
 	end
@@ -157,20 +175,20 @@ def assert_overlap(enum1,enum2)
 	assert_not_empty(enum2)
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
-def assert_include(element,list,message=nil)
+#def assert_include(element,list,message=nil)
+#	raise "Second argument of assert_include must be an Array or Set" if !(list.instance_of?(Array) || list.instance_of?(Set))
 #	if message.nil? then
-		message=build_message(message, "? is not in list ?", element,list.inspect)
+#		message=build_message(message, "? is not in list ?", element,list.inspect)
 #	end #if 
-	raise "Second argument of assert_include must be an Array" if !(list.instance_of?(Array) || list.instance_of?(Set))
-	assert(list.include?(element),message)
-end #assert_include
+#	assert(list.include?(element),message)
+#end #assert_include
 def assert_dir_include(filename,glob)
 	assert_include(filename,Dir[glob],"Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
-def assert_not_include(element,list,message=nil)
-	message=build_message(message, "? is in list ?", element,list)   
-	assert_block(message){!list.include?(element)}
-end #assert_not_include
+#def assert_not_include(element,list,message=nil)
+#	message=build_message(message, "? is in list ?", element,list)   
+#	assert_block(message){!list.include?(element)}
+#end #assert_not_include
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
@@ -190,11 +208,11 @@ def assert_public_instance_method(obj,methodName,message='')
 end #assert_public_instance_method
 def assert_array_of(obj, type)
 	assert_block("obj=#{obj.inspect} must be an Array") {obj.instance_of?(Array)}
-	puts "obj=#{obj.inspect} must be an Array of Strings(pathnames)"
-	puts "obj.size=#{obj.size} "
-	puts "obj[0]=#{obj[0].inspect} "
+#	puts "obj=#{obj.inspect} must be an Array of Strings(pathnames)"
+#	puts "obj.size=#{obj.size} "
+#	puts "obj[0]=#{obj[0].inspect} "
 	obj.each do |p|
-		puts "p=#{p.inspect} must be a String(pathnames)" 
+#		puts "p=#{p.inspect} must be a String(pathnames)" 
 	end #each
 	assert_block("obj=#{obj.inspect} must be an Array of Strings(pathnames)") {obj.all?{|s| s.instance_of?(String)}}
 end #array_of
@@ -222,5 +240,8 @@ def assert_module_included(klass,moduleName)
     		klass.module_included?(moduleName)
 	end #assert_block
 end #assert_module_included
-
-
+end #Assertions
+end #Unit
+end #Test
+include Test::Unit::Assertions
+Test::Unit::Assertions.assert_pre_conditions

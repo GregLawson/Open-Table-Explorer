@@ -7,8 +7,14 @@
 ###########################################################################
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets start embeddded arrays
-require 'app/models/inlineAssertions.rb'
+#require 'app/models/inlineAssertions.rb'
 class NestedArray < Array # tree or matrix, whatever
+module TestCases
+Echo_proc=Proc.new{|parseTree| parseTree}
+Reverse_proc=Proc.new{|parseTree| parseTree.reverse}
+Constant_proc=Proc.new{|parseTree| '*'}
+Asymmetrical_Tree_Array=NestedArray.new([['1','2'],'3'])
+end #TestCases
 def initialize(array=[])
 	super(array)
 end #initialize
@@ -26,6 +32,10 @@ def [](index)
 		return at(index)
 	end #if
 end #[]index
+# reverse nested array
+def reverse
+	promote(super)
+end #reverse
 # Should apply to_s to each element before returning
 # Use map_recursive
 def to_s
