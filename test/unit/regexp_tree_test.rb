@@ -17,7 +17,6 @@ extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
 class RegexpTreeTest < ActiveSupport::TestCase
 set_class_variables
-#require 'app/models/regexp_tree.rb'
 @@CONSTANT_PARSE_TREE=RegexpParser.new('K')
 @@keditor=@@CONSTANT_PARSE_TREE.clone
 @@CONSTANT_PARSE_TREE.freeze
