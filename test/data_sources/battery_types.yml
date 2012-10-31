@@ -14,12 +14,12 @@ AA,NEXcell:
   Chemistry: NiMH
   Rated_capacity_mAh: 2600
 AA,Panasonic: 
-  Brand: Panasonic: 
+  Brand: Panasonic
   Size:  AA
   Chemistry: NiMH
   Rated_capacity_mAh: 2300
 AA,PowerRock:
-  Brand: PowerRock: 
+  Brand: PowerRock
   Size:  AA
   Chemistry: NiMH
   Rated_capacity_mAh: 2500

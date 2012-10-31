@@ -1,9 +1,0 @@
-StreamPattern,name:
- model_class: StreamPattern
- Column_Name: name
- Before_Pattern: 
- Data_Pattern: 
- After_Pattern: 
-
-
-
