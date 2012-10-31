@@ -29,7 +29,7 @@ end #assert_answer
 def test_explain_assert_equal
 end #explain_assert_equal
 def test_explain_assert_respond_to
-	assert_raise(Test::Unit::AssertionFailedError){explain_assert_respond_to(TestClass,:sequential_id?)}
+	assert_raise(AssertionFailedError){explain_assert_respond_to(TestClass,:sequential_id?)}
 #	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
 
 	explain_assert_respond_to(Acquisition,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
