@@ -78,7 +78,7 @@ end #assert_overlap
 def test_assert_include
 	element=:b
 	list=[:a,:b,:c]
-	assert_include(element,list,"#{element.inspect} is not in list #{list.inspect}")
+	assert_include(list, element, "#{element.inspect} is not in list #{list.inspect}")
 	assert_include('table_specs',fixture_names)
 	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
 	set=Set.new(list)
