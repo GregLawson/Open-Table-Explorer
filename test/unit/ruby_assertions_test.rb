@@ -130,5 +130,5 @@ def test_assert_regexp
 	#assert_raise(Test::Unit::AssertionFailedError){assert_regexp('(')}
 end #assert_regexp
 
-end #class
+end #RubyAssertionsTest
 
