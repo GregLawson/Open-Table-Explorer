@@ -56,7 +56,7 @@ def test_initialize
 	assert_nil(regexp_match_sequence.matched_data)	
 	assert_equal([['a'], ['b']], regexp_match_sequence)
 end #initialize
-Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
+#Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 def test_inspect
 	assert_instance_of(RegexpMatch, Addresses)
 	assert_instance_of(String, Addresses[0])
