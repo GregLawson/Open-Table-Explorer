@@ -127,7 +127,7 @@ end #assert_single_element_array
 def test_assert_regexp
 	assert_regexp('\(')
 	assert_regexp('()')
-	#assert_raise(Test::Unit::AssertionFailedError){assert_regexp('(')}
+	assert_raise(AssertionFailedError){assert_regexp('(')}
 end #assert_regexp
 
 def test_assert_module_included
