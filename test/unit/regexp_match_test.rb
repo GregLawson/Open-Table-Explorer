@@ -10,19 +10,10 @@ require_relative '../../app/models/regexp_tree.rb'
 require_relative '../../app/models/regexp_match_assertions.rb'
 #require '/home/greg/Desktop/git/no_rails/test/assertions/regexp_tree.rb'
 # Ensure assertions are included in classes.
-#class GenericType < ActiveRecord::Base
-#include GenericTypeAssertions
-#extend GenericTypeAssertions::ClassMethods
-#end #class GenericType < ActiveRecord::Base
-
-class RegexpMatch < RegexpTree # reopen class to add assertions
-include RegexpMatchAssertions
-extend RegexpMatchAssertions::ClassMethods
-end #RegexpMatch
 
 class RegexpMatchTest < Test::Unit::TestCase #file context
 #set_class_variables(RegexpMatchTest,false)
-include RegexpMatchAssertions::ClassMethods
+include RegexpMatch::Assertions::ClassMethods
 #Digit=GenericType.find_by_name('digit')
 #Lower=GenericType.find_by_name('lower')
 string1='a'
