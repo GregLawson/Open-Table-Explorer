@@ -55,19 +55,9 @@ def promote(value)
 end #promote
 def inspect
 	if @match_data then
-		"RegexpMatch: #{self.to_regexp} matches '#{@dataToParse}'."
+		"#{@regexp_tree.to_regexp} matches '#{@dataToParse}'"
 	else
-		if self[0].kind_of?(RegexpMatch) then
-			map do |match| 
-				if kind_of?(RegexpMatch) then
-					match.inspect+"\n"
-				else
-					match
-				end #if
-			end #map
-		else
-			"RegexpMatch: #{self.to_regexp} does not match '#{@dataToParse}'."
-		end #if
+		"#{@regexp_tree.to_regexp} does not match '#{@dataToParse}'"
 	end #if
 end #inspect
 def map_matches(branch=self, data_to_match=@dataToParse)

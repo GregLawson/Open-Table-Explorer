@@ -49,10 +49,10 @@ def test_initialize
 end #initialize
 #Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 def test_inspect
-	assert_instance_of(RegexpMatch, Addresses)
-	assert_instance_of(String, Addresses[0])
-	assert_equal("RegexpMatch: (?mx-i:a) matches 'a'.", Matches.inspect)
-	assert_equal("RegexpMatch: (?mx-i:<Url:0xb5f22960>) does not match '<Url:0xb5ce4e3c>'.", Addresses.inspect)
+	Matches.assert_pre_conditions
+	assert_equal("(?mx-i:a) matches 'a'", Matches.inspect)
+	Addresses.assert_pre_conditions
+	assert_equal("(?mx-i:<Url:0xb5f22960>) does not match '<Url:0xb5ce4e3c>'", Addresses.inspect)
 
 end #inspect
 def test_map_matches
