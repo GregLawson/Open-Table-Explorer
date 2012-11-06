@@ -84,14 +84,14 @@ end #inspect
 def test_equal_operator
 	rhs=RegexpParse::TestCases::Dot_star_parse
 	lhs=RegexpParse.new('.*')
-	assert_include(lhs.methods, '==')
+	assert_include(lhs.methods, :==)
 
 	assert_equal(rhs, lhs)
 end #equal_operator
 def test_equal
 	rhs=RegexpParse::TestCases::Dot_star_parse
 	lhs=RegexpParse.new('.*')
-	assert_include(lhs.methods, 'eql?')
+	assert_include(lhs.methods, :eql?)
 
 	assert(lhs.eql?(rhs))
 	assert_equal(rhs, lhs)
@@ -395,24 +395,24 @@ def test_names
 			nil
 		end #if
 	end.compact.uniq #map
-	assert_include(RegexpParse::TestCases.names, 'Sequence')
+	assert_include(RegexpParse::TestCases.names, :Sequence)
 
 end #names
 def test_strings
 	assert_not_nil(RegexpParse::TestCases.constants)
-	assert_include(RegexpParse::TestCases.constants, 'Dot_star_string')
+	assert_include(RegexpParse::TestCases.constants, :Dot_star_string)
 
-	assert_include(RegexpParse::TestCases.methods(false), 'strings')
+	assert_include(RegexpParse::TestCases.methods(false), :strings)
 
-	assert_include(RegexpParse::TestCases::strings, 'Dot_star_string')
+	assert_include(RegexpParse::TestCases::strings, :Dot_star_string)
 
 end #strings
 def test_arrays
-	assert_include(RegexpParse::TestCases::arrays, 'Dot_star_array')
+	assert_include(RegexpParse::TestCases::arrays, :Dot_star_array)
 
 end #arrays
 def test_parses
-	assert_include(RegexpParse::TestCases::parses, 'Dot_star_parse')
+	assert_include(RegexpParse::TestCases::parses, :Dot_star_parse)
 
 end #parses
 RegexpParse.assert_pre_conditions
