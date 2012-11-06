@@ -16,20 +16,17 @@ attr_reader :dataToParse, :matched_data
 #	regexp is an Array of RegexpMatches that partially match dataToParse and 
 #	dataToParse is the String union of that may or may not match
 # better explanation needed here, see tests.
-def initialize(regexp,dataToParse)
-	if regexp.instance_of?(Array) then
-		if regexp[0].instance_of?(RegexpMatch) then # Array of matches
-			super(regexp)
-			@dataToParse=dataToParse
-			@match_data=self.to_regexp.match(@dataToParse)
-			raise "Expect only partial matches but @match_data=#{@match_data.inspect}" unless @match_data.nil?
+def initialize(regexp_tree,dataToParse)
+	@regexp_tree=RegexpTree.promote(regexp_tree)
+	@dataToParse=dataToParse
+	@match_data=@regexp_tree.to_regexp.match(@dataToParse)
+#	self[0]={:regexp_tree => RegexpTree.promote(regexp_tree), :data_to_match => dataToParse, :match_data => regexp_tree.to_regexp.match(@dataToParse)}
+	if regexp_tree.instance_of?(Array) then
+		if regexp_tree[0].instance_of?(RegexpMatch) then # Array of matches
 		else
-			raise "Unexpected Array does not contain only RegexpMatch, regexp.class=#{regexp.class.name}."
+			raise "Unexpected Array does not contain only RegexpMatch, regexp_tree.class=#{regexp_tree.class.name}."
 		end #if
 	else
-		super(regexp)
-		@dataToParse=dataToParse
-		@match_data=self.to_regexp.match(@dataToParse)
 	end #if
 end #initialize
 # Rescue bad regexp and return nil

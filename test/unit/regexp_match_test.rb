@@ -42,10 +42,14 @@ RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td class=xl33 width=200>Title</td>
  </tr>')
 def test_initialize
-	assert_match(WhiteSpacePattern,WhiteSpace)
+
+	assert_instance_of(RegexpMatch, Addresses)
+	assert_instance_of(String, Addresses.dataToParse)
+	assert_instance_of(RegexpTree, Addresses.regexp_tree)
+	Addresses.assert_pre_conditions
 	regexp_match_sequence=RegexpMatch.new([RegexpMatch.new('a','a'), RegexpMatch.new('b', 'b')], 'ac')
 	assert_nil(regexp_match_sequence.matched_data)	
-	assert_equal([['a'], ['b']], regexp_match_sequence)
+	assert_equal("[(?mx-i:a) matches 'a', (?mx-i:b) matches 'b']", regexp_match_sequence.regexp_tree, "regexp_match_sequence=#{regexp_match_sequence}")
 end #initialize
 #Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 def test_inspect
