@@ -29,6 +29,9 @@ def initialize(regexp_tree,dataToParse)
 	else
 	end #if
 end #initialize
+def ==(other)
+	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
+end #equal
 # Rescue bad regexp and return nil
 def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
 	regexp=canonical_regexp(regexp)
@@ -47,8 +50,8 @@ def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
 end #match_data?
 # return superclass instance converted to RegexpMatch
 # Used by [] and other methods shared with superclasses
-def promote(value)
-	return RegexpMatch.new(value, @dataToParse)
+def RegexpMatch.promote(value, dataToParse)
+	return RegexpMatch.new(value, dataToParse)
 end #promote
 def inspect
 	if @match_data then
