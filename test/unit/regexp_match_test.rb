@@ -51,6 +51,10 @@ def test_initialize
 	assert_nil(regexp_match_sequence.matched_data)	
 	assert_equal("[(?mx-i:a) matches 'a', (?mx-i:b) matches 'b']", regexp_match_sequence.regexp_tree, "regexp_match_sequence=#{regexp_match_sequence}")
 end #initialize
+def test_double_equal
+	assert(Alternative==RegexpMatch.promote('a', 'b'))
+	assert_equal(Alternative, RegexpMatch.promote('a', 'b'))
+end #==
 #Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
 def test_promote
 	assert_instance_of(RegexpMatch, RegexpMatch.promote('a', 'b'))
