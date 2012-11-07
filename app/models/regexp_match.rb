@@ -22,13 +22,6 @@ def initialize(regexp_tree,dataToParse)
 	@dataToParse=dataToParse
 	@match_data=@regexp_tree.to_regexp.match(@dataToParse)
 #	self[0]={:regexp_tree => RegexpTree.promote(regexp_tree), :data_to_match => dataToParse, :match_data => regexp_tree.to_regexp.match(@dataToParse)}
-	if regexp_tree.instance_of?(Array) then
-		if regexp_tree[0].instance_of?(RegexpMatch) then # Array of matches
-		else
-			raise "Unexpected Array does not contain only RegexpMatch, regexp_tree.class=#{regexp_tree.class.name}."
-		end #if
-	else
-	end #if
 end #initialize
 def ==(other)
 	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
