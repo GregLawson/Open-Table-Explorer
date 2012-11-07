@@ -25,7 +25,7 @@ def initialize(regexp_tree,dataToParse)
 end #initialize
 def ==(other)
 	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
-end #equal
+end #==
 # Rescue bad regexp and return nil
 def RegexpMatch.match_data?(regexp, string_to_match)
 	regexp=canonical_regexp(regexp)
@@ -47,6 +47,7 @@ end #match_data?
 def RegexpMatch.promote(value, dataToParse)
 	return RegexpMatch.new(value, dataToParse)
 end #promote
+# display match or not but does not search for maximum sub match
 def inspect
 	if @match_data then
 		"#{@regexp_tree.to_regexp} matches '#{@dataToParse}'"
@@ -54,12 +55,14 @@ def inspect
 		"#{@regexp_tree.to_regexp} does not match '#{@dataToParse}'"
 	end #if
 end #inspect
+# checks if complete match, If not tries to find maximal sub match.
+# recursive call on unmatched subtrees
 def map_matches(branch=self, data_to_match=@dataToParse)
 	branch_match=match_branch(branch, data_to_match)
 	matched_data=branch_match.matched_data
 	if matched_data.nil? || matched_data.size==0 then
 		if branch.kind_of?(Array) then
-			start_match=-1 #preindex to 0
+			start_match=-1 #preincrement to 0
 			ret=branch.map do |subTree|
 				start_match=start_match+1
 				map_matches(subTree, data_to_match[start_match..-1])
