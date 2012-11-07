@@ -7,13 +7,13 @@
 ###########################################################################
 # Class methods
 # For a fixed string compute parse tree or sub trees that match
-class RegexpMatch < RegexpTree #file context
-attr_reader :dataToParse, :matched_data
+class RegexpMatch
+attr_reader :regexp_tree, :dataToParse, :matched_data
 # Normal new- 
-#	regexp is a RegexpTree and 
+#	regexp_tree is a RegexpTree and 
 #	dataToParse is a String that may or may not match
 # Partial match
-#	regexp is an Array of RegexpMatches that partially match dataToParse and 
+#	regexp_tree is an Array of RegexpMatches that partially match dataToParse and 
 #	dataToParse is the String union of that may or may not match
 # better explanation needed here, see tests.
 def initialize(regexp_tree,dataToParse)
@@ -33,7 +33,7 @@ def ==(other)
 	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
 end #equal
 # Rescue bad regexp and return nil
-def RegexpMatch.match_data?(regexp, string_to_match=@dataToParse)
+def RegexpMatch.match_data?(regexp, string_to_match)
 	regexp=canonical_regexp(regexp)
 	raise "string_to_match='#{string_to_match.inspect}' of class #{string_to_match.class.name} must be String." unless string_to_match.instance_of?(String)
 	if regexp.nil? then
