@@ -7,10 +7,9 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/regexp_match_assertions.rb'
-#require '/home/greg/Desktop/git/no_rails/test/assertions/regexp_tree.rb'
 
 class RegexpMatchAssertionsTest < Test::Unit::TestCase #file context
-#set_class_variables(RegexpMatchTest,false)
+#set_class_variables(RegexpMatchAssertionsTest,false)
 #Digit=GenericType.find_by_name('digit')
 #Lower=GenericType.find_by_name('lower')
 string1='a'

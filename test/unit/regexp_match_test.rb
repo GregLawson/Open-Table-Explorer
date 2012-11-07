@@ -8,7 +8,6 @@
 require_relative 'test_environment'
 require_relative '../../app/models/regexp_match_assertions.rb'
 #require '/home/greg/Desktop/git/no_rails/test/assertions/regexp_tree.rb'
-# Ensure assertions are included in classes.
 
 class RegexpMatchTest < Test::Unit::TestCase #file context
 #set_class_variables(RegexpMatchTest,false)
@@ -42,9 +41,6 @@ RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
  </tr>')
 def test_initialize
 
-	assert_instance_of(RegexpMatch, Addresses)
-	assert_instance_of(String, Addresses.dataToParse)
-	assert_instance_of(RegexpTree, Addresses.regexp_tree)
 	Addresses.assert_pre_conditions
 	regexp_match_sequence=RegexpMatch.new([RegexpMatch.new('a','a'), RegexpMatch.new('b', 'b')], 'ac')
 	assert_nil(regexp_match_sequence.matched_data)	

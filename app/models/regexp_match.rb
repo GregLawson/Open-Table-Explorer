@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/regexp_tree.rb'
 # Class methods
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch

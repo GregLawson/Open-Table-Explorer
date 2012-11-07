@@ -6,11 +6,10 @@
 #
 ###########################################################################
 require_relative '../../app/models/regexp_match.rb'
-module RegexpMatchAssertions #file context
+class RegexpMatch
+module Assertions
 require 'test/unit'
 include Test::Unit::Assertions
-#require 'rails/test_help'
-#include Squeeze_Display
 # Assertions (validations)
 module ClassMethods
 def assert_invariant
@@ -46,7 +45,7 @@ def assert_regexp_match(regexp_match=self)
 	assert_respond_to(regexp_match,:consecutiveMatches)
 	assert_not_nil(regexp_match.consecutiveMatches(+1,0,0))
 	assert(regexp_match.consecutiveMatches(+1,0,0).size>0)
-end #def
+end #assert_regexp_match
 end #ClassMethods
 def assert_pre_conditions
 	self.class.assert_pre_conditions
@@ -87,5 +86,16 @@ def assert_consecutiveMatch(match, previous_match=nil)
 	else
 	end #if
 end #consecutiveMatch
+end #Assertions
+end #RegexpMatch
 
+# Ensure assertions are included in classes.
+#class GenericType < ActiveRecord::Base
+#include GenericTypeAssertions
+#extend GenericTypeAssertions::ClassMethods
+#end #class GenericType < ActiveRecord::Base
+
+class RegexpMatch # reopen class to add assertions
+include RegexpMatch::Assertions
+extend RegexpMatch::Assertions::ClassMethods
 end #RegexpMatch
