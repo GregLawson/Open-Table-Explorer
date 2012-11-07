@@ -38,6 +38,15 @@ RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td class=xl33 width=54>Show #</td>
   <td class=xl33 width=200>Title</td>
  </tr>')
+def test_assert_invariant
+	RegexpMatch.assert_invariant
+end #def assert_invariant
+def test_assert_pre_conditions
+	RegexpMatch.assert_pre_conditions
+end #assert_pre_conditions
+def test_assert_post_conditions
+	RegexpMatch.assert_post_conditions
+end #assert_post_conditions
 def test_explain_assert_match
 	regexp
 	string
@@ -53,6 +62,19 @@ def test_assert_match
 	assert_nil(regexp_match_sequence.matched_data)	
 	assert_equal([['a'], ['b']], regexp_match_sequence)
 end #assert_regexp_match
+def test_assert_pre_conditions
+	Addresses.assert_pre_conditions
+
+end #assert_pre_conditions
+def test_assert_invariant
+	assert_instance_of(RegexpMatch, Addresses)
+	assert_instance_of(String, Addresses.dataToParse)
+	assert_instance_of(RegexpTree, Addresses.regexp_tree)
+	Addresses.assert_invariant
+end #def assert_invariant
+def test_assert_post_conditions
+	Addresses.assert_post_conditions
+end #assert_post_conditions
 def test_assert_match_branch
 	branch=Addresses
 	data_to_match=Addresses.dataToParse

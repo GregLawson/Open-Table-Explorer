@@ -13,6 +13,16 @@ include Test::Unit::Assertions
 #include Squeeze_Display
 # Assertions (validations)
 module ClassMethods
+def assert_invariant
+
+end #def assert_invariant
+def assert_pre_conditions
+	assert_invariant
+end #assert_pre_conditions
+
+def assert_post_conditions
+	assert_invariant
+end #assert_post_conditions
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
 	assert_not_nil(regexp, message)
@@ -38,6 +48,22 @@ def assert_regexp_match(regexp_match=self)
 	assert(regexp_match.consecutiveMatches(+1,0,0).size>0)
 end #def
 end #ClassMethods
+def assert_pre_conditions
+	self.class.assert_pre_conditions
+	assert_invariant
+end #assert_pre_conditions
+def assert_invariant
+	self.class.assert_invariant
+	assert_instance_of(RegexpMatch, self)
+	assert_instance_of(String, self.dataToParse)
+	assert_instance_of(RegexpTree, self.regexp_tree)
+
+end #def assert_invariant
+
+def assert_post_conditions
+	self.class.assert_post_conditions
+	assert_invariant
+end #assert_post_conditions
 def assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
 	ret=match_branch(branch, data_to_match)
 	message=build_message(message, "ret=?", ret)
