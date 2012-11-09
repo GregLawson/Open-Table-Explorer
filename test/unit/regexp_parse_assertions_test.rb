@@ -6,7 +6,6 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../test/assertions/regexp_parse_assertions.rb'
 class UnboundedRange  # reopen class to add assertions
 include UnboundedRange::Assertions
