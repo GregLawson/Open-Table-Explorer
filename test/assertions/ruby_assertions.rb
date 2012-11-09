@@ -108,7 +108,7 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end #if
 		assert_respond_to(obj,methodName,message)
 	else # not Class, Module. Instance?
-		noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
+#warn		noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 #		assert_equal(obj.class.public_instance_methods,obj.public_class_methods)
 		if obj.respond_to?(methodName.to_s) then
 			return # OK not ActiveRecord
