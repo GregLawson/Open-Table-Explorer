@@ -18,10 +18,12 @@ def default_message
 	return message
 end #default_message
 end #Test::Unit::Assertions
+
+require_relative '../../app/models/regexp_tree.rb'
 module RegexpTreeAssertions
 # Assertions (validations)
 include Test::Unit::Assertions
-require 'rails/test_help'
+#require 'rails/test_help'
 module ClassMethods
 end #ClassMethods
 def assert_anchoring

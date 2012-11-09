@@ -15,8 +15,8 @@ class RegexpTree < NestedArray # reopen class to add assertions
 include RegexpTreeAssertions
 extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
-class RegexpTreeTest < ActiveSupport::TestCase
-set_class_variables
+class RegexpTreeTest < TestCase
+#set_class_variables
 def test_Anchoring_initialize
 	No_anchor.assert_anchoring
 	Start_anchor.assert_anchoring
