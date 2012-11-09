@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+require_relative 'default_assertions_test.rb'
 require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
 class UnboundedFixnum  # reopen class to add assertions
 include UnboundedFixnum::Assertions
@@ -28,7 +29,4 @@ def test_assert_invariant_conditions
 end #assert_invariant_conditions
 def test_assert_pre_conditions
 end #assert_pre_conditions
-def test_assert_post_conditions
-	UnboundedFixnum.new(511).assert_post_conditions
-end #assert_post_conditions
 end #UnboundedFixnum
