@@ -65,9 +65,9 @@ def assert_post_conditions
 	assert_invariant
 end #assert_post_conditions
 def assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
-	ret=match_branch(branch, data_to_match)
-	message=build_message(message, "ret=?", ret)
-	assert_not_nil(ret.dataToParse, message)
+	branch_match=match_branch(branch, data_to_match)
+	message=build_message(message, "branch_match=?", branch_match)
+	assert_not_nil(branch_match.dataToParse, message)
 end #match_branch
 def assert_consecutiveMatches(matches)
 	assert_instance_of(Array, matches)
