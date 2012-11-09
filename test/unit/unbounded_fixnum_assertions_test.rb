@@ -8,13 +8,6 @@
 require_relative 'test_environment'
 require_relative 'default_assertions_test.rb'
 require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
-class UnboundedFixnum  # reopen class to add assertions
-include UnboundedFixnum::Assertions
-extend UnboundedFixnum::Assertions::ClassMethods
-end #UnboundedFixnum
-class UnboundedFixnumAssertionsTest < Test::Unit::TestCase
-def test_assert_weakest_pre_conditions
-	UnboundedFixnum.assert_weakest_pre_conditions
 end #assert_pre_conditions
 def test_assert_UnboundedFixnum_invariant_conditions
 	UnboundedFixnum.assert_invariant_conditions	

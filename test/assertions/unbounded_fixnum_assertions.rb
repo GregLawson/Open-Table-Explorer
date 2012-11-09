@@ -51,3 +51,7 @@ end #assert_post_conditions
 
 end #Assertions
 end #UnboundedFixnum
+class UnboundedFixnum  # reopen class to add assertions
+include UnboundedFixnum::Assertions
+extend UnboundedFixnum::Assertions::ClassMethods
+end #UnboundedFixnum
