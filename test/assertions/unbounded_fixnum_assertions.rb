@@ -12,6 +12,7 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 # nil means unbounded (i.e. infinity)
 class UnboundedFixnum < Numeric # Fixnum blocks new
 require_relative '../../test/unit/test_environment'
+require_relative 'default_assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods

@@ -8,6 +8,7 @@
 require_relative 'test_environment'
 require_relative 'default_assertions_test.rb'
 require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
+include DefaultAssertionTests
 def test_CLASS_assert_pre_conditions
 end #assert_pre_conditions
 	UnboundedFixnum.assert_invariant_conditions	
