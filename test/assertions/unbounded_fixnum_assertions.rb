@@ -17,7 +17,7 @@ include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 # conditions true while class is being defined
-def assert_weakest_pre_conditions
+def assert_pre_conditions
 	assert_invariant
 	assert_include(UnboundedFixnum.ancestors, Numeric)
 end #assert_pre_conditions
