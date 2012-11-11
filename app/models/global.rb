@@ -136,18 +136,10 @@ def canonicalName
 		else
 			return "Module #{name}"
 		end #if
-	elsif instance_of?(ActiveRecord::Base) then
+	elsif self.class.name=='ActiveRecord::Base' then
 		return "ActiveRecord::Base #{self.class.name}"		
-	elsif kind_of?(ActiveRecord::Base) then
-		return "ActiveRecord::Base subclass #{self.class.name}"		
-	elsif Generic_Table.activeRecordTableNotCreatedYet?(self) then
-		return "Active_Record #{self.class.inspect}"
 	elsif instance_of?(Array) then
 		return "Array instance"
-	elsif kind_of?(Account) then
-		return "Account"
-	elsif instance_of?(Account) then
-		return "Account"
 	elsif !respond_to?(:to_s) then
 		return "#{self.class.name} does not respond to :to_s"
 	elsif to_s.nil? then
