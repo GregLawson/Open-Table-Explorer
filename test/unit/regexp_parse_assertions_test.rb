@@ -11,14 +11,14 @@ require_relative 'default_assertions_test.rb'
 class RegexpParseAssertionsTest < TestCase
 #set_class_variables
 include RegexpParse::TestCases
-#include DefaultAssertionTests
-def test_RegexpParse_assert_pre_conditions
+include DefaultAssertionTests
+def test_Class_assert_pre_conditions
 	RegexpParse.assert_pre_conditions
 end #self.assert_pre_conditions
-def assert_invariant
+def test_Class_assert_invariant
 	RegexpParse.assert_invariant
 end #assert_RegexpParse_invariant_conditions
-def assert_post_conditions
+def test_Class_assert_post_conditions
 	RegexpParse.assert_post_conditions
 end #assert_RegexpParse_post_conditions
 Asymmetrical_Tree=RegexpParse.new(NestedArray::TestCases::Asymmetrical_Tree_Array)

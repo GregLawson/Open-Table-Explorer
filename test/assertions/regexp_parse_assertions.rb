@@ -44,7 +44,7 @@ end #assert_RegexpParse_invariant_conditions
 # pre-conditions of constants should now be true
 def assert_post_conditions
 	assert_invariant
-	parses.each do |parse|
+	TestCases.parses.each do |parse|
 		parse.assert_pre_conditions
 	end #each
 end #assert_RegexpParse_post_conditions
@@ -189,6 +189,7 @@ end #string_of
 def self.array_of?(string)
 	return parse_of?(string.to_s).to_a
 end #array_of
+# removes suffix if present else nil
 def self.name_of?(constant)
 	match=/([A-Z][a-z_]*)_(array|string|parse)$/.match(constant)
 	return match
