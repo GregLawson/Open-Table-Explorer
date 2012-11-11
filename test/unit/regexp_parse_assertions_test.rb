@@ -7,9 +7,11 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/regexp_parse_assertions.rb'
+require_relative 'default_assertions_test.rb'
 class UnboundedRange  # reopen class to add assertions
 include UnboundedRange::Assertions
 #extend UnboundedRange::Assertions::ClassMethods
+include DefaultAssertionTests
 end #UnboundedRange
 class RegexpParseAssertionsTest < TestCase
 #set_class_variables
