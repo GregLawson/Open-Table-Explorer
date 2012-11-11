@@ -39,6 +39,11 @@ RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td class=xl33 width=54>Show #</td>
   <td class=xl33 width=200>Title</td>
  </tr>')
+def test_promote
+	assert_instance_of(RegexpMatch, RegexpMatch.promote('a', 'b'))
+	assert_equal(Alternative, RegexpMatch.promote('a', 'b'))
+	RegexpMatch.new('(', '(').assert_pre_conditions
+end #promote
 def test_initialize
 	Matches.assert_pre_conditions
 	Alternative.assert_pre_conditions
@@ -61,11 +66,6 @@ def test_double_equal
 	assert(Alternative==RegexpMatch.promote('a', 'b'))
 	assert_equal(Alternative, RegexpMatch.promote('a', 'b'))
 end #==
-#Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
-def test_promote
-	assert_instance_of(RegexpMatch, RegexpMatch.promote('a', 'b'))
-	assert_equal(Alternative, RegexpMatch.promote('a', 'b'))
-end #promote
 def test_inspect
 	Matches.assert_pre_conditions
 	assert_equal("(?mx-i:a) matches 'a'", Matches.inspect)

@@ -8,7 +8,7 @@
 require_relative '../../app/models/regexp_tree.rb'
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch
-attr_reader :regexp_tree, :dataToParse, :matched_data
+attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
 # Normal new- 
 #	regexp_tree is a RegexpTree and 
 #	dataToParse is a String that may or may not match
@@ -41,9 +41,15 @@ end #promote
 
 # Instance methods
 def initialize(regexp_tree,dataToParse)
+	@errors=[]
 	@regexp_tree=RegexpTree.promote(regexp_tree)
 	@dataToParse=dataToParse
-	@match_data=@regexp_tree.to_regexp.match(@dataToParse)
+	if @regexp_tree.to_regexp.nil? then
+		@errors=['@regexp_tree.to_regexp.nil?']
+		@match_data= nil
+	else
+		@match_data=@regexp_tree.to_regexp.match(@dataToParse)
+	end #if
 end #initialize
 def ==(other)
 	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
