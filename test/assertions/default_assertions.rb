@@ -12,7 +12,7 @@ include Test::Unit::Assertions
 module ClassMethods
 def assert_invariant
 
-end #def assert_invariant
+end # assert_invariant
 def assert_pre_conditions
 	assert_invariant
 end #assert_pre_conditions

@@ -19,27 +19,21 @@ end #table_name?
 def model_class?
 	eval(model_name?)
 end #model_class?
-def test_case_names?
+def names_of_tests?
 	self.methods(true).select do |m|
 		m.match(/^test_/) 
 	end #map
-end #test_case_names?
-def test_CLASS_assert_invariant
-	assert(false, "force all tests (explicit and default) to show themselves. tests=#{test_case_names?}")
-end #def assert_CLASS_invariant
-def test_CLASS_assert_pre_conditions
-	assert_include(class_variables, :@@model_class)
-	@@model_class=UnboundedFixnum
-	assert_include(class_variables, :@@model_class)
-	assert_equal(UnboundedFixnumAssertionsTest, self)
-	assert_equal(self.name, 'UnboundedFixnumAssertionsTest')
-	assert_equal(self.name[-4..-1], 'Test')
+end #names_of_tests?
+def test_Class_assert_invariant
+	assert_equal(self.class.name[-4..-1], 'Test')
+	assert_equal(6, names_of_tests?.size, "#{names_of_tests?.sort}")
+end # assert_invariant
+def test_Class_assert_pre_conditions
 	model_class?.assert_pre_conditions
-	model_class?.assert_invariant
-end #assert_CLASS_pre_conditions
-def test_CLASS_assert_post_conditions
+end #assert_Class_pre_conditions
+def test_Class_assert_post_conditions
 	model_class?.assert_post_conditions
-end #assert_CLASS_post_conditions
+end #assert_Class_post_conditions
 def test_assert_pre_conditions
 	self.class::Example.assert_pre_conditions
 

@@ -19,8 +19,8 @@ module ClassMethods
 include Test::Unit::Assertions
 # conditions true while class is being defined
 def assert_pre_conditions
-	assert_invariant
 	assert_include(UnboundedFixnum.ancestors, Numeric)
+	assert_invariant
 end #assert_pre_conditions
 # conditions that are always true (at least atomically)
 def assert_invariant
