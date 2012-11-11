@@ -128,6 +128,93 @@ def assert_postfix_expression
 	assert_not_nil(post_op,"self=#{self.inspect}")
 end #postfix_expression
 end #Assertions
+module TestCases #  Namespace
+Any_binary_char_string='[\000-\377]'
+Any_binary_string="#{Any_binary_char_string}*"
+Any_binary_char=RegexpParse.new(Any_binary_char_string)
+Any_binary_char_parse=RegexpParse.new(Any_binary_char_string)
+Any_binary_string_parse=RegexpParse.new(Any_binary_string)
+Quantified_operator_array=["{", "3", ",", "4", "}"]
+Quantified_operator_string=Quantified_operator_array.join
+Quantified_repetition_array=[".", ["{", "3", ",", "4", "}"]]
+Quantified_repetition_string=Quantified_repetition_array.join
+#Quantified_repetition_parse=RegexpParse.new(Quantified_repetition_string)
+Composite_regexp_array=["t", "e", "s", "t", "/",
+	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
+	 	["[", ".", "]"],
+	 	"r",
+		[["[", "a", "-", "z", "]"], "*"]]
+Composite_regexp_string=Composite_regexp_array.join
+Composite_regexp_parse=RegexpParse.new(Composite_regexp_string)
+Dot_star_array=['.', '*']
+Dot_star_string=Dot_star_array.join
+Dot_star_parse=RegexpParse.new(Dot_star_string)
+Parenthesized_array=['a', ['(', '.', ')']]
+Parenthesized_string=Parenthesized_array.join
+Parenthesized_parse=RegexpParse.new(Parenthesized_string)	
+Sequence_array=['1', '2', '3']
+Sequence_string=Sequence_array.join
+Sequence_parse=RegexpParse.new(Sequence_string)
+Empty_language_array=[]
+Empty_language_string=Empty_language_array.join
+Empty_language_parse=RegexpParse.new(Empty_language_string)
+module Parameters
+Start_anchor_string='^' #should be \S or start of String
+End_anchor_string='$' #should be \s or end of String
+Anchor_root_test_case='a'
+end # module Parameters
+No_anchor=RegexpParse.new(Parameters::Anchor_root_test_case)
+Start_anchor=RegexpParse.new(Parameters::Start_anchor_string+Parameters::Anchor_root_test_case)
+End_anchor=RegexpParse.new(Parameters::Anchor_root_test_case+Parameters::End_anchor_string)
+Both_anchor=RegexpParse.new(Parameters::Start_anchor_string+Parameters::Anchor_root_test_case+Parameters::End_anchor_string)
+def self.value_of?(name, form)
+	constant_reference=constant_reference?(name, form)
+	
+	if defined? constant_reference then
+		RegexpParse::TestCases.const_get(name.to_s+'_'+form.to_s)
+	else
+		nil
+	end#
+
+end #value_of
+def self.constant_reference?(name, form)
+	'RegexpParse::TestCases::'+name.to_s+'_'+form.to_s
+end #constant_reference
+def self.parse_of?(string)
+	return RegexpParse.new(string.to_s)
+end #parse_of
+def self.string_of?(name)
+	return array.to_a.join
+end #string_of
+def self.array_of?(string)
+	return parse_of?(string.to_s).to_a
+end #array_of
+def self.name_of?(constant)
+	match=/([A-Z][a-z_]*)_(array|string|parse)$/.match(constant)
+	return match
+end #name_of
+def self.names
+	constants=RegexpParse::TestCases.constants
+	constants.map do |name|
+		constant=RegexpParse::TestCases.const_get(name)
+		match=RegexpParse::TestCases.name_of?(name)
+		if !match.nil? && (constant.class==String || constant.class==Array || constant.class==RegexpParse) then
+			match[1]
+		else
+			nil
+		end #if
+	end.compact.uniq #map
+end #names
+def self.strings
+	return RegexpParse::TestCases.constants.select {|c| /.*_string/.match(c)}
+end #strings
+def self.arrays
+	return RegexpParse::TestCases.constants.select {|c| /.*_array/.match(c)}
+end #arrays
+def self.parses
+	return RegexpParse::TestCases.constants.select {|c| /.*_parse/.match(c)}
+end #parses
+end #TestCases
 end #RegexpParse
 class RegexpParse  # reopen class to add assertions
 include RegexpParse::Assertions
