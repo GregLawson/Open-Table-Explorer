@@ -40,11 +40,22 @@ RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td class=xl33 width=200>Title</td>
  </tr>')
 def test_initialize
+	Matches.assert_pre_conditions
+	Alternative.assert_pre_conditions
+	Deletion.assert_pre_conditions
+	Insertion.assert_pre_conditions
+	White_Match.assert_pre_conditions	
 
+	Keditor.assert_pre_conditions
+	Rows_Match.assert_pre_conditions
+	RowsEdtor2.assert_pre_conditions
 	Addresses.assert_pre_conditions
+	RegexpMatch.new('(', '(').assert_pre_conditions
+
 	regexp_match_sequence=RegexpMatch.new([RegexpMatch.new('a','a'), RegexpMatch.new('b', 'b')], 'ac')
-	assert_nil(regexp_match_sequence.matched_data)	
-	assert_equal("[(?mx-i:a) matches 'a', (?mx-i:b) matches 'b']", regexp_match_sequence.regexp_tree, "regexp_match_sequence=#{regexp_match_sequence}")
+#	assert_nil(regexp_match_sequence.matched_data)	
+#	assert_equal("[(?mx-i:a) matches 'a', (?mx-i:b) matches 'b']", regexp_match_sequence.regexp_tree, "regexp_match_sequence=#{regexp_match_sequence}")
+regexp_tree
 end #initialize
 def test_double_equal
 	assert(Alternative==RegexpMatch.promote('a', 'b'))

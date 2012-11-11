@@ -6,7 +6,6 @@
 #
 ###########################################################################
 require_relative '../../app/models/regexp_tree.rb'
-# Class methods
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch
 attr_reader :regexp_tree, :dataToParse, :matched_data
@@ -17,15 +16,7 @@ attr_reader :regexp_tree, :dataToParse, :matched_data
 #	regexp_tree is an Array of RegexpMatches that partially match dataToParse and 
 #	dataToParse is the String union of that may or may not match
 # better explanation needed here, see tests.
-def initialize(regexp_tree,dataToParse)
-	@regexp_tree=RegexpTree.promote(regexp_tree)
-	@dataToParse=dataToParse
-	@match_data=@regexp_tree.to_regexp.match(@dataToParse)
-#	self[0]={:regexp_tree => RegexpTree.promote(regexp_tree), :data_to_match => dataToParse, :match_data => regexp_tree.to_regexp.match(@dataToParse)}
-end #initialize
-def ==(other)
-	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
-end #==
+# Class methods
 # Rescue bad regexp and return nil
 def RegexpMatch.match_data?(regexp, string_to_match)
 	regexp=canonical_regexp(regexp)
@@ -47,6 +38,16 @@ end #match_data?
 def RegexpMatch.promote(value, dataToParse)
 	return RegexpMatch.new(value, dataToParse)
 end #promote
+
+# Instance methods
+def initialize(regexp_tree,dataToParse)
+	@regexp_tree=RegexpTree.promote(regexp_tree)
+	@dataToParse=dataToParse
+	@match_data=@regexp_tree.to_regexp.match(@dataToParse)
+end #initialize
+def ==(other)
+	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
+end #==
 # display match or not but does not search for maximum sub match
 def inspect
 	if @match_data then
