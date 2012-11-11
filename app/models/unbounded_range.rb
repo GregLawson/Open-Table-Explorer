@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'test/unit'
-require_relative '../../app/models/unbounded_fixnum.rb'
+require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
 # Extention of Range class to unbounded limits
 # Used in RegexpTree for /.*/ and /.+/
 # handles comparisons as UnboundedFixnum::Inf means unbounded (i.e. infinity)
@@ -133,4 +133,13 @@ def assert_unbounded_range_equal(rhs)
 	assert_equal(lhs, rhs, "lhs=#{lhs.inspect}, rhs=#{rhs.inspect}")
 end #assert_unbounded_range_equal
 end #Assertions
+end #UnboundedRange
+
+class UnboundedFixnum  # reopen class to add assertions
+include UnboundedFixnum::Assertions
+extend UnboundedFixnum::Assertions::ClassMethods
+end #UnboundedFixnum
+class UnboundedRange  # reopen class to add assertions
+include UnboundedRange::Assertions
+#extend UnboundedRange::Assertions::ClassMethods
 end #UnboundedRange
