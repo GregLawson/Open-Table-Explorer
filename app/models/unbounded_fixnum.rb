@@ -21,8 +21,11 @@ def initialize(number, infinity_sign=nil)
 		@infinity_sign=infinity_sign
 	end #if
 end #UnboundedFixnum_initialize
+module Constants
 Inf=UnboundedFixnum.new(nil,+1)
 Neg_inf=UnboundedFixnum.new(nil,-1)
+end #Constants
+include Constants
 # or coerce
 def UnboundedFixnum.promote(other, infinity_sign=nil)
 	if other.instance_of?(UnboundedFixnum) then

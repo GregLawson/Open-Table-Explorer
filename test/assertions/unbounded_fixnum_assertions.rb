@@ -51,6 +51,10 @@ def assert_post_conditions
 end #assert_post_conditions
 
 end #Assertions
+module TestCases
+Example=UnboundedFixnum.new(3)
+include Constants
+end #TestCases
 end #UnboundedFixnum
 class UnboundedFixnum  # reopen class to add assertions
 include UnboundedFixnum::Assertions
