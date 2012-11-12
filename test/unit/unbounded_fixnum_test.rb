@@ -7,10 +7,6 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
-class UnboundedFixnum  # reopen class to add assertions
-include UnboundedFixnum::Assertions
-extend UnboundedFixnum::Assertions::ClassMethods
-end #UnboundedFixnum
 class UnboundedFixnumTest < Test::Unit::TestCase
 def test_UnboundedFixnum_initialize
 	assert_not_nil(UnboundedFixnum)
