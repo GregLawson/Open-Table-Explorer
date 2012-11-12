@@ -54,6 +54,22 @@ def test_assert_flat_set
 	assert_raise(Test::Unit::AssertionFailedError) {assert(assert_flat_set(set))}
 	
 end #assert_flat_set
+def test_assert_subset
+	subset_enumeration=[1,2]
+#	superset_enumeration=[1,2,3]
+	superset_enumeration=[1,2]
+	assert_instance_of(Array, subset_enumeration)
+	assert_instance_of(Array, superset_enumeration)
+	subset_enumeration_array=subset_enumeration.to_a.map {|e| e.to_s}
+	subset=subset_enumeration_array.to_set
+	superset=Set.new(superset_enumeration.to_a.map {|e| e.to_s})
+	assert_flat_set(subset)
+	assert_flat_set(superset)
+	subset_surplus=subset-superset
+	assert_empty(subset_surplus, "subset_surplus=#{subset_surplus}, superset=#{superset}, subset=#{subset}")
+	assert_subset([1,2],[1,2,3])
+	assert_subset([1,2],[1,2])
+end #assert_subset
 def test_equal_sets
 	expected_enumeration=[/a/,/b/]
 	actual_enumeration=[/b/,/a/]

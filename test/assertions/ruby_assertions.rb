@@ -7,6 +7,7 @@
 ###########################################################################
 require 'test/unit'
 require_relative '../../app/models/global.rb'
+require 'set'
 module Test
 module Unit
 module Assertions
@@ -137,6 +138,24 @@ def assert_flat_set(set)
 		assert(!e.instance_of?(Set))
 	end
 end #assert_flat_set
+def assert_subset(subset_enumeration, superset_enumeration, message=nil)
+	if subset_enumeration.instance_of?(Set) then
+		subset=subset_enumeration
+	else
+		subset_enumeration_array=subset_enumeration.to_a.map {|e| e.to_s}
+#		expected_set=Set.new subset_enumeration_array
+		subset=subset_enumeration_array.to_set
+	end #if
+	if superset_enumeration.instance_of?(Set) then
+		superset=superset_enumeration
+	else
+		superset=Set.new(superset_enumeration.to_a.map {|e| e.to_s})
+	end #if
+	assert_flat_set(subset)
+	assert_flat_set(superset)
+	subset_surplus=subset-superset
+	assert_empty(subset_surplus, "subset_surplus=#{subset_surplus}, superset=#{superset}, subset=#{subset}")
+end #assert_subset
 def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
 	if expected_enumeration.instance_of?(Set) then
 		expected_set=expected_enumeration
