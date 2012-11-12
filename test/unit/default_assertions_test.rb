@@ -6,6 +6,7 @@
 #
 ###########################################################################
 module DefaultAssertionTests
+# methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
 end #name_of_test?
@@ -32,6 +33,9 @@ def test_Class_assert_pre_conditions
 	model_class?.assert_pre_conditions
 end #assert_Class_pre_conditions
 def test_Class_assert_post_conditions
+	model_class?::TestCases.constants_by_class(model_class?).each do |c|
+		c.assert_pre_conditions
+	end #each
 	model_class?.assert_post_conditions
 end #assert_Class_post_conditions
 def test_assert_pre_conditions

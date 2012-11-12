@@ -19,6 +19,9 @@ end #assert_pre_conditions
 
 def assert_post_conditions
 	assert_invariant
+	constants_by_class(self).each do |c|
+		c.assert_pre_conditions
+	end #each
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
@@ -34,5 +37,15 @@ def assert_post_conditions
 	self.class.assert_post_conditions
 	assert_invariant
 end #assert_post_conditions
+module TestCases
+def self.value_of?(name)
+	RegexpParse::TestCases.const_get(name.to_s)
+end #value_of
+def self.constants_by_class(klass)
+	RegexpParse::TestCases.constants.select do |c|
+		value_of?(c).instance_of?(klass)
+	end #select
+end #constants_by_class
+end #TestCases
 end #Assertions
 
