@@ -6,10 +6,8 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/minimal_assertions.rb'
+require_relative '../../test/unit/default_assertions_test.rb'
 class MinimalTest < TestCase
-def test_assert_array_of
-	assert_array_of(['',''], String)
-	assert_raise(MiniTest::Assertion){assert_array_of(nil, String)}
-end #array_of
+include DefaultAssertionTests
 end #MinimalTest
