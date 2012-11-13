@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-# There is a rails method that does this; forgot name
 module Test::Unit::Assertions
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
