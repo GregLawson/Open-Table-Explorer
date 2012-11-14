@@ -12,17 +12,25 @@ include Test::Unit::Assertions
 module ClassMethods
 def assert_invariant
 
-end # assert_invariant
+end # class_assert_invariant
 def assert_pre_conditions
 	assert_invariant
-end #assert_pre_conditions
+end #class_assert_pre_conditions
 
 def assert_post_conditions
 	assert_invariant
-	constants_by_class(self).each do |c|
+	self.example_constants_by_class(self).each do |c|
 		c.assert_pre_conditions
 	end #each
-end #assert_post_conditions
+end #class_assert_post_conditions
+def value_of_example?(name)
+	const_get(name.to_s)
+end #value_of_example
+def example_constants_by_class(klass)
+	constants.select do |c|
+		value_of_example?(c).instance_of?(klass)
+	end #select
+end #example_constants_by_class
 end #ClassMethods
 def assert_pre_conditions
 	self.class.assert_pre_conditions
@@ -37,15 +45,7 @@ def assert_post_conditions
 	self.class.assert_post_conditions
 	assert_invariant
 end #assert_post_conditions
-module TestCases
-def self.value_of?(name)
-	RegexpParse::TestCases.const_get(name.to_s)
-end #value_of
-def self.constants_by_class(klass)
-	RegexpParse::TestCases.constants.select do |c|
-		value_of?(c).instance_of?(klass)
-	end #select
-end #constants_by_class
-end #TestCases
 end #Assertions
 
+module TestCaseHelpers
+end #TestCases
