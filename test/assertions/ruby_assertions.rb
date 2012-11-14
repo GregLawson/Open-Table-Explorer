@@ -188,9 +188,9 @@ end #assert_overlap
 #	assert(list.include?(element),message)
 #end #assert_include
 def assert_dir_include(filename,glob)
-	assert_include(filename,Dir[glob],"Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
+	assert_include(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
-#def assert_not_include(element,list,message=nil)
+#def assert_not_include(list, element, message=nil)
 #	message=build_message(message, "? is in list ?", element,list)   
 #	assert_block(message){!list.include?(element)}
 #end #assert_not_include
