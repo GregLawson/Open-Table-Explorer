@@ -12,20 +12,6 @@ module Test
 module Unit
 module Assertions
 # File of ruby assertions not requiring ActiveRecord or fixtures
-def assert_pre_conditions
-	#puts "assert_pre_conditions called."
-	assert_equal('Test::Unit::Assertions', self.name)
-	assert_equal('Module', self.class.name)
-	assert_equal([Test::Unit::Assertions, Test::Unit, Test], Module.nesting)
-	assert_equal([MiniTest::Assertions], self.included_modules)
-	assert_equal([Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel], self.class.included_modules)
-	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
-	assert_include(self.methods(true), :explain_assert_respond_to)
-	assert_not_include(self.methods(false), :explain_assert_respond_to)
-	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
-	assert_equal([:nesting, :constants], self.class.methods(false))
-	#puts "self.class.methods(true)=#{self.class.methods(true)}"
-end #assert_pre_conditions
 
 def assert_call_result(obj,methodName,*arguments)
 	assert_instance_of(Symbol,methodName,"assert_call_result caller=#{caller.inspect}")
