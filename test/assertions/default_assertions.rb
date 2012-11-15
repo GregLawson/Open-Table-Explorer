@@ -5,10 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-module Assertions
+module DefaultAssertions
 require 'test/unit'
 include Test::Unit::Assertions
-# Assertions (validations)
 module ClassMethods
 def assert_invariant
 
@@ -27,9 +26,14 @@ def value_of_example?(name)
 	const_get(name.to_s)
 end #value_of_example
 def example_constants_by_class(klass)
-	constants.select do |c|
-		value_of_example?(c).instance_of?(klass)
-	end #select
+	constants.map do |c|
+		value=value_of_example?(c)
+		if value.instance_of?(klass) then
+			value
+		else
+			nil
+		end #if
+	end.compact #select
 end #example_constants_by_class
 end #ClassMethods
 def assert_pre_conditions
@@ -45,7 +49,7 @@ def assert_post_conditions
 	self.class.assert_post_conditions
 	assert_invariant
 end #assert_post_conditions
-end #Assertions
+end #DefaultAssertions
 
 module TestCaseHelpers
 end #TestCases

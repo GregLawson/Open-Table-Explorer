@@ -47,48 +47,49 @@ def test_test_case
 	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
 	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
 	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
-	assert_equal(model_class?::TestCases.included_modules, [])
-	assert_equal(model_class?.included_modules, [TestCaseHelpers, Assertions, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin,Kernel])
+	assert_include(model_class?.included_modules, model_class?::Assertions)
+	assert_include(model_class?.included_modules, Test::Unit::Assertions)
 #	assert_equal('Test::Unit::Assertions', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
-	model_class?::TestCases.class_dummy
-	assert_include(model_class?.methods, :example_constants_by_class)
-	assert_respond_to(model_class?, :example_constants_by_class)
-	fail "got to end of test."
+	assert_include(model_class?.methods, :example_constants_by_class, "model_class?=#{model_class?}")
+	assert_respond_to(model_class?, :example_constants_by_class, "model_class?=#{model_class?}")
+#	assert_respond_to(model_class?, :example_constants_by_class)
+#	assert_include(model_class?.methods, :example_constants_by_class, "model_class?=#{model_class?}")
+	fail "got to end of default test."
 end #test_test_case
 def test_class_assert_invariant
 	#puts "self.class.methods(true)=#{self.class.methods(true)}"
 	model_class?.assert_invariant
-	fail "got to end of test."
+	fail "got to end of default test."
 end # class_assert_invariant
 def test_class_assert_pre_conditions
 	model_class?.assert_pre_conditions
-	fail "got to end of test."
+	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_post_conditions
 	model_class?.example_constants_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
 	end #each
 	model_class?.assert_post_conditions
-	fail "got to end of test."
+	fail "got to end of default test."
 end #class_assert_post_conditions
 def test_assert_pre_conditions
 	model_class?.example_constants_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
 	end #each
-	fail "got to end of test."
+	fail "got to end of default test."
 end #assert_pre_conditions
 def test_assert_invariant
 	model_class?.example_constants_by_class(model_class?).each do |c|
 		c.assert_invariant
 	end #each
-	fail "got to end of test."
+	fail "got to end of default test."
 end #def assert_invariant
 def test_assert_post_conditions
 	model_class?.example_constants_by_class(model_class?).each do |c|
 		c.assert_post_conditions
 	end #each
-	fail "got to end of test."
+	fail "got to end of default test."
 end #assert_post_conditions
 end #DefaultAssertionTests
