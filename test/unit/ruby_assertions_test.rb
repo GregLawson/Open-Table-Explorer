@@ -51,7 +51,7 @@ def test_assert_flat_set
 	assert(assert_flat_set(set))
 	set=Set[1,Set[2],3]
 	assert(set.to_a[1].instance_of?(Set))
-	assert_raise(Test::Unit::AssertionFailedError) {assert(assert_flat_set(set))}
+	assert_raise(AssertionFailedError) {assert(assert_flat_set(set))}
 	
 end #assert_flat_set
 def test_assert_subset
@@ -111,9 +111,9 @@ def test_assert_not_include
 	element=1
 	list=[1,2,3]
 	assert(list.include?(element))
-	assert_include(element, list)
-	assert_not_include(4, list)
-	assert_raise(Test::Unit::AssertionFailedError){assert_not_include(element, list)}
+	assert_include(list, element)
+	assert_not_include(list, 4)
+	assert_raise(AssertionFailedError){assert_not_include(list, element)}
 end #assert_not_include
 def test_assert_public_instance_method
 	obj=StreamPattern.new
