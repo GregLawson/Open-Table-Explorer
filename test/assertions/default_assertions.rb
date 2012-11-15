@@ -9,9 +9,11 @@ module DefaultAssertions
 require 'test/unit'
 include Test::Unit::Assertions
 module ClassMethods
+# conditions that are always true (at least atomically)
 def assert_invariant
 
 end # class_assert_invariant
+# conditions true while class is being defined
 def assert_pre_conditions
 	assert_invariant
 end #class_assert_pre_conditions
@@ -37,19 +39,14 @@ def example_constants_by_class(klass)
 end #example_constants_by_class
 end #ClassMethods
 def assert_pre_conditions
-	self.class.assert_pre_conditions
-	assert_invariant
 end #assert_pre_conditions
+# Instance methods
 def assert_invariant
-	self.class.assert_invariant
 
 end #def assert_invariant
 
+# Post conditions are true after an operation
 def assert_post_conditions
-	self.class.assert_post_conditions
-	assert_invariant
 end #assert_post_conditions
 end #DefaultAssertions
 
-module TestCaseHelpers
-end #TestCases

@@ -71,7 +71,6 @@ def test_class_assert_post_conditions
 	model_class?.example_constants_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
 	end #each
-	model_class?.assert_post_conditions
 	fail "got to end of default test."
 end #class_assert_post_conditions
 def test_assert_pre_conditions
