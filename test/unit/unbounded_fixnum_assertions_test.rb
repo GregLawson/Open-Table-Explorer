@@ -10,5 +10,4 @@ require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
 require_relative '../../test/unit/default_assertions_test.rb'
 class UnboundedFixnumAssertionsTest < TestCase
 include DefaultAssertionTests
-
 end #UnboundedFixnum

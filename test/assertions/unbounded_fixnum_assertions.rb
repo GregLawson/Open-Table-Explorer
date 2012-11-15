@@ -34,8 +34,8 @@ include Assertions
 extend Assertions::ClassMethods
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
-module TestCases
+module Examples
 Example=UnboundedFixnum.new(3)
 include Constants
-end #TestCases
+end #Examples
 end #UnboundedFixnum

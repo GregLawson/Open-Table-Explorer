@@ -16,7 +16,7 @@ include Assertions
 extend Assertions::ClassMethods
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
-module TestCases
+module Examples
 	Constant=1
-end #TestCases
+end #Examples
 end #Minimal

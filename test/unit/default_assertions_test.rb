@@ -29,7 +29,7 @@ def names_of_tests?
 end #names_of_tests?
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)
-#include "#{DefaultAssertionTests.model_class?}::TestCases"
+#include "#{DefaultAssertionTests.model_class?}::Examples"
 def test_test_case
 	assert_equal(self.class.name[-4..-1], 'Test')
 	assert_equal(6, names_of_tests?.size, "#{names_of_tests?.sort}")
@@ -39,10 +39,10 @@ def test_test_case
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
-	puts "model_class?::TestCases.inspect=#{model_class?::TestCases.inspect}"
-	puts "model_class?::TestCases.constants.inspect=#{model_class?::TestCases.constants.inspect}"
-	puts "model_class?::TestCases.instance_methods.inspect=#{model_class?::TestCases.instance_methods.inspect}"
-	puts "model_class?::TestCases.methods.inspect=#{model_class?::TestCases.methods.inspect}"
+	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
+	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
+	puts "model_class?::Examples.instance_methods.inspect=#{model_class?::Examples.instance_methods.inspect}"
+	puts "model_class?::Examples.methods.inspect=#{model_class?::Examples.methods.inspect}"
 	puts "model_class?::Assertions.inspect=#{model_class?::Assertions.inspect}"
 	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
 	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
