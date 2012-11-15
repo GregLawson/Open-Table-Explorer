@@ -12,25 +12,22 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 # nil means unbounded (i.e. infinity)
 class UnboundedFixnum < Numeric # Fixnum blocks new
 require_relative '../../test/unit/test_environment'
-require_relative 'default_assertions.rb'
+require_relative '../assertions/default_assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 # conditions true while class is being defined
 def assert_pre_conditions
-	assert_include(UnboundedFixnum.ancestors, Numeric)
 	assert_invariant
 end #assert_pre_conditions
 # conditions that are always true (at least atomically)
 def assert_invariant
-	assert_equal(UnboundedFixnum, self)
-end #assert_UnboundedFixnum_invariant_conditions
+	assert_include(UnboundedFixnum.ancestors, Numeric)
+end #class_invariant_conditions
 # Post conditions are true after an operation
-def assert_post_conditions
-	assert_invariant
-end #assert_UnboundedFixnum_post_conditions
 end #ClassMethods
+# Instance methods
 def assert_invariant
 	self.class.assert_invariant
 	if @fixnum.nil? then
@@ -41,22 +38,14 @@ def assert_invariant
 		assert_instance_of(Fixnum, @fixnum)
 	end #if
 end #assert_invariant
-def assert_pre_conditions
-	self.class.assert_pre_conditions
-	assert_invariant
-end #assert_pre_conditions
-def assert_post_conditions
-	self.class.assert_post_conditions
-	assert_invariant
-end #assert_post_conditions
 
 end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
 module TestCases
 Example=UnboundedFixnum.new(3)
 include Constants
 end #TestCases
-end #UnboundedFixnum
-class UnboundedFixnum  # reopen class to add assertions
-include UnboundedFixnum::Assertions
-extend UnboundedFixnum::Assertions::ClassMethods
 end #UnboundedFixnum
