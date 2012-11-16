@@ -30,11 +30,12 @@ end #names_of_tests?
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
-def test_test_case
+def test_test_environment
 	assert_equal(self.class.name[-4..-1], 'Test')
 	assert_equal(6, names_of_tests?.size, "#{names_of_tests?.sort}")
 	assert_equal([DefaultAssertionTests], Module.nesting)
-	assert_equal([DefaultAssertionTests, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel], self.class.included_modules)
+	assert_include(self.class.included_modules, Test::Unit::Assertions)
+	assert_include(self.class.included_modules, DefaultAssertionTests)
 	assert_include(self.methods(true), :explain_assert_respond_to)
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
@@ -52,12 +53,18 @@ def test_test_case
 #	assert_equal('Test::Unit::Assertions', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
+	fail "got to end of default test."
+end #test_test_case
+def test_assertion_inclusion
+	assert_include(model_class?.included_modules, model_class?::Assertions)
+	assert_include(model_class?.ancestors, Test::Unit::Assertions)
+	assert_include(model_class?.ancestors, model_class?::Examples, "module #{model_class?}::Examples  should exist in class #{model_class?}")
+	assert_include(model_class?.included_modules, model_class?::Examples, "module Examples  should be included in class #{model_class?}")
 	assert_include(model_class?.methods, :example_constants_by_class, "model_class?=#{model_class?}")
 	assert_respond_to(model_class?, :example_constants_by_class, "model_class?=#{model_class?}")
 #	assert_respond_to(model_class?, :example_constants_by_class)
 #	assert_include(model_class?.methods, :example_constants_by_class, "model_class?=#{model_class?}")
-	fail "got to end of default test."
-end #test_test_case
+end #test_assertion_inclusion
 def test_class_assert_invariant
 	#puts "self.class.methods(true)=#{self.class.methods(true)}"
 	model_class?.assert_invariant

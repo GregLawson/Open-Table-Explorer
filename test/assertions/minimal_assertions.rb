@@ -19,4 +19,5 @@ extend DefaultAssertions::ClassMethods
 module Examples
 	Constant=1
 end #Examples
+include Examples
 end #Minimal
