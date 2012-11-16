@@ -38,4 +38,5 @@ module Examples
 Example=UnboundedFixnum.new(3)
 include Constants
 end #Examples
+include Examples
 end #UnboundedFixnum
