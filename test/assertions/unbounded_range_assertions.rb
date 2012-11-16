@@ -40,6 +40,8 @@ end #assert_unbounded_range_equal
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
 include UnboundedRange::Assertions
 #extend UnboundedRange::Assertions::ClassMethods
 module Examples
@@ -47,4 +49,5 @@ include UnboundedRange::Constants
 One_to_ten=UnboundedRange.new(1, 10)
 Repetition_1_2=UnboundedRange.new(1,2)
 end #Examples
+include Examples
 end #UnboundedRange
