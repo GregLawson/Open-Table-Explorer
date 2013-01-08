@@ -11,10 +11,13 @@ require_relative 'nested_array.rb'
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
 attr_reader :regexp_string,:tokenIndex,:parse_tree
-Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+module Constants
 OpeningBrackets='({['
 ClosingBrackets=')}]'
 PostfixOperators='+*?|'
+Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+end #Constants
+include Constants
 def initialize(regexp_string)
 	@tokenIndex=-1 # start at end
 	if regexp_string.kind_of?(RegexpParse) then
@@ -300,4 +303,17 @@ end #regexpTree!
 # The following test case constants can be used externally.
 # For internal tests use  RegexpParseTest constants.
 # Only assert_post_consitions should be used.
+module Constants
+Any_binary_char_string='[\000-\377]'
+Any_binary_string="#{Any_binary_char_string}*"
+Any_binary_char=RegexpParse.new(Any_binary_char_string)
+Any_binary_char_parse=RegexpParse.new(Any_binary_char_string)
+Any_binary_string_parse=RegexpParse.new(Any_binary_string)
+Dot_star_array=['.', '*']
+Dot_star_string=Dot_star_array.join
+Dot_star_parse=RegexpParse.new(Dot_star_string)
+Empty_language_array=[]
+Empty_language_string=Empty_language_array.join
+Empty_language_parse=RegexpParse.new(Empty_language_string)
+end #Constants
 end #RegexpParse
