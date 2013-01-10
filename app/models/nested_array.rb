@@ -9,12 +9,12 @@
 # Postfix operators and brackets start embeddded arrays
 #require 'app/models/inlineAssertions.rb'
 class NestedArray < Array # tree or matrix, whatever
-module TestCases
+module Examples
 Echo_proc=Proc.new{|parseTree| parseTree}
 Reverse_proc=Proc.new{|parseTree| parseTree.reverse}
 Constant_proc=Proc.new{|parseTree| '*'}
 Asymmetrical_Tree_Array=NestedArray.new([['1','2'],'3'])
-end #TestCases
+end #Examples
 def initialize(array=[])
 	super(array)
 end #initialize

@@ -10,7 +10,7 @@ require_relative '../../test/assertions/regexp_parse_assertions.rb'
 require_relative 'default_assertions_test.rb'
 class RegexpParseAssertionsTest < TestCase
 #set_class_variables
-include RegexpParse::TestCases
+include RegexpParse::Examples
 include DefaultAssertionTests
 def test_Class_assert_pre_conditions
 	RegexpParse.assert_pre_conditions
@@ -46,33 +46,33 @@ def test_assert_post_conditions
 	parser.assert_post_conditions
 end #assert_post_conditions
 def test_assert_repetition_range
-	RegexpParse.new(RegexpParse::TestCases::Empty_language_string).assert_repetition_range(UnboundedRange.new(0,0))
+	RegexpParse.new(RegexpParse::Examples::Empty_language_string).assert_repetition_range(UnboundedRange.new(0,0))
 	assert_equal(UnboundedRange::Once, RegexpParse.new('a').repetition_length)
 end #assert_repetition_range
 def test_assert_round_trip
-	RegexpParse.assert_round_trip(RegexpParse::TestCases::Dot_star_array)
-	RegexpParse.assert_round_trip(RegexpParse::TestCases::Parenthesized_array)
+	RegexpParse.assert_round_trip(RegexpParse::Examples::Dot_star_array)
+	RegexpParse.assert_round_trip(RegexpParse::Examples::Parenthesized_array)
 end #assert_round_trip
 def test_value_of
 	name=:Parenthesized
 	form=:string
-	assert_equal(RegexpParse::TestCases::Parenthesized_string, RegexpParse::TestCases.value_of?(name, form))
+	assert_equal(RegexpParse::Examples::Parenthesized_string, RegexpParse::Examples.value_of?(name, form))
 end #value_of
 def test_constant_name
 	name=:Parenthesized
 	form=:string
-	assert_equal('RegexpParse::TestCases::Parenthesized_string', RegexpParse::TestCases.constant_reference?(name, form))
+	assert_equal('RegexpParse::Examples::Parenthesized_string', RegexpParse::Examples.constant_reference?(name, form))
 end #constant_name
 def test_parse_of
-	string=RegexpParse::TestCases::Parenthesized_string
+	string=RegexpParse::Examples::Parenthesized_string
 end #parse_of
 def test_string_of
 	name=:Parenthesized
 	form=:string
-	array=RegexpParse::TestCases::Parenthesized_array
+	array=RegexpParse::Examples::Parenthesized_array
 end #string_of
 def test_array_of
-	string=RegexpParse::TestCases::Parenthesized_string
+	string=RegexpParse::Examples::Parenthesized_string
 end #array_of
 def test_name_of
 	constant='Parenthesized_parse'
@@ -81,14 +81,14 @@ def test_name_of
 	assert_equal(3, match.size, "match=#{match.inspect}")
 end #name_of
 def test_names
-	constants=RegexpParse::TestCases.constants
+	constants=RegexpParse::Examples.constants
 	assert_not_empty(constants)
 	assert_instance_of(Symbol, constants[0])
 	constants.map do |name|
-		constant=RegexpParse::TestCases.const_get(name)
+		constant=RegexpParse::Examples.const_get(name)
 		assert_not_nil(name, "name=#{name.inspect}, constants=#{constants.inspect}")
 		assert_instance_of(Symbol, name)
-		match=RegexpParse::TestCases.name_of?(name)
+		match=RegexpParse::Examples.name_of?(name)
 		if !match.nil? && (constant.class==String || constant.class==Array || constant.class==RegexpParse) then
 			assert_not_nil(match, "name.class=#{name.class.inspect}, name=#{name.inspect}, constants=#{constants.inspect}")
 			match[1]
@@ -96,20 +96,20 @@ def test_names
 			nil
 		end #if
 	end.compact.uniq #map
-	assert_include(RegexpParse::TestCases.names, 'Sequence')
+	assert_include(RegexpParse::Examples.names, 'Sequence')
 
 end #names
 def test_strings
-	assert_not_nil(RegexpParse::TestCases.constants)
-	assert_include(RegexpParse::TestCases.constants, :Dot_star_string)
+	assert_not_nil(RegexpParse::Examples.constants)
+	assert_include(RegexpParse::Examples.constants, :Dot_star_string)
 
-	assert_include(RegexpParse::TestCases.methods(false), :strings)
+	assert_include(RegexpParse::Examples.methods(false), :strings)
 
-	assert_include(RegexpParse::TestCases::strings, :Dot_star_string)
+	assert_include(RegexpParse::Examples::strings, :Dot_star_string)
 
 end #strings
 def test_arrays
-	assert_include(RegexpParse::TestCases::arrays, :Dot_star_array)
+	assert_include(RegexpParse::Examples::arrays, :Dot_star_array)
 
 end #arrays
 def test_parses

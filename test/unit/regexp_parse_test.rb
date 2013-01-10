@@ -18,23 +18,9 @@ extend RegexpParse::Assertions::ClassMethods
 end #RegexpParse
 class RegexpParseTest < TestCase
 #set_class_variables
-include RegexpParse::TestCases
+include RegexpParse::Examples
 RegexpParse.assert_pre_conditions #verify class
-# The following test case constants should be used only internally
-# For external use use  RegexpParse::TestCases
 # assert_pre_consitions and assert_invariant are used
-Asymmetrical_Tree=RegexpParse.new(NestedArray::TestCases::Asymmetrical_Tree_Array)
-CONSTANT_PARSE_TREE=RegexpParse.new('K')
-Restartable_parse=CONSTANT_PARSE_TREE.clone
-#CONSTANT_PARSE_TREE.freeze
-	assert_equal(['K'],CONSTANT_PARSE_TREE.to_a)
-
-KC_parse=RegexpParse.new('KC')
-RowsRegexp='(<tr.*</tr>)'
-Rows_parse=RegexpParse.new(RowsRegexp)
-RowsEdtor2=RegexpParse.new('\s*(<tr.*</tr>)')
-KCET_parse=RegexpParse.new('KCET[^
-]*</tr>\s*(<tr.*</tr>).*KVIE')
 def test_OpeningBrackets
 	assert_equal('(', RegexpParse::OpeningBrackets[RegexpParse::ClosingBrackets.index(')')].chr)
 end #OpeningBrackets
@@ -64,8 +50,8 @@ def test_initialize
 	assert_instance_of(NestedArray, RegexpParse.new(CONSTANT_PARSE_TREE).parse_tree)
 	assert_instance_of(NestedArray, RegexpParse.new(/.*/).parse_tree)
 	assert_instance_of(NestedArray, RegexpParse.new('.*').parse_tree)
-	assert_instance_of(RegexpParse, RegexpParse::TestCases::Parenthesized_parse)
-	RegexpParse::TestCases::Parenthesized_parse.assert_post_conditions
+	assert_instance_of(RegexpParse, Parenthesized_parse)
+	Parenthesized_parse.assert_post_conditions
 	CONSTANT_PARSE_TREE.assert_post_conditions
 	KC_parse.assert_post_conditions
 	Rows_parse.assert_post_conditions
@@ -73,23 +59,23 @@ def test_initialize
 	KCET_parse.assert_post_conditions
 	assert_equal(2, RegexpParse.new('.*').parse_tree.size)
 	assert_equal(['.','*'], RegexpParse.new('.*').parse_tree)
-#	assert_equal(RegexpParse::TestCases::Nested_Test_Array, NestedArray.new(RegexpParse::TestCases::Nested_Test_Array).map_recursive(&NestedArray::TestCases::Echo_proc))
-#	assert_equal(RegexpParse::TestCases::Nested_Test_Array, NestedArray.new(RegexpParse::TestCases::Nested_Test_Array).map_branches(&NestedArray::TestCases::Echo_proc))
+#	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_recursive(&NestedArray::Examples::Echo_proc))
+#	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_branches(&NestedArray::Examples::Echo_proc))
 end #initialize
 def test_inspect
 	inspect_string='@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1'
 	assert_equal(inspect_string, RegexpParse.new('.*').inspect)
-	assert_equal(inspect_string, RegexpParse::TestCases::Dot_star_parse.inspect)
+	assert_equal(inspect_string, Dot_star_parse.inspect)
 end #inspect
 def test_equal_operator
-	rhs=RegexpParse::TestCases::Dot_star_parse
+	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
 	assert_include(lhs.methods, :==)
 
 	assert_equal(rhs, lhs)
 end #equal_operator
 def test_equal
-	rhs=RegexpParse::TestCases::Dot_star_parse
+	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
 	assert_include(lhs.methods, :eql?)
 
@@ -97,7 +83,7 @@ def test_equal
 	assert_equal(rhs, lhs)
 end #equal
 def test_compare
-	rhs=RegexpParse::TestCases::Dot_star_parse
+	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
 	compare=rhs <=> lhs
 	assert_equal(0, compare)
@@ -111,45 +97,47 @@ def test_RegexpParse_promotable
 	assert(RegexpParse.promotable?(['.', '*']))
 end #RegexpParse.promotable
 def test_RegexpParse_promote
-	assert_equal(RegexpParse::TestCases::Dot_star_parse, RegexpParse.promote(RegexpParse::TestCases::Dot_star_parse))
-	assert_equal(RegexpParse::TestCases::Dot_star_parse, RegexpParse.promote('.*'))
+	assert_equal(Dot_star_parse, RegexpParse.promote(Dot_star_parse))
+	assert_equal(Dot_star_parse, RegexpParse.promote('.*'))
 	assert_equal('@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1', RegexpParse.new(['.', '*']).inspect, "RegexpParse.new(['.', '*'])=#{RegexpParse.new(['.', '*']).inspect}")
 	assert_equal('@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1', RegexpParse.promote(['.', '*']).inspect, "RegexpParse.promote(['.', '*'])=#{RegexpParse.promote(['.', '*']).inspect}")
-	assert_equal(RegexpParse::TestCases::Dot_star_parse, RegexpParse.promote(['.', '*']), "RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}, RegexpParse.promote(['.', '*'])=#{RegexpParse.promote(['.', '*']).inspect}")
-	assert_equal(RegexpParse::TestCases::Dot_star_parse, RegexpParse.promote(/.*/))
+	assert_equal(Dot_star_parse, RegexpParse.promote(['.', '*']), "Dot_star_parse=#{Dot_star_parse.inspect}, RegexpParse.promote(['.', '*'])=#{RegexpParse.promote(['.', '*']).inspect}")
+	assert_equal(Dot_star_parse, RegexpParse.promote(/.*/))
 end #RegexpParse.promote
 def test_to_a
 	CONSTANT_PARSE_TREE.assert_post_conditions
 	assert_equal(['K'], CONSTANT_PARSE_TREE.parse_tree, "KC_parse=#{KC_parse.inspect}")
 	assert_equal(['K'], CONSTANT_PARSE_TREE.to_a, "KC_parse=#{KC_parse.inspect}")
-	assert_equal(NestedArray::TestCases::Asymmetrical_Tree_Array.flatten, Asymmetrical_Tree.to_a.flatten)
-	RegexpParse::TestCases::Dot_star_parse.assert_invariant
-	RegexpParse::TestCases::Dot_star_parse.assert_post_conditions
-	message="RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}"
-	message+=" RegexpParse::TestCases::Dot_star_parse.parse_tree=#{RegexpParse::TestCases::Dot_star_parse.parse_tree.inspect}"
-	message+=" RegexpParse::TestCases::Dot_star_parse.parse_tree.join=#{RegexpParse::TestCases::Dot_star_parse.parse_tree.join.inspect}"
-	assert_equal(RegexpParse::TestCases::Dot_star_parse.regexp_string, RegexpParse::TestCases::Dot_star_parse.parse_tree.join, message)
-	assert_equal(RegexpParse::TestCases::Dot_star_parse.regexp_string, RegexpParse::TestCases::Dot_star_parse.parse_tree.to_a.join, "")
+	assert_equal(NestedArray::Examples::Asymmetrical_Tree_Array.flatten, Asymmetrical_Tree_Parse.to_a.flatten)
+	Dot_star_parse.assert_invariant
+	Dot_star_parse.assert_post_conditions
+	message="Dot_star_parse=#{Dot_star_parse.inspect}"
+	message+=" Dot_star_parse.parse_tree=#{Dot_star_parse.parse_tree.inspect}"
+	message+=" Dot_star_parse.parse_tree.join=#{Dot_star_parse.parse_tree.join.inspect}"
+	assert_equal(Dot_star_parse.regexp_string, Dot_star_parse.parse_tree.join, message)
+	assert_equal(Dot_star_parse.regexp_string, Dot_star_parse.parse_tree.to_a.join, "")
 end #to_a
 def test_RegexpParse_to_s
-	assert_equal('.*', RegexpParse::TestCases::Dot_star_parse.to_s)
-	assert_equal(Asymmetrical_Tree.regexp_string, Asymmetrical_Tree.parse_tree.to_s)
+	assert_equal('.*', Dot_star_parse.to_s)
+	assert_equal(Asymmetrical_Tree_Parse.regexp_string, Asymmetrical_Tree_Parse.parse_tree.to_s)
 end #to_s
 def test_postfix_expression
-	assert_not_nil(RegexpParse::TestCases::Dot_star_parse)
-	assert(RegexpParse::TestCases::Dot_star_parse.postfix_expression?,"RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}")
-	assert(!RegexpParse.new(['K',['.','*'],'C']).postfix_expression?,"RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}")
-	assert(!RegexpParse.new(['K',['.','*']]).postfix_expression?,"RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}")
-	assert(!RegexpParse.new([['.','*'],'C']).postfix_expression?,"RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}")
-#	assert(!RegexpParse.new([['.','*']]).postfix_expression?,"RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}")
+	assert_not_nil(Dot_star_parse)
+	assert(Dot_star_parse.postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
+	assert(!RegexpParse.new(['K',['.','*'],'C']).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
+	assert(!RegexpParse.new(['K',['.','*']]).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
+	assert(!RegexpParse.new([['.','*'],'C']).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
+#	assert(!RegexpParse.new([['.','*']]).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
 end #postfix_expression
 def test_bracket_operator
-	assert_equal(RegexpParse::TestCases::Quantified_repetition_array, RegexpParse.new(RegexpParse::TestCases::Quantified_repetition_string).parse_tree)
-	assert_not_nil(RegexpParse.new(RegexpParse::TestCases::Quantified_operator_string).parse_tree)
-	assert_not_nil(RegexpParse.new(RegexpParse::TestCases::Quantified_operator_string).parse_tree[-1])
-	assert_equal('}', RegexpParse.new(RegexpParse::TestCases::Quantified_operator_string).parse_tree[-1])
-	assert_not_nil(RegexpParse.bracket_operator?(RegexpParse.new(RegexpParse::TestCases::Quantified_operator_string).parse_tree[-1]))
-	assert_equal('}', RegexpParse.bracket_operator?(RegexpParse.new(RegexpParse::TestCases::Quantified_operator_string).parse_tree[-1]))
+# branch is parse tree or string to test
+# detect bracket operator (not postfix characters)
+	assert_equal('{3,4}', Quantified_operator_string)
+	assert_not_nil(RegexpParse.new(Quantified_operator_string).parse_tree)
+	assert_not_nil(RegexpParse.new(Quantified_operator_string).parse_tree[-1])
+	assert_equal('}', RegexpParse.new(Quantified_operator_string).parse_tree[-1])
+	assert_not_nil(RegexpParse.bracket_operator?(RegexpParse.new(Quantified_operator_string).parse_tree[-1]))
+	assert_equal('}', RegexpParse.bracket_operator?(RegexpParse.new(Quantified_operator_string).parse_tree[-1]))
 	assert(!RegexpParse.bracket_operator?(RegexpParse.new('.*')))
 
 	assert(!RegexpParse.bracket_operator?(RegexpParse.new('.')))
@@ -157,48 +145,48 @@ end #bracket_operator
 def test_postfix_operator
 	assert_instance_of(String,['*','a'][1])
 	assert_equal(0,'*+?'.index(['*','a'][0]))
-	assert_not_nil(RegexpParse::TestCases::Dot_star_parse)
-	assert(RegexpParse.postfix_operator?('*'),"RegexpParse::TestCases::Dot_star_parse.to_s=#{RegexpParse::TestCases::Dot_star_parse.to_s.inspect}")
+	assert_not_nil(Dot_star_parse)
+	assert(RegexpParse.postfix_operator?('*'),"Dot_star_parse.to_s=#{Dot_star_parse.to_s.inspect}")
 	assert_equal('*', Any_binary_string_parse.postfix_expression?)
 	assert(!RegexpParse.postfix_operator?('.'),"RegexpParse.postfix_operator?('.')=#{RegexpParse.postfix_operator?('.')}")
 end #postfix_operator
 def test_postfix_operator_walk
-	assert_equal(['1', '2', '3'], Asymmetrical_Tree.to_a.flatten)
-	assert_equal([['1', '2'], '3'], Asymmetrical_Tree.to_a)
-	assert_equal('*',NestedArray::TestCases::Constant_proc.call(RegexpParse::TestCases::Sequence_parse))
-	assert_equal(RegexpParse::TestCases::Sequence_parse,NestedArray::TestCases::Echo_proc.call(RegexpParse::TestCases::Sequence_parse))
-	assert_equal(Asymmetrical_Tree,NestedArray::TestCases::Echo_proc.call(Asymmetrical_Tree))
+	assert_equal(['1', '2', '3'], Asymmetrical_Tree_Parse.to_a.flatten)
+	assert_equal([['1', '2'], '3'], Asymmetrical_Tree_Parse.to_a)
+	assert_equal('*',NestedArray::Examples::Constant_proc.call(Sequence_parse))
+	assert_equal(Sequence_parse,NestedArray::Examples::Echo_proc.call(Sequence_parse))
+	assert_equal(Asymmetrical_Tree_Parse,NestedArray::Examples::Echo_proc.call(Asymmetrical_Tree_Parse))
 	reverse_proc=Proc.new{|parse_tree| parse_tree.reverse}
-	assert_equal(RegexpParse::TestCases::Sequence_parse.to_a.reverse, reverse_proc.call(RegexpParse::TestCases::Sequence_parse))
-	RegexpParse::TestCases::Dot_star_parse.assert_post_conditions
+	assert_equal(Sequence_parse.to_a.reverse, reverse_proc.call(Sequence_parse))
+	Dot_star_parse.assert_post_conditions
 
-	assert_equal(['.','*'], RegexpParse::TestCases::Dot_star_parse.parse_tree)
-	assert_equal(RegexpParse::TestCases::Dot_star_parse.parse_tree[-1], '*')
-	assert_not_equal(RegexpParse::TestCases::Dot_star_parse.parse_tree[0].class, Array)
-	assert_equal(RegexpParse::TestCases::Dot_star_parse, RegexpParse::TestCases::Dot_star_parse.postfix_operator_walk(&NestedArray::TestCases::Echo_proc))
-	assert_equal(RegexpParse::TestCases::Dot_star_parse, RegexpParse::TestCases::Dot_star_parse.postfix_operator_walk{|p| p})
-	assert_equal(['.', '*'], RegexpParse::TestCases::Dot_star_parse.postfix_operator_walk(&NestedArray::TestCases::Echo_proc).parse_tree)
-	assert_equal(RegexpParse::TestCases::Sequence_parse, RegexpParse.new(RegexpParse::TestCases::Sequence_parse).postfix_operator_walk(&NestedArray::TestCases::Constant_proc).parse_tree)
-	assert_equal(RegexpParse::TestCases::Sequence_parse, RegexpParse.new(RegexpParse::TestCases::Sequence_parse).postfix_operator_walk(&NestedArray::TestCases::Echo_proc))
-	assert_not_nil(RegexpParse.new(Asymmetrical_Tree))
-	assert_equal(Asymmetrical_Tree, RegexpParse.new(Asymmetrical_Tree).postfix_operator_walk{|p| p})
+	assert_equal(['.','*'], Dot_star_parse.parse_tree)
+	assert_equal(Dot_star_parse.parse_tree[-1], '*')
+	assert_not_equal(Dot_star_parse.parse_tree[0].class, Array)
+	assert_equal(Dot_star_parse, Dot_star_parse.postfix_operator_walk(&NestedArray::Examples::Echo_proc))
+	assert_equal(Dot_star_parse, Dot_star_parse.postfix_operator_walk{|p| p})
+	assert_equal(['.', '*'], Dot_star_parse.postfix_operator_walk(&NestedArray::Examples::Echo_proc).parse_tree)
+	assert_equal(Sequence_parse, RegexpParse.new(Sequence_parse).postfix_operator_walk(&NestedArray::Examples::Constant_proc).parse_tree)
+	assert_equal(Sequence_parse, RegexpParse.new(Sequence_parse).postfix_operator_walk(&NestedArray::Examples::Echo_proc))
+	assert_not_nil(RegexpParse.new(Asymmetrical_Tree_Parse))
+	assert_equal(Asymmetrical_Tree_Parse, RegexpParse.new(Asymmetrical_Tree_Parse).postfix_operator_walk{|p| p})
 
 	assert_equal(['*'], RegexpParse.new([['.','*']]).postfix_operator_walk{|p| '*'})
-	assert(RegexpParse::TestCases::Dot_star_parse.postfix_expression?,"RegexpParse::TestCases::Dot_star_parse=#{RegexpParse::TestCases::Dot_star_parse.inspect}")
+	assert(Dot_star_parse.postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
 	assert_equal(['*', 'C'], RegexpParse.new([['.','*'],'C']).postfix_operator_walk{|p| '*'})
-	assert_equal('*',NestedArray::TestCases::Constant_proc.call(['.','*']))
-	assert_equal('*', RegexpParse::TestCases::Dot_star_parse.postfix_operator_walk(&NestedArray::TestCases::Constant_proc))
-	assert_equal(['*'], Proc.new{|parse_tree| parse_tree[1..-1]}.call(RegexpParse::TestCases::Dot_star_parse))
-	assert_equal(RegexpParse, Proc.new{|parse_tree| parse_tree[1..-1].class}.call(RegexpParse::TestCases::Dot_star_parse))
+	assert_equal('*',NestedArray::Examples::Constant_proc.call(['.','*']))
+	assert_equal('*', Dot_star_parse.postfix_operator_walk(&NestedArray::Examples::Constant_proc))
+	assert_equal(['*'], Proc.new{|parse_tree| parse_tree[1..-1]}.call(Dot_star_parse))
+	assert_equal(RegexpParse, Proc.new{|parse_tree| parse_tree[1..-1].class}.call(Dot_star_parse))
 	visit_proc=Proc.new{|parse_tree| parse_tree[1..-1]}
-	assert_equal(['*'], visit_proc.call(RegexpParse::TestCases::Dot_star_parse))
+	assert_equal(['*'], visit_proc.call(Dot_star_parse))
 	assert_equal('.', ['.','*'][0])
 	assert_equal('.', [['.','*']][0][0])
 	visit_proc=Proc.new{|parse_tree| parse_tree[0]}
-	assert_equal('.', visit_proc.call(RegexpParse::TestCases::Dot_star_parse))
+	assert_equal('.', visit_proc.call(Dot_star_parse))
 	visit_proc=Proc.new{|parse_tree| parse_tree[1..-1]<<parse_tree[0]}
-	assert_equal(['*', '.'], visit_proc.call(RegexpParse::TestCases::Dot_star_parse))
-	assert_equal(['*', '.'], RegexpParse::TestCases::Dot_star_parse.postfix_operator_walk(&visit_proc))
+	assert_equal(['*', '.'], visit_proc.call(Dot_star_parse))
+	assert_equal(['*', '.'], Dot_star_parse.postfix_operator_walk(&visit_proc))
 	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
 	assert_equal('test/*[.]r*', Test_Pattern.to_pathname_glob)
 end #postfix_operator_walk
@@ -220,7 +208,7 @@ def test_repetition_length
 	assert_equal(node.repetition_length, UnboundedRange.new(0, nil))
 # constant tests
 	assert_equal(UnboundedRange::Once, RegexpParse.new('.').repetition_length)
-#bomb	assert_equal(UnboundedRange::Once, RegexpParse::TestCases::Sequence_parse.repetition_length)
+#bomb	assert_equal(UnboundedRange::Once, Sequence_parse.repetition_length)
 # now test a variable parse and repetiton_length
 
 	assert_equal(Any_binary_string_parse.repetition_length, UnboundedRange.new(0, UnboundedFixnum::Inf))
@@ -236,18 +224,18 @@ def test_repetition_length
 	Composite_regexp_parse.assert_repetition_range(UnboundedRange.new(3, 3))
 
 
-	parse=RegexpParse::TestCases::Any_binary_string_parse
-	parse=RegexpParse::TestCases::Quantified_repetition_parse
-	parse=RegexpParse::TestCases::Composite_regexp_parse
-	parse=RegexpParse::TestCases::Dot_star_parse
-	parse=RegexpParse::TestCases::Empty_language_parse
+	parse=Any_binary_string_parse
+	parse=Quantified_repetition_parse
+	parse=Composite_regexp_parse
+	parse=Dot_star_parse
+	parse=Empty_language_parse
 	rep=UnboundedRange::Once
-	parse=RegexpParse::TestCases::Parenthesized_parse
-	parse=RegexpParse::TestCases::No_anchor
-	parse=RegexpParse::TestCases::Start_anchor
-	parse=RegexpParse::TestCases::End_anchor
-	parse=RegexpParse::TestCases::Both_anchor
-	parse=RegexpParse::TestCases::Sequence_parse
+	parse=Parenthesized_parse
+	parse=No_anchor
+	parse=Start_anchor
+	parse=End_anchor
+	parse=Both_anchor
+	parse=Sequence_parse
 	parse.assert_invariant
 #temp	parse.assert_post_conditions
 	rep=parse.repetition_length
@@ -256,7 +244,7 @@ def test_repetition_length
 	assert_instance_of(UnboundedFixnum, rep.first)
 	assert_not_nil(rep.first)
 
-	RegexpParse.new(RegexpParse::TestCases::Empty_language_string).assert_repetition_range(UnboundedRange.new(0,0))
+	RegexpParse.new(Empty_language_string).assert_repetition_range(UnboundedRange.new(0,0))
 	assert_equal(UnboundedRange::Once, RegexpParse.new('a').repetition_length)
 
 #temp	parse.assert_repetition_range(rep)
@@ -279,9 +267,9 @@ def test_repetition_length
 	assert_operator(rep.first, :>, 0)
 	assert_equal(3, rep.last)
 	assert_not_nil(UnboundedRange.new(3, 3))
-	assert_equal(0, UnboundedRange.new(3, 3) <=> RegexpParse::TestCases::Sequence_parse.repetition_length)
-#	assert_equal(3, RegexpParse::TestCases::Sequence_parse.repetition_length)
-	assert_equal(UnboundedRange.new(3, 3), RegexpParse::TestCases::Sequence_parse.repetition_length)
+	assert_equal(0, UnboundedRange.new(3, 3) <=> Sequence_parse.repetition_length)
+#	assert_equal(3, Sequence_parse.repetition_length)
+	assert_equal(UnboundedRange.new(3, 3), Sequence_parse.repetition_length)
 end #repetition_length
 def test_repeated_pattern
 
@@ -293,20 +281,20 @@ def test_repeated_pattern
 	assert_equal(['a'], RegexpParse.new('a').parse_tree)
 	assert_equal(['a'], RegexpParse.new('a').repeated_pattern)
 	assert_equal(['.'], RegexpParse.new('.').repeated_pattern)
-	assert_equal(RegexpParse::TestCases::Quantified_repetition_parse, RegexpParse.new('.{3,4}'))
+	assert_equal(Quantified_repetition_parse, RegexpParse.new('.{3,4}'))
 	assert_equal(['.'], RegexpParse.new('.{3,4}').repeated_pattern)
-	assert_equal('*', RegexpParse::TestCases::Any_binary_string_parse.postfix_expression?)
-	assert_instance_of(NestedArray, RegexpParse::TestCases::Any_binary_string_parse.repeated_pattern('a'))
-	assert_instance_of(NestedArray, RegexpParse::TestCases::Any_binary_string_parse.repeated_pattern)
-	assert_instance_of(NestedArray, RegexpParse::TestCases::Quantified_repetition_parse.repeated_pattern)
-	assert_instance_of(NestedArray, RegexpParse::TestCases::Sequence_parse.repeated_pattern)
-	assert_equal(RegexpParse::TestCases::Binary_range, RegexpParse::TestCases::Any_binary_string_parse.repeated_pattern.to_s)
-	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], RegexpParse::TestCases::Any_binary_string_parse.repeated_pattern		)
+	assert_equal('*', Any_binary_string_parse.postfix_expression?)
+	assert_instance_of(NestedArray, Any_binary_string_parse.repeated_pattern('a'))
+	assert_instance_of(NestedArray, Any_binary_string_parse.repeated_pattern)
+	assert_instance_of(NestedArray, Quantified_repetition_parse.repeated_pattern)
+	assert_instance_of(NestedArray, Sequence_parse.repeated_pattern)
+	assert_equal(Binary_range, Any_binary_string_parse.repeated_pattern.to_s)
+	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any_binary_string_parse.repeated_pattern		)
  	assert_not_nil(RepetitionLength.new('.', 1, nil).repeated_pattern)
 end #repeated_pattern
 def test_case
-	assert_equal(Anchoring, RegexpParse.new(RegexpParse::TestCases::Both_anchor).case?)
-	assert_equal(RepetitionLength, RegexpParse::TestCases::Any_binary_string_parse.case?)
+	assert_equal(Anchoring, RegexpParse.new(Both_anchor).case?)
+	assert_equal(RepetitionLength, Any_binary_string_parse.case?)
 end #case
 def test_restartParse
 	Restartable_parse.restartParse!

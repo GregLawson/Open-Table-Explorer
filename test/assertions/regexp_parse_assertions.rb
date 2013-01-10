@@ -27,7 +27,7 @@ def assert_invariant
 	assert_include(instance_methods(false), :parseOneTerm!)
 	assert_include(instance_methods(true), :assert_post_conditions)
 	assert_include(instance_methods(true), :assert_repetition_range)
-#	moduleName='RegexpParse::TestCases'
+#	moduleName='RegexpParse::Examples'
 	moduleName='RegexpParse'
 	klass=RegexpParse
 	message="Module #{moduleName} not included in #{RegexpParse.inspect} context.Modules actually included=#{klass.ancestors.inspect}."
@@ -128,45 +128,6 @@ def assert_postfix_expression
 	assert_not_nil(post_op,"self=#{self.inspect}")
 end #postfix_expression
 end #Assertions
-module TestCases #  Namespace
-Any_binary_char_string='[\000-\377]'
-Any_binary_string="#{Any_binary_char_string}*"
-Any_binary_char=RegexpParse.new(Any_binary_char_string)
-Any_binary_char_parse=RegexpParse.new(Any_binary_char_string)
-Any_binary_string_parse=RegexpParse.new(Any_binary_string)
-Quantified_operator_array=["{", "3", ",", "4", "}"]
-Quantified_operator_string=Quantified_operator_array.join
-Quantified_repetition_array=[".", ["{", "3", ",", "4", "}"]]
-Quantified_repetition_string=Quantified_repetition_array.join
-#Quantified_repetition_parse=RegexpParse.new(Quantified_repetition_string)
-Composite_regexp_array=["t", "e", "s", "t", "/",
-	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
-	 	["[", ".", "]"],
-	 	"r",
-		[["[", "a", "-", "z", "]"], "*"]]
-Composite_regexp_string=Composite_regexp_array.join
-Composite_regexp_parse=RegexpParse.new(Composite_regexp_string)
-Dot_star_array=['.', '*']
-Dot_star_string=Dot_star_array.join
-Dot_star_parse=RegexpParse.new(Dot_star_string)
-Parenthesized_array=['a', ['(', '.', ')']]
-Parenthesized_string=Parenthesized_array.join
-Parenthesized_parse=RegexpParse.new(Parenthesized_string)	
-Sequence_array=['1', '2', '3']
-Sequence_string=Sequence_array.join
-Sequence_parse=RegexpParse.new(Sequence_string)
-Empty_language_array=[]
-Empty_language_string=Empty_language_array.join
-Empty_language_parse=RegexpParse.new(Empty_language_string)
-module Parameters
-Start_anchor_string='^' #should be \S or start of String
-End_anchor_string='$' #should be \s or end of String
-Anchor_root_test_case='a'
-end # module Parameters
-No_anchor=RegexpParse.new(Parameters::Anchor_root_test_case)
-Start_anchor=RegexpParse.new(Parameters::Start_anchor_string+Parameters::Anchor_root_test_case)
-End_anchor=RegexpParse.new(Parameters::Anchor_root_test_case+Parameters::End_anchor_string)
-Both_anchor=RegexpParse.new(Parameters::Start_anchor_string+Parameters::Anchor_root_test_case+Parameters::End_anchor_string)
 def self.value_of?(name, form)
 	constant_reference=constant_reference?(name, form)
 	
@@ -215,9 +176,50 @@ end #arrays
 def self.parses
 	return RegexpParse::TestCases.constants.select {|c| /.*_parse/.match(c)}
 end #parses
-end #TestCases
 end #RegexpParse
 class RegexpParse  # reopen class to add assertions
 include RegexpParse::Assertions
 extend RegexpParse::Assertions::ClassMethods
+module Examples #  Namespace
+include Constants
+Asymmetrical_Tree_Parse=RegexpParse.new(NestedArray::Examples::Asymmetrical_Tree_Array)
+Quantified_operator_array=["{", "3", ",", "4", "}"]
+Quantified_operator_string=Quantified_operator_array.join
+Quantified_repetition_array=[".", ["{", "3", ",", "4", "}"]]
+Quantified_repetition_string=Quantified_repetition_array.join
+#Quantified_repetition_parse=RegexpParse.new(Quantified_repetition_string)
+Composite_regexp_array=["t", "e", "s", "t", "/",
+	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
+	 	["[", ".", "]"],
+	 	"r",
+		[["[", "a", "-", "z", "]"], "*"]]
+Composite_regexp_string=Composite_regexp_array.join
+Composite_regexp_parse=RegexpParse.new(Composite_regexp_string)
+Parenthesized_array=['a', ['(', '.', ')']]
+Parenthesized_string=Parenthesized_array.join
+Parenthesized_parse=RegexpParse.new(Parenthesized_string)	
+Sequence_array=['1', '2', '3']
+Sequence_string=Sequence_array.join
+Sequence_parse=RegexpParse.new(Sequence_string)
+module Parameters
+Start_anchor_string='^' #should be \S or start of String
+End_anchor_string='$' #should be \s or end of String
+Anchor_root_test_case='a'
+end # module Parameters
+No_anchor=RegexpParse.new(Parameters::Anchor_root_test_case)
+Start_anchor=RegexpParse.new(Parameters::Start_anchor_string+Parameters::Anchor_root_test_case)
+End_anchor=RegexpParse.new(Parameters::Anchor_root_test_case+Parameters::End_anchor_string)
+Both_anchor=RegexpParse.new(Parameters::Start_anchor_string+Parameters::Anchor_root_test_case+Parameters::End_anchor_string)
+CONSTANT_PARSE_TREE=RegexpParse.new('K')
+Restartable_parse=CONSTANT_PARSE_TREE.clone
+#CONSTANT_PARSE_TREE.freeze
+
+KC_parse=RegexpParse.new('KC')
+RowsRegexp='(<tr.*</tr>)'
+Rows_parse=RegexpParse.new(RowsRegexp)
+RowsEdtor2=RegexpParse.new('\s*(<tr.*</tr>)')
+KCET_parse=RegexpParse.new('KCET[^
+]*</tr>\s*(<tr.*</tr>).*KVIE')
+end #Examples
+include Examples
 end #RegexpParse
