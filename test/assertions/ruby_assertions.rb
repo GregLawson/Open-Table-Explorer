@@ -124,6 +124,8 @@ def assert_flat_set(set)
 		assert(!e.instance_of?(Set))
 	end
 end #assert_flat_set
+def assert_set_promotable(enumeration)
+end #assert_set_promotable
 def assert_subset(subset_enumeration, superset_enumeration, message=nil)
 	if subset_enumeration.instance_of?(Set) then
 		subset=subset_enumeration
