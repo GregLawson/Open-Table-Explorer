@@ -131,11 +131,21 @@ def test_bracket_operator
 	assert(!RegexpParse.bracket_operator?(RegexpParse.new('.*')))
 
 	assert(!RegexpParse.bracket_operator?(RegexpParse.new('.')))
+	assert_equal('*', Dot_star_array[-1])
+	assert_nil(RegexpParse.bracket_operator?(Dot_star_array[-1]))
+# unlike postfix expression branch, only last node should be passed
+	assert_equal('.{3,4}', Quantified_repetition_string)
+	assert_equal(Quantified_repetition_array, RegexpParse.new(Quantified_repetition_string).parse_tree)
+	assert_nil(RegexpParse.bracket_operator?(Quantified_repetition_array[-1]))
 end #bracket_operator
 def test_postfix_operator
-	assert_instance_of(String,['*','a'][1])
+	branch='*'
+	assert_instance_of(String, branch)
 	assert_equal(0,'*+?'.index(['*','a'][0]))
+	assert_equal(1,	PostfixOperators.index(branch))	
 	assert_not_nil(Dot_star_parse)
+	branch=Dot_star_array
+	assert_equal(1,	RegexpParse.bracket_operator?(branch[-1]))
 	assert(RegexpParse.postfix_operator?('*'),"Dot_star_parse.to_s=#{Dot_star_parse.to_s.inspect}")
 	assert_equal('*', Any_binary_string_parse.postfix_expression?)
 	assert(!RegexpParse.postfix_operator?('.'),"RegexpParse.postfix_operator?('.')=#{RegexpParse.postfix_operator?('.')}")
