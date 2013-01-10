@@ -20,17 +20,17 @@ def test_initialize
 	assert_equal(['K'], NestedArray.new(['K']).to_a)
 end #initialize
 def test_index
-	assert_instance_of(NestedArray,NestedArray::TestCases::Asymmetrical_Tree_Array)
-	assert_respond_to(NestedArray::TestCases::Asymmetrical_Tree_Array, :[])
-	assert_not_nil(NestedArray::TestCases::Asymmetrical_Tree_Array[0])
-	assert_instance_of(NestedArray, NestedArray::TestCases::Asymmetrical_Tree_Array[0])
+	assert_instance_of(NestedArray,NestedArray::Examples::Asymmetrical_Tree_Array)
+	assert_respond_to(NestedArray::Examples::Asymmetrical_Tree_Array, :[])
+	assert_not_nil(NestedArray::Examples::Asymmetrical_Tree_Array[0])
+	assert_instance_of(NestedArray, NestedArray::Examples::Asymmetrical_Tree_Array[0])
 end #[]index
 def test_to_s
 	assert_equal('123',NestedArray.new([1,2,3]).to_s)
 	assert_equal('123',NestedArray.new([1,[2,3]]).to_s)
 end #to_s
 def test_map_recursive
-	assert_equal(['*','.'], NestedArray::TestCases::Echo_proc.call(['*','.']))
+	assert_equal(['*','.'], NestedArray::Examples::Echo_proc.call(['*','.']))
 	assert_equal(['1','2'], NestedArray.new(['1','2']).map_recursive{|p| p})
 	assert_equal(['String','String'], NestedArray.new(['1','2']).map_recursive{|p| p.class.name})
 	assert_equal(['?1','?2'], NestedArray.new(['1','2']).map_recursive{|p| '?'+p})
@@ -42,10 +42,10 @@ def test_map_recursive
 	assert_equal(['K',['*','.']], NestedArray.new(['K',['*','.']]).map_recursive{|p| p})
 	assert_equal(['K',['*','.'],'C'], NestedArray.new(['K',['*','.'],'C']).map_recursive{|p| p})
 	visit_proc=Proc.new{|parseTree| parseTree}
-#	assert_equal('*', NestedArray::TestCases::Echo_proc.call)
-	assert_equal(['*','.'], NestedArray::TestCases::Echo_proc.call(['*','.']))
-	assert_equal(['*','.'], NestedArray.new(['*','.']).map_recursive(&NestedArray::TestCases::Echo_proc))
-	NestedArray::TestCases::Asymmetrical_Tree_Array.map_recursive() do |leaf|
+#	assert_equal('*', NestedArray::Examples::Echo_proc.call)
+	assert_equal(['*','.'], NestedArray::Examples::Echo_proc.call(['*','.']))
+	assert_equal(['*','.'], NestedArray.new(['*','.']).map_recursive(&NestedArray::Examples::Echo_proc))
+	NestedArray::Examples::Asymmetrical_Tree_Array.map_recursive() do |leaf|
 		assert_instance_of(String, leaf)
 	end #map_recursive
 end #map_recursive
@@ -59,12 +59,12 @@ def test_map_branches
 	assert_equal('2', NestedArray.new(['*','1','2']).map_branches{|p| p[2]})
 	assert_equal('1*2', NestedArray.new(['*','1','2']).map_branches{|p| p[1]+p[0]+p[2]})
 	assert_equal(['C',['.','*'],'K'], NestedArray.new(['K',['*','.'],'C']).map_branches{|p| p.reverse})
-	assert_equal(['C',['.','*'],'K'], NestedArray.new(['K',['*','.'],'C']).map_branches(&NestedArray::TestCases::Reverse_proc))
-	assert_equal(['.','*'],NestedArray::TestCases::Reverse_proc.call(['*','.']))
+	assert_equal(['C',['.','*'],'K'], NestedArray.new(['K',['*','.'],'C']).map_branches(&NestedArray::Examples::Reverse_proc))
+	assert_equal(['.','*'],NestedArray::Examples::Reverse_proc.call(['*','.']))
 	assert_equal([['.','*']], NestedArray.new([['*','.']]).map_branches{|p| p.reverse})
-	assert_equal(NestedArray::TestCases::Asymmetrical_Tree_Array.reverse,NestedArray::TestCases::Reverse_proc.call(NestedArray::TestCases::Asymmetrical_Tree_Array))
-	assert_equal(NestedArray::TestCases::Asymmetrical_Tree_Array.flatten.reverse, NestedArray::TestCases::Asymmetrical_Tree_Array.map_branches(&NestedArray::TestCases::Reverse_proc).flatten)
-	NestedArray::TestCases::Asymmetrical_Tree_Array.map_branches() do |leaf|
+	assert_equal(NestedArray::Examples::Asymmetrical_Tree_Array.reverse,NestedArray::Examples::Reverse_proc.call(NestedArray::Examples::Asymmetrical_Tree_Array))
+	assert_equal(NestedArray::Examples::Asymmetrical_Tree_Array.flatten.reverse, NestedArray::Examples::Asymmetrical_Tree_Array.map_branches(&NestedArray::Examples::Reverse_proc).flatten)
+	NestedArray::Examples::Asymmetrical_Tree_Array.map_branches() do |leaf|
 		assert_instance_of(Array, leaf)
 	end #map_branches
 end #map_branches
