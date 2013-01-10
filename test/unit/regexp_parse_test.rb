@@ -7,20 +7,10 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../assertions/regexp_parse_assertions.rb'
-class UnboundedRange  # reopen class to add assertions
-include UnboundedRange::Assertions
-#extend UnboundedRange::Assertions::ClassMethods
-end #UnboundedRange
-class RegexpParse  # reopen class to add assertions
-include RegexpParse::Assertions
-#include UnboundedRange::Assertions #not needed?
-extend RegexpParse::Assertions::ClassMethods
-end #RegexpParse
 class RegexpParseTest < TestCase
-#set_class_variables
 include RegexpParse::Examples
+include Test::Unit::Assertions
 RegexpParse.assert_pre_conditions #verify class
-# assert_pre_consitions and assert_invariant are used
 def test_OpeningBrackets
 	assert_equal('(', RegexpParse::OpeningBrackets[RegexpParse::ClosingBrackets.index(')')].chr)
 end #OpeningBrackets
