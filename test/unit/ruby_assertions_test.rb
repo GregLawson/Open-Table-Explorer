@@ -8,10 +8,6 @@
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
-#@@table_name='stream_patterns'
-#fixtures @@table_name.to_sym
-#fixtures :table_specs
-#require 'test/test_helper_test_tables.rb'
 def test_assert_call_result
 	#~ explain_assert_respond_to(self,:testMethod)
 	assert_call_result(self,:testMethod)
@@ -28,6 +24,9 @@ def test_assert_answer
 end #assert_answer
 def test_explain_assert_equal
 end #explain_assert_equal
+def test_explain_assert_block
+	message="assert_block failed." # :yields: 
+end #explain_assert_block
 def test_explain_assert_respond_to
 	assert_raise(AssertionFailedError){explain_assert_respond_to(TestClass,:sequential_id?)}
 #	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
