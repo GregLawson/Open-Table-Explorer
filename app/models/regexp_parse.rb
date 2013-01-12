@@ -98,15 +98,32 @@ end #to_a
 def to_s
 	return to_a.join
 end #to_s
-def postfix_expression?(branch=self)
+# If branch has a postfix operator or a bracketed length range
+# return postfix operator (what about | operator?)
+# else return nil (no repetition) (not {1,1}?)
+def RegexpParse.postfix_expression?(branch)
 	branch=RegexpParse.promote(branch)
 	postfix_operator=RegexpParse.postfix_operator?(branch.parse_tree[-1])
 	if postfix_operator then
 		return postfix_operator
 	else
-		return nil #not postfix chars
+		bracket_operator=RegexpParse.bracket_operator?(branch)
+		if bracket_operator then
+			bracket_operator
+		else
+			return nil #not postfix chars
+		end #if
 	end #if
 end #postfix_expression
+def postfix_expression?
+	RegexpParse.postfix_expression?(self)
+end #postfix_expression
+# detect bracket operator (not postfix characters)
+# branch is parse tree or string to test (not Regexp)
+# unlike postfix expression branch, only last node should be passed
+# return bracket parse tree - bracket expression detected
+# return closing bracket character - closing bracket character
+# return nil - no bracket 
 def RegexpParse.bracket_operator?(branch)
 	if branch.kind_of?(RegexpParse) && branch.parse_tree[-1]=='}' then
 		return branch.parse_tree 
@@ -116,10 +133,18 @@ def RegexpParse.bracket_operator?(branch)
 		return nil	
 	end #if
 end #bracket_operator
+# branch is parse tree or string to test
+# unlike postfix expression branch, only last node should be passed
 # returns node such as ['*'] or ["{", "3", ",", "4", "}"]
+# returns nil if not a postfix operator
 def RegexpParse.postfix_operator?(branch)
 	if branch.instance_of?(String) then
-		PostfixOperators.index(branch)	
+		index=PostfixOperators.index(branch)	
+		if index.nil? then
+			nil
+		else
+			PostfixOperators[index]
+		end #if
 	else
 		RegexpParse.bracket_operator?(branch)
 	end #if
@@ -282,9 +307,6 @@ def regexpTree!(terminator=nil)
 	return ret.reverse
 end #regexpTree!
 
-# The following test case constants can be used externally.
-# For internal tests use  RegexpParseTest constants.
-# Only assert_post_consitions should be used.
 module Constants
 Any_binary_char_string='[\000-\377]'
 Any_binary_string="#{Any_binary_char_string}*"

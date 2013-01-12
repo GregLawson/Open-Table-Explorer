@@ -114,10 +114,15 @@ end #to_s
 def test_postfix_expression
 	assert_not_nil(Dot_star_parse)
 	assert(Dot_star_parse.postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
+# embedded postfix expressions return false (nil)
 	assert(!RegexpParse.new(['K',['.','*'],'C']).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
 	assert(!RegexpParse.new(['K',['.','*']]).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
 	assert(!RegexpParse.new([['.','*'],'C']).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
-#	assert(!RegexpParse.new([['.','*']]).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
+#	redundant nested Array is stripped
+	assert(RegexpParse.new([['.','*']]).postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
+	assert_instance_of(String, Any_binary_string_parse.parse_tree[-1])
+	assert_equal('*', RegexpParse.postfix_operator?(Any_binary_string_parse.parse_tree[-1]))
+	assert_equal('*', Any_binary_string_parse.postfix_expression?)
 end #postfix_expression
 def test_bracket_operator
 # branch is parse tree or string to test
@@ -137,6 +142,7 @@ def test_bracket_operator
 	assert_equal('.{3,4}', Quantified_repetition_string)
 	assert_equal(Quantified_repetition_array, RegexpParse.new(Quantified_repetition_string).parse_tree)
 	assert_nil(RegexpParse.bracket_operator?(Quantified_repetition_array[-1]))
+	assert_nil(RegexpParse.bracket_operator?(Dot_star_array[-1]))
 end #bracket_operator
 def test_postfix_operator
 	branch='*'
@@ -145,10 +151,10 @@ def test_postfix_operator
 	assert_equal(1,	PostfixOperators.index(branch))	
 	assert_not_nil(Dot_star_parse)
 	branch=Dot_star_array
-	assert_equal(1,	RegexpParse.bracket_operator?(branch[-1]))
+	assert_nil(RegexpParse.bracket_operator?(Dot_star_array[-1]))
 	assert(RegexpParse.postfix_operator?('*'),"Dot_star_parse.to_s=#{Dot_star_parse.to_s.inspect}")
-	assert_equal('*', Any_binary_string_parse.postfix_expression?)
 	assert(!RegexpParse.postfix_operator?('.'),"RegexpParse.postfix_operator?('.')=#{RegexpParse.postfix_operator?('.')}")
+	assert_equal('*', RegexpParse.postfix_operator?(Any_binary_string_parse.parse_tree[-1]))
 end #postfix_operator
 def test_postfix_operator_walk
 	assert_equal(['1', '2', '3'], Asymmetrical_Tree_Parse.to_a.flatten)
