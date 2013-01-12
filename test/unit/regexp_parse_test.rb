@@ -292,10 +292,6 @@ def test_repeated_pattern
 	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any_binary_string_parse.repeated_pattern		)
  	assert_not_nil(RepetitionLength.new('.', 1, nil).repeated_pattern)
 end #repeated_pattern
-def test_case
-	assert_equal(Anchoring, RegexpParse.new(Both_anchor).case?)
-	assert_equal(RepetitionLength, Any_binary_string_parse.case?)
-end #case
 def test_restartParse
 	Restartable_parse.restartParse!
 	Restartable_parse.assert_pre_conditions

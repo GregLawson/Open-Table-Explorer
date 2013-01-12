@@ -206,25 +206,7 @@ end #repeated_pattern
 # Expect to eventually replace with inheritance
 # Or use in parser (or post-parser initialization) to set classes correcly.
 # Need more uniform subclasses
-# Is there a useful hierarchy?
-def case?(branch=self)
-	if branch.instance_of?(String) then
-		String # commonly termination condition
-	elsif postfix_expression? then
-		if alternatives? then
-			:Alternatives
-		else
-			RepetitionLength
-		end #if
-	else #sequence
-		anchoring=RegexpSequence.new(branch)
-		if anchoring[:start_anchor].nil? && anchoring[:end_anchor].nil? then unachored sequence
-			RegexpParse
-		else # anchored
-			Anchoring
-		end #if
-	end #if
-end #case
+# Is there a useful hierarchy? Sequence (chars and trees) and alternatives (char class, |)
 # Private methods that alter state end in !
 #private
 def restartParse! # primarily for testing
