@@ -7,22 +7,11 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/regexp_parse_assertions.rb'
-require_relative 'default_assertions_test.rb'
+require_relative '../../test/unit/default_assertions_test.rb'
 class RegexpParseAssertionsTest < TestCase
-#set_class_variables
 include RegexpParse::Examples
 include DefaultAssertionTests
-def test_Class_assert_pre_conditions
-	RegexpParse.assert_pre_conditions
-end #self.assert_pre_conditions
-def test_Class_assert_invariant
-	RegexpParse.assert_invariant
-end #assert_RegexpParse_invariant_conditions
-def test_Class_assert_post_conditions
-	RegexpParse.assert_post_conditions
-end #assert_RegexpParse_post_conditions
-Asymmetrical_Tree=RegexpParse.new(NestedArray::TestCases::Asymmetrical_Tree_Array)
-def test_assert_invariant
+def test_class_assert_invariant
 	regexp_string='K.*C'
 	test_tree=RegexpParse.new(regexp_string)
 	assert_not_nil(test_tree.parse_tree)
@@ -35,16 +24,12 @@ def test_assert_invariant
 	assert_equal(test_tree.regexp_string, test_tree.rest.to_s+test_tree.parse_tree.to_s)
 	assert_equal(test_tree.regexp_string, test_tree.rest+test_tree.parse_tree.to_s)
 	test_tree.assert_invariant
-end #assert_invariant
+end #assert_class_invariant_conditions
 def test_assert_pre_conditions
-	parser=RegexpParse::TestCases::Sequence_parse
+	parser=RegexpParse::Examples::Sequence_parse
 	parser.restartParse!
 	parser.assert_pre_conditions
 end #assert_pre_conditions
-def test_assert_post_conditions
-	parser=RegexpParse::TestCases::Sequence_parse
-	parser.assert_post_conditions
-end #assert_post_conditions
 def test_assert_repetition_range
 	RegexpParse.new(RegexpParse::Examples::Empty_language_string).assert_repetition_range(UnboundedRange.new(0,0))
 	assert_equal(UnboundedRange::Once, RegexpParse.new('a').repetition_length)

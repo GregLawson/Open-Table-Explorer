@@ -6,22 +6,17 @@
 #
 ###########################################################################
 require_relative '../../app/models/regexp_parse.rb'
-require_relative 'ruby_assertions.rb'
+require_relative '../../test/assertions/ruby_assertions.rb'
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
-
+require_relative '../assertions/default_assertions.rb'
 require 'test/unit'
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
-# conditions true of class before initialization of class constants
-def assert_pre_conditions
-	assert_invariant
-end #self.assert_pre_conditions
-# Class conditions always true
 def assert_invariant
 	assert_equal(RegexpParse, self)
 	assert_include(instance_methods(false), :parseOneTerm!)
@@ -39,15 +34,16 @@ def assert_invariant
 #	KC_parse.restartParse!
 #	assert_equal(['K','C'],KC_parse.regexpTree!)
 #	assert_equal(["(", "<", "t", "r", [".", "*"], "<", "/", "t", "r", ">"],Rows_parse.regexpTree!('('))
-end #assert_RegexpParse_invariant_conditions
+end #assert_class_invariant_conditions
 # conditions true after initialization of class constants.
 # pre-conditions of constants should now be true
 def assert_post_conditions
 	assert_invariant
-	TestCases.parses.each do |parse|
+	assert_operator(Examples.parses.size, :>, 0)
+	Examples.parses.each do |parse|
 		parse.assert_pre_conditions
 	end #each
-end #assert_RegexpParse_post_conditions
+end #assert_class_post_conditions
 # assert conversions to arrays and strings are correct and reversable (?).
 def assert_round_trip(array)
 	assert_equal(array, ::RegexpParse.new(array).parse_tree)
@@ -127,7 +123,6 @@ def assert_postfix_expression
 	post_op=postfix_expression?
 	assert_not_nil(post_op,"self=#{self.inspect}")
 end #postfix_expression
-end #Assertions
 def self.value_of?(name, form)
 	constant_reference=constant_reference?(name, form)
 	
@@ -176,10 +171,11 @@ end #arrays
 def self.parses
 	return RegexpParse::TestCases.constants.select {|c| /.*_parse/.match(c)}
 end #parses
-end #RegexpParse
-class RegexpParse  # reopen class to add assertions
-include RegexpParse::Assertions
-extend RegexpParse::Assertions::ClassMethods
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
 module Examples #  Namespace
 include Constants
 Asymmetrical_Tree_Parse=RegexpParse.new(NestedArray::Examples::Asymmetrical_Tree_Array)
