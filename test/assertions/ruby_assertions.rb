@@ -250,5 +250,5 @@ end #assert_module_included
 end #Assertions
 end #Unit
 end #Test
-include Test::Unit::Assertions
-Test::Unit::Assertions.assert_pre_conditions
+#include Test::Unit::Assertions
+#Test::Unit::Assertions.assert_pre_conditions
