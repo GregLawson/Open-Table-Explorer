@@ -111,6 +111,12 @@ def test_RegexpParse_to_s
 	assert_equal('.*', Dot_star_parse.to_s)
 	assert_equal(Asymmetrical_Tree_Parse.regexp_string, Asymmetrical_Tree_Parse.parse_tree.to_s)
 end #to_s
+def test_RegexpParse_postfix_expression?
+	node=Quantified_repetition_parse
+	assert_equal(node, RegexpParse.promote(node))
+	assert(node.postfix_expression?, "node=#{node.inspect}")
+	assert_equal(["{", "3", ",", "4", "}"], node.postfix_expression?, "Quantified_repetition_parse=#{Quantified_repetition_parse.inspect}")
+end #postfix_expression
 def test_postfix_expression
 	assert_not_nil(Dot_star_parse)
 	assert(Dot_star_parse.postfix_expression?,"Dot_star_parse=#{Dot_star_parse.inspect}")
@@ -123,9 +129,10 @@ def test_postfix_expression
 	assert_instance_of(String, Any_binary_string_parse.parse_tree[-1])
 	assert_equal('*', RegexpParse.postfix_operator?(Any_binary_string_parse.parse_tree[-1]))
 	assert_equal('*', Any_binary_string_parse.postfix_expression?)
+	assert(Quantified_repetition_parse.postfix_expression?, "Quantified_repetition_parse=#{Quantified_repetition_parse.inspect}")
 end #postfix_expression
 def test_bracket_operator
-# branch is parse tree or string to test
+# node is parse tree or string to test
 # detect bracket operator (not postfix characters)
 	assert_equal('{3,4}', Quantified_operator_string)
 	assert_not_nil(RegexpParse.new(Quantified_operator_string).parse_tree)
@@ -138,23 +145,37 @@ def test_bracket_operator
 	assert(!RegexpParse.bracket_operator?(RegexpParse.new('.')))
 	assert_equal('*', Dot_star_array[-1])
 	assert_nil(RegexpParse.bracket_operator?(Dot_star_array[-1]))
-# unlike postfix expression branch, only last node should be passed
+# unlike postfix expression node, only last node should be passed
 	assert_equal('.{3,4}', Quantified_repetition_string)
 	assert_equal(Quantified_repetition_array, RegexpParse.new(Quantified_repetition_string).parse_tree)
 	assert_nil(RegexpParse.bracket_operator?(Quantified_repetition_array[-1]))
 	assert_nil(RegexpParse.bracket_operator?(Dot_star_array[-1]))
+	node=Quantified_repetition_parse
+	last_node=node.parse_tree[-1]
+	assert_equal(RegexpParse.new(last_node), RegexpParse.promote(last_node))
+	assert_equal(["{", "3", ",", "4", "}"], last_node, "last_node=#{last_node.inspect}")
+	assert_instance_of(NestedArray, last_node)
+	assert_equal(last_node, RegexpParse.bracket_operator?(last_node), "RegexpParse.bracket_operator?(last_node)=#{RegexpParse.bracket_operator?(last_node).inspect}")
 end #bracket_operator
 def test_postfix_operator
-	branch='*'
-	assert_instance_of(String, branch)
+	node='*'
+	assert_instance_of(String, node)
 	assert_equal(0,'*+?'.index(['*','a'][0]))
-	assert_equal(1,	PostfixOperators.index(branch))	
+	assert_equal(1,	PostfixOperators.index(node))	
 	assert_not_nil(Dot_star_parse)
-	branch=Dot_star_array
+	node=Dot_star_array
 	assert_nil(RegexpParse.bracket_operator?(Dot_star_array[-1]))
 	assert(RegexpParse.postfix_operator?('*'),"Dot_star_parse.to_s=#{Dot_star_parse.to_s.inspect}")
 	assert(!RegexpParse.postfix_operator?('.'),"RegexpParse.postfix_operator?('.')=#{RegexpParse.postfix_operator?('.')}")
 	assert_equal('*', RegexpParse.postfix_operator?(Any_binary_string_parse.parse_tree[-1]))
+	
+	node=Quantified_repetition_parse
+	last_node=node.parse_tree[-1]
+	assert_equal(RegexpParse.new(last_node), RegexpParse.promote(last_node))
+	assert_equal(["{", "3", ",", "4", "}"], last_node, "last_node=#{last_node.inspect}")
+	assert_instance_of(NestedArray, last_node)
+	assert_equal(last_node, RegexpParse.bracket_operator?(last_node), "RegexpParse.bracket_operator?(last_node)=#{RegexpParse.bracket_operator?(last_node).inspect}")
+	assert_equal(last_node, RegexpParse.postfix_operator?(last_node), "RegexpParse.postfix_operator?(last_node)=#{RegexpParse.postfix_operator?(last_node).inspect}")
 end #postfix_operator
 def test_postfix_operator_walk
 	assert_equal(['1', '2', '3'], Asymmetrical_Tree_Parse.to_a.flatten)
@@ -287,7 +308,14 @@ def test_repeated_pattern
 	assert_equal(['a'], RegexpParse.new('a').parse_tree)
 	assert_equal(['a'], RegexpParse.new('a').repeated_pattern)
 	assert_equal(['.'], RegexpParse.new('.').repeated_pattern)
-	assert_equal(Quantified_repetition_parse, RegexpParse.new('.{3,4}'))
+
+	node=Quantified_repetition_parse
+	assert_equal(node, RegexpParse.promote(node))
+	assert_equal([".", ["{", "3", ",", "4", "}"]], RegexpParse.new('.{3,4}').parse_tree)
+	assert(Quantified_repetition_parse.postfix_expression?, "Quantified_repetition_parse=#{Quantified_repetition_parse.inspect}")
+	assert(node.postfix_expression?, "node=#{node.inspect}")
+	assert_equal(["."], [RegexpParse.new('.{3,4}').parse_tree[0]])
+
 	assert_equal(['.'], RegexpParse.new('.{3,4}').repeated_pattern)
 	assert_equal('*', Any_binary_string_parse.postfix_expression?)
 	assert_instance_of(NestedArray, Any_binary_string_parse.repeated_pattern('a'))

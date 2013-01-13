@@ -98,16 +98,16 @@ end #to_a
 def to_s
 	return to_a.join
 end #to_s
-# If branch has a postfix operator or a bracketed length range
+# If node has a postfix operator or a bracketed length range
 # return postfix operator (what about | operator?)
 # else return nil (no repetition) (not {1,1}?)
-def RegexpParse.postfix_expression?(branch)
-	branch=RegexpParse.promote(branch)
-	postfix_operator=RegexpParse.postfix_operator?(branch.parse_tree[-1])
+def RegexpParse.postfix_expression?(node)
+	node=RegexpParse.promote(node)
+	postfix_operator=RegexpParse.postfix_operator?(node.parse_tree[-1])
 	if postfix_operator then
 		return postfix_operator
 	else
-		bracket_operator=RegexpParse.bracket_operator?(branch)
+		bracket_operator=RegexpParse.bracket_operator?(node)
 		if bracket_operator then
 			bracket_operator
 		else
@@ -119,34 +119,36 @@ def postfix_expression?
 	RegexpParse.postfix_expression?(self)
 end #postfix_expression
 # detect bracket operator (not postfix characters)
-# branch is parse tree or string to test (not Regexp)
-# unlike postfix expression branch, only last node should be passed
+# node is parse tree or string to test (not Regexp)
+# unlike postfix expression node, only last node should be passed
 # return bracket parse tree - bracket expression detected
 # return closing bracket character - closing bracket character
 # return nil - no bracket 
-def RegexpParse.bracket_operator?(branch)
-	if branch.kind_of?(RegexpParse) && branch.parse_tree[-1]=='}' then
-		return branch.parse_tree 
-	elsif branch.kind_of?(String) && branch=='}' then
-		return branch 
+def RegexpParse.bracket_operator?(node)
+	if node.kind_of?(NestedArray) && node[-1]=='}' then
+		return node 
+	elsif node.kind_of?(RegexpParse) && node.parse_tree[-1]=='}' then
+		return node.parse_tree 
+	elsif node.kind_of?(String) && node=='}' then
+		return node 
 	else
 		return nil	
 	end #if
 end #bracket_operator
-# branch is parse tree or string to test
-# unlike postfix expression branch, only last node should be passed
+# node is parse tree or string to test
+# unlike postfix expression node, only last node should be passed
 # returns node such as ['*'] or ["{", "3", ",", "4", "}"]
 # returns nil if not a postfix operator
-def RegexpParse.postfix_operator?(branch)
-	if branch.instance_of?(String) then
-		index=PostfixOperators.index(branch)	
+def RegexpParse.postfix_operator?(node)
+	if node.instance_of?(String) then
+		index=PostfixOperators.index(node)	
 		if index.nil? then
 			nil
 		else
 			PostfixOperators[index]
 		end #if
 	else
-		RegexpParse.bracket_operator?(branch)
+		RegexpParse.bracket_operator?(node)
 	end #if
 end #postfix_operator
 def postfix_operator_walk(&visit_proc)
@@ -219,7 +221,7 @@ def repeated_pattern(node=self)
 #		node=RegexpParse.promote(node)
 #	end #if	
 	if node.postfix_expression? then # argument is not an Array
-		return [node.parse_tree[0]]
+		return RegexpParse.new([node.parse_tree[0]])
 #	elsif post_op=postfix_expression?(node) then
 #		return RegexpParse.new(node[0])
 #	elsif node[-1]=='}' then
