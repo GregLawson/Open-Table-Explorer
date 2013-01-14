@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
 include RegexpParse::Examples
-include Test::Unit::Assertions
+include RegexpParse::Assertions
 RegexpParse.assert_pre_conditions #verify class
 def test_OpeningBrackets
 	assert_equal('(', RegexpParse::OpeningBrackets[RegexpParse::ClosingBrackets.index(')')].chr)
