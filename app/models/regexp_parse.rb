@@ -227,7 +227,7 @@ def repeated_pattern(node=self)
 #	elsif node[-1]=='}' then
 #		node[0]
 	else
-		parse_tree
+		self
 	end #if
 end #repeated_pattern
 # Expect to eventually replace with inheritance
