@@ -302,12 +302,12 @@ def test_repeated_pattern
 
 	assert_equal(['.','*'], RegexpParse.new('.*').parse_tree)
 	assert(RegexpParse.new('.*').postfix_expression?)
-	assert_equal(['.'], RegexpParse.new('.*').repeated_pattern)
-	assert_equal(['.'], RegexpParse.new('.+').repeated_pattern)
-	assert_equal(['.'], RegexpParse.new('.?').repeated_pattern)
+	assert_equal(['.'], RegexpParse.new('.*').repeated_pattern.parse_tree)
+	assert_equal(['.'], RegexpParse.new('.+').repeated_pattern.parse_tree)
+	assert_equal(['.'], RegexpParse.new('.?').repeated_pattern.parse_tree)
 	assert_equal(['a'], RegexpParse.new('a').parse_tree)
-	assert_equal(['a'], RegexpParse.new('a').repeated_pattern)
-	assert_equal(['.'], RegexpParse.new('.').repeated_pattern)
+	assert_equal(['a'], RegexpParse.new('a').repeated_pattern.parse_tree)
+	assert_equal(['.'], RegexpParse.new('.').repeated_pattern.parse_tree)
 
 	node=Quantified_repetition_parse
 	assert_equal(node, RegexpParse.promote(node))
@@ -316,15 +316,15 @@ def test_repeated_pattern
 	assert(node.postfix_expression?, "node=#{node.inspect}")
 	assert_equal(["."], [RegexpParse.new('.{3,4}').parse_tree[0]])
 
-	assert_equal(['.'], RegexpParse.new('.{3,4}').repeated_pattern)
+	assert_equal(['.'], RegexpParse.new('.{3,4}').repeated_pattern.parse_tree)
 	assert_equal('*', Any_binary_string_parse.postfix_expression?)
-	assert_instance_of(NestedArray, Any_binary_string_parse.repeated_pattern('a'))
-	assert_instance_of(NestedArray, Any_binary_string_parse.repeated_pattern)
-	assert_instance_of(NestedArray, Quantified_repetition_parse.repeated_pattern)
-	assert_instance_of(NestedArray, Sequence_parse.repeated_pattern)
-	assert_equal(Binary_range, Any_binary_string_parse.repeated_pattern.to_s)
-	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any_binary_string_parse.repeated_pattern		)
- 	assert_not_nil(RepetitionLength.new('.', 1, nil).repeated_pattern)
+	assert_instance_of(RegexpParse, Any_binary_string_parse.repeated_pattern('a'))
+	assert_kind_of(NestedArray, Any_binary_string_parse.repeated_pattern.parse_tree)
+	assert_instance_of(RegexpParse, Quantified_repetition_parse.repeated_pattern)
+	assert_kind_of(NestedArray, Sequence_parse.repeated_pattern.parse_tree)
+	assert_equal(Any_binary_char_string, Any_binary_string_parse.repeated_pattern.to_s)
+	assert_equal(["[", "\\0", "0", "0", "-", "\\3", "7", "7", "]"], Any_binary_string_parse.repeated_pattern.parse_tree		)
+# 	assert_not_nil(RepetitionLength.new('.', 1, nil).repeated_pattern)
 end #repeated_pattern
 def test_restartParse
 	Restartable_parse.restartParse!
