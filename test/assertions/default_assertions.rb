@@ -9,6 +9,7 @@ module DefaultAssertions
 require 'test/unit'
 include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
 

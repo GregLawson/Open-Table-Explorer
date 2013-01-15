@@ -6,8 +6,8 @@
 #
 ###########################################################################
 module DefaultAssertionTests
-include Test::Unit::Assertions
-extend Test::Unit::Assertions
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
 # methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
