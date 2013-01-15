@@ -42,16 +42,6 @@ def example_constants_by_class(klass=self, regexp=//)
 		end #if
 	end.compact #select
 end #example_constants_by_class
-def example_by_regexp(regexp)
-	constants.map do |constant_symbol|
-		value=value_of_example?(constant_symbol)
-		if constant_symbol.to_s.match(regexp) then
-			value
-		else
-			nil
-		end #if
-	end.compact #select
-end #example_constants_by_class
 end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
