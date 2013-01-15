@@ -28,10 +28,24 @@ end #class_assert_post_conditions
 def value_of_example?(name)
 	const_get(name.to_s)
 end #value_of_example
-def example_constants_by_class(klass)
-	constants.map do |c|
-		value=value_of_example?(c)
+def example_constants_by_class(klass=self, regexp=//)
+	constants.map do |constant_symbol|
+		value=value_of_example?(constant_symbol)
 		if value.instance_of?(klass) then
+			if constant_symbol.to_s.match(regexp) then
+				value
+			else
+				nil
+			end #if
+		else
+			nil
+		end #if
+	end.compact #select
+end #example_constants_by_class
+def example_by_regexp(regexp)
+	constants.map do |constant_symbol|
+		value=value_of_example?(constant_symbol)
+		if constant_symbol.to_s.match(regexp) then
 			value
 		else
 			nil

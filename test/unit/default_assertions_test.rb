@@ -81,6 +81,11 @@ def test_class_assert_post_conditions
 	end #each
 #	fail "got to end of default test."
 end #class_assert_post_conditions
+def test_example_constants_by_class
+	assert_include(Minimal.constants, :Constant)
+	assert_equal(Minimal::Constant, Minimal.value_of_example?(:Constant))
+	assert_equal([Minimal::Constant], Minimal.example_constants_by_class(Fixnum))
+end #example_constants_by_class
 def test_assert_pre_conditions
 	model_class?.example_constants_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
