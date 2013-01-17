@@ -151,6 +151,10 @@ end #assert_regexp
 def test_assert_module_included
 	assert_module_included(RubyAssertionsTest, Test::Unit::Assertions)
 end #assert_module_included
+def test_assert_scope_path
+	assert_scope_path([:RubyAssertionsTest, :TestClass])
+	assert_scope_path([:TestClass])
+end #assert_scope_path
 def test_assert_path_to_constant
 	assert_path_to_constant(:RubyAssertionsTest, :TestClass, :TestConstant)
 	assert_path_to_constant(:TestClass, :TestConstant)
