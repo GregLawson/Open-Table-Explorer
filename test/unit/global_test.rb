@@ -16,6 +16,7 @@ end #def
 end #class
 class GlobalTest < TestCase
 class TestClass < Object
+TestConstant=3.2
 def self.classMethod
 end #def
 public
@@ -182,4 +183,8 @@ def test_Acquisition_Interface_modules
 	assert(AcquisitionInterface.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test
+def test_assert_path_to_constant
+	assert_path_to_constant(:GlobalTest, :TestClass, :TestConstant)
+	assert_path_to_constant(:TestClass, :TestConstant)
+end #assert_path_to_constant
 end #test class
