@@ -8,6 +8,9 @@
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
+class TestClass < Object
+TestConstant=3.2
+end #RubyAssertionsTest
 def test_assert_call_result
 	#~ explain_assert_respond_to(self,:testMethod)
 	assert_call_result(self,:testMethod)
@@ -148,5 +151,11 @@ end #assert_regexp
 def test_assert_module_included
 	assert_module_included(RubyAssertionsTest, Test::Unit::Assertions)
 end #assert_module_included
+def test_assert_path_to_constant
+	assert_path_to_constant(:RubyAssertionsTest, :TestClass, :TestConstant)
+	assert_path_to_constant(:TestClass, :TestConstant)
+end #assert_path_to_constant
+def test_assert_path_to_method
+end #assert_path_to_method
 end #RubyAssertionsTest
 

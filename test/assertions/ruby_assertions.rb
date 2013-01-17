@@ -247,6 +247,36 @@ def assert_module_included(klass,moduleName)
     		klass.module_included?(moduleName)
 	end #assert_block
 end #assert_module_included
+def assert_path_to_constant(*names)
+	assert_not_empty(names)
+#	puts "*names=#{names.inspect}"
+	global_names=names.map do |name|
+		Module.constants.include?(name)
+	end #each
+	if global_names[0] then
+	else
+		names=[self.class.name.to_sym]+names
+#		puts "after adding self, names=#{names.inspect}"
+	end #if
+	names.each_index do |i|
+		testRange=0..i
+	#	puts "testRange=#{testRange.inspect}"
+		assert_instance_of(Symbol, names[i], "name=#{names[i].inspect},testRange=#{testRange}")
+	#	puts "names[testRange]=#{names[testRange].inspect}"
+		path=names[testRange].join('::')
+		begin
+			object=eval(path)
+		rescue
+			fail "names=#{names.inspect}, testRange=#{testRange.inspect}, path=#{path.inspect}"
+		end #begin
+		assert_not_nil(object)
+		if i<names.size-2 then
+			assert_kind_of(Module, object)
+		end #if
+	end#if
+end #assert_path_to_constant
+def assert_path_to_method(*names)
+end #assert_path_to_method
 end #Assertions
 end #Unit
 end #Test
