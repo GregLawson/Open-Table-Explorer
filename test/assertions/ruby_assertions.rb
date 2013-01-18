@@ -276,17 +276,9 @@ def assert_scope_path(names)
 	return names # with inserted local module
 end #assert_scope_path
 def assert_path_to_constant(*names)
-	names=assert_scope_path(names[0..-2])+names[-1..-1]
-	assert_not_empty(names)
-#	puts "*names=#{names.inspect}"
-	global_names=names.map do |name|
-		Module.constants.include?(name)
-	end #each
-	if global_names[0] then
-	else
-		names=[self.class.name.to_sym]+names
-#		puts "after adding self, names=#{names.inspect}"
-	end #if
+	context=assert_scope_path(names[0..-2])
+	constant_name=names[-1..-1]
+	names=context+constant_name
 	names.each_index do |i|
 		testRange=0..i
 	#	puts "testRange=#{testRange.inspect}"
