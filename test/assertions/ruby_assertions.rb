@@ -279,23 +279,14 @@ def assert_path_to_constant(*names)
 	context=assert_scope_path(names[0..-2])
 	constant_name=names[-1..-1]
 	names=context+constant_name
-	names.each_index do |i|
-		testRange=0..i
-	#	puts "testRange=#{testRange.inspect}"
-		assert_instance_of(Symbol, names[i], "name=#{names[i].inspect},testRange=#{testRange}")
-	#	puts "names[testRange]=#{names[testRange].inspect}"
-		path=names[testRange].join('::')
-		message="names=#{names.inspect}, testRange=#{testRange.inspect}, path=#{path.inspect}"
-		begin
-			object=eval(path)
-		rescue
-			fail "names=#{names.inspect}, testRange=#{testRange.inspect}, path=#{path.inspect}"
-		end #begin
-		assert_not_nil(object)
-		if i<names.size-2 then
-			assert_kind_of(Module, object)
-		end #if
-	end#if
+	path=names.join('::')
+	message="names=#{names.inspect}, path=#{path.inspect}"
+	begin
+		object=eval(path)
+	rescue
+		fail message
+	end #begin
+	assert_not_nil(object)
 end #assert_path_to_constant
 def assert_path_to_method(*names)
 end #assert_path_to_method
