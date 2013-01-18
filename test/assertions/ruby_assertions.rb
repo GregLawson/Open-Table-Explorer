@@ -273,9 +273,10 @@ def assert_scope_path(names)
 		assert_not_nil(object, message)
 		assert_kind_of(Module, object, message)
 	end#if
+	return names # with inserted local module
 end #assert_scope_path
 def assert_path_to_constant(*names)
-	assert_scope_path(names[0..-2])
+	names=assert_scope_path(names[0..-2])+names[-1..-1]
 	assert_not_empty(names)
 #	puts "*names=#{names.inspect}"
 	global_names=names.map do |name|
