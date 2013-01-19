@@ -293,7 +293,7 @@ def assert_constant_path_respond_to(*names)
 		raise "In assert_path_to_method: Not enough arguments. names=#{names.inspect}"
 	elsif names.size==2 then #local object
 		if self.instance_variables.include?(names[0]) then
-			assert_respond_to(eval(names[0]), names[1])
+			explain_assert_respond_to(eval(names[0]), names[1])
 		else
 		end #if
 	else
@@ -301,7 +301,7 @@ def assert_constant_path_respond_to(*names)
 		path=eval(context.join('::'))
 		method_name=names[-1]
 		message="names=#{names.inspect}, path=#{path.inspect}"
-		assert_respond_to(path, method_name, message)
+		explain_assert_respond_to(path, method_name, message)
 	end #
 end #assert_constant_path_respond_to
 end #Assertions
