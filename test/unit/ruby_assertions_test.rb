@@ -31,11 +31,11 @@ def test_explain_assert_block
 	message="assert_block failed." # :yields: 
 end #explain_assert_block
 def test_explain_assert_respond_to
-	assert_raise(AssertionFailedError){explain_assert_respond_to(TestClass,:sequential_id?)}
+	explain_assert_respond_to(TestClass,:test_class_method,"Local tet method.")
+#	assert_raise(AssertionFailedError){explain_assert_respond_to(TestClass,:sequential_id?)}
 #	explain_assert_respond_to(TestClass,:sequential_id?," probably does not include include Generic_Table statement.")
 
-	explain_assert_respond_to(Acquisition,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(Acquisition,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
+#	assert_respond_to(Acquisition,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
 
 end #explain_assert_respond_to
 def test_assert_not_empty
