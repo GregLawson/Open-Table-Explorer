@@ -10,6 +10,10 @@ require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
 class TestClass < Object
 TestConstant=3.2
+def test_instance_method
+end #test_instance_method
+def self.test_class_method
+end #test_class_method
 end #RubyAssertionsTest
 def test_assert_call_result
 	#~ explain_assert_respond_to(self,:testMethod)
