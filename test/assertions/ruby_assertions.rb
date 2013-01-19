@@ -288,7 +288,7 @@ def assert_path_to_constant(*names)
 	end #begin
 	assert_not_nil(object)
 end #assert_path_to_constant
-def assert_path_to_respond_to(*names)
+def assert_constant_path_respond_to(*names)
 	if names.size<2 then 
 		raise "In assert_path_to_method: Not enough arguments. names=#{names.inspect}"
 	elsif names.size==2 then #local object
@@ -303,7 +303,7 @@ def assert_path_to_respond_to(*names)
 		message="names=#{names.inspect}, path=#{path.inspect}"
 		assert_respond_to(path, method_name, message)
 	end #
-end #assert_path_to_respond_to
+end #assert_constant_path_respond_to
 end #Assertions
 end #Unit
 end #Test

@@ -159,10 +159,10 @@ def test_assert_path_to_constant
 	assert_path_to_constant(:RubyAssertionsTest, :TestClass, :TestConstant)
 	assert_path_to_constant(:TestClass, :TestConstant)
 end #assert_path_to_constant
-def test_assert_path_to_respond_to
-	assert_path_to_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
-	assert_path_to_respond_to(:TestClass, :test_class_method)
-	assert_path_to_respond_to(:RubyAssertionsTest, :assert_path_to_method)
-end #assert_path_to_respond_to
+def test_assert_constant_path_respond_to
+	assert_constant_path_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
+	assert_constant_path_respond_to(:TestClass, :test_class_method)
+	assert_constant_path_respond_to(:RubyAssertionsTest, :assert_path_to_method)
+end #assert_constant_path_respond_to
 end #RubyAssertionsTest
 
