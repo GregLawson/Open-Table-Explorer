@@ -288,8 +288,22 @@ def assert_path_to_constant(*names)
 	end #begin
 	assert_not_nil(object)
 end #assert_path_to_constant
-def assert_path_to_method(*names)
-end #assert_path_to_method
+def assert_path_to_respond_to(*names)
+	if names.size<2 then 
+		raise "In assert_path_to_method: Not enough arguments. names=#{names.inspect}"
+	elsif names.size==2 then #local object
+		if self.instance_variables.include?(names[0]) then
+			assert_respond_to(eval(names[0]), names[1])
+		else
+		end #if
+	else
+		context=assert_scope_path(names[0..-2])
+		path=eval(context.join('::'))
+		method_name=names[-1]
+		message="names=#{names.inspect}, path=#{path.inspect}"
+		assert_respond_to(path, method_name, message)
+	end #
+end #assert_path_to_respond_to
 end #Assertions
 end #Unit
 end #Test
