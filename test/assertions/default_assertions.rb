@@ -21,14 +21,28 @@ end #class_assert_pre_conditions
 
 def assert_post_conditions
 	assert_invariant
-	self.example_constants_by_class(self).each do |c|
+	self.example_constant_names_by_class(self).each do |c|
 		c.assert_pre_conditions
 	end #each
 end #class_assert_post_conditions
 def value_of_example?(name)
 	const_get(name.to_s)
 end #value_of_example
-def example_constants_by_class(klass=self, regexp=//)
+def example_constant_names_by_class(klass=self, regexp=//)
+	constants.map do |constant_symbol|
+		value=value_of_example?(constant_symbol)
+		if value.instance_of?(klass) then
+			if constant_symbol.to_s.match(regexp) then
+				constant_symbol
+			else
+				nil
+			end #if
+		else
+			nil
+		end #if
+	end.compact #select
+end #example_constant_names_by_class
+def example_constant_values_by_class(klass=self, regexp=//)
 	constants.map do |constant_symbol|
 		value=value_of_example?(constant_symbol)
 		if value.instance_of?(klass) then
@@ -41,7 +55,7 @@ def example_constants_by_class(klass=self, regexp=//)
 			nil
 		end #if
 	end.compact #select
-end #example_constants_by_class
+end #example_constant_values_by_class
 end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
