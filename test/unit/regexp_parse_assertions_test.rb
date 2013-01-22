@@ -46,7 +46,7 @@ end #value_of
 def test_constant_name
 	name=:Parenthesized
 	form=:string
-	assert_equal('RegexpParse::Examples::Parenthesized_string', RegexpParse::Examples.constant_reference?(name, form))
+	assert_equal('RegexpParse::Examples::Parenthesized_string', RegexpParse.constant_reference?(name, form))
 end #constant_name
 def test_parse_of
 	string=RegexpParse::Examples::Parenthesized_string
@@ -73,7 +73,7 @@ def test_names
 		constant=RegexpParse::Examples.const_get(name)
 		assert_not_nil(name, "name=#{name.inspect}, constants=#{constants.inspect}")
 		assert_instance_of(Symbol, name)
-		match=RegexpParse::Examples.name_of?(name)
+		match=RegexpParse.name_of?(name)
 		if !match.nil? && (constant.class==String || constant.class==Array || constant.class==RegexpParse) then
 			assert_not_nil(match, "name.class=#{name.class.inspect}, name=#{name.inspect}, constants=#{constants.inspect}")
 			match[1]
@@ -81,7 +81,7 @@ def test_names
 			nil
 		end #if
 	end.compact.uniq #map
-	assert_include(RegexpParse::Examples.names, 'Sequence')
+	assert_include(RegexpParse.names, 'Sequence')
 
 end #names
 def test_strings
@@ -90,15 +90,34 @@ def test_strings
 
 	assert_include(RegexpParse::Examples.methods(false), :strings)
 
-	assert_include(RegexpParse::Examples::strings, :Dot_star_string)
+	assert_include(RegexpParse.strings, :Dot_star_string)
 
 end #strings
 def test_arrays
-	assert_include(RegexpParse::Examples::arrays, :Dot_star_array)
+	assert_include(RegexpParse.arrays, :Dot_star_array)
 
 end #arrays
 def test_parses
-	assert_include(RegexpParse::TestCases::parses, :Dot_star_parse)
+	num_RegexpParse=0
+	ret=RegexpParse::Examples.constants.select do |c|
+# http://www.postal-code.com/mrhappy/blog/2007/02/01/ruby-comparing-an-objects-class-in-a-case-statement/
+		case c
+		when RegexpParse 
+			assert_instance_of(RegexpParse, c)
+			num_RegexpParse+=1
+		when Symbol 
+			assert(!(Symbol=== c.class), "Unexpected RegexpParse::Examples constant=#{c.inspect} of type #{c.class}")
+			assert(Symbol=== c, "Unexpected RegexpParse::Examples constant=#{c.inspect} of type #{c.class}")
+			assert_instance_of(Symbol, c)
+		else
+			assert(Symbol=== c.class, "Unexpected RegexpParse::Examples constant=#{c.inspect} of type #{c.class}")
+			assert_not_equal(Symbol, c.class)
+			fail "Unexpected RegexpParse::Examples constant=#{c.inspect} of type #{c.class}"
+		end #case
+		c.instance_of?(RegexpParse)
+	end #select
+#message	assert_not_empty(ret, "num_RegexpParse=#{num_RegexpParse}")
+	assert_subset(RegexpParse::Examples.constants.select {|c| /.*_parse/.match(c)}, RegexpParse.parses, "num_RegexpParse=#{num_RegexpParse}")
 
 end #parses
 RegexpParse.assert_pre_conditions
