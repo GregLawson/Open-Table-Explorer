@@ -44,10 +44,30 @@ def test_value_of
 	assert_equal(RegexpParse::Examples::Parenthesized_string, RegexpParse::Examples.value_of?(name, form))
 end #value_of
 def test_constant_name
+def test_full_name
 	name=:Parenthesized
-	form=:string
-	assert_equal('RegexpParse::Examples::Parenthesized_string', RegexpParse.constant_reference?(name, form))
-end #constant_name
+	suffix=:_string
+	full_name='RegexpParse::Examples::'+name.to_s+suffix.to_s
+	assert_equal('RegexpParse::Examples::Parenthesized_string', RegexpParse.full_name?(name, suffix))
+	ret=begin
+		eval(full_name.to_s)
+		full_name
+	rescue 
+		nil
+	end #begin
+	assert_equal(ret, RegexpParse.full_name?(name, suffix))
+	suffix=''
+	full_name='RegexpParse::Examples::'+name.to_s+suffix.to_s
+	ret=begin
+		eval(full_name.to_s)
+		full_name
+	rescue 
+		nil
+	end #begin
+	assert_nil(ret)
+	assert_equal(ret, RegexpParse.full_name?(name, ''))
+	assert_nil(RegexpParse.full_name?(:Parenthesized))
+end #full_name
 def test_parse_of
 	string=RegexpParse::Examples::Parenthesized_string
 end #parse_of

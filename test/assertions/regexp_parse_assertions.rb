@@ -216,6 +216,15 @@ Rows_parse=RegexpParse.new(RowsRegexp)
 RowsEdtor2=RegexpParse.new('\s*(<tr.*</tr>)')
 KCET_parse=RegexpParse.new('KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE')
+def full_name?(name, suffix='')
+	full_name='RegexpParse::Examples::'+name.to_s+suffix.to_s
+	ret=begin
+		eval(full_name.to_s)
+		full_name
+	rescue 
+		nil
+	end #begin
+end #full_name
 end #Examples
 include Examples
 end #RegexpParse
