@@ -44,6 +44,11 @@ def test_value_of
 	assert_equal(RegexpParse::Examples::Parenthesized_string, RegexpParse::Examples.value_of?(name, form))
 end #value_of
 def test_constant_name
+def test_path_array
+	name=:Parenthesized
+	suffix=:_string
+	assert_equal([:RegexpParse, :Examples, (name.to_s+suffix.to_s).to_sym], RegexpParse.path_array?(name, suffix))
+end #path_array
 def test_full_name
 	name=:Parenthesized
 	suffix=:_string

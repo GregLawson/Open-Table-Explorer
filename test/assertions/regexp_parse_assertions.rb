@@ -216,6 +216,9 @@ Rows_parse=RegexpParse.new(RowsRegexp)
 RowsEdtor2=RegexpParse.new('\s*(<tr.*</tr>)')
 KCET_parse=RegexpParse.new('KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE')
+def path_array?(name, suffix='')
+	path_array=[:RegexpParse, :Examples, (name.to_s+suffix.to_s).to_sym]
+end #path_array
 def full_name?(name, suffix='')
 	full_name='RegexpParse::Examples::'+name.to_s+suffix.to_s
 	ret=begin
