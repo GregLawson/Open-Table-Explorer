@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/minimal_assertions.rb'
-require_relative '../../test/unit/default_assertions_test.rb'
+require_relative '../../test/unit/default_assertions_tests.rb'
 class MinimalTest < TestCase
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods

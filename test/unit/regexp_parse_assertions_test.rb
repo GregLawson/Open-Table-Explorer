@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/regexp_parse_assertions.rb'
-require_relative '../../test/unit/default_assertions_test.rb'
+require_relative '../../test/unit/default_assertions_tests.rb'
 class RegexpParseAssertionsTest < TestCase
 include RegexpParse::Examples
 include DefaultAssertionTests

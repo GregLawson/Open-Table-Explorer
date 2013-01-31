@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
-require_relative '../../test/unit/default_assertions_test.rb'
+require_relative '../../test/unit/default_assertions_tests.rb'
 class UnboundedFixnumAssertionsTest < TestCase
 include UnboundedFixnum::Examples
 include DefaultAssertionTests
