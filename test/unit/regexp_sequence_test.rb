@@ -10,10 +10,6 @@ require_relative 'test_environment'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 #require 'test/test_helper_test_tables.rb'
-class RegexpTree < NestedArray # reopen class to add assertions
-include RegexpTreeAssertions
-extend RegexpTreeAssertions::ClassMethods
-end #RegexpTree
 class RegexpSequenceTest < TestCase
 def test_Anchoring_initialize
 	No_anchor.assert_anchoring
