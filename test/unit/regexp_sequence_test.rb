@@ -13,6 +13,9 @@ require_relative '../../app/models/regexp_sequence.rb'
 # move passing tests toward end
 #require 'test/test_helper_test_tables.rb'
 class RegexpSequenceTest < TestCase
+include RegexpSequence::Examples
+include RegexpSequence::Assertions
+# How about anchoring as special Regexp Constants at start and end of sequence
 def test_Anchoring_initialize
 	No_anchor.assert_anchoring
 	Start_anchor.assert_anchoring
