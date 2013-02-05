@@ -6,6 +6,8 @@
 #
 ###########################################################################
 # parse tree internal format is nested Arrays.
+class RegexpTree < NestedArray # declare class
+end #RegexpTree reopen later
 # Postfix operators and brackets end embeddded arrays
 require 'app/models/inlineAssertions.rb'
 class Anchoring < ActiveSupport::HashWithIndifferentAccess

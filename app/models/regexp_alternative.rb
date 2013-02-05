@@ -7,7 +7,8 @@
 ###########################################################################
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
-require 'app/models/inlineAssertions.rb'
+class RegexpTree < NestedArray # declare class
+end #RegexpTree reopen later
 class RegexpAlternative < RegexpTree
 include Comparable
 # Parse regexp_string into parse tree for editing

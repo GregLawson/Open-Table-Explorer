@@ -9,6 +9,8 @@
 # Postfix operators and brackets end embeddded arrays
 require_relative 'nested_array.rb'
 require_relative 'regexp_parse.rb'
+require_relative 'regexp_alternative.rb'
+require_relative 'regexp_alternative.rb'
 class RegexpTree < NestedArray
 include Comparable
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
