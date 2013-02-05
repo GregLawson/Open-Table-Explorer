@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2010-2012 by Greg Lawson                                      
+#    Copyright (C) 2010-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
