@@ -39,7 +39,6 @@ def test_compare_anchor
 	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Both_anchor))
 	assert_nil(Anchoring.new(Start_anchor) <=> Anchoring.new(End_anchor))
 end #compare_anchor
-Alternative_ab_of_abc_10=RegexpTree.new('a|b', '[abc]{1,10}')
 
 def test_probability_of_sequence
 	branch=No_anchor

@@ -70,6 +70,7 @@ def regexpParserTest(parser)
 	assert(parser.beyondString?)
 end #def
 
+Alternative_ab_of_abc_10=RegexpTree.new('a|b', '[abc]{1,10}')
 def test_probability_space_regexp
 	assert_equal(RegexpTree.new('[abc]{1,10}'), Alternative_ab_of_abc_10.probability_space_regexp)
 end #probability_space_regexp
