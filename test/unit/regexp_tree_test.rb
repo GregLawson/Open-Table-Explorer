@@ -6,7 +6,9 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/regexp_tree_assertions.rb'
+require_relative '../assertions/regexp_tree_assertions.rb'
+require_relative '../../test/assertions/default_assertions.rb'
+require_relative '../../test/unit/default_assertions_tests.rb'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
@@ -16,7 +18,9 @@ include RegexpTreeAssertions
 extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
 class RegexpTreeTest < TestCase
-#set_class_variables
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
+include DefaultAssertionTests
 def test_Anchoring_initialize
 	No_anchor.assert_anchoring
 	Start_anchor.assert_anchoring
@@ -378,7 +382,7 @@ def test_editor
 end #def
 def test_zero_parameter_new
 	assert_nothing_raised{RegexpTree.new} # 0 arguments
-	assert_not_nil(@@model_class)
+	assert_not_nil(model_class?)
 end #test_name_correct
 def test_case
 	assert_equal(Anchoring, RegexpParse.new(Both_anchor).case?)
