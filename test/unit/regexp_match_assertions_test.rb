@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/regexp_match_assertions.rb'
+require_relative '../assertions/regexp_match_assertions.rb'
 
 class RegexpMatchAssertionsTest < Test::Unit::TestCase #file context
 #set_class_variables(RegexpMatchAssertionsTest,false)
