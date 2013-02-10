@@ -5,18 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-module Test::Unit::Assertions
-def default_message
-	message="Module.nesting=#{Module.nesting.inspect}"
-	message+=" Class #{self.class.name}"
-	message+=" unknown method"
-	message+=" self=#{self.inspect}"
-	message+=" local_variables=#{local_variables.inspect}"
-	message+=" instance_variables=#{instance_variables.inspect}"
-	message+=" callers=#{callers}"
-	return message
-end #default_message
-end #Test::Unit::Assertions
 
 require_relative '../../app/models/regexp_tree.rb'
 module RegexpTreeAssertions

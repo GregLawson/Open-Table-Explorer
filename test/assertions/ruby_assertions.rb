@@ -11,6 +11,16 @@ require 'set'
 module Test
 module Unit
 module Assertions
+def default_message
+	message="Module.nesting=#{Module.nesting.inspect}"
+	message+=" Class #{self.class.name}"
+	message+=" unknown method"
+	message+=" self=#{self.inspect}"
+	message+=" local_variables=#{local_variables.inspect}"
+	message+=" instance_variables=#{instance_variables.inspect}"
+	message+=" callers=#{callers}"
+	return message
+end #default_message
 # File of ruby assertions not requiring ActiveRecord or fixtures
 
 def assert_call_result(obj,methodName,*arguments)
