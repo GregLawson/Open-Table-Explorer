@@ -28,6 +28,8 @@ end #[]index
 def test_to_s
 	assert_equal('123',NestedArray.new([1,2,3]).to_s)
 	assert_equal('123',NestedArray.new([1,[2,3]]).to_s)
+	assert_equal(Asymmetrical_Tree_Array,Asymmetrical_Tree.to_a)
+	assert_equal('123',Asymmetrical_Tree.to_s)
 end #to_s
 def test_map_recursive
 	assert_equal(['*','.'], NestedArray::Examples::Echo_proc.call(['*','.']))

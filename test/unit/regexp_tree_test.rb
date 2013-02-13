@@ -368,8 +368,6 @@ end #grep
 def test_to_s
 
 
-	assert_equal(Asymmetrical_Tree_Array,Asymmetrical_Tree.to_a)
-	assert_equal('123',Asymmetrical_Tree.to_s)
 #recurse	assert_equal('.*',RegexpTree.new('.*').to_s)
 	assert_equal('K.*C',RegexpTree.new('K.*C').to_s)
 end #to_s
