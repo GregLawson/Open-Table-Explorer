@@ -188,24 +188,6 @@ def regexp_error(regexp_string, options=Default_options)
 rescue RegexpError => exception
 	return exception
 end #regexp_error
-def case?(branch=self)
-	if branch.instance_of?(String) then
-		String # commonly termination condition
-	elsif postfix_expression? then
-		if alternatives? then
-			:Alternatives
-		else
-			RepetitionLength
-		end #if
-	else #sequence
-		anchoring=RegexpSequence.new(branch)
-		if anchoring[:start_anchor].nil? && anchoring[:end_anchor].nil? then unachored sequence
-			RegexpParse
-		else # anchored
-			Anchoring
-		end #if
-	end #if
-end #case
 # returns pair of min and end repetitions of a RegexpTree
 # end can be nil to signify unlimited repetitions
 end #RegexpTree

@@ -308,6 +308,26 @@ def regexpTree!(terminator=nil)
 #not recursive	assert_invariant(ret.reverse)
 	return ret.reverse
 end #regexpTree!
+def RegexpParse.case?(node)
+	if node.instance_of?(String) then
+		:String # commonly termination condition
+	else
+		node=RegexpParse.promote(node)
+		if postfix_operator=RegexpParse.postfix_expression?(node) then
+			if postfix_operator=='|' then
+				:RegexpAlternative
+			else
+				:RegexpRepetition
+			end #if
+		elsif node.to_a[-1]==']' then
+			:CharacterClass
+		elsif node.to_a[-1]==')' then
+			:RegexpCapture
+		else #sequence
+			:RegexpSequence
+		end #if
+	end #if
+end #case
 
 module Constants
 Any_binary_char_string='[\000-\377]'

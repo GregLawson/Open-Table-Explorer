@@ -383,8 +383,4 @@ def test_zero_parameter_new
 	assert_nothing_raised{RegexpTree.new} # 0 arguments
 	assert_not_nil(model_class?)
 end #test_name_correct
-def test_case
-	assert_equal(Anchoring, RegexpParse.new(Both_anchor).case?)
-	assert_equal(RepetitionLength, Any_binary_string_parse.case?)
-end #case
 end #RegexpTreeTest
