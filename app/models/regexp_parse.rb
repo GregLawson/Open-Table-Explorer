@@ -317,16 +317,16 @@ def RegexpParse.case?(node)
 	else
 		node=RegexpParse.promote(node)
 		if postfix_operator=RegexpParse.postfix_expression?(node) then
-			if postfix_operator=='|' then
-				:RegexpAlternative
-			else
-				:RegexpRepetition
-			end #if
+			:RegexpRepetition
 		elsif node.to_a[-1]==']' then
 			:CharacterClass
 		elsif node.to_a[-1]==')' then
 			:RegexpCapture
-		else #sequence
+		elsif node==Empty_language_parse then
+			:RegexpEmpty
+		elsif RegexpParse.postfix_expression?(node.to_a[0]) =='|' then
+			:RegexpAlternative
+		else #sequence is default
 			:RegexpSequence
 		end #if
 	end #if

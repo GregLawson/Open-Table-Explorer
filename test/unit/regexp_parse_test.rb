@@ -380,10 +380,13 @@ def test_case
 	assert_equal(:RegexpRepetition, RegexpParse.case?(Any_binary_string_parse))
 	assert_equal(:RegexpRepetition, RegexpParse.case?(Dot_star_parse))
 	assert_equal(:CharacterClass, RegexpParse.case?(Any_binary_char))
-	assert_equal(:RegexpSequence, RegexpParse.case?(/ab/))
-#debug	assert_equal(:RegexpEmpty, RegexpParse.case?(//))
+	assert_equal(:RegexpCapture, RegexpParse.case?(/(b)/))
 	assert_match(Empty_language_parse.to_regexp, '')
 	assert_no_match(Empty_language_parse.to_regexp, 'a')
+	assert_equal(:RegexpEmpty, RegexpParse.case?(/\A\z/))
+	assert_equal(:RegexpSequence, RegexpParse.case?(/ab/))
+	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
+	assert_equal(:RegexpAlternative, RegexpParse.case?(/a|b/))
 end #case
 RegexpParse.assert_pre_conditions
 end #RegexpParerTest
