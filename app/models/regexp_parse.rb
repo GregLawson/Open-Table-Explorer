@@ -98,6 +98,9 @@ end #to_a
 def to_s
 	return to_a.join
 end #to_s
+def to_regexp
+	return Regexp.new(to_s)
+end #to_regexp
 # If node has a postfix operator or a bracketed length range
 # return postfix operator (what about | operator?)
 # else return nil (no repetition) (not {1,1}?)

@@ -111,6 +111,10 @@ def test_RegexpParse_to_s
 	assert_equal('.*', Dot_star_parse.to_s)
 	assert_equal(Asymmetrical_Tree_Parse.regexp_string, Asymmetrical_Tree_Parse.parse_tree.to_s)
 end #to_s
+def test_to_regexp
+	regexp=/abc/
+	assert_equal(RegexpParse.new(regexp).to_regexp, regexp)
+end #to_regexp
 def test_RegexpParse_postfix_expression?
 	node=Quantified_repetition_parse
 	assert_equal(node, RegexpParse.promote(node))
