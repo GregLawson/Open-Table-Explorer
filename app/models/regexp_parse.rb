@@ -338,7 +338,7 @@ Any_binary_string_parse=RegexpParse.new(Any_binary_string)
 Dot_star_array=['.', '*']
 Dot_star_string=Dot_star_array.join
 Dot_star_parse=RegexpParse.new(Dot_star_string)
-Empty_language_array=[]
+Empty_language_array=['\A', '\z'] # beginning to end of string with nothing in between
 Empty_language_string=Empty_language_array.join
 Empty_language_parse=RegexpParse.new(Empty_language_string)
 end #Constants

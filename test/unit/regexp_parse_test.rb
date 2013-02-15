@@ -372,9 +372,14 @@ def test_regexpTree
 	assert_equal(["(", "<", "t", "r", [".", "*"], "<", "/", "t", "r", ">"],Rows_parse.regexpTree!('('))
 end #regexpTree!
 def test_case
+	assert_equal(:String, RegexpParse.case?('ab'))
+	assert_equal(:RegexpRepetition, RegexpParse.case?(Any_binary_string_parse))
+	assert_equal(:RegexpRepetition, RegexpParse.case?(Dot_star_parse))
 	assert_equal(:CharacterClass, RegexpParse.case?(Any_binary_char))
 	assert_equal(:RegexpSequence, RegexpParse.case?(/ab/))
-	assert_equal(:String, RegexpParse.case?('ab'))
+#debug	assert_equal(:RegexpEmpty, RegexpParse.case?(//))
+	assert_match(Empty_language_parse.to_regexp, '')
+	assert_no_match(Empty_language_parse.to_regexp, 'a')
 end #case
 RegexpParse.assert_pre_conditions
 end #RegexpParerTest
