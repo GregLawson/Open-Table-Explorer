@@ -331,7 +331,10 @@ def RegexpParse.case?(node)
 		end #if
 	end #if
 end #case
-
+def RegexpParse.typed?(node)
+	type=RegexpParse.case?(node)
+	eval(type.to_s).new(node)
+end #typed
 module Constants
 Any_binary_char_string='[\000-\377]'
 Any_binary_string="#{Any_binary_char_string}*"
