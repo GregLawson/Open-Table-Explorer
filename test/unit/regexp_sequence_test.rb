@@ -57,23 +57,23 @@ def test_initialize
 	assert_equal(['K'],@@CONSTANT_PARSE_TREE.to_a)
 	assert_equal('K', @@CONSTANT_PARSE_TREE.regexp_string)
 
-	assert_equal(['K'], RegexpTree.new('K').to_a)
+	assert_equal(['K'], RegexpSequence.new('K').to_a)
 	assert_equal([['1', '2'], '3'], Asymmetrical_Tree.to_a)
 	assert_equal(Sequence, Asymmetrical_Tree_Array.flatten)
-	assert_not_nil(RegexpTree.new(['.']))
-	assert_not_nil(RegexpTree.new('.'))
-	assert_not_nil(RegexpTree.new(/./))
+	assert_not_nil(RegexpSequence.new(['.']))
+	assert_not_nil(RegexpSequence.new('.'))
+	assert_not_nil(RegexpSequence.new(/./))
 end #initialize
 def test_compare_anchors
 	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Start_anchor))
 	No_anchor.assert_anchors_specialized_by(Start_anchor)
-	RegexpTree.new('a').assert_anchors_specialized_by('^a')
+	RegexpSequence.new('a').assert_anchors_specialized_by('^a')
 	assert_equal(1, No_anchor.compare_anchors?(Start_anchor))
 end #compare_anchors
 def test_sequence_comparison
-	assert_equal(1, RegexpTree.new('ab').compare_sequence?(RegexpTree.new('abc')))
-	RegexpTree.new('ab').assert_sequence_specialized_by(RegexpTree.new('abc'))	
-	RegexpTree.new('ab').assert_sequence_specialized_by(RegexpTree.new('abc'))	
+	assert_equal(1, RegexpSequence.new('ab').compare_sequence?(RegexpSequence.new('abc')))
+	RegexpSequence.new('ab').assert_sequence_specialized_by(RegexpSequence.new('abc'))	
+	RegexpSequence.new('ab').assert_sequence_specialized_by(RegexpSequence.new('abc'))	
 end #sequence_comparison
 A=RegexpTree.new('a')
 B=RegexpTree.new('b')
