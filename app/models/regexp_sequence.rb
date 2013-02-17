@@ -6,11 +6,11 @@
 #
 ###########################################################################
 # parse tree internal format is nested Arrays.
-class RegexpTree < NestedArray # declare class
-end #RegexpTree reopen later
+require_relative '../../app/models/regexp_tree.rb'
+#class RegexpTree < NestedArray # declare class
+#end #RegexpTree reopen later
 # Postfix operators and brackets end embeddded arrays
-require 'app/models/inlineAssertions.rb'
-class Anchoring < ActiveSupport::HashWithIndifferentAccess
+class Anchoring #< ActiveSupport::HashWithIndifferentAccess
 include Comparable
 attr_reader :start_base, :end_base
 def initialize(regexp_tree)
@@ -57,41 +57,30 @@ def <=>(other)
 	end #case
 end #<=>
 end #Anchoring
-class RegexpSequence < NestedArray
+class RegexpSequence < RegexpTree
 include Comparable
 class TestCases
 Sequence=RegexpSequence.new(['1', '2', '3'])
 end #TestCases
 # Parse regexp_string into parse tree for editing
-def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=RegexpParse::Default_options)
-	if regexp.kind_of?(Array) then #nested Arrays
-		super(regexp)
-		
-	elsif regexp.instance_of?(String) then 
-		super(RegexpParse.new(regexp).to_a)
-	elsif regexp.instance_of?(RegexpParse) then 
-		super(regexp.to_a)
-	elsif regexp.instance_of?(Regexp) then 
-		super()
-		super(RegexpParse.new(regexp.source).to_a)
-	else
-		raise "unexpected regexp=#{regexp.inspect}"
-	end #if
-	@probability_space_regexp=probability_space_regexp
-#	@anchor=Anchoring.new(self) infinite recursion
+def initialize(*nodes)
+	nodes.each do |node|
+		node=RegexpTree.promote(node)
+		self.append(node)
+	end #map
 end #initialize
 def RegexpTree.promote(node)
 	if node.kind_of?(RegexpTree) then #nested Arrays
 		node
 	elsif node.kind_of?(Array) then #nested Arrays
-		RegexpTree.new(node)
+		RegexpSequence.new(node)
 		
 	elsif node.instance_of?(String) then 
-		RegexpTree.new(RegexpParse.new(node).to_a)
+		RegexpSequence.new(RegexpParse.new(node).to_a)
 	elsif node.instance_of?(RegexpParse) then 
-		RegexpTree.new(node.to_a)
+		RegexpSequence.new(node.to_a)
 	elsif node.instance_of?(Regexp) then 
-		RegexpTree.new(RegexpParse.new(node.source).to_a)
+		RegexpSequence.new(RegexpParse.new(node.source).to_a)
 	else
 		raise "unexpected node=#{node.inspect}"
 	end #if
@@ -103,7 +92,7 @@ def probability_of_sequence(branch=self)
 		if element.instance_of?(String) then
 			product * probability_of_repetition(1, 1, element) 
 		elsif element.kind_of?(Array) then
-			product * probability_of_sequence(RegexpTree.new(element)) 
+			product * probability_of_sequence(RegexpSequence.new(element)) 
 		else
 			product * probability_of_repetition(element.repetition_length, 1, element.repeated_pattern) 
 		end #if
@@ -120,13 +109,13 @@ def unanchor(branch=self)
 	Anchoring.new(self)[:base_regexp]
 end #unanchor
 def start_anchor(branch=self)
-	RegexpTree.new(['^', Anchoring.new(self)[:base_regexp]])
+	RegexpSequence.new(['^', Anchoring.new(self)[:base_regexp]])
 end #start_anchor
 def end_anchor(branch=self)
-	RegexpTree.new([Anchoring.new(self)[:base_regexp], '$'])
+	RegexpSequence.new([Anchoring.new(self)[:base_regexp], '$'])
 end #end_anchor
 def exact_anchor(branch=self)
-	RegexpTree.new(['^', Anchoring.new(self)[:base_regexp], '$'])
+	RegexpSequence.new(['^', Anchoring.new(self)[:base_regexp], '$'])
 end #exact_anchor
 def compare_sequence?(other)
 	return nil if other.instance_of?(String)
@@ -160,7 +149,7 @@ def compare_sequence?(other)
 	end #if
 end #sequence_comparison
 # if there is no intersection return Empty_language
-Empty_language=RegexpTree.new([])
+Empty_language=RegexpSequence.new([])
 def sequence_intersect(rhs)
 	if rhs.instance_of?(String) then
 		if alternatives?.include(rhs) then
@@ -182,7 +171,7 @@ def sequence_intersect(rhs)
 		Empty_language
 	else
 		first=self[0].alternatives_intersect(rhs[0])
-		RegexpTree.new([first, self[1..-1].alternatives_intersect(rhs[1..-1])])
+		RegexpSequence.new([first, self[1..-1].alternatives_intersect(rhs[1..-1])])
 	end #if
 end #sequence_intersect
 # intersetion should be interpreted as
@@ -193,6 +182,6 @@ end #sequence_intersect
 # if no intersetion: I==[]
 # then L >= [] and R >= []
 def +(other)
-	return RegexpTree.new(self.to_a+other.to_a)
+	return RegexpSequence.new(self.to_a+other.to_a)
 end #+
 end #RegexpTree
