@@ -329,42 +329,6 @@ Test_Pattern_Array=["t", "e", "s", "t", "/",
 	 	"r",
 		[["[", "a", "-", "z", "]"], "*"]]
 Test_Pattern=RegexpTree.new(Test_Pattern_Array)
-def test_to_filename_glob
-	assert_equal('*', RegexpTree.new(['.','*']).to_pathname_glob)
-	assert_equal('*', RegexpTree.new([['.','*']]).to_pathname_glob)
-	assert_equal('K*C', RegexpTree.new(['K',['.','*'],'C']).to_pathname_glob)
-	assert_equal('app/models/*[.]rb', RegexpTree.new('app/models/([a-zA-Z0-9_]*)[.]rb').to_pathname_glob)
-	assert_equal(Test_Pattern_Array, RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_a)
-	assert_equal(Test_Pattern_Array, Test_Pattern.map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))})
-	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
-	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_pathname_glob)
-end #to_pathname_glob
-def test_pathnames
-	assert_include('app/models', RegexpTree.new('app/.*').pathnames)
-end #pathnames
-def test_grep
-	file_regexp='app/controllers/urls_controller.rb'
-	pattern='(\w+)\.all'
-	delimiter="\n"
-	regexp=Regexp.new(pattern)
-	ps=RegexpTree.new(file_regexp).pathnames
-	p=ps.first
-	assert_equal([p], ps)
-	assert_instance_of(String, p)
-	l=IO.read(p).split(delimiter).first
-	assert_instance_of(String, l)
-	matchData=regexp.match(l)
-	assert_instance_of(Hash, {:pathname => p, :match => 'Url'})
-	if matchData then
-		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
-	end #if
-	grep_matches=RegexpTree.new(file_regexp).grep(pattern)
-	assert_instance_of(Array, grep_matches)
-	assert_equal("app/controllers/urls_controller.rb", grep_matches[0][:context])
-	assert_equal("Url", grep_matches[0][:matchData][1])
-	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, grep_matches[0])
-	assert_equal(file_regexp, grep_matches[0][:context])
-end #grep
 def test_to_s
 
 

@@ -19,6 +19,19 @@ assert_equal([GenericTableTest], Module.nesting)
 assert_not_include(GenericGrep, self.included_modules)
 assert_equal('constant', defined? GenericGrep)
 ASSOCIATION_MACRO_PATTERN=GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN
+def test_to_pathname_glob
+	assert_equal('*', RegexpTree.new(['.','*']).to_pathname_glob)
+	assert_equal('*', RegexpTree.new([['.','*']]).to_pathname_glob)
+	assert_equal('K*C', RegexpTree.new(['K',['.','*'],'C']).to_pathname_glob)
+	assert_equal('app/models/*[.]rb', RegexpTree.new('app/models/([a-zA-Z0-9_]*)[.]rb').to_pathname_glob)
+	assert_equal(Test_Pattern_Array, RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_a)
+	assert_equal(Test_Pattern_Array, Test_Pattern.map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))})
+	assert_equal('test/*[.]r*', Test_Pattern.postfix_operator_walk{|p| '*'}.to_s)
+	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_pathname_glob)
+end #to_pathname_glob
+def test_pathnames
+	assert_include('app/models', RegexpTree.new('app/.*').pathnames)
+end #pathnames
 def test_single_grep
 	pattern='(\w+)\.all'
 	regexp=Regexp.new(pattern)
@@ -58,6 +71,29 @@ def test_files_grep
 #		assert_equal(matchData[1], p[:matchData][1])
 	end #each
 end #files_grep
+def test_grep
+	file_regexp='app/controllers/urls_controller.rb'
+	pattern='(\w+)\.all'
+	delimiter="\n"
+	regexp=Regexp.new(pattern)
+	ps=RegexpTree.new(file_regexp).pathnames
+	p=ps.first
+	assert_equal([p], ps)
+	assert_instance_of(String, p)
+	l=IO.read(p).split(delimiter).first
+	assert_instance_of(String, l)
+	matchData=regexp.match(l)
+	assert_instance_of(Hash, {:pathname => p, :match => 'Url'})
+	if matchData then
+		assert_instance_of(Hash, {:pathname => p, :match => matchData[1]})
+	end #if
+	grep_matches=RegexpTree.new(file_regexp).grep(pattern)
+	assert_instance_of(Array, grep_matches)
+	assert_equal("app/controllers/urls_controller.rb", grep_matches[0][:context])
+	assert_equal("Url", grep_matches[0][:matchData][1])
+	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, grep_matches[0])
+	assert_equal(file_regexp, grep_matches[0][:context])
+end #grep
 def test_grep_command
 	assert_equal("grep \"#{ASSOCIATION_MACRO_PATTERN}\" -r {app/models/,test/unit/}*.rb", ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN))
 	assert_equal("", `#{ActiveRecord::Base::grep_command(ASSOCIATION_MACRO_PATTERN)}`)
