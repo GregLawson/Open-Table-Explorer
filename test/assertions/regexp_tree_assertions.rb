@@ -7,7 +7,10 @@
 ###########################################################################
 
 require_relative '../../app/models/regexp_tree.rb'
-module RegexpTreeAssertions
+require_relative '../../test/assertions/ruby_assertions.rb'
+class RegexpTree
+require_relative '../assertions/default_assertions.rb'
+module Assertions
 # Assertions (validations)
 include Test::Unit::Assertions
 #require 'rails/test_help'
@@ -111,4 +114,5 @@ def assert_specialized_by(specialized)
 	assert_equal(1, comparison)
 	assert_operator(self, :>, specialized, message)
 end #<=>
+end #Assertions
 end #RegexpTree
