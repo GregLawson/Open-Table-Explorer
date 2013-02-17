@@ -59,9 +59,6 @@ end #<=>
 end #Anchoring
 class RegexpSequence < RegexpTree
 include Comparable
-class TestCases
-Sequence=RegexpSequence.new(['1', '2', '3'])
-end #TestCases
 # Parse regexp_string into parse tree for editing
 def initialize(*nodes)
 	nodes.each do |node|
@@ -184,4 +181,11 @@ end #sequence_intersect
 def +(other)
 	return RegexpSequence.new(self.to_a+other.to_a)
 end #+
+module Examples
+include Constants
+Sequence=RegexpSequence.new(['1', '2', '3'])
+A=RegexpSequence.new('a')
+B=RegexpSequence.new('b')
+Ab=RegexpSequence.new('ab')
+end #Examples
 end #RegexpTree
