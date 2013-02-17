@@ -7,73 +7,13 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../assertions/regexp_tree_assertions.rb'
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 require_relative '../../test/unit/default_assertions_tests.rb'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
 #require 'test/test_helper_test_tables.rb'
-class RegexpTree < NestedArray # reopen class to add assertions
-include RegexpTreeAssertions
-extend RegexpTreeAssertions::ClassMethods
-end #RegexpTree
 class RegexpTreeTest < TestCase
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
 include DefaultAssertionTests
-def test_Anchoring_initialize
-	No_anchor.assert_anchoring
-	Start_anchor.assert_anchoring
-	End_anchor.assert_anchoring
-	Both_anchor.assert_anchoring
-#	assert_equal(Anchor_root_test_case, Anchoring.new(No_anchor))
-	assert_equal(No_anchor, Anchoring.new(No_anchor)[:base_regexp])
-	assert_equal(No_anchor, Anchoring.new(Start_anchor)[:base_regexp])
-	assert_equal(No_anchor, Anchoring.new(End_anchor)[:base_regexp])
-	assert_equal(No_anchor, Anchoring.new(Both_anchor)[:base_regexp])
-	assert_equal(Anchoring::Start_anchor_regexp, Anchoring.new(Start_anchor)[:start_anchor])
-	assert_nil(Anchoring.new(No_anchor)[:start_anchor])
-	assert_nil(Anchoring.new(Start_anchor)[:end_anchor])
-	assert_equal(Anchoring::End_anchor_regexp, Anchoring.new(End_anchor)[:end_anchor])
-end #anchoring
-def test_compare_anchor
-	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Start_anchor))
-	assert_operator(Anchoring.new(Start_anchor), :>, Anchoring.new(Both_anchor))
-	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(End_anchor))
-	assert_operator(Anchoring.new(End_anchor), :>, Anchoring.new(Both_anchor))
-	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Both_anchor))
-	assert_nil(Anchoring.new(Start_anchor) <=> Anchoring.new(End_anchor))
-end #anchor
-def regexpParserTest(parser)
-	assert_respond_to(parser,:parseOneTerm!)
-#	Now test after full parse.
-	parser.restartParse!
-	assert(!parser.beyondString?)
-	assert(parser.rest.length>0)
-	assert(parser.rest==parser.regexp_string)
-	parser.conservationOfCharacters	
-#	Test after a little parsing.
-	assert_not_nil(parser.nextToken!)
-	assert(parser.rest!=parser.regexp_string)
-	parser.restartParse!
-	assert_not_nil(parser.parseOneTerm!)
-	parser.restartParse!
-	assert(parser.parseOneTerm!.size>0)
-#	Now test after full parse.
-	parser.restartParse!
-	assert_not_nil(parser.regexpTree!)
-	assert(parser.rest=='')
-	parser.restartParse!
-	parser.conservationOfCharacters	
-	parser.restartParse!
-	assert(parser.regexpTree!.size>0)
-	assert(parser.beyondString?)
-end #def
-
-Alternative_ab_of_abc_10=RegexpTree.new('a|b', '[abc]{1,10}')
-def test_probability_space_regexp
-	assert_equal(RegexpTree.new('[abc]{1,10}'), Alternative_ab_of_abc_10.probability_space_regexp)
-end #probability_space_regexp
 def test_probability_space_size
 	assert_equal(256, RegexpTree::Any.probability_space_size)
 	assert_equal(194, RegexpTree::Many.probability_space_size)

@@ -18,6 +18,9 @@ class RegexpAlternativeTest < TestCase
 set_class_variables
 Alternative_ab_of_abc_10=RegexpAlternative.new('a|b', '[abc]{1,10}')
 Tree123=RegexpParse.new('[1-3]')
+def test_probability_space_regexp
+	assert_equal(RegexpTree.new('[abc]{1,10}'), Alternative_ab_of_abc_10.probability_space_regexp)
+end #probability_space_regexp
 
 def test_probability_of_alternatives
 	assert_equal(3, [1,2].reduce {|sum, e| sum + e })
