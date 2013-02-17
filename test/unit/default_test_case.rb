@@ -5,7 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-module DefaultAssertionTests
+require_relative 'test_environment'
+require_relative '../../test/unit/default_assertions_tests.rb'
+class DefaultTestCase1 < TestCase # test file only
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
 # methods to extract model, class from TestCase subclass
@@ -16,27 +18,39 @@ end #name_of_test?
 def model_name?
 	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '')
 end #model_name?
-def table_name?
-	model_name?.tableize
-end #table_name?
 def model_class?
 	eval(model_name?)
 end #model_class?
+def table_name?
+	model_name?.tableize
+end #table_name?
 def names_of_tests?
 	self.methods(true).select do |m|
 		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
 	end #map
 end #names_of_tests?
+end #DefaultTestCase1
+
+class DefaultTestCase2 < DefaultTestCase1 # test and model files
+end #DefaultTestCase2
+
+class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
+def assertions_pathname?
+	"../assertions/"+model_name?+"_assertions.rb"
+end #assertions_pathname?
+end #DefaultTestCase3
+
+class DefaultTestCase < DefaultTestCase3# test, model, assertion, and assertion test files
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 def test_test_environment
-	assert_equal(self.class.name[-4..-1], 'Test')
+	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test'")
 	assert_equal(6, names_of_tests?.size, "#{names_of_tests?.sort}")
-	assert_equal([DefaultAssertionTests], Module.nesting)
+	assert_equal([DefaultTestCase], Module.nesting)
 	assert_include(self.class.included_modules, Test::Unit::Assertions)
-	assert_include(self.class.included_modules, DefaultAssertionTests)
-	assert_include(self.methods(true), :explain_assert_respond_to)
+#	assert_include(self.class.included_modules, DefaultAssertionTests)
+	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
@@ -48,7 +62,7 @@ def test_test_environment
 #	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
 #	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
 #	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
-	assert_include(model_class?.included_modules, model_class?::Assertions)
+	assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
 	assert_include(model_class?.included_modules, Test::Unit::Assertions)
 #	assert_equal('Test::Unit::Assertions', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
@@ -100,4 +114,4 @@ def test_assert_post_conditions
 	end #each
 #	fail "got to end of default test."
 end #assert_post_conditions
-end #DefaultAssertionTests
+end #DefaultTestCase
