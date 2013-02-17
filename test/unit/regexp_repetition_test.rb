@@ -1,14 +1,11 @@
 ###########################################################################
-#    Copyright (C) 2010-2012 by Greg Lawson                                      
+#    Copyright (C) 2010-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test_helper'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
+require_relative 'test_environment'
 #require 'test/test_helper_test_tables.rb'
 class RegexpTree < NestedArray # reopen class to add assertions
 include RegexpTreeAssertions
