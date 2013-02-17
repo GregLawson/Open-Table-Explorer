@@ -22,3 +22,8 @@ ruby test/unit/ruby_assertions_test.rb -n test_explain_assert_block
 ruby test/unit/ruby_assertions_test.rb -n test_explain_assert_respond_to
 ruby test/unit/unbounded_fixnum_test.rb
 ruby test/unit/unbounded_range_test.rb
+ruby test/unit/regexp_parse_test.rb -n test_case
+ruby test/unit/regexp_parse_assertions_test.rb -n test_class_assert_invariant
+ruby test/unit/regexp_parse_test.rb -n test_to_regexp
+ruby test/unit/regexp_tree_test.rb -n test_to_s
+ruby test/unit/regexp_tree_test.rb -n test_zero_parameter_new
