@@ -8,6 +8,10 @@
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
+def test_caller_lines
+	ignore_lines=19
+	assert_equal("\ntest/unit/ruby_assertions_test.rb:13:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
+end #caller_lines
 class TestClass < Object
 TestConstant=3.2
 def test_instance_method

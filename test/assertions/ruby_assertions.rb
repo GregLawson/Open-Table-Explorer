@@ -11,6 +11,9 @@ require 'set'
 module Test
 module Unit
 module Assertions
+def caller_lines(ignore_lines=19)
+	"\n#{caller[0..-ignore_lines].join("\n")}\n"
+end #caller_lines
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
 	message+=" Class #{self.class.name}"
@@ -18,7 +21,7 @@ def default_message
 	message+=" self=#{self.inspect}"
 	message+=" local_variables=#{local_variables.inspect}"
 	message+=" instance_variables=#{instance_variables.inspect}"
-	message+=" callers=#{callers}"
+	message+=" callers=#{caller_lines}"
 	return message
 end #default_message
 # File of ruby assertions not requiring ActiveRecord or fixtures
