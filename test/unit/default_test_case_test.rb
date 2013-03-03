@@ -6,12 +6,41 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../test/assertions/minimal_assertions.rb'
-require_relative '../../test/unit/default_assertions_tests.rb'
-class MinimalTest < TestCase
+require_relative 'default_test_case.rb'
+class EmptyTest
+end #EmptyTest
+class EmptyDefaultTest < DefaultTestCase1
+end #EmptyDefaultTest
+class EmptyIncludedTest
+include DefaultTests1
+end #EmptyIncludedTest
+
+require_relative '../../test/assertions/default_assertions.rb'
+class ClassExists
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
-include DefaultAssertionTests
+def self.assert_invariant
+	assert_equal(:ClassExists, self.name.to_sym, caller_lines)
+	assert_instance_of(Class, self)
+end # class_assert_invariant
+end #ClassExists
+
+class ClassExistsTest < DefaultTestCase1
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
+def test_case_assert_invariant
+	caller_message=" callers=#{caller.join("\n")}"
+	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
+end #assert_invariant
+def test_assert_class_invariant
+	assert_include(Module.constants, :ClassExists)
+end #test_assert_class_invariant
+include DefaultTests1
+end #ClassExistsTest
+
+require_relative '../../test/assertions/minimal_assertions.rb'
+class MinimalTest < TestCase
+extend DefaultAssertions::ClassMethods
 def test_example_constants_by_class
 	assert_include(Minimal.constants, :Constant)
 	assert_equal(Minimal::Constant, Minimal.value_of_example?(:Constant))
@@ -19,7 +48,3 @@ def test_example_constants_by_class
 	assert_equal([:Constant], Minimal.example_constant_names_by_class(Fixnum, /on/))
 end #example_constant_names_by_class
 end #MinimalTest
-require_relative 'test_environment'
-require_relative 'default_test_case.rb'
-class EmptyTest < DefaultTestCase1
-end #EmptyTestCase
