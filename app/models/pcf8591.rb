@@ -98,7 +98,7 @@ def assert_disconnected(control_byte=Default_control_byte, samples=64)
 		scan=scan.drop_while {|e| e==@discard}
 	end #if
 	assert_operator(@discard/4.0, :<=, scan[0], "under "+message)
-	assert_operator(@discard/2.6, :>=, scan[0], "over "+message)
+	assert_operator(@discard/2.0, :>=, scan[0], "over "+message)
 	scan[1..-1].each do |value|
 		assert_operator(value, :<=, 1, message)
 	end #each
@@ -108,6 +108,7 @@ include Assertions
 extend Assertions::ClassMethods
 module Examples
 	YL_40=PCF8591.new(1, 0x48) # all address bits tied low
+	BURST_LENGTH=64
 end #Examples
 end #PCF8591
 
