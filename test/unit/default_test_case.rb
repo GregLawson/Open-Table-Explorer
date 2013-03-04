@@ -19,7 +19,32 @@ def test_class_assert_invariant
 	model_class?.assert_invariant
 #	fail "got to end of default test."
 end # class_assert_invariant
+# methods to extract model, class from TestCase subclass
+def name_of_test?
+	self.class.name
+end #name_of_test?
+# Extract model name from test name if Rails-like naming convention is followed
+def model_name?
+	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
+end #model_name?
+def model_class?
+	begin
+		eval(model_name?.to_s)
+	rescue
+		nil
+	end #begin rescue
+end #model_class?
+def table_name?
+	model_name?.tableize
+end #table_name?
+def names_of_tests?
+	self.methods(true).select do |m|
+		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
+	end #map
+end #names_of_tests?
 
+def test_case_pre_conditions
+end #test_case_pre_conditions
 end #DefaultTests1
 module DefaultTests2
 include DefaultTests1
@@ -102,30 +127,6 @@ end #DefaultTests4
 class DefaultTestCase1 < TestCase # test file only
 #include DefaultAssertions
 #extend DefaultAssertions::ClassMethods
-# methods to extract model, class from TestCase subclass
-def name_of_test?
-	self.class.name
-end #name_of_test?
-# Extract model name from test name if Rails-like naming convention is followed
-def model_name?
-	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
-end #model_name?
-def model_class?
-	begin
-		eval(model_name?.to_s)
-	rescue
-		nil
-	end #begin rescue
-end #model_class?
-def table_name?
-	model_name?.tableize
-end #table_name?
-def names_of_tests?
-	self.methods(true).select do |m|
-		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
-	end #map
-end #names_of_tests?
-
 end #DefaultTestCase1
 
 class DefaultTestCase2 < DefaultTestCase1 # test and model files
@@ -141,6 +142,4 @@ extend Test::Unit::Assertions
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
-def test_case_pre_conditions
-end #test_case_pre_conditions
 end #DefaultTestCase
