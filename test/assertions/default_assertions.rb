@@ -12,15 +12,14 @@ module ClassMethods
 include Test::Unit::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
-
+	assert_instance_of(Class, self)
 end # class_assert_invariant
 # conditions true while class is being defined
+# assertions true after class (and nested module Examples) is defined
 def assert_pre_conditions
-	assert_invariant
 end #class_assert_pre_conditions
-
+# assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
-	assert_invariant
 	self.example_constant_names_by_class(self).each do |c|
 		c.assert_pre_conditions
 	end #each
