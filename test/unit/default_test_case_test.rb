@@ -7,9 +7,13 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative 'default_test_case.rb'
-class EmptyTest < DefaultTestCase1
+class EmptyTest
+end #EmptyTest
+class EmptyDefaultTest < DefaultTestCase1
+end #EmptyDefaultTest
+class EmptyIncludedTest
 include DefaultTests1
-end #EmptyTestCase
+end #EmptyIncludedTest
 
 require_relative '../../test/assertions/default_assertions.rb'
 class ClassExists
