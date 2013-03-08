@@ -6,10 +6,64 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../test/unit/default_assertions_tests.rb'
+require_relative '../assertions/ruby_assertions.rb'
+module DefaultTests1
+include Test::Unit::Assertions
+def test_case_pre_conditions
+	caller_message=" callers=#{caller.join("\n")}"
+	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
+end #test_case_pre_conditions
+def test_class_assert_invariant
+	assert_include(Module.constants+self.class.constants, model_name?.to_sym)
+	assert_not_nil(model_class?, "Define a class named #{model_name?} or redefine model_name? to return correct class name.")
+	model_class?.assert_invariant
+#	fail "got to end of default test."
+end # class_assert_invariant
+end #DefaultTests1
+module DefaultTests2
+include DefaultTests1
+def test_class_assert_pre_conditions
+	model_class?.assert_pre_conditions
+#	fail "got to end of default test."
+end #class_assert_pre_conditions
+def test_class_assert_post_conditions
+	model_class?.example_constant_names_by_class(model_class?).each do |c|
+		c.assert_pre_conditions
+	end #each
+#	fail "got to end of default test."
+end #class_assert_post_conditions
+#ClassMethods
+def test_assert_pre_conditions
+	model_class?.example_constant_names_by_class(model_class?).each do |c|
+		c.assert_pre_conditions
+	end #each
+#	fail "got to end of default test."
+end #assert_pre_conditions
+def test_assert_invariant
+	model_class?.example_constant_values_by_class(model_class?).each do |c|
+		c.assert_invariant
+	end #each
+#	fail "got to end of default test."
+end #def assert_invariant
+def test_assert_post_conditions
+	model_class?.example_constant_names_by_class(model_class?).each do |c|
+		c.assert_post_conditions
+	end #each
+#	fail "got to end of default test."
+end #assert_post_conditions
+def self.assert_invariant
+	fail "got here=self.assert_invariant"
+end # class_assert_invariant
+end #DefaultTests2
+module DefaultTests3
+include DefaultTests2
+end
+module DefaultTests4
+include DefaultTests3
+end
 class DefaultTestCase1 < TestCase # test file only
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
+#include DefaultAssertions
+#extend DefaultAssertions::ClassMethods
 # methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
@@ -19,7 +73,11 @@ def model_name?
 	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '')
 end #model_name?
 def model_class?
-	eval(model_name?)
+	begin
+		eval(model_name?)
+	rescue
+		nil
+	end #begin rescue
 end #model_class?
 def table_name?
 	model_name?.tableize
@@ -29,6 +87,9 @@ def names_of_tests?
 		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
 	end #map
 end #names_of_tests?
+def global_class_names
+	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
+end #global_class_names
 end #DefaultTestCase1
 
 class DefaultTestCase2 < DefaultTestCase1 # test and model files
@@ -41,11 +102,15 @@ end #assertions_pathname?
 end #DefaultTestCase3
 
 class DefaultTestCase < DefaultTestCase3# test, model, assertion, and assertion test files
+require 'test/unit'
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 def test_test_environment
-	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test'")
+	caller_message=" callers=#{caller.join("\n")}"
+	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
 	assert_equal(6, names_of_tests?.size, "#{names_of_tests?.sort}")
 	assert_equal([DefaultTestCase], Module.nesting)
 	assert_include(self.class.included_modules, Test::Unit::Assertions)
@@ -80,38 +145,4 @@ def test_assertion_inclusion
 #	assert_respond_to(model_class?, :example_constant_names_by_class)
 #	assert_include(model_class?.methods, :example_constant_names_by_class, "model_class?=#{model_class?}")
 end #test_assertion_inclusion
-def test_class_assert_invariant
-	#puts "self.class.methods(true)=#{self.class.methods(true)}"
-	model_class?.assert_invariant
-#	fail "got to end of default test."
-end # class_assert_invariant
-def test_class_assert_pre_conditions
-	model_class?.assert_pre_conditions
-#	fail "got to end of default test."
-end #class_assert_pre_conditions
-def test_class_assert_post_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
-		c.assert_pre_conditions
-	end #each
-#	fail "got to end of default test."
-end #class_assert_post_conditions
-#ClassMethods
-def test_assert_pre_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
-		c.assert_pre_conditions
-	end #each
-#	fail "got to end of default test."
-end #assert_pre_conditions
-def test_assert_invariant
-	model_class?.example_constant_values_by_class(model_class?).each do |c|
-		c.assert_invariant
-	end #each
-#	fail "got to end of default test."
-end #def assert_invariant
-def test_assert_post_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
-		c.assert_post_conditions
-	end #each
-#	fail "got to end of default test."
-end #assert_post_conditions
 end #DefaultTestCase
