@@ -7,7 +7,7 @@
 ###########################################################################
 class PCF8591
 module Constants
-module CB
+module CB #bits for control byte
 	# 0-3 analog channels
 	Auto_increment=0x04
 	# single ended or differntial 
@@ -20,6 +20,7 @@ module CB
 end #CB
 	CB_Mask=0x77 # zeros in reserved bits
 	Default_control_byte=CB::Auto_increment|CB::All_single_ended|CB::Analog_output_enable
+	MAX_OSC_WARM_UP=32 #maximum time for internal oscillator to begin producing changing data
 end #Constants
 include Constants
 def initialize(bus=1, address=0x48)
@@ -41,19 +42,34 @@ def get_value_string
 end #get_value_string
 def control_byte(channel, output_enable, differential)
 end #control_byte
-def adc_read(control_byte=Default_control_byte, burst_length=1)
+def adc_read(control_byte=Default_control_byte, burst_length=1, analog_output_enable=CB::Analog_output_enable)
+	control_byte=control_byte|CB::Analog_output_enable #default to analog out enabled
 	if @last_control_byte!=control_byte then
 		sysout=`#{select_channel_string(control_byte)}` # set control_byte
 		@last_control_byte=control_byte
 	end #if
 #	puts "select_channel_string="+select_channel_string(control_byte) # set control_byte
-	@discard=`#{get_value_string}`.chomp.hex #clear latched value
-#	puts "discard=", @discard
-	ret=Array.new(burst_length) do |index| 
+	@read_behind=`#{get_value_string}`.chomp.hex #clear latched value
+#	puts "discard=", @read_behind
+	ret=[] #no data collected yet
+	if analog_output_enable then
+		iterations=burst_length
+	else
+		iterations=burst_length+MAX_OSC_WARM_UP
+	end #if
+	iterations.times do |index| # extra
 		sysout=`#{get_value_string}`
 #		puts "get_value_string="+get_value_string
 #		puts sysout
-		sysout.chomp.hex
+		value=sysout.chomp.hex
+		if analog_output_enable then
+			ret.push(value)
+		else
+			if value!=@read_behind then 
+				ret.push(value)
+			end #if
+		end #if
+		break if ret.size>=burst_length #
 	end #Array.new
 	sysout=`#{select_channel_string(control_byte&~CB::Analog_output_enable)}` # set control_byte
 	@last_value[control_byte]=ret[-1]
@@ -70,9 +86,6 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_constant(control_byte=Default_control_byte, samples=64, expected_value=nil)
 	scan=adc_read(control_byte, samples)
-	if (control_byte&CB::Analog_output_enable)==CB::Analog_output_enable then
-		scan=scan.drop_while {|e| e==@discard}
-	end #if
 	unique_values=scan.uniq
 	assert_equal(1, unique_values.size,message)
 	if !expected_value.nil? then
@@ -81,10 +94,7 @@ def assert_constant(control_byte=Default_control_byte, samples=64, expected_valu
 end #assert_constant
 def assert_range(control_byte=Default_control_byte, samples=64, min=0, max=255, max_range=nil)
 	scan=adc_read(control_byte, samples)
-	message="\ncontrol_byte=#{control_byte}\n#{self.inspect} #{scan.inspect}\ndecay=#{@discard.to_f/scan[0].to_f}\n#{caller_lines}"
-	if (control_byte&CB::Analog_output_enable)==CB::Analog_output_enable then
-		scan=scan.drop_while {|e| e==@discard}
-	end #if
+	message="\ncontrol_byte=#{control_byte}\n#{self.inspect} #{scan.inspect}\ndecay=#{@read_behind.to_f/scan[0].to_f}\n#{caller_lines}"
 	assert_operator(min, :<=, scan.min, message)
 	assert_operator(max, :>=, scan.max, message)
 	if !max_range.nil? then
@@ -93,22 +103,21 @@ def assert_range(control_byte=Default_control_byte, samples=64, min=0, max=255, 
 end #assert_range
 def assert_disconnected(control_byte=Default_control_byte, samples=64)
 	scan=adc_read(control_byte, samples)
-	message="\ncontrol_byte=#{control_byte}\n#{self.inspect} #{scan.inspect}\ndecay=#{@discard.to_f/scan[0].to_f}\n#{caller_lines}"
-	if (control_byte&CB::Analog_output_enable)==CB::Analog_output_enable then
-		scan=scan.drop_while {|e| e==@discard}
-	end #if
-	assert_operator(@discard/4.0, :<=, scan[0], "under "+message)
-	assert_operator(@discard/2.0, :>=, scan[0], "over "+message)
+	message="\ncontrol_byte=#{control_byte}\n#{self.inspect} #{scan.inspect}\ndecay=#{@read_behind.to_f/scan[0].to_f}\n#{caller_lines}"
+	assert_operator(@read_behind/4.0, :<=, scan[0], "under "+message)
 	scan[1..-1].each do |value|
-		assert_operator(value, :<=, 1, message)
+		assert_operator(value, :<=, 4, "byte "+message)
 	end #each
+	if @read_behind>8 then
+		assert_operator((@read_behind-4)/2.4, :>=, scan[0], "over "+message)
+	end #if
 end #assert_disconnected
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 module Examples
 	YL_40=PCF8591.new(1, 0x48) # all address bits tied low
-	BURST_LENGTH=64
+	BURST_LENGTH=8
 end #Examples
 end #PCF8591
 

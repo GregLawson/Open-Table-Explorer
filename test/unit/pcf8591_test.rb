@@ -45,11 +45,13 @@ def test_disconnected
 end #test_disconnected
 # thermistor R6 connected via jumper P4 to AIN1
 def test_thermistor
+	YL_40.assert_range(1+CB::Analog_output_enable, BURST_LENGTH, 216, 220, 2)
+	YL_40.assert_range(1, BURST_LENGTH, 216, 220, 2)	
 end #test_thermistor
 # light sensor (CDS) R7 connected via jumper P5 to AIN2
 def test_CDS
 	YL_40.assert_range(0+CB::Analog_output_enable, BURST_LENGTH, 143, 227, 8)	
-	YL_40.assert_range(0, BURST_LENGTH, 143, 225, 8)	
+	YL_40.assert_range(0, BURST_LENGTH, 143, 227, 8)	
 end #CDS
 # potentiometer R3 connected via jumper P6 to ANI3
 def test_potentiometer
