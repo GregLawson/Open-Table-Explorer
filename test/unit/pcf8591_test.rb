@@ -26,36 +26,23 @@ end #select_channel_string
 def test_get_value_string
 	assert_equal('sudo i2cget -y 1 0x48', YL_40.get_value_string)
 end #get_value_string
+def test_dac_set_value_string
+	assert_equal('sudo i2cset -y 1 0x48 0x41 0x0', YL_40.dac_set_value_string)
+end #dac_set_value_string
+
 def test_adc_read
 	analog=1
 	miniboard=PCF8591.new
 	miniboard.assert_range(1+CB::Analog_output_enable, BURST_LENGTH, 216, 220, 2)
 	miniboard.assert_range(1, BURST_LENGTH, 216, 220, 2)	
+	i=0
+	3.times do
+		i=i+1
+		print i.to_s+" "+miniboard.adc_read(0+CB::Analog_output_enable,1).to_s
+		print " "+miniboard.adc_read(1+CB::Analog_output_enable,1).to_s
+		print " "+miniboard.adc_read(2+CB::Analog_output_enable,1).to_s
+		puts " "+miniboard.adc_read(3+CB::Analog_output_enable,1).to_s
+	puts miniboard.adc_read(Default_control_byte,4).join(' ')
+	end #loop
 end #adc_read
 end #PCF8591
-class YL_40_OnboardTest <TestCase
-#include DefaultTests1
-include PCF8591::Examples
-include PCF8591::Constants
-#include DefaultTests2
-# disconnected not connected, no jumper for AIN0
-def test_disconnected
-	YL_40.assert_disconnected(2+CB::Analog_output_enable, BURST_LENGTH)	
-	YL_40.assert_disconnected(2, BURST_LENGTH)	
-end #test_disconnected
-# thermistor R6 connected via jumper P4 to AIN1
-def test_thermistor
-	YL_40.assert_range(1+CB::Analog_output_enable, BURST_LENGTH, 216, 220, 2)
-	YL_40.assert_range(1, BURST_LENGTH, 216, 220, 2)	
-end #test_thermistor
-# light sensor (CDS) R7 connected via jumper P5 to AIN2
-def test_CDS
-	YL_40.assert_range(0+CB::Analog_output_enable, BURST_LENGTH, 143, 227, 8)	
-	YL_40.assert_range(0, BURST_LENGTH, 143, 227, 8)	
-end #CDS
-# potentiometer R3 connected via jumper P6 to ANI3
-def test_potentiometer
-	YL_40.assert_constant(3+CB::Analog_output_enable, BURST_LENGTH)
-	YL_40.assert_constant(3, BURST_LENGTH)
-end #test_potentiometer
-end #YL_40_OnboardTest

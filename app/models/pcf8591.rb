@@ -40,17 +40,20 @@ end #select_channel_string
 def get_value_string
 	command_string(:get)
 end #get_value_string
-def control_byte(channel, output_enable, differential)
-end #control_byte
+def dac_set_value_string(output_value=0, control_byte=0x41)
+	command_string(command=:set, '0x'+control_byte.to_s(16), '0x'+output_value.to_s(16))
+end #dac_set_value_string
+def dac_set(output_value=0, control_byte=0x41)
+	@last_aout=`#{dac_set_value_string(output_value, control_byte)}`
+end #dac_set
+# set analog_output_enable to zero to force internal oscillator delay
 def adc_read(control_byte=Default_control_byte, burst_length=1, analog_output_enable=CB::Analog_output_enable)
 	control_byte=control_byte|CB::Analog_output_enable #default to analog out enabled
 	if @last_control_byte!=control_byte then
 		sysout=`#{select_channel_string(control_byte)}` # set control_byte
 		@last_control_byte=control_byte
 	end #if
-#	puts "select_channel_string="+select_channel_string(control_byte) # set control_byte
 	@read_behind=`#{get_value_string}`.chomp.hex #clear latched value
-#	puts "discard=", @read_behind
 	ret=[] #no data collected yet
 	if analog_output_enable then
 		iterations=burst_length
@@ -75,7 +78,7 @@ def adc_read(control_byte=Default_control_byte, burst_length=1, analog_output_en
 	@last_value[control_byte]=ret[-1]
 	return ret
 end #adc_read
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 module Assertions
 include DefaultAssertions
@@ -85,7 +88,7 @@ def assert_pre_conditions
 	assert_instance_of(Class, self)
 end #assert_pre_conditions
 def assert_constant(control_byte=Default_control_byte, samples=64, expected_value=nil)
-	scan=adc_read(control_byte, samples)
+	scan=adc_read(control_byte, samples, 0)
 	unique_values=scan.uniq
 	assert_equal(1, unique_values.size,message)
 	if !expected_value.nil? then
@@ -93,7 +96,7 @@ def assert_constant(control_byte=Default_control_byte, samples=64, expected_valu
 	end #if
 end #assert_constant
 def assert_range(control_byte=Default_control_byte, samples=64, min=0, max=255, max_range=nil)
-	scan=adc_read(control_byte, samples)
+	scan=adc_read(control_byte, samples, 0)
 	message="\ncontrol_byte=#{control_byte}\n#{self.inspect} #{scan.inspect}\ndecay=#{@read_behind.to_f/scan[0].to_f}\n#{caller_lines}"
 	assert_operator(min, :<=, scan.min, message)
 	assert_operator(max, :>=, scan.max, message)
@@ -102,16 +105,22 @@ def assert_range(control_byte=Default_control_byte, samples=64, min=0, max=255, 
 	end #if
 end #assert_range
 def assert_disconnected(control_byte=Default_control_byte, samples=64)
-	scan=adc_read(control_byte, samples)
+	scan=adc_read(control_byte, samples, 0)
 	message="\ncontrol_byte=#{control_byte}\n#{self.inspect} #{scan.inspect}\ndecay=#{@read_behind.to_f/scan[0].to_f}\n#{caller_lines}"
 	assert_operator(@read_behind/4.0, :<=, scan[0], "under "+message)
 	scan[1..-1].each do |value|
 		assert_operator(value, :<=, 4, "byte "+message)
 	end #each
 	if @read_behind>8 then
-		assert_operator((@read_behind-4)/2.4, :>=, scan[0], "over "+message)
+		assert_operator((@read_behind-4)/2.0, :>=, scan[0], "over "+message)
 	end #if
 end #assert_disconnected
+def assert_loopback(input_control_byte, output_value=0)
+	256.times do |i|
+		dac_set(i)
+		assert_range(input_control_byte, Examples::BURST_LENGTH, i, i+1, 2)
+	end #times
+end #assert_loopback
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
