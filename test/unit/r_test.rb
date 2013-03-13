@@ -54,6 +54,7 @@ def test_loopback
 
 	puts con.eval("tapply(loopback$V10,ain,summary)")
 	con.eval("rle(as.vector(ain))")
-	DataFrames.pairSummary('loopback$V9','loopback$V10')
+	df=DataFrames.new(:loopback)
+	df.pairSummary('loopback$V9','loopback$V10')
 end #test_loopback
 end #RSessionTest

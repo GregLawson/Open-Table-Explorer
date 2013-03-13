@@ -41,9 +41,13 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #RSession
-module DataFrames
+class DataFrames
 	@r=RSession.new
-def self.psqlExport(tableName)
+def initialize(name, session=RSession::Default_Session)
+	@name=name
+	@session=session
+end #initialize
+def psqlExport(tableName=@name)
 	#sql="COPY #{tableName} TO '#{tableName}.csv' WITH CSV HEADER "
 	sql="COPY #{tableName} TO STDOUT WITH CSV HEADER "
 	puts "sql=#{sql}"	
@@ -51,24 +55,24 @@ def self.psqlExport(tableName)
 	puts "psql=#{psql}"	
 	sysout=`#{psql}`
 end
-def self.importRelation(tableName)
+def importRelation(tableName=@name)
 # 	pv<-read.csv('/home/greg/energy/rails/energy/production.csv')
-	eval_R_shell("#{tableName}<-read.csv(\"/tmp/#{tableName}.csv\")")
+	@session.eval("#{tableName}<-read.csv(\"/tmp/#{tableName}.csv\")")
 #	@r.assign("foo",@r.read_csv("/tmp/#{tableName}.csv"))
 #	puts @r.foo.size
 #	puts @r.read_csv("/tmp/#{tableName}.csv")
 end
-def self.plot(x,y)
-	eval_R_shell("png(filename = \"#{tableName}.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",  res = NA,type = c(\"cairo\", \"Xlib\", \"cairo1\", \"quartz\"))")
-	eval_R_shell("plot(#{x},#{y})")
-	eval_R_shell("dev.off()")
+def plot(x,y, tableName=@name)
+	@session.eval("png(filename = \"#{tableName}.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",  res = NA,type = c(\"cairo\", \"Xlib\", \"cairo1\", \"quartz\"))")
+	@session.eval("plot(#{x},#{y})")
+	@session.eval("dev.off()")
 end
-def self.variableSummary(var)
+def variableSummary(var, tableName=@name)
 	puts "#{var} "
-	puts eval_R_shell("class(#{var})")
-	puts eval_R_shell("summary(#{var})")
+	puts @session.eval("class(#{var})")
+	puts @session.eval("summary(#{var})")
 end
-def self.pairSummary(x,y)
+def pairSummary(x,y)
 	variableSummary(x)
 	variableSummary(y)
 	plot(x,y)
