@@ -5,6 +5,7 @@ require 'rserve'
 class RSessionTest <TestCase
 include DefaultTests1
 include RSession::Constants
+include DataFrames::Examples
 def test_initialize
 
 end #initialize
@@ -44,11 +45,31 @@ def test_example
     #<Rserve::REXP::GenericVector:0x000000010c81d0 @attr=nil, @payload=#<Rserve::Rlist:0x000000010c8278 @names=nil, @data=[#<Rserve::REXP::String:0x000000010c86d8 @payload=["a"], @attr=nil>, #<Rserve::REXP::String:0x000000010c85c0 @payload=["b"], @attr=nil>, #<Rserve::REXP::String:0x000000010c82e8 @payload=["c", "d"], @attr=nil>]>>
 
 end #example
+def test_csv_import
+	Loopback.csv_import([:ain,:aout_value], Loopback_Filename)
+end #csv_import
+def test_r_symbol
+	assert_equal("loopback$V8", Loopback.r_symbol(:V8))	
+end #r_symbol
+def test_r_class_symbol
+	var='loopback$V8'
+	klass=Default_Session.eval("class(#{var})")
+	assert_equal("integer", klass.as_strings[0])	
+	assert_equal("integer", Loopback.r_class_symbol(:V8))	
+end #r_class_symbol
+def test_variableSummary
+	var=:V8
+	summary=Default_Session.eval("summary(#{var})").as_doubles
+	assert_instance_of(Array, summary)	
+	assert_equal("", Loopback.variableSummary(:V9))	
+end #variableSummary
+def test_pairSummary
+end #pairSummary
 def test_loopback
 	con=RSession.new
 
 
-	con.eval("loopback<-read.table('/tmp/loopback4.log',sep=',',fill=TRUE)")
+	con.eval("loopback<-read.table('/tmp/loopback4.csv',sep=',',fill=TRUE)")
 	con.eval("ain<-as.factor(loopback$V10)")
 
 

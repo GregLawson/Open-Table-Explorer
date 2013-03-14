@@ -6,6 +6,26 @@ def initialize
 end #initialize
 def eval(r_code)
 	@con.eval(r_code)
+rescue Rserve::Connection::EvalError => exception
+#	puts "\nr_code=#{r_code}"
+#	puts "exception.message=#{exception.message}"
+#	puts "exception.backtrace=#{exception.backtrace}"
+#	puts caller_lines
+	matchData=/status=error:'(.*)'/.match(exception.message)
+#	puts "/status=error:'(.*)'\(/.match(exception.message).inspect}=#{/status=error:(.*)/.match(exception.message).inspect}"
+	error_message=matchData[1]
+#	puts "error_message=#{error_message}"
+	message=build_message(nil, "\n? error while evaluating R expression ?\n", error_message, r_code)
+	raise exception.exception(message) #quit on first error
+rescue StandardError => exception
+#	puts "\nr_code=#{r_code}"
+#	puts exception.inspect
+#	puts "exception.class.name=#{exception.class.name}"
+#	puts "exception.methods(false)=#{exception.methods(false)}"
+#	puts "exception.class.methods(false)=#{exception.class.methods(false)}"
+	message=build_message(nil, "\n? error while evaluating R expression ?\n", exception.message, r_code)
+	raise exception(message) #don't know anything about
+ensure
 end #eval
 def assign(variable, r_code)
 	@con.assign(variable, r_code)
@@ -44,9 +64,12 @@ end #RSession
 class DataFrames
 	@r=RSession.new
 def initialize(name, session=RSession::Default_Session)
-	@name=name
+	@name=name.to_sym
 	@session=session
 end #initialize
+def csv_import(name_order, filename=@name.to_s+'.csv', sep=',')
+	@session.eval("loopback<-read.table('#{filename}',sep='#{sep}',fill=TRUE)")
+end #csv_import
 def psqlExport(tableName=@name)
 	#sql="COPY #{tableName} TO '#{tableName}.csv' WITH CSV HEADER "
 	sql="COPY #{tableName} TO STDOUT WITH CSV HEADER "
@@ -66,16 +89,26 @@ def plot(x,y, tableName=@name)
 	@session.eval("png(filename = \"#{tableName}.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",  res = NA,type = c(\"cairo\", \"Xlib\", \"cairo1\", \"quartz\"))")
 	@session.eval("plot(#{x},#{y})")
 	@session.eval("dev.off()")
-end
+end #plot
+def r_symbol(field=:V0)
+	"#{@name}$#{field}"
+end #r_symbol
+def r_class_symbol(field=:V0)
+	var="#{@name}$#{field}"
+	Default_Session.eval("class(#{var})").as_strings[0]
+end #r_class_symbol
 def variableSummary(var, tableName=@name)
-	puts "#{var} "
-	puts @session.eval("class(#{var})")
-	puts @session.eval("summary(#{var})")
-end
+	"#{var} "+@session.eval("class(#{var})")+@session.eval("summary(#{var})")
+end #variableSummary
 def pairSummary(x,y)
 	variableSummary(x)
 	variableSummary(y)
 	plot(x,y)
-end
+end #pairSummary
+module Examples
+Loopback_Filename='/tmp/loopback4.csv'
+Loopback=DataFrames.new(:loopback)
+end #Examples
+
 
 end # DataFrames module
