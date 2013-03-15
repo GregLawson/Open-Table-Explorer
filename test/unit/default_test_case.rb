@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 module DefaultTests1
+include Test::Unit::Assertions
 def test_case_pre_conditions
 	assert_equal([DefaultTests1], Module.nesting)
 	caller_message=" callers=#{caller.join("\n")}"
@@ -50,7 +51,6 @@ module DefaultTests2
 include DefaultTests1
 def test_class_assert_pre_conditions
 	model_class?.assert_pre_conditions
-	assert_equal(6, names_of_tests?.size, "#{names_of_tests?.sort}")
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_post_conditions
@@ -127,12 +127,18 @@ end #DefaultTests4
 class DefaultTestCase1 < TestCase # test file only
 #include DefaultAssertions
 #extend DefaultAssertions::ClassMethods
+def global_class_names
+	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
+end #global_class_names
 end #DefaultTestCase1
 
 class DefaultTestCase2 < DefaultTestCase1 # test and model files
 end #DefaultTestCase2
 
 class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
+def assertions_pathname?
+	"../assertions/"+model_name?+"_assertions.rb"
+end #assertions_pathname?
 end #DefaultTestCase3
 
 class DefaultTestCase < DefaultTestCase3# test, model, assertion, and assertion test files

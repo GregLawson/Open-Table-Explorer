@@ -26,6 +26,16 @@ end # class_assert_invariant
 end #ClassExists
 
 class ClassExistsTest < DefaultTestCase1
+def test_name_of_test
+	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
+	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
+end #name_of_test?
+def test_global_class_names
+	constants=Module.constants
+	assert_instance_of(Array, constants)
+	constants.select {|n| eval(n.to_s).instance_of?(Class)}
+	assert_include(global_class_names, self.class.name.to_sym)
+end #global_classes
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def test_case_assert_invariant
