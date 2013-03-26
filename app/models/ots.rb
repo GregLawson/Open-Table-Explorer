@@ -9,7 +9,17 @@ require_relative '../../app/models/no_db.rb'
 class OTS
 include NoDB
 extend NoDB::ClassMethods
-
+module Constants
+Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
+Delimiter='\s+'
+Type_pattern='(\?\?|0|;)'
+Description_pattern='([.]+)'
+Symbol_regexp=/#{Symbol_pattern}/
+Delimiter_regexp=/#{Symbol_pattern}#{Delimiter}/
+Type_regexp=/#{Symbol_pattern}#{Delimiter}#{Type_pattern}/
+Description_regexp=/^#{Symbol_pattern}#{Delimiter}#{Type_pattern}#{Delimiter}/
+Full_regexp=/#{Symbol_pattern}#{Delimiter}#{Type_pattern}#{Delimiter}#{Description_pattern}/
+end #Constants
 def self.all
 	IO.readlines('battery_types').map do |r| #map
 		symbol_pattern="[A-Z0-9?]+"
