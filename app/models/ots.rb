@@ -13,13 +13,11 @@ extend NoDB::ClassMethods
 def self.all
 	IO.readlines('battery_types').map do |r| #map
 		symbol_pattern="[A-Z0-9?]+"
-		matchData=/(#{symbol_pattern})\s+(??|0)\s+\{.+\}/.match(r)
+		matchData=/(#{symbol_pattern})\s+(\?\?|0)\s+\{(.+)\}/.match(r)
 		if matchData then
-			hash={:name => matchData[1], :type => matchData[2], :description => matchData[3]}
-			OTS.new(hash)
+			OTS.new(matchData[1..3], [:name, :type, :description], [String, String, String])
 		end #if
-		OTS.new(hash)
-	end #map
+	end.compact #map
 end #all
 module Assertions
 def assert_pre_conditions

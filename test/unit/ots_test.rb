@@ -18,20 +18,24 @@ def test_all
 	assert(File.exists?('test/data_sources'), Dir['../*'].inspect)
 	assert(File.exists?('test/data_sources'))
 	assert(File.exists?('test/data_sources/US_1040_template.txt'))
-	IO.readlines('test/data_sources/US_1040_template.txt').map do |r| #map
+	ret=IO.readlines('test/data_sources/US_1040_template.txt').map do |r| #map
 		symbol_pattern="[A-Z0-9?]+"
 		matchData=/#{symbol_pattern}/.match(r)
 		matchData=/(#{symbol_pattern})/.match(r)
 		matchData=/(#{symbol_pattern})\s+/.match(r)
 		matchData=/(#{symbol_pattern})\s+(0|\?\?)/.match(r)
-		matchData=/(#{symbol_pattern})\s+(\?\?|0)\s+\{.+\}/.match(r)
+		matchData=/(#{symbol_pattern})\s+(\?\?|0)\s+\{(.+)\}/.match(r)
 		if matchData then
 			hash={:name => matchData[1], :type => matchData[2], :description => matchData[3]}
-			OTS.new(hash)
-	#		assert_match(symbol_pattern, r)
+			assert_equal(3, matchData[1..3].size)
 			assert_match(/#{symbol_pattern}/, r)
 			assert_match(/^#{symbol_pattern}/, r)
+			name=matchData[1]
+			type=matchData[2]
+			description=matchData[3].strip
+			OTS.new([name, type, description], [:name, :type, :description], [String, String, String])
 		end #if
-	end #map
+	end.compact #map
+	assert_empty(ret, ret.inspect)
 end #all
 end #OTS
