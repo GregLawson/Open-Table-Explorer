@@ -1,8 +1,8 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
-# Copyright: See COPYING pathname that comes with this distribution
+# Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative 'test_environment'
