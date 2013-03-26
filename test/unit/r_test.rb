@@ -9,6 +9,10 @@ include DataFrames::Examples
 def test_initialize
 
 end #initialize
+def setup
+	Loopback.csv_import([:ain,:aout_value], Loopback_Filename)
+	Default_Session.eval('save.image()')
+end #setup
 def test_eval
 	rexp=Default_Session.eval('1+1')
 	assert_equal([2.0], rexp.as_doubles)
@@ -48,6 +52,18 @@ end #example
 def test_csv_import
 	Loopback.csv_import([:ain,:aout_value], Loopback_Filename)
 end #csv_import
+def test_show_plot
+	Default_Session.eval("plot(#{Loopback.r_symbol(:V7)},#{Loopback.r_symbol(:V8)})")
+end #
+def test_png_plot
+	Default_Session.eval("png(filename = \"test.png\")")
+	Default_Session.eval("png(filename = \"test.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\")")
+	Default_Session.eval("png(filename = \"test.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",  res = NA)")
+	Default_Session.eval("png(filename = \"test.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",type = c(\"cairo\", \"Xlib\", \"cairo1\", \"quartz\"))")
+	Default_Session.eval("png(filename = \"test.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",  res = NA,type = c(\"cairo\", \"Xlib\", \"cairo1\", \"quartz\"))")
+	Default_Session.eval("plot(#{x},#{y})")
+	Default_Session.eval("dev.off()")	
+end #
 def test_r_symbol
 	assert_equal("loopback$V8", Loopback.r_symbol(:V8))	
 end #r_symbol
@@ -59,12 +75,17 @@ def test_r_class_symbol
 end #r_class_symbol
 def test_variableSummary
 	var=:V8
-	summary=Default_Session.eval("summary(#{var})").as_doubles
+	summary=Default_Session.eval("summary(#{Loopback.r_symbol(var)})").as_doubles
 	assert_instance_of(Array, summary)	
-	assert_equal("", Loopback.variableSummary(:V9))	
+	assert_equal({:Min=>0.0, :Quartile1=>0.0, :Median=>148.0,:Mean=>95.11, :Quartile3=>184.0, :Max=>220.0}, Loopback.variableSummary(:V9))	
 end #variableSummary
+
 def test_pairSummary
+	
 end #pairSummary
+def test_glm(model)
+	Default_Session.eval("glm(V, data=loopback").as_doubles
+end #glm
 def test_loopback
 	con=RSession.new
 
@@ -76,6 +97,6 @@ def test_loopback
 	puts con.eval("tapply(loopback$V10,ain,summary)")
 	con.eval("rle(as.vector(ain))")
 	df=DataFrames.new(:loopback)
-	df.pairSummary('loopback$V9','loopback$V10')
+	df.pairSummary(:V9,:V10)
 end #test_loopback
 end #RSessionTest

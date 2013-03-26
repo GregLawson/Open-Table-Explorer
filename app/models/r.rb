@@ -3,28 +3,19 @@ require 'rserve'
 class RSession
 def initialize
 	@con=Rserve::Connection.new
+	@log=[]
 end #initialize
 def eval(r_code)
+	@log << r_code # Array of all expressions evaluated
 	@con.eval(r_code)
 rescue Rserve::Connection::EvalError => exception
-#	puts "\nr_code=#{r_code}"
-#	puts "exception.message=#{exception.message}"
-#	puts "exception.backtrace=#{exception.backtrace}"
-#	puts caller_lines
 	matchData=/status=error:'(.*)'/.match(exception.message)
-#	puts "/status=error:'(.*)'\(/.match(exception.message).inspect}=#{/status=error:(.*)/.match(exception.message).inspect}"
 	error_message=matchData[1]
-#	puts "error_message=#{error_message}"
-	message=build_message(nil, "\n? error while evaluating R expression ?\n", error_message, r_code)
+	message=build_message(nil, "\n? error while evaluating R expression ?\n#{@log.join("\n")}", error_message, r_code)
 	raise exception.exception(message) #quit on first error
 rescue StandardError => exception
-#	puts "\nr_code=#{r_code}"
-#	puts exception.inspect
-#	puts "exception.class.name=#{exception.class.name}"
-#	puts "exception.methods(false)=#{exception.methods(false)}"
-#	puts "exception.class.methods(false)=#{exception.class.methods(false)}"
 	message=build_message(nil, "\n? error while evaluating R expression ?\n", exception.message, r_code)
-	raise exception(message) #don't know anything about
+	raise exception.exception(message) #don't know anything about
 ensure
 end #eval
 def assign(variable, r_code)
@@ -68,7 +59,7 @@ def initialize(name, session=RSession::Default_Session)
 	@session=session
 end #initialize
 def csv_import(name_order, filename=@name.to_s+'.csv', sep=',')
-	@session.eval("loopback<-read.table('#{filename}',sep='#{sep}',fill=TRUE)")
+	@session.eval("#{@name}<-read.table('#{filename}',sep='#{sep}',fill=TRUE)")
 end #csv_import
 def psqlExport(tableName=@name)
 	#sql="COPY #{tableName} TO '#{tableName}.csv' WITH CSV HEADER "
@@ -85,26 +76,36 @@ def importRelation(tableName=@name)
 #	puts @r.foo.size
 #	puts @r.read_csv("/tmp/#{tableName}.csv")
 end
-def plot(x,y, tableName=@name)
-	@session.eval("png(filename = \"#{tableName}.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",  res = NA,type = c(\"cairo\", \"Xlib\", \"cairo1\", \"quartz\"))")
-	@session.eval("plot(#{x},#{y})")
-	@session.eval("dev.off()")
-end #plot
+def show_plot(x,y)
+	@session.eval("plot(#{r_symbol(x)},#{r_symbol(y)})")
+end #show_plot
+def png_plot(x,y)
+	@session.eval("png(filename = \"#{@name}.png\",width = 480, height = 480, units = \"px\", pointsize = 12, bg = \"white\",  res = NA,type = c(\"cairo\", \"Xlib\", \"cairo-png\", \"quartz\"))")
+	show_plot(x,y)
+	@session.eval("dev.off()")	
+end #png_plot
+
 def r_symbol(field=:V0)
 	"#{@name}$#{field}"
 end #r_symbol
 def r_class_symbol(field=:V0)
 	var="#{@name}$#{field}"
-	Default_Session.eval("class(#{var})").as_strings[0]
+	@session.eval("class(#{var})").as_strings[0]
 end #r_class_symbol
 def variableSummary(var, tableName=@name)
-	"#{var} "+@session.eval("class(#{var})")+@session.eval("summary(#{var})")
+	ret={}
+	statistics=@session.eval("summary(#{r_symbol(var)})").as_doubles
+	ret[:Min], ret[:Quartile1], ret[:Median], ret[:Mean], ret[:Quartile3], ret[:Max]=statistics
+	ret
 end #variableSummary
 def pairSummary(x,y)
 	variableSummary(x)
 	variableSummary(y)
-	plot(x,y)
+	show_plot(x,y)
 end #pairSummary
+def glm(model)
+	@session.eval("glm(#model}, data=#{@name}").as_doubles
+end #glm
 module Examples
 Loopback_Filename='/tmp/loopback4.csv'
 Loopback=DataFrames.new(:loopback)
