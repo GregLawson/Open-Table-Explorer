@@ -454,7 +454,7 @@ end #ClassMethods
 DEFAULT_TYPE=String
 def initialize(values=nil, names=nil, types=nil)
 	if values.nil? then
-		@attributes=ActiveSupport::HashWithIndifferentAccess.new
+		@attributes=Hash.new
 		@types={}
 	elsif values.instance_of?(Array) then
 		if names.instance_of?(Array) then
