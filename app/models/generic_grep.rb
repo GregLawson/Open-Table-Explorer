@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/global.rb'
+#require 'app/models/global.rb'
 class String
 # Low level single line match. Called by nested_grep
 def single_grep(context, pattern)
