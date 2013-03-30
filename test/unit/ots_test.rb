@@ -35,14 +35,7 @@ def test_parse
 	assert_match(/#{Type_pattern}/, ' 0 ')
 	assert_match(/#{Type_pattern}/, ' ?? ')
 	assert_match(/#{Type_pattern}/, ' ; ')
-	acquisition='L ?? {e}'
-	acquisition='L 0 {e}'
-	acquisition='L ; {e}'
-	acquisition=" A28            ;       { Other deductions, listed on Sched-A page A-6.}\n"
-	acquisition="L            0       { Other deductions, listed on Sched-A page A-6.}\n"
-	acquisition="L            ;       { Other deductions, listed on Sched-A page A-6.}\n"
-	acquisition="L                   { Other deductions, listed on Sched-A page A-6.}\n"
-	acquisition="L            ??       { Other deductions, listed on Sched-A page A-6.}\n"
+	acquisition="L            ??       { e}\n"
 
 	matchData=Symbol_regexp.match(acquisition)
 	assert_equal('L',matchData[1])
@@ -51,28 +44,21 @@ def test_parse
 	assert_equal('L',matchData[1])
 
 	matchData=Description_regexp.match(acquisition)
-#	assert_equal('e',matchData[-1])
+	assert_equal(' e',matchData[-1])
 
 	matchData=Full_regexp.match(acquisition)
 	assert_equal(12, matchData.size, matchData.inspect)
 	assert_equal('L',matchData[1])
-#except	assert_equal(matchData[2], matchData[3] || matchData[5] || matchData[7] , matchData.inspect)
+	assert_equal(matchData[2], matchData[3] || matchData[5] || matchData[7] , matchData.inspect)
 	assert_equal('0', md=Full_regexp.match('L 0 {e}')[6], md.inspect)
 	type=matchData[10] || matchData[4] || matchData[6] || matchData[8]
-#except	assert_include(['??', ';', '0'],type, matchData.inspect)
-	matchMap=[matchData[2].nil?, matchData[4].nil?, matchData[6].nil?, matchData[8].nil?]
-	case matchMap
-	when [false, false, true, true] then assert_equal('??', matchData[4], matchData.inspect)
-	when [false, true, false, true] then assert_equal('0', matchData[6], matchData.inspect)
-	when [false, true, true, false] then assert_equal(';', matchData[8], matchData.inspect)
-	when [false, true, true, true] then assert_match(/\s+/, matchData[2], matchData.inspect)
-	else
-		fail matchMap.inspect
-	end #case
+	assert_include(['??', ';', '0'],type, matchData.inspect)
+
+	OTS.assert_full_match(acquisition)
 	ios=OTS.parse(acquisition, Full_regexp)
 	assert_equal('L',ios[:name])
 	assert_equal('??', ios[:type])
-	assert_equal(' Other deductions, listed on Sched-A page A-6.',ios[:description])
+	assert_equal('e',ios[:description])
 	
 end #parse
 def test_raw_acquisitions

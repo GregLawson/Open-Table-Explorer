@@ -22,8 +22,8 @@ end #Constants
 def self.parse(acquisition, pattern=Full_regexp) #acquisition=next
 	matchData=pattern.match(acquisition)
 	name=matchData[1]
-	type=matchData[4] || matchData[6] || matchData[8] || matchData[2] # 
-	description=matchData[-1] #.strip
+	type=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
+	description=matchData[-1].strip
 	OTS.new([name, type, description], [:name, :type, :description], [String, String, String])
 end #parse
 def self.raw_acquisitions
