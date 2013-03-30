@@ -57,6 +57,9 @@ def test_inspect
 	assert_equal(inspect_string, RegexpParse.new('.*').inspect)
 	assert_equal(inspect_string, Dot_star_parse.inspect)
 end #inspect
+def test_regexp_error
+	assert_nothing_raised{RegexpParse.regexp_error('(')}
+end #regexp_error
 def test_equal_operator
 	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')

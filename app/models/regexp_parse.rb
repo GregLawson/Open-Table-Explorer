@@ -18,7 +18,7 @@ PostfixOperators='+*?|'
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 end #Constants
 include Constants
-def initialize(regexp_string)
+def initialize(regexp_string, options=Default_options)
 	@tokenIndex=-1 # start at end
 	if regexp_string.kind_of?(RegexpParse) then
 		@parse_tree=NestedArray.new(regexp_string.parse_tree)
@@ -43,6 +43,20 @@ end #initialize
 def inspect
 	"@regexp_string=\"#{@regexp_string}\", @parse_tree=#{@parse_tree.inspect}, @tokenIndex=#{@tokenIndex.inspect}"
 end #inspect
+# Rescue bad regexp and return nil
+# Example regexp with unbalanced bracketing characters
+def RegexpParse.regexp_rescued(regexp_string, options=Default_options)
+	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
+	return Regexp.new(regexp_string, options)
+rescue RegexpError
+	return nil
+end #regexp_rescued
+def RegexpParse.regexp_error(regexp_string, options=Default_options)
+	raise "expecting regexp_string=#{regexp_string.inspect}" unless regexp_string.instance_of?(String)
+	return Regexp.new(regexp_string, options)
+rescue RegexpError => exception
+	return exception
+end #regexp_error
 def ==(rhs)
 	if self.parse_tree==rhs.parse_tree then
 		return true

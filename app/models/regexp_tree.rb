@@ -13,10 +13,9 @@ require_relative 'regexp_parse.rb'
 #require_relative 'regexp_sequence.rb'
 class RegexpTree < NestedArray
 include Comparable
-Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 #raise "" unless self.constants.include?('Default_options')
 # Parse regexp_string into parse tree for editing
-def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Default_options)
+def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=RegexpParse::Default_options)
 	if regexp.kind_of?(Array) then #nested Arrays
 		super(regexp)
 		
@@ -167,27 +166,12 @@ end #grep
 def to_s
 	to_a.join
 end #to_s
-def to_regexp(options=Default_options)
+def to_regexp(options=RegexpParse::Default_options)
 	regexp_string=to_s
-	regexp=RegexpTree.regexp_rescued(regexp_string, options)
+	regexp=RegexpParse.regexp_rescued(regexp_string, options)
 
 	return regexp
 end #to_regexp
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
-# Rescue bad regexp and return nil
-# Example regexp with unbalanced bracketing characters
-def RegexpTree.regexp_rescued(regexp_string, options=Default_options)
-	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
-	return Regexp.new(regexp_string, options)
-rescue RegexpError
-	return nil
-end #regexp_rescued
-def regexp_error(regexp_string, options=Default_options)
-	return Regexp.new(regexp_string, options)
-rescue RegexpError => exception
-	return exception
-end #regexp_error
-# returns pair of min and end repetitions of a RegexpTree
-# end can be nil to signify unlimited repetitions
 end #RegexpTree
