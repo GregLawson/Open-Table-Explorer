@@ -12,71 +12,146 @@ require_relative '../assertions/regexp_parse_assertions.rb'
 class OTSTest < DefaultTestCase2
 include DefaultTests2
 include OTS::Constants
+include OTS::Examples
+def test_CLASS_constants
+	assert_match(/#{Symbol_pattern}/, Simple_acquisition)
+	assert_match(/#{Delimiter}/, Simple_acquisition)
+	assert_match(/#{Type_pattern}/, Simple_acquisition)
+	assert_match(/#{Description_pattern}/, Simple_acquisition)
+	assert_match(Symbol_regexp, Simple_acquisition)
+	assert_match(Type_regexp, Simple_acquisition)
+	assert_match(Description_regexp, Simple_acquisition)
+	assert_match(Full_regexp, Simple_acquisition)
+	OTS.assert_post_conditions
+end #Constants
 def test_initialize
 	assert_not_nil(OTS.new)
 end #initialize
-def test_all
-	assert(File.exists?('..'))
-	assert(File.exists?('test/data_sources'), Dir['../*'].inspect)
-	assert(File.exists?('test/data_sources'))
-	assert(File.exists?('test/data_sources/US_1040_template.txt'))
+def test_parse
 	assert_match(/(;)/, ';')
 	assert_match(/(\?\?|0|;)/, '0')
 	assert_match(/(\?\?|0|;)/, ';')
 	assert_match(/(\?\?|0|;)/, '??')
-	assert_match(/#{Type_pattern}/, '0')
-	assert_match(/#{Type_pattern}/, '0')
-	assert_match(/#{Type_pattern}/, '??')
-	assert_match(/#{Type_pattern}/, ';')
-	ret=IO.readlines('test/data_sources/US_1040_template.txt').map do |r| #map
+	assert_match(/#{Type_pattern}/, ' 0 ')
+	assert_match(/#{Type_pattern}/, ' ?? ')
+	assert_match(/#{Type_pattern}/, ' ; ')
+	acquisition='L ?? {e}'
+	acquisition='L 0 {e}'
+	acquisition='L ; {e}'
+	acquisition=" A28            ;       { Other deductions, listed on Sched-A page A-6.}\n"
+	acquisition="L            0       { Other deductions, listed on Sched-A page A-6.}\n"
+	acquisition="L            ;       { Other deductions, listed on Sched-A page A-6.}\n"
+	acquisition="L                   { Other deductions, listed on Sched-A page A-6.}\n"
+	acquisition="L            ??       { Other deductions, listed on Sched-A page A-6.}\n"
+
+	matchData=Symbol_regexp.match(acquisition)
+	assert_equal('L',matchData[1])
+
+	matchData=Type_regexp.match(acquisition)
+	assert_equal('L',matchData[1])
+
+	matchData=Description_regexp.match(acquisition)
+#	assert_equal('e',matchData[-1])
+
+	matchData=Full_regexp.match(acquisition)
+	assert_equal(12, matchData.size, matchData.inspect)
+	assert_equal('L',matchData[1])
+#except	assert_equal(matchData[2], matchData[3] || matchData[5] || matchData[7] , matchData.inspect)
+	assert_equal('0', md=Full_regexp.match('L 0 {e}')[6], md.inspect)
+	type=matchData[10] || matchData[4] || matchData[6] || matchData[8]
+#except	assert_include(['??', ';', '0'],type, matchData.inspect)
+	matchMap=[matchData[2].nil?, matchData[4].nil?, matchData[6].nil?, matchData[8].nil?]
+	case matchMap
+	when [false, false, true, true] then assert_equal('??', matchData[4], matchData.inspect)
+	when [false, true, false, true] then assert_equal('0', matchData[6], matchData.inspect)
+	when [false, true, true, false] then assert_equal(';', matchData[8], matchData.inspect)
+	when [false, true, true, true] then assert_match(/\s+/, matchData[2], matchData.inspect)
+	else
+		fail matchMap.inspect
+	end #case
+	ios=OTS.parse(acquisition, Full_regexp)
+	assert_equal('L',ios[:name])
+	assert_equal('??', ios[:type])
+	assert_equal(' Other deductions, listed on Sched-A page A-6.',ios[:description])
+	
+end #parse
+def test_raw_acquisitions
+	assert(File.exists?('..'))
+	assert(File.exists?('test/data_sources'), Dir['../*'].inspect)
+	assert(File.exists?('test/data_sources/US_1040_template.txt'))
+	assert_equal(115, OTS.raw_acquisitions.size)
+end #raw_acquisitions
+def test_coarse_filter
+	assert_not_empty(OTS.coarse_filter.compact, OTS.coarse_filter.inspect)
+	assert_operator(84, :==, OTS.coarse_filter.size, OTS.coarse_filter.inspect)
+end #coarse_filter
+def test_coarse_rejections
+	OTS.coarse_rejections.each do |acquisition|
+		puts acquisition if Type_regexp.match(acquisition) 
+		puts acquisition if Description_regexp.match(acquisition)
+	end #select
+	assert_operator(31, :==, OTS.coarse_rejections.size, OTS.coarse_rejections.inspect)
+end #coarse_rejections
+def test_all
+	ret=OTS.coarse_filter.map do |r| #map
 		matchData=Full_regexp.match(r)
 		matchData3=Symbol_pattern.match(r)
-		matchData2=Delimiter_regexp.match(r)
-		matchData1=Type_regexp.match(r)
-		matchData0=Description_regexp.match(r)
-		if matchData then
+		type_matchData=Type_regexp.match(r)
+		description_match_data=Description_regexp.match(r)
+		full_match=matchData.nil? ? nil : !matchData[1].nil? && matchData[-1].nil?
+		puts "full_match.inspect=#{full_match.inspect}"
+		if full_match then
 			hash={:name => matchData[1], :type => matchData[2], :description => matchData[3]}
-			assert_equal(3, matchData[1..3].size)
-			assert_match(/#{Symbol_pattern}/, r)
-			assert_match(/^#{Symbol_pattern}/, r)
+			assert_match(/#{Symbol_pattern}/, r, matchData.inspect+r)
 			name=matchData[1]
 			type=matchData[2]
-			description=matchData[3].strip
+			description=matchData[-1] #.strip
 			ots=OTS.new([name, type, description], [:name, :type, :description], [String, String, String])
-		elsif matchData0 then
-			puts "Description_regexp"+matchData0.inspect+r
-			rest=matchData2.post_match
-			badMatch=/#{Description_pattern}/.match(rest)
-			puts "badMatch="+badMatch.inspect
-			assert_match(/\{/, rest)
-			assert_match(/\{(.+)\}/, rest)
-			assert_match(/\{([.]+)\}/, rest)
-		elsif matchData1 then
-			assert(matchData1, matchData2.inspect)
-			puts "Type_regexp"+r
-		elsif matchData2 then
-			rest=matchData2.post_match
+		elsif type_matchData then
+			rest=type_matchData.post_match
 			badMatch=/#{Type_pattern}/.match(rest)
 			puts "/0|;/.match(rest[0])=#{/0|;/.match(rest[0]).inspect}"
 			puts "/#{Type_pattern}/.match(rest[0])=#{/#{Type_pattern}/.match(rest[0]).inspect}"
 			puts "/#{Type_pattern}/.match(rest)=#{/#{Type_pattern}/.match(rest).inspect}"
-			assert(matchData2, matchData3.inspect)
-			puts "Delimiter_regexp: matchData2=#{matchData2.inspect}\nmatchData2.post_match=#{matchData2.post_match.inspect}\n#{r.inspect}"
+			assert(type_matchData, matchData3.inspect)
+			puts "Delimiter_regexp: type_matchData=#{type_matchData.inspect}\ntype_matchData.post_match=#{type_matchData.post_match.inspect}\n#{r.inspect}"
 			
 			puts "Full_regexp matchData=#{matchData.inspect}"
 			puts "Delimiter_regexp matchData3=#{matchData3.inspect}"
-			puts "matchData2=#{matchData2.inspect}"
-			puts "matchData1=#{matchData1.inspect}"
-			puts "matchData0=#{matchData0.inspect}"
+			puts "type_matchData=#{type_matchData.inspect}"
+			puts "type_matchData=#{type_matchData.inspect}"
+			puts "description_match_data=#{description_match_data.inspect}"
+			rest=description_match_data.post_match
+			badMatch=/#{Description_pattern}/.match(rest)
+			puts "badMatch="+badMatch.inspect
 
 		elsif matchData3 then
 			assert(matchData3, r.inspect)
 			puts "Symbol_pattern"+r
+		elsif description_match_data then
+			puts "Description_regexp"+description_match_data.inspect+r
 		else
 #			puts r
 		end #if
-		ots
-	end.compact #map
-	assert_empty(ret, ret.inspect)
+		matchData ? ots : r
+	end #map
+	assert_not_empty(ret.compact, ret.inspect)
+	assert_operator(84, :==, ret.size, ret.inspect)
 end #all
+def test_assert_full_match
+	OTS.assert_full_match(" A28            ;       { Other deductions, listed on Sched-A page A-6.}\n")
+	OTS.assert_full_match("L            0       { Other deductions, listed on Sched-A page A-6.}\n")
+	OTS.assert_full_match("L            ;       { Other deductions, listed on Sched-A page A-6.}\n")
+	OTS.assert_full_match("L            ??       { Other deductions, listed on Sched-A page A-6.}\n")
+	OTS.assert_full_match("L                   { Other deductions, listed on Sched-A page A-6.}\n")
+	OTS.assert_full_match('L ?? {e}')
+	OTS.assert_full_match('L 0 {e}')
+	OTS.assert_full_match('L ; {e}')
+	
+	OTS.assert_full_match("L            ;       { Other deductions, listed on Sched-A page A-6.}\n")
+	OTS.assert_full_match('L ; {e}')
+	OTS.assert_full_match('L ?? {e}')
+	OTS.assert_full_match('L  {e}')	
+
+end #assert_full_match
 end #OTS
