@@ -10,6 +10,7 @@ require_relative '../../app/models/generic_table_html.rb' # in test_helper?
 require_relative '../../app/models/generic_grep.rb' # in test_helper?
 require_relative '../../app/models/column_group.rb'
 require 'yaml'
+require 'active_support/all'
 # Methods in common bettween ActiveRecord::Base and NoDB
 module Common
 #require 'app/models/IncludeModuleClassMethods.rb'
@@ -424,14 +425,7 @@ def default_names(values_or_size, prefix='Col_')
 	Array.new(size) {|i| prefix+i.to_s}
 end #default_names
 def insert_sql(record)
-	values=record.values.map do |value|
-		if value.instance_of?(String) then
-			"'"+value.to_s+"'"
-		else
-			value
-		end #if
-	end #map
-	return "INSERT INTO #{self.table_name}(#{get_field_names.join(',')}) VALUES(#{values.join(',')});\n"
+	record.insert_sql
 end #insert_sql
 def dump
 	all.map do |record|
@@ -499,5 +493,15 @@ def each_pair(&block)
 		block.call(key, value)
 	end #each_pair
 end #each_pair
+def insert_sql
+	value_strings=@attributes.values.map do |value|
+		if value.instance_of?(String) then
+			"'"+value.to_s+"'"
+		else
+			value
+		end #if
+	end #map
+	return "INSERT INTO #{self.table_name}(#{self.class.get_field_names.join(',')}) VALUES(#{value_strings.join(',')});\n"
+end #insert_sql
 end #NoDB
 

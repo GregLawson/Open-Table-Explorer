@@ -213,16 +213,16 @@ def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
 		message+='expect to pass'
-	elsif obj.respond_to?(methodName.to_s.singularize) then
-		message+="but singular #{methodName.to_s.singularize} is a method"
-	elsif obj.respond_to?(methodName.to_s.pluralize) then
-		message+="but plural #{methodName.to_s.pluralize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize) then
-		message+="but tableize #{methodName.to_s.tableize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
-		message+="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
-	else
-		message+="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.singularize) then
+#		message+="but singular #{methodName.to_s.singularize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.pluralize) then
+#		message+="but plural #{methodName.to_s.pluralize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.tableize) then
+#		message+="but tableize #{methodName.to_s.tableize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
+#		message+="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
+#	else
+#		message+="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #assert_public_instance_method
@@ -260,14 +260,12 @@ def assert_module_included(klass,moduleName)
     		klass.module_included?(moduleName)
 	end #assert_block
 end #assert_module_included
-def assert_scope_path(names)
+def global_name?(name)
+	Module.constants.include?(name)
+end #global_name
+def assert_scope_path(*names)
 	assert_not_empty(names)
-#	puts "*names=#{names.inspect}"
-	global_names=names.map do |name|
-		Module.constants.include?(name)
-	end #each
-	if global_names[0] then
-	else
+	if !global_name?(names[0]) then
 		names=[self.class.name.to_sym]+names
 #		puts "after adding self, names=#{names.inspect}"
 	end #if
@@ -289,7 +287,7 @@ def assert_scope_path(names)
 	return names # with inserted local module
 end #assert_scope_path
 def assert_path_to_constant(*names)
-	context=assert_scope_path(names[0..-2])
+	context=assert_scope_path(*names[0..-2]) #splat 
 	constant_name=names[-1..-1]
 	names=context+constant_name
 	path=names.join('::')
@@ -310,7 +308,7 @@ def assert_constant_path_respond_to(*names)
 		else
 		end #if
 	else
-		context=assert_scope_path(names[0..-2])
+		context=assert_scope_path(*names[0..-2])
 		path=eval(context.join('::'))
 		method_name=names[-1]
 		message="names=#{names.inspect}, path=#{path.inspect}"
@@ -326,7 +324,7 @@ def assert_constant_instance_respond_to(*names)
 		else
 		end #if
 	else
-		context=assert_scope_path(names[0..-2])
+		context=assert_scope_path(*names[0..-2])
 		path=eval(context.join('::'))
 		method_name=names[-1]
 		message="names=#{names.inspect}, path=#{path.inspect}"

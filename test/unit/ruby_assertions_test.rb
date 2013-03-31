@@ -159,13 +159,18 @@ end #assert_regexp
 def test_assert_module_included
 	assert_module_included(RubyAssertionsTest, Test::Unit::Assertions)
 end #assert_module_included
+def test_global_name
+	assert(global_name?(:String), Module.constants.inspect)
+	assert(global_name?(:RubyAssertionsTest), Module.constants.inspect)
+	assert(global_name?(:DefaultAssertions), Module.constants.inspect)
+end #global_name
 def test_assert_scope_path
-	assert_scope_path([:RubyAssertionsTest, :TestClass])
-	assert_scope_path([:TestClass])
+	assert_scope_path(:RubyAssertionsTest, :TestClass)
+	assert_scope_path(:TestClass)
 end #assert_scope_path
 def test_assert_path_to_constant
-	assert_path_to_constant(:RubyAssertionsTest, :TestClass, :TestConstant)
-	assert_path_to_constant(:TestClass, :TestConstant)
+	assert_path_to_constant(:RubyAssertionsTest, :TestClass, :TestConstant) #global path
+	assert_path_to_constant(:TestClass, :TestConstant) #relative path
 end #assert_path_to_constant
 def test_assert_constant_path_respond_to
 	assert_constant_path_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
@@ -175,6 +180,8 @@ end #assert_constant_path_respond_to
 def test_assert_constant_instance_respond_to
 	assert_constant_path_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
 	assert_constant_path_respond_to(:TestClass, :test_class_method)
+	assert_scope_path(:DefaultAssertions, :ClassMethods)
+	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
 end #assert_constant_instance_respond_to
 end #RubyAssertionsTest
 
