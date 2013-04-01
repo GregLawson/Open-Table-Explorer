@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
-class OTS
+class OpenTaxSolver
 include NoDB
 extend NoDB::ClassMethods
 module Constants
@@ -28,7 +28,7 @@ def self.parse(acquisition, pattern=Full_regexp) #acquisition=next
 	name=matchData[1]
 	type=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
 	description=matchData[-1].strip
-	OTS.new([name, type, description], [:name, :type, :description], [String, String, String])
+	OpenTaxSolver.new([name, type, description], [:name, :type_chars, :description], [String, String, String])
 end #parse
 def self.raw_acquisitions
 	IO.readlines('test/data_sources/US_1040_template.txt')
@@ -69,7 +69,7 @@ module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_pre_conditions
-		assert_instance_of(OTS, self)
+		assert_instance_of(OpenTaxSolver, self)
 		assert_instance_of(Hash, self.attributes)
 		assert_respond_to(self.attributes, :values)
 		assert_scope_path(:DefaultAssertions, :ClassMethods)
@@ -82,8 +82,8 @@ def assert_pre_conditions
 		assert_instance_of(Array, attributes.values)
 end #assert_pre_conditions
 module ClassMethods
-include OTS::Constants
-include OTS::Examples
+include OpenTaxSolver::Constants
+include OpenTaxSolver::Examples
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
@@ -96,7 +96,7 @@ end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
 	Examples.constants.each do |name|
-		example_acquisition=OTS.value_of_example?(name)
+		example_acquisition=OpenTaxSolver.value_of_example?(name)
 		assert_match(/#{Symbol_pattern}/, example_acquisition)
 		assert_match(/#{Delimiter}/, example_acquisition)
 		assert_match(/#{Type_pattern}/, example_acquisition)
@@ -134,7 +134,7 @@ def assert_full_match(acquisition)
 			if capture_kind[i].instance_of?(String) then
 				case alternatives[i] <=> nesting.size
 				when +1	then nesting.push(match_index)
-				when 0 then puts "no push or pop nesting=#{nesting.inspect}"
+				when 0 then #puts "no push or pop nesting=#{nesting.inspect}"
 				when -1 then nesting.pop
 				else
 					fail nesting.inspect
@@ -186,5 +186,5 @@ include Assertions
 include Examples
 include Constants
 extend Assertions::ClassMethods
-end #OTS
+end #OpenTaxSolver
 

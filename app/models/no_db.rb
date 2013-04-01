@@ -429,7 +429,7 @@ def insert_sql(record)
 end #insert_sql
 def dump
 	all.map do |record|
-		values=insert_sql(record)
+		record.insert_sql
 	end #map
 end #dump
 def data_source_yaml(yaml_table_name=table_name)
@@ -496,7 +496,7 @@ end #each_pair
 def insert_sql
 	value_strings=@attributes.values.map do |value|
 		if value.instance_of?(String) then
-			"'"+value.to_s+"'"
+			value.inspect
 		else
 			value
 		end #if
