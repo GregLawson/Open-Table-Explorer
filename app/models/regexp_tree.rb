@@ -30,6 +30,7 @@ def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Regex
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
 	@probability_space_regexp=probability_space_regexp
+	@errors=[RegexpParse.regexp_error(regexp.to_s, options)]
 #	@anchor=Anchoring.new(self) infinite recursion
 end #initialize
 def RegexpTree.promote(node)
@@ -50,9 +51,9 @@ def RegexpTree.promote(node)
 end #RegexpTree.promote
 def self.canonical_regexp(regexp)
 	if regexp.instance_of?(String) then
-		regexp=RegexpTree.regexp_rescued(regexp)
+		regexp=RegexpParse.regexp_rescued(regexp)
 	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=RegexpTree.regexp_rescued(regexp.to_s)
+		regexp=RegexpParse.regexp_rescued(regexp.to_s)
 	elsif regexp.nil? then
 		return //
 	elsif !regexp.instance_of?(Regexp) then
