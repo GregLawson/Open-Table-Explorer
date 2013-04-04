@@ -18,6 +18,7 @@ attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
 # better explanation needed here, see tests.
 # Class methods
 # Rescue bad regexp and return nil
+# Good regexp returns MatchData type or nil for no match
 def RegexpMatch.match_data?(regexp, string_to_match)
 	regexp=canonical_regexp(regexp)
 	raise "string_to_match='#{string_to_match.inspect}' of class #{string_to_match.class.name} must be String." unless string_to_match.instance_of?(String)
@@ -51,6 +52,15 @@ def initialize(regexp_tree,dataToParse)
 		@match_data=@regexp_tree.to_regexp.match(@dataToParse)
 	end #if
 end #initialize
+def force
+	force_match=clone
+	if modification.match_data.nil? then
+#		force_match.regexp_tree=RegexpAlternative.new(@regexp_tree, @dataToParse.to_exact_regexp)
+		force_match.regexp_tree=RegexpParse.new(@regexp_tree.to_s+'|'+ @dataToParse.to_exact_regexp.to_s)
+	else
+	end #if
+	force_match
+end #force
 def ==(other)
 	@regexp_tree=other.regexp_tree && @dataToParse=other.dataToParse
 end #==
@@ -199,4 +209,43 @@ def consecutiveMatch(increment=+1, start_limit=0, end_limit=self.size-1)
 		return lastMatch
 	end #if
 end #consecutiveMatch
+module Assertions
+def assert_pre_conditions
+	assert_instance_of(Class, self)
+end #assert_pre_conditions
+end #Assertions
+require_relative '../../test/assertions/default_assertions.rb'
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
+module Examples #  Namespace
+#include Constants
+#Digit=GenericType.find_by_name('digit')
+#Lower=GenericType.find_by_name('lower')
+string1='a'
+string2='b'
+Alternative=RegexpMatch.new(string1, string2)
+Matches=RegexpMatch.new(string1, string1)
+string1=%{<Url:0xb5f22960>}
+string2=%{<Url:0xb5ce4e3c>}
+Addresses=RegexpMatch.new(string1, string2)
+Deletion=RegexpMatch.new('KxC', 'KC')
+Insertion=RegexpMatch.new('KC', 'KxC')
+
+WhiteSpacePattern=' '
+WhiteSpace=' '
+White_Match=RegexpMatch.new(WhiteSpacePattern,WhiteSpace)	
+
+Keditor=RegexpMatch.new('K','K')
+RowsRegexp='(<tr.*</tr>)'
+Rows_Match=RegexpMatch.new(RowsRegexp,'')
+RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
+  <td height=14 class=xl33 width=39>&nbsp;</td>
+  <td class=xl32 width=68>Date</td>
+  <td class=xl33 width=106>Time</td>
+  <td class=xl33 width=60>Series</td>
+  <td class=xl33 width=54>Show #</td>
+  <td class=xl33 width=200>Title</td>
+ </tr>')
+#Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
+end #Examples
 end #RegexpMatch
