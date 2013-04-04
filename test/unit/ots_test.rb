@@ -80,13 +80,14 @@ def test_all
 		if matchData then
 			OpenTaxSolver.assert_full_match(r)
 			ios=OpenTaxSolver.parse(r, Full_regexp)
+			ios[:tax_year]=Default_tax_year
 		else
 			nil
 		end #if
 	end.compact #select
 	assert_not_empty(ret.compact, ret.inspect)
 	assert_operator(84, :==, OpenTaxSolver.all.size, OpenTaxSolver.fine_rejections.inspect)
-	OpenTaxSolver.all.each do |ots|
+	OpenTaxSolver.all(Default_tax_year).each do |ots|
 		assert_instance_of(OpenTaxSolver, ots)
 		assert_instance_of(Hash, ots.attributes)
 		assert_respond_to(ots.attributes, :values)

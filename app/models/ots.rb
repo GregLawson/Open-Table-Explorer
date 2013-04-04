@@ -10,6 +10,8 @@ class OpenTaxSolver
 include NoDB
 extend NoDB::ClassMethods
 module Constants
+Default_tax_year=2012
+Open_tax_solver_directory="#{Default_tax_year}"
 Data_source_directory='test/data_sources'
 OTS_template_filename="#{Data_source_directory}/US_1040_template.txt"
 OTS_SQL_dump_filename="#{Data_source_directory}/OTS_SQL_dump.sql"
@@ -43,11 +45,13 @@ def self.coarse_rejections
 		!(Type_regexp.match(acquisition) && Description_regexp.match(acquisition))
 	end #select
 end #coarse_rejections
-def self.all
+def self.all(tax_year=Default_tax_year)
 	coarse_filter.map do |r| #map
 		matchData=Full_regexp.match(r)
 		if matchData then
 			ios=parse(r, Full_regexp)
+			ios[:yax_year]=tax_year
+			ios
 		else
 			nil
 		end #if
