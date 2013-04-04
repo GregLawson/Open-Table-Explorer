@@ -9,12 +9,21 @@
 require_relative '../../app/models/regexp_tree.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 class RegexpTree
-require_relative '../assertions/default_assertions.rb'
+#require_relative '../assertions/default_assertions.rb'
 module Assertions
 # Assertions (validations)
 include Test::Unit::Assertions
 #require 'rails/test_help'
 module ClassMethods
+def assert_pre_conditions
+	assert_equal(Object, superclass)
+end #assert_pre_conditions
+def def assert_post_conditions
+	assert_include(instance_methods, :[])
+	assert_include(instance_methods, :+)
+	assert_include(instance_methods, :|)
+	assert_include(instance_methods, :*)
+end #assert_post_conditions
 end #ClassMethods
 def assert_anchoring
 	anchoring=Anchoring.new(self)
