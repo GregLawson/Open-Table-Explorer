@@ -10,7 +10,7 @@ require_relative 'nested_array.rb'
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
-attr_reader :regexp_string,:tokenIndex,:parse_tree
+attr_reader :regexp_string,:tokenIndex,:parse_tree, :errors
 module Constants
 OpeningBrackets='({['
 ClosingBrackets=')}]'
@@ -22,18 +22,22 @@ def initialize(regexp_string, options=Default_options)
 	@tokenIndex=-1 # start at end
 	if regexp_string.kind_of?(RegexpParse) then
 		@parse_tree=NestedArray.new(regexp_string.parse_tree)
-		@regexp_string=regexp_string.to_s	
+		@regexp_string=regexp_string.to_s
+		@errors=regexp_string.errors	
 	elsif regexp_string.kind_of?(Array) then
 		@parse_tree=NestedArray.new(regexp_string)
 		@regexp_string=regexp_string.join	
+		@errors=RegexpParse.regexp_error(@regexp_string, options)
 	elsif regexp_string.kind_of?(String) then
 		@regexp_string=regexp_string
 		restartParse!
 		@parse_tree=regexpTree!
+		@errors=RegexpParse.regexp_error(@regexp_string, options)
 	elsif regexp_string.kind_of?(Regexp) then
 		@regexp_string=regexp_string.source
 		restartParse!
 		@parse_tree=regexpTree!
+		@errors=RegexpParse.regexp_error(@regexp_string, options)
 	else # unexpected
 		raise "unexpected type regexp_string=#{regexp_string} of type #{regexp_string.class.name}"
 	
@@ -57,6 +61,7 @@ def RegexpParse.regexp_error(regexp_string, options=Default_options)
 rescue RegexpError => exception
 	return exception
 end #regexp_error
+
 def ==(rhs)
 	if self.parse_tree==rhs.parse_tree then
 		return true
