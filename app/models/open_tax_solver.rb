@@ -10,11 +10,11 @@ class OpenTaxSolver
 include NoDB
 extend NoDB::ClassMethods
 module Constants
-Default_tax_year=2012
-Open_tax_solver_directory="#{Default_tax_year}"
+Default_tax_year=2011
+Open_tax_solver_directory="../OpenTaxSolver#{Default_tax_year}_9.01/examples_and_templates/US_1040/"
 Data_source_directory='test/data_sources'
-OTS_template_filename="#{Data_source_directory}/US_1040_template.txt"
-OTS_SQL_dump_filename="#{Data_source_directory}/OTS_SQL_dump.sql"
+OTS_template_filename="#{Open_tax_solver_directory}/US_1040_template.txt"
+OTS_SQL_dump_filename="#{Data_source_directory}/OTS_SQL_dump_{Default_tax_year}.sql"
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Delimiter='\s+'
 Specific_types=['\?\?', '0', ';', '0\s+;', 'Yes']
@@ -50,7 +50,7 @@ def self.all(tax_year=Default_tax_year)
 		matchData=Full_regexp.match(r)
 		if matchData then
 			ios=parse(r, Full_regexp)
-			ios[:yax_year]=tax_year
+			ios[:tax_year]=tax_year
 			ios
 		else
 			nil
@@ -93,9 +93,9 @@ extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
-	assert_include(included_modules, NoDB)
-	assert(File.exists?(Data_source_directory), Dir['../*'].inspect)
-	assert(File.exists?(OTS_template_filename))
+	assert_include(included_modules, NoDB, "")
+	assert(File.exists?(Data_source_directory), Dir["#{Data_source_directory}/*"].inspect)
+	assert(File.exists?(OTS_template_filename), "File #{OTS_template_filename} doesnot exist.")
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"

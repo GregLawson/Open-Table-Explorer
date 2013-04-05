@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/regexp_tree.rb'
+require_relative '../../config/initializers/monkey/String.rb'
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch
 attr_reader :regexp_tree, :dataToParse, :matched_data, :errors

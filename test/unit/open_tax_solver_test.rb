@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative 'default_test_case.rb'
-require_relative '../../app/models/ots.rb'
+require_relative '../../app/models/open_tax_solver.rb'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class OpenTaxSolverTest < DefaultTestCase2
 include DefaultTests2
