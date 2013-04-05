@@ -6,7 +6,26 @@
 #
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
-class OpenTaxFormFiller
+class GenericFiles
+include NoDB
+extend NoDB::ClassMethods
+
+end #GenericFiles
+class GenericJsons <GenericFiles
+module Assertions
+module ClassMethods
+def assert_json_string(acquisition)
+	assert_not_nil(acquisition)
+	assert_instance_of(String, acquisition)
+	json=JSON[acquisition]
+	assert_instance_of(Hash, json)
+end #assert_json_string
+end #ClassMethods
+end #Assertions
+end #GenericJson
+
+module OpenTaxFormFiller
+class Definitions < GenericJsons
 include NoDB
 extend NoDB::ClassMethods
 module Constants
@@ -31,7 +50,7 @@ def self.parse(acquisition) #acquisition=next
 		entries.push(flat)
 	end #each_pair
 	entries.map do |hash|
-		OpenTaxFormFiller.new(hash, [String, Fixnum, String, String])
+		Definitions.new(hash, [String, Fixnum, String, String])
 	end #map
 end #parse
 def assert_json_string(acquisition)
@@ -43,7 +62,7 @@ end #assert_json_string
 def self.raw_acquisitions
 	all_files=Dir[OTF_definition_filenames]
 	all_files.map do |filename|
-		OpenTaxFormFiller.parse(IO.read(filename))
+		Definitions.parse(IO.read(filename))
 	end.flatten # map
 end #raw_acquisitions
 def self.coarse_filter
@@ -77,7 +96,7 @@ def assert_pre_conditions
 		assert_instance_of(Array, attributes.values)
 end #assert_pre_conditions
 def assert_invariant
-	assert_instance_of(OpenTaxFormFiller, self)
+	assert_instance_of(Definitions, self)
 #	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_includes(self.methods, :insert_sql)
 	explain_assert_respond_to(self, :insert_sql)
@@ -86,8 +105,8 @@ def assert_invariant
 	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
-include OpenTaxFormFiller::Constants
-include OpenTaxFormFiller::Examples
+include Constants
+include Examples
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
@@ -98,22 +117,18 @@ end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
 	Examples.constants.each do |name|
-		example_acquisition=OpenTaxFormFiller.value_of_example?(name)
+		example_acquisition=Definitions.value_of_example?(name)
 	end #each
 #hit	fail "end of CLASS assert_post_conditions"
 end #assert_post_conditions
-def assert_json_string(acquisition)
-	assert_not_nil(acquisition)
-	assert_instance_of(String, acquisition)
-	json=JSON[acquisition]
-	assert_instance_of(Hash, json)
-end #assert_json_string
 end #ClassMethods
 end #Assertions
 require_relative '../../test/assertions/default_assertions.rb'
-include Assertions
 include Examples
 include Constants
+include Assertions
 extend Assertions::ClassMethods
+include GenericJsons::Assertions
+extend GenericJsons::Assertions::ClassMethods
+end #Definitions
 end #OpenTaxFormFiller
-
