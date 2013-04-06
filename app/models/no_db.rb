@@ -464,7 +464,9 @@ def initialize(values=nil, names=nil, types=nil)
 		@attributes=values
 		@types=types || names
 	else
-		raised "confused about arguments to NoDB.initialize."
+		message="values=#{values.inspect}, \nnames=#{names.inspect}, \ntypes=#{types.inspect}"
+		message+="values.nil?=#{values.nil?.inspect}, \nvalues.instance_of?(Array)=#{values.instance_of?(Array).inspect}, \nvalues.instance_of?(Hash)=#{values.instance_of?(Hash).inspect}"
+		raise "confused about arguments to NoDB.initialize.\n"+message
 	end #if
 end #NoDB initialize
 def [](attribute_name)

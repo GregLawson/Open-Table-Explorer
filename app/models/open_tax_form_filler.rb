@@ -11,28 +11,38 @@ include NoDB
 extend NoDB::ClassMethods
 module ClassMethods
 end #ClassMethods
-
+module Constants
+Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
+Symbol_regexp=/#{Symbol_pattern}/
+end #Constants
 end #GenericFiles
 
 module GenericJsons
 include GenericFiles
 module ClassMethods
 include GenericFiles::ClassMethods
-def raw_acquisitions
+def raw_acquisitions #acquisition=next
 	all_files=Dir[input_file_names]
 	all_files.map do |filename|
-		parse(IO.read(filename))
-	end.flatten # map
+		IO.read(filename)
+	end.flatten # map no arrays by filename
 end #raw_acquisitions
+#return Array of Hash
 def coarse_filter
-	raw_acquisitions
+	raw_acquisitions.map do |r|
+		parse(r)
+	end.flatten #json reshaping
 end #coarse_filter
 def coarse_rejections
 	[]
 end #coarse_rejections
+#return Array of class
 def all_initialize
-	coarse_filter
-end #all
+	coarse_filter.map do |hash|
+#		model_class?.new(parse(hash), [String, Fixnum, String, String])
+		new(hash, [String, Fixnum, String, String])
+	end #map
+end #all_initialize
 def fine_rejections
 	[]
 end #fine_rejections
@@ -75,8 +85,6 @@ Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
 Input_filenames="#{Open_tax_filler_directory}/definition/Federal/f*.json"
 Data_source_directory='test/data_sources'
 OTF_SQL_dump_filename="#{Data_source_directory}/OTF_SQL_dump_#{Default_tax_year}.sql"
-Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
-Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
 include Constants
 def self.input_file_names
@@ -94,9 +102,7 @@ def self.parse(acquisition) #acquisition=next
 		flat[:type]=value
 		entries.push(flat)
 	end #each_pair
-	entries.map do |hash|
-		Definitions.new(hash, [String, Fixnum, String, String])
-	end #map
+	entries
 end #parse
 def self.all
 	All
@@ -169,7 +175,7 @@ def self.input_file_names
 	Input_filenames
 end #input_file_names
 # returns array of hashes
-def self.parse(acquisition) #acquisition=next
+def self.parse(acquisition) 
 	json=JSON[acquisition]
 	entries=[]
 	json['fields'].each_pair do |key, value|
@@ -180,9 +186,7 @@ def self.parse(acquisition) #acquisition=next
 		flat[:type]=value
 		entries.push(flat)
 	end #each_pair
-	entries.map do |hash|
-		Definitions.new(hash, [String, Fixnum, String, String])
-	end #map
+	entries
 end #parse
 def self.all
 	All

@@ -24,48 +24,25 @@ def test_CLASS_constants
 	Definitions.assert_post_conditions
 
 end #Constants
-def test_initialize
-	assert_not_nil(Definitions.new)
-end #initialize
-def test_Definitions_parse
-	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
-	assert_instance_of(Hash, hash)
-	acquisition=JSON[hash]
-	puts acquisition.inspect
-	assert_not_nil(acquisition)
-	assert_instance_of(String, acquisition)
-	json=JSON[acquisition]
-	assert_instance_of(Hash, json)
-	assert_include(json.keys, 'year')
-	assert_include(json.keys, 'fields')
-	Definitions::assert_json_string(acquisition)
-	otff=Definitions.parse(acquisition)
-	assert_equal({:form=>"f1040", :year=>2012, :line=>"L1", :type=>"Amount"},otff[0].attributes, otff[0].inspect)
-	assert_equal([:form, :year, :line, :type],otff[0].attributes.keys, otff[0].inspect)
-	assert_equal(["f1040", 2012, "L1", "Amount"],otff[0].attributes.values, otff[0].inspect)
-	assert_equal('f1040',otff[0][:form])
-	assert_equal(Default_tax_year,otff[0][:year])
-	assert_equal('Amount', otff[0][:type])
-end #parse
-def test_raw_acquisitions
+def test_raw_acquisitions  #acquisition=next
 	all_files=Dir[Input_filenames]
 	all=all_files.map do |filename|
-		json_string=IO.read(filename)
-		otff=Definitions.parse(json_string)
-	end.compact # map
+		acquisition=IO.read(filename)
+		Definitions.assert_json_string(acquisition)
+		acquisition
+	end.flatten # map no arrays by filename
 	raw_acquisitions=Definitions.raw_acquisitions
 	assert_instance_of(Array, raw_acquisitions, raw_acquisitions.inspect)
-	assert_instance_of(Definitions, raw_acquisitions[0], raw_acquisitions[0].inspect)
-	assert_equal(867, Definitions.raw_acquisitions.size, raw_acquisitions.inspect)
-	assert_equal([:form, :year, :line, :type], raw_acquisitions[0].keys, raw_acquisitions.inspect)
-	types=raw_acquisitions.map do |otff|
-		otff[:type]
-	end.uniq #map
-	assert_equal(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], types)
+	assert_equal(9, Definitions.raw_acquisitions.size, raw_acquisitions.inspect)
 end #raw_acquisitions
 def test_coarse_filter
 	assert_not_empty(Definitions.coarse_filter.compact, Definitions.coarse_filter.inspect)
 	assert_operator(867, :==, Definitions.coarse_filter.size, Definitions.coarse_filter.inspect)
+	assert_equal([:form, :year, :line, :type], model_class?.coarse_filter[0].keys, model_class?.coarse_filter.inspect)
+	types=model_class?.coarse_filter.map do |otff|
+		otff[:type]
+	end.uniq #map
+	assert_equal(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], types)
 end #coarse_filter
 def test_coarse_rejections
 	Definitions.coarse_rejections.each do |acquisition|
@@ -74,7 +51,7 @@ def test_coarse_rejections
 	end #select
 	assert_operator(0, :==, Definitions.coarse_rejections.size, Definitions.coarse_rejections.inspect)
 end #coarse_rejections
-def test_all
+def test_all_initialize
 	assert_operator(867, :==, Definitions.all.size, Definitions.fine_rejections.inspect)
 	Definitions.all.each do |ots|
 		assert_instance_of(Definitions, ots)
@@ -101,12 +78,11 @@ def test_fine_rejections
 	Definitions.fine_rejections.each do |r|
 	end #each
 end #fine_rejections
-def test_assert_json_string
-	Definitions::assert_json_string(Simple_acquisition)
-
-end #assert_full_match
-end #OpenTaxFormFiller
+def test_initialize
+	assert_not_nil(Definitions.new)
+end #initialize
 def test_Definitions_parse
+	
 	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
 	assert_instance_of(Hash, hash)
 	acquisition=JSON[hash]
@@ -118,14 +94,39 @@ def test_Definitions_parse
 	assert_include(json.keys, 'year')
 	assert_include(json.keys, 'fields')
 	Definitions::assert_json_string(acquisition)
-	otff=Definitions.parse(acquisition)
-	assert_equal({:form=>"f1040", :year=>2012, :line=>"L1", :type=>"Amount"},otff[0].attributes, otff[0].inspect)
-	assert_equal([:form, :year, :line, :type],otff[0].attributes.keys, otff[0].inspect)
-	assert_equal(["f1040", 2012, "L1", "Amount"],otff[0].attributes.values, otff[0].inspect)
-	assert_equal('f1040',otff[0][:form])
-	assert_equal(Default_tax_year,otff[0][:year])
-	assert_equal('Amount', otff[0][:type])
-	model_class?.all.each do |r|
-		r.assert_post_conditions
+	parsed=Definitions.parse(acquisition)
+	assert_equal({:form=>"f1040", :year=>2012, :line=>"L1", :type=>"Amount"},parsed[0], parsed[0].inspect)
+	assert_equal([:form, :year, :line, :type],parsed[0].keys, parsed[0].inspect)
+	assert_equal(["f1040", 2012, "L1", "Amount"],parsed[0].values, parsed[0].inspect)
+	assert_equal('f1040',parsed[0][:form])
+	assert_equal(Default_tax_year, parsed[0][:year])
+	assert_equal('Amount', parsed[0][:type])
+end #parse
+def test_assert_json_string
+	Definitions::assert_json_string(Simple_acquisition)
+
+end #assert_full_match
+end #OpenTaxFormFiller
+def test_Transformationss_parse
+	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
+	assert_instance_of(Hash, hash)
+	acquisition=JSON[hash]
+	puts acquisition.inspect
+	assert_not_nil(acquisition)
+	assert_instance_of(String, acquisition)
+	json=JSON[acquisition]
+	assert_instance_of(Hash, json)
+	assert_include(json.keys, 'year')
+	assert_include(json.keys, 'fields')
+	Definitions::assert_json_string(acquisition)
+	parsed=Definitions.parse(acquisition)
+	assert_equal({:form=>"f1040", :year=>2012, :line=>"L1", :type=>"Amount"},parsed[0].attributes, parsed[0].inspect)
+	assert_equal([:form, :year, :line, :type],parsed[0].attributes.keys, parsed[0].inspect)
+	assert_equal(["f1040", 2012, "L1", "Amount"],parsed[0].attributes.values, parsed[0].inspect)
+	assert_equal('f1040',parsed[0][:form])
+	assert_equal(Default_tax_year,parsed[0][:year])
+	assert_equal('Amount', parsed[0][:type])
+	model_class?.coarse_acquisition.each do |r|
+		assert_equal([], r.keys)
 	end #each
 end #parse
