@@ -22,6 +22,12 @@ module GenericJsons
 include GenericFiles
 module ClassMethods
 include GenericFiles::ClassMethods
+def raw_acquisitions
+	all_files=Dir[input_file_names]
+	all_files.map do |filename|
+		parse(IO.read(filename))
+	end.flatten # map
+end #raw_acquisitions
 def coarse_filter
 	raw_acquisitions
 end #coarse_filter
@@ -73,6 +79,9 @@ Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
 include Constants
+def self.input_file_names
+	Input_filenames
+end #input_file_names
 # returns array of hashes
 def self.parse(acquisition) #acquisition=next
 	json=JSON[acquisition]
@@ -89,12 +98,6 @@ def self.parse(acquisition) #acquisition=next
 		Definitions.new(hash, [String, Fixnum, String, String])
 	end #map
 end #parse
-def self.raw_acquisitions
-	all_files=Dir[Input_filenames]
-	all_files.map do |filename|
-		Definitions.parse(IO.read(filename))
-	end.flatten # map
-end #raw_acquisitions
 module Examples
 Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
 
