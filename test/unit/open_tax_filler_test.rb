@@ -13,6 +13,9 @@ include DefaultTests2
 def model_name?
 	'OpenTaxFormFiller::Definitions'.to_sym
 end #model_name?
+def table_name?
+	'definitions'
+end #table_name?
 include OpenTaxFormFiller::Definitions::Constants
 include OpenTaxFormFiller::Definitions::Examples
 include OpenTaxFormFiller
@@ -73,7 +76,7 @@ def test_all_initialize
 	assert_not_equal('"', Definitions.dump[0][0], Definitions.dump[0][0..20])
 	assert_equal("\n", Definitions.dump[0][-1], Definitions.dump[0][0..20])
 	IO.binwrite(OTF_SQL_dump_filename, Definitions.dump.join(''))
-end #all
+end #all_initialize
 def test_fine_rejections
 	Definitions.fine_rejections.each do |r|
 	end #each
@@ -81,6 +84,10 @@ end #fine_rejections
 def test_initialize
 	assert_not_nil(Definitions.new)
 end #initialize
+def test_assert_json_string
+	Definitions::assert_json_string(Simple_acquisition)
+
+end #assert_json_string
 def test_Definitions_parse
 	
 	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
@@ -102,10 +109,6 @@ def test_Definitions_parse
 	assert_equal(Default_tax_year, parsed[0][:year])
 	assert_equal('Amount', parsed[0][:type])
 end #parse
-def test_assert_json_string
-	Definitions::assert_json_string(Simple_acquisition)
-
-end #assert_full_match
 end #OpenTaxFormFiller
 def test_Transformationss_parse
 	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}

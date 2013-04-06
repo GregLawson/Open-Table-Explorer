@@ -46,6 +46,9 @@ end #all_initialize
 def fine_rejections
 	[]
 end #fine_rejections
+def dump_sql(filename="#{Data_source_directory}/#{self.class.name}_#{Default_tax_year}.sql")
+		IO.binwrite(filename, Definitions.dump.join(''))
+end #dump
 end #ClassMethods
 module Assertions
 def assert_pre_conditions
