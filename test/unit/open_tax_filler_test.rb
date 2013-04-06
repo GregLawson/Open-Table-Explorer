@@ -27,7 +27,7 @@ end #Constants
 def test_initialize
 	assert_not_nil(Definitions.new)
 end #initialize
-def test_parse
+def test_Definitions_parse
 	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
 	assert_instance_of(Hash, hash)
 	acquisition=JSON[hash]
@@ -106,3 +106,26 @@ def test_assert_json_string
 
 end #assert_full_match
 end #OpenTaxFormFiller
+def test_Definitions_parse
+	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
+	assert_instance_of(Hash, hash)
+	acquisition=JSON[hash]
+	puts acquisition.inspect
+	assert_not_nil(acquisition)
+	assert_instance_of(String, acquisition)
+	json=JSON[acquisition]
+	assert_instance_of(Hash, json)
+	assert_include(json.keys, 'year')
+	assert_include(json.keys, 'fields')
+	Definitions::assert_json_string(acquisition)
+	otff=Definitions.parse(acquisition)
+	assert_equal({:form=>"f1040", :year=>2012, :line=>"L1", :type=>"Amount"},otff[0].attributes, otff[0].inspect)
+	assert_equal([:form, :year, :line, :type],otff[0].attributes.keys, otff[0].inspect)
+	assert_equal(["f1040", 2012, "L1", "Amount"],otff[0].attributes.values, otff[0].inspect)
+	assert_equal('f1040',otff[0][:form])
+	assert_equal(Default_tax_year,otff[0][:year])
+	assert_equal('Amount', otff[0][:type])
+	model_class?.all.each do |r|
+		r.assert_post_conditions
+	end #each
+end #parse
