@@ -15,7 +15,7 @@ def test_case_pre_conditions
 	assert_operator(1, :<=, names_of_tests?.size, "#{names_of_tests?.sort}")
 end #test_case_pre_conditions
 def test_class_assert_invariant
-	assert_include(Module.constants, model_name?)
+#	assert_include(Module.constants, model_name?)
 	assert_not_nil(model_class?, "Define a class named #{model_name?} or redefine model_name? to return correct class name.")
 	model_class?.assert_invariant
 #	fail "got to end of default test."

@@ -11,7 +11,7 @@ include NoDB
 extend NoDB::ClassMethods
 
 end #GenericFiles
-class GenericJsons <GenericFiles
+module GenericJsons
 module Assertions
 module ClassMethods
 def assert_json_string(acquisition)
@@ -25,9 +25,11 @@ end #Assertions
 end #GenericJson
 
 module OpenTaxFormFiller
-class Definitions < GenericJsons
+class Definitions
 include NoDB
 extend NoDB::ClassMethods
+include GenericJsons::Assertions
+extend GenericJsons::Assertions::ClassMethods
 module Constants
 Default_tax_year=2012
 Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
