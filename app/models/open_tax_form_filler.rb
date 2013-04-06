@@ -10,6 +10,10 @@ module GenericFiles
 include NoDB
 extend NoDB::ClassMethods
 module ClassMethods
+# use for filenaming
+def table_name?
+	self.class.name.tableize
+end #model_name?
 end #ClassMethods
 module Constants
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
@@ -46,9 +50,9 @@ end #all_initialize
 def fine_rejections
 	[]
 end #fine_rejections
-def dump_sql(filename="#{Data_source_directory}/#{self.class.name}_#{Default_tax_year}.sql")
-		IO.binwrite(filename, Definitions.dump.join(''))
-end #dump
+def dump_sql_to_file(filename="#{Data_source_directory}/#{self.name}_#{Default_tax_year}.sql")
+		IO.binwrite(filename, dump.join(''))
+end #dump_sql_to_file
 end #ClassMethods
 module Assertions
 def assert_pre_conditions
@@ -93,6 +97,9 @@ include Constants
 def self.input_file_names
 	Input_filenames
 end #input_file_names
+def table_name?
+	'Definitions'
+end #model_name?
 # returns array of hashes
 def self.parse(acquisition) #acquisition=next
 	json=JSON[acquisition]
@@ -184,7 +191,9 @@ def self.parse(acquisition)
 	json['fields'].each_pair do |key, value|
 		flat={}
 		flat[:form]=json['form']
+		flat[:title]=json['title']
 		flat[:year]=json['year']
+		flat[:pdfSum]=json['pdfSum']
 		flat[:line]=key
 		flat[:type]=value
 		entries.push(flat)
