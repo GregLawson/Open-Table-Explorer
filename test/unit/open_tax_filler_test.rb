@@ -19,7 +19,7 @@ include OpenTaxFormFiller
 def test_CLASS_constants
 	
 	assert(File.exists?(Open_tax_filler_directory), Dir["#{Open_tax_filler_directory}/*"].inspect)
-	assert_not_empty(Dir[OTF_definition_filenames])
+	assert_not_empty(Dir[Input_filenames])
 	assert(File.exists?(Data_source_directory), Dir["#{Data_source_directory}/*"].inspect)
 	Definitions.assert_post_conditions
 
@@ -48,7 +48,7 @@ def test_parse
 	assert_equal('Amount', otff[0][:type])
 end #parse
 def test_raw_acquisitions
-	all_files=Dir[OTF_definition_filenames]
+	all_files=Dir[Input_filenames]
 	all=all_files.map do |filename|
 		json_string=IO.read(filename)
 		otff=Definitions.parse(json_string)
@@ -76,7 +76,7 @@ def test_coarse_rejections
 end #coarse_rejections
 def test_all
 	assert_operator(867, :==, Definitions.all.size, Definitions.fine_rejections.inspect)
-	Definitions.all(Default_tax_year).each do |ots|
+	Definitions.all.each do |ots|
 		assert_instance_of(Definitions, ots)
 		assert_instance_of(Hash, ots.attributes)
 		assert_respond_to(ots.attributes, :values)
