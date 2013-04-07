@@ -56,12 +56,14 @@ def test_parse
 
 	OpenTaxSolver.assert_full_match(acquisition)
 	ios=OpenTaxSolver.parse(acquisition, Full_regexp)
-	assert_equal('L',ios[:name])
-	assert_equal('??', ios[:type_chars])
-	assert_equal('e',ios[:description])
+	assert_instance_of(Array, ios)
+	assert_instance_of(Hash, ios[0])
+	assert_equal('L',ios[0][:name])
+	assert_equal('??', ios[0][:type_chars])
+	assert_equal('e',ios[0][:description])
 end #parse
 def test_raw_acquisitions
-	assert_equal(115, OpenTaxSolver.raw_acquisitions.size)
+	assert_equal(1, OpenTaxSolver.raw_acquisitions.size)
 end #raw_acquisitions
 def test_coarse_filter
 	assert_not_empty(OpenTaxSolver.coarse_filter.compact, OpenTaxSolver.coarse_filter.inspect)
@@ -80,7 +82,7 @@ def test_all
 		if matchData then
 			OpenTaxSolver.assert_full_match(r)
 			ios=OpenTaxSolver.parse(r, Full_regexp)
-			ios[:tax_year]=Default_tax_year
+			ios[0][:tax_year]=Default_tax_year
 		else
 			nil
 		end #if

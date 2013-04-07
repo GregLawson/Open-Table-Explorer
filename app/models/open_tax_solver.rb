@@ -5,10 +5,12 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/generic_files.rb'
 class OpenTaxSolver
-include NoDB
-extend NoDB::ClassMethods
+include GenericFiles
+extend GenericFiles::ClassMethods
+include GenericFiles::Assertions
+extend GenericFiles::Assertions::ClassMethods
 module Constants
 Default_tax_year=2011
 Open_tax_solver_directory="../OpenTaxSolver#{Default_tax_year}_9.01/examples_and_templates/US_1040/"
@@ -25,37 +27,52 @@ Type_regexp=/#{Symbol_pattern}#{Type_pattern}/
 Description_regexp=/#{Description_pattern}/
 Full_regexp=/#{Symbol_pattern}#{Type_pattern}#{Description_pattern}/
 end #Constants
-def self.parse(acquisition, pattern=Full_regexp) #acquisition=next
-	matchData=pattern.match(acquisition)
-	name=matchData[1]
-	type=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
-	description=matchData[-1].strip
-	OpenTaxSolver.new([name, type, description], [:name, :type_chars, :description], [String, String, String])
+def self.parse(acquisition, pattern=Full_regexp, tax_year=Default_tax_year) #acquisition=next
+	lines=acquisition.lines.map do |line|
+		matchData=pattern.match(line)
+		name=matchData[1]
+		type_chars=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
+		description=matchData[-1].strip
+		hash={:name => name, :type_chars => type_chars, :description => description, :tax_year => tax_year}
+	end #each_line
 end #parse
-def self.raw_acquisitions
-	IO.readlines('test/data_sources/US_1040_template.txt')
-end #raw_acquisitions
+def self.input_file_names
+	"#{Open_tax_solver_directory}/US_1040_template.txt"
+end #input_file_names
 def self.coarse_filter
-	raw_acquisitions.select do |acquisition|
-		Type_regexp.match(acquisition) && Description_regexp.match(acquisition)
-	end #select
+	raw_acquisitions.map do |acquisition|
+		matches=acquisition.lines.map do |line|
+			if Type_regexp.match(line) && Description_regexp.match(line) then
+				line
+			else
+				nil
+			end #if
+		end #each_line
+	end.flatten.compact #select
 end #coarse_filter
 def self.coarse_rejections
-	raw_acquisitions.select do |acquisition|
-		!(Type_regexp.match(acquisition) && Description_regexp.match(acquisition))
-	end #select
+	raw_acquisitions.map do |acquisition|
+		matches=acquisition.lines.map do |line|
+			if Type_regexp.match(line) && Description_regexp.match(line) then
+				nil
+			else
+				line
+			end #if
+		end #each_line
+	end.flatten.compact #select
 end #coarse_rejections
 def self.all(tax_year=Default_tax_year)
 	coarse_filter.map do |r| #map
 		matchData=Full_regexp.match(r)
 		if matchData then
 			ios=parse(r, Full_regexp)
-			ios[:tax_year]=tax_year
-			ios
+			ios.map do |hash|
+				OpenTaxSolver.new(hash, [String, String, String])
+			end #map
 		else
 			nil
 		end #if
-	end.compact #map
+	end.compact.flatten #map
 end #all
 def self.fine_rejections
 	coarse_filter.select do |r| #map
