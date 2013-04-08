@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/regexp_match.rb'
 module GenericFiles
 include NoDB
 extend NoDB::ClassMethods
@@ -23,11 +24,14 @@ def raw_acquisitions #acquisition=next
 end #raw_acquisitions
 #return Array of class
 def all_initialize
-	coarse_filter.map do |hash|
+	parse.map do |hash|
 #		model_class?.new(parse(hash), [String, Fixnum, String, String])
 		new(hash, [String, Fixnum, String, String])
 	end #map
 end #all_initialize
+def dump_sql_to_file(filename="#{Data_source_directory}/#{self.name}_#{Default_tax_year}.sql")
+		IO.binwrite(filename, dump.join(''))
+end #dump_sql_to_file
 end #ClassMethods
 module Constants
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
@@ -63,9 +67,6 @@ end #coarse_rejections
 def fine_rejections
 	[]
 end #fine_rejections
-def dump_sql_to_file(filename="#{Data_source_directory}/#{self.name}_#{Default_tax_year}.sql")
-		IO.binwrite(filename, dump.join(''))
-end #dump_sql_to_file
 end #ClassMethods
 module Assertions
 module ClassMethods
