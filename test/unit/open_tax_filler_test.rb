@@ -128,6 +128,35 @@ def test_parse
 	parsed=model_class?.parse
 	model_class?.assert_parsed
 end #parse
+def test_match_regexp_array
+	acquisition=model_class?.raw_acquisitions[0]
+	combination_indices=[0, 1, 2] #passes
+	combination_indices=[0, 1, 2, 3] #fails
+	combination_indices=[0, 1, 2, 4] #passes?
+	regexp_string=Full_regexp_array[combination_indices[0]]
+	assert_match(/#{regexp_string}/, acquisition)
+	combination_indices.each_cons(2) do |pair|
+		if pair[0]+1==pair[1] then # consecutive match
+			added_regexp=Full_regexp_array[pair[1]]
+		else #mismatch deleted
+			added_regexp="(?<error_#{pair[0]}>.*)"
+		end #if
+		regexp_string+=added_regexp
+		if matchData=/#{regexp_string}/.match(acquisition) then
+			rest=matchData.post_match
+		else
+			message="regexp_string=/#{regexp_string}/ did not match acquisition"
+			message+="\n#{acquisition[0..100]}"
+			message="\npair=/#{pair}" 
+			message+="\nadding /#{added_regexp}/ did not match '#{rest}'"
+			raise message
+		end #if
+	end #each_cons
+	regexp=Regexp.new(regexp_string)
+	assert_match(/#{regexp_string}/, acquisition)
+	matchData=regexp.match(acquisition)
+	assert_not_nil(matchData)
+end #match_regexp_array
 def test_subset_regexp
 	model_class?.raw_acquisitions.map do |acquisition|
 		assert_instance_of(String, acquisition)
