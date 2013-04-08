@@ -133,8 +133,8 @@ Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
 Data_source_directory='test/data_sources'
 Record_separator='},\n'
 Field_name_regexp='"F(?<field_number>[0-9]+)":{\n'
-Start_regexp='"fdf":"(?<form_type>topmostSubform|form1)\[0\].Page(?<page>1|2)\[0\]'
-Path_regexp='(?<path>[A-Za-z]+.){0,3}'
+Start_regexp='"fdf":"(?<form_type>topmostSubform|form1)\[0\].Page(?<page>1|2)\[0\]\.'
+Path_regexp='(?<path>[A-Za-z]+\.){0,3}'
 Last_field_regexp='(?<field_designator>p[0-9]-t?[0-9]+|f[0-9]+_[0-9]+)'
 End_regexp=']",\n\"type\":\"text\"\n},'
 Full_regexp_array=[Field_name_regexp, Start_regexp, Path_regexp, Last_field_regexp, End_regexp]
@@ -162,6 +162,30 @@ end #parse
 def self.all
 	All
 end #all
+# array of indices  to match
+# nil value means need insertion of any characters
+def self.match_regexp_array(combination_indices, acquisition)
+	regexp_string=Full_regexp_array[combination_indices[0]]
+	combination_indices.each_cons(2) do |pair|
+		if pair[0]+1==pair[1] then # consecutive match
+			regexp_string+=Full_regexp_array[pair[1]]
+		else #mismatch deleted
+			regexp_string+="(?<error_#{pair[0]}>.*)"
+		end #if
+	end #each_cons
+	regexp=Regexp.new(regexp_string)
+	matchData=regexp.match(acquisition)
+end #match_regexp_array
+def self.leftmost_match(regexp_array, acquisition)
+	[0..regexp_array.size-1].times.find do |i|
+		match_regexp_array(regexp_array[0..i], acquisition)
+	end #find
+end #leftmost_match
+def self.reverse_array_match(regexp_array, acquisition)
+	Array.new(regexp_array.size){|i| regexp_array.size-i}.find do |i|
+		match_regexp_array(regexp_array[i..-1], acquisition)
+	end #find
+end #reverse_array_match
 def self.subset_regexp(size)
 	longest=Full_regexp_array.size
 	Full_regexp_array.combination(longest) do |c|

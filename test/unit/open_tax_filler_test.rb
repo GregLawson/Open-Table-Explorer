@@ -130,9 +130,10 @@ def test_parse
 end #parse
 def test_match_regexp_array
 	acquisition=model_class?.raw_acquisitions[0]
+	rest=acquisition
 	combination_indices=[0, 1, 2] #passes
+	combination_indices=[0, 1, 2, 4] #passes
 	combination_indices=[0, 1, 2, 3] #fails
-	combination_indices=[0, 1, 2, 4] #passes?
 	regexp_string=Full_regexp_array[combination_indices[0]]
 	assert_match(/#{regexp_string}/, acquisition)
 	combination_indices.each_cons(2) do |pair|
