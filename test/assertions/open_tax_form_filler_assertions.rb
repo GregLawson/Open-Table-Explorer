@@ -142,10 +142,13 @@ def assert_parseable(acquisition, strict=false)
 				hash[n.to_sym]=matchData[n]
 			end #map
 			acquisition=matchData.post_match
-		else
 			if strict then
 				assert_not_nil(matchData)
-				assert_not_nil(matchData.pre_match)
+				assert_empty(matchData.pre_match, "/#{rs}/ is not a leftmost match of '#{acquisition[0..100]}'\nhash=#{hash.inspect}")
+			end #if
+		else
+			if strict then
+				puts "/#{rs}/ does not match #{acquisition}"
 			end #if
 		end #if
 		matchData
