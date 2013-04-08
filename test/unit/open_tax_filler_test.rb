@@ -100,39 +100,52 @@ end #model_name?
 include DefaultTests2
 def test_parse
 	model_class?.raw_acquisitions.each do |acquisition|
+		begin
 		assert_not_nil(acquisition)
 		assert_instance_of(String, acquisition)
 		model_class?.assert_parseable(acquisition, strict=false)
 		model_class?.assert_parseable(acquisition, strict=true)
 		hash={}
-		matchDatas= Full_regexp_array.map do |rs|
-			matchData=/#{rs}/.match(acquisition)
+		longest=Full_regexp_array.size
+		
+		Full_regexp_array.combination(longest) do |c|
+			regexp=Regexp.new(c.join)
+			assert_instance_of(Regexp, regexp)
+			matchData=regexp.match(acquisition)
+			if matchData then
+				matchData.names.map do |n|
+					hash[n.to_sym]=matchData[n]
+				end #map
+				acquisition=matchData.post_match
+			else
+				acquisition=nil
+			end #if
+		end #combinations
+		assert_instance_of(Hash, hash)
+		hash
+		end until acquisition.nil? | acquisition.empty?
+	end.flatten #map
+	parsed=model_class?.parse
+	model_class?.assert_parsed
+end #parse
+def test_subset_regexp
+	model_class?.raw_acquisitions.map do |acquisition|
+		assert_instance_of(String, acquisition)
+		hash={}
+		longest=Full_regexp_array.size
+		Full_regexp_array.combination(longest) do |c|
+			regexp=Regexp.new(c.join)
+			assert_instance_of(Regexp, regexp)
+			matchData=regexp.match(acquisition)
 			if matchData then
 				matchData.names.map do |n|
 					hash[n.to_sym]=matchData[n]
 				end #map
 				acquisition=matchData.post_match
 			end #if
-		end #map
-		assert_instance_of(Hash, hash)
+		end #combinations
 		hash
 	end.flatten #map
-	parsed=model_class?.parse
-	model_class?.assert_parsed
-end #parse
-def test_subset_regexp
-	longest=Full_regexp_array.size
-	Full_regexp_array.combination(longest) do |c|
-		Pjsons.raw_acquisitions.map do |line|
-			assert_instance_of(String, line)
-			regexp=Regexp.new(c.join)
-			assert_instance_of(Regexp, regexp)
-			regexp.match(line)
-		end #map
-	end #combinations
-	Full_regexp_array.map do |rs|
-		/#{rs}/
-	end #map
 end #subset_regexp
 def test_dump_sql_to_file
 	filename="#{Data_source_directory}/#{model_name?}_#{Default_tax_year}.sql"
