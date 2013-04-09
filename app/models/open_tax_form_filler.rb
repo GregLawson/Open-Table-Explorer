@@ -123,7 +123,7 @@ Field_name_regexp='"F(?<field_number>[0-9a-f]+)":{\n'
 Start_regexp='"fdf":"(?<form_type>topmostSubform|form1)\[0\].Page(?<page>1|2)\[0\]\.'
 Path_regexp='(?<path>[A-Za-z]+\.){0,3}'
 Last_field_regexp='(?<field_designator>p[0-9]-t?[0-9]+|f[0-9]+[_-][0-9]+)\[0'
-End_regexp=']",\n\"type\":\"text\"\n},'
+End_regexp='\]",\n\"type\":\"text\"\n},'
 Full_regexp_array=[Field_name_regexp, Start_regexp, Path_regexp, Last_field_regexp, End_regexp]
 end #Constants
 include Constants
@@ -135,18 +135,23 @@ def self.full_regexp_array
 end #full_regexp_array
 # returns array of hashes
 def self.parse 
+	array_of_hashes=[]
 	coarse= raw_acquisitions.map do |acquisition|
+		begin
 		hash={}
-		matchDatas= Full_regexp_array.map do |rs|
-			matchData=/#{rs}/.match(acquisition)
-			if matchData then
-				matchData.names.map do |n|
-					hash[n.to_sym]=matchData[n]
-				end #map
-				acquisition=matchData.post_match
+		regexp=Regexp.new(Full_regexp_array.join)
+		matchData=regexp.match(acquisition)
+		if matchData then
+			matchData.names.map do |n|
+				hash[n.to_sym]=matchData[n]
+			end #map
+			acquisition=matchData.post_match
+		else
+			acquisition=nil
 			end #if
-		end #map
-		hash
+		array_of_hashes << hash
+		end until acquisition.nil? | acquisition.empty?
+		array_of_hashes
 	end.flatten #map
 end #parse
 def self.all
@@ -199,7 +204,6 @@ end #coarse_filter
 
 include Assertions
 extend Assertions::ClassMethods
-Pjsons.assert_pre_conditions
 Pjsons.assert_pre_conditions
 module Examples
 Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"

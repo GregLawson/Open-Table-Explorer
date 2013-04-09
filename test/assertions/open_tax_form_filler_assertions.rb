@@ -153,6 +153,9 @@ def assert_pre_conditions
 #	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_include(included_modules, NoDB, "")
 #	assert_equal(MiniTest::Assertion, self)
+	full_regexp_array.each do |regexp_string|
+		assert_not_nil(RegexpParse.regexp_rescued(regexp_string), regexp_string)
+	end #each
 	parsed= raw_acquisitions.map do |acquisition|
 		hash={}
 		matchDatas= OpenTaxFormFiller::Pjsons::Full_regexp_array.map do |rs|

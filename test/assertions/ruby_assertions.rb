@@ -227,14 +227,11 @@ def assert_public_instance_method(obj,methodName,message='')
 	assert_respond_to( obj, methodName,message)
 end #assert_public_instance_method
 def assert_array_of(obj, type)
-	assert_block("obj=#{obj.inspect} must be an Array") {obj.instance_of?(Array)}
-#	puts "obj=#{obj.inspect} must be an Array of Strings(pathnames)"
-#	puts "obj.size=#{obj.size} "
-#	puts "obj[0]=#{obj[0].inspect} "
+	assert_block("obj=#{obj.inspect} must be an Array not #{obj.class.name}") {obj.instance_of?(Array)}
 	obj.each do |p|
 #		puts "p=#{p.inspect} must be a String(pathnames)" 
+		assert_block("obj=#{obj.inspect} must be an Array of #{type.name}") {obj.all?{|s| s.instance_of?(type)}}
 	end #each
-	assert_block("obj=#{obj.inspect} must be an Array of Strings(pathnames)") {obj.all?{|s| s.instance_of?(String)}}
 end #array_of
 def assert_single_element_array(obj)
 	assert_instance_of(Array, obj, "assert_single_element_array expects an Array. ")

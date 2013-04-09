@@ -99,32 +99,45 @@ def model_class?
 end #model_name?
 include DefaultTests2
 def test_parse
+	array_of_hashes=[]
 	model_class?.raw_acquisitions.each do |acquisition|
 		begin
 		assert_not_nil(acquisition)
+		assert(!(acquisition.nil?), "acquisition should not be nil at start of parse")
+		assert(!(acquisition.size==0), "acquisition should not have a size of zero at start of parse")
+		assert(!(acquisition.empty?), "acquisition should not be empty at start of parse")
 		assert_instance_of(String, acquisition)
 		model_class?.assert_match_regexp_array(acquisition)
 		hash={}
 		longest=Full_regexp_array.size
 		
-		Full_regexp_array.combination(longest) do |c|
-			regexp=Regexp.new(c.join)
-			assert_instance_of(Regexp, regexp)
-			matchData=regexp.match(acquisition)
-			if matchData then
-				matchData.names.map do |n|
-					hash[n.to_sym]=matchData[n]
-				end #map
-				acquisition=matchData.post_match
-			else
-				acquisition=nil
-			end #if
-		end #combinations
+		regexp=Regexp.new(Full_regexp_array.join)
+		assert_instance_of(Regexp, regexp)
+		matchData=regexp.match(acquisition)
+		if matchData then
+			matchData.names.map do |n|
+				hash[n.to_sym]=matchData[n]
+			end #map
+			acquisition=matchData.post_match
+			assert(!(acquisition.nil?), "acquisition should not be nil after match")
+#ok at end			assert(!(acquisition.size==0), "acquisition should not have a size of zero after match")
+#ok at end			assert(!(acquisition.empty?), "acquisition should not be empty after match")
+		else
+			acquisition=nil
+			assert(acquisition.nil? | acquisition.empty? | acquisition.size==0)
+		end #if
 		assert_instance_of(Hash, hash)
-		hash
-		end until acquisition.nil? | acquisition.empty?
+		array_of_hashes << hash
+		puts hash.inspect
+		puts "'#{acquisition}', length=#{acquisition.size}"
+		end until (acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0)
+		assert((acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0))
+		array_of_hashes
 	end.flatten #map
+	assert_operator(array_of_hashes.size, :>, model_class?.raw_acquisitions.size)
+	assert_array_of(array_of_hashes, Hash) #flatten array
 	parsed=model_class?.parse
+	assert_array_of(parsed, Hash) #flatten array
 	model_class?.assert_parsed
 end #parse
 def test_match_regexp_array
