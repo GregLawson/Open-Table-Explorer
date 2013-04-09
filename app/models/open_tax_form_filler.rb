@@ -150,7 +150,7 @@ def self.parse
 			acquisition=nil
 			end #if
 		array_of_hashes << hash
-		end until acquisition.nil? | acquisition.empty?
+		end until (acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0)
 		array_of_hashes
 	end.flatten #map
 end #parse
