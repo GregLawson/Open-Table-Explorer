@@ -59,12 +59,7 @@ All=Definitions.all_initialize
 end #Examples
 require_relative '../../test/assertions/default_assertions.rb'
 
-require_relative '../../test/assertions/default_assertions.rb'
 include Examples
-include Assertions
-extend Assertions::ClassMethods
-include GenericJsons::Assertions
-extend GenericJsons::Assertions::ClassMethods
 end #Definitions
 
 class Transforms
@@ -72,8 +67,6 @@ include NoDB
 extend NoDB::ClassMethods
 include GenericJsons
 extend GenericJsons::ClassMethods
-include GenericJsons::Assertions
-extend GenericJsons::Assertions::ClassMethods
 module Constants
 include OpenTaxFormFiller::Constants
 Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
@@ -114,10 +107,6 @@ Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
 All=Transforms.all_initialize
 end #Examples
 include Examples
-include Assertions
-extend Assertions::ClassMethods
-include GenericJsons::Assertions
-extend GenericJsons::Assertions::ClassMethods
 end #Transforms
 
 class Pjsons
@@ -125,17 +114,15 @@ include NoDB
 extend NoDB::ClassMethods
 include GenericFiles
 extend GenericFiles::ClassMethods
-include GenericFiles::Assertions
-extend GenericFiles::Assertions::ClassMethods
 module Constants
 include OpenTaxFormFiller::Constants
 Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
 Data_source_directory='test/data_sources'
 Record_separator='},\n'
-Field_name_regexp='"F(?<field_number>[0-9]+)":{\n'
+Field_name_regexp='"F(?<field_number>[0-9a-f]+)":{\n'
 Start_regexp='"fdf":"(?<form_type>topmostSubform|form1)\[0\].Page(?<page>1|2)\[0\]\.'
 Path_regexp='(?<path>[A-Za-z]+\.){0,3}'
-Last_field_regexp='(?<field_designator>p[0-9]-t?[0-9]+|f[0-9]+_[0-9]+)'
+Last_field_regexp='(?<field_designator>p[0-9]-t?[0-9]+|f[0-9]+[_-][0-9]+)\[0'
 End_regexp=']",\n\"type\":\"text\"\n},'
 Full_regexp_array=[Field_name_regexp, Start_regexp, Path_regexp, Last_field_regexp, End_regexp]
 end #Constants
@@ -143,6 +130,9 @@ include Constants
 def self.input_file_names
 	"#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
 end #input_file_names
+def self.full_regexp_array
+	Full_regexp_array
+end #full_regexp_array
 # returns array of hashes
 def self.parse 
 	coarse= raw_acquisitions.map do |acquisition|
@@ -165,13 +155,15 @@ end #all
 # array of indices  to match
 # nil value means need insertion of any characters
 def self.match_regexp_array(combination_indices, acquisition)
+	rest=acquisition
 	regexp_string=Full_regexp_array[combination_indices[0]]
 	combination_indices.each_cons(2) do |pair|
 		if pair[0]+1==pair[1] then # consecutive match
-			regexp_string+=Full_regexp_array[pair[1]]
+			added_regexp=Full_regexp_array[pair[1]]
 		else #mismatch deleted
-			regexp_string+="(?<error_#{pair[0]}>.*)"
+			added_regexp="(?<error_#{pair[0]}>.*)"
 		end #if
+		regexp_string+=added_regexp
 	end #each_cons
 	regexp=Regexp.new(regexp_string)
 	matchData=regexp.match(acquisition)
@@ -215,7 +207,5 @@ Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
 All=Pjsons.all_initialize
 end #Examples
 include Examples
-include GenericFiles::Assertions
-extend GenericFiles::Assertions::ClassMethods
 end #Pjsons
 end #OpenTaxFormFiller

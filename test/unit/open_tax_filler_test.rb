@@ -103,8 +103,7 @@ def test_parse
 		begin
 		assert_not_nil(acquisition)
 		assert_instance_of(String, acquisition)
-		model_class?.assert_parseable(acquisition, strict=false)
-		model_class?.assert_parseable(acquisition, strict=true)
+		model_class?.assert_match_regexp_array(acquisition)
 		hash={}
 		longest=Full_regexp_array.size
 		
@@ -149,7 +148,7 @@ def test_match_regexp_array
 			message="regexp_string=/#{regexp_string}/ did not match acquisition"
 			message+="\n#{acquisition[0..100]}"
 			message="\npair=/#{pair}" 
-			message+="\nadding /#{added_regexp}/ did not match '#{rest}'"
+			message+="\nadding /#{added_regexp}/ did not match '#{rest[0..100]}'"
 			raise message
 		end #if
 	end #each_cons
@@ -157,20 +156,18 @@ def test_match_regexp_array
 	assert_match(/#{regexp_string}/, acquisition)
 	matchData=regexp.match(acquisition)
 	assert_not_nil(matchData)
+	acquisition=matchData.post_match
+	assert(matchData=model_class?.match_regexp_array(combination_indices, acquisition))
+	acquisition=matchData.post_match
+	model_class?.assert_match_regexp_array(acquisition,combination_indices)
 end #match_regexp_array
 def test_subset_regexp
 	model_class?.raw_acquisitions.map do |acquisition|
 		assert_instance_of(String, acquisition)
-		hash={}
 		longest=Full_regexp_array.size
-		Full_regexp_array.combination(longest) do |c|
-			regexp=Regexp.new(c.join)
-			assert_instance_of(Regexp, regexp)
-			matchData=regexp.match(acquisition)
+		Array.new(Full_regexp_array.size){|i| i}.combination(longest) do |c|
+			matchData=model_class?.match_regexp_array(c, acquisition)
 			if matchData then
-				matchData.names.map do |n|
-					hash[n.to_sym]=matchData[n]
-				end #map
 				acquisition=matchData.post_match
 			end #if
 		end #combinations

@@ -10,13 +10,6 @@ require_relative '../../app/models/open_tax_form_filler.rb'
 module OpenTaxFormFiller
 
 class Definitions
-include NoDB
-extend NoDB::ClassMethods
-include GenericJsons
-extend GenericJsons::ClassMethods
-include GenericJsons::Assertions
-extend GenericJsons::Assertions::ClassMethods
-include Constants
 require_relative '../../test/assertions/default_assertions.rb'
 
 module Assertions
@@ -59,10 +52,6 @@ extend GenericJsons::Assertions::ClassMethods
 end #Definitions
 
 class Transforms
-include NoDB
-extend NoDB::ClassMethods
-include GenericJsons
-extend GenericJsons::ClassMethods
 include GenericJsons::Assertions
 extend GenericJsons::Assertions::ClassMethods
 require_relative '../../test/assertions/default_assertions.rb'
@@ -80,8 +69,6 @@ def assert_invariant
 	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
-#include Constants
-#include Examples
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
@@ -99,18 +86,12 @@ end #assert_post_conditions
 end #ClassMethods
 end #Assertions
 require_relative '../../test/assertions/default_assertions.rb'
-#include Examples
-#include Assertions
 extend Assertions::ClassMethods
 include GenericJsons::Assertions
 extend GenericJsons::Assertions::ClassMethods
 end #Transforms
 
 class Pjsons
-include NoDB
-extend NoDB::ClassMethods
-include GenericFiles
-extend GenericFiles::ClassMethods
 include GenericFiles::Assertions
 extend GenericFiles::Assertions::ClassMethods
 require_relative '../../test/assertions/default_assertions.rb'
@@ -129,33 +110,36 @@ def assert_invariant
 	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
-#include Constants
 #include Test::Unit::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
-def assert_parseable(acquisition, strict=false)
-	hash={}
-	matchDatas= OpenTaxFormFiller::Pjsons::Full_regexp_array.map do |rs|
-		matchData=/#{rs}/.match(acquisition)
-		if matchData then
-			matchData.names.map do |n|
-				hash[n.to_sym]=matchData[n]
-			end #map
-			acquisition=matchData.post_match
-			if strict then
-				assert_not_nil(matchData)
-				assert_empty(matchData.pre_match, "/#{rs}/ is not a leftmost match of '#{acquisition[0..100]}'\nhash=#{hash.inspect}")
-			end #if
-		else
-			if strict then
-				puts "/#{rs}/ does not match #{acquisition}"
-			end #if
+def assert_match_regexp_array(acquisition, combination_indices=Array.new(full_regexp_array.size){|i| i})
+	rest=acquisition # save for error reporting context
+	regexp_string=full_regexp_array[combination_indices[0]]
+	assert_match(/#{regexp_string}/, acquisition)
+	combination_indices.each_cons(2) do |pair|
+		if pair[0]+1==pair[1] then # consecutive match
+			added_regexp=full_regexp_array[pair[1]]
+		else #mismatch deleted
+			added_regexp="(?<error_#{pair[0]}>.*)"
 		end #if
-		matchData
-	end #map
-	assert_not_equal(0, hash.size, hash)
-	puts "hash=#{hash.inspect}"
-end #assert_parseable
+		regexp_string+=added_regexp
+		if matchData=/#{regexp_string}/.match(acquisition) then
+			rest=matchData.post_match
+		else
+			message="regexp_string=/#{regexp_string}/ did not match acquisition"
+			message+="\n#{acquisition[0..100]}"
+			message="\npair=/#{pair}" 
+			message+="\nadding /#{added_regexp}/ did not match '#{rest[0..100]}'"
+			raise message
+		end #if
+	end #each_cons
+	regexp=Regexp.new(regexp_string)
+	assert_match(/#{regexp_string}/, acquisition)
+	matchData=regexp.match(acquisition)
+	assert_not_nil(matchData)
+	match_regexp_array(combination_indices, acquisition)
+end #match_regexp_array
 def assert_parsed
 	parsed=parse
 	assert_not_empty(parsed)
@@ -182,12 +166,8 @@ def assert_pre_conditions
 		puts "hash=#{hash.inspect}"
 		hash
 	end #select
-	assert_parseable(raw_acquisitions[0])
 	assert_not_empty(parsed)
 	assert_not_empty(coarse_filter)
-	raw_acquisitions.map do |acquisition|
-		assert_parseable(acquisition)	
-	end #map
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
