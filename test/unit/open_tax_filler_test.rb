@@ -29,7 +29,7 @@ def test_parse
 	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
 	assert_instance_of(Hash, hash)
 	acquisition=JSON[hash]
-	puts acquisition.inspect
+#	puts acquisition.inspect
 	assert_not_nil(acquisition)
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
@@ -71,7 +71,7 @@ def test_parse
 	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
 	assert_instance_of(Hash, hash)
 	acquisition=JSON[hash]
-	puts acquisition.inspect
+#	puts acquisition.inspect
 	assert_not_nil(acquisition)
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
@@ -128,8 +128,8 @@ def test_parse
 		end #if
 		assert_instance_of(Hash, hash)
 		array_of_hashes << hash
-		puts hash.inspect
-		puts "'#{acquisition}', length=#{acquisition.size}"
+#		puts hash.inspect
+#		puts "'#{acquisition}', length=#{acquisition.size}"
 		end until (acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0)
 		assert((acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0))
 		array_of_hashes
@@ -139,6 +139,14 @@ def test_parse
 	parsed=model_class?.parse
 	assert_array_of(parsed, Hash) #flatten array
 	model_class?.assert_parsed
+	assert_operator(parsed.size, :>=, 2080)
+	assert_operator(parsed.uniq.size, :>=, 414)
+	assert_no_duplicates(array_of_hashes)
+	assert_no_duplicates(parsed)
+	assert_equal(parsed.uniq.size, raw_acquisitions.size/4, "parse should be one quarter of raw_acquisitions.")
+	assert_equal(parsed.uniq.size, parsed.size, "parse produces duplicates.")
+	assert_equal(array_of_hashes.uniq.size, array_of_hashes.size, "array_of_hashes produces duplicates.")
+	assert_equal(array_of_hashes.size, 2080)
 end #parse
 def test_match_regexp_array
 	acquisition=model_class?.raw_acquisitions[0]

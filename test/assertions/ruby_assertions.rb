@@ -233,6 +233,19 @@ def assert_array_of(obj, type)
 		assert_block("obj=#{obj.inspect} must be an Array of #{type.name}") {obj.all?{|s| s.instance_of?(type)}}
 	end #each
 end #array_of
+def assert_no_duplicates(array, columns_to_ignore=[])
+	if array[0].instance_of?(Hash) then
+		array=array.map {|hash| columns_to_ignore.each{|col| hash.delete(col)}}
+	end #if
+	frequencies={}
+	array.sort.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary}
+	assert_instance_of(Array, frequencies, frequencies.inspect)
+	assert_instance_of(Hash, frequencies[0], frequencies[0].inspect)
+	duplicates=frequencies.select do |freq|
+		freq[:count]>1
+	end #select
+	assert_equal(array.size, array.uniq.size, "Array has duplicates. First ten elements are #{array}"+caller_lines)
+end #assert_no_duplicates
 def assert_single_element_array(obj)
 	assert_instance_of(Array, obj, "assert_single_element_array expects an Array. ")
 	assert_equal(1, obj.size)

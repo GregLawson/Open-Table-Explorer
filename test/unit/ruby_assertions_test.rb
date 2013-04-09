@@ -147,6 +147,14 @@ def test_assert_array_of
 	#assert_raise(Test::Unit::AssertionFailedError){assert_array_of([[]], String)}
 	assert_array_of([], String)
 end #array_of
+def test_assert_no_duplicates
+	array=[1,2,3]
+	columns_to_ignore=[]
+	assert_no_duplicates(array, columns_to_ignore)
+	assert_no_duplicates(array)
+	assert_no_duplicates([1,2,3,3])
+	
+end #assert_no_duplicates
 def test_assert_single_element_array
 	assert_single_element_array([3])	
 end #assert_single_element_array

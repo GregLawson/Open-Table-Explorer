@@ -149,6 +149,9 @@ def assert_parsed
 	assert_operator(parsed.size, :>, raw_acquisitions.size)
 #	puts parsed.inspect
 end #assert_parsed
+# minimal assertions (with good error messaages) to allow:
+# 1) class definition to execute (often Example constant setting requires initialize method to execute without error)
+# 2) class requirements to be documented
 def assert_pre_conditions
 #	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_include(included_modules, NoDB, "")
@@ -156,21 +159,7 @@ def assert_pre_conditions
 	full_regexp_array.each do |regexp_string|
 		assert_not_nil(RegexpParse.regexp_rescued(regexp_string), regexp_string)
 	end #each
-	parsed= raw_acquisitions.map do |acquisition|
-		hash={}
-		matchDatas= OpenTaxFormFiller::Pjsons::Full_regexp_array.map do |rs|
-			matchData=/#{rs}/.match(acquisition)
-			matchData.names.map do |n|
-				hash[n.to_sym]=matchData[n]
-			end #map
-			acquisition=matchData.post_match
-			matchData
-		end #first
-		puts "hash=#{hash.inspect}"
-		hash
-	end #select
-	assert_not_empty(parsed)
-	assert_not_empty(coarse_filter)
+	assert_not_empty(raw_acquisitions)
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
@@ -178,6 +167,7 @@ def assert_post_conditions
 		example_acquisition=Definitions.value_of_example?(name)
 	end #each
 #hit	fail "end of CLASS assert_post_conditions"
+	assert_operator(raw_acquisitions.size, :==, 2080)
 end #assert_post_conditions
 end #ClassMethods
 end #Assertions

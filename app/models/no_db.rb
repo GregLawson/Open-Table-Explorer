@@ -497,7 +497,9 @@ def each_pair(&block)
 end #each_pair
 def insert_sql
 	value_strings=@attributes.values.map do |value|
-		if value.instance_of?(String) then
+		if value.nil? then
+			"NULL"
+		elsif value.instance_of?(String) then
 			value.inspect
 		else
 			value
