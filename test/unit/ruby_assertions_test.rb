@@ -149,10 +149,34 @@ def test_assert_array_of
 end #array_of
 def test_assert_no_duplicates
 	array=[1,2,3]
+	array=[{:b => 2}, {:a => 1}, {}]
 	columns_to_ignore=[]
+	assert_operator(array.uniq.size, :>, 1, "All input array elements are identical")
+	assert_operator(array.size/array.uniq.size, :<, 1.2, "Array has too many duplicates. First ten elements are #{array[0..9]}"+caller_lines)
+	if array[0].instance_of?(Hash) and columns_to_ignore!=[] then
+		assert_not_empty(array)
+		array=array.map {|hash| columns_to_ignore.each{|col| hash.delete(col)}}
+		assert_not_empty(array)
+		assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
+	end #if
+	assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
+	frequencies={}
+	array.sort{|a1,a2| a1.inspect<=>a2.inspect}.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary.size}
+	assert_instance_of(Hash, frequencies, frequencies.inspect)
+	sorted_by_frequency=frequencies.to_a.sort do |x,y| 
+		assert_instance_of(Array, x)
+		assert_instance_of(Array, y)
+		assert_instance_of(Fixnum, x[1])
+		assert_instance_of(Fixnum, y[1])
+		x[1]<=>y[1]
+	end #sort
+	message="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
+	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[0..10]}"+caller_lines
+	assert_equal(array.size, array.uniq.size, message)
 	assert_no_duplicates(array, columns_to_ignore)
 	assert_no_duplicates(array)
-	assert_no_duplicates([1,2,3,3])
+	assert_no_duplicates([{:b => 2}, {:a => 1}], columns_to_ignore)
+	assert_raise(MiniTest::Assertion){assert_no_duplicates([1,2,3,3])}
 	
 end #assert_no_duplicates
 def test_assert_single_element_array

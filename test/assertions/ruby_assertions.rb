@@ -234,17 +234,19 @@ def assert_array_of(obj, type)
 	end #each
 end #array_of
 def assert_no_duplicates(array, columns_to_ignore=[])
-	if array[0].instance_of?(Hash) then
+	assert_operator(array.uniq.size, :>, 1, "All input array elements are identical")
+	assert_operator(array.size/array.uniq.size, :<, 1.2, "Array has too many duplicates. First ten elements are #{array[0..9]}"+caller_lines)
+	if array[0].instance_of?(Hash) and columns_to_ignore!=[] then
 		array=array.map {|hash| columns_to_ignore.each{|col| hash.delete(col)}}
 	end #if
+	assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
 	frequencies={}
-	array.sort.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary}
-	assert_instance_of(Array, frequencies, frequencies.inspect)
-	assert_instance_of(Hash, frequencies[0], frequencies[0].inspect)
-	duplicates=frequencies.select do |freq|
-		freq[:count]>1
-	end #select
-	assert_equal(array.size, array.uniq.size, "Array has duplicates. First ten elements are #{array}"+caller_lines)
+	array.sort{|a1,a2| a1.inspect<=>a2.inspect}.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary.size}
+	assert_instance_of(Hash, frequencies, frequencies.inspect)
+	sorted_by_frequency=frequencies.to_a.sort{|x,y| x[1]<=>y[1]}
+	message="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
+	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[0..10]}"+caller_lines
+	assert_equal(array.size, array.uniq.size, message)
 end #assert_no_duplicates
 def assert_single_element_array(obj)
 	assert_instance_of(Array, obj, "assert_single_element_array expects an Array. ")
