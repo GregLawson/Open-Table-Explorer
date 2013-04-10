@@ -330,6 +330,24 @@ def regexpTree!(terminator=nil)
 #not recursive	assert_invariant(ret.reverse)
 	return ret.reverse
 end #regexpTree!
+def to_pathname_glob
+	ret=RegexpParse.new(parse_tree.map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpParse.new(b))})
+	ret=ret.postfix_operator_walk{|p| '*'}
+	if ret.instance_of?(RegexpParse) then
+		ret=ret.parse_tree.flatten.join
+	elsif ret.kind_of?(Array) then
+		ret=ret.flatten.join
+	end #if
+	return ret
+end #to_pathname_glob
+def pathnames
+	Dir[to_pathname_glob].select do |pathname|
+		to_regexp.match(pathname)
+	end #select
+end #pathnames
+def grep(pattern, delimiter="\n")
+	pathnames.files_grep(pattern, delimiter="\n")
+end #grep
 def RegexpParse.case?(node)
 	if node.instance_of?(String) then
 		:String # commonly termination condition

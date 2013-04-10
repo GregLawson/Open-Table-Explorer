@@ -378,6 +378,14 @@ def test_regexpTree
 	assert_equal(['K','C'],KC_parse.regexpTree!)
 	assert_equal(["(", "<", "t", "r", [".", "*"], "<", "/", "t", "r", ">"],Rows_parse.regexpTree!('('))
 end #regexpTree!
+def test_to_pathname_glob
+	regexp=RegexpParse.new(/.*/)
+	assert_equal('*', regexp.to_pathname_glob)
+end #to_pathname_glob
+def test_pathnames
+end #pathnames
+def test_grep(pattern, delimiter="\n")
+end #grep
 def test_case
 	assert_equal(:String, RegexpParse.case?('ab'))
 	assert_equal(:RegexpRepetition, RegexpParse.case?(Any_binary_string_parse))
