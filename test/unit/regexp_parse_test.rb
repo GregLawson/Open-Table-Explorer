@@ -391,7 +391,7 @@ def test_case
 	assert_equal(:RegexpRepetition, RegexpParse.case?(Any_binary_string_parse))
 	assert_equal(:RegexpRepetition, RegexpParse.case?(Dot_star_parse))
 	assert_equal(:CharacterClass, RegexpParse.case?(Any_binary_char))
-	assert_equal(:RegexpCapture, RegexpParse.case?(/(b)/))
+	assert_equal(:RegexpParen, RegexpParse.case?(/(b)/))
 	assert_match(Empty_language_parse.to_regexp, '')
 	assert_no_match(Empty_language_parse.to_regexp, 'a')
 	assert_equal(:RegexpEmpty, RegexpParse.case?(/\A\z/))
@@ -399,5 +399,24 @@ def test_case
 	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
 	assert_equal(:RegexpAlternative, RegexpParse.case?(/a|b/))
 end #case
+def test_typed
+	assert_not_nil(RegexpParse.typed?(Any_binary_char_parse))
+	assert_kind_of(NestedArray, RegexpParse.typed?(Any_binary_char_parse))
+	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char_parse))
+#	assert(global_name?(RexexpTree))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Any_binary_string_parse))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Dot_star_parse))
+	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char))
+#	assert_match(Empty_language_parse.to_regexp, '')
+#	assert_no_match(Empty_language_parse.to_regexp, 'a')
+#	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
+	assert_instance_of(RegexpAlternative, RegexpParse.typed?(/a|b/))
+	assert_instance_of(RegexpSequence, RegexpParse.typed?(/ab/))
+	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
+#	assert_instance_of(RegexpCapture, RegexpParse.typed?(/(b)/))
+	assert_instance_of(RegexpParen, RegexpParse.typed?(/(b)/))
+	assert_instance_of(RegexpEmpty, RegexpParse.typed?(/\A\z/))
+
+end #typed
 RegexpParse.assert_pre_conditions
 end #RegexpParerTest

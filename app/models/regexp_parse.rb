@@ -7,6 +7,26 @@
 ###########################################################################
 require_relative 'unbounded_range.rb'
 require_relative 'nested_array.rb'
+
+class RegexpTree < NestedArray
+end #RegexpTree
+#assert(global_name?(:RexexpTree))
+
+class RegexpToken < RegexpTree
+end #RegexpToken
+class RegexpSequence < RegexpTree
+end #RegexpSequence
+class RegexpAlternative < RegexpTree
+end #RegexpAlternative
+class RegexpRepetition < RegexpSequence
+end #RegexpRepetition
+class CharacterClass < RegexpAlternative
+end #CharacterClass
+class RegexpParen < RegexpTree
+end #RegexpParen
+class RegexpEmpty < RegexpTree
+end #RegexpEmpty
+
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
@@ -358,7 +378,7 @@ def RegexpParse.case?(node)
 		elsif node.to_a[-1]==']' then
 			:CharacterClass
 		elsif node.to_a[-1]==')' then
-			:RegexpCapture
+			:RegexpParen
 		elsif node==Empty_language_parse then
 			:RegexpEmpty
 		elsif RegexpParse.postfix_expression?(node.to_a[0]) =='|' then
@@ -369,8 +389,9 @@ def RegexpParse.case?(node)
 	end #if
 end #case
 def RegexpParse.typed?(node)
+	node=RegexpParse.promote(node)
 	type=RegexpParse.case?(node)
-	eval(type.to_s).new(node)
+	eval(type.to_s).new(node.parse_tree)
 end #typed
 module Constants
 Any_binary_char_string='[\000-\377]'
