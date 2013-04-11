@@ -9,16 +9,77 @@ require_relative 'unbounded_range.rb'
 require_relative 'nested_array.rb'
 
 class RegexpTree < NestedArray
+def self.[](regexp_array)
+	RegexpParse.typed?(regexp_array)
+end #brackets
 end #RegexpTree
 #assert(global_name?(:RexexpTree))
 
 class RegexpToken < RegexpTree
+def self.[](character)
+	if character.instance_of?(Symbol) then
+		RegexpToken.new([Constants::To_s[character]]) # get character from symbol lookup
+	else
+		RegexpToken.new([character])	
+	end #if
+end #square_brackets_RegexpToken
+def self.tos_initialize
+	ret={}
+	Array.new(256){|i| i.chr}.each do |character|
+		symbol=RegexpToken[character].to_sym
+		ret[symbol]=character
+	end #each
+	return ret
+end #tos_initialize
+def inspect
+	':'+to_sym.to_s
+end #inspect
+def to_sym
+	case self[0]
+	when '(' then :begin_capture
+	when ')' then :end_capture
+	when '{' then :begin_repetition
+	when '}' then :end_repetition
+	when '[' then :begin_class
+	when ']' then :end_class
+	when '.' then :any_char
+	when '?' then :optional
+	when '+' then :many
+	when '*' then :any
+	when ' ' then :space
+	when "\t" then :tab
+	when "\n" then :newline
+	else 
+		if self[0]==Regexp.escape(self[0]) then
+			self[0].to_sym
+#		elsif self[0]!=self[0].inspect[1..-2] then # strip double quotes
+		else
+			self[0].inspect[1..-2].to_sym
+#		else
+#			raise "#{self[0].inspect} is not escaped"
+		end #if
+	end #case
+end #string
+module Constants
+To_s=RegexpToken.tos_initialize
+end #Constants_RegexpToken
 end #RegexpToken
 class RegexpSequence < RegexpTree
+def to_pathname_glob
+	map {|node| node.to_pathname_glob}
+end #to_pathname_glob
 end #RegexpSequence
 class RegexpAlternative < RegexpTree
+def to_pathname_glob
+	if any? {|node| node.size>1} then
+		'*'
+	else
+		'['+join(',')+']'
+	end #if
+end #to_pathname_glob
 end #RegexpAlternative
 class RegexpRepetition < RegexpSequence
+	'*'
 end #RegexpRepetition
 class CharacterClass < RegexpAlternative
 end #CharacterClass
@@ -351,7 +412,7 @@ def regexpTree!(terminator=nil)
 	return ret.reverse
 end #regexpTree!
 def to_pathname_glob
-	ret=RegexpParse.new(parse_tree.map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpParse.new(b))})
+	ret=RegexpParse.new(parse_tree.map_branches{|b| (b[0]=='('?RegexpParse.new(b[1..-2]):RegexpParse.new(b))})
 	ret=ret.postfix_operator_walk{|p| '*'}
 	if ret.instance_of?(RegexpParse) then
 		ret=ret.parse_tree.flatten.join
@@ -390,8 +451,15 @@ def RegexpParse.case?(node)
 end #case
 def RegexpParse.typed?(node)
 	node=RegexpParse.promote(node)
+	if node.instance_of?(Array) then
+		node.map{|e| typed?(e)}
+	end #if
 	type=RegexpParse.case?(node)
-	eval(type.to_s).new(node.parse_tree)
+	if type==:String then
+		RegexpToken.new(node)	
+	else
+		eval(type.to_s).new(node.parse_tree)
+	end #if
 end #typed
 module Constants
 Any_binary_char_string='[\000-\377]'

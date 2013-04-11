@@ -171,7 +171,7 @@ def test_assert_no_duplicates
 		x[1]<=>y[1]
 	end #sort
 	message="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
-	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[0..10]}"+caller_lines
+	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[-10..-1]}"+caller_lines
 	assert_equal(array.size, array.uniq.size, message)
 	assert_no_duplicates(array, columns_to_ignore)
 	assert_no_duplicates(array)
