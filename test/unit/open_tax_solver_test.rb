@@ -131,4 +131,10 @@ def test_assert_full_match
 	OpenTaxSolver.assert_full_match('L  {e}')	
 
 end #assert_full_match
+def test_dump_sql_to_file
+	assert_equal(:OpenTaxSolver, model_name?)
+	filename="#{Data_source_directory}/#{model_name?}_#{Default_tax_year}.sql"
+	assert_respond_to(model_class?, :dump_sql_to_file)
+	model_class?.dump_sql_to_file(filename)
+end #dump_sql_to_file
 end #OpenTaxSolver
