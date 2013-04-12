@@ -12,8 +12,8 @@ extend GenericFiles::ClassMethods
 include GenericFiles::Assertions
 extend GenericFiles::Assertions::ClassMethods
 module Constants
-Default_tax_year=2011
-Open_tax_solver_directory="../OpenTaxSolver#{Default_tax_year}_9.01/examples_and_templates/US_1040/"
+Default_tax_year=2012
+Open_tax_solver_directory="../OpenTaxSolver#{Default_tax_year}_*/examples_and_templates/US_1040/"
 Data_source_directory='test/data_sources'
 OTS_template_filename="#{Open_tax_solver_directory}/US_1040_template.txt"
 OTS_SQL_dump_filename="#{Data_source_directory}/OTS_SQL_dump_#{Default_tax_year}.sql"
@@ -27,6 +27,9 @@ Type_regexp=/#{Symbol_pattern}#{Type_pattern}/
 Description_regexp=/#{Description_pattern}/
 Full_regexp=/#{Symbol_pattern}#{Type_pattern}#{Description_pattern}/
 end #Constants
+def self.input_file_names
+	"#{Open_tax_solver_directory}/US_1040_template.txt"
+end #input_file_names
 def self.parse(acquisition, pattern=Full_regexp, tax_year=Default_tax_year) #acquisition=next
 	lines=acquisition.lines.map do |line|
 		matchData=pattern.match(line)
@@ -111,8 +114,9 @@ include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_include(included_modules, NoDB, "")
-	assert(File.exists?(Data_source_directory), Dir["#{Data_source_directory}/*"].inspect)
-	assert(File.exists?(OTS_template_filename), "File #{OTS_template_filename} doesnot exist.")
+	Dir[input_file_names].each do |f|
+		assert(File.exists?(f), Dir["#{Data_source_directory}/*"].inspect)
+	end #each
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
