@@ -13,10 +13,14 @@ include GenericFiles::Assertions
 extend GenericFiles::Assertions::ClassMethods
 module Constants
 Default_tax_year=2012
-Open_tax_solver_directory="../OpenTaxSolver#{Default_tax_year}_*/examples_and_templates/US_1040/"
-Data_source_directory='test/data_sources'
-OTS_template_filename="#{Open_tax_solver_directory}/US_1040_template.txt"
-OTS_SQL_dump_filename="#{Data_source_directory}/OTS_SQL_dump_#{Default_tax_year}.sql"
+Open_tax_solver_directory="../OpenTaxSolver2012_10.00"
+Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
+Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_Lawson.txt"
+Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
+
+Open_tax_solver_binary="#{Open_tax_solver_directory}/bin/taxsolve_US_1040_2012"
+Command="#{Open_tax_solver_binary} #{Open_tax_solver_input} >#{Open_tax_solver_sysout}"
+OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Delimiter='\s+'
 Specific_types=['\?\?', '0', ';', '0\s+;', 'Yes']
@@ -28,7 +32,7 @@ Description_regexp=/#{Description_pattern}/
 Full_regexp=/#{Symbol_pattern}#{Type_pattern}#{Description_pattern}/
 end #Constants
 def self.input_file_names
-	"#{Open_tax_solver_directory}/US_1040_template.txt"
+	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #input_file_names
 def self.parse(acquisition, pattern=Full_regexp, tax_year=Default_tax_year) #acquisition=next
 	lines=acquisition.lines.map do |line|
@@ -40,7 +44,7 @@ def self.parse(acquisition, pattern=Full_regexp, tax_year=Default_tax_year) #acq
 	end #each_line
 end #parse
 def self.input_file_names
-	"#{Open_tax_solver_directory}/US_1040_template.txt"
+	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #input_file_names
 def self.coarse_filter
 	raw_acquisitions.map do |acquisition|
@@ -115,7 +119,7 @@ def assert_pre_conditions
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_include(included_modules, NoDB, "")
 	Dir[input_file_names].each do |f|
-		assert(File.exists?(f), Dir["#{Data_source_directory}/*"].inspect)
+		assert(File.exists?(f), Dir["#{Open_tax_solver_data_directory}/*"].inspect)
 	end #each
 end #assert_pre_conditions
 def assert_post_conditions

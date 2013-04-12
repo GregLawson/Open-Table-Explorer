@@ -67,7 +67,7 @@ def test_raw_acquisitions
 end #raw_acquisitions
 def test_coarse_filter
 	assert_not_empty(OpenTaxSolver.coarse_filter.compact, OpenTaxSolver.coarse_filter.inspect)
-	assert_operator(84, :==, OpenTaxSolver.coarse_filter.size, OpenTaxSolver.coarse_filter.inspect)
+	assert_operator(80, :<=, OpenTaxSolver.coarse_filter.size, OpenTaxSolver.coarse_filter.inspect)
 end #coarse_filter
 def test_coarse_rejections
 	OpenTaxSolver.coarse_rejections.each do |acquisition|
@@ -88,7 +88,7 @@ def test_all
 		end #if
 	end.compact #select
 	assert_not_empty(ret.compact, ret.inspect)
-	assert_operator(84, :==, OpenTaxSolver.all.size, OpenTaxSolver.fine_rejections.inspect)
+	assert_operator(80, :<=, OpenTaxSolver.all.size, OpenTaxSolver.fine_rejections.inspect)
 	OpenTaxSolver.all(Default_tax_year).each do |ots|
 		assert_instance_of(OpenTaxSolver, ots)
 		assert_instance_of(Hash, ots.attributes)
@@ -108,7 +108,6 @@ def test_all
 	assert_instance_of(String, OpenTaxSolver.dump[0])
 	assert_not_equal('"', OpenTaxSolver.dump[0][0], OpenTaxSolver.dump[0][0..20])
 	assert_equal("\n", OpenTaxSolver.dump[0][-1], OpenTaxSolver.dump[0][0..20])
-	IO.binwrite(OTS_SQL_dump_filename, OpenTaxSolver.dump.join(''))
 end #all
 def test_fine_rejections
 	OpenTaxSolver.fine_rejections.each do |r|
@@ -133,8 +132,10 @@ def test_assert_full_match
 end #assert_full_match
 def test_dump_sql_to_file
 	assert_equal(:OpenTaxSolver, model_name?)
-	filename="#{Data_source_directory}/#{model_name?}_#{Default_tax_year}.sql"
+	filename="db/SQL/Export/#{model_name?}_#{Default_tax_year}.sql"
 	assert_respond_to(model_class?, :dump_sql_to_file)
 	model_class?.dump_sql_to_file(filename)
+	sysout=`#{Command}`
+	puts "sysout=#{sysout}"
 end #dump_sql_to_file
 end #OpenTaxSolver
