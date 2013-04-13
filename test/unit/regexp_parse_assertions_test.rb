@@ -10,7 +10,9 @@ require_relative '../../test/assertions/regexp_parse_assertions.rb'
 require_relative '../../test/unit/default_assertions_tests.rb'
 class RegexpParseAssertionsTest < TestCase
 include RegexpParse::Examples
+extend RegexpParse::Examples::ClassMethods
 include DefaultAssertionTests
+include DefaultAssertionTests::ClassMethods
 def test_class_assert_invariant
 	regexp_string='K.*C'
 	test_tree=RegexpParse.new(regexp_string)
@@ -40,10 +42,13 @@ def test_assert_round_trip
 end #assert_round_trip
 def test_value_of
 	name=:Parenthesized
-	form=:string
-	assert_equal(RegexpParse::Examples::Parenthesized_string, RegexpParse::Examples.value_of?(name, form))
+	suffix=:_string
+	assert_nil(RegexpParse.full_name?(:Parenthesized))
+	full_name=RegexpParse.full_name?(name, suffix)
+	assert_not_nil(RegexpParse::Examples.const_get(name.to_sym))
+	assert_nil(RegexpParse::Examples.const_get(full_name.to_sym))
+	assert_equal(RegexpParse::Examples::Parenthesized_string, RegexpParse.value_of?(name, suffix))
 end #value_of
-def test_constant_name
 def test_path_array
 	name=:Parenthesized
 	suffix=:_string
@@ -75,11 +80,13 @@ def test_full_name
 end #full_name
 def test_parse_of
 	string=RegexpParse::Examples::Parenthesized_string
+	assert_equal(RegexpParse::Examples::Parenthesized_parse, RegexpParse.parse_of?('Parenthesized'))
 end #parse_of
 def test_string_of
 	name=:Parenthesized
-	form=:string
+	suffix=:_string
 	array=RegexpParse::Examples::Parenthesized_array
+	assert_equal(RegexpParse::Examples::Parenthesized_parse, RegexpParse.string_of?('Parenthesized'))
 end #string_of
 def test_array_of
 	string=RegexpParse::Examples::Parenthesized_string
@@ -90,6 +97,14 @@ def test_name_of
 	assert_not_nil(match)
 	assert_equal(3, match.size, "match=#{match.inspect}")
 end #name_of
+def test_constants_by_class
+	klass=RegexpParse
+	rps=RegexpParse::Examples.constants.select do |c|
+		RegexpParse.value_of?(c).instance_of?(klass)
+	end #select
+	assert_not_empty(rps)
+	assert_equal(rps, RegexpParse.example_constant_names_by_class(klass))
+end #example_constant_names_by_class
 def test_names
 	constants=RegexpParse::Examples.constants
 	assert_not_empty(constants)
@@ -113,7 +128,7 @@ def test_strings
 	assert_not_nil(RegexpParse::Examples.constants)
 	assert_include(RegexpParse::Examples.constants, :Dot_star_string)
 
-	assert_include(RegexpParse::Examples.methods(false), :strings)
+#	assert_include(RegexpParse::Examples.methods(false), :strings)
 
 	assert_include(RegexpParse.strings, :Dot_star_string)
 

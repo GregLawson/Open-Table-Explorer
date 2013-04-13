@@ -9,7 +9,8 @@ require_relative 'unbounded_range.rb'
 require_relative 'nested_array.rb'
 
 class RegexpTree < NestedArray
-def self.[](regexp_array)
+def self.[](*regexp_array)
+	regexp_array=RegexpParse.promote(regexp_array)
 	RegexpParse.typed?(regexp_array)
 end #brackets
 end #RegexpTree

@@ -21,27 +21,45 @@ Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_Lawson_sysout.
 Open_tax_solver_binary="#{Open_tax_solver_directory}/bin/taxsolve_US_1040_2012"
 Command="#{Open_tax_solver_binary} #{Open_tax_solver_input} >#{Open_tax_solver_sysout}"
 OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
-Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
+Symbol_pattern='^ ?(?<name>[-A-Za-z0-9?]+)'
 Delimiter='\s+'
 Specific_types=['\?\?', '0', ';', '0\s+;', 'Yes']
-Type_pattern='(\s+|'+Specific_types.map{|a| '('+Delimiter+'('+a+')'+Delimiter+')'}.join('|')+')'
-Description_pattern='\{(.+)\}'
+Type_pattern='(?<blank_or_outter>\s+|'+Specific_types.map{|a| '(?<outter>'+Delimiter+'(?<type_chars>'+a+')'+Delimiter+')'}.join('|')+')'
+Description_pattern='\{(?<description>.+)\}'
 Symbol_regexp=/#{Symbol_pattern}/
 Type_regexp=/#{Symbol_pattern}#{Type_pattern}/
 Description_regexp=/#{Description_pattern}/
-Full_regexp=/#{Symbol_pattern}#{Type_pattern}#{Description_pattern}/
+Full_regexp_array=[Symbol_pattern, Type_pattern, Description_pattern]
 end #Constants
 def self.input_file_names
 	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #input_file_names
-def self.parse(acquisition, pattern=Full_regexp, tax_year=Default_tax_year) #acquisition=next
-	lines=acquisition.lines.map do |line|
-		matchData=pattern.match(line)
-		name=matchData[1]
-		type_chars=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
-		description=matchData[-1].strip
-		hash={:name => name, :type_chars => type_chars, :description => description, :tax_year => tax_year}
-	end #each_line
+def self.parse
+	array_of_hashes=[]
+	sequence_number=0
+	raw_acquisitions.map do |acquisition|
+		puts "start loop sequence_number=#{sequence_number}"
+		begin
+		hash={}
+		regexp=Regexp.new(Full_regexp_array.join)
+		matchData=regexp.match(acquisition)
+		if matchData then
+			matchData.names.map do |n|
+				hash[n.to_sym]=matchData[n]
+				puts "before sequence_number=#{sequence_number}"
+				sequence_number=sequence_number+1
+				puts "after sequence_number=#{sequence_number}"
+				puts "end loop sequence_number=#{sequence_number}"
+			end #map
+			acquisition=matchData.post_match
+		else
+			acquisition=nil
+		end #if
+		array_of_hashes.push(hash)
+		
+		end until (acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0)
+		array_of_hashes
+	end.flatten #map
 end #parse
 def self.input_file_names
 	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
@@ -70,9 +88,9 @@ def self.coarse_rejections
 end #coarse_rejections
 def self.all(tax_year=Default_tax_year)
 	coarse_filter.map do |r| #map
-		matchData=Full_regexp.match(r)
+		matchData=Full_regexp_array.join.match(r)
 		if matchData then
-			ios=parse(r, Full_regexp)
+			ios=parse(r, Full_regexp_array.join)
 			ios.map do |hash|
 				OpenTaxSolver.new(hash, [String, String, String])
 			end #map
@@ -83,7 +101,7 @@ def self.all(tax_year=Default_tax_year)
 end #all
 def self.fine_rejections
 	coarse_filter.select do |r| #map
-		!Full_regexp.match(r)
+		!Full_regexp_array.join.match(r)
 	end #select
 end #fine_rejections
 module Examples
@@ -133,19 +151,27 @@ def assert_post_conditions
 		assert_match(Symbol_regexp, example_acquisition)
 		assert_match(Type_regexp, example_acquisition)
 		assert_match(Description_regexp, example_acquisition)
-		assert_match(Full_regexp, example_acquisition)
+		assert_match(Full_regexp_array.join, example_acquisition)
 	end #each
 #hit	fail "end of CLASS assert_post_conditions"
 end #assert_post_conditions
 def assert_full_match(acquisition)
-	assert_match(/#{Symbol_pattern}/, acquisition)
-	assert_match(/#{Delimiter}/, acquisition)
-	assert_match(/#{Type_pattern}/, acquisition)
-	assert_match(/#{Description_pattern}/, acquisition)
-	assert_match(Symbol_regexp, acquisition)
-	assert_match(Type_regexp, acquisition)
-	assert_match(Description_regexp, acquisition)
-	matchData=Full_regexp.match(acquisition)
+	message=caller_lines
+	assert_match(/#{Symbol_pattern}/, acquisition, caller_lines)
+	assert_match(/#{Delimiter}/, acquisition, caller_lines)
+	assert_match(/#{Type_pattern}/, acquisition, caller_lines)
+	assert_match(/#{Description_pattern}/, acquisition, caller_lines)
+	assert_match(Symbol_regexp, acquisition, caller_lines)
+	assert_match(Type_regexp, acquisition, caller_lines)
+	assert_match(Description_regexp, acquisition, caller_lines)
+	assert_not_empty(acquisition, caller_lines)
+	assert_not_empty(caller_lines, caller_lines)
+	assert_not_empty(Full_regexp_array, caller_lines)
+	assert_not_empty(Full_regexp_array.join, caller_lines)
+	assert_not_nil(Regexp.new(Full_regexp_array.join), caller_lines)
+	assert_instance_of(Regexp, Regexp.new(Full_regexp_array.join), caller_lines)
+	matchData=Regexp.new(Full_regexp_array.join).match(acquisition, caller_lines)
+	matchData=Full_regexp_array.join.match(acquisition, caller_lines)
 	if matchData then
 		assert_equal(14, matchData.size, matchData.inspect)
 		indices0=[2,4,6,8,10,12]
@@ -204,7 +230,7 @@ def assert_full_match(acquisition)
 			fail matchMap.inspect+matchData.inspect
 		end #case
 	else
-		assert_match(Full_regexp,acquisition)
+		assert_match(Full_regexp_array.join,acquisition)
 		fail acquisition
 	end #if
 end #assert_match

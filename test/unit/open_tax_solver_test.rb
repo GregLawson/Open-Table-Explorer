@@ -21,7 +21,7 @@ def test_CLASS_constants
 	assert_match(Symbol_regexp, Simple_acquisition)
 	assert_match(Type_regexp, Simple_acquisition)
 	assert_match(Description_regexp, Simple_acquisition)
-	assert_match(Full_regexp, Simple_acquisition)
+	assert_match(Full_regexp_array.join, Simple_acquisition)
 	OpenTaxSolver.assert_post_conditions
 
 end #Constants
@@ -29,13 +29,6 @@ def test_initialize
 	assert_not_nil(OpenTaxSolver.new)
 end #initialize
 def test_parse
-	assert_match(/(;)/, ';')
-	assert_match(/(\?\?|0|;)/, '0')
-	assert_match(/(\?\?|0|;)/, ';')
-	assert_match(/(\?\?|0|;)/, '??')
-	assert_match(/#{Type_pattern}/, ' 0 ')
-	assert_match(/#{Type_pattern}/, ' ?? ')
-	assert_match(/#{Type_pattern}/, ' ; ')
 	acquisition="L            ??       { e}\n"
 
 	matchData=Symbol_regexp.match(acquisition)
@@ -47,15 +40,15 @@ def test_parse
 	matchData=Description_regexp.match(acquisition)
 	assert_equal(' e',matchData[-1])
 
-	matchData=Full_regexp.match(acquisition)
+	matchData=Full_regexp_array.join.match(acquisition)
 	assert_equal('L',matchData[1])
 	assert_equal(matchData[2], matchData[3] || matchData[5] || matchData[7] , matchData.inspect)
-	assert_equal('0', md=Full_regexp.match('L 0 {e}')[6], md.inspect)
+	assert_equal('0', md=Full_regexp_array.join.match('L 0 {e}')[6], md.inspect)
 	type=matchData[10] || matchData[4] || matchData[6] || matchData[8]
 	assert_include(['??', ';', '0'],type, matchData.inspect)
 
 	OpenTaxSolver.assert_full_match(acquisition)
-	ios=OpenTaxSolver.parse(acquisition, Full_regexp)
+	ios=OpenTaxSolver.parse(acquisition, Full_regexp_array.join)
 	assert_instance_of(Array, ios)
 	assert_instance_of(Hash, ios[0])
 	assert_equal('L',ios[0][:name])
@@ -78,10 +71,10 @@ def test_coarse_rejections
 end #coarse_rejections
 def test_all
 	ret=OpenTaxSolver.coarse_filter.map do |r| #map
-		matchData=Full_regexp.match(r)
+		matchData=Full_regexp_array.join.match(r)
 		if matchData then
 			OpenTaxSolver.assert_full_match(r)
-			ios=OpenTaxSolver.parse(r, Full_regexp)
+			ios=OpenTaxSolver.parse(r, Full_regexp_array.join)
 			ios[0][:tax_year]=Default_tax_year
 		else
 			nil
@@ -115,21 +108,26 @@ def test_fine_rejections
 	end #each
 end #fine_rejections
 def test_assert_full_match
-	OpenTaxSolver.assert_full_match(" A28            ;       { Other deductions, listed on Sched-A page A-6.}\n")
+	OpenTaxSolver.assert_full_match('L  {e}')
+	OpenTaxSolver.assert_full_match('{e}')
+	OpenTaxSolver.assert_full_match('L ?? {e}')
+	OpenTaxSolver.assert_full_match('L 0 {e}')
+	OpenTaxSolver.assert_full_match('L ; {e}')
+	OpenTaxSolver.assert_full_match('L ; {e}')
+	OpenTaxSolver.assert_full_match('L ?? {e}')
 	OpenTaxSolver.assert_full_match("L            0       { Other deductions, listed on Sched-A page A-6.}\n")
 	OpenTaxSolver.assert_full_match("L            ;       { Other deductions, listed on Sched-A page A-6.}\n")
 	OpenTaxSolver.assert_full_match("L            ??       { Other deductions, listed on Sched-A page A-6.}\n")
 	OpenTaxSolver.assert_full_match("L                   { Other deductions, listed on Sched-A page A-6.}\n")
-	OpenTaxSolver.assert_full_match('L ?? {e}')
-	OpenTaxSolver.assert_full_match('L 0 {e}')
-	OpenTaxSolver.assert_full_match('L ; {e}')
 	
 	OpenTaxSolver.assert_full_match("L            ;       { Other deductions, listed on Sched-A page A-6.}\n")
-	OpenTaxSolver.assert_full_match('L ; {e}')
-	OpenTaxSolver.assert_full_match('L ?? {e}')
 	OpenTaxSolver.assert_full_match('L  {e}')	
+	assert(Full_regexp_array.join.match(" A28            ;       { Other deductions, listed on Sched-A page A-6.}\n"))
+	assert_match(Full_regexp_array.join, " A28            ;       { Other deductions, listed on Sched-A page A-6.}\n")
+	OpenTaxSolver.assert_full_match(" A28            ;       { Other deductions, listed on Sched-A page A-6.}\n")
 
 end #assert_full_match
+include OpenTaxSolver::Constants
 def test_dump_sql_to_file
 	assert_equal(:OpenTaxSolver, model_name?)
 	filename="db/SQL/Export/#{model_name?}_#{Default_tax_year}.sql"

@@ -34,7 +34,7 @@ def table_name?
 end #model_name?
 # returns array of hashes
 def self.parse
-	coarse= raw_acquisitions.map do |acquisition|
+	raw_acquisitions.map do |acquisition|
 		json=JSON[acquisition]
 		entries=[]
 		json['fields'].each_pair do |key, value|
@@ -128,7 +128,8 @@ Full_regexp_array=[Field_name_regexp, Start_regexp, Path_regexp, Last_field_rege
 end #Constants
 include Constants
 def self.input_file_names
-	"#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+
+	file_regexp="#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
 end #input_file_names
 def self.full_regexp_array
 	Full_regexp_array
@@ -136,7 +137,8 @@ end #full_regexp_array
 # returns array of hashes
 def self.parse 
 	array_of_hashes=[]
-	coarse= raw_acquisitions.map do |acquisition|
+	sequence_number=0
+	raw_acquisitions.map do |acquisition|
 		begin
 		hash={}
 		regexp=Regexp.new(Full_regexp_array.join)
@@ -148,8 +150,8 @@ def self.parse
 			acquisition=matchData.post_match
 		else
 			acquisition=nil
-			end #if
-		array_of_hashes << hash
+		end #if
+		array_of_hashes.push(hash)
 		end until (acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0)
 		array_of_hashes
 	end.flatten #map

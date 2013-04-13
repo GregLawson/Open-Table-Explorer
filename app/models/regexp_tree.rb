@@ -40,11 +40,11 @@ def RegexpTree.promote(node)
 		RegexpTree.new(node)
 		
 	elsif node.instance_of?(String) then 
-		RegexpTree.new(RegexpParse.new(node).to_a)
+		RegexpTree.new(RegexpParse.new(node))
 	elsif node.instance_of?(RegexpParse) then 
-		RegexpTree.new(node.to_a)
+		RegexpTree.new(node)
 	elsif node.instance_of?(Regexp) then 
-		RegexpTree.new(RegexpParse.new(node.source).to_a)
+		RegexpTree.new(RegexpParse.new(node.source))
 	else
 		raise "unexpected node=#{node.inspect}"
 	end #if
@@ -157,4 +157,12 @@ def to_regexp(options=RegexpParse::Default_options)
 end #to_regexp
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
+module Assertions
+def assert_pre_conditions
+	assert_kind_of(NestedArray, self)
+end #assert_pre_conditions
+end #Assertions
+require_relative '../../test/assertions/default_assertions.rb'
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
 end #RegexpTree

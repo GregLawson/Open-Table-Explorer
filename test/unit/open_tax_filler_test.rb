@@ -98,9 +98,16 @@ def model_class?
 	OpenTaxFormFiller::Pjsons
 end #model_name?
 include DefaultTests2
+def test_input_file_names
+	file_regexp="#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+	regexp=RegexpParse.new(file_regexp)
+	regexp.to_pathname_glob
+	assert_equal('*', regexp.to_pathname_glob)
+end #input_file_names
 def test_parse
+	context={}
 	array_of_hashes=[]
-	model_class?.raw_acquisitions.each do |acquisition|
+	model_class?.raw_acquisitions.each_with_index do |acquisition|
 		begin
 		assert_not_nil(acquisition)
 		assert(!(acquisition.nil?), "acquisition should not be nil at start of parse")
@@ -127,7 +134,7 @@ def test_parse
 			assert(acquisition.nil? | acquisition.empty? | acquisition.size==0)
 		end #if
 		assert_instance_of(Hash, hash)
-		array_of_hashes << hash
+		array_of_hashes << hash.merge(context)
 #		puts hash.inspect
 #		puts "'#{acquisition}', length=#{acquisition.size}"
 		end until (acquisition.nil?) | (acquisition.empty?) | (acquisition.size==0)
