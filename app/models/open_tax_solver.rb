@@ -138,13 +138,20 @@ def assert_post_conditions
 #hit	fail "end of CLASS assert_post_conditions"
 end #assert_post_conditions
 def assert_full_match(acquisition)
-	assert_match(/#{Symbol_pattern}/, acquisition)
-	assert_match(/#{Delimiter}/, acquisition)
-	assert_match(/#{Type_pattern}/, acquisition)
-	assert_match(/#{Description_pattern}/, acquisition)
-	assert_match(Symbol_regexp, acquisition)
-	assert_match(Type_regexp, acquisition)
-	assert_match(Description_regexp, acquisition)
+	message=caller_lines
+	assert_match(/#{Symbol_pattern}/, acquisition, caller_lines)
+	assert_match(/#{Delimiter}/, acquisition, caller_lines)
+	assert_match(/#{Type_pattern}/, acquisition, caller_lines)
+	assert_match(/#{Description_pattern}/, acquisition, caller_lines)
+	assert_match(Symbol_regexp, acquisition, caller_lines)
+	assert_match(Type_regexp, acquisition, caller_lines)
+	assert_match(Description_regexp, acquisition, caller_lines)
+	assert_not_empty(acquisition, caller_lines)
+	assert_not_empty(caller_lines, caller_lines)
+	assert_not_empty(Full_regexp_array, caller_lines)
+	assert_not_empty(Full_regexp_array.join, caller_lines)
+	assert_not_nil(Regexp.new(Full_regexp_array.join), caller_lines)
+	assert_instance_of(Regexp, Regexp.new(Full_regexp_array.join), caller_lines)
 	matchData=Full_regexp.match(acquisition)
 	if matchData then
 		assert_equal(14, matchData.size, matchData.inspect)
