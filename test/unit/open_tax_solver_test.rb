@@ -16,7 +16,7 @@ extend OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
 extend OpenTableExplorer::Finance::Constants
 def test_run_tax_solver
-	form='Federal/f1040'
+	form='1040'
 	jurisdiction='US'
 	sysout=`#{Command}`
 	puts "sysout=#{sysout}"

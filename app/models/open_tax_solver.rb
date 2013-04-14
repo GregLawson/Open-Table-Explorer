@@ -20,7 +20,7 @@ module Constants
 Open_Tax_Filler_Directory='../OpenTaxFormFiller'
 Data_source_directory='test/data_sources'
 Default_tax_year=2012
-Open_tax_solver_directory="../OpenTaxSolver2012_10.00"
+Open_tax_solver_directory=Dir["../OpenTaxSolver2012_*"][0]
 Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
 Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_Lawson.txt"
 Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
