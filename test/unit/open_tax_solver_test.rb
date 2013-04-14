@@ -13,6 +13,54 @@ class OpenTaxSolverTest < DefaultTestCase2
 include DefaultTests2
 include OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
+def test_run_tax_solver
+	sysout=`#{Command}`
+	puts "sysout=#{sysout}"
+end #test_run_tax_solver
+def 	test_run_tax_solver_to_Form_filler
+	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
+	puts "sysout=#{sysout}"
+end #test_run_tax_solver_to_Form_filler
+def 	test_run_tax_form_filler
+#
+#2. In the main directory, run
+#./script/fillin_values FORM_NAME INPUT.json OUTPUT_FILE
+#where form name is something like f8829 or f1040.
+#3. Your OUTPUT_FILE should be your desired pdf filename.
+#	sysout=`#{Open_Tax_Filler_Directory}/script/fillin_values FORM_NAME {Data_source_directory}/US_1040_OTS.json {Data_source_directory}/otff_output.pdf`
+
+#!/bin/bash
+
+#: ${YEAR_DIR:=2012}
+#FORM=$1
+#DATA=$2
+#FDF=/tmp/output.fdf
+
+#node script/apply_values.js ${YEAR_DIR}/definition/${FORM}.json \
+#       ${YEAR_DIR}/transform/${FORM}.json ${DATA} > /tmp/output.fdf
+
+#pdftk ${YEAR_DIR}/PDF/${FORM}.pdf fill_form ${FDF} output $3
+	form='Federal/f1040'
+	form_filename=form.sub('/','_')
+	year_dir='2012'
+	data="#{Data_source_directory}/US_1040_OTS.json"
+	assert(File.exists?(data))
+	fdf='/tmp/output.fdf'
+	output_pdf="#{Data_source_directory}/#{form_filename}_otff.pdf"
+	assert(File.exists?(data))
+	pdf_input="#{Open_Tax_Filler_Directory}/"
+#	assert(File.exists?(data))
+	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{year_dir}/definition/#{form}.json #{Open_Tax_Filler_Directory}/#{year_dir}/transform/#{form}.json #{data} > #{fdf}`
+	assert_equal('', sysout, "nodejs sysout=#{sysout}")
+
+	assert(File.exists?('test/data_sources/'), 'test/data_sources/ does not exist')
+	sysout=`pdftk #{Open_Tax_Filler_Directory}/#{year_dir}/PDF/#{form}.pdf fill_form #{fdf} output #{output_pdf}`
+	assert_equal('', sysout, "pdftk sysout=#{sysout}")
+	assert(File.exists?('test/data_sources/Federal_f1040_otff.pdf'), Dir['test/data_sources/*'].join(';'))
+	
+	sysout=`pdftoppm -jpeg  #{output_pdf} #{form_filename}`
+	assert_equal('', sysout, "pdftoppm sysout=#{sysout}")
+end #test_run_tax_form_filler
 def test_CLASS_constants
 	assert_match(/#{Symbol_pattern}/, Simple_acquisition)
 	assert_match(/#{Delimiter}/, Simple_acquisition)
@@ -61,6 +109,7 @@ def test_parse
 	assert_equal('L',ios[0][:name])
 	assert_equal('??', ios[0][:type_chars])
 	assert_equal('e',ios[0][:description])
+
 end #parse
 def test_raw_acquisitions
 	assert_equal(1, OpenTaxSolver.raw_acquisitions.size)
@@ -135,7 +184,5 @@ def test_dump_sql_to_file
 	filename="db/SQL/Export/#{model_name?}_#{Default_tax_year}.sql"
 	assert_respond_to(model_class?, :dump_sql_to_file)
 	model_class?.dump_sql_to_file(filename)
-	sysout=`#{Command}`
-	puts "sysout=#{sysout}"
 end #dump_sql_to_file
 end #OpenTaxSolver

@@ -31,18 +31,30 @@ Type_regexp=/#{Symbol_pattern}#{Type_pattern}/
 Description_regexp=/#{Description_pattern}/
 Full_regexp=/#{Symbol_pattern}#{Type_pattern}#{Description_pattern}/
 Full_regexp_array=[Symbol_pattern, Type_pattern, Description_pattern]
+Open_Tax_Filler_Directory='../OpenTaxFormFiller'
+Data_source_directory='test/data_sources'
 end #Constants
+include Constants
 def self.input_file_names
 	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #input_file_names
-def self.parse(acquisition, pattern=Full_regexp, tax_year=Default_tax_year) #acquisition=next
+def self.parse
+	sequence_number=0
+	raw_acquisitions.map do |acquisition|
 	lines=acquisition.lines.map do |line|
-		matchData=pattern.match(line)
-		name=matchData[1]
-		type_chars=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
-		description=matchData[-1].strip
+		regexp=Regexp.new(Full_regexp_array.join)
+		matchData=regexp.match(line)
+		if matchData then
+			name=matchData[1]
+			type_chars=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
+			description=matchData[-1].strip
+		end #if
+		tax_year=2012
 		hash={:name => name, :type_chars => type_chars, :description => description, :tax_year => tax_year}
-	end #each_line
+		sequence_number=sequence_number+1
+		hash=hash.merge({:id => sequence_number})
+	end.compact #each_line
+	end.flatten #each_acquisition
 end #parse
 def self.input_file_names
 	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
@@ -69,18 +81,8 @@ def self.coarse_rejections
 		end #each_line
 	end.flatten.compact #select
 end #coarse_rejections
-def self.all(tax_year=Default_tax_year)
-	coarse_filter.map do |r| #map
-		matchData=Full_regexp.match(r)
-		if matchData then
-			ios=parse(r, Full_regexp)
-			ios.map do |hash|
-				OpenTaxSolver.new(hash, [String, String, String])
-			end #map
-		else
-			nil
-		end #if
-	end.compact.flatten #map
+def self.all
+	All
 end #all
 def self.fine_rejections
 	coarse_filter.select do |r| #map
@@ -218,6 +220,9 @@ def assert_full_match(acquisition)
 end #assert_match
 end #ClassMethods
 end #Assertions
+module Constants
+All=OpenTaxSolver.all_initialize
+end #Constants
 require_relative '../../test/assertions/default_assertions.rb'
 include Assertions
 include Examples
