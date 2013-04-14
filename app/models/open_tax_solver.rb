@@ -30,6 +30,7 @@ Symbol_regexp=/#{Symbol_pattern}/
 Type_regexp=/#{Symbol_pattern}#{Type_pattern}/
 Description_regexp=/#{Description_pattern}/
 Full_regexp=/#{Symbol_pattern}#{Type_pattern}#{Description_pattern}/
+Full_regexp_array=[Symbol_pattern, Type_pattern, Description_pattern]
 end #Constants
 def self.input_file_names
 	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
