@@ -6,12 +6,19 @@
 #
 ###########################################################################
 require_relative '../../app/models/generic_files.rb'
-class OpenTaxSolver
-include GenericFiles
-extend GenericFiles::ClassMethods
-include GenericFiles::Assertions
-extend GenericFiles::Assertions::ClassMethods
+module OpenTableExplorer
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
+def shell_command(command_string)
+	sysout=`#{command_string}`
+	puts "sysout=#{sysout}"
+	assert_equal('', sysout, "#{command_string} \nsysout=#{sysout}")
+	sysout
+end #shell_command
+module Finance
 module Constants
+Open_Tax_Filler_Directory='../OpenTaxFormFiller'
+Data_source_directory='test/data_sources'
 Default_tax_year=2012
 Open_tax_solver_directory="../OpenTaxSolver2012_10.00"
 Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
@@ -20,6 +27,33 @@ Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_Lawson_sysout.
 
 Open_tax_solver_binary="#{Open_tax_solver_directory}/bin/taxsolve_US_1040_2012"
 Command="#{Open_tax_solver_binary} #{Open_tax_solver_input} >#{Open_tax_solver_sysout}"
+OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
+end #Constants
+class TaxForms
+include Constants
+include OpenTableExplorer
+def initialize(form, jurisdiction='US')
+	@form=form
+	@jurisdiction=jurisdiction
+end #initialize
+def run_open_tax_solver
+	open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_Lawson.txt"
+	open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
+	command="#{Open_tax_solver_binary} #{open_tax_solver_input} >#{open_tax_solver_sysout}"
+	shell_command(command)
+end #run_open_tax_solver
+end #TaxForms
+end #Finance
+end #OpenTableExplorer
+class OpenTaxSolver
+include GenericFiles
+extend GenericFiles::ClassMethods
+include GenericFiles::Assertions
+extend GenericFiles::Assertions::ClassMethods
+extend OpenTableExplorer::Finance::Constants
+module Constants
+include OpenTableExplorer::Finance::Constants
+extend OpenTableExplorer::Finance::Constants
 OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Delimiter='\s+'

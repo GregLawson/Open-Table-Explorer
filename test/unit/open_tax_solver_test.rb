@@ -12,10 +12,15 @@ require_relative '../assertions/regexp_parse_assertions.rb'
 class OpenTaxSolverTest < DefaultTestCase2
 include DefaultTests2
 include OpenTaxSolver::Constants
+extend OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
+extend OpenTableExplorer::Finance::Constants
 def test_run_tax_solver
+	form='Federal/f1040'
+	jurisdiction='US'
 	sysout=`#{Command}`
 	puts "sysout=#{sysout}"
+	OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction).run_open_tax_solver
 end #test_run_tax_solver
 def 	test_run_tax_solver_to_Form_filler
 	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
@@ -103,13 +108,12 @@ def test_parse
 	assert_include(['??', ';', '0'],type, matchData.inspect)
 
 	OpenTaxSolver.assert_full_match(acquisition)
-	ios=OpenTaxSolver.parse(acquisition, Full_regexp)
+	ios=OpenTaxSolver.parse
 	assert_instance_of(Array, ios)
 	assert_instance_of(Hash, ios[0])
-	assert_equal('L',ios[0][:name])
-	assert_equal('??', ios[0][:type_chars])
-	assert_equal('e',ios[0][:description])
-
+#	assert_equal('L',ios[0][:name])
+#	assert_equal('??', ios[0][:type_chars])
+#	assert_equal('e',ios[0][:description])
 end #parse
 def test_raw_acquisitions
 	assert_equal(1, OpenTaxSolver.raw_acquisitions.size)
@@ -130,15 +134,12 @@ def test_all
 		matchData=Full_regexp.match(r)
 		if matchData then
 			OpenTaxSolver.assert_full_match(r)
-			ios=OpenTaxSolver.parse(r, Full_regexp)
-			ios[0][:tax_year]=Default_tax_year
 		else
 			nil
 		end #if
 	end.compact #select
-	assert_not_empty(ret.compact, ret.inspect)
 	assert_operator(80, :<=, OpenTaxSolver.all.size, OpenTaxSolver.fine_rejections.inspect)
-	OpenTaxSolver.all(Default_tax_year).each do |ots|
+	OpenTaxSolver.all.each do |ots|
 		assert_instance_of(OpenTaxSolver, ots)
 		assert_instance_of(Hash, ots.attributes)
 		assert_respond_to(ots.attributes, :values)
