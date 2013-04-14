@@ -32,20 +32,23 @@ end #Constants
 class TaxForms
 include Constants
 include OpenTableExplorer
+attr_reader :form, :jurisdiction, :tax_year, :form_filename, :open_tax_solver_directory, :open_tax_solver_data_directory, :ots_template_filename, :output_pdf
 def initialize(form, jurisdiction='US', tax_year=Finance::Constants::Default_tax_year)
 	@form=form
 	@jurisdiction=jurisdiction
 	@tax_year=tax_year
+	@open_tax_solver_directory="../OpenTaxSolver#{@tax_year}_10.00"
+	@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@jurisdiction}_#{@form}"
+	@ots_template_filename="#{Open_tax_solver_data_directory}/#{@jurisdiction}_#{@form}_template.txt"
+	@form_filename=@form.sub('/','_')
+	@output_pdf="#{Data_source_directory}/#{@form_filename}_otff.pdf"
+
 end #initialize
 def run_open_tax_solver
-	open_tax_solver_directory="../OpenTaxSolver#{@tax_year}_10.00"
-	open_tax_solver_data_directory="#{open_tax_solver_directory}/examples_and_templates/US_1040"
 	open_tax_solver_input="#{open_tax_solver_data_directory}/US_1040_Lawson.txt"
 	open_tax_solver_sysout="#{open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
 	command="#{Open_tax_solver_binary} #{open_tax_solver_input} >#{open_tax_solver_sysout}"
 	shell_command(command)
-	form_filename=@form.sub('/','_')
-	output_pdf="#{Data_source_directory}/#{form_filename}_otff.pdf"
 end #run_open_tax_solver
 end #TaxForms
 end #Finance
