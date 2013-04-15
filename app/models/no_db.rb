@@ -9,6 +9,18 @@ require_relative '../../app/models/global.rb'
 require_relative '../../app/models/generic_table_html.rb' # in test_helper?
 require_relative '../../app/models/generic_grep.rb' # in test_helper?
 require_relative '../../app/models/column_group.rb'
+# sudo apt-get install ruby-activerecord-3.2
+# gem install activerecord
+# gem install activerecord-mysql-adapter
+require 'rubygems'
+require 'active_record'
+ActiveRecord::Base.establish_connection(
+  :adapter  => 'mysql',
+  :database => 'database',
+  :username => 'greg',
+  :password => 'password',
+  :host     => 'localhost')
+
 require 'yaml'
 require 'active_support/all'
 # Methods in common bettween ActiveRecord::Base and NoDB
