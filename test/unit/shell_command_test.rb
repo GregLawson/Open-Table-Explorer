@@ -1,6 +1,6 @@
-require 'test/unit'
-require '/home/greg/Desktop/git/no_rails/app/models/shell_command.rb'
-class WirelessTest < Test::Unit::TestCase
+require_relative 'test_environment'
+require_relative '../../app/models/shell_command.rb'
+class ShellCommandTest < Test::Unit::TestCase
 include Parse
 def test_delimiter_regexp
 	assert_equal(['1', '2'], parse("1,2", Parse.delimiter_regexp(",")))
