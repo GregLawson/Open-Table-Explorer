@@ -17,15 +17,18 @@ include OpenTaxSolver::Examples
 extend OpenTableExplorer::Finance::Constants
 def test_run_tax_solver
 	form='1040'
-	jurisdiction='US'
+	jurisdiction=:US
 	sysout=`#{Command}`
-	puts "sysout=#{sysout}"
-	OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction).run_open_tax_solver
-end #test_run_tax_solver
-def 	test_run_tax_solver_to_Form_filler
+	puts "test_run_tax_solver sysout=#{sysout}"
+	form=OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction)
+	form.assert_post_conditions
+	form.run_open_tax_solver
+end #run_open_tax_solver
+def 	test_run_tax_solver_to_filler
 	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
-	puts "sysout=#{sysout}"
-end #test_run_tax_solver_to_Form_filler
+	puts "test_run_tax_solver_to_Form_filler sysout=#{sysout}"
+	OpenTableExplorer::Finance::TaxForms.new('1040', :US).run_open_tax_solver_to_filler
+end #run_open_tax_solver_to_filler
 def 	test_run_tax_form_filler
 #
 #2. In the main directory, run
@@ -62,9 +65,13 @@ def 	test_run_tax_form_filler
 	sysout=`pdftk #{Open_Tax_Filler_Directory}/#{year_dir}/PDF/#{form}.pdf fill_form #{fdf} output #{output_pdf}`
 	assert_equal('', sysout, "pdftk sysout=#{sysout}")
 	assert(File.exists?('test/data_sources/Federal_f1040_otff.pdf'), Dir['test/data_sources/*'].join(';'))
+#debug	sysout=`evince test/data_sources/Federal_f1040_otff.pdf`
+	assert_equal('', sysout, "evince sysout=#{sysout}")
 	
 	sysout=`pdftoppm -jpeg  #{output_pdf} #{form_filename}`
 	assert_equal('', sysout, "pdftoppm sysout=#{sysout}")
+	sysout=`display  Federal_f1040-1.jpg`
+	assert_equal('', sysout, "display sysout=#{sysout}")
 end #test_run_tax_form_filler
 def test_CLASS_constants
 	assert_match(/#{Symbol_pattern}/, Simple_acquisition)

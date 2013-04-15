@@ -9,6 +9,7 @@ require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
 module OpenTaxFormFiller
 module Constants
 Default_tax_year=2012
+Data_source_directory='test/data_sources'
 end #Constants
 
 class Definitions
@@ -22,7 +23,6 @@ module Constants
 include OpenTaxFormFiller::Constants
 Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
 Input_filenames="#{Open_tax_filler_directory}/definition/Federal/f*.json"
-Data_source_directory='test/data_sources'
 OTF_SQL_dump_filename="#{Data_source_directory}/OTF_SQL_dump_#{Default_tax_year}.sql"
 end #Constants
 include Constants

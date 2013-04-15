@@ -7,19 +7,23 @@
 ###########################################################################
 require_relative '../../app/models/generic_files.rb'
 module OpenTableExplorer
+module Constants
+Data_source_directory='test/data_sources'
+end #Constants
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def shell_command(command_string)
+	puts command_string
 	sysout=`#{command_string}`
 	puts "sysout=#{sysout}"
-	assert_equal('', sysout, "#{command_string} \nsysout=#{sysout}")
+	assert_equal('', sysout, "command_string=#{command_string} \nsysout=#{sysout}")
 	sysout
 end #shell_command
 module Finance
 module Constants
-Open_Tax_Filler_Directory='../OpenTaxFormFiller'
-Data_source_directory='test/data_sources'
+include OpenTableExplorer::Constants
 Default_tax_year=2012
+Open_Tax_Filler_Directory='../OpenTaxFormFiller'
 Open_tax_solver_directory=Dir["../OpenTaxSolver2012_*"][0]
 Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
 Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_Lawson.txt"
@@ -35,14 +39,15 @@ include OpenTableExplorer
 attr_reader :form, :jurisdiction, :tax_year, :form_filename, :open_tax_solver_directory, :open_tax_solver_data_directory, :ots_template_filename, :output_pdf
 def initialize(form, jurisdiction='US', tax_year=Finance::Constants::Default_tax_year)
 	@form=form
-	@jurisdiction=jurisdiction
+	@jurisdiction=jurisdiction # :US, or :CA
 	@tax_year=tax_year
-	@open_tax_solver_directory="../OpenTaxSolver#{@tax_year}_10.00"
-	@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@jurisdiction}_#{@form}"
-	@ots_template_filename="#{Open_tax_solver_data_directory}/#{@jurisdiction}_#{@form}_template.txt"
-	@form_filename=@form.sub('/','_')
+	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"][0]
+	@form_filename="#{@jurisdiction.to_s}_#{@form}"
+	@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}"
+	@open_tax_solver_output="#{open_tax_solver_data_directory}/#{@form_filename}_Lawson.txt"
+	@ots_template_filename="#{Open_tax_solver_data_directory}/#{@jurisdiction.to_s}_#{@form}_template.txt"
 	@output_pdf="#{Data_source_directory}/#{@form_filename}_otff.pdf"
-
+	
 end #initialize
 def run_open_tax_solver
 	open_tax_solver_input="#{open_tax_solver_data_directory}/US_1040_Lawson.txt"
@@ -50,6 +55,20 @@ def run_open_tax_solver
 	command="#{Open_tax_solver_binary} #{open_tax_solver_input} >#{open_tax_solver_sysout}"
 	shell_command(command)
 end #run_open_tax_solver
+def run_open_tax_solver_to_filler
+	command="nodejs #{@open_Tax_Filler_Directory}/script/json_ots.js #{@open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json"
+	shell_command(command)
+end #run_open_tax_solver_to_filler
+module Assertions
+def assert_post_conditions
+	assert(File.exists?(@open_tax_solver_directory), caller_lines)
+	assert(File.exists?(@open_tax_solver_data_directory), caller_lines)
+	assert(File.exists?(@open_tax_solver_output), caller_lines)
+	assert(File.exists?(@ots_template_filename), caller_lines)
+	assert(File.exists?(@output_pdf), "@output_pdf=#{@output_pdf}"+caller_lines)
+end #assert_post_conditions
+end #Assertions
+include Assertions
 end #TaxForms
 end #Finance
 end #OpenTableExplorer
