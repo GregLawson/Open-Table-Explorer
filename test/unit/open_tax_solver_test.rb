@@ -72,6 +72,7 @@ def 	test_run_tax_form_filler
 	assert_equal('', sysout, "pdftoppm sysout=#{sysout}")
 	sysout=`display  Federal_f1040-1.jpg`
 	assert_equal('', sysout, "display sysout=#{sysout}")
+	assert(File.exists?(output_pdf), "output_pdf=#{output_pdf}"+caller_lines)
 end #test_run_tax_form_filler
 def test_CLASS_constants
 	assert_match(/#{Symbol_pattern}/, Simple_acquisition)

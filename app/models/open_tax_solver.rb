@@ -65,7 +65,6 @@ def assert_post_conditions
 	assert(File.exists?(@open_tax_solver_data_directory), caller_lines)
 	assert(File.exists?(@open_tax_solver_output), caller_lines)
 	assert(File.exists?(@ots_template_filename), caller_lines)
-	assert(File.exists?(@output_pdf), "@output_pdf=#{@output_pdf}"+caller_lines)
 end #assert_post_conditions
 end #Assertions
 include Assertions
