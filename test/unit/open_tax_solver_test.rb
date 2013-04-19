@@ -18,36 +18,26 @@ extend OpenTableExplorer::Finance::Constants
 def test_run_tax_solver
 	form='1040'
 	jurisdiction=:US
-	sysout=`#{Command}`
-	puts "test_run_tax_solver sysout=#{sysout}"
+#	sysout=`#{Command}`
+#	assert_equal('', sysout, "test_run_tax_solver sysout=#{sysout}")
 	form=OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction)
 	form.assert_post_conditions
 	form.run_open_tax_solver
 end #run_open_tax_solver
 def 	test_run_tax_solver_to_filler
+	assert(File.exists?(Open_Tax_Filler_Directory))
+	assert(File.exists?(Open_Tax_Filler_Directory+'/script/apply_values.js'))
+	data="#{Data_source_directory}/US_1040_OTS.json"
 	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
-	puts "test_run_tax_solver_to_Form_filler sysout=#{sysout}"
-	OpenTableExplorer::Finance::TaxForms.new('1040', :US).run_open_tax_solver_to_filler
+	assert_equal('', sysout, "test_run_tax_solver_to_Form_filler sysout=#{sysout}")
+	assert(File.exists?(data))
+	results=OpenTableExplorer::Finance::TaxForms.new('1040', :US).run_open_tax_solver_to_filler
+	assert_equal(0, results.exit_status)
+	assert_empty(results.errors)
 end #run_open_tax_solver_to_filler
 def 	test_run_tax_form_filler
 #
-#2. In the main directory, run
-#./script/fillin_values FORM_NAME INPUT.json OUTPUT_FILE
-#where form name is something like f8829 or f1040.
-#3. Your OUTPUT_FILE should be your desired pdf filename.
-#	sysout=`#{Open_Tax_Filler_Directory}/script/fillin_values FORM_NAME {Data_source_directory}/US_1040_OTS.json {Data_source_directory}/otff_output.pdf`
 
-#!/bin/bash
-
-#: ${YEAR_DIR:=2012}
-#FORM=$1
-#DATA=$2
-#FDF=/tmp/output.fdf
-
-#node script/apply_values.js ${YEAR_DIR}/definition/${FORM}.json \
-#       ${YEAR_DIR}/transform/${FORM}.json ${DATA} > /tmp/output.fdf
-
-#pdftk ${YEAR_DIR}/PDF/${FORM}.pdf fill_form ${FDF} output $3
 	form='Federal/f1040'
 	form_filename=form.sub('/','_')
 	year_dir='2012'
@@ -55,9 +45,8 @@ def 	test_run_tax_form_filler
 	assert(File.exists?(data))
 	fdf='/tmp/output.fdf'
 	output_pdf="#{Data_source_directory}/#{form_filename}_otff.pdf"
-	assert(File.exists?(data))
 	pdf_input="#{Open_Tax_Filler_Directory}/"
-#	assert(File.exists?(data))
+	assert(File.exists?(data))
 	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{year_dir}/definition/#{form}.json #{Open_Tax_Filler_Directory}/#{year_dir}/transform/#{form}.json #{data} > #{fdf}`
 	assert_equal('', sysout, "nodejs sysout=#{sysout}")
 
@@ -73,7 +62,7 @@ def 	test_run_tax_form_filler
 	sysout=`display  Federal_f1040-1.jpg`
 	assert_equal('', sysout, "display sysout=#{sysout}")
 	assert(File.exists?(output_pdf), "output_pdf=#{output_pdf}"+caller_lines)
-end #test_run_tax_form_filler
+end #run_tax_form_filler
 def test_CLASS_constants
 	assert_match(/#{Symbol_pattern}/, Simple_acquisition)
 	assert_match(/#{Delimiter}/, Simple_acquisition)
