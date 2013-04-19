@@ -183,7 +183,7 @@ Quantified_operator_array=["{", "3", ",", "4", "}"]
 Quantified_operator_string=Quantified_operator_array.join
 Quantified_repetition_array=[".", ["{", "3", ",", "4", "}"]]
 Quantified_repetition_string=Quantified_repetition_array.join
-#Quantified_repetition_parse=RegexpParse.new(Quantified_repetition_string)
+Quantified_repetition_parse=RegexpParse.new(Quantified_repetition_string)
 Composite_regexp_array=["t", "e", "s", "t", "/",
 	  	[["[", "a", "-", "z", "A", "-", "Z", "0", "-", "9", "_", "]"], "*"],
 	 	["[", ".", "]"],
