@@ -1,7 +1,9 @@
 require_relative 'test_environment'
 require_relative '../../app/models/shell_command.rb'
-class ShellCommandTest < Test::Unit::TestCase
+require_relative 'default_test_case.rb'
+class ShellCommandsTest < DefaultTestCase2
 include Parse
+include ShellCommands::Examples
 def test_delimiter_regexp
 	assert_equal(['1', '2'], parse("1,2", Parse.delimiter_regexp(",")))
 	assert_equal(['2', '3'], parse("2,3", Parse.delimiter_regexp(",")))
@@ -13,7 +15,7 @@ def test_delimiter_regexp
 	assert_equal(CSV, Parse.delimiter_regexp(","))
 end #delimiter_regexp
 def test_terminator_regexp
-	assert_equal(['1', '2', '3'], parse("1\n2\n3\n", LINES))
+	assert_equal(['1', '2', '3'], parse("1\n2\n3\n", LINES), "")
 	assert_equal(LINES, Parse.terminator_regexp('\n'))
 end #terminator_regexp
 def test_parse_string
@@ -82,14 +84,13 @@ def test_parse_name_values
 		end #if
 	end #map
 end #parse_name_values
-COMMAND_STRING='echo "1 2;3 4"'
-EXAMPLE=ShellCommand.new(COMMAND_STRING)
 def test_initialize
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
 	assert_equal("", EXAMPLE.errors)
 	assert_equal(0, EXAMPLE.exit_status.exitstatus)
 	assert_equal(EXAMPLE.exit_status.pid, EXAMPLE.pid)
+	assert_equal("Hello World\n", Hello_world.output)
 end #initialize
 def test_system_output
 	ret=[] #make method scope not block scope so it can be returned
@@ -114,8 +115,14 @@ def test_rows_and_columns
 	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns)
 end #rows_and_columns
 def test_inspect
+	Hello_world.assert_post_conditions
+	assert_equal("Hello World\n", Hello_world.output)
+	assert_equal("Hello World\n", Hello_world.inspect)
 	assert_equal("", EXAMPLE.inspect)
 end #inspect
+def test_assert_post_conditions
+	Hello_world.assert_post_conditions
+end #assert_post_conditions
 def test_NetworkInterface
 	lines=parse(NetworkInterface::IFCONFIG.output, LINES)
 	double_lines=NetworkInterface::IFCONFIG.output.split("\n\n")

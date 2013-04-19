@@ -59,7 +59,7 @@ def parse_name_values(array, pairs, new_names, pattern)
 	end #map
 end #parse_name_values
 end #Parse
-class ShellCommand
+class ShellCommands
 attr_reader :command_string, :output, :errors, :exit_status, :pid
 include Parse
 # execute same command again (also called by new.
@@ -107,8 +107,25 @@ def inspect
 	end #each
 	ret
 end #inspect
-end #ShellCommand
+module Assertions
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
+def assert_post_conditions
+	assert_empty(@errors)
+	assert_equal(0, @exit_status)
+end #assert_post_conditions
+end #Assertions
+include Assertions
+module Examples
+Hello_world=ShellCommands.new('echo "Hello World"')
+
+COMMAND_STRING='echo "1 2;3 4"'
+EXAMPLE=ShellCommands.new(COMMAND_STRING)
+
+end #Examples
+include Examples
+end #ShellCommands
 class NetworkInterface
-IFCONFIG=ShellCommand.new('/sbin/ifconfig')
+IFCONFIG=ShellCommands.new('/sbin/ifconfig')
 #puts IFCONFIG.inspect
 end #NetworkInterface
