@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
+require_relative '../../app/models/shell_command.rb'
 module BlueTooth
 module Constants
 end #Constants
@@ -101,7 +102,7 @@ include Assertions
 extend Assertions::ClassMethods
 BluezTestDeviceList.assert_pre_conditions
 module Examples
-Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
+Devices=ShellCommand.new('')
 
 All=BluezTestDeviceList.all_initialize
 end #Examples
