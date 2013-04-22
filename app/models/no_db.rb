@@ -16,9 +16,9 @@ require 'rubygems'
 require 'active_record'
 ActiveRecord::Base.establish_connection(
   :adapter  => 'mysql',
-  :database => 'database',
+  :database => 'default_schema',
   :username => 'greg',
-  :password => 'password',
+#  :password => 'password',
   :host     => 'localhost')
 
 require 'yaml'

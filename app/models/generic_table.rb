@@ -5,7 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/global.rb'
+require_relative '../../app/models/global.rb'
+require_relative '../../app/models/generic_table_html.rb' # in test_helper?
+require_relative '../../app/models/generic_table_association.rb' # in test_helper?
+require_relative '../../app/models/generic_grep.rb' # in test_helper?
+require_relative '../../app/models/column_group.rb'
 #require 'test/assertions/generic_table_assertions.rb' # in test_helper?
 # Methods in common bettween ActiveRecord::Base and NoDB
 module Generic_Table
@@ -147,13 +151,13 @@ include Generic_Table
 extend Generic_Table::ClassMethods
 include GenericTableAssociation
 extend GenericTableAssociation::ClassMethods
-include ActionView::Helpers::UrlHelper
+#Rails only? include ActionView::Helpers::UrlHelper
 
 
 end #class Base
 end #module ActiveRecord
 module Common
-require 'app/models/IncludeModuleClassMethods.rb'
+#gone_manual! require 'app/models/IncludeModuleClassMethods.rb'
 def Generic_Table.class_of_name(name)
 	 return name.to_s.constantize
 rescue
@@ -530,7 +534,7 @@ end #def
 end # Generic_Table
 module NoDB # provide duck-typed ActiveRecord like functions.
 attr_reader :attributes
-include ActiveModel # trying to fulfill Rails 3 promise that ActiveModel would allow non-ActiveRecord classes to share methods.
+#gone_manual! include ActiveModel # trying to fulfill Rails 3 promise that ActiveModel would allow non-ActiveRecord classes to share methods.
 include Generic_Table
 extend Generic_Table::ClassMethods
 module ClassMethods

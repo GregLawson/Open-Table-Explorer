@@ -5,8 +5,10 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/generic_table.rb' # in test_helper?
 class Url < ActiveRecord::Base
-include Generic_Table
+#include Generic_Table # really needed?
 has_many :stream_methods
 after_initialize :init
 def init
@@ -62,4 +64,5 @@ end #stream_method
 def implicit_stream_link
 	return StreamLink.new
 end #implicit_stream_link
+require_relative '../../test/assertions/ruby_assertions.rb'
 end #Url

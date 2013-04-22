@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/global.rb'
+require_relative '../../app/models/global.rb'
 module GenericTableAssociation
 module ClassMethods
 # List names (as Strings) of all foreign keys.
@@ -85,7 +85,7 @@ end #is_association_patterns
 def is_association?(association_name)
 	# Don’t create associations that have the same name as instance methods of ActiveRecord::Base.
 	if ActiveRecord::Base.instance_methods_from_class.include?(association_name.to_s) then
-		raise "# Don’t create associations that have the same name (#{association_name.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class})."
+#bad char		raise "# Don’t create associations that have the same name (#{association_name.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class})."
 	end #if
 	if association_name.to_s[-4,4]=='_ids' then # automatically generated
 		return false
@@ -109,7 +109,7 @@ def is_association_to_many?(association_name)
 		return false
 	end
 end #is_association_to_many
-@@Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
+#debug @@Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
 
 def is_polymorphic_association?(association_name)
 	return is_association_patterns?(association_name,@@Example_polymorphic_patterns)
