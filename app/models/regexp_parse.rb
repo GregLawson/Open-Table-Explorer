@@ -433,38 +433,54 @@ end #pathnames
 def grep(pattern, delimiter="\n")
 	pathnames.files_grep(pattern, delimiter="\n")
 end #grep
-def RegexpParse.case?(node)
-	if node.instance_of?(String) then
-		:String # commonly termination condition
+def RegexpParse.typed?(node)
+	node=RegexpParse.promote(node)
+	if node.parse_tree==[] then
+		puts "nil"
+		nil
+	elsif node.instance_of?(String) then
+		puts "node=#{node.inspect}, node.class.name=#{node.class.name}"
+		RegexpToken[node] # commonly termination condition
 	else
 		node=RegexpParse.promote(node)
 		if postfix_operator=RegexpParse.postfix_expression?(node) then
-			:RegexpRepetition
+			RegexpRepetition.new(node.parse_tree)
 		elsif node.to_a[-1]==']' then
-			:CharacterClass
+			CharacterClass.new(node.parse_tree)
 		elsif node.to_a[-1]==')' then
-			:RegexpParen
+			RegexpParen.new(node.parse_tree)
 		elsif node==Empty_language_parse then
-			:RegexpEmpty
+			RegexpEmpty.new(node.parse_tree)
 		elsif RegexpParse.postfix_expression?(node.to_a[0]) =='|' then
-			:RegexpAlternative
+			RegexpAlternative.new(node.parse_tree)
 		else #sequence is default
-			:RegexpSequence
+			if node.parse_tree.size == 0 then
+				puts "nil"
+				nil
+			elsif node.parse_tree.size == 1 then
+				puts "node.parse_tree.size == 1\nnode=#{node.inspect}, node.class.name=#{node.class.name}"
+				RegexpParse.typed?(node.parse_tree[0]) #recurse to discard extra nesting
+			else
+				args=node.parse_tree.map do |n| 
+					puts "n=#{n.inspect}, n.class.name=#{n.class.name}"
+					RegexpParse.typed?(n)
+				end #map
+				RegexpSequence.new(args)
+			end #if
 		end #if
 	end #if
 end #case
-def RegexpParse.typed?(node)
-	node=RegexpParse.promote(node)
-	if node.instance_of?(Array) then
-		node.map{|e| typed?(e)}
-	end #if
-	type=RegexpParse.case?(node)
-	if type==:String then
-		RegexpToken.new(node)	
-	else
-		eval(type.to_s).new(node.parse_tree)
-	end #if
-end #typed
+#	node=RegexpParse.promote(node)
+#	if node.instance_of?(Array) then
+#		node.map{|e| typed?(e)}
+#	end #if
+#	type=RegexpParse.case?(node)
+#	if type==:String then
+#		RegexpToken.new(node)	
+#	else
+#		eval(type.to_s).new(node.parse_tree)
+#	end #if
+#end #typed
 module Constants
 Any_binary_char_string='[\000-\377]'
 Any_binary_string="#{Any_binary_char_string}*"

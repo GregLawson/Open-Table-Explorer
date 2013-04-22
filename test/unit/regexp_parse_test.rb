@@ -457,18 +457,18 @@ def test_pathnames
 end #pathnames
 def test_grep(pattern, delimiter="\n")
 end #grep
-def test_case
-	assert_equal(:String, RegexpParse.case?('ab'))
-	assert_equal(:RegexpRepetition, RegexpParse.case?(Any_binary_string_parse))
-	assert_equal(:RegexpRepetition, RegexpParse.case?(Dot_star_parse))
-	assert_equal(:CharacterClass, RegexpParse.case?(Any_binary_char))
-	assert_equal(:RegexpParen, RegexpParse.case?(/(b)/))
+def test_old_case
+	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Any_binary_string_parse))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Dot_star_parse))
+	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char))
+	assert_instance_of(RegexpParen, RegexpParse.typed?(/(b)/))
 	assert_match(Empty_language_parse.to_regexp, '')
 	assert_no_match(Empty_language_parse.to_regexp, 'a')
-	assert_equal(:RegexpEmpty, RegexpParse.case?(/\A\z/))
-	assert_equal(:RegexpSequence, RegexpParse.case?(/ab/))
+	assert_instance_of(RegexpEmpty, RegexpParse.typed?(/\A\z/))
+	assert_instance_of(RegexpSequence, RegexpParse.typed?(/ab/))
 	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
-	assert_equal(:RegexpAlternative, RegexpParse.case?(/a|b/))
+	assert_instance_of(RegexpAlternative, RegexpParse.typed?(/a|b/))
 end #case
 def test_typed
 	assert_not_nil(RegexpParse.typed?(Any_binary_char_parse))
