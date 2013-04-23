@@ -54,14 +54,14 @@ def test_class_assert_pre_conditions
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_post_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
+	model_class?.example_constant_values_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
 	end #each
 #	fail "got to end of default test."
 end #class_assert_post_conditions
 #ClassMethods
 def test_assert_pre_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
+	model_class?.example_constant_values_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
 	end #each
 #	fail "got to end of default test."
@@ -73,7 +73,7 @@ def test_assert_invariant
 #	fail "got to end of default test."
 end #def assert_invariant
 def test_assert_post_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
+	model_class?.example_constant_values_by_class(model_class?).each do |c|
 		c.assert_post_conditions
 	end #each
 #	fail "got to end of default test."
