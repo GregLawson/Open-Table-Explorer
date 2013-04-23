@@ -5,6 +5,12 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/generic_table.rb' # in test_helper?
+require_relative '../../app/models/stream_method.rb'
+require_relative '../../app/models/stream_pattern.rb'
+require_relative '../../app/models/stream_pattern_argument.rb'
+require_relative '../../app/models/url.rb'
 class StreamMethod  < ActiveRecord::Base # like a method def
 include Generic_Table
 has_many :stream_method_calls
@@ -162,4 +168,30 @@ def fire!
 		end #each
 		return self
 end #fire
+module Examples
+end #Examples
+include Examples
+module Assertions
+include DefaultAssertions
+module ClassMethods
+include DefaultAssertions::ClassMethods
+def assert_pre_conditions
+	StreamMethod.all.map do |u|
+		stream_methods= StreamMethod.find_all_by_name(u.scheme)
+		assert_not_nil(stream_methods)
+		assert_instance_of(Array, stream_methods)
+	end #map
+#	fail "end of class assert_pre_conditions "
+end #assert_pre_conditions
+end #ClassMethods
+def assert_pre_conditions
+	assert_instance_of(StreamMethod, self)
+	stream_methods= Url.find_all_by_name(scheme)
+	assert_not_nil(stream_methods)
+	assert_instance_of(Array, stream_methods)
+#	fail "end of instance assert_pre_conditions"
+end #assert_pre_conditions
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
 end #StreamMethod

@@ -5,10 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative '../../app/models/stream_method.rb'
 class StreamMethod < ActiveRecord::Base
 include Test::Unit::Assertions
-require 'rails/test_help'
+#require 'rails/test_help'
 def self.assert_no_syntax_error(code)
 	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
 	instance_eval(method_def)
