@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_table.rb' # in test_helper?
+require_relative '../../app/models/stream_method.rb'
 class Url < ActiveRecord::Base
 #include Generic_Table # really needed?
 has_many :stream_methods
