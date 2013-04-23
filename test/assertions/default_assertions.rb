@@ -20,7 +20,7 @@ def assert_pre_conditions
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
-	self.example_constant_names_by_class(self).each do |c|
+	self.example_constant_values_by_class(self).each do |c|
 		c.assert_pre_conditions
 	end #each
 end #class_assert_post_conditions

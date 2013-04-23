@@ -10,7 +10,7 @@ require_relative 'default_test_case.rb'
 require_relative '../../app/models/url.rb'
 class UrlTest < DefaultTestCase2
 include DefaultTests2
-@@test_url_record=Url.find_by_name('nmap_local_network_0')
+Test_url_record=Url.find_by_name('nmap_local_network_0')
 def test_find_by_name
  	assert_equal('EEG', Url.find_by_name('EEG').href)
 end #find_by_name
@@ -26,14 +26,19 @@ end #def
 def test_uriHash
 end #def
 def test_scheme
-	assert_equal('shell', @@test_url_record.scheme)
+	assert_equal('shell', Test_url_record.scheme)
 end #scheme
 def test_stream_method
-	scheme_name=@@test_url_record.scheme
+	scheme_name=Test_url_record.scheme
 	scheme_name=scheme_name[0..0].upcase+scheme_name[1..-1]
 	assert_equal('Shell', scheme_name)
-	stream_method= StreamMethod.find_by_name(scheme_name)
-	assert_not_nil(@@test_url_record.stream_method)
+	stream_method= StreamMethod.find_all_by_name(scheme_name)
+	assert_not_nil(stream_method)
+	assert_instance_of(Array, stream_method)
+	stream_method.all? do |s|
+		assert_instance_of(StreamMethod, s)
+		assert_equal('Shell', s.name)
+	end #all
 end #stream_method
 def implicit_stream_link
 end #implicit_stream_link
@@ -48,4 +53,7 @@ def test_id_equal
 	assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
 #	assert_test_id_equal
 end #test_id_equal
+def test_assert_pre_conditions
+	Test_url_record.assert_pre_conditions
+end #assert_pre_conditions
 end #Url
