@@ -65,4 +65,13 @@ def implicit_stream_link
 	return StreamLink.new
 end #implicit_stream_link
 require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/default_assertions.rb'
+module Assertions
+include DefaultAssertions
+module ClassMethods
+include DefaultAssertions::ClassMethods
+end #ClassMethods
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
 end #Url
