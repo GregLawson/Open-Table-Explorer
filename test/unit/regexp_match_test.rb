@@ -39,6 +39,17 @@ RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td class=xl33 width=54>Show #</td>
   <td class=xl33 width=200>Title</td>
  </tr>')
+def test_to_exact_regexp
+	unambiguous_string=%{abc0123}
+	assert_match(Regexp.new(unambiguous_string), unambiguous_string)
+	assert_equal(unambiguous_string, Regexp.new(unambiguous_string).source)
+	assert_match(unambiguous_string.to_exact_regexp, unambiguous_string)
+	ambiguous_string=%{()[]{}.?+*}
+	assert_match(Regexp.new(Regexp.escape(ambiguous_string)), ambiguous_string)
+	assert_equal(Regexp.escape(ambiguous_string), Regexp.new(Regexp.escape(ambiguous_string)).source)
+	assert_match(Regexp.new(Regexp.escape(ambiguous_string)), ambiguous_string)
+	assert_match(ambiguous_string.to_exact_regexp, ambiguous_string)
+end #to_exact_regexp
 def test_promote
 	assert_instance_of(RegexpMatch, RegexpMatch.promote('a', 'b'))
 	assert_equal(Alternative, RegexpMatch.promote('a', 'b'))
