@@ -14,6 +14,18 @@ module Assertions
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
+def assert(test, msg = UNASSIGNED)
+  case msg
+  when UNASSIGNED
+    msg = nil
+  when String, Proc
+  else
+    bt = caller.reject { |s| s.rindex(MINI_DIR, 0) }
+    raise ArgumentError, "assertion message must be String or Proc, but #{msg.class} was given.", bt
+  end
+  super caller_lines+msg.to_s
+end
+       
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
 	message+=" Class #{self.class.name}"
