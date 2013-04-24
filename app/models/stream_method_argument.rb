@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_table.rb' # in test_helper?
+require_relative '../../app/models/stream_method.rb' # in test_helper?
 class StreamMethodArgument < ActiveRecord::Base # like the arguments of a methed def
 include Generic_Table
 belongs_to :stream_method
@@ -39,8 +40,17 @@ def assert_pre_conditions
 #	fail "end of class assert_pre_conditions "
 end #assert_pre_conditions
 end #ClassMethods
+def assert_invariant
+end #assert_invariant
 def assert_pre_conditions
 	assert_instance_of(StreamMethodArgument, self)
+	assert_not_empty(name, inspect)
+	assert_not_empty(self[:name], inspect)
+	assert_not_empty(self['name'], inspect)
+	assert_not_empty(direction, inspect)
+	assert_include(['Input', 'Output'], direction)
+	assert_not_nil(stream_method, inspect)
+	assert_empty(self[:catfish], inspect)
 #	fail "end of instance assert_pre_conditions"
 end #assert_pre_conditions
 end #Assertions

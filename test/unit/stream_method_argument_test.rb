@@ -14,9 +14,7 @@ include DefaultTests2
 include StreamMethodArgument::Examples
 def test_initialize
 	arg=StreamMethodArgument.first
-	assert_not_empty(arg.name, arg.inspect)
-	assert_not_empty(arg[:name], arg.inspect)
-	assert_not_empty(arg['name'], arg.inspect)
+	arg.assert_pre_conditions
 end #initialize
 def test_gui_name
 	assert_equal("@URL", First_URL_argument.gui_name)
