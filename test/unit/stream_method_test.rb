@@ -23,11 +23,11 @@ rescue  StandardError => exception_raised
 	puts "$!=#{$!}"
 end #def	  
 def test_gui_name
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	assert_equal("@input", acq.gui_name('input'))
 end #gui_name
 def test_instance_name_reference
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	assert_equal("self[:input]", acq.instance_name_reference('input'))
 end #instance_name_reference
 def test_default_method

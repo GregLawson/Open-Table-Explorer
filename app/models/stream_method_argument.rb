@@ -11,10 +11,21 @@ class StreamMethodArgument < ActiveRecord::Base # like the arguments of a methed
 include Generic_Table
 belongs_to :stream_method
 has_many :stream_links
+def initialize(name, direction)
+end #initialize
 def self.logical_primary_key
 	return [:stream_method_id, :name]
 end #logical_key
+def gui_name
+	return "@#{self.name}"
+end #gui_name
+def instance_name_reference
+	return "self[:#{self.name}]"
+end #instance_name_reference
 module Examples
+URL_name='URL'
+URL_argument=StreamMethodArgument.find_all_by_name(URL_name)
+First_URL_argument=URL_argument.first
 end #Examples
 include Examples
 require_relative '../../test/assertions/default_assertions.rb'
