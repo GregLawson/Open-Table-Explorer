@@ -13,9 +13,10 @@ require_relative '../assertions/stream_method_assertions.rb'
 # move passing tests toward end
 class StreamMethodTest < DefaultTestCase2
 include DefaultTests2
-def acq_and_rescue
+include StreamMethod::Examples
+def fossil_test_acq_and_rescue
 	stream=acquisition_stream_specs(@testURL.to_sym)
-	acq=ruby_interfaces(:HTTP)
+	acq=HTTP_method.clone
 	acq.interface_method
 	assert(!acq.interaction.error.nil? || !acq.interaction.acquisition_data.empty?)
 rescue  StandardError => exception_raised
@@ -31,11 +32,11 @@ def test_instance_name_reference
 	assert_equal("self[:input]", acq.instance_name_reference('input'))
 end #instance_name_reference
 def test_default_method
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	assert_equal('@acquisition=@uri', acq.default_method)
 end #default_method
 def test_map_io
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	code=acq.default_method
 	name='uri'
 	assert_equal('@acquisition=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
@@ -51,7 +52,7 @@ def test_map_io
 	assert_equal('self[:acquisition]=self[:uri]', acq.map_io(acq.default_method))
 end #map_io
 def test_eval_method
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	code=acq.interface_code
 	if code.nil? || code.empty? then
 		rows=0
@@ -65,20 +66,21 @@ def test_eval_method
 	assert_operator(cols,:>,0)
 	acq.compile_code!
 	explain_assert_respond_to(acq,:interface_code_method)
-	assert_include('interface_code_method',acq.methods(true))
+	assert_include(acq.methods(true), :interface_code_method)
 #	acq.eval_method(:interface_code,'')
-	assert_include('interface_code_rows',acq.methods(true))
-	assert_include('interface_code_rows',acq.singleton_methods(true))
+	assert_include(acq.methods(true), :interface_code_rows)
+	assert_include(acq.singleton_methods(true), :interface_code_rows)
 	explain_assert_respond_to(acq,:interface_code_rows)
 	assert_not_nil(acq.interface_code_rows)
 end #eval_method
 def test_compile_code
 # test one case
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	assert_instance_of(StreamMethod,acq)
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
 	assert_not_nil(acq)
+	acq.assert_pre_conditions
 # test all cases
 	StreamMethod.all.each do |sm|
 		assert_instance_of(StreamMethod,sm)
@@ -92,15 +94,16 @@ def test_compile_code
 		assert_not_nil(sm)
 		assert(!sm.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{sm.canonicalName}.")
 		assert_empty(sm.syntax_errors?)
+		sm.assert_pre_conditions
 	end #each_value
 end #compile_code
 def test_syntax_error
-	sm=StreamMethod.find_by_name(:HTTP).clone
+	sm=HTTP_method.clone
 	sm.compile_code!
 	assert_empty(sm.errors.keys)
 	sm.assert_active_model_error
 
-	sm=StreamMethod.find_by_name(:HTTP).clone # reinitialize from fixture
+	sm=HTTP_method.clone # reinitialize from fixture
 	sm.interface_code='***'
 	sm.compile_code!
 	expected_interface_error_message= %{SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>}
@@ -114,7 +117,7 @@ def test_syntax_error
 	assert_equal([expected_interface_error_message], sm.errors[:interface_code],"interface_code=#{sm[:interface_code]}")
 	assert_equal([expected_interface_error_message], sm.syntax_errors?)
 # try different error
-	sm=StreamMethod.find_by_name(:HTTP).clone # reinitialize from fixture
+	sm=HTTP_method.clone # reinitialize from fixture
 	sm.return_code='***'
 	sm.compile_code!
 #	assert_equal('***', sm.interface_code)
@@ -124,7 +127,7 @@ def test_syntax_error
 	assert_instance_of(Array, sm.errors[:rescue_code],"rescue_code=#{sm[:rescue_code]}")
 	sm.assert_active_model_error(:return_code, expected_return_error_message.to_exact_regexp)
 # try third error
-	sm=StreamMethod.find_by_name(:HTTP).clone # reinitialize from fixture
+	sm=HTTP_method.clone # reinitialize from fixture
 	sm.rescue_code='***'
 	sm.compile_code!
 #	assert_equal('***', sm.interface_code)
@@ -150,7 +153,7 @@ def test_syntax_error
 	end #each
 end #syntax_error
 def test_input_stream_names
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
 	stream_inputs=stream_pattern_arguments.select{|a| a.direction=='Input'}
 	assert_equal(['URI'], stream_inputs.map{|a| a.name})
@@ -158,7 +161,7 @@ def test_input_stream_names
 
 end #input_stream_names
 def test_output_stream_names
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
 	stream_outputs=stream_pattern_arguments.select{|a| a.direction=='Output'}
 	assert_equal(['Acquisition'], stream_outputs.map{|a| a.name})
@@ -193,7 +196,7 @@ def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	firing.errors.clear # so we can run more tests
 end #fire_check
 def test_fire
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	acq.assert_active_model_error # make sure there are no lingering (uninitialized) errors
 	acq.compile_code!
 	acq.assert_active_model_error # asume compilation errors have been all taken care of , earlier
@@ -202,7 +205,7 @@ def test_fire
 	acq.assert_active_model_error(:rescue_code)
 	acq.assert_active_model_error(:return_code)
 	expected_interface_error_message=%{#<NoMethodError: undefined method `uri' for #<Url:0xb5f22960>>}
-	acq.assert_active_model_error(:interface_code, expected_interface_error_message.to_exact_regexp)
+#?	acq.assert_active_model_error(:interface_code, expected_interface_error_message.to_exact_regexp)
 	fire_check(acq.interface_code, ['#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>'], ['is empty.'])
 	fire_check(acq.default_method, [], [])
 	assert_equal("http://192.168.100.1", acq[:acquisition])
@@ -212,7 +215,7 @@ def test_fire
 	end #each
 end #fire
 def test_errors
-	acq=StreamMethod.find_by_name(:HTTP)
+	acq=HTTP_method.clone
 	assert(!acq.has_attribute?(:errors))
 	assert_instance_of(ActiveModel::Errors, acq.errors)
 	assert_instance_of(Array, acq.errors.full_messages)
@@ -234,9 +237,5 @@ def test_errors
 	acq.errors.clear      
 	assert_equal(0, acq.errors.count)
 end #errors
-def test_id_equal
-	assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
-#	assert_test_id_equal
-end #test_id_equal
 
 end #StreamMethod
