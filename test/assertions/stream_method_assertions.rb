@@ -220,16 +220,22 @@ end #errors
 def assert_invariant
 	assert_instance_of(StreamMethod, self)
 	assert(!respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
+
+	input_streams.each do |stream|
+		assert_instance_of(StreamMethodArgument, stream)
+		code=code.gsub(stream.gui_name, stream.instance_name_reference)
+#		code=code+":input(#{stream.gui_name}, #{instance_name_reference(stream)})"
+	end #each
 end # class_assert_invariant
 def assert_pre_conditions
-	input_stream_names.each do |input|
+	input_streams.each do |input|
 	end #each
 	assert_empty(syntax_errors?)
 	assert_equal(0, errors.count)
 #	fail "end of instance assert_pre_conditions"
 end #assert_pre_conditions
 def assert_post_conditions
-	input_stream_names.each do |input|
+	input_streams.each do |input|
 	end #each
 	assert(!respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
 	assert_empty(syntax_errors?)

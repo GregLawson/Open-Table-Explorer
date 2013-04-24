@@ -11,6 +11,7 @@ require_relative '../../app/models/stream_method.rb'
 require_relative '../../app/models/stream_pattern.rb'
 require_relative '../../app/models/stream_pattern_argument.rb'
 require_relative '../../app/models/url.rb'
+require_relative '../../app/models/stream_method_argument.rb' # in test_helper?
 class StreamMethod  < ActiveRecord::Base # like a method def
 include Generic_Table
 has_many :stream_method_calls
@@ -25,41 +26,35 @@ end #logical_key
 def initialize(hash=nil)
 	super(hash)
 end #initialize
-def gui_name(name)
-	return "@#{name}"
-end #gui_name
-def instance_name_reference(name)
-	return "self[:#{name}]"
-end #instance_name_reference
 def default_method
-	rhs=case input_stream_names.size
+	rhs=case input_streams.size
 	when 0 
 		'123'
 	when 1
-		gui_name(input_stream_names[0])
+		input_streams[0].gui_name
 	else
-		'['+input_stream_names.map{|n| gui_name(n)}.join(',')+']'		
+		'['+input_streams.map{|stream| stream.gui_name}.join(',')+']'		
 	end #case
-	return case output_stream_names.size
+	return case output_streams.size
 	when 0 
 		'puts '+rhs
 	when 1
-		gui_name(output_stream_names[0])+'='+rhs
+		gui_name(output_streams[0])+'='+rhs
 	else
-		output_stream_names.map{|n| gui_name(n)}.join(',')+'='+rhs
+		output_streams.map{|stream| stream.gui_name}.join(',')+'='+rhs
 	end #case
 	
 #	return lhs+'='+rhs
 end #default_method
 # Allow external setting of instance variables
 def map_io(code)
-	input_stream_names.each do |name|
-		code=code.gsub(gui_name(name), instance_name_reference(name))
-#		code=code+":input(#{gui_name(name)}, #{instance_name_reference(name)})"
+	input_streams.each do |stream|
+		code=code.gsub(stream.gui_name, stream.instance_name_reference)
+#		code=code+":input(#{stream.gui_name}, #{instance_name_reference(stream)})"
 	end #each
-	output_stream_names.each do |name|
-		code=code.gsub(gui_name(name), instance_name_reference(name))
-#		code=code+":output(#{gui_name(name)}, #{instance_name_reference(name)})"
+	output_streams.each do |stream|
+		code=code.gsub(stream.gui_name, instance_name_reference(stream))
+#		code=code+":output(#{stream.gui_name}, #{instance_name_reference(stream)})"
 	end #each
 	return code
 end #map_io
@@ -124,24 +119,24 @@ def short_error_message
 	end #if
 end #def
 
-def input_stream_names
+def input_streams
 	if stream_pattern.nil? then
 		return [] # pattern undefined
 	else
 		stream_pattern_arguments=stream_pattern.stream_pattern_arguments
 		stream_inputs=stream_pattern_arguments.select{|a| a.direction=='Input'}
-		return stream_inputs.map{|a| a.name.downcase}
+#		return stream_inputs.map{|a| a.name.downcase}
 	end #if
-end #input_stream_names
-def output_stream_names
+end #input_streams
+def output_streams
 	if stream_pattern.nil? then
 		return [] # pattern undefined
 	else
 		stream_pattern_arguments=stream_pattern.stream_pattern_arguments
 		stream_outputs=stream_pattern_arguments.select{|a| a.direction=='Output'}
-		return stream_outputs.map{|a| a.name.downcase}
+#		return stream_outputs.map{|a| a.name.downcase}
 	end #if
-end #output_stream_names
+end #output_streams
 def fire!
 	errors.clear
 	interface_code_method
@@ -152,7 +147,7 @@ def fire!
 	else
 		errors.add(:interface_code,"Not subclass of StandardError: " + "couldn't acquire data from #{url}")
 	ensure
-		output_stream_names.each do |name|
+		output_streams.each do |name|
 			if self[name.to_sym].nil? then
 				errors.add(name,'is empty.')
 				if errors.empty? then

@@ -23,14 +23,6 @@ rescue  StandardError => exception_raised
 	puts 'Error: ' + exception_raised.inspect + ' could not get data from '+stream.url
 	puts "$!=#{$!}"
 end #def	  
-def test_gui_name
-	acq=HTTP_method.clone
-	assert_equal("@input", acq.gui_name('input'))
-end #gui_name
-def test_instance_name_reference
-	acq=HTTP_method.clone
-	assert_equal("self[:input]", acq.instance_name_reference('input'))
-end #instance_name_reference
 def test_default_method
 	acq=HTTP_method.clone
 	assert_equal('@acquisition=@uri', acq.default_method)
@@ -39,15 +31,15 @@ def test_map_io
 	acq=HTTP_method.clone
 	code=acq.default_method
 	name='uri'
-	assert_equal('@acquisition=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	assert_equal('@acquisition=self[:uri]', code.gsub(acq.stream.gui_name, acq.instance_name_reference(stream)))
 	name='acquisition'
-	assert_equal('self[:acquisition]=@uri', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	assert_equal('self[:acquisition]=@uri', code.gsub(acq.stream.gui_name, acq.instance_name_reference(stream)))
 	name='uri'
-	code=code.gsub(acq.gui_name(name), acq.instance_name_reference(name))
-	assert_equal('@acquisition=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	code=code.gsub(acq.stream.gui_name, acq.instance_name_reference(stream))
+	assert_equal('@acquisition=self[:uri]', code.gsub(acq.stream.gui_name, acq.instance_name_reference(stream)))
 	name='acquisition'
-	code=code.gsub(acq.gui_name(name), acq.instance_name_reference(name))
-	assert_equal('self[:acquisition]=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
+	code=code.gsub(acq.stream.gui_name, acq.instance_name_reference(stream))
+	assert_equal('self[:acquisition]=self[:uri]', code.gsub(acq.stream.gui_name, acq.instance_name_reference(stream)))
 	assert_equal('', acq.map_io(''))
 	assert_equal('self[:acquisition]=self[:uri]', acq.map_io(acq.default_method))
 end #map_io
@@ -152,22 +144,22 @@ def test_syntax_error
 		sm.assert_active_model_error
 	end #each
 end #syntax_error
-def test_input_stream_names
+def test_input_streams
 	acq=HTTP_method.clone
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
 	stream_inputs=stream_pattern_arguments.select{|a| a.direction=='Input'}
 	assert_equal(['URI'], stream_inputs.map{|a| a.name})
-	assert_equal(['uri'], acq.input_stream_names)
+#	assert_equal(['uri'], acq.input_streams)
 
-end #input_stream_names
-def test_output_stream_names
+end #input_streams
+def test_output_streams
 	acq=HTTP_method.clone
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
 	stream_outputs=stream_pattern_arguments.select{|a| a.direction=='Output'}
 	assert_equal(['Acquisition'], stream_outputs.map{|a| a.name})
-	assert_equal(['acquisition'], acq.output_stream_names)
+#	assert_equal(['acquisition'], acq.output_streams)
 
-end #output_stream_names
+end #output_streams
 def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	stream_method=StreamMethod.new
 	stream_method.assert_active_model_error(field, expected_error_message_regexp)
