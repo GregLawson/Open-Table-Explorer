@@ -12,7 +12,11 @@ class StreamMethodArgument < ActiveRecord::Base # like the arguments of a methed
 include Generic_Table
 belongs_to :stream_method
 has_many :stream_links
-def initialize(name, direction)
+def initialize(name=nil, direction=nil)
+	super() # apply ActiveRecord magic
+	self[:name]=name
+	self[:direction]=direction
+	
 end #initialize
 def self.logical_primary_key
 	return [:stream_method_id, :name]
@@ -40,19 +44,35 @@ def assert_pre_conditions
 #	fail "end of class assert_pre_conditions "
 end #assert_pre_conditions
 end #ClassMethods
+# true at all times
 def assert_invariant
-end #assert_invariant
-def assert_pre_conditions
 	assert_instance_of(StreamMethodArgument, self)
+	assert(!self.class.sequential_id?, "self.class=#{self.class}, should not be a sequential_id.")
 	assert_not_empty(name, inspect)
 	assert_not_empty(self[:name], inspect)
 	assert_not_empty(self['name'], inspect)
 	assert_not_empty(direction, inspect)
-	assert_include(['Input', 'Output'], direction)
-	assert_not_nil(stream_method, inspect)
 	assert_empty(self[:catfish], inspect)
+end #assert_invariant
+# true after creating an object from scratch
+def assert_pre_conditions
 #	fail "end of instance assert_pre_conditions"
 end #assert_pre_conditions
+# conditions after all ActiveRecord reading and initialization 
+def assert_post_conditions
+	assert_include(['Input', 'Output'], direction)
+	assert_not_nil(stream_method, inspect)
+	assert(global_name?(:StreamMethodArgument))
+	assert_constant_path_respond_to(:Generic_Table, :stream_method)
+	assert_scope_path(:StreamMethodArgument)
+	assert_constant_path_respond_to(:Generic_Table)
+	assert_constant_instance_respond_to(:Generic_Table)
+
+	assert_constant_path_respond_to(:StreamMethodArgument, :stream_method)
+	assert_constant_path_respond_to(:stream_method)
+	assert_equal('', association_state(:stream_method))
+	assert_path_to_constant(:Generic_Table)
+end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
