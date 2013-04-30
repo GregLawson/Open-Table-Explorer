@@ -28,9 +28,7 @@ def instance_name_reference
 	return "self[:#{self.name}]"
 end #instance_name_reference
 module Examples
-URL_name='URL'
-URL_argument=StreamMethodArgument.find_all_by_name(URL_name)
-First_URL_argument=URL_argument.first
+First_stream_argument=StreamMethodArgument.first
 end #Examples
 include Examples
 require_relative '../../test/assertions/default_assertions.rb'
@@ -65,12 +63,18 @@ def assert_post_conditions
 	assert(global_name?(:StreamMethodArgument))
 	assert_constant_path_respond_to(:Generic_Table, :stream_method)
 	assert_scope_path(:StreamMethodArgument)
-	assert_constant_path_respond_to(:Generic_Table)
-	assert_constant_instance_respond_to(:Generic_Table)
+	assert_constant_instance_respond_to(:Generic_Table, :association_state)
 
 	assert_constant_path_respond_to(:StreamMethodArgument, :stream_method)
-	assert_constant_path_respond_to(:stream_method)
-	assert_equal('', association_state(:stream_method))
+	assert_constant_path_respond_to(:StreamMethodArgument, :association_state)
+	assert_constant_path_respond_to(:GenericTableAssociation, :association_state)
+	assert_constant_path_respond_to(:GenericTableAssociation, :ClassMethods, :association_state)
+	assert_constant_instance_respond_to(:StreamMethodArgument, :First_stream_argument, :association_state)
+	assert_instance_of(StreamMethodArgument, StreamMethodArgument::First_stream_argument)
+	assert_include(StreamMethodArgument::First_stream_argument.public_methods, :association_state, StreamMethodArgument::First_stream_argument.public_methods)
+	assert_respond_to(StreamMethodArgument::First_stream_argument, :association_state, StreamMethodArgument::First_stream_argument.methods)
+#	puts "StreamMethodArgument::First_stream_argument.class.included_modules=#{StreamMethodArgument::First_stream_argument.class.included_modules.inspect}"
+	assert_equal('', StreamMethodArgument::First_stream_argument.association_state(:stream_method))
 	assert_path_to_constant(:Generic_Table)
 end #assert_post_conditions
 end #Assertions
