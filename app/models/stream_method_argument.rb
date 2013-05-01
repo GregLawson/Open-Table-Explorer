@@ -10,6 +10,7 @@ require_relative '../../app/models/generic_table.rb' # in test_helper?
 require_relative '../../app/models/stream_method.rb' # in test_helper?
 class StreamMethodArgument < ActiveRecord::Base # like the arguments of a methed def
 include Generic_Table
+extend GenericTableAssociation::ClassMethods
 belongs_to :stream_method
 has_many :stream_links
 def initialize(name=nil, direction=nil)
@@ -41,6 +42,18 @@ def assert_pre_conditions
 	end #map
 #	fail "end of class assert_pre_conditions "
 end #assert_pre_conditions
+def assert_post_conditions
+	StreamMethodArgument.all do |sma|
+		sma.assert_post_conditions
+	end #all
+#	fail "end of instance assert_pre_conditions"
+end #assert_post_conditions
+def assert_invariant
+	assert(global_name?(:StreamMethodArgument))
+	assert_scope_path(:StreamMethodArgument)
+	assert_path_to_constant(:Generic_Table)
+#	fail "end of instance assert_pre_conditions"
+end #assert_invariant
 end #ClassMethods
 # true at all times
 def assert_invariant
@@ -51,6 +64,7 @@ def assert_invariant
 	assert_not_empty(self['name'], inspect)
 	assert_not_empty(direction, inspect)
 	assert_empty(self[:catfish], inspect)
+	assert_include(['Input', 'Output'], direction)
 end #assert_invariant
 # true after creating an object from scratch
 def assert_pre_conditions
@@ -58,11 +72,8 @@ def assert_pre_conditions
 end #assert_pre_conditions
 # conditions after all ActiveRecord reading and initialization 
 def assert_post_conditions
-	assert_include(['Input', 'Output'], direction)
 	assert_not_nil(stream_method, inspect)
-	assert(global_name?(:StreamMethodArgument))
 	assert_constant_path_respond_to(:Generic_Table, :stream_method)
-	assert_scope_path(:StreamMethodArgument)
 	assert_constant_instance_respond_to(:Generic_Table, :association_state)
 
 	assert_constant_path_respond_to(:StreamMethodArgument, :stream_method)
@@ -73,9 +84,7 @@ def assert_post_conditions
 	assert_instance_of(StreamMethodArgument, StreamMethodArgument::First_stream_argument)
 	assert_include(StreamMethodArgument::First_stream_argument.public_methods, :association_state, StreamMethodArgument::First_stream_argument.public_methods)
 	assert_respond_to(StreamMethodArgument::First_stream_argument, :association_state, StreamMethodArgument::First_stream_argument.methods)
-#	puts "StreamMethodArgument::First_stream_argument.class.included_modules=#{StreamMethodArgument::First_stream_argument.class.included_modules.inspect}"
 	assert_equal('', StreamMethodArgument::First_stream_argument.association_state(:stream_method))
-	assert_path_to_constant(:Generic_Table)
 end #assert_post_conditions
 end #Assertions
 include Assertions
