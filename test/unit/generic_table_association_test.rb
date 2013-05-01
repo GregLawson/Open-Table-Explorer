@@ -328,6 +328,101 @@ def test_logical_primary_key_recursive_value
 end #logical_primary_key_recursive_value
 def test_logical_primary_key_value
 end #logical_primary_key_value
+def test_associated_to_s
+	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
+
+	acquisition_stream_spec.associated_to_s(:acquisition_interface,:name)
+	assert_instance_of(String,acquisition_stream_spec.associated_to_s(:acquisition_interface,:name))
+	assert_respond_to(acquisition_stream_spec,:associated_to_s)
+	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
+	acquisitions(:one).acquisition_stream_spec_id=nil
+	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
+	acquisitions(:one).acquisition_stream_spec_id=0
+
+	assert_not_nil(acquisition_stream_spec)
+#	puts acquisition_stream_spec.matching_instance_methods(/table_spec/).inspect
+#	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
+	assert_respond_to(acquisition_stream_spec,:table_spec)
+	meth=acquisition_stream_spec.method(:table_spec)
+	
+	assert_not_empty(StreamPatternArgument.foreign_key_names)
+	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
+	assert_include('stream_pattern',StreamPatternArgument.foreign_key_association_names)
+	
+
+	#~ explain_assert_respond_to(TestTable.new,:generic_table_associated_model)
+	#~ explain_assert_respond_to(TestTable.new,:stream_method_id)
+	#~ assert_association(TestTable.new,:generic_table_associated_model)
+	#~ assert_association_to_one(TestTable.new,:generic_table_associated_model)
+	#~ ass=TestTable.send(:stream_method_id)
+	#~ assert_not_nil(ass)
+	#~ associations_foreign_key_name=(TestTable.name.tableize.singularize+'_id').to_sym
+	#~ assert_include(associations_foreign_key_name,TestTable.foreign_key_association_names)
+	#~ associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
+	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) })
+	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) }.uniq)
+	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(','))
+	#~ assert_not_empty(associations_foreign_key_values, "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values} and returns type #{ass.class.name}.")
+
+	
+#	assert_not_nil(meth.call)
+#	ass=acquisition_stream_spec.send(:table_spec)
+#	if ass.nil? then
+#		return ''
+#	else
+#		return ass.send(:model_class_name,*args).to_s
+#	end
+#	puts "acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)=#{acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)}"
+end #associated_to_s
+def test_matching_associations
+	assert_equal(["frequency_id"],TableSpec.foreign_key_names)
+
+	assert_equal("Acquisition","acquisitions".classify)
+	assert_equal("Acquisition",Acquisition.name)
+	assert_equal("acquisitions",Acquisition.table_name)
+	assert_equal("Acquisition".tableize,"acquisitions")
+	assert(Generic_Table.table_exists?("acquisitions".tableize))
+	
+
+	assert_respond_to(TableSpec.new,:frequency)
+	assert_nil(TableSpec.new.frequency)
+	assert_association(TableSpec.new,"frequency")
+	assert(TableSpec.is_matching_association?("frequency"))
+	assert_association(Frequency.new,"table_specs")
+	assert_equal('frequencies',Frequency.table_name)
+	assert(TableSpec.is_association?(Frequency.table_name.singularize))
+end #matching_associations
+#end #Module GenericTableAssertions
+#module ActiveRecord
+#class Base
+def test_Base_assert_foreign_keys_not_nil
+	class_reference=StreamLink
+	class_reference.assert_foreign_keys_not_nil
+end #assert_foreign_keys_not_nil
+def test_assert_foreign_keys_not_nil
+	class_reference=StreamLink
+	assert_equal(['input_stream_method_argument_id','output_stream_method_argument_id',"store_method_id","next_method_id"], class_reference.foreign_key_names)
+	class_reference.first.assert_foreign_keys_not_nil
+end #assert_foreign_keys_not_nil
+# display possible foreign key values when nil foreign keys values are found
+def test_assert_foreign_key_not_nil
+	class_reference=StreamLink
+	association_name='input_stream_method_argument'
+	assert_association(class_reference, association_name)
+	assert_not_nil(class_reference.association_class(association_name))
+	association_class=StreamMethodArgument	
+	class_reference.all.each do |r|
+		assert_not_nil(association_class)
+		possible_foreign_key_values=association_class.all.map do |fkacr|
+			fkacr.logical_primary_key_recursive_value.join(',')
+		end.uniq #map
+		assert_not_empty(possible_foreign_key_values, "as no foreign keys.")
+		message=possible_foreign_key_values.join("\n")
+
+		assert_not_nil(r.foreign_key_value(association_name), message)
+	end #each
+	assert_foreign_key_not_nil(StreamLink.first, :input_stream_method_argument, StreamMethodArgument)
+end #assert_foreign_key_not_nil
 test 'Inter-model associations' do
 #	puts "model_classes=#{model_classes.inspect}"
 	CodeBase.rails_MVC_classes.each do |class_with_foreign_key|
@@ -398,100 +493,5 @@ def test_Association_Progression
 	assert(association_class.is_association?(association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)) ,"#{association_class.inspect}.is_association?(#{association_class.association_method_symbol(TestTable.table_name.singularize.to_sym)})")
 	assert(TestTable.is_matching_association?(:full_associated_models))
 end #test
-def test_associated_to_s
-	acquisition_stream_spec=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
 
-	acquisition_stream_spec.associated_to_s(:acquisition_interface,:name)
-	assert_instance_of(String,acquisition_stream_spec.associated_to_s(:acquisition_interface,:name))
-	assert_respond_to(acquisition_stream_spec,:associated_to_s)
-	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
-	acquisitions(:one).acquisition_stream_spec_id=nil
-	assert_equal('',acquisitions(:one).associated_to_s(:acquisition_stream_spec,:url))
-	acquisitions(:one).acquisition_stream_spec_id=0
-
-	assert_not_nil(acquisition_stream_spec)
-#	puts acquisition_stream_spec.matching_instance_methods(/table_spec/).inspect
-#	puts acquisition_stream_spec.class.similar_methods(:table_spec).inspect
-	assert_respond_to(acquisition_stream_spec,:table_spec)
-	meth=acquisition_stream_spec.method(:table_spec)
-	
-	assert_not_empty(StreamPatternArgument.foreign_key_names)
-	assert_include('stream_pattern_id',StreamPatternArgument.foreign_key_names)
-	assert_include('stream_pattern',StreamPatternArgument.foreign_key_association_names)
-	
-
-	#~ explain_assert_respond_to(TestTable.new,:generic_table_associated_model)
-	#~ explain_assert_respond_to(TestTable.new,:stream_method_id)
-	#~ assert_association(TestTable.new,:generic_table_associated_model)
-	#~ assert_association_to_one(TestTable.new,:generic_table_associated_model)
-	#~ ass=TestTable.send(:stream_method_id)
-	#~ assert_not_nil(ass)
-	#~ associations_foreign_key_name=(TestTable.name.tableize.singularize+'_id').to_sym
-	#~ assert_include(associations_foreign_key_name,TestTable.foreign_key_association_names)
-	#~ associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
-	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) })
-	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) }.uniq)
-	#~ assert_not_empty(ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(','))
-	#~ assert_not_empty(associations_foreign_key_values, "Association #{assName}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values} and returns type #{ass.class.name}.")
-
-	
-#	assert_not_nil(meth.call)
-#	ass=acquisition_stream_spec.send(:table_spec)
-#	if ass.nil? then
-#		return ''
-#	else
-#		return ass.send(:model_class_name,*args).to_s
-#	end
-#	puts "acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)=#{acquisition_stream_spec.associated_to_s(:table_spec,:model_class_name)}"
-end #test
-def test_matching_associations
-	assert_equal(["frequency_id"],TableSpec.foreign_key_names)
-
-	assert_equal("Acquisition","acquisitions".classify)
-	assert_equal("Acquisition",Acquisition.name)
-	assert_equal("acquisitions",Acquisition.table_name)
-	assert_equal("Acquisition".tableize,"acquisitions")
-	assert(Generic_Table.table_exists?("acquisitions".tableize))
-	
-
-	assert_respond_to(TableSpec.new,:frequency)
-	assert_nil(TableSpec.new.frequency)
-	assert_association(TableSpec.new,"frequency")
-	assert(TableSpec.is_matching_association?("frequency"))
-	assert_association(Frequency.new,"table_specs")
-	assert_equal('frequencies',Frequency.table_name)
-	assert(TableSpec.is_association?(Frequency.table_name.singularize))
-end #matching_associations
-#end #Module GenericTableAssertions
-#module ActiveRecord
-#class Base
-def test_Base_assert_foreign_keys_not_nil
-	class_reference=StreamLink
-	class_reference.assert_foreign_keys_not_nil
-end #assert_foreign_keys_not_nil
-def test_assert_foreign_keys_not_nil
-	class_reference=StreamLink
-	assert_equal(['input_stream_method_argument_id','output_stream_method_argument_id',"store_method_id","next_method_id"], class_reference.foreign_key_names)
-	class_reference.first.assert_foreign_keys_not_nil
-end #assert_foreign_keys_not_nil
-# display possible foreign key values when nil foreign keys values are found
-def test_assert_foreign_key_not_nil
-	class_reference=StreamLink
-	association_name='input_stream_method_argument'
-	assert_association(class_reference, association_name)
-	assert_not_nil(class_reference.association_class(association_name))
-	association_class=StreamMethodArgument	
-	class_reference.all.each do |r|
-		assert_not_nil(association_class)
-		possible_foreign_key_values=association_class.all.map do |fkacr|
-			fkacr.logical_primary_key_recursive_value.join(',')
-		end.uniq #map
-		assert_not_empty(possible_foreign_key_values, "as no foreign keys.")
-		message=possible_foreign_key_values.join("\n")
-
-		assert_not_nil(r.foreign_key_value(association_name), message)
-	end #each
-	assert_foreign_key_not_nil(StreamLink.first, :input_stream_method_argument, StreamMethodArgument)
-end #assert_foreign_key_not_nil
-
-end #test class
+end # GenericTableAssociation

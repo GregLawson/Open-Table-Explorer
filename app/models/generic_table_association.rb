@@ -352,7 +352,6 @@ def associated_to_s(association_name,method,*args)
 			return ass.send(method.to_sym,*args).to_s
 		end
 	end
-end #def
+end #associated_to_s
 
 end # GenericTableAssociation
-
