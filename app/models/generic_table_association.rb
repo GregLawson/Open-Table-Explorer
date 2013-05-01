@@ -1,11 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative '../../app/models/global.rb'
+#require_relative '../../app/models/generic_table.rb'
 module GenericTableAssociation
 module ClassMethods
 # List names (as Strings) of all foreign keys.

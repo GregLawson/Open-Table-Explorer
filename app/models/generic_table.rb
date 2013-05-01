@@ -17,7 +17,6 @@ module ClassMethods
 include GenericTableHtml::ClassMethods
 include GenericGrep::ClassMethods
 include ColumnGroup::ClassMethods
-include GenericTableAssociation::ClassMethods
 def nesting
 	return Module.nesting
 end #nesting

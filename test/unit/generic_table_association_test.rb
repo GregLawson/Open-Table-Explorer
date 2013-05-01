@@ -1,24 +1,27 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test_helper.rb'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
-require 'test/test_helper_test_tables.rb'
+require_relative 'test_environment'
+require_relative 'default_test_case.rb'
+#require 'test/test_helper_test_tables.rb'
+require_relative '../../app/models/generic_table_association.rb'
+#require 'app/models/generic_table_assertion.rb'
+require 'active_support/all'
+require 'set'
 class GenericTableAssociationTest < ActiveSupport::TestCase
-include Generic_Table
-include GenericTableAssertions
+include DefaultTests2
+#include Generic_Table
+#include GenericTableAssertions
 @@table_name='stream_patterns'
-fixtures @@table_name.to_sym
-	fixtures :table_specs
-	fixtures :acquisition_stream_specs
-	fixtures :acquisition_interfaces
-	fixtures :acquisitions
+#fixtures @@table_name.to_sym
+#	fixtures :table_specs
+#	fixtures :acquisition_stream_specs
+#	fixtures :acquisition_interfaces
+#	fixtures :acquisitions
 def test_foreign_key_names
 	content_column_names=StreamPatternArgument.content_columns.collect {|m| m.name}
 	assert_include('stream_pattern_id',StreamPatternArgument.column_names)

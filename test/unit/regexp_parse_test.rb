@@ -8,6 +8,7 @@
 require_relative 'test_environment'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
+include DefaultTests2
 include RegexpParse::Examples
 include RegexpToken::Constants
 include RegexpParse::Assertions
