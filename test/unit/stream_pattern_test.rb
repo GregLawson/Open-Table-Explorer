@@ -5,10 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
+require_relative 'test_environment'
+require_relative 'default_test_case.rb'
 class StreamPatternTest < ActiveSupport::TestCase
 set_class_variables
 def setup

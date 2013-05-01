@@ -7,11 +7,18 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative 'default_test_case.rb'
-#require 'test/test_helper_test_tables.rb'
 require_relative '../../app/models/generic_table_association.rb'
-#require 'app/models/generic_table_assertion.rb'
 require 'active_support/all'
 require 'set'
+require 'active_record'
+require_relative '../../app/models/generic_table.rb'
+require_relative '../../app/models/stream_pattern_argument.rb'
+require_relative '../../app/models/stream_pattern.rb'
+require_relative '../../app/models/stream_link.rb'
+require_relative '../../app/models/stream_method.rb'
+require_relative '../../app/models/stream_link.rb'
+require_relative '../../app/models/no_db.rb'
+require_relative '../test_helper_test_tables.rb'
 class GenericTableAssociationTest < ActiveSupport::TestCase
 include DefaultTests2
 #include Generic_Table
@@ -95,7 +102,8 @@ def test_association_methods
 
 	assert_equal_sets(["stream_pattern_arguments=", "validate_associated_records_for_stream_pattern_arguments","autosave_associated_records_for_stream_pattern_arguments", "stream_pattern_arguments"],class_reference.association_methods(association_reference))
 end #association_methods
-@@fk_association_patterns=Set.new([/^autosave_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/, /^validate_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/])
+Array_of_patterns=
+@@fk_association_patterns=Set[/^autosave_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)=$/, /^validate_associated_records_for_([a-z0-9_]+)$/, /^([a-z0-9_]+)$/]
 def test_association_patterns
 	class_reference=@@FOREIGN_KEY_ASSOCIATION_CLASS
 	association_reference=@@TABLE_NAME_WITH_FOREIGN_KEY.to_sym

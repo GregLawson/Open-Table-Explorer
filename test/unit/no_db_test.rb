@@ -1,14 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative 'test_environment'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
+require_relative 'default_test_case.rb'
 #require 'test/test_helper_test_tables.rb'
 require_relative '../../app/models/generic_table_assertion.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
