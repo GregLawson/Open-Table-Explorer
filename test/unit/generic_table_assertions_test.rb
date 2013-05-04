@@ -13,25 +13,6 @@ include GenericTableAssertion::KernelMethods
 #fixtures @@table_name.to_sym
 #fixtures :table_specs
 require 'test/test_helper_test_tables.rb'
-def test_assert_foreign_key_name
-end #assert_foreign_key_name
-def test_assert_association
-end #assert_association
-def test_assert_association_to_one
-	class_reference=StreamMethodArgument
-	association_reference=:stream_method
-	assert_association(class_reference,association_reference)
-	assert_association_to_one(class_reference,association_reference)
-	
-	assert_has_associations(TableSpec)
-	assert_has_instance_methods(TableSpec)
-
-end #assert_association_to_one
-def test_assert_association_to_many
-	assert_not_nil(table_specs(:ifconfig).class.is_association_to_many?(:acquisition_stream_specs))
-	assert_association_to_many(TableSpec,:acquisition_stream_specs)
-	assert_association_one_to_many(table_specs(:ifconfig),:acquisition_stream_specs)
-end #assert_association_to_many
 #
 # not single generic_table method
 #

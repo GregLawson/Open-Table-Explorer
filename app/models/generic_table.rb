@@ -10,6 +10,7 @@ require_relative '../../app/models/generic_table_html.rb' # in test_helper?
 require_relative '../../app/models/generic_table_association.rb' # in test_helper?
 require_relative '../../app/models/generic_grep.rb' # in test_helper?
 require_relative '../../app/models/column_group.rb'
+require_relative '../../app/models/generic_table_association.rb'
 #require 'test/assertions/generic_table_assertions.rb' # in test_helper?
 # Methods in common bettween ActiveRecord::Base and NoDB
 module Generic_Table
