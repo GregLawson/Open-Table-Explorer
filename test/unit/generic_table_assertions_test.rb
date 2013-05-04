@@ -5,14 +5,13 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-
-require 'test/test_helper'
+require_relative 'test_environment'
 require 'app/models/generic_table_assertion.rb'
 class GenericTableAssertionTest < ActiveSupport::TestCase
 include GenericTableAssertion::KernelMethods
 @@table_name='stream_patterns'
-fixtures @@table_name.to_sym
-fixtures :table_specs
+#fixtures @@table_name.to_sym
+#fixtures :table_specs
 require 'test/test_helper_test_tables.rb'
 def test_assert_foreign_key_name
 end #assert_foreign_key_name

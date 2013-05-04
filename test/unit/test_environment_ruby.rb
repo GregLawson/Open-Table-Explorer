@@ -7,4 +7,5 @@
 ###########################################################################
 require 'test/unit'
 TestCase=Test::Unit::TestCase
+require_relative 'default_test_case.rb'
 AssertionFailedError=MiniTest::Assertions
