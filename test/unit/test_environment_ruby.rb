@@ -6,6 +6,6 @@
 #
 ###########################################################################
 require 'test/unit'
-TestCase=Test::Unit::TestCase
+#TestCase=Test::Unit::TestCase #computed below
 require_relative 'default_test_case.rb'
 AssertionFailedError=MiniTest::Assertions

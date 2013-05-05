@@ -6,7 +6,6 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative 'default_test_case.rb'
 clclass GenericTableExamplesTest < TestCase
 extend DefaultAssertions::ClassMethods
 def test_example_constants_by_class

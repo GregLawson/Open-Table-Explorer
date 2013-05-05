@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+TestCase=Test::Unit::TestCase
 module DefaultTests1
 include Test::Unit::Assertions
 def test_case_pre_conditions
