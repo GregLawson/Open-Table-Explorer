@@ -24,7 +24,7 @@ def assertions_pathname?
 	"test/assertions/"+@model_filename.to_s+"_assertions.rb"
 end #assertions_pathname?
 def assertions_test_pathname?
-	"../../test/unit/"+model_name?+"_assertions.rb"
+	"test/unit/"+@model_filename.to_s+"_assertions_test.rb"
 end #assertions_test_pathname?
 end #TestEnvironment
 
