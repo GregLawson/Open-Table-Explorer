@@ -15,7 +15,7 @@ def initialize(model_class_name=self.model_class_name?)
 #	@files_root= # reltive to working directory not file as in require_relative
 end #initialize
 def model_pathname?
-	"../../app/models/"+model_name?+".rb"
+	"app/models/"+@model_filename.to_s+".rb"
 end #model_pathname?
 def model_test_pathname?
 	"../../test/unit/"+model_name?+"_assertions.rb"
