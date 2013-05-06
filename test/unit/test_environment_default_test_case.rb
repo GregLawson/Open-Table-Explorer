@@ -8,4 +8,4 @@
 require 'test/unit'
 #TestCase=Test::Unit::TestCase #computed below
 require_relative 'default_test_case.rb'
-AssertionFailedError=MiniTest::Assertions
+AssertionFailedError=MiniTest::Assertion

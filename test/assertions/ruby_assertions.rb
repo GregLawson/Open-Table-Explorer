@@ -14,6 +14,7 @@ module Assertions
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
+=begin
 def assert(test, msg = UNASSIGNED)
   case msg
   when UNASSIGNED
@@ -25,6 +26,7 @@ def assert(test, msg = UNASSIGNED)
   end
   super caller_lines+msg.to_s
 end
+=end
        
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
@@ -88,7 +90,7 @@ def explain_assert_block(message="assert_block failed.") # :yields:
     if (! yield)
       raise exception
       raise message.to_s
-      raise Test::Unit::AssertionFailedError.new(message.to_s)
+      raise AssertionFailedError.new(message.to_s)
     end
   end
 end #explain_assert_block
@@ -355,6 +357,18 @@ def assert_constant_instance_respond_to(*names)
 		assert_public_instance_method(path, method_name, message)
 	end #
 end #assert_constant_instance_respond_to
+def assert_pathname_exists(pathname)
+	assert_not_nil(pathname)
+	assert_not_empty(pathname)
+	assert(File.exists?(pathname), "File.exists?(pathname)=#{File.exists?(pathname).inspect}")
+	assert(File.exists?(File.expand_path(pathname)), "File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
+end #assert_pathname_exists
+def assert_data_file(pathname)
+	assert_pathname_exists(pathname)
+	assert(File.file?(pathname), "File.file?(pathname)=#{File.file?(pathname).inspect}")
+	assert_not_nil(File.size?(pathname))
+	assert_not_equal(0, File.size?(pathname))
+end #assert_data_file
 end #Assertions
 end #Unit
 end #Test

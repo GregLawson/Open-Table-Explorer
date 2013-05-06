@@ -129,22 +129,22 @@ def test_assert_public_instance_method
 	obj=StreamPattern.new
 	methodName=:stream_pattern_arguments
 	assert_respond_to(obj,methodName)
-	assert_raise(Test::Unit::AssertionFailedError){assert_respond_to(obj,methodName.to_s.singularize)}
+	assert_raise(AssertionFailedError){assert_respond_to(obj,methodName.to_s.singularize)}
 	assert_respond_to(obj,methodName.to_s.pluralize) 
 	assert_respond_to(obj,methodName.to_s.tableize)
-	assert_raise(Test::Unit::AssertionFailedError){assert_respond_to(obj,methodName.to_s.tableize.singularize)}
+	assert_raise(AssertionFailedError){assert_respond_to(obj,methodName.to_s.tableize.singularize)}
 	assert_public_instance_method(obj,methodName)
-	assert_raise(Test::Unit::AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.singularize)}
+	assert_raise(AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.singularize)}
 	assert_public_instance_method(obj,methodName.to_s.pluralize) 
 	assert_public_instance_method(obj,methodName.to_s.tableize)
-	assert_raise(Test::Unit::AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.tableize.singularize)}
+	assert_raise(AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.tableize.singularize)}
 
 
 end #assert_public_instance_method
 def test_assert_array_of
 	assert_array_of(['',''], String)
-	#assert_raise(Test::Unit::AssertionFailedError){assert_array_of(nil, String)}
-	#assert_raise(Test::Unit::AssertionFailedError){assert_array_of([[]], String)}
+	#assert_raise(AssertionFailedError){assert_array_of(nil, String)}
+	#assert_raise(AssertionFailedError){assert_array_of([[]], String)}
 	assert_array_of([], String)
 end #array_of
 def test_assert_no_duplicates
@@ -215,5 +215,21 @@ def test_assert_constant_instance_respond_to
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
 end #assert_constant_instance_respond_to
+def test_assert_pathname_exists
+	assert_pathname_exists('/dev/zero')
+	bad_pathname='/catfish'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+	
+	bad_pathname='../../test/unit/TestIntrospection::TestEnvironment_assertions_test.rb'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+end #assert_pathname_exists
+def test_assert_data_file
+	assert_pathname_exists('/dev/zero')
+	bad_pathname='/catfish'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+	
+	bad_pathname='../../test/unit/TestIntrospection::TestEnvironment_assertions_test.rb'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+end #assert_data_file
 end #RubyAssertionsTest
 
