@@ -198,4 +198,4 @@ extend Test::Unit::Assertions
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase
-TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).name_test_class?)
+#TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).name_test_class?)
