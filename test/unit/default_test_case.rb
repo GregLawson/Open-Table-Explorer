@@ -26,6 +26,9 @@ end #assertions_pathname?
 def assertions_test_pathname?
 	"test/unit/"+@model_filename.to_s+"_assertions_test.rb"
 end #assertions_test_pathname?
+def pathnames?
+	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
+end #pathnames
 end #TestEnvironment
 
 # methods to extract model, class from TestCase subclass
