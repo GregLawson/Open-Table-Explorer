@@ -29,6 +29,9 @@ end #assertions_test_pathname?
 def pathnames?
 	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
 end #pathnames
+def absolute_pathnames?
+	pathnames?.map {|p| File.expand_path(p)}
+end #absolute_pathnames
 end #TestEnvironment
 
 # methods to extract model, class from TestCase subclass

@@ -59,6 +59,11 @@ def test_pathnames
 	assert_equal(4, UnboundedFixnumTestEnvironment.pathnames?.size)
 	assert_array_of(UnboundedFixnumTestEnvironment.pathnames?, String)
 end #pathnames
+def test_absolute_pathnames
+	assert_instance_of(Array, UnboundedFixnumTestEnvironment.absolute_pathnames?)
+	assert_equal(4, UnboundedFixnumTestEnvironment.absolute_pathnames?.size)
+	assert_array_of(UnboundedFixnumTestEnvironment.absolute_pathnames?, String)
+end #absolute_pathnames
 def test_name_of_test
 	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
