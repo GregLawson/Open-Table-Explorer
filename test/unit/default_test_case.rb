@@ -35,6 +35,13 @@ end #absolute_pathnames
 def pathname_existance?
 	absolute_pathnames?.map {|p| File.exists?(p) ? 1 : 0}
 end #pathname_existance
+def inspect
+	existing, missing = pathnames?.partition do |p|
+		File.exists?(p)
+	end #partition
+	ret=" test for model class "+@model_class_name.to_s+"assertions_test_pathname="+assertions_test_pathname?.inspect
+	ret+="existing files=#{existing.inspect} and missing files=#{missing.inspect}"
+end #inspect
 end #TestEnvironment
 
 # methods to extract model, class from TestCase subclass

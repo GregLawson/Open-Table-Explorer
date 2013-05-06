@@ -72,6 +72,9 @@ def test_pathname_existance
 		e
 	end #all
 end #pathname_existance
+def test_inspect
+	assert_match(/exist/, UnboundedFixnumTestEnvironment.inspect)
+end #inspect
 def test_name_of_test
 	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
