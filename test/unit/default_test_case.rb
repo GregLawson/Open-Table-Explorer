@@ -32,6 +32,9 @@ end #pathnames
 def absolute_pathnames?
 	pathnames?.map {|p| File.expand_path(p)}
 end #absolute_pathnames
+def pathname_existance?
+	absolute_pathnames?.map {|p| File.exists?(p) ? 1 : 0}
+end #pathname_existance
 end #TestEnvironment
 
 # methods to extract model, class from TestCase subclass
