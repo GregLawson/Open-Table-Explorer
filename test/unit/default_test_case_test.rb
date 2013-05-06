@@ -54,6 +54,9 @@ def test_assertions_test_pathname
 	assert(File.exists?(UnboundedFixnumTestEnvironment.assertions_test_pathname?))
 	assert_data_file(UnboundedFixnumTestEnvironment.assertions_test_pathname?)
 end #assertions_test_pathname?
+def test_name_test_class
+	assert_equal(:DefaultClass4, UnboundedFixnumTestEnvironment.name_test_class?)
+end #name_test_class
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumTestEnvironment.pathnames?)
 	assert_equal(4, UnboundedFixnumTestEnvironment.pathnames?.size)

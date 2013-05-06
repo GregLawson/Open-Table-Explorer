@@ -26,6 +26,19 @@ end #assertions_pathname?
 def assertions_test_pathname?
 	"test/unit/"+@model_filename.to_s+"_assertions_test.rb"
 end #assertions_test_pathname?
+def name_test_class?
+	if File.exists?(self.assertions_test_pathname?) then
+		:DefaultClass4
+	elsif File.exists?(self.assertions_pathname?) then
+		:DefaultClass3
+	elsif File.exists?(self.model_test_pathname?) then
+		:DefaultClass2
+	elsif File.exists?(self.model_pathname?) then
+		:DefaultClass1
+	else
+		raise "test for model class "+@model_class_name.to_s+pathname_existance?.join
+	end #if
+end #name_test_class
 def pathnames?
 	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
 end #pathnames
