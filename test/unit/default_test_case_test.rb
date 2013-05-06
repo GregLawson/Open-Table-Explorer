@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative 'default_test_case.rb'
+#require_relative 'default_test_case.rb'
 require_relative '../../app/models/unbounded_fixnum.rb'
 class EmptyTest
 end #EmptyTest
