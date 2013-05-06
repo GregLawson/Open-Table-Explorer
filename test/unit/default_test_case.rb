@@ -73,7 +73,7 @@ def model_class?
 	end #begin rescue
 end #model_class?
 def table_name?
-	model_name?.tableize
+	model_name?.to_s.tableize
 end #table_name?
 def names_of_tests?
 	self.methods(true).select do |m|
