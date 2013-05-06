@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative 'default_test_case.rb'
+require_relative '../../app/models/unbounded_fixnum.rb'
 class EmptyTest
 end #EmptyTest
 class EmptyDefaultTest < DefaultTestCase1
@@ -26,6 +27,10 @@ end # class_assert_invariant
 end #ClassExists
 
 class ClassExistsTest < DefaultTestCase1
+module Examples
+UnboundedFixnumTestEnvironment=TestEnvironment.new(:UnboundedFixnum)
+end #Examples
+include Examples
 def test_name_of_test
 	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
