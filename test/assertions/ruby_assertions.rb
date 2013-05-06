@@ -360,7 +360,7 @@ end #assert_constant_instance_respond_to
 def assert_pathname_exists(pathname)
 	assert_not_nil(pathname)
 	assert_not_empty(pathname)
-	assert(File.exists?(pathname), "File.exists?(pathname)=#{File.exists?(pathname).inspect}")
+	assert(File.exists?(pathname), "File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
 	assert(File.exists?(File.expand_path(pathname)), "File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
 end #assert_pathname_exists
 def assert_data_file(pathname)
