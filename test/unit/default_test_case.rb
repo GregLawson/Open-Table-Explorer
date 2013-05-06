@@ -6,11 +6,13 @@
 #
 ###########################################################################
 TestCase=Test::Unit::TestCase
+require 'active_support/all'
 module TestIntrospection
 class TestEnvironment
-def initialize(test_class_name=self.class.name)
-	@test_class_name=test_class_name
-#	@files_root=
+attr_reader :model_filename
+def initialize(model_class_name=self.model_class_name?)
+	@model_filename=model_class_name.to_s.tableize.singularize.to_sym
+#	@files_root= # reltive to working directory not file as in require_relative
 end #initialize
 def model_pathname?
 	"../../app/models/"+model_name?+".rb"
