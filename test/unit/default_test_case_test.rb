@@ -39,6 +39,10 @@ def test_model_pathname
 	assert(File.exists?(UnboundedFixnumTestEnvironment.model_pathname?))
 	assert_data_file(UnboundedFixnumTestEnvironment.model_pathname?)
 end #model_pathname?
+def test_model_test_pathname
+	assert(File.exists?(UnboundedFixnumTestEnvironment.model_test_pathname?))
+	assert_data_file(UnboundedFixnumTestEnvironment.model_test_pathname?)
+end #model_test_pathname?
 def test_name_of_test
 	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)

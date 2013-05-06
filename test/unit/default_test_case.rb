@@ -18,7 +18,7 @@ def model_pathname?
 	"app/models/"+@model_filename.to_s+".rb"
 end #model_pathname?
 def model_test_pathname?
-	"../../test/unit/"+model_name?+"_assertions.rb"
+	"test/unit/"+@model_filename.to_s+"_test.rb"
 end #model_test_pathname?
 def assertions_pathname?
 	"../assertions/"+model_name?+"_assertions.rb"
