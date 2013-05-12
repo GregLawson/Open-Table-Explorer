@@ -8,7 +8,7 @@
 require_relative 'test_environment'
 require_relative '../assertions/regexp_match_assertions.rb'
 
-class RegexpMatchAssertionsTest < Test::Unit::TestCase #file context
+class RegexpMatchAssertionsTest < DefaultTestCase2 
 #set_class_variables(RegexpMatchAssertionsTest,false)
 #Digit=GenericType.find_by_name('digit')
 #Lower=GenericType.find_by_name('lower')

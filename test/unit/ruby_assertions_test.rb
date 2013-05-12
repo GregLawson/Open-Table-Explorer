@@ -129,24 +129,56 @@ def test_assert_public_instance_method
 	obj=StreamPattern.new
 	methodName=:stream_pattern_arguments
 	assert_respond_to(obj,methodName)
-	assert_raise(Test::Unit::AssertionFailedError){assert_respond_to(obj,methodName.to_s.singularize)}
+	assert_raise(AssertionFailedError){assert_respond_to(obj,methodName.to_s.singularize)}
 	assert_respond_to(obj,methodName.to_s.pluralize) 
 	assert_respond_to(obj,methodName.to_s.tableize)
-	assert_raise(Test::Unit::AssertionFailedError){assert_respond_to(obj,methodName.to_s.tableize.singularize)}
+	assert_raise(AssertionFailedError){assert_respond_to(obj,methodName.to_s.tableize.singularize)}
 	assert_public_instance_method(obj,methodName)
-	assert_raise(Test::Unit::AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.singularize)}
+	assert_raise(AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.singularize)}
 	assert_public_instance_method(obj,methodName.to_s.pluralize) 
 	assert_public_instance_method(obj,methodName.to_s.tableize)
-	assert_raise(Test::Unit::AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.tableize.singularize)}
+	assert_raise(AssertionFailedError){assert_public_instance_method(obj,methodName.to_s.tableize.singularize)}
 
 
 end #assert_public_instance_method
 def test_assert_array_of
 	assert_array_of(['',''], String)
-	#assert_raise(Test::Unit::AssertionFailedError){assert_array_of(nil, String)}
-	#assert_raise(Test::Unit::AssertionFailedError){assert_array_of([[]], String)}
+	#assert_raise(AssertionFailedError){assert_array_of(nil, String)}
+	#assert_raise(AssertionFailedError){assert_array_of([[]], String)}
 	assert_array_of([], String)
 end #array_of
+def test_assert_no_duplicates
+	array=[1,2,3]
+	array=[{:b => 2}, {:a => 1}, {}]
+	columns_to_ignore=[]
+	assert_operator(array.uniq.size, :>, 1, "All input array elements are identical")
+	assert_operator(array.size/array.uniq.size, :<, 1.2, "Array has too many duplicates. First ten elements are #{array[0..9]}"+caller_lines)
+	if array[0].instance_of?(Hash) and columns_to_ignore!=[] then
+		assert_not_empty(array)
+		array=array.map {|hash| columns_to_ignore.each{|col| hash.delete(col)}}
+		assert_not_empty(array)
+		assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
+	end #if
+	assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
+	frequencies={}
+	array.sort{|a1,a2| a1.inspect<=>a2.inspect}.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary.size}
+	assert_instance_of(Hash, frequencies, frequencies.inspect)
+	sorted_by_frequency=frequencies.to_a.sort do |x,y| 
+		assert_instance_of(Array, x)
+		assert_instance_of(Array, y)
+		assert_instance_of(Fixnum, x[1])
+		assert_instance_of(Fixnum, y[1])
+		x[1]<=>y[1]
+	end #sort
+	message="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
+	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[-10..-1]}"+caller_lines
+	assert_equal(array.size, array.uniq.size, message)
+	assert_no_duplicates(array, columns_to_ignore)
+	assert_no_duplicates(array)
+	assert_no_duplicates([{:b => 2}, {:a => 1}], columns_to_ignore)
+	assert_raise(MiniTest::Assertion){assert_no_duplicates([1,2,3,3])}
+	
+end #assert_no_duplicates
 def test_assert_single_element_array
 	assert_single_element_array([3])	
 end #assert_single_element_array
@@ -159,13 +191,18 @@ end #assert_regexp
 def test_assert_module_included
 	assert_module_included(RubyAssertionsTest, Test::Unit::Assertions)
 end #assert_module_included
+def test_global_name
+	assert(global_name?(:String), Module.constants.inspect)
+	assert(global_name?(:RubyAssertionsTest), Module.constants.inspect)
+	assert(global_name?(:DefaultAssertions), Module.constants.inspect)
+end #global_name
 def test_assert_scope_path
-	assert_scope_path([:RubyAssertionsTest, :TestClass])
-	assert_scope_path([:TestClass])
+	assert_scope_path(:RubyAssertionsTest, :TestClass)
+	assert_scope_path(:TestClass)
 end #assert_scope_path
 def test_assert_path_to_constant
-	assert_path_to_constant(:RubyAssertionsTest, :TestClass, :TestConstant)
-	assert_path_to_constant(:TestClass, :TestConstant)
+	assert_path_to_constant(:RubyAssertionsTest, :TestClass, :TestConstant) #global path
+	assert_path_to_constant(:TestClass, :TestConstant) #relative path
 end #assert_path_to_constant
 def test_assert_constant_path_respond_to
 	assert_constant_path_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
@@ -175,6 +212,24 @@ end #assert_constant_path_respond_to
 def test_assert_constant_instance_respond_to
 	assert_constant_path_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
 	assert_constant_path_respond_to(:TestClass, :test_class_method)
+	assert_scope_path(:DefaultAssertions, :ClassMethods)
+	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
 end #assert_constant_instance_respond_to
+def test_assert_pathname_exists
+	assert_pathname_exists('/dev/zero')
+	bad_pathname='/catfish'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+	
+	bad_pathname='../../test/unit/TestIntrospection::TestEnvironment_assertions_test.rb'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+end #assert_pathname_exists
+def test_assert_data_file
+	assert_pathname_exists('/dev/zero')
+	bad_pathname='/catfish'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+	
+	bad_pathname='../../test/unit/TestIntrospection::TestEnvironment_assertions_test.rb'
+	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
+end #assert_data_file
 end #RubyAssertionsTest
 

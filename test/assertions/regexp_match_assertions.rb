@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2010-2012 by Greg Lawson                                      
+#    Copyright (C) 2010-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -13,15 +13,9 @@ include Test::Unit::Assertions
 # Assertions (validations)
 module ClassMethods
 def assert_invariant
-
+	assert_equal(self, RegexpMatch)
 end #def assert_invariant
-def assert_pre_conditions
-	assert_invariant
-end #assert_pre_conditions
 
-def assert_post_conditions
-	assert_invariant
-end #assert_post_conditions
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
 	assert_not_nil(regexp, message)
@@ -52,18 +46,12 @@ def assert_pre_conditions
 	assert_invariant
 end #assert_pre_conditions
 def assert_invariant
-	self.class.assert_invariant
-	assert_instance_of(RegexpMatch, self)
 	assert_instance_of(RegexpTree, @regexp_tree)
 	assert_instance_of(String, @dataToParse)
 	assert_block("@match_data=#{@match_data}") {@match_data.nil? || @match_data.instance_of?(MatchData)}
 
 end #def assert_invariant
 
-def assert_post_conditions
-	self.class.assert_post_conditions
-	assert_invariant
-end #assert_post_conditions
 def assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
 	branch_match=match_branch(branch, data_to_match)
 	message=build_message(message, "branch_match=?", branch_match)

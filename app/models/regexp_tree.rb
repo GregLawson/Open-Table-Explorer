@@ -13,10 +13,9 @@ require_relative 'regexp_parse.rb'
 #require_relative 'regexp_sequence.rb'
 class RegexpTree < NestedArray
 include Comparable
-Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 #raise "" unless self.constants.include?('Default_options')
 # Parse regexp_string into parse tree for editing
-def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Default_options)
+def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=RegexpParse::Default_options)
 	if regexp.kind_of?(Array) then #nested Arrays
 		super(regexp)
 		
@@ -31,6 +30,7 @@ def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Defau
 		raise "unexpected regexp=#{regexp.inspect}"
 	end #if
 	@probability_space_regexp=probability_space_regexp
+	@errors=[RegexpParse.regexp_error(regexp.to_s, options)]
 #	@anchor=Anchoring.new(self) infinite recursion
 end #initialize
 def RegexpTree.promote(node)
@@ -51,9 +51,9 @@ def RegexpTree.promote(node)
 end #RegexpTree.promote
 def self.canonical_regexp(regexp)
 	if regexp.instance_of?(String) then
-		regexp=RegexpTree.regexp_rescued(regexp)
+		regexp=RegexpParse.regexp_rescued(regexp)
 	elsif regexp.instance_of?(Array) || regexp.instance_of?(RegexpTree) || regexp.instance_of?(RegexpMatch) then
-		regexp=RegexpTree.regexp_rescued(regexp.to_s)
+		regexp=RegexpParse.regexp_rescued(regexp.to_s)
 	elsif regexp.nil? then
 		return //
 	elsif !regexp.instance_of?(Regexp) then
@@ -146,48 +146,15 @@ def to_a
 end #to_a
 # file name glob (suitible for Dir[]) most like regexp.
 # often matches more filenames than regexp (see pathnames)
-def to_pathname_glob
-	ret=RegexpParse.new(map_branches{|b| (b[0]=='('?RegexpTree.new(b[1..-2]):RegexpTree.new(b))})
-	ret=ret.postfix_operator_walk{|p| '*'}
-	if ret.instance_of?(RegexpParse) then
-		ret=ret.parse_tree.flatten.join
-	elsif ret.kind_of?(Array) then
-		ret=ret.flatten.join
-	end #if
-	return ret
-end #to_pathname_glob
-def pathnames
-	Dir[to_pathname_glob].select do |pathname|
-		to_regexp.match(pathname)
-	end #select
-end #pathnames
-def grep(pattern, delimiter="\n")
-	pathnames.files_grep(pattern, delimiter="\n")
-end #grep
 def to_s
 	to_a.join
 end #to_s
-def to_regexp(options=Default_options)
+def to_regexp(options=RegexpParse::Default_options)
 	regexp_string=to_s
-	regexp=RegexpTree.regexp_rescued(regexp_string, options)
+	regexp=RegexpParse.regexp_rescued(regexp_string, options)
 
 	return regexp
 end #to_regexp
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
-# Rescue bad regexp and return nil
-# Example regexp with unbalanced bracketing characters
-def RegexpTree.regexp_rescued(regexp_string, options=Default_options)
-	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
-	return Regexp.new(regexp_string, options)
-rescue RegexpError
-	return nil
-end #regexp_rescued
-def regexp_error(regexp_string, options=Default_options)
-	return Regexp.new(regexp_string, options)
-rescue RegexpError => exception
-	return exception
-end #regexp_error
-# returns pair of min and end repetitions of a RegexpTree
-# end can be nil to signify unlimited repetitions
 end #RegexpTree

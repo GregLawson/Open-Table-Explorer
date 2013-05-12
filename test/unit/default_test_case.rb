@@ -5,21 +5,57 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
-module DefaultTests1
-include Test::Unit::Assertions
-def test_case_pre_conditions
-	assert_equal([DefaultTests1], Module.nesting)
-	caller_message=" callers=#{caller.join("\n")}"
-	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
-	assert_operator(1, :<=, names_of_tests?.size, "#{names_of_tests?.sort}")
-end #test_case_pre_conditions
-def test_class_assert_invariant
-	assert_include(Module.constants, model_name?)
-	assert_not_nil(model_class?, "Define a class named #{model_name?} or redefine model_name? to return correct class name.")
-	model_class?.assert_invariant
-#	fail "got to end of default test."
-end # class_assert_invariant
+TestCase=Test::Unit::TestCase
+require 'active_support/all'
+module TestIntrospection
+class TestEnvironment
+attr_reader :model_filename
+def initialize(model_class_name=self.model_class_name?)
+	@model_filename=model_class_name.to_s.tableize.singularize.to_sym
+#	@files_root= # reltive to working directory not file as in require_relative
+end #initialize
+def model_pathname?
+	"app/models/"+@model_filename.to_s+".rb"
+end #model_pathname?
+def model_test_pathname?
+	"test/unit/"+@model_filename.to_s+"_test.rb"
+end #model_test_pathname?
+def assertions_pathname?
+	"test/assertions/"+@model_filename.to_s+"_assertions.rb"
+end #assertions_pathname?
+def assertions_test_pathname?
+	"test/unit/"+@model_filename.to_s+"_assertions_test.rb"
+end #assertions_test_pathname?
+def name_test_class?
+	if File.exists?(self.assertions_test_pathname?) then
+		:DefaultClass4
+	elsif File.exists?(self.assertions_pathname?) then
+		:DefaultClass3
+	elsif File.exists?(self.model_test_pathname?) then
+		:DefaultClass2
+	elsif File.exists?(self.model_pathname?) then
+		:DefaultClass1
+	else
+		raise "test for model class "+@model_class_name.to_s+pathname_existance?.join
+	end #if
+end #name_test_class
+def pathnames?
+	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
+end #pathnames
+def absolute_pathnames?
+	pathnames?.map {|p| File.expand_path(p)}
+end #absolute_pathnames
+def pathname_existance?
+	absolute_pathnames?.map {|p| File.exists?(p) ? 1 : 0}
+end #pathname_existance
+def inspect
+	existing, missing = pathnames?.partition do |p|
+		File.exists?(p)
+	end #partition
+	ret=" test for model class "+@model_class_name.to_s+"assertions_test_pathname="+assertions_test_pathname?.inspect
+	ret+="existing files=#{existing.inspect} and missing files=#{missing.inspect}"
+end #inspect
+end #TestEnvironment
 # methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
@@ -36,13 +72,29 @@ def model_class?
 	end #begin rescue
 end #model_class?
 def table_name?
-	model_name?.tableize
+	model_name?.to_s.tableize
 end #table_name?
 def names_of_tests?
 	self.methods(true).select do |m|
 		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
 	end #map
 end #names_of_tests?
+end #TestIntrospection
+include TestIntrospection
+module DefaultTests1
+include Test::Unit::Assertions
+def test_case_pre_conditions
+	assert_equal([DefaultTests1], Module.nesting)
+	caller_message=" callers=#{caller.join("\n")}"
+	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
+	assert_operator(1, :<=, names_of_tests?.size, "#{names_of_tests?.sort}")
+end #test_case_pre_conditions
+def test_class_assert_invariant
+#	assert_include(Module.constants, model_name?)
+	assert_not_nil(model_class?, "Define a class named #{model_name?} or redefine model_name? to return correct class name.")
+	model_class?.assert_invariant
+#	fail "got to end of default test."
+end # class_assert_invariant
 
 def test_case_pre_conditions
 end #test_case_pre_conditions
@@ -54,14 +106,14 @@ def test_class_assert_pre_conditions
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_post_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
+	model_class?.example_constant_values_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
 	end #each
 #	fail "got to end of default test."
 end #class_assert_post_conditions
 #ClassMethods
 def test_assert_pre_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
+	model_class?.example_constant_values_by_class(model_class?).each do |c|
 		c.assert_pre_conditions
 	end #each
 #	fail "got to end of default test."
@@ -73,7 +125,7 @@ def test_assert_invariant
 #	fail "got to end of default test."
 end #def assert_invariant
 def test_assert_post_conditions
-	model_class?.example_constant_names_by_class(model_class?).each do |c|
+	model_class?.example_constant_values_by_class(model_class?).each do |c|
 		c.assert_post_conditions
 	end #each
 #	fail "got to end of default test."
@@ -84,9 +136,6 @@ end # class_assert_invariant
 end #DefaultTests2
 module DefaultTests3
 include DefaultTests2
-def assertions_pathname?
-	"../assertions/"+model_name?+"_assertions.rb"
-end #assertions_pathname?
 def test_assertion_inclusion
 	assert_include(model_class?.included_modules, model_class?::Assertions)
 	assert_include(model_class?.ancestors, Test::Unit::Assertions)
@@ -149,3 +198,4 @@ extend Test::Unit::Assertions
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase
+#TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).name_test_class?)

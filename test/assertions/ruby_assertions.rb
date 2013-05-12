@@ -14,6 +14,20 @@ module Assertions
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
+=begin
+def assert(test, msg = UNASSIGNED)
+  case msg
+  when UNASSIGNED
+    msg = nil
+  when String, Proc
+  else
+    bt = caller.reject { |s| s.rindex(MINI_DIR, 0) }
+    raise ArgumentError, "assertion message must be String or Proc, but #{msg.class} was given.", bt
+  end
+  super caller_lines+msg.to_s
+end
+=end
+       
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
 	message+=" Class #{self.class.name}"
@@ -76,7 +90,7 @@ def explain_assert_block(message="assert_block failed.") # :yields:
     if (! yield)
       raise exception
       raise message.to_s
-      raise Test::Unit::AssertionFailedError.new(message.to_s)
+      raise AssertionFailedError.new(message.to_s)
     end
   end
 end #explain_assert_block
@@ -213,29 +227,41 @@ def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
 		message+='expect to pass'
-	elsif obj.respond_to?(methodName.to_s.singularize) then
-		message+="but singular #{methodName.to_s.singularize} is a method"
-	elsif obj.respond_to?(methodName.to_s.pluralize) then
-		message+="but plural #{methodName.to_s.pluralize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize) then
-		message+="but tableize #{methodName.to_s.tableize} is a method"
-	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
-		message+="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
-	else
-		message+="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.singularize) then
+#		message+="but singular #{methodName.to_s.singularize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.pluralize) then
+#		message+="but plural #{methodName.to_s.pluralize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.tableize) then
+#		message+="but tableize #{methodName.to_s.tableize} is a method"
+#	elsif obj.respond_to?(methodName.to_s.tableize.singularize) then
+#		message+="but singular tableize #{methodName.to_s.tableize.singularize} is a method"
+#	else
+#		message+="but neither singular #{methodName.to_s.singularize} nor plural #{methodName.to_s.pluralize} nor tableize #{methodName.to_s.tableize} nor singular tableize #{methodName.to_s.tableize.singularize} is a method"
 	end #if
 	assert_respond_to( obj, methodName,message)
 end #assert_public_instance_method
 def assert_array_of(obj, type)
-	assert_block("obj=#{obj.inspect} must be an Array") {obj.instance_of?(Array)}
-#	puts "obj=#{obj.inspect} must be an Array of Strings(pathnames)"
-#	puts "obj.size=#{obj.size} "
-#	puts "obj[0]=#{obj[0].inspect} "
+	assert_block("obj=#{obj.inspect} must be an Array not #{obj.class.name}") {obj.instance_of?(Array)}
 	obj.each do |p|
 #		puts "p=#{p.inspect} must be a String(pathnames)" 
+		assert_block("obj=#{obj.inspect} must be an Array of #{type.name}") {obj.all?{|s| s.instance_of?(type)}}
 	end #each
-	assert_block("obj=#{obj.inspect} must be an Array of Strings(pathnames)") {obj.all?{|s| s.instance_of?(String)}}
 end #array_of
+def assert_no_duplicates(array, columns_to_ignore=[])
+	assert_operator(array.uniq.size, :>, 1, "All input array elements are identical")
+	assert_operator(array.size/array.uniq.size, :<, 1.2, "Array has too many duplicates. First ten elements are #{array[0..9]}"+caller_lines)
+	if array[0].instance_of?(Hash) and columns_to_ignore!=[] then
+		array=array.map {|hash| columns_to_ignore.each{|col| hash.delete(col)}}
+	end #if
+	assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
+	frequencies={}
+	array.sort{|a1,a2| a1.inspect<=>a2.inspect}.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary.size}
+	assert_instance_of(Hash, frequencies, frequencies.inspect)
+	sorted_by_frequency=frequencies.to_a.sort{|x,y| x[1]<=>y[1]}
+	message="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
+	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[0..10]}"+caller_lines
+	assert_equal(array.size, array.uniq.size, message)
+end #assert_no_duplicates
 def assert_single_element_array(obj)
 	assert_instance_of(Array, obj, "assert_single_element_array expects an Array. ")
 	assert_equal(1, obj.size)
@@ -260,14 +286,12 @@ def assert_module_included(klass,moduleName)
     		klass.module_included?(moduleName)
 	end #assert_block
 end #assert_module_included
-def assert_scope_path(names)
+def global_name?(name)
+	Module.constants.include?(name)
+end #global_name
+def assert_scope_path(*names)
 	assert_not_empty(names)
-#	puts "*names=#{names.inspect}"
-	global_names=names.map do |name|
-		Module.constants.include?(name)
-	end #each
-	if global_names[0] then
-	else
+	if !global_name?(names[0]) then
 		names=[self.class.name.to_sym]+names
 #		puts "after adding self, names=#{names.inspect}"
 	end #if
@@ -289,7 +313,7 @@ def assert_scope_path(names)
 	return names # with inserted local module
 end #assert_scope_path
 def assert_path_to_constant(*names)
-	context=assert_scope_path(names[0..-2])
+	context=assert_scope_path(*names[0..-2]) #splat 
 	constant_name=names[-1..-1]
 	names=context+constant_name
 	path=names.join('::')
@@ -310,7 +334,7 @@ def assert_constant_path_respond_to(*names)
 		else
 		end #if
 	else
-		context=assert_scope_path(names[0..-2])
+		context=assert_scope_path(*names[0..-2])
 		path=eval(context.join('::'))
 		method_name=names[-1]
 		message="names=#{names.inspect}, path=#{path.inspect}"
@@ -326,13 +350,25 @@ def assert_constant_instance_respond_to(*names)
 		else
 		end #if
 	else
-		context=assert_scope_path(names[0..-2])
+		context=assert_scope_path(*names[0..-2])
 		path=eval(context.join('::'))
 		method_name=names[-1]
 		message="names=#{names.inspect}, path=#{path.inspect}"
 		assert_public_instance_method(path, method_name, message)
 	end #
 end #assert_constant_instance_respond_to
+def assert_pathname_exists(pathname)
+	assert_not_nil(pathname)
+	assert_not_empty(pathname)
+	assert(File.exists?(pathname), "File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
+	assert(File.exists?(File.expand_path(pathname)), "File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
+end #assert_pathname_exists
+def assert_data_file(pathname)
+	assert_pathname_exists(pathname)
+	assert(File.file?(pathname), "File.file?(pathname)=#{File.file?(pathname).inspect}")
+	assert_not_nil(File.size?(pathname))
+	assert_not_equal(0, File.size?(pathname))
+end #assert_data_file
 end #Assertions
 end #Unit
 end #Test

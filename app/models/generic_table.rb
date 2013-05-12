@@ -1,11 +1,16 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/global.rb'
+require_relative '../../app/models/global.rb'
+require_relative '../../app/models/generic_table_html.rb' # in test_helper?
+require_relative '../../app/models/generic_table_association.rb' # in test_helper?
+require_relative '../../app/models/generic_grep.rb' # in test_helper?
+require_relative '../../app/models/column_group.rb'
+require_relative '../../app/models/generic_table_association.rb'
 #require 'test/assertions/generic_table_assertions.rb' # in test_helper?
 # Methods in common bettween ActiveRecord::Base and NoDB
 module Generic_Table
@@ -136,9 +141,11 @@ def is_active_record_method?(method_name)
 	end #if
 end #is_active_record_method
 end #ClassMethods
+extend ClassMethods
 include GenericTableHtml
 include GenericGrep
 include ColumnGroup
+include GenericTableAssociation
 end #Generic_Table
 module ActiveRecord
 
@@ -147,13 +154,13 @@ include Generic_Table
 extend Generic_Table::ClassMethods
 include GenericTableAssociation
 extend GenericTableAssociation::ClassMethods
-include ActionView::Helpers::UrlHelper
+#Rails only? include ActionView::Helpers::UrlHelper
 
 
 end #class Base
 end #module ActiveRecord
 module Common
-require 'app/models/IncludeModuleClassMethods.rb'
+#gone_manual! require 'app/models/IncludeModuleClassMethods.rb'
 def Generic_Table.class_of_name(name)
 	 return name.to_s.constantize
 rescue
@@ -448,58 +455,11 @@ def self.db2yaml
 		table2yaml(table_name)
 	end #each
 end #def
-# Display attribute or method value from association even if association is nil
-def association_state(association_name)
-	case self.class.association_arity(association_name)
-	when :to_one
-		foreign_key_value=foreign_key_value(association_name)
-		if foreign_key_value.nil? then # foreign key uninitialized
-			return "Foreign key #{association_name.to_s}_id defined as attribute but has nil value."
-		#~ elsif foreign_key_value.empty? then # foreign key uninitialized
-			#~ return "Foreign key #{association_name.to_s}_id defined as attribute but has empty value."
-		else
-			ass=send(association_name)
-			if ass.nil? then
-				return "Foreign key #{association_name.to_s}_id has value #{foreign_key_value.inspect} but the association returns nil."
-			else
-				return "Foreign key #{association_name.to_s}_id has value #{foreign_key_value.inspect},#{ass.inspect} and returns type #{ass.class.name}."
-			end
-		end
-	when :to_many
-		ass=send(association_name)
-		associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
-		if ass.nil? then
-			return "Association #{association_name}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
-		elsif ass.empty? then
-			ret= "Association #{association_name} with foreign key #{associations_foreign_key_name} is empty; "
-			case self.class.association_class(association_name).association_macro_type(self.class.name.tableize.singularize)
-			when :has_many
-				return ret+"but has many."
-			when :belongs_to
-				return ret+"but belongs_to."
-			when :neither_has_many_nor_belongs_to
-				return ret+"because neither_has_many_nor_belongs_to."
-			else
-				return "New return value from #{self.class.name}.association_macro_type(#{association_name})=#{self.class.association_macro_type(association_name)}."
-			end #case
-		else
-			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
-			return "Association #{association_name}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
-		end
-		
-	when :not_generic_table
-		return "#{self.class.name} does not recognize #{association_name} as a generic table."
-	when:not_an_association
-		return "#{self.class.name} does not recognize #{association_name} as association."
-	else
-		return "New return value from #{self.class.name}.association_arity(#{association_name})=#{self.class.association_arity(association_name)}."
-	end #if
-end #def
 def Match_and_strip(regexp=/=$/)
 	matching_methods(regexp).map do |m|
 		m.sub(regexp,'')
 	end
-end #def
+end #Match_and_strip
 def Generic_Table.eval_constant(constant_name)
 	constant_name.constantize
 rescue NameError
@@ -530,7 +490,7 @@ end #def
 end # Generic_Table
 module NoDB # provide duck-typed ActiveRecord like functions.
 attr_reader :attributes
-include ActiveModel # trying to fulfill Rails 3 promise that ActiveModel would allow non-ActiveRecord classes to share methods.
+#gone_manual! include ActiveModel # trying to fulfill Rails 3 promise that ActiveModel would allow non-ActiveRecord classes to share methods.
 include Generic_Table
 extend Generic_Table::ClassMethods
 module ClassMethods

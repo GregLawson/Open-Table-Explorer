@@ -7,10 +7,95 @@
 ###########################################################################
 require_relative 'unbounded_range.rb'
 require_relative 'nested_array.rb'
+
+class RegexpTree < NestedArray
+def self.[](*regexp_array)
+	if regexp_array.size==1 then # no splat
+		regexp_array=regexp[0]	
+	end #if
+#	regexp_array=[*regexp_array].map{|r| RegexpParse.promote(r)}
+	RegexpParse.typed?(regexp_array)
+end #brackets
+end #RegexpTree
+#assert(global_name?(:RexexpTree))
+
+class RegexpToken < RegexpTree
+def self.[](character)
+	if character.instance_of?(Symbol) then
+		RegexpToken.new([Constants::To_s[character]]) # get character from symbol lookup
+	else
+		RegexpToken.new([character])	
+	end #if
+end #square_brackets_RegexpToken
+def self.tos_initialize
+	ret={}
+	Array.new(256){|i| i.chr}.each do |character|
+		symbol=RegexpToken[character].to_sym
+		ret[symbol]=character
+	end #each
+	return ret
+end #tos_initialize
+def inspect
+	':'+to_sym.to_s
+end #inspect
+def to_sym
+	case self[0]
+	when '(' then :begin_capture
+	when ')' then :end_capture
+	when '{' then :begin_repetition
+	when '}' then :end_repetition
+	when '[' then :begin_class
+	when ']' then :end_class
+	when '.' then :any_char
+	when '?' then :optional
+	when '+' then :many
+	when '*' then :any
+	when ' ' then :space
+	when "\t" then :tab
+	when "\n" then :newline
+	else 
+		if self[0]==Regexp.escape(self[0]) then
+			self[0].to_sym
+#		elsif self[0]!=self[0].inspect[1..-2] then # strip double quotes
+		else
+			self[0].inspect[1..-2].to_sym
+#		else
+#			raise "#{self[0].inspect} is not escaped"
+		end #if
+	end #case
+end #string
+module Constants
+To_s=RegexpToken.tos_initialize
+end #Constants_RegexpToken
+end #RegexpToken
+class RegexpSequence < RegexpTree
+def to_pathname_glob
+	map {|node| node.to_pathname_glob}
+end #to_pathname_glob
+end #RegexpSequence
+class RegexpAlternative < RegexpTree
+def to_pathname_glob
+	if any? {|node| node.size>1} then
+		'*'
+	else
+		'['+join(',')+']'
+	end #if
+end #to_pathname_glob
+end #RegexpAlternative
+class RegexpRepetition < RegexpSequence
+	'*'
+end #RegexpRepetition
+class CharacterClass < RegexpAlternative
+end #CharacterClass
+class RegexpParen < RegexpTree
+end #RegexpParen
+class RegexpEmpty < RegexpTree
+end #RegexpEmpty
+
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
-attr_reader :regexp_string,:tokenIndex,:parse_tree
+attr_reader :regexp_string,:tokenIndex,:parse_tree, :errors
 module Constants
 OpeningBrackets='({['
 ClosingBrackets=')}]'
@@ -18,22 +103,26 @@ PostfixOperators='+*?|'
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 end #Constants
 include Constants
-def initialize(regexp_string)
+def initialize(regexp_string, options=Default_options)
 	@tokenIndex=-1 # start at end
 	if regexp_string.kind_of?(RegexpParse) then
 		@parse_tree=NestedArray.new(regexp_string.parse_tree)
-		@regexp_string=regexp_string.to_s	
+		@regexp_string=regexp_string.to_s
+		@errors=regexp_string.errors	
 	elsif regexp_string.kind_of?(Array) then
 		@parse_tree=NestedArray.new(regexp_string)
 		@regexp_string=regexp_string.join	
+		@errors=RegexpParse.regexp_error(@regexp_string, options)
 	elsif regexp_string.kind_of?(String) then
 		@regexp_string=regexp_string
 		restartParse!
 		@parse_tree=regexpTree!
+		@errors=RegexpParse.regexp_error(@regexp_string, options)
 	elsif regexp_string.kind_of?(Regexp) then
 		@regexp_string=regexp_string.source
 		restartParse!
 		@parse_tree=regexpTree!
+		@errors=RegexpParse.regexp_error(@regexp_string, options)
 	else # unexpected
 		raise "unexpected type regexp_string=#{regexp_string} of type #{regexp_string.class.name}"
 	
@@ -43,6 +132,21 @@ end #initialize
 def inspect
 	"@regexp_string=\"#{@regexp_string}\", @parse_tree=#{@parse_tree.inspect}, @tokenIndex=#{@tokenIndex.inspect}"
 end #inspect
+# Rescue bad regexp and return nil
+# Example regexp with unbalanced bracketing characters
+def RegexpParse.regexp_rescued(regexp_string, options=Default_options)
+	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
+	return Regexp.new(regexp_string, options)
+rescue RegexpError
+	return nil
+end #regexp_rescued
+def RegexpParse.regexp_error(regexp_string, options=Default_options)
+	raise "expecting regexp_string=#{regexp_string.inspect}" unless regexp_string.instance_of?(String)
+	return Regexp.new(regexp_string, options)
+rescue RegexpError => exception
+	return exception
+end #regexp_error
+
 def ==(rhs)
 	if self.parse_tree==rhs.parse_tree then
 		return true
@@ -311,30 +415,72 @@ def regexpTree!(terminator=nil)
 #not recursive	assert_invariant(ret.reverse)
 	return ret.reverse
 end #regexpTree!
-def RegexpParse.case?(node)
-	if node.instance_of?(String) then
-		:String # commonly termination condition
+def to_pathname_glob
+	ret=RegexpParse.new(parse_tree.map_branches{|b| (b[0]=='('?RegexpParse.new(b[1..-2]):RegexpParse.new(b))})
+	ret=ret.postfix_operator_walk{|p| '*'}
+	if ret.instance_of?(RegexpParse) then
+		ret=ret.parse_tree.flatten.join
+	elsif ret.kind_of?(Array) then
+		ret=ret.flatten.join
+	end #if
+	return ret
+end #to_pathname_glob
+def pathnames
+	Dir[to_pathname_glob].select do |pathname|
+		to_regexp.match(pathname)
+	end #select
+end #pathnames
+def grep(pattern, delimiter="\n")
+	pathnames.files_grep(pattern, delimiter="\n")
+end #grep
+def RegexpParse.typed?(node)
+	node=RegexpParse.promote(node)
+	if node.parse_tree==[] then
+		puts "nil"
+		nil
+	elsif node.instance_of?(String) then
+		puts "node=#{node.inspect}, node.class.name=#{node.class.name}"
+		RegexpToken[node] # commonly termination condition
 	else
 		node=RegexpParse.promote(node)
 		if postfix_operator=RegexpParse.postfix_expression?(node) then
-			:RegexpRepetition
+			RegexpRepetition.new(node.parse_tree)
 		elsif node.to_a[-1]==']' then
-			:CharacterClass
+			CharacterClass.new(node.parse_tree)
 		elsif node.to_a[-1]==')' then
-			:RegexpCapture
+			RegexpParen.new(node.parse_tree)
 		elsif node==Empty_language_parse then
-			:RegexpEmpty
+			RegexpEmpty.new(node.parse_tree)
 		elsif RegexpParse.postfix_expression?(node.to_a[0]) =='|' then
-			:RegexpAlternative
+			RegexpAlternative.new(node.parse_tree)
 		else #sequence is default
-			:RegexpSequence
+			if node.parse_tree.size == 0 then
+				puts "nil"
+				nil
+			elsif node.parse_tree.size == 1 then
+				puts "node.parse_tree.size == 1\nnode=#{node.inspect}, node.class.name=#{node.class.name}"
+				RegexpParse.typed?(node.parse_tree[0]) #recurse to discard extra nesting
+			else
+				args=node.parse_tree.map do |n| 
+					puts "n=#{n.inspect}, n.class.name=#{n.class.name}"
+					RegexpParse.typed?(n)
+				end #map
+				RegexpSequence.new(args)
+			end #if
 		end #if
 	end #if
 end #case
-def RegexpParse.typed?(node)
-	type=RegexpParse.case?(node)
-	eval(type.to_s).new(node)
-end #typed
+#	node=RegexpParse.promote(node)
+#	if node.instance_of?(Array) then
+#		node.map{|e| typed?(e)}
+#	end #if
+#	type=RegexpParse.case?(node)
+#	if type==:String then
+#		RegexpToken.new(node)	
+#	else
+#		eval(type.to_s).new(node.parse_tree)
+#	end #if
+#end #typed
 module Constants
 Any_binary_char_string='[\000-\377]'
 Any_binary_string="#{Any_binary_char_string}*"

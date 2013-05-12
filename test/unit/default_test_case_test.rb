@@ -6,7 +6,8 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative 'default_test_case.rb'
+#require_relative 'default_test_case.rb'
+require_relative '../../app/models/unbounded_fixnum.rb'
 class EmptyTest
 end #EmptyTest
 class EmptyDefaultTest < DefaultTestCase1
@@ -26,6 +27,57 @@ end # class_assert_invariant
 end #ClassExists
 
 class ClassExistsTest < DefaultTestCase1
+module Examples
+UnboundedFixnumTestEnvironment=TestEnvironment.new(:UnboundedFixnum)
+end #Examples
+include Examples
+def test_initialize
+	assert_respond_to(UnboundedFixnumTestEnvironment, :model_filename)
+	assert_equal(:unbounded_fixnum, UnboundedFixnumTestEnvironment.model_filename)	
+end #initialize
+def test_model_pathname
+	assert(File.exists?(UnboundedFixnumTestEnvironment.model_pathname?))
+	assert_data_file(UnboundedFixnumTestEnvironment.model_pathname?)
+end #model_pathname?
+def test_model_test_pathname
+	assert(File.exists?(UnboundedFixnumTestEnvironment.model_test_pathname?))
+	assert_data_file(UnboundedFixnumTestEnvironment.model_test_pathname?)
+end #model_test_pathname?
+def test_assertions_pathname
+#	assert(File.exists?(UnboundedFixnumTestEnvironment.assertions_pathname?))
+	assert_data_file(UnboundedFixnumTestEnvironment.assertions_pathname?)
+end #assertions_pathname?
+def test_assertions_test_pathname
+	assert_not_nil("UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumTestEnvironment.inspect)
+	assert_not_nil(UnboundedFixnumTestEnvironment.assertions_test_pathname?)
+	assert_not_equal('', "../../test/unit/"+"UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumTestEnvironment)
+	assert(File.exists?(UnboundedFixnumTestEnvironment.assertions_test_pathname?))
+	assert_data_file(UnboundedFixnumTestEnvironment.assertions_test_pathname?)
+end #assertions_test_pathname?
+def test_name_test_class
+	assert_equal(:DefaultClass4, UnboundedFixnumTestEnvironment.name_test_class?)
+end #name_test_class
+def test_pathnames
+	assert_instance_of(Array, UnboundedFixnumTestEnvironment.pathnames?)
+	assert_equal(4, UnboundedFixnumTestEnvironment.pathnames?.size)
+	assert_array_of(UnboundedFixnumTestEnvironment.pathnames?, String)
+end #pathnames
+def test_absolute_pathnames
+	assert_instance_of(Array, UnboundedFixnumTestEnvironment.absolute_pathnames?)
+	assert_equal(4, UnboundedFixnumTestEnvironment.absolute_pathnames?.size)
+	assert_array_of(UnboundedFixnumTestEnvironment.absolute_pathnames?, String)
+end #absolute_pathnames
+def test_pathname_existance
+	assert_instance_of(Array, UnboundedFixnumTestEnvironment.pathname_existance?)
+	assert_equal(4, UnboundedFixnumTestEnvironment.pathname_existance?.size)
+	assert_array_of(UnboundedFixnumTestEnvironment.pathname_existance?, Fixnum)
+	UnboundedFixnumTestEnvironment.pathname_existance?.all? do |e|
+		e
+	end #all
+end #pathname_existance
+def test_inspect
+	assert_match(/exist/, UnboundedFixnumTestEnvironment.inspect)
+end #inspect
 def test_name_of_test
 	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)

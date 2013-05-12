@@ -1,11 +1,13 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/global.rb'
+require_relative '../../app/models/global.rb'
+#require_relative '../../app/models/generic_table.rb'
+require_relative '../../app/models/stream_method.rb'
 module GenericTableAssociation
 module ClassMethods
 # List names (as Strings) of all foreign keys.
@@ -85,7 +87,7 @@ end #is_association_patterns
 def is_association?(association_name)
 	# Don’t create associations that have the same name as instance methods of ActiveRecord::Base.
 	if ActiveRecord::Base.instance_methods_from_class.include?(association_name.to_s) then
-		raise "# Don’t create associations that have the same name (#{association_name.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class})."
+#bad char		raise "# Don’t create associations that have the same name (#{association_name.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord.instance_methods_from_class})."
 	end #if
 	if association_name.to_s[-4,4]=='_ids' then # automatically generated
 		return false
@@ -109,7 +111,7 @@ def is_association_to_many?(association_name)
 		return false
 	end
 end #is_association_to_many
-@@Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
+#debug @@Example_polymorphic_patterns=Set.new([/^([a-z0-9_]+)$/, /^set_([a-z0-9_]+)_target$/, /^([a-z0-9_]+)=$/, /^autosave_associated_records_for_([a-z0-9_]+)$/, /^loaded_([a-z0-9_]+)?$/])
 
 def is_polymorphic_association?(association_name)
 	return is_association_patterns?(association_name,@@Example_polymorphic_patterns)
@@ -227,7 +229,7 @@ def association_class(association_name)
 	 if !self.kind_of?(ActiveRecord::Base) then
 		raise "#{self.class.name} is not an ActiveRecord::Base."
 	 elsif !self.class.is_association?(self.class.association_method_symbol(association_name)) then
-		raise "#{self.class.association_method_symbol(association_name)} is not an association of #{self.name}."
+		raise "association_name=#{association_name.inspect}, #{self.class.association_method_symbol(association_name)} is not an association of #{self.class.name}."
 	else
 		association=name_to_association(association_name)
 		if association.instance_of?(Array) then
@@ -290,6 +292,53 @@ def logical_primary_key_value(delimiter=',')
 		end #if
 	end #if
 end #logical_primary_key_value
+# Display attribute or method value from association even if association is nil
+def association_state(association_name)
+	case self.class.association_arity(association_name)
+	when :to_one
+		foreign_key_value=foreign_key_value(association_name)
+		if foreign_key_value.nil? then # foreign key uninitialized
+			return "Foreign key #{association_name.to_s}_id defined as attribute but has nil value."
+		#~ elsif foreign_key_value.empty? then # foreign key uninitialized
+			#~ return "Foreign key #{association_name.to_s}_id defined as attribute but has empty value."
+		else
+			ass=send(association_name)
+			if ass.nil? then
+				return "Foreign key #{association_name.to_s}_id has value #{foreign_key_value.inspect} but the association returns nil."
+			else
+				return "Foreign key #{association_name.to_s}_id has value #{foreign_key_value.inspect},#{ass.inspect} and returns type #{ass.class.name}."
+			end
+		end
+	when :to_many
+		ass=send(association_name)
+		associations_foreign_key_name=(self.class.name.tableize.singularize+'_id').to_sym
+		if ass.nil? then
+			return "Association #{association_name}'s foreign key #{associations_foreign_key_name} has value #{ass[self.class.name.to_s+'_id']} but the association returns nil."
+		elsif ass.empty? then
+			ret= "Association #{association_name} with foreign key #{associations_foreign_key_name} is empty; "
+			case self.class.association_class(association_name).association_macro_type(self.class.name.tableize.singularize)
+			when :has_many
+				return ret+"but has many."
+			when :belongs_to
+				return ret+"but belongs_to."
+			when :neither_has_many_nor_belongs_to
+				return ret+"because neither_has_many_nor_belongs_to."
+			else
+				return "New return value from #{self.class.name}.association_macro_type(#{association_name})=#{self.class.association_macro_type(association_name)}."
+			end #case
+		else
+			associations_foreign_key_values=ass.map { |a| a.send(associations_foreign_key_name) }.uniq.join(',')
+			return "Association #{association_name}'s foreign key #{associations_foreign_key_name} has value #{associations_foreign_key_values},#{ass.inspect} and returns type #{ass.class.name}."
+		end
+		
+	when :not_generic_table
+		return "#{self.class.name} does not recognize #{association_name} as a generic table."
+	when:not_an_association
+		return "#{self.class.name} does not recognize #{association_name} as association."
+	else
+		return "New return value from #{self.class.name}.association_arity(#{association_name})=#{self.class.association_arity(association_name)}."
+	end #if
+end #association_state
 def association_has_data(association_name)
 	return association_state(association_name)[/ and returns type /,0]
 end #def
@@ -304,7 +353,141 @@ def associated_to_s(association_name,method,*args)
 			return ass.send(method.to_sym,*args).to_s
 		end
 	end
-end #def
+end #associated_to_s
 
+module Examples
+First_stream_method=StreamMethod.first
+end #Examples
+include Examples
+require_relative '../../test/assertions/default_assertions.rb'
+module Assertions
+include DefaultAssertions
+module ClassMethods
+include DefaultAssertions::ClassMethods
+# All records and all foreign keys are not nil
+def assert_foreign_keys_not_nil
+	all.each do |record|
+		record.assert_foreign_keys_not_nil
+	end #each
+end #assert_foreign_keys_not_nil
+def assert_pre_conditions
+#	fail "end of class assert_pre_conditions "
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
+def assert_invariant
+#	fail "end of instance assert_pre_conditions"
+end #assert_invariant
+end #ClassMethods
+def assert_foreign_key_name(class_reference, foreign_key_name)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
+	if !foreign_key_name.kind_of?(String) then
+		foreign_key_name=foreign_key_name.to_s
+	end #if
+	assert_block("foreign_key_name=#{foreign_key_name} is not a foreign key of class_reference=#{class_reference.inspect}"){class_reference.foreign_key_names.include?(foreign_key_name)}
+end #assert_foreign_key_name
+# All foreign keys of instance are not nil
+def assert_foreign_keys_not_nil
+	self.class.foreign_key_association_names.each do |fka|
+		assert_foreign_key_not_nil(self.class, fka)
+	end #each
+end #assert_foreign_keys_not_nil
+# display possible foreign key values when nil foreign keys values are found
+def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))
+	assert_association(obj.class, association_name)
+	assert_not_nil(association_class)
+	assert_not_nil(association_class)
+	possible_foreign_key_values=association_class.all.map do |fkacr|
+		fkacr.logical_primary_key_recursive_value.join(',')
+	end.uniq #map
+	message="Foreign key association #{association_name} is nil.\nShould be of type #{association_class.name}\n"
+	message+=possible_foreign_key_values.join("\n")
+	message+="\nEdit file #{obj.class.name.tableize}.yml so that foreign key #{association_name}_id has one of the above values."
+	assert_not_nil(obj.name_to_association(association_name), message)
+end #assert_foreign_key_not_nil
+def assert_foreign_key_association_names(class_reference,association_reference)
+	assert_include(class_reference.foreign_key_association_names, association_reference.to_s)
+end #foreign_key_association_names
+def assert_associated_foreign_key_name(class_reference,assName)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
+	assert_instance_of(Symbol,assName,"associated_foreign_key_name assName=#{assName.inspect}")
+	many_to_one_foreign_keys=class_reference.foreign_key_names
+#	many_to_one_associations=many_to_one_foreign_keys.collect {|k| k[0..-4]}
+	matchingAssNames=many_to_one_foreign_keys.select do |fk|
+		assert_instance_of(String,fk)
+		ass=fk[0..-4].to_sym
+# not class remap		assert_association_many_to_one(class_reference,ass)
+		ass==assName
+	end #end
+	assert_equal(matchingAssNames,[matchingAssNames.first].compact,"assName=#{assName.inspect},matchingAssNames=#{matchingAssNames.inspect},many_to_one_foreign_keys=#{many_to_one_foreign_keys.inspect}")
+	assert(class_reference.associated_foreign_key_name(assName))
+end #associated_foreign_key_name
+def assert_associated_foreign_key(obj,assName)
+	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
+	assert_association(obj,assName)
+	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
+	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
+end #associated_foreign_key_records
+def assert_association_methods
+end #association_methods
+# assert that an association named association_reference exists  in class class_reference
+def assert_association(class_reference,association_reference, message=nil)
+	message=build_message(message, "Class=? association=?", class_reference.inspect, association_reference.inspect)	
+	if class_reference.kind_of?(Class) then
+		klass=class_reference
+	else
+		klass=class_reference.class
+	end #if
+	association_reference=association_reference.to_sym
+	assert_not_equal('_id',association_reference.to_s[-3..-1],build_message(message, "association_reference=#{association_reference} should not end in '_id' as it will be confused wth a foreign key."))
+	assert_not_equal('_ids',association_reference.to_s[-4..-1],build_message(message, "association_reference=#{association_reference} causes confusion with automatic _ids and _ids= generated for to_many assoiations."))
+	if ActiveRecord::Base.instance_methods_from_class(true).include?(association_reference.to_s) then
+		raise "Don't create associations that have the same name (#{association_reference.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord::Base.instance_methods_from_class.inspect})."
+	end #if
+	assert_instance_of(Symbol,association_reference,build_message(message, "assert_association"))
+	if klass.module_included?(Generic_Table) then
+		association_type=klass.association_arity(association_reference)
+		assert_not_nil(association_type, message)
+		assert_include([:to_one,:to_many,:not_an_association], association_type, build_message(message, "In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}"))
+	end #if
+	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
+	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")
+	assert(klass.is_association?(association_reference),build_message(message, "klass.name=? does not have an association ? but does have associations =?",klass.name,association_reference,klass.association_names))
+end #assert_association
+
+def assert_association_to_one(class_reference,assName)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
+	assert_instance_of(Symbol,assName,"assert_association_to_one")
+	assert_association(class_reference,assName)
+	assert(!class_reference.is_association_to_many?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.class.similar_methods(assName).inspect}")
+	assert(class_reference.is_association_to_one?(assName),"fail !is_association_to_many?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}, class_reference.similar_methods(assName).inspect=#{class_reference.similar_methods(assName).inspect}")
+end #is_association_to_one
+def assert_association_to_many(class_reference,assName)
+	if !class_reference.kind_of?(Class) then
+		class_reference=class_reference.class
+	end #if
+	assert_instance_of(Symbol,assName,"assert_association_to_many")
+	assert_association(class_reference,assName)
+	assert(class_reference.is_association_to_many?(assName),"is_association_to_many?(#{class_reference.inspect},#{assName.inspect}) returns false. #{class_reference.similar_methods(assName).inspect}.respond_to?(#{(assName.to_s+'_ids').to_sym}) and class_reference.respond_to?(#{(assName.to_s+'_ids=').to_sym})")
+	assert(!class_reference.is_association_to_one?(assName),"fail !is_association_to_one?, class_reference.inspect=#{class_reference.inspect},assName=#{assName}")
+end #assert_association_to_many
+# true at all times
+def assert_invariant
+end #assert_invariant
+# true after creating an object from scratch
+def assert_pre_conditions
+#	fail "end of instance assert_pre_conditions"
+end #assert_pre_conditions
+# conditions after all ActiveRecord reading and initialization 
+def assert_post_conditions
+end #assert_post_conditions
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
 end # GenericTableAssociation
-

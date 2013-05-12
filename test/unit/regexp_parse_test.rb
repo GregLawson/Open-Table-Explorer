@@ -8,9 +8,70 @@
 require_relative 'test_environment'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
+include DefaultTests2
 include RegexpParse::Examples
+include RegexpToken::Constants
 include RegexpParse::Assertions
 RegexpParse.assert_pre_conditions #verify class
+def test_brackets_RegexpTree
+	assert_not_nil(RegexpTree[Any_binary_char_parse])
+	assert_kind_of(NestedArray, RegexpTree[Any_binary_char_parse])
+	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char_parse])
+#	assert(global_name?(RegexpTree))
+	assert_instance_of(RegexpRepetition, RegexpTree[Any_binary_string_parse])
+	assert_instance_of(RegexpRepetition, RegexpTree[Dot_star_parse])
+	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char])
+#	assert_match(Empty_language_parse.to_regexp, '')
+#	assert_no_match(Empty_language_parse.to_regexp, 'a')
+#	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
+	assert_instance_of(RegexpAlternative, RegexpTree[/a|b/])
+	assert_instance_of(RegexpSequence, RegexpTree[/ab/])
+	assert_instance_of(RegexpSequence, RegexpTree['ab'])
+	assert_instance_of(RegexpParen, RegexpTree[/(b)/])
+	assert_instance_of(RegexpEmpty, RegexpTree[/\A\z/])
+end #brackets
+def test_Constants_RegexpToken
+	assert_instance_of(Hash, To_s)
+	assert_equal(256, To_s.values.size)
+	key_types=To_s.keys.map {|k| k.class}.uniq
+	assert_equal([Symbol], key_types)
+	value_types=To_s.values.map {|k| k.class}.uniq
+	assert_equal([String], value_types)
+	value_sizes=To_s.values.map {|k| k.size}.uniq
+	assert_equal([1], value_sizes)
+end #Constants_RegexpToken
+def test_square_brackets_RegexpToken
+	assert_instance_of(RegexpToken, RegexpToken[")"])
+	assert_equal(RegexpToken[")"].inspect, ':'+:end_capture.to_s)
+	assert_equal(To_s[:end_capture], ')')
+	assert_equal(RegexpToken[:end_capture].to_sym, :end_capture)
+	assert_equal(RegexpToken[:end_capture].inspect, ':'+:end_capture.to_s)
+end #square_brackets_RegexpToken
+def test_inspect_RegexpToken
+	assert_equal(RegexpToken["*"].inspect, ':'+:any.to_s)
+end #inspect
+def test_to_sym_RegexpToken
+	assert_equal(RegexpToken.new(["("]).inspect, ':'+:begin_capture.to_s)
+	assert_equal(RegexpToken.new([")"]).inspect, ':'+:end_capture.to_s)
+	assert_equal(RegexpToken.new(["{"]).inspect, ':'+:begin_repetition.to_s)
+	assert_equal(RegexpToken.new(["}"]).inspect, ':'+:end_repetition.to_s)
+	assert_equal(RegexpToken.new(["["]).inspect, ':'+:begin_class.to_s)
+	assert_equal(RegexpToken.new(["]"]).inspect, ':'+:end_class.to_s)
+	assert_equal(RegexpToken.new(["."]).inspect, ':'+:any_char.to_s)
+	assert_equal(RegexpToken.new(["?"]).inspect, ':'+:optional.to_s)
+	assert_equal(RegexpToken.new(["+"]).inspect, ':'+:many.to_s)
+	assert_equal(RegexpToken.new(["*"]).inspect, ':'+:any.to_s)
+	assert_equal(RegexpToken["*"].inspect, ':'+:any.to_s)
+	assert_equal(RegexpToken["*"].to_sym, :any)
+	assert_equal(RegexpToken[" "].to_sym, :space)
+	assert_equal(RegexpToken["\t"].to_sym, :tab)
+	assert_equal(RegexpToken["\n"].to_sym, :newline)
+	assert_equal(RegexpToken["a"].to_sym, :a)
+end #string
+def test_to_pathname_glob_RegexpSequence
+	assert_instance_of(RegexpSequence, RegexpTree[/ab/])
+	assert_equal('ab', RegexpTree[/ab/].to_pathname_glob)	
+end #to_pathname_glob
 def test_OpeningBrackets
 	assert_equal('(', RegexpParse::OpeningBrackets[RegexpParse::ClosingBrackets.index(')')].chr)
 end #OpeningBrackets
@@ -57,6 +118,9 @@ def test_inspect
 	assert_equal(inspect_string, RegexpParse.new('.*').inspect)
 	assert_equal(inspect_string, Dot_star_parse.inspect)
 end #inspect
+def test_regexp_error
+	assert_nothing_raised{RegexpParse.regexp_error('(')}
+end #regexp_error
 def test_equal_operator
 	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
@@ -375,21 +439,67 @@ def test_regexpTree
 	assert_equal(['K','C'],KC_parse.regexpTree!)
 	assert_equal(["(", "<", "t", "r", [".", "*"], "<", "/", "t", "r", ">"],Rows_parse.regexpTree!('('))
 end #regexpTree!
-def test_case
-	assert_equal(:String, RegexpParse.case?('ab'))
-	assert_equal(:RegexpRepetition, RegexpParse.case?(Any_binary_string_parse))
-	assert_equal(:RegexpRepetition, RegexpParse.case?(Dot_star_parse))
-	assert_equal(:CharacterClass, RegexpParse.case?(Any_binary_char))
-	assert_equal(:RegexpCapture, RegexpParse.case?(/(b)/))
+def test_to_pathname_glob
+	assert_equal('ab', RegexpParse.new(/ab/).to_pathname_glob)
+	assert_equal('[ab]', RegexpParse.new(/[ab]/).to_pathname_glob)
+	assert_equal('ab', RegexpParse.new(/(ab)/).to_pathname_glob)
+#	open_tax_filler_directory="../OpenTaxFormFiller/(?<tax_year>[0-9]{4}}"
+	open_tax_filler_directory="../OpenTaxFormFiller/([0-9]{4})"
+	assert_equal('ab', RegexpTree.new(open_tax_filler_directory).to_pathname_glob)
+	file_regexp="#{open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+	regexp=RegexpTree.new(file_regexp)
+	assert_equal('*', regexp.to_pathname_glob)
+end #to_pathname_glob
+def test_pathnames
+	open_tax_filler_directory="../OpenTaxFormFiller/(?<tax_year>[0-9]{4}}"
+	file_regexp="#{open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+	regexp=RegexpParse.new(file_regexp)
+	regexp.pathnames.compact.map{|matchData| matchData[1]}
+end #pathnames
+def test_grep(pattern, delimiter="\n")
+end #grep
+def test_old_case
+	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Any_binary_string_parse))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Dot_star_parse))
+	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char))
+	assert_instance_of(RegexpParen, RegexpParse.typed?(/(b)/))
 	assert_match(Empty_language_parse.to_regexp, '')
 	assert_no_match(Empty_language_parse.to_regexp, 'a')
-	assert_equal(:RegexpEmpty, RegexpParse.case?(/\A\z/))
-	assert_equal(:RegexpSequence, RegexpParse.case?(/ab/))
+	assert_instance_of(RegexpEmpty, RegexpParse.typed?(/\A\z/))
+	assert_instance_of(RegexpSequence, RegexpParse.typed?(/ab/))
 	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
-	assert_equal(:RegexpAlternative, RegexpParse.case?(/a|b/))
+	assert_instance_of(RegexpAlternative, RegexpParse.typed?(/a|b/))
 end #case
 def test_typed
-	# can't be tested until RegexpTree subclasses are defined
+	assert_not_nil(RegexpParse.typed?(Any_binary_char_parse))
+
+	node='ab'
+	node=RegexpParse.promote(node)
+	if node.instance_of?(Array) then
+		node.map{|e| typed?(e)}
+	end #if
+	assert_equal(RegexpSequence[RegexpToken["a"], RegexpToken["b"]], node)
+	assert_equal(["a", "b"], RegexpParse.new('ab').parse_tree)
+	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
+	assert_equal([:a, :b], RegexpParse.typed?('ab'))
+
+	assert_kind_of(NestedArray, RegexpParse.typed?(Any_binary_char_parse))
+	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char_parse))
+#	assert(global_name?(RegexpTree))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Any_binary_string_parse))
+	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Dot_star_parse))
+	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char))
+#	assert_match(Empty_language_parse.to_regexp, '')
+#	assert_no_match(Empty_language_parse.to_regexp, 'a')
+#	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
+	assert_instance_of(RegexpAlternative, RegexpParse.typed?(/a|b/))
+	assert_instance_of(RegexpSequence, RegexpParse.typed?(/ab/))
+	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
+	assert_instance_of(RegexpParen, RegexpParse.typed?(/(b)/))
+	assert_instance_of(RegexpEmpty, RegexpParse.typed?(/\A\z/))
+	
+
 end #typed
 RegexpParse.assert_pre_conditions
 end #RegexpParerTest

@@ -6,14 +6,16 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+require_relative 'default_test_case.rb'
 require_relative '../assertions/regexp_tree_assertions.rb'
-#require_relative '../../test/assertions/default_assertions.rb'
-require_relative '../../test/unit/default_assertions_tests.rb'
 #require 'test/test_helper_test_tables.rb'
-class RegexpTreeTest < TestCase
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
-include DefaultAssertionTests
+class RegexpTreeTest < DefaultTestCase3
+include DefaultTests3
+def test_initialize
+	assert_not_nil(RegexpTree.new)
+	assert_nothing_raised{RegexpTree.new} # 0 arguments
+	assert_not_nil(model_class?)
+end #initialize
 def test_probability_space_size
 	assert_equal(256, RegexpTree::Any.probability_space_size)
 	assert_equal(194, RegexpTree::Many.probability_space_size)
@@ -34,8 +36,4 @@ end #compare_repetitions
 A=RegexpTree.new('a')
 B=RegexpTree.new('b')
 Ab=RegexpTree.new('ab')
-def test_zero_parameter_new
-	assert_nothing_raised{RegexpTree.new} # 0 arguments
-	assert_not_nil(model_class?)
-end #test_name_correct
 end #RegexpTreeTest

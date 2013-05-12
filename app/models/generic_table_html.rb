@@ -6,7 +6,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/global.rb'
+#require 'app/models/global.rb'
 module GenericTableHtml
 module ClassMethods
 # column order for default html generation
