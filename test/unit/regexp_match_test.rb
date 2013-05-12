@@ -39,6 +39,13 @@ RowsEdtor2=RegexpMatch.new('\s*(<tr.*</tr>)',' <tr height=14>
   <td class=xl33 width=54>Show #</td>
   <td class=xl33 width=200>Title</td>
  </tr>')
+#Macaddr_Column=GenericType.find_by_name('Macaddr_Column')
+def test_match_data
+	assert_nil(RegexpMatch.match_data?(/a/, 'b'))
+	regexp=/\(.*\)/
+	string_to_match='a+(b+c)'
+	assert(RegexpMatch.match_data?(regexp, string_to_match))
+end #match_data?
 def test_promote
 	assert_instance_of(RegexpMatch, RegexpMatch.promote('a', 'b'))
 	assert_equal(Alternative, RegexpMatch.promote('a', 'b'))
@@ -60,7 +67,6 @@ def test_initialize
 	regexp_match_sequence=RegexpMatch.new([RegexpMatch.new('a','a'), RegexpMatch.new('b', 'b')], 'ac')
 #	assert_nil(regexp_match_sequence.matched_data)	
 #	assert_equal("[(?mx-i:a) matches 'a', (?mx-i:b) matches 'b']", regexp_match_sequence.regexp_tree, "regexp_match_sequence=#{regexp_match_sequence}")
-regexp_tree
 end #initialize
 def test_double_equal
 	assert(Alternative==RegexpMatch.promote('a', 'b'))
@@ -69,7 +75,6 @@ end #==
 def test_inspect
 	Matches.assert_pre_conditions
 	assert_equal("(?mx-i:a) matches 'a'", Matches.inspect)
-	Addresses.assert_pre_conditions
 	assert_equal("(?mx-i:<Url:0xb5f22960>) does not match '<Url:0xb5ce4e3c>'", Addresses.inspect)
 
 end #inspect
@@ -94,8 +99,8 @@ def test_map_matches
 	end #if
 	assert_not_nil(Addresses.map_matches)
 	assert_instance_of(RegexpMatch, Addresses.map_matches)
-	assert_equal("<Url:0xb5ce4e3c>", Addresses.map_matches, "Addresses.map_matches=#{Addresses.map_matches.inspect}")
 	assert_instance_of(RegexpMatch, Addresses.map_matches[0])
+	assert_equal("<Url:0xb5ce4e3c>", Addresses.map_matches, "Addresses.map_matches=#{Addresses.map_matches.inspect}")
 	assert_equal("<Url:0xb5ce4e3c>", Addresses.map_matches.matched_data[0])
 end #map_matches
 def test_match_branch

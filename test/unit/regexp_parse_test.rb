@@ -388,5 +388,8 @@ def test_case
 	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
 	assert_equal(:RegexpAlternative, RegexpParse.case?(/a|b/))
 end #case
+def test_typed
+	# can't be tested until RegexpTree subclasses are defined
+end #typed
 RegexpParse.assert_pre_conditions
 end #RegexpParerTest

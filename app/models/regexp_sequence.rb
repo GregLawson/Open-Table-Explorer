@@ -59,6 +59,12 @@ end #<=>
 end #Anchoring
 class RegexpSequence < RegexpTree
 include Comparable
+module Constants
+class StartString <RegexpTree; end
+class EndString <RegexpTree; end
+class StartLine <RegexpTree; end
+class EndLine <RegexpTree; end
+end #Constants
 # Parse regexp_string into parse tree for editing
 def initialize(*nodes)
 	nodes.each do |node|
