@@ -5,11 +5,11 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class EegTest < ActiveSupport::TestCase
+class EegTest < TestCase
 set_class_variables('Eeg', false)
 #file not fixture fixtures @@table_name.to_sym
 def test_initialize

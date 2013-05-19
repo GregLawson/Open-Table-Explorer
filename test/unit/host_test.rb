@@ -5,11 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class HostTest < ActiveSupport::TestCase
+class HostTest < TestCase
 set_class_variables
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'

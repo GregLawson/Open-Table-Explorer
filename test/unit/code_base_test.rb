@@ -5,12 +5,12 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-require 'test/test_helper_test_tables.rb'
-class CodeBaseTest < ActiveSupport::TestCase
+require_relative '../assertions/generic_table_examples.rb'
+class CodeBaseTest < TestCase
 require 'lib/tasks/testing.rb'
 @@Test_pathname='app/models/code_base.rb'
 
@@ -236,7 +236,7 @@ def test_globs_match_regexp
 
 end #globs_match_regexp
 end #CodeBase
-class MatchedPathNameTest < ActiveSupport::TestCase
+class MatchedPathNameTest < TestCase
 require 'lib/tasks/testing.rb'
 @@Test_pathname='app/models/code_base.rb'
 def test_MatchedPathName
@@ -321,7 +321,7 @@ end #model_name
 def test_test_name
 end #test_name
 end #MatchedPathName
-class ModelNameTest < ActiveSupport::TestCase
+class ModelNameTest < TestCase
 @@Test_pathname='app/models/code_base.rb'
 def test_ModelNames
 	assert_equal('code_base', ModelName.new('code_base', false).singular_model_name)

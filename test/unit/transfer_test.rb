@@ -1,9 +1,9 @@
-require 'test/test_helper'
+require_relative 'test_environment'
 require 'active_support' # for singularize and pluralize
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class TransferTest < ActiveSupport::TestCase
+class TransferTest < TestCase
 def setup
 	define_model_of_test # allow generic tests
 	assert_module_included(@model_class,Generic_Table)

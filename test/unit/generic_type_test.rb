@@ -5,14 +5,14 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 
 class GenericType < ActiveRecord::Base
 include GenericTypeAssertions
 extend GenericTypeAssertions::ClassMethods
 end #class GenericType < ActiveRecord::Base
 
-class GenericTypeTest < ActiveSupport::TestCase
+class GenericTypeTest < TestCase
 set_class_variables
 Text=GenericType::Text
 Ascii=GenericType::Ascii

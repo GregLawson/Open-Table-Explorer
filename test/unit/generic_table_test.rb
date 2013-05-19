@@ -10,7 +10,7 @@ require_relative 'default_test_case.rb'
 require 'test/test_helper_test_tables.rb'
 require 'app/models/generic_table_assertion.rb'
 require 'test/assertions/ruby_assertions.rb'
-class GenericTableTest < ActiveSupport::TestCase
+class GenericTableTest < TestCase
 include DefaultTests2
 include Generic_Table
 extend Generic_Table::ClassMethods

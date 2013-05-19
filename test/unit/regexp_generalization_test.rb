@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 # Ensure assertions are included in classes.
 class GenericType < ActiveRecord::Base
 include GenericTypeAssertions
@@ -17,7 +17,7 @@ include RegexpMatchAssertions
 extend RegexpMatchAssertions::ClassMethods
 end #RegexpMatch
 
-class RegexpGeneralizationTest < ActiveSupport::TestCase #file context
+class RegexpGeneralizationTest < TestCase #file context
 set_class_variables(RegexpMatchTest,false)
 #require 'test/unit'
 #include Test_Helpers

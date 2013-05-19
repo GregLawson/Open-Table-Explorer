@@ -10,7 +10,7 @@ require 'test_helper'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 #require 'test/test_helper_test_tables.rb'
-class StringTest < ActiveSupport::TestCase
+class StringTest < TestCase
 def test_to_exact_regexp
 #	RegexpTree::Binary_bytes.each do |c|
 	RegexpTree::Ascii_characters.each do |c|

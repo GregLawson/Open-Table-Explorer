@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require 'app/models/generic_table_assertion.rb'
-class GenericTableAssertionTest < ActiveSupport::TestCase
+class GenericTableAssertionTest < TestCase
 include GenericTableAssertion::KernelMethods
 @@table_name='stream_patterns'
 #fixtures @@table_name.to_sym

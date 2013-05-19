@@ -5,9 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 require 'test/assertions/example_type_assertions.rb'
-class ExampleTypeTest < ActiveSupport::TestCase
+class ExampleTypeTest < TestCase
 @@test_name=self.name
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
 @@table_name=@@model_name.tableize

@@ -11,7 +11,7 @@ require 'test_helper.rb'
 # move passing tests toward end
 require 'test/test_helper_test_tables.rb'
 #require 'test/assertions/generic_table_assertions'
-class ColumnGroupTest < ActiveSupport::TestCase
+class ColumnGroupTest < TestCase
 include Generic_Table
 include GenericTableAssertion
 include GenericTableAssertion::KernelMethods

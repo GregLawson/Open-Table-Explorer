@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative 'default_test_case.rb'
-class StreamPatternTest < ActiveSupport::TestCase
+class StreamPatternTest < TestCase
 set_class_variables
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'

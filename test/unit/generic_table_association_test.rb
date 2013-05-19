@@ -19,7 +19,7 @@ require_relative '../../app/models/stream_method.rb'
 require_relative '../../app/models/stream_link.rb'
 require_relative '../../app/models/no_db.rb'
 require_relative '../assertions/generic_table_examples.rb'
-class GenericTableAssociationTest < ActiveSupport::TestCase
+class GenericTableAssociationTest < TestCase
 include DefaultTests2
 #include Generic_Table
 include GenericTableAssociation::Assertions
