@@ -10,8 +10,10 @@ require 'active_support/all'
 module TestIntrospection
 class TestEnvironment
 attr_reader :model_filename
-def initialize(model_class_name=self.model_class_name?)
-	@model_filename=model_class_name.to_s.tableize.singularize.to_sym
+def initialize(test_class_name=self.class.name)
+	@test_class_name=test_class_name.to_sym
+	@model_class_name=@test_class_name.to_s.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
+	@model_filename=@model_class_name.to_s.tableize.singularize.to_sym
 #	@files_root= # reltive to working directory not file as in require_relative
 end #initialize
 def model_pathname?
@@ -55,6 +57,27 @@ def inspect
 	ret=" test for model class "+@model_class_name.to_s+"assertions_test_pathname="+assertions_test_pathname?.inspect
 	ret+="existing files=#{existing.inspect} and missing files=#{missing.inspect}"
 end #inspect
+module Assertions
+module ClassMethods
+include Test::Unit::Assertions
+end #ClassMethods
+
+include Test::Unit::Assertions
+# conditions that are always true (at least atomically)
+def assert_invariant
+end # class_assert_invariant
+# conditions true while class is being defined
+# assertions true after class (and nested module Examples) is defined
+def assert_pre_conditions
+end #class_assert_pre_conditions
+# assertions true after class (and nested module Examples) is defined
+def assert_post_conditions
+end #class_assert_post_conditions
+
+
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
 end #TestEnvironment
 # methods to extract model, class from TestCase subclass
 def name_of_test?
@@ -133,6 +156,36 @@ end #assert_post_conditions
 def self.assert_invariant
 	fail "got here=self.assert_invariant"
 end # class_assert_invariant
+def test_aaa_environment
+	assert_include(self.class.included_modules, Test::Unit::Assertions)
+#	assert_include(self.class.included_modules, DefaultAssertionTests)
+#	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{assertions_pathname?}")
+	assert_not_include(self.methods(false), :explain_assert_respond_to)
+	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
+	assert_equal([], self.class.methods(false))
+#	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
+#	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
+#	puts "model_class?::Examples.instance_methods.inspect=#{model_class?::Examples.instance_methods.inspect}"
+#	puts "model_class?::Examples.methods.inspect=#{model_class?::Examples.methods.inspect}"
+#	puts "model_class?::Assertions.inspect=#{model_class?::Assertions.inspect}"
+#	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
+#	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
+#	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
+	message="Define a class named #{model_name?} or redefine model_name? to return correct class name."
+	message+="\nself.class.name=#{self.class.name}"
+	message+="\nmodel_name?=#{model_name?}"
+	message+="\nmodel_class?=#{model_class?}"
+	message+="\nor require '#{TE.model_pathname?}'"
+	assert_not_nil(self.class.name, message)
+	assert_not_nil(model_name?, message)
+	assert_not_nil(model_class?, message)
+	assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
+	assert_include(model_class?.included_modules, Test::Unit::Assertions)
+#	assert_equal('Test::Unit::Assertions', self.class.name)
+#	assert_equal([MiniTest::Assertions], self.class.included_modules)
+#	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
+	fail "got to end of test_environment ."
+end #test_test_environment
 end #DefaultTests2
 module DefaultTests3
 include DefaultTests2
@@ -198,4 +251,5 @@ extend Test::Unit::Assertions
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase
+TE=TestIntrospection::TestEnvironment.new
 #TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).name_test_class?)
