@@ -9,7 +9,7 @@ require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-#require 'test/test_helper_test_tables.rb'
+#require_relative '../assertions/generic_table_examples.rb'
 class RegexpAlternative < RegexpTree # reopen class to add assertions
 include RegexpTreeAssertions
 extend RegexpTreeAssertions::ClassMethods

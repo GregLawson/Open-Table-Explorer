@@ -23,6 +23,7 @@ def attribute_names
 	return ['foreign_key_id'] 
 end #def
 end #class
+
 class FullAssociatedModel < ActiveRecord::Base
 include DefaultAssertions
 include Generic_Table
@@ -60,9 +61,11 @@ end #TestClass
 end #Examples
 end #OpenTableBrowser
 # Favorite test case for associations
+class GenericTableExamples
 @@CLASS_WITH_FOREIGN_KEY=StreamPatternArgument
 @@FOREIGN_KEY_ASSOCIATION_CLASS=StreamPattern
 @@FOREIGN_KEY_ASSOCIATION_SYMBOL=:stream_pattern # needs correct plurality
 @@FOREIGN_KEY_ASSOCIATION_INSTANCE=@@FOREIGN_KEY_ASSOCIATION_CLASS.where(:name => 'Acquisition').first
 @@TABLE_NAME_WITH_FOREIGN_KEY=@@CLASS_WITH_FOREIGN_KEY.name.tableize
+end #GenericTableExamples
 end #OpenTableExplorer

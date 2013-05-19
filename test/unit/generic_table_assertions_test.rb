@@ -12,8 +12,7 @@ include GenericTableAssertion::KernelMethods
 @@table_name='stream_patterns'
 #fixtures @@table_name.to_sym
 #fixtures :table_specs
-require 'test/test_helper_test_tables.rb'
-#
+require_relative '../assertions/generic_table_examples.rb'#
 # not single generic_table method
 #
 def test_assert_associations
