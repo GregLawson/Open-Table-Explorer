@@ -1,0 +1,20 @@
+Loaded suite test/unit/testing_file_pattern_test
+Started
+........status=M, file=db/tests.sql
+status=M, file=lib/tasks/testing.rb
+status=M, file=lib/tasks/testing_file_patterns.rb
+status=M, file=log/unit/testing_file_pattern_test.log
+status=M, file=test/unit/testing_file_pattern_test.rb
+status=??, file=log/unit/stream_method_test.log
+db/tests.sql don't know when to stage.
+lib/tasks/testing.rb don't know when to stage.
+lib/tasks/testing_file_patterns.rb don't know when to stage.
+...............E..
+Finished in 33.354597 seconds.
+
+  1) Error:
+test_uptodate_order(TestingFilePatternsTest):
+NoMethodError: undefined method `not_uptodate_order' for CodeBase:Class
+    test/unit/testing_file_pattern_test.rb:67:in `test_uptodate_order'
+
+26 tests, 7082 assertions, 0 failures, 1 errors

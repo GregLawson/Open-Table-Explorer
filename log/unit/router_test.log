@@ -1,0 +1,17 @@
+Loaded suite test/unit/router_test
+Started
+.E..
+Finished in 14.543687 seconds.
+
+  1) Error:
+test_general_associations(RouterTest):
+NoMethodError: undefined method `is_association_to_many?' for #<Router:0xb5c6beec>
+    /test/test_helper_assert_generic_table.rb:71:in `assert_association_to_one'
+    /test/test_helper_assert_generic_table.rb:136:in `assert_general_associations'
+    /test/test_helper_assert_generic_table.rb:130:in `each'
+    /test/test_helper_assert_generic_table.rb:130:in `assert_general_associations'
+    /test/test_helper_assert_generic_table.rb:129:in `each_value'
+    /test/test_helper_assert_generic_table.rb:129:in `assert_general_associations'
+    test/unit/router_test.rb:15:in `test_general_associations'
+
+4 tests, 1814 assertions, 0 failures, 1 errors

@@ -1,0 +1,93 @@
+Loaded suite test/unit/method_model_test
+Started
+..."ActiveModel::Validations::ExclusionValidator"
+.exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+[["scope", "name", "private", "method", "singleton", "instance_variable_defined", "source_location", "exception", "protected", "arity", "owner"], ["scope", "name", "private", "parameters", "method", "singleton", "instance_variable_defined", "source_location", "exception", "protected", "arity", "owner"]]
+..exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+..exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+exc=wrong number of arguments (1 for 0), object=path_info[0].split(/\.|\//)
+.class name[0] is empty, class=#<Class:0xb6a920e8>
+class name[1] is empty, class=#<Class:0xb6b1db0c>
+Duplicate class name[1] = 
+class name[2] is empty, class=#<Class:0xb6b57514>
+Duplicate class name[2] = 
+class name[3] is empty, class=#<Class:0xb7138e88>
+Duplicate class name[3] = 
+class name[4] is empty, class=#<Class:0xb7112044>
+Duplicate class name[4] = 
+class name[5] is empty, class=#<Class:0xb7109228>
+Duplicate class name[5] = 
+class name[6] is empty, class=#<Class:0xb63437ec>
+Duplicate class name[6] = AbstractController::ActionNotFound
+class name[7] is empty, class=#<Class:0xb620ca40>
+Duplicate class name[7] = AbstractController::DoubleRenderError
+class name[8] is empty, class=#<Class:0xb6a547fc>
+Duplicate class name[8] = AbstractController::I18nProxy
+class name[9] is empty, class=#<Class:0xb6b23250>
+Duplicate class name[9] = Acquisition
+class name[10] is empty, class=#<Class:0xb620cd4c>
+Duplicate class name[10] = AcquisitionStreamSpec
+Duplicate class name[1485] = Time
+..constant "BlockValidator" fails constanization
+constant "Naming" fails constanization
+constant "Conversion" fails constanization
+constant "Observer" fails constanization
+constant "DeprecatedErrorMethods" fails constanization
+constant "Observing" fails constanization
+constant "Dirty" fails constanization
+constant "Callbacks" fails constanization
+constant "Serialization" fails constanization
+constant "EachValidator" fails constanization
+constant "MissingAttributeError" fails constanization
+constant "Translation" fails constanization
+constant "Errors" fails constanization
+constant "TestCase" fails constanization
+constant "Validations" fails constanization
+constant "Lint" fails constanization
+constant "Validator" fails constanization
+constant "MassAssignmentSecurity" fails constanization
+constant "AttributeMethods" fails constanization
+constant "Serializers" fails constanization
+constant "Name" fails constanization
+pretty print
+.F.......
+Finished in 3085.612213 seconds.
+
+  1) Failure:
+test_find_by_name(GlobalTest)
+    [test/unit/method_model_test.rb:218:in `test_find_by_name'
+     test/unit/method_model_test.rb:216:in `each'
+     test/unit/method_model_test.rb:216:in `test_find_by_name']:
+<:instance> expected but was
+<:class>.
+
+20 tests, 54207 assertions, 1 failures, 0 errors
