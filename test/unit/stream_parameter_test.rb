@@ -5,9 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 
-class StreamParameterTest < ActiveSupport::TestCase
+class StreamParameterTest < TestCase
 set_class_variables
 def test_id_equal
 	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")

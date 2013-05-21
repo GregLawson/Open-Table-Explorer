@@ -5,11 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class StreamLinkTest < ActiveSupport::TestCase
+class StreamLinkTest < TestCase
 set_class_variables
 fixtures :stream_method_arguments
 #	ActiveSupport::TestCase::fixtures :stream_method_arguments

@@ -6,12 +6,12 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-#require 'test/test_helper_test_tables.rb'
+#require_relative '../assertions/generic_table_examples.rb'
 class RegexpTree < NestedArray # reopen class to add assertions
 include RegexpTreeAssertions
 extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
-class RegexpRepetitionTest < ActiveSupport::TestCase
+class RegexpRepetitionTest < TestCase
 set_class_variables
 def test_RegexpRepetition_initialize
 	assert_equal(One_to_ten.repetition_length, 1..10)

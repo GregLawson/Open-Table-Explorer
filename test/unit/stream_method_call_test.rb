@@ -5,9 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 
-class StreamMethodCallTest < ActiveSupport::TestCase
+class StreamMethodCallTest < TestCase
 set_class_variables
 def test_stream_links
 	streamCall=StreamMethodCall.first

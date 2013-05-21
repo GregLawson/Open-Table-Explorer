@@ -34,6 +34,7 @@ include Examples
 def test_initialize
 	assert_respond_to(UnboundedFixnumTestEnvironment, :model_filename)
 	assert_equal(:unbounded_fixnum, UnboundedFixnumTestEnvironment.model_filename)	
+	assert_equal(:unbounded_fixnum, TestIntrospection::TestEnvironment.new(:UnboundedFixnumTest).model_filename)
 end #initialize
 def test_model_pathname
 	assert(File.exists?(UnboundedFixnumTestEnvironment.model_pathname?))

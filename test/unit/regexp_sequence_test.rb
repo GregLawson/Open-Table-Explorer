@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-#require 'test/test_helper_test_tables.rb'
+#require_relative '../assertions/generic_table_examples.rb'
 require_relative '../../app/models/regexp_sequence.rb'
 class RegexpTree < NestedArray # reopen class to add assertions
 #include RegexpTreeAssertions
