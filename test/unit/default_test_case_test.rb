@@ -129,4 +129,10 @@ def test_example_constants_by_class
 	assert_equal([:Constant], Minimal.example_constant_names_by_class(Fixnum))
 	assert_equal([:Constant], Minimal.example_constant_names_by_class(Fixnum, /on/))
 end #example_constant_names_by_class
+def test_TestIntrospection_TestEnvironment
+	te=TestIntrospection::TestEnvironment.new(model_name?)
+	default_test_symbol=te.default_test_class_id?
+	default_tests=eval("DefaultTests"+default_test_symbol.to_s)
+	default_test_case=eval("DefaultTestCase"+default_test_symbol.to_s)
+end #test_TestIntrospection_TestEnvironment
 end #MinimalTest

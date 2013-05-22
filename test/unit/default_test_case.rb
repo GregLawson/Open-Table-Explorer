@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-TestCase=Test::Unit::TestCase
 require 'active_support/all'
 module TestIntrospection
 class TestEnvironment
@@ -53,6 +52,12 @@ def default_test_class_id?
 		0 # fewest assumptions, no files
 	end #if
 end #default_test_class_id
+def default_tests_module_name?
+	"DefaultTests"+default_test_class_id?.to_s
+end #default_tests_module?
+def test_case_class_name?
+	"DefaultTestCase"+default_test_class_id?.to_s
+end #test_case_class?
 def pathnames?
 	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
 end #pathnames
@@ -237,7 +242,7 @@ end #DefaultTests3
 module DefaultTests4
 include DefaultTests3
 end #DefaultTests4
-class DefaultTestCase0 < TestCase # doesn't follow any class filenaming conventions
+class DefaultTestCase0 < Test::Unit::TestCase # doesn't follow any class filenaming conventions
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
 #include DefaultAssertions
@@ -264,5 +269,6 @@ extend Test::Unit::Assertions
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase4
-TE=TestIntrospection::TestEnvironment.new
-#TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?)
+TE=TestIntrospection::TestEnvironment.new(model_name?)
+DefaultTests=eval(TE.default_tests_module_name?)
+TestCase=eval(TE.test_case_class_name?)
