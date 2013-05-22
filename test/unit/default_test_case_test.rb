@@ -6,8 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-#require_relative 'default_test_case.rb'
-require_relative '../../app/models/unbounded_fixnum.rb'
+require_relative '../../test/unit/default_test_case.rb'
 class EmptyTest
 end #EmptyTest
 class EmptyDefaultTest < DefaultTestCase1
@@ -15,27 +14,22 @@ end #EmptyDefaultTest
 class EmptyIncludedTest
 include DefaultTests1
 end #EmptyIncludedTest
-
-require_relative '../../test/assertions/default_assertions.rb'
-class ClassExists
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
-def self.assert_invariant
-	assert_equal(:ClassExists, self.name.to_sym, caller_lines)
-	assert_instance_of(Class, self)
-end # class_assert_invariant
-end #ClassExists
-
-class ClassExistsTest < DefaultTestCase1
-module Examples
-UnboundedFixnumTestEnvironment=TestEnvironment.new(:UnboundedFixnum)
-end #Examples
-include Examples
+require_relative '../../app/models/unbounded_fixnum.rb'
+class TestEnvironmentTest < TestCase
+include TestIntrospection::TestEnvironment::Examples
 def test_initialize
+#	model_name=
+	assert_equal('test/unit/default_test_case_test.rb', __FILE__)
+	assert_equal('test/unit', File.dirname(__FILE__))
+	te=TestIntrospection::TestEnvironment.new(model_name?)
+	
 	assert_respond_to(UnboundedFixnumTestEnvironment, :model_filename)
 	assert_equal(:unbounded_fixnum, UnboundedFixnumTestEnvironment.model_filename)	
 	assert_equal(:unbounded_fixnum, TestIntrospection::TestEnvironment.new(:UnboundedFixnumTest).model_filename)
 end #initialize
+def test_inspect
+	assert_match(/exist/, UnboundedFixnumTestEnvironment.inspect)
+end #inspect
 def test_model_pathname
 	assert(File.exists?(UnboundedFixnumTestEnvironment.model_pathname?))
 	assert_data_file(UnboundedFixnumTestEnvironment.model_pathname?)
@@ -55,9 +49,13 @@ def test_assertions_test_pathname
 	assert(File.exists?(UnboundedFixnumTestEnvironment.assertions_test_pathname?))
 	assert_data_file(UnboundedFixnumTestEnvironment.assertions_test_pathname?)
 end #assertions_test_pathname?
-def test_name_test_class
-	assert_equal(:DefaultClass4, UnboundedFixnumTestEnvironment.name_test_class?)
-end #name_test_class
+def test_name_test_case_class_id
+	assert_equal(4, UnboundedFixnumTestEnvironment.name_test_case_class_id?)
+	default_test_symbol=TestIntrospection::TestEnvironment.new(model_name?).name_test_case_class_id?
+	assert_equal(0, default_test_symbol)
+	assert_equal(0, TestIntrospection::TestEnvironment.new(model_name?).name_test_case_class_id?)
+	test_case=eval(default_test_symbol.to_s)
+end #name_test_case_class_id
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumTestEnvironment.pathnames?)
 	assert_equal(4, UnboundedFixnumTestEnvironment.pathnames?.size)
@@ -76,9 +74,20 @@ def test_pathname_existance
 		e
 	end #all
 end #pathname_existance
-def test_inspect
-	assert_match(/exist/, UnboundedFixnumTestEnvironment.inspect)
-end #inspect
+end #TestEnvironment
+
+
+require_relative '../../test/assertions/default_assertions.rb'
+class ClassExists
+include DefaultAssertions
+extend DefaultAssertions::ClassMethods
+def self.assert_invariant
+	assert_equal(:ClassExists, self.name.to_sym, caller_lines)
+	assert_instance_of(Class, self)
+end # class_assert_invariant
+end #ClassExists
+
+class ClassExistsTest < DefaultTestCase1
 def test_name_of_test
 	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)

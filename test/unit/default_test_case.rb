@@ -10,12 +10,23 @@ require 'active_support/all'
 module TestIntrospection
 class TestEnvironment
 attr_reader :model_filename
-def initialize(test_class_name=self.class.name)
+def initialize(test_class_name=self.class.name, model_class_name=nil)
 	@test_class_name=test_class_name.to_sym
-	@model_class_name=@test_class_name.to_s.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
+	if model_class_name.nil? then
+		@model_class_name=@test_class_name.to_s.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
+	else
+		@model_class_name=model_class_name
+	end #if
 	@model_filename=@model_class_name.to_s.tableize.singularize.to_sym
 #	@files_root= # reltive to working directory not file as in require_relative
 end #initialize
+def inspect
+	existing, missing = pathnames?.partition do |p|
+		File.exists?(p)
+	end #partition
+	ret=" test for model class "+@model_class_name.to_s+"assertions_test_pathname="+assertions_test_pathname?.inspect
+	ret+="existing files=#{existing.inspect} and missing files=#{missing.inspect}"
+end #inspect
 def model_pathname?
 	"app/models/"+@model_filename.to_s+".rb"
 end #model_pathname?
@@ -28,19 +39,20 @@ end #assertions_pathname?
 def assertions_test_pathname?
 	"test/unit/"+@model_filename.to_s+"_assertions_test.rb"
 end #assertions_test_pathname?
-def name_test_class?
+#  Initially the number of files for the model
+def name_test_case_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
-		:DefaultClass4
+		4
 	elsif File.exists?(self.assertions_pathname?) then
-		:DefaultClass3
+		3
 	elsif File.exists?(self.model_test_pathname?) then
-		:DefaultClass2
+		2
 	elsif File.exists?(self.model_pathname?) then
-		:DefaultClass1
+		1
 	else
-		raise "test for model class "+@model_class_name.to_s+pathname_existance?.join
+		0 # fewest assumptions, no files
 	end #if
-end #name_test_class
+end #name_test_case_class_id
 def pathnames?
 	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
 end #pathnames
@@ -50,13 +62,9 @@ end #absolute_pathnames
 def pathname_existance?
 	absolute_pathnames?.map {|p| File.exists?(p) ? 1 : 0}
 end #pathname_existance
-def inspect
-	existing, missing = pathnames?.partition do |p|
-		File.exists?(p)
-	end #partition
-	ret=" test for model class "+@model_class_name.to_s+"assertions_test_pathname="+assertions_test_pathname?.inspect
-	ret+="existing files=#{existing.inspect} and missing files=#{missing.inspect}"
-end #inspect
+module Examples
+UnboundedFixnumTestEnvironment=TestEnvironment.new(:UnboundedFixnum)
+end #Examples
 module Assertions
 module ClassMethods
 include Test::Unit::Assertions
@@ -104,6 +112,9 @@ def names_of_tests?
 end #names_of_tests?
 end #TestIntrospection
 include TestIntrospection
+module DefaultTests0
+# no default tests?
+end #DefaultTests0
 module DefaultTests1
 include Test::Unit::Assertions
 def test_case_pre_conditions
@@ -252,4 +263,4 @@ extend Test::Unit::Assertions
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase
 TE=TestIntrospection::TestEnvironment.new
-#TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).name_test_class?)
+#TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).name_test_case_class_id?)
