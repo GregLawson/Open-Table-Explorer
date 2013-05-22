@@ -40,7 +40,7 @@ def assertions_test_pathname?
 	"test/unit/"+@model_filename.to_s+"_assertions_test.rb"
 end #assertions_test_pathname?
 #  Initially the number of files for the model
-def name_test_case_class_id?
+def default_test_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
 		4
 	elsif File.exists?(self.assertions_pathname?) then
@@ -52,7 +52,7 @@ def name_test_case_class_id?
 	else
 		0 # fewest assumptions, no files
 	end #if
-end #name_test_case_class_id
+end #default_test_class_id
 def pathnames?
 	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
 end #pathnames
@@ -263,4 +263,4 @@ extend Test::Unit::Assertions
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase
 TE=TestIntrospection::TestEnvironment.new
-#TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).name_test_case_class_id?)
+#TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?)

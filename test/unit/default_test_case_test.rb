@@ -49,13 +49,16 @@ def test_assertions_test_pathname
 	assert(File.exists?(UnboundedFixnumTestEnvironment.assertions_test_pathname?))
 	assert_data_file(UnboundedFixnumTestEnvironment.assertions_test_pathname?)
 end #assertions_test_pathname?
-def test_name_test_case_class_id
-	assert_equal(4, UnboundedFixnumTestEnvironment.name_test_case_class_id?)
-	default_test_symbol=TestIntrospection::TestEnvironment.new(model_name?).name_test_case_class_id?
+def test_default_test_class_id
+	assert_equal(4, UnboundedFixnumTestEnvironment.default_test_class_id?)
+	default_test_symbol=TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?
 	assert_equal(0, default_test_symbol)
-	assert_equal(0, TestIntrospection::TestEnvironment.new(model_name?).name_test_case_class_id?)
-	test_case=eval(default_test_symbol.to_s)
-end #name_test_case_class_id
+	assert_equal(0, TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?)
+	tests=eval("DefaultTests"+default_test_symbol.to_s)
+	assert_path_to_constant(:DefaultTestCase1)
+	assert_path_to_constant(:DefaultTestCase1)
+	test_case=eval("DefaultTestCase"+default_test_symbol.to_s)
+end #default_test_class_id
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumTestEnvironment.pathnames?)
 	assert_equal(4, UnboundedFixnumTestEnvironment.pathnames?.size)
