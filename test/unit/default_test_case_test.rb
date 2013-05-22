@@ -55,9 +55,16 @@ def test_default_test_class_id
 	assert_equal(0, default_test_symbol)
 	assert_equal(0, TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?)
 	tests=eval("DefaultTests"+default_test_symbol.to_s)
+	assert_path_to_constant(:DefaultTestCase0)
 	assert_path_to_constant(:DefaultTestCase1)
-	assert_path_to_constant(:DefaultTestCase1)
+	assert_path_to_constant(:DefaultTestCase2)
+	assert_path_to_constant(:DefaultTestCase3)
+	assert_path_to_constant(:DefaultTestCase4)
 	test_case=eval("DefaultTestCase"+default_test_symbol.to_s)
+	assert_path_to_constant(:DefaultTests1)
+	assert_path_to_constant(:DefaultTests2)
+	assert_path_to_constant(:DefaultTests3)
+	assert_path_to_constant(:DefaultTests4)
 end #default_test_class_id
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumTestEnvironment.pathnames?)

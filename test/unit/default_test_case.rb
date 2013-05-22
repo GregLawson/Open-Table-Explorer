@@ -237,7 +237,9 @@ end #DefaultTests3
 module DefaultTests4
 include DefaultTests3
 end #DefaultTests4
-class DefaultTestCase1 < TestCase # test file only
+class DefaultTestCase0 < TestCase # doesn't follow any class filenaming conventions
+end #DefaultTestCase0
+class DefaultTestCase1 < DefaultTestCase0 # test file only
 #include DefaultAssertions
 #extend DefaultAssertions::ClassMethods
 def global_class_names
@@ -254,13 +256,13 @@ def assertions_pathname?
 end #assertions_pathname?
 end #DefaultTestCase3
 
-class DefaultTestCase < DefaultTestCase3# test, model, assertion, and assertion test files
+class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
 require 'test/unit'
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
-end #DefaultTestCase
+end #DefaultTestCase4
 TE=TestIntrospection::TestEnvironment.new
 #TestCase=eval(TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?)
