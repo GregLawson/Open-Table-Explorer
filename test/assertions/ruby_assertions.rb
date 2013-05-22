@@ -14,6 +14,15 @@ module Assertions
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
+# returns to ruby 1.8 behavior
+def build_message(head, template=nil, *arguments)
+#  head=head+", arguments=#{arguments.inspect}"
+  template &&= template.chomp
+  arguments.each do |arg|
+  	template.sub!(/\?/, arg.inspect)
+  end #each
+  caller_lines+head.to_s+template
+end
 =begin
 def assert(test, msg = UNASSIGNED)
   case msg
@@ -136,6 +145,7 @@ def explain_assert_respond_to(obj,methodName,message='')
 	end
 end #explain_assert_respond_to
 def assert_not_empty(object,message=nil)
+#	puts "in assert_not_empty: message=#{message.inspect}"
 	message=build_message(message, "? is empty with value ?.", object.canonicalName,object.inspect)   
 	assert_not_nil(object,message)
 	assert_block(message){!object.empty?}
@@ -205,8 +215,8 @@ def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
 	end #if
 end #assert_equal_sets
 def assert_overlap(enum1,enum2)
-	assert_not_empty(enum1)
-	assert_not_empty(enum2)
+	assert_not_empty(enum1, "Assume first set to not be empty.")
+	assert_not_empty(enum2, "Assume second set to not be empty.")
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
 #def assert_include(element,list,message=nil)
@@ -290,7 +300,8 @@ def global_name?(name)
 	Module.constants.include?(name)
 end #global_name
 def assert_scope_path(*names)
-	assert_not_empty(names)
+	return [] if names.size==0
+	assert_not_empty(names, "Expect non-empty scope path.")
 	if !global_name?(names[0]) then
 		names=[self.class.name.to_sym]+names
 #		puts "after adding self, names=#{names.inspect}"
@@ -359,7 +370,7 @@ def assert_constant_instance_respond_to(*names)
 end #assert_constant_instance_respond_to
 def assert_pathname_exists(pathname)
 	assert_not_nil(pathname)
-	assert_not_empty(pathname)
+	assert_not_empty(pathname, "Assume pathname to not be empty.")
 	assert(File.exists?(pathname), "File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
 	assert(File.exists?(File.expand_path(pathname)), "File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
 end #assert_pathname_exists
