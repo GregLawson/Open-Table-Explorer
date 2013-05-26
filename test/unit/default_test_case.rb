@@ -7,6 +7,15 @@
 ###########################################################################
 require 'active_support/all'
 module TestIntrospection
+def model_basename?
+	File.basename($0, '.rb')[0..-6]
+end #model_basename
+def class_name?
+	model_basename?.classify
+end #class_name
+def name_of_test?
+	model_basename?.classify.to_s+'Test'
+end #name_of_test
 class TestEnvironment
 attr_reader :model_filename
 def initialize(test_class_name=self.class.name, model_class_name=nil)

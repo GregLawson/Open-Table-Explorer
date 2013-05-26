@@ -17,6 +17,19 @@ end #EmptyIncludedTest
 require_relative '../../app/models/unbounded_fixnum.rb'
 class TestEnvironmentTest < TestCase
 include TestIntrospection::TestEnvironment::Examples
+def test_model_basename
+	assert_equal('test/unit/default_test_case_test.rb', $0)
+	assert_equal('test/unit/default_test_case_test.rb', __FILE__)
+	assert_equal('test/unit', File.dirname($0))
+	assert_equal('default_test_case_test.rb', File.basename($0))
+	assert_equal('.rb', File.extname($0))
+	assert_equal('default_test_case_test', File.basename($0, '.rb'))
+	assert_equal('default_test_case', File.basename($0, '.rb')[0..-6])
+	assert_equal('default_test_case', model_basename?)
+end #model_basename
+def test_class_name
+	assert_equal('DefaultTestCase', class_name?)
+end #class_name
 def test_initialize
 #	model_name=
 	assert_equal('test/unit/default_test_case_test.rb', __FILE__)
