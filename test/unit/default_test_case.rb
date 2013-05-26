@@ -18,7 +18,7 @@ def name_of_test?
 end #name_of_test
 class TestEnvironment
 attr_reader :model_filename
-def initialize(test_class_name=self.class.name, model_class_name=nil)
+def initialize(test_class_name=class_name?, model_class_name=nil)
 	@test_class_name=test_class_name.to_sym
 	if model_class_name.nil? then
 		@model_class_name=@test_class_name.to_s.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
