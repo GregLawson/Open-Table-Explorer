@@ -115,6 +115,9 @@ include Test::Unit::Assertions
 end #DefaultTests0
 module DefaultTests1
 include DefaultTests0
+def initialize(*args)
+	@test_enviroonment=TestEnvironment.new(model_name?, name_of_test?)
+end #initialize
 # methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
