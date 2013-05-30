@@ -35,10 +35,9 @@ def test_name_of_test
 	assert_equal('DefaultTestCaseTest', name_of_test?)
 end #name_of_test
 def test_initialize
-#	model_name=
 	assert_equal('test/unit/default_test_case_test.rb', __FILE__)
 	assert_equal('test/unit', File.dirname(__FILE__))
-	te=TestIntrospection::TestEnvironment.new(model_name?)
+	te=TestIntrospection::TestEnvironment.new(TE.model_name?)
 	
 	assert_respond_to(UnboundedFixnumTestEnvironment, :model_basename)
 	assert_equal(:unbounded_fixnum, UnboundedFixnumTestEnvironment.model_basename)	
@@ -147,7 +146,7 @@ def test_example_constants_by_class
 	assert_equal([:Constant], Minimal.example_constant_names_by_class(Fixnum, /on/))
 end #example_constant_names_by_class
 def test_TestIntrospection_TestEnvironment
-	te=TestIntrospection::TestEnvironment.new(model_name?)
+	te=TestIntrospection::TestEnvironment.new(TE.model_name?)
 	default_test_class_id=te.default_test_class_id?
 	default_tests=eval("DefaultTests"+default_test_class_id.to_s)
 	default_test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
