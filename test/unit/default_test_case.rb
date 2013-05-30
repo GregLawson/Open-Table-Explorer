@@ -76,6 +76,12 @@ end #absolute_pathnames
 def pathname_existance?
 	absolute_pathnames?.map {|p| File.exists?(p) ? 1 : 0}
 end #pathname_existance
+def model_class?
+	eval(@model_class_name)
+end #model_class
+def model_name?
+	@model_class_name
+end #model_name?
 module Examples
 UnboundedFixnumTestEnvironment=TestEnvironment.new(:UnboundedFixnum)
 end #Examples
