@@ -17,7 +17,7 @@ def name_of_test?
 	model_basename?.classify.to_s+'Test'
 end #name_of_test
 class TestEnvironment
-attr_reader :model_filename
+attr_reader :model_basename, :test_class_name
 def initialize(test_class_name=class_name?, model_class_name=nil)
 	@test_class_name=test_class_name.to_sym
 	if model_class_name.nil? then
@@ -25,7 +25,7 @@ def initialize(test_class_name=class_name?, model_class_name=nil)
 	else
 		@model_class_name=model_class_name
 	end #if
-	@model_filename=@model_class_name.to_s.tableize.singularize.to_sym
+	@model_basename=@model_class_name.to_s.tableize.singularize.to_sym
 #	@files_root= # reltive to working directory not file as in require_relative
 end #initialize
 def inspect
@@ -36,16 +36,16 @@ def inspect
 	ret+="existing files=#{existing.inspect} and missing files=#{missing.inspect}"
 end #inspect
 def model_pathname?
-	"app/models/"+@model_filename.to_s+".rb"
+	"app/models/"+@model_basename.to_s+".rb"
 end #model_pathname?
 def model_test_pathname?
-	"test/unit/"+@model_filename.to_s+"_test.rb"
+	"test/unit/"+@model_basename.to_s+"_test.rb"
 end #model_test_pathname?
 def assertions_pathname?
-	"test/assertions/"+@model_filename.to_s+"_assertions.rb"
+	"test/assertions/"+@model_basename.to_s+"_assertions.rb"
 end #assertions_pathname?
 def assertions_test_pathname?
-	"test/unit/"+@model_filename.to_s+"_assertions_test.rb"
+	"test/unit/"+@model_basename.to_s+"_assertions_test.rb"
 end #assertions_test_pathname?
 #  Initially the number of files for the model
 def default_test_class_id?

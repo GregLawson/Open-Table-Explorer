@@ -36,9 +36,9 @@ def test_initialize
 	assert_equal('test/unit', File.dirname(__FILE__))
 	te=TestIntrospection::TestEnvironment.new(model_name?)
 	
-	assert_respond_to(UnboundedFixnumTestEnvironment, :model_filename)
-	assert_equal(:unbounded_fixnum, UnboundedFixnumTestEnvironment.model_filename)	
-	assert_equal(:unbounded_fixnum, TestIntrospection::TestEnvironment.new(:UnboundedFixnumTest).model_filename)
+	assert_respond_to(UnboundedFixnumTestEnvironment, :model_basename)
+	assert_equal(:unbounded_fixnum, UnboundedFixnumTestEnvironment.model_basename)	
+	assert_equal(:unbounded_fixnum, TestIntrospection::TestEnvironment.new(:UnboundedFixnumTest).model_basename)
 end #initialize
 def test_inspect
 	assert_match(/exist/, UnboundedFixnumTestEnvironment.inspect)
