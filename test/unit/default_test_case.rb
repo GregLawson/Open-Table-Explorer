@@ -107,6 +107,8 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #TestEnvironment
+end #TestIntrospection
+include TestIntrospection
 # methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
@@ -130,8 +132,6 @@ def names_of_tests?
 		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
 	end #map
 end #names_of_tests?
-end #TestIntrospection
-include TestIntrospection
 module DefaultTests0
 # no default tests?
 end #DefaultTests0
