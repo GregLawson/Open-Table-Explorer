@@ -133,10 +133,11 @@ end #names_of_tests?
 end #TestIntrospection
 include TestIntrospection
 module DefaultTests0
+include Test::Unit::Assertions
 # no default tests?
 end #DefaultTests0
 module DefaultTests1
-include Test::Unit::Assertions
+include DefaultTests0
 def test_case_pre_conditions
 	assert_equal([DefaultTests1], Module.nesting)
 	caller_message=" callers=#{caller.join("\n")}"
