@@ -107,17 +107,6 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #TestEnvironment
-end #TestIntrospection
-include TestIntrospection
-module DefaultTests0
-include Test::Unit::Assertions
-# no default tests?
-end #DefaultTests0
-module DefaultTests1
-include DefaultTests0
-def initialize(*args)
-	@test_enviroonment=TestEnvironment.new(model_name?, name_of_test?)
-end #initialize
 # methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
@@ -141,6 +130,17 @@ def names_of_tests?
 		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
 	end #map
 end #names_of_tests?
+end #TestIntrospection
+include TestIntrospection
+module DefaultTests0
+include Test::Unit::Assertions
+# no default tests?
+end #DefaultTests0
+module DefaultTests1
+include DefaultTests0
+def initialize(*args)
+	@test_enviroonment=TestEnvironment.new(model_name?, name_of_test?)
+end #initialize
 def test_case_pre_conditions
 	assert_equal([DefaultTests1], Module.nesting)
 	caller_message=" callers=#{caller.join("\n")}"
