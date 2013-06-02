@@ -107,17 +107,6 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #TestEnvironment
-end #TestIntrospection
-include TestIntrospection
-module DefaultTests0
-include Test::Unit::Assertions
-# no default tests?
-end #DefaultTests0
-module DefaultTests1
-include DefaultTests0
-def initialize(*args)
-	@test_enviroonment=TestEnvironment.new(model_name?, name_of_test?)
-end #initialize
 # methods to extract model, class from TestCase subclass
 def name_of_test?
 	self.class.name
@@ -141,6 +130,13 @@ def names_of_tests?
 		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
 	end #map
 end #names_of_tests?
+end #TestIntrospection
+include TestIntrospection
+module DefaultTests0
+# no default tests?
+end #DefaultTests0
+module DefaultTests1
+include Test::Unit::Assertions
 def test_case_pre_conditions
 	assert_equal([DefaultTests1], Module.nesting)
 	caller_message=" callers=#{caller.join("\n")}"
@@ -149,7 +145,7 @@ def test_case_pre_conditions
 end #test_case_pre_conditions
 def test_class_assert_invariant
 #	assert_include(Module.constants, model_name?)
-	assert_not_nil(model_class?, "Define a class named #{TE.model_name?} or redefine model_name? to return correct class name.")
+	assert_not_nil(model_class?, "Define a class named #{model_name?} or redefine model_name? to return correct class name.")
 	model_class?.assert_invariant
 #	fail "got to end of default test."
 end # class_assert_invariant
@@ -206,13 +202,13 @@ def test_aaa_environment
 #	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
 #	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
 #	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
-	message="Define a class named #{TE.model_name?} or redefine model_name? to return correct class name."
+	message="Define a class named #{model_name?} or redefine model_name? to return correct class name."
 	message+="\nself.class.name=#{self.class.name}"
-	message+="\nmodel_name?=#{TE.model_name?}"
+	message+="\nmodel_name?=#{model_name?}"
 	message+="\nmodel_class?=#{model_class?}"
 	message+="\nor require '#{TE.model_pathname?}'"
 	assert_not_nil(self.class.name, message)
-	assert_not_nil(TE.model_name?, message)
+	assert_not_nil(model_name?, message)
 	assert_not_nil(model_class?, message)
 	assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
 	assert_include(model_class?.included_modules, Test::Unit::Assertions)
@@ -276,7 +272,7 @@ end #DefaultTestCase2
 
 class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 def assertions_pathname?
-	"../assertions/"+TE.model_name?+"_assertions.rb"
+	"../assertions/"+model_name?+"_assertions.rb"
 end #assertions_pathname?
 end #DefaultTestCase3
 
@@ -288,6 +284,6 @@ extend Test::Unit::Assertions
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase4
-TE=TestIntrospection::TestEnvironment.new
+TE=TestIntrospection::TestEnvironment.new(model_name?)
 DefaultTests=eval(TE.default_tests_module_name?)
 TestCase=eval(TE.test_case_class_name?)

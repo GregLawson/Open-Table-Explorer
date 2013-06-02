@@ -30,14 +30,11 @@ end #model_basename
 def test_class_name
 	assert_equal('DefaultTestCase', class_name?)
 end #class_name
-def test_name_of_test
-	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
-	assert_equal('DefaultTestCaseTest', name_of_test?)
-end #name_of_test
 def test_initialize
+#	model_name=
 	assert_equal('test/unit/default_test_case_test.rb', __FILE__)
 	assert_equal('test/unit', File.dirname(__FILE__))
-	te=TestIntrospection::TestEnvironment.new(TE.model_name?)
+	te=TestIntrospection::TestEnvironment.new(model_name?)
 	
 	assert_respond_to(UnboundedFixnumTestEnvironment, :model_basename)
 	assert_equal(:unbounded_fixnum, UnboundedFixnumTestEnvironment.model_basename)	
@@ -67,16 +64,16 @@ def test_assertions_test_pathname
 end #assertions_test_pathname?
 def test_default_test_class_id
 	assert_equal(4, UnboundedFixnumTestEnvironment.default_test_class_id?)
-	default_test_class_id=TestIntrospection::TestEnvironment.new(TE.model_name?).default_test_class_id?
-	assert_equal(2, default_test_class_id)
-	assert_equal(2, TestIntrospection::TestEnvironment.new(TE.model_name?).default_test_class_id?)
-	tests=eval("DefaultTests"+default_test_class_id.to_s)
+	default_test_symbol=TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?
+	assert_equal(0, default_test_symbol)
+	assert_equal(0, TestIntrospection::TestEnvironment.new(model_name?).default_test_class_id?)
+	tests=eval("DefaultTests"+default_test_symbol.to_s)
 	assert_path_to_constant(:DefaultTestCase0)
 	assert_path_to_constant(:DefaultTestCase1)
 	assert_path_to_constant(:DefaultTestCase2)
 	assert_path_to_constant(:DefaultTestCase3)
 	assert_path_to_constant(:DefaultTestCase4)
-	test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
+	test_case=eval("DefaultTestCase"+default_test_symbol.to_s)
 	assert_path_to_constant(:DefaultTests1)
 	assert_path_to_constant(:DefaultTests2)
 	assert_path_to_constant(:DefaultTests3)
@@ -146,9 +143,9 @@ def test_example_constants_by_class
 	assert_equal([:Constant], Minimal.example_constant_names_by_class(Fixnum, /on/))
 end #example_constant_names_by_class
 def test_TestIntrospection_TestEnvironment
-	te=TestIntrospection::TestEnvironment.new(TE.model_name?)
-	default_test_class_id=te.default_test_class_id?
-	default_tests=eval("DefaultTests"+default_test_class_id.to_s)
-	default_test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
+	te=TestIntrospection::TestEnvironment.new(model_name?)
+	default_test_symbol=te.default_test_class_id?
+	default_tests=eval("DefaultTests"+default_test_symbol.to_s)
+	default_test_case=eval("DefaultTestCase"+default_test_symbol.to_s)
 end #test_TestIntrospection_TestEnvironment
 end #MinimalTest
