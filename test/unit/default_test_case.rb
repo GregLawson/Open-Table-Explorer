@@ -146,7 +146,7 @@ def test_case_pre_conditions
 end #test_case_pre_conditions
 def test_class_assert_invariant
 #	assert_include(Module.constants, model_name?)
-	assert_not_nil(model_class?, "Define a class named #{model_name?} or redefine model_name? to return correct class name.")
+	assert_not_nil(model_class?, "Define a class named #{TE.model_name?} or redefine model_name? to return correct class name.")
 	model_class?.assert_invariant
 #	fail "got to end of default test."
 end # class_assert_invariant
@@ -203,13 +203,13 @@ def test_aaa_environment
 #	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
 #	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
 #	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
-	message="Define a class named #{model_name?} or redefine model_name? to return correct class name."
+	message="Define a class named #{TE.model_name?} or redefine model_name? to return correct class name."
 	message+="\nself.class.name=#{self.class.name}"
-	message+="\nmodel_name?=#{model_name?}"
+	message+="\nmodel_name?=#{TE.model_name?}"
 	message+="\nmodel_class?=#{model_class?}"
 	message+="\nor require '#{TE.model_pathname?}'"
 	assert_not_nil(self.class.name, message)
-	assert_not_nil(model_name?, message)
+	assert_not_nil(TE.model_name?, message)
 	assert_not_nil(model_class?, message)
 	assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
 	assert_include(model_class?.included_modules, Test::Unit::Assertions)
@@ -273,7 +273,7 @@ end #DefaultTestCase2
 
 class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 def assertions_pathname?
-	"../assertions/"+model_name?+"_assertions.rb"
+	"../assertions/"+TE.model_name?+"_assertions.rb"
 end #assertions_pathname?
 end #DefaultTestCase3
 
