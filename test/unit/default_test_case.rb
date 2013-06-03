@@ -285,6 +285,6 @@ extend Test::Unit::Assertions
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase4
-TE=TestIntrospection::TestEnvironment.new(model_name?)
+TE=TestIntrospection::TestEnvironment.new
 DefaultTests=eval(TE.default_tests_module_name?)
 TestCase=eval(TE.test_case_class_name?)
