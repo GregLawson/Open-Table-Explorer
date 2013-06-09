@@ -5,13 +5,14 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/generic_table.rb'
+#require_relative '../../app/models/generic_table.rb'
+require_relative '../../app/models/no_db.rb'
 require_relative '../../test/assertions/default_assertions.rb'
-class Chemistry < ActiveRecord
+class Chemistry < ActiveRecord::Base
 end #Chemistry
-class FormFactor < ActiveRecord
+class FormFactor < ActiveRecord::Base
 end #FormFactor
-class Brand < ActiveRecord
+class Brand < ActiveRecord::Base
 end #Brand
 class BatteryType
 include NoDB
