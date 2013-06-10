@@ -17,25 +17,26 @@ def file_versions(filename)
 end #file_versions
 command_line="git checkout #{Edit_branch}"
 sysout=`#{command_line}`
-if $?.success? then
-else
+if !$?.success? then
 	puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}";exit
-end #if
-command_line="diffuse"+ file_versions(File) + ' -t' +file_versions(Test_file)
-sysout=`#{command_line}`
-if $?.success? then
-	command_line="ruby "+ Test_file
+else
+	command_line="diffuse"+ file_versions(File) + ' -t' +file_versions(Test_file)
 	sysout=`#{command_line}`
 	if $?.success? then
-		puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}";exit
-		command_line="git-cola "
+		command_line="ruby "+ Test_file
 		sysout=`#{command_line}`
-		puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}";exit
+		if $?.success? then
+			puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}"
+			command_line="git-cola "
+			sysout=`#{command_line}`
+			puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}";exit
+		else
+			puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}";exit
+		end #if
 	else
-		puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}";exit
+		puts "command_line=#{command_line}, $?=#{$?.inspect}";exit
 	end #if
-else
-	puts "command_line=#{command_line}, $?=#{$?.inspect}";exit
+	puts command_line
+	puts sysout
 end #if
-puts command_line
-puts sysout
+
