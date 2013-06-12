@@ -1,4 +1,5 @@
+require_relative 'no_db.rb'
 class Router < ActiveRecord::Base
-include Generic_Table
+
 belongs_to :hosts
 end
