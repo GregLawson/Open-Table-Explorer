@@ -1,3 +1,6 @@
+require 'test/unit'
+require_relative '../test/unit/default_test_case.rb'
+require_relative '../app/models/test_environment.rb'
 case ARGV.size
 when 0 then puts "dct <branch> <file>; where <branch> is development, compiles, or master"; exit
 end #case
