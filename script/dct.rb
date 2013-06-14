@@ -15,12 +15,15 @@ end #revison_tag
 def file_versions(filename)
 	" #{revison_tag(:master)} #{filename} #{revison_tag(:compiles)} #{filename} #{revison_tag(:development)} #{filename}"
 end #file_versions
+def test_files(*files)
+	" #{revison_tag(Edit_branch)} #{files[0]} #{revison_tag(Edit_branch)} #{files[1]} "
+end #test_files
 command_line="git checkout #{Edit_branch}"
 sysout=`#{command_line}`
 if !$?.success? then
 	puts "command_line=#{command_line}, $?=#{$?.inspect}, $?.success?=#{$?.success?}";exit
 else
-	command_line="diffuse"+ file_versions(File) + ' -t' +file_versions(Test_file)
+	command_line="diffuse"+ file_versions(File) + ' -t' +file_versions(Test_file) + ' -t' +test_files(File, Test_file)
 	sysout=`#{command_line}`
 	if $?.success? then
 		command_line="ruby "+ Test_file
