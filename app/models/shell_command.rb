@@ -1,18 +1,21 @@
 require 'open3'
 module Parse
+module Constants
 LINES=/([^\n]*)(?:\n([^\n]*))*/
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
+end #Constants
+include Constants
+# A terminator is a delimiter that is at the end (like new line)
+def Parse.terminator_regexp(delimiter)
+	raise "delimiter must be single characters not #{delimiter}." if delimiter.length!=1
+	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
+end #terminator_regexp
 # A delimiter is generally not at the end (like commas)
 def Parse.delimiter_regexp(delimiter)
 	raise "delimiters must be single characters not #{delimiter.inspect}." if delimiter.length!=1
 	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
 end #delimiter_regexp
-# A terminator is a delimiter that is at the end (like new line)
-def Parse.terminator_regexp(delimiter)
-	raise "delimiters must be single characters not #{delimiter}." if delimiter.length!=1
-	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
-end #terminator_regexp
 def parse_string(string, pattern=LINES)
 	ret=string.match(pattern)
 	ret[1..-1] # return matched subexpressions

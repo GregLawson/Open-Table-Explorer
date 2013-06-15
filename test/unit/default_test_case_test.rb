@@ -30,10 +30,6 @@ end #model_basename
 def test_class_name
 	assert_equal('DefaultTestCase', class_name?)
 end #class_name
-def test_name_of_test
-	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
-	assert_equal('DefaultTestCaseTest', name_of_test?)
-end #name_of_test
 def test_initialize
 	assert_equal('test/unit/default_test_case_test.rb', __FILE__)
 	assert_equal('test/unit', File.dirname(__FILE__))
