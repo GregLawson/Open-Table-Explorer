@@ -3,6 +3,10 @@ require_relative '../../app/models/shell_command.rb'
 require_relative 'default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
 include Parse
+def test_terminator_regexp
+	assert_equal(['1', '2', '3'], parse("1\n2\n3\n", LINES), "")
+	assert_equal(LINES, Parse.terminator_regexp('\n'))
+end #terminator_regexp
 include ShellCommands::Examples
 def test_delimiter_regexp
 	assert_equal(['1', '2'], parse("1,2", Parse.delimiter_regexp(",")))
@@ -14,10 +18,6 @@ def test_delimiter_regexp
 	assert_equal(['1', '2', '3'], parse("1 2 3", Parse.delimiter_regexp('\s')))
 	assert_equal(CSV, Parse.delimiter_regexp(","))
 end #delimiter_regexp
-def test_terminator_regexp
-	assert_equal(['1', '2', '3'], parse("1\n2\n3\n", LINES), "")
-	assert_equal(LINES, Parse.terminator_regexp('\n'))
-end #terminator_regexp
 def test_parse_string
 	string="1\n2"
 	pattern=Parse::LINES
