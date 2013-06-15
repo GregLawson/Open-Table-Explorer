@@ -1,19 +1,18 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative 'test_environment'
-
+require_relative '../assertions/generic_type_assertions.rb'
 class GenericType < ActiveRecord::Base
 include GenericTypeAssertions
 extend GenericTypeAssertions::ClassMethods
 end #class GenericType < ActiveRecord::Base
 
 class GenericTypeTest < TestCase
-set_class_variables
 Text=GenericType::Text
 Ascii=GenericType::Ascii
 Alpha=GenericType.find_by_name('alpha')
