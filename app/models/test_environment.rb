@@ -28,7 +28,21 @@ def initialize(test_class_name=class_name?, model_class_name=nil)
 	end #if
 	@model_basename=@model_class_name.to_s.tableize.singularize.to_sym
 	@pwd_dir=`pwd` .chomp+'/'# reltive to working directory not file as in require_relative
-	@test_dir=File.dirname($0)+'/'
+	@script_directory_pathname=File.dirname(File.expand_path($0))+'/'
+	@script_directory_name=File.basename(@script_directory_pathname)
+	puts "@script_directory_pathname=#@script_directory_pathname}"
+	puts "@script_directory_name=#{@script_directory_name}"
+	case @script_directory_name
+	when 'unit' then
+		@test_dir=@script_directory_pathname
+	when 'scripts' then
+		@test_dir=File.dirname(@script_directory_pathname)+'/test/unit'
+	when 'models'
+		fail "Tha's a model not a test file."
+	else
+		fail "can't find test directory"
+	end #case
+	puts "@test_dir=#{@test_dir}"
 	@class_dir=@test_dir+"../../app/models/"
 	@assertions_dir=@test_dir+"../assertions/"
 	@assertions_test_dir=@test_dir

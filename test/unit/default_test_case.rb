@@ -216,7 +216,7 @@ def test_aaa_environment
 #	assert_equal('Test::Unit::Assertions', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
-	fail "got to end of test_environment ."
+#	fail "got to end of test_environment ."
 end #test_test_environment
 end #DefaultTests2
 module DefaultTests3
