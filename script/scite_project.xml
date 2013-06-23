@@ -24,14 +24,14 @@
 			<file>./../test/unit/error_type_test.rb</file>
 		</group>
 		<group name='Streams' expanded='TRUE'>
-			<file>./../test/unit/stream_link_test.rb</file>
 			<group name='Executable' expanded='TRUE'>
 				<file>./../test/unit/frequency_test.rb</file>
 				<file>./../test/unit/stream_method_call_test.rb</file>
+				<file>./../test/unit/stream_parameter_test.rb</file>
+				<file>./../test/unit/stream_link_test.rb</file>
 			</group>
 			<group name='Component Library' expanded='TRUE'>
 				<file>./../test/unit/url_test.rb</file>
-				<file>./../test/unit/stream_parameter_test.rb</file>
 				<file>./../test/unit/stream_method_test.rb</file>
 				<file>./../test/unit/stream_method_argument_test.rb</file>
 				<file>./../test/unit/stream_pattern_test.rb</file>
