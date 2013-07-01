@@ -3,6 +3,7 @@ require_relative '../../test/unit/default_test_case.rb'
 require_relative '../../app/models/test_environment.rb'
 require_relative '../../app/models/shell_command.rb'
 class WorkFlow
+include TestIntrospection
 attr_reader :test_environment, :edit_files
 module ClassMethods
 def revison_tag(branch)
@@ -15,11 +16,13 @@ end #ClassMethods
 extend ClassMethods
 def initialize(*argv)
 	raise "Arguments (argv) for WorkFlow.initialize cannot be empty" if argv.empty? 
-	@test_environment=TestIntrospection::TestEnvironment.new(model_basename?(argv[0]))
+	@model_basename=model_basename?(argv[0])
+	raise "@model_base_name=#{@model_basename.inspect}\nargv[0]=#{argv[0]}\nARGV=#{ARGV.inspect}" if @model_basename.empty?
+	@test_environment=TestEnvironment.new(@model_basename)
 	@edit_files, missing=@test_environment.pathnames?.partition do |p|
 		File.exists?(p)
 	end #partition
-	raise "edit_files do not exist\n argv=#{argv.inspect}\n @edit_files=#{@edit_files.inspect}\n missing=#{missing.inspect}" if  @edit_files.empty?
+	raise "edit_files do not exist\n argv=#{argv.inspect}\n @edit_files=#{@edit_files.inspect}\n missing=#{missing.inspect}\nself=#{self.inspect}" if  @edit_files.empty?
 end #initialize
 def execute
 	test=ShellCommands.new("ruby "+ self.test_environment.model_test_pathname?, :delay_execution)

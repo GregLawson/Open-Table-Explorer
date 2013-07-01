@@ -273,7 +273,7 @@ end #DefaultTestCase2
 
 class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 def assertions_pathname?
-	"../assertions/"+TE.model_name?+"_assertions.rb"
+	"../assertions/"+TE.model_name?.to_sym+"_assertions.rb"
 end #assertions_pathname?
 end #DefaultTestCase3
 

@@ -133,8 +133,10 @@ include DefaultTests1
 end #ClassExistsTest
 
 require_relative '../../test/assertions/minimal_assertions.rb'
-class MinimalTest < TestCase
+#assert_equal(DefaultTestCase0, TestCase)
+class DefaultTestCaseTest< TestCase
 extend DefaultAssertions::ClassMethods
+#assert_equal(DefaultTestCase0, self)
 def test_example_constants_by_class
 	assert_include(Minimal.constants, :Constant)
 	assert_equal(Minimal::Constant, Minimal.value_of_example?(:Constant))
@@ -147,4 +149,15 @@ def test_TestIntrospection_TestEnvironment
 	default_tests=eval("DefaultTests"+default_test_class_id.to_s)
 	default_test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
 end #test_TestIntrospection_TestEnvironment
+def test_environment
+	te=TestIntrospection::TestEnvironment.new
+	defaultTests=eval(te.default_tests_module_name?)
+	testCase=eval(te.test_case_class_name?)
+
+	assert_equal(TE.display, te.display)
+	assert_equal(defaultTests, DefaultTests)
+	assert_equal(TestCase, testCase)
+	assert_equal(1, TestIntrospection::TestEnvironment.new('DefaultTestCase').default_test_class_id?)
+	assert_equal(1, te.default_test_class_id?)
+end #test_environment
 end #MinimalTest
