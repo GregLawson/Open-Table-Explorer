@@ -53,7 +53,7 @@ def project_root_dir?(path=File.expand_path($0))
 	end #case
 end #project_root_dir
 def lookup(name, param_name)
-	ret=Suffixes.first do |s|
+	ret=Suffixes.find do |s|
 		s[:name]==name
 	end #find
 	ret[param_name]
@@ -97,7 +97,7 @@ def assert_naming_convention_match(s, basename, extension)
 	assert(naming_convention_basename(s, basename, extension))
 end #naming_convention_match
 def assert_pre_conditions
-	assert_module_included(:assertions)
+	assert_module_included(self, TestIntrospection::Assertions)
 end #assert_pre_conditions
 end #Assertions
 include Assertions
