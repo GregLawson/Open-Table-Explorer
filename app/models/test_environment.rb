@@ -7,75 +7,66 @@
 ###########################################################################
 require 'active_support/all'
 require 'test/unit'
-module TestIntrospection
-def model_basename?(test_file_path=File.expand_path($0))
-	File.basename(test_file_path, '.rb')[0..-6]
-end #model_basename
-def class_name?(model_basename=model_basename?)
-	model_basename.classify
-end #class_name
-def name_of_test?(model_basename=model_basename?)
-	model_basename.classify.to_s+'Test'
-end #name_of_test
+require_relative 'test_introspection.rb'
 class TestEnvironment
-attr_reader :model_basename, :test_class_name, :pwd_dir, :top_level_directory,  :test_dir, :class_dir, :assertions_dir, :assertions_test_dir
-def initialize(test_class_name=class_name?, model_class_name=nil)
-	@test_class_name=test_class_name.to_sym
-	if model_class_name.nil? then
-		@model_class_name=@test_class_name.to_s.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
-	else
-		@model_class_name=model_class_name
-	end #if
-	@model_basename=@model_class_name.to_s.tableize.singularize.to_sym
-	@pwd_dir=`pwd` .chomp+'/'# reltive to working directory not file as in require_relative
-	@script_directory_pathname=File.dirname(File.expand_path($0))+'/'
-	@script_directory_name=File.basename(@script_directory_pathname)
-	puts "@script_directory_pathname=#@script_directory_pathname}"
-	puts "@script_directory_name=#{@script_directory_name}"
-	case @script_directory_name
-	when 'unit' then
-		@test_dir=@script_directory_pathname
-	when 'scripts' then
-		@test_dir=File.dirname(@script_directory_pathname)+'/test/unit'
-	when 'models'
-		fail "Tha's a model not a test file."
-	else
-		fail "can't find test directory"
-	end #case
-	puts "@test_dir=#{@test_dir}"
-	@class_dir=@test_dir+"../../app/models/"
-	@assertions_dir=@test_dir+"../assertions/"
-	@assertions_test_dir=@test_dir
-end #initialize
-def inspect
-	existing, missing = pathnames?.partition do |p|
+include TestIntrospection::Constants
+extend TestIntrospection
+attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
+def initialize(model_class_name=TestEnvironment.path2model_name?, project_root_dir=TestEnvironment.project_root_dir?)
+	raise "model_class is nil\nfrom path=File.expand_path(#{$0})" if model_class_name.nil?
+	@model_class_name=model_class_name.to_sym
+	@project_root_dir=project_root_dir
+	@model_basename=@model_class_name.to_s.tableize.singularize
+	@edit_files, @missing_files=pathnames?.partition do |p|
 		File.exists?(p)
 	end #partition
-	ret=" test for model class "+@model_class_name.to_s+" assertions_test_pathname="
-	ret+=assertions_test_pathname?.inspect
-	ret+="\nexisting files=#{existing.inspect} \nand missing files=#{missing.inspect}"
-end #inspect
+end #initialize
+# Equality of content
+def ==(other)
+	if model_class_name==other.model_class_name && project_root_dir==other.project_root_dir then
+		true
+	else
+		false
+	end #if
+end #==
+#def inspect
+#	existing, missing = pathnames?.partition do |p|
+#		File.exists?(p)
+#	end #partition
+#	ret=" test for model class "+@model_class_name.to_s+" assertions_test_pathname="
+#	ret+=assertions_test_pathname?.inspect
+#	ret+="\nexisting files=#{existing.inspect} \nand missing files=#{missing.inspect}"
+#end #inspect
+def pathname_pattern?(file_spec)
+	@project_root_dir+TestEnvironment.lookup(file_spec, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(file_spec, :suffix)
+end #pathname_pattern
 def model_pathname?
-	@class_dir+@model_basename.to_s+".rb"
+	pathname_pattern?(:model)
 end #model_pathname?
 def model_test_pathname?
-	@test_dir+@model_basename.to_s+"_test.rb"
+	@project_root_dir+TestEnvironment.lookup(:test, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(:test, :suffix)
+	pathname_pattern?(:test)
 end #model_test_pathname?
 def assertions_pathname?
-	@assertions_dir+"/"+@model_basename.to_s+"_assertions.rb"
+	@project_root_dir+TestEnvironment.lookup(:assertions, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(:assertions, :suffix)
+	pathname_pattern?(:assertions)
 end #assertions_pathname?
 def assertions_test_pathname?
-	@assertions_test_dir+@model_basename.to_s+"_assertions_test.rb"
+	@project_root_dir+TestEnvironment.lookup(:assertions_test, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(:assertions_test, :suffix)
+	pathname_pattern?(:assertions_test)
 end #assertions_test_pathname?
+def data_sources_directory?
+	@project_root_dir+'test/data_sources/'
+end #data_sources_directory
 #  Initially the number of files for the model
 def default_test_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
 		4
 	elsif File.exists?(self.assertions_pathname?) then
 		3
-	elsif File.exists?(self.model_test_pathname?) then
-		2
 	elsif File.exists?(self.model_pathname?) then
+		2
+	elsif File.exists?(self.model_test_pathname?) then
 		1
 	else
 		0 # fewest assumptions, no files
@@ -88,7 +79,7 @@ def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
 def pathnames?
-	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
+	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
 end #pathnames
 def absolute_pathnames?
 	pathnames?.map {|p| File.expand_path(p)}
@@ -104,56 +95,49 @@ def model_name?
 end #model_name?
 module Examples
 UnboundedFixnumTestEnvironment=TestEnvironment.new(:UnboundedFixnum)
+SELF=TestEnvironment.new
 end #Examples
 module Assertions
 module ClassMethods
 include Test::Unit::Assertions
-end #ClassMethods
-
-include Test::Unit::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
+#	fail "end of assert_invariant "
 end # class_assert_invariant
 # conditions true while class is being defined
-# assertions true after class (and nested module Examples) is defined
 def assert_pre_conditions
-	assert_not_empty(@test_class_name)
-	assert_not_empty(@model_basename)
+	assert_respond_to(TestEnvironment, :project_root_dir?)
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
+	assert_equal(TE, TestIntrospection::TestEnvironment::Examples::SELF)
 end #class_assert_post_conditions
+end #ClassMethods
+module KernelMethods
+def assert_default_test_class_id(expected_id, class_name, message='')
+	te=TestIntrospection::TestEnvironment.new(class_name)
+	message+="te=#{te.inspect}"
+	assert_equal(expected_id, te.default_test_class_id?, message)
+end #default_test_class_id
+end #KernelMethods
+include Test::Unit::Assertions
+# conditions that are always true (at least atomically)
+def assert_invariant
+	fail "end of assert_invariant "
+end #assert_invariant
+# conditions true while class is being defined
+# assertions true after class (and nested module Examples) is defined
+def assert_pre_conditions
+	assert_not_empty(@test_class_name, "test_class_name")
+	assert_not_empty(@model_basename, "model_basename")
+	fail "end ofassert_pre_conditions "
+end #class_assert_pre_conditions
+# assertions true after class (and nested module Examples) is defined
+def assert_post_conditions
+end #assert_post_conditions
 
 
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #TestEnvironment
-# methods to extract model, class from TestCase subclass
-def name_of_test?
-	self.class.name
-end #name_of_test?
-# Extract model name from test name if Rails-like naming convention is followed
-def model_name?
-	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
-end #model_name?
-def model_class?
-	begin
-		eval(model_name?.to_s)
-	rescue
-		nil
-	end #begin rescue
-end #model_class?
-def table_name?
-	model_name?.to_s.tableize
-end #table_name?
-def names_of_tests?
-	self.methods(true).select do |m|
-		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
-	end #map
-end #names_of_tests?
-end #TestIntrospection
-include TestIntrospection
-TE=TestIntrospection::TestEnvironment.new
-DefaultTests=eval(TE.default_tests_module_name?)
-TestCase=eval(TE.test_case_class_name?)

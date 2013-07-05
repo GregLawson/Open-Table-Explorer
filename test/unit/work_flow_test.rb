@@ -13,7 +13,7 @@ def test_file_versions
 end #file_versions
 include WorkFlow::Examples
 def test_initialize
-	te=TestIntrospection::TestEnvironment.new(TestFile)
+	te=TestEnvironment.new(TestFile)
 	assert_not_nil(te)
 	wf=WorkFlow.new(TestFile)
 	assert_not_nil(wf)
@@ -22,11 +22,11 @@ def test_initialize
 		[File.exists?(p), p]
 	end #map
 	puts 'existance='+existance.inspect
-	assert_not_empty(TestWorkFlow.edit_files, "TestWorkFlow.test_environment.pathnames?=#{TestWorkFlow.test_environment.pathnames?}")
-	assert_include(TestWorkFlow.edit_files, TestFile, "existance=#{existance}\nTestWorkFlow.test_environment.pathnames=#{TestWorkFlow.test_environment.pathnames?}")
+	assert_not_empty(TestWorkFlow.test_environment.edit_files, "TestWorkFlow.test_environment.pathnames?=#{TestWorkFlow.test_environment.pathnames?}")
+	assert_include(TestWorkFlow.test_environment.edit_files, TestFile, "existance=#{existance}\nTestWorkFlow.test_environment.pathnames=#{TestWorkFlow.test_environment.pathnames?}")
 end #initialize
 def test_execute
-	assert_include(TestWorkFlow.edit_files, TestFile)
+	assert_include(TestWorkFlow.test_environment.edit_files, TestFile)
 #	assert_equal('', TestWorkFlow.version_comparison)
 #	assert_equal('', TestWorkFlow.test_files)
 end #execute

@@ -8,4 +8,8 @@
 require 'test/unit'
 #TestCase=Test::Unit::TestCase #computed below
 require_relative 'default_test_case.rb'
+require_relative '../../app/models/test_environment.rb'
+TE=TestEnvironment.new
+DefaultTests=eval(TE.default_tests_module_name?)
+TestCase=eval(TE.test_case_class_name?)
 AssertionFailedError=MiniTest::Assertion

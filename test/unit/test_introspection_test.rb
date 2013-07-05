@@ -48,9 +48,22 @@ def test_project_root_dir
 	path=File.expand_path($0)
 end #project_root_dir
 def test_lookup
-	name=:model
+	name=:assertions
 	param_name=:suffix
+	ret=Suffixes.map do |s|
+		s[:name]==name
+	end #find
+	assert_equal([false,false,true,false], ret)
+	ret=Suffixes.find do |s|
+		s[:name]==name
+	end #find
+	assert_equal(name, ret[:name])
+	param_name=:name # easy test, where I know the answer
+	assert_equal(name, lookup(name, param_name))
 	assert_equal(:model, lookup(:model, :name))
+	assert_equal(:test, lookup(:test, :name))
+	assert_equal(:assertions, lookup(:assertions, :name))
+	assert_equal(:assertions_test, lookup(:assertions_test, :name))
 end #lookup
 def test_model_basename
 	assert_match(/test\/unit\/test_introspection_test.rb$/, File.expand_path($0))
