@@ -36,17 +36,23 @@ end #==
 #	ret+=assertions_test_pathname?.inspect
 #	ret+="\nexisting files=#{existing.inspect} \nand missing files=#{missing.inspect}"
 #end #inspect
+def pathname_pattern?(file_spec)
+	@project_root_dir+TestEnvironment.lookup(file_spec, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(file_spec, :suffix)
+end #pathname_pattern
 def model_pathname?
-	@project_root_dir+TestEnvironment.lookup(:model, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(:model, :suffix)
+	pathname_pattern?(:model)
 end #model_pathname?
 def model_test_pathname?
 	@project_root_dir+TestEnvironment.lookup(:test, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(:test, :suffix)
+	pathname_pattern?(:test)
 end #model_test_pathname?
 def assertions_pathname?
 	@project_root_dir+TestEnvironment.lookup(:assertions, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(:assertions, :suffix)
+	pathname_pattern?(:assertions)
 end #assertions_pathname?
 def assertions_test_pathname?
 	@project_root_dir+TestEnvironment.lookup(:assertions_test, :sub_directory)+@model_basename.to_s+TestEnvironment.lookup(:assertions_test, :suffix)
+	pathname_pattern?(:assertions_test)
 end #assertions_test_pathname?
 def data_sources_directory?
 	@project_root_dir+'test/data_sources'
@@ -72,7 +78,7 @@ def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
 def pathnames?
-	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, self.model_pathname?]
+	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
 end #pathnames
 def absolute_pathnames?
 	pathnames?.map {|p| File.expand_path(p)}
