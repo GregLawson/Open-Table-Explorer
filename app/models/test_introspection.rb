@@ -43,11 +43,11 @@ def project_root_dir?(path=File.expand_path($0))
 	script_directory_name=File.basename(script_directory_pathname)
 	case script_directory_name
 	when 'unit' then
-		script_directory_pathname+'../../'
+		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'script' then
 		File.dirname(script_directory_pathname)
 	when 'models'
-		script_directory_pathname+'../../'
+		File.expand_path(script_directory_pathname+'../../')+'/'
 	else
 		fail "can't find test directory"
 	end #case
@@ -67,29 +67,6 @@ end #class_name
 def name_of_test?(model_basename=model_basename?)
 	model_basename.classify.to_s+'Test'
 end #name_of_test
-# methods to extract model, class from TestCase subclass
-def name_of_test?
-	self.class.name
-end #name_of_test?
-# Extract model name from test name if Rails-like naming convention is followed
-def model_name?
-	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
-end #model_name?
-def model_class?
-	begin
-		eval(model_name?.to_s)
-	rescue
-		nil
-	end #begin rescue
-end #model_class?
-def table_name?
-	model_name?.to_s.tableize
-end #table_name?
-def names_of_tests?
-	self.methods(true).select do |m|
-		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
-	end #map
-end #names_of_tests?
 module Assertions
 def assert_naming_convention_match(s, basename, extension)
 	assert_equal(extension, File.extname(s[:suffix]))

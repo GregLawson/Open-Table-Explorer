@@ -13,6 +13,7 @@ include TestIntrospection::Constants
 extend TestIntrospection
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
 def initialize(model_class_name=TestEnvironment.path2model_name?, project_root_dir=TestEnvironment.project_root_dir?)
+	raise "model_class is nil\nfrom path=File.expand_path(#{$0})" if model_class_name.nil?
 	@model_class_name=model_class_name.to_sym
 	@project_root_dir=project_root_dir
 	@model_basename=@model_class_name.to_s.tableize.singularize
@@ -55,7 +56,7 @@ def assertions_test_pathname?
 	pathname_pattern?(:assertions_test)
 end #assertions_test_pathname?
 def data_sources_directory?
-	@project_root_dir+'test/data_sources'
+	@project_root_dir+'test/data_sources/'
 end #data_sources_directory
 #  Initially the number of files for the model
 def default_test_class_id?
@@ -127,8 +128,8 @@ end #assert_invariant
 # conditions true while class is being defined
 # assertions true after class (and nested module Examples) is defined
 def assert_pre_conditions
-	assert_not_empty(@test_class_name)
-	assert_not_empty(@model_basename)
+	assert_not_empty(@test_class_name, "test_class_name")
+	assert_not_empty(@model_basename, "model_basename")
 	fail "end ofassert_pre_conditions "
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
