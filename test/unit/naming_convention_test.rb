@@ -25,23 +25,52 @@ include NamingConvention::Examples
 include NamingConvention::Assertions
 #include NamingConvention::Assertions::KernelMethods
 extend NamingConvention::Assertions::ClassMethods
+def test_suffix_match
+	s=Patterns[1]
+	path='dct.rb'
+	message="s=#{s}\nsuffix=#{s[:suffix]}"
+	message+="\nNamingConvention.suffix_match(s, path)=#{NamingConvention.suffix_match(s, path)}"
+	assert(NamingConvention.suffix_match(s, path), message)
+	assert(NamingConvention.suffix_match(Patterns[0], '.rb'), "Patterns[0], '', '.rb")
+	assert(NamingConvention.suffix_match(Patterns[1], '.rb'), "Patterns[1], '', '.rb'")
+	assert(NamingConvention.suffix_match(Patterns[2], '_test.rb'), "Patterns[2], '_test', '.rb'")
+	assert(NamingConvention.suffix_match(Patterns[3], '_assertions.rb'), "Patterns[3], '_assertions', '.rb'")
+	assert(NamingConvention.suffix_match(Patterns[4], '_assertions_test.rb'), "Patterns[4], '_assertions_test', '.rb'")
+end #suffix_match
+def test_sub_directory_match
+	s=Patterns[1]
+	path='script/dct.rb'
+	sub_directory=File.dirname(path)
+	expected_sub_directory=s[:sub_directory][0..-2] # drops trailing /
+	message="expected_sub_directory=#{expected_sub_directory}\nsub_directory=#{sub_directory}"
+	assert_not_nil(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], message)
+	assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory, message)
+	message="s=#{s}\nsub_directory=#{sub_directory}\nexpected_sub_directory=#{expected_sub_directory}"
+	message+="\nNamingConvention.sub_directory_match(s, path)=#{NamingConvention.sub_directory_match(s, path)}"
+	assert(NamingConvention.sub_directory_match(s, path), message)
+	assert(NamingConvention.sub_directory_match(Patterns[0], 'app/models/naming_convention_test.rb'), "Patterns[0], 'app/models/'")
+	assert(NamingConvention.sub_directory_match(Patterns[1], 'script/naming_convention_test.rb'), "Patterns[1], 'script/'")
+	assert(NamingConvention.sub_directory_match(Patterns[2], 'test/unit/naming_convention_test.rb'), "Patterns[2], 'test/unit/'")
+	assert(NamingConvention.sub_directory_match(Patterns[3], 'test/assertions/naming_convention_test.rb'), "(Patterns[3], 'test/assertions/'")
+	assert(NamingConvention.sub_directory_match(Patterns[4], 'test/unit/naming_convention_test.rb'), "(Patterns[4], 'test/unit/'")
+end #sub_directory_match
 def test_path2model_name
 	path=File.expand_path($0)
 	extension=File.extname(path)
 	assert_equal('.rb', extension)
-	basename=File.basename(path, extension)
-	assert_equal('naming_convention_test', basename)
+	basename=File.basename(path)
+	assert_equal('naming_convention_test.rb', basename)
 	expected_match=2
 	assert_include(NamingConvention.included_modules, NamingConvention::Assertions)
 	assert_include(NamingConvention.methods, :assert_pre_conditions)
 	assert_respond_to(	NamingConvention, :assert_pre_conditions)
 	NamingConvention.assert_pre_conditions
-#	NamingConvention.assert_NamingConvention.naming_convention_match(Suffixes[expected_match], basename, extension)
-	name_length=basename.size+extension.size-Suffixes[expected_match][:suffix].size
-	assert_equal(17, name_length)
-	matches=Suffixes.reverse.map do |s| #reversed from rare to common
-		if NamingConvention.naming_convention_extension(s, extension) && NamingConvention.naming_convention_basename(s, basename, extension) then
-			name_length=basename.size+extension.size-s[:suffix].size
+	NamingConvention.assert_naming_convention_match(Patterns[expected_match], path)
+	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
+	assert_equal(20, name_length)
+	matches=Patterns.reverse.map do |s| #reversed from rare to common
+		if NamingConvention.suffix_match(s, path) && NamingConvention.sub_directory_match(s, path) then
+			name_length=basename.size-s[:suffix].size
 			basename[0,name_length].classify.to_sym
 		else
 			nil
@@ -53,11 +82,12 @@ def test_path2model_name
 	
 	path=File.expand_path(DCT_filename)
 	extension=File.extname(path)
-	assert_equal('.rb', extension)
 	basename=File.basename(path, extension)
 	assert_equal('dct', basename)
+	assert_equal('.rb', extension)
 	expected_match=1
-	name_length=basename.size+extension.size-Suffixes[expected_match][:suffix].size
+	NamingConvention.assert_naming_convention_match(Patterns[expected_match], path)
+	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
 	assert_equal(3, name_length)
 
 	model_class_name=NamingConvention.path2model_name?
@@ -69,11 +99,11 @@ end #project_root_dir
 def test_lookup
 	name=:assertions
 	param_name=:suffix
-	ret=Suffixes.map do |s|
+	ret=Patterns.map do |s|
 		s[:name]==name
 	end #find
 	assert_equal([false,false,false,true,false], ret)
-	ret=Suffixes.find do |s|
+	ret=Patterns.find do |s|
 		s[:name]==name
 	end #find
 	assert_equal(name, ret[:name])
@@ -97,9 +127,9 @@ def test_initialize
 	assert_equal('naming_convention', SELF.model_basename)
 	assert_not_empty(SELF.project_root_dir)
 end #initialize
-def test_inspect
-#	assert_match(/exist/, UnboundedFixnumNamingConvention.inspect)
-end #inspect
+def test_equals
+	assert(NamingConvention.new==NamingConvention.new)
+end #==
 def test_model_pathname
 	assert(File.exists?(UnboundedFixnumNamingConvention.model_pathname?), UnboundedFixnumNamingConvention.model_pathname?)
 	assert_data_file(UnboundedFixnumNamingConvention.model_pathname?)
@@ -142,24 +172,21 @@ def test_default_test_class_id
 	assert_equal(2, NamingConvention.new(te.model_name?).default_test_class_id?, te.inspect)
 #	assert_equal(1, NamingConvention.new('DefaultTestCase').default_test_class_id?)
 end #default_test_class_id
+def test_default_tests_module_name
+end #default_tests_module?
+def test_test_case_class_name
+end #test_case_class?
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumNamingConvention.pathnames?)
 	assert_equal(4, UnboundedFixnumNamingConvention.pathnames?.size)
 	assert_array_of(UnboundedFixnumNamingConvention.pathnames?, String)
 end #pathnames
-def test_absolute_pathnames
-	assert_instance_of(Array, UnboundedFixnumNamingConvention.absolute_pathnames?)
-	assert_equal(4, UnboundedFixnumNamingConvention.absolute_pathnames?.size)
-	assert_array_of(UnboundedFixnumNamingConvention.absolute_pathnames?, String)
-end #absolute_pathnames
-def test_pathname_existance
-	assert_instance_of(Array, UnboundedFixnumNamingConvention.pathname_existance?)
-	assert_equal(4, UnboundedFixnumNamingConvention.pathname_existance?.size)
-	assert_array_of(UnboundedFixnumNamingConvention.pathname_existance?, Fixnum)
-	UnboundedFixnumNamingConvention.pathname_existance?.all? do |e|
-		e
-	end #all
-end #pathname_existance
+def test_model_class
+	assert_equal(NamingConvention, SELF.model_class?)
+end #model_class
+def test_model_name
+	assert_equal(:NamingConvention, SELF.model_name?)
+end #model_name?
 include NamingConvention::Assertions
 extend NamingConvention::Assertions::ClassMethods
 #def test_class_assert_invariant
@@ -171,6 +198,13 @@ end #class_assert_pre_conditions
 def test_class_assert_post_conditions
 #	NamingConvention.assert_post_conditions
 end #class_assert_post_conditions
+def test_assert_naming_convention_match
+	assert(NamingConvention.assert_naming_convention_match(Patterns[0], SELF.model_pathname?), "Patterns[0], 'app/models/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[1], DCT_filename), "Patterns[1], 'script/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[2], SELF.model_test_pathname?), "Patterns[2], 'test/unit/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[3], SELF.assertions_pathname?), "(Patterns[3], 'test/assertions/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[4], SELF.assertions_test_pathname?), "(Patterns[4], 'test/unit/'")
+end #naming_convention_match
 def test_assert_default_test_class_id
 #	assert_constant_path_respond_to(:TestIntrospection, :NamingConvention, :KernelMethods, :assert_default_test_class_id)
 #	assert_respond_to(NamingConventionTest, :assert_default_test_class_id)
