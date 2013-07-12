@@ -1,6 +1,6 @@
 require 'test/unit'
 require_relative '../../test/unit/default_test_case.rb'
-require_relative '../../app/models/test_environment.rb'
+require_relative '../../app/models/naming_convention.rb'
 require_relative '../../app/models/shell_command.rb'
 class WorkFlow
 include TestIntrospection
@@ -16,7 +16,7 @@ end #ClassMethods
 extend ClassMethods
 def initialize(*argv)
 	raise "Arguments (argv) for WorkFlow.initialize cannot be empty" if argv.empty? 
-	@test_environment=TestEnvironment.new(model_class_name=TestEnvironment.path2model_name?(argv[0]), project_root_dir=TestEnvironment.project_root_dir?(argv[0]))
+	@test_environment=NamingConvention.new(model_class_name=NamingConvention.path2model_name?(argv[0]), project_root_dir=NamingConvention.project_root_dir?(argv[0]))
 	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 	message+= "\n @test_environment.edit_files=#{@test_environment.edit_files.inspect}" 
 	message+= "\n @test_environment.missing_files=#{@test_environment.missing_files.inspect}" 

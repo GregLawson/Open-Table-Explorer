@@ -13,7 +13,7 @@ require_relative '../../app/models/unbounded_fixnum.rb'
 require_relative '../../test/assertions/default_assertions.rb'
 
 require_relative '../../test/assertions/minimal_assertions.rb'
-class MinimalTest < Test::Unit::TestCase
+class MinimalTest < DefaultTestCase0
 extend DefaultAssertions::ClassMethods
 #assert_equal(DefaultTestCase0, self)
 def test_example_constants_by_class

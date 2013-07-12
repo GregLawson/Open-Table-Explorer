@@ -9,8 +9,6 @@
 require_relative '../../test/unit/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/naming_convention.rb'
-require 'test/unit'
-include Test::Unit::Assertions
 class EmptyTest
 end #EmptyTest
 class EmptyDefaultTest < DefaultTestCase1
@@ -27,22 +25,17 @@ include NamingConvention::Examples
 include NamingConvention::Assertions
 #include NamingConvention::Assertions::KernelMethods
 extend NamingConvention::Assertions::ClassMethods
-def test_extension_match
-	s=Patterns[1]
-	extension='.rb'
-#	assert_equal(extension, File.extname(s[:suffix]))
-	message="s=#{s}\nextension=#{extension}"
-	message+="\nNamingConvention.extension_match(s, extension)=#{NamingConvention.extension_match(s, extension)}"
-	assert(NamingConvention.extension_match(s, extension), message)
-end #extension_match
 def test_suffix_match
 	s=Patterns[1]
-	suffix='dct'
-	extension='.rb'
-	expected_suffix=File.basename(s[:suffix], extension)
-	assert_equal(extension, File.basename(extension, extension))
-#	assert_equal(suffix[-expected_suffix.size,expected_suffix.size], expected_suffix)
-	message="s=#{s}\nsuffix=#{suffix}\nextension=#{extension}"
+	path='dct.rb'
+	message="s=#{s}\nsuffix=#{s[:suffix]}"
+	message+="\nNamingConvention.suffix_match(s, path)=#{NamingConvention.suffix_match(s, path)}"
+	assert(NamingConvention.suffix_match(s, path), message)
+	assert(NamingConvention.suffix_match(Patterns[0], '.rb'), "Patterns[0], '', '.rb")
+	assert(NamingConvention.suffix_match(Patterns[1], '.rb'), "Patterns[1], '', '.rb'")
+	assert(NamingConvention.suffix_match(Patterns[2], '_test.rb'), "Patterns[2], '_test', '.rb'")
+	assert(NamingConvention.suffix_match(Patterns[3], '_assertions.rb'), "Patterns[3], '_assertions', '.rb'")
+	assert(NamingConvention.suffix_match(Patterns[4], '_assertions_test.rb'), "Patterns[4], '_assertions_test', '.rb'")
 end #suffix_match
 def test_sub_directory_match
 	s=Patterns[1]
@@ -55,13 +48,18 @@ def test_sub_directory_match
 	message="s=#{s}\nsub_directory=#{sub_directory}\nexpected_sub_directory=#{expected_sub_directory}"
 	message+="\nNamingConvention.sub_directory_match(s, path)=#{NamingConvention.sub_directory_match(s, path)}"
 	assert(NamingConvention.sub_directory_match(s, path), message)
+	assert(NamingConvention.sub_directory_match(Patterns[0], 'app/models/naming_convention_test.rb'), "Patterns[0], 'app/models/'")
+	assert(NamingConvention.sub_directory_match(Patterns[1], 'script/naming_convention_test.rb'), "Patterns[1], 'script/'")
+	assert(NamingConvention.sub_directory_match(Patterns[2], 'test/unit/naming_convention_test.rb'), "Patterns[2], 'test/unit/'")
+	assert(NamingConvention.sub_directory_match(Patterns[3], 'test/assertions/naming_convention_test.rb'), "(Patterns[3], 'test/assertions/'")
+	assert(NamingConvention.sub_directory_match(Patterns[4], 'test/unit/naming_convention_test.rb'), "(Patterns[4], 'test/unit/'")
 end #sub_directory_match
 def test_path2model_name
 	path=File.expand_path($0)
 	extension=File.extname(path)
 	assert_equal('.rb', extension)
-	basename=File.basename(path, extension)
-	assert_equal('naming_convention_test', basename)
+	basename=File.basename(path)
+	assert_equal('naming_convention_test.rb', basename)
 	expected_match=2
 	assert_include(NamingConvention.included_modules, NamingConvention::Assertions)
 	assert_include(NamingConvention.methods, :assert_pre_conditions)
@@ -69,10 +67,10 @@ def test_path2model_name
 	NamingConvention.assert_pre_conditions
 	NamingConvention.assert_naming_convention_match(Patterns[expected_match], path)
 	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
-	assert_equal(17, name_length)
+	assert_equal(20, name_length)
 	matches=Patterns.reverse.map do |s| #reversed from rare to common
-		if NamingConvention.naming_convention_extension(s, extension) && NamingConvention.naming_convention_basename(s, basename, extension) then
-			name_length=basename.size+extension.size-s[:suffix].size
+		if NamingConvention.suffix_match(s, path) && NamingConvention.sub_directory_match(s, path) then
+			name_length=basename.size-s[:suffix].size
 			basename[0,name_length].classify.to_sym
 		else
 			nil
@@ -200,6 +198,13 @@ end #class_assert_pre_conditions
 def test_class_assert_post_conditions
 #	NamingConvention.assert_post_conditions
 end #class_assert_post_conditions
+def test_assert_naming_convention_match
+	assert(NamingConvention.assert_naming_convention_match(Patterns[0], SELF.model_pathname?), "Patterns[0], 'app/models/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[1], DCT_filename), "Patterns[1], 'script/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[2], SELF.model_test_pathname?), "Patterns[2], 'test/unit/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[3], SELF.assertions_pathname?), "(Patterns[3], 'test/assertions/'")
+	assert(NamingConvention.assert_naming_convention_match(Patterns[4], SELF.assertions_test_pathname?), "(Patterns[4], 'test/unit/'")
+end #naming_convention_match
 def test_assert_default_test_class_id
 #	assert_constant_path_respond_to(:TestIntrospection, :NamingConvention, :KernelMethods, :assert_default_test_class_id)
 #	assert_respond_to(NamingConventionTest, :assert_default_test_class_id)

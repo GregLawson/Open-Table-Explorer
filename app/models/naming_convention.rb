@@ -18,32 +18,8 @@ module Constants
 end  #Constants
 include Constants
 module ClassMethods
-def naming_convention_extension(s, extension)
-	extension==File.extname(s[:suffix])
-end #naming_convention_match
-def naming_convention_basename(s, basename, extension)
-	expected_baseline=File.basename(s[:suffix], extension)
-	basename[-expected_baseline.size,expected_baseline.size]==expected_baseline
-end #naming_convention_match
-def extension_match(s, extension)
-	if 	extension==s[:suffix] then
-		true
-	else
-		extension==File.extname(s[:suffix])
-	end #if
-end #extension_match
 def suffix_match(s, path)
 	path[-s[:suffix].size, s[:suffix].size] == s[:suffix]
-=begin
-extension=File.extname(path)
-	if 	extension==s[:suffix] then
-		true
-	else
-		extension==File.extname(s[:suffix])
-		expected_suffix=File.basename(s[:suffix], extension)
-		suffix[-expected_suffix.size,expected_suffix.size]==expected_suffix
-	end #if
-=end
 end #suffix_match
 def sub_directory_match(s, path)
 	path=File.expand_path(path)
@@ -54,10 +30,10 @@ end #sub_directory_match
 def path2model_name?(path=$0)
 	path=File.expand_path(path)
 	extension=File.extname(path)
-	basename=File.basename(path, extension)
+	basename=File.basename(path)
 	matches=Constants::Patterns.reverse.map do |s| #reversed from rare to common
-		if suffix_match(s, path) && suffix_match(s, path) then
-			name_length=basename.size+extension.size-s[:suffix].size
+		if suffix_match(s, path) && sub_directory_match(s, path) then
+			name_length=basename.size-s[:suffix].size
 			basename[0,name_length].classify.to_sym
 		else
 			nil

@@ -7,34 +7,12 @@
 ###########################################################################
 require 'active_support/all'
 #include TestIntrospection
-#require_relative '../../app/models/test_environment.rb'
+BaseTestCase=ActiveSupport::TestCase
 module DefaultTests0
 require 'test/unit'
 include Test::Unit::Assertions
-def name_of_test?
-	self.class.name
-end #name_of_test?
-# Extract model name from test name if Rails-like naming convention is followed
-def model_name?
-	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
-end #model_name?
-def model_class?
-	begin
-		eval(model_name?.to_s)
-	rescue
-		nil
-	end #begin rescue
-end #model_class?
-def table_name?
-	model_name?.to_s.tableize
-end #table_name?
-def names_of_tests?
-	self.methods(true).select do |m|
-		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
-	end #map
-end #names_of_tests
 def test_environment?
-	TestEnvironment.new(model_name?)
+	NamingConvention.new(model_name?)
 end #test_environment
 end #DefaultTests0
 module DefaultTests1
@@ -163,14 +141,36 @@ end #DefaultTests3
 module DefaultTests4
 include DefaultTests3
 end #DefaultTests4
-class DefaultTestCase0 < Test::Unit::TestCase # doesn't follow any class filenaming conventions
+class DefaultTestCase0 < BaseTestCase # doesn't follow any class filenaming conventions
+def name_of_test?
+	self.class.name
+end #name_of_test?
+# Extract model name from test name if Rails-like naming convention is followed
+def model_name?
+	name_of_test?.sub(/Test$/, '').sub(/Assertions$/, '').to_sym
+end #model_name?
+def model_class?
+	begin
+		eval(model_name?.to_s)
+	rescue
+		nil
+	end #begin rescue
+end #model_class?
+def table_name?
+	model_name?.to_s.tableize
+end #table_name?
+def names_of_tests?
+	self.methods(true).select do |m|
+		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
+	end #map
+end #names_of_tests
+def global_class_names
+	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
+end #global_class_names
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
 #include DefaultAssertions
 #extend DefaultAssertions::ClassMethods
-def global_class_names
-	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
-end #global_class_names
 end #DefaultTestCase1
 
 class DefaultTestCase2 < DefaultTestCase1 # test and model files
