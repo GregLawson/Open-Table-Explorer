@@ -178,8 +178,12 @@ def test_test_case_class_name
 end #test_case_class?
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumNamingConvention.pathnames?)
-	assert_equal(4, UnboundedFixnumNamingConvention.pathnames?.size)
+	assert_equal(5, UnboundedFixnumNamingConvention.pathnames?.size)
 	assert_array_of(UnboundedFixnumNamingConvention.pathnames?, String)
+	pathnames=Patterns.map do |p|
+		UnboundedFixnumNamingConvention.pathname_pattern?(p[:name])
+	end #
+	assert_equal(UnboundedFixnumNamingConvention.pathnames?, pathnames)
 end #pathnames
 def test_model_class
 	assert_equal(NamingConvention, SELF.model_class?)

@@ -125,7 +125,10 @@ def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
 def pathnames?
-	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
+#	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
+	pathnames=Patterns.map do |p|
+		pathname_pattern?(p[:name])
+	end #
 end #pathnames
 def model_class?
 	eval(@model_class_name.to_s)
