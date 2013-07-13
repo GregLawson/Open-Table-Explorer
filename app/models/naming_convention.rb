@@ -45,7 +45,7 @@ def project_root_dir?(path=$0)
 	path=File.expand_path(path)
 	script_directory_pathname=File.dirname(path)+'/'
 	script_directory_name=File.basename(script_directory_pathname)
-	case script_directory_name
+	ret=case script_directory_name
 	when 'unit' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'script' then
@@ -55,6 +55,8 @@ def project_root_dir?(path=$0)
 	else
 		fail "can't find test directory"
 	end #case
+	raise "ret=#{ret} does not end in a slash" if ret[-1,1]!= '/'
+	return ret
 end #project_root_dir
 def lookup(name, param_name)
 	ret=Constants::Patterns.find do |s|
