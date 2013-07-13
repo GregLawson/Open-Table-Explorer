@@ -74,8 +74,13 @@ def initialize(model_class_name=NamingConvention.path2model_name?, project_root_
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
 	raise message if model_class_name.nil?
 	@model_class_name=model_class_name.to_sym
-	@project_root_dir=project_root_dir
+	if project_root_dir.nil? then
+		@project_root_dir='' #empty string not nil
+	else
+		@project_root_dir= project_root_dir  #not nil
+	end #
 	@model_basename=@model_class_name.to_s.tableize.singularize
+	raise "@model_basename" if @model_basename.nil?
 	@edit_files, @missing_files=pathnames?.partition do |p|
 		File.exists?(p)
 	end #partition
@@ -89,6 +94,10 @@ def ==(other)
 	end #if
 end #==
 def pathname_pattern?(file_spec)
+	raise "project_root_dir" if @project_root_dir.nil?
+	raise "NamingConvention.lookup(file_spec, :sub_directory)" if NamingConvention.lookup(file_spec, :sub_directory).nil?
+	raise "@model_basename" if @model_basename.nil?
+	raise "NamingConvention.lookup(file_spec, :suffix)" if NamingConvention.lookup(file_spec, :suffix).nil?
 	@project_root_dir+NamingConvention.lookup(file_spec, :sub_directory)+@model_basename.to_s+NamingConvention.lookup(file_spec, :suffix)
 end #pathname_pattern
 def model_pathname?
@@ -128,6 +137,8 @@ def test_case_class_name?
 end #test_case_class?
 def pathnames?
 #	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
+	raise "project_root_dir" if @project_root_dir.nil?
+	raise "@model_basename" if @model_basename.nil?
 	pathnames=Patterns.map do |p|
 		pathname_pattern?(p[:name])
 	end #
@@ -221,6 +232,8 @@ def assert_pre_conditions
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
+	message+="\ndefault NamingConvention.project_root_dir?=#{NamingConvention.project_root_dir?.inspect}"
+	assert_not_empty(@project_root_dir, message)
 end #assert_post_conditions
 
 
