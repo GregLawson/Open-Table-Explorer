@@ -177,9 +177,6 @@ class DefaultTestCase2 < DefaultTestCase1 # test and model files
 end #DefaultTestCase2
 
 class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
-def assertions_pathname?
-	"../assertions/"+TE.model_name?+"_assertions.rb"
-end #assertions_pathname?
 end #DefaultTestCase3
 
 class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
