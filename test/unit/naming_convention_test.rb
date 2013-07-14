@@ -125,7 +125,7 @@ def test_initialize
 	assert_equal(:NamingConvention, te.model_class_name)
 	assert_equal(:NamingConvention, SELF.model_class_name)
 	assert_equal('naming_convention', SELF.model_basename)
-	assert_not_empty(SELF.project_root_dir)
+	assert_not_empty(SELF.project_root_dir, "SELF=#{SELF.inspect}")
 end #initialize
 def test_equals
 	assert(NamingConvention.new==NamingConvention.new)

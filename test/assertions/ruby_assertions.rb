@@ -144,9 +144,9 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end
 	end
 end #explain_assert_respond_to
-def assert_not_empty(object,message=nil)
+def assert_not_empty(object,message='')
 #	puts "in assert_not_empty: message=#{message.inspect}"
-	message=build_message(message, "? is empty with value ?.", object.canonicalName,object.inspect)   
+	message+="\n#{object.canonicalName}, is empty with value #{object.inspect}."
 	assert_not_nil(object,message)
 	assert_block(message){!object.empty?}
 end #assert_not_empty
