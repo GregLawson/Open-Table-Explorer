@@ -98,7 +98,7 @@ def pathname_pattern?(file_spec)
 	raise "NamingConvention.lookup(file_spec, :sub_directory)" if NamingConvention.lookup(file_spec, :sub_directory).nil?
 	raise "@model_basename" if @model_basename.nil?
 	raise "NamingConvention.lookup(file_spec, :suffix)" if NamingConvention.lookup(file_spec, :suffix).nil?
-	@project_root_dir+NamingConvention.lookup(file_spec, :sub_directory)+model_basename.to_s+NamingConvention.lookup(file_spec, :suffix)
+	@project_root_dir+NamingConvention.lookup(file_spec, :sub_directory)+@model_basename.to_s+NamingConvention.lookup(file_spec, :suffix)
 end #pathname_pattern
 def model_pathname?
 	pathname_pattern?(:model)
@@ -136,7 +136,12 @@ def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
 def pathnames?
-	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
+#	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
+	raise "project_root_dir" if @project_root_dir.nil?
+	raise "@model_basename" if @model_basename.nil?
+	pathnames=Patterns.map do |p|
+		pathname_pattern?(p[:name])
+	end #
 end #pathnames
 def model_class?
 	eval(@model_class_name.to_s)
