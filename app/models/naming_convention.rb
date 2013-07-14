@@ -28,6 +28,7 @@ def sub_directory_match(s, path)
 	sub_directory[-expected_sub_directory.size,expected_sub_directory.size]==expected_sub_directory
 end #sub_directory_match
 def path2model_name?(path=$0)
+	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
 	extension=File.extname(path)
 	basename=File.basename(path)
@@ -49,13 +50,13 @@ def project_root_dir?(path=$0)
 	when 'unit' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'script' then
-		File.dirname(script_directory_pathname)
+		File.dirname(script_directory_pathname)+'/'
 	when 'models'
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	else
 		fail "can't find test directory"
 	end #case
-	raise "ret=#{ret} does not end in a slash" if ret[-1,1]!= '/'
+	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
 	return ret
 end #project_root_dir
 def lookup(name, param_name)

@@ -14,8 +14,12 @@ end #file_versions
 end #ClassMethods
 extend ClassMethods
 def initialize(*argv)
+	argv=argv.flatten
 	raise "Arguments (argv) for WorkFlow.initialize cannot be empty" if argv.empty? 
-	@test_environment=NamingConvention.new(model_class_name=NamingConvention.path2model_name?(argv[0]), project_root_dir=NamingConvention.project_root_dir?(argv[0]))
+	raise "argv must be an array." if !argv.instance_of?(Array)
+	raise "argv[0]=#{argv[0].inspect} must be an String." if !argv[0].instance_of?(String)
+	path2model_name=NamingConvention.path2model_name?(argv[0])
+	@test_environment=NamingConvention.new(path2model_name, NamingConvention.project_root_dir?(argv[0]))
 	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 	message+= "\n @test_environment.edit_files=#{@test_environment.edit_files.inspect}" 
 	message+= "\n @test_environment.missing_files=#{@test_environment.missing_files.inspect}" 
