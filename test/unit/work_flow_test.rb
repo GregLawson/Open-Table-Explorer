@@ -5,6 +5,7 @@ class WorkFlowTest < TestCase
 include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
+include WorkFlow::Examples
 def test_revison_tag
 	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
 end #revison_tag
@@ -20,6 +21,9 @@ def test_initialize
 	assert_not_empty(TestWorkFlow.test_environment.edit_files, "TestWorkFlow.test_environment.edit_files=#{TestWorkFlow.test_environment.edit_files}")
 	assert_include(TestWorkFlow.test_environment.edit_files, TestFile, "TestWorkFlow.test_environment.edit_files=#{TestWorkFlow.test_environment.edit_files}")
 end #initialize
+def test_branch
+	assert_equal('master', Repo.head.name, Repo.head.inspect)
+end #branch
 def test_execute
 	assert_include(TestWorkFlow.test_environment.edit_files, TestFile)
 #	assert_equal('', TestWorkFlow.version_comparison)
