@@ -14,23 +14,33 @@
 			<file>./../test/unit/generic_table_assertions_test.rb</file>
 			<file>./../test/unit/ruby_assertions_test.rb</file>
 		</group>
-		<group name='test environment' expanded='FALSE'>
+		<group name='test environment' expanded='TRUE'>
 			<file>./../test/unit/test_environment_rails.rb</file>
 			<file>./../test/unit/test_environment.rb</file>
 			<file>./../test/unit/test_environment_ruby.rb</file>
 			<file>./../test/unit/test_environment_default_test_case.rb</file>
+			<group name='Default tests' expanded='FALSE'>
+				<file>./../test/unit/default_test_case.rb</file>
+				<file>./../test/unit/default_assertions_test.rb</file>
+				<file>./../test/unit/minimal_test.rb</file>
+				<file>./../test/unit/default_test_case_test.rb</file>
+			</group>
+			<group name='file_naming' expanded='TRUE'>
+				<file>./../test/unit/work_flow_test.rb</file>
+				<file>./../test/unit/naming_convention_test.rb</file>
+			</group>
 		</group>
 		<group name='Dubious' expanded='FALSE'>
 			<file>./../test/unit/error_type_test.rb</file>
 		</group>
-		<group name='Streams' expanded='TRUE'>
-			<group name='Executable' expanded='TRUE'>
+		<group name='Streams' expanded='FALSE'>
+			<group name='Executable' expanded='FALSE'>
 				<file>./../test/unit/frequency_test.rb</file>
 				<file>./../test/unit/stream_method_call_test.rb</file>
 				<file>./../test/unit/stream_parameter_test.rb</file>
 				<file>./../test/unit/stream_link_test.rb</file>
 			</group>
-			<group name='Component Library' expanded='TRUE'>
+			<group name='Component Library' expanded='FALSE'>
 				<file>./../test/unit/url_test.rb</file>
 				<file>./../test/unit/stream_method_test.rb</file>
 				<file>./../test/unit/stream_method_argument_test.rb</file>
@@ -98,12 +108,6 @@
 			<file>./../test/unit/open_tax_solver_test.rb</file>
 			<file>./../test/unit/open_tax_filler_test.rb</file>
 			<file>./../test/unit/transfer_test.rb</file>
-		</group>
-		<group name='Default tests' expanded='FALSE'>
-			<file>./../test/unit/default_test_case.rb</file>
-			<file>./../test/unit/default_assertions_test.rb</file>
-			<file>./../test/unit/minimal_test.rb</file>
-			<file>./../test/unit/default_test_case_test.rb</file>
 		</group>
 		<group name='Generic Acquisition' expanded='FALSE'>
 			<file>./../test/unit/generic_files_test.rb</file>
