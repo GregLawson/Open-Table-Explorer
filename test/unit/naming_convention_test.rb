@@ -243,8 +243,6 @@ def test_global_class_names
 	constants.select {|n| eval(n.to_s).instance_of?(Class)}
 	assert_include(global_class_names, self.class.name.to_sym)
 end #global_classes
-include Test::Unit::Assertions
-extend Test::Unit::Assertions
 def test_case_assert_invariant
 	caller_message=" callers=#{caller.join("\n")}"
 	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)

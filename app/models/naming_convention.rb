@@ -219,7 +219,6 @@ def assert_default_test_class_id(expected_id, class_name, message='')
 	assert_equal(expected_id, te.default_test_class_id?, message+caller_lines)
 end #default_test_class_id
 end #KernelMethods
-include Test::Unit::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
 	fail "end of assert_invariant "
