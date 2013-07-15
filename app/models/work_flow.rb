@@ -81,11 +81,10 @@ module Assertions
 module ClassMethods
 def assert_post_conditions
 	assert_pathname_exists(TestFile, "assert_post_conditions")
-end #assert_pre_conditions
+end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
 	assert_not_nil(@test_environment)
-	test_environment.assert_pre_conditions
 	assert_not_empty(@test_environment.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_environment.edit_files=#{@test_environment.edit_files.inspect}")
 end #assert_pre_conditions
 end #Assertions
