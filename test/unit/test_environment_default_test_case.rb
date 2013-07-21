@@ -5,7 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit'
-#TestCase=Test::Unit::TestCase #computed below
+require 'active_support/all'
 require_relative 'default_test_case.rb'
-AssertionFailedError=MiniTest::Assertion
+require_relative '../../app/models/naming_convention.rb'
+TE=NamingConvention.new
+DefaultTests=eval(TE.default_tests_module_name?)
+TestCase=eval(TE.test_case_class_name?)
+# AssertionFailedError=Test::Unit::AssertionFailedError
