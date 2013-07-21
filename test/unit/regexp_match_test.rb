@@ -9,8 +9,8 @@ require_relative 'test_environment'
 require_relative '../assertions/regexp_match_assertions.rb'
 #require '/home/greg/Desktop/git/no_rails/test/assertions/regexp_tree.rb'
 
-class RegexpMatchTest < Test::Unit::TestCase #file context
-include DefaultTests2
+class RegexpMatchTest < TestCase #file context
+include DefaultTests
 include RegexpMatch::Assertions::ClassMethods
 #Digit=GenericType.find_by_name('digit')
 #Lower=GenericType.find_by_name('lower')
