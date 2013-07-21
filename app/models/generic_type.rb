@@ -1,10 +1,11 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/no_db.rb'
 # 1a) a regexp should match all examples from itself down the specialization tree.
 # 1b) an example should match its regexp and all generalization regexps above if
 # 2) an example should not match at least one of its specialization regexps
@@ -17,7 +18,7 @@ has_many :specialize, :class_name => "GenericType",
     :foreign_key => "generalize_id"
 belongs_to :generalize, :class_name => "GenericType",
     :foreign_key => "generalize_id"
-require 'test/assertions/ruby_assertions.rb'
+#require 'test/assertions/ruby_assertions.rb'
 #def initialize(generic_type)
 #end #initialize
 def GenericType.find_by_name(name)
