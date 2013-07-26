@@ -5,10 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/naming_convention.rb'
-class RelatedFiles
+require_relative '../../app/models/file_pattern.rb'
+class RelatedFile
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
-def initialize(model_class_name=NamingConvention.path2model_name?, project_root_dir=NamingConvention.project_root_dir?)
+def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
 	raise message if model_class_name.nil?
 	@model_class_name=model_class_name.to_sym
@@ -33,10 +33,10 @@ def ==(other)
 end #==
 def pathname_pattern?(file_spec)
 	raise "project_root_dir" if @project_root_dir.nil?
-	raise "NamingConvention.find_by_name(file_spec)[:sub_directory]" if NamingConvention.find_by_name(file_spec)[:sub_directory].nil?
+	raise "FilePattern.find_by_name(file_spec)[:sub_directory]" if FilePattern.find_by_name(file_spec)[:sub_directory].nil?
 	raise "@model_basename" if @model_basename.nil?
-	raise "NamingConvention.find_by_name(file_spec)[:suffix]" if NamingConvention.find_by_name(file_spec)[:suffix].nil?
-	@project_root_dir+NamingConvention.find_by_name(file_spec)[:sub_directory]+@model_basename.to_s+NamingConvention.find_by_name(file_spec)[:suffix]
+	raise "FilePattern.find_by_name(file_spec)[:suffix]" if FilePattern.find_by_name(file_spec)[:suffix].nil?
+	@project_root_dir+FilePattern.find_by_name(file_spec)[:sub_directory]+@model_basename.to_s+FilePattern.find_by_name(file_spec)[:suffix]
 end #pathname_pattern
 def model_pathname?
 	pathname_pattern?(:model)
@@ -58,8 +58,8 @@ def pathnames?
 #	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
 	raise "project_root_dir" if @project_root_dir.nil?
 	raise "@model_basename" if @model_basename.nil?
-	pathnames=NamingConvention::Patterns.map do |p|
-		pathname_pattern?(p[:name])
+	pathnames=FilePattern::All.map do |p|
+		p.path?(@model_basename)
 	end #
 end #pathnames
 def default_test_class_id?
@@ -87,6 +87,13 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
+module Examples
+UnboundedFixnumRelatedFile=RelatedFile.new(:UnboundedFixnum)
+SELF=RelatedFile.new(:RelatedFile)
+DCT_filename='script/dct.rb'
+#DCT=RelatedFile.new(RelatedFile.path2model_name?(DCT_filename), RelatedFile.project_root_dir?(DCT_filename))
+end #Examples
+include Examples
 module Assertions
 module ClassMethods
 #include Test::Unit::Assertions
@@ -96,56 +103,17 @@ def assert_invariant
 end # class_assert_invariant
 # conditions true while class is being defined
 def assert_pre_conditions
-	assert_respond_to(NamingConvention, :project_root_dir?)
-	assert_module_included(self, NamingConvention::Assertions)
+	assert_respond_to(FilePattern, :project_root_dir?)
+	assert_module_included(self, FilePattern::Assertions)
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
-	assert_equal(TE, NamingConvention::Examples::SELF)
+	assert_equal(TE, FilePattern::Examples::SELF)
 end #class_assert_post_conditions
-def assert_naming_convention_match(s, path)
-	assert_equal(path[-s[:suffix].size, s[:suffix].size], s[:suffix], caller_lines)
-=begin
-	extension=File.extname(path)
-	assert_equal('.rb', extension, caller_lines)
-	basename=File.basename(path, extension)
-	expected_extension=File.extname(s[:suffix])
-	message="s=#{s.inspect}, extension=#{extension.inspect}"
-	assert_equal(expected_extension, extension, message+caller_lines)
-	if 	extension==s[:suffix] then
-		extension=s[:suffix]
-		expected_suffix=''
-		suffix=''
-	else
-		expected_suffix=File.basename(s[:suffix], extension)
-		suffix=path[-expected_suffix.size,expected_suffix.size]
-	end #if
-#	expected_suffix=File.basename(s[:suffix], extension)
-	assert_equal(extension, File.extname(path), caller_lines)
-	assert_equal(extension, File.basename(extension, extension), caller_lines)
-#	assert_equal(suffix[-expected_suffix.size,expected_suffix.size], expected_suffix)
-	message="s=#{s}\nsuffix=#{suffix}\nextension=#{extension}"
-	message+="\nNamingConvention.suffix_match(s, suffix, extension)=#{NamingConvention.suffix_match(s, suffix, extension)}"
-	assert_equal(suffix, expected_suffix, caller_lines)
-	assert(NamingConvention.suffix_match(s, suffix, extension), message+caller_lines)
-	assert(extension_match(s, extension), message+caller_lines)
-	assert(suffix_match(s, suffix, extension), message+caller_lines)
-=end
-	sub_directory=File.dirname(path)
-	expected_sub_directory=s[:sub_directory][0..-2] # drops trailing /
-	message="expected_sub_directory=#{expected_sub_directory}\nsub_directory=#{sub_directory}"
-	assert_not_nil(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], message+caller_lines)
-	assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory, message+caller_lines)
-	message="s=#{s}\nsub_directory=#{sub_directory}\nexpected_sub_directory=#{expected_sub_directory}"
-	message+="\nNamingConvention.sub_directory_match(s, path)=#{NamingConvention.sub_directory_match(s, path)}"
-	assert(NamingConvention.sub_directory_match(s, path), message+caller_lines)
-
-	message="s=#{s.inspect}, path=#{path.inspect}"
-end #naming_convention_match
 end #ClassMethods
 module KernelMethods
 def assert_default_test_class_id(expected_id, class_name, message='')
-	te=NamingConvention.new(class_name)
+	te=FilePattern.new(class_name)
 	message+="te=#{te.inspect}"
 	assert_equal(expected_id, te.default_test_class_id?, message+caller_lines)
 end #default_test_class_id
@@ -163,7 +131,7 @@ def assert_pre_conditions
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
-	message+="\ndefault NamingConvention.project_root_dir?=#{NamingConvention.project_root_dir?.inspect}"
+	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
 	assert_not_empty(@project_root_dir, message)
 end #assert_post_conditions
 
@@ -171,10 +139,4 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-module Examples
-UnboundedFixnumRelatedFiles=RelatedFiles.new(:UnboundedFixnum)
-SELF=RelatedFiles.new(:RelatedFiles)
-DCT_filename='script/dct.rb'
-#DCT=RelatedFiles.new(RelatedFiles.path2model_name?(DCT_filename), RelatedFiles.project_root_dir?(DCT_filename))
-end #Examples
-end #RelatedFiles
+end #RelatedFile

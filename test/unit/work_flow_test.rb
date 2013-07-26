@@ -37,4 +37,11 @@ def test_version_comparison
 	assert_equal('', TestWorkFlow.test_files([]))
 	assert_equal(TestFile, TestWorkFlow.test_files([TestFile]))
 end #version_comparison
+def test_local_assert_post_conditions
+
+		TestWorkFlow.assert_post_conditions
+end #assert_post_conditions
+def test_local_assert_pre_conditions
+		TestWorkFlow.assert_pre_conditions
+end #assert_pre_conditions
 end #WorkFlow

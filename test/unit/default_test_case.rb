@@ -11,9 +11,9 @@ BaseTestCase=ActiveSupport::TestCase
 module DefaultTests0
 require 'test/unit'
 include Test::Unit::Assertions
-def test_environment?
-	NamingConvention.new(model_name?)
-end #test_environment
+def related_files?
+	RelatedFile.new(model_name?)
+end #related_files
 end #DefaultTests0
 module DefaultTests1
 include DefaultTests0
@@ -99,8 +99,8 @@ def test_aaa_environment
 #	assert_equal('Test::Unit::Assertions', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
-#	fail "got to end of test_environment ."
-end #test_test_environment
+#	fail "got to end of related_files ."
+end #test_related_files
 end #DefaultTests2
 module DefaultTests3
 include DefaultTests2
@@ -115,7 +115,7 @@ def test_assertion_inclusion
 #	assert_respond_to(model_class?, :example_constant_names_by_class)
 #	assert_include(model_class?.methods, :example_constant_names_by_class, "model_class?=#{model_class?}")
 end #test_assertion_inclusion
-def test_test_environment
+def test_related_files
 	assert_include(self.class.included_modules, Test::Unit::Assertions)
 #	assert_include(self.class.included_modules, DefaultAssertionTests)
 	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{assertions_pathname?}")
@@ -177,9 +177,6 @@ class DefaultTestCase2 < DefaultTestCase1 # test and model files
 end #DefaultTestCase2
 
 class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
-def assertions_pathname?
-	"../assertions/"+TE.model_name?.to_sym+"_assertions.rb"
-end #assertions_pathname?
 end #DefaultTestCase3
 
 class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
