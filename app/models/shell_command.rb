@@ -44,9 +44,10 @@ extend Test::Unit::Assertions
 def assert_pre_conditions
 
 end #assert_pre_conditions
-def assert_post_conditions
-	assert_empty(@errors, inspect)
-	assert_equal(0, @exit_status, inspect)
+def assert_post_conditions(message='')
+	message+="self=#{inspect}"
+	assert_empty(@errors, message)
+	assert_equal(0, @exit_status, message)
 end #assert_post_conditions
 end #Assertions
 include Assertions

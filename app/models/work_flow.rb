@@ -8,7 +8,7 @@ include Grit
 attr_reader :related_files, :edit_files
 module ClassMethods
 def current_branch_name?
-	WorkFlow::Repo.head.name
+	WorkFlow::Repo.head.name.to_sym
 end #branch
 def revison_tag(branch)
 		return '-r '+branch.to_s
@@ -43,8 +43,35 @@ def edit_all
 end #edit_all
 def execute
 	edit_default
-	test_and_commit
+	test_and_commit(related_files.model_test_pathname?)
 end #execute
+def edit
+	edit_default
+end #edit
+def upgrade
+	executable=related_files.model_test_pathname? 
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
+	test.execute
+	if test.success? then
+		upgrade_commit(:master, executable)
+	elsif test.exit_status==1 then # 1 error or syntax error
+		upgrade_commit(:development, executable)
+	else
+		upgrade_commit(:compiles, executable)
+	end #if
+end #upgrade
+def downgrade
+	executable=related_files.model_test_pathname? 
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
+	test.execute
+	if test.success? then
+		downgrade_commit(:master, executable)
+	elsif test.exit_status==1 then # 1 error or syntax error
+		downgrade_commit(:development, executable)
+	else
+		downgrade_commit(:compiles, executable)
+	end #if
+end #downgrade
 def test_files(files=nil)
 	if files.nil? then
 		files=@related_files.edit_files
@@ -60,37 +87,52 @@ def version_comparison(files=nil)
 	end #map
 	ret.join(' ')
 end #version_comparison
-def upgrade_test_and_commit
-end #upgrade_test_and_commit
-def downgrade_test_and_commit
-end #upgrade_test_and_commit
-def tested_files(test_file)
-	case RelatedFile.default_test_class_id?
+def upgrade_commit(target_branch, executable)
+	target_index=WorkFlow::Branch_enhancement.index(target_branch)
+	WorkFlow::Branch_enhancement.each do |b|
+		commit_to_branch(b, executable)
+	end #each
+end #upgrade_commit
+def downgrade_commit(target_branch, executable)
+	commit_to_branch(target_branch, executable)
+end #downgrade_commit
+def tested_files(executable)
+	if executable!=related_files.model_test_pathname? then # script only
+		[related_files.model_pathname?, executable]
+	else case related_files.default_test_class_id? # test files
 	when 0 then [related_files.model_test_pathname?]
-	when 1 then [related_files.model_pathname?, related_files.model_test_pathname?]
-	when 2 then [related_files.model_pathname?, related_files.model_test_pathname?]
-	when 3 then [related_files.model_pathname?, related_files.model_test_pathname?]
-	when 4 then [related_files.model_pathname?, related_files.model_test_pathname?]
+	when 1 then [related_files.model_test_pathname?]
+	when 2 then [related_files.model_pathname?, executable]
+	when 3 then [related_files.model_pathname?, related_files.model_test_pathname?, related_files.assertions_pathname?]
+	when 4 then [related_files.model_pathname?, related_files.model_test_pathname?, related_files.assertions_pathname?, related_files.assertions_test_pathname?]
 	end #case
+	end #if
 end #tested_files
-def test_and_commit
-	test=ShellCommands.new("ruby "+ self.related_files.model_test_pathname?, :delay_execution)
+def commit_to_branch(target_branch, executable)
+	Stash_Save.execute.assert_post_conditions
+	if WorkFlow.current_branch_name?!=target_branch then
+		push_branch=WorkFlow.current_branch_name?
+		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
+		message="#{WorkFlow.current_branch_name?}!=#{target_branch}"
+		switch_branch.assert_post_conditions(message)
+		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
+	end #if
+	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions
+	Git_Cola.execute.assert_post_conditions
+	if push_branch!=target_branch then
+		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
+		Stash_Pop.execute.assert_post_conditions
+	end #if
+end #commit_to_branch
+def test_and_commit(executable)
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
 	if test.success? then
-		Stash_Save.execute.assert_post_conditions
-		if current_branch_name?!=:master then
-			push_branch=current_branch_name?
-			Master_Checkout.execute.assert_post_conditions
-		end #if
-		Git_Cola.execute.assert_post_conditions
-		if push_branch!=:master then
-			Master_Checkout.execute.assert_post_conditions
-			Stash_Pop.execute.assert_post_conditions
-		end #if
+		commit_to_branch(:master, executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
-		Git_Cola.execute.assert_post_conditions
+		commit_to_branch(:development, executable)
 	else
-		Git_Cola.execute.assert_post_conditions
+		commit_to_branch(:compiles, executable)
 	end #if
 end #test
 require_relative '../../test/assertions/default_assertions.rb'
