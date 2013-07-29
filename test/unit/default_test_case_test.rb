@@ -7,11 +7,7 @@
 ###########################################################################
 #require_relative 'test_environment'
 require_relative '../../test/unit/default_test_case.rb'
-require_relative '../../app/models/unbounded_fixnum.rb'
-
-
 require_relative '../../test/assertions/default_assertions.rb'
-
 require_relative '../../test/assertions/minimal_assertions.rb'
 class MinimalTest < DefaultTestCase0
 extend DefaultAssertions::ClassMethods

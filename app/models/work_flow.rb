@@ -1,18 +1,25 @@
 require 'test/unit'
 require 'grit'
 require_relative '../../test/unit/default_test_case.rb'
-require_relative '../../app/models/naming_convention.rb'
+require_relative 'related_file.rb'
 require_relative '../../app/models/shell_command.rb'
 class WorkFlow
 include Grit
-attr_reader :test_environment, :edit_files
+attr_reader :related_files, :edit_files
 module ClassMethods
+def current_branch_name?
+	WorkFlow::Repo.head.name
+end #branch
 def revison_tag(branch)
 		return '-r '+branch.to_s
 end #revison_tag
-def file_versions(filename)
-	" -t #{WorkFlow.revison_tag(:master)} #{filename} #{WorkFlow.revison_tag(:compiles)} #{filename} #{WorkFlow.revison_tag(:development)} #{filename}"
-end #file_versions
+def goldilocks(filename)
+	current_index=WorkFlow::Branch_enhancement.index(current_branch_name?.to_sym)
+	last_slot_index=WorkFlow::Branch_enhancement.size-1
+	right_index=[current_index+1, last_slot_index].min
+	left_index=[current_index-1, 0].max
+	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{filename} #{filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{filename}"
+end #goldilocks
 end #ClassMethods
 extend ClassMethods
 def initialize(*argv)
@@ -20,60 +27,72 @@ def initialize(*argv)
 	raise "Arguments (argv) for WorkFlow.initialize cannot be empty" if argv.empty? 
 	raise "argv must be an array." if !argv.instance_of?(Array)
 	raise "argv[0]=#{argv[0].inspect} must be an String." if !argv[0].instance_of?(String)
-	path2model_name=NamingConvention.path2model_name?(argv[0])
-	@test_environment=NamingConvention.new(path2model_name, NamingConvention.project_root_dir?(argv[0]))
+	path2model_name=FilePattern.path2model_name?(argv[0])
+	@related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(argv[0]))
 	message= "edit_files do not exist\n argv=#{argv.inspect}" 
-	message+= "\n @test_environment.edit_files=#{@test_environment.edit_files.inspect}" 
-	message+= "\n @test_environment.missing_files=#{@test_environment.missing_files.inspect}" 
-	raise message if  @test_environment.edit_files.empty?
+	message+= "\n @related_files.edit_files=#{@related_files.edit_files.inspect}" 
+	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
+	raise message if  @related_files.edit_files.empty?
 end #initialize
-def current_branch_name?
-	Repo.head.name
-end #branch
-def edit
-end #edit
+def edit_default
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
+	puts edit.command_string
+	edit.execute.assert_post_conditions
+end #edit_default
 def edit_all
 end #edit_all
-def test
-	test=ShellCommands.new("ruby "+ self.test_environment.model_test_pathname?, :delay_execution)
+def execute
+	edit_default
+	test_and_commit
+end #execute
+def test_files(files=nil)
+	if files.nil? then
+		files=@related_files.edit_files
+	end #if
+	' -t '+files.join(' ')
+end #test_files
+def version_comparison(files=nil)
+	if files.nil? then
+		files=@related_files.edit_files
+	end #if
+	ret=files.map do |f|
+		WorkFlow.goldilocks(f)
+	end #map
+	ret.join(' ')
+end #version_comparison
+def upgrade_test_and_commit
+end #upgrade_test_and_commit
+def downgrade_test_and_commit
+end #upgrade_test_and_commit
+def tested_files(test_file)
+	case RelatedFile.default_test_class_id?
+	when 0 then [related_files.model_test_pathname?]
+	when 1 then [related_files.model_pathname?, related_files.model_test_pathname?]
+	when 2 then [related_files.model_pathname?, related_files.model_test_pathname?]
+	when 3 then [related_files.model_pathname?, related_files.model_test_pathname?]
+	when 4 then [related_files.model_pathname?, related_files.model_test_pathname?]
+	end #case
+end #tested_files
+def test_and_commit
+	test=ShellCommands.new("ruby "+ self.related_files.model_test_pathname?, :delay_execution)
 	test.execute
 	if test.success? then
-		Master_Checkout.execute.assert_post_conditions
+		Stash_Save.execute.assert_post_conditions
+		if current_branch_name?!=:master then
+			push_branch=current_branch_name?
+			Master_Checkout.execute.assert_post_conditions
+		end #if
+		Git_Cola.execute.assert_post_conditions
+		if push_branch!=:master then
+			Master_Checkout.execute.assert_post_conditions
+			Stash_Pop.execute.assert_post_conditions
+		end #if
+	elsif test.exit_status==1 then # 1 error or syntax error
 		Git_Cola.execute.assert_post_conditions
 	else
 		Git_Cola.execute.assert_post_conditions
 	end #if
 end #test
-def best
-end #best
-def execute
-	test=ShellCommands.new("ruby "+ self.test_environment.model_test_pathname?, :delay_execution)
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
-	puts edit.command_string
-	edit.execute.assert_post_conditions
-	test.execute
-	if test.success? then
-		Master_Checkout.execute.assert_post_conditions
-		Git_Cola.execute.assert_post_conditions
-	else
-		Git_Cola.execute.assert_post_conditions
-	end #if
-end #execute
-def test_files(files=nil)
-	if files.nil? then
-		files=@test_environment.edit_files
-	end #if
-	files.join(' ')
-end #test_files
-def version_comparison(files=nil)
-	if files.nil? then
-		files=@test_environment.edit_files
-	end #if
-	ret=files.map do |f|
-		WorkFlow.file_versions(f)
-	end #map
-	ret.join(' ')
-end #version_comparison
 require_relative '../../test/assertions/default_assertions.rb'
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
@@ -81,27 +100,27 @@ module Assertions
 module ClassMethods
 def assert_post_conditions
 	assert_pathname_exists(TestFile, "assert_post_conditions")
-end #assert_pre_conditions
+end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
-	assert_not_nil(@test_environment)
-	test_environment.assert_pre_conditions
-	assert_not_empty(@test_environment.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_environment.edit_files=#{@test_environment.edit_files.inspect}")
+	assert_not_nil(@related_files)
+	assert_not_empty(@related_files.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @related_files.edit_files=#{@related_files.edit_files.inspect}")
 end #assert_pre_conditions
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
 module Constants
-
+Stash_Save=ShellCommands.new("git stash save", :delay_execution)
+Stash_Pop=ShellCommands.new("git stash pop", :delay_execution)
 Git_Cola=ShellCommands.new("git-cola ", :delay_execution)
 Master_Checkout=ShellCommands.new("git checkout master", :delay_execution)
 Compiles_Checkout=ShellCommands.new("git checkout compiles", :delay_execution)
 Development_Checkout=ShellCommands.new("git checkout development", :delay_execution)
 CompilesSupersetOfMaster=ShellCommands.new("git log compiles..master", :delay_execution)
 DevelopmentSupersetofCompiles=ShellCommands.new("git log development..compiles", :delay_execution)
-Root_directory=NamingConvention.project_root_dir?
+Root_directory=FilePattern.project_root_dir?
 Repo= Grit::Repo.new(Root_directory)
-
+Branch_enhancement=[:master, :compiles, :development]
 end #Constants
 include Constants
 module Examples
