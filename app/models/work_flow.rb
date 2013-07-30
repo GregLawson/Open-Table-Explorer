@@ -96,6 +96,15 @@ end #upgrade_commit
 def downgrade_commit(target_branch, executable)
 	commit_to_branch(target_branch, executable)
 end #downgrade_commit
+def functional_parallelism
+	[
+	[related_files.model_pathname?, related_files.model_test_pathname?],
+	[related_files.assertions_pathname?, related_files.model_test_pathname?],
+	[related_files.assertions_pathname?, related_files.assertions_test_pathname?]
+	].select do |fp|
+		fp-tested_files(executable)==[]
+	end #map
+end #functioonal_parallelism
 def tested_files(executable)
 	if executable!=related_files.model_test_pathname? then # script only
 		[related_files.model_pathname?, executable]
