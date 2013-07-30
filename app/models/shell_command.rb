@@ -41,7 +41,7 @@ include Examples
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
-def assert_pre_conditions
+def assert_pre_conditions(message='')
 
 end #assert_pre_conditions
 def assert_post_conditions(message='')

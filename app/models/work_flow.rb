@@ -122,7 +122,7 @@ def commit_to_branch(target_branch, executable)
 	if WorkFlow.current_branch_name?!=target_branch then
 		push_branch=WorkFlow.current_branch_name?
 		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
-		message="#{WorkFlow.current_branch_name?}!=#{target_branch}"
+		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}"
 		switch_branch.assert_post_conditions(message)
 		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
 	end #if
@@ -130,7 +130,7 @@ def commit_to_branch(target_branch, executable)
 	Git_Cola.execute.assert_post_conditions
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
-		Stash_Pop.execute.assert_post_conditions
+		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable)
