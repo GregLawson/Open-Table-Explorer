@@ -17,7 +17,7 @@ def goldilocks(filename)
 	current_index=WorkFlow::Branch_enhancement.index(current_branch_name?.to_sym)
 	last_slot_index=WorkFlow::Branch_enhancement.size-1
 	right_index=[current_index+1, last_slot_index].min
-	left_index=[current_index-1, 0].max
+	left_index=right_index-1 
 	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{filename} #{filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{filename}"
 end #goldilocks
 end #ClassMethods
@@ -60,6 +60,18 @@ def upgrade
 		upgrade_commit(:compiles, executable)
 	end #if
 end #upgrade
+def best
+	executable=related_files.model_test_pathname? 
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
+	test.execute
+	if test.success? then
+		upgrade_commit(:master, executable)
+	elsif test.exit_status==1 then # 1 error or syntax error
+		upgrade_commit(:development, executable)
+	else
+		upgrade_commit(:compiles, executable)
+	end #if
+end #best
 def downgrade
 	executable=related_files.model_test_pathname? 
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
@@ -72,11 +84,12 @@ def downgrade
 		downgrade_commit(:compiles, executable)
 	end #if
 end #downgrade
-def test_files(files=nil)
-	if files.nil? then
-		files=@related_files.edit_files
-	end #if
-	' -t '+files.join(' ')
+def test_files(executable)
+	pairs=functional_parallelism(executable).map do |p|
+	
+		' -t '+p.join(' ')
+	end #map
+	pairs.join(' ')
 end #test_files
 def version_comparison(files=nil)
 	if files.nil? then
@@ -96,7 +109,7 @@ end #upgrade_commit
 def downgrade_commit(target_branch, executable)
 	commit_to_branch(target_branch, executable)
 end #downgrade_commit
-def functional_parallelism
+def functional_parallelism(executable)
 	[
 	[related_files.model_pathname?, related_files.model_test_pathname?],
 	[related_files.assertions_pathname?, related_files.model_test_pathname?],
@@ -104,9 +117,9 @@ def functional_parallelism
 	].select do |fp|
 		fp-tested_files(executable)==[]
 	end #map
-end #functioonal_parallelism
+end #functional_parallelism
 def tested_files(executable)
-	if executable!=related_files.model_test_pathname? then # script only
+	if executable==related_files.script_pathname? then # script only
 		[related_files.model_pathname?, executable]
 	else case related_files.default_test_class_id? # test files
 	when 0 then [related_files.model_test_pathname?]
