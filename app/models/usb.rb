@@ -1,11 +1,18 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
-require_relative '../../app/models/minimal.rb'
-class MinimalTest < TestCase
-end #MinimalTest
+require 'usb'
+class UsbBbus
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
+module Constants
+end #Constants
+include Constants
+module Examples
+end #Examples
+end #WorkFlow
