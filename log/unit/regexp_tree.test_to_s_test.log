@@ -1,0 +1,7 @@
+Loaded suite test/unit/regexp_tree_test
+Started
+@model_class is not a ActiveRecord::Base.
+.
+Finished in 0.012171 seconds.
+
+1 tests, 5 assertions, 0 failures, 0 errors

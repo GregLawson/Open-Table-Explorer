@@ -1,0 +1,118 @@
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# yaml description http://en.wikipedia.org/wiki/Yaml
+# especially http://en.wikipedia.org/wiki/Yaml#Syntax
+# yaml spec http://yaml.org/spec/1.2/spec.htm
+
+HTTP:
+  name: HTTP
+  library: net/http
+  interface_code: @acquisition= Net::HTTP.get(@uri.uri)
+  return_code: 
+  rescue_code:
+  stream_pattern: Acquisition
+
+Shell:
+  name: Shell
+  library: 
+  interface_code: @acquisition=`#{@uri..schemelessUrl} 2>&1`
+  rescue_code: 
+  library:
+  return_code:  |
+    if $?==0 then
+    @interaction.error=nil
+    else	  
+    @interaction.error=@interaction.acquisition_data
+    @interaction.acquisition_data=nil
+    end
+  stream_pattern: Acquisition
+
+File:
+  name: File
+  library: 
+  interface_code: @acquisition=IO.read(@uri.schemelessUrl)
+  rescue_code: 
+  library:
+  return_code: 
+  stream_pattern: Acquisition
+
+Delimited:
+  name: Delimited
+  library: 
+  interface_code:
+     @parsed= @unparsed.split(@selection)
+  return_code: 
+  rescue_code: 
+  stream_pattern: Parse
+
+HTML:
+  name: HTML
+  library: hpricot
+  interface_code: @parsed_data= Hpricot(@acquisition).search(@selection)
+  return_code: 
+  rescue_code: 
+  stream_pattern: Parse
+
+XML:
+  name: XML
+  library: 
+  interface_code:  |
+     @parsed_data= REXML::Document.new(@acquisition).get_elements(@selection)
+  return_code: 
+  rescue_code: 
+  stream_pattern: Parse
+
+JSON:
+  name: JSON
+  library: 
+  interface_code: @parsed_data= JSON.parse(@acquisition)[@selection]
+  return_code: 
+  rescue_code: 
+  stream_pattern: Parse
+
+
+Binary:
+  name: Binary
+  library: 
+  interface_code: @parsed_data=@acquisition.unpack(@selection)
+  return_code: 
+  rescue_code: 
+  stream_pattern: Parse
+
+Regexp:
+  name: Regexp
+  library: 
+  interface_code: @parsed_data=Regexp.new(@selection).match(@acquisition)
+  return_code: 
+  rescue_code: 
+  stream_pattern: Parse
+
+Store:
+  name: Store
+  library: active_record
+  interface_code: @model_class.create(@name_value_pairs)
+  return_code: 
+  rescue_code: 
+  stream_pattern: Storage
+
+Data_Table:
+  name: Data_Table
+  library: r
+  interface_code: @input.find_by_sql(@sql)
+  return_code: 
+  rescue_code: 
+  stream_pattern: Query_Output
+
+GLM:
+  name: GLM
+  library: r
+  interface_code: @input.r_execute('GLM')
+  return_code: 
+  rescue_code: 
+  stream_pattern: Query_Output
