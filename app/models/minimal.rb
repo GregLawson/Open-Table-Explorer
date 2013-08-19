@@ -6,19 +6,22 @@
 #
 ###########################################################################
 class Minimal
-attr_reader :related_files, :edit_files
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
 module Assertions
+include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
