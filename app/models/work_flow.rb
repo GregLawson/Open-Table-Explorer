@@ -1,4 +1,10 @@
-require 'test/unit'
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'grit'
 require_relative '../../test/unit/default_test_case.rb'
 require_relative 'related_file.rb'

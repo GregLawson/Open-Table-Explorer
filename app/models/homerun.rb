@@ -6,32 +6,42 @@
 #
 ###########################################################################
 require_relative '../../app/models/shell_command.rb'
-class Udev
+class HomeRun
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-require_relative '../../test/assertions/default_assertions.rb'
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
+#include DefaultAssertions
+#extend DefaultAssertions::ClassMethods
+def initialize(id='10311E80')
+	@id=id
+end #initialize
+def scan
+	scan=ShellCommands.new("hdhomerun_config #{@id} scan").execute
+end #scan
+require 'test/unit'
 module Assertions
+include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
+	assert_include(self.instance_variables, :@id, "self=#{self.inspect}")
+	assert_not_nil(@id)
 end #assert_post_conditions
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
 module Constants
-Lib_udev=ShellCommands.new("ls -1 /lib/udev/rules.d/*", :delay_execution)
-Etc_udev=ShellCommands.new("ls -l /etc/udev/rules.d/*", :delay_execution)
+Discover=ShellCommands.new('hdhomerun_config discover', :delay_execution)
 end #Constants
 include Constants
 module Examples
 include Constants
+Default_hdhr=HomeRun.new
 end #Examples
 include Examples
-end #Udev
+end #HomeRun
