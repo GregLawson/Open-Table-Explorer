@@ -34,12 +34,14 @@ def project_root_dir?(path=$0)
 	ret=case script_directory_name
 	when 'unit' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'integration' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'script' then
 		File.dirname(script_directory_pathname)+'/'
 	when 'models'
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	else
-		fail "can't find test directory"
+		fail "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
 	end #case
 	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
 	return ret
@@ -95,6 +97,7 @@ module Constants
 Patterns=[
 	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
 	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
+	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
 	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
