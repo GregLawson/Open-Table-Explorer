@@ -1,7 +1,6 @@
 require_relative 'test_environment'
-require_relative '../../app/models/router.rb'
-class RouterTest < TestCase
-require_relative '../../app/models/router.rb'
+require_relative '../../app/models/dhcp.rb'
+class DHCPTest < TestCase
 def test_dhclient
 	command_string='/sbin/dhclient -v eth0'
 	dhclient=ShellCommands.new(command_string)

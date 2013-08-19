@@ -27,6 +27,3 @@ def MAC(ip)
 	parse(/#{ip} ([0-9A-F]+\:[0-9A-F]+\:[0-9A-F]+\:[0-9A-F]+)/, @errors)
 end #MACs
 end #Arp
-class Router < ActiveRecord::Base
-belongs_to :hosts
-end
