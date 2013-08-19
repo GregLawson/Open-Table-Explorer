@@ -12,7 +12,7 @@ include HomeRun::Examples
 def test_integration
 	Discover.execute
 	assert_match(/^hdhomerun device /, Discover.output, "Discover=#{Discover.inspect}")
-	assert_equal('hdhomerun device 10311E80 found at 172.31.42.101', Discover.output)
+	assert_equal('hdhomerun device 10311E80 found at 172.31.42.101\n', Discover.output)
 #special case	assert_not_empty(scan.output, "scan=#{scan.inspect}")
 end #test_integration
 
