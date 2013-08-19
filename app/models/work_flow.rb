@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'grit'
+require 'grit'  # sudo gem install grit
 require_relative '../../test/unit/default_test_case.rb'
 require_relative 'related_file.rb'
 require_relative '../../app/models/shell_command.rb'
