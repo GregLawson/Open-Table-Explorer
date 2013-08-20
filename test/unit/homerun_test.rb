@@ -14,12 +14,13 @@ def test_initialize
 end #initialize
 def test_scan
 	scan=Default_hdhr.scan
-	assert_match(/^unable to connect to device\n|^$/, scan.errors, "scan=#{scan.inspect}")
+	assert_match(Scan_error|Scan_error_pass, scan.errors, "scan=#{scan.inspect}")
 end
 def test_Constants
 	Discover.execute
 	assert_operator(0, :<, Discover.output.size, "Discover=#{Discover.inspect}")
-	assert_match(/^no devices found\n|^hdhomerun device /, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Discover_error|/^hdhomerun device /, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Discover_error|Discover_parse, Discover.output, "Discover=#{Discover.inspect}")
 end #Constants
 
 end #HomeRun

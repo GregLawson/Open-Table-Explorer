@@ -5,6 +5,14 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+class Regexp
+def *(other)
+	return Regexp.new(self.to_s+other.to_s)
+end #*
+def |(other)
+	return Regexp.union(self, other)
+end #|
+end #Regexp
 require_relative '../../app/models/shell_command.rb'
 class HomeRun
 module ClassMethods
@@ -37,6 +45,15 @@ include Assertions
 #TestWorkFlow.assert_pre_conditions
 module Constants
 Discover=ShellCommands.new('hdhomerun_config discover', :delay_execution)
+Discover_example='hdhomerun device 10311E80 found at 172.31.42.101'
+Id_pattern=/([[hex]]{8})/
+Ip_pattern=/(\d{1,3}\.{3}\d{1,3})/
+Discover_parse=/hdhomerun device #{Id_pattern} found at #{Ip_pattern}/
+Discover_error=/^no devices found\n/
+Scan_error=/^unable to connect to device\n/
+Scan_error_pass=/^$/
+
+Discover_parse=//
 end #Constants
 include Constants
 module Examples
