@@ -5,14 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class Regexp
-def *(other)
-	return Regexp.new(self.to_s+other.to_s)
-end #*
-def |(other)
-	return Regexp.union(self, other)
-end #|
-end #Regexp
+require_relative 'regexp.rb'
 require_relative '../../app/models/shell_command.rb'
 class HomeRun
 module ClassMethods
