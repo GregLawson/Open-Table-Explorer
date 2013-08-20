@@ -124,6 +124,7 @@ def functional_parallelism(edit_files=@related_files.edit_files)
 	[
 	[related_files.model_pathname?, related_files.model_test_pathname?],
 	[related_files.assertions_pathname?, related_files.model_test_pathname?],
+	[related_files.model_test_pathname?, related_files.pathname_pattern?(:integration_test)],
 	[related_files.assertions_pathname?, related_files.assertions_test_pathname?]
 	].select do |fp|
 		fp-edit_files==[] # files must exist to be edited?
