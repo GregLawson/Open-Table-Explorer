@@ -100,7 +100,6 @@ module Constants
 OpeningBrackets='({['
 ClosingBrackets=')}]'
 PostfixOperators='+*?|'
-Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 end #Constants
 include Constants
 def initialize(regexp_string, options=Default_options)
@@ -482,7 +481,6 @@ end #case
 #	end #if
 #end #typed
 module Constants
-Any_binary_char_string='[\000-\377]'
 Any_binary_string="#{Any_binary_char_string}*"
 Any_binary_char=RegexpParse.new(Any_binary_char_string)
 Any_binary_char_parse=RegexpParse.new(Any_binary_char_string)
