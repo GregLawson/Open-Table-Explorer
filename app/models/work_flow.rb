@@ -43,7 +43,7 @@ def initialize(*argv)
 	raise message if  @related_files.edit_files.empty?
 end #initialize
 def edit_default
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + ' &', :delay_execution)
 	puts edit.command_string
 	edit.execute.assert_post_conditions
 end #edit_default
@@ -56,10 +56,19 @@ end #execute
 def edit
 	edit_default
 end #edit
-def upgrade
-	executable=related_files.model_test_pathname? 
+def test(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
+	if test.success? then
+		stage(:master, executable)
+	elsif test.exit_status==1 then # 1 error or syntax error
+		stage(:development, executable)
+	else
+		stage(:compiles, executable)
+	end #if
+end #test
+def upgrade(executable=related_files.model_test_pathname?)
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	if test.success? then
 		upgrade_commit(:master, executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -68,10 +77,8 @@ def upgrade
 		upgrade_commit(:compiles, executable)
 	end #if
 end #upgrade
-def best
-	executable=related_files.model_test_pathname? 
+def best(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
 	if test.success? then
 		upgrade_commit(:master, executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -80,8 +87,7 @@ def best
 		upgrade_commit(:compiles, executable)
 	end #if
 end #best
-def downgrade
-	executable=related_files.model_test_pathname? 
+def downgrade(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
 	if test.success? then
@@ -142,7 +148,7 @@ def tested_files(executable)
 	end #case
 	end #if
 end #tested_files
-def commit_to_branch(target_branch, executable)
+def stage(target_branch, executable)
 	Stash_Save.execute.assert_post_conditions
 	if WorkFlow.current_branch_name?!=target_branch then
 		push_branch=WorkFlow.current_branch_name?
@@ -151,7 +157,10 @@ def commit_to_branch(target_branch, executable)
 		switch_branch.assert_post_conditions(message)
 		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
 	end #if
-	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions
+	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
+end #stage
+def commit_to_branch(target_branch, executable)
+	stage(target_branch, executable)
 	Git_Cola.execute.assert_post_conditions
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
@@ -191,6 +200,7 @@ module Constants
 Stash_Save=ShellCommands.new("git stash save", :delay_execution)
 Stash_Pop=ShellCommands.new("git stash pop", :delay_execution)
 Git_Cola=ShellCommands.new("git-cola ", :delay_execution)
+Git_status=ShellCommands.new("git status", :delay_execution)
 Master_Checkout=ShellCommands.new("git checkout master", :delay_execution)
 Compiles_Checkout=ShellCommands.new("git checkout compiles", :delay_execution)
 Development_Checkout=ShellCommands.new("git checkout development", :delay_execution)
