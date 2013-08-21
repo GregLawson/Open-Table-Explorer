@@ -15,7 +15,9 @@ OptionParser.new do |opts|
   opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
     commands+=[:upgrade] if u
   end
-
+  opts.on("-t", "--[no-]test", "Test. No commit. ") do |u|
+    commands+=[:test] if u
+  end
 end.parse!
 
 pp commands
@@ -23,10 +25,11 @@ pp ARGV
 
 
 case ARGV.size
-when 0 then 
-	puts "work_flow <command> <file>; where <command> is not yet implemented"
+when 0 then # scite testing defaults command and file
+	puts "work_flow --<command> <file>"
 	this_file=File.expand_path(__FILE__)
-	argv=[:downgrade, this_file] # incestuous default test case for scite
+	argv=[this_file] # incestuous default test case for scite
+	commands=[:test]
 else
 	argv=ARGV
 end #case

@@ -1,5 +1,11 @@
-require 'test/unit'
-require 'grit'
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+require 'grit'  # sudo gem install grit
 require_relative '../../test/unit/default_test_case.rb'
 require_relative 'related_file.rb'
 require_relative '../../app/models/shell_command.rb'
@@ -18,7 +24,9 @@ def goldilocks(filename)
 	last_slot_index=WorkFlow::Branch_enhancement.size-1
 	right_index=[current_index+1, last_slot_index].min
 	left_index=right_index-1 
-	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{filename} #{filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{filename}"
+	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+
+	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{relative_filename}"
 end #goldilocks
 end #ClassMethods
 extend ClassMethods
@@ -48,10 +56,19 @@ end #execute
 def edit
 	edit_default
 end #edit
-def upgrade
+def test
 	executable=related_files.model_test_pathname? 
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
+	if test.success? then
+		stage(:master, executable)
+	elsif test.exit_status==1 then # 1 error or syntax error
+		stage(:development, executable)
+	else
+		stage(:compiles, executable)
+	end #if
+end #test
+def upgrade
 	if test.success? then
 		upgrade_commit(:master, executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -61,9 +78,6 @@ def upgrade
 	end #if
 end #upgrade
 def best
-	executable=related_files.model_test_pathname? 
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
 	if test.success? then
 		upgrade_commit(:master, executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -84,10 +98,13 @@ def downgrade
 		downgrade_commit(:compiles, executable)
 	end #if
 end #downgrade
-def test_files(executable)
-	pairs=functional_parallelism(executable).map do |p|
-	
-		' -t '+p.join(' ')
+def test_files(edit_files=@related_files.edit_files)
+	pairs=functional_parallelism(edit_files).map do |p|
+
+		' -t '+p.map do |f|
+			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
+			
+		end.join(' ') #map
 	end #map
 	pairs.join(' ')
 end #test_files
@@ -109,17 +126,18 @@ end #upgrade_commit
 def downgrade_commit(target_branch, executable)
 	commit_to_branch(target_branch, executable)
 end #downgrade_commit
-def functional_parallelism(executable)
+def functional_parallelism(edit_files=@related_files.edit_files)
 	[
 	[related_files.model_pathname?, related_files.model_test_pathname?],
 	[related_files.assertions_pathname?, related_files.model_test_pathname?],
+	[related_files.model_test_pathname?, related_files.pathname_pattern?(:integration_test)],
 	[related_files.assertions_pathname?, related_files.assertions_test_pathname?]
 	].select do |fp|
-		fp-tested_files(executable)==[]
+		fp-edit_files==[] # files must exist to be edited?
 	end #map
 end #functional_parallelism
 def tested_files(executable)
-	if executable==related_files.script_pathname? then # script only
+	if executable!=related_files.model_test_pathname? then # script only
 		[related_files.model_pathname?, executable]
 	else case related_files.default_test_class_id? # test files
 	when 0 then [related_files.model_test_pathname?]
@@ -130,7 +148,7 @@ def tested_files(executable)
 	end #case
 	end #if
 end #tested_files
-def commit_to_branch(target_branch, executable)
+def stage(target_branch, executable)
 	Stash_Save.execute.assert_post_conditions
 	if WorkFlow.current_branch_name?!=target_branch then
 		push_branch=WorkFlow.current_branch_name?
@@ -139,11 +157,16 @@ def commit_to_branch(target_branch, executable)
 		switch_branch.assert_post_conditions(message)
 		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
 	end #if
-	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions
+	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
+end #stage
+def commit_to_branch(target_branch, executable)
+	stage(target_branch, executable)
 	Git_Cola.execute.assert_post_conditions
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
-		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
+		tested_files(executable).each do |p|
+			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
+		end #each
 	end #if
 end #commit_to_branch
 def test_and_commit(executable)
