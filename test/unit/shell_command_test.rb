@@ -26,4 +26,14 @@ def test_system_output
 	}
 	ret
 end #system_output
-end #WirelessTest
+def test_success?
+	assert(EXAMPLE.success?)
+end #success
+def test_puts
+	assert_equal(Example_output, EXAMPLE.output)
+	assert_equal(EXAMPLE, EXAMPLE.puts) #allow command chaining
+end #puts
+def test_assert_post_conditions
+	message=''
+end #assert_post_conditions
+end #ShellCommands

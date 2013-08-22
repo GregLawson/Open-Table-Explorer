@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'open3'
 class ShellCommands
 attr_reader :command_string, :output, :errors, :exit_status, :pid
