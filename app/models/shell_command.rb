@@ -30,6 +30,10 @@ end #system_output
 def success?
 	@exit_status==0
 end #success
+def puts
+	$stdout.puts @output,@errors
+	self # return for comand chaining
+end #puts
 module Examples
 Hello_world=ShellCommands.new('echo "Hello World"')
 
@@ -42,12 +46,13 @@ module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_pre_conditions(message='')
-
+	self # return for comand chaining
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
 	assert_empty(@errors, message)
 	assert_equal(0, @exit_status, message)
+	self # return for comand chaining
 end #assert_post_conditions
 end #Assertions
 include Assertions
