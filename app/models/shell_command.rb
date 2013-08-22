@@ -43,7 +43,7 @@ def puts
 end #puts
 module Examples
 Hello_world=ShellCommands.new('echo "Hello World"')
-
+Example_output="1 2;3 4\n"
 COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
 
