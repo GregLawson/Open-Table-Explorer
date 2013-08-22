@@ -14,8 +14,11 @@ def test_goldilocks
 	last_slot_index=WorkFlow::Branch_enhancement.size-1
 	right_index=[current_index, last_slot_index].min
 	left_index=right_index-1 
+	relative_filename=	Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	assert_data_file(relative_filename)
+	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
 	assert_match(/ -t /, WorkFlow.goldilocks(TestFile))
-	assert_match(/#{TestFile}/, WorkFlow.goldilocks(TestFile))
+	assert_match(/#{relative_filename}/, WorkFlow.goldilocks(TestFile))
 	assert_match(/#{WorkFlow.current_branch_name?}/, WorkFlow.goldilocks(TestFile))
 end #goldilocks
 include WorkFlow::Examples
@@ -37,13 +40,22 @@ def test_execute
 #	assert_equal('', TestWorkFlow.test_files)
 end #execute
 def test_test_files
-	assert_equal(' -t ', TestWorkFlow.test_files([]))
-	assert_equal(' -t '+TestFile, TestWorkFlow.test_files([TestFile]))
+	assert_equal('', TestWorkFlow.test_files([]))
+# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
 end #test_files
 def test_version_comparison
-	assert_equal(' -t ', TestWorkFlow.version_comparison([]))
-	assert_equal(' -t '+TestFile, TestWorkFlow.version_comparison([TestFile]))
+	assert_equal('', TestWorkFlow.version_comparison([]))
 end #version_comparison
+def test_functional_parallelism
+	edit_files=TestWorkFlow.related_files.edit_files
+	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
+	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
+	end #functional_parallelism
+def test_tested_files
+	executable=TestWorkFlow.related_files.model_test_pathname?
+	tested_files=TestWorkFlow.tested_files(executable)
+	assert_operator(TestWorkFlow.related_files.default_test_class_id?, :<=, tested_files.size)
+end #tested_files
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions
