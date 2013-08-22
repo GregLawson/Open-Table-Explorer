@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/shell_command.rb'
 require_relative 'default_test_case.rb'
@@ -26,4 +33,14 @@ def test_system_output
 	}
 	ret
 end #system_output
-end #WirelessTest
+def test_success?
+	assert(EXAMPLE.success?)
+end #success
+def test_puts
+	assert_equal(Example_output, EXAMPLE.output)
+	assert_equal(EXAMPLE, EXAMPLE.puts) #allow command chaining
+end #puts
+def test_assert_post_conditions
+	message=''
+end #assert_post_conditions
+end #ShellCommands
