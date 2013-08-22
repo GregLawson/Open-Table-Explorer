@@ -43,7 +43,7 @@ def initialize(*argv)
 	raise message if  @related_files.edit_files.empty?
 end #initialize
 def edit_default
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + ' &', :delay_execution)
 	puts edit.command_string
 	edit.execute.assert_post_conditions
 end #edit_default
@@ -200,6 +200,7 @@ module Constants
 Stash_Save=ShellCommands.new("git stash save", :delay_execution)
 Stash_Pop=ShellCommands.new("git stash pop", :delay_execution)
 Git_Cola=ShellCommands.new("git-cola ", :delay_execution)
+Git_status=ShellCommands.new("git status", :delay_execution)
 Master_Checkout=ShellCommands.new("git checkout master", :delay_execution)
 Compiles_Checkout=ShellCommands.new("git checkout compiles", :delay_execution)
 Development_Checkout=ShellCommands.new("git checkout development", :delay_execution)
