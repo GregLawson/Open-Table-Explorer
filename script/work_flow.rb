@@ -45,3 +45,4 @@ argv.each do |f|
 		end #case
 	end #each
 end #each
+WorkFlow::Git_status.execute.puts
