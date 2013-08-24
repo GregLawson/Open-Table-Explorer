@@ -34,6 +34,33 @@ def system_output(command_string)
 	}
 	ret
 end #system_output
+def fork(cmd)
+	start(cmd)
+	self #allows command chaining
+end #fork
+def server(cmd)
+	start
+	self #allows command chaining
+end #server
+def start(cmd)
+	@stdin, @stdout, @stderr, @wait_thr = Open3.popen3(*cmd)
+	self #allows command chaining
+end #start
+def wait
+	@exit_status = @wait_thr.value # Process::Status object returned.
+	close
+	self #allows command chaining
+end #wait
+def close
+	@pid = @wait_thr[:pid]  # pid of the started process
+	@stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
+	@output=@stdout.read
+	@stdout.close
+	@errors=@stderr.read
+	@stderr.close
+	@exit_status = @wait_thr.value  # Process::Status object returned.
+	self #allows command chaining
+end #close
 def success?
 	@exit_status==0
 end #success
