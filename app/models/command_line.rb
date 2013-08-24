@@ -8,6 +8,7 @@
 require 'optparse'
 require 'ostruct'
 require 'pp'
+require 'test/unit'
 class CommandLine
 module ClassMethods
 end #ClassMethods
