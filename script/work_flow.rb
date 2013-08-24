@@ -2,6 +2,23 @@ require 'optparse'
 require 'ostruct'
 require 'pp'
 require_relative '../app/models/work_flow.rb'
+class CommandLine
+def initialize(name, description=name)
+	@name=name
+	@description=description
+end #initialize
+def add_option(option)
+	@options = (@options.nil? ? [] : @options)+[option]
+end #add_option
+end #CommandLine
+class CommandLineOption
+def initialize(name, description=name, short_option=name[0], long_option=name)
+	@name=name
+	@description=description
+	@short_option=short_option
+	@long_option=long_option
+end #initialize
+end #CommandLineOption
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
@@ -42,6 +59,7 @@ argv.each do |f|
 		when :test then editTestGit.test
 		when :upgrade then editTestGit.upgrade
 		when :downgrade then editTestGit.downgrade
+		when :merge_down then editTestGit.merge_down
 		end #case
 	end #each
 end #each
