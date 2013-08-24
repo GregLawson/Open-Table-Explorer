@@ -50,6 +50,7 @@ def add_option(name, description=name, help_source='man')
 	option=CommandLineOption.new(name, description, help_source)
 	@options = (@options.nil? ? [] : @options)+[option]
 end #add_option
+end #CommandLine
 class CommandLineOption
 def initialize(name, description=name, short_option=name[0], long_option=name)
 	@name=name
