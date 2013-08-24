@@ -9,12 +9,13 @@ require 'optparse'
 require 'ostruct'
 require 'pp'
 require 'test/unit'
+require_relative '../../app/models/shell_command.rb'
 class CommandLine
 module ClassMethods
 def create_from_path(path)
-	ShellCommands("file "+path).execute.assert_post_conditions.puts
+	ShellCommands.new("file "+path).execute.assert_post_conditions.puts
 	basename=File.basename(path)
-	ShellCommands("man "+basename).execute.assert_post_conditions.puts
+	ShellCommands.new("man "+basename).execute.assert_post_conditions.puts
 end #create_from_path
 end #ClassMethods
 extend ClassMethods
@@ -23,6 +24,23 @@ def initialize(name, description=name, help_source='man')
 	@description=description
 	@help_source=help_source
 end #initialize
+def run
+	case ARGV.size
+	when 0 then # scite testing defaults command and file
+		puts "work_flow --<command> <file>"
+		this_file=File.expand_path(__FILE__)
+		argv=[this_file] # incestuous default test case for scite
+		commands=[:test]
+	else
+		argv=ARGV
+	end #case
+	argv.each do |f|
+		command_line=CommandLine.new(f)
+		commands.each do |c|
+			command_line.method(c)
+		end #each
+	end #each
+end #run
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
