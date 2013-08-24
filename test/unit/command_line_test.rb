@@ -9,6 +9,19 @@ require_relative 'test_environment'
 require 'pp'
 require_relative '../../app/models/command_line.rb'
 class CommandLineTest < TestCase
+def test_create_from_path
+	path=	ShellCommands("file "+path).execute.assert_post_conditions.puts
+	basename=File.basename(path)
+	ShellCommands("man "+basename).execute.assert_post_conditions.puts
+	ShellCommands("info "+basename).execute.assert_post_conditions.puts
+	ShellCommands(basename+" --help").execute.assert_post_conditions.puts
+	ShellCommands(basename+" -h").execute.assert_post_conditions.puts
+	ShellCommands(basename+" -v").execute.assert_post_conditions.puts
+end #create_from_path
+def test_
+end #
+def test_
+end #
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
@@ -41,15 +54,15 @@ else
 	argv=ARGV
 end #case
 argv.each do |f|
-	editTestGit=WorkFlow.new(f)
+	command_line=CommandLine.new(f)
 	commands.each do |c|
 		case c.to_sym
-		when :execute then editTestGit.execute
-		when :edit then editTestGit.edit
-		when :test then editTestGit.test
-		when :upgrade then editTestGit.upgrade
-		when :downgrade then editTestGit.downgrade
-		when :merge_down then editTestGit.merge_down
+		when :execute then command_line.execute
+		when :edit then command_line.edit
+		when :test then command_line.test
+		when :upgrade then command_line.upgrade
+		when :downgrade then command_line.downgrade
+		when :merge_down then command_line.merge_down
 		end #case
 	end #each
 end #each

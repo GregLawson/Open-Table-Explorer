@@ -11,6 +11,11 @@ require 'pp'
 require 'test/unit'
 class CommandLine
 module ClassMethods
+def create_from_path(path)
+	ShellCommands("file "+path).execute.assert_post_conditions.puts
+	basename=File.basename(path)
+	ShellCommands("man "+basename).execute.assert_post_conditions.puts
+end #create_from_path
 end #ClassMethods
 extend ClassMethods
 def initialize(name, description=name, help_source='man')
@@ -18,9 +23,6 @@ def initialize(name, description=name, help_source='man')
 	@description=description
 	@help_source=help_source
 end #initialize
-def add_option(option)
-	@options = (@options.nil? ? [] : @options)+[option]
-end #add_option
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -43,6 +45,11 @@ include Constants
 end #Examples
 include Examples
 end #CommandLine
+class CommandLineScript < CommandLine
+def add_option(name, description=name, help_source='man')
+	option=CommandLineOption.new(name, description, help_source)
+	@options = (@options.nil? ? [] : @options)+[option]
+end #add_option
 class CommandLineOption
 def initialize(name, description=name, short_option=name[0], long_option=name)
 	@name=name
