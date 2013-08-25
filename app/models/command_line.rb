@@ -23,7 +23,41 @@ def initialize(name, description=name, help_source='man')
 	@name=name
 	@description=description
 	@help_source=help_source
+	@file_type=	ShellCommands.new("file -b "+@path).execute.output
+	@mime_type=	ShellCommands.new("file -b --mime "+@path).execute.output
+	@dpkg="grep "#{@path}$"  /var/lib/*/info/*.list"
+	if @mime_type=='application/octet' then
+		@basename=File.basename(path,File.extname(path))
+		@version=ShellCommands.new(@basename+" --version").execute.output
+		@v=ShellCommands.new(basename+" -v").execute.output
+		@man=ShellCommands.new("man "+@basename).execute.output
+		@info=ShellCommands.new("info "+@basename).execute.output
+		@help=ShellCommands.new(@basename+" --help").execute.output
+		@h=ShellCommands.new(@basename+" -h").execute.output
+		@whereis=ShellCommands.new("whereis "+command).execute.output
+	end #if
 end #initialize
+module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+def assert_post_conditions
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
+end #Assertions
+include Assertions
+#TestWorkFlow.assert_pre_conditions
+module Constants
+end #Constants
+include Constants
+module Examples
+include Constants
+end #Examples
+include Examples
 def run
 	case ARGV.size
 	when 0 then # scite testing defaults command and file
@@ -68,9 +102,9 @@ def add_option(name, description=name, help_source='man')
 	option=CommandLineOption.new(name, description, help_source)
 	@options = (@options.nil? ? [] : @options)+[option]
 end #add_option
-end #CommandLine
+end #CommandLineScript
 class CommandLineOption
-def initialize(name, description=name, short_option=name[0], long_option=name)
+def initialize(name, description=name, long_option=name, short_option=name[0])
 	@name=name
 	@description=description
 	@short_option=short_option
