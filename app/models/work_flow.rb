@@ -51,7 +51,7 @@ def execute
 	edit_default
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
-def deserving_branch(executable=related_files.model_test_pathname?)
+def deserving_branch?(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
 	if test.success? then
@@ -63,46 +63,16 @@ def deserving_branch(executable=related_files.model_test_pathname?)
 	end #if
 end #
 def test(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
-	if test.success? then
-		stage(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		stage(:development, executable)
-	else
-		stage(:compiles, executable)
-	end #if
+	stage(deserving_branch?(executable), executable)
 end #test
 def upgrade(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	if test.success? then
-		upgrade_commit(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		upgrade_commit(:development, executable)
-	else
-		upgrade_commit(:compiles, executable)
-	end #if
+	upgrade_commit(deserving_branch?(executable), executable)
 end #upgrade
 def best(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	if test.success? then
-		upgrade_commit(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		upgrade_commit(:development, executable)
-	else
-		upgrade_commit(:compiles, executable)
-	end #if
+	upgrade_commit(deserving_branch?(executable), executable)
 end #best
 def downgrade(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
-	if test.success? then
-		downgrade_commit(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		downgrade_commit(:development, executable)
-	else
-		downgrade_commit(:compiles, executable)
-	end #if
+	downgrade_commit(deserving_branch?(executable), executable)
 end #downgrade
 def test_files(edit_files=@related_files.edit_files)
 	pairs=functional_parallelism(edit_files).map do |p|
