@@ -43,7 +43,7 @@ def initialize(*argv)
 	raise message if  @related_files.edit_files.empty?
 end #initialize
 def edit_default
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + ' &', :delay_execution)
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
 	puts edit.command_string
 	edit.execute.assert_post_conditions
 end #edit_default
@@ -56,8 +56,7 @@ end #execute
 def edit
 	edit_default
 end #edit
-def test
-	executable=related_files.model_test_pathname? 
+def test(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
 	if test.success? then
@@ -68,7 +67,8 @@ def test
 		stage(:compiles, executable)
 	end #if
 end #test
-def upgrade
+def upgrade(executable=related_files.model_test_pathname?)
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	if test.success? then
 		upgrade_commit(:master, executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -77,7 +77,8 @@ def upgrade
 		upgrade_commit(:compiles, executable)
 	end #if
 end #upgrade
-def best
+def best(executable=related_files.model_test_pathname?)
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	if test.success? then
 		upgrade_commit(:master, executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -86,8 +87,7 @@ def best
 		upgrade_commit(:compiles, executable)
 	end #if
 end #best
-def downgrade
-	executable=related_files.model_test_pathname? 
+def downgrade(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
 	if test.success? then
@@ -149,19 +149,24 @@ def tested_files(executable)
 	end #if
 end #tested_files
 def stage(target_branch, executable)
-	Stash_Save.execute.assert_post_conditions
-	if WorkFlow.current_branch_name?!=target_branch then
+	if WorkFlow.current_branch_name?==target_branch then
+		push_branch=target_branch # no need for stash popping
+	else
 		push_branch=WorkFlow.current_branch_name?
+		Stash_Save.execute.assert_post_conditions
 		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
 		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}"
 		switch_branch.assert_post_conditions(message)
-		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
+		tested_files(executable).each do |p|
+			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
+		end #each
 	end #if
 	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
+	Git_Cola.execute.assert_post_conditions
+	push_branch
 end #stage
 def commit_to_branch(target_branch, executable)
-	stage(target_branch, executable)
-	Git_Cola.execute.assert_post_conditions
+	push_branch=stage(target_branch, executable)
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
 		tested_files(executable).each do |p|
