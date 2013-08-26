@@ -149,7 +149,9 @@ def tested_files(executable)
 	end #if
 end #tested_files
 def stage(target_branch, executable)
-	if WorkFlow.current_branch_name?!=target_branch then
+	if WorkFlow.current_branch_name? ==target_branch then
+		push_branch=target_branch # no need for stash popping
+	else
 		push_branch=WorkFlow.current_branch_name?
 		Stash_Save.execute.assert_post_conditions
 		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
@@ -161,9 +163,10 @@ def stage(target_branch, executable)
 	end #if
 	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
 	Git_Cola.execute.assert_post_conditions
+	push_branch
 end #stage
 def commit_to_branch(target_branch, executable)
-	stage(target_branch, executable)
+	push_branch=stage(target_branch, executable)
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
 		tested_files(executable).each do |p|
