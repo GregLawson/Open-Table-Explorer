@@ -42,20 +42,26 @@ def initialize(*argv)
 	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
 	raise message if  @related_files.edit_files.empty?
 end #initialize
-def edit_default
+def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
 	puts edit.command_string
 	edit.execute.assert_post_conditions
-end #edit_default
-def edit_all
-end #edit_all
+end #edit
 def execute
 	edit_default
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
-def edit
-	edit_default
-end #edit
+def deserving_branch(executable=related_files.model_test_pathname?)
+	test=ShellCommands.new("ruby "+executable, :delay_execution)
+	test.execute
+	if test.success? then
+		:master
+	elsif test.exit_status==1 then # 1 error or syntax error
+		:development
+	else
+		:compiles
+	end #if
+end #
 def test(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
@@ -119,8 +125,8 @@ def version_comparison(files=nil)
 end #version_comparison
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
-	WorkFlow::Branch_enhancement.each do |b|
-		commit_to_branch(b, executable)
+	WorkFlow::Branch_enhancement.each_index do |b, i|
+		commit_to_branch(b, executable) if i >= target_index
 	end #each
 end #upgrade_commit
 def downgrade_commit(target_branch, executable)
@@ -169,9 +175,7 @@ def commit_to_branch(target_branch, executable)
 	push_branch=stage(target_branch, executable)
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
-		tested_files(executable).each do |p|
-			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
-		end #each
+		ShellCommands.new("git checkout stash pop").execute.assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable)
