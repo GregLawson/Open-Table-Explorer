@@ -43,7 +43,7 @@ def initialize(*argv)
 	raise message if  @related_files.edit_files.empty?
 end #initialize
 def edit_default
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + ' &', :delay_execution)
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
 	puts edit.command_string
 	edit.execute.assert_post_conditions
 end #edit_default
@@ -149,19 +149,21 @@ def tested_files(executable)
 	end #if
 end #tested_files
 def stage(target_branch, executable)
-	Stash_Save.execute.assert_post_conditions
 	if WorkFlow.current_branch_name?!=target_branch then
 		push_branch=WorkFlow.current_branch_name?
+		Stash_Save.execute.assert_post_conditions
 		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
 		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}"
 		switch_branch.assert_post_conditions(message)
-		ShellCommands.new("git checkout stash "+tested_files(executable).join(' ')).execute.assert_post_conditions
+		tested_files(executable).each do |p|
+			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
+		end #each
 	end #if
 	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
+	Git_Cola.execute.assert_post_conditions
 end #stage
 def commit_to_branch(target_branch, executable)
 	stage(target_branch, executable)
-	Git_Cola.execute.assert_post_conditions
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
 		tested_files(executable).each do |p|
