@@ -15,7 +15,7 @@ attr_reader :related_files, :edit_files
 module ClassMethods
 def current_branch_name?
 	WorkFlow::Repo.head.name.to_sym
-end #branch
+end #current_branch_name
 def revison_tag(branch)
 		return '-r '+branch.to_s
 end #revison_tag
@@ -149,7 +149,7 @@ def tested_files(executable)
 	end #if
 end #tested_files
 def stage(target_branch, executable)
-	if WorkFlow.current_branch_name?==target_branch then
+	if WorkFlow.current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
 	else
 		push_branch=WorkFlow.current_branch_name?

@@ -6,6 +6,11 @@ include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
+def test_current_branch_name?
+	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
+	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
+
+end #current_branch_name
 def test_revison_tag
 	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
 end #revison_tag
@@ -30,10 +35,6 @@ def test_initialize
 	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
 end #initialize
-def test_branch
-	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
-	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
-end #branch
 def test_execute
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile)
 #	assert_equal('', TestWorkFlow.version_comparison)
@@ -56,6 +57,12 @@ def test_tested_files
 	tested_files=TestWorkFlow.tested_files(executable)
 	assert_operator(TestWorkFlow.related_files.default_test_class_id?, :<=, tested_files.size)
 end #tested_files
+def test_stage
+	target_branch=:development
+	assert_not_equal(WorkFlow.current_branch_name?, target_branch) # never on stash
+	target_branch=:compiles
+	assert_equal(WorkFlow.current_branch_name?, target_branch) # 
+end #stage
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions
