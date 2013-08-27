@@ -132,6 +132,7 @@ def stage(target_branch, executable)
 		Stash_Save.execute.assert_post_conditions
 		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
 		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}\n"
+		message+="WorkFlow.current_branch_name? !=target_branch=#{WorkFlow.current_branch_name? !=target_branch}\n"
 		tested_files(executable).each do |p|
 			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
 		end #each
