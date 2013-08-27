@@ -145,9 +145,7 @@ def commit_to_branch(target_branch, executable)
 	push_branch=stage(target_branch, executable)
 	if push_branch!=target_branch then
 		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
-		tested_files(executable).each do |p|
-			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
-		end #each
+		ShellCommands.new("git checkout stash pop").execute.assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable)
