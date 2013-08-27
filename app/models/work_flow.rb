@@ -42,61 +42,37 @@ def initialize(*argv)
 	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
 	raise message if  @related_files.edit_files.empty?
 end #initialize
-def edit_default
+def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
 	puts edit.command_string
 	edit.execute.assert_post_conditions
-end #edit_default
-def edit_all
-end #edit_all
+end #edit
 def execute
 	edit_default
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
-def edit
-	edit_default
-end #edit
-def test(executable=related_files.model_test_pathname?)
+def deserving_branch?(executable=related_files.model_test_pathname?)
 	test=ShellCommands.new("ruby "+executable, :delay_execution)
 	test.execute
 	if test.success? then
-		stage(:master, executable)
+		:master
 	elsif test.exit_status==1 then # 1 error or syntax error
-		stage(:development, executable)
+		:development
 	else
-		stage(:compiles, executable)
+		:compiles
 	end #if
+end #
+def test(executable=related_files.model_test_pathname?)
+	stage(deserving_branch?(executable), executable)
 end #test
 def upgrade(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	if test.success? then
-		upgrade_commit(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		upgrade_commit(:development, executable)
-	else
-		upgrade_commit(:compiles, executable)
-	end #if
+	upgrade_commit(deserving_branch?(executable), executable)
 end #upgrade
 def best(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	if test.success? then
-		upgrade_commit(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		upgrade_commit(:development, executable)
-	else
-		upgrade_commit(:compiles, executable)
-	end #if
+	upgrade_commit(deserving_branch?(executable), executable)
 end #best
 def downgrade(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
-	if test.success? then
-		downgrade_commit(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		downgrade_commit(:development, executable)
-	else
-		downgrade_commit(:compiles, executable)
-	end #if
+	downgrade_commit(deserving_branch?(executable), executable)
 end #downgrade
 def test_files(edit_files=@related_files.edit_files)
 	pairs=functional_parallelism(edit_files).map do |p|
@@ -119,8 +95,8 @@ def version_comparison(files=nil)
 end #version_comparison
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
-	WorkFlow::Branch_enhancement.each do |b|
-		commit_to_branch(b, executable)
+	WorkFlow::Branch_enhancement.each_index do |b, i|
+		commit_to_branch(b, executable) if i >= target_index
 	end #each
 end #upgrade_commit
 def downgrade_commit(target_branch, executable)
