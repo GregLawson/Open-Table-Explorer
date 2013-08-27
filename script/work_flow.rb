@@ -2,29 +2,13 @@ require 'optparse'
 require 'ostruct'
 require 'pp'
 require_relative '../app/models/work_flow.rb'
-class CommandLine
-def initialize(name, description=name)
-	@name=name
-	@description=description
-end #initialize
-def add_option(option)
-	@options = (@options.nil? ? [] : @options)+[option]
-end #add_option
-end #CommandLine
-class CommandLineOption
-def initialize(name, description=name, short_option=name[0], long_option=name)
-	@name=name
-	@description=description
-	@short_option=short_option
-	@long_option=long_option
-end #initialize
-end #CommandLineOption
+require_relative '../app/models/command_line.rb'
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
 
-  opts.on("-e", "--[no-]edit", "Edit related files and versions in diffuse") do |v|
-    commands+=[:edit] if v
+  opts.on("-e", "--[no-]edit", "Edit related files and versions in diffuse") do |e|
+    commands+=[:edit] if e
   end
   opts.on("-d", "--[no-]downgrade", "Test downgraded related files in git branches") do |d|
     commands+=[:downgrade] if d
@@ -32,8 +16,11 @@ OptionParser.new do |opts|
   opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
     commands+=[:upgrade] if u
   end
-  opts.on("-t", "--[no-]test", "Test. No commit. ") do |u|
-    commands+=[:test] if u
+  opts.on("-t", "--[no-]test", "Test. No commit. ") do |t|
+    commands+=[:test] if t
+  end
+  opts.on("-b", "--[no-]best", "Best. Merge down, no conflicts. ") do |t|
+    commands+=[:test] if t
   end
 end.parse!
 
@@ -59,7 +46,7 @@ argv.each do |f|
 		when :test then editTestGit.test
 		when :upgrade then editTestGit.upgrade
 		when :downgrade then editTestGit.downgrade
-		when :merge_down then editTestGit.merge_down
+		when :best then editTestGit.best
 		end #case
 	end #each
 end #each
