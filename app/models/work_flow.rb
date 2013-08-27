@@ -125,14 +125,15 @@ def tested_files(executable)
 	end #if
 end #tested_files
 def stage(target_branch, executable)
-	if WorkFlow.current_branch_name? ==target_branch then
+	push_branch=WorkFlow.current_branch_name?
+	if push_branch ==target_branch then
 		push_branch=target_branch # no need for stash popping
 	else
-		push_branch=WorkFlow.current_branch_name?
 		Stash_Save.execute.assert_post_conditions
 		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
-		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}\n"
-		message+="WorkFlow.current_branch_name? !=target_branch=#{WorkFlow.current_branch_name? !=target_branch}\n"
+		message="#{push_branch.inspect}!=#{target_branch.inspect}\n"
+		message+="push_branch !=target_branch=#{push_branch !=target_branch}\n"
+		message+="\npush_branch=#{push_branch.inspect}\n"
 		tested_files(executable).each do |p|
 			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
 		end #each
