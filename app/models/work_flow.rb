@@ -15,7 +15,7 @@ attr_reader :related_files, :edit_files
 module ClassMethods
 def current_branch_name?
 	WorkFlow::Repo.head.name.to_sym
-end #current_branch_name
+end #branch
 def revison_tag(branch)
 		return '-r '+branch.to_s
 end #revison_tag

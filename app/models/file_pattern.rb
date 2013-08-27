@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'test/unit'
+require 'pathname'
 class FilePattern <  ActiveSupport::HashWithIndifferentAccess
 module ClassMethods
 def all
@@ -33,12 +34,14 @@ def project_root_dir?(path=$0)
 	ret=case script_directory_name
 	when 'unit' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'integration' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'script' then
 		File.dirname(script_directory_pathname)+'/'
 	when 'models'
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	else
-		fail "can't find test directory"
+		fail "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
 	end #case
 	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
 	return ret
@@ -85,11 +88,16 @@ def path?(model_basename)
 	raise "" if !self[:suffix].instance_of?(String)
 	@@project_root_dir+self[:sub_directory]+model_basename.to_s+self[:suffix]
 end #path
+
+def relative_path?(model_basename)
+	Pathname.new(path?(model_basename)).relative_path_from(Pathname.new(Dir.pwd))
+end #relative_path
 module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns=[
 	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
 	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
+	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
 	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}

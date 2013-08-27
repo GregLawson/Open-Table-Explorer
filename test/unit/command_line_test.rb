@@ -9,8 +9,9 @@ require_relative 'test_environment'
 require 'pp'
 require_relative '../../app/models/command_line.rb'
 class CommandLineTest < TestCase
+include CommandLineScript::Examples
 def test_path_of_command
-	assert_equal('/usr/bin/ruby', path_of_command(ruby))
+	assert_match('/usr/bin/ruby', CommandLine.path_of_command('ruby'))
 end #path_of_command
 def test_initialize
 	path=File.expand_path(__FILE__)
@@ -34,10 +35,6 @@ def test_add_option
   SELF.add_option("upgrade", "Test upgraded related files in git branches")
   SELF.add_option("test", "Test. No commit. ")
 end #add_option
-def test_
-end #
-def test_run
-end #run
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"

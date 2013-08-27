@@ -9,13 +9,6 @@
 require_relative '../../test/unit/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
-class EmptyTest
-end #EmptyTest
-class EmptyDefaultTest < DefaultTestCase1
-end #EmptyDefaultTest
-class EmptyIncludedTest
-include DefaultTests1
-end #EmptyIncludedTest
 require_relative '../../app/models/unbounded_fixnum.rb'
 class RelatedFileTest <  DefaultTestCase2
 #include DefaultTests2 
@@ -31,7 +24,7 @@ def test_initialize
 	te=RelatedFile.new(SELF.model_name?)
 	assert_equal(:RelatedFile, te.model_class_name)
 	assert_equal(:RelatedFile, SELF.model_class_name)
-	assert_equal('naming_convention', SELF.model_basename)
+	assert_equal('related_file', SELF.model_basename)
 	assert_not_empty(SELF.project_root_dir)
 end #initialize
 def test_equals
@@ -95,8 +88,8 @@ def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
 	assert_equal(5, UnboundedFixnumRelatedFile.pathnames?.size)
 	assert_array_of(UnboundedFixnumRelatedFile.pathnames?, String)
-	pathnames=Patterns.map do |p|
-		UnboundedFixnumRelatedFile.pathname_pattern?(p[:name])
+	pathnames=FilePattern::All.map do |p|
+		p.path?(UnboundedFixnumRelatedFile.model_basename)
 	end #
 	assert_equal(UnboundedFixnumRelatedFile.pathnames?, pathnames)
 end #pathnames
@@ -127,44 +120,6 @@ def test_assert_default_test_class_id
 #	assert_default_test_class_id(0,'EmptyDefaultTest')
 #	assert_default_test_class_id(3,'GenericType')
 end #default_test_class_id
-def test_initialize
-	assert_respond_to(UnboundedFixnumRelatedFile, :model_basename)
-	assert_equal('unbounded_fixnum', UnboundedFixnumRelatedFile.model_basename)	
-	assert_equal('unbounded_fixnum', RelatedFile.new(:UnboundedFixnum).model_basename)
-	model_class_name=FilePattern.path2model_name?
-	assert_equal(:RelatedFile, model_class_name)
-	project_root_dir=FilePattern.project_root_dir?
-	te=RelatedFile.new(SELF.model_name?)
-	assert_equal(:RelatedFile, te.model_class_name)
-	assert_equal(:RelatedFile, SELF.model_class_name)
-	assert_equal('related_file', SELF.model_basename)
-	assert_not_empty(SELF.project_root_dir)
-end #initialize
-def test_equals
-	assert(RelatedFile.new==RelatedFile.new)
-end #==
-def test_model_pathname
-	assert(File.exists?(UnboundedFixnumRelatedFile.model_pathname?), UnboundedFixnumRelatedFile.model_pathname?)
-	assert_data_file(UnboundedFixnumRelatedFile.model_pathname?)
-end #model_pathname?
-def test_model_test_pathname
-	assert(File.exists?(UnboundedFixnumRelatedFile.model_test_pathname?))
-	assert_data_file(UnboundedFixnumRelatedFile.model_test_pathname?)
-end #model_test_pathname?
-def test_assertions_pathname
-#	assert(File.exists?(UnboundedFixnumRelatedFile.assertions_pathname?))
-	assert_data_file(UnboundedFixnumRelatedFile.assertions_pathname?)
-end #assertions_pathname?
-def test_assertions_test_pathname
-	assert_not_nil("UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumRelatedFile.inspect)
-	assert_not_nil(UnboundedFixnumRelatedFile.assertions_test_pathname?)
-	assert_not_equal('', "../../test/unit/"+"UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumRelatedFile.inspect)
-	assert(File.exists?(UnboundedFixnumRelatedFile.assertions_test_pathname?), UnboundedFixnumRelatedFile.inspect)
-	assert_data_file(UnboundedFixnumRelatedFile.assertions_test_pathname?)
-end #assertions_test_pathname?
-def test_data_sources_directory
-#	assert_pathname_exists(TE.data_sources_directory?)
-end #data_sources_directory
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
 	assert_equal(5, UnboundedFixnumRelatedFile.pathnames?.size)
@@ -174,72 +129,6 @@ def test_pathnames
 	end #
 	assert_equal(UnboundedFixnumRelatedFile.pathnames?, pathnames)
 end #pathnames
-def test_default_test_class_id
-	assert_path_to_constant(:DefaultTestCase0)
-	assert_path_to_constant(:DefaultTestCase1)
-	assert_path_to_constant(:DefaultTestCase2)
-	assert_path_to_constant(:DefaultTestCase3)
-	assert_path_to_constant(:DefaultTestCase4)
-	assert_path_to_constant(:DefaultTests0)
-	assert_path_to_constant(:DefaultTests1)
-	assert_path_to_constant(:DefaultTests2)
-	assert_path_to_constant(:DefaultTests3)
-	assert_path_to_constant(:DefaultTests4)
-	assert_equal(4, UnboundedFixnumRelatedFile.default_test_class_id?, UnboundedFixnumRelatedFile.inspect)
-	te=RelatedFile.new(model_name?)
-	default_test_class_id=te.default_test_class_id?
-	test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
-	tests=eval("DefaultTests"+default_test_class_id.to_s)
-	assert_equal(2, default_test_class_id, te.inspect)
-	assert_equal(2, RelatedFile.new(te.model_name?).default_test_class_id?, te.inspect)
-#	assert_equal(1, RelatedFile.new('DefaultTestCase').default_test_class_id?)
-end #default_test_class_id
-def test_default_tests_module_name
-end #default_tests_module?
-def test_test_case_class_name
-end #test_case_class?
-def test_model_class
-	assert_equal(RelatedFile, SELF.model_class?)
-end #model_class
-def test_model_name
-	assert_equal(:RelatedFile, SELF.model_name?)
-end #model_name?
 end #RelatedFile
 
-require_relative '../../test/assertions/default_assertions.rb'
-class ClassExists
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
-def self.assert_invariant
-	assert_equal(:ClassExists, self.name.to_sym, caller_lines)
-	assert_instance_of(Class, self)
-end # class_assert_invariant
-end #ClassExists
-
-class ClassExistsTest < DefaultTestCase1
-def test_name_of_test
-	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
-#	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
-end #name_of_test?
-def test_global_class_names
-	constants=Module.constants
-	assert_instance_of(Array, constants)
-	constants.select {|n| eval(n.to_s).instance_of?(Class)}
-	assert_include(global_class_names, self.class.name.to_sym)
-end #global_classes
-def test_case_assert_invariant
-	caller_message=" callers=#{caller.join("\n")}"
-	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
-end #assert_invariant
-def test_assert_class_invariant
-	assert_include(Module.constants, :ClassExists)
-end #test_assert_class_invariant
-def test_TestIntrospection_RelatedFile
-	te=RelatedFile.new(model_name?)
-	default_test_class_id=te.default_test_class_id?
-	default_tests=eval("DefaultTests"+default_test_class_id.to_s)
-	default_test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
-end #test_TestIntrospection_RelatedFile
-include DefaultTests1
-end #ClassExistsTest
 

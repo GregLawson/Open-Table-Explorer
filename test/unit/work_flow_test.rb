@@ -60,7 +60,7 @@ end #tested_files
 def test_stage
 	target_branch=:development
 	assert_not_equal(WorkFlow.current_branch_name?, target_branch) # never on stash
-	target_branch=:compiles
+	target_branch=:master
 	assert_equal(WorkFlow.current_branch_name?, target_branch) # 
 end #stage
 def test_local_assert_post_conditions

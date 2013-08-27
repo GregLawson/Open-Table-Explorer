@@ -12,15 +12,13 @@ require 'test/unit'
 require_relative '../../app/models/shell_command.rb'
 class CommandLine
 module ClassMethods
-def create_from_path(path)
-	ShellCommands.new("file "+path).execute.assert_post_conditions.puts
-	basename=File.basename(path)
-	ShellCommands.new("man "+basename).execute.assert_post_conditions.puts
-end #create_from_path
+def path_of_command(command)
+		whereis=ShellCommands.new("whereis "+command).execute.output
+end #path_of_command
 end #ClassMethods
 extend ClassMethods
-def initialize(name, description=name, help_source='man')
-	@name=name
+def initialize(path, description=nil, help_source=nil)
+	@path=File.expand_path(path)
 	@description=description
 	@help_source=help_source
 	@file_type=	ShellCommands.new("file -b "+@path).execute.output
@@ -58,19 +56,38 @@ module Examples
 include Constants
 end #Examples
 include Examples
+end #CommandLine
+class CommandLineScript < CommandLine
+def add_option(name, description=name, long_option=name, short_option=name[0])
+	option=CommandLineOption.new(name, description, long_option, short_option)
+	@options = (@options.nil? ? [] : @options)+[option]
+end #add_option
+def parse_options
+	@commands = []
+	OptionParser.new do |opts|
+		opts.banner = "Usage: #@basename} --<command> files"
+		@options.each do |option|
+			opts.on(option.short_option, "--[no-]#{option.long_option}", option.description) do |o|
+				@commands+=[option.name] if o
+		  end #on
+	  end #each
+	end.parse!
+end #parse_options
 def run
 	case ARGV.size
 	when 0 then # scite testing defaults command and file
 		puts "work_flow --<command> <file>"
 		this_file=File.expand_path(__FILE__)
 		argv=[this_file] # incestuous default test case for scite
-		commands=[:test]
 	else
 		argv=ARGV
 	end #case
+	if @coomands.size=0 then
+		@commands=[:test]
+	end #if
 	argv.each do |f|
 		command_line=CommandLine.new(f)
-		commands.each do |c|
+		@commands.each do |c|
 			command_line.method(c)
 		end #each
 	end #each
@@ -94,14 +111,9 @@ end #Constants
 include Constants
 module Examples
 include Constants
+SELF=CommandLineScript.new($0)
 end #Examples
 include Examples
-end #CommandLine
-class CommandLineScript < CommandLine
-def add_option(name, description=name, help_source='man')
-	option=CommandLineOption.new(name, description, help_source)
-	@options = (@options.nil? ? [] : @options)+[option]
-end #add_option
 end #CommandLineScript
 class CommandLineOption
 def initialize(name, description=name, long_option=name, short_option=name[0])

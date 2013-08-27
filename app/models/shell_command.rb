@@ -64,13 +64,8 @@ end #close
 def success?
 	@exit_status==0
 end #success
-def puts_string
-	ret='$ '+@command_string
-	ret+="\n"+@output
-	ret+="\n"+@errors
-end #puts_string
 def puts
-	$stdout.puts puts_string
+	$stdout.puts @output,@errors
 	self # return for comand chaining
 end #puts
 module Examples
@@ -88,7 +83,7 @@ def assert_pre_conditions(message='')
 	self # return for comand chaining
 end #assert_pre_conditions
 def assert_post_conditions(message='')
-	message+=puts_string
+	message+="self=#{inspect}"
 	assert_empty(@errors, message)
 	assert_equal(0, @exit_status, message)
 	self # return for comand chaining
