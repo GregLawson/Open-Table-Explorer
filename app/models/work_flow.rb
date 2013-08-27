@@ -40,7 +40,7 @@ def initialize(*argv)
 	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 	message+= "\n @related_files.edit_files=#{@related_files.edit_files.inspect}" 
 	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
-	raise message if  @related_files.edit_files.empty?
+#	raise message if  @related_files.edit_files.empty?
 end #initialize
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
