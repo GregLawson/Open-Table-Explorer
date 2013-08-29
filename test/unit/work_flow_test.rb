@@ -46,6 +46,16 @@ end #test_files
 def test_version_comparison
 	assert_equal('', TestWorkFlow.version_comparison([]))
 end #version_comparison
+def test_functional_parallelism
+	edit_files=TestWorkFlow.related_files.edit_files
+	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
+	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
+	end #functional_parallelism
+def test_tested_files
+	executable=TestWorkFlow.related_files.model_test_pathname?
+	tested_files=TestWorkFlow.tested_files(executable)
+	assert_operator(TestWorkFlow.related_files.default_test_class_id?, :<=, tested_files.size)
+end #tested_files
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions
