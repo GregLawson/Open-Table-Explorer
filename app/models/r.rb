@@ -4,6 +4,7 @@ class RSession
 def initialize
 	@con=Rserve::Connection.new
 	@log=[]
+	eval("library(ggplot2)")
 end #initialize
 def eval(r_code)
 	@log << r_code # Array of all expressions evaluated
@@ -38,7 +39,7 @@ include Test::Unit::Assertions
 extend Test::Unit::Assertions
 module Assertions
 def assert_invariant
-	assert_equal(eval('1+2'))
+	assert_equal(3, eval('1+2'))
 
 end #assert_invariant
 module ClassMethods
@@ -52,8 +53,8 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #RSession
+
 class DataFrames
-	@r=RSession.new
 def initialize(name, session=RSession::Default_Session)
 	@name=name.to_sym
 	@session=session
@@ -72,9 +73,7 @@ end
 def importRelation(tableName=@name)
 # 	pv<-read.csv('/home/greg/energy/rails/energy/production.csv')
 	@session.eval("#{tableName}<-read.csv(\"/tmp/#{tableName}.csv\")")
-#	@r.assign("foo",@r.read_csv("/tmp/#{tableName}.csv"))
-#	puts @r.foo.size
-#	puts @r.read_csv("/tmp/#{tableName}.csv")
+
 end
 def show_plot(x,y)
 	@session.eval("plot(#{r_symbol(x)},#{r_symbol(y)})")
@@ -107,8 +106,15 @@ def glm(model)
 	@session.eval("glm(#model}, data=#{@name}").as_doubles
 end #glm
 module Examples
-Loopback_Filename='/tmp/loopback4.csv'
+Loopback_channel2_filename=File.expand_path('test/data_sources/loopback_channel2.csv')
+Loopback_4_channels_filename=File.expand_path('test/data_sources/loopback_4_channels.csv')
 Loopback=DataFrames.new(:loopback)
+Default_Session.eval("loopback_channel2 <-read.table('#{Loopback_channel2_filename}',sep=',',fill=TRUE)")
+#	Loopback.csv_import([:ain,:aout_value], Loopback_4_channels_filename)
+
+Default_Session.eval('save.image()')
+
+
 end #Examples
 
 
