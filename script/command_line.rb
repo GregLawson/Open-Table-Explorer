@@ -1,7 +1,11 @@
-require 'optparse'
-require 'ostruct'
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'pp'
-require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 commands = []
 OptionParser.new do |opts|
@@ -17,9 +21,6 @@ OptionParser.new do |opts|
     commands+=[:upgrade] if u
   end
   opts.on("-t", "--[no-]test", "Test. No commit. ") do |t|
-    commands+=[:test] if t
-  end
-  opts.on("-b", "--[no-]best", "Best. Merge down, no conflicts. ") do |t|
     commands+=[:test] if t
   end
 end.parse!
@@ -46,7 +47,7 @@ argv.each do |f|
 		when :test then editTestGit.test
 		when :upgrade then editTestGit.upgrade
 		when :downgrade then editTestGit.downgrade
-		when :best then editTestGit.best
+		when :merge_down then editTestGit.merge_down
 		end #case
 	end #each
 end #each
