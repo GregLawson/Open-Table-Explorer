@@ -8,7 +8,7 @@ end #Constants
 include Constants
 # A terminator is a delimiter that is at the end (like new line)
 def Parse.terminator_regexp(delimiter)
-	raise "delimiter must be single characters not #{delimiter}." if delimiter.length!=1
+#	raise "delimiter must be single characters not #{delimiter}." if delimiter.length!=1
 	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
 end #terminator_regexp
 # A delimiter is generally not at the end (like commas)
@@ -61,28 +61,9 @@ def parse_name_values(array, pairs, new_names, pattern)
 		end #if
 	end #map
 end #parse_name_values
-require_relative '../../app/models/parse.rb'
-include Parse
 def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 	parse(@output, row_pattern).map  do |row| 
 		parse(row, column_pattern)
 	end #map
 end #rows_and_columns
-def inspect
-	ret=''
-	if @errors!='' || @exit_status!=0 then
-		ret+="@command_string=#{@command_string.inspect}\n"
-	end #if
-	if @errors!='' then
-		ret+="@errors=#{@errors.inspect}\n"
-	end #if
-	if @exit_status!=0 then
-		ret+="@exit_status=#{@exit_status.inspect}\n"
-		ret+="@pid=#{@pid.inspect}\n"
-	end #if
-	rows_and_columns.each do |row|
-		ret+=row.join(',')+"\n" unless row.nil?
-	end #each
-	ret
-end #inspect
 end #Parse
