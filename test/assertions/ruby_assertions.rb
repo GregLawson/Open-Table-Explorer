@@ -15,6 +15,7 @@ def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
 # returns to ruby 1.8 behavior
+=begin
 def build_message(head, template=nil, *arguments)
 #  head=head+", arguments=#{arguments.inspect}"
   template &&= template.chomp
@@ -23,7 +24,6 @@ def build_message(head, template=nil, *arguments)
   end #each
   caller_lines+head.to_s+template
 end
-=begin
 def assert(test, msg = UNASSIGNED)
   case msg
   when UNASSIGNED
