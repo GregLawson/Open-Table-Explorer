@@ -15,7 +15,6 @@ end #all
 def path2model_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
-	extension=File.extname(path)
 	basename=File.basename(path)
 	matches=all.map do |s| 
 		if s.suffix_match(path) && s.sub_directory_match(path) then
@@ -47,14 +46,14 @@ def project_root_dir?(path=$0)
 	return ret
 end #project_root_dir
 def find_by_name(name)
-	ret=Constants::All.find do |s|
+	Constants::All.find do |s|
 		s[:name]==name
 	end #find
 end #find_by_name
 def pathnames?(model_basename)
 	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
 	raise "model_basename" if model_basename.nil?
-	pathnames=FilePattern::Constants::All.map do |p|
+	FilePattern::Constants::All.map do |p|
 		p.path?(model_basename)
 	end #
 end #pathnames
