@@ -58,7 +58,7 @@ def pathnames?
 #	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
 	raise "project_root_dir" if @project_root_dir.nil?
 	raise "@model_basename" if @model_basename.nil?
-	pathnames=FilePattern::All.map do |p|
+	FilePattern::All.map do |p|
 		p.path?(@model_basename)
 	end #
 end #pathnames
