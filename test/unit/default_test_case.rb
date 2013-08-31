@@ -29,9 +29,6 @@ def test_class_assert_invariant
 	model_class?.assert_invariant
 #	fail "got to end of default test."
 end # class_assert_invariant
-
-def test_case_pre_conditions
-end #test_case_pre_conditions
 end #DefaultTests1
 module DefaultTests2
 include DefaultTests1
