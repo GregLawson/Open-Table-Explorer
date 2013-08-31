@@ -22,6 +22,9 @@ OptionParser.new do |opts|
   opts.on("-b", "--[no-]best", "Best. Merge down, no conflicts. ") do |t|
     commands+=[:test] if t
   end
+  opts.on("-x", "--[no-]emacs", "Emacs unit edit. ") do |t|
+    commands+=[:emacs] if t
+  end
 end.parse!
 
 pp commands
@@ -47,6 +50,7 @@ argv.each do |f|
 		when :upgrade then editTestGit.upgrade
 		when :downgrade then editTestGit.downgrade
 		when :best then editTestGit.best
+		when :emacs then editTestGit.emacs
 		end #case
 	end #each
 end #each
