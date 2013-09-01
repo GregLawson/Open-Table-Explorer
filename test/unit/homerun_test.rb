@@ -20,6 +20,12 @@ def test_Constants
 	Discover.execute
 	assert_operator(0, :<, Discover.output.size, "Discover=#{Discover.inspect}")
 	assert_match(Discover_error|/^hdhomerun device /, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Id_pattern, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Ip_pattern0, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Ip_pattern1, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Ip_pattern2, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Ip_pattern3, Discover.output, "Discover=#{Discover.inspect}")
+	assert_match(Ip_pattern, Discover.output, "Discover=#{Discover.inspect}")
 	assert_match(Discover_error|Discover_parse, Discover.output, "Discover=#{Discover.inspect}")
 end #Constants
 
