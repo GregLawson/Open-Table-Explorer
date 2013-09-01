@@ -46,6 +46,6 @@ def test_inspect
 	assert_equal("1 2;3 4\n", EXAMPLE.inspect)
 end #inspect
 def test_assert_post_conditions
-	message=''
+	Hello_world.assert_post_conditions
 end #assert_post_conditions
 end #ShellCommands
