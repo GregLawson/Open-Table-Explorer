@@ -31,15 +31,31 @@ def regexp_error(regexp_string, options=Default_options)
 rescue RegexpError => exception
 	return exception
 end #regexp_error
+# A terminator is a delimiter that is at the end (like new line)
+def terminator_regexp(delimiter)
+#	raise "delimiter must be single characters not #{delimiter}." if delimiter.length!=1
+	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
+end #terminator_regexp
+# A delimiter is generally not at the end (like commas)
+def delimiter_regexp(delimiter)
+	raise "delimiters must be single characters not #{delimiter.inspect}." if delimiter.length!=1
+	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
+end #delimiter_regexp
 end #ClassMethods
 extend ClassMethods
 def unescaped_string
 	"#{source}"
 end #unescape
 def *(other)
-	return Regexp.new(self.source+Regexp.promote(other).source)
+	case other
+	when Regexp then return Regexp.new(self.source + other.source)
+	when String then return Regexp.new(self.source + other)
+	when Fixnum then return Regexp.new(self.source*other)
+	else
+		raise "other.class=#{other.class.inspect}"
+	end #case
 end #sequence
-def |(other)
+def |(other) # |
 	return Regexp.union(self.source, Regexp.promote(other).source)
 end #alterative
 def capture(key=nil)

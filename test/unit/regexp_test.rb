@@ -30,6 +30,8 @@ def test_sequence
   assert_equal('/\\n/', /\n/.inspect)
   assert_equal(/a/, Regexp.new(/a/.source))
   assert_equal('a', Regexp.promote(/a/).source)
+  assert_equal('a', Regexp.promote(/a/).source)
+  assert_equal(/a{3}/, /a/*"{3}")
 end #sequence
 def test_alterative
   assert_equal(/a|b/, /a/ | /b/)
