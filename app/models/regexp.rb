@@ -37,11 +37,21 @@ def unescaped_string
 	"#{source}"
 end #unescape
 def *(other)
-	return Regexp.new(self.to_s+Regexp.promote(other).to_s)
-end #*
+	return Regexp.new(self.source+Regexp.promote(other).source)
+end #sequence
 def |(other)
-	return Regexp.union(self, Regexp.promote(other))
-end #|
+	return Regexp.union(self.source, Regexp.promote(other).source)
+end #alterative
+def capture(key=nil)
+	if key.nil? then
+		/(#{self.source})/
+	else
+		/(?<#{key.to_s}>#{self.source})/
+	end #if
+end #capture
+def group
+	/(?:#{self.source})/
+end #group
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
