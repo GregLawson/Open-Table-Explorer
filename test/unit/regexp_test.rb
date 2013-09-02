@@ -10,10 +10,11 @@ require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
 include Regexp::Examples
 def test_unescaped_string
-#	assert_equal(, )
 	escape_string='\d'
 	assert_equal(/#{escape_string}/, Regexp.new(escape_string))
 	assert_equal(escape_string, Regexp.new(escape_string).source)
+	assert_equal(escape_string, Regexp.new(escape_string).unescaped_string)
+
 	assert_match(Ip_number_pattern, '123')
 
 	assert_equal(escape_string, Regexp.new(escape_string).unescaped_string)
