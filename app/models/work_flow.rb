@@ -64,7 +64,7 @@ def deserving_branch?(executable=related_files.model_test_pathname?)
 	elsif test.exit_status==1 then # 1 error or syntax error
 		:development
 	else
-		:compiles
+		:testing
 	end #if
 end #
 def test(executable=related_files.model_test_pathname?)
@@ -162,7 +162,7 @@ def test_and_commit(executable)
 	elsif test.exit_status==1 then # 1 error or syntax error
 		commit_to_branch(:development, executable)
 	else
-		commit_to_branch(:compiles, executable)
+		commit_to_branch(:testing, executable)
 	end #if
 end #test
 require_relative '../../test/assertions/default_assertions.rb'
@@ -193,7 +193,7 @@ CompilesSupersetOfMaster=ShellCommands.new("git log compiles..master", :delay_ex
 DevelopmentSupersetofCompiles=ShellCommands.new("git log development..compiles", :delay_execution)
 Root_directory=FilePattern.project_root_dir?
 Repo= Grit::Repo.new(Root_directory)
-Branch_enhancement=[:master, :compiles, :development]
+Branch_enhancement=[:master, :testing, :development]
 end #Constants
 include Constants
 module Examples

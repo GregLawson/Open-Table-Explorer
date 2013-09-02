@@ -14,7 +14,7 @@ def test_unescaped_string
 	assert_equal(/#{escape_string}/, Regexp.new(escape_string))
 	assert_equal(escape_string, Regexp.new(escape_string).source)
 	assert_equal(escape_string, Regexp.new(escape_string).unescaped_string)
-	assert_equal("\n", /\n/.unescaped_string)
+	assert_equal('\\n', /\n/.source)
 	assert_match(Ip_number_pattern, '123')
 
 	assert_equal(escape_string, Regexp.new(escape_string).unescaped_string)
@@ -29,12 +29,6 @@ def test_sequence
   assert_equal('(?-mix:\\n)', /\n/.to_s)
   assert_equal('/\\n/', /\n/.inspect)
   assert_equal(/a/, Regexp.new(/a/.source))
-  assert_equal(/a/, Regexp.new(/a/.to_s))
-  assert_equal(/a/, Regexp.promote(/a/).to_s)
-  assert_equal(/a/, /a/*"{3}")
-  assert_equal(/a/, Regexp.new(/a/.to_s))
-  assert_equal(ans, parse(lines, nonterminator*next_line*"{3}"))
-  assert_equal(ans, parse(lines, nonterminator*next_line*"*"))
 end #sequence
 def test_alterative
   assert_equal(/a|b/, /a/ | /b/)
