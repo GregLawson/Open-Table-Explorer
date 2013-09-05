@@ -8,7 +8,32 @@
 require_relative 'test_environment'
 require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
+include DefaultTests
+extend DefaultTests2
+#puts Regexp.methods(false)
+include Test::Unit::Assertions
+DefaultTests2.assert_environment
 include Regexp::Examples
+def test_promote
+end #promote
+def test_regexp_rescued
+end #regexp_rescued
+def test_regexp_error
+end #regexp_error
+def test_terminator_regexp
+	assert_equal(['1', '2', '3'], parse("1\n2\n3\n", LINES), "")
+	assert_equal(LINES, Regexp.terminator_regexp('\n'))
+end #terminator_regexp
+def test_delimiter_regexp
+	assert_equal(['1', '2'], parse("1,2", Regexp.delimiter_regexp(",")))
+	assert_equal(['2', '3'], parse("2,3", Regexp.delimiter_regexp(",")))
+	assert_equal(['2', ''], parse("2,", Regexp.delimiter_regexp(",")))
+	assert_equal(WORDS, Regexp.delimiter_regexp("\s"))
+	assert_equal(['2'], parse("2", Regexp::CSV), "matchData=#{CSV.match('2').inspect}")
+	assert_equal(['2'], parse("2", Regexp.delimiter_regexp(",")))
+	assert_equal(['1', '2', '3'], parse("1 2 3", Regexp.delimiter_regexp('\s')))
+	assert_equal(CSV, Regexp.delimiter_regexp(","))
+end #delimiter_regexp
 def test_unescaped_string
 	escape_string='\d'
 	assert_equal(/#{escape_string}/, Regexp.new(escape_string))
@@ -29,6 +54,9 @@ def test_sequence
   assert_equal('(?-mix:\\n)', /\n/.to_s)
   assert_equal('/\\n/', /\n/.inspect)
   assert_equal(/a/, Regexp.new(/a/.source))
+  assert_equal('a', Regexp.promote(/a/).source)
+  assert_equal('a', Regexp.promote(/a/).source)
+  assert_equal(/a{3}/, /a/*"{3}")
 end #sequence
 def test_alterative
   assert_equal(/a|b/, /a/ | /b/)
