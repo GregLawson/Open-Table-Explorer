@@ -74,6 +74,8 @@ module ClassMethods
 include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
+def assert_pre_conditions
+end #assert_pre_conditions
 end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
@@ -81,16 +83,21 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 end #Constants
 include Constants
 module Examples
 include Constants
-Ip_number_pattern=/\d{1,3}/
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
+Line_terminator=/\n/
+Line_pattern=/([^\n]*)/
+LINES=/([^\n]*)(?:\n([^\n]*))*/
+WORDS=/([^\s]*)(?:\s([^\s]*))*/
+Ip_number_pattern=/\d{1,3}/
 end #Examples
 include Examples
 end #Regexp

@@ -8,7 +8,21 @@
 require_relative 'test_environment'
 require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
+include DefaultTests
+extend DefaultTests2
+#puts Regexp.methods(false)
+include Test::Unit::Assertions
 include Regexp::Examples
+def test_promote
+end #promote
+def test_regexp_rescued
+end #regexp_rescued
+def test_regexp_error
+end #regexp_error
+def test_terminator_regexp
+end #terminator_regexp
+def test_delimiter_regexp
+end #delimiter_regexp
 def test_unescaped_string
 	escape_string='\d'
 	assert_equal(/#{escape_string}/, Regexp.new(escape_string))
