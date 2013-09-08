@@ -7,14 +7,12 @@
 ###########################################################################
 require_relative 'test_environment'
 class RebuildTest < TestCase
-Temporary='~/Desktop/git/'
-Source='/media/greg/SD_USB_32G/Repository Backups/'
-require "#{Source}clone-reconstruct/app/models/shell_command.rb"
-ShellCommands.new("copy -a #{Source}development_old #{Temporary}recover").assert_post_conditions #uncorrupted old backup to start
-#subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
-#puts "cd_command=#{cd_command.inspect}"
+require_relative "../../app/models/rebuild.rb"
+def setup
+	ShellCommands.new("copy -a #{Source}development_old #{Temporary}recover").assert_post_conditions #uncorrupted old backup to start
+end #setup
+
 #exists ShellCommands.new("git branch details").assert_post_conditions
-ShellCommands.new("git reset 8db16b5cfaa0adacfd157c8ffba727c26117179d").assert_post_conditions
 #exists ShellCommands.new("git branch summary").assert_post_conditions
 
 

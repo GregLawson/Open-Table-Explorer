@@ -9,7 +9,7 @@ class Minimal
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-require "shell_command.rb"
+require_relative "shell_command.rb"
 #subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
 #puts "cd_command=#{cd_command.inspect}"
 def fetch_commits(name, commit, repository_file)
@@ -19,9 +19,6 @@ def initialize_branch(name, commit, repository_file)
 	ShellCommands.new("git fetch file://"+repository+" "+name)
 	ShellCommands.new("git symbolic-link #{name.to_s} "+commit.to_s).assert_post_conditions
 end #initialize_branch
-#exists ShellCommands.new("git branch details").assert_post_conditions
-ShellCommands.new("git reset 8db16b5cfaa0adacfd157c8ffba727c26117179d").assert_post_conditions
-#exists ShellCommands.new("git branch summary").assert_post_conditions
 
 def add_commits(from_repository, last_commit_to_add, branch, history_options='--squash -Xthiers ')
 	ShellCommands.new("git fetch file://"+repository+" "+name)
@@ -47,6 +44,8 @@ end #Constants
 include Constants
 module Examples
 include Constants
+Temporary='~/Desktop/git/'
+Source='/media/greg/SD_USB_32G/Repository Backups/'
 end #Examples
 include Examples
 end #Minimal
