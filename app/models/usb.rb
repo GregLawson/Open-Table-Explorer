@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'usb'
-class UsbBbus
+class UsbBus
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
