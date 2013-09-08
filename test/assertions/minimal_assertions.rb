@@ -7,15 +7,22 @@
 ###########################################################################
 require_relative '../../test/assertions/ruby_assertions.rb'
 class Minimal
-require_relative '../assertions/default_assertions.rb'
 module Assertions
+include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
+def assert_post_conditions
+end #assert_post_conditions
 end #ClassMethods
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
+#include DefaultAssertions
+#extend DefaultAssertions::ClassMethods
 module Examples
 	Constant=1
 end #Examples

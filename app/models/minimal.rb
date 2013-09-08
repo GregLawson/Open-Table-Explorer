@@ -9,8 +9,8 @@ class Minimal
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
+#include DefaultAssertions
+#extend DefaultAssertions::ClassMethods
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods

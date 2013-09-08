@@ -7,4 +7,4 @@
 ###########################################################################
 require_relative 'test_environment'
 class MinimalTest < TestCase
-end #MinimalTest
+end #Minimal
