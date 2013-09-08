@@ -5,14 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'optparse'
-require 'ostruct'
-require 'pp'
-require_relative '../app/models/command_line.rb'
-Temporary='~/Desktop/git/'
-Source='/media/greg/SD_USB_32G/Repository Backups/'
-require "#{Source}clone-reconstruct/app/models/shell_command.rb"
-ShellCommands.new("copy -a #{Source}development_old #{Temporary}recover").assert_post_conditions #uncorrupted old backup to start
+class Minimal
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
+require "shell_command.rb"
 #subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
 #puts "cd_command=#{cd_command.inspect}"
 def fetch_commits(name, commit, repository_file)
@@ -31,18 +28,27 @@ def add_commits(from_repository, last_commit_to_add, branch, history_options='--
 	ShellCommands.new("git checkout  #{branch}").assert_post_conditions
 	ShellCommands.new("git merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
+module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+def assert_post_conditions
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
+end #Assertions
+include Assertions
+#TestWorkFlow.assert_pre_conditions
+module Constants
+end #Constants
+include Constants
+module Examples
+include Constants
+end #Examples
+include Examples
+end #Minimal
 
-#add_commits("postgres", :postgres, Temporary+"details")
-#add_commits("activeRecord", :activeRecord, Temporary+"details")
-#add_commits("rails2", :rails2, Temporary+"details")
-#add_commits("rails3", :rails3, Temporary+"details")
-#add_commits("", :default, Source+"details")
-#add_commits("taxesFreeeze", :taxesFreeeze, Source+"copy-master")
-#add_commits("", :taxesStopped, Source+"copy-master")
-#add_commits("development", :development, Source+"copy-master")
-#add_commits("compiles", :compiles, Source+"copy-master")
-#add_commits("master", :master, Source+"copy-master")
-#add_commits("usb", :usb, Source+"clone-reconstruct-newer ")
 
-
-#ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
