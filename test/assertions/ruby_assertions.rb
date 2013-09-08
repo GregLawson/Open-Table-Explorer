@@ -150,7 +150,7 @@ def assert_not_empty(object,message='')
 	assert_not_nil(object,message)
 	assert_block(message){!object.empty?}
 end #assert_not_empty
-def assert_empty(object,message=nil)
+def assert_empty(object,message='')
 	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
 	if !object.nil?  then # nil is empty
 		assert_block(message){object.empty? || object==Set[nil]}
@@ -376,7 +376,7 @@ def assert_pathname_exists(pathname)
 end #assert_pathname_exists
 def assert_data_file(pathname)
 	assert_pathname_exists(pathname)
-	assert(File.file?(pathname), "File.file?(pathname)=#{File.file?(pathname).inspect}")
+	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it aa directory?")
 	assert_not_nil(File.size?(pathname))
 	assert_not_equal(0, File.size?(pathname))
 end #assert_data_file

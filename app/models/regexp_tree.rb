@@ -15,6 +15,25 @@ class RegexpTree < NestedArray
 include Comparable
 #raise "" unless self.constants.include?('Default_options')
 # Parse regexp_string into parse tree for editing
+module ClassMethods
+def promote(node)
+	if node.kind_of?(RegexpTree) then #nested Arrays
+		node
+	elsif node.kind_of?(Array) then #nested Arrays
+		RegexpTree.new(node)
+		
+	elsif node.instance_of?(String) then 
+		RegexpTree.new(RegexpParse.new(node).to_a)
+	elsif node.instance_of?(RegexpParse) then 
+		RegexpTree.new(node.to_a)
+	elsif node.instance_of?(Regexp) then 
+		RegexpTree.new(RegexpParse.new(node.source).to_a)
+	else
+		raise "unexpected node=#{node.inspect}"
+	end #if
+end #promote
+end #ClassMethods
+extend ClassMethods
 def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=RegexpParse::Default_options)
 	if regexp.kind_of?(Array) then #nested Arrays
 		super(regexp)
@@ -33,22 +52,6 @@ def initialize(regexp=[], probability_space_regexp='[[:print:]]+', options=Regex
 	@errors=[RegexpParse.regexp_error(regexp.to_s, options)]
 #	@anchor=Anchoring.new(self) infinite recursion
 end #initialize
-def RegexpTree.promote(node)
-	if node.kind_of?(RegexpTree) then #nested Arrays
-		node
-	elsif node.kind_of?(Array) then #nested Arrays
-		RegexpTree.new(node)
-		
-	elsif node.instance_of?(String) then 
-		RegexpTree.new(RegexpParse.new(node).to_a)
-	elsif node.instance_of?(RegexpParse) then 
-		RegexpTree.new(node.to_a)
-	elsif node.instance_of?(Regexp) then 
-		RegexpTree.new(RegexpParse.new(node.source).to_a)
-	else
-		raise "unexpected node=#{node.inspect}"
-	end #if
-end #RegexpTree.promote
 def self.canonical_regexp(regexp)
 	if regexp.instance_of?(String) then
 		regexp=RegexpParse.regexp_rescued(regexp)
