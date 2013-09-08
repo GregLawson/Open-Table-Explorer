@@ -6,7 +6,12 @@
 #
 ###########################################################################
 require 'open3'
+require 'shellwords.rb'
 class ShellCommands
+module ClassMethods
+include Shellwords
+end #ClassMethods
+extend ClassMethods
 attr_reader :command_string, :output, :errors, :exit_status, :pid
 # execute same command again (also called by new.
 def execute
