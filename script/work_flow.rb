@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require 'optparse'
 require 'ostruct'
 require 'pp'
