@@ -5,13 +5,33 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class Minimal
+class Rebuild
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
 #subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
 #puts "cd_command=#{cd_command.inspect}"
+def initialize(url)
+	@url=url
+	@path=url
+	source_path=Source+'development_old'
+	temporary_path=Temporary+'recover'
+	if File.exists?(@path) then
+		command_string='rsync "'+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+	else
+		command_string='cp -a "'+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+	end #if
+end #initialize
+def git_command(git_subcommand)
+	ret=ShellCommands.new("cd #{@path}; git "+git_subcommand).assert_post_conditions
+	if $VERBOSE && git_subcommand != 'status' then
+		ShellCommands.new("cd #{@path}; git status").inspect
+	end #if
+	ret
+end #git_command
 def fetch_commits(name, commit, repository_file)
 	ShellCommands.new("git fetch file://"+repository+" "+name)
 end #fetch_commits
@@ -48,6 +68,6 @@ Temporary='~/Desktop/git/'
 Source='/media/greg/SD_USB_32G/Repository Backups/'
 end #Examples
 include Examples
-end #Minimal
+end #Rebuild
 
 

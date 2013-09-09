@@ -6,12 +6,21 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-class RebuildTest < TestCase
 require_relative "../../app/models/rebuild.rb"
+class RebuildTest < TestCase
+include Rebuild::Examples
+#puts "cd_command=#{cd_command.inspect}"
 def setup
-	ShellCommands.new("copy -a #{Source}development_old #{Temporary}recover").assert_post_conditions #uncorrupted old backup to start
 end #setup
-
+def test_corruption_fsck
+	ShellCommands.new("git fsck").assert_post_conditions
+end #corruption
+def test_corruption_rebase
+	ShellCommands.new("git rebase").assert_post_conditions
+end #corruption
+def test_corruption_gc
+	ShellCommands.new("git gc").assert_post_conditions
+end #corruption
 #exists ShellCommands.new("git branch details").assert_post_conditions
 #exists ShellCommands.new("git branch summary").assert_post_conditions
 
