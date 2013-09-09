@@ -6,6 +6,9 @@
 #
 ###########################################################################
 class Rebuild
+module Constants
+Temporary='/mnt/working/Recover'
+end #Constants
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
