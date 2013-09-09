@@ -36,17 +36,17 @@ def git_command(git_subcommand)
 	ret
 end #git_command
 def fetch_commits(name, commit, repository_file)
-	ShellCommands.new("git fetch file://"+repository+" "+name)
+	Development_old.git_command("fetch file://"+repository+" "+name)
 end #fetch_commits
 def initialize_branch(name, commit, repository_file)
-	ShellCommands.new("git fetch file://"+repository+" "+name)
-	ShellCommands.new("git symbolic-link #{name.to_s} "+commit.to_s).assert_post_conditions
+	Development_old.git_command("fetch file://"+repository+" "+name)
+	Development_old.git_command("symbolic-link #{name.to_s} "+commit.to_s).assert_post_conditions
 end #initialize_branch
 
 def add_commits(from_repository, last_commit_to_add, branch, history_options='--squash -Xthiers ')
-	ShellCommands.new("git fetch file://"+repository+" "+name)
-	ShellCommands.new("git checkout  #{branch}").assert_post_conditions
-	ShellCommands.new("git merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
+	Development_old.git_command("fetch file://"+repository+" "+name)
+	Development_old.git_command("checkout  #{branch}").assert_post_conditions
+	Development_old.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
 module Assertions
 include Test::Unit::Assertions

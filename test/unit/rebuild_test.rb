@@ -10,19 +10,17 @@ require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include Rebuild::Examples
 #puts "cd_command=#{cd_command.inspect}"
-def setup
-end #setup
 def test_corruption_fsck
-#	ShellCommands.new("git fsck").assert_post_conditions
+#	Development_old.git_command("fsck").assert_post_conditions
 end #corruption
 def test_corruption_rebase
-#	ShellCommands.new("git rebase").assert_post_conditions
+#	Development_old.git_command("rebase").assert_post_conditions
 end #corruption
 def test_corruption_gc
-#	ShellCommands.new("git gc").assert_post_conditions
+#	Development_old.git_command("gc").assert_post_conditions
 end #corruption
-#exists ShellCommands.new("git branch details").assert_post_conditions
-#exists ShellCommands.new("git branch summary").assert_post_conditions
+#exists Development_old.git_command("branch details").assert_post_conditions
+#exists Development_old.git_command("branch summary").assert_post_conditions
 
 
 #add_commits("postgres", :postgres, Temporary+"details")
