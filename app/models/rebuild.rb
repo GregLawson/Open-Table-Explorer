@@ -62,13 +62,11 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
-module Constants
-end #Constants
 include Constants
 module Examples
 include Constants
-Temporary='/mnt/working/Recover'
 Source='/media/greg/SD_USB_32G/Repository Backups/'
+Development_old=Rebuild.new(Source+'development_old')
 end #Examples
 include Examples
 end #Rebuild
