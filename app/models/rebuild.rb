@@ -29,9 +29,9 @@ def initialize(url)
 	end #if
 end #initialize
 def git_command(git_subcommand)
-	ret=ShellCommands.new("cd #{@path}; git "+git_subcommand).assert_post_conditions
+	ret=ShellCommands.new("cd #{Shellwords.escape(@path)}; git "+git_subcommand).assert_post_conditions
 	if $VERBOSE && git_subcommand != 'status' then
-		ShellCommands.new("cd #{@path}; git status").inspect
+		ShellCommands.new("cd #{Shellwords.escape(@path)}; git status").inspect
 	end #if
 	ret
 end #git_command
