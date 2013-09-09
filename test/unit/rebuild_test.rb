@@ -13,13 +13,13 @@ include Rebuild::Examples
 def setup
 end #setup
 def test_corruption_fsck
-	ShellCommands.new("git fsck").assert_post_conditions
+#	ShellCommands.new("git fsck").assert_post_conditions
 end #corruption
 def test_corruption_rebase
-	ShellCommands.new("git rebase").assert_post_conditions
+#	ShellCommands.new("git rebase").assert_post_conditions
 end #corruption
 def test_corruption_gc
-	ShellCommands.new("git gc").assert_post_conditions
+#	ShellCommands.new("git gc").assert_post_conditions
 end #corruption
 #exists ShellCommands.new("git branch details").assert_post_conditions
 #exists ShellCommands.new("git branch summary").assert_post_conditions
@@ -39,4 +39,9 @@ end #corruption
 
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
+def test_Constants
+  path=Source+'development_old'
+  assert(File.exists?(path))
+  development_old=Rebuild.new(path)
+end #Examples
 end #Rebuild

@@ -15,13 +15,13 @@ require_relative "shell_command.rb"
 def initialize(url)
 	@url=url
 	@path=url
-	source_path=Source+'development_old'
+	source_path=@path
 	temporary_path=Temporary+'recover'
 	if File.exists?(@path) then
-		command_string='rsync "'+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		command_string='rsync '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 	else
-		command_string='cp -a "'+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 	end #if
 end #initialize
@@ -64,7 +64,7 @@ end #Constants
 include Constants
 module Examples
 include Constants
-Temporary='~/Desktop/git/'
+Temporary='/mnt/working/Recover'
 Source='/media/greg/SD_USB_32G/Repository Backups/'
 end #Examples
 include Examples
