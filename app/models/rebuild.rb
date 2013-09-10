@@ -29,30 +29,30 @@ def initialize(url)
 	end #if
 end #initialize
 def git_command(git_subcommand)
-	ret=ShellCommands.new("cd #{Shellwords.escape(@path)}; git "+git_subcommand).assert_post_conditions
+	ret=ShellCommands.new("cd #{Shellwords.escape(@path)}; git "+git_subcommand)
 	if $VERBOSE && git_subcommand != 'status' then
 		ShellCommands.new("cd #{Shellwords.escape(@path)}; git status").inspect
 	end #if
 	ret
 end #git_command
 def standardize_position
-	Development_old.git_command("stash save").assert_post_conditions
-	Development_old.git_command("rebase --abort").assert_post_conditions
-	Development_old.git_command("merge --abort").assert_post_conditions
-	Development_old.git_command("checkout master").assert_post_conditions
+	git_command("rebase --abort")
+	git_command("merge --abort")
+	git_command("stash save").assert_post_conditions
+	git_command("checkout master")
 end #standardize_position
 def fetch_commits(name, commit, repository_file)
-	Development_old.git_command("fetch file://"+repository+" "+name)
+	Clean_Example.git_command("fetch file://"+repository+" "+name)
 end #fetch_commits
 def initialize_branch(name, commit, repository_file)
-	Development_old.git_command("fetch file://"+repository+" "+name)
-	Development_old.git_command("symbolic-link #{name.to_s} "+commit.to_s).assert_post_conditions
+	Clean_Example.git_command("fetch file://"+repository+" "+name)
+	Clean_Example.git_command("symbolic-link #{name.to_s} "+commit.to_s).assert_post_conditions
 end #initialize_branch
 
 def add_commits(from_repository, last_commit_to_add, branch, history_options='--squash -Xthiers ')
-	Development_old.git_command("fetch file://"+repository+" "+name)
-	Development_old.git_command("checkout  #{branch}").assert_post_conditions
-	Development_old.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
+	Clean_Example.git_command("fetch file://"+repository+" "+name)
+	Clean_Example.git_command("checkout  #{branch}").assert_post_conditions
+	Clean_Example.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
 module Assertions
 include Test::Unit::Assertions
@@ -72,7 +72,6 @@ include Constants
 module Examples
 include Constants
 Source='/media/greg/SD_USB_32G/Repository Backups/'
-Development_old=Rebuild.new(Source+'development_old')
 end #Examples
 include Examples
 end #Rebuild

@@ -9,18 +9,26 @@ require_relative 'test_environment'
 require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include Rebuild::Examples
+Clean_Example=Rebuild.new(Source+'test_recover')
 #puts "cd_command=#{cd_command.inspect}"
 def test_corruption_fsck
-	Development_old.git_command("fsck").assert_post_conditions
+	Clean_Example.git_command("fsck").assert_post_conditions
 end #corruption
 def test_corruption_rebase
-#	Development_old.git_command("rebase").assert_post_conditions
+#	Clean_Example.git_command("rebase").assert_post_conditions
 end #corruption
 def test_corruption_gc
-	Development_old.git_command("gc").assert_post_conditions
+	Clean_Example.git_command("gc").assert_post_conditions
 end #corruption
-#exists Development_old.git_command("branch details").assert_post_conditions
-#exists Development_old.git_command("branch summary").assert_post_conditions
+#exists Clean_Example.git_command("branch details").assert_post_conditions
+#exists Clean_Example.git_command("branch summary").assert_post_conditions
+def test_standardize_position
+	Clean_Example.git_command("rebase --abort").puts
+	Clean_Example.git_command("merge --abort").puts
+	Clean_Example.git_command("stash save").assert_post_conditions
+	Clean_Example.git_command("checkout master").puts
+	Clean_Example.standardize_position
+end #standardize_position
 
 
 #add_commits("postgres", :postgres, Temporary+"details")
@@ -38,8 +46,8 @@ end #corruption
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_Constants
-  path=Source+'development_old'
-  assert(File.exists?(path))
-  development_old=Rebuild.new(path)
+  path=Source+'test_recover'
+  assert_pathname_exists(path)
+#  development_old=Rebuild.new(path)
 end #Examples
 end #Rebuild
