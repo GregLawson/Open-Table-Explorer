@@ -35,6 +35,12 @@ def git_command(git_subcommand)
 	end #if
 	ret
 end #git_command
+def standardize_position
+	Development_old.git_command("stash save").assert_post_conditions
+	Development_old.git_command("rebase --abort").assert_post_conditions
+	Development_old.git_command("merge --abort").assert_post_conditions
+	Development_old.git_command("checkout master").assert_post_conditions
+end #standardize_position
 def fetch_commits(name, commit, repository_file)
 	Development_old.git_command("fetch file://"+repository+" "+name)
 end #fetch_commits
