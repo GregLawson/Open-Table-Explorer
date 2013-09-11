@@ -12,6 +12,7 @@ module Constants
 	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
 	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
 	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
+	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
 	]
