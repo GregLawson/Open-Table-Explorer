@@ -27,6 +27,7 @@ def initialize(url)
 		command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 	end #if
+	standardize_position
 end #initialize
 def git_command(git_subcommand)
 	ret=ShellCommands.new("cd #{Shellwords.escape(@path)}; git "+git_subcommand)

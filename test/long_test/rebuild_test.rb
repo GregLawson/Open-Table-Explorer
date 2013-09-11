@@ -9,7 +9,7 @@ require_relative '../unit/test_environment'
 require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include Rebuild::Examples
-Clean_Example=Rebuild.new(Source+'test_recover')
+Clean_Example=Rebuild.new(Source+'development_old')
 #puts "cd_command=#{cd_command.inspect}"
 def test_corruption_fsck
 	Clean_Example.git_command("fsck").assert_post_conditions
@@ -46,8 +46,8 @@ end #standardize_position
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_Constants
-  path=Source+'test_recover'
-  assert_pathname_exists(path)
-#  development_old=Rebuild.new(path)
+  path=Source+'development_old'
+  assert(File.exists?(path))
+  development_old=Rebuild.new(path)
 end #Examples
 end #Rebuild
