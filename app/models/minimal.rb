@@ -27,7 +27,7 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
-#TestWorkFlow.assert_pre_conditions
+#self.assert_pre_conditions
 module Examples
 include Constants
 end #Examples
