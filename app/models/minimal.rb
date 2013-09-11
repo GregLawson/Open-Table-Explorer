@@ -6,6 +6,9 @@
 #
 ###########################################################################
 class Minimal
+module Constants
+end #Constants
+include Constants
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
@@ -25,9 +28,6 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
-module Constants
-end #Constants
-include Constants
 module Examples
 include Constants
 end #Examples
