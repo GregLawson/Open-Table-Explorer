@@ -89,7 +89,7 @@ def test_find_by_name
 end #find_by_name
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
-	assert_equal(5, FilePattern.pathnames?('test').size)
+	assert_equal(All.size, FilePattern.pathnames?('test').size)
 	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
 def test_initialize
