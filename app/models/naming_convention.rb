@@ -48,6 +48,8 @@ def project_root_dir?(path=$0)
 	script_directory_pathname=File.dirname(path)+'/'
 	script_directory_name=File.basename(script_directory_pathname)
 	ret=case script_directory_name
+	when 'long_test' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'unit' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'script' then
