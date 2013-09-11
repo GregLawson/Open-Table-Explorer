@@ -14,6 +14,7 @@ Patterns=[
 	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
 	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
 	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
+	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/'}, 
 	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
@@ -175,7 +176,7 @@ def assert_naming_convention_match(path)
 	assert(self.sub_directory_match(path), message+caller_lines)
 	message="self=#{self.inspect}, path=#{path.inspect}"
 end #naming_convention_match
-end #Axx`	sertions
+end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #FilePattern
