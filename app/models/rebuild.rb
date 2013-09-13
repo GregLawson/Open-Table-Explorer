@@ -5,7 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class Rebuild
+require_relative "../../app/models/repository.rb"
+class Rebuild < Repository
 module Constants
 Temporary='/mnt/working/Recover'
 end #Constants
