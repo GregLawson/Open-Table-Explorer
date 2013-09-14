@@ -1,4 +1,11 @@
-require_relative 'test_environment.rb'
+###########################################################################
+#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+require_relative '../unit/test_environment'
 require_relative '../../app/models/work_flow.rb'
 
 class WorkFlowTest < TestCase
@@ -6,25 +13,20 @@ include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
-def test_current_branch_name?
-	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
-	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
-
-end #current_branch_name
 def test_revison_tag
 	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
 end #revison_tag
 def test_goldilocks
-	current_index=WorkFlow::Branch_enhancement.index(WorkFlow.current_branch_name?.to_sym)
+	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
 	last_slot_index=WorkFlow::Branch_enhancement.size-1
 	right_index=[current_index, last_slot_index].min
 	left_index=right_index-1 
 	relative_filename=	Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
 	assert_data_file(relative_filename)
 	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
-	assert_match(/ -t /, WorkFlow.goldilocks(TestFile))
-	assert_match(/#{relative_filename}/, WorkFlow.goldilocks(TestFile))
-	assert_match(/#{WorkFlow.current_branch_name?}/, WorkFlow.goldilocks(TestFile))
+	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
+	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
+	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
 end #goldilocks
 include WorkFlow::Examples
 def test_initialize
@@ -59,9 +61,7 @@ def test_tested_files
 end #tested_files
 def test_stage
 	target_branch=:development
-	assert_not_equal(WorkFlow.current_branch_name?, target_branch) # never on stash
 	target_branch=:master
-	assert_equal(WorkFlow.current_branch_name?, target_branch) # 
 end #stage
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
