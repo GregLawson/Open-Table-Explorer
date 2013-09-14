@@ -8,7 +8,6 @@
 require 'optparse'
 require 'ostruct'
 require 'pp'
-require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 commands = []
 OptionParser.new do |opts|
@@ -25,12 +24,6 @@ OptionParser.new do |opts|
   end
   opts.on("-t", "--[no-]test", "Test. No commit. ") do |t|
     commands+=[:test] if t
-  end
-  opts.on("-b", "--[no-]best", "Best. Merge down, no conflicts. ") do |t|
-    commands+=[:test] if t
-  end
-  opts.on("-x", "--[no-]emacs", "Emacs unit edit. ") do |t|
-    commands+=[:emacs] if t
   end
 end.parse!
 
@@ -56,8 +49,7 @@ argv.each do |f|
 		when :test then editTestGit.test
 		when :upgrade then editTestGit.upgrade
 		when :downgrade then editTestGit.downgrade
-		when :best then editTestGit.best
-		when :emacs then editTestGit.emacs
+		when :merge_down then editTestGit.merge_down
 		end #case
 	end #each
 end #each
