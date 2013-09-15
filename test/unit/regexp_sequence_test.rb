@@ -13,9 +13,6 @@ class RegexpTree < NestedArray # reopen class to add assertions
 #extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
 class RegexpSequenceTest < TestCase
-include RegexpSequence::Examples
-include RegexpSequence::Assertions
-# How about anchoring as special Regexp Constants at start and end of sequence
 def test_Anchoring_initialize
 	No_anchor.assert_anchoring
 	Start_anchor.assert_anchoring
@@ -75,9 +72,6 @@ def test_sequence_comparison
 	RegexpSequence.new('ab').assert_sequence_specialized_by(RegexpSequence.new('abc'))	
 	RegexpSequence.new('ab').assert_sequence_specialized_by(RegexpSequence.new('abc'))	
 end #sequence_comparison
-A=RegexpTree.new('a')
-B=RegexpTree.new('b')
-Ab=RegexpTree.new('ab')
 def test_sequence_intersect
 #	alternatives=Ab.alternatives?
 	lhs=Ab

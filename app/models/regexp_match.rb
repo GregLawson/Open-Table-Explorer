@@ -51,6 +51,10 @@ def initialize(regexp_tree,dataToParse)
 		@match_data= nil
 	else
 		@match_data=@regexp_tree.to_regexp.match(@dataToParse)
+		if @match_data.nil? then
+			@regexp_tree=RegexpAlternative.new(@regexp_tree, @dataToParse.to_exact_regexp)
+		else
+		end #if
 	end #if
 end #initialize
 def force

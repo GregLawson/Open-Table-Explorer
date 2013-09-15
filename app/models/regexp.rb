@@ -31,23 +31,51 @@ def regexp_error(regexp_string, options=Default_options)
 rescue RegexpError => exception
 	return exception
 end #regexp_error
+# A terminator is a delimiter that is at the end (like new line)
+def terminator_regexp(delimiter)
+#	raise "delimiter must be single characters not #{delimiter}." if delimiter.length!=1
+	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
+end #terminator_regexp
+# A delimiter is generally not at the end (like commas)
+def delimiter_regexp(delimiter)
+	raise "delimiters must be single characters not #{delimiter.inspect}." if delimiter.length!=1
+	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
+end #delimiter_regexp
 end #ClassMethods
 extend ClassMethods
 def unescaped_string
 	"#{source}"
 end #unescape
 def *(other)
-	return Regexp.new(self.to_s+Regexp.promote(other).to_s)
-end #*
-def |(other)
-	return Regexp.union(self, Regexp.promote(other))
-end #|
+	case other
+	when Regexp then return Regexp.new(self.source + other.source)
+	when String then return Regexp.new(self.source + other)
+	when Fixnum then return Regexp.new(self.source*other)
+	else
+		raise "other.class=#{other.class.inspect}"
+	end #case
+end #sequence
+def |(other) # |
+	return Regexp.union(self.source, Regexp.promote(other).source)
+end #alterative
+def capture(key=nil)
+	if key.nil? then
+		/(#{self.source})/
+	else
+		/(?<#{key.to_s}>#{self.source})/
+	end #if
+end #capture
+def group
+	/(?:#{self.source})/
+end #group
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
+def assert_pre_conditions
+end #assert_pre_conditions
 end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
@@ -55,16 +83,21 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 end #Constants
 include Constants
 module Examples
 include Constants
-Ip_number_pattern=/\d{1,3}/
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
+Line_terminator=/\n/
+Line_pattern=/([^\n]*)/
+LINES=/([^\n]*)(?:\n([^\n]*))*/
+WORDS=/([^\s]*)(?:\s([^\s]*))*/
+Ip_number_pattern=/\d{1,3}/
 end #Examples
 include Examples
 end #Regexp

@@ -5,15 +5,17 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class Minimal
-module Constants
-end #Constants
-include Constants
+class Stream # < Enumerator::Lazy 
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-#include DefaultAssertions
-#extend DefaultAssertions::ClassMethods
+def initialize(*args)
+  if args.size=1 then
+    @buffer=[args]
+  else
+    @buffer=args
+  end #if
+end #initialize
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -27,9 +29,12 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
-#self.assert_pre_conditions
+#TestWorkFlow.assert_pre_conditions
+module Constants
+end #Constants
+include Constants
 module Examples
 include Constants
 end #Examples
 include Examples
-end #Minimal
+end #Stream

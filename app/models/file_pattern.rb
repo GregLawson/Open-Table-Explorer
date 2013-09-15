@@ -8,6 +8,19 @@
 require 'test/unit'
 require 'pathname'
 class FilePattern <  ActiveSupport::HashWithIndifferentAccess
+module Constants
+# ordered from ambiguous to specific, common to rare
+Patterns=[
+	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
+	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
+	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
+	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/'}, 
+	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
+	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
+	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
+	]
+All=Patterns.map {|s| FilePattern.new(s)}	
+end  #Constants
 module ClassMethods
 def all
 	Constants::All
@@ -15,7 +28,6 @@ end #all
 def path2model_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
-	extension=File.extname(path)
 	basename=File.basename(path)
 	matches=all.map do |s| 
 		if s.suffix_match(path) && s.sub_directory_match(path) then
@@ -34,6 +46,8 @@ def project_root_dir?(path=$0)
 	ret=case script_directory_name
 	when 'unit' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'long_test' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'integration' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'script' then
@@ -47,14 +61,14 @@ def project_root_dir?(path=$0)
 	return ret
 end #project_root_dir
 def find_by_name(name)
-	ret=Constants::All.find do |s|
+	Constants::All.find do |s|
 		s[:name]==name
 	end #find
 end #find_by_name
 def pathnames?(model_basename)
 	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
 	raise "model_basename" if model_basename.nil?
-	pathnames=FilePattern::Constants::All.map do |p|
+	FilePattern::Constants::All.map do |p|
 		p.path?(model_basename)
 	end #
 end #pathnames
@@ -92,18 +106,6 @@ end #path
 def relative_path?(model_basename)
 	Pathname.new(path?(model_basename)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
-module Constants
-# ordered from ambiguous to specific, common to rare
-Patterns=[
-	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
-	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
-	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
-	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
-	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
-	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
-	]
-All=Patterns.map {|s| FilePattern.new(s)}	
-end  #Constants
 include Constants
 module Examples
 DCT_filename='script/dct.rb'
@@ -173,7 +175,7 @@ def assert_naming_convention_match(path)
 	assert(self.sub_directory_match(path), message+caller_lines)
 	message="self=#{self.inspect}, path=#{path.inspect}"
 end #naming_convention_match
-end #Axx`	sertions
+end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 end #FilePattern

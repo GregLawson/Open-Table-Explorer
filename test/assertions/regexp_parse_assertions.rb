@@ -123,54 +123,6 @@ def assert_postfix_expression
 	post_op=postfix_expression?
 	assert_not_nil(post_op,"self=#{self.inspect}")
 end #postfix_expression
-def self.value_of?(name, form)
-	constant_reference=constant_reference?(name, form)
-	
-	if defined? constant_reference then
-		RegexpParse::TestCases.const_get(name.to_s+'_'+form.to_s)
-	else
-		nil
-	end#
-
-end #value_of
-def self.constant_reference?(name, form)
-	'RegexpParse::TestCases::'+name.to_s+'_'+form.to_s
-end #constant_reference
-def self.parse_of?(string)
-	return RegexpParse.new(string.to_s)
-end #parse_of
-def self.string_of?(name)
-	return array.to_a.join
-end #string_of
-def self.array_of?(string)
-	return parse_of?(string.to_s).to_a
-end #array_of
-# removes suffix if present else nil
-def self.name_of?(constant)
-	match=/([A-Z][a-z_]*)_(array|string|parse)$/.match(constant)
-	return match
-end #name_of
-def self.names
-	constants=RegexpParse::TestCases.constants
-	constants.map do |name|
-		constant=RegexpParse::TestCases.const_get(name)
-		match=RegexpParse::TestCases.name_of?(name)
-		if !match.nil? && (constant.class==String || constant.class==Array || constant.class==RegexpParse) then
-			match[1]
-		else
-			nil
-		end #if
-	end.compact.uniq #map
-end #names
-def self.strings
-	return RegexpParse::TestCases.constants.select {|c| /.*_string/.match(c)}
-end #strings
-def self.arrays
-	return RegexpParse::TestCases.constants.select {|c| /.*_array/.match(c)}
-end #arrays
-def self.parses
-	return RegexpParse::TestCases.constants.select {|c| /.*_parse/.match(c)}
-end #parses
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
@@ -178,7 +130,7 @@ include DefaultAssertions
 extend DefaultAssertions::ClassMethods
 module Examples #  Namespace
 include Constants
-Asymmetrical_Tree_Parse=RegexpParse.new(NestedArray::Examples::Asymmetrical_Tree_Array)
+#Asymmetrical_Tree_Parse=RegexpParse.new(NestedArray::Examples::Asymmetrical_Tree_Array)
 Quantified_operator_array=["{", "3", ",", "4", "}"]
 Quantified_operator_string=Quantified_operator_array.join
 Quantified_repetition_array=[".", ["{", "3", ",", "4", "}"]]
@@ -216,6 +168,13 @@ Rows_parse=RegexpParse.new(RowsRegexp)
 RowsEdtor2=RegexpParse.new('\s*(<tr.*</tr>)')
 KCET_parse=RegexpParse.new('KCET[^
 ]*</tr>\s*(<tr.*</tr>).*KVIE')
+module ClassMethods
+def value_of?(name, suffix='')
+	
+	
+	path_array=path_array?(name, suffix)
+	eval(path_array[0..-2].join).const_get(path_array[-1].to_sym)
+end #value_of
 def path_array?(name, suffix='')
 	path_array=[:RegexpParse, :Examples, (name.to_s+suffix.to_s).to_sym]
 end #path_array
@@ -228,6 +187,54 @@ def full_name?(name, suffix='')
 		nil
 	end #begin
 end #full_name
+def parse_of?(name)
+	if full_name=full_name?(name) then
+		return RegexpParse.new(value_of?(full_name))
+	elsif full_name=full_name?(name, :_parse) then
+		return RegexpParse.new(value_of?(full_name))
+	elsif full_name=full_name?(name, :_array) then
+		return RegexpParse.new(value_of?(full_name))
+	elsif full_name=full_name?(name, :_string) then
+		return RegexpParse.new(value_of?(full_name))
+	else
+		return nil
+	end
+	return RegexpParse.new(name.to_s)
+end #parse_of
+def string_of?(name)
+	return array.to_a.join
+end #string_of
+def array_of?(string)
+	return parse_of?(string.to_s).to_a
+end #array_of
+# removes suffix if present else nil
+def name_of?(constant)
+	match=/([A-Z][a-z_]*)_(array|string|parse)$/.match(constant)
+	return match
+end #name_of
+def names
+	constants=RegexpParse::Examples.constants
+	constants.map do |name|
+		constant=RegexpParse::Examples.const_get(name)
+		match=RegexpParse.name_of?(name)
+		if !match.nil? && (constant.class==String || constant.class==Array || constant.class==RegexpParse) then
+			match[1]
+		else
+			nil
+		end #if
+	end.compact.uniq #map
+end #names
+def strings
+	return example_constant_names_by_class(String)
+end #strings
+def arrays
+	return example_constant_names_by_class(Array)
+end #arrays
+def parses
+	example_constant_names_by_class(RegexpParse)
+end #parses
+end #ClassMethods
 end #Examples
 include Examples
+extend Examples::ClassMethods
 end #RegexpParse

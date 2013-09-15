@@ -71,10 +71,12 @@ def test_path2model_name
 	assert_equal('dct', basename)
 	assert_equal('.rb', extension)
 	expected_match=1
-#	FilePattern.assert_naming_convention_match(Patterns[expected_match], path)
 	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
 	assert_equal(3, name_length)
-
+	expected_match=3
+	path='test/long_test/rebuild_test.rb'
+	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
+	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
 end #path2model_name
 def test_project_root_dir
 	path=File.expand_path($0)
@@ -89,7 +91,7 @@ def test_find_by_name
 end #find_by_name
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
-	assert_equal(5, FilePattern.pathnames?('test').size)
+	assert_equal(All.size, FilePattern.pathnames?('test').size)
 	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
 def test_initialize
@@ -112,4 +114,9 @@ def test_class_assert_post_conditions
 end #class_assert_post_conditions
 def assert_pattern_srray(array)
 end #assert_pattern_srray
+def test_assert_naming_convention_match
+	expected_match=3
+	path='test/long_test/rebuild_test.rb'
+	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
+end #naming_convention_match
 end #FilePattern

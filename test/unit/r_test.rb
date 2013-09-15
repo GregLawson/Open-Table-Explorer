@@ -10,8 +10,6 @@ def test_initialize
 
 end #initialize
 def setup
-	Loopback.csv_import([:ain,:aout_value], Loopback_Filename)
-	Default_Session.eval('save.image()')
 end #setup
 def test_eval
 	rexp=Default_Session.eval('1+1')
@@ -50,7 +48,8 @@ def test_example
 
 end #example
 def test_csv_import
-	Loopback.csv_import([:ain,:aout_value], Loopback_Filename)
+	Loopback.csv_import([:ain,:aout_value], Loopback_channel2_filename)
+	Loopback.csv_import([:ain,:aout_value], Loopback_4_channels_filename)
 end #csv_import
 def test_show_plot
 	Default_Session.eval("plot(#{Loopback.r_symbol(:V7)},#{Loopback.r_symbol(:V8)})")
@@ -65,10 +64,10 @@ def test_png_plot
 	Default_Session.eval("dev.off()")	
 end #
 def test_r_symbol
-	assert_equal("loopback$V8", Loopback.r_symbol(:V8))	
+	assert_equal("loopback_channel2$V8", Loopback.r_symbol(:V8))	
 end #r_symbol
 def test_r_class_symbol
-	var='loopback$V8'
+	var='loopback_channel2$V8'
 	klass=Default_Session.eval("class(#{var})")
 	assert_equal("integer", klass.as_strings[0])	
 	assert_equal("integer", Loopback.r_class_symbol(:V8))	
@@ -77,26 +76,29 @@ def test_variableSummary
 	var=:V8
 	summary=Default_Session.eval("summary(#{Loopback.r_symbol(var)})").as_doubles
 	assert_instance_of(Array, summary)	
-	assert_equal({:Min=>0.0, :Quartile1=>0.0, :Median=>148.0,:Mean=>95.11, :Quartile3=>184.0, :Max=>220.0}, Loopback.variableSummary(:V9))	
+	assert_equal(0.0, Loopback.variableSummary(:V9)[:Min])	
+	assert_equal([:Min, :Quartile1, :Median, :Mean, :Quartile3, :Max], Loopback.variableSummary(:V9).keys)	
 end #variableSummary
 
 def test_pairSummary
 	
 end #pairSummary
-def test_glm(model)
-	Default_Session.eval("glm(V, data=loopback").as_doubles
+def test_glm
+	Default_Session.eval("glm(V, data=loopback_channel2").as_doubles
+	glm_text=Loopback.gm('')
 end #glm
-def test_loopback
+def test_Examples
+	assert_pathname_exists(Loopback_channel2_filename)
+	assert_pathname_exists(Loopback_4_channels_filename)
 	con=RSession.new
 
 
-	con.eval("loopback<-read.table('/tmp/loopback4.csv',sep=',',fill=TRUE)")
-	con.eval("ain<-as.factor(loopback$V10)")
+	con.eval("ain<-as.factor(loopback_channel2$V10)")
 
 
-	puts con.eval("tapply(loopback$V10,ain,summary)")
+	puts con.eval("tapply(loopback_channel2$V10,ain,summary)")
 	con.eval("rle(as.vector(ain))")
-	df=DataFrames.new(:loopback)
+	df=DataFrames.new(:loopback_channel2)
 	df.pairSummary(:V9,:V10)
-end #test_loopback
+end #Examples
 end #RSessionTest
