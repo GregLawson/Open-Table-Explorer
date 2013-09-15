@@ -6,7 +6,6 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative 'default_test_case.rb'
 require_relative '../assertions/regexp_tree_assertions.rb'
 #require_relative '../assertions/generic_table_examples.rb'
 class RegexpTreeTest < DefaultTestCase3

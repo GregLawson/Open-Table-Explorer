@@ -86,8 +86,8 @@ end #def assert_invariant
 def test_assert_post_conditions
   each_example {|e| existing_call(e, :assert_post_conditions)}
 end #assert_post_conditions
-def test_test_environment
-  assert_equal(TestCase, self.superclass)
+def assert_environment
+  warn {assert_equal(TestCase, self.class.superclass)}
   message= "self=#{self.inspect}"
   puts message
   message+= "\nself.included_modules=#{self.included_modules.inspect}"

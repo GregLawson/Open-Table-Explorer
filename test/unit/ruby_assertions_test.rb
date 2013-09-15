@@ -18,7 +18,11 @@ def test_instance_method
 end #test_instance_method
 def self.test_class_method
 end #test_class_method
-end #RubyAssertionsTest
+end #TestClass
+def test_warn
+end #warn
+def test_info
+end #info     
 def test_assert_call_result
 	#~ explain_assert_respond_to(self,:testMethod)
 	assert_call_result(self,:testMethod)
