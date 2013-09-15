@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'grit'  # sudo gem install grit
-require_relative '../../test/unit/default_test_case.rb'
+#require_relative '../../test/unit/default_test_case.rb'
 require_relative 'related_file.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative 'repository.rb'
@@ -51,7 +51,6 @@ def goldilocks(filename)
 
 	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{relative_filename}"
 end #goldilocks
->>>>>>> 07e08bffe53125bba5b93dde0a2894a7f3a68128
 def execute
 	edit_default
 	test_and_commit(related_files.model_test_pathname?)
