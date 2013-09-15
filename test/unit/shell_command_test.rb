@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/shell_command.rb'
-require_relative 'default_test_case.rb'
+require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
 include ShellCommands::Examples
 def test_initialize
