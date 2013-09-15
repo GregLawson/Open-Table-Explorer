@@ -6,7 +6,7 @@
 #
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
-require_relative '../../test/unit/default_test_case.rb'
+require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/file_pattern.rb'
 class FilePatternTest <  DefaultTestCase2
