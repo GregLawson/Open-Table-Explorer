@@ -7,11 +7,15 @@ CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
 def parse_string(string, pattern=LINES)
-	ret=string.match(pattern)
-	if named_capture=={} then
-		ret[1..-1] # return matched subexpressions
+	matchData=string.match(pattern)
+	if matchData.names=={} then
+		matchData[1..-1] # return unnamed subexpressions
 	else
-		ret.named_capture # return matched subexpressions
+		named_hash={}
+		matchData.names.each do |n| # return named subexpressions
+			named_hash[n.to_sym]=matchData[n]
+		end # each
+		named_hash
 	end #if
 end #parse_string
 def parse_array(string_array, pattern=WORDS)
