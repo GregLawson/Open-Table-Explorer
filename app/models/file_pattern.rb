@@ -7,6 +7,7 @@
 ###########################################################################
 require 'test/unit'
 require 'pathname'
+require 'active_support'
 class FilePattern <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
