@@ -64,8 +64,22 @@ end #close
 def success?
 	@exit_status==0
 end #success
+def inspect
+	ret=''
+	if @errors!='' || @exit_status!=0 then
+		ret+="@command_string=#{@command_string.inspect}\n"
+	end #if
+	if @errors!='' then
+		ret+="@errors=#{@errors.inspect}\n"
+	end #if
+	if @exit_status!=0 then
+		ret+="@exit_status=#{@exit_status.inspect}\n"
+		ret+="@pid=#{@pid.inspect}\n"
+	end #if
+	ret+@output
+end #inspect
 def puts
-	$stdout.puts @output,@errors
+	$stdout.puts inspect
 	self # return for comand chaining
 end #puts
 module Examples

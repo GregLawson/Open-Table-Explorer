@@ -1,3 +1,10 @@
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/shell_command.rb'
 class ParseTest < TestCase
@@ -89,15 +96,6 @@ def test_rows_and_columns
 	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(';'))) 
 	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns)
 end #rows_and_columns
-def test_inspect
-	Hello_world.assert_post_conditions
-	assert_equal("Hello World\n", Hello_world.output)
-	assert_equal("Hello World\n", Hello_world.inspect)
-	assert_equal("", EXAMPLE.inspect)
-end #inspect
-def test_assert_post_conditions
-	Hello_world.assert_post_conditions
-end #assert_post_conditions
 include Parse::Constants
 def test_NetworkInterface
 	lines=parse(NetworkInterface::IFCONFIG.output, LINES)

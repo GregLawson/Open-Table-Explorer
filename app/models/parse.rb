@@ -68,21 +68,4 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 		parse(row, column_pattern)
 	end #map
 end #rows_and_columns
-def inspect
-	ret=''
-	if @errors!='' || @exit_status!=0 then
-		ret+="@command_string=#{@command_string.inspect}\n"
-	end #if
-	if @errors!='' then
-		ret+="@errors=#{@errors.inspect}\n"
-	end #if
-	if @exit_status!=0 then
-		ret+="@exit_status=#{@exit_status.inspect}\n"
-		ret+="@pid=#{@pid.inspect}\n"
-	end #if
-	rows_and_columns.each do |row|
-		ret+=row.join(',')+"\n" unless row.nil?
-	end #each
-	ret
-end #inspect
 end #Parse

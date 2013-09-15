@@ -36,11 +36,17 @@ end #system_output
 def test_success?
 	assert(EXAMPLE.success?)
 end #success
+def test_inspect
+	Hello_world.assert_post_conditions
+	assert_equal("Hello World\n", Hello_world.output)
+	assert_equal("Hello World\n", Hello_world.inspect)
+	assert_equal("", EXAMPLE.inspect)
+end #inspect
 def test_puts
 	assert_equal(Example_output, EXAMPLE.output)
 	assert_equal(EXAMPLE, EXAMPLE.puts) #allow command chaining
 end #puts
 def test_assert_post_conditions
-	message=''
+	Hello_world.assert_post_conditions
 end #assert_post_conditions
 end #ShellCommands
