@@ -36,25 +36,6 @@ def assert(test, msg = UNASSIGNED)
   super caller_lines+msg.to_s
 end
 =end
-def warn(message='', &block)
-	if !$VERBOSE.nil? then
-		puts message
-	end #if
-  if block_given? then
-    begin
-      block.call
-    rescue Exception => exception_raised
-      puts exception_raised.inspect
-    rescue String => exception_raised
-      puts MiniTest::Assertion_raised.inspect
-    end #begin
-  end #if
-end #warn
-def info(message)
-	if $VERBOSE then
-		puts message
-	end #if
-end #info     
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
 	message+=" Class #{self.class.name}"
