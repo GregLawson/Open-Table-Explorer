@@ -68,6 +68,15 @@ end #capture
 def group
 	/(?:#{self.source})/
 end #group
+def capture_name_array
+	names=[] # empty till added to
+	named_captures.each_pair do |key, index_array|
+		index_array.each do |index|
+			names[index-1]=key.to_sym # delete zero index (not a capture)
+		end #each
+	end #each_pair
+	names
+end #capture_names
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods

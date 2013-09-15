@@ -81,4 +81,9 @@ def test_group
 	message="matchData.inspect=#{matchData.inspect}"
 	assert_equal('2', matchData[0], message)
 end #group
+def test_capture_names
+	pattern=/\d/.capture(:a)*/\d+/.capture(:b)
+	assert_equal(['a', 'b'], pattern.names)
+	assert_equal([:a, :b], pattern.capture_name_array, "named_captures=#{pattern.named_captures.inspect}")
+end #capture_names
 end #Regexp
