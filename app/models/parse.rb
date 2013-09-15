@@ -6,19 +6,13 @@ WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
-# A terminator is a delimiter that is at the end (like new line)
-def Parse.terminator_regexp(delimiter)
-#	raise "delimiter must be single characters not #{delimiter}." if delimiter.length!=1
-	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
-end #terminator_regexp
-# A delimiter is generally not at the end (like commas)
-def Parse.delimiter_regexp(delimiter)
-	raise "delimiters must be single characters not #{delimiter.inspect}." if delimiter.length!=1
-	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
-end #delimiter_regexp
 def parse_string(string, pattern=LINES)
 	ret=string.match(pattern)
-	ret[1..-1] # return matched subexpressions
+	if named_capture=={} then
+		ret[1..-1] # return matched subexpressions
+	else
+		ret.named_capture # return matched subexpressions
+	end #if
 end #parse_string
 def parse_array(string_array, pattern=WORDS)
 	string_array.map do |string|
