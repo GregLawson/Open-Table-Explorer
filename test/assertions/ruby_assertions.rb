@@ -380,6 +380,25 @@ def assert_data_file(pathname)
 	assert_not_nil(File.size?(pathname))
 	assert_not_equal(0, File.size?(pathname))
 end #assert_data_file
+def warn(message='', &block)
+	if !$VERBOSE.nil? then
+		puts message
+	end #if
+  if block_given? then
+    begin
+      block.call
+    rescue Exception => exception_raised
+      puts exception_raised.inspect
+    rescue String => exception_raised
+      puts MiniTest::Assertion_raised.inspect
+    end #begin
+  end #if
+end #warn
+def info(message)
+	if $VERBOSE then
+		puts message
+	end #if
+end #info     
 end #Assertions
 end #Unit
 end #Test
