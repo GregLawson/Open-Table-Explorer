@@ -10,24 +10,46 @@ require_relative 'shell_command.rb'
 class Repository
 module Constants
 Temporary='/mnt/working/Recover'
+Root_directory=FilePattern.project_root_dir?
+Source=File.dirname(Root_directory)+'/'
 end #Constants
 module ClassMethods
+def create_empty(path)
+	ShellCommands.new('mkdir '+path)
+	ShellCommands.new('cd '+path+';git init')
+	new_repository=Repository.new(path)
+	IO.write(path+'/README', 'Smallest possible repository.') # two consecutive slashes = one slash
+	new_repository.git_command('add README')
+	new_repository.git_command('commit -m "initial commit of README"')
+end #create_empty
+def create_if_missing(path)
+	if File.exists?(path) then
+		Repository.new(path)
+	else
+		create_empty(path)
+	end #if
+end #create_if_missing
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
 #subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
 #puts "cd_command=#{cd_command.inspect}"
-def initialize(url)
-	@url=url
-	@path=url
+def initialize(path)
+	@url=path
+	@path=path
 	source_path=@path
 	temporary_path=Temporary+'recover'
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
+def shell_command(command, working_directory=Shellwords.escape(@path))
+		ret=ShellCommands.new("cd #{working_directory}; git status")
+		ret.puts if $VERBOSE
+		ret
+end #shell_command
 def git_command(git_subcommand)
-	ret=ShellCommands.new("cd #{Shellwords.escape(@path)}; git "+git_subcommand)
+	ret=shell_command("git "+git_subcommand)
 	if $VERBOSE && git_subcommand != 'status' then
-		ShellCommands.new("cd #{Shellwords.escape(@path)}; git status").inspect
+		shell_command("status").puts
 	end #if
 	ret
 end #git_command
@@ -41,8 +63,7 @@ def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #branch
 def deserving_branch?(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
+	test=shell_command("ruby "+executable)
 	if test.success? then
 		:master
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -77,28 +98,28 @@ def stage(target_branch, executable)
 		push_branch=target_branch # no need for stash popping
 	else
 		push_branch=WorkFlow.current_branch_name?
-		Stash_Save.execute.assert_post_conditions
-		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
+		git_command("stash save").assert_post_conditions
+		switch_branch=git_command("checkout "+target_branch.to_s).execute
 		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="WorkFlow.current_branch_name? !=target_branch=#{WorkFlow.current_branch_name? !=target_branch}\n"
 		tested_files(executable).each do |p|
-			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
+			git_command("checkout stash "+p).execute.assert_post_conditions
 		end #each
 		switch_branch.puts.assert_post_conditions(message)
 	end #if
-	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
+	git_command("add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
 	Git_Cola.execute.assert_post_conditions
 	push_branch
 end #stage
 def commit_to_branch(target_branch, executable)
 	push_branch=stage(target_branch, executable)
 	if push_branch!=target_branch then
-		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
-		ShellCommands.new("git checkout stash pop").execute.assert_post_conditions
+		git_command("checkout "+push_branch.to_s).execute.assert_post_conditions
+		git_command("checkout stash pop").execute.assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
+	test=ShellCommands.new("ruby "+executable)
 	test.execute
 	if test.success? then
 		commit_to_branch(:master, executable)
@@ -108,6 +129,15 @@ def test_and_commit(executable)
 		commit_to_branch(:compiles, executable)
 	end #if
 end #test
+def Stash_Pop
+	git_command("stash pop")
+end #
+def CompilesSupersetOfMaster
+	git_command("log compiles..master")
+end #
+def DevelopmentSupersetofCompiles
+	git_command("log development..compiles")
+end #
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -122,20 +152,11 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
-Stash_Save=ShellCommands.new("git stash save", :delay_execution)
-Stash_Pop=ShellCommands.new("git stash pop", :delay_execution)
-Git_status=ShellCommands.new("git status", :delay_execution)
-Master_Checkout=ShellCommands.new("git checkout master", :delay_execution)
-Compiles_Checkout=ShellCommands.new("git checkout compiles", :delay_execution)
-Development_Checkout=ShellCommands.new("git checkout development", :delay_execution)
-CompilesSupersetOfMaster=ShellCommands.new("git log compiles..master", :delay_execution)
-DevelopmentSupersetofCompiles=ShellCommands.new("git log development..compiles", :delay_execution)
-Root_directory=FilePattern.project_root_dir?
-Repo= Grit::Repo.new(Root_directory)
 include Constants
 module Examples
 include Constants
-Source='/media/greg/SD_USB_32G/Repository Backups/'
+Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
+Repo= Grit::Repo.new(Root_directory)
 end #Examples
 include Examples
 end #Repository
