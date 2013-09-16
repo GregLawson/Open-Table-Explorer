@@ -12,10 +12,10 @@ module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns=[
 	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
+	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
 	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
 	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
 	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/'}, 
-	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
 	]
