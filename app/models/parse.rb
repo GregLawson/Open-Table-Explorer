@@ -8,7 +8,7 @@ end #Constants
 include Constants
 def parse_string(string, pattern=LINES)
 	matchData=string.match(pattern)
-	if matchData.names=={} then
+	if matchData.names==[] then
 		matchData[1..-1] # return unnamed subexpressions
 	else
 		named_hash={}
