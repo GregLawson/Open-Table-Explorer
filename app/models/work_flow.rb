@@ -55,6 +55,9 @@ def execute
 	edit_default
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
+def test(executable=@related_files.model_test_pathname?)
+	@repository.stage(@repository.deserving_branch?(executable), executable)
+end #test
 def test_files(edit_files=@related_files.edit_files)
 	pairs=functional_parallelism(edit_files).map do |p|
 
