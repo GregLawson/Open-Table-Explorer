@@ -17,9 +17,13 @@ def test_parse_string
 	ret=string.match(pattern)
 	assert_equal(answer, ret[1..-1]) # return matched subexpressions
 	matchData=string.match(pattern)
-	if matchData.names=={} then
+	assert_equal(matchData.names, [])
+	if matchData.names==[] then
 		assert_equal(answer, matchData[1..-1], matchData) # return unnamed subexpressions
 	else
+		nc=pattern.named_captures
+		assert_not_nil(nc)
+		assert_not_empty(nc)
 		named_hash={}
 		matchData.names.each do |n| # return named subexpressions
 			named_hash[n.to_sym]=matchData[n]
@@ -90,12 +94,9 @@ def test_rows_and_columns
 	column_delimiter=';'
 	row_delimiter="\n"
 #	name_tag=nil
-	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(row_delimiter))) 
-	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns(column_delimiter))
 end #rows_and_columns
 include Parse::Constants
 def test_assert_post_conditions
-	Hello_world.assert_post_conditions
 end #assert_post_conditions
 def test_NetworkInterface
 	lines=parse(NetworkInterface::IFCONFIG.output, LINES)
@@ -105,7 +106,6 @@ def test_NetworkInterface
 	assert_equal('eth0', double_lines[0].split(' ')[0])
 	words=parse(double_lines[0], WORDS)
 	assert_equal('eth0', words[0])
-	assert_equal('Link', words[1], "words=#{words.inspect}, lines=#{lines.inspect}")
 	puts "words=#{words.inspect}, double_lines=#{double_lines.inspect}"
 	words=double_lines.map do |row|
 		words=parse(row, WORDS)
@@ -115,8 +115,5 @@ def test_NetworkInterface
 	parse(NetworkInterface::IFCONFIG.output, LINES).map  do |row| 
 		parse(row, WORDS)
 	end #map
-	assert_equal('', NetworkInterface::IFCONFIG.rows_and_columns)
-	assert_equal('eth0,', NetworkInterface::IFCONFIG.inspect)
-	assert_equal('', NetworkInterface::IFCONFIG.output)
 end #NetworkInterface
 end #ParseTest
