@@ -14,17 +14,17 @@ end #EmptyDefaultTest
 class EmptyIncludedTest
 include DefaultTests1
 end #EmptyIncludedTest
-require_relative '../../test/assertions/default_assertions.rb'
-require_relative '../../test/assertions/minimal_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/minimal_assertions.rb'
 class MinimalTest < DefaultTestCase0
-extend DefaultAssertions::ClassMethods
+#extend DefaultAssertions::ClassMethods
 end #MinimalTest
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 class ClassExists
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
+#include DefaultAssertions
+#extend DefaultAssertions::ClassMethods
 def self.assert_invariant
-	assert_equal(:ClassExists, self.name.to_sym, caller_lines)
+	assert_equal(:ClassExists, self.name.to_sym) #, caller_lines)
 	assert_instance_of(Class, self)
 end # class_assert_invariant
 end #ClassExists
