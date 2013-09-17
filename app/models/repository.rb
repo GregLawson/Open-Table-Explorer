@@ -65,11 +65,11 @@ end #branch
 def deserving_branch?(executable=related_files.model_test_pathname?)
 	test=shell_command("ruby "+executable)
 	if test.success? then
-		:master
+		:passed
 	elsif test.exit_status==1 then # 1 error or syntax error
-		:development
+		:edited
 	else
-		:compiles
+		:testing
 	end #if
 end #
 def upgrade_commit(target_branch, executable)
@@ -119,15 +119,9 @@ def commit_to_branch(target_branch, executable)
 	end #if
 end #commit_to_branch
 def test_and_commit(executable)
-	test=ShellCommands.new("ruby "+executable)
-	test.execute
-	if test.success? then
-		commit_to_branch(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		commit_to_branch(:development, executable)
-	else
-		commit_to_branch(:compiles, executable)
-	end #if
+	
+	commit_to_branch(deserving_branch?, executable)
+
 end #test
 def Stash_Pop
 	git_command("stash pop")
