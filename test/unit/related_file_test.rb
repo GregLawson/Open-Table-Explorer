@@ -6,7 +6,7 @@
 #
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
-require_relative '../../test/unit/default_test_case.rb'
+require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
 require_relative '../../app/models/unbounded_fixnum.rb'
@@ -122,7 +122,7 @@ def test_assert_default_test_class_id
 end #default_test_class_id
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
-	assert_equal(5, UnboundedFixnumRelatedFile.pathnames?.size)
+	assert_operator(5, :<=, UnboundedFixnumRelatedFile.pathnames?.size)
 	assert_array_of(UnboundedFixnumRelatedFile.pathnames?, String)
 	pathnames=FilePattern::All.map do |p|
 		p.path?(UnboundedFixnumRelatedFile.model_basename)
