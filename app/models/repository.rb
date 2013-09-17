@@ -94,14 +94,14 @@ def downgrade(executable=related_files.model_test_pathname?)
 	downgrade_commit(deserving_branch?(executable), executable)
 end #downgrade
 def stage(target_branch, executable)
-	if WorkFlow.current_branch_name? ==target_branch then
+	if current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
 	else
-		push_branch=WorkFlow.current_branch_name?
+		push_branch=current_branch_name?
 		git_command("stash save").assert_post_conditions
 		switch_branch=git_command("checkout "+target_branch.to_s).execute
-		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}\n"
-		message+="WorkFlow.current_branch_name? !=target_branch=#{WorkFlow.current_branch_name? !=target_branch}\n"
+		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
+		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
 		tested_files(executable).each do |p|
 			git_command("checkout stash "+p).execute.assert_post_conditions
 		end #each
