@@ -1,0 +1,142 @@
+###########################################################################
+#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+require_relative '../../app/models/file_pattern.rb'
+class RelatedFile
+attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
+def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
+	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
+	raise message if model_class_name.nil?
+	@model_class_name=model_class_name.to_sym
+	if project_root_dir.nil? then
+		@project_root_dir='' #empty string not nil
+	else
+		@project_root_dir= project_root_dir  #not nil
+	end #
+	@model_basename=@model_class_name.to_s.tableize.singularize
+	raise "@model_basename" if @model_basename.nil?
+	@edit_files, @missing_files=pathnames?.partition do |p|
+		File.exists?(p)
+	end #partition
+end #initialize
+# Equality of defining content
+def ==(other)
+	if model_class_name==other.model_class_name && project_root_dir==other.project_root_dir then
+		true
+	else
+		false
+	end #if
+end #==
+def pathname_pattern?(file_spec)
+	raise "project_root_dir" if @project_root_dir.nil?
+	raise "FilePattern.find_by_name(file_spec)[:sub_directory]" if FilePattern.find_by_name(file_spec)[:sub_directory].nil?
+	raise "@model_basename" if @model_basename.nil?
+	raise "FilePattern.find_by_name(file_spec)[:suffix]" if FilePattern.find_by_name(file_spec)[:suffix].nil?
+	@project_root_dir+FilePattern.find_by_name(file_spec)[:sub_directory]+@model_basename.to_s+FilePattern.find_by_name(file_spec)[:suffix]
+end #pathname_pattern
+def model_pathname?
+	pathname_pattern?(:model)
+end #model_pathname?
+def model_test_pathname?
+	pathname_pattern?(:test)
+end #model_test_pathname?
+def assertions_pathname?
+	pathname_pattern?(:assertions)
+end #assertions_pathname?
+def assertions_test_pathname?
+	pathname_pattern?(:assertions_test)
+end #assertions_test_pathname?
+def data_sources_directory?
+	@project_root_dir+'test/data_sources/'
+end #data_sources_directory
+#  Initially the number of files for the model
+def pathnames?
+#	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
+	raise "project_root_dir" if @project_root_dir.nil?
+	raise "@model_basename" if @model_basename.nil?
+	FilePattern::All.map do |p|
+		p.path?(@model_basename)
+	end #
+end #pathnames
+def default_test_class_id?
+	if File.exists?(self.assertions_test_pathname?) then
+		4
+	elsif File.exists?(self.assertions_pathname?) then
+		3
+	elsif File.exists?(self.model_pathname?) then
+		2
+	elsif File.exists?(self.model_test_pathname?) then
+		1
+	else
+		0 # fewest assumptions, no files
+	end #if
+end #default_test_class_id
+def default_tests_module_name?
+	"DefaultTests"+default_test_class_id?.to_s
+end #default_tests_module?
+def test_case_class_name?
+	"DefaultTestCase"+default_test_class_id?.to_s
+end #test_case_class?
+def model_class?
+	eval(@model_class_name.to_s)
+end #model_class
+def model_name?
+	@model_class_name
+end #model_name?
+module Examples
+UnboundedFixnumRelatedFile=RelatedFile.new(:UnboundedFixnum)
+SELF=RelatedFile.new(:RelatedFile)
+DCT_filename='script/dct.rb'
+#DCT=RelatedFile.new(RelatedFile.path2model_name?(DCT_filename), RelatedFile.project_root_dir?(DCT_filename))
+end #Examples
+include Examples
+module Assertions
+module ClassMethods
+#include Test::Unit::Assertions
+# conditions that are always true (at least atomically)
+def assert_invariant
+#	fail "end of assert_invariant "
+end # class_assert_invariant
+# conditions true while class is being defined
+def assert_pre_conditions
+	assert_respond_to(FilePattern, :project_root_dir?)
+	assert_module_included(self, FilePattern::Assertions)
+end #class_assert_pre_conditions
+# assertions true after class (and nested module Examples) is defined
+def assert_post_conditions
+	assert_equal(TE, FilePattern::Examples::SELF)
+end #class_assert_post_conditions
+end #ClassMethods
+module KernelMethods
+def assert_default_test_class_id(expected_id, class_name, message='')
+	te=FilePattern.new(class_name)
+	message+="te=#{te.inspect}"
+	assert_equal(expected_id, te.default_test_class_id?, message+caller_lines)
+end #default_test_class_id
+end #KernelMethods
+# conditions that are always true (at least atomically)
+def assert_invariant
+	fail "end of assert_invariant "
+end #assert_invariant
+# conditions true while class is being defined
+# assertions true after class (and nested module Examples) is defined
+def assert_pre_conditions
+	assert_not_empty(@test_class_name, "test_class_name")
+	assert_not_empty(@model_basename, "model_basename")
+	fail "end ofassert_pre_conditions "
+end #class_assert_pre_conditions
+# assertions true after class (and nested module Examples) is defined
+def assert_post_conditions
+	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
+	assert_not_empty(@project_root_dir, message)
+end #assert_post_conditions
+
+
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+end #RelatedFile
