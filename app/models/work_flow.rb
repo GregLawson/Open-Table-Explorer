@@ -11,7 +11,7 @@ require_relative 'related_file.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative 'repository.rb'
 class WorkFlow
-include Grit
+#include Grit
 attr_reader :related_files, :edit_files, :repository
 module ClassMethods
 def revison_tag(branch)
@@ -117,7 +117,7 @@ include Assertions
 #TestWorkFlow.assert_pre_conditions
 module Constants
 Git_Cola=ShellCommands.new("git-cola ", :delay_execution)
-Branch_enhancement=[:master, :compiles, :development]
+Branch_enhancement=[:passed, :testing, :edited]
 end #Constants
 include Constants
 module Examples

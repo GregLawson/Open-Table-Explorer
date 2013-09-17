@@ -17,6 +17,7 @@ def test_revison_tag
 	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
 end #revison_tag
 def test_goldilocks
+	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
 	last_slot_index=WorkFlow::Branch_enhancement.size-1
 	right_index=[current_index, last_slot_index].min
