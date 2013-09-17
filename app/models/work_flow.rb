@@ -32,42 +32,6 @@ def initialize(*argv)
 #	raise message if  @related_files.edit_files.empty?
   @repository=Repository.new(@related_files.project_root_dir)
 end #initialize
-def edit
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
-	puts edit.command_string
-	edit.execute.assert_post_conditions
-end #edit
-def emacs
-	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '), :delay_execution)
-	puts emacs.command_string
-	emacs.execute.assert_post_conditions
-end #emacs
-def goldilocks(filename)
-	current_index=WorkFlow::Branch_enhancement.index(@repository.current_branch_name?.to_sym)
-	last_slot_index=WorkFlow::Branch_enhancement.size-1
-	right_index=[current_index+1, last_slot_index].min
-	left_index=right_index-1 
-	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
-
-	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{relative_filename}"
-end #goldilocks
-def execute
-	edit_default
-	test_and_commit(related_files.model_test_pathname?)
-end #execute
-def test(executable=@related_files.model_test_pathname?)
-	@repository.stage(@repository.deserving_branch?(executable), executable)
-end #test
-def test_files(edit_files=@related_files.edit_files)
-	pairs=functional_parallelism(edit_files).map do |p|
-
-		' -t '+p.map do |f|
-			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
-			
-		end.join(' ') #map
-	end #map
-	pairs.join(' ')
-end #test_files
 def version_comparison(files=nil)
 	if files.nil? then
 		files=@related_files.edit_files
@@ -77,6 +41,15 @@ def version_comparison(files=nil)
 	end #map
 	ret.join(' ')
 end #version_comparison
+def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
+	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
+	last_slot_index=WorkFlow::Branch_enhancement.size-1
+	right_index=[current_index+1, last_slot_index].min
+	left_index=right_index-1 
+	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+
+	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{relative_filename}"
+end #goldilocks
 def functional_parallelism(edit_files=@related_files.edit_files)
 	[
 	[related_files.model_pathname?, related_files.model_test_pathname?],
@@ -87,6 +60,33 @@ def functional_parallelism(edit_files=@related_files.edit_files)
 		fp-edit_files==[] # files must exist to be edited?
 	end #map
 end #functional_parallelism
+def test_files(edit_files=@related_files.edit_files)
+	pairs=functional_parallelism(edit_files).map do |p|
+
+		' -t '+p.map do |f|
+			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
+			
+		end.join(' ') #map
+	end #map
+	pairs.join(' ')
+end #test_files
+def edit
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
+	puts edit.command_string
+	edit.execute.assert_post_conditions
+end #edit
+def emacs
+	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '), :delay_execution)
+	puts emacs.command_string
+	emacs.execute.assert_post_conditions
+end #emacs
+def execute
+	edit_default
+	test_and_commit(related_files.model_test_pathname?)
+end #execute
+def test(executable=@related_files.model_test_pathname?)
+	@repository.stage(@repository.deserving_branch?(executable), executable)
+end #test
 def tested_files(executable)
 	if executable!=related_files.model_test_pathname? then # script only
 		[related_files.model_pathname?, executable]
