@@ -65,8 +65,13 @@ def find_by_name(name)
 		s[:name]==name
 	end #find
 end #find_by_name
+def find_from_path(path)
+	Constants::All.find do |p|
+		p.sub_directory_match(path) && p.suffix_match(path)
+	end #find
+end #pattern_from_path
 def pathnames?(model_basename)
-	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
+#	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
 	raise "model_basename" if model_basename.nil?
 	FilePattern::Constants::All.map do |p|
 		p.path?(model_basename)
@@ -77,7 +82,6 @@ end #pathnames
 #assert_pre_conditions
 end #ClassMethods
 extend ClassMethods
-@@project_root_dir=self.project_root_dir?
 def initialize(hash)
 	@pattern=hash
 	super(hash)
@@ -95,22 +99,18 @@ def sub_directory_match(path)
 	sub_directory[-expected_sub_directory.size,expected_sub_directory.size]==expected_sub_directory
 end #sub_directory_match
 def path?(model_basename)
-	raise "" if !@@project_root_dir.instance_of?(String)
+#	raise "" if !@@project_root_dir.instance_of?(String)
 	raise self.inspect if !self.instance_of?(FilePattern)
 	raise self.inspect if !self[:sub_directory].instance_of?(String)
 	raise "model_basename-#{model_basename.inspect}" if !model_basename.instance_of?(String)
 	raise "" if !self[:suffix].instance_of?(String)
-	@@project_root_dir+self[:sub_directory]+model_basename.to_s+self[:suffix]
+	self[:sub_directory]+model_basename.to_s+self[:suffix]
 end #path
 
 def relative_path?(model_basename)
 	Pathname.new(path?(model_basename)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
 include Constants
-module Examples
-DCT_filename='script/dct.rb'
-#DCT=FilePattern.new(FilePattern.path2model_name?(DCT_filename), FilePattern.project_root_dir?(DCT_filename))
-end #Examples
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -130,9 +130,9 @@ def assert_post_conditions
 	assert_not_nil(path)
 	assert_not_empty(path)
 	assert(File.exists?(path))
-	assert_not_empty(FilePattern.class_variables)
-	assert_include(FilePattern.class_variables, :@@project_root_dir)
-	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
+#	assert_not_empty(FilePattern.class_variables)
+#	assert_include(FilePattern.class_variables, :@@project_root_dir)
+#	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
 	assert_not_empty(array, array_message)
@@ -178,4 +178,11 @@ end #naming_convention_match
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
+module Examples
+DCT_filename='script/dct.rb'
+#DCT=FilePattern.new(FilePattern.path2model_name?(DCT_filename), FilePattern.project_root_dir?(DCT_filename))
+SELF_Model=__FILE__
+SELF_Test=$0
+#SELF=FilePattern.new(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
+end #Examples
 end #FilePattern
