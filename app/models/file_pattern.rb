@@ -130,9 +130,9 @@ def assert_post_conditions
 	assert_not_nil(path)
 	assert_not_empty(path)
 	assert(File.exists?(path))
-	assert_not_empty(FilePattern.class_variables)
-	assert_include(FilePattern.class_variables, :@@project_root_dir)
-	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
+#	assert_not_empty(FilePattern.class_variables)
+#	assert_include(FilePattern.class_variables, :@@project_root_dir)
+#	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
 	assert_not_empty(array, array_message)
