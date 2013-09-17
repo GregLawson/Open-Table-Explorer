@@ -87,18 +87,6 @@ end #execute
 def test(executable=@related_files.model_test_pathname?)
 	@repository.stage(@repository.deserving_branch?(executable), executable)
 end #test
-def tested_files(executable)
-	if executable!=related_files.model_test_pathname? then # script only
-		[related_files.model_pathname?, executable]
-	else case related_files.default_test_class_id? # test files
-	when 0 then [related_files.model_test_pathname?]
-	when 1 then [related_files.model_test_pathname?]
-	when 2 then [related_files.model_pathname?, executable]
-	when 3 then [related_files.model_pathname?, related_files.model_test_pathname?, related_files.assertions_pathname?]
-	when 4 then [related_files.model_pathname?, related_files.model_test_pathname?, related_files.assertions_pathname?, related_files.assertions_test_pathname?]
-	end #case
-	end #if
-end #tested_files
 require_relative '../../test/assertions/default_assertions.rb'
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods

@@ -52,14 +52,15 @@ end #assertions_test_pathname?
 def test_data_sources_directory
 #	assert_pathname_exists(TE.data_sources_directory?)
 end #data_sources_directory
-def test_assert_naming_convention_match
-	te=RelatedFile.new
-	assert(FilePattern.find_by_name(:model).assert_naming_convention_match(SELF.model_pathname?), "Patterns[0], 'app/models/'")
-	assert(FilePattern.find_by_name(:script).assert_naming_convention_match(DCT_filename), "Patterns[1], 'script/'")
-	assert(FilePattern.find_by_name(:test).assert_naming_convention_match($0), "Patterns[2], 'test/unit/'")
-	assert(FilePattern.find_by_name(:assertions).assert_naming_convention_match(SELF.assertions_pathname?), "(Patterns[3], 'test/assertions/'")
-	assert(FilePattern.find_by_name(:assertions_test).assert_naming_convention_match(SELF.assertions_test_pathname?), "(Patterns[4], 'test/unit/'")
-end #naming_convention_match
+def test_pathnames
+	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
+	assert_equal(5, UnboundedFixnumRelatedFile.pathnames?.size)
+	assert_array_of(UnboundedFixnumRelatedFile.pathnames?, String)
+	pathnames=FilePattern::All.map do |p|
+		p.path?(UnboundedFixnumRelatedFile.model_basename)
+	end #
+	assert_equal(UnboundedFixnumRelatedFile.pathnames?, pathnames)
+end #pathnames
 def test_default_test_class_id
 	assert_path_to_constant(:DefaultTestCase0)
 	assert_path_to_constant(:DefaultTestCase1)
@@ -84,15 +85,11 @@ def test_default_tests_module_name
 end #default_tests_module?
 def test_test_case_class_name
 end #test_case_class?
-def test_pathnames
-	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
-	assert_equal(5, UnboundedFixnumRelatedFile.pathnames?.size)
-	assert_array_of(UnboundedFixnumRelatedFile.pathnames?, String)
-	pathnames=FilePattern::All.map do |p|
-		p.path?(UnboundedFixnumRelatedFile.model_basename)
-	end #
-	assert_equal(UnboundedFixnumRelatedFile.pathnames?, pathnames)
-end #pathnames
+def test_tested_files
+	executable=TestWorkFlow.related_files.model_test_pathname?
+	tested_files=TestWorkFlow.tested_files(executable)
+	assert_operator(TestWorkFlow.related_files.default_test_class_id?, :<=, tested_files.size)
+end #tested_files
 def test_model_class
 	assert_equal(RelatedFile, SELF.model_class?)
 end #model_class

@@ -81,6 +81,18 @@ end #default_tests_module?
 def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
+def tested_files(executable)
+	if executable!=model_test_pathname? then # script only
+		[model_pathname?, executable]
+	else case default_test_class_id? # test files
+	when 0 then [model_test_pathname?]
+	when 1 then [model_test_pathname?]
+	when 2 then [model_pathname?, executable]
+	when 3 then [model_pathname?, model_test_pathname?, assertions_pathname?]
+	when 4 then [model_pathname?, model_test_pathname?, assertions_pathname?, assertions_test_pathname?]
+	end #case
+	end #if
+end #tested_files
 def model_class?
 	eval(@model_class_name.to_s)
 end #model_class
