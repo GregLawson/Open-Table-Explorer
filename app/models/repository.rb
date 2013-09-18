@@ -39,6 +39,7 @@ def initialize(path)
 	@path=path
 	source_path=@path
 	temporary_path=Temporary+'recover'
+  puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
