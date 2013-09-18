@@ -101,9 +101,10 @@ def test_model_name
 end #model_name?
 include RelatedFile::Assertions
 extend RelatedFile::Assertions::ClassMethods
-#def test_class_assert_invariant
-#	RelatedFile.assert_invariant
-#end # class_assert_invariant
+def test_Examples
+	UnboundedFixnumRelatedFile.assert_pre_conditions
+	UnboundedFixnumRelatedFile.assert_post_conditions
+end #Examples
 def test_class_assert_pre_conditions
 #	RelatedFile.assert_pre_conditions
 end #class_assert_pre_conditions
