@@ -86,9 +86,9 @@ end #default_tests_module?
 def test_test_case_class_name
 end #test_case_class?
 def test_tested_files
-	executable=TestWorkFlow.related_files.model_test_pathname?
-	tested_files=TestWorkFlow.tested_files(executable)
-	assert_operator(TestWorkFlow.related_files.default_test_class_id?, :<=, tested_files.size)
+	executable=SELF.model_test_pathname?
+	tested_files=SELF.tested_files(executable)
+	assert_operator(SELF.default_test_class_id?, :<=, tested_files.size)
 end #tested_files
 def test_model_class
 	assert_equal(RelatedFile, SELF.model_class?)
@@ -98,9 +98,10 @@ def test_model_name
 end #model_name?
 include RelatedFile::Assertions
 extend RelatedFile::Assertions::ClassMethods
-#def test_class_assert_invariant
-#	RelatedFile.assert_invariant
-#end # class_assert_invariant
+def test_Examples
+	UnboundedFixnumRelatedFile.assert_pre_conditions
+	UnboundedFixnumRelatedFile.assert_post_conditions
+end #Examples
 def test_class_assert_pre_conditions
 #	RelatedFile.assert_pre_conditions
 end #class_assert_pre_conditions
