@@ -7,6 +7,9 @@
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
 class RelatedFile
+module Constants
+end #Constants
+include Constants
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
 def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
@@ -107,8 +110,9 @@ DCT_filename='script/dct.rb'
 end #Examples
 include Examples
 module Assertions
+include Test::Unit::Assertions
 module ClassMethods
-#include Test::Unit::Assertions
+include Test::Unit::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "
@@ -137,12 +141,12 @@ end #assert_invariant
 # conditions true while class is being defined
 # assertions true after class (and nested module Examples) is defined
 def assert_pre_conditions
-	assert_not_empty(@test_class_name, "test_class_name")
+	assert_not_empty(@model_class_name, "test_class_name")
 	assert_not_empty(@model_basename, "model_basename")
-	fail "end ofassert_pre_conditions "
+#	fail "end ofassert_pre_conditions "
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
-def assert_post_conditions
+def assert_post_conditions(message='')
 	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
 	assert_not_empty(@project_root_dir, message)
 end #assert_post_conditions
@@ -151,4 +155,9 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+include Constants
+end #Examples
+include Examples
 end #RelatedFile
