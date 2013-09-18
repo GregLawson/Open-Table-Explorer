@@ -93,7 +93,7 @@ end #best
 def downgrade(executable=related_files.model_test_pathname?)
 	downgrade_commit(deserving_branch?(executable), executable)
 end #downgrade
-def stage(target_branch, executable)
+def stage(target_branch, tested_files)
 	if current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
 	else
@@ -102,25 +102,25 @@ def stage(target_branch, executable)
 		switch_branch=git_command("checkout "+target_branch.to_s).execute
 		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
-		tested_files(executable).each do |p|
+		tested_files.each do |p|
 			git_command("checkout stash "+p).execute.assert_post_conditions
 		end #each
 		switch_branch.puts.assert_post_conditions(message)
 	end #if
-	git_command("add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
+	git_command("add "+tested_files.join(' ')).execute.assert_post_conditions	
 	Git_Cola.execute.assert_post_conditions
 	push_branch
 end #stage
-def commit_to_branch(target_branch, executable)
-	push_branch=stage(target_branch, executable)
+def commit_to_branch(target_branch, tested_files)
+	push_branch=stage(target_branch, tested_files)
 	if push_branch!=target_branch then
 		git_command("checkout "+push_branch.to_s).execute.assert_post_conditions
-		git_command("checkout stash pop").execute.assert_post_conditions
+		git_command("checkout stash apply").execute.assert_post_conditions
 	end #if
 end #commit_to_branch
-def test_and_commit(executable)
+def test_and_commit(executable, tested_files)
 	
-	commit_to_branch(deserving_branch?, executable)
+	commit_to_branch(deserving_branch?(executable), tested_files)
 
 end #test
 def Stash_Pop
