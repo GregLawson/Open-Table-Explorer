@@ -27,6 +27,7 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
