@@ -71,9 +71,9 @@ def test_files(edit_files=@related_files.edit_files)
 	pairs.join(' ')
 end #test_files
 def edit
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files, :delay_execution)
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
 	puts edit.command_string
-	edit.execute.assert_post_conditions
+	edit.assert_post_conditions
 end #edit
 def emacs
 	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '), :delay_execution)
@@ -85,7 +85,7 @@ def execute
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
 def test(executable=@related_files.model_test_pathname?)
-	@repository.stage(@repository.deserving_branch?(executable), executable)
+	@repository.stage(@repository.deserving_branch?(executable), @related_files.tested_files(executable))
 end #test
 require_relative '../../test/assertions/default_assertions.rb'
 include DefaultAssertions
