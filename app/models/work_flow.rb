@@ -104,7 +104,7 @@ end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
 module Constants
-Git_Cola=ShellCommands.new("git-cola ", :delay_execution)
+#Git_Cola=ShellCommands.new("git-cola ", :delay_execution)
 Branch_enhancement=[:passed, :testing, :edited]
 end #Constants
 include Constants

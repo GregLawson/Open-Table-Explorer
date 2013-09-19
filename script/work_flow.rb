@@ -59,6 +59,6 @@ argv.each do |f|
 		when :best then editTestGit.best
 		when :emacs then editTestGit.emacs
 		end #case
+		editTestGit.repository.git_command('status').puts
 	end #each
 end #each
-WorkFlow::Git_status.execute.puts
