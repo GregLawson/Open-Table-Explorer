@@ -10,17 +10,14 @@ require 'active_support/all'
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
 def each_example(&block)
-  info "$VERBOSE=#{$VERBOSE.inspect}"
   included_module_names=model_class?.included_modules.map{|m| m.name}
-  info "included_module_names=#{included_module_names.inspect}"
   if  included_module_names.include?("#{model_class?}::Examples") then
-    info "model_class?.constants=#{model_class?.constants}"
+#    info "model_class?.constants=#{model_class?.constants}"
     constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
 #verbose    info "constant_objects=#{constant_objects}"
     examples=constant_objects.select{|c| c.instance_of?(Regexp)}
-    info "examples=#{examples}"
     if examples.empty? then
-      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
+#once      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
     else
       examples.each do |c|
         info "calling block on #{c.inspect}"
@@ -82,6 +79,9 @@ def assert_environment
   assert_include(TE.model_class?.included_modules, Regexp::Examples, message)
 end #assert_environment
 def test_aaa_environment
+  info "$VERBOSE=#{$VERBOSE.inspect}"
+  included_module_names=model_class?.included_modules.map{|m| m.name}
+  info "included_module_names=#{included_module_names.inspect}"
   assert_include(self.class.included_modules, Test::Unit::Assertions)
 	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
@@ -109,6 +109,13 @@ def test_aaa_environment
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of related_files ."
+    constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
+#verbose    info "constant_objects=#{constant_objects}"
+    examples=constant_objects.select{|c| c.instance_of?(Regexp)}
+    info "examples=#{examples}"
+    if examples.empty? then
+      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
+	end #if
 end #test_aaa_environment
 def test_class_assert_pre_conditions
 	model_class?.assert_pre_conditions
