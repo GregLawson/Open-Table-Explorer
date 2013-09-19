@@ -89,8 +89,9 @@ def puts
 end #puts
 def inspect
 	ret=''
-	if @errors!='' || @exit_status!=0 then
-		ret+="@command_string=#{@command_string.inspect}\n"
+	if @errors!='' || @exit_status!=0 || !@output.empty? then
+		ret+="$ #{@command_string.inspect}\n"
+		info {fail "I'm called too often!"}
 	end #if
 	if @errors!='' then
 		ret+="@errors=#{@errors.inspect}\n"
@@ -101,14 +102,6 @@ def inspect
 	end #if
 	ret+@output
 end #inspect
-module Examples
-Hello_world=ShellCommands.new('echo "Hello World"')
-Example_output="1 2;3 4\n"
-COMMAND_STRING='echo "1 2;3 4"'
-EXAMPLE=ShellCommands.new(COMMAND_STRING)
-
-end #Examples
-include Examples
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
@@ -124,6 +117,14 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 end #ShellCommands
+module Examples
+Hello_world=ShellCommands.new('echo "Hello World"')
+Example_output="1 2;3 4\n"
+COMMAND_STRING='echo "1 2;3 4"'
+EXAMPLE=ShellCommands.new(COMMAND_STRING)
+
+end #Examples
+include Examples
 class NetworkInterface
 IFCONFIG=ShellCommands.new('/sbin/ifconfig')
 #puts IFCONFIG.inspect
