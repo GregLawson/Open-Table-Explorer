@@ -7,4 +7,6 @@
 ###########################################################################
 require_relative 'test_environment'
 class MinimalTest < TestCase
+include DefaultTests
+include TE.model_class?::Examples
 end #Minimal
