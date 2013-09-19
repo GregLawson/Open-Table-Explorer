@@ -64,12 +64,12 @@ def test_pathnames
 	assert_operator(5, :<=, UnboundedFixnumRelatedFile.pathnames?.size)
 	assert_array_of(UnboundedFixnumRelatedFile.pathnames?, String)
 	pathnames=FilePattern::All.map do |p|
-		p.path?(UnboundedFixnumRelatedFile.model_basename)
-	end #
+		UnboundedFixnumRelatedFile.		pathname_pattern?(p[:name])
+	end #map
 	assert_equal(UnboundedFixnumRelatedFile.pathnames?, pathnames)
 	SELF.assert_pre_conditions
 	SELF.assert_post_conditions
-	assert_include(SELF.pathnames?, $0, SELF)
+	assert_include(SELF.pathnames?, File.expand_path($0), SELF)
 end #pathnames
 def test_default_test_class_id
 	assert_path_to_constant(:DefaultTestCase0)
