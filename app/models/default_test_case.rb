@@ -8,44 +8,7 @@
 require 'active_support/all'
 #include TestIntrospection
 BaseTestCase=ActiveSupport::TestCase
-module DefaultTests0
-require 'test/unit'
-include Test::Unit::Assertions
-extend Test::Unit::Assertions
-def related_files?
-	RelatedFile.new(model_name?)
-end #related_files
-end #DefaultTests0
-module DefaultTests1
-include DefaultTests0
-def test_case_pre_conditions
-	assert_equal([DefaultTests1], Module.nesting)
-	caller_message=" callers=#{caller.join("\n")}"
-	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
-	assert_operator(1, :<=, names_of_tests?.size, "#{names_of_tests?.sort}")
-end #test_case_pre_conditions
-def test_class_assert_invariant
-#	assert_include(Module.constants, model_name?)
-#	assert_not_nil(model_class?, "Define a class named #{TE.model_name?} or redefine model_name? to return correct class name.")
-	model_class?.assert_invariant
-#	fail "got to end of default test."
-end # class_assert_invariant
-end #DefaultTests1
-module DefaultTests2
-include DefaultTests1
-def test_class_assert_pre_conditions
-	model_class?.assert_pre_conditions
-#	fail "got to end of default test."
-end #class_assert_pre_conditions
-def test_class_assert_invariant
-  existing_call(model_class?, :assert_invariant)
-#	fail "got to end of default test."
-end #def assert_invariant
-def test_class_assert_post_conditions
-	model_class?.assert_post_conditions
-#	fail "got to end of default test."
-end #class_assert_post_conditions
-#ClassMethods
+module ExampleCall
 def each_example(&block)
   info "$VERBOSE=#{$VERBOSE.inspect}"
   included_module_names=model_class?.included_modules.map{|m| m.name}
@@ -78,15 +41,33 @@ def existing_call(object, symbol)
    warn "method #{symbol} does not exist for object of type #{object.class.name}"
  end #if
 end #assertion_call
-def test_assert_pre_conditions
-  each_example {|e| existing_call(e, :assert_pre_conditions)}
-end #assert_pre_conditions
-def test_assert_invariant
-  each_example {|e| existing_call(e, :assert_invariant)}
-end #def assert_invariant
-def test_assert_post_conditions
-  each_example {|e| existing_call(e, :assert_post_conditions)}
-end #assert_post_conditions
+end #ExampleCall
+module DefaultTests0
+require 'test/unit'
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
+def related_files?
+	RelatedFile.new(model_name?)
+end #related_files
+end #DefaultTests0
+module DefaultTests1
+include DefaultTests0
+def test_case_pre_conditions
+	assert_equal([DefaultTests1], Module.nesting)
+	caller_message=" callers=#{caller.join("\n")}"
+	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
+	assert_operator(1, :<=, names_of_tests?.size, "#{names_of_tests?.sort}")
+end #test_case_pre_conditions
+def test_class_assert_invariant
+#	assert_include(Module.constants, model_name?)
+#	assert_not_nil(model_class?, "Define a class named #{TE.model_name?} or redefine model_name? to return correct class name.")
+	model_class?.assert_invariant
+#	fail "got to end of default test."
+end # class_assert_invariant
+end #DefaultTests1
+module DefaultTests2
+include DefaultTests1
+include ExampleCall
 def assert_environment
   warn {assert_equal(TestCase, self.class.superclass)}
   message= "self=#{self.inspect}"
@@ -99,7 +80,7 @@ def assert_environment
   assert_include(TE.model_class?.included_modules, Regexp::Assertions, message)
 #?  assert_include(TE.model_class?.included_modules, Regexp::Assertions::ClassMethods, message)
   assert_include(TE.model_class?.included_modules, Regexp::Examples, message)
-end #test_test_environment
+end #assert_environment
 def test_aaa_environment
   assert_include(self.class.included_modules, Test::Unit::Assertions)
 #	assert_include(self.class.included_modules, DefaultAssertionTests)
@@ -129,7 +110,29 @@ def test_aaa_environment
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of related_files ."
-end #test_related_files
+end #test_aaa_environment
+def test_class_assert_pre_conditions
+	model_class?.assert_pre_conditions
+#	fail "got to end of default test."
+end #class_assert_pre_conditions
+def test_class_assert_invariant
+  existing_call(model_class?, :assert_invariant)
+#	fail "got to end of default test."
+end #def assert_invariant
+def test_class_assert_post_conditions
+	model_class?.assert_post_conditions
+#	fail "got to end of default test."
+end #class_assert_post_conditions
+#ClassMethods
+def test_assert_pre_conditions
+  each_example {|e| existing_call(e, :assert_pre_conditions)}
+end #assert_pre_conditions
+def test_assert_invariant
+  each_example {|e| existing_call(e, :assert_invariant)}
+end #def assert_invariant
+def test_assert_post_conditions
+  each_example {|e| existing_call(e, :assert_post_conditions)}
+end #assert_post_conditions
 end #DefaultTests2
 module DefaultTests3
 include DefaultTests2
