@@ -21,6 +21,8 @@ class MinimalTest < DefaultTestCase0
 end #MinimalTest
 #require_relative '../../test/assertions/default_assertions.rb'
 class ClassExists
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
 #include DefaultAssertions
 #extend DefaultAssertions::ClassMethods
 def self.assert_invariant
@@ -31,7 +33,7 @@ end #ClassExists
 
 class ClassExistsTest < DefaultTestCase1
 def test_name_of_test
-	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
+	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}")
 #	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 end #name_of_test?
 def test_global_class_names

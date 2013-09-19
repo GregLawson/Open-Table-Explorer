@@ -11,6 +11,7 @@ BaseTestCase=ActiveSupport::TestCase
 module DefaultTests0
 require 'test/unit'
 include Test::Unit::Assertions
+extend Test::Unit::Assertions
 def related_files?
 	RelatedFile.new(model_name?)
 end #related_files
