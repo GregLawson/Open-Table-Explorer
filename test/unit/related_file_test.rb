@@ -10,8 +10,11 @@ require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
 require_relative '../../app/models/unbounded_fixnum.rb'
+TE=RelatedFile.new
+DefaultTests=eval(TE.default_tests_module_name?)
+TestCase=eval(TE.test_case_class_name?)
 class RelatedFileTest <  DefaultTestCase2
-#include DefaultTests2 
+include DefaultTests2 
 #include DefaultTests0    #less error messages
 include RelatedFile::Examples
 def test_initialize
@@ -20,12 +23,16 @@ def test_initialize
 	assert_equal('unbounded_fixnum', RelatedFile.new(:UnboundedFixnum).model_basename)
 	model_class_name=FilePattern.path2model_name?
 	assert_equal(:RelatedFile, model_class_name)
+	
 	project_root_dir=FilePattern.project_root_dir?
-	te=RelatedFile.new(SELF.model_name?)
-	assert_equal(:RelatedFile, te.model_class_name)
+	
 	assert_equal(:RelatedFile, SELF.model_class_name)
 	assert_equal('related_file', SELF.model_basename)
 	assert_not_empty(SELF.project_root_dir)
+	SELF.assert_pre_conditions
+	te=RelatedFile.new(SELF.model_name?)
+	assert_equal(:RelatedFile, te.model_class_name)
+	assert_equal(:RelatedFile, SELF.model_class_name)
 end #initialize
 def test_equals
 	assert(RelatedFile.new==RelatedFile.new)
@@ -60,6 +67,9 @@ def test_pathnames
 		p.path?(UnboundedFixnumRelatedFile.model_basename)
 	end #
 	assert_equal(UnboundedFixnumRelatedFile.pathnames?, pathnames)
+	SELF.assert_pre_conditions
+	SELF.assert_post_conditions
+	assert_include(SELF.pathnames?, $0, SELF)
 end #pathnames
 def test_default_test_class_id
 	assert_path_to_constant(:DefaultTestCase0)
@@ -94,6 +104,7 @@ def test_model_class
 	assert_equal(RelatedFile, SELF.model_class?)
 end #model_class
 def test_model_name
+	assert_equal(:RelatedFile, SELF.model_class_name)
 	assert_equal(:RelatedFile, SELF.model_name?)
 end #model_name?
 include RelatedFile::Assertions

@@ -158,6 +158,7 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+SELF=RelatedFile.new #defaults to this unit
 end #Examples
 include Examples
 end #RelatedFile
