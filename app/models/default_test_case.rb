@@ -83,8 +83,7 @@ def assert_environment
 end #assert_environment
 def test_aaa_environment
   assert_include(self.class.included_modules, Test::Unit::Assertions)
-#	assert_include(self.class.included_modules, DefaultAssertionTests)
-#	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{assertions_pathname?}")
+	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
