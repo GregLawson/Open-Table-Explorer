@@ -36,7 +36,7 @@ def test_initialize
 	wf=WorkFlow.new(TestFile)
 	assert_not_nil(wf)
 	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
-	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
+	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
 end #initialize
 def test_execute
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile)
