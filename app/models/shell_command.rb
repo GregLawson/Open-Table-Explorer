@@ -18,11 +18,9 @@ def execute
 	@output, @errors, @exit_status, @pid=system_output(command_string)
 	self #allows command chaining
 end #execute
-def initialize(command_string, delay_execution=nil)
+def initialize(command_string)
 	@command_string=command_string
-	if delay_execution.nil? then
-		execute # do it first time, then execute
-	end #if
+	execute # do it first time, then execute
 end #initialize
 def system_output(command_string)
 	ret=[] #make method scope not block scope so it can be returned
@@ -37,6 +35,7 @@ def system_output(command_string)
 		exit_status = wait_thr.value # Process::Status object returned.
 		ret=[output, errors, exit_status, pid]
 	}
+	info inspect if $VERBOSE
 	ret
 end #system_output
 def fork(cmd)
@@ -87,21 +86,6 @@ def puts
 	$stdout.puts inspect
 	self # return for comand chaining
 end #puts
-def inspect
-	ret=''
-	if @errors!='' || @exit_status!=0 || !@output.empty? then
-		ret+="$ #{@command_string.inspect}\n"
-		info {fail "I'm called too often!"}
-	end #if
-	if @errors!='' then
-		ret+="@errors=#{@errors.inspect}\n"
-	end #if
-	if @exit_status!=0 then
-		ret+="@exit_status=#{@exit_status.inspect}\n"
-		ret+="@pid=#{@pid.inspect}\n"
-	end #if
-	ret+@output
-end #inspect
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
