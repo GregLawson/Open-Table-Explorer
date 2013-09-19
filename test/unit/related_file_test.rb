@@ -54,7 +54,7 @@ def test_data_sources_directory
 end #data_sources_directory
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
-	assert_equal(5, UnboundedFixnumRelatedFile.pathnames?.size)
+	assert_operator(5, :<=, UnboundedFixnumRelatedFile.pathnames?.size)
 	assert_array_of(UnboundedFixnumRelatedFile.pathnames?, String)
 	pathnames=FilePattern::All.map do |p|
 		p.path?(UnboundedFixnumRelatedFile.model_basename)
@@ -118,15 +118,6 @@ def test_assert_default_test_class_id
 #	assert_default_test_class_id(0,'EmptyDefaultTest')
 #	assert_default_test_class_id(3,'GenericType')
 end #default_test_class_id
-def test_pathnames
-	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
-	assert_operator(5, :<=, UnboundedFixnumRelatedFile.pathnames?.size)
-	assert_array_of(UnboundedFixnumRelatedFile.pathnames?, String)
-	pathnames=FilePattern::All.map do |p|
-		p.path?(UnboundedFixnumRelatedFile.model_basename)
-	end #
-	assert_equal(UnboundedFixnumRelatedFile.pathnames?, pathnames)
-end #pathnames
 end #RelatedFile
 
 
