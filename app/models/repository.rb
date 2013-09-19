@@ -39,6 +39,7 @@ def initialize(path)
 	@path=path
 	source_path=@path
 	temporary_path=Temporary+'recover'
+  puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
@@ -108,7 +109,7 @@ def stage(target_branch, tested_files)
 		switch_branch.puts.assert_post_conditions(message)
 	end #if
 	git_command("add "+tested_files.join(' ')).execute.assert_post_conditions	
-	Git_Cola.execute.assert_post_conditions
+	git_command("cola").assert_post_conditions
 	push_branch
 end #stage
 def commit_to_branch(target_branch, tested_files)
