@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+require_relative '../../app/models/minimal.rb'
 class MinimalTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
