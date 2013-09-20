@@ -103,13 +103,6 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
-module Examples
-UnboundedFixnumRelatedFile=RelatedFile.new(:UnboundedFixnum)
-SELF=RelatedFile.new(:RelatedFile)
-DCT_filename='script/dct.rb'
-#DCT=RelatedFile.new(RelatedFile.path2model_name?(DCT_filename), RelatedFile.project_root_dir?(DCT_filename))
-end #Examples
-include Examples
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -159,6 +152,7 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+UnboundedFixnumRelatedFile=RelatedFile.new(:UnboundedFixnum)
 SELF=RelatedFile.new #defaults to this unit
 end #Examples
 include Examples
