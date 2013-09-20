@@ -80,9 +80,10 @@ def inspect
 		ret+="@exit_status=#{@exit_status.inspect}\n"
 		ret+="@pid=#{@pid.inspect}\n"
 	end #if
-	ret+@output
+	ret+@output.to_s
 end #inspect
 def puts
+	$stdout.puts "$ "+@command_string
 	$stdout.puts inspect
 	self # return for comand chaining
 end #puts
