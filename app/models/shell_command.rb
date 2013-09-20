@@ -35,7 +35,7 @@ def system_output(command_string)
 		exit_status = wait_thr.value # Process::Status object returned.
 		ret=[output, errors, exit_status, pid]
 	}
-	info inspect if $VERBOSE
+	$stdout.puts inspect if $VERBOSE
 	ret
 end #system_output
 def fork(cmd)
