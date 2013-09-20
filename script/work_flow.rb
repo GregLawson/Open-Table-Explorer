@@ -23,7 +23,7 @@ OptionParser.new do |opts|
     commands+=[:test] if t
   end
 end.parse!
-
+commands=[:test] if commands.empty?
 pp commands
 pp ARGV
 
@@ -33,7 +33,6 @@ when 0 then # scite testing defaults command and file
 	puts "work_flow --<command> <file>"
 	this_file=File.expand_path(__FILE__)
 	argv=[this_file] # incestuous default test case for scite
-	commands=[:test]
 else
 	argv=ARGV
 end #case
