@@ -36,7 +36,7 @@ def test_initialize
 	wf=WorkFlow.new(TestFile)
 	assert_not_nil(wf)
 	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
-	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
+	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
 end #initialize
 def test_execute
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile)
@@ -55,11 +55,6 @@ def test_functional_parallelism
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
 	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
 	end #functional_parallelism
-def test_tested_files
-	executable=TestWorkFlow.related_files.model_test_pathname?
-	tested_files=TestWorkFlow.tested_files(executable)
-	assert_operator(TestWorkFlow.related_files.default_test_class_id?, :<=, tested_files.size)
-end #tested_files
 def test_stage
 	target_branch=:development
 	target_branch=:master
