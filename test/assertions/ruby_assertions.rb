@@ -38,7 +38,7 @@ end
 =end
 def warn(message='', &block)
 	if !$VERBOSE.nil? then
-		puts message
+		$stdout.puts message
 	end #if
   if block_given? then
     begin
@@ -52,7 +52,7 @@ def warn(message='', &block)
 end #warn
 def info(message)
 	if $VERBOSE then
-		puts message
+		$stdout.puts message
 	end #if
 end #info     
 def default_message
