@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'active_support/all'
-require_relative 'default_test_case.rb'
+require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
 TE=RelatedFile.new

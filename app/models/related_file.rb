@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
 class RelatedFile
+@@project_root_dir=FilePattern.project_root_dir?
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
 def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
@@ -58,7 +59,7 @@ def pathnames?
 #	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
 	raise "project_root_dir" if @project_root_dir.nil?
 	raise "@model_basename" if @model_basename.nil?
-	pathnames=FilePattern::All.map do |p|
+	FilePattern::All.map do |p|
 		p.path?(@model_basename)
 	end #
 end #pathnames
@@ -81,6 +82,18 @@ end #default_tests_module?
 def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
+def tested_files(executable)
+	if executable!=model_test_pathname? then # script only
+		[model_pathname?, executable]
+	else case default_test_class_id? # test files
+	when 0 then [model_test_pathname?]
+	when 1 then [model_test_pathname?]
+	when 2 then [model_pathname?, executable]
+	when 3 then [model_pathname?, model_test_pathname?, assertions_pathname?]
+	when 4 then [model_pathname?, model_test_pathname?, assertions_pathname?, assertions_test_pathname?]
+	end #case
+	end #if
+end #tested_files
 def model_class?
 	eval(@model_class_name.to_s)
 end #model_class

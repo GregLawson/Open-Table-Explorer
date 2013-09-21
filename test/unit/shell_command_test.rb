@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/shell_command.rb'
-require_relative 'default_test_case.rb'
+require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
 include ShellCommands::Examples
 def test_initialize
@@ -36,11 +36,18 @@ end #system_output
 def test_success?
 	assert(EXAMPLE.success?)
 end #success
+def test_inspect
+	Hello_world.assert_post_conditions
+	assert_equal("Hello World\n", Hello_world.output)
+	assert_equal("Hello World\n", Hello_world.inspect)
+	assert_equal("1 2;3 4\n", EXAMPLE.inspect)
+end #inspect
+>>>>>>> passed
 def test_puts
 	assert_equal(Example_output, EXAMPLE.output)
 	assert_equal(EXAMPLE, EXAMPLE.puts) #allow command chaining
 end #puts
 def test_assert_post_conditions
-	message=''
+	Hello_world.assert_post_conditions
 end #assert_post_conditions
 end #ShellCommands

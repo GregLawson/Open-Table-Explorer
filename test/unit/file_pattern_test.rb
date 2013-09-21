@@ -6,7 +6,7 @@
 #
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
-require_relative '../../test/unit/default_test_case.rb'
+require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/file_pattern.rb'
 class FilePatternTest <  DefaultTestCase2
@@ -14,7 +14,8 @@ class FilePatternTest <  DefaultTestCase2
 #include DefaultTests0    #less error messages
 include FilePattern::Constants
 include FilePattern::Examples
-include FilePattern::Assertions
+Root_directory=FilePattern.project_root_dir?($0)
+#include FilePattern::Assertions
 #include FilePattern::Assertions::KernelMethods
 extend FilePattern::Assertions::ClassMethods
 def test_all
@@ -45,14 +46,14 @@ def test_path2model_name
 	assert_equal('.rb', extension)
 	basename=File.basename(path)
 	assert_equal('file_pattern_test.rb', basename)
-	expected_match=2
+	expected_match=1
 	assert_include(FilePattern.included_modules, FilePattern::Assertions)
 	assert_include(FilePattern.methods, :assert_pre_conditions)
 	assert_respond_to(FilePattern, :assert_pre_conditions)
 	FilePattern.assert_pre_conditions
 #	FilePattern.assert_naming_convention_match(Patterns[expected_match], path)
 	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
-	assert_equal(15, name_length)
+	assert_equal(15, name_length, "basename.size=#{basename.size}, extension.size=#{extension.size}\n Patterns[expected_match]=#{Patterns[expected_match].inspect}\n Patterns[expected_match][:suffix].size=#{Patterns[expected_match][:suffix].size}, ")
 	matches=All.reverse.map do |s| #reversed from rare to common
 		if s.suffix_match(path) && s.sub_directory_match(path) then
 			name_length=basename.size-s[:suffix].size
@@ -70,11 +71,13 @@ def test_path2model_name
 	basename=File.basename(path, extension)
 	assert_equal('dct', basename)
 	assert_equal('.rb', extension)
-	expected_match=1
-#	FilePattern.assert_naming_convention_match(Patterns[expected_match], path)
+	expected_match=2
 	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
-	assert_equal(3, name_length)
-
+	assert_equal(3, name_length, "basename.size=#{basename.size}, extension.size=#{extension.size}\n Patterns[expected_match]=#{Patterns[expected_match].inspect}\n Patterns[expected_match][:suffix].size=#{Patterns[expected_match][:suffix].size}, ")
+	expected_match=4
+	path='test/long_test/rebuild_test.rb'
+	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
+	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
 end #path2model_name
 def test_project_root_dir
 	path=File.expand_path($0)
@@ -89,7 +92,7 @@ def test_find_by_name
 end #find_by_name
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
-	assert_equal(5, FilePattern.pathnames?('test').size)
+	assert_equal(All.size, FilePattern.pathnames?('test').size)
 	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
 def test_initialize
@@ -112,4 +115,15 @@ def test_class_assert_post_conditions
 end #class_assert_post_conditions
 def assert_pattern_srray(array)
 end #assert_pattern_srray
+def test_assert_naming_convention_match
+	expected_match=4
+	path='test/long_test/rebuild_test.rb'
+	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
+#	te=RelatedFile.new
+	assert(FilePattern.find_by_name(:model).assert_naming_convention_match(SELF_Model), "Patterns[0], 'app/models/'")
+	assert(FilePattern.find_by_name(:test).assert_naming_convention_match(SELF_Test), "Patterns[2], 'test/unit/'")
+	assert(FilePattern.find_by_name(:script).assert_naming_convention_match(DCT_filename), "Patterns[1], 'script/'")
+	assert(FilePattern.find_by_name(:assertions).assert_naming_convention_match('test/assertions/_assertions.rb'), "(Patterns[3], 'test/assertions/'")
+	assert(FilePattern.find_by_name(:assertions_test).assert_naming_convention_match('test/unit/_assertions_test.rb'), "(Patterns[4], 'test/unit/'")
+end #naming_convention_match
 end #FilePattern
