@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING pathname that comes with this distribution
@@ -9,9 +9,10 @@ require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-require_relative '../assertions/generic_table_examples.rb'
+#require_relative '../assertions/generic_table_examples.rb'
+require_relative '../../app/models/code_base.rb'
 class CodeBaseTest < TestCase
-require 'lib/tasks/testing.rb'
+require_relative '../../lib/tasks/testing.rb'
 @@Test_pathname='app/models/code_base.rb'
 
 def test_initialize
@@ -237,7 +238,7 @@ def test_globs_match_regexp
 end #globs_match_regexp
 end #CodeBase
 class MatchedPathNameTest < TestCase
-require 'lib/tasks/testing.rb'
+require_relative '../../lib/tasks/testing.rb'
 @@Test_pathname='app/models/code_base.rb'
 def test_MatchedPathName
 	matched_path_name=MatchedPathName.new(@@Test_pathname)
