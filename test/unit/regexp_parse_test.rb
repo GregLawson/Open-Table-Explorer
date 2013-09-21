@@ -16,19 +16,6 @@ RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
 	assert_not_nil(RegexpTree[Any_binary_char_parse])
 	assert_kind_of(NestedArray, RegexpTree[Any_binary_char_parse])
-	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char_parse])
-#	assert(global_name?(RegexpTree))
-	assert_instance_of(RegexpRepetition, RegexpTree[Any_binary_string_parse])
-	assert_instance_of(RegexpRepetition, RegexpTree[Dot_star_parse])
-	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char])
-#	assert_match(Empty_language_parse.to_regexp, '')
-#	assert_no_match(Empty_language_parse.to_regexp, 'a')
-#	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
-	assert_instance_of(RegexpAlternative, RegexpTree[/a|b/])
-	assert_instance_of(RegexpSequence, RegexpTree[/ab/])
-	assert_instance_of(RegexpSequence, RegexpTree['ab'])
-	assert_instance_of(RegexpParen, RegexpTree[/(b)/])
-	assert_instance_of(RegexpEmpty, RegexpTree[/\A\z/])
 end #brackets
 def test_Constants_RegexpToken
 	assert_instance_of(Hash, To_s)
@@ -475,31 +462,7 @@ def test_typed
 	assert_not_nil(RegexpParse.typed?(Any_binary_char_parse))
 
 	node='ab'
-	node=RegexpParse.promote(node)
-	if node.instance_of?(Array) then
-		node.map{|e| typed?(e)}
-	end #if
-	assert_equal(RegexpSequence[RegexpToken["a"], RegexpToken["b"]], node)
-	assert_equal(["a", "b"], RegexpParse.new('ab').parse_tree)
-	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
-	assert_equal([:a, :b], RegexpParse.typed?('ab'))
-
-	assert_kind_of(NestedArray, RegexpParse.typed?(Any_binary_char_parse))
-	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char_parse))
-#	assert(global_name?(RegexpTree))
-	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Any_binary_string_parse))
-	assert_instance_of(RegexpRepetition, RegexpParse.typed?(Dot_star_parse))
-	assert_instance_of(CharacterClass, RegexpParse.typed?(Any_binary_char))
-#	assert_match(Empty_language_parse.to_regexp, '')
-#	assert_no_match(Empty_language_parse.to_regexp, 'a')
-#	assert_equal(['a', '|'], RegexpParse.new(/a|b/).to_a[0])
-	assert_instance_of(RegexpAlternative, RegexpParse.typed?(/a|b/))
-	assert_instance_of(RegexpSequence, RegexpParse.typed?(/ab/))
-	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
-	assert_instance_of(RegexpParen, RegexpParse.typed?(/(b)/))
-	assert_instance_of(RegexpEmpty, RegexpParse.typed?(/\A\z/))
 	
-
 end #typed
 RegexpParse.assert_pre_conditions
 end #RegexpParerTest
