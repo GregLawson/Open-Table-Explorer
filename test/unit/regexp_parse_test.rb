@@ -16,8 +16,9 @@ RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
 	assert_not_nil(RegexpTree[Any_binary_char_parse])
 	assert_kind_of(NestedArray, RegexpTree[Any_binary_char_parse])
-#	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char_parse])
-##	assert(global_name?(RegexpTree))
+	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char_parse])
+	assert_global_name(:RegexpTree)
+	assert(global_name?(:RegexpTree))
 #	assert_instance_of(RegexpRepetition, RegexpTree[Any_binary_string_parse])
 #	assert_instance_of(RegexpRepetition, RegexpTree[Dot_star_parse])
 #	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char])
