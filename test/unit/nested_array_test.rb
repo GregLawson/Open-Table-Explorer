@@ -7,13 +7,10 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/nested_array.rb'
-#require_relative 'default_assertions_test.rb'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
-#require_relative '../assertions/generic_table_examples.rb'
+#require_relative '../../test/assertions/ruby_assertions.rb'
 class NestedArrayTest  < TestCase
-
+include DefaultTests
+include TE.model_class?::Examples
 def test_initialize
 	assert_not_nil(NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']))
@@ -28,8 +25,6 @@ end #[]index
 def test_to_s
 	assert_equal('123',NestedArray.new([1,2,3]).to_s)
 	assert_equal('123',NestedArray.new([1,[2,3]]).to_s)
-	assert_equal(Asymmetrical_Tree_Array,Asymmetrical_Tree.to_a)
-	assert_equal('123',Asymmetrical_Tree.to_s)
 end #to_s
 def test_map_recursive
 	assert_equal(['*','.'], NestedArray::Examples::Echo_proc.call(['*','.']))
