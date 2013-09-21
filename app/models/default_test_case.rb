@@ -28,7 +28,7 @@ def each_example(&block)
     warn "There is no module #{model_class?}::Examples."
   end #if
 end #each_example
-# Call method symbol on object if it exists
+# Call method symbol on object if method exists
 def existing_call(object, symbol)
  if object.respond_to?(symbol) then
    info "method #{symbol.inspect} does  exist for object of type #{object.class.name}"
@@ -83,7 +83,7 @@ def test_aaa_environment
   included_module_names=model_class?.included_modules.map{|m| m.name}
   info "included_module_names=#{included_module_names.inspect}"
   assert_include(self.class.included_modules, Test::Unit::Assertions)
-	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
+#	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
@@ -118,7 +118,7 @@ def test_aaa_environment
 	end #if
 end #test_aaa_environment
 def test_class_assert_pre_conditions
-	model_class?.assert_pre_conditions
+  existing_call(model_class?, :ssert_pre_conditions)
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_invariant
@@ -126,7 +126,7 @@ def test_class_assert_invariant
 #	fail "got to end of default test."
 end #def assert_invariant
 def test_class_assert_post_conditions
-	model_class?.assert_post_conditions
+  existing_call(model_class?, :assert_post_conditions)
 #	fail "got to end of default test."
 end #class_assert_post_conditions
 #ClassMethods
