@@ -317,6 +317,9 @@ end #assert_module_included
 def global_name?(name)
 	Module.constants.include?(name)
 end #global_name
+def assert_global_name(name)
+	assert_include(Module.constants, name)
+end #global_name
 def assert_scope_path(*names)
 	return [] if names.size==0
 	assert_not_empty(names, "Expect non-empty scope path.")

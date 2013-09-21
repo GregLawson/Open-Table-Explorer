@@ -63,7 +63,6 @@ def pathnames?
 	raise "@model_basename" if @model_basename.nil?
 	FilePattern::All.map do |p|
 		pathname_pattern?(p[:name])
-#		p.path?(@model_basename)
 	end #
 end #pathnames
 def default_test_class_id?

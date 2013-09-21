@@ -10,8 +10,6 @@ require_relative 'test_environment'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class StreamLinkTest < TestCase
-set_class_variables
-fixtures :stream_method_arguments
 #	ActiveSupport::TestCase::fixtures :stream_method_arguments
 def test_logical_primary_key
 end #logical_key

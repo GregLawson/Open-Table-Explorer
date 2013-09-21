@@ -32,6 +32,8 @@ def test_parse_string
 	assert_equal(answer, parse_string(string, Parse::LINES), "matchData=#{matchData.inspect}")
 	assert_equal(answer, parse_string(string), "matchData=#{matchData.inspect}")
 	assert_equal(['1', '2'], parse_string("1 2", Parse::WORDS))
+#	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
+#	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
 def test_parse_array
 	string_array=["1 2","3 4"]
@@ -94,10 +96,14 @@ def test_rows_and_columns
 	column_delimiter=';'
 	row_delimiter="\n"
 #	name_tag=nil
+#	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(row_delimiter))) 
+#	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns(column_delimiter))
 end #rows_and_columns
 include Parse::Constants
 def test_assert_post_conditions
+	Hello_world.assert_post_conditions
 end #assert_post_conditions
+include Parse::Constants
 def test_NetworkInterface
 	lines=parse(NetworkInterface::IFCONFIG.output, LINES)
 	double_lines=NetworkInterface::IFCONFIG.output.split("\n\n")
@@ -106,6 +112,7 @@ def test_NetworkInterface
 	assert_equal('eth0', double_lines[0].split(' ')[0])
 	words=parse(double_lines[0], WORDS)
 	assert_equal('eth0', words[0])
+#	assert_equal('Link', words[1], "words=#{words.inspect}, lines=#{lines.inspect}")
 	puts "words=#{words.inspect}, double_lines=#{double_lines.inspect}"
 	words=double_lines.map do |row|
 		words=parse(row, WORDS)
@@ -115,5 +122,8 @@ def test_NetworkInterface
 	parse(NetworkInterface::IFCONFIG.output, LINES).map  do |row| 
 		parse(row, WORDS)
 	end #map
+#	assert_equal('', NetworkInterface::IFCONFIG.rows_and_columns)
+#	assert_equal('eth0,', NetworkInterface::IFCONFIG.inspect)
+#	assert_equal('', NetworkInterface::IFCONFIG.output)
 end #NetworkInterface
 end #ParseTest
