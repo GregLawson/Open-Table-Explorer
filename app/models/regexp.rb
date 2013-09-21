@@ -95,6 +95,7 @@ include Assertions
 extend Assertions::ClassMethods
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+Any_binary_char_string='[\000-\377]'
 end #Constants
 include Constants
 module Examples
