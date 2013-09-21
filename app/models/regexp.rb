@@ -102,7 +102,6 @@ module Examples
 include Constants
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
-Any_binary_char_string='[\000-\377]'
 Line_terminator=/\n/
 Line_pattern=/([^\n]*)/
 LINES=/([^\n]*)(?:\n([^\n]*))*/
