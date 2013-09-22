@@ -6,9 +6,6 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
 #require_relative '../assertions/generic_table_examples.rb'
 require_relative '../../app/models/code_base.rb'
 class CodeBaseTest < TestCase

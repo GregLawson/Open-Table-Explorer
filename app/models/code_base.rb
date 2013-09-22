@@ -31,7 +31,7 @@ include NoDB
 ]
 # Initializes a spec from a hash
 def initialize(hash=nil)
-	super
+	@hash=hash
 end #initialize
 # Returns all specs
 def CodeBase.all
