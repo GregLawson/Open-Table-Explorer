@@ -32,8 +32,7 @@ end #create_if_missing
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
-#subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
-#puts "cd_command=#{cd_command.inspect}"
+attr_reader :path, :grit_repo
 def initialize(path)
 	@url=path
 	@path=path
@@ -43,14 +42,14 @@ def initialize(path)
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
-		ret=ShellCommands.new("cd #{working_directory}; git status")
+		ret=ShellCommands.new("cd #{working_directory}; #{command}")
 		ret.puts if $VERBOSE
 		ret
 end #shell_command
 def git_command(git_subcommand)
 	ret=shell_command("git "+git_subcommand)
 	if $VERBOSE && git_subcommand != 'status' then
-		shell_command("status").puts
+		shell_command("git status").puts
 	end #if
 	ret
 end #git_command
@@ -62,9 +61,10 @@ def standardize_position
 end #standardize_position
 def current_branch_name?
 	@grit_repo.head.name.to_sym
-end #branch
-def deserving_branch?(executable=related_files.model_test_pathname?)
+end #current_branch_name
+def deserving_branch?(executable=@related_files.model_test_pathname?)
 	test=shell_command("ruby "+executable)
+	test.puts if $VERBOSE
 	if test.success? then
 		:passed
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -72,7 +72,7 @@ def deserving_branch?(executable=related_files.model_test_pathname?)
 	else
 		:testing
 	end #if
-end #
+end #deserving_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
@@ -152,6 +152,8 @@ module Examples
 include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Repo= Grit::Repo.new(Root_directory)
+SELF_code_Repo=Repository.new(Root_directory)
+Empty_Repo=Repository.new(Source+'test_recover/')
 end #Examples
 include Examples
 end #Repository
