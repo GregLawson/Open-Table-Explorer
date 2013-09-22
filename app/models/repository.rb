@@ -32,8 +32,7 @@ end #create_if_missing
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
-#subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
-#puts "cd_command=#{cd_command.inspect}"
+attr_reader :path, :grit_repo
 def initialize(path)
 	@url=path
 	@path=path
@@ -43,14 +42,14 @@ def initialize(path)
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
-		ret=ShellCommands.new("cd #{working_directory}; git status")
+		ret=ShellCommands.new("cd #{working_directory}; #{command}")
 		ret.puts if $VERBOSE
 		ret
 end #shell_command
 def git_command(git_subcommand)
 	ret=shell_command("git "+git_subcommand)
 	if $VERBOSE && git_subcommand != 'status' then
-		shell_command("status").puts
+		shell_command("git status").puts
 	end #if
 	ret
 end #git_command
@@ -152,6 +151,8 @@ module Examples
 include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Repo= Grit::Repo.new(Root_directory)
+SELF_code_Repo=Repository.new(Root_directory)
+Empty_Repo=Repository.new(Source+'test_recover/')
 end #Examples
 include Examples
 end #Repository
