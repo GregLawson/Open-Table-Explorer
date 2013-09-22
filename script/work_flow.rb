@@ -34,6 +34,7 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+commands=[:test] if commands.empty?
 pp commands
 pp ARGV
 
@@ -43,7 +44,6 @@ when 0 then # scite testing defaults command and file
 	puts "work_flow --<command> <file>"
 	this_file=File.expand_path(__FILE__)
 	argv=[this_file] # incestuous default test case for scite
-	commands=[:test]
 else
 	argv=ARGV
 end #case
@@ -59,6 +59,6 @@ argv.each do |f|
 		when :best then editTestGit.best
 		when :emacs then editTestGit.emacs
 		end #case
+		editTestGit.repository.git_command('status').puts
 	end #each
 end #each
-WorkFlow::Git_status.execute.puts
