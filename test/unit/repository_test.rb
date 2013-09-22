@@ -9,8 +9,19 @@ require_relative '../unit/test_environment'
 require_relative "../../app/models/repository.rb"
 class RepositoryTest < TestCase
 include Repository::Examples
-Clean_Example=Repository.new(Source+'test_recover')
-#puts "cd_command=#{cd_command.inspect}"
+Clean_Example=Empty_Repo
+def test_initialize
+	assert_pathname_exists(SELF_code_Repo.path)
+	assert_pathname_exists(Empty_Repo.path)
+end #initialize
+def test_shell_command
+	assert_equal(SELF_code_Repo.path, SELF_code_Repo.shell_command('pwd').output.chomp+'/')
+	assert_equal(Empty_Repo.path, Empty_Repo.shell_command('pwd').output.chomp+'/')
+end #shell_command
+def test_git_command
+	assert_match(/branch/,SELF_code_Repo.git_command('status').output)
+	assert_match(/branch/,Empty_Repo.git_command('status').output)
+end #git_command
 def test_corruption_fsck
 	Clean_Example.git_command("fsck").assert_post_conditions
 end #corruption
