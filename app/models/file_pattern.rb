@@ -69,7 +69,7 @@ def find_from_path(path)
 	Constants::All.find do |p|
 		p.sub_directory_match(path) && p.suffix_match(path)
 	end #find
-end #pattern_from_path
+end #find_from_path
 def pathnames?(model_basename)
 #	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
 	raise "model_basename" if model_basename.nil?
