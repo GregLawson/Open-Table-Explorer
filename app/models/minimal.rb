@@ -6,11 +6,14 @@
 #
 ###########################################################################
 class Minimal
+module Constants
+end #Constants
+include Constants
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
+#include DefaultAssertions
+#extend DefaultAssertions::ClassMethods
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -24,12 +27,10 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
-#TestWorkFlow.assert_pre_conditions
-module Constants
-end #Constants
-include Constants
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
 module Examples
 include Constants
 end #Examples
-include Examples
+#include Examples
 end #Minimal
