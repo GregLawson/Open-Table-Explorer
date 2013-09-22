@@ -61,9 +61,10 @@ def standardize_position
 end #standardize_position
 def current_branch_name?
 	@grit_repo.head.name.to_sym
-end #branch
-def deserving_branch?(executable=related_files.model_test_pathname?)
+end #current_branch_name
+def deserving_branch?(executable=@related_files.model_test_pathname?)
 	test=shell_command("ruby "+executable)
+	test.puts if $VERBOSE
 	if test.success? then
 		:passed
 	elsif test.exit_status==1 then # 1 error or syntax error
@@ -71,7 +72,7 @@ def deserving_branch?(executable=related_files.model_test_pathname?)
 	else
 		:testing
 	end #if
-end #
+end #deserving_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
@@ -108,7 +109,7 @@ def stage(target_branch, tested_files)
 		switch_branch.puts.assert_post_conditions(message)
 	end #if
 	git_command("add "+tested_files.join(' ')).execute.assert_post_conditions	
-	git_command("cola").assert_post_conditions
+	git_command('cola').assert_post_conditions
 	push_branch
 end #stage
 def commit_to_branch(target_branch, tested_files)
