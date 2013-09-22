@@ -14,15 +14,6 @@ def test_create_empty
 end #create_empty
 def test_create_if_missing
 end #create_if_missing
-def test_corruption_fsck
-	Clean_Example.git_command("fsck").assert_post_conditions
-end #corruption
-def test_corruption_rebase
-#	Clean_Example.git_command("rebase").assert_post_conditions
-end #corruption
-def test_corruption_gc
-	Clean_Example.git_command("gc").assert_post_conditions
-end #corruption
 #exists Clean_Example.git_command("branch details").assert_post_conditions
 #exists Clean_Example.git_command("branch summary").assert_post_conditions
 def test_initialize
@@ -57,7 +48,15 @@ def test_stage
 #	target_branch
 #	tested_files
 end #stage
-
+def test_corruption_fsck
+	Clean_Example.git_command("fsck").assert_post_conditions
+end #corruption
+def test_corruption_rebase
+#	Clean_Example.git_command("rebase").assert_post_conditions
+end #corruption
+def test_corruption_gc
+	Clean_Example.git_command("gc").assert_post_conditions
+end #corruption
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")
 #add_commits("rails2", :rails2, Temporary+"details")
