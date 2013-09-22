@@ -15,7 +15,7 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :exit_status, :pid
 # execute same command again (also called by new.
 def execute
-	@output, @errors, @exit_status, @pid=system_output(command_string)
+	@output, @errors, @exit_status, @pid=system_output(@command_string)
 	self #allows command chaining
 end #execute
 def initialize(command_string)
@@ -85,6 +85,8 @@ end #inspect
 def puts
 	$stdout.puts "$ "+@command_string
 	$stdout.puts inspect
+	shorter_callers=caller.grep(/^[^\/]/)
+	$stdout.puts shorter_callers.join("\n") if $VERBOSE
 	self # return for comand chaining
 end #puts
 module Assertions
@@ -97,11 +99,13 @@ def assert_post_conditions(message='')
 	message+="self=#{inspect}"
 	assert_empty(@errors, message)
 	assert_equal(0, @exit_status, message)
+	assert_not_nil(@errors)
+	assert_not_nil(@exit_status)
+	assert_not_nil(@pid)
 	self # return for comand chaining
 end #assert_post_conditions
 end #Assertions
 include Assertions
-end #ShellCommands
 module Examples
 Hello_world=ShellCommands.new('echo "Hello World"')
 Example_output="1 2;3 4\n"
@@ -110,6 +114,7 @@ EXAMPLE=ShellCommands.new(COMMAND_STRING)
 
 end #Examples
 include Examples
+end #ShellCommands
 class NetworkInterface
 IFCONFIG=ShellCommands.new('/sbin/ifconfig')
 #puts IFCONFIG.inspect

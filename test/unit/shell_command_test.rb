@@ -9,6 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
+include DefaultTests
 include ShellCommands::Examples
 def test_initialize
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
@@ -17,6 +18,7 @@ def test_initialize
 	assert_equal(0, EXAMPLE.exit_status.exitstatus)
 	assert_equal(EXAMPLE.exit_status.pid, EXAMPLE.pid)
 	assert_equal("Hello World\n", Hello_world.output)
+	Hello_world.assert_post_conditions
 end #initialize
 def test_system_output
 	ret=[] #make method scope not block scope so it can be returned
@@ -44,6 +46,10 @@ def test_inspect
 end #inspect
 def test_puts
 	assert_equal(Example_output, EXAMPLE.output)
+	assert_kind_of(Enumerable, caller)
+	assert_instance_of(Array, caller)
+	explain_assert_respond_to(caller, :grep)
+	shorter_callers=caller.grep(/^[^\/]/)
 	assert_equal(EXAMPLE, EXAMPLE.puts) #allow command chaining
 end #puts
 def test_assert_post_conditions
