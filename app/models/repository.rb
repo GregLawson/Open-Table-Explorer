@@ -107,6 +107,9 @@ def stage(target_branch, tested_files)
 			git_command("checkout stash "+p).execute.assert_post_conditions
 		end #each
 		switch_branch.puts.assert_post_conditions(message)
+		if !switch_branch.errors.empty? then
+			puts "Why am I here?"+message
+		end #if
 	end #if
 	git_command("add "+tested_files.join(' ')).execute.assert_post_conditions	
 	git_command('cola').assert_post_conditions
