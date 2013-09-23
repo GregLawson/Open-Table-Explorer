@@ -41,8 +41,8 @@ def test_current_branch_name?
 
 end #current_branch_name
 def test_deserving_branch
-	executable=SELF_code_Repo.related_files.model_test_pathname?
-	assert_equal(:passed, SELF_code_Repo.deserving_branch?($0))
+	executable=$0
+	assert_equal(:passed, SELF_code_Repo.deserving_branch?('minimal.rb'))
 end #deserving_branch
 def test_stage
 #	target_branch
