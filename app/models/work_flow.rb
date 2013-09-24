@@ -85,13 +85,11 @@ def execute
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
 def test(executable=@related_files.model_test_pathname?)
+	@repository.stage(:edited, @related_files.tested_files(executable))
 	@repository.stage(@repository.deserving_branch?(executable), @related_files.tested_files(executable))
 	@repository.git_command('checkout edited')
-	@repository.git_command('stash apply')
+#	@repository.git_command('stash apply')
 end #test
-require_relative '../../test/assertions/default_assertions.rb'
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
 module Assertions
 module ClassMethods
 def assert_post_conditions
