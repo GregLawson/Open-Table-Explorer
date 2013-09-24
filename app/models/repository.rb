@@ -100,9 +100,9 @@ def stage(target_branch, tested_files)
 	else
 		push_branch=current_branch_name?
 		git_command("stash save").assert_post_conditions
+		switch_branch=git_command("checkout "+target_branch.to_s).execute
 		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
-		switch_branch=git_command("checkout "+target_branch.to_s).execute
 		tested_files.each do |p|
 			git_command("checkout stash "+p).execute.assert_post_conditions
 		end #each
@@ -110,7 +110,6 @@ def stage(target_branch, tested_files)
 			puts "Why am I here?"+message
 			switch_branch.puts
 		end #if
-		switch_branch.puts.assert_post_conditions(message)
 	end #if
 	git_command("add "+tested_files.join(' ')).execute.assert_post_conditions	
 	git_command('cola').assert_post_conditions
