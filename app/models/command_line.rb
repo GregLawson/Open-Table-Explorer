@@ -9,6 +9,7 @@ require 'optparse'
 require 'ostruct'
 require 'pp'
 require 'test/unit'
+require 'mime/types' # new ruby detailed library
 require_relative '../../app/models/shell_command.rb'
 class CommandLine
 module ClassMethods
