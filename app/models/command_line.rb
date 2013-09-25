@@ -36,6 +36,12 @@ def initialize(path, description=nil, help_source=nil)
 		@whereis=ShellCommands.new("whereis "+command).execute.output
 	end #if
 end #initialize
+#mime/types in a ruby library
+def ruby_mime
+    plaintext = MIME::Types[@mime_type]
+    # returns [text/plain, text/plain]
+    text      = plaintext.first
+end #ruby_mime
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
