@@ -10,6 +10,12 @@ class Regexp
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 Any_binary_char_string='[\000-\377]'
+Any='*'
+Many='+'
+Optional='?'
+Start_string=/\A/
+End_string=/\z/
+End_string_less_newline=/\Z/
 end #Constants
 module ClassMethods
 def promote(node)
