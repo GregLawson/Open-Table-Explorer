@@ -12,6 +12,9 @@ require_relative '../../app/models/shell_command.rb'
 require_relative 'repository.rb'
 class WorkFlow
 #include Grit
+module Constants
+Branch_enhancement=[:passed, :testing, :edited]
+end #Constants
 attr_reader :related_files, :edit_files, :repository
 module ClassMethods
 def revison_tag(branch)
@@ -85,13 +88,18 @@ def execute
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
 def test(executable=@related_files.model_test_pathname?)
+		push_branch=@repository.current_branch_name?
+	@repository.git_command("stash save").assert_post_conditions
 	@repository.stage(:edited, @related_files.tested_files(executable))
 	@repository.stage(@repository.deserving_branch?(executable), @related_files.tested_files(executable))
-	@repository.git_command('checkout edited')
-#	@repository.git_command('stash apply')
+	@repository.git_command('checkout #{push_branch}')
+	@repository.git_command('stash apply')
+	@repository.recent_test.puts
 end #test
 module Assertions
+include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
 def assert_post_conditions
 	assert_pathname_exists(TestFile, "assert_post_conditions")
 end #assert_post_conditions
@@ -100,13 +108,12 @@ def assert_pre_conditions
 	assert_not_nil(@related_files)
 	assert_not_empty(@related_files.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @related_files.edit_files=#{@related_files.edit_files.inspect}")
 end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 #TestWorkFlow.assert_pre_conditions
-module Constants
-#Git_Cola=ShellCommands.new("git-cola ", :delay_execution)
-Branch_enhancement=[:passed, :testing, :edited]
-end #Constants
 include Constants
 module Examples
 TestFile=File.expand_path($0)
