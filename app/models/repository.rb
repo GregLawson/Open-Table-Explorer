@@ -82,14 +82,14 @@ end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 def safely_visit_branch(target_branch, &block)
-	push_branch=@repository.current_branch_name?
-	@repository.git_command("stash save").assert_post_conditions
-	@repository.git_command('checkout #{target_branch}').assert_post_conditions
-	block.call
-	@repository.git_command('checkout #{push_branch}').assert_post_conditions
-	@repository.git_command('stash apply').assert_post_conditions
-	@repository.recent_test.puts
-end #test
+	push_branch=current_branch_name?
+	git_command("stash save").assert_post_conditions
+	git_command('checkout #{target_branch}').assert_post_conditions
+	block.call(self)
+	git_command('checkout #{push_branch}').assert_post_conditions
+	git_command('stash apply').assert_post_conditions
+	recent_test.puts
+end #safely_visit_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
