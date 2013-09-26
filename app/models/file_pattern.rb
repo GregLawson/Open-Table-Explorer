@@ -22,12 +22,6 @@ Patterns=[
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
 include Regexp::Constants
-Any='*'
-Many='+'
-Optional='?'
-Start_string=/\A/
-End_string=/\z/
-End_string_less_newline=/\Z/
 Directory_delimiter=/\//
 Basename_character_regexp=/[[:word:]\. -]/
 Basename_regexp=Basename_character_regexp*Many
