@@ -7,6 +7,10 @@
 ###########################################################################
 class Regexp
 #include Comparable
+module Constants
+Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+Any_binary_char_string='[\000-\377]'
+end #Constants
 module ClassMethods
 def promote(node)
 	if node.instance_of?(String) then 
@@ -93,10 +97,6 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-module Constants
-Default_options=Regexp::EXTENDED | Regexp::MULTILINE
-Any_binary_char_string='[\000-\377]'
-end #Constants
 include Constants
 module Examples
 include Constants
