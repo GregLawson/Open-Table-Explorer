@@ -21,6 +21,7 @@ Patterns=[
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
+include Regexp::Constants
 Any='*'
 Many='+'
 Optional='?'
