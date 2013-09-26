@@ -46,6 +46,8 @@ def project_root_dir?(path=$0)
 	ret=case script_directory_name
 	when 'unit' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'assertions' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'long_test' then
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	when 'integration' then
@@ -69,7 +71,7 @@ def find_from_path(path)
 	Constants::All.find do |p|
 		p.sub_directory_match(path) && p.suffix_match(path)
 	end #find
-end #find_from_path
+end #pattern_from_path
 def pathnames?(model_basename)
 #	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
 	raise "model_basename" if model_basename.nil?
@@ -184,5 +186,6 @@ DCT_filename='script/dct.rb'
 SELF_Model=__FILE__
 SELF_Test=$0
 #SELF=FilePattern.new(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
+Project_root_directory=FilePattern.project_root_dir?($0)
 end #Examples
 end #FilePattern
