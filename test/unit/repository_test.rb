@@ -45,6 +45,10 @@ def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
+def test_safely_visit_branch
+	push_branch=Clean_Example.current_branch_name?
+	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
+end #safely_visit_branch
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")

@@ -14,7 +14,6 @@ Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
 end #Constants
 module ClassMethods
-attr_reader :recent_test, :deserving_branch
 def create_empty(path)
 	ShellCommands.new('mkdir '+path)
 	ShellCommands.new('cd '+path+';git init')
@@ -33,7 +32,7 @@ end #create_if_missing
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
-attr_reader :path, :grit_repo
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
 	@path=path
@@ -80,6 +79,17 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 	end #if
 	@deserving_branch
 end #deserving_branch
+# This is safe in the sense that a stash saves all files
+# and a stash apply restores all tracked files
+def safely_visit_branch(target_branch, &block)
+	push_branch=current_branch_name?
+	git_command("stash save").assert_post_conditions
+	git_command('checkout #{target_branch}').assert_post_conditions
+	block.call(self)
+	git_command('checkout #{push_branch}').assert_post_conditions
+	git_command('stash apply').assert_post_conditions
+	recent_test.puts
+end #safely_visit_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
