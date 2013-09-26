@@ -14,6 +14,7 @@ Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
 end #Constants
 module ClassMethods
+attr_reader :recent_test, :deserving_branch
 def create_empty(path)
 	ShellCommands.new('mkdir '+path)
 	ShellCommands.new('cd '+path+';git init')
@@ -63,15 +64,21 @@ def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
 def deserving_branch?(executable=@related_files.model_test_pathname?)
-	test=shell_command("ruby "+executable)
-	test.puts if $VERBOSE
-	if test.success? then
-		:passed
-	elsif test.exit_status==1 then # 1 error or syntax error
-		:edited
+	@recent_test=shell_command("ruby "+executable)
+	@recent_test.puts if $VERBOSE
+	if @recent_test.success? then
+		@deserving_branch=:passed
+	elsif @recent_test.exit_status==1 then # 1 error or syntax error
+		syntax_test=shell_command("ruby-c "+executable)
+		if syntax_test.output=="Syntax OK\n" then
+			@deserving_branch=:testing
+		else
+			@deserving_branch=:edited
+		end #if
 	else
-		:testing
+		@deserving_branch=:testing
 	end #if
+	@deserving_branch
 end #deserving_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
@@ -99,16 +106,15 @@ def stage(target_branch, tested_files)
 		push_branch=target_branch # no need for stash popping
 	else
 		push_branch=current_branch_name?
-		git_command("stash save").assert_post_conditions
 		switch_branch=git_command("checkout "+target_branch.to_s).execute
 		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
 		tested_files.each do |p|
 			git_command("checkout stash "+p).execute.assert_post_conditions
 		end #each
-		switch_branch.puts.assert_post_conditions(message)
 		if !switch_branch.errors.empty? then
 			puts "Why am I here?"+message
+			switch_branch.puts
 		end #if
 	end #if
 	git_command("add "+tested_files.join(' ')).execute.assert_post_conditions	
