@@ -7,6 +7,7 @@
 ###########################################################################
 require 'test/unit'
 require 'pathname'
+require_relative 'regexp.rb'
 class FilePattern <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
@@ -20,6 +21,20 @@ Patterns=[
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
+Any='*'
+Many='+'
+Optional='?'
+Start_string=/\A/
+End_string=/\z/
+End_string_less_newline=/\Z/
+Directory_delimiter=/\//
+Basename_character_regexp=/[[:word:]\. -]/
+Basename_regexp=Basename_character_regexp*Many
+Pathname_character_regexp=/[[:word:]\. \/-]/
+Relative_pathname_regexp=Start_string*Pathname_character_regexp*Many*End_string
+Absolute_pathname_regexp=Start_string*Directory_delimiter*Pathname_character_regexp*Many*End_string
+Relative_directory_regexp=Start_string*Pathname_character_regexp*Many*End_string
+Absolute_directory_regexp=Start_string*Directory_delimiter*Pathname_character_regexp*Many*End_string
 end  #Constants
 module ClassMethods
 def all
@@ -84,6 +99,9 @@ end #pathnames
 #assert_pre_conditions
 end #ClassMethods
 extend ClassMethods
+module Constants
+Project_root_directory=FilePattern.project_root_dir?($0)
+end #Constants
 def initialize(hash)
 	@pattern=hash
 	super(hash)
@@ -108,7 +126,12 @@ def path?(model_basename)
 	raise "" if !self[:suffix].instance_of?(String)
 	self[:sub_directory]+model_basename.to_s+self[:suffix]
 end #path
-
+def parse_pathname_regexp
+	Absolute_directory_regexp.capture(:project_root_directory)*self[:sub_directory]+/[[:word:]]+/.capture(:model_basename)+self[:suffix]
+end #parse_pathname_regexp
+def pathname_glob(model_basename='*')
+	Project_root_directory+self[:sub_directory]+model_basename+self[:suffix]
+end #pathname_glob
 def relative_path?(model_basename)
 	Pathname.new(path?(model_basename)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
@@ -186,6 +209,5 @@ DCT_filename='script/dct.rb'
 SELF_Model=__FILE__
 SELF_Test=$0
 #SELF=FilePattern.new(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
-Project_root_directory=FilePattern.project_root_dir?($0)
 end #Examples
 end #FilePattern
