@@ -14,10 +14,20 @@ class FilePatternTest <  DefaultTestCase2
 #include DefaultTests0    #less error messages
 include FilePattern::Constants
 include FilePattern::Examples
-Root_directory=FilePattern.project_root_dir?($0)
 #include FilePattern::Assertions
 #include FilePattern::Assertions::KernelMethods
 extend FilePattern::Assertions::ClassMethods
+def test_Constants
+
+	assert_match(Directory_delimiter, Project_root_directory)
+	assert_match(Basename_character_regexp, Project_root_directory)
+	assert_match(Basename_regexp, Project_root_directory)
+	assert_match(Pathname_character_regexp, Project_root_directory)
+	assert_match(Absolute_pathname_regexp, $0)
+	assert_match(Relative_directory_regexp, All[0][:sub_directory])
+	assert_match(Absolute_directory_regexp, Project_root_directory)
+#	assert_match(Relative_pathname_regexp, )
+end #Constants
 def test_all
 	assert_not_empty(FilePattern.all)
 	assert_equal(All, FilePattern.all)
