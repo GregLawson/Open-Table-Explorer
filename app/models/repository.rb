@@ -68,7 +68,12 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 	if test.success? then
 		:passed
 	elsif test.exit_status==1 then # 1 error or syntax error
-		:edited
+		syntax_test=shell_command("ruby-c "+executable)
+		if syntax_test.output=="Syntax OK\n" then
+			:testing
+		else
+			:edited
+		end #if
 	else
 		:testing
 	end #if
@@ -95,7 +100,6 @@ def downgrade(executable=related_files.model_test_pathname?)
 	downgrade_commit(deserving_branch?(executable), executable)
 end #downgrade
 def stage(target_branch, tested_files)
-	git_command("stash save").assert_post_conditions
 	if current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
 	else
