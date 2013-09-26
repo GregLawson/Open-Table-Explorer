@@ -14,7 +14,7 @@ Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
 end #Constants
 module ClassMethods
-read_attr :recent_test, :deserving_branch
+attr_reader :recent_test, :deserving_branch
 def create_empty(path)
 	ShellCommands.new('mkdir '+path)
 	ShellCommands.new('cd '+path+';git init')
