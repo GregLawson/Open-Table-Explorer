@@ -16,6 +16,14 @@ include WorkFlow::Examples
 def test_revison_tag
 	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
 end #revison_tag
+def test_initialize
+	te=RelatedFile.new(TestFile)
+	assert_not_nil(te)
+	wf=WorkFlow.new(TestFile)
+	assert_not_nil(wf)
+	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
+	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
+end #initialize
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
@@ -30,14 +38,6 @@ def test_goldilocks
 	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
 end #goldilocks
 include WorkFlow::Examples
-def test_initialize
-	te=RelatedFile.new(TestFile)
-	assert_not_nil(te)
-	wf=WorkFlow.new(TestFile)
-	assert_not_nil(wf)
-	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
-	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
-end #initialize
 def test_execute
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile)
 #	assert_equal('', TestWorkFlow.version_comparison)
@@ -54,11 +54,7 @@ def test_functional_parallelism
 	edit_files=TestWorkFlow.related_files.edit_files
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
 	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
-	end #functional_parallelism
-def test_stage
-	target_branch=:development
-	target_branch=:master
-end #stage
+end #functional_parallelism
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions
