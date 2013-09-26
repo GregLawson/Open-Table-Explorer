@@ -14,6 +14,7 @@ Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
 end #Constants
 module ClassMethods
+read_attr :recent_test, :deserving_branch
 def create_empty(path)
 	ShellCommands.new('mkdir '+path)
 	ShellCommands.new('cd '+path+';git init')
@@ -63,20 +64,21 @@ def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
 def deserving_branch?(executable=@related_files.model_test_pathname?)
-	test=shell_command("ruby "+executable)
-	test.puts if $VERBOSE
-	if test.success? then
-		:passed
-	elsif test.exit_status==1 then # 1 error or syntax error
+	@recent_test=shell_command("ruby "+executable)
+	@recent_test.puts if $VERBOSE
+	if @recent_test.success? then
+		@deserving_branch=:passed
+	elsif @recent_test.exit_status==1 then # 1 error or syntax error
 		syntax_test=shell_command("ruby-c "+executable)
 		if syntax_test.output=="Syntax OK\n" then
-			:testing
+			@deserving_branch=:testing
 		else
-			:edited
+			@deserving_branch=:edited
 		end #if
 	else
-		:testing
+		@deserving_branch=:testing
 	end #if
+	@deserving_branch
 end #deserving_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
