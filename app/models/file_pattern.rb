@@ -21,12 +21,7 @@ Patterns=[
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
-Any='*'
-Many='+'
-Optional='?'
-Start_string=/\A/
-End_string=/\z/
-End_string_less_newline=/\Z/
+include Regexp::Constants
 Directory_delimiter=/\//
 Basename_character_regexp=/[[:word:]\. -]/
 Basename_regexp=Basename_character_regexp*Many
