@@ -93,6 +93,7 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.stage(@repository.deserving_branch?(executable), @related_files.tested_files(executable))
 	@repository.git_command('checkout edited')
 	@repository.git_command('stash apply')
+	@repository.recent_test.puts
 end #test
 module Assertions
 include Test::Unit::Assertions
