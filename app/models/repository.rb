@@ -68,7 +68,12 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 	if test.success? then
 		:passed
 	elsif test.exit_status==1 then # 1 error or syntax error
-		:edited
+		syntax_test=shell_command("ruby-c "+executable)
+		if syntax_test.output=="Syntax OK\n" then
+			:testing
+		else
+			:edited
+		end #if
 	else
 		:testing
 	end #if
