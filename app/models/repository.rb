@@ -14,7 +14,6 @@ Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
 end #Constants
 module ClassMethods
-attr_reader :recent_test, :deserving_branch
 def create_empty(path)
 	ShellCommands.new('mkdir '+path)
 	ShellCommands.new('cd '+path+';git init')
@@ -33,7 +32,7 @@ end #create_if_missing
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
-attr_reader :path, :grit_repo
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
 	@path=path
