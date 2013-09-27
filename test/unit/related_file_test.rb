@@ -128,6 +128,9 @@ end #default_test_class_id
 def test_Examples
 	UnboundedFixnumRelatedFile.assert_pre_conditions
 	UnboundedFixnumRelatedFile.assert_post_conditions
+def test_assert_tested_files
+	assert_tested_files($0, [:model, :test])
+end #assert_tested_files
 end #Examples
 end #RelatedFile
 
