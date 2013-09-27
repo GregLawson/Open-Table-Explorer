@@ -14,24 +14,26 @@ end #EmptyDefaultTest
 class EmptyIncludedTest
 include DefaultTests1
 end #EmptyIncludedTest
-require_relative '../../test/assertions/default_assertions.rb'
-require_relative '../../test/assertions/minimal_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/minimal_assertions.rb'
 class MinimalTest < DefaultTestCase0
-extend DefaultAssertions::ClassMethods
+#extend DefaultAssertions::ClassMethods
 end #MinimalTest
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 class ClassExists
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
+#include DefaultAssertions
+#extend DefaultAssertions::ClassMethods
 def self.assert_invariant
-	assert_equal(:ClassExists, self.name.to_sym, caller_lines)
+	assert_equal(:ClassExists, self.name.to_sym) #, caller_lines)
 	assert_instance_of(Class, self)
 end # class_assert_invariant
 end #ClassExists
 
 class ClassExistsTest < DefaultTestCase1
 def test_name_of_test
-	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
+	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}")
 #	assert_equal('ClassExistsTest', name_of_test?, "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_lines)
 end #name_of_test?
 def test_global_class_names

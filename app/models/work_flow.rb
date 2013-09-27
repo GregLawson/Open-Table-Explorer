@@ -88,10 +88,11 @@ def execute
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
 def test(executable=@related_files.model_test_pathname?)
+		push_branch=@repository.current_branch_name?
 	@repository.git_command("stash save").assert_post_conditions
 	@repository.stage(:edited, @related_files.tested_files(executable))
 	@repository.stage(@repository.deserving_branch?(executable), @related_files.tested_files(executable))
-	@repository.git_command('checkout edited')
+	@repository.git_command('checkout #{push_branch}')
 	@repository.git_command('stash apply')
 	@repository.recent_test.puts
 end #test

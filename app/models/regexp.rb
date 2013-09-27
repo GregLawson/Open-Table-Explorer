@@ -7,6 +7,16 @@
 ###########################################################################
 class Regexp
 #include Comparable
+module Constants
+Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+Any_binary_char_string='[\000-\377]'
+Any='*'
+Many='+'
+Optional='?'
+Start_string=/\A/
+End_string=/\z/
+End_string_less_newline=/\Z/
+end #Constants
 module ClassMethods
 def promote(node)
 	if node.instance_of?(String) then 
@@ -93,15 +103,12 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-module Constants
-Default_options=Regexp::EXTENDED | Regexp::MULTILINE
-Any_binary_char_string='[\000-\377]'
-end #Constants
 include Constants
 module Examples
 include Constants
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
+Any_binary_char_string='[\000-\377]'
 Line_terminator=/\n/
 Line_pattern=/([^\n]*)/
 LINES=/([^\n]*)(?:\n([^\n]*))*/
