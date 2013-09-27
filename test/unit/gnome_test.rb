@@ -1,11 +1,13 @@
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require_relative 'test_environment.rb'
 require_relative '../../app/models/shell_command.rb'
-class Gnome
-module Constants
-Data_Sources_Dir=TE.data_sources_directory?+'gnome_hangs/'
-end #Constants
-include Constants
-end #Gnome
+include Gnome::Constants
 class GnomeTest < TestCase
 include DefaultTests
 include Gnome::Constants
@@ -19,5 +21,5 @@ def test_ps
 	ps=ShellCommands.new('ps -ef')
 	IO.binwrite(Data_Sources_Dir+'test.ps', ps.output)
 end #lsof
-end #GnomeTest
+end #Gnome
 
