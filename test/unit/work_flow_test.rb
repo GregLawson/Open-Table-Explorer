@@ -55,10 +55,6 @@ def test_functional_parallelism
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
 	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
 end #functional_parallelism
-def test_stage
-	target_branch=:development
-	target_branch=:master
-end #stage
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions
