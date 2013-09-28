@@ -88,7 +88,8 @@ def execute
 	test_and_commit(related_files.model_test_pathname?)
 end #execute
 def test(executable=@related_files.model_test_pathname?)
-		push_branch=@repository.current_branch_name?
+	begin
+	push_branch=@repository.current_branch_name?
 	@repository.git_command("stash save").assert_post_conditions
 	@repository.stage(:edited, @related_files.tested_files(executable))
 	@repository.stage(@repository.deserving_branch?(executable), @related_files.tested_files(executable))
@@ -96,6 +97,7 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.git_command('stash apply')
 	@repository.recent_test.puts
 	edit
+	end until @repository.recent_test.success?
 end #test
 module Assertions
 include Test::Unit::Assertions
