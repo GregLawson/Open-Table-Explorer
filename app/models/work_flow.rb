@@ -91,10 +91,14 @@ def test(executable=@related_files.model_test_pathname?)
 	begin
 	push_branch=@repository.current_branch_name?
 	@repository.git_command("stash save").assert_post_conditions
-	@repository.stage(:edited, @related_files.tested_files(executable))
-	@repository.stage(@repository.deserving_branch?(executable), @related_files.tested_files(executable))
+#	@repository.stage(:edited, @related_files.tested_files(executable))
+	deserving_branch=@repository.deserving_branch?(executable)
+	@repository.stage(deserving_branch, @related_files.tested_files(executable))
 	@repository.git_command('checkout #{push_branch}')
 	@repository.git_command('stash apply')
+	@repository.git_command('checkout #{deserving_branch}')
+	@repository.git_command('stash apply')
+	@repository.git_command('cola')
 	@repository.recent_test.puts
 	edit
 	end until @repository.recent_test.success?
@@ -104,7 +108,7 @@ include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 def assert_post_conditions
-	assert_pathname_exists(TestFile, "assert_post_conditions")
+#	assert_pathname_exists(TestFile, "assert_post_conditions")
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
