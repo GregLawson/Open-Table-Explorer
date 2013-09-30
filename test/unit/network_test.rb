@@ -16,7 +16,7 @@ class NetworkTest < TestCase
 @@table_name=@@model_name.tableize
 #@@my_fixtures=fixtures(@@table_name)
  
-fixtures @@table_name.to_sym
+#fixtures @@table_name.to_sym
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests
