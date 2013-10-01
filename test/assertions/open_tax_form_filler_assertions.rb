@@ -5,12 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/open_tax_form_filler.rb'
 module OpenTaxFormFiller
 
 class Definitions
-#require_relative '../../test/assertions/default_assertions.rb'
 
 module Assertions
 include Test::Unit::Assertions

@@ -5,7 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
+require_relative '../../app/models/generic_file.rb'
+#require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
 module OpenTaxFormFiller
 module Constants
 Default_tax_year=2012
