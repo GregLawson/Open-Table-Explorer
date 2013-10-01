@@ -6,7 +6,6 @@
 #
 ###########################################################################
 require 'active_support/all'
-#include TestIntrospection
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
 def each_example(&block)
