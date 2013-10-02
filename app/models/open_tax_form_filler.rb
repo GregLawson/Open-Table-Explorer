@@ -51,17 +51,8 @@ end #assert_json_string
 def self.raw_acquisitions
 	all_files=Dir[OTF_definition_filenames]
 	all_files.map do |filename|
-		json=JSON[IO.read(filename)]
-		entries=json['fields'].each_pair do |key, value|
-			flat={}
-			flat[:form]=json['form']
-			flat[:year]=json['year']
-			flat[:line]=key
-			flat[:type]=value
-			flat
-		end #each_pair
-		entries
-	end.compact # map
+		OpenTaxFormFiller.parse(IO.read(filename))
+	end.flatten # map
 end #raw_acquisitions
 def self.coarse_filter
 	raw_acquisitions.select do |acquisition|
