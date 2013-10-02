@@ -9,8 +9,9 @@ require_relative 'test_environment'
 require_relative '../../app/models/open_tax_form_filler.rb'
 class OpenTaxFormFillerTest < DefaultTestCase2
 include DefaultTests2
-include OpenTaxFormFiller::Constants
-include OpenTaxFormFiller::Examples
+include OpenTaxFormFiller::Definitions::Constants
+include OpenTaxFormFiller::Definitions::Examples
+include OpenTaxFormFiller
 def test_CLASS_constants
 	
 	assert(File.exists?(Open_tax_filler_directory), Dir["#{Open_tax_filler_directory}/*"].inspect)

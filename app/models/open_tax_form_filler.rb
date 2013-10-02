@@ -51,6 +51,9 @@ end #Assertions
 end #GenericJson
 
 module OpenTaxFormFiller
+module Constants
+Default_tax_year=2012
+end #Constants
 class Definitions
 include NoDB
 extend NoDB::ClassMethods
@@ -195,8 +198,8 @@ end #coarse_filter
 
 include Assertions
 extend Assertions::ClassMethods
-Pjsons.assert_pre_conditions
-Pjsons.assert_pre_conditions
+#Pjsons.assert_pre_conditions
+#Pjsons.assert_pre_conditions
 module Examples
 Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
 
