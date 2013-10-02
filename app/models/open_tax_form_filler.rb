@@ -63,21 +63,10 @@ def self.coarse_rejections
 	[]
 end #coarse_rejections
 def self.all(tax_year=Default_tax_year)
-	coarse_filter.map do |r| #map
-		matchData=Full_regexp.match(r)
-		if matchData then
-			otff=parse(r, Full_regexp)
-			otff[:tax_year]=tax_year
-			otff
-		else
-			nil
-		end #if
-	end.compact #map
+	coarse_filter
 end #all
 def self.fine_rejections
-	coarse_filter.select do |r| #map
-		!Full_regexp.match(r)
-	end #select
+	[]
 end #fine_rejections
 module Examples
 Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
