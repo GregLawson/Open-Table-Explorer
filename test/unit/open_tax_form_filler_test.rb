@@ -7,8 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/open_tax_form_filler.rb'
-class OpenTaxFormFillerTest < DefaultTestCase2
-include DefaultTests2
+class DefinitionsTest < DefaultTestCase2
 include OpenTaxFormFiller::Definitions::Constants
 include OpenTaxFormFiller::Definitions::Examples
 include OpenTaxFormFiller
@@ -29,6 +28,7 @@ def test_CLASS_constants
 	OpenTaxFormFiller.assert_post_conditions
 
 end #Constants
+include DefaultTests2
 def test_initialize
 	assert_not_nil(OpenTaxFormFiller.new)
 end #initialize
