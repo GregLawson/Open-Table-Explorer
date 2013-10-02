@@ -5,117 +5,16 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/generic_files.rb'
-require_relative '../../app/models/shell_command.rb'
-module OpenTableExplorer
-module Constants
-Data_source_directory='test/data_sources'
-end #Constants
-include Test::Unit::Assertions
-extend Test::Unit::Assertions
-def shell_command(command_string)
-	puts command_string
-	sysout=`#{command_string}`
-#	puts "sysout=#{sysout}"
-	assert_equal('', sysout, "command_string=#{command_string} \nsysout=#{sysout}")
-	sysout
-end #shell_command
-module Finance
-module Constants
-include OpenTableExplorer::Constants
-Default_tax_year=2012
-Open_Tax_Filler_Directory='../OpenTaxFormFiller'
-Open_tax_solver_directory=Dir["../OpenTaxSolver2012_*"][0]
-Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
-Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_Lawson.txt"
-Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
-
-Open_tax_solver_binary="#{Open_tax_solver_directory}/bin/taxsolve_US_1040_2012"
-Command="#{Open_tax_solver_binary} #{Open_tax_solver_input} >#{Open_tax_solver_sysout}"
-OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
-end #Constants
-# Main purpose of this class is to translate between the 
-# differing naming conventions of OpenTaxSolver and OpenTaxFormFiller
-class TaxForms
-include Constants
-include OpenTableExplorer
-attr_reader :form, :jurisdiction, :tax_year, :form_filename, :open_tax_solver_directory, :open_tax_solver_data_directory, :ots_template_filename, :output_pdf
-def initialize(form, jurisdiction='US', tax_year=Finance::Constants::Default_tax_year)
-	@form=form
-	@jurisdiction=jurisdiction # :US, or :CA
-	@tax_year=tax_year
-	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"][0]
-	@form_filename="#{@jurisdiction.to_s}_#{@form}"
-	@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}"
-	@open_tax_solver_output="#{open_tax_solver_data_directory}/#{@form_filename}_Lawson.txt"
-	@ots_template_filename="#{Open_tax_solver_data_directory}/#{@jurisdiction.to_s}_#{@form}_template.txt"
-	@ots_to_otff_values="#{Data_source_directory}/#{@form_filename}_OTS.json"
-
-	@output_pdf="#{Data_source_directory}/#{@form_filename}_otff.pdf"
-	@fdf='/tmp/output.fdf'
-
-end #initialize
-def run_open_tax_solver
-	open_tax_solver_input="#{open_tax_solver_data_directory}/US_1040_Lawson.txt"
-	open_tax_solver_sysout="#{open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
-	command="#{Open_tax_solver_binary} #{open_tax_solver_input} >#{open_tax_solver_sysout}"
-	shell_command(command)
-	results=ShellCommands.new(command)
-end #run_open_tax_solver
-def run_open_tax_solver_to_filler
-	command="nodejs #{@open_Tax_Filler_Directory}/script/json_ots.js #{@open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json"
-	shell_command(command)
-	results=ShellCommands.new(command)
-end #run_open_tax_solver_to_filler
-def 	run_tax_form_filler_node
-# The following comments are copied from the README files:
-#2. In the main directory, run
-#./script/fillin_values FORM_NAME INPUT.json OUTPUT_FILE
-#where form name is something like f8829 or f1040.
-#3. Your OUTPUT_FILE should be your desired pdf filename.
-#	sysout=`#{Open_Tax_Filler_Directory}/script/fillin_values FORM_NAME {Data_source_directory}/US_1040_OTS.json {Data_source_directory}/otff_output.pdf`
-
-#!/bin/bash
-
-#: ${YEAR_DIR:=2012}
-#FORM=$1
-#DATA=$2
-#FDF=/tmp/output.fdf
-
-#node script/apply_values.js ${YEAR_DIR}/definition/${FORM}.json \
-#       ${YEAR_DIR}/transform/${FORM}.json ${DATA} > /tmp/output.fdf
-	command="nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{year_dir}/definition/#{form}.json #{Open_Tax_Filler_Directory}/#{year_dir}/transform/#{form}.json #{data} > #{fdf}"
-	results=ShellCommands.new(command)
-end #run_tax_form_filler_node
-def 	run_fillin_pdf_form
-#pdftk ${YEAR_DIR}/PDF/${FORM}.pdf fill_form ${fdf} output $3
-end #run_tax_form_filler
-module Assertions
-def assert_post_conditions
-	assert(File.exists?(@open_tax_solver_directory), caller_lines)
-	assert(File.exists?(@open_tax_solver_data_directory), caller_lines)
-	assert(File.exists?(@open_tax_solver_output), caller_lines)
-	assert(File.exists?(@ots_template_filename), caller_lines)
-end #assert_post_conditions
-end #Assertions
-include Assertions
-module Examples
-F1040=TaxForms.new(1040, :US, 2012)
-CA540=TaxForms.new(540, :CA, 2012)
-end #Examples
-end #TaxForms
-end #Finance
-end #OpenTableExplorer
+require_relative '../../app/models/no_db.rb'
 class OpenTaxSolver
-include GenericFiles
-extend GenericFiles::ClassMethods
-include GenericFiles::Assertions
-extend GenericFiles::Assertions::ClassMethods
-extend OpenTableExplorer::Finance::Constants
+include NoDB
+extend NoDB::ClassMethods
 module Constants
-include OpenTableExplorer::Finance::Constants
-extend OpenTableExplorer::Finance::Constants
-OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
+Default_tax_year=2011
+Open_tax_solver_directory="../OpenTaxSolver#{Default_tax_year}_9.01/examples_and_templates/US_1040/"
+Data_source_directory='test/data_sources'
+OTS_template_filename="#{Open_tax_solver_directory}/US_1040_template.txt"
+OTS_SQL_dump_filename="#{Data_source_directory}/OTS_SQL_dump_{Default_tax_year}.sql"
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Delimiter='\s+'
 Specific_types=['\?\?', '0', ';', '0\s+;', 'Yes']
@@ -125,59 +24,38 @@ Symbol_regexp=/#{Symbol_pattern}/
 Type_regexp=/#{Symbol_pattern}#{Type_pattern}/
 Description_regexp=/#{Description_pattern}/
 Full_regexp=/#{Symbol_pattern}#{Type_pattern}#{Description_pattern}/
-Full_regexp_array=[Symbol_pattern, Type_pattern, Description_pattern]
-Open_Tax_Filler_Directory='../OpenTaxFormFiller'
-Data_source_directory='test/data_sources'
 end #Constants
-include Constants
-def self.input_file_names
-	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
-end #input_file_names
-def self.parse
-	sequence_number=0
-	raw_acquisitions.map do |acquisition|
-	lines=acquisition.lines.map do |line|
-		regexp=Regexp.new(Full_regexp_array.join)
-		matchData=regexp.match(line)
-		if matchData then
-			name=matchData[1]
-			type_chars=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
-			description=matchData[-1].strip
-		end #if
-		tax_year=2012
-		hash={:name => name, :type_chars => type_chars, :description => description, :tax_year => tax_year}
-		sequence_number=sequence_number+1
-		hash=hash.merge({:id => sequence_number})
-	end.compact #each_line
-	end.flatten #each_acquisition
+def self.parse(acquisition, pattern=Full_regexp) #acquisition=next
+	matchData=pattern.match(acquisition)
+	name=matchData[1]
+	type=(matchData[4] || matchData[6] || matchData[8] || matchData[2]).strip # 
+	description=matchData[-1].strip
+	OpenTaxSolver.new([name, type, description], [:name, :type_chars, :description], [String, String, String])
 end #parse
-def self.input_file_names
-	"#{Open_tax_solver_data_directory}/US_1040_template.txt"
-end #input_file_names
+def self.raw_acquisitions
+	IO.readlines('test/data_sources/US_1040_template.txt')
+end #raw_acquisitions
 def self.coarse_filter
-	raw_acquisitions.map do |acquisition|
-		matches=acquisition.lines.map do |line|
-			if Type_regexp.match(line) && Description_regexp.match(line) then
-				line
-			else
-				nil
-			end #if
-		end #each_line
-	end.flatten.compact #select
+	raw_acquisitions.select do |acquisition|
+		Type_regexp.match(acquisition) && Description_regexp.match(acquisition)
+	end #select
 end #coarse_filter
 def self.coarse_rejections
-	raw_acquisitions.map do |acquisition|
-		matches=acquisition.lines.map do |line|
-			if Type_regexp.match(line) && Description_regexp.match(line) then
-				nil
-			else
-				line
-			end #if
-		end #each_line
-	end.flatten.compact #select
+	raw_acquisitions.select do |acquisition|
+		!(Type_regexp.match(acquisition) && Description_regexp.match(acquisition))
+	end #select
 end #coarse_rejections
-def self.all
-	All
+def self.all(tax_year=Default_tax_year)
+	coarse_filter.map do |r| #map
+		matchData=Full_regexp.match(r)
+		if matchData then
+			ios=parse(r, Full_regexp)
+			ios[:tax_year]=tax_year
+			ios
+		else
+			nil
+		end #if
+	end.compact #map
 end #all
 def self.fine_rejections
 	coarse_filter.select do |r| #map
@@ -216,9 +94,8 @@ include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_include(included_modules, NoDB, "")
-	Dir[input_file_names].each do |f|
-		assert(File.exists?(f), Dir["#{Open_tax_solver_data_directory}/*"].inspect)
-	end #each
+	assert(File.exists?(Data_source_directory), Dir["#{Data_source_directory}/*"].inspect)
+	assert(File.exists?(OTS_template_filename), "File #{OTS_template_filename} doesnot exist.")
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
@@ -236,20 +113,13 @@ def assert_post_conditions
 #hit	fail "end of CLASS assert_post_conditions"
 end #assert_post_conditions
 def assert_full_match(acquisition)
-	message=caller_lines
-	assert_match(/#{Symbol_pattern}/, acquisition, caller_lines)
-	assert_match(/#{Delimiter}/, acquisition, caller_lines)
-	assert_match(/#{Type_pattern}/, acquisition, caller_lines)
-	assert_match(/#{Description_pattern}/, acquisition, caller_lines)
-	assert_match(Symbol_regexp, acquisition, caller_lines)
-	assert_match(Type_regexp, acquisition, caller_lines)
-	assert_match(Description_regexp, acquisition, caller_lines)
-	assert_not_empty(acquisition, caller_lines)
-	assert_not_empty(caller_lines, caller_lines)
-	assert_not_empty(Full_regexp_array, caller_lines)
-	assert_not_empty(Full_regexp_array.join, caller_lines)
-	assert_not_nil(Regexp.new(Full_regexp_array.join), caller_lines)
-	assert_instance_of(Regexp, Regexp.new(Full_regexp_array.join), caller_lines)
+	assert_match(/#{Symbol_pattern}/, acquisition)
+	assert_match(/#{Delimiter}/, acquisition)
+	assert_match(/#{Type_pattern}/, acquisition)
+	assert_match(/#{Description_pattern}/, acquisition)
+	assert_match(Symbol_regexp, acquisition)
+	assert_match(Type_regexp, acquisition)
+	assert_match(Description_regexp, acquisition)
 	matchData=Full_regexp.match(acquisition)
 	if matchData then
 		assert_equal(14, matchData.size, matchData.inspect)
@@ -315,9 +185,6 @@ def assert_full_match(acquisition)
 end #assert_match
 end #ClassMethods
 end #Assertions
-module Constants
-All=OpenTaxSolver.all_initialize
-end #Constants
 require_relative '../../test/assertions/default_assertions.rb'
 include Assertions
 include Examples
