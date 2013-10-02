@@ -20,7 +20,7 @@ end #ClassMethods
 end #Assertions
 end #GenericJson
 
-class OpenTaxFormFiller
+module OpenTaxFormFiller
 class Definitions
 include NoDB
 extend NoDB::ClassMethods
@@ -130,4 +130,3 @@ include GenericJsons::Assertions
 extend GenericJsons::Assertions::ClassMethods
 end #Definitions
 end #OpenTaxFormFiller
-
