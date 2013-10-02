@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/open_tax_form_filler.rb'
+require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
 class DefinitionsTest < DefaultTestCase2
 include OpenTaxFormFiller::Definitions::Constants
 include OpenTaxFormFiller::Definitions::Examples
