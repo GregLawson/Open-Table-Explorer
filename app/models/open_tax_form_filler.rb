@@ -116,12 +116,6 @@ def assert_post_conditions
 	end #each
 #hit	fail "end of CLASS assert_post_conditions"
 end #assert_post_conditions
-def assert_json_string(acquisition)
-	assert_not_nil(acquisition)
-	assert_instance_of(String, acquisition)
-	json=JSON[acquisition]
-	assert_instance_of(Hash, json)
-end #assert_json_string
 end #ClassMethods
 end #Assertions
 require_relative '../../test/assertions/default_assertions.rb'
