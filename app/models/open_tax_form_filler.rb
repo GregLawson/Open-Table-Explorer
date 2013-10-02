@@ -132,4 +132,78 @@ extend Assertions::ClassMethods
 include GenericJsons::Assertions
 extend GenericJsons::Assertions::ClassMethods
 end #Definitions
+class Pjsons
+include NoDB
+extend NoDB::ClassMethods
+include GenericFiles
+extend GenericFiles::ClassMethods
+include GenericFiles::Assertions
+extend GenericFiles::Assertions::ClassMethods
+module Constants
+include OpenTaxFormFiller::Constants
+Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
+Data_source_directory='test/data_sources'
+Record_separator='},\n'
+Field_name_regexp='"F(?<field_number>[0-9]+)":{\n'
+Start_regexp='"fdf":"(?<form_type>topmostSubform|form1)\[0\].Page(?<page>1|2)\[0\]'
+Path_regexp='(?<path>[A-Za-z]+.){0,3}'
+Last_field_regexp='(?<field_designator>p[0-9]-t?[0-9]+|f[0-9]+_[0-9]+)'
+End_regexp=']",\n\"type\":\"text\"\n},'
+Full_regexp_array=[Field_name_regexp, Start_regexp, Path_regexp, Last_field_regexp, End_regexp]
+end #Constants
+include Constants
+def self.input_file_names
+	"#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+end #input_file_names
+# returns array of hashes
+def self.parse 
+	coarse= raw_acquisitions.map do |acquisition|
+		hash={}
+		matchDatas= Full_regexp_array.map do |rs|
+			matchData=/#{rs}/.match(acquisition)
+			if matchData then
+				matchData.names.map do |n|
+					hash[n.to_sym]=matchData[n]
+				end #map
+				acquisition=matchData.post_match
+			end #if
+		end #map
+		hash
+	end.flatten #map
+end #parse
+def self.all
+	All
+end #all
+def self.subset_regexp(size)
+	longest=Full_regexp_array.size
+	Full_regexp_array.combination(longest) do |c|
+		raw_acquisitions.map do |line|
+			Regexp.new(c.join).match(line)
+		end #map
+	end #combinations
+	Full_regexp_array.map do |rs|
+		/#{rs}/
+	end #map
+end #subset_regexp
+def self.coarse_filter
+	raw_acquisitions.select do |acquisition|
+		Full_regexp_array.first do |rs|
+			/#{rs}/.match(acquisition)
+		end #first
+	end #select
+end #coarse_filter
+
+include Assertions
+extend Assertions::ClassMethods
+Pjsons.assert_pre_conditions
+Pjsons.assert_pre_conditions
+module Examples
+Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
+
+All=Pjsons.all_initialize
+end #Examples
+include Examples
+include GenericFiles::Assertions
+extend GenericFiles::Assertions::ClassMethods
+end #Pjsons
 end #OpenTaxFormFiller
