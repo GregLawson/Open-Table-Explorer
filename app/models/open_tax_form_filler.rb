@@ -8,7 +8,37 @@
 require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/no_db.rb'
 module GenericJsons
+include GenericFiles
+module ClassMethods
+include GenericFiles::ClassMethods
+def raw_acquisitions
+	all_files=Dir[input_file_names]
+	all_files.map do |filename|
+		parse(IO.read(filename))
+	end.flatten # map
+end #raw_acquisitions
+def coarse_filter
+	raw_acquisitions
+end #coarse_filter
+def coarse_rejections
+	[]
+end #coarse_rejections
+def all
+	coarse_filter
+end #all
+def fine_rejections
+	[]
+end #fine_rejections
+end #ClassMethods
 module Assertions
+def assert_pre_conditions
+		assert_instance_of(Hash, self.attributes)
+		assert_respond_to(self.attributes, :values)
+		assert_constant_instance_respond_to(:NoDB, :insert_sql)
+		assert_include(self.class.included_modules, NoDB)
+#		assert_include(NoDB.methods, :insert_sql)
+		assert_instance_of(Array, attributes.values)
+end #assert_pre_conditions
 module ClassMethods
 def assert_json_string(acquisition)
 	assert_not_nil(acquisition)
@@ -24,17 +54,23 @@ module OpenTaxFormFiller
 class Definitions
 include NoDB
 extend NoDB::ClassMethods
+include GenericJsons
+extend GenericJsons::ClassMethods
 include GenericJsons::Assertions
 extend GenericJsons::Assertions::ClassMethods
 module Constants
 Default_tax_year=2012
 Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
-OTF_definition_filenames="#{Open_tax_filler_directory}/definition/Federal/f*.json"
+Input_filenames="#{Open_tax_filler_directory}/definition/Federal/f*.json"
 Data_source_directory='test/data_sources'
 OTF_SQL_dump_filename="#{Data_source_directory}/OTF_SQL_dump_#{Default_tax_year}.sql"
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
+include Constants
+def self.input_file_names
+	Input_filenames
+end #input_file_names
 # returns array of hashes
 def self.parse(acquisition) #acquisition=next
 	json=JSON[acquisition]
@@ -51,30 +87,6 @@ def self.parse(acquisition) #acquisition=next
 		Definitions.new(hash, [String, Fixnum, String, String])
 	end #map
 end #parse
-def assert_json_string(acquisition)
-	assert_not_nil(acquisition)
-	assert_instance_of(String, acquisition)
-	json=JSON[acquisition]
-	assert_instance_of(Hash, json)
-end #assert_json_string
-def self.raw_acquisitions
-	all_files=Dir[OTF_definition_filenames]
-	all_files.map do |filename|
-		Definitions.parse(IO.read(filename))
-	end.flatten # map
-end #raw_acquisitions
-def self.coarse_filter
-	raw_acquisitions
-end #coarse_filter
-def self.coarse_rejections
-	[]
-end #coarse_rejections
-def self.all(tax_year=Default_tax_year)
-	coarse_filter
-end #all
-def self.fine_rejections
-	[]
-end #fine_rejections
 module Examples
 Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
 
@@ -85,14 +97,6 @@ require_relative '../../test/assertions/default_assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
-def assert_pre_conditions
-		assert_instance_of(Hash, self.attributes)
-		assert_respond_to(self.attributes, :values)
-		assert_constant_instance_respond_to(:NoDB, :insert_sql)
-		assert_include(self.class.included_modules, NoDB)
-#		assert_include(NoDB.methods, :insert_sql)
-		assert_instance_of(Array, attributes.values)
-end #assert_pre_conditions
 def assert_invariant
 	assert_instance_of(Definitions, self)
 #	assert_scope_path(:DefaultAssertions, :ClassMethods)
@@ -123,7 +127,6 @@ end #ClassMethods
 end #Assertions
 require_relative '../../test/assertions/default_assertions.rb'
 include Examples
-include Constants
 include Assertions
 extend Assertions::ClassMethods
 include GenericJsons::Assertions
