@@ -7,6 +7,19 @@
 ###########################################################################
 require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/no_db.rb'
+module GenericJsons
+module Assertions
+module ClassMethods
+def assert_json_string(acquisition)
+	assert_not_nil(acquisition)
+	assert_instance_of(String, acquisition)
+	json=JSON[acquisition]
+	assert_instance_of(Hash, json)
+end #assert_json_string
+end #ClassMethods
+end #Assertions
+end #GenericJson
+
 class OpenTaxFormFiller
 include NoDB
 extend NoDB::ClassMethods
