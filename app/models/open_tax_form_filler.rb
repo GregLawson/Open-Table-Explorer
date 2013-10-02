@@ -60,9 +60,7 @@ def self.coarse_filter
 	end #select
 end #coarse_filter
 def self.coarse_rejections
-	raw_acquisitions.select do |acquisition|
-		!(Type_regexp.match(acquisition) && Description_regexp.match(acquisition))
-	end #select
+	[]
 end #coarse_rejections
 def self.all(tax_year=Default_tax_year)
 	coarse_filter.map do |r| #map
