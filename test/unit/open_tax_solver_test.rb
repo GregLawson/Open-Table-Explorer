@@ -17,12 +17,6 @@ extend OpenTableExplorer::Finance::Constants
 def test_Constants
 	assert_pathname_exists(Data_source_directory)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
-	assert_pathname_exists(Open_tax_solver_directory)
-	assert_pathname_exists(Open_tax_solver_data_directory)
-	assert_pathname_exists(Open_tax_solver_input)
-
-	assert_pathname_exists(Open_tax_solver_binary)
-	assert_pathname_exists(OTS_template_filename)
 #	assert_pathname_exists(Open_tax_solver_sysout)
 end #Constants
 def test_initialize
@@ -74,7 +68,6 @@ def 	test_run_tax_form_filler
 
 	assert(File.exists?(Data_source_directory), Data_source_directory+' does not exist')
 	sysout=`pdftk #{Open_Tax_Filler_Directory}/#{year_dir}/PDF/#{form}.pdf fill_form #{fdf} output #{output_pdf}`
-	assert_pathname_exists(Data_source_directory+'Federal_f1040_otff.pdf', 'Dir='+Dir[Data_source_directory+'*'].join(';'))
 	assert(File.exists?(Data_source_directory+'Federal_f1040_otff.pdf'), Dir[Data_source_directory+'*'].join(';'))
 #debug	sysout=`evince Data_source_directory+Federal_f1040_otff.pdf`
 	assert_equal('', sysout, "evince sysout=#{sysout}")
