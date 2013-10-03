@@ -389,17 +389,17 @@ def assert_constant_instance_respond_to(*names)
 		assert_public_instance_method(path, method_name, message)
 	end #
 end #assert_constant_instance_respond_to
-def assert_pathname_exists(pathname)
-	assert_not_nil(pathname)
-	assert_not_empty(pathname, "Assume pathname to not be empty.")
-	assert(File.exists?(pathname), "File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
-	assert(File.exists?(File.expand_path(pathname)), "File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
+def assert_pathname_exists(pathname, message='')
+	assert_not_nil(pathname, message)
+	assert_not_empty(pathname, message+"Assume pathname to not be empty.")
+	assert(File.exists?(pathname), message+"File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
+	assert(File.exists?(File.expand_path(pathname)), message+"File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
 end #assert_pathname_exists
-def assert_data_file(pathname)
-	assert_pathname_exists(pathname)
+def assert_data_file(pathname, message='')
+	assert_pathname_exists(pathname, message)
 	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it aa directory?")
-	assert_not_nil(File.size?(pathname))
-	assert_not_equal(0, File.size?(pathname))
+	assert_not_nil(File.size?(pathname), message)
+	assert_not_equal(0, File.size?(pathname), message)
 end #assert_data_file
 end #Assertions
 end #Unit
