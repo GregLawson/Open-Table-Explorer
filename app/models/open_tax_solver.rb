@@ -8,8 +8,6 @@
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_file.rb'
 module OpenTableExplorer
-module Constants
-end #Constants
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def shell_command(command_string)

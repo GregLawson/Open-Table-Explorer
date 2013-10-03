@@ -15,6 +15,15 @@ extend OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
 extend OpenTableExplorer::Finance::Constants
 def test_Constants
+assert_pathname_exists(Data_source_directory)
+assert_pathname_exists(Open_Tax_Filler_Directory)
+assert_pathname_exists(Open_tax_solver_directory)
+assert_pathname_exists(Open_tax_solver_data_directory)
+assert_pathname_exists(Open_tax_solver_input)
+assert_pathname_exists(Open_tax_solver_sysout)
+
+assert_pathname_exists(Open_tax_solver_binary)
+assert_pathname_exists(OTS_template_filename)
 end #Constants
 def test_initialize
 end #initialize
