@@ -183,6 +183,12 @@ def assert_pre_conditions
 	Dir[input_file_names].each do |f|
 		assert(File.exists?(f), Dir["#{Open_tax_solver_data_directory}/*"].inspect)
 	end #each
+	assert_pathname_exists(Open_tax_solver_directory)
+	assert_pathname_exists(Open_tax_solver_data_directory)
+	assert_pathname_exists(Open_tax_solver_input)
+
+	assert_pathname_exists(Open_tax_solver_binary)
+	assert_pathname_exists(OTS_template_filename)
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
