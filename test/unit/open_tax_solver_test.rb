@@ -14,13 +14,16 @@ include OpenTaxSolver::Constants
 extend OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
 extend OpenTableExplorer::Finance::Constants
+def test_Constants
+end #Constants
+def test_initialize
+end #initialize
 def test_run_tax_solver
 	form='1040'
 	jurisdiction=:US
 	sysout=`#{Command}`
 	puts "test_run_tax_solver sysout=#{sysout}"
 	form=OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction)
-	form.assert_post_conditions
 	form.run_open_tax_solver
 end #run_open_tax_solver
 def 	test_run_tax_solver_to_filler
@@ -60,11 +63,10 @@ def 	test_run_tax_form_filler
 	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{year_dir}/definition/#{form}.json #{Open_Tax_Filler_Directory}/#{year_dir}/transform/#{form}.json #{data} > #{fdf}`
 	assert_equal('', sysout, "nodejs sysout=#{sysout}")
 
-	assert(File.exists?('test/data_sources/'), 'test/data_sources/ does not exist')
+	assert(File.exists?(Data_source_directory), Data_source_directory+' does not exist')
 	sysout=`pdftk #{Open_Tax_Filler_Directory}/#{year_dir}/PDF/#{form}.pdf fill_form #{fdf} output #{output_pdf}`
-	assert_equal('', sysout, "pdftk sysout=#{sysout}")
-	assert(File.exists?('test/data_sources/Federal_f1040_otff.pdf'), Dir['test/data_sources/*'].join(';'))
-#debug	sysout=`evince test/data_sources/Federal_f1040_otff.pdf`
+	assert(File.exists?(Data_source_directory+'Federal_f1040_otff.pdf'), Dir[Data_source_directory+'*'].join(';'))
+#debug	sysout=`evince Data_source_directory+Federal_f1040_otff.pdf`
 	assert_equal('', sysout, "evince sysout=#{sysout}")
 	
 	sysout=`pdftoppm -jpeg  #{output_pdf} #{form_filename}`

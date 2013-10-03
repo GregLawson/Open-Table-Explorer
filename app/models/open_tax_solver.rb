@@ -9,7 +9,6 @@ require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_file.rb'
 module OpenTableExplorer
 module Constants
-Data_source_directory='test/data_sources'
 end #Constants
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
@@ -23,6 +22,7 @@ end #shell_command
 module Finance
 module Constants
 include OpenTableExplorer::Constants
+Data_source_directory='test/data_sources/taxes'
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller'
 Open_tax_solver_directory=Dir["../OpenTaxSolver2012_*"][0]
@@ -77,6 +77,7 @@ include GenericFiles
 extend GenericFiles::ClassMethods
 include GenericFiles::Assertions
 extend GenericFiles::Assertions::ClassMethods
+extend OpenTableExplorer::Constants
 extend OpenTableExplorer::Finance::Constants
 module Constants
 include OpenTableExplorer::Finance::Constants
