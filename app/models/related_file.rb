@@ -143,7 +143,12 @@ def assert_post_conditions(message='')
 	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
 	assert_not_empty(@project_root_dir, message)
 end #assert_post_conditions
-
+def assert_tested_files(executable, file_patterns)
+	tested_file_patterns=tested_files(executable).map do |f|
+		FilePatter.find_by_path(f)[:name]
+	end #map
+	assert_equal(file_patterns, tested_file_patterns)
+end #assert_tested_files
 
 end #Assertions
 include Assertions
