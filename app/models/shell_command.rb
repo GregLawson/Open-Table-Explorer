@@ -20,9 +20,7 @@ def execute
 end #execute
 def initialize(command_string, delay_execution=nil)
 	@command_string=command_string
-	if delay_execution.nil? then
-		execute # do it first time, then execute
-	end #if
+	execute # do it first time, then execute
 end #initialize
 def system_output(command_string)
 	ret=[] #make method scope not block scope so it can be returned
