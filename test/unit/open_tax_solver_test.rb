@@ -6,63 +6,12 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative 'default_test_case.rb'
 require_relative '../../app/models/open_tax_solver.rb'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class OpenTaxSolverTest < DefaultTestCase2
 include DefaultTests2
 include OpenTaxSolver::Constants
-extend OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
-extend OpenTableExplorer::Finance::Constants
-def test_run_tax_solver
-	form='1040'
-	jurisdiction=:US
-#	sysout=`#{Command}`
-#	assert_equal('', sysout, "test_run_tax_solver sysout=#{sysout}")
-	form=OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction)
-	form.assert_post_conditions
-	form.run_open_tax_solver
-end #run_open_tax_solver
-def 	test_run_tax_solver_to_filler
-	assert(File.exists?(Open_Tax_Filler_Directory))
-	assert(File.exists?(Open_Tax_Filler_Directory+'/script/apply_values.js'))
-	data="#{Data_source_directory}/US_1040_OTS.json"
-	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
-	assert_equal('', sysout, "test_run_tax_solver_to_Form_filler sysout=#{sysout}")
-	assert(File.exists?(data))
-	results=OpenTableExplorer::Finance::TaxForms.new('1040', :US).run_open_tax_solver_to_filler
-	assert_equal(0, results.exit_status)
-	assert_empty(results.errors)
-end #run_open_tax_solver_to_filler
-def 	test_run_tax_form_filler
-#
-
-	form='Federal/f1040'
-	form_filename=form.sub('/','_')
-	year_dir='2012'
-	data="#{Data_source_directory}/US_1040_OTS.json"
-	assert(File.exists?(data))
-	fdf='/tmp/output.fdf'
-	output_pdf="#{Data_source_directory}/#{form_filename}_otff.pdf"
-	pdf_input="#{Open_Tax_Filler_Directory}/"
-	assert(File.exists?(data))
-	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{year_dir}/definition/#{form}.json #{Open_Tax_Filler_Directory}/#{year_dir}/transform/#{form}.json #{data} > #{fdf}`
-	assert_equal('', sysout, "nodejs sysout=#{sysout}")
-
-	assert(File.exists?('test/data_sources/'), 'test/data_sources/ does not exist')
-	sysout=`pdftk #{Open_Tax_Filler_Directory}/#{year_dir}/PDF/#{form}.pdf fill_form #{fdf} output #{output_pdf}`
-	assert_equal('', sysout, "pdftk sysout=#{sysout}")
-	assert(File.exists?('test/data_sources/Federal_f1040_otff.pdf'), Dir['test/data_sources/*'].join(';'))
-#debug	sysout=`evince test/data_sources/Federal_f1040_otff.pdf`
-	assert_equal('', sysout, "evince sysout=#{sysout}")
-	
-	sysout=`pdftoppm -jpeg  #{output_pdf} #{form_filename}`
-	assert_equal('', sysout, "pdftoppm sysout=#{sysout}")
-	sysout=`display  Federal_f1040-1.jpg`
-	assert_equal('', sysout, "display sysout=#{sysout}")
-	assert(File.exists?(output_pdf), "output_pdf=#{output_pdf}"+caller_lines)
-end #run_tax_form_filler
 def test_CLASS_constants
 	assert_match(/#{Symbol_pattern}/, Simple_acquisition)
 	assert_match(/#{Delimiter}/, Simple_acquisition)
@@ -105,19 +54,17 @@ def test_parse
 	assert_include(['??', ';', '0'],type, matchData.inspect)
 
 	OpenTaxSolver.assert_full_match(acquisition)
-	ios=OpenTaxSolver.parse
-	assert_instance_of(Array, ios)
-	assert_instance_of(Hash, ios[0])
-#	assert_equal('L',ios[0][:name])
-#	assert_equal('??', ios[0][:type_chars])
-#	assert_equal('e',ios[0][:description])
+	ios=OpenTaxSolver.parse(acquisition, Full_regexp)
+	assert_equal('L',ios[:name])
+	assert_equal('??', ios[:type_chars])
+	assert_equal('e',ios[:description])
 end #parse
 def test_raw_acquisitions
-	assert_equal(1, OpenTaxSolver.raw_acquisitions.size)
+	assert_equal(115, OpenTaxSolver.raw_acquisitions.size)
 end #raw_acquisitions
 def test_coarse_filter
 	assert_not_empty(OpenTaxSolver.coarse_filter.compact, OpenTaxSolver.coarse_filter.inspect)
-	assert_operator(80, :<=, OpenTaxSolver.coarse_filter.size, OpenTaxSolver.coarse_filter.inspect)
+	assert_operator(84, :==, OpenTaxSolver.coarse_filter.size, OpenTaxSolver.coarse_filter.inspect)
 end #coarse_filter
 def test_coarse_rejections
 	OpenTaxSolver.coarse_rejections.each do |acquisition|
@@ -131,12 +78,15 @@ def test_all
 		matchData=Full_regexp.match(r)
 		if matchData then
 			OpenTaxSolver.assert_full_match(r)
+			ios=OpenTaxSolver.parse(r, Full_regexp)
+			ios[:tax_year]=Default_tax_year
 		else
 			nil
 		end #if
 	end.compact #select
-	assert_operator(80, :<=, OpenTaxSolver.all.size, OpenTaxSolver.fine_rejections.inspect)
-	OpenTaxSolver.all.each do |ots|
+	assert_not_empty(ret.compact, ret.inspect)
+	assert_operator(84, :==, OpenTaxSolver.all.size, OpenTaxSolver.fine_rejections.inspect)
+	OpenTaxSolver.all(Default_tax_year).each do |ots|
 		assert_instance_of(OpenTaxSolver, ots)
 		assert_instance_of(Hash, ots.attributes)
 		assert_respond_to(ots.attributes, :values)
@@ -155,6 +105,7 @@ def test_all
 	assert_instance_of(String, OpenTaxSolver.dump[0])
 	assert_not_equal('"', OpenTaxSolver.dump[0][0], OpenTaxSolver.dump[0][0..20])
 	assert_equal("\n", OpenTaxSolver.dump[0][-1], OpenTaxSolver.dump[0][0..20])
+	IO.binwrite(OTS_SQL_dump_filename, OpenTaxSolver.dump.join(''))
 end #all
 def test_fine_rejections
 	OpenTaxSolver.fine_rejections.each do |r|
@@ -177,10 +128,4 @@ def test_assert_full_match
 	OpenTaxSolver.assert_full_match('L  {e}')	
 
 end #assert_full_match
-def test_dump_sql_to_file
-	assert_equal(:OpenTaxSolver, model_name?)
-	filename="db/SQL/Export/#{model_name?}_#{Default_tax_year}.sql"
-	assert_respond_to(model_class?, :dump_sql_to_file)
-	model_class?.dump_sql_to_file(filename)
-end #dump_sql_to_file
 end #OpenTaxSolver
