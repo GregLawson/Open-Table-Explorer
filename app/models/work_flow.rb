@@ -98,6 +98,7 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.git_command('stash apply')
 	@repository.git_command('checkout #{deserving_branch}')
 	@repository.git_command('stash apply')
+	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+@related_files.model_class_name)	
 	@repository.git_command('cola')
 	@repository.recent_test.puts
 	edit
