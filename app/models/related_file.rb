@@ -94,7 +94,7 @@ def tested_files(executable)
 	when 3 then [model_pathname?, model_test_pathname?, assertions_pathname?]
 	when 4 then [model_pathname?, model_test_pathname?, assertions_pathname?, assertions_test_pathname?]
 	end #case
-	end #if
+	end-@missing_files #if
 end #tested_files
 def model_class?
 	eval(@model_class_name.to_s)
