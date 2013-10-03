@@ -8,8 +8,6 @@
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_file.rb'
 module OpenTableExplorer
-module Constants
-end #Constants
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def shell_command(command_string)
@@ -21,14 +19,13 @@ def shell_command(command_string)
 end #shell_command
 module Finance
 module Constants
-include OpenTableExplorer::Constants
 Data_source_directory='test/data_sources/taxes'
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller'
 Open_tax_solver_directory=Dir["../OpenTaxSolver2012_*"][0]
 Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
-Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_Lawson.txt"
-Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
+Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_example.txt"
+Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_example_sysout.txt"
 
 Open_tax_solver_binary="#{Open_tax_solver_directory}/bin/taxsolve_US_1040_2012"
 Command="#{Open_tax_solver_binary} #{Open_tax_solver_input} >#{Open_tax_solver_sysout}"
@@ -77,7 +74,7 @@ include GenericFiles
 extend GenericFiles::ClassMethods
 include GenericFiles::Assertions
 extend GenericFiles::Assertions::ClassMethods
-extend OpenTableExplorer::Constants
+#extend OpenTableExplorer::Constants
 extend OpenTableExplorer::Finance::Constants
 module Constants
 include OpenTableExplorer::Finance::Constants
