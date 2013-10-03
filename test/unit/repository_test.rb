@@ -45,6 +45,12 @@ def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
+def test_deserving_branch
+	assert_equal(:passed, SELF_code_Repo.deserving_branch?'/dev/null'))
+	assert_equal(:passed, SELF_code_Repo.deserving_branch?'test/unit/minimal.rb'))
+	assert_equal(:edited, SELF_code_Repo.deserving_branch?('/etc/mtab')) #force syntax error with non-ruby text
+#	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
+end #deserving_branch
 def test_safely_visit_branch
 	push_branch=Clean_Example.current_branch_name?
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
