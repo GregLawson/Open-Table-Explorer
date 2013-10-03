@@ -10,13 +10,6 @@ require_relative '../../app/models/generic_file.rb'
 module OpenTableExplorer
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
-def shell_command(command_string)
-	puts command_string
-	sysout=`#{command_string}`
-	puts "sysout=#{sysout}"
-	assert_equal('', sysout, "command_string=#{command_string} \nsysout=#{sysout}")
-	sysout
-end #shell_command
 module Finance
 module Constants
 Data_source_directory='test/data_sources/taxes'
