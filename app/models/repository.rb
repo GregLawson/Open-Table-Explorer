@@ -89,11 +89,11 @@ def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
 	git_command("stash save").assert_post_conditions
 	git_command('checkout #{target_branch}').assert_post_conditions
-	block.call(self)
+	ret=block.call(self)
 	git_command('checkout #{push_branch}').assert_post_conditions
 	stash_command=git_command('stash apply')
-	stash_command.assert_post_conditions
-	recent_test.puts
+	stash_command.assert_post_conditions if $VERBOSE
+	ret
 end #safely_visit_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
