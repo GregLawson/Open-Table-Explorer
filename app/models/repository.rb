@@ -70,7 +70,7 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		@deserving_branch=:passed
-	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+	elsif @recent_test.exit_status==1 then # 1 error or syntax error
 		syntax_test=shell_command("ruby-c "+executable)
 		if syntax_test.output=="Syntax OK\n" then
 			@deserving_branch=:testing
