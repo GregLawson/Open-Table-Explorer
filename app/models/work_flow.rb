@@ -114,6 +114,11 @@ module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
+def assert_pre_conditions
+	assert_kind_of(@repository, Grit::Repro)
+	assert_respond_to(@repository, :status)
+	assert_respond_to(@repository.status, :changed)
+end #assert_pre_conditions
 def assert_post_conditions
 #	assert_pathname_exists(TestFile, "assert_post_conditions")
 end #assert_post_conditions
