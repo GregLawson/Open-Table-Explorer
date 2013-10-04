@@ -42,7 +42,6 @@ def test_inspect
 	assert_equal("Hello World\n", Hello_world.inspect)
 	assert_equal("1 2;3 4\n", EXAMPLE.inspect)
 end #inspect
->>>>>>> passed
 def test_puts
 	assert_equal(Example_output, EXAMPLE.output)
 	assert_equal(EXAMPLE, EXAMPLE.puts) #allow command chaining
