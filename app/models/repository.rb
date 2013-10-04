@@ -10,7 +10,7 @@ require 'grit'  # sudo gem install grit
 # partial API at less /usr/share/doc/ruby-grit/API.txt
 # code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
-class Repository
+class Repository # <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
@@ -131,7 +131,7 @@ def stage(target_branch, tested_files)
 			switch_branch.puts
 		end #if
 	end #if
-	git_command("add "+tested_files.join(' ')).execute.assert_post_conditions	
+	git_command("add "+tested_files.join(' ')).assert_post_conditions	
 	git_command('cola').assert_post_conditions
 	push_branch
 end #stage
@@ -147,9 +147,6 @@ def test_and_commit(executable, tested_files)
 	commit_to_branch(deserving_branch?(executable), tested_files)
 
 end #test
-def Stash_Pop
-	git_command("stash pop")
-end #
 def CompilesSupersetOfMaster
 	git_command("log compiles..master")
 end #
