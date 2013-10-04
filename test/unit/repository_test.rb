@@ -47,7 +47,7 @@ def test_current_branch_name?
 end #current_branch_name
 def test_deserving_branch
 	assert_equal(:passed, SELF_code_Repo.deserving_branch?('/dev/null'))
-	assert_equal(:passed, SELF_code_Repo.deserving_branch?('test/unit/minimal.rb'))
+	assert_equal(:passed, SELF_code_Repo.deserving_branch?('test/unit/minimal2.rb'))
 	assert_equal(:edited, SELF_code_Repo.deserving_branch?('/etc/mtab')) #force syntax error with non-ruby text
 #	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
 end #deserving_branch
