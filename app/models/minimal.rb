@@ -32,5 +32,4 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 end #Examples
-#include Examples
 end #Minimal
