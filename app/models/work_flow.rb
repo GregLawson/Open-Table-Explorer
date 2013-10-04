@@ -93,7 +93,10 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.git_command("stash save").assert_post_conditions
 #	@repository.stage(:edited, @related_files.tested_files(executable))
 	deserving_branch=@repository.deserving_branch?(executable)
-	if @repository.recent_test.success? @repository.modified==[] then
+	if @repository.recent_test.success? @repository.status.changed==[] then
+		puts "exiting because I think I have nothing to do."
+		@repository.recent_test.puts
+		@repository.git_command('status').puts
 		return
 	end #if
 	@repository.stage(deserving_branch, @related_files.tested_files(executable))
