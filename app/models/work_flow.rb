@@ -93,6 +93,9 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.git_command("stash save").assert_post_conditions
 #	@repository.stage(:edited, @related_files.tested_files(executable))
 	deserving_branch=@repository.deserving_branch?(executable)
+	if @repository.recent_test.success? @repository.modified==[] then
+		return
+	end #if
 	@repository.stage(deserving_branch, @related_files.tested_files(executable))
 	@repository.git_command('checkout #{push_branch}')
 	@repository.git_command('stash apply')
