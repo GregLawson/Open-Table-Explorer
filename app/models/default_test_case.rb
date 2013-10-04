@@ -144,13 +144,6 @@ include DefaultTests2
 def test_assertion_inclusion
 	assert_include(model_class?.included_modules, model_class?::Assertions)
 	assert_include(model_class?.ancestors, Test::Unit::Assertions)
-	assert_include(model_class?.ancestors, model_class?::Examples, "module #{model_class?}::Examples  should exist in class #{model_class?}.\nPlace 'include Examples' within class #{model_class?} scope in assertions file.")
-	assert_include(model_class?.ancestors, DefaultAssertions, "module DefaultAssertions  should exist in class #{model_class?}.\nPlace 'include DefaultAssertions' within class #{model_class?} scope in assertions file.")
-	assert_include(model_class?.included_modules, model_class?::Examples, "module Examples  should be included in class #{model_class?}")
-	assert_include(model_class?.methods, :example_constant_names_by_class, "module DefaultAssertions::ClassMethods (including :example_constant_names_by_class) should exist in class #{model_class?}.\nPlace 'extend DefaultAssertions::ClassMethods' within class #{model_class?} scope in assertions file.")
-	assert_respond_to(model_class?, :example_constant_names_by_class, "model_class?=#{model_class?}")
-#	assert_respond_to(model_class?, :example_constant_names_by_class)
-#	assert_include(model_class?.methods, :example_constant_names_by_class, "model_class?=#{model_class?}")
 end #test_assertion_inclusion
 def test_related_files
 	assert_include(self.class.included_modules, Test::Unit::Assertions)
