@@ -6,6 +6,9 @@
 #
 ###########################################################################
 require 'grit'  # sudo gem install grit
+# rdoc at http://grit.rubyforge.org/
+# partial API at less /usr/share/doc/ruby-grit/API.txt
+# code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
 class Repository
 module Constants
