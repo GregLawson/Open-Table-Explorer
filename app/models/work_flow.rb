@@ -79,36 +79,34 @@ def edit
 	edit.assert_post_conditions
 end #edit
 def emacs
-	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '), :delay_execution)
+	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
 	emacs.execute.assert_post_conditions
 end #emacs
-def execute
-	edit_default
-	test_and_commit(related_files.model_test_pathname?)
-end #execute
 def test(executable=@related_files.model_test_pathname?)
+	begin
+		deserving_branch=@repository.deserving_branch?(executable)
+		@repository.safely_visit_branch(deserving_branch) do
+			@repository.stage(deserving_branch, @related_files.tested_files(executable))
+		end #safely_visit_branch
+		end # infinite? interactive loop
+end #test
+def execute(executable=@related_files.model_test_pathname?)
 	begin
 	push_branch=@repository.current_branch_name?
 	@repository.git_command("stash save").assert_post_conditions
 #	@repository.stage(:edited, @related_files.tested_files(executable))
 	deserving_branch=@repository.deserving_branch?(executable)
-	if @repository.recent_test.success? @repository.status.changed==[] then
-		puts "exiting because I think I have nothing to do."
-		@repository.recent_test.puts
-		@repository.git_command('status').puts
-		return
-	end #if
 	@repository.stage(deserving_branch, @related_files.tested_files(executable))
 	@repository.git_command('checkout #{push_branch}')
 	@repository.git_command('stash apply')
 	@repository.git_command('checkout #{deserving_branch}')
-	@repository.git_command('stash apply')
+#	@repository.git_command('stash apply')
 	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+@related_files.model_class_name.to_s)	
 	@repository.git_command('cola')
 	@repository.recent_test.puts
 	edit
-	end until @repository.recent_test.success?
+	end
 end #test
 module Assertions
 include Test::Unit::Assertions
