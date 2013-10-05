@@ -169,7 +169,22 @@ end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_deserving_branch(branch_expected, executable)
-end #assert_deserving_branch
+	deserving_branch=deserving_branch?(executable)
+	case 
+	when :edited then
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	when :passed then
+	when :testing then
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	end #case
+	assert_equal(deserving_branch, branch_expected)
+end #deserving_branch
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
