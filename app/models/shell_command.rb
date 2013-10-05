@@ -12,10 +12,10 @@ module ClassMethods
 include Shellwords
 end #ClassMethods
 extend ClassMethods
-attr_reader :command_string, :output, :errors, :exit_status, :pid
+attr_reader :command_string, :output, :errors, :process_status, :pid
 # execute same command again (also called by new.
 def execute
-	@output, @errors, @exit_status, @pid=system_output(@command_string)
+	@output, @errors, @process_status, @pid=system_output(@command_string)
 	self #allows command chaining
 end #execute
 def initialize(command_string)
@@ -30,10 +30,10 @@ def system_output(command_string)
 		stdout.close
 		errors=stderr.read
 		stderr.close
-		exit_status = wait_thr.value  # Process::Status object returned.
+		process_status = wait_thr.value  # Process::Status object returned.
 		pid = wait_thr.pid # pid of the started process.
-		exit_status = wait_thr.value # Process::Status object returned.
-		ret=[output, errors, exit_status, pid]
+		process_status = wait_thr.value # Process::Status object returned.
+		ret=[output, errors, process_status, pid]
 	}
 	$stdout.puts inspect if $VERBOSE
 	ret
@@ -51,7 +51,7 @@ def start(cmd)
 	self #allows command chaining
 end #start
 def wait
-	@exit_status = @wait_thr.value # Process::Status object returned.
+	@process_status = @wait_thr.value # Process::Status object returned.
 	close
 	self #allows command chaining
 end #wait
@@ -62,22 +62,22 @@ def close
 	@stdout.close
 	@errors=@stderr.read
 	@stderr.close
-	@exit_status = @wait_thr.value  # Process::Status object returned.
+	@process_status = @wait_thr.value  # Process::Status object returned.
 	self #allows command chaining
 end #close
 def success?
-	@exit_status==0
+	@process_status.success?
 end #success
 def inspect
 	ret=''
-	if @errors!='' || @exit_status!=0 then
+	if @errors!='' || !success? then
 		ret+="@command_string=#{@command_string.inspect}\n"
 	end #if
 	if @errors!='' then
 		ret+="@errors=#{@errors.inspect}\n"
 	end #if
-	if @exit_status!=0 then
-		ret+="@exit_status=#{@exit_status.inspect}\n"
+	if !success? then
+		ret+="@process_status=#{@process_status.inspect}\n"
 		ret+="@pid=#{@pid.inspect}\n"
 	end #if
 	ret+@output.to_s
@@ -97,10 +97,11 @@ def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
-	assert_empty(@errors, message)
-	assert_equal(0, @exit_status, message)
+	assert_empty(@errors, message+'expected errors to be empty\n'+inspect)
+	assert_equal(0, @process_status, message)
 	assert_not_nil(@errors)
-	assert_not_nil(@exit_status)
+	assert_not_nil(@process_status)
+	assert_instance_of(Process::Status, @process_status)
 	assert_not_nil(@pid)
 	self # return for comand chaining
 end #assert_post_conditions
