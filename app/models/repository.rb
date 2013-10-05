@@ -10,7 +10,7 @@ require 'grit'  # sudo gem install grit
 # partial API at less /usr/share/doc/ruby-grit/API.txt
 # code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
-class Repository <Grit::Repo
+class Repository # <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
@@ -35,14 +35,14 @@ end #create_if_missing
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
-attr_reader :path, :recent_test, :deserving_branch
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
 	@path=path
 	source_path=@path
 	temporary_path=Temporary+'recover'
   puts '@path='+@path if $VERBOSE
-	super(@path)
+	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
 		ret=ShellCommands.new("cd #{working_directory}; #{command}")
@@ -63,14 +63,14 @@ def standardize_position
 	git_command("checkout master")
 end #standardize_position
 def current_branch_name?
-	head.name.to_sym
+	@grit_repo.head.name.to_sym
 end #current_branch_name
 def deserving_branch?(executable=@related_files.model_test_pathname?)
 	@recent_test=shell_command("ruby "+executable)
 	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		@deserving_branch=:passed
-	elsif @recent_test.process_state.exitstatus==1 then # 1 error or syntax error
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
 		syntax_test=shell_command("ruby-c "+executable)
 		if syntax_test.output=="Syntax OK\n" then
 			@deserving_branch=:testing
@@ -164,8 +164,6 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
-def assert_deserving_branch(branch_expected, executable)
-end #assert_deserving_branch
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
