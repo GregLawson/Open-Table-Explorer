@@ -59,8 +59,8 @@ def test_deserving_branch
 		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
 		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	SELF_code_Repo.assert_deserving_branch(:passed, executable)
 	assert_equal(:passed, SELF_code_Repo.deserving_branch?('test/unit/minimal2_test.rb'))
+	SELF_code_Repo.assert_deserving_branch(:passed, executable)
 
 	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
 #	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
