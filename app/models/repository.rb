@@ -7,7 +7,7 @@
 ###########################################################################
 require 'grit'  # sudo gem install grit
 require_relative 'shell_command.rb'
-class Repository
+class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
@@ -32,14 +32,14 @@ end #create_if_missing
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch
+attr_reader :path, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
 	@path=path
 	source_path=@path
 	temporary_path=Temporary+'recover'
   puts '@path='+@path if $VERBOSE
-	@grit_repo=Grit::Repo.new(@path)
+	super(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
 		ret=ShellCommands.new("cd #{working_directory}; #{command}")
@@ -60,14 +60,14 @@ def standardize_position
 	git_command("checkout master")
 end #standardize_position
 def current_branch_name?
-	@grit_repo.head.name.to_sym
+	head.name.to_sym
 end #current_branch_name
 def deserving_branch?(executable=@related_files.model_test_pathname?)
 	@recent_test=shell_command("ruby "+executable)
 	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		@deserving_branch=:passed
-	elsif @recent_test.exit_status==1 then # 1 error or syntax error
+	elsif @recent_test.process_state.exitstatus==1 then # 1 error or syntax error
 		syntax_test=shell_command("ruby-c "+executable)
 		if syntax_test.output=="Syntax OK\n" then
 			@deserving_branch=:testing
@@ -81,15 +81,16 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
+# safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
-	push_branch=@repository.current_branch_name?
-	@repository.git_command("stash save").assert_post_conditions
-	@repository.git_command('checkout #{target_branch}').assert_post_conditions
-	block.call
-	@repository.git_command('checkout #{push_branch}').assert_post_conditions
-	@repository.git_command('stash apply').assert_post_conditions
-	@repository.recent_test.puts
-end #test
+	push_branch=current_branch_name?
+	git_command("stash save").assert_post_conditions
+	git_command('checkout #{target_branch}').assert_post_conditions
+	block.call(self)
+	git_command('checkout #{push_branch}').assert_post_conditions
+	git_command('stash apply').assert_post_conditions
+	recent_test.puts
+end #safely_visit_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
@@ -143,9 +144,6 @@ def test_and_commit(executable, tested_files)
 	commit_to_branch(deserving_branch?(executable), tested_files)
 
 end #test
-def Stash_Pop
-	git_command("stash pop")
-end #
 def CompilesSupersetOfMaster
 	git_command("log compiles..master")
 end #
@@ -163,6 +161,8 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
+def assert_deserving_branch(branch_expected, executable)
+end #assert_deserving_branch
 end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
