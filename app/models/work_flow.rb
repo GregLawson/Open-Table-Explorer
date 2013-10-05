@@ -79,7 +79,7 @@ def edit
 	edit.assert_post_conditions
 end #edit
 def emacs
-	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '), :delay_execution)
+	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
 	emacs.execute.assert_post_conditions
 end #emacs
