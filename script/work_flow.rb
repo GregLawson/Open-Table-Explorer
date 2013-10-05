@@ -33,6 +33,7 @@ OptionParser.new do |opts|
     commands+=[:emacs] if t
   end
 end.parse!
+
 commands=[:test] if commands.empty?
 pp commands
 pp ARGV

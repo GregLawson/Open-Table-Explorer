@@ -98,6 +98,7 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.git_command('stash apply')
 	@repository.git_command('checkout #{deserving_branch}')
 	@repository.git_command('stash apply')
+	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+@related_files.model_class_name.to_s)	
 	@repository.git_command('cola')
 	@repository.recent_test.puts
 	edit
@@ -107,6 +108,11 @@ module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
+def assert_pre_conditions
+	assert_kind_of(@repository, Grit::Repo)
+	assert_respond_to(@repository, :status)
+	assert_respond_to(@repository.status, :changed)
+end #assert_pre_conditions
 def assert_post_conditions
 #	assert_pathname_exists(TestFile, "assert_post_conditions")
 end #assert_post_conditions
