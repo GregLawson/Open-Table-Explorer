@@ -172,15 +172,15 @@ def assert_deserving_branch(branch_expected, executable)
 	deserving_branch=deserving_branch?(executable)
 	case 
 	when :edited then
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		recent_test=shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
-		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		syntax_test=shell_command("ruby -c "+executable)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	when :passed then
 	when :testing then
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		recent_test=shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		syntax_test=shell_command("ruby -c "+executable)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	end #case
 	assert_equal(deserving_branch, branch_expected)
