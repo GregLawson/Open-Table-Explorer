@@ -177,7 +177,7 @@ def assert_deserving_branch(branch_expected, executable)
 		assert_equal(1, recent_test.process_status.exitstatus, recent_test.inspect)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	when :testing then
-		assert_operator(1 :<=, recent_test.process_status.exitstatus, recent_test.inspect)
+		assert_operator(1, :<=, recent_test.process_status.exitstatus, recent_test.inspect)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	when :passed then
 		assert_equal(0, recent_test.process_status.exitstatus, recent_test.inspect)
