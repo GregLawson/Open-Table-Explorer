@@ -168,7 +168,7 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
-def assert_deserving_branch(branch_expected, executable)
+def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
 	recent_test=shell_command("ruby "+executable)
 	message+="\nrecent_test="+recent_test.inspect
