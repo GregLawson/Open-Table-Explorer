@@ -98,6 +98,8 @@ def safely_visit_branch(target_branch, &block)
 	end #if
 	ret
 end #safely_visit_branch
+def validate_commit
+end #validate_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
