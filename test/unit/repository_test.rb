@@ -46,21 +46,23 @@ def test_current_branch_name?
 
 end #current_branch_name
 def test_deserving_branch
-	executable='/etc/mtab'
-	recent_test=SELF_code_Repo.shell_command("ruby "+executable)
-	assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
-	syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
-	assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	executable='/etc/mtab' #force syntax error with non-ruby text
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(:edited, SELF_code_Repo.deserving_branch?(executable))
+	SELF_code_Repo.assert_deserving_branch(:edited, executable)
 
 	executable='test/unit/minimal2_test.rb'
-	recent_test=SELF_code_Repo.shell_command("ruby "+executable)
-	assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-	syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
-	assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-
-	assert_equal(:passed, SELF_code_Repo.deserving_branch?('/dev/null'))
-	assert_equal(:edited, SELF_code_Repo.deserving_branch?('/etc/mtab')) #force syntax error with non-ruby text
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	SELF_code_Repo.assert_deserving_branch(:passed, executable)
 	assert_equal(:passed, SELF_code_Repo.deserving_branch?('test/unit/minimal2_test.rb'))
+
+	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
 #	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
 end #deserving_branch
 def test_safely_visit_branch
