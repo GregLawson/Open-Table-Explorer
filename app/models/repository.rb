@@ -169,21 +169,23 @@ end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_deserving_branch(branch_expected, executable)
-	deserving_branch=deserving_branch?(executable)
+	deserving_branch=deserving_branch?(executable, message='')
 	recent_test=shell_command("ruby "+executable)
+	message+="\nrecent_test="+recent_test.inspect
 	syntax_test=shell_command("ruby -c "+executable)
+	message+="\nsyntax_test="+syntax_test.inspect
 	case 
 	when :edited then
-		assert_equal(1, recent_test.process_status.exitstatus, recent_test.inspect)
-		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+		assert_equal(1, recent_test.process_status.exitstatus, message)
+		assert_not_equal("Syntax OK\n", syntax_test.output, message)
 	when :testing then
-		assert_operator(1, :<=, recent_test.process_status.exitstatus, recent_test.inspect)
-		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
 	when :passed then
-		assert_equal(0, recent_test.process_status.exitstatus, recent_test.inspect)
-		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+		assert_equal(0, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
 	end #case
-	assert_equal(deserving_branch, branch_expected)
+	assert_equal(deserving_branch, branch_expected, message)
 end #deserving_branch
 end #Assertions
 include Assertions
