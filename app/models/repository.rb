@@ -6,6 +6,9 @@
 #
 ###########################################################################
 require 'grit'  # sudo gem install grit
+# rdoc at http://grit.rubyforge.org/
+# partial API at less /usr/share/doc/ruby-grit/API.txt
+# code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
 class Repository <Grit::Repo
 module Constants
@@ -67,8 +70,8 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		@deserving_branch=:passed
-	elsif @recent_test.process_state.exitstatus==1 then # 1 error or syntax error
-		syntax_test=shell_command("ruby-c "+executable)
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test=shell_command("ruby -c "+executable)
 		if syntax_test.output=="Syntax OK\n" then
 			@deserving_branch=:testing
 		else
@@ -84,12 +87,16 @@ end #deserving_branch
 # safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
-	git_command("stash save").assert_post_conditions
-	git_command('checkout #{target_branch}').assert_post_conditions
-	block.call(self)
-	git_command('checkout #{push_branch}').assert_post_conditions
-	git_command('stash apply').assert_post_conditions
-	recent_test.puts
+	if push_branch!=target_branch then
+		git_command("stash save").assert_post_conditions
+		git_command('checkout #{target_branch}').assert_post_conditions
+		ret=block.call(self)
+		git_command('checkout #{push_branch}').assert_post_conditions
+		git_command('stash apply').assert_post_conditions
+	else
+		ret=block.call(self)
+	end #if
+	ret
 end #safely_visit_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
