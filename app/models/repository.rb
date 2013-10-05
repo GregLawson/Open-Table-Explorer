@@ -170,17 +170,17 @@ def assert_post_conditions
 end #assert_post_conditions
 def assert_deserving_branch(branch_expected, executable)
 	deserving_branch=deserving_branch?(executable)
+	recent_test=shell_command("ruby "+executable)
+	syntax_test=shell_command("ruby -c "+executable)
 	case 
 	when :edited then
-		recent_test=shell_command("ruby "+executable)
-		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
-		syntax_test=shell_command("ruby -c "+executable)
+		assert_equal(1, recent_test.process_status.exitstatus, recent_test.inspect)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	when :passed then
 	when :testing then
-		recent_test=shell_command("ruby "+executable)
-		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-		syntax_test=shell_command("ruby -c "+executable)
+		assert_operator(1 :<=, recent_test.process_status.exitstatus, recent_test.inspect)
+		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	when :passed then
+		assert_equal(0, recent_test.process_status.exitstatus, recent_test.inspect)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	end #case
 	assert_equal(deserving_branch, branch_expected)
