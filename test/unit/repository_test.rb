@@ -50,7 +50,7 @@ def test_deserving_branch
 	recent_test=SELF_code_Repo.shell_command("ruby "+executable)
 	assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
 	syntax_test=SELF_code_Repo.shell_command("ruby-c "+executable)
-	assert_not_equal(syntax_test.output, "Syntax OK\n")
+	assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 
 	executable='test/unit/minimal2_test.rb'
 	recent_test=SELF_code_Repo.shell_command("ruby "+executable)
