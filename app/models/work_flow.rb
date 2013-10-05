@@ -115,7 +115,7 @@ include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 def assert_pre_conditions
-	assert_kind_of(@repository, Grit::Repro)
+	assert_kind_of(@repository, Grit::Repo)
 	assert_respond_to(@repository, :status)
 	assert_respond_to(@repository.status, :changed)
 end #assert_pre_conditions
