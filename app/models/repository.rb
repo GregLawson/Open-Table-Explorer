@@ -87,12 +87,16 @@ end #deserving_branch
 # safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
-	git_command("stash save").assert_post_conditions
-	git_command('checkout #{target_branch}').assert_post_conditions
-	block.call(self)
-	git_command('checkout #{push_branch}').assert_post_conditions
-	git_command('stash apply').assert_post_conditions
-	recent_test.puts
+	if push_branch!=target_branch then
+		git_command("stash save").assert_post_conditions
+		git_command('checkout #{target_branch}').assert_post_conditions
+		ret=block.call(self)
+		git_command('checkout #{push_branch}').assert_post_conditions
+		git_command('stash apply').assert_post_conditions
+	else
+		ret=block.call(self)
+	end #if
+	ret
 end #safely_visit_branch
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
