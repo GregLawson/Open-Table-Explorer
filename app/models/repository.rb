@@ -99,7 +99,7 @@ def safely_visit_branch(target_branch, &block)
 	ret
 end #safely_visit_branch
 def validate_commit(related_files, executable)
-	related_files.tested_files.each do |p|
+	related_files.tested_files(executable).each do |p|
 			git_command("checkout stash "+p).execute.assert_post_conditions
 		end #each
 	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
