@@ -89,7 +89,7 @@ def test(executable=@related_files.model_test_pathname?)
 		@repository.safely_visit_branch(deserving_branch) do
 			@repository.stage(deserving_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
-		end # infinite? interactive loop
+		end until false # infinite? interactive loop
 end #test
 def execute(executable=@related_files.model_test_pathname?)
 	begin
