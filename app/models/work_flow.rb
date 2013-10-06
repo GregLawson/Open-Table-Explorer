@@ -91,7 +91,6 @@ def test(executable=@related_files.model_test_pathname?)
 #			@repository.stage(deserving_branch, @related_files.tested_files(executable))
 			@repository.validate_commit(@related_files, executable)
 		end #safely_visit_branch
-		@repository.recent_test.puts
 		edit
 	end until false # infinite? interactive loop
 end #test
