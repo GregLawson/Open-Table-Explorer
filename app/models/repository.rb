@@ -34,7 +34,6 @@ def create_if_missing(path)
 end #create_if_missing
 end #ClassMethods
 extend ClassMethods
-require_relative "shell_command.rb"
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
