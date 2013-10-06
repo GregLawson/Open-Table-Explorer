@@ -71,7 +71,7 @@ def test_safely_visit_branch
 end #safely_visit_branch
 def test_validate_commit
 	assert_respond_to(Clean_Example.grit_repo, :status)
-	assert_instance_of(Clean_Example.grit_repo.status, Grit::Status)
+	assert_instance_of(Grit::Status, Clean_Example.grit_repo.status)
 end #validate_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
