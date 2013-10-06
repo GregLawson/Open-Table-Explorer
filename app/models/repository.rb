@@ -86,7 +86,7 @@ end #deserving_branch
 # safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
-	if push_branch!=target_branch then
+	if push_branch!=target_branch && something_to_commit? then
 		git_command("stash save").assert_post_conditions
 		git_command('checkout #{target_branch}').assert_post_conditions
 		ret=block.call(self)
