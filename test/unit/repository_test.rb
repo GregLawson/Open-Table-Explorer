@@ -73,6 +73,10 @@ def test_validate_commit
 	assert_respond_to(Clean_Example.grit_repo, :status)
 	assert_instance_of(Grit::Status, Clean_Example.grit_repo.status)
 end #validate_commit
+def test_something_to_commit?
+	status=grit_repo.status
+	status.added+status.changed+status.deleted!=[]
+end #nothing_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")
