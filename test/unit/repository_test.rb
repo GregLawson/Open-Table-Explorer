@@ -70,6 +70,7 @@ def test_safely_visit_branch
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
 end #safely_visit_branch
 def test_validate_commit
+	assert_respond_to(self.grit_repo, :status)
 end #validate_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
