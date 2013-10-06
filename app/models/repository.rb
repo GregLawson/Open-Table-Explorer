@@ -98,7 +98,12 @@ def safely_visit_branch(target_branch, &block)
 	end #if
 	ret
 end #safely_visit_branch
-def validate_commit
+def validate_commit(related_files, executable)
+	related_files.tested_files.each do |p|
+			git_command("checkout stash "+p).execute.assert_post_conditions
+		end #each
+	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
+	git_command('cola').assert_post_conditions
 end #validate_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
