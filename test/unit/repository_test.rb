@@ -74,6 +74,7 @@ def test_validate_commit
 	assert_instance_of(Grit::Status, Clean_Example.grit_repo.status)
 end #validate_commit
 def test_something_to_commit?
+	return true #debug
 	status=grit_repo.status
 	status.added+status.changed+status.deleted!=[]
 end #nothing_to_commit
