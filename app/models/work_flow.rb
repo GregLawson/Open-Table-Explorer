@@ -87,7 +87,9 @@ def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=@repository.deserving_branch?(executable)
 		@repository.safely_visit_branch(deserving_branch) do
-			@repository.stage(deserving_branch, @related_files.tested_files(executable))
+#			@repository.stage(deserving_branch, @related_files.tested_files(executable))
+			@repository.validate_commit(@related_files, executable)
+			@repository.recent_test.puts
 		end #safely_visit_branch
 		end until false # infinite? interactive loop
 end #test
