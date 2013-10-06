@@ -98,6 +98,13 @@ def safely_visit_branch(target_branch, &block)
 	end #if
 	ret
 end #safely_visit_branch
+def validate_commit(related_files, executable)
+	related_files.tested_files.each do |p|
+			git_command("checkout stash "+p).execute.assert_post_conditions
+		end #each
+	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
+	git_command('cola').assert_post_conditions
+end #validate_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
@@ -172,12 +179,17 @@ def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
 	recent_test=shell_command("ruby "+executable)
 	message+="\nrecent_test="+recent_test.inspect
+	message+="\nrecent_test.process_status="+recent_test.process_status.inspect
 	syntax_test=shell_command("ruby -c "+executable)
 	message+="\nsyntax_test="+syntax_test.inspect
-	case 
+	message+="\nsyntax_test.process_status="+syntax_test.process_status.inspect
+	message+="\nbranch_expected=#{branch_expected.inspect}"
+	message+="\ndeserving_branch=#{deserving_branch.inspect}"
+	case deserving_branch
 	when :edited then
 		assert_equal(1, recent_test.process_status.exitstatus, message)
 		assert_not_equal("Syntax OK\n", syntax_test.output, message)
+		assert_equal(1, syntax_test.process_status.exitstatus, message)
 	when :testing then
 		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
 		assert_equal("Syntax OK\n", syntax_test.output, message)

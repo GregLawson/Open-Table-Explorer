@@ -69,6 +69,8 @@ def test_safely_visit_branch
 	push_branch=Clean_Example.current_branch_name?
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
 end #safely_visit_branch
+def test_validate_commit
+end #validate_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")
