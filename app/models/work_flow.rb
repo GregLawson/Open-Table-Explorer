@@ -89,7 +89,6 @@ def test(executable=@related_files.model_test_pathname?)
 		@repository.recent_test.puts
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do
-#			@repository.stage(deserving_branch, @related_files.tested_files(executable))
 			@repository.validate_commit(@related_files, executable)
 		end #safely_visit_branch
 		edit
