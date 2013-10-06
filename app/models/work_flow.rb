@@ -81,7 +81,7 @@ end #edit
 def emacs
 	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
-	emacs.execute.assert_post_conditions
+	emacs.assert_post_conditions
 end #emacs
 def test(executable=@related_files.model_test_pathname?)
 	begin
