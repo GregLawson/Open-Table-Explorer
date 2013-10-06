@@ -98,11 +98,13 @@ def safely_visit_branch(target_branch, &block)
 	ret
 end #safely_visit_branch
 def validate_commit(related_files, executable)
-	related_files.tested_files(executable).each do |p|
-		git_command("checkout stash "+p).assert_post_conditions
-	end #each
-	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
-	git_command('cola').assert_post_conditions
+	if something_to_commit? then
+		related_files.tested_files(executable).each do |p|
+			git_command("checkout stash "+p).assert_post_conditions
+		end #each
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
+		git_command('cola').assert_post_conditions
+	end #if
 end #validate_commit
 def something_to_commit?
 	status=grit_repo.status
