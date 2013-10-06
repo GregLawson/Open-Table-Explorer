@@ -38,7 +38,7 @@ def test_standardize_position
 	Clean_Example.git_command("merge --abort").puts
 	Clean_Example.git_command("stash save").assert_post_conditions
 	Clean_Example.git_command("checkout master").puts
-	Clean_Example.standardize_position
+	Clean_Example.standardize_position!
 end #standardize_position
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)

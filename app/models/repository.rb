@@ -55,12 +55,12 @@ def git_command(git_subcommand)
 	end #if
 	ret
 end #git_command
-def standardize_position
+def standardize_position!
 	git_command("rebase --abort")
 	git_command("merge --abort")
 	git_command("stash save").assert_post_conditions
 	git_command("checkout master")
-end #standardize_position
+end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
@@ -107,6 +107,7 @@ def validate_commit(related_files, executable)
 	end #if
 end #validate_commit
 def something_to_commit?
+	return true #debug
 	status=grit_repo.status
 	status.added+status.changed+status.deleted!=[]
 end #nothing_to_commit
