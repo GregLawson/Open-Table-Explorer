@@ -99,7 +99,7 @@ def safely_visit_branch(target_branch, &block)
 end #safely_visit_branch
 def validate_commit(related_files, executable)
 	related_files.tested_files(executable).each do |p|
-		git_command("checkout stash "+p).execute.assert_post_conditions
+		git_command("checkout stash "+p).assert_post_conditions
 	end #each
 	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
 	git_command('cola').assert_post_conditions
@@ -134,7 +134,7 @@ def stage(target_branch, tested_files)
 		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
 		tested_files.each do |p|
-			git_command("checkout stash "+p).execute.assert_post_conditions
+			git_command("checkout stash "+p).assert_post_conditions
 		end #each
 		if !switch_branch.errors.empty? then
 			puts "Why am I here?"+message
@@ -148,8 +148,8 @@ end #stage
 def commit_to_branch(target_branch, tested_files)
 	push_branch=stage(target_branch, tested_files)
 	if push_branch!=target_branch then
-		git_command("checkout "+push_branch.to_s).execute.assert_post_conditions
-		git_command("checkout stash apply").execute.assert_post_conditions
+		git_command("checkout "+push_branch.to_s).assert_post_conditions
+		git_command("checkout stash apply").assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable, tested_files)
