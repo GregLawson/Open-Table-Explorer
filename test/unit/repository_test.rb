@@ -82,7 +82,7 @@ def test_something_to_commit?
 	assert_instance_of(Array, status.added)
 	assert_instance_of(Array, status.changed)
 	assert_instance_of(Array, status.deleted)
-end #nothing_to_commit
+end #something_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")

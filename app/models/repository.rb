@@ -116,7 +116,7 @@ def something_to_commit?
 	return true #debug
 	status=grit_repo.status
 	status.added+status.changed+status.deleted!=[]
-end #nothing_to_commit
+end #something_to_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
