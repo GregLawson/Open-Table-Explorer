@@ -74,13 +74,14 @@ def test_safely_visit_branch
 		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
 end #safely_visit_branch
 def test_validate_commit
-	assert_respond_to(Clean_Example.grit_repo, :status)
-	assert_instance_of(Grit::Status, Clean_Example.grit_repo.status)
 end #validate_commit
 def test_something_to_commit?
-	return true #debug
-	status=grit_repo.status
-	status.added+status.changed+status.deleted!=[]
+	assert_respond_to(Clean_Example.grit_repo, :status)
+	assert_instance_of(Grit::Status, Clean_Example.grit_repo.status)
+	status=Clean_Example.grit_repo.status
+	assert_instance_of(Array, status.added)
+	assert_instance_of(Array, status.changed)
+	assert_instance_of(Array, status.deleted)
 end #nothing_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")

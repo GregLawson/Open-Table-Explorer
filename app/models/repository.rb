@@ -89,10 +89,14 @@ def safely_visit_branch(target_branch, &block)
 	if push_branch!=target_branch && something_to_commit? then
 		git_command('stash save').assert_post_conditions
 		checkout_target=git_command("checkout #{target_branch}")
-		if checkout_target.errors=="Switched to branch '#{target_branch}'\n" then
+		if checkout_target.errors!="Switched to branch '#{target_branch}'\n" then
+			checkout_target.assert_post_conditions
 		end #if
 		ret=block.call(self)
-		git_command("checkout #{push_branch}").assert_post_conditions
+		checkout_push=git_command("checkout #{push_branch}")#.assert_post_conditions
+		if checkout_push.errors!="Switched to branch '#{push_branch}'\n" then
+			checkout_push.assert_post_conditions
+		end #if
 		git_command('stash apply').assert_post_conditions
 	else
 		ret=block.call(self)
