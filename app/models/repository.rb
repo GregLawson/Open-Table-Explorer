@@ -84,6 +84,12 @@ end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
+def confirm_branch_switch(branch)
+	checkout_branch=git_command("checkout #{branch}")
+	if checkout_branch.errors!="Switched to branch '#{branch}'\n" then
+		checkout_branch.assert_post_conditions
+	end #if
+end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
 	if push_branch!=target_branch && something_to_commit? then

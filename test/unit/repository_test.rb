@@ -83,6 +83,8 @@ def test_something_to_commit?
 	assert_instance_of(Hash, status.changed)
 	assert_instance_of(Hash, status.deleted)
 	assert_equal({}, status.added)
+	assert_equal({}, status.changed)
+	assert_equal({}, status.deleted)
 end #something_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
