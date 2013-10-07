@@ -68,6 +68,10 @@ end #deserving_branch
 def test_safely_visit_branch
 	push_branch=Clean_Example.current_branch_name?
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
+	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){Clean_Example.current_branch_name?})
+		target_branch=:master
+		checkout_target=Clean_Example.git_command("checkout #{target_branch}")
+		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
 end #safely_visit_branch
 def test_validate_commit
 	assert_respond_to(Clean_Example.grit_repo, :status)

@@ -10,7 +10,7 @@ require 'grit'  # sudo gem install grit
 # partial API at less /usr/share/doc/ruby-grit/API.txt
 # code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
-class Repository <Grit::Repo
+class Repository # <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
@@ -88,7 +88,9 @@ def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
 	if push_branch!=target_branch && something_to_commit? then
 		git_command('stash save').assert_post_conditions
-		git_command("checkout #{target_branch}").assert_post_conditions
+		checkout_target=git_command("checkout #{target_branch}")
+		if checkout_target.errors=="Switched to branch '#{target_branch}'\n" then
+		end #if
 		ret=block.call(self)
 		git_command("checkout #{push_branch}").assert_post_conditions
 		git_command('stash apply').assert_post_conditions
@@ -141,7 +143,7 @@ def stage(target_branch, tested_files)
 		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
 		tested_files.each do |p|
-			git_command("checkout stash "+p).assert_post_conditions
+			git_command('checkout stash '+p).assert_post_conditions
 		end #each
 		if !switch_branch.errors.empty? then
 			puts "Why am I here?"+message
@@ -155,8 +157,8 @@ end #stage
 def commit_to_branch(target_branch, tested_files)
 	push_branch=stage(target_branch, tested_files)
 	if push_branch!=target_branch then
-		git_command("checkout "+push_branch.to_s).assert_post_conditions
-		git_command("checkout stash apply").assert_post_conditions
+		git_command('checkout '+push_branch.to_s).assert_post_conditions
+		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable, tested_files)
