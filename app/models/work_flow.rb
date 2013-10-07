@@ -78,16 +78,23 @@ def edit
 	puts edit.command_string
 	edit.assert_post_conditions
 end #edit
-def emacs
+def emacs(executable=@related_files.model_test_pathname?)
 	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
-	emacs.execute.assert_post_conditions
+	emacs.assert_post_conditions
 end #emacs
-def execute
-	edit_default
-	test_and_commit(related_files.model_test_pathname?)
-end #execute
 def test(executable=@related_files.model_test_pathname?)
+	begin
+		deserving_branch=@repository.deserving_branch?(executable)
+		@repository.recent_test.puts
+		puts deserving_branch if $VERBOSE
+		@repository.safely_visit_branch(deserving_branch) do
+			@repository.validate_commit(@related_files, executable)
+		end #safely_visit_branch
+		edit
+	end until false # infinite? interactive loop
+end #test
+def execute(executable=@related_files.model_test_pathname?)
 	begin
 	push_branch=@repository.current_branch_name?
 	@repository.git_command("stash save").assert_post_conditions
@@ -97,12 +104,12 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.git_command('checkout #{push_branch}')
 	@repository.git_command('stash apply')
 	@repository.git_command('checkout #{deserving_branch}')
-	@repository.git_command('stash apply')
+#	@repository.git_command('stash apply')
 	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+@related_files.model_class_name.to_s)	
 	@repository.git_command('cola')
 	@repository.recent_test.puts
 	edit
-	end until @repository.recent_test.success?
+	end
 end #test
 module Assertions
 include Test::Unit::Assertions
