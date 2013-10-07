@@ -104,6 +104,11 @@ def safely_visit_branch(target_branch, &block)
 	ret
 end #safely_visit_branch
 def validate_commit(related_files, executable)
+def stage_files(branch, files)
+	safely_visit_branch(branch) do
+		validate_commit(files)
+	end #safely_visit_branch
+end #stage_files
 	if something_to_commit? then
 		related_files.tested_files(executable).each do |p|
 			git_command('checkout stash '+p).assert_post_conditions
