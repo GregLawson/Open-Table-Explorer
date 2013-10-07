@@ -87,10 +87,10 @@ end #deserving_branch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
 	if push_branch!=target_branch && something_to_commit? then
-		git_command("stash save").assert_post_conditions
-		git_command('checkout #{target_branch}').assert_post_conditions
+		git_command('stash save').assert_post_conditions
+		git_command("checkout #{target_branch}").assert_post_conditions
 		ret=block.call(self)
-		git_command('checkout #{push_branch}').assert_post_conditions
+		git_command("checkout #{push_branch}").assert_post_conditions
 		git_command('stash apply').assert_post_conditions
 	else
 		ret=block.call(self)
@@ -100,7 +100,7 @@ end #safely_visit_branch
 def validate_commit(related_files, executable)
 	if something_to_commit? then
 		related_files.tested_files(executable).each do |p|
-			git_command("checkout stash "+p).assert_post_conditions
+			git_command('checkout stash '+p).assert_post_conditions
 		end #each
 		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
 		git_command('cola').assert_post_conditions
