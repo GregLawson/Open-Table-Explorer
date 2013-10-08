@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 ###########################################################################
 #    Copyright (C) 2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
