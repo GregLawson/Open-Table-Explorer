@@ -118,8 +118,8 @@ def validate_commit(files)
 	end #if
 end #validate_commit
 def something_to_commit?
-	status=grit_repo.status
-	status.added=={}&&status.changed=={}&&status.deleted=={}
+	status=@grit_repo.status
+	status.added!={}||status.changed!={}||status.deleted!={}
 end #something_to_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
@@ -191,6 +191,12 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
+def assert_nothing_to_commit
+	status=grit_repo.status
+	assert_equal({}, status.added)
+	assert_equal({}, status.changed)
+	assert_equal({}, status.deleted)
+end #assert_nothing_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
 	recent_test=shell_command("ruby "+executable)

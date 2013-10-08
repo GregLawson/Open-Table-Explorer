@@ -85,7 +85,15 @@ def test_something_to_commit?
 	assert_equal({}, status.added)
 	assert_equal({}, status.changed)
 	assert_equal({}, status.deleted)
-	assert(!Clean_Example.something_to_commit?, Clean_Example.status.inspect)
+	assert((status.added=={}), status.inspect)
+	assert((status.changed=={}), status.inspect)
+	assert((status.deleted=={}), status.inspect)
+	assert((status.added=={}&&status.changed=={}), status.inspect)
+	assert((status.added=={}&&status.deleted=={}), status.inspect)
+	assert((status.deleted=={}&&status.changed=={}), status.inspect)
+	assert((status.added=={}&&status.changed=={}&&status.deleted=={}), status.inspect)
+	assert(!Clean_Example.something_to_commit?, status.inspect)
+	Clean_Example.assert_nothing_to_commit
 end #something_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
