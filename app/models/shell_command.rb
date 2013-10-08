@@ -21,6 +21,7 @@ end #execute
 def initialize(command_string)
 	@command_string=command_string
 	execute # do it first time, then execute
+	$stdout.puts inspect if $VERBOSE
 end #initialize
 def system_output(command_string)
 	ret=[] #make method scope not block scope so it can be returned
@@ -35,7 +36,6 @@ def system_output(command_string)
 		process_status = wait_thr.value # Process::Status object returned.
 		ret=[output, errors, process_status, pid]
 	}
-	$stdout.puts inspect if $VERBOSE
 	ret
 end #system_output
 def fork(cmd)
@@ -98,7 +98,7 @@ end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
 	assert_empty(@errors, message+'expected errors to be empty\n'+inspect)
-	assert_equal(0, @process_status, message)
+	assert_equal(0, @process_status.exitstatus, message)
 	assert_not_nil(@errors)
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
