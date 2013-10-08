@@ -38,7 +38,7 @@ def test_standardize_position
 	Clean_Example.git_command("merge --abort").puts
 	Clean_Example.git_command("stash save").assert_post_conditions
 	Clean_Example.git_command("checkout master").puts
-	Clean_Example.standardize_position
+	Clean_Example.standardize_position!
 end #standardize_position
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
@@ -68,10 +68,24 @@ end #deserving_branch
 def test_safely_visit_branch
 	push_branch=Clean_Example.current_branch_name?
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
+	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){Clean_Example.current_branch_name?})
+	target_branch=:master
+	checkout_target=Clean_Example.git_command("checkout #{target_branch}")
+#		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
 end #safely_visit_branch
 def test_validate_commit
-	assert_respond_to(self.grit_repo, :status)
 end #validate_commit
+def test_something_to_commit?
+	assert_respond_to(Clean_Example.grit_repo, :status)
+	assert_instance_of(Grit::Status, Clean_Example.grit_repo.status)
+	status=Clean_Example.grit_repo.status
+	assert_instance_of(Hash, status.added)
+	assert_instance_of(Hash, status.changed)
+	assert_instance_of(Hash, status.deleted)
+	assert_equal({}, status.added)
+	assert_equal({}, status.changed)
+	assert_equal({}, status.deleted)
+end #something_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")
