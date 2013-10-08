@@ -114,12 +114,12 @@ def stage_files(branch, files)
 		validate_commit(files)
 	end #safely_visit_branch
 end #stage_files
-def validate_commit(related_files, executable)
+def validate_commit(files)
 	if something_to_commit? then
-		related_files.tested_files(executable).each do |p|
+		files.each do |p|
 			git_command('checkout stash '+p).assert_post_conditions
 		end #each
-		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFiles.new(files[0]).model_class_name.to_s)	
 		git_command('cola').assert_post_conditions
 	end #if
 end #validate_commit
