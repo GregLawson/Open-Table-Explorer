@@ -45,11 +45,11 @@ def run_open_tax_solver
 	open_tax_solver_input="#{open_tax_solver_data_directory}/US_1040_Lawson.txt"
 	open_tax_solver_sysout="#{open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
 	command="#{Open_tax_solver_binary} #{open_tax_solver_input} >#{open_tax_solver_sysout}"
-	shell_command(command)
+	ShellCommands.new(command).assert_post_conditions
 end #run_open_tax_solver
 def run_open_tax_solver_to_filler
 	command="nodejs #{@open_Tax_Filler_Directory}/script/json_ots.js #{@open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json"
-	shell_command(command)
+	ShellCommands.new(command).assert_post_conditions
 end #run_open_tax_solver_to_filler
 module Assertions
 def assert_post_conditions
