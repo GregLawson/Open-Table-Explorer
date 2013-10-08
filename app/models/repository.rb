@@ -113,7 +113,7 @@ def validate_commit(files)
 		files.each do |p|
 			git_command('checkout stash '+p).assert_post_conditions
 		end #each
-		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFiles.new(files[0]).model_class_name.to_s)	
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new(files[0]).model_class_name.to_s)	
 		git_command('cola').assert_post_conditions
 	end #if
 end #validate_commit
