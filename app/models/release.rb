@@ -8,7 +8,8 @@
 require_relative 'related_file.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative 'repository.rb'
-class Release
+require_relative '../../app/models/work_flow.rb'
+class Release <WorkFlow
 module Constants
 end #Constants
 include Constants
@@ -25,16 +26,19 @@ def initialize(executable)
 #	raise message if  @related_files.edit_files.empty?
   @repository=Repository.new(@related_files.project_root_dir)
 end #initialize
-def unit_test
+def unit_test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=@repository.deserving_branch?(executable)
+		if @repository.recent_test.success? then
+			break
+		end #if
 		@repository.recent_test.puts
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do
 			@repository.validate_commit(@related_files.tested_files(executable))
 		end #safely_visit_branch
 		edit
-	end until !@repository.something_to_commit? && @repository.recent_test.success? # infinite? interactive loop
+	end until !@repository.something_to_commit? 
 end #unit_test
 module Assertions
 include Test::Unit::Assertions
