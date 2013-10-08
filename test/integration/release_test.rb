@@ -15,15 +15,14 @@ include TE.model_class?::Examples
 def test_work_flow_script
 end #work_flow_script
 def test_unit_test_all
+	Repository::Examples::SELF_code_Repo.git_command('checkout passed')
 	pattern=FilePattern.find_by_name(:test)
 	glob=pattern.pathname_glob
 	puts 'glob='+glob
 	tests=Dir[glob]
 	puts tests.inspect
-	tests.all? do |test|
-		puts test
-		Repository::Examples::SELF_code_Repo.deserving_branch?(test)==:passed
-		Repository::Examples::SELF_code_Repo.recent_test.puts
+	tests.each do |test|
+		Release.new(test).unit_test
 	end #each
 end #test_unit_test_all
 end #Release
