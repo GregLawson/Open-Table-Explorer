@@ -77,8 +77,8 @@ argv.each do |f|
 		when :testing then work_flow.repository.stage_files(:testing, [f])
 		when :edited then work_flow.repository.stage_files(:edited, [f])
 		when :deserve then 
-			$stdout.puts  work_flow.repository.recent_test.inspect
 			$stdout.puts  work_flow.repository.deserving_branch?(f)
+			$stdout.puts  work_flow.repository.recent_test.inspect
 		end #case
 		$stdout.puts work_flow.repository.git_command('status').inspect
 	end #each
