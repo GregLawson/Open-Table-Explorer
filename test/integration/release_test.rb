@@ -18,7 +18,6 @@ def test_unit_test_all
 	pattern=FilePattern.find_by_name(:test)
                  glob=pattern.pathname_glob
 	tests=Dir[glob]
-	puts tests.inspect
 	tests.all? do |test|
 		Repository::Examples::SELF_code_Repo.deserving_branch?(test)==:passed
 	end #each
