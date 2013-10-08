@@ -10,7 +10,7 @@ require 'grit'  # sudo gem install grit
 # partial API at less /usr/share/doc/ruby-grit/API.txt
 # code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
-class Repository # <Grit::Repo
+class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
