@@ -10,6 +10,12 @@ class RelatedFile
 module Constants
 end #Constants
 include Constants
+module ClassMethods
+def new_from_path?(path)
+	RelatedFile.new(FilePattern.path2model_name?(path), FilePattern.project_root_dir?(path))
+end #new_from_path?
+end #ClassMethods
+extend ClassMethods
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
 def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
