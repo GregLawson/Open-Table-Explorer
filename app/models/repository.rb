@@ -34,7 +34,6 @@ def create_if_missing(path)
 end #create_if_missing
 end #ClassMethods
 extend ClassMethods
-require_relative "shell_command.rb"
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
@@ -56,12 +55,12 @@ def git_command(git_subcommand)
 	end #if
 	ret
 end #git_command
-def standardize_position
+def standardize_position!
 	git_command("rebase --abort")
 	git_command("merge --abort")
 	git_command("stash save").assert_post_conditions
 	git_command("checkout master")
-end #standardize_position
+end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
@@ -85,26 +84,49 @@ end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
+def confirm_branch_switch(branch)
+	checkout_branch=git_command("checkout #{branch}")
+	if checkout_branch.errors!="Switched to branch '#{branch}'\n" then
+		checkout_branch.assert_post_conditions
+	end #if
+end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
-	if push_branch!=target_branch then
-		git_command("stash save").assert_post_conditions
-		git_command('checkout #{target_branch}').assert_post_conditions
+	if push_branch!=target_branch && something_to_commit? then
+		git_command('stash save').assert_post_conditions
+		checkout_target=git_command("checkout #{target_branch}")
+		if checkout_target.errors!="Switched to branch '#{target_branch}'\n" then
+			checkout_target.assert_post_conditions
+		end #if
 		ret=block.call(self)
-		git_command('checkout #{push_branch}').assert_post_conditions
+		checkout_push=git_command("checkout #{push_branch}")#.assert_post_conditions
+		if checkout_push.errors!="Switched to branch '#{push_branch}'\n" then
+			checkout_push.assert_post_conditions
+		end #if
 		git_command('stash apply').assert_post_conditions
 	else
 		ret=block.call(self)
 	end #if
 	ret
 end #safely_visit_branch
-def validate_commit(related_files, executable)
-	related_files.tested_files.each do |p|
-			git_command("checkout stash "+p).execute.assert_post_conditions
+def stage_files(branch, files)
+	safely_visit_branch(branch) do
+		validate_commit(files)
+	end #safely_visit_branch
+end #stage_files
+def validate_commit(files)
+	if something_to_commit? then
+		files.each do |p|
+			git_command('checkout stash '+p).assert_post_conditions
 		end #each
-	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+related_files.model_class_name.to_s)	
-	git_command('cola').assert_post_conditions
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFiles.new(files[0]).model_class_name.to_s)	
+		git_command('cola').assert_post_conditions
+	end #if
 end #validate_commit
+def something_to_commit?
+	status=grit_repo.status
+	status.added=={}&&status.changed=={}&&status.deleted=={}
+end #something_to_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
@@ -135,7 +157,7 @@ def stage(target_branch, tested_files)
 		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
 		tested_files.each do |p|
-			git_command("checkout stash "+p).execute.assert_post_conditions
+			git_command('checkout stash '+p).assert_post_conditions
 		end #each
 		if !switch_branch.errors.empty? then
 			puts "Why am I here?"+message
@@ -149,8 +171,8 @@ end #stage
 def commit_to_branch(target_branch, tested_files)
 	push_branch=stage(target_branch, tested_files)
 	if push_branch!=target_branch then
-		git_command("checkout "+push_branch.to_s).execute.assert_post_conditions
-		git_command("checkout stash apply").execute.assert_post_conditions
+		git_command('checkout '+push_branch.to_s).assert_post_conditions
+		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable, tested_files)
