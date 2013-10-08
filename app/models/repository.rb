@@ -113,13 +113,13 @@ def validate_commit(files)
 		files.each do |p|
 			git_command('checkout stash '+p).assert_post_conditions
 		end #each
-		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new(files[0]).model_class_name.to_s)	
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new_from_path?(files[0]).model_class_name.to_s)	
 		git_command('cola').assert_post_conditions
 	end #if
 end #validate_commit
 def something_to_commit?
-	status=grit_repo.status
-	status.added=={}&&status.changed=={}&&status.deleted=={}
+	status=@grit_repo.status
+	status.added!={}||status.changed!={}||status.deleted!={}
 end #something_to_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
@@ -191,6 +191,12 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
+def assert_nothing_to_commit
+	status=grit_repo.status
+	assert_equal({}, status.added)
+	assert_equal({}, status.changed)
+	assert_equal({}, status.deleted)
+end #assert_nothing_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
 	recent_test=shell_command("ruby "+executable)
