@@ -5,6 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# need  sudo apt-get install poppler-utils
+# need nodejs
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/shell_command.rb'
