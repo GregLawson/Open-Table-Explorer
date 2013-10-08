@@ -85,6 +85,7 @@ def test_something_to_commit?
 	assert_equal({}, status.added)
 	assert_equal({}, status.changed)
 	assert_equal({}, status.deleted)
+	assert(!Clean_Example.something_to_commit?, Clean_Example.status.inspect)
 end #something_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
