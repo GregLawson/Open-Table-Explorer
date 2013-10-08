@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-#require_relative '../../app/models/release.rb'
+require_relative '../../app/models/release.rb'
 class ReleaseTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
