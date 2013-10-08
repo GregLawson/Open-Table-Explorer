@@ -124,9 +124,8 @@ end #stage_files
 	end #if
 end #validate_commit
 def something_to_commit?
-	return true #debug
 	status=grit_repo.status
-	status.added+status.changed+status.deleted!=[]
+	status.added=={}&&status.changed=={}&&status.deleted=={}
 end #something_to_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
