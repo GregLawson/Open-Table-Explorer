@@ -70,9 +70,9 @@ argv.each do |f|
 		when :downgrade then editTestGit.downgrade(f)
 		when :best then editTestGit.best(f)
 		when :emacs then editTestGit.emacs(f)
-		when :passed then editTestGit.stage_files(:passed, [f])
-		when :testing then editTestGit.stage_files(:testing, [f])
-		when :edited then editTestGit.stage_files(:edited, [f])
+		when :passed then editTestGit.repository.stage_files(:passed, [f])
+		when :testing then editTestGit.repository.stage_files(:testing, [f])
+		when :edited then editTestGit.repository.stage_files(:edited, [f])
 		end #case
 		$stdout.puts editTestGit.repository.git_command('status').inspect
 	end #each
