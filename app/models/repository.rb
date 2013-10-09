@@ -93,6 +93,10 @@ end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
 	if push_branch!=target_branch && something_to_commit? then
+		puts "status.added=#{status.added.inspect}"
+		puts "status.changed=#{status.changed.inspect}"
+		puts "status.deleted=#{status.deleted.inspect}"
+		puts "something_to_commit?=#{something_to_commit?.inspect}"
 		git_command('stash save').assert_post_conditions
 		confirm_branch_switch(target_branch)
 		ret=block.call(self)
