@@ -93,10 +93,11 @@ def safely_visit_branch(target_branch, &block)
 	changes_branch=push_branch
 	push=something_to_commit? # remember
 	if push then
-		puts "status.added=#{status.added.inspect}"
-		puts "status.changed=#{status.changed.inspect}"
-		puts "status.deleted=#{status.deleted.inspect}"
-		puts "something_to_commit?=#{something_to_commit?.inspect}"
+#		status=@grit_repo.status
+#		puts "status.added=#{status.added.inspect}"
+#		puts "status.changed=#{status.changed.inspect}"
+#		puts "status.deleted=#{status.deleted.inspect}"
+#		puts "something_to_commit?=#{something_to_commit?.inspect}"
 		git_command('stash save').assert_post_conditions
 		changes_branch=:stash
 	end #if
@@ -108,7 +109,7 @@ def safely_visit_branch(target_branch, &block)
 	else
 		ret=block.call(self)
 	end #if
-	if pus then
+	if push then
 		git_command('stash apply').assert_post_conditions
 	end #if
 	ret
