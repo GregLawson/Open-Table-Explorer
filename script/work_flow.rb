@@ -48,6 +48,9 @@ OptionParser.new do |opts|
   opts.on("-v", "--[no-]deserve", "Stage file to edited. ") do |t|
     commands+=[:deserve] if t
   end
+  opts.on("-l", "--[no-]minimal", "edit with minimal comparison. ") do |t|
+    commands+=[:minimal] if t
+  end
 end.parse!
 
 commands=[:test] if commands.empty?
@@ -78,6 +81,9 @@ argv.each do |f|
 		when :testing then editTestGit.repository.stage_files(:testing, [f])
 		when :edited then editTestGit.repository.stage_files(:edited, [f])
 		when :deserve then $stdout.puts  editTestGit.repository.deserving_branch?(f)
+			$stdout.puts  work_flow.repository.deserving_branch?(f)
+			$stdout.puts  work_flow.repository.recent_test.inspect
+		when :minimal then minimal_edit
 		end #case
 		$stdout.puts editTestGit.repository.git_command('status').inspect
 	end #each
