@@ -6,14 +6,16 @@
 #
 ###########################################################################
 class Minimal2
+#require_relative '../../app/models/no_db.rb'
 module Constants
 end #Constants
 include Constants
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-#include DefaultAssertions
-#extend DefaultAssertions::ClassMethods
+# attr_reader
+def initialize
+end #initialize
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
