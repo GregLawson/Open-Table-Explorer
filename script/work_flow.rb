@@ -83,7 +83,7 @@ argv.each do |f|
 		when :deserve then $stdout.puts  editTestGit.repository.deserving_branch?(f)
 			$stdout.puts  work_flow.repository.deserving_branch?(f)
 			$stdout.puts  work_flow.repository.recent_test.inspect
-		when :minimal then minimal_edit
+		when :minimal then editTestGit.minimal_edit
 		end #case
 		$stdout.puts editTestGit.repository.git_command('status').inspect
 	end #each
