@@ -73,6 +73,15 @@ def test_files(edit_files=@related_files.edit_files)
 	end #map
 	pairs.join(' ')
 end #test_files
+def minimal_comparison(edit_files=@related_files.edit_files)
+	pairs=FilePattern::All.map do |p|
+		min_path=Pathname.new(p.pathname_glob(:Minimal).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		path=Pathname.new(p.pathname_glob(@related_files.base_name)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		if File.exists?(min_path) && File.exists?(path_exists then
+			' -t '+path+' '+min_path
+		end #if
+	end.compact.join #map
+end #test_files
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
 	puts edit.command_string
