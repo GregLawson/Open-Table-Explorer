@@ -66,9 +66,9 @@ when 0 then # scite testing defaults command and file
 else
 	argv=ARGV
 end #case
-argv.each do |f|
-	work_flow=WorkFlow.new(f)
-	commands.each do |c|
+commands.each do |c|
+	argv.each do |f|
+		work_flow=WorkFlow.new(f)
 		case c.to_sym
 		when :execute then work_flow.execute(f)
 		when :edit then work_flow.edit
