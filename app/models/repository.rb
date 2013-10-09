@@ -90,30 +90,38 @@ def confirm_branch_switch(branch)
 end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
-	if push_branch!=target_branch && something_to_commit? then
+	changes_branch=push_branch
+	push=something_to_commit? # remember
+	if push then
 		puts "status.added=#{status.added.inspect}"
 		puts "status.changed=#{status.changed.inspect}"
 		puts "status.deleted=#{status.deleted.inspect}"
 		puts "something_to_commit?=#{something_to_commit?.inspect}"
 		git_command('stash save').assert_post_conditions
+		changes_branch=:stash
+	end #if
+
+	if push_branch!=target_branch then
 		confirm_branch_switch(target_branch)
-		ret=block.call(self)
+		ret=block.call(changes_branch)
 		confirm_branch_switch(push_branch)
-		git_command('stash apply').assert_post_conditions
 	else
 		ret=block.call(self)
+	end #if
+	if pus then
+		git_command('stash apply').assert_post_conditions
 	end #if
 	ret
 end #safely_visit_branch
 def stage_files(branch, files)
-	safely_visit_branch(branch) do
-		validate_commit(files)
+	safely_visit_branch(branch) do |changes_branch|
+		validate_commit(changes_branch, files)
 	end #safely_visit_branch
 end #stage_files
-def validate_commit(files)
+def validate_commit(changes_branch, files)
 	if something_to_commit? then
 		files.each do |p|
-			git_command('checkout stash '+p).assert_post_conditions
+			git_command('checkout #{changes_branch} '+p).assert_post_conditions
 		end #each
 		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new_from_path?(files[0]).model_class_name.to_s)	
 		git_command('cola').assert_post_conditions
