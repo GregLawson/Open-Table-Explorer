@@ -73,20 +73,25 @@ def test_files(edit_files=@related_files.edit_files)
 	end #map
 	pairs.join(' ')
 end #test_files
-def minimal_comparison(edit_files=@related_files.edit_files)
-	pairs=FilePattern::All.map do |p|
+def minimal_comparison
+	FilePattern::All.map do |p|
 		min_path=Pathname.new(p.pathname_glob(:Minimal).relative_path_from(Pathname.new(Dir.pwd)).to_s
 		path=Pathname.new(p.pathname_glob(@related_files.base_name)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 		if File.exists?(min_path) && File.exists?(path_exists then
 			' -t '+path+' '+min_path
 		end #if
 	end.compact.join #map
-end #test_files
+end #minimal_comparison
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
 	puts edit.command_string
 	edit.assert_post_conditions
 end #edit
+def minimal_edit
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + minimal_comparison)
+	puts edit.command_string
+	edit.assert_post_conditions
+end #minimal_edit
 def emacs(executable=@related_files.model_test_pathname?)
 	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
