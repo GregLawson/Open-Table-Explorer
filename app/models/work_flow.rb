@@ -103,8 +103,8 @@ def test(executable=@related_files.model_test_pathname?)
 		deserving_branch=@repository.deserving_branch?(executable)
 		@repository.recent_test.puts
 		puts deserving_branch if $VERBOSE
-		@repository.safely_visit_branch(deserving_branch) do
-			@repository.validate_commit(@related_files.tested_files(executable))
+		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
 		edit
 	end until false # infinite? interactive loop
