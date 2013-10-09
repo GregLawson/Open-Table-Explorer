@@ -73,11 +73,11 @@ def test_files(edit_files=@related_files.edit_files)
 	end #map
 	pairs.join(' ')
 end #test_files
-def minimal_comparison
+def minimal_comparison?
 	FilePattern::All.map do |p|
 		min_path=Pathname.new(p.pathname_glob('minimal'+@related_files.default_test_class_id?.to_s)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 		path=Pathname.new(p.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		puts "File.exists?(#{min_path})=#{File.exists?(min_path)}, File.exists?(#{path})=#{File.exists?(path)}" if $VERBOSE
+		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
 		if File.exists?(min_path) && File.exists?(path) then
 			' -t '+path+' '+min_path
 		end #if
@@ -89,7 +89,7 @@ def edit
 	edit.assert_post_conditions
 end #edit
 def minimal_edit
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + minimal_comparison)
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + minimal_comparison?)
 	puts edit.command_string
 	edit.assert_post_conditions
 end #minimal_edit
