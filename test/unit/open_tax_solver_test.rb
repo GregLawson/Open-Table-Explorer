@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/open_tax_solver.rb'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class OpenTaxSolverTest < DefaultTestCase2
-include DefaultTests2
+include DefaultTests
 include OpenTaxSolver::Constants
 extend OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
@@ -17,7 +17,11 @@ extend OpenTableExplorer::Finance::Constants
 def test_Constants
 	assert_pathname_exists(Data_source_directory)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
-#	assert_pathname_exists(Open_tax_solver_sysout)
+	assert_pathname_exists(Open_tax_solver_directory)
+	assert_pathname_exists(Open_tax_solver_data_directory)
+	assert_pathname_exists(Open_tax_solver_input)
+	assert_pathname_exists(Open_tax_solver_binary)
+	assert_pathname_exists(OTS_template_filename)
 end #Constants
 def test_initialize
 end #initialize
@@ -28,6 +32,7 @@ def test_run_tax_solver
 	puts "test_run_tax_solver sysout=#{sysout}"
 	form=OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction)
 	form.run_open_tax_solver
+	assert_pathname_exists(Open_tax_solver_sysout)
 end #run_open_tax_solver
 def 	test_run_tax_solver_to_filler
 	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
