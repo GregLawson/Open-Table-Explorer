@@ -67,24 +67,24 @@ else
 	argv=ARGV
 end #case
 argv.each do |f|
-	editTestGit=WorkFlow.new(f)
+	work_flow=WorkFlow.new(f)
 	commands.each do |c|
 		case c.to_sym
-		when :execute then editTestGit.execute(f)
-		when :edit then editTestGit.edit
-		when :test then editTestGit.test(f)
-		when :upgrade then editTestGit.upgrade(f)
-		when :downgrade then editTestGit.downgrade(f)
-		when :best then editTestGit.best(f)
-		when :emacs then editTestGit.emacs(f)
-		when :passed then editTestGit.repository.stage_files(:passed, [f])
-		when :testing then editTestGit.repository.stage_files(:testing, [f])
-		when :edited then editTestGit.repository.stage_files(:edited, [f])
-		when :deserve then $stdout.puts  editTestGit.repository.deserving_branch?(f)
+		when :execute then work_flow.execute(f)
+		when :edit then work_flow.edit
+		when :test then work_flow.test(f)
+		when :upgrade then work_flow.upgrade(f)
+		when :downgrade then work_flow.downgrade(f)
+		when :best then work_flow.best(f)
+		when :emacs then work_flow.emacs(f)
+		when :passed then work_flow.repository.stage_files(:passed, [f])
+		when :testing then work_flow.repository.stage_files(:testing, [f])
+		when :edited then work_flow.repository.stage_files(:edited, [f])
+		when :deserve then 
 			$stdout.puts  work_flow.repository.deserving_branch?(f)
 			$stdout.puts  work_flow.repository.recent_test.inspect
 		when :minimal then editTestGit.minimal_edit
 		end #case
-		$stdout.puts editTestGit.repository.git_command('status').inspect
+		$stdout.puts work_flow.repository.git_command('status').inspect
 	end #each
 end #each
