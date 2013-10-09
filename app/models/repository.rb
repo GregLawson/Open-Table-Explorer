@@ -38,8 +38,6 @@ attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
 	@path=path
-	source_path=@path
-	temporary_path=Temporary+'recover'
   puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
