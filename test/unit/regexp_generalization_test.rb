@@ -18,7 +18,6 @@ extend RegexpMatchAssertions::ClassMethods
 end #RegexpMatch
 
 class RegexpGeneralizationTest < TestCase #file context
-set_class_variables(RegexpMatchTest,false)
 #require 'test/unit'
 #include Test_Helpers
 #require 'test/assertions/ruby_assertions.rb'

@@ -12,7 +12,6 @@ include RegexpTreeAssertions
 extend RegexpTreeAssertions::ClassMethods
 end #RegexpTree
 class RegexpRepetitionTest < TestCase
-set_class_variables
 def test_RegexpRepetition_initialize
 	assert_equal(One_to_ten.repetition_length, 1..10)
 	assert_instance_of(UnboundedRange, One_a.repetition_length)

@@ -10,7 +10,6 @@ require_relative 'test_environment'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class HostTest < TestCase
-#set_class_variables
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 #	define_model_of_test # allow generic tests

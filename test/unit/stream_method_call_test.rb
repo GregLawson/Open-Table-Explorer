@@ -8,7 +8,6 @@
 require_relative 'test_environment'
 
 class StreamMethodCallTest < TestCase
-set_class_variables
 def test_stream_links
 	streamCall=StreamMethodCall.first
 	assert_equal(64810937,streamCall.id)
