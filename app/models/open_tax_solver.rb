@@ -7,6 +7,7 @@
 ###########################################################################
 # need  sudo apt-get install poppler-utils
 # need nodejs
+# need sudo apt-get install pdftk
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/shell_command.rb'
