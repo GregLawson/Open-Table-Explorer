@@ -20,6 +20,9 @@ end #RegexpTree
 #assert(global_name?(:RexexpTree))
 
 class RegexpToken < RegexpTree
+module Constants
+To_s=RegexpToken.tos_initialize
+end #Constants_RegexpToken
 def self.[](character)
 	if character.instance_of?(Symbol) then
 		RegexpToken.new([Constants::To_s[character]]) # get character from symbol lookup
@@ -64,9 +67,6 @@ def to_sym
 		end #if
 	end #case
 end #string
-module Constants
-To_s=RegexpToken.tos_initialize
-end #Constants_RegexpToken
 end #RegexpToken
 class RegexpSequence < RegexpTree
 def to_pathname_glob
