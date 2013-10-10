@@ -7,12 +7,12 @@
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
 class Minimal2
-module Constants
-end #Constants
-include Constants
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
+module Constants
+end #Constants
+include Constants
 # attr_reader
 def initialize
 end #initialize
