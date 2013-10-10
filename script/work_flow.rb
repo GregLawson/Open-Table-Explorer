@@ -70,7 +70,9 @@ else
 	argv=ARGV
 end #case
 commands.each do |c|
-	argv.each do |f|
+	case c.to_sym
+		when :all then WorkFlow.new($0).all
+	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
 		when :execute then work_flow.execute(f)

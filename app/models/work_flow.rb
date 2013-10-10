@@ -123,7 +123,7 @@ def unit_test(executable=@related_files.model_test_pathname?)
 		edit
 	end until !@repository.something_to_commit? 
 end #unit_test
-def test_unit_test_all
+def all
 	pattern=FilePattern.find_by_name(:test)
 	glob=pattern.pathname_glob
 	tests=Dir[glob]
