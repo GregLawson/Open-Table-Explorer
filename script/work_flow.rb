@@ -48,6 +48,9 @@ OptionParser.new do |opts|
   opts.on("-v", "--[no-]deserve", "Stage file to edited. ") do |t|
     commands+=[:deserve] if t
   end
+  opts.on("-a", "--[no-]all", "All files tested ") do |t|
+    commands+=[:minimal] if t
+  end
   opts.on("-l", "--[no-]minimal", "edit with minimal comparison. ") do |t|
     commands+=[:minimal] if t
   end
