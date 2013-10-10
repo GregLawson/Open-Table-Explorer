@@ -5,8 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class Minimal2
 #require_relative '../../app/models/no_db.rb'
+class Minimal2
 module Constants
 end #Constants
 include Constants
