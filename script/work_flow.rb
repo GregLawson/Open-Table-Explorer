@@ -92,4 +92,5 @@ commands.each do |c|
 		end #case
 		$stdout.puts work_flow.repository.git_command('status').inspect
 	end #each
+	end #case
 end #each
