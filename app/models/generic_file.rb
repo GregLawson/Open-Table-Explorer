@@ -34,11 +34,20 @@ def dump_sql_to_file(filename="#{Data_source_directory}/#{self.name}_#{Default_t
 		IO.binwrite(filename, dump.join(''))
 end #dump_sql_to_file
 end #ClassMethods
+extend ClassMethods
 module Constants
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
 module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
+end #ClassMethods
 def assert_pre_conditions
 		assert_instance_of(Hash, self.attributes)
 		assert_respond_to(self.attributes, :values)
@@ -47,9 +56,15 @@ def assert_pre_conditions
 #		assert_include(NoDB.methods, :insert_sql)
 		assert_instance_of(Array, attributes.values)
 end #assert_pre_conditions
-module ClassMethods
-end #ClassMethods
+def assert_post_conditions
+end #assert_post_conditions
 end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+include Constants
+end #Examples
 end #GenericFiles
 
 module GenericJsons
@@ -69,8 +84,17 @@ def fine_rejections
 	[]
 end #fine_rejections
 end #ClassMethods
+extend ClassMethods
+module Constants
+end #Constants
 module Assertions
+include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
 def assert_json_string(acquisition)
 	assert_not_nil(acquisition)
 	assert_instance_of(String, acquisition)
@@ -78,6 +102,16 @@ def assert_json_string(acquisition)
 	assert_instance_of(Hash, json)
 end #assert_json_string
 end #ClassMethods
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
 end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+include Constants
+end #Examples
 end #GenericJson
 
