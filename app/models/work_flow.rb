@@ -109,6 +109,28 @@ def test(executable=@related_files.model_test_pathname?)
 		edit
 	end until !@repository.something_to_commit? 
 end #test
+def unit_test(executable=@related_files.model_test_pathname?)
+	begin
+		deserving_branch=@repository.deserving_branch?(executable)
+		if @repository.recent_test.success? then
+			break
+		end #if
+		@repository.recent_test.puts
+		puts deserving_branch if $VERBOSE
+		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+		end #safely_visit_branch
+		edit
+	end until !@repository.something_to_commit? 
+end #unit_test
+def test_unit_test_all
+	pattern=FilePattern.find_by_name(:test)
+	glob=pattern.pathname_glob
+	tests=Dir[glob]
+	tests.each do |test|
+		Release.new(test).unit_test
+	end #each
+end #test_unit_test_all
 def execute(executable=@related_files.model_test_pathname?)
 	begin
 	push_branch=@repository.current_branch_name?

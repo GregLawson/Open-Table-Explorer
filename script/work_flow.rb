@@ -83,7 +83,7 @@ commands.each do |c|
 		when :deserve then 
 			$stdout.puts  work_flow.repository.deserving_branch?(f)
 			$stdout.puts  work_flow.repository.recent_test.inspect
-		when :minimal then editTestGit.minimal_edit
+		when :minimal then work_flow.minimal_edit
 		end #case
 		$stdout.puts work_flow.repository.git_command('status').inspect
 	end #each
