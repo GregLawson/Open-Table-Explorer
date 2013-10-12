@@ -7,3 +7,6 @@
 /Federal_f1040-2.jpg
 /Federal_f1040-1.jpg
 /db/SQL/separate.mwb.bak
+.bundle
+db/*.sqlite3
+log/*.log
