@@ -117,17 +117,6 @@ extend FilePattern::Assertions::ClassMethods
 #def test_class_assert_invariant
 #	FilePattern.assert_invariant
 #end # class_assert_invariant
-def test_sub_directory_match
-end #sub_directory_match
-def test_path
-end #path
-def test_parse_pathname_regexp
-	matchData=
-end #parse_pathname_regexp
-def test_pathname_glob
-end #pathname_glob
-def test_relative_path
-end #relative_path
 def test_class_assert_pre_conditions
 #	FilePattern.assert_pre_conditions
 end #class_assert_pre_conditions
@@ -147,6 +136,4 @@ def test_assert_naming_convention_match
 	assert(FilePattern.find_by_name(:assertions).assert_naming_convention_match('test/assertions/_assertions.rb'), "(Patterns[3], 'test/assertions/'")
 	assert(FilePattern.find_by_name(:assertions_test).assert_naming_convention_match('test/unit/_assertions_test.rb'), "(Patterns[4], 'test/unit/'")
 end #naming_convention_match
-def test_Examples
-end #Examples
 end #FilePattern

@@ -91,7 +91,7 @@ def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
 def tested_files(executable)
-	if executable!=model_test_pathname? then # script only
+	if executable==pathname_pattern?(:script) then # script only
 		[model_pathname?, executable]
 	else case default_test_class_id? # test files
 	when 0 then [model_test_pathname?]

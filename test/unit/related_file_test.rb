@@ -23,9 +23,7 @@ def test_initialize
 	assert_equal('unbounded_fixnum', RelatedFile.new(:UnboundedFixnum).model_basename)
 	model_class_name=FilePattern.path2model_name?
 	assert_equal(:RelatedFile, model_class_name)
-	
 	project_root_dir=FilePattern.project_root_dir?
-	
 	assert_equal(:RelatedFile, SELF.model_class_name)
 	assert_equal('related_file', SELF.model_basename)
 	assert_not_empty(SELF.project_root_dir)
@@ -128,9 +126,6 @@ end #default_test_class_id
 def test_Examples
 	UnboundedFixnumRelatedFile.assert_pre_conditions
 	UnboundedFixnumRelatedFile.assert_post_conditions
-def test_assert_tested_files
-	assert_tested_files($0, [:model, :test])
-end #assert_tested_files
 end #Examples
 end #RelatedFile
 
