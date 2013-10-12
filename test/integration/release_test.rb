@@ -16,10 +16,10 @@ def test_work_flow_script
 end #work_flow_script
 def test_unit_test_all
 	pattern=FilePattern.find_by_name(:test)
-                 glob=pattern.pathname_glob
+	glob=pattern.pathname_glob
 	tests=Dir[glob]
-	tests.all? do |test|
-		Repository::Examples::SELF_code_Repo.deserving_branch?(test)==:passed
+	tests.each do |test|
+		Release.new(test).unit_test
 	end #each
 end #test_unit_test_all
 end #Release

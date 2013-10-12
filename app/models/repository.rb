@@ -10,7 +10,7 @@ require 'grit'  # sudo gem install grit
 # partial API at less /usr/share/doc/ruby-grit/API.txt
 # code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
-class Repository # <Grit::Repo
+class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
@@ -34,13 +34,10 @@ def create_if_missing(path)
 end #create_if_missing
 end #ClassMethods
 extend ClassMethods
-require_relative "shell_command.rb"
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	@url=path
 	@path=path
-	source_path=@path
-	temporary_path=Temporary+'recover'
   puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
@@ -56,12 +53,12 @@ def git_command(git_subcommand)
 	end #if
 	ret
 end #git_command
-def standardize_position
+def standardize_position!
 	git_command("rebase --abort")
 	git_command("merge --abort")
 	git_command("stash save").assert_post_conditions
 	git_command("checkout master")
-end #standardize_position
+end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
@@ -85,19 +82,56 @@ end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
+def confirm_branch_switch(branch)
+	checkout_branch=git_command("checkout #{branch}")
+	if checkout_branch.errors!="Switched to branch '#{branch}'\n" then
+		checkout_branch.assert_post_conditions
+	end #if
+end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
+	changes_branch=push_branch
+	push=something_to_commit? # remember
+	if push then
+#		status=@grit_repo.status
+#		puts "status.added=#{status.added.inspect}"
+#		puts "status.changed=#{status.changed.inspect}"
+#		puts "status.deleted=#{status.deleted.inspect}"
+#		puts "something_to_commit?=#{something_to_commit?.inspect}"
+		git_command('stash save').assert_post_conditions
+		changes_branch=:stash
+	end #if
+
 	if push_branch!=target_branch then
-		git_command("stash save").assert_post_conditions
-		git_command('checkout #{target_branch}').assert_post_conditions
-		ret=block.call(self)
-		git_command('checkout #{push_branch}').assert_post_conditions
-		git_command('stash apply').assert_post_conditions
+		confirm_branch_switch(target_branch)
+		ret=block.call(changes_branch)
+		confirm_branch_switch(push_branch)
 	else
 		ret=block.call(self)
 	end #if
+	if push then
+		git_command('stash apply').assert_post_conditions
+	end #if
 	ret
 end #safely_visit_branch
+def stage_files(branch, files)
+	safely_visit_branch(branch) do |changes_branch|
+		validate_commit(changes_branch, files)
+	end #safely_visit_branch
+end #stage_files
+def validate_commit(changes_branch, files)
+	if something_to_commit? then
+		files.each do |p|
+			git_command('checkout #{changes_branch} '+p).assert_post_conditions
+		end #each
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new_from_path?(files[0]).model_class_name.to_s)	
+		git_command('cola').assert_post_conditions
+	end #if
+end #validate_commit
+def something_to_commit?
+	status=@grit_repo.status
+	status.added!={}||status.changed!={}||status.deleted!={}
+end #something_to_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
 	WorkFlow::Branch_enhancement.each_index do |b, i|
@@ -128,7 +162,7 @@ def stage(target_branch, tested_files)
 		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
 		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
 		tested_files.each do |p|
-			git_command("checkout stash "+p).execute.assert_post_conditions
+			git_command('checkout stash '+p).assert_post_conditions
 		end #each
 		if !switch_branch.errors.empty? then
 			puts "Why am I here?"+message
@@ -142,8 +176,8 @@ end #stage
 def commit_to_branch(target_branch, tested_files)
 	push_branch=stage(target_branch, tested_files)
 	if push_branch!=target_branch then
-		git_command("checkout "+push_branch.to_s).execute.assert_post_conditions
-		git_command("checkout stash apply").execute.assert_post_conditions
+		git_command('checkout '+push_branch.to_s).assert_post_conditions
+		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
 def test_and_commit(executable, tested_files)
@@ -168,6 +202,12 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
+def assert_nothing_to_commit
+	status=grit_repo.status
+	assert_equal({}, status.added)
+	assert_equal({}, status.changed)
+	assert_equal({}, status.deleted)
+end #assert_nothing_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
 	recent_test=shell_command("ruby "+executable)

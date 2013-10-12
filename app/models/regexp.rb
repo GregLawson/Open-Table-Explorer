@@ -17,6 +17,7 @@ Start_string=/\A/
 End_string=/\z/
 End_string_less_newline=/\Z/
 end #Constants
+include Constants
 module ClassMethods
 def promote(node)
 	if node.instance_of?(String) then 
@@ -103,7 +104,6 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-include Constants
 module Examples
 include Constants
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
@@ -115,5 +115,4 @@ LINES=/([^\n]*)(?:\n([^\n]*))*/
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 Ip_number_pattern=/\d{1,3}/
 end #Examples
-include Examples
 end #Regexp

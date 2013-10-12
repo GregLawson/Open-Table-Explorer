@@ -5,19 +5,23 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class Minimal
-module Constants
-end #Constants
-include Constants
+#require_relative '../../app/models/no_db.rb'
+class Minimal2
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-#include DefaultAssertions
-#extend DefaultAssertions::ClassMethods
+module Constants
+end #Constants
+include Constants
+# attr_reader
+def initialize
+end #initialize
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
+def assert_pre_conditions
+end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
@@ -32,5 +36,4 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 end #Examples
-#include Examples
 end #Minimal

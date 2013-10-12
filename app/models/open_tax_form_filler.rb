@@ -10,7 +10,7 @@ require_relative '../../app/models/no_db.rb'
 module OpenTaxFormFiller
 module Constants
 Default_tax_year=2012
-Data_source_directory='test/data_sources'
+Data_source_directory='test/data_sources/taxes/'
 end #Constants
 
 class Definitions

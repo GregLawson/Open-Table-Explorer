@@ -5,19 +5,15 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# need  sudo apt-get install poppler-utils
+# need nodejs
+# need sudo apt-get install pdftk
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/shell_command.rb'
 module OpenTableExplorer
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
-def shell_command(command_string)
-	puts command_string
-	sysout=`#{command_string}`
-	puts "sysout=#{sysout}"
-	assert_equal('', sysout, "command_string=#{command_string} \nsysout=#{sysout}")
-	sysout
-end #shell_command
 module Finance
 module Constants
 Data_source_directory='test/data_sources/taxes'
@@ -35,6 +31,9 @@ end #Constants
 class TaxForms
 include Constants
 include OpenTableExplorer
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
 attr_reader :form, :jurisdiction, :tax_year, :form_filename, :open_tax_solver_directory, :open_tax_solver_data_directory, :ots_template_filename, :output_pdf
 def initialize(form, jurisdiction='US', tax_year=Finance::Constants::Default_tax_year)
 	@form=form
@@ -52,13 +51,31 @@ def run_open_tax_solver
 	open_tax_solver_input="#{open_tax_solver_data_directory}/US_1040_Lawson.txt"
 	open_tax_solver_sysout="#{open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
 	command="#{Open_tax_solver_binary} #{open_tax_solver_input} >#{open_tax_solver_sysout}"
+<<<<<<< HEAD
 	shell_command(command)
 end #run_open_tax_solver
 def run_open_tax_solver_to_filler
 	command="nodejs #{@open_Tax_Filler_Directory}/script/json_ots.js #{@open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json"
 	shell_command(command)
+=======
+	ShellCommands.new(command).assert_post_conditions
+end #run_open_tax_solver
+def run_open_tax_solver_to_filler
+	command="nodejs #{@open_Tax_Filler_Directory}/script/json_ots.js #{@open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json"
+	ShellCommands.new(command).assert_post_conditions
+>>>>>>> testing
 end #run_open_tax_solver_to_filler
 module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions
+end #assert_pre_conditions
 def assert_post_conditions
 	assert(File.exists?(@open_tax_solver_directory), caller_lines)
 	assert(File.exists?(@open_tax_solver_data_directory), caller_lines)
@@ -67,6 +84,8 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
 end #TaxForms
 end #Finance
 end #OpenTableExplorer
@@ -291,8 +310,6 @@ All=OpenTaxSolver.all_initialize
 end #Constants
 require_relative '../../test/assertions/default_assertions.rb'
 include Assertions
-include Examples
-include Constants
 extend Assertions::ClassMethods
 end #OpenTaxSolver
 

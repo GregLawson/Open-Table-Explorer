@@ -15,7 +15,6 @@ include Generic_Table
 extend Generic_Table::ClassMethods
 #include GenericTableAssertions
 include GenericTableAssertion::KernelMethods
-set_class_variables BatteryMeasurement
 @@table_name='stream_patterns'
 	fixtures :table_specs
 	fixtures :acquisition_stream_specs

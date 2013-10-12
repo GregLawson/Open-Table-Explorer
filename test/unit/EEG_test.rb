@@ -10,8 +10,6 @@ require_relative 'test_environment'
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
 class EegTest < TestCase
-set_class_variables('Eeg', false)
-#file not fixture fixtures @@table_name.to_sym
 def test_initialize
 end #initialize
 def test_all
@@ -72,8 +70,4 @@ def test_associations
 	assert_equal('Acquisition',StreamPatternArgument.where("name='Acquisition'").first[:name])
 #	assert_equal([],StreamMethodArgument.where("stream_pattern='Acquisition'").name)
 end #test_associations
-def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
-	assert_test_id_equal
-end #id_equal
 end #EEG

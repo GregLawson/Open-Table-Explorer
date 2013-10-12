@@ -1,0 +1,1 @@
+minimal3.rb
