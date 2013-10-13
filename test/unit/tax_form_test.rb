@@ -10,10 +10,9 @@ require_relative '../../app/models/tax_form.rb'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class TaxFormTest < TestCase
 include DefaultTests
-include TaxForm::Constants
-extend TaxForm::Constants
-include TaxForm::Examples
+include OpenTableExplorer::Finance::Constants
 extend OpenTableExplorer::Finance::Constants
+include OpenTableExplorer::Finance::TaxForm::Examples
 def test_Constants
 	assert_pathname_exists(Data_source_directory)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
