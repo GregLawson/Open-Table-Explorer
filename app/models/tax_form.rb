@@ -9,7 +9,6 @@
 # need nodejs
 # need sudo apt-get install pdftk
 require_relative '../../app/models/no_db.rb'
-require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/shell_command.rb'
 module OpenTableExplorer
 include Test::Unit::Assertions
@@ -28,7 +27,7 @@ Open_tax_solver_binary="#{Open_tax_solver_directory}/bin/taxsolve_US_1040_2012"
 Command="#{Open_tax_solver_binary} #{Open_tax_solver_input} >#{Open_tax_solver_sysout}"
 OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #Constants
-class TaxForms
+class TaxForm
 include Constants
 include OpenTableExplorer
 module ClassMethods
@@ -105,6 +104,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 end #Examples
-end #TaxForms
+end #TaxForm
 end #Finance
 end #OpenTableExplorer

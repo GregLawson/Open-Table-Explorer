@@ -6,13 +6,13 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/open_tax_solver.rb'
+require_relative '../../app/models/tax_form.rb'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class TaxFormTest < TestCase
 include DefaultTests
-include OpenTaxSolver::Constants
-extend OpenTaxSolver::Constants
-include OpenTaxSolver::Examples
+include TaxForm::Constants
+extend TaxForm::Constants
+include TaxForm::Examples
 extend OpenTableExplorer::Finance::Constants
 def test_Constants
 	assert_pathname_exists(Data_source_directory)
@@ -30,14 +30,14 @@ def test_run_tax_solver
 	jurisdiction=:US
 	sysout=`#{Command}`
 	puts "test_run_tax_solver sysout=#{sysout}"
-	form=OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction)
+	form=OpenTableExplorer::Finance::TaxForm.new(form, jurisdiction)
 	form.run_open_tax_solver
 	assert_pathname_exists(Open_tax_solver_sysout)
 end #run_open_tax_solver
 def 	test_run_tax_solver_to_filler
 	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
 	puts "test_run_tax_solver_to_Form_filler sysout=#{sysout}"
-	OpenTableExplorer::Finance::TaxForms.new('1040', :US).run_open_tax_solver_to_filler
+	OpenTableExplorer::Finance::TaxForm.new('1040', :US).run_open_tax_solver_to_filler
 end #run_open_tax_solver_to_filler
 def 	test_run_pdf_to_jpeg
 #
