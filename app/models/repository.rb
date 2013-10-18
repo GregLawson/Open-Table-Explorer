@@ -126,11 +126,18 @@ def validate_commit(changes_branch, files)
 		end #each
 		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new_from_path?(files[0]).model_class_name.to_s)	
 		git_command('cola').assert_post_conditions
+		ShellCommand.new('git rebase --autosquash --interactive')
 	end #if
 end #validate_commit
 def something_to_commit?
 	status=@grit_repo.status
-	status.added!={}||status.changed!={}||status.deleted!={}
+	ret=status.added!={}||status.changed!={}||status.deleted!={}
+	message="status.added=#{status.added.inspect}"
+	message+="\nstatus.changed=#{status.changed.inspect}"
+	message+="\nstatus.deleted=#{status.deleted.inspect}"
+	message+="\nstatus.added!={}||status.changed!={}||status.deleted!={}==#{ret}"
+	puts message if $VERBOSE
+	ret
 end #something_to_commit
 def upgrade_commit(target_branch, executable)
 	target_index=WorkFlow::Branch_enhancement.index(target_branch)
