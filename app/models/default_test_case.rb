@@ -34,9 +34,32 @@ def existing_call(object, symbol)
    assert_respond_to(object, symbol)
    object.method(symbol).call
  else
-   warn "method #{symbol} does not exist for object of type #{object.class.name}"
+	message="method #{symbol} does not exist for object "
+	if object.respond_to?(:name) then
+		message+="named #{object.name}"
+	else
+		message+="of type #{object.class.name}"
+	end #if
+   warn message
  end #if
-end #assertion_call
+end #existing_call
+def named_object?
+	if object.respond_to?(:name) then
+		"named #{object.name}"
+	else
+		"of type #{object.class.name}"
+	end #if
+end #named_object?
+def assert_optional_method(object, symbol)
+ if object.respond_to?(symbol) then
+   info "method #{symbol.inspect} does exist for object of type #{object.class.name}"
+   assert_respond_to(object, symbol)
+   object.method(symbol).call
+ else
+	message="method #{symbol} does not exist for object "+named_object?
+   warn message
+ end #if
+end #
 end #ExampleCall
 module DefaultTests0
 require 'test/unit'
