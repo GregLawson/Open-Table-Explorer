@@ -1,0 +1,2194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: CodeBase
+  
+    &mdash; Documentation by YARD 0.8.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (C)</a> &raquo;
+    
+    
+    <span class="title">CodeBase</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: CodeBase
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">CodeBase</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="NoDB.html" title="NoDB (module)">NoDB</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/models/code.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="AFFECTS_EVERYTHING-constant" class="">AFFECTS_EVERYTHING =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>[]=</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>db/schema.rb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/test_helper.rb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/models/global.rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/models/generic_table.rb</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="AFFECTS_CONTROLLERS-constant" class="">AFFECTS_CONTROLLERS =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/shared/*</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="TABLE_FINDER_REGEXPS-classvariable" class="">@@TABLE_FINDER_REGEXPS =
+          <div class="docstring">
+  <div class="discussion">
+    <dl class="rdoc-list"><dt>name, example_pathname, Dir_glob, plural,test_type</dt>
+<dd>
+<p>plural can be  true false or nil (not model specific)</p>
+</dd></dl>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:models</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/models/global.rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/models/([a-zA-Z0-9_]*)[.]rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:both</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:testing</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test/test_helper.rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test/[a-zA-Z0-9_]*[.]r[a-z]*</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:both</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:unit_tests</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test/unit/global_test.rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test/unit/([a-zA-Z0-9_]*)_test[.]rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:unit</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:functional_tests</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test/functional/stream_patterns_controller_test.rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test/functional/([a-zA-Z0-9_]*)_controller_test[.]rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:unit_test_logs</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log/unit/generic_table_test.log</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log/unit/([a-zA-Z0-9_]*)([.a-zA-Z0-9_]*)_test[.]log</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:unit</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:functional_test_logs</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log/functional/stream_patterns_controller_test.log</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log/functional/([a-zA-Z0-9_]*)_controller_test[.]log</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:new_views</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/acquisition_stream_specs/new.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/([a-z_]*)/new[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:edit_views</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/acquisition_stream_specs/edit.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/([a-z_]*)/edit[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:show_views</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/acquisition_stream_specs/show.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/([a-z_]*)/show[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:index_views</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/acquisition_stream_specs/index.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/([a-z_]*)/index[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:shared_partials</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/shared/_multi-line.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/shared/_[a-zA-Z0-9_-]*[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:form_partials</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/stream_patterns/_form.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/([a-z_]*)/_form[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:show_partials</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/stream_patterns/_show_partial.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/([a-z_]*)/_show_partial[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:index_partials</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/stream_patterns/_index_partial.html.erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/views/([a-z_]*)/_index_partial[.]html[.]erb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='lbrace'>{</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='symbol'>:controllers</span><span class='comma'>,</span> <span class='symbol'>:example_pathname</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/controllers/stream_patterns_controller.rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:Dir_glob</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>app/controllers/([a-z0-9_]*)_controller[.]rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:plural</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:test_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:controller</span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="NoDB.html" title="NoDB (module)">NoDB</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NoDB.html#DEFAULT_TYPE-constant" title="NoDB::DEFAULT_TYPE (constant)">NoDB::DEFAULT_TYPE</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="ColumnGroup/ClassMethods.html" title="ColumnGroup::ClassMethods (module)">ColumnGroup::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ColumnGroup/ClassMethods.html#History_columns-constant" title="ColumnGroup::ClassMethods::History_columns (constant)">ColumnGroup::ClassMethods::History_columns</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="GenericGrep/ClassMethods.html" title="GenericGrep::ClassMethods (module)">GenericGrep::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericGrep/ClassMethods.html#ASSOCIATION_MACRO_LETTERS-constant" title="GenericGrep::ClassMethods::ASSOCIATION_MACRO_LETTERS (constant)">GenericGrep::ClassMethods::ASSOCIATION_MACRO_LETTERS</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#ASSOCIATION_MACRO_PATTERN-constant" title="GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN (constant)">GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="GenericTableAssociation/Examples.html" title="GenericTableAssociation::Examples (module)">GenericTableAssociation::Examples</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericTableAssociation/Examples.html#First_stream_method-constant" title="GenericTableAssociation::Examples::First_stream_method (constant)">GenericTableAssociation::Examples::First_stream_method</a></span></p>
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="NoDB.html" title="NoDB (module)">NoDB</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NoDB.html#attributes-instance_method" title="NoDB#attributes (method)">#attributes</a></span></p>
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#all-class_method" title="all (class method)">+ (Object) <strong>all</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns all specs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#controller_sources-class_method" title="controller_sources (class method)">+ (Object) <strong>controller_sources</strong>(singular_table) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>unit_sources.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#controller_target-class_method" title="controller_target (class method)">+ (Object) <strong>controller_target</strong>(singular_table) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>unit_target.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_by_name-class_method" title="find_by_name (class method)">+ (Object) <strong>find_by_name</strong>(spec_name_symbol) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>like ActiveRecord method.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#git_add_successful-class_method" title="git_add_successful (class method)">+ (Object) <strong>git_add_successful</strong>(not_uptodate_sources) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>gitStatus.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#gitStatus-class_method" title="gitStatus (class method)">+ (Object) <strong>gitStatus</strong>(&amp;process_status) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>not_uptodate_sources.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#model_pathname-class_method" title="model_pathname (class method)">+ (Object) <strong>model_pathname</strong>(singular_table) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>test_pathname.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#model_spec_symbols-class_method" title="model_spec_symbols (class method)">+ (Object) <strong>model_spec_symbols</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>controller_target.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#not_uptodate_sources-class_method" title="not_uptodate_sources (class method)">+ (Object) <strong>not_uptodate_sources</strong>(target, sources) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>determine which pathnames should be staged if test is successful all
+pathnames newer than previous test log.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rails_MVC_classes-class_method" title="rails_MVC_classes (class method)">+ (Object) <strong>rails_MVC_classes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#spec_symbols-class_method" title="spec_symbols (class method)">+ (Object) <strong>spec_symbols</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>model_spec_symbols.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test_pathname-class_method" title="test_pathname (class method)">+ (Object) <strong>test_pathname</strong>(singular_table, test_type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unit_sources-class_method" title="unit_sources (class method)">+ (Object) <strong>unit_sources</strong>(singular_table) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>model_pathname.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unit_target-class_method" title="unit_target (class method)">+ (Object) <strong>unit_target</strong>(singular_table) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>controller_sources.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uptodate%3F-class_method" title="uptodate? (class method)">+ (Boolean) <strong>uptodate?</strong>(target, sources) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>models.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#why_not_stage-class_method" title="why_not_stage (class method)">+ (Object) <strong>why_not_stage</strong>(pathname, singular_table) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>stage target and source pathnames when all tests pass.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#why_not_stage_helper-class_method" title="why_not_stage_helper (class method)">+ (Object) <strong>why_not_stage_helper</strong>(pathname, target, sources, test_type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>stage target and source pathnames when all tests pass.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%5B%5D%3D-instance_method" title="#[]= (instance method)">- (Object) <strong>[]=</strong>(name, attribute) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>pathnames.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (CodeBase) <strong>initialize</strong>(hash = nil) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Initializes a spec from a hash.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#models-instance_method" title="#models (instance method)">- (Object) <strong>models</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>for given spec return models.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pathname_glob-instance_method" title="#pathname_glob (instance method)">- (Object) <strong>pathname_glob</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns a file glob to find pathname, removing parenthesis golbs are
+defined at <a
+href="http://www.ruby-doc.org/core-1.9.3/Dir.html#method-c-glob">www.ruby-doc.org/core-1.9.3/Dir.html#method-c-glob</a>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pathnames-instance_method" title="#pathnames (instance method)">- (Object) <strong>pathnames</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Find array of pathnames that match CodeBase spec.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pathnames_with_models%3F-instance_method" title="#pathnames_with_models? (instance method)">- (Boolean) <strong>pathnames_with_models?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>find_by_name.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#regexp-instance_method" title="#regexp (instance method)">- (Object) <strong>regexp</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns a Regexp to extract model names from pathname, keeping parenthesis
+Regexp syntax is defined at <a
+href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">www.ruby-doc.org/core-1.9.3/Regexp.html</a>
+specify as a regexp with added parenthesis for model name (and test)
+capture globs are less powerful than regexp, so to make them convertable,
+we specify regexps and convert to globs then match with regexp
+implementation currently incomplete [a-z]* does not glob any word but any
+string starting with a letter!.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="NoDB.html" title="NoDB (module)">NoDB</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NoDB.html#%5B%5D-instance_method" title="NoDB#[] (method)">#[]</a></span>, <span class='object_link'><a href="NoDB.html#clone-instance_method" title="NoDB#clone (method)">#clone</a></span>, <span class='object_link'><a href="NoDB.html#each_pair-instance_method" title="NoDB#each_pair (method)">#each_pair</a></span>, <span class='object_link'><a href="NoDB.html#has_key%3F-instance_method" title="NoDB#has_key? (method)">#has_key?</a></span>, <span class='object_link'><a href="NoDB.html#insert_sql-instance_method" title="NoDB#insert_sql (method)">#insert_sql</a></span>, <span class='object_link'><a href="NoDB.html#keys-instance_method" title="NoDB#keys (method)">#keys</a></span>, <span class='object_link'><a href="NoDB.html#table_class-instance_method" title="NoDB#table_class (method)">#table_class</a></span>, <span class='object_link'><a href="NoDB.html#table_name-instance_method" title="NoDB#table_name (method)">#table_name</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Generic_Table/ClassMethods.html" title="Generic_Table::ClassMethods (module)">Generic_Table::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Generic_Table/ClassMethods.html#is_active_record_method%3F-instance_method" title="Generic_Table::ClassMethods#is_active_record_method? (method)">#is_active_record_method?</a></span>, <span class='object_link'><a href="Generic_Table/ClassMethods.html#model_file_name-instance_method" title="Generic_Table::ClassMethods#model_file_name (method)">#model_file_name</a></span>, <span class='object_link'><a href="Generic_Table/ClassMethods.html#nesting-instance_method" title="Generic_Table::ClassMethods#nesting (method)">#nesting</a></span>, <span class='object_link'><a href="Generic_Table/ClassMethods.html#one_pass_statistics-instance_method" title="Generic_Table::ClassMethods#one_pass_statistics (method)">#one_pass_statistics</a></span>, <span class='object_link'><a href="Generic_Table/ClassMethods.html#sample-instance_method" title="Generic_Table::ClassMethods#sample (method)">#sample</a></span>, <span class='object_link'><a href="Generic_Table/ClassMethods.html#sample_burst-instance_method" title="Generic_Table::ClassMethods#sample_burst (method)">#sample_burst</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="ColumnGroup/ClassMethods.html" title="ColumnGroup::ClassMethods (module)">ColumnGroup::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ColumnGroup/ClassMethods.html#attribute_ddl-instance_method" title="ColumnGroup::ClassMethods#attribute_ddl (method)">#attribute_ddl</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#attribute_rails_type-instance_method" title="ColumnGroup::ClassMethods#attribute_rails_type (method)">#attribute_rails_type</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#attribute_ruby_type-instance_method" title="ColumnGroup::ClassMethods#attribute_ruby_type (method)">#attribute_ruby_type</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#candidate_logical_keys_from_indexes-instance_method" title="ColumnGroup::ClassMethods#candidate_logical_keys_from_indexes (method)">#candidate_logical_keys_from_indexes</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#categorical%3F-instance_method" title="ColumnGroup::ClassMethods#categorical? (method)">#categorical?</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#column_symbols-instance_method" title="ColumnGroup::ClassMethods#column_symbols (method)">#column_symbols</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#default_logical_primary_key-instance_method" title="ColumnGroup::ClassMethods#default_logical_primary_key (method)">#default_logical_primary_key</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#defaulted_primary_logical_key%3F-instance_method" title="ColumnGroup::ClassMethods#defaulted_primary_logical_key? (method)">#defaulted_primary_logical_key?</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#history_type%3F-instance_method" title="ColumnGroup::ClassMethods#history_type? (method)">#history_type?</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#is_logical_primary_key%3F-instance_method" title="ColumnGroup::ClassMethods#is_logical_primary_key? (method)">#is_logical_primary_key?</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#logical_attributes-instance_method" title="ColumnGroup::ClassMethods#logical_attributes (method)">#logical_attributes</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#logical_primary_key-instance_method" title="ColumnGroup::ClassMethods#logical_primary_key (method)">#logical_primary_key</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#logical_primary_key_recursive-instance_method" title="ColumnGroup::ClassMethods#logical_primary_key_recursive (method)">#logical_primary_key_recursive</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#numerical%3F-instance_method" title="ColumnGroup::ClassMethods#numerical? (method)">#numerical?</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#probably_categorical%3F-instance_method" title="ColumnGroup::ClassMethods#probably_categorical? (method)">#probably_categorical?</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#probably_numerical%3F-instance_method" title="ColumnGroup::ClassMethods#probably_numerical? (method)">#probably_numerical?</a></span>, <span class='object_link'><a href="ColumnGroup/ClassMethods.html#sequential_id%3F-instance_method" title="ColumnGroup::ClassMethods#sequential_id? (method)">#sequential_id?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="GenericGrep/ClassMethods.html" title="GenericGrep::ClassMethods (module)">GenericGrep::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericGrep/ClassMethods.html#all_associations-instance_method" title="GenericGrep::ClassMethods#all_associations (method)">#all_associations</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#association_grep-instance_method" title="GenericGrep::ClassMethods#association_grep (method)">#association_grep</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#association_grep_pattern-instance_method" title="GenericGrep::ClassMethods#association_grep_pattern (method)">#association_grep_pattern</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#association_macro_type-instance_method" title="GenericGrep::ClassMethods#association_macro_type (method)">#association_macro_type</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#association_type-instance_method" title="GenericGrep::ClassMethods#association_type (method)">#association_type</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#belongs_to_association%3F-instance_method" title="GenericGrep::ClassMethods#belongs_to_association? (method)">#belongs_to_association?</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#grep_all_associations_command-instance_method" title="GenericGrep::ClassMethods#grep_all_associations_command (method)">#grep_all_associations_command</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#grep_command-instance_method" title="GenericGrep::ClassMethods#grep_command (method)">#grep_command</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#has_many_association%3F-instance_method" title="GenericGrep::ClassMethods#has_many_association? (method)">#has_many_association?</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#has_one_association%3F-instance_method" title="GenericGrep::ClassMethods#has_one_association? (method)">#has_one_association?</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#model_grep-instance_method" title="GenericGrep::ClassMethods#model_grep (method)">#model_grep</a></span>, <span class='object_link'><a href="GenericGrep/ClassMethods.html#model_grep_command-instance_method" title="GenericGrep::ClassMethods#model_grep_command (method)">#model_grep_command</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="GenericTableHtml/ClassMethods.html" title="GenericTableHtml::ClassMethods (module)">GenericTableHtml::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericTableHtml/ClassMethods.html#column_order-instance_method" title="GenericTableHtml::ClassMethods#column_order (method)">#column_order</a></span>, <span class='object_link'><a href="GenericTableHtml/ClassMethods.html#header_html-instance_method" title="GenericTableHtml::ClassMethods#header_html (method)">#header_html</a></span>, <span class='object_link'><a href="GenericTableHtml/ClassMethods.html#table_html-instance_method" title="GenericTableHtml::ClassMethods#table_html (method)">#table_html</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Generic_Table.html" title="Generic_Table (module)">Generic_Table</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Generic_Table.html#activeRecordTableNotCreatedYet%3F-class_method" title="Generic_Table.activeRecordTableNotCreatedYet? (method)">activeRecordTableNotCreatedYet?</a></span>, <span class='object_link'><a href="Generic_Table.html#classDefiniton-class_method" title="Generic_Table.classDefiniton (method)">classDefiniton</a></span>, <span class='object_link'><a href="Generic_Table.html#classReference-class_method" title="Generic_Table.classReference (method)">classReference</a></span>, <span class='object_link'><a href="Generic_Table.html#class_of_name-class_method" title="Generic_Table.class_of_name (method)">class_of_name</a></span>, <span class='object_link'><a href="Generic_Table.html#eval_constant-class_method" title="Generic_Table.eval_constant (method)">eval_constant</a></span>, <span class='object_link'><a href="Generic_Table.html#is_ActiveRecord_table%3F-class_method" title="Generic_Table.is_ActiveRecord_table? (method)">is_ActiveRecord_table?</a></span>, <span class='object_link'><a href="Generic_Table.html#is_generic_table%3F-class_method" title="Generic_Table.is_generic_table? (method)">is_generic_table?</a></span>, <span class='object_link'><a href="Generic_Table.html#is_generic_table_name%3F-class_method" title="Generic_Table.is_generic_table_name? (method)">is_generic_table_name?</a></span>, <span class='object_link'><a href="Generic_Table.html#is_table%3F-class_method" title="Generic_Table.is_table? (method)">is_table?</a></span>, <span class='object_link'><a href="Generic_Table.html#rails_MVC_class%3F-class_method" title="Generic_Table.rails_MVC_class? (method)">rails_MVC_class?</a></span>, <span class='object_link'><a href="Generic_Table.html#rubyClassName-class_method" title="Generic_Table.rubyClassName (method)">rubyClassName</a></span>, <span class='object_link'><a href="Generic_Table.html#table_exists%3F-class_method" title="Generic_Table.table_exists? (method)">table_exists?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="GenericTableAssociation.html" title="GenericTableAssociation (module)">GenericTableAssociation</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericTableAssociation.html#associated_foreign_key_records-instance_method" title="GenericTableAssociation#associated_foreign_key_records (method)">#associated_foreign_key_records</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#associated_to_s-instance_method" title="GenericTableAssociation#associated_to_s (method)">#associated_to_s</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#association_class-instance_method" title="GenericTableAssociation#association_class (method)">#association_class</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#association_has_data-instance_method" title="GenericTableAssociation#association_has_data (method)">#association_has_data</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#association_state-instance_method" title="GenericTableAssociation#association_state (method)">#association_state</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#foreign_key_points_to_me%3F-instance_method" title="GenericTableAssociation#foreign_key_points_to_me? (method)">#foreign_key_points_to_me?</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#foreign_key_to_association-instance_method" title="GenericTableAssociation#foreign_key_to_association (method)">#foreign_key_to_association</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#foreign_key_value-instance_method" title="GenericTableAssociation#foreign_key_value (method)">#foreign_key_value</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#logical_primary_key_recursive_value-instance_method" title="GenericTableAssociation#logical_primary_key_recursive_value (method)">#logical_primary_key_recursive_value</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#logical_primary_key_value-instance_method" title="GenericTableAssociation#logical_primary_key_value (method)">#logical_primary_key_value</a></span>, <span class='object_link'><a href="GenericTableAssociation.html#name_to_association-instance_method" title="GenericTableAssociation#name_to_association (method)">#name_to_association</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="GenericTableAssociation/Assertions/ClassMethods.html" title="GenericTableAssociation::Assertions::ClassMethods (module)">GenericTableAssociation::Assertions::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericTableAssociation/Assertions/ClassMethods.html#assert_foreign_keys_not_nil-instance_method" title="GenericTableAssociation::Assertions::ClassMethods#assert_foreign_keys_not_nil (method)">#assert_foreign_keys_not_nil</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions/ClassMethods.html#assert_invariant-instance_method" title="GenericTableAssociation::Assertions::ClassMethods#assert_invariant (method)">#assert_invariant</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions/ClassMethods.html#assert_post_conditions-instance_method" title="GenericTableAssociation::Assertions::ClassMethods#assert_post_conditions (method)">#assert_post_conditions</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions/ClassMethods.html#assert_pre_conditions-instance_method" title="GenericTableAssociation::Assertions::ClassMethods#assert_pre_conditions (method)">#assert_pre_conditions</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="GenericTableAssociation/Assertions.html" title="GenericTableAssociation::Assertions (module)">GenericTableAssociation::Assertions</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_associated_foreign_key-instance_method" title="GenericTableAssociation::Assertions#assert_associated_foreign_key (method)">#assert_associated_foreign_key</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_associated_foreign_key_name-instance_method" title="GenericTableAssociation::Assertions#assert_associated_foreign_key_name (method)">#assert_associated_foreign_key_name</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_association-instance_method" title="GenericTableAssociation::Assertions#assert_association (method)">#assert_association</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_association_methods-instance_method" title="GenericTableAssociation::Assertions#assert_association_methods (method)">#assert_association_methods</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_association_to_many-instance_method" title="GenericTableAssociation::Assertions#assert_association_to_many (method)">#assert_association_to_many</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_association_to_one-instance_method" title="GenericTableAssociation::Assertions#assert_association_to_one (method)">#assert_association_to_one</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_foreign_key_association_names-instance_method" title="GenericTableAssociation::Assertions#assert_foreign_key_association_names (method)">#assert_foreign_key_association_names</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_foreign_key_name-instance_method" title="GenericTableAssociation::Assertions#assert_foreign_key_name (method)">#assert_foreign_key_name</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_foreign_key_not_nil-instance_method" title="GenericTableAssociation::Assertions#assert_foreign_key_not_nil (method)">#assert_foreign_key_not_nil</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_foreign_keys_not_nil-instance_method" title="GenericTableAssociation::Assertions#assert_foreign_keys_not_nil (method)">#assert_foreign_keys_not_nil</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_invariant-instance_method" title="GenericTableAssociation::Assertions#assert_invariant (method)">#assert_invariant</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_post_conditions-instance_method" title="GenericTableAssociation::Assertions#assert_post_conditions (method)">#assert_post_conditions</a></span>, <span class='object_link'><a href="GenericTableAssociation/Assertions.html#assert_pre_conditions-instance_method" title="GenericTableAssociation::Assertions#assert_pre_conditions (method)">#assert_pre_conditions</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="GenericTableHtml.html" title="GenericTableHtml (module)">GenericTableHtml</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericTableHtml.html#column_html-instance_method" title="GenericTableHtml#column_html (method)">#column_html</a></span>, <span class='object_link'><a href="GenericTableHtml.html#rails_route-instance_method" title="GenericTableHtml#rails_route (method)">#rails_route</a></span>, <span class='object_link'><a href="GenericTableHtml.html#row_html-instance_method" title="GenericTableHtml#row_html (method)">#row_html</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="CodeBase (class)">CodeBase</a></span></tt>) <strong>initialize</strong>(hash = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Initializes a spec from a hash</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='ivar'>@hash</span><span class='op'>=</span><span class='id identifier rubyid_hash'>hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="all-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>all</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns all specs</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+	<span class='kw'>return</span> <span class='cvar'>@@TABLE_FINDER_REGEXPS</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_spec'>spec</span><span class='op'>|</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="controller_sources-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>controller_sources</strong>(singular_table) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>unit_sources</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90
+91
+92
+93
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_controller_sources'>controller_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_plural_table'>plural_table</span><span class='op'>=</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span>
+	<span class='comment'># commn_sources apply to both unit and functional tests.
+</span>	<span class='id identifier rubyid_common_sources'>common_sources</span><span class='op'>=</span><span class='const'>AFFECTS_EVERYTHING</span><span class='op'>+</span><span class='lbracket'>[</span><span class='id identifier rubyid_model_pathname'>model_pathname</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/fixtures/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>.yml</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+	<span class='id identifier rubyid_sources'>sources</span><span class='op'>=</span><span class='id identifier rubyid_common_sources'>common_sources</span><span class='op'>+</span><span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>app/views/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>/*.html.erb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='op'>+</span><span class='const'>AFFECTS_CONTROLLERS</span>
+	<span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/functional/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>_controller_test.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>+</span><span class='id identifier rubyid_sources'>sources</span><span class='op'>+</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>app/controllers/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>_controller.rb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>app/helpers/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>_helper.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="controller_target-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>controller_target</strong>(singular_table) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>unit_target</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_controller_target'>controller_target</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_plural_table'>plural_table</span><span class='op'>=</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span>
+	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/functional/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>_controller_test.log</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_by_name-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>find_by_name</strong>(spec_name_symbol) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>like ActiveRecord method</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111
+112
+113</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 109</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_find_by_name'>find_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_spec_name_symbol'>spec_name_symbol</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_index'>index</span><span class='op'>=</span><span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='op'>==</span><span class='id identifier rubyid_spec_name_symbol'>spec_name_symbol</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbrace'>}</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spec_name_symbol=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_spec_name_symbol'>spec_name_symbol</span><span class='rbrace'>}</span><span class='tstring_content'> not found</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+	<span class='kw'>return</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="git_add_successful-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>git_add_successful</strong>(not_uptodate_sources) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>gitStatus</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180
+181
+182
+183</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 178</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_git_add_successful'>git_add_successful</span><span class='lparen'>(</span><span class='id identifier rubyid_not_uptodate_sources'>not_uptodate_sources</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_not_uptodate_sources'>not_uptodate_sources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+		<span class='id identifier rubyid_sh'>sh</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git add </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_s'>s</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>end</span> <span class='comment'>#each
+</span>	<span class='id identifier rubyid_sh'>sh</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git-cola</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="gitStatus-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>gitStatus</strong>(&amp;process_status) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>not_uptodate_sources</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+171
+172
+173
+174
+175
+176
+177</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 171</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_gitStatus'>gitStatus</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_process_status'>process_status</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_modified_files'>modified_files</span><span class='op'>=</span><span class='backtick'>`</span><span class='tstring_content'>git ls-files --modified</span><span class='tstring_end'>`</span></span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>-</span> <span class='backtick'>`</span><span class='tstring_content'>git ls-files --deleted</span><span class='tstring_end'>`</span></span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_modified_files'>modified_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pathname'>pathname</span><span class='op'>|</span> 
+<span class='comment'>#		status,pathname=line.split(&quot; &quot;)
+</span>		<span class='id identifier rubyid_process_status'>process_status</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>M</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#each
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="model_pathname-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>model_pathname</strong>(singular_table) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>test_pathname</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_model_pathname'>model_pathname</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>app/models/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rbrace'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="model_spec_symbols-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>model_spec_symbols</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>controller_target</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_model_spec_symbols'>model_spec_symbols</span>
+	<span class='kw'>return</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='lbracket'>[</span><span class='symbol'>:test_type</span><span class='rbracket'>]</span><span class='op'>!=</span><span class='symbol'>:both</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="not_uptodate_sources-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>not_uptodate_sources</strong>(target, sources) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>determine which pathnames should be staged if test is successful all
+pathnames newer than previous test log. pathname must also have changed
+since last staging</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 159</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_not_uptodate_sources'>not_uptodate_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_sources'>sources</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sources=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> must be an Array</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sources=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> must be an Array of Strings(pathnames)</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sources.size=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sources[0]=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sources'>sources</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>p=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> must be a String(pathnames)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#each
+</span>	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sources=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> must be an Array of Strings(pathnames)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>target=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> must be a String (pathnames)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span> <span class='op'>||</span>  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_uptodate?'>uptodate?</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_s'>s</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rails_MVC_classes-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>rails_MVC_classes</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 231</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_rails_MVC_classes'>rails_MVC_classes</span>
+<span class='comment'>#	puts fixture_names.inspect
+</span>	<span class='cvar'>@@ALL_VIEW_DIRS</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_view_dir'>view_dir</span><span class='op'>|</span>
+		<span class='id identifier rubyid_model_pathnamename'>model_pathnamename</span><span class='op'>=</span><span class='id identifier rubyid_view_dir'>view_dir</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^app/views/</span><span class='regexp_end'>}</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='const'>Generic_Table</span><span class='period'>.</span><span class='id identifier rubyid_is_generic_table_name?'>is_generic_table_name?</span><span class='lparen'>(</span><span class='id identifier rubyid_model_pathnamename'>model_pathnamename</span><span class='period'>.</span><span class='id identifier rubyid_singularize'>singularize</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_model_pathnamename'>model_pathnamename</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span>
+		<span class='kw'>else</span>
+<span class='comment'>#			puts &quot;File.exists?(\&quot;app/models/#{model_pathnamename}\&quot;)=#{File.exists?('app/models/'+model_pathnamename)}&quot;
+</span>			<span class='kw'>nil</span> <span class='comment'># discarded by later Array#compact
+</span>		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span> <span class='comment'>#map
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="spec_symbols-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>spec_symbols</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>model_spec_symbols</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 105</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_spec_symbols'>spec_symbols</span>
+	<span class='kw'>return</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="test_pathname-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>test_pathname</strong>(singular_table, test_type) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71
+72
+73
+74
+75
+76
+77</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_test_pathname'>test_pathname</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='comma'>,</span> <span class='id identifier rubyid_test_type'>test_type</span><span class='rparen'>)</span>
+	<span class='kw'>case</span> <span class='id identifier rubyid_test_type'>test_type</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+	<span class='kw'>when</span> <span class='symbol'>:unit</span>
+		<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/unit/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rbrace'>}</span><span class='tstring_content'>_test.rb</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>when</span> <span class='symbol'>:controller</span>
+		<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/functional/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>_controller_test.rb</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>else</span> <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unnown test_type=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_test_type'>test_type</span><span class='rbrace'>}</span><span class='tstring_content'> for singular_table=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>end</span> <span class='comment'>#case
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unit_sources-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>unit_sources</strong>(singular_table) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>model_pathname</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 81</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_unit_sources'>unit_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_plural_table'>plural_table</span><span class='op'>=</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span>
+	<span class='comment'># commn_sources apply to both unit and functional tests.
+</span>	<span class='id identifier rubyid_model_pathname'>model_pathname</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>app/models/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rbrace'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_common_sources'>common_sources</span><span class='op'>=</span><span class='const'>AFFECTS_EVERYTHING</span><span class='op'>+</span><span class='lbracket'>[</span><span class='id identifier rubyid_model_pathname'>model_pathname</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/fixtures/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural_table'>plural_table</span><span class='rbrace'>}</span><span class='tstring_content'>.yml</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+	<span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/unit/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rbrace'>}</span><span class='tstring_content'>_test.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='op'>+</span><span class='id identifier rubyid_common_sources'>common_sources</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unit_target-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>unit_target</strong>(singular_table) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>controller_sources</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 95</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_unit_target'>unit_target</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/unit/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rbrace'>}</span><span class='tstring_content'>_test.log</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="uptodate?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>uptodate?</strong>(target, sources) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>models</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_uptodate?'>uptodate?</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span><span class='id identifier rubyid_sources'>sources</span><span class='rparen'>)</span> 
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sources=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> must be an Array of Strings(pathnames)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>target=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> must be a String (pathnames)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+		<span class='comment'>#~ system (&quot;ls -l #{target}&quot;) {|ok, res| } # discard result if pathname doesn't exist
+</span>		<span class='comment'>#~ system &quot;ls -l #{s}&quot;
+</span>		<span class='kw'>if</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='kw'>false</span>
+		<span class='kw'>end</span> <span class='comment'>#def
+</span>		<span class='kw'>if</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='kw'>false</span>
+		<span class='kw'>end</span> <span class='comment'>#def
+</span>		<span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_mtime'>mtime</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span><span class='op'>&lt;</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_mtime'>mtime</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='kw'>false</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#each
+</span>	<span class='kw'>return</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="why_not_stage-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>why_not_stage</strong>(pathname, singular_table) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>stage target and source pathnames when all tests pass. stage model pathname
+and .yml pathnames when BOTH unit and controller tests pass</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 217</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_why_not_stage'>why_not_stage</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='comma'>,</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_match_spec'>match_spec</span><span class='op'>=</span><span class='const'>MatchedPathName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_match_spec'>match_spec</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_singular_table'>singular_table</span><span class='op'>=</span><span class='const'>FILE_MOD_TIMES</span><span class='lbracket'>[</span><span class='const'>FILE_MOD_TIMES</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>/</span><span class='int'>2</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='comment'># pick average pathname, not too active, not too abandoned
+</span>		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rbrace'>}</span><span class='tstring_content'> don't know when to stage.</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_singular_table'>singular_table</span><span class='op'>=</span><span class='const'>MatchedPathName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_singular_model_name'>singular_model_name</span>
+		<span class='id identifier rubyid_why_not_stage_helper'>why_not_stage_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='comma'>,</span><span class='id identifier rubyid_unit_target'>unit_target</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span><span class='comma'>,</span><span class='id identifier rubyid_unit_sources'>unit_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span><span class='comma'>,</span><span class='symbol'>:unit</span><span class='rparen'>)</span>  <span class='kw'>if</span> <span class='id identifier rubyid_match_spec'>match_spec</span><span class='lbracket'>[</span><span class='symbol'>:test_type</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='symbol'>:controller</span>
+		<span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_controller_target'>controller_target</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_why_not_stage_helper'>why_not_stage_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='comma'>,</span><span class='id identifier rubyid_controller_target'>controller_target</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span><span class='comma'>,</span><span class='id identifier rubyid_controller_sources'>controller_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_singular_table'>singular_table</span><span class='rparen'>)</span><span class='comma'>,</span><span class='symbol'>:controller</span><span class='rparen'>)</span>  <span class='kw'>if</span> <span class='id identifier rubyid_match_spec'>match_spec</span><span class='lbracket'>[</span><span class='symbol'>:test_type</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='symbol'>:unit</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="why_not_stage_helper-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>why_not_stage_helper</strong>(pathname, target, sources, test_type) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>stage target and source pathnames when all tests pass. stage model pathname
+and .yml pathnames when BOTH unit and controller tests pass</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 187</span>
+
+<span class='kw'>def</span> <span class='const'>CodeBase</span><span class='period'>.</span><span class='id identifier rubyid_why_not_stage_helper'>why_not_stage_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='comma'>,</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span><span class='id identifier rubyid_sources'>sources</span><span class='comma'>,</span><span class='id identifier rubyid_test_type'>test_type</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='comment'>#~ puts &quot;Target #{target}  does exist.&quot; 
+</span>		<span class='kw'>if</span> <span class='const'>TestRun</span><span class='period'>.</span><span class='id identifier rubyid_log_passed?'>log_passed?</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_system'>system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git add </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>if</span> <span class='id identifier rubyid_pathname'>pathname</span><span class='op'>==</span><span class='id identifier rubyid_target'>target</span> <span class='kw'>then</span>
+				<span class='kw'>return</span> <span class='kw'>true</span>
+			<span class='kw'>elsif</span>  <span class='id identifier rubyid_uptodate?'>uptodate?</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span><span class='lbracket'>[</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>then</span>
+				<span class='kw'>if</span> <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rparen'>)</span> <span class='kw'>then</span>
+					<span class='id identifier rubyid_system'>system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git add </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+					<span class='kw'>return</span> <span class='kw'>true</span>
+				<span class='kw'>else</span>
+					<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rbrace'>}</span><span class='tstring_content'> not a </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_test_type'>test_type</span><span class='rbrace'>}</span><span class='tstring_content'> source.</span><span class='tstring_end'>&quot;</span></span>
+					<span class='kw'>return</span> <span class='kw'>false</span>
+				<span class='kw'>end</span> <span class='comment'>#if
+</span>			<span class='kw'>else</span>
+				<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rbrace'>}</span><span class='tstring_content'> not up to date.</span><span class='tstring_end'>&quot;</span></span> 
+			<span class='kw'>end</span> <span class='comment'>#if
+</span>			<span class='kw'>return</span> <span class='kw'>true</span>
+		<span class='kw'>else</span>
+			<span class='kw'>return</span> <span class='kw'>false</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>else</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Target </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='rbrace'>}</span><span class='tstring_content'> for pathname=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rbrace'>}</span><span class='tstring_content'> does not exist.</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>return</span> <span class='kw'>false</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="[]=-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>[]=</strong>(name, attribute) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>pathnames</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='op'>[]=</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
+	<span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='op'>=</span><span class='id identifier rubyid_attribute'>attribute</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="models-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>models</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>for given spec return models</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_models'>models</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_pathnames_with_models?'>pathnames_with_models?</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_models'>models</span><span class='op'>=</span><span class='id identifier rubyid_pathnames'>pathnames</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span><span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+			<span class='id identifier rubyid_model'>model</span><span class='op'>=</span><span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_regexp'>regexp</span><span class='comma'>,</span><span class='int'>1</span><span class='rbracket'>]</span>
+			<span class='kw'>if</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+				<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pathname=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='rbrace'>}</span><span class='tstring_content'> does not match regexp=</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_regexp'>regexp</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>end</span> <span class='comment'>#if
+</span>			<span class='kw'>if</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:plural</span><span class='rbracket'>]</span> <span class='kw'>then</span>
+				<span class='id identifier rubyid_model'>model</span><span class='op'>=</span><span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_singularize'>singularize</span>
+			<span class='kw'>end</span> <span class='comment'>#if
+</span>			<span class='id identifier rubyid_model'>model</span>
+		<span class='kw'>end</span> <span class='comment'>#map
+</span>		<span class='kw'>return</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_models'>models</span><span class='rparen'>)</span>
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='const'>Set</span><span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>	
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pathname_glob-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>pathname_glob</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a file glob to find pathname, removing parenthesis golbs are
+defined at <a
+href="http://www.ruby-doc.org/core-1.9.3/Dir.html#method-c-glob">www.ruby-doc.org/core-1.9.3/Dir.html#method-c-glob</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 42</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pathname_glob'>pathname_glob</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='const'>RegexpTree</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:Dir_glob</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_pathname_glob'>to_pathname_glob</span>
+<span class='comment'>#	ret=self[:Dir_glob].sub(/(\()/,'').sub(/(\))/,'')
+</span>	<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pathnames-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>pathnames</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Find array of pathnames that match CodeBase spec</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pathnames'>pathnames</span>
+	<span class='const'>Dir</span><span class='lbracket'>[</span><span class='id identifier rubyid_pathname_glob'>pathname_glob</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pathname'>pathname</span><span class='op'>|</span>
+		<span class='id identifier rubyid_regexp'>regexp</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#select
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pathnames_with_models?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>pathnames_with_models?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>find_by_name</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+114
+115
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 114</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pathnames_with_models?'>pathnames_with_models?</span>
+	<span class='id identifier rubyid_pathnames'>pathnames</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='kw'>do</span><span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+		<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_regexp'>regexp</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>&gt;</span><span class='int'>1</span>
+	<span class='kw'>end</span> <span class='comment'>#select
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="regexp-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>regexp</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a Regexp to extract model names from pathname, keeping parenthesis
+Regexp syntax is defined at <a
+href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">www.ruby-doc.org/core-1.9.3/Regexp.html</a>
+specify as a regexp with added parenthesis for model name (and test)
+capture globs are less powerful than regexp, so to make them convertable,
+we specify regexps and convert to globs then match with regexp
+implementation currently incomplete [a-z]* does not glob any word but any
+string starting with a letter!</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/code.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_regexp'>regexp</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>^</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:Dir_glob</span><span class='rbracket'>]</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>$</span><span class='tstring_end'>'</span></span>
+	<span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ret'>ret</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Fri Oct 18 09:13:28 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

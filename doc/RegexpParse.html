@@ -1,0 +1,3278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: RegexpParse
+  
+    &mdash; Documentation by YARD 0.8.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (R)</a> &raquo;
+    
+    
+    <span class="title">RegexpParse</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: RegexpParse
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">RegexpParse</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Regexp/Constants.html" title="Regexp::Constants (module)">Regexp::Constants</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html" title="RegexpParse::Constants (module)">Constants</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/models/regexp_parse.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>parse tree internal format is nested Arrays. Postfix operators and brackets
+end embeddded arrays</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="RegexpParse/Constants.html" title="RegexpParse::Constants (module)">Constants</a></span>
+    
+  
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="RegexpParse/Constants.html" title="RegexpParse::Constants (module)">Constants</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="RegexpParse/Constants.html#Any_binary_char-constant" title="RegexpParse::Constants::Any_binary_char (constant)">Constants::Any_binary_char</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Any_binary_char_parse-constant" title="RegexpParse::Constants::Any_binary_char_parse (constant)">Constants::Any_binary_char_parse</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Any_binary_string-constant" title="RegexpParse::Constants::Any_binary_string (constant)">Constants::Any_binary_string</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Any_binary_string_parse-constant" title="RegexpParse::Constants::Any_binary_string_parse (constant)">Constants::Any_binary_string_parse</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#ClosingBrackets-constant" title="RegexpParse::Constants::ClosingBrackets (constant)">Constants::ClosingBrackets</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Dot_star_array-constant" title="RegexpParse::Constants::Dot_star_array (constant)">Constants::Dot_star_array</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Dot_star_parse-constant" title="RegexpParse::Constants::Dot_star_parse (constant)">Constants::Dot_star_parse</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Dot_star_string-constant" title="RegexpParse::Constants::Dot_star_string (constant)">Constants::Dot_star_string</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Empty_language_array-constant" title="RegexpParse::Constants::Empty_language_array (constant)">Constants::Empty_language_array</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Empty_language_parse-constant" title="RegexpParse::Constants::Empty_language_parse (constant)">Constants::Empty_language_parse</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#Empty_language_string-constant" title="RegexpParse::Constants::Empty_language_string (constant)">Constants::Empty_language_string</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#OpeningBrackets-constant" title="RegexpParse::Constants::OpeningBrackets (constant)">Constants::OpeningBrackets</a></span>, <span class='object_link'><a href="RegexpParse/Constants.html#PostfixOperators-constant" title="RegexpParse::Constants::PostfixOperators (constant)">Constants::PostfixOperators</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Regexp/Constants.html" title="Regexp::Constants (module)">Regexp::Constants</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Regexp/Constants.html#Any-constant" title="Regexp::Constants::Any (constant)">Regexp::Constants::Any</a></span>, <span class='object_link'><a href="Regexp/Constants.html#Any_binary_char_string-constant" title="Regexp::Constants::Any_binary_char_string (constant)">Regexp::Constants::Any_binary_char_string</a></span>, <span class='object_link'><a href="Regexp/Constants.html#Default_options-constant" title="Regexp::Constants::Default_options (constant)">Regexp::Constants::Default_options</a></span>, <span class='object_link'><a href="Regexp/Constants.html#End_string-constant" title="Regexp::Constants::End_string (constant)">Regexp::Constants::End_string</a></span>, <span class='object_link'><a href="Regexp/Constants.html#End_string_less_newline-constant" title="Regexp::Constants::End_string_less_newline (constant)">Regexp::Constants::End_string_less_newline</a></span>, <span class='object_link'><a href="Regexp/Constants.html#Many-constant" title="Regexp::Constants::Many (constant)">Regexp::Constants::Many</a></span>, <span class='object_link'><a href="Regexp/Constants.html#Optional-constant" title="Regexp::Constants::Optional (constant)">Regexp::Constants::Optional</a></span>, <span class='object_link'><a href="Regexp/Constants.html#Start_string-constant" title="Regexp::Constants::Start_string (constant)">Regexp::Constants::Start_string</a></span></p>
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#errors-instance_method" title="#errors (instance method)">- (Object) <strong>errors</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute errors.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_tree-instance_method" title="#parse_tree (instance method)">- (Object) <strong>parse_tree</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute parse_tree.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#regexp_string-instance_method" title="#regexp_string (instance method)">- (Object) <strong>regexp_string</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute regexp_string.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tokenIndex-instance_method" title="#tokenIndex (instance method)">- (Object) <strong>tokenIndex</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute tokenIndex.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bracket_operator%3F-class_method" title="bracket_operator? (class method)">+ (Boolean) <strong>bracket_operator?</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>detect bracket operator (not postfix characters) node is parse tree or
+string to test (not Regexp) unlike postfix expression node, only last node
+should be passed return bracket parse tree - bracket expression detected
+return closing bracket character - closing bracket character return nil -
+no bracket.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#operator_range-class_method" title="operator_range (class method)">+ (Object) <strong>operator_range</strong>(postfix_operator) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>macro_call?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#postfix_expression%3F-class_method" title="postfix_expression? (class method)">+ (Boolean) <strong>postfix_expression?</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>If node has a postfix operator or a bracketed length range return postfix
+operator (what about | operator?) else return nil (no repetition) (not
+1,1?).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#postfix_operator%3F-class_method" title="postfix_operator? (class method)">+ (Boolean) <strong>postfix_operator?</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>node is parse tree or string to test unlike postfix expression node, only
+last node should be passed returns node such as ['*'] or [""3", ",",
+"4", ""] returns nil if not a postfix operator.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#promotable%3F-class_method" title="promotable? (class method)">+ (Boolean) <strong>promotable?</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>compare.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#promote-class_method" title="promote (class method)">+ (Object) <strong>promote</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>RegexpParse.promotable.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#regexp_error-class_method" title="regexp_error (class method)">+ (Object) <strong>regexp_error</strong>(regexp_string, options = Default_options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>regexp_rescued.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#regexp_rescued-class_method" title="regexp_rescued (class method)">+ (Object) <strong>regexp_rescued</strong>(regexp_string, options = Default_options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Rescue bad regexp and return nil Example regexp with unbalanced bracketing
+characters.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#typed%3F-class_method" title="typed? (class method)">+ (Boolean) <strong>typed?</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>grep.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%3C%3D%3E-instance_method" title="#&lt;=&gt; (instance method)">- (Object) <strong>&lt;=&gt;</strong>(rhs) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>equal.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%3D%3D-instance_method" title="#== (instance method)">- (Object) <strong>==</strong>(rhs) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>regexp_error.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#advanceToken%21-instance_method" title="#advanceToken! (instance method)">- (Object) <strong>advanceToken!</strong>(increment) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>rest.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#beyondString%3F-instance_method" title="#beyondString? (instance method)">- (Boolean) <strong>beyondString?</strong>(testPos = @tokenIndex) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>test if parsing has gone beyond end of string and should stop.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#curlyTree%21-instance_method" title="#curlyTree! (instance method)">- (Object) <strong>curlyTree!</strong>(regexp_string) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>handle 2,3-style specification of repetitions not currently used, since
+numbers are not interpreted currently handled identically to parenthesis
+and square brackets.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#eql%3F-instance_method" title="#eql? (instance method)">- (Boolean) <strong>eql?</strong>(rhs) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>equal_operator.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#grep-instance_method" title="#grep (instance method)">- (Object) <strong>grep</strong>(pattern, delimiter = &quot;\n&quot;) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>pathnames.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (RegexpParse) <strong>initialize</strong>(regexp_string, options = Default_options) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of RegexpParse.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>initialize.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#macro_call%3F-instance_method" title="#macro_call? (instance method)">- (Boolean) <strong>macro_call?</strong>(macro = parse_tree) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>postfix_operator_walk.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#nextToken%21-instance_method" title="#nextToken! (instance method)">- (Object) <strong>nextToken!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>restartParse.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parseOneTerm%21-instance_method" title="#parseOneTerm! (instance method)">- (Object) <strong>parseOneTerm!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>parse matching brackets, postfix operator, or single character.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pathnames-instance_method" title="#pathnames (instance method)">- (Object) <strong>pathnames</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>to_pathname_glob.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#postfix_expression%3F-instance_method" title="#postfix_expression? (instance method)">- (Boolean) <strong>postfix_expression?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>postfix_expression.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#postfix_operator_walk-instance_method" title="#postfix_operator_walk (instance method)">- (Object) <strong>postfix_operator_walk</strong>(&amp;visit_proc) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>postfix_operator.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#regexpTree%21-instance_method" title="#regexpTree! (instance method)">- (Object) <strong>regexpTree!</strong>(terminator = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>parseOneTerm!.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#repeated_pattern-instance_method" title="#repeated_pattern (instance method)">- (Object) <strong>repeated_pattern</strong>(node = self) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns a NestedArray object.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#repetition_length-instance_method" title="#repetition_length (instance method)">- (Object) <strong>repetition_length</strong>(node = self) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>operator_range.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rest-instance_method" title="#rest (instance method)">- (Object) <strong>rest</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>nextToken!.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#restartParse%21-instance_method" title="#restartParse! (instance method)">- (Object) <strong>restartParse!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Expect to eventually replace with inheritance Or use in parser (or
+post-parser initialization) to set classes correcly.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_a-instance_method" title="#to_a (instance method)">- (Object) <strong>to_a</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>RegexpParse.promote.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_pathname_glob-instance_method" title="#to_pathname_glob (instance method)">- (Object) <strong>to_pathname_glob</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>regexpTree!.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_regexp-instance_method" title="#to_regexp (instance method)">- (Object) <strong>to_regexp</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>to_s.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_s-instance_method" title="#to_s (instance method)">- (Object) <strong>to_s</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>to_a.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RegexpParse (class)">RegexpParse</a></span></tt>) <strong>initialize</strong>(regexp_string, options = Default_options) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of RegexpParse</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 106</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='const'>Default_options</span><span class='rparen'>)</span>
+	<span class='ivar'>@tokenIndex</span><span class='op'>=</span><span class='op'>-</span><span class='int'>1</span> <span class='comment'># start at end
+</span>	<span class='kw'>if</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='ivar'>@parse_tree</span><span class='op'>=</span><span class='const'>NestedArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='rparen'>)</span>
+		<span class='ivar'>@regexp_string</span><span class='op'>=</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+		<span class='ivar'>@errors</span><span class='op'>=</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span>	
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='ivar'>@parse_tree</span><span class='op'>=</span><span class='const'>NestedArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='rparen'>)</span>
+		<span class='ivar'>@regexp_string</span><span class='op'>=</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>	
+		<span class='ivar'>@errors</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_regexp_error'>regexp_error</span><span class='lparen'>(</span><span class='ivar'>@regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='ivar'>@regexp_string</span><span class='op'>=</span><span class='id identifier rubyid_regexp_string'>regexp_string</span>
+		<span class='id identifier rubyid_restartParse!'>restartParse!</span>
+		<span class='ivar'>@parse_tree</span><span class='op'>=</span><span class='id identifier rubyid_regexpTree!'>regexpTree!</span>
+		<span class='ivar'>@errors</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_regexp_error'>regexp_error</span><span class='lparen'>(</span><span class='ivar'>@regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Regexp</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='ivar'>@regexp_string</span><span class='op'>=</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span>
+		<span class='id identifier rubyid_restartParse!'>restartParse!</span>
+		<span class='ivar'>@parse_tree</span><span class='op'>=</span><span class='id identifier rubyid_regexpTree!'>regexpTree!</span>
+		<span class='ivar'>@errors</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_regexp_error'>regexp_error</span><span class='lparen'>(</span><span class='ivar'>@regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+	<span class='kw'>else</span> <span class='comment'># unexpected
+</span>		<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unexpected type regexp_string=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='rbrace'>}</span><span class='tstring_content'> of type </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+	
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='ivar'>@parse_tree</span><span class='op'>=</span><span class='ivar'>@parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_merge_single_element_arrays?'>merge_single_element_arrays?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="errors-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>errors</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute errors</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
+  <span class='ivar'>@errors</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="parse_tree-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>parse_tree</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute parse_tree</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_tree'>parse_tree</span>
+  <span class='ivar'>@parse_tree</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="regexp_string-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>regexp_string</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute regexp_string</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span>
+  <span class='ivar'>@regexp_string</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="tokenIndex-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>tokenIndex</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute tokenIndex</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tokenIndex'>tokenIndex</span>
+  <span class='ivar'>@tokenIndex</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="bracket_operator?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>bracket_operator?</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>detect bracket operator (not postfix characters) node is parse tree or
+string to test (not Regexp) unlike postfix expression node, only last node
+should be passed return bracket parse tree - bracket expression detected
+return closing bracket character - closing bracket character return nil -
+no bracket</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 234</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_bracket_operator?'>bracket_operator?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>NestedArray</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>}</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_node'>node</span> 
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>}</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span> 
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_node'>node</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>}</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_node'>node</span> 
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='kw'>nil</span>	
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="operator_range-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>operator_range</strong>(postfix_operator) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>macro_call?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 288</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_operator_range'>operator_range</span><span class='lparen'>(</span><span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>+</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>?</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unexpected postfix_operator=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="postfix_expression?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>postfix_expression?</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>If node has a postfix operator or a bracketed length range return postfix
+operator (what about | operator?) else return nil (no repetition) (not
+1,1?)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 211</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_node'>node</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_postfix_operator?'>postfix_operator?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_postfix_operator'>postfix_operator</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_postfix_operator'>postfix_operator</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_bracket_operator'>bracket_operator</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_bracket_operator?'>bracket_operator?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_bracket_operator'>bracket_operator</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_bracket_operator'>bracket_operator</span>
+		<span class='kw'>else</span>
+			<span class='kw'>return</span> <span class='kw'>nil</span> <span class='comment'>#not postfix chars
+</span>		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="postfix_operator?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>postfix_operator?</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>node is parse tree or string to test unlike postfix expression node, only
+last node should be passed returns node such as ['*'] or [""3", ",",
+"4", ""] returns nil if not a postfix operator</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 249</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_postfix_operator?'>postfix_operator?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_index'>index</span><span class='op'>=</span><span class='const'>PostfixOperators</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>	
+		<span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+			<span class='kw'>nil</span>
+		<span class='kw'>else</span>
+			<span class='const'>PostfixOperators</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>else</span>
+		<span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_bracket_operator?'>bracket_operator?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="promotable?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>promotable?</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>compare</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 171</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promotable?'>promotable?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>Regexp</span><span class='rparen'>)</span> <span class='kw'>then</span> 
+		<span class='kw'>true</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='kw'>then</span> 
+		<span class='kw'>true</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='kw'>then</span> <span class='comment'>#nested Arrays
+</span>		<span class='kw'>true</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='kw'>then</span> <span class='comment'>#nested Arrays
+</span>		<span class='kw'>false</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='kw'>then</span> 
+		<span class='kw'>false</span>
+	<span class='kw'>else</span>
+		<span class='kw'>false</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="promote-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>promote</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>RegexpParse.promotable</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 186</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promotable?'>promotable?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='kw'>then</span> <span class='comment'>#nested Arrays
+</span>		<span class='id identifier rubyid_node'>node</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='kw'>then</span> 
+		<span class='id identifier rubyid_node'>node</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>Regexp</span><span class='rparen'>)</span> <span class='kw'>then</span> 
+		<span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unexpected node=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="regexp_error-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>regexp_error</strong>(regexp_string, options = Default_options) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>regexp_rescued</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+143
+144
+145
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 143</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_regexp_error'>regexp_error</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='const'>Default_options</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expecting regexp_string=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>RegexpError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_exception'>exception</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_exception'>exception</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="regexp_rescued-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>regexp_rescued</strong>(regexp_string, options = Default_options) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Rescue bad regexp and return nil Example regexp with unbalanced bracketing
+characters</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+137
+138
+139
+140
+141
+142</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 137</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_regexp_rescued'>regexp_rescued</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='const'>Default_options</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expecting regexp_string=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>RegexpError</span>
+	<span class='kw'>return</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="typed?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>typed?</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>grep</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 436</span>
+
+<span class='kw'>def</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_typed?'>typed?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_node'>node</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='op'>==</span><span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nil</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>nil</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>node=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, node.class.name=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+		<span class='const'>RegexpToken</span><span class='lbracket'>[</span><span class='id identifier rubyid_node'>node</span><span class='rbracket'>]</span> <span class='comment'># commonly termination condition
+</span>	<span class='kw'>else</span>
+		<span class='id identifier rubyid_node'>node</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='const'>RegexpRepetition</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='rparen'>)</span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>]</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+			<span class='const'>CharacterClass</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='rparen'>)</span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>)</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+			<span class='const'>RegexpParen</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='rparen'>)</span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='op'>==</span><span class='const'>Empty_language_parse</span> <span class='kw'>then</span>
+			<span class='const'>RegexpEmpty</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='rparen'>)</span>
+		<span class='kw'>elsif</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>|</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+			<span class='const'>RegexpAlternative</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='rparen'>)</span>
+		<span class='kw'>else</span> <span class='comment'>#sequence is default
+</span>			<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>0</span> <span class='kw'>then</span>
+				<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nil</span><span class='tstring_end'>&quot;</span></span>
+				<span class='kw'>nil</span>
+			<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span> <span class='kw'>then</span>
+				<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>node.parse_tree.size == 1\nnode=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, node.class.name=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+				<span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_typed?'>typed?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='comment'>#recurse to discard extra nesting
+</span>			<span class='kw'>else</span>
+				<span class='id identifier rubyid_args'>args</span><span class='op'>=</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> 
+					<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, n.class.name=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+					<span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_typed?'>typed?</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='rparen'>)</span>
+				<span class='kw'>end</span> <span class='comment'>#map
+</span>				<span class='const'>RegexpSequence</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+			<span class='kw'>end</span> <span class='comment'>#if
+</span>		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="<=>-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>&lt;=&gt;</strong>(rhs) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>equal</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+164
+165
+166
+167
+168
+169
+170</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 164</span>
+
+<span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rhs'>rhs</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='op'>==</span><span class='id identifier rubyid_rhs'>rhs</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='int'>0</span>
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='kw'>nil</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="==-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>==</strong>(rhs) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>regexp_error</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+150
+151
+152
+153
+154
+155
+156</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 150</span>
+
+<span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_rhs'>rhs</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='op'>==</span><span class='id identifier rubyid_rhs'>rhs</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='kw'>true</span>
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='kw'>false</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="advanceToken!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>advanceToken!</strong>(increment) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>rest</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+373
+374
+375</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 373</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_advanceToken!'>advanceToken!</span><span class='lparen'>(</span><span class='id identifier rubyid_increment'>increment</span><span class='rparen'>)</span>
+	<span class='ivar'>@tokenIndex</span><span class='op'>=</span><span class='ivar'>@tokenIndex</span><span class='op'>+</span><span class='id identifier rubyid_increment'>increment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="beyondString?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>beyondString?</strong>(testPos = @tokenIndex) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>test if parsing has gone beyond end of string and should stop</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+377
+378
+379</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 377</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_beyondString?'>beyondString?</span><span class='lparen'>(</span><span class='id identifier rubyid_testPos'>testPos</span><span class='op'>=</span><span class='ivar'>@tokenIndex</span><span class='rparen'>)</span>
+	<span class='ivar'>@regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_testPos'>testPos</span><span class='op'>&lt;</span><span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_testPos'>testPos</span><span class='op'>&gt;</span><span class='ivar'>@regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>-</span><span class='int'>1</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="curlyTree!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>curlyTree!</strong>(regexp_string) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>handle 2,3-style specification of repetitions not currently used, since
+numbers are not interpreted currently handled identically to parenthesis
+and square brackets</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+383
+384
+385
+386
+387
+388
+389</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 383</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_curlyTree!'>curlyTree!</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_remaining'>remaining</span><span class='op'>=</span><span class='id identifier rubyid_rest'>rest</span>
+	<span class='id identifier rubyid_matchData'>matchData</span><span class='op'>=</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\{(\d*)(,(\d*))?\}</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_remaining'>remaining</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_increment'>increment</span><span class='op'>=</span><span class='id identifier rubyid_matchData'>matchData</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>+</span><span class='id identifier rubyid_matchData'>matchData</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>+</span><span class='int'>1</span>
+	<span class='id identifier rubyid_advanceToken!'>advanceToken!</span><span class='lparen'>(</span><span class='id identifier rubyid_increment'>increment</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>{</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='lbracket'>[</span><span class='id identifier rubyid_matchData'>matchData</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_matchData'>matchData</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>}</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="eql?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>eql?</strong>(rhs) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>equal_operator</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+157
+158
+159
+160
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 157</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='id identifier rubyid_rhs'>rhs</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='op'>==</span><span class='id identifier rubyid_rhs'>rhs</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='kw'>true</span>
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='kw'>false</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="grep-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>grep</strong>(pattern, delimiter = &quot;\n&quot;) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>pathnames</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+433
+434
+435</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 433</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='comma'>,</span> <span class='id identifier rubyid_delimiter'>delimiter</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_pathnames'>pathnames</span><span class='period'>.</span><span class='id identifier rubyid_files_grep'>files_grep</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='comma'>,</span> <span class='id identifier rubyid_delimiter'>delimiter</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inspect-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>inspect</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>initialize</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 132</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
+	<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@regexp_string=\&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@regexp_string</span><span class='rbrace'>}</span><span class='tstring_content'>\&quot;, @parse_tree=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, @tokenIndex=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@tokenIndex</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="macro_call?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>macro_call?</strong>(macro = parse_tree) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>postfix_operator_walk</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+280
+281
+282
+283
+284
+285
+286
+287</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 280</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_macro_call?'>macro_call?</span><span class='lparen'>(</span><span class='id identifier rubyid_macro'>macro</span><span class='op'>=</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>[</span><span class='tstring_end'>'</span></span> <span class='op'>!=</span> <span class='id identifier rubyid_macro'>macro</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+	<span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>]</span><span class='tstring_end'>'</span></span> <span class='op'>!=</span> <span class='id identifier rubyid_macro'>macro</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
+	<span class='id identifier rubyid_inner_colons'>inner_colons</span><span class='op'>=</span><span class='id identifier rubyid_macro'>macro</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span> <span class='comment'># not another nested array
+</span>	<span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>:</span><span class='tstring_end'>'</span></span> <span class='op'>!=</span> <span class='id identifier rubyid_inner_colons'>inner_colons</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+	<span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>:</span><span class='tstring_end'>'</span></span> <span class='op'>!=</span> <span class='id identifier rubyid_inner_colons'>inner_colons</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
+	<span class='kw'>return</span>	<span class='id identifier rubyid_inner_colons'>inner_colons</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="nextToken!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>nextToken!</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>restartParse</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 354</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_nextToken!'>nextToken!</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_beyondString?'>beyondString?</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>method nextToken! called after end of regexp_string.</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>elsif</span> <span class='ivar'>@tokenIndex</span><span class='op'>&gt;</span><span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@regexp_string</span><span class='lbracket'>[</span><span class='ivar'>@tokenIndex</span><span class='op'>-</span><span class='int'>1</span><span class='op'>..</span><span class='ivar'>@tokenIndex</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>\\</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>\\</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='ivar'>@regexp_string</span><span class='lbracket'>[</span><span class='ivar'>@tokenIndex</span><span class='op'>..</span><span class='ivar'>@tokenIndex</span><span class='rbracket'>]</span>
+		<span class='ivar'>@tokenIndex</span><span class='op'>=</span><span class='ivar'>@tokenIndex</span><span class='op'>-</span><span class='int'>2</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='ivar'>@regexp_string</span><span class='lbracket'>[</span><span class='ivar'>@tokenIndex</span><span class='op'>..</span><span class='ivar'>@tokenIndex</span><span class='rbracket'>]</span>
+		<span class='ivar'>@tokenIndex</span><span class='op'>=</span><span class='ivar'>@tokenIndex</span><span class='op'>-</span><span class='int'>1</span>
+	<span class='kw'>end</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parseOneTerm!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>parseOneTerm!</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>parse matching brackets, postfix operator, or single character</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 391</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parseOneTerm!'>parseOneTerm!</span>
+	<span class='id identifier rubyid_ch'>ch</span><span class='op'>=</span><span class='id identifier rubyid_nextToken!'>nextToken!</span>
+	<span class='id identifier rubyid_index'>index</span><span class='op'>=</span><span class='const'>ClosingBrackets</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_ch'>ch</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='kw'>then</span>
+		<span class='kw'>return</span>  <span class='id identifier rubyid_regexpTree!'>regexpTree!</span><span class='lparen'>(</span><span class='const'>OpeningBrackets</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_chr'>chr</span><span class='rparen'>)</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_ch'>ch</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_index'>index</span><span class='op'>=</span><span class='const'>PostfixOperators</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_ch'>ch</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='kw'>then</span>
+			<span class='kw'>return</span>  <span class='const'>NestedArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_parseOneTerm!'>parseOneTerm!</span><span class='comma'>,</span> <span class='id identifier rubyid_ch'>ch</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+		<span class='kw'>else</span>
+			<span class='kw'>return</span> <span class='id identifier rubyid_ch'>ch</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pathnames-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>pathnames</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>to_pathname_glob</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+428
+429
+430
+431
+432</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 428</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pathnames'>pathnames</span>
+	<span class='const'>Dir</span><span class='lbracket'>[</span><span class='id identifier rubyid_to_pathname_glob'>to_pathname_glob</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pathname'>pathname</span><span class='op'>|</span>
+		<span class='id identifier rubyid_to_regexp'>to_regexp</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_pathname'>pathname</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#select
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="postfix_expression?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>postfix_expression?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>postfix_expression</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+225
+226
+227</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 225</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span>
+	<span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="postfix_operator_walk-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>postfix_operator_walk</strong>(&amp;visit_proc) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>postfix_operator</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 261</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_postfix_operator_walk'>postfix_operator_walk</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_visit_proc'>visit_proc</span><span class='rparen'>)</span>
+	<span class='comment'># recurse on subtrees first so transformations ripple up generally
+</span>	<span class='comment'># postfix expresion should not change operator
+</span>	<span class='id identifier rubyid_branching'>branching</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='op'>|</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_postfix_operator_walk'>postfix_operator_walk</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_visit_proc'>visit_proc</span><span class='rparen'>)</span>
+		<span class='kw'>else</span> <span class='comment'># leaf string
+</span>			<span class='id identifier rubyid_sub_tree'>sub_tree</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span><span class='rparen'>)</span> <span class='comment'>#map and RegexpParse.new
+</span><span class='comment'>#OK	raise &quot;Unexpected #{self.inspect}.postfix_expression?=#{postfix_expression?} != #{branching.inspect}.postfix_expression?=#{RegexpParse.new(branching).postfix_expression?}&quot;  unless postfix_expression? == RegexpParse.new(branching).postfix_expression?
+</span>	<span class='kw'>if</span> <span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span> <span class='kw'>then</span> <span class='comment'>#postfixes trickle up
+</span>		<span class='id identifier rubyid_new_branching'>new_branching</span><span class='op'>=</span><span class='id identifier rubyid_visit_proc'>visit_proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_branching'>branching</span><span class='rparen'>)</span>
+			
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_new_branching'>new_branching</span><span class='op'>=</span><span class='id identifier rubyid_branching'>branching</span>
+	<span class='kw'>end</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_new_branching'>new_branching</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="regexpTree!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>regexpTree!</strong>(terminator = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>parseOneTerm!</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 405</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_regexpTree!'>regexpTree!</span><span class='lparen'>(</span><span class='id identifier rubyid_terminator'>terminator</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='const'>NestedArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+	<span class='kw'>begin</span>
+		<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_beyondString?'>beyondString?</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_term'>term</span><span class='op'>=</span><span class='id identifier rubyid_parseOneTerm!'>parseOneTerm!</span>
+			<span class='id identifier rubyid_ret'>ret</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_term'>term</span>
+		<span class='kw'>else</span>
+			<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='kw'>until</span> <span class='id identifier rubyid_term'>term</span><span class='op'>==</span><span class='id identifier rubyid_terminator'>terminator</span>
+<span class='comment'>#not recursive	assert_invariant(ret.reverse)
+</span>	<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="repeated_pattern-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>repeated_pattern</strong>(node = self) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a NestedArray object</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 322</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_repeated_pattern'>repeated_pattern</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='op'>=</span><span class='kw'>self</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_node'>node</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+<span class='comment'>#	if node.instance_of?(RegexpParse) then
+</span><span class='comment'>#		node=node.parse_tree
+</span><span class='comment'>#	else
+</span>
+<span class='comment'>#		node=RegexpParse.promote(node)
+</span><span class='comment'>#	end #if	
+</span>	<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span> <span class='kw'>then</span> <span class='comment'># argument is not an Array
+</span>		<span class='kw'>return</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='comment'>#	elsif post_op=postfix_expression?(node) then
+</span><span class='comment'>#		return RegexpParse.new(node[0])
+</span><span class='comment'>#	elsif node[-1]=='}' then
+</span><span class='comment'>#		node[0]
+</span>	<span class='kw'>else</span>
+		<span class='kw'>self</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="repetition_length-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>repetition_length</strong>(node = self) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>operator_range</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 301</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_repetition_length'>repetition_length</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='op'>=</span><span class='kw'>self</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_node'>node</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_operator_range'>operator_range</span><span class='lparen'>(</span><span class='id identifier rubyid_postfix_operator'>postfix_operator</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_post_op'>post_op</span><span class='op'>=</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_postfix_expression?'>postfix_expression?</span> <span class='kw'>then</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_post_op'>post_op</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_post_op'>post_op</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>+</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_post_op'>post_op</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>?</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+		<span class='kw'>else</span>
+			<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unexpected post_op=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_post_op'>post_op</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>elsif</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>}</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
+	<span class='kw'>else</span>
+		<span class='const'>UnboundedRange</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='comma'>,</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rest-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>rest</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>nextToken!</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+366
+367
+368
+369
+370
+371
+372</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 366</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_rest'>rest</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_beyondString?'>beyondString?</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='ivar'>@regexp_string</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='ivar'>@tokenIndex</span><span class='rbracket'>]</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="restartParse!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>restartParse!</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Expect to eventually replace with inheritance Or use in parser (or
+post-parser initialization) to set classes correcly. Need more uniform
+subclasses Is there a useful hierarchy? Sequence (chars and trees) and
+alternatives (char class, |) Private methods that alter state end in !
+private</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+346
+347
+348
+349
+350
+351
+352
+353</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 346</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_restartParse!'>restartParse!</span> <span class='comment'># primarily for testing
+</span>	<span class='kw'>if</span> <span class='ivar'>@regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+		<span class='ivar'>@tokenIndex</span><span class='op'>=</span><span class='op'>-</span><span class='int'>1</span> <span class='comment'># start at end
+</span>	<span class='kw'>else</span>
+		<span class='ivar'>@tokenIndex</span><span class='op'>=</span><span class='ivar'>@regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>-</span><span class='int'>1</span> <span class='comment'># start at end
+</span>	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='ivar'>@parse_tree</span><span class='op'>=</span><span class='const'>NestedArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_a-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>to_a</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>RegexpParse.promote</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+199
+200
+201</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 199</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
+	<span class='kw'>return</span> <span class='ivar'>@parse_tree</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_pathname_glob-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>to_pathname_glob</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>regexpTree!</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 418</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_pathname_glob'>to_pathname_glob</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_map_branches'>map_branches</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_b'>b</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_b'>b</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(</span><span class='tstring_end'>'</span></span><span class='op'>?</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_b'>b</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='op'>:</span><span class='const'>RegexpParse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_postfix_operator_walk'>postfix_operator_walk</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>RegexpParse</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_parse_tree'>parse_tree</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_regexp-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>to_regexp</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>to_s</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+205
+206
+207</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 205</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_regexp'>to_regexp</span>
+	<span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_s-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>to_s</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>to_a</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+202
+203
+204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_parse.rb', line 202</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Fri Oct 18 09:14:02 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
