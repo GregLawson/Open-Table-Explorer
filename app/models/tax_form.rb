@@ -36,7 +36,9 @@ attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename,
 :open_tax_solver_input, :open_tax_solver_data_directory, :open_tax_solver_output,
 :ots_template_filename, :ots_json, :ots_to_json_run,
 :output_pdf
-def initialize(taxpayer='example', form='1040', jurisdiction=:US, tax_year=Finance::Constants::Default_tax_year)
+def initialize(taxpayer='example', form='1040',
+			jurisdiction=:US,
+			tax_year=Finance::Constants::Default_tax_year)
 	@taxpayer=taxpayer.to_s
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
