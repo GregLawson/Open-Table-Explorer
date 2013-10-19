@@ -36,7 +36,7 @@ attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename,
 :open_tax_solver_input, :open_tax_solver_data_directory, :open_tax_solver_output,
 :ots_template_filename, :ots_json, :ots_to_json_run,
 :output_pdf
-def initialize(taxpayer='example', form='1040', jurisdiction=:US, tax_year=Finance::Constants::Default_tax_year)
+def initialize(taxpayer='example', form='1040', jurisdiction=:US, tax_year=Finance::Constants::Default_tax_year, open_tax_solver_data_directory=nil)
 	@taxpayer=taxpayer.to_s
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
@@ -123,15 +123,22 @@ include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 def assert_pre_conditions
+	message="In assert_pre_conditions, self=#{inspect}"
+	assert_pathname_exists(@open_tax_solver_data_directory, message)
+	assert_pathname_exists(@open_tax_solver_input, message)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_open_tax_solver
-	assert_pathname_exists(@open_tax_solver_input)
 #	@open_tax_solver_run.assert_post_conditions
 	peculiar_status=@open_tax_solver_run.process_status.exitstatus==1
-	message=IO.binread(@open_tax_solver_sysout)+@open_tax_solver_run.errors
+	if File.exists?(@open_tax_solver_sysout) then
+		message=IO.binread(@open_tax_solver_sysout)
+	else
+		message="file=#{@open_tax_solver_sysout} does not exist"
+	end #if
+	message+=@open_tax_solver_run.errors
 	@open_tax_solver_run.puts
 	puts "peculiar_status=#{peculiar_status}"
 	puts "message='#{message}'"
