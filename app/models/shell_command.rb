@@ -68,23 +68,21 @@ end #close
 def success?
 	@process_status.success?
 end #success
-def inspect
+def inspect(echo_command=@errors!='' || !success?)
 	ret=''
-	if @errors!='' || !success? then
-		ret+="@command_string=#{@command_string.inspect}\n"
+	if echo_command then
+		ret+="$ #{@command_string}\n"
 	end #if
 	if @errors!='' then
 		ret+="@errors=#{@errors.inspect}\n"
 	end #if
 	if !success? then
 		ret+="@process_status=#{@process_status.inspect}\n"
-		ret+="@pid=#{@pid.inspect}\n"
 	end #if
 	ret+@output.to_s
 end #inspect
 def puts
-	$stdout.puts "$ "+@command_string
-	$stdout.puts inspect
+	$stdout.puts inspect(:echo_command)
 	shorter_callers=caller.grep(/^[^\/]/)
 	$stdout.puts shorter_callers.join("\n") if $VERBOSE
 	self # return for comand chaining
