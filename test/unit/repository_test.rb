@@ -38,7 +38,7 @@ def test_standardize_position
 	Clean_Example.git_command("merge --abort").puts
 	Clean_Example.git_command("stash save").assert_post_conditions
 	Clean_Example.git_command("checkout master").puts
-	Clean_Example.standardize_position
+	Clean_Example.standardize_position!
 end #standardize_position
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
@@ -46,27 +46,49 @@ def test_current_branch_name?
 
 end #current_branch_name
 def test_deserving_branch
-	executable='/etc/mtab'
-	recent_test=SELF_code_Repo.shell_command("ruby "+executable)
-	assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
-	syntax_test=SELF_code_Repo.shell_command("ruby-c "+executable)
-	assert_not_equal(syntax_test.output, "Syntax OK\n")
+	executable='/etc/mtab' #force syntax error with non-ruby text
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(:edited, SELF_code_Repo.deserving_branch?(executable))
+	SELF_code_Repo.assert_deserving_branch(:edited, executable)
 
 	executable='test/unit/minimal2_test.rb'
-	recent_test=SELF_code_Repo.shell_command("ruby "+executable)
-	assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-	syntax_test=SELF_code_Repo.shell_command("ruby-c "+executable)
-	assert_equal(syntax_test.output, "Syntax OK\n")
-
-	assert_equal(:passed, SELF_code_Repo.deserving_branch?('/dev/null'))
-	assert_equal(:edited, SELF_code_Repo.deserving_branch?('/etc/mtab')) #force syntax error with non-ruby text
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(:passed, SELF_code_Repo.deserving_branch?('test/unit/minimal2_test.rb'))
+	SELF_code_Repo.assert_deserving_branch(:passed, executable)
+
+	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
 #	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
 end #deserving_branch
 def test_safely_visit_branch
 	push_branch=Clean_Example.current_branch_name?
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
+	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){Clean_Example.current_branch_name?})
+	target_branch=:master
+	checkout_target=Clean_Example.git_command("checkout #{target_branch}")
+#		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
 end #safely_visit_branch
+def test_validate_commit
+end #validate_commit
+def test_something_to_commit?
+	assert_respond_to(Clean_Example.grit_repo, :status)
+	assert_instance_of(Grit::Status, Clean_Example.grit_repo.status)
+	status=Clean_Example.grit_repo.status
+	assert_instance_of(Hash, status.added)
+	assert_instance_of(Hash, status.changed)
+	assert_instance_of(Hash, status.deleted)
+	assert_equal({}, status.added)
+	assert_equal({}, status.changed)
+	assert_equal({}, status.deleted)
+	assert((status.added=={}), status.inspect)
+	Clean_Example.assert_nothing_to_commit
+	assert(!Clean_Example.something_to_commit?, Clean_Example.grit_repo.status.inspect)
+end #something_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")
