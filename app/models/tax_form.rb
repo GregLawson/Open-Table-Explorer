@@ -43,7 +43,11 @@ def initialize(taxpayer, form, jurisdiction=:US, tax_year=Finance::Constants::De
 	@tax_year=tax_year
 	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"].sort[-1]
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
-	@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
+	if open_tax_solver_data_directory.nil? then
+		@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
+	else
+		@open_tax_solver_data_directory=open_tax_solver_data_directory
+	end #if
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_data_directory+'/'+@taxpayer_basename_with_year+'.txt') then
