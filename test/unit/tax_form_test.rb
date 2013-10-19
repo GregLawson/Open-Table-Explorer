@@ -17,7 +17,7 @@ include OpenTableExplorer::Finance::Constants
 extend OpenTableExplorer::Finance::Constants
 include OpenTableExplorer::Finance::TaxForm::Examples
 def test_Constants
-#	assert_pathname_exists(Data_source_directory)
+	assert_pathname_exists(Data_source_directory)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
 #	assert_pathname_exists(Open_tax_solver_directory)
 #	assert_pathname_exists(Open_tax_solver_data_directory)
