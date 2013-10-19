@@ -53,12 +53,12 @@ def test_initialize
 end #initialize
 def test_build
 	US1040_example.build.assert_build
+	CA540_example.build.assert_build
 	US1040_user.build.assert_build
 	CA540_user.build.assert_build
+	US1040_example1.build.assert_build
 	US1040_template.build.assert_build
 	CA540_template.build.assert_build
-	CA540_example.build.assert_build
-	US1040_example1.build.assert_build
 end #build
 def test_run_tax_solver
 	form='1040'
