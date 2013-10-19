@@ -1,0 +1,1835 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Repository
+  
+    &mdash; Documentation by YARD 0.8.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (R)</a> &raquo;
+    
+    
+    <span class="title">Repository</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Repository
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Repository</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><span class='object_link'><a href="Repository/ClassMethods.html" title="Repository::ClassMethods (module)">ClassMethods</a></span></dd>
+      
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="Repository/Assertions.html" title="Repository::Assertions (module)">Assertions</a></span>, <span class='object_link'><a href="Repository/Constants.html" title="Repository::Constants (module)">Constants</a></span>, <span class='object_link'><a href="Repository/Examples.html" title="Repository::Examples (module)">Examples</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/repository.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>&lt;Grit::Repo</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Repository/Assertions.html" title="Repository::Assertions (module)">Assertions</a></span>, <span class='object_link'><a href="Repository/ClassMethods.html" title="Repository::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Repository/Constants.html" title="Repository::Constants (module)">Constants</a></span>, <span class='object_link'><a href="Repository/Examples.html" title="Repository::Examples (module)">Examples</a></span>
+    
+  
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Repository/Examples.html" title="Repository::Examples (module)">Examples</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Repository/Examples.html#Empty_Repo-constant" title="Repository::Examples::Empty_Repo (constant)">Examples::Empty_Repo</a></span>, <span class='object_link'><a href="Repository/Examples.html#Removable_Source-constant" title="Repository::Examples::Removable_Source (constant)">Examples::Removable_Source</a></span>, <span class='object_link'><a href="Repository/Examples.html#Repo-constant" title="Repository::Examples::Repo (constant)">Examples::Repo</a></span>, <span class='object_link'><a href="Repository/Examples.html#SELF_code_Repo-constant" title="Repository::Examples::SELF_code_Repo (constant)">Examples::SELF_code_Repo</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Repository/Constants.html" title="Repository::Constants (module)">Constants</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Repository/Constants.html#Root_directory-constant" title="Repository::Constants::Root_directory (constant)">Constants::Root_directory</a></span>, <span class='object_link'><a href="Repository/Constants.html#Source-constant" title="Repository::Constants::Source (constant)">Constants::Source</a></span>, <span class='object_link'><a href="Repository/Constants.html#Temporary-constant" title="Repository::Constants::Temporary (constant)">Constants::Temporary</a></span></p>
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#deserving_branch-instance_method" title="#deserving_branch (instance method)">- (Object) <strong>deserving_branch</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute deserving_branch.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#grit_repo-instance_method" title="#grit_repo (instance method)">- (Object) <strong>grit_repo</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute grit_repo.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path-instance_method" title="#path (instance method)">- (Object) <strong>path</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute path.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#recent_test-instance_method" title="#recent_test (instance method)">- (Object) <strong>recent_test</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute recent_test.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#best-instance_method" title="#best (instance method)">- (Object) <strong>best</strong>(executable = related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>upgrade.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#commit_to_branch-instance_method" title="#commit_to_branch (instance method)">- (Object) <strong>commit_to_branch</strong>(target_branch, tested_files) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>stage.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#CompilesSupersetOfMaster-instance_method" title="#CompilesSupersetOfMaster (instance method)">- (Object) <strong>CompilesSupersetOfMaster</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>test.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_branch_name%3F-instance_method" title="#current_branch_name? (instance method)">- (Boolean) <strong>current_branch_name?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>standardize_position.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#deserving_branch%3F-instance_method" title="#deserving_branch? (instance method)">- (Boolean) <strong>deserving_branch?</strong>(executable = @related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>current_branch_name.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#DevelopmentSupersetofCompiles-instance_method" title="#DevelopmentSupersetofCompiles (instance method)">- (Object) <strong>DevelopmentSupersetofCompiles</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#downgrade-instance_method" title="#downgrade (instance method)">- (Object) <strong>downgrade</strong>(executable = related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>best.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#downgrade_commit-instance_method" title="#downgrade_commit (instance method)">- (Object) <strong>downgrade_commit</strong>(target_branch, executable) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>upgrade_commit.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#git_command-instance_method" title="#git_command (instance method)">- (Object) <strong>git_command</strong>(git_subcommand) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>shell_command.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Repository) <strong>initialize</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Repository.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#safely_visit_branch-instance_method" title="#safely_visit_branch (instance method)">- (Object) <strong>safely_visit_branch</strong>(target_branch, &amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This is safe in the sense that a stash saves all files and a stash apply
+restores all tracked files safe is meant to mean no files or changes are
+lost or buried.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#shell_command-instance_method" title="#shell_command (instance method)">- (Object) <strong>shell_command</strong>(command, working_directory = Shellwords.escape(@path)) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>initialize.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#stage-instance_method" title="#stage (instance method)">- (Object) <strong>stage</strong>(target_branch, tested_files) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>downgrade.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#standardize_position-instance_method" title="#standardize_position (instance method)">- (Object) <strong>standardize_position</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>git_command.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test-instance_method" title="#test (instance method)">- (Object) <strong>test</strong>(executable = related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>downgrade_commit.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test_and_commit-instance_method" title="#test_and_commit (instance method)">- (Object) <strong>test_and_commit</strong>(executable, tested_files) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>commit_to_branch.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#upgrade-instance_method" title="#upgrade (instance method)">- (Object) <strong>upgrade</strong>(executable = related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>test.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#upgrade_commit-instance_method" title="#upgrade_commit (instance method)">- (Object) <strong>upgrade_commit</strong>(target_branch, executable) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>safely_visit_branch.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Repository/ClassMethods.html" title="Repository::ClassMethods (module)">ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Repository/ClassMethods.html#create_empty-instance_method" title="Repository::ClassMethods#create_empty (method)">create_empty</a></span>, <span class='object_link'><a href="Repository/ClassMethods.html#create_if_missing-instance_method" title="Repository::ClassMethods#create_if_missing (method)">create_if_missing</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Repository/Assertions.html" title="Repository::Assertions (module)">Assertions</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Repository/Assertions.html#assert_deserving_branch-instance_method" title="Repository::Assertions#assert_deserving_branch (method)">#assert_deserving_branch</a></span>, <span class='object_link'><a href="Repository/Assertions.html#assert_post_conditions-instance_method" title="Repository::Assertions#assert_post_conditions (method)">#assert_post_conditions</a></span>, <span class='object_link'><a href="Repository/Assertions.html#assert_pre_conditions-instance_method" title="Repository::Assertions#assert_pre_conditions (method)">#assert_pre_conditions</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Repository (class)">Repository</a></span></tt>) <strong>initialize</strong>(path) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Repository</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+	<span class='ivar'>@url</span><span class='op'>=</span><span class='id identifier rubyid_path'>path</span>
+	<span class='ivar'>@path</span><span class='op'>=</span><span class='id identifier rubyid_path'>path</span>
+	<span class='id identifier rubyid_source_path'>source_path</span><span class='op'>=</span><span class='ivar'>@path</span>
+	<span class='id identifier rubyid_temporary_path'>temporary_path</span><span class='op'>=</span><span class='const'>Temporary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>recover</span><span class='tstring_end'>'</span></span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>@path=</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='ivar'>@path</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+	<span class='ivar'>@grit_repo</span><span class='op'>=</span><span class='const'>Grit</span><span class='op'>::</span><span class='const'>Repo</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@path</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="deserving_branch-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>deserving_branch</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute deserving_branch</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_deserving_branch'>deserving_branch</span>
+  <span class='ivar'>@deserving_branch</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="grit_repo-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>grit_repo</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute grit_repo</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_grit_repo'>grit_repo</span>
+  <span class='ivar'>@grit_repo</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="path-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>path</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute path</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='ivar'>@path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="recent_test-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>recent_test</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute recent_test</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_recent_test'>recent_test</span>
+  <span class='ivar'>@recent_test</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="best-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>best</strong>(executable = related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>upgrade</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_best'>best</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_upgrade_commit'>upgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="commit_to_branch-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>commit_to_branch</strong>(target_branch, tested_files) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>stage</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+142
+143
+144
+145
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 142</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_commit_to_branch'>commit_to_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>=</span><span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>!=</span><span class='id identifier rubyid_target_branch'>target_branch</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_push_branch'>push_branch</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout stash apply</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="CompilesSupersetOfMaster-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>CompilesSupersetOfMaster</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>test</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='const'>CompilesSupersetOfMaster</span>
+	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log compiles..master</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_branch_name?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>current_branch_name?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>standardize_position</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 65</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span>
+	<span class='ivar'>@grit_repo</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="deserving_branch?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>deserving_branch?</strong>(executable = @related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>current_branch_name</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='ivar'>@recent_test</span><span class='op'>=</span><span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+	<span class='ivar'>@recent_test</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+	<span class='kw'>if</span> <span class='ivar'>@recent_test</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span> <span class='kw'>then</span>
+		<span class='ivar'>@deserving_branch</span><span class='op'>=</span><span class='symbol'>:passed</span>
+	<span class='kw'>elsif</span> <span class='ivar'>@recent_test</span><span class='period'>.</span><span class='id identifier rubyid_process_status'>process_status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span><span class='op'>==</span><span class='int'>1</span> <span class='kw'>then</span> <span class='comment'># 1 error or syntax error
+</span>		<span class='id identifier rubyid_syntax_test'>syntax_test</span><span class='op'>=</span><span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby -c </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_syntax_test'>syntax_test</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Syntax OK\n</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span>
+			<span class='ivar'>@deserving_branch</span><span class='op'>=</span><span class='symbol'>:testing</span>
+		<span class='kw'>else</span>
+			<span class='ivar'>@deserving_branch</span><span class='op'>=</span><span class='symbol'>:edited</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>else</span>
+		<span class='ivar'>@deserving_branch</span><span class='op'>=</span><span class='symbol'>:testing</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='ivar'>@deserving_branch</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="DevelopmentSupersetofCompiles-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>DevelopmentSupersetofCompiles</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 157</span>
+
+<span class='kw'>def</span> <span class='const'>DevelopmentSupersetofCompiles</span>
+	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log development..compiles</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="downgrade-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>downgrade</strong>(executable = related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>best</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_downgrade'>downgrade</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_downgrade_commit'>downgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="downgrade_commit-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>downgrade_commit</strong>(target_branch, executable) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>upgrade_commit</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 107</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_downgrade_commit'>downgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_commit_to_branch'>commit_to_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="git_command-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>git_command</strong>(git_subcommand) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>shell_command</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 52</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='id identifier rubyid_git_subcommand'>git_subcommand</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_git_subcommand'>git_subcommand</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='gvar'>$VERBOSE</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_git_subcommand'>git_subcommand</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>status</span><span class='tstring_end'>'</span></span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git status</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="safely_visit_branch-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>safely_visit_branch</strong>(target_branch, &amp;block) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This is safe in the sense that a stash saves all files and a stash apply
+restores all tracked files safe is meant to mean no files or changes are
+lost or buried.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>=</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>!=</span><span class='id identifier rubyid_target_branch'>target_branch</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stash save</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout #{target_branch}</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout #{push_branch}</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>stash apply</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="shell_command-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>shell_command</strong>(command, working_directory = Shellwords.escape(@path)) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>initialize</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span><span class='comma'>,</span> <span class='id identifier rubyid_working_directory'>working_directory</span><span class='op'>=</span><span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='ivar'>@path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cd </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_working_directory'>working_directory</span><span class='rbrace'>}</span><span class='tstring_content'>; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_command'>command</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+		<span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="stage-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>stage</strong>(target_branch, tested_files) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>downgrade</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 122</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span> <span class='op'>==</span><span class='id identifier rubyid_target_branch'>target_branch</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>=</span><span class='id identifier rubyid_target_branch'>target_branch</span> <span class='comment'># no need for stash popping
+</span>	<span class='kw'>else</span>
+		<span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>=</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span>
+		<span class='id identifier rubyid_switch_branch'>switch_branch</span><span class='op'>=</span><span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span>
+		<span class='id identifier rubyid_message'>message</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>!=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+		<span class='id identifier rubyid_message'>message</span><span class='op'>+=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>current_branch_name? !=target_branch=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span> <span class='op'>!=</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+		<span class='id identifier rubyid_tested_files'>tested_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+			<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout stash </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='kw'>end</span> <span class='comment'>#each
+</span>		<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_switch_branch'>switch_branch</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Why am I here?</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_message'>message</span>
+			<span class='id identifier rubyid_switch_branch'>switch_branch</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_tested_files'>tested_files</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>	
+	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cola</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+	<span class='id identifier rubyid_push_branch'>push_branch</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="standardize_position-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>standardize_position</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>git_command</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_standardize_position'>standardize_position</span>
+	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rebase --abort</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>merge --abort</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stash save</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout master</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="test-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>test</strong>(executable = related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>downgrade_commit</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 110</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="test_and_commit-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>test_and_commit</strong>(executable, tested_files) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>commit_to_branch</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151
+152
+153</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 149</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_test_and_commit'>test_and_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
+	
+	<span class='id identifier rubyid_commit_to_branch'>commit_to_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="upgrade-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>upgrade</strong>(executable = related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>test</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+113
+114
+115</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 113</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_upgrade'>upgrade</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_upgrade_commit'>upgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="upgrade_commit-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>upgrade_commit</strong>(target_branch, executable) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>safely_visit_branch</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 101</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_upgrade_commit'>upgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_target_index'>target_index</span><span class='op'>=</span><span class='const'>WorkFlow</span><span class='op'>::</span><span class='const'>Branch_enhancement</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='rparen'>)</span>
+	<span class='const'>WorkFlow</span><span class='op'>::</span><span class='const'>Branch_enhancement</span><span class='period'>.</span><span class='id identifier rubyid_each_index'>each_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+		<span class='id identifier rubyid_commit_to_branch'>commit_to_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_i'>i</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_target_index'>target_index</span>
+	<span class='kw'>end</span> <span class='comment'>#each
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Fri Oct 18 17:07:28 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,2469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Common
+  
+    &mdash; Documentation by YARD 0.8.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (C)</a> &raquo;
+    
+    
+    <span class="title">Common</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Common
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="ColumnGroup.html" title="ColumnGroup (module)">ColumnGroup</a></span>, <span class='object_link'><a href="GenericGrep.html" title="GenericGrep (module)">GenericGrep</a></span>, <span class='object_link'><a href="GenericTableHtml.html" title="GenericTableHtml (module)">GenericTableHtml</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/no_db.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Methods in common bettween ActiveRecord::Base and NoDB</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Common/ClassMethods.html" title="Common::ClassMethods (module)">ClassMethods</a></span>
+    
+  
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#db2yaml-class_method" title="db2yaml (class method)">+ (Object) <strong>db2yaml</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>file open def.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#acquire-instance_method" title="#acquire (instance method)">- (Object) <strong>acquire</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>method monitor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#adaptiveAcquisition-instance_method" title="#adaptiveAcquisition (instance method)">- (Object) <strong>adaptiveAcquisition</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#addColumn-instance_method" title="#addColumn (instance method)">- (Object) <strong>addColumn</strong>(name, type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#addPrefix-instance_method" title="#addPrefix (instance method)">- (Object) <strong>addPrefix</strong>(variableHash, prefix) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#association_state-instance_method" title="#association_state (instance method)">- (Object) <strong>association_state</strong>(association_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Display attribute or method value from association even if association is
+nil.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#classDefiniton-instance_method" title="#classDefiniton (instance method)">- (Object) <strong>classDefiniton</strong>(model_class_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#classReference-instance_method" title="#classReference (instance method)">- (Object) <strong>classReference</strong>(model_class_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#column_Definitions-instance_method" title="#column_Definitions (instance method)">- (Object) <strong>column_Definitions</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#display-instance_method" title="#display (instance method)">- (Object) <strong>display</strong>(exp) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#display_full_time-instance_method" title="#display_full_time (instance method)">- (Object) <strong>display_full_time</strong>(time) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#eval_constant-instance_method" title="#eval_constant (instance method)">- (Object) <strong>eval_constant</strong>(constant_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#exclude-instance_method" title="#exclude (instance method)">- (Object) <strong>exclude</strong>(variableHash, exclusionList = []) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_or_initialize-instance_method" title="#find_or_initialize (instance method)">- (Object) <strong>find_or_initialize</strong>(findCriteria) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initFail-instance_method" title="#initFail (instance method)">- (Object) <strong>initFail</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_ActiveRecord_table%3F-instance_method" title="#is_ActiveRecord_table? (instance method)">- (Boolean) <strong>is_ActiveRecord_table?</strong>(model_class_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_table%3F-instance_method" title="#is_table? (instance method)">- (Boolean) <strong>is_table?</strong>(table_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#log-instance_method" title="#log (instance method)">- (Object) <strong>log</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#Match_and_strip-instance_method" title="#Match_and_strip (instance method)">- (Object) <strong>Match_and_strip</strong>(regexp = /=$/) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#monitor-instance_method" title="#monitor (instance method)">- (Object) <strong>monitor</strong>(keys) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>method log.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pg_table_exists%3F-instance_method" title="#pg_table_exists? (instance method)">- (Boolean) <strong>pg_table_exists?</strong>(tableName = self.to_s.downcase) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process-instance_method" title="#process (instance method)">- (Object) <strong>process</strong>(acquisitionData) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#Require_Table-instance_method" title="#Require_Table (instance method)">- (Object) <strong>Require_Table</strong>(tableName = self.to_s) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#requireColumn-instance_method" title="#requireColumn (instance method)">- (Object) <strong>requireColumn</strong>(name, type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rubyClassName-instance_method" title="#rubyClassName (instance method)">- (Object) <strong>rubyClassName</strong>(model_class_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scaffold-instance_method" title="#scaffold (instance method)">- (Object) <strong>scaffold</strong>(columnDefs) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#singularTableName-instance_method" title="#singularTableName (instance method)">- (Object) <strong>singularTableName</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#table2yaml-instance_method" title="#table2yaml (instance method)">- (Object) <strong>table2yaml</strong>(table_name = self.class.name.tableize) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>def.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#updateMaxTypeNum-instance_method" title="#updateMaxTypeNum (instance method)">- (Object) <strong>updateMaxTypeNum</strong>(maxTypeNums) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#updates-instance_method" title="#updates (instance method)">- (Object) <strong>updates</strong>(variableHashes) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="GenericTableHtml.html" title="GenericTableHtml (module)">GenericTableHtml</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="GenericTableHtml.html#column_html-instance_method" title="GenericTableHtml#column_html (method)">#column_html</a></span>, <span class='object_link'><a href="GenericTableHtml.html#rails_route-instance_method" title="GenericTableHtml#rails_route (method)">#rails_route</a></span>, <span class='object_link'><a href="GenericTableHtml.html#row_html-instance_method" title="GenericTableHtml#row_html (method)">#row_html</a></span></p>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="db2yaml-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>db2yaml</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>file open def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+325
+326
+327
+328
+329
+330</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 325</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_db2yaml'>db2yaml</span>
+	<span class='id identifier rubyid_skip_tables'>skip_tables</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>schema_info</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tedprimaries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>weathers</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='lparen'>(</span>	<span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_connection'>connection</span><span class='period'>.</span><span class='id identifier rubyid_tables'>tables</span> <span class='op'>-</span> <span class='id identifier rubyid_skip_tables'>skip_tables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_table_name'>table_name</span><span class='op'>|</span>
+		<span class='id identifier rubyid_table2yaml'>table2yaml</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#each
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="acquire-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>acquire</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>method monitor</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 130</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_acquire'>acquire</span>
+	<span class='ivar'>@acqClasses</span><span class='op'>=</span><span class='const'>Generic_Acquisitions</span><span class='period'>.</span><span class='id identifier rubyid_parse_classes'>parse_classes</span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span><span class='rparen'>)</span>
+	<span class='ivar'>@acqClasses</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ac'>ac</span><span class='op'>|</span>
+		<span class='ivar'>@acquisitionData</span><span class='op'>=</span><span class='id identifier rubyid_acquire'>acquire</span>
+	<span class='kw'>end</span> <span class='comment'>#map
+</span>	<span class='ivar'>@acquisitionData</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ad'>ad</span><span class='op'>|</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_acquisitionUpdated?'>acquisitionUpdated?</span><span class='lparen'>(</span><span class='id identifier rubyid_ad'>ad</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_row'>row</span><span class='op'>=</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
+			<span class='id identifier rubyid_row'>row</span><span class='op'>=</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_ad'>ad</span><span class='rparen'>)</span>
+			<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_printLog'>printLog</span>
+		<span class='kw'>else</span>
+			<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_ad'>ad</span>
+		<span class='kw'>end</span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="adaptiveAcquisition-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>adaptiveAcquisition</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 174</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_adaptiveAcquisition'>adaptiveAcquisition</span>
+	<span class='id identifier rubyid_notModifieds'>notModifieds</span><span class='op'>=</span><span class='int'>0</span>
+	<span class='id identifier rubyid_done'>done</span><span class='op'>=</span><span class='kw'>false</span>
+	<span class='kw'>begin</span>
+		<span class='ivar'>@acquisitionData</span><span class='op'>=</span><span class='id identifier rubyid_acquire'>acquire</span> 
+		<span class='kw'>if</span> <span class='id identifier rubyid_acquisitionsUpdated?'>acquisitionsUpdated?</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_done'>done</span><span class='op'>=</span><span class='kw'>true</span>
+		<span class='kw'>else</span>
+			<span class='id identifier rubyid_notModifieds'>notModifieds</span><span class='op'>=</span><span class='id identifier rubyid_notModifieds'>notModifieds</span><span class='op'>+</span><span class='int'>1</span>
+			<span class='kw'>if</span> <span class='id identifier rubyid_notModifieds'>notModifieds</span><span class='period'>.</span><span class='id identifier rubyid_modulo'>modulo</span><span class='lparen'>(</span><span class='int'>10</span><span class='rparen'>)</span><span class='op'>==</span><span class='int'>0</span> <span class='kw'>then</span>
+<span class='comment'>#				Global::log.info(&quot;notModifieds=#{notModifieds}&quot;)
+</span><span class='comment'>#				Global::log.info(&quot;@acquisitionData=#{@acquisitionData}&quot;)
+</span>			<span class='kw'>else</span>
+<span class='comment'>#				Global::log.info(&quot;not updated&quot;)	
+</span>			<span class='kw'>end</span>
+		<span class='kw'>end</span>	
+		<span class='comment'>#sleep self[:interval]
+</span>		<span class='id identifier rubyid_wait'>wait</span>
+	<span class='kw'>end</span> <span class='kw'>until</span> <span class='id identifier rubyid_done'>done</span>
+<span class='comment'>#	Global::log.info(&quot;notModifieds=#{notModifieds}&quot;)
+</span>	<span class='kw'>return</span> <span class='ivar'>@acquisitionData</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="addColumn-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>addColumn</strong>(name, type) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+242
+243
+244
+245
+246</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 242</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_addColumn'>addColumn</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sql'>sql</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ALTER TABLE  </span><span class='embexpr_beg'>#{</span><span class='ivar'>@table_name</span><span class='rbrace'>}</span><span class='tstring_content'> ADD COLUMN </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='rbrace'>}</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_errorMessage'>errorMessage</span><span class='op'>=</span><span class='const'>DB</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_sql'>sql</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_errorMessage'>errorMessage</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="addPrefix-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>addPrefix</strong>(variableHash, prefix) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+265
+266
+267
+268
+269
+270
+271</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 265</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_addPrefix'>addPrefix</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHash'>variableHash</span><span class='comma'>,</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+	<span class='id identifier rubyid_variableHash'>variableHash</span><span class='period'>.</span><span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='op'>=</span><span class='id identifier rubyid_value'>value</span>
+	<span class='kw'>end</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="association_state-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>association_state</strong>(association_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Display attribute or method value from association even if association is
+nil</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 332</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_association_state'>association_state</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span>
+	<span class='kw'>case</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_association_arity'>association_arity</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span>
+	<span class='kw'>when</span> <span class='symbol'>:to_one</span>
+		<span class='id identifier rubyid_foreign_key_value'>foreign_key_value</span><span class='op'>=</span><span class='id identifier rubyid_foreign_key_value'>foreign_key_value</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_foreign_key_value'>foreign_key_value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span> <span class='comment'># foreign key uninitialized
+</span>			<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Foreign key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>_id defined as attribute but has nil value.</span><span class='tstring_end'>&quot;</span></span>
+		<span class='comment'>#~ elsif foreign_key_value.empty? then # foreign key uninitialized
+</span>			<span class='comment'>#~ return &quot;Foreign key #{association_name.to_s}_id defined as attribute but has empty value.&quot;
+</span>		<span class='kw'>else</span>
+			<span class='id identifier rubyid_ass'>ass</span><span class='op'>=</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span>
+			<span class='kw'>if</span> <span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+				<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Foreign key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>_id has value </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_foreign_key_value'>foreign_key_value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> but the association returns nil.</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>else</span>
+				<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Foreign key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>_id has value </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_foreign_key_value'>foreign_key_value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>,</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> and returns type </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>end</span>
+		<span class='kw'>end</span>
+	<span class='kw'>when</span> <span class='symbol'>:to_many</span>
+		<span class='id identifier rubyid_ass'>ass</span><span class='op'>=</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_associations_foreign_key_name'>associations_foreign_key_name</span><span class='op'>=</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='period'>.</span><span class='id identifier rubyid_singularize'>singularize</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_id</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Association </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rbrace'>}</span><span class='tstring_content'>'s foreign key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_associations_foreign_key_name'>associations_foreign_key_name</span><span class='rbrace'>}</span><span class='tstring_content'> has value </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ass'>ass</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_id</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> but the association returns nil.</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Association </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rbrace'>}</span><span class='tstring_content'> with foreign key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_associations_foreign_key_name'>associations_foreign_key_name</span><span class='rbrace'>}</span><span class='tstring_content'> is empty; </span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>case</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_association_class'>association_class</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_association_macro_type'>association_macro_type</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='period'>.</span><span class='id identifier rubyid_singularize'>singularize</span><span class='rparen'>)</span>
+			<span class='kw'>when</span> <span class='symbol'>:has_many</span>
+				<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>but has many.</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>when</span> <span class='symbol'>:belongs_to</span>
+				<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>but belongs_to.</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>when</span> <span class='symbol'>:neither_has_many_nor_belongs_to</span>
+				<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>because neither_has_many_nor_belongs_to.</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>else</span>
+				<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New return value from </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>.association_macro_type(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rbrace'>}</span><span class='tstring_content'>)=</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_association_macro_type'>association_macro_type</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+			<span class='kw'>end</span> <span class='comment'>#case
+</span>		<span class='kw'>else</span>
+			<span class='id identifier rubyid_associations_foreign_key_values'>associations_foreign_key_values</span><span class='op'>=</span><span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_associations_foreign_key_name'>associations_foreign_key_name</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>,</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+			<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Association </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rbrace'>}</span><span class='tstring_content'>'s foreign key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_associations_foreign_key_name'>associations_foreign_key_name</span><span class='rbrace'>}</span><span class='tstring_content'> has value </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_associations_foreign_key_values'>associations_foreign_key_values</span><span class='rbrace'>}</span><span class='tstring_content'>,</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> and returns type </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ass'>ass</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>end</span>
+		
+	<span class='kw'>when</span> <span class='symbol'>:not_generic_table</span>
+		<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'> does not recognize </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rbrace'>}</span><span class='tstring_content'> as a generic table.</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>when</span><span class='symbol'>:not_an_association</span>
+		<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'> does not recognize </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rbrace'>}</span><span class='tstring_content'> as association.</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New return value from </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>.association_arity(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rbrace'>}</span><span class='tstring_content'>)=</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_association_arity'>association_arity</span><span class='lparen'>(</span><span class='id identifier rubyid_association_name'>association_name</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="classDefiniton-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>classDefiniton</strong>(model_class_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+290
+291
+292</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 290</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_classDefiniton'>classDefiniton</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>class </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rubyClassName'>rubyClassName</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>  &lt; ActiveRecord::Base\ninclude Generic_Table\nend</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="classReference-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>classReference</strong>(model_class_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+293
+294
+295
+296
+297</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 293</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_classReference'>classReference</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_rubyClassName'>rubyClassName</span><span class='op'>=</span><span class='id identifier rubyid_rubyClassName'>rubyClassName</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_model_class_eval'>model_class_eval</span><span class='op'>=</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_classDefiniton'>classDefiniton</span><span class='lparen'>(</span><span class='id identifier rubyid_rubyClassName'>rubyClassName</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rubyClassName'>rubyClassName</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_model_class_eval'>model_class_eval</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="column_Definitions-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>column_Definitions</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 153</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_column_Definitions'>column_Definitions</span>
+	<span class='id identifier rubyid_adaptiveAcquisition'>adaptiveAcquisition</span>
+	<span class='id identifier rubyid_names'>names</span><span class='op'>=</span><span class='id identifier rubyid_getNames'>getNames</span>
+<span class='comment'>#	Global::log.debug(&quot;names=#{names}&quot;)
+</span>	<span class='id identifier rubyid_typeNums'>typeNums</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='comment'># make it array, so array functons can be used
+</span>        <span class='id identifier rubyid_numSamples'>numSamples</span><span class='op'>=</span><span class='int'>0</span>
+        <span class='kw'>begin</span>
+        	<span class='id identifier rubyid_typeNums'>typeNums</span><span class='op'>=</span><span class='id identifier rubyid_updateMaxTypeNum'>updateMaxTypeNum</span><span class='lparen'>(</span><span class='id identifier rubyid_typeNums'>typeNums</span><span class='rparen'>)</span>
+        	<span class='id identifier rubyid_numSamples'>numSamples</span> <span class='op'>=</span> <span class='id identifier rubyid_numSamples'>numSamples</span><span class='op'>+</span><span class='int'>1</span>
+        <span class='kw'>end</span> <span class='kw'>until</span> <span class='id identifier rubyid_streamEnd'>streamEnd</span> <span class='kw'>or</span> <span class='id identifier rubyid_numSamples'>numSamples</span><span class='op'>&gt;</span><span class='int'>10</span>
+	<span class='ivar'>@sqlTypes</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_each_index'>each_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span> 
+		<span class='ivar'>@sqlTypes</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='const'>Import_Column</span><span class='period'>.</span><span class='id identifier rubyid_row2ImportType'>row2ImportType</span><span class='lparen'>(</span><span class='id identifier rubyid_typeNums'>typeNums</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='comment'>#		Global::log.info(&quot;#{names[i]} #{@sqlTypes[i]} \&quot;#{@sqlValues[i]}\&quot; #{typeNums[i]}&quot;)
+</span>		<span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_names'>names</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='ivar'>@sqlTypes</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='comment'>#		Global::log.info(&quot;ret=#{ret}&quot;)
+</span>	<span class='kw'>end</span>
+<span class='comment'>#	Global::log.info(&quot;ret=#{ret}&quot;)
+</span>	<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="display-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>display</strong>(exp) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+209
+210
+211
+212
+213</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 209</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_display'>display</span><span class='lparen'>(</span><span class='id identifier rubyid_exp'>exp</span><span class='rparen'>)</span>
+ <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_exp'>exp</span><span class='rbrace'>}</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span>
+ <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_exp'>exp</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+ <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_exp'>exp</span><span class='rbrace'>}</span><span class='tstring_content'>=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_exp'>exp</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="display_full_time-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>display_full_time</strong>(time) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+406
+407
+408</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 406</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_display_full_time'>display_full_time</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_rfc2822'>rfc2822</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="eval_constant-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>eval_constant</strong>(constant_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+383
+384
+385
+386
+387</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 383</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_eval_constant'>eval_constant</span><span class='lparen'>(</span><span class='id identifier rubyid_constant_name'>constant_name</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_constant_name'>constant_name</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span>
+<span class='kw'>rescue</span> <span class='const'>NameError</span>
+	<span class='kw'>return</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="exclude-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>exclude</strong>(variableHash, exclusionList = []) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+272
+273
+274
+275
+276
+277
+278
+279</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 272</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHash'>variableHash</span><span class='comma'>,</span><span class='id identifier rubyid_exclusionList'>exclusionList</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+	<span class='id identifier rubyid_variableHash'>variableHash</span><span class='period'>.</span><span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+		<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_exclusionList'>exclusionList</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+			<span class='id identifier rubyid_ret'>ret</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='op'>=</span><span class='id identifier rubyid_value'>value</span>
+		<span class='kw'>end</span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_or_initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>find_or_initialize</strong>(findCriteria) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 197</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_or_initialize'>find_or_initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_findCriteria'>findCriteria</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_records'>records</span><span class='op'>=</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:all</span><span class='comma'>,</span><span class='id identifier rubyid_findCriteria'>findCriteria</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_records'>records</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_findCriteria'>findCriteria</span><span class='rparen'>)</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_records'>records</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>==</span><span class='int'>1</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_records'>records</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+	<span class='kw'>else</span>
+		<span class='cvar'>@@log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>criteria not unque; records=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_records'>records</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_raise'>raise</span> 
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="initFail-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>initFail</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+280
+281
+282
+283
+284</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 280</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initFail'>initFail</span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Table does not exist. Enter following command in rails to create:</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_scaffold'>scaffold</span>
+	<span class='id identifier rubyid_exit'>exit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_ActiveRecord_table?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>is_ActiveRecord_table?</strong>(model_class_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+398
+399
+400
+401
+402
+403
+404
+405</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 398</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_is_ActiveRecord_table?'>is_ActiveRecord_table?</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_is_table?'>is_table?</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_model_class'>model_class</span><span class='op'>=</span><span class='id identifier rubyid_eval_constant'>eval_constant</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_model_class'>model_class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='rparen'>)</span>
+	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='kw'>false</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_table?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>is_table?</strong>(table_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 388</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_is_table?'>is_table?</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>table_name must include only [A-Za-z0-9_].</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[A-Za-z0-9_]+$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_table_exists?'>table_exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='kw'>true</span>
+	<span class='comment'>#~ elsif table_exists?(table_name.tableize) then
+</span>		<span class='comment'>#~ return true
+</span>	<span class='kw'>else</span>
+		<span class='kw'>return</span> <span class='kw'>false</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="log-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>log</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+107
+108
+109
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 107</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_log'>log</span>
+<span class='kw'>begin</span>
+	<span class='id identifier rubyid_acquire'>acquire</span>
+	<span class='id identifier rubyid_wait'>wait</span>
+<span class='kw'>end</span> <span class='kw'>until</span> <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="Match_and_strip-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>Match_and_strip</strong>(regexp = /=$/) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+378
+379
+380
+381
+382</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 378</span>
+
+<span class='kw'>def</span> <span class='const'>Match_and_strip</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp'>regexp</span><span class='op'>=</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>=$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_matching_methods'>matching_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp'>regexp</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span>
+		<span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp'>regexp</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="monitor-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>monitor</strong>(keys) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>method log</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 113</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_monitor'>monitor</span><span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span> <span class='comment'># update continously
+</span><span class='comment'>#	Global::log.info(&quot;in monitor self.name=#{self.name}&quot;)
+</span>	<span class='id identifier rubyid_whoAmI'>whoAmI</span>
+	<span class='comment'>#generic_acquisitions
+</span>	<span class='kw'>begin</span>
+		<span class='id identifier rubyid_acquisitionData'>acquisitionData</span><span class='op'>=</span><span class='id identifier rubyid_acquire'>acquire</span>
+		<span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_acquisitionsUpdated?'>acquisitionsUpdated?</span><span class='lparen'>(</span><span class='id identifier rubyid_acquisitionData'>acquisitionData</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_row'>row</span><span class='op'>=</span><span class='id identifier rubyid_find_or_initialize'>find_or_initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
+			<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_acquisitionData'>acquisitionData</span><span class='rparen'>)</span>
+			<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_printLog'>printLog</span>
+		<span class='kw'>else</span>
+<span class='comment'>#			Global::log.info(acquisitionData)
+</span>		<span class='kw'>end</span>
+	
+		<span class='id identifier rubyid_wait'>wait</span>
+	<span class='kw'>end</span> <span class='kw'>until</span> <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pg_table_exists?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>pg_table_exists?</strong>(tableName = self.to_s.downcase) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+257
+258
+259
+260
+261
+262
+263
+264</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 257</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pg_table_exists?'>pg_table_exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_tableName'>tableName</span><span class='op'>=</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sql'>sql</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>select table_name from information_schema.tables where table_schema='public' AND table_name='</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tableName'>tableName</span><span class='rbrace'>}</span><span class='tstring_content'>';</span><span class='tstring_end'>&quot;</span></span>
+<span class='comment'>#	Global::log.debug(&quot;sql=#{sql}&quot;)
+</span>	<span class='id identifier rubyid_res'>res</span>  <span class='op'>=</span> <span class='id identifier rubyid_find_by_sql'>find_by_sql</span><span class='lparen'>(</span><span class='id identifier rubyid_sql'>sql</span><span class='rparen'>)</span>
+<span class='comment'>#	Global::log.info(&quot;res.size=#{res.size}&quot;)
+</span>	<span class='comment'>#puts &quot;res=#{res}&quot;
+</span>	<span class='kw'>return</span> <span class='id identifier rubyid_res'>res</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>&gt;</span><span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="process-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>process</strong>(acquisitionData) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_acquisitionData'>acquisitionData</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_acqClasses'>acqClasses</span><span class='op'>=</span><span class='const'>Generic_Acquisitions</span><span class='period'>.</span><span class='id identifier rubyid_parse_classes'>parse_classes</span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_acqClasses'>acqClasses</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ac'>ac</span><span class='op'>|</span>
+		<span class='id identifier rubyid_variableHashes'>variableHashes</span><span class='op'>=</span><span class='id identifier rubyid_ac'>ac</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_acquisitionData'>acquisitionData</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#each
+</span>	<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_updates'>updates</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHashes'>variableHashes</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="Require_Table-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>Require_Table</strong>(tableName = self.to_s) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 214</span>
+
+<span class='kw'>def</span> <span class='const'>Require_Table</span><span class='lparen'>(</span><span class='id identifier rubyid_tableName'>tableName</span><span class='op'>=</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+<span class='comment'>#	Global::log.info(&quot;in Require_Table self.class=#{self.class}&quot;)
+</span><span class='comment'>#	Global::log.info(&quot;in Require_Table self.to_s=#{self.to_s}&quot;)
+</span><span class='comment'>#	Global::log.info(&quot;in Require_Table tableName=#{tableName}&quot;)
+</span>	<span class='kw'>if</span> <span class='id identifier rubyid_pg_table_exists?'>pg_table_exists?</span> <span class='kw'>then</span>
+		<span class='comment'>#return new
+</span>	<span class='kw'>else</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Table </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tableName'>tableName</span><span class='rbrace'>}</span><span class='tstring_content'> does not exist. Enter following command in rails to create:</span><span class='tstring_end'>&quot;</span></span>
+		<span class='comment'>#puts Generic_Columns.scaffold(Generic_Columns.column_Definitions)
+</span>		<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_scaffold'>scaffold</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_column_Definitions'>column_Definitions</span><span class='rparen'>)</span>
+<span class='comment'>#		puts scaffold(self.column_Definitions)
+</span>	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="requireColumn-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>requireColumn</strong>(name, type) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 247</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_requireColumn'>requireColumn</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+<span class='comment'>#	Global::log.info(&quot;self.class=#{self.class}&quot;)
+</span><span class='comment'>#	Global::log.info(&quot;name=#{name}&quot;)
+</span>	<span class='kw'>if</span> <span class='id identifier rubyid_has_attribute?'>has_attribute?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Column </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'> to be created with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_addColumn'>addColumn</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rubyClassName-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>rubyClassName</strong>(model_class_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+285
+286
+287
+288
+289</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 285</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_rubyClassName'>rubyClassName</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='op'>=</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='op'>+</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='comment'># ruby class names are constants and must start with a capital letter.
+</span>	<span class='comment'># remainng case is unchanged to allow camel casing to separate words for model names.
+</span>	<span class='kw'>return</span> <span class='id identifier rubyid_model_class_name'>model_class_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="scaffold-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>scaffold</strong>(columnDefs) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 227</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scaffold'>scaffold</span> <span class='lparen'>(</span><span class='id identifier rubyid_columnDefs'>columnDefs</span><span class='rparen'>)</span>
+<span class='comment'>#	Global::log.info(&quot;singularTableName=#{singularTableName}&quot;)
+</span><span class='comment'>#	Global::log.info(&quot;in scaffold singularTableName=#{singularTableName}&quot;)
+</span>	<span class='id identifier rubyid_rails'>rails</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>script/generate scaffold </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_singularTableName'>singularTableName</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_columnDefs'>columnDefs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>  <span class='op'>|</span><span class='id identifier rubyid_col'>col</span><span class='op'>|</span>
+		<span class='id identifier rubyid_rails'>rails</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rails'>rails</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_col'>col</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_col'>col</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+		<span class='comment'>#puts rails
+</span>	<span class='kw'>end</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_rails'>rails</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="singularTableName-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>singularTableName</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+237
+238
+239
+240
+241</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 237</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_singularTableName'>singularTableName</span>
+<span class='comment'>#	Global::log.info(&quot;in singularTableName self.class=#{self.class}&quot;)
+</span><span class='comment'>#	Global::log.info(&quot;in singularTableName self.to_s=#{self.to_s}&quot;)
+</span>	<span class='kw'>return</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_chop'>chop</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="table2yaml-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>table2yaml</strong>(table_name = self.class.name.tableize) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>def</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 298</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_table2yaml'>table2yaml</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='op'>=</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='int'>0</span> <span class='comment'>#&quot;000&quot;
+</span>	<span class='id identifier rubyid_limit'>limit</span><span class='op'>=</span><span class='int'>100</span> <span class='comment'># too long slow all tests, too short give poor test coverage
+</span>	<span class='id identifier rubyid_sql'>sql</span>  <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM %s LIMIT </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_limit'>limit</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    	<span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/fixtures/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_table_name'>table_name</span><span class='rbrace'>}</span><span class='tstring_content'>.yml.gen</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>w</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+      		<span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_limit'>limit</span><span class='lparen'>(</span><span class='id identifier rubyid_limit'>limit</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='comment'>#		puts &quot;data.inspect=#{data.inspect}&quot;
+</span>		<span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'># Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html</span><span class='tstring_end'>&quot;</span></span>
+		 <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_model_instance'>model_instance</span><span class='op'>|</span>
+			<span class='id identifier rubyid_i'>i</span><span class='op'>=</span><span class='id identifier rubyid_i'>i</span><span class='op'>+</span><span class='int'>1</span>
+			<span class='id identifier rubyid_fixture_attributes'>fixture_attributes</span><span class='op'>=</span><span class='id identifier rubyid_model_instance'>model_instance</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
+			<span class='id identifier rubyid_fixture_attributes'>fixture_attributes</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>created_at</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>  <span class='comment'># automatically regenerated
+</span>			<span class='id identifier rubyid_fixture_attributes'>fixture_attributes</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>updated_at</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>  <span class='comment'># automatically regenerated
+</span>			<span class='kw'>if</span> <span class='id identifier rubyid_sequential_id?'>sequential_id?</span> <span class='kw'>then</span>
+				<span class='id identifier rubyid_primaryKeyValue'>primaryKeyValue</span><span class='op'>=</span><span class='id identifier rubyid_i'>i</span>
+				<span class='id identifier rubyid_fixture_attributes'>fixture_attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='op'>=</span><span class='id identifier rubyid_i'>i</span>  <span class='comment'># automatically regenerated
+</span>			<span class='kw'>else</span>
+				<span class='id identifier rubyid_primaryKeyValue'>primaryKeyValue</span><span class='op'>=</span><span class='id identifier rubyid_model_instance'>model_instance</span><span class='period'>.</span><span class='id identifier rubyid_logical_primary_key_value'>logical_primary_key_value</span>
+				<span class='id identifier rubyid_fixture_attributes'>fixture_attributes</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>  <span class='comment'># automatically regenerated
+</span>			<span class='kw'>end</span>
+<span class='comment'>#			puts &quot;fixture_attributes.inspect=#{fixture_attributes.inspect}&quot;
+</span><span class='comment'>#			puts &quot;fixture_attributes.to_yaml.inspect=#{fixture_attributes.to_yaml.inspect}&quot;
+</span>			<span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_primaryKeyValue'>primaryKeyValue</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_fixture_attributes'>fixture_attributes</span>
+			<span class='id identifier rubyid_hash'>hash</span>
+		<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_yaml'>to_yaml</span>
+	<span class='kw'>end</span><span class='comment'># file open
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="updateMaxTypeNum-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>updateMaxTypeNum</strong>(maxTypeNums) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145
+146
+147
+148
+149
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 145</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_updateMaxTypeNum'>updateMaxTypeNum</span><span class='lparen'>(</span><span class='id identifier rubyid_maxTypeNums'>maxTypeNums</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_adaptiveAcquisition'>adaptiveAcquisition</span>
+	<span class='id identifier rubyid_values'>values</span><span class='op'>=</span> <span class='id identifier rubyid_getValues'>getValues</span>
+	<span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_index'>each_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+		<span class='id identifier rubyid_maxTypeNums'>maxTypeNums</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='op'>=</span><span class='lbracket'>[</span><span class='const'>Import_Column</span><span class='period'>.</span><span class='id identifier rubyid_firstMatch'>firstMatch</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span><span class='id identifier rubyid_maxTypeNums'>maxTypeNums</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span><span class='comma'>,</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+	<span class='kw'>end</span>
+	<span class='kw'>return</span>   <span class='id identifier rubyid_maxTypeNums'>maxTypeNums</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="updates-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>updates</strong>(variableHashes) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 70</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_updates'>updates</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHashes'>variableHashes</span><span class='rparen'>)</span>
+<span class='comment'>#	Global::log.info(&quot;variableHashes.inspect=#{variableHashes.inspect}&quot;)
+</span>	<span class='id identifier rubyid_variableHash'>variableHash</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='comment'># merge into single hash
+</span>	<span class='id identifier rubyid_variableHashes'>variableHashes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_vhs'>vhs</span><span class='op'>|</span>
+		<span class='id identifier rubyid_vhs'>vhs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_vh'>vh</span><span class='op'>|</span>
+			<span class='id identifier rubyid_variableHash'>variableHash</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_vh'>vh</span><span class='rparen'>)</span>
+		<span class='kw'>end</span> <span class='comment'>#each
+</span>	<span class='kw'>end</span> <span class='comment'>#each
+</span><span class='comment'>#	Global::log.info(&quot;variableHash.inspect=#{variableHash.inspect}&quot;)
+</span>	<span class='kw'>if</span> <span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHash'>variableHash</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='cvar'>@@log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>record already exists</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_row'>row</span><span class='op'>=</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='comment'>#		Global::log.info( &quot;variableHash['khhr_observation_time_rfc822']=#{variableHash['khhr_observation_time_rfc822']}&quot;)
+</span>		<span class='id identifier rubyid_reportNull'>reportNull</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHash'>variableHash</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHash'>variableHash</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_now'>now</span><span class='op'>=</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_has_attribute?'>has_attribute?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>created_at</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>created_at</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>		<span class='kw'>if</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_has_attribute?'>has_attribute?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>updated_at</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>updated_at</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>		<span class='comment'>#update_attribute(&quot;id&quot;,&quot;NULL&quot;) 
+</span>	<span class='kw'>end</span> <span class='comment'># if else
+</span>	
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Fri Oct 18 17:07:15 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
