@@ -52,7 +52,7 @@ def test_initialize
 	assert_equal('CA_540_2012_template', CA540_template.taxpayer_basename)
 end #initialize
 def test_build
-#	US1040_example.build.assert_build
+	US1040_example.build.assert_build
 	US1040_user.build.assert_build
 	CA540_user.build.assert_build
 	US1040_template.build.assert_build
