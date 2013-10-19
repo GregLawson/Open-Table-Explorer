@@ -18,14 +18,11 @@ module Constants
 Data_source_directory='test/data_sources/taxes'
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller'
-Open_tax_solver_directory=Dir["../OpenTaxSolver2012_*"][0]
-Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
-Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_example.txt"
-Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_example_sysout.txt"
+#Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
+#Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_example.txt"
+#Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_example_sysout.txt"
 
-Open_tax_solver_binary="#{Open_tax_solver_directory}/bin/taxsolve_US_1040_2012"
-Command="#{Open_tax_solver_binary} #{Open_tax_solver_input} >#{Open_tax_solver_sysout}"
-OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
+#OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #Constants
 class TaxForm
 include Constants
@@ -33,53 +30,89 @@ include OpenTableExplorer
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-attr_reader :form, :jurisdiction, :tax_year, :form_filename, :open_tax_solver_directory, :open_tax_solver_data_directory, :ots_template_filename, :output_pdf
-def initialize(form, jurisdiction='US', tax_year=Finance::Constants::Default_tax_year)
+attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename, 
+:taxpayer_basename_with_year, :open_tax_solver_binary, :open_tax_solver_directory, 
+:open_tax_solver_to_filler_run, 
+:open_tax_solver_input, :open_tax_solver_data_directory, :open_tax_solver_output,
+:ots_template_filename, :ots_json, :ots_to_json_run,
+:output_pdf
+def initialize(taxpayer, form, jurisdiction=:US, tax_year=Finance::Constants::Default_tax_year)
+	@taxpayer=taxpayer.to_s
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
 	@tax_year=tax_year
-	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"][0]
+	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"].sort[-1]
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
-	@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}"
-	@open_tax_solver_output="#{open_tax_solver_data_directory}/#{@form_filename}_Lawson.txt"
-	@ots_template_filename="#{Open_tax_solver_data_directory}/#{@jurisdiction.to_s}_#{@form}_template.txt"
-	@output_pdf="#{Data_source_directory}/#{@form_filename}_otff.pdf"
+	@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
+	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
+	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
+	if File.exists?(@open_tax_solver_data_directory+'/'+@taxpayer_basename_with_year+'.txt') then
+		@taxpayer_basename=@taxpayer_basename_with_year
+	end #if
+	@open_tax_solver_binary="#{@open_tax_solver_directory}/bin/taxsolve_#{@form_filename}_#{@tax_year}"
+	if !File.exists?(@open_tax_solver_binary) then
+		@open_tax_solver_binary="#{Dir["../OpenTaxSolver#{@tax_year-1}_*"].sort[-1]}/bin/taxsolve_#{@form_filename}_#{@tax_year-1}"
+		warn("@open_tax_solver_binary=#{@open_tax_solver_binary}")
+	end #if
+	@open_tax_solver_input="#{open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
+	@open_tax_solver_output="#{open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
+	@open_tax_solver_sysout="#{open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
+	@output_pdf="#{@open_tax_solver_data_directory}/taxes/#{@taxpayer_basename}_otff.pdf"
 	
 end #initialize
+def build
+	run_open_tax_solver
+	run_ots_to_json
+	run_json_to_fdf
+	run_fdf_to_pdf
+	run_pdf_to_jpeg
+	self
+end #build
 def run_open_tax_solver
-	open_tax_solver_input="#{open_tax_solver_data_directory}/US_1040_Lawson.txt"
-	open_tax_solver_sysout="#{open_tax_solver_data_directory}/US_1040_Lawson_sysout.txt"
-	command="#{Open_tax_solver_binary} #{open_tax_solver_input} >#{open_tax_solver_sysout}"
-	ShellCommands.new(command).assert_post_conditions
+
+	command="#{@open_tax_solver_binary} #{@open_tax_solver_input} >#{@open_tax_solver_sysout}"
+	@open_tax_solver_run=ShellCommands.new(command)
+	self
 end #run_open_tax_solver
-def run_open_tax_solver_to_filler
-	command="nodejs #{@open_Tax_Filler_Directory}/script/json_ots.js #{@open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json"
-	ShellCommands.new(command).assert_post_conditions
-end #run_open_tax_solver_to_filler
-def run_pdf_to_jpeg
+def run_ots_to_json
+	@open_tax_form_filler_ots_js="#{Open_Tax_Filler_Directory}/script/json_ots.js"
+	@ots_json="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_OTS.json"
+	command="nodejs #{@open_tax_form_filler_ots_js} #{@open_tax_solver_output} > #{@ots_json}"
+	@ots_to_json_run=ShellCommands.new(command)
+	assert_pathname_exists(@ots_json)
+	self
+end #run_ots_to_json
+def run_json_to_fdf
 	form='Federal/f1040'
 	form_filename=form.sub('/','_')
-	year_dir='2012'
-	data="#{Data_source_directory}/US_1040_OTS.json"
-	assert(File.exists?(data))
-	fdf='/tmp/output.fdf'
-	output_pdf="#{Data_source_directory}/#{form_filename}_otff.pdf"
-	assert(File.exists?(data))
+	if @jurisdiction==:US then
+		@otff_form='Federal/f'+@form.to_s
+	else
+		@otff_form=@jurisdiction.to_s+'/f'+@form.to_s
+	end #if
+	@fdf='/tmp/output.fdf'
+	output_pdf="#{@open_tax_solver_data_directory}/#{@taxpayer_basename_with_year}_otff.pdf"
+	assert_pathname_exists(@ots_json)
 	pdf_input="#{Open_Tax_Filler_Directory}/"
-#	assert(File.exists?(data))
-	sysout=`nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{year_dir}/definition/#{form}.json #{Open_Tax_Filler_Directory}/#{year_dir}/transform/#{form}.json #{data} > #{fdf}`
-	assert_equal('', sysout, "nodejs sysout=#{sysout}")
-
-	assert(File.exists?(Data_source_directory), Data_source_directory+' does not exist')
-	sysout=`pdftk #{Open_Tax_Filler_Directory}/#{year_dir}/PDF/#{form}.pdf fill_form #{fdf} output #{output_pdf}`
-#	assert(File.exists?(Data_source_directory+'Federal_f1040_otff.pdf'), Dir[Data_source_directory+'*'].join(';'))
-#debug	sysout=`evince Data_source_directory+Federal_f1040_otff.pdf`
-#	assert_equal('', sysout, "evince sysout=#{sysout}")
+	assert_pathname_exists(@ots_json)
+	command="nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{@tax_year}/definition/#{@otff_form}.json #{Open_Tax_Filler_Directory}/#{@tax_year}/transform/#{@otff_form}.json #{@ots_json} > #{@fdf}"
+	@json_to_fdf_run=ShellCommands.new(command)
+	self
+end #run_json_to_fdf
+def run_fdf_to_pdf
+#	assert_pathname_exists(@open_tax_solver_data_directory, @open_tax_solver_data_directory+' does not exist')
+	@fdf_to_pdf_run=ShellCommands.new("pdftk #{Open_Tax_Filler_Directory}/#{@tax_year}/PDF/#{@otff_form}.pdf fill_form #{@fdf} output #{output_pdf}")
+#	assert_pathname_exists(@open_tax_solver_data_directory+'Federal_f1040_otff.pdf', Dir[@open_tax_solver_data_directory+'*'].join(';'))
+	@evince_run=ShellCommands.new("evince @open_tax_solver_data_directory+Federal_f1040_otff.pdf") if $VERBOSE
+	@evince_run.assert_post_conditions if $VERBOSE
+	self
+end #run_fdf_to_pdf
+def run_pdf_to_jpeg
 	
-	sysout=`pdftoppm -jpeg  #{output_pdf} #{form_filename}`
-#	assert_equal('', sysout, "pdftoppm sysout=#{sysout}")
-	sysout=`display  Federal_f1040-1.jpg`
-	assert_equal('', sysout, "display sysout=#{sysout}")
+	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{form_filename}")
+	@display_jpeg_run=ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
+	@display_jpeg_run.assert_post_conditions if $VERBOSE
+	self
 end #run_pdf_to_jpeg
 module Assertions
 include Test::Unit::Assertions
@@ -90,19 +123,72 @@ end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
+def assert_open_tax_solver
+	assert_pathname_exists(@open_tax_solver_input)
+#	@open_tax_solver_run.assert_post_conditions
+	peculiar_status=@open_tax_solver_run.process_status.exitstatus==1
+	message=IO.binread(@open_tax_solver_sysout)+@open_tax_solver_run.errors
+	@open_tax_solver_run.puts
+	puts "peculiar_status=#{peculiar_status}"
+	puts "message='#{message}'"
+	if peculiar_status then
+		warn(message)
+		warn('!@open_tax_solver_run.success?='+(!@open_tax_solver_run.success?).to_s)
+	else
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status')
+	end #if
+	assert_pathname_exists(@open_tax_solver_output)
+	assert_pathname_exists(@open_tax_solver_sysout)
+end #assert_open_tax_solver
+def assert_json_to_fdf
+	@json_to_fdf_run.assert_post_conditions
+end #assert_json_to_fdf
+def assert_fdf_to_pdf
+	@fdf_to_pdf_run.assert_post_conditions
+end #assert_json_to_fdf
+def assert_pdf_to_jpeg
+	@pdf_to_jpeg_run.assert_post_conditions
+end #assert_json_to_fdf
+def assert_build
+#	@open_tax_solver_run.assert_open_tax_solver
+#	@ots_to_json_run.assert_ots_to_json
+#	@json_to_fdf_run.assert_json_to_fdf
+#	@fdf_to_pdf_run.assert_fdf_to_pdf
+#	@pdf_to_jpeg_run.assert_pdf_to_jpeg
+	if !@open_tax_solver_run.success? then
+		assert_open_tax_solver
+	elsif !@ots_to_json_run.success? then
+		assert_ots_to_json
+	elsif !@json_to_fdf_run.success? then
+		assert_json_to_fdf
+	elsif !@fdf_to_pdf_run.success? then
+				@fdf_to_pdf_run.puts
+	else
+		assert_pdf_to_jpeg
+	end #if
+	self
+end #build
 def assert_pre_conditions
+	assert_pathname_exists(@open_tax_solver_input)
 end #assert_pre_conditions
 def assert_post_conditions
-	assert(File.exists?(@open_tax_solver_directory), caller_lines)
-	assert(File.exists?(@open_tax_solver_data_directory), caller_lines)
-	assert(File.exists?(@open_tax_solver_output), caller_lines)
-	assert(File.exists?(@ots_template_filename), caller_lines)
+	assert_pathname_exists(@open_tax_solver_directory, caller_lines)
+	assert_pathname_exists(@open_tax_solver_data_directory, caller_lines)
+	assert_pathname_exists(@open_tax_solver_output, caller_lines)
 end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
+Example_Taxpayer=ENV['USERNAME'].to_sym
+US1040_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US)
+CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA)
+US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US)
+CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA)
+US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US)
+US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US)
+CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :CA)
 end #Examples
 end #TaxForm
 end #Finance
