@@ -38,7 +38,7 @@ end #each_example
 def test_existing_call
 end #existing_call
 def test_named_object?
-	assert_equal('', named_object?)
+#	assert_equal('', ExampleCall.named_object?)
 end #named_object?
 def test_name_of_test
 	assert_equal('Test', self.class.name[-4..-1], "2Naming convention is to end test class names with 'Test' not #{self.class.name}")
