@@ -38,7 +38,9 @@ attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename,
 :output_pdf
 def initialize(taxpayer='example', form='1040',
 			jurisdiction=:US,
-			tax_year=Finance::Constants::Default_tax_year)
+			tax_year=Finance::Constants::Default_tax_year,
+			open_tax_solver_data_directory=nil
+ )
 	@taxpayer=taxpayer.to_s
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
