@@ -131,7 +131,6 @@ def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_open_tax_solver
-	assert_pathname_exists(@open_tax_solver_input)
 #	@open_tax_solver_run.assert_post_conditions
 	peculiar_status=@open_tax_solver_run.process_status.exitstatus==1
 	if File.exists?(@open_tax_solver_sysout) then
@@ -170,7 +169,7 @@ def assert_build
 	if !@open_tax_solver_run.success? then
 		assert_open_tax_solver
 	elsif !@ots_to_json_run.success? then
-		assert_ots_to_json
+		@json_to_fdf_run.assert_post_conditions
 	elsif !@json_to_fdf_run.success? then
 		assert_json_to_fdf
 	elsif !@fdf_to_pdf_run.success? then
