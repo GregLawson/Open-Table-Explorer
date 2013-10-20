@@ -21,7 +21,11 @@ end #execute
 def initialize(command_string)
 	@command_string=command_string
 	execute # do it first time, then execute
-	$stdout.puts inspect if $VERBOSE
+	case $VERBOSE
+	when nil then # -W0
+	when true then $stdout.puts trace # -W2
+	else $stdout.puts inspect(:echo_command) # -W1
+	end #case
 end #initialize
 def system_output(command_string)
 	ret=[] #make method scope not block scope so it can be returned
@@ -83,10 +87,14 @@ def inspect(echo_command=@errors!='' || !success?)
 end #inspect
 def puts
 	$stdout.puts inspect(:echo_command)
-	shorter_callers=caller.grep(/^[^\/]/)
-	$stdout.puts shorter_callers.join("\n") if $VERBOSE
 	self # return for comand chaining
 end #puts
+def trace
+	$stdout.puts inspect(:echo_command)
+	shorter_callers=caller.grep(/^[^\/]/)
+	$stdout.puts shorter_callers.join("\n")
+	self # return for comand chaining
+end #trace
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
