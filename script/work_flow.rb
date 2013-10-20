@@ -48,6 +48,15 @@ OptionParser.new do |opts|
   opts.on("-v", "--[no-]deserve", "Stage file to edited. ") do |t|
     commands+=[:deserve] if t
   end
+  opts.on("-a", "--[no-]all", "All files tested ") do |t|
+    commands+=[:minimal] if t
+  end
+  opts.on("-l", "--[no-]minimal", "edit with minimal comparison. ") do |t|
+    commands+=[:minimal] if t
+  end
+  opts.on("-r", "--[no-]related", "Related files") do |t|
+    commands+=[:related] if t
+  end
 end.parse!
 
 commands=[:test] if commands.empty?
@@ -63,22 +72,32 @@ when 0 then # scite testing defaults command and file
 else
 	argv=ARGV
 end #case
-argv.each do |f|
-	editTestGit=WorkFlow.new(f)
-	commands.each do |c|
+commands.each do |c|
+	case c.to_sym
+		when :all then WorkFlow.new($0).all
+	else argv.each do |f|
+		work_flow=WorkFlow.new(f)
 		case c.to_sym
-		when :execute then editTestGit.execute(f)
-		when :edit then editTestGit.edit
-		when :test then editTestGit.test(f)
-		when :upgrade then editTestGit.upgrade(f)
-		when :downgrade then editTestGit.downgrade(f)
-		when :best then editTestGit.best(f)
-		when :emacs then editTestGit.emacs(f)
-		when :passed then editTestGit.repository.stage_files(:passed, [f])
-		when :testing then editTestGit.repository.stage_files(:testing, [f])
-		when :edited then editTestGit.repository.stage_files(:edited, [f])
-		when :deserve then $stdout.puts  editTestGit.repository.deserving_branch?(f)
+		when :execute then work_flow.execute(f)
+		when :edit then work_flow.edit
+		when :test then work_flow.test(f)
+		when :upgrade then work_flow.upgrade(f)
+		when :downgrade then work_flow.downgrade(f)
+		when :best then work_flow.best(f)
+		when :emacs then work_flow.emacs(f)
+		when :passed then work_flow.repository.stage_files(:passed, [f])
+		when :testing then work_flow.repository.stage_files(:testing, [f])
+		when :edited then work_flow.repository.stage_files(:edited, [f])
+		when :deserve then 
+			$stdout.puts  work_flow.repository.deserving_branch?(f)
+			$stdout.puts  work_flow.repository.recent_test.inspect
+		when :minimal then work_flow.minimal_edit
+		when :related then
+			puts work_flow.related_files.inspect
+			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison?
+
 		end #case
-		editTestGit.repository.git_command('status  --short --branch')
+		$stdout.puts work_flow.repository.git_command('status').inspect
 	end #each
+	end #case
 end #each

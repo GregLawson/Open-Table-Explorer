@@ -1,0 +1,1 @@
+../../../script/passing.sh
