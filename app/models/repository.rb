@@ -83,11 +83,12 @@ end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
-def confirm_branch_switch(branch)
-	checkout_branch=git_command("checkout #{branch}")
-	if checkout_branch.errors!="Switched to branch '#{branch}'\n" then
-		checkout_branch.assert_post_conditions
+def confirm_branch_switch(target_branch)
+	checkout_branch=git_command("checkout #{target_branch.to_s}")
+	if checkout_branch.errors!="Switched to branch '#{target_branch.to_s}'\n" then
+		checkout_branch.puts unless checkout_branch.success?
 	end #if
+	self # for command chaining
 end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
@@ -108,7 +109,7 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 		confirm_branch_switch(push_branch)
 	else
-		ret=block.call(self)
+		ret=block.call(changes_branch)
 	end #if
 	if push then
 		git_command('stash apply').assert_post_conditions
@@ -247,9 +248,8 @@ include Constants
 module Examples
 include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
-Repo= Grit::Repo.new(Root_directory)
 SELF_code_Repo=Repository.new(Root_directory)
-Empty_Repo=Repository.new(Source+'test_recover/')
+Empty_Repo=Repository.new(Source+'test_repository/')
 end #Examples
 include Examples
 end #Repository

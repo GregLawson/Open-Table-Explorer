@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -65,13 +65,34 @@ def test_deserving_branch
 	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
 #	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
 end #deserving_branch
+def test_confirm_branch_switch
+	target_branch=:passed
+	Clean_Example.git_command('branch #{target_branch.to_s}').assert_post_conditions
+	assert_equal("* master\n  passed\n", Clean_Example.git_command('branch').output)
+	target_branch=:passed
+	checkout_branch=Clean_Example.git_command("checkout #{target_branch.to_s}")
+	if checkout_branch.errors!="Switched to branch '#{target_branch.to_s}'\n" then
+		checkout_branch.puts unless checkout_branch.success?
+	end #if
+	assert_equal(target_branch, Clean_Example.current_branch_name?, "checkout_branch=#{checkout_branch.inspect}")
+	Clean_Example.confirm_branch_switch(:master).assert_post_conditions
+#	assert_raises(Exception) {Clean_Example.confirm_branch_switch(:catfish)}
+	target_branch=:passed
+	Clean_Example.confirm_branch_switch(target_branch).assert_post_conditions
+	assert_equal(target_branch, Clean_Example.current_branch_name?)
+	target_branch=:master
+	Clean_Example.confirm_branch_switch(target_branch)
+	assert_equal(target_branch, Clean_Example.current_branch_name?)
+end #confirm_branch_switch
 def test_safely_visit_branch
 	push_branch=Clean_Example.current_branch_name?
+	assert_equal(:master, push_branch)
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){push_branch})
 	assert_equal(push_branch, Clean_Example.safely_visit_branch(push_branch){Clean_Example.current_branch_name?})
 	target_branch=:master
-	checkout_target=Clean_Example.git_command("checkout #{target_branch}")
+	checkout_target=Clean_Example.git_command("checkout #{target_branch}").assert_pre_conditions
 #		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
+	
 end #safely_visit_branch
 def test_validate_commit
 end #validate_commit
