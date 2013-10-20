@@ -73,11 +73,26 @@ def test_files(edit_files=@related_files.edit_files)
 	end #map
 	pairs.join(' ')
 end #test_files
+def minimal_comparison?
+	FilePattern::All.map do |p|
+		min_path=Pathname.new(p.pathname_glob('minimal'+@related_files.default_test_class_id?.to_s)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		path=Pathname.new(p.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
+		if File.exists?(min_path) && File.exists?(path) then
+			' -t '+path+' '+min_path
+		end #if
+	end.compact.join #map
+end #minimal_comparison
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
 	puts edit.command_string
 	edit.assert_post_conditions
 end #edit
+def minimal_edit
+	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + minimal_comparison?)
+	puts edit.command_string
+	edit.assert_post_conditions
+end #minimal_edit
 def emacs(executable=@related_files.model_test_pathname?)
 	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
@@ -88,12 +103,37 @@ def test(executable=@related_files.model_test_pathname?)
 		deserving_branch=@repository.deserving_branch?(executable)
 		@repository.recent_test.puts
 		puts deserving_branch if $VERBOSE
-		@repository.safely_visit_branch(deserving_branch) do
-			@repository.validate_commit(@related_files.tested_files(executable))
+		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
 		edit
-	end until false # infinite? interactive loop
+	end until !@repository.something_to_commit? 
 end #test
+def unit_test(executable=@related_files.model_test_pathname?)
+	begin
+		deserving_branch=@repository.deserving_branch?(executable)
+		if @repository.recent_test.success? then
+			break
+		end #if
+		@repository.recent_test.puts
+		puts deserving_branch if $VERBOSE
+		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+		end #safely_visit_branch
+		if !@repository.something_to_commit? then
+			@repository.confirm_branch_switch(deserving_branch)
+		end #if
+		edit
+	end until !@repository.something_to_commit? 
+end #unit_test
+def all
+	pattern=FilePattern.find_by_name(:test)
+	glob=pattern.pathname_glob
+	tests=Dir[glob]
+	tests.each do |test|
+		Release.new(test).unit_test
+	end #each
+end #test_unit_test_all
 def execute(executable=@related_files.model_test_pathname?)
 	begin
 	push_branch=@repository.current_branch_name?

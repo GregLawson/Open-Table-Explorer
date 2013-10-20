@@ -95,7 +95,7 @@ def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
-	assert_empty(@errors, message+'expected errors to be empty\n')
+	assert_empty(@errors, message+'expected errors to be empty\n'+inspect)
 	assert_equal(0, @process_status.exitstatus, message)
 	assert_not_nil(@errors, "expect @errors to not be nil.")
 	assert_not_nil(@process_status)

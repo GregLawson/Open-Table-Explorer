@@ -31,6 +31,7 @@ Absolute_pathname_regexp=Start_string*Directory_delimiter*Pathname_character_reg
 Relative_directory_regexp=Start_string*Pathname_character_regexp*Many*End_string
 Absolute_directory_regexp=Start_string*Directory_delimiter*Pathname_character_regexp*Many*End_string
 end  #Constants
+include Constants
 module ClassMethods
 def all
 	Constants::All

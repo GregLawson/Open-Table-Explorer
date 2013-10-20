@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2010-2011 by Greg Lawson                                      
+#    Copyright (C) 2010-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,12 +9,12 @@
 # Postfix operators and brackets start embeddded arrays
 #require 'app/models/inlineAssertions.rb'
 class NestedArray < Array # tree or matrix, whatever
-module Examples
-Echo_proc=Proc.new{|parseTree| parseTree}
-Reverse_proc=Proc.new{|parseTree| parseTree.reverse}
-Constant_proc=Proc.new{|parseTree| '*'}
-Asymmetrical_Tree_Array=NestedArray.new([['1','2'],'3'])
-end #Examples
+module Constants
+end #Constants
+include Constants
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
 def initialize(array=[])
 	super(array)
 end #initialize
@@ -84,4 +84,25 @@ def merge_single_element_arrays?
 	end #map_branches
 
 end #merge_single_element_arrays
+module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+def assert_post_conditions
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+Echo_proc=Proc.new{|parseTree| parseTree}
+Reverse_proc=Proc.new{|parseTree| parseTree.reverse}
+Constant_proc=Proc.new{|parseTree| '*'}
+Asymmetrical_Tree_Array=NestedArray.new([['1','2'],'3'])
+end #Examples
 end #NestedArray
