@@ -44,14 +44,13 @@ def initialize(path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
 		ret=ShellCommands.new("cd #{working_directory}; #{command}")
-		ret.puts if $VERBOSE
 		ret
 end #shell_command
 def git_command(git_subcommand)
 	ret=shell_command("git "+git_subcommand)
-	if $VERBOSE && git_subcommand != 'status' then
-		shell_command("git status").puts
-	end #if
+#	if $VERBOSE && git_subcommand != 'status' then
+#		shell_command("git status").puts
+#	end #if
 	ret
 end #git_command
 def standardize_position!
