@@ -79,6 +79,6 @@ argv.each do |f|
 		when :edited then editTestGit.repository.stage_files(:edited, [f])
 		when :deserve then $stdout.puts  editTestGit.repository.deserving_branch?(f)
 		end #case
-		$stdout.puts editTestGit.repository.git_command('status').inspect
+		editTestGit.repository.git_command('status  --short --branch')
 	end #each
 end #each
