@@ -111,7 +111,7 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 	end #if
 	if push then
-		git_command('stash apply').assert_post_conditions
+		git_command('stash apply --quiet').assert_post_conditions
 	end #if
 	ret
 end #safely_visit_branch
