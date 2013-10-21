@@ -7,6 +7,7 @@
 ###########################################################################
 require 'pp'
 require_relative '../app/models/command_line.rb'
+pp ARGV
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
