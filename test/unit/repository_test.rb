@@ -24,12 +24,15 @@ def test_git_command
 end #git_command
 def test_corruption_fsck
 	Clean_Example.git_command("fsck").assert_post_conditions
+	Clean_Example.corruption_fsck.assert_post_conditions
 end #corruption
 def test_corruption_rebase
 #	Clean_Example.git_command("rebase").assert_post_conditions
+#	Clean_Example.corruption_rebase.assert_post_conditions
 end #corruption
 def test_corruption_gc
 	Clean_Example.git_command("gc").assert_post_conditions
+	Clean_Example.corruption_gc.assert_post_conditions
 end #corruption
 #exists Clean_Example.git_command("branch details").assert_post_conditions
 #exists Clean_Example.git_command("branch summary").assert_post_conditions

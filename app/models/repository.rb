@@ -53,6 +53,15 @@ def git_command(git_subcommand)
 	end #if
 	ret
 end #git_command
+def corruption_fsck
+	git_command("fsck")
+end #corruption
+def corruption_rebase
+#	git_command("rebase")
+end #corruption
+def corruption_gc
+	git_command("gc")
+end #corruption
 def standardize_position!
 	git_command("rebase --abort")
 	git_command("merge --abort")
@@ -110,7 +119,7 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(self)
 	end #if
 	if push then
-		git_command('stash apply').assert_post_conditions
+		git_command('stash apply --quiet').assert_post_conditions
 	end #if
 	ret
 end #safely_visit_branch
