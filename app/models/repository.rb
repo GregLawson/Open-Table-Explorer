@@ -225,7 +225,7 @@ def DevelopmentSupersetofCompiles
 	git_command("log development..compiles")
 end #
 def force_change
-	IO.write(@path+'/README', 'Smallest possible repository.'+	Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")) # timestamp make file unique
+	IO.write(@path+'/README', 'Smallest possible repository.'+	Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n") # timestamp make file unique
 end #force_change
 def revert_changes
 	git_command('git reset --hard')

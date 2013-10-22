@@ -150,7 +150,7 @@ def test_force_change
 	Clean_Example.git_command('add README')
 	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
 	assert(Clean_Example.something_to_commit?)
-	Clean_Example.git_command('commit -m "initial commit of README"')
+#	Clean_Example.git_command('commit -m "timestamped commit of README"')
 	Clean_Example.revert_changes
 	Clean_Example.assert_nothing_to_commit
 end #force_change
