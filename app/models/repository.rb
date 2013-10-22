@@ -54,6 +54,9 @@ def git_command(git_subcommand)
 	end #if
 	ret
 end #git_command
+def inspect
+	git_command('git status --short --branch').output
+end #inspect
 def corruption_fsck
 	git_command("fsck")
 end #corruption
@@ -219,14 +222,16 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
-def assert_nothing_to_commit
+def assert_nothing_to_commit(message='')
 	status=@grit_repo.status
+	message+="@grit_repo.status=#{@grit_repo.status.inspect}"
 	assert_equal({}, status.added)
 	assert_equal({}, status.changed)
 	assert_equal({}, status.deleted)
 end #assert_nothing_to_commit
-def assert_something_to_commit
-	assert(!something_to_commit?, @grit_repo.status.inspect)
+def assert_something_to_commit(message='')
+	message+="@grit_repo.status=#{@grit_repo.status.inspect}"
+	assert(!something_to_commit?, message)
 end #assert_something_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)

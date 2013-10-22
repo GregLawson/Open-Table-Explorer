@@ -45,6 +45,9 @@ def test_git_command
 	assert_match(/branch/,SELF_code_Repo.git_command('status').output)
 	assert_match(/branch/,Empty_Repo.git_command('status').output)
 end #git_command
+def test_inspect
+	assert_equal('', Clean_Example.inspect)
+end #inspect
 def test_corruption_fsck
 	Clean_Example.git_command("fsck").assert_post_conditions
 	Clean_Example.corruption_fsck.assert_post_conditions
@@ -120,7 +123,14 @@ def test_assert_nothing_to_commit
 	Clean_Example.assert_nothing_to_commit
 end #assert_nothing_to_commit
 def test_assert_something_to_commit
+	IO.write(Clean_Example.path+'/README', 'Smallest possible repository.') # two consecutive slashes = one slash
+	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
+	Clean_Example.assert_something_to_commit
+	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
+	Clean_Example.git_command('add README')
+	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
 	assert(Clean_Example.something_to_commit?)
+	Clean_Example.git_command('commit -m "initial commit of README"')
 	Clean_Example.assert_something_to_commit
 end #assert_something_to_commit
 def test_assert_deserving_branch
