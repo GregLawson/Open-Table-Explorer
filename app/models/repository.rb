@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# @see http://grit.rubyforge.org/
 require 'grit'  # sudo gem install grit
 # rdoc at http://grit.rubyforge.org/
 # partial API at less /usr/share/doc/ruby-grit/API.txt
@@ -18,8 +19,8 @@ Source=File.dirname(Root_directory)+'/'
 end #Constants
 module ClassMethods
 def create_empty(path)
-	ShellCommands.new('mkdir '+path)
-	ShellCommands.new('cd '+path+';git init')
+	Dir.mkdir(path)
+	ShellCommands.new('cd "'+path+'";git init')
 	new_repository=Repository.new(path)
 	IO.write(path+'/README', 'Smallest possible repository.') # two consecutive slashes = one slash
 	new_repository.git_command('add README')

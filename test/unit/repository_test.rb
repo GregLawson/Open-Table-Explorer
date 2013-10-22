@@ -16,8 +16,22 @@ def test_Constants
 	assert_pathname_exists(Source)
 end #Constants
 def test_create_empty
-end #create_empty
+	unique_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	Dir.mkdir(unique_pathname)
+	ShellCommands.new('cd "'+unique_pathname+'";git init').assert_post_conditions
+	new_repository=Repository.new(unique_pathname)
+	IO.write(unique_pathname+'/README', 'Smallest possible repository.') # two consecutive slashes = one slash
+	new_repository.git_command('add README')
+	new_repository.git_command('commit -m "initial commit of README"')
+	FileUtils.remove_entry_secure(unique_pathname) #, force = false)
+	Repository.create_empty(unique_pathname)
+# @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
+	FileUtils.remove_entry_secure(unique_pathname) #, force = false)
+	end #create_empty
 def test_create_if_missing
+	unique_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	Repository.create_if_missing(unique_pathname)
+	FileUtils.remove_entry_secure(unique_pathname) #, force = false)
 end #create_if_missing
 def test_initialize
 	assert_pathname_exists(SELF_code_Repo.path)
