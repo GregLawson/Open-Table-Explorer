@@ -16,16 +16,29 @@ module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
+README_start_text='Smallest possible repository.'
 end #Constants
+include Constants
 module ClassMethods
+include Constants
 def create_empty(path)
 	Dir.mkdir(path)
 	ShellCommands.new('cd "'+path+'";git init')
 	new_repository=Repository.new(path)
-	IO.write(path+'/README', 'Smallest possible repository.') # two consecutive slashes = one slash
+	IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
 	new_repository.git_command('commit -m "initial commit of README"')
+	new_repository
 end #create_empty
+def delete_existing(path)
+	FileUtils.remove_entry_secure(path) #, force = false)
+end #delete_existing
+def replace_or_create(path)
+	if File.exists?(path) then
+		delete_existing(path)
+	end #if
+	create_empty(path)
+end #replace_or_create
 def create_if_missing(path)
 	if File.exists?(path) then
 		Repository.new(path)
@@ -55,7 +68,7 @@ def git_command(git_subcommand)
 	ret
 end #git_command
 def inspect
-	git_command('git status --short --branch').output
+	git_command('status --short --branch').output
 end #inspect
 def corruption_fsck
 	git_command("fsck")
@@ -214,7 +227,9 @@ end #
 def force_change
 	IO.write(@path+'/README', 'Smallest possible repository.'+	Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")) # timestamp make file unique
 end #force_change
-
+def revert_changes
+	git_command('git reset --hard')
+end #revert_changes
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -229,13 +244,13 @@ end #assert_post_conditions
 def assert_nothing_to_commit(message='')
 	status=@grit_repo.status
 	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
-	assert_equal({}, status.added)
-	assert_equal({}, status.changed)
-	assert_equal({}, status.deleted)
+	assert_equal({}, status.added, 'added '+message)
+	assert_equal({}, status.changed, 'changed '+message)
+	assert_equal({}, status.deleted, 'deleted '+message)
 end #assert_nothing_to_commit
 def assert_something_to_commit(message='')
 	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
-	assert(!something_to_commit?, message)
+	assert(something_to_commit?, message)
 end #assert_something_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
@@ -270,7 +285,9 @@ include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Repo= Grit::Repo.new(Root_directory)
 SELF_code_Repo=Repository.new(Root_directory)
-Empty_Repo=Repository.new(Source+'test_recover/')
+Empty_Repo_path=Source+'test_repository/'
+Empty_Repo=Repository.replace_or_create(Empty_Repo_path)
+Modified_path=Empty_Repo_path+'/README'
 end #Examples
 include Examples
 end #Repository
