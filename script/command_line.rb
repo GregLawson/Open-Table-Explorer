@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 ###########################################################################
 #    Copyright (C) 2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
@@ -5,6 +6,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
 require 'pp'
 require_relative '../app/models/command_line.rb'
 pp ARGV
