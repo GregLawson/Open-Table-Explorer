@@ -10,6 +10,15 @@ require_relative "../../app/models/repository.rb"
 class RepositoryTest < TestCase
 include Repository::Examples
 Clean_Example=Empty_Repo
+def test_Constants
+#	assert_pathname_exists(Temporary)
+	assert_pathname_exists(Root_directory)
+	assert_pathname_exists(Source)
+end #Constants
+def test_create_empty
+end #create_empty
+def test_create_if_missing
+end #create_if_missing
 def test_initialize
 	assert_pathname_exists(SELF_code_Repo.path)
 	assert_pathname_exists(Empty_Repo.path)
@@ -107,7 +116,7 @@ end #something_to_commit
 
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
-def test_Constants
+def test_Examples
   path=Source+'test_recover'
   assert_pathname_exists(path)
 #  development_old=Repository.new(path)
