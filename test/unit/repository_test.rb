@@ -51,10 +51,11 @@ def test_git_command
 end #git_command
 def test_inspect
 	clean_run=Clean_Example.git_command('status --short --branch').assert_post_conditions
-	assert_equal('', clean_run.output)
-	assert_equal('', Clean_Example.inspect)
+	assert_equal("## master\n", clean_run.output)
+	assert_equal("## master\n", Clean_Example.inspect)
 	Clean_Example.force_change
-	assert_not_equal('', Clean_Example.inspect)
+	assert_not_equal("## master\n", Clean_Example.inspect)
+	assert_equal("## master\n M README\n", Clean_Example.inspect)
 end #inspect
 def test_corruption_fsck
 	Clean_Example.git_command("fsck").assert_post_conditions
