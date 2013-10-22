@@ -88,8 +88,6 @@ def test_deserving_branch
 	assert_equal(:passed, SELF_code_Repo.deserving_branch?('test/unit/minimal2_test.rb'))
 	SELF_code_Repo.assert_deserving_branch(:passed, executable)
 
-	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
-#	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
 end #deserving_branch
 def test_safely_visit_branch
 	push_branch=Clean_Example.current_branch_name?
@@ -100,6 +98,9 @@ def test_safely_visit_branch
 #		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
 end #safely_visit_branch
 def test_validate_commit
+	Clean_Example.assert_nothing_to_commit
+	Clean_Example.assert_something_to_commit
+	assert(Clean_Example.something_to_commit?)
 end #validate_commit
 def test_something_to_commit?
 	assert_respond_to(Clean_Example.grit_repo, :status)
@@ -115,6 +116,20 @@ def test_something_to_commit?
 	Clean_Example.assert_nothing_to_commit
 	assert(!Clean_Example.something_to_commit?, Clean_Example.grit_repo.status.inspect)
 end #something_to_commit
+def test_assert_nothing_to_commit
+	Clean_Example.assert_nothing_to_commit
+end #assert_nothing_to_commit
+def test_assert_something_to_commit
+	assert(Clean_Example.something_to_commit?)
+	Clean_Example.assert_something_to_commit
+end #assert_something_to_commit
+def test_assert_deserving_branch
+	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
+	SELF_code_Repo.assert_deserving_branch(:passed, 'test/unit/minimal2_test.rb')
+	executable='/etc/mtab' #force syntax error with non-ruby text
+	SELF_code_Repo.assert_deserving_branch(:edited, executable)
+#	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
+end #deserving_branch
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")

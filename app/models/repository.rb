@@ -220,11 +220,14 @@ end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_nothing_to_commit
-	status=grit_repo.status
+	status=@grit_repo.status
 	assert_equal({}, status.added)
 	assert_equal({}, status.changed)
 	assert_equal({}, status.deleted)
 end #assert_nothing_to_commit
+def assert_something_to_commit
+	assert(!something_to_commit?, @grit_repo.status.inspect)
+end #assert_something_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
 	recent_test=shell_command("ruby "+executable)
