@@ -211,6 +211,10 @@ end #
 def DevelopmentSupersetofCompiles
 	git_command("log development..compiles")
 end #
+def force_change
+	IO.write(@path+'/README', 'Smallest possible repository.'+	Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")) # timestamp make file unique
+end #force_change
+
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -224,13 +228,13 @@ def assert_post_conditions
 end #assert_post_conditions
 def assert_nothing_to_commit(message='')
 	status=@grit_repo.status
-	message+="@grit_repo.status=#{@grit_repo.status.inspect}"
+	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
 	assert_equal({}, status.added)
 	assert_equal({}, status.changed)
 	assert_equal({}, status.deleted)
 end #assert_nothing_to_commit
 def assert_something_to_commit(message='')
-	message+="@grit_repo.status=#{@grit_repo.status.inspect}"
+	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
 	assert(!something_to_commit?, message)
 end #assert_something_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')

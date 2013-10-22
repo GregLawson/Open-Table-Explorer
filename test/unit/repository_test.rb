@@ -47,6 +47,8 @@ def test_git_command
 end #git_command
 def test_inspect
 	assert_equal('', Clean_Example.inspect)
+	Clean_Example.force_change
+	assert_not_equal('', Clean_Example.inspect)
 end #inspect
 def test_corruption_fsck
 	Clean_Example.git_command("fsck").assert_post_conditions
@@ -102,6 +104,7 @@ def test_safely_visit_branch
 end #safely_visit_branch
 def test_validate_commit
 	Clean_Example.assert_nothing_to_commit
+	Clean_Example.force_change
 	Clean_Example.assert_something_to_commit
 	assert(Clean_Example.something_to_commit?)
 end #validate_commit
@@ -117,13 +120,14 @@ def test_something_to_commit?
 	assert_equal({}, status.deleted)
 	assert((status.added=={}), status.inspect)
 	Clean_Example.assert_nothing_to_commit
+	Clean_Example.force_change
 	assert(!Clean_Example.something_to_commit?, Clean_Example.grit_repo.status.inspect)
 end #something_to_commit
 def test_assert_nothing_to_commit
 	Clean_Example.assert_nothing_to_commit
 end #assert_nothing_to_commit
 def test_assert_something_to_commit
-	IO.write(Clean_Example.path+'/README', 'Smallest possible repository.') # two consecutive slashes = one slash
+	Clean_Example.force_change
 	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
 	Clean_Example.assert_something_to_commit
 	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
