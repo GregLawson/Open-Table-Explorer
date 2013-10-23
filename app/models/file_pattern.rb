@@ -68,7 +68,8 @@ def project_root_dir?(path=$0)
 	when 'models'
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	else
-		fail "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
+		warn "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
+		script_directory_name+'/'
 	end #case
 	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
 	return ret
