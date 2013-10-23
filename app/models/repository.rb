@@ -28,6 +28,7 @@ def create_empty(path)
 	IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
 	new_repository.git_command('commit -m "create_empty initial commit of README"')
+	new_repository.git_command('branch passed')
 	new_repository
 end #create_empty
 def delete_existing(path)
