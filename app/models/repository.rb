@@ -118,7 +118,7 @@ def confirm_branch_switch(branch)
 end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
-	changes_branch=push_branch
+	changes_branch=push_branch # 
 	push=something_to_commit? # remember
 	if push then
 #		status=@grit_repo.status
@@ -245,6 +245,10 @@ def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
+	assert_pathname_exists(path)
+	assert_pathname_exists(path+'.git/')
+	assert_pathname_exists(path+'.git/logs/')
+	assert_pathname_exists(path+'.git/logs/refs/')
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions

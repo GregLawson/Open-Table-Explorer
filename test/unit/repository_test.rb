@@ -123,6 +123,10 @@ def test_safely_visit_branch
 end #safely_visit_branch
 def test_stage_file
 	Minimal_repository.force_change
+	assert_pathname_exists(Minimal_repository.path)
+	assert_pathname_exists(Minimal_repository.path+'.git/')
+	assert_pathname_exists(Minimal_repository.path+'.git/logs/')
+	assert_pathname_exists(Minimal_repository.path+'.git/logs/refs/')
 	Minimal_repository.stage_files(:passed, [Minimal_repository.path+'README'])
 	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
 	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
