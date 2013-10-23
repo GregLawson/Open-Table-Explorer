@@ -16,7 +16,7 @@ module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
-README_start_text='Smallest possible repository.'
+README_start_text='Minimal repository.'
 end #Constants
 include Constants
 module ClassMethods
@@ -27,10 +27,11 @@ def create_empty(path)
 	new_repository=Repository.new(path)
 	IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
-	new_repository.git_command('commit -m "initial commit of README"')
+	new_repository.git_command('commit -m "create_empty initial commit of README"')
 	new_repository
 end #create_empty
 def delete_existing(path)
+# @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
 	FileUtils.remove_entry_secure(path) #, force = false)
 end #delete_existing
 def replace_or_create(path)
@@ -224,11 +225,11 @@ end #
 def DevelopmentSupersetofCompiles
 	git_command("log development..compiles")
 end #
-def force_change
-	IO.write(@path+'/README', 'Smallest possible repository.'+	Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n") # timestamp make file unique
+def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
+	IO.write(@path+'/README', content) # timestamp make file unique
 end #force_change
 def revert_changes
-	git_command('git reset --hard')
+	git_command('reset --hard')
 end #revert_changes
 module Assertions
 include Test::Unit::Assertions
@@ -288,6 +289,8 @@ SELF_code_Repo=Repository.new(Root_directory)
 Empty_Repo_path=Source+'test_repository/'
 Empty_Repo=Repository.replace_or_create(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
+Unique_repository_directory_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+
 end #Examples
 include Examples
 end #Repository

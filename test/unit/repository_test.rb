@@ -16,26 +16,26 @@ def test_Constants
 	assert_pathname_exists(Source)
 end #Constants
 def test_create_empty
-	unique_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
-	Dir.mkdir(unique_pathname)
-	ShellCommands.new('cd "'+unique_pathname+'";git init').assert_post_conditions
-	new_repository=Repository.new(unique_pathname)
-	IO.write(unique_pathname+'/README', README_start_text+"\n") # two consecutive slashes = one slash
+	Dir.mkdir(Unique_repository_directory_pathname)
+	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
+	new_repository=Repository.new(Unique_repository_directory_pathname)
+	IO.write(Unique_repository_directory_pathname+'/README', README_start_text+"1\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
-	new_repository.git_command('commit -m "initial commit of README"')
-	FileUtils.remove_entry_secure(unique_pathname) #, force = false)
-	Repository.create_empty(unique_pathname)
-# @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
-	FileUtils.remove_entry_secure(unique_pathname) #, force = false)
+	new_repository.git_command('commit -m "test_create_empty initial commit of README"')
+	Repository.delete_existing(Unique_repository_directory_pathname)
+	Repository.create_empty(Unique_repository_directory_pathname)
+	Repository.delete_existing(Unique_repository_directory_pathname)
 end #create_empty
-def delete_existing
+def test_delete_existing
+	Repository.create_if_missing(Unique_repository_directory_pathname)
+	Repository.delete_existing(Unique_repository_directory_pathname)
+	assert(!File.exists?(Unique_repository_directory_pathname))
 end #delete_existing
-def replace_or_create
+def test_replace_or_create
 end #replace_or_create
 def test_create_if_missing
-	unique_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
-	Repository.create_if_missing(unique_pathname)
-	FileUtils.remove_entry_secure(unique_pathname) #, force = false)
+	Repository.create_if_missing(Unique_repository_directory_pathname)
+	FileUtils.remove_entry_secure(Unique_repository_directory_pathname) #, force = false)
 end #create_if_missing
 def test_initialize
 	assert_pathname_exists(SELF_code_Repo.path)
@@ -128,7 +128,7 @@ def test_something_to_commit?
 	assert((status.added=={}), status.inspect)
 	Clean_Example.assert_nothing_to_commit
 	Clean_Example.force_change
-	assert(!Clean_Example.something_to_commit?, Clean_Example.grit_repo.status.inspect)
+	assert(Clean_Example.something_to_commit?, Clean_Example.grit_repo.status.inspect)
 end #something_to_commit
 def setup
 	Clean_Example.revert_changes # so next test starts clean
@@ -139,7 +139,6 @@ def teardown
 end #teardown
 def test_force_change
 	Clean_Example.assert_nothing_to_commit
-	assert_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 	IO.write(Modified_path, README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n") # timestamp make file unique
 	assert_not_equal(README_start_text, IO.read(Modified_path))
 	Clean_Example.revert_changes
@@ -151,12 +150,13 @@ def test_force_change
 	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
 	assert(Clean_Example.something_to_commit?)
 #	Clean_Example.git_command('commit -m "timestamped commit of README"')
-	Clean_Example.revert_changes
+	Clean_Example.revert_changes.assert_post_conditions
 	Clean_Example.assert_nothing_to_commit
 end #force_change
 def test_revert_changes
-	Clean_Example.revert_changes
+	Clean_Example.revert_changes.assert_post_conditions
 	Clean_Example.assert_nothing_to_commit
+	assert_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #revert_changes
 def test_assert_nothing_to_commit
 	Clean_Example.assert_nothing_to_commit
@@ -169,7 +169,7 @@ def test_assert_something_to_commit
 	Clean_Example.git_command('add README')
 	assert_not_equal({}, Clean_Example.grit_repo.status.changed)
 	assert(Clean_Example.something_to_commit?)
-	Clean_Example.git_command('commit -m "initial commit of README"')
+#	Clean_Example.git_command('commit -m "initial commit of README"')
 	Clean_Example.assert_something_to_commit
 	Clean_Example.revert_changes
 	Clean_Example.assert_nothing_to_commit
