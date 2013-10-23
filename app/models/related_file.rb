@@ -12,7 +12,8 @@ end #Constants
 include Constants
 module ClassMethods
 def new_from_path?(path)
-	RelatedFile.new(FilePattern.path2model_name?(path), FilePattern.project_root_dir?(path))
+	library_name=FilePattern.path2model_name?(path)
+	RelatedFile.new(library_name, FilePattern.project_root_dir?(path))
 end #new_from_path?
 end #ClassMethods
 extend ClassMethods
