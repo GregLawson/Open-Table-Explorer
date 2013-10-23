@@ -114,6 +114,7 @@ def test_validate_commit
 	Clean_Example.force_change
 	assert(Clean_Example.something_to_commit?)
 	Clean_Example.assert_something_to_commit
+	Clean_Example.validate_commit(:master, [Clean_Example.path+'README'])
 end #validate_commit
 def test_something_to_commit?
 	assert_respond_to(Clean_Example.grit_repo, :status)

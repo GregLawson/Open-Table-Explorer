@@ -146,14 +146,19 @@ def stage_files(branch, files)
 		validate_commit(changes_branch, files)
 	end #safely_visit_branch
 end #stage_files
+def unit_names?(files)
+	files.map do |f|
+		FilePattern.path2model_name?(f).to_s
+	end #map
+end #unit_names?
 def validate_commit(changes_branch, files)
 	if something_to_commit? then
 		files.each do |p|
 			git_command('checkout #{changes_branch} '+p).assert_post_conditions
 		end #each
-		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new_from_path?(files[0]).model_class_name.to_s)	
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).join(','))	
 		git_command('cola').assert_post_conditions
-		ShellCommand.new('git rebase --autosquash --interactive')
+		git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
 def something_to_commit?
