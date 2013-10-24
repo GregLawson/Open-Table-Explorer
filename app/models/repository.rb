@@ -153,14 +153,14 @@ def unit_names?(files)
 	end #map
 end #unit_names?
 def validate_commit(changes_branch, files)
-	puts files.inspect
-		files.each do |p|
-			puts p.inspect
-			git_command('checkout '+changes_branch.to_s+' '+p)
-		end #each
-		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).join(','))	
-		git_command('cola').assert_post_conditions
-		git_command('rebase --autosquash --interactive')
+	puts files.inspect if $VERBOSE
+	files.each do |p|
+		puts p.inspect  if $VERBOSE
+		git_command('checkout '+changes_branch.to_s+' '+p)
+	end #each
+	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(','))	
+	git_command('cola').assert_post_conditions
+	git_command('rebase --autosquash --interactive')
 end #validate_commit
 def something_to_commit?
 	status=@grit_repo.status
