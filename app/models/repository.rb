@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# @see http://grit.rubyforge.org/
 require 'grit'  # sudo gem install grit
 # rdoc at http://grit.rubyforge.org/
 # partial API at less /usr/share/doc/ruby-grit/API.txt
@@ -15,16 +16,31 @@ module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
+README_start_text='Minimal repository.'
 end #Constants
+include Constants
 module ClassMethods
+include Constants
 def create_empty(path)
-	ShellCommands.new('mkdir '+path)
-	ShellCommands.new('cd '+path+';git init')
+	Dir.mkdir(path)
+	ShellCommands.new('cd "'+path+'";git init')
 	new_repository=Repository.new(path)
-	IO.write(path+'/README', 'Smallest possible repository.') # two consecutive slashes = one slash
+	IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
-	new_repository.git_command('commit -m "initial commit of README"')
+	new_repository.git_command('commit -m "create_empty initial commit of README"')
+	new_repository.git_command('branch passed')
+	new_repository
 end #create_empty
+def delete_existing(path)
+# @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
+	FileUtils.remove_entry_secure(path) #, force = false)
+end #delete_existing
+def replace_or_create(path)
+	if File.exists?(path) then
+		delete_existing(path)
+	end #if
+	create_empty(path)
+end #replace_or_create
 def create_if_missing(path)
 	if File.exists?(path) then
 		Repository.new(path)
@@ -53,6 +69,18 @@ def git_command(git_subcommand)
 	end #if
 	ret
 end #git_command
+def inspect
+	git_command('status --short --branch').output
+end #inspect
+def corruption_fsck
+	git_command("fsck")
+end #corruption
+def corruption_rebase
+#	git_command("rebase")
+end #corruption
+def corruption_gc
+	git_command("gc")
+end #corruption
 def standardize_position!
 	git_command("rebase --abort")
 	git_command("merge --abort")
@@ -90,7 +118,7 @@ def confirm_branch_switch(branch)
 end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
-	changes_branch=push_branch
+	changes_branch=push_branch # 
 	push=something_to_commit? # remember
 	if push then
 #		status=@grit_repo.status
@@ -107,10 +135,10 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 		confirm_branch_switch(push_branch)
 	else
-		ret=block.call(self)
+		ret=block.call(changes_branch)
 	end #if
 	if push then
-		git_command('stash apply').assert_post_conditions
+		git_command('stash apply --quiet').assert_post_conditions
 	end #if
 	ret
 end #safely_visit_branch
@@ -119,15 +147,20 @@ def stage_files(branch, files)
 		validate_commit(changes_branch, files)
 	end #safely_visit_branch
 end #stage_files
+def unit_names?(files)
+	files.map do |f|
+		FilePattern.path2model_name?(f).to_s
+	end #map
+end #unit_names?
 def validate_commit(changes_branch, files)
-	if something_to_commit? then
-		files.each do |p|
-			git_command('checkout #{changes_branch} '+p).assert_post_conditions
-		end #each
-		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+RelatedFile.new_from_path?(files[0]).model_class_name.to_s)	
-		git_command('cola').assert_post_conditions
-		ShellCommand.new('git rebase --autosquash --interactive')
-	end #if
+	puts files.inspect if $VERBOSE
+	files.each do |p|
+		puts p.inspect  if $VERBOSE
+		git_command('checkout '+changes_branch.to_s+' '+p)
+	end #each
+	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(','))	
+	git_command('cola').assert_post_conditions
+	git_command('rebase --autosquash --interactive')
 end #validate_commit
 def something_to_commit?
 	status=@grit_repo.status
@@ -198,6 +231,12 @@ end #
 def DevelopmentSupersetofCompiles
 	git_command("log development..compiles")
 end #
+def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
+	IO.write(@path+'/README', content) # timestamp make file unique
+end #force_change
+def revert_changes
+	git_command('reset --hard')
+end #revert_changes
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -206,15 +245,24 @@ def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
+	assert_pathname_exists(path)
+	assert_pathname_exists(path+'.git/')
+	assert_pathname_exists(path+'.git/logs/')
+	assert_pathname_exists(path+'.git/logs/refs/')
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
-def assert_nothing_to_commit
-	status=grit_repo.status
-	assert_equal({}, status.added)
-	assert_equal({}, status.changed)
-	assert_equal({}, status.deleted)
+def assert_nothing_to_commit(message='')
+	status=@grit_repo.status
+	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
+	assert_equal({}, status.added, 'added '+message)
+	assert_equal({}, status.changed, 'changed '+message)
+	assert_equal({}, status.deleted, 'deleted '+message)
 end #assert_nothing_to_commit
+def assert_something_to_commit(message='')
+	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
+	assert(something_to_commit?, message)
+end #assert_something_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
 	recent_test=shell_command("ruby "+executable)
@@ -248,7 +296,11 @@ include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Repo= Grit::Repo.new(Root_directory)
 SELF_code_Repo=Repository.new(Root_directory)
-Empty_Repo=Repository.new(Source+'test_recover/')
+Empty_Repo_path=Source+'test_repository/'
+Empty_Repo=Repository.replace_or_create(Empty_Repo_path)
+Modified_path=Empty_Repo_path+'/README'
+Unique_repository_directory_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+
 end #Examples
 include Examples
 end #Repository
