@@ -8,6 +8,7 @@
 require_relative '../unit/test_environment'
 require_relative "../../app/models/repository.rb"
 class RepositoryTest < TestCase
+include DefaultTests
 include Repository::Examples
 Minimal_repository=Empty_Repo
 def test_Constants
@@ -126,7 +127,8 @@ def test_stage_file
 	assert_pathname_exists(Minimal_repository.path)
 	assert_pathname_exists(Minimal_repository.path+'.git/')
 	assert_pathname_exists(Minimal_repository.path+'.git/logs/')
-	assert_pathname_exists(Minimal_repository.path+'.git/logs/refs/')
+#	assert_pathname_exists(Minimal_repository.path+'.git/logs/refs/')
+	assert_pathname_exists(Minimal_repository.path+'README')
 	Minimal_repository.stage_files(:passed, [Minimal_repository.path+'README'])
 	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
 	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
