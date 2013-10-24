@@ -115,6 +115,7 @@ def confirm_branch_switch(branch)
 	if checkout_branch.errors!="Switched to branch '#{branch}'\n" then
 		checkout_branch.assert_post_conditions
 	end #if
+	checkout_branch # for command chaining
 end #confirm_branch_switch
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
