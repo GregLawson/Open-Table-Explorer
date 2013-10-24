@@ -161,7 +161,10 @@ def test_validate_commit
 	Minimal_repository.force_change
 	assert(Minimal_repository.something_to_commit?)
 	Minimal_repository.assert_something_to_commit
-	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'])
+#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'])
+	Minimal_repository.git_command('stash')
+	Minimal_repository.git_command('checkout passed')
+	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'])
 end #validate_commit
 def test_something_to_commit?
 	assert_respond_to(Minimal_repository.grit_repo, :status)
@@ -181,6 +184,7 @@ end #something_to_commit
 def setup
 	Minimal_repository.revert_changes # so next test starts clean
 	Minimal_repository.assert_nothing_to_commit  # check if next test starts clean
+	Minimal_repository.git_command('checkout master')
 end #setup
 def teardown
 	Minimal_repository.revert_changes # so next test starts clean
