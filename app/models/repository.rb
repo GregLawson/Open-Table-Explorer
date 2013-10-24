@@ -135,7 +135,7 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 		confirm_branch_switch(push_branch)
 	else
-		ret=block.call(self)
+		ret=block.call(changes_branch)
 	end #if
 	if push then
 		git_command('stash apply --quiet').assert_post_conditions
@@ -155,7 +155,7 @@ end #unit_names?
 def validate_commit(changes_branch, files)
 	if something_to_commit? then
 		files.each do |p|
-			git_command('checkout #{changes_branch} '+p).assert_post_conditions
+			git_command('checkout '+changes_branch.to_s+' '+p)
 		end #each
 		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).join(','))	
 		git_command('cola').assert_post_conditions

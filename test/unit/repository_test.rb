@@ -110,7 +110,25 @@ def test_confirm_branch_switch
 	assert_equal(:master, Minimal_repository.current_branch_name?)
 end #confirm_branch_switch
 def test_safely_visit_branch
+	Minimal_repository.force_change
 	push_branch=Minimal_repository.current_branch_name?
+	target_branch=:passed
+	push=Minimal_repository.something_to_commit? # remember
+	if push then
+		Minimal_repository.git_command('stash save').assert_post_conditions
+		changes_branch=:stash
+	end #if
+
+	if push_branch!=target_branch then
+		Minimal_repository.confirm_branch_switch(target_branch)
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+		Minimal_repository.confirm_branch_switch(push_branch)
+	else
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+	end #if
+	if push then
+		Minimal_repository.git_command('stash apply --quiet').assert_post_conditions
+	end #if
 	assert_equal(push_branch, Minimal_repository.safely_visit_branch(push_branch){push_branch})
 	assert_equal(push_branch, Minimal_repository.safely_visit_branch(push_branch){Minimal_repository.current_branch_name?})
 	target_branch=:master
@@ -129,6 +147,11 @@ def test_stage_file
 	assert_pathname_exists(Minimal_repository.path+'.git/logs/')
 #	assert_pathname_exists(Minimal_repository.path+'.git/logs/refs/')
 	assert_pathname_exists(Minimal_repository.path+'README')
+
+	Minimal_repository.safely_visit_branch(:passed) do |changes_branch|
+		Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+	end #safely_visit_branch
+
 	Minimal_repository.stage_files(:passed, [Minimal_repository.path+'README'])
 	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
 	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
