@@ -17,6 +17,10 @@ Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
+Error_classification={0 => :success,
+				1     => :single_test_fail,
+				100 => :initialization_fail,
+				10000 => :syntax_error}
 end #Constants
 include Constants
 module ClassMethods
@@ -90,9 +94,30 @@ end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
+def error_score?(executable=@related_files.model_test_pathname?)
+	@recent_test=shell_command("ruby "+executable)
+#	@recent_test.puts if $VERBOSE
+	if @recent_test.success? then
+		0
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test=shell_command("ruby -c "+executable)
+		if syntax_test.output=="Syntax OK\n" then
+			initialize_test=shell_command("ruby "+executable+' -n test_initialize')
+			if initialize_test.success? then
+				1
+			else # initialization  failure or test_initialize failure
+				100 # may prevent other tests from running
+			end #if
+		else
+			10000 # syntax error can hide many sins
+		end #if
+	else
+		@recent_test.process_status.exitstatus # num_errors>1
+	end #if
+end #error_score
 def deserving_branch?(executable=@related_files.model_test_pathname?)
 	@recent_test=shell_command("ruby "+executable)
-	@recent_test.puts if $VERBOSE
+#	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		@deserving_branch=:passed
 	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
