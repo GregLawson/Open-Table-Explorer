@@ -21,11 +21,13 @@ end #execute
 def initialize(command_string)
 	@command_string=command_string
 	execute # do it first time, then execute
-	case $VERBOSE
-	when nil then # -W0
-	when true then $stdout.puts trace # -W2
-	else $stdout.puts inspect(:echo_command) # -W1
-	end #case
+	if $VERBOSE.nil? then
+	elsif $VERBOSE then
+		$stdout.puts trace # -W2
+	else 
+		$stdout.puts inspect(:echo_command) # -W1
+	end #if
+
 end #initialize
 def system_output(command_string)
 	ret=[] #make method scope not block scope so it can be returned
