@@ -27,6 +27,7 @@ def initialize(command_string)
 	else 
 		$stdout.puts inspect(:echo_command) # -W1
 	end #if
+
 end #initialize
 def system_output(command_string)
 	ret=[] #make method scope not block scope so it can be returned
@@ -88,10 +89,14 @@ def inspect(echo_command=@errors!='' || !success?)
 end #inspect
 def puts
 	$stdout.puts inspect(:echo_command)
-	shorter_callers=caller.grep(/^[^\/]/)
-	$stdout.puts shorter_callers.join("\n") if $VERBOSE
 	self # return for comand chaining
 end #puts
+def trace
+	$stdout.puts inspect(:echo_command)
+	shorter_callers=caller.grep(/^[^\/]/)
+	$stdout.puts shorter_callers.join("\n")
+	self # return for comand chaining
+end #trace
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
@@ -100,12 +105,13 @@ def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
-	assert_empty(@errors, message+'expected errors to be empty\n'+inspect)
+	puts unless success?&& @errors.empty?
+	assert_empty(@errors, message+'expected errors to be empty\n')
 	assert_equal(0, @process_status.exitstatus, message)
-	assert_not_nil(@errors)
+	assert_not_nil(@errors, "expect @errors to not be nil.")
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
-	assert_not_nil(@pid)
+
 	self # return for comand chaining
 end #assert_post_conditions
 end #Assertions
