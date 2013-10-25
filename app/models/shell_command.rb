@@ -12,10 +12,10 @@ module ClassMethods
 include Shellwords
 end #ClassMethods
 extend ClassMethods
-attr_reader :command_string, :output, :errors, :process_status, :pid
+attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
-	@output, @errors, @process_status, @pid=system_output(@command_string)
+	@output, @errors, @process_status=system_output(@command_string)
 	self #allows command chaining
 end #execute
 def initialize(command_string)
@@ -38,9 +38,8 @@ def system_output(command_string)
 		errors=stderr.read
 		stderr.close
 		process_status = wait_thr.value  # Process::Status object returned.
-		pid = wait_thr.pid # pid of the started process.
 		process_status = wait_thr.value # Process::Status object returned.
-		ret=[output, errors, process_status, pid]
+		ret=[output, errors, process_status]
 	}
 	ret
 end #system_output
@@ -62,7 +61,6 @@ def wait
 	self #allows command chaining
 end #wait
 def close
-	@pid = @wait_thr[:pid]  # pid of the started process
 	@stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 	@output=@stdout.read
 	@stdout.close
