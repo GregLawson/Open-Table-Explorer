@@ -84,6 +84,25 @@ def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
+def test_error_score?
+	executable=@related_files.model_test_pathname?
+	executable='/etc/mtab' #force syntax error with non-ruby text
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(10000, SELF_code_Repo.error_score?(executable))
+	SELF_code_Repo.assert_deserving_branch(:edited, executable)
+
+	executable='test/unit/minimal2_test.rb'
+		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
+		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(0, SELF_code_Repo.error_score?('test/unit/minimal2_test.rb'))
+	SELF_code_Repo.assert_deserving_branch(:passed, executable)
+
+end #error_score
 def test_deserving_branch
 	executable='/etc/mtab' #force syntax error with non-ruby text
 		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
