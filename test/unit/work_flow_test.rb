@@ -59,8 +59,6 @@ def test_test_files
 end #test_files
 def test_minimal_comparison
 	assert_equal(' -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb', TestWorkFlow.minimal_comparison?)
-	assert_equal(4, RelatedFile.new_from_path?('app/models/regexp_parse.rb').default_test_class_id?)
-	RelatedFile.new_from_path?('app/models/regexp_parse.rb').assert_default_test_class_id(4)
 	assert_equal(' -t app/models/regexp_parse.rb app/models/minimal4.rb', WorkFlow.new('test/unit/regexp_parse_test.rb').minimal_comparison?)
 end #minimal_comparison
 def test_stage_files
