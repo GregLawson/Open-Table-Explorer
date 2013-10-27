@@ -106,6 +106,7 @@ def test(executable=@related_files.model_test_pathname?)
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
+		@repository.confirm_branch_switch(deserving_branch)
 		edit
 	end until !@repository.something_to_commit? 
 end #test
