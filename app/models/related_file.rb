@@ -128,11 +128,6 @@ def assert_post_conditions
 end #class_assert_post_conditions
 end #ClassMethods
 module KernelMethods
-def assert_default_test_class_id(expected_id, class_name, message='')
-	te=FilePattern.new(class_name)
-	message+="te=#{te.inspect}"
-	assert_equal(expected_id, te.default_test_class_id?, message+caller_lines)
-end #default_test_class_id
 end #KernelMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
@@ -156,6 +151,10 @@ def assert_tested_files(executable, file_patterns)
 	end #map
 	assert_equal(file_patterns, tested_file_patterns)
 end #assert_tested_files
+def assert_default_test_class_id(expected_id, message='')
+	message+="self=#{self.inspect}"
+	assert_equal(expected_id, default_test_class_id?, message+caller_lines)
+end #default_test_class_id
 
 end #Assertions
 include Assertions
