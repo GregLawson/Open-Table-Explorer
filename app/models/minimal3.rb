@@ -12,6 +12,4 @@ include Constants
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
-#include DefaultAssertions
-#extend DefaultAssertions::ClassMethods
 end #Minimal
