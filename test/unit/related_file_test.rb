@@ -114,14 +114,14 @@ def test_class_assert_post_conditions
 #	RelatedFile.assert_post_conditions
 end #class_assert_post_conditions
 def test_assert_default_test_class_id
-#	RelatedFileassert_constant_path_respond_to(:TestIntrospection, :RelatedFile, :KernelMethods, :assert_default_test_class_id)
+#	RelatedFile.assert_constant_path_respond_to(:TestIntrospection, :RelatedFile, :KernelMethods, :assert_default_test_class_id)
 #	assert_respond_to(RelatedFileTest, :assert_default_test_class_id)
 #	explain_assert_respond_to(self, :assert_default_test_class_id)
-#	assert_default_test_class_id(4,'UnboundedFixnum')
-#	assert_default_test_class_id(2,'RelatedFile')
-#	assert_default_test_class_id(1,'DefaultTestCase')
-#	assert_default_test_class_id(0,'EmptyDefaultTest')
-#	assert_default_test_class_id(3,'GenericType')
+	RelatedFile.new(:UnboundedFixnum).assert_default_test_class_id(4,'')
+	RelatedFile.new(:RelatedFile).assert_default_test_class_id(2,'')
+	RelatedFile.new(:DefaultTestCase).assert_default_test_class_id(1,'')
+	RelatedFile.new(:EmptyDefaultTest).assert_default_test_class_id(0,'')
+	RelatedFile.new(:GenericType).assert_default_test_class_id(3,'')
 end #default_test_class_id
 def test_Examples
 	UnboundedFixnumRelatedFile.assert_pre_conditions
