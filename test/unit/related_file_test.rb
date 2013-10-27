@@ -119,7 +119,7 @@ def test_assert_default_test_class_id
 #	explain_assert_respond_to(self, :assert_default_test_class_id)
 	RelatedFile.new(:UnboundedFixnum).assert_default_test_class_id(4,'')
 	RelatedFile.new(:RelatedFile).assert_default_test_class_id(2,'')
-	RelatedFile.new(:DefaultTestCase).assert_default_test_class_id(1,'')
+	RelatedFile.new(:DefaultTestCase).assert_default_test_class_id(2,'')
 	RelatedFile.new(:EmptyDefaultTest).assert_default_test_class_id(0,'')
 	RelatedFile.new(:GenericType).assert_default_test_class_id(3,'')
 end #default_test_class_id
