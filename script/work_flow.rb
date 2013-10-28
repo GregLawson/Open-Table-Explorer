@@ -97,7 +97,7 @@ commands.each do |c|
 			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison?
 
 		end #case
-		$stdout.puts work_flow.repository.git_command('status').inspect
+		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
 end #each
