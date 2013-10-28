@@ -74,7 +74,10 @@ else
 end #case
 commands.each do |c|
 	case c.to_sym
-		when :all then WorkFlow.new($0).all
+		when :all then 
+			WorkFlow.new($0).all(:test)
+			WorkFlow.new($0).all(:assertions_test)
+			WorkFlow.new($0).all(:long_test)
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
