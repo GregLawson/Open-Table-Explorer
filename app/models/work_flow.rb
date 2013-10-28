@@ -130,6 +130,7 @@ def all(pattern_name=:test)
 	pattern=FilePattern.find_by_name(pattern_name)
 	glob=pattern.pathname_glob
 	tests=Dir[glob]
+	puts tests.inspect if $VERBOSE
 	tests.each do |test|
 		WorkFlow.new(test).unit_test
 	end #each
