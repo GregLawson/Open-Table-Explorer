@@ -12,7 +12,7 @@ include DefaultTests2
 include RegexpParse::Examples
 include RegexpToken::Constants
 include RegexpParse::Assertions
-include NestedArray
+include NestedArray::Examples
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
 	assert_not_nil(RegexpTree[Any_binary_char_parse])
