@@ -131,7 +131,7 @@ def all
 	glob=pattern.pathname_glob
 	tests=Dir[glob]
 	tests.each do |test|
-		Release.new(test).unit_test
+		WorkFlow.new(test).unit_test
 	end #each
 end #test_unit_test_all
 def execute(executable=@related_files.model_test_pathname?)
