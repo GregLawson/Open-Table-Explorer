@@ -49,7 +49,7 @@ OptionParser.new do |opts|
     commands+=[:deserve] if t
   end
   opts.on("-a", "--[no-]all", "All files tested ") do |t|
-    commands+=[:minimal] if t
+    commands+=[:all] if t
   end
   opts.on("-l", "--[no-]minimal", "edit with minimal comparison. ") do |t|
     commands+=[:minimal] if t
