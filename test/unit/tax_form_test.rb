@@ -44,7 +44,7 @@ def test_initialize
 	assert_equal(:US, US1040_user.jurisdiction)
 	assert_equal('1040', US1040_user.form)
 	assert_equal('US_1040', US1040_user.form_filename)
-	assert_match(/CA_540_2011$/, CA540_example.open_tax_solver_binary)
+	assert_match(/CA_540_2012$/, CA540_example.open_tax_solver_binary)
 	assert_equal('US_1040_example', US1040_example.taxpayer_basename)
 	assert_equal('US_1040_example1', US1040_example1.taxpayer_basename)
 	assert_equal('CA_540_2012_example', CA540_example.taxpayer_basename)
@@ -133,8 +133,8 @@ def test_Examples
 	OpenTableExplorer::Finance::TaxForm::Examples.constants.each do |e|
 		value=eval(e.to_s)
 		if value.instance_of?(OpenTableExplorer::Finance::TaxForm) then
-			value.assert_pre_conditions
-			value.assert_post_conditions
+			value.assert_pre_conditions('constant name='+e.to_s+"\n")
+			value.assert_post_conditions(e)
 		end #if
 	end #each
 	assert_pathname_exists(US1040_user.open_tax_solver_input)
