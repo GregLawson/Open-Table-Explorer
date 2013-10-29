@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/minimal4.rb'
-class Minimal
+class Minimal4
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
