@@ -49,7 +49,7 @@ OptionParser.new do |opts|
     commands+=[:deserve] if t
   end
   opts.on("-a", "--[no-]all", "All files tested ") do |t|
-    commands+=[:minimal] if t
+    commands+=[:all] if t
   end
   opts.on("-l", "--[no-]minimal", "edit with minimal comparison. ") do |t|
     commands+=[:minimal] if t
@@ -74,7 +74,10 @@ else
 end #case
 commands.each do |c|
 	case c.to_sym
-		when :all then WorkFlow.new($0).all
+		when :all then 
+			WorkFlow.new($0).all(:test)
+			WorkFlow.new($0).all(:assertions_test)
+			WorkFlow.new($0).all(:long_test)
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
