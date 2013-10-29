@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../app/models/minimal4.rb'
 class Minimal
 module Assertions
 include Test::Unit::Assertions
@@ -24,7 +25,6 @@ extend Assertions::ClassMethods
 #include DefaultAssertions
 #extend DefaultAssertions::ClassMethods
 module Examples
-	Constant=1
 end #Examples
 include Examples
 end #Minimal
