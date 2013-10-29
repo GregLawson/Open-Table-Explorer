@@ -50,7 +50,7 @@ def initialize(taxpayer='example', form='1040',
 	if open_tax_solver_data_directory.nil? then
 		@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
 	else
-		@open_tax_solver_data_directory=open_tax_solver_data_directory
+		@open_tax_solver_data_directory=open_tax_solver_data_directory+"/#{@form_filename}/"
 	end #if
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
