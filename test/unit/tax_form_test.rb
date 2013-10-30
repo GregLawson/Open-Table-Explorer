@@ -17,9 +17,9 @@ include OpenTableExplorer::Finance::Constants
 extend OpenTableExplorer::Finance::Constants
 include OpenTableExplorer::Finance::TaxForm::Examples
 def test_Constants
-#	assert_pathname_exists(Data_source_directory)
+	assert_pathname_exists(Data_source_directory, 'mkdir test/data_sources/tax_form')
 	assert_pathname_exists(Open_Tax_Filler_Directory)
-#	assert_pathname_exists(Open_tax_solver_directory)
+#	assert_pathname_exists(Open_tax_solver_examples_directory)
 #	assert_pathname_exists(Open_tax_solver_data_directory)
 #	assert_pathname_exists(Open_tax_solver_input)
 #	assert_pathname_exists(Open_tax_solver_binary)
@@ -44,7 +44,7 @@ def test_initialize
 	assert_equal(:US, US1040_user.jurisdiction)
 	assert_equal('1040', US1040_user.form)
 	assert_equal('US_1040', US1040_user.form_filename)
-	assert_match(/CA_540_2011$/, CA540_example.open_tax_solver_binary)
+	assert_match(/CA_540_2012$/, CA540_example.open_tax_solver_binary)
 	assert_equal('US_1040_example', US1040_example.taxpayer_basename)
 	assert_equal('US_1040_example1', US1040_example1.taxpayer_basename)
 	assert_equal('CA_540_2012_example', CA540_example.taxpayer_basename)
@@ -53,12 +53,12 @@ def test_initialize
 end #initialize
 def test_build
 	US1040_example.build.assert_build
+	CA540_example.build.assert_build
 	US1040_user.build.assert_build
 	CA540_user.build.assert_build
+	US1040_example1.build.assert_build
 	US1040_template.build.assert_build
 	CA540_template.build.assert_build
-	CA540_example.build.assert_build
-	US1040_example1.build.assert_build
 end #build
 def test_run_tax_solver
 	form='1040'
@@ -133,8 +133,17 @@ def test_Examples
 	OpenTableExplorer::Finance::TaxForm::Examples.constants.each do |e|
 		value=eval(e.to_s)
 		if value.instance_of?(OpenTableExplorer::Finance::TaxForm) then
-			value.assert_pre_conditions
-			value.assert_post_conditions
+			message="value=#{value.inspect}\n"
+			assert_instance_of(OpenTableExplorer::Finance::TaxForm, value, message)
+			assert_not_empty("../OpenTaxSolver#{Default_tax_year}_*")
+			assert_not_empty(Dir["../OpenTaxSolver#{Default_tax_year}_*"], Dir["../OpenTaxSolver*"].inspect)
+			assert_not_nil(Dir["../OpenTaxSolver#{Default_tax_year}_*"].sort[-1])
+			assert_not_nil(value.open_tax_solver_directory, 'constant name='+e.to_s+"\n"+message)
+			assert_pathname_exists(value.open_tax_solver_directory, 'constant name='+e.to_s+"\n"+"")
+			assert_pathname_exists(value.open_tax_solver_data_directory, 'constant name='+e.to_s+"\n")
+			assert_pathname_exists(value.open_tax_solver_input, 'constant name='+e.to_s+"\n")
+			value.assert_pre_conditions('constant name='+e.to_s+"\n")
+			value.assert_post_conditions('constant name='+e.to_s+"\n")
 		end #if
 	end #each
 	assert_pathname_exists(US1040_user.open_tax_solver_input)
