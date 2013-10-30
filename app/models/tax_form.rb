@@ -18,7 +18,7 @@ module Constants
 Data_source_directory='test/data_sources/tax_form/'
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller-master'
-#Open_tax_solver_data_directory="#{Open_tax_solver_directory}/examples_and_templates/US_1040"
+#Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
 #Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_example.txt"
 #Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_example_sysout.txt"
 
@@ -50,7 +50,7 @@ def initialize(taxpayer='example', form='1040',
 	if open_tax_solver_data_directory.nil? then
 		@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
 	else
-		@open_tax_solver_data_directory=open_tax_solver_data_directory
+		@open_tax_solver_data_directory=open_tax_solver_data_directory+"/#{@form_filename}/"
 	end #if
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
@@ -58,13 +58,9 @@ def initialize(taxpayer='example', form='1040',
 		@taxpayer_basename=@taxpayer_basename_with_year
 	end #if
 	@open_tax_solver_binary="#{@open_tax_solver_directory}/bin/taxsolve_#{@form_filename}_#{@tax_year}"
-	if !File.exists?(@open_tax_solver_binary) then
-		@open_tax_solver_binary="#{Dir["../OpenTaxSolver#{@tax_year-1}_*"].sort[-1]}/bin/taxsolve_#{@form_filename}_#{@tax_year-1}"
-		warn("@open_tax_solver_binary=#{@open_tax_solver_binary}")
-	end #if
-	@open_tax_solver_input="#{open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
-	@open_tax_solver_output="#{open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
-	@open_tax_solver_sysout="#{open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
+	@open_tax_solver_input="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
+	@open_tax_solver_output="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
+	@open_tax_solver_sysout="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
 	@output_pdf="#{@open_tax_solver_data_directory}/taxes/#{@taxpayer_basename}_otff.pdf"
 	
 end #initialize
@@ -126,12 +122,12 @@ module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
-def assert_pre_conditions
-	message="In assert_pre_conditions, self=#{inspect}"
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_pathname_exists(@open_tax_solver_data_directory, message)
 	assert_pathname_exists(@open_tax_solver_input, message)
 end #assert_pre_conditions
-def assert_post_conditions
+def assert_post_conditions(message='')
 end #assert_post_conditions
 end #ClassMethods
 def assert_open_tax_solver
@@ -183,27 +179,28 @@ def assert_build
 	end #if
 	self
 end #build
-def assert_pre_conditions
-	assert_pathname_exists(@open_tax_solver_input)
+def assert_pre_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_input, message)
 end #assert_pre_conditions
-def assert_post_conditions
-	assert_pathname_exists(@open_tax_solver_directory, caller_lines)
-	assert_pathname_exists(@open_tax_solver_data_directory, caller_lines)
-	assert_pathname_exists(@open_tax_solver_output, caller_lines)
+def assert_post_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_data_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
 end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
+include Constants
 Example_Taxpayer=ENV['USERNAME'].to_sym
 US1040_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US)
 CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA)
-US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US)
-CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA)
-US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US)
-US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US)
-CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :CA)
+US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US, Default_tax_year, Data_source_directory)
+CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA, Default_tax_year, Data_source_directory)
+US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US, Default_tax_year, Data_source_directory)
+US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US, Default_tax_year, Data_source_directory)
+CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :CA, Default_tax_year, Data_source_directory)
 end #Examples
 end #TaxForm
 end #Finance
