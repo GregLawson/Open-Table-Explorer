@@ -85,7 +85,7 @@ def test_current_branch_name?
 
 end #current_branch_name
 def test_error_score?
-	executable=@related_files.model_test_pathname?
+#	executable=SELF_code_Repo.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
 		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
