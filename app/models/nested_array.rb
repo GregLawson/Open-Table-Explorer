@@ -7,7 +7,6 @@
 ###########################################################################
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets start embeddded arrays
-#require 'app/models/inlineAssertions.rb'
 class NestedArray < Array # tree or matrix, whatever
 module Constants
 end #Constants
