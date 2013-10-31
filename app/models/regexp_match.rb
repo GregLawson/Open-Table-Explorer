@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/regexp_tree.rb'
-require_relative '../../config/initializers/monkey/String.rb'
+#require_relative '../../config/initializers/monkey/String.rb'
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch
 attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
@@ -18,6 +18,9 @@ attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
 #	dataToParse is the String union of that may or may not match
 # better explanation needed here, see tests.
 # Class methods
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
 # Rescue bad regexp and return nil
 # Good regexp returns MatchData type or nil for no match
 def RegexpMatch.match_data?(regexp, string_to_match)
@@ -52,7 +55,8 @@ def initialize(regexp_tree,dataToParse)
 	else
 		@match_data=@regexp_tree.to_regexp.match(@dataToParse)
 		if @match_data.nil? then
-			@regexp_tree=RegexpAlternative.new(@regexp_tree, @dataToParse.to_exact_regexp)
+			exact_match_regexp= Regexp.new(Regexp.escape(@dataToParse), RegexpParse::Default_options)
+			@regexp_tree=RegexpAlternative.new(@regexp_tree, exact_match_regexp)
 		else
 		end #if
 	end #if
