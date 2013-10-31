@@ -7,12 +7,12 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/regexp_parse_assertions.rb'
-require_relative '../../test/unit/default_assertions_tests.rb'
+#require_relative '../../test/unit/default_assertions_tests.rb'
 class RegexpParseAssertionsTest < TestCase
 include RegexpParse::Examples
 extend RegexpParse::Examples::ClassMethods
-include DefaultAssertionTests
-include DefaultAssertionTests::ClassMethods
+#include DefaultAssertionTests
+#include DefaultAssertionTests::ClassMethods
 def test_class_assert_invariant
 	regexp_string='K.*C'
 	test_tree=RegexpParse.new(regexp_string)
