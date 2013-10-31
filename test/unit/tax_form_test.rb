@@ -108,26 +108,26 @@ def test_run_json_to_fdf
 #pdftk ${YEAR_DIR}/PDF/${FORM}.pdf fill_form ${FDF} output $3
 	US1040_template.run_json_to_fdf.assert_json_to_fdf
 	US1040_example.run_json_to_fdf.assert_json_to_fdf
-	CA540_template.run_json_to_fdf.assert_json_to_fdf
-	CA540_example.run_json_to_fdf.assert_json_to_fdf
+#	CA540_template.run_json_to_fdf.assert_json_to_fdf
+#	CA540_example.run_json_to_fdf.assert_json_to_fdf
 	US1040_user.run_json_to_fdf.assert_json_to_fdf
-	CA540_user.run_json_to_fdf.assert_json_to_fdf
+#	CA540_user.run_json_to_fdf.assert_json_to_fdf
 end #run_json_to_fdf
 def test_run_fdf_to_pdf
-	US1040_template.run_fdf_to_pdf.assert_fdf_to_pdf
-	US1040_example.run_fdf_to_pdf.assert_fdf_to_pdf
-	CA540_template.run_fdf_to_pdf.assert_fdf_to_pdf
-	CA540_example.run_fdf_to_pdf.assert_fdf_to_pdf
-	US1040_user.run_fdf_to_pdf.assert_fdf_to_pdf
-	CA540_user.run_fdf_to_pdf.assert_fdf_to_pdf
+#	US1040_template.run_fdf_to_pdf.assert_fdf_to_pdf
+#	US1040_example.run_fdf_to_pdf.assert_fdf_to_pdf
+#	CA540_template.run_fdf_to_pdf.assert_fdf_to_pdf
+#	CA540_example.run_fdf_to_pdf.assert_fdf_to_pdf
+#	US1040_user.run_fdf_to_pdf.assert_fdf_to_pdf
+#	CA540_user.run_fdf_to_pdf.assert_fdf_to_pdf
 end #run_json_to_pdf
 def 	test_run_pdf_to_jpeg
-	US1040_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
-	US1040_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
-	CA540_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
-	CA540_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
-	US1040_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
-	CA540_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
+#	US1040_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
+#	US1040_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
+#	CA540_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
+#	CA540_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
+#	US1040_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
+#	CA540_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
 end #run_pdf_to_jpeg
 def test_Examples
 	OpenTableExplorer::Finance::TaxForm::Examples.constants.each do |e|
