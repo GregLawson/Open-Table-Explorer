@@ -52,7 +52,7 @@ def initialize(regexp_tree,dataToParse)
 	else
 		@match_data=@regexp_tree.to_regexp.match(@dataToParse)
 		if @match_data.nil? then
-			exact_match_regexp= Regexp.new(Regexp.escape(@dataToParse), RegexpTree::Default_options)
+			exact_match_regexp= Regexp.new(Regexp.escape(@dataToParse), RegexpParse::Default_options)
 			@regexp_tree=RegexpAlternative.new(@regexp_tree, exact_match_regexp)
 		else
 		end #if
