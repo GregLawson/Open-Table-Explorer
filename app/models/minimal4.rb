@@ -12,4 +12,6 @@ include Constants
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
+def initialize
+end #initialize
 end #Minimal
