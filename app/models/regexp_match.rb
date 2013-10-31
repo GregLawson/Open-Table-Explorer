@@ -18,6 +18,9 @@ attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
 #	dataToParse is the String union of that may or may not match
 # better explanation needed here, see tests.
 # Class methods
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
 # Rescue bad regexp and return nil
 # Good regexp returns MatchData type or nil for no match
 def RegexpMatch.match_data?(regexp, string_to_match)
