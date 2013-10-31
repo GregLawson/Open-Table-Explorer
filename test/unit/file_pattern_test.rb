@@ -122,7 +122,6 @@ end #sub_directory_match
 def test_path
 end #path
 def test_parse_pathname_regexp
-	matchData=
 end #parse_pathname_regexp
 def test_pathname_glob
 end #pathname_glob
