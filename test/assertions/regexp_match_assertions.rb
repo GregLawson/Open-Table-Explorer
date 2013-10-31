@@ -46,7 +46,7 @@ def assert_pre_conditions
 	assert_invariant
 end #assert_pre_conditions
 def assert_invariant
-	assert_instance_of(RegexpTree, @regexp_tree)
+	assert_kind_of(RegexpTree, @regexp_tree)
 	assert_instance_of(String, @dataToParse)
 	assert_block("@match_data=#{@match_data}") {@match_data.nil? || @match_data.instance_of?(MatchData)}
 
