@@ -210,15 +210,6 @@ end #downgrade_commit
 def test(executable=related_files.model_test_pathname?)
 	stage(deserving_branch?(executable), executable)
 end #test
-def upgrade(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #upgrade
-def best(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #best
-def downgrade(executable=related_files.model_test_pathname?)
-	downgrade_commit(deserving_branch?(executable), executable)
-end #downgrade
 def stage(target_branch, tested_files)
 	if current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
@@ -246,11 +237,6 @@ def commit_to_branch(target_branch, tested_files)
 		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
-def test_and_commit(executable, tested_files)
-	
-	commit_to_branch(deserving_branch?(executable), tested_files)
-
-end #test
 def CompilesSupersetOfMaster
 	git_command("log compiles..master")
 end #
