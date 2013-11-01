@@ -115,6 +115,23 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end #error_score
+def deserving_branch?(executable=@related_files.model_test_pathname?)
+	@recent_test=shell_command("ruby "+executable)
+#	@recent_test.puts if $VERBOSE
+	if @recent_test.success? then
+		@deserving_branch=:passed
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test=shell_command("ruby -c "+executable)
+		if syntax_test.output=="Syntax OK\n" then
+			@deserving_branch=:testing
+		else
+			@deserving_branch=:edited
+		end #if
+	else
+		@deserving_branch=:testing
+	end #if
+	@deserving_branch
+end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
