@@ -115,23 +115,6 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end #error_score
-def deserving_branch?(executable=@related_files.model_test_pathname?)
-	@recent_test=shell_command("ruby "+executable)
-#	@recent_test.puts if $VERBOSE
-	if @recent_test.success? then
-		@deserving_branch=:passed
-	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test=shell_command("ruby -c "+executable)
-		if syntax_test.output=="Syntax OK\n" then
-			@deserving_branch=:testing
-		else
-			@deserving_branch=:edited
-		end #if
-	else
-		@deserving_branch=:testing
-	end #if
-	@deserving_branch
-end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
@@ -210,15 +193,6 @@ end #downgrade_commit
 def test(executable=related_files.model_test_pathname?)
 	stage(deserving_branch?(executable), executable)
 end #test
-def upgrade(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #upgrade
-def best(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #best
-def downgrade(executable=related_files.model_test_pathname?)
-	downgrade_commit(deserving_branch?(executable), executable)
-end #downgrade
 def stage(target_branch, tested_files)
 	if current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
@@ -246,11 +220,6 @@ def commit_to_branch(target_branch, tested_files)
 		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
-def test_and_commit(executable, tested_files)
-	
-	commit_to_branch(deserving_branch?(executable), tested_files)
-
-end #test
 def CompilesSupersetOfMaster
 	git_command("log compiles..master")
 end #
