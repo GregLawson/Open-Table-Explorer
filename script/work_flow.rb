@@ -49,7 +49,7 @@ OptionParser.new do |opts|
     commands+=[:deserve] if t
   end
   opts.on("-a", "--[no-]all", "All files tested ") do |t|
-    commands+=[:minimal] if t
+    commands+=[:all] if t
   end
   opts.on("-l", "--[no-]minimal", "edit with minimal comparison. ") do |t|
     commands+=[:minimal] if t
@@ -74,7 +74,10 @@ else
 end #case
 commands.each do |c|
 	case c.to_sym
-		when :all then WorkFlow.new($0).all
+		when :all then 
+			WorkFlow.new($0).all(:test)
+			WorkFlow.new($0).all(:assertions_test)
+			WorkFlow.new($0).all(:long_test)
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
@@ -89,7 +92,7 @@ commands.each do |c|
 		when :testing then work_flow.repository.stage_files(:testing, [f])
 		when :edited then work_flow.repository.stage_files(:edited, [f])
 		when :deserve then 
-			$stdout.puts  work_flow.repository.deserving_branch?(f)
+			$stdout.puts  'deserving branch='+work_flow.repository.deserving_branch?(f).to_s
 			$stdout.puts  work_flow.repository.recent_test.inspect
 		when :minimal then work_flow.minimal_edit
 		when :related then
@@ -97,7 +100,7 @@ commands.each do |c|
 			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison?
 
 		end #case
-		$stdout.puts work_flow.repository.git_command('status').inspect
+		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
 end #each

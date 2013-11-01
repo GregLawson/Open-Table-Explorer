@@ -16,7 +16,6 @@ def test_initialize
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
 	assert_equal("", EXAMPLE.errors)
 	assert_equal(0, EXAMPLE.process_status.exitstatus)
-	assert_equal(EXAMPLE.process_status.pid, EXAMPLE.pid)
 	assert_equal("Hello World\n", Hello_world.output)
 	Hello_world.assert_post_conditions
 end #initialize
@@ -29,9 +28,8 @@ def test_system_output
 		errors=stderr.read
 		stderr.close
 		process_status = wait_thr.value  # Process::Status object returned.
-		pid = wait_thr.pid # pid of the started process.
 		process_status = wait_thr.value # Process::Status object returned.
-		ret=[output, errors, process_status, pid]
+		ret=[output, errors, process_status]
 	}
 	ret
 end #system_output

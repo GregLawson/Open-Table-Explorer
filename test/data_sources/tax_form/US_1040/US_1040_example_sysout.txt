@@ -1,0 +1,148 @@
+US 1040 2012 - v10.00
+Writing results to file:  test/data_sources/tax_form//US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  31663.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30965.70
+	Qual. Div & Gains WorkSheet 8:  31663.94
+	Qual. Div & Gains WorkSheet 9:  31663.94
+	Qual. Div & Gains WorkSheet 10:  30965.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:     -0.00
+	Qual. Div & Gains WorkSheet 16:   3776.00
+	Qual. Div & Gains WorkSheet 17:   3776.00
+	Qual. Div & Gains WorkSheet 18:   3881.00
+	Qual. Div & Gains WorkSheet 19:   3776.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 78750.00
+ 		AMT Form 6251, L34 =  3776.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: test/data_sources/tax_form//US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2012 - EXAMPLE 	Fri Nov  1 01:22:30 2013
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Property Description)  (c Buy Date) (d Date Sold) (e Sold Price) (f Cost)
+ -------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98
+ -------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Property Description)  (c Buy Date) (d Date Sold) (e Sold Price) (f Cost)
+ -------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22
+ -------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1e =    6960.00    D1f =   -5750.97    D1g =       0.00    D1h =    1209.03
+ D2e =       0.00    D2f =       0.00    D2g =       0.00    D2h =       0.00
+ D3e =       0.00    D3f =       0.00    D3g =       0.00    D3h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8e  =    4209.95   D8f  =   -3658.22   D8g  =       0.00   D8h  =     551.73
+ D9e  =       0.00   D9f  =       0.00   D9g  =       0.00   D9h  =       0.00
+ D10e =       0.00   D10f =       0.00   D10g =       0.00   D10h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39 = 0
+ A2 = 51163.94
+ A3 = 3837.30
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ A29 = 5342.49
+Use standard deduction.
+L40 = 11900.00
+L41 = 39263.94
+L42 = 7600.00
+L43 = 31663.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  31663.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30965.70
+	Qual. Div & Gains WorkSheet 8:  31663.94
+	Qual. Div & Gains WorkSheet 9:  31663.94
+	Qual. Div & Gains WorkSheet 10:  30965.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:     -0.00
+	Qual. Div & Gains WorkSheet 16:   3776.00
+	Qual. Div & Gains WorkSheet 17:   3776.00
+	Qual. Div & Gains WorkSheet 18:   3881.00
+	Qual. Div & Gains WorkSheet 19:   3776.00
+L44 = 3776.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3776)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 78750.00
+ 		AMT Form 6251, L34 =  3776.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 = 3776.00
+L54 =   0.00
+L55 = 3776.00
+L61 = 3776.00		total tax
+L62 = 4153.59
+L72 = 4153.59		total payments
+L73 = 377.59  REBATE!!!
+L74a = 377.59 
