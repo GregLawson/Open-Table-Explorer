@@ -98,6 +98,8 @@ def emacs(executable=@related_files.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
+def deserving_branch?
+end #deserving_branch
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=@repository.deserving_branch?(executable)
