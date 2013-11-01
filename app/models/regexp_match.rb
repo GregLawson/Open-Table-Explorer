@@ -9,7 +9,6 @@ require_relative '../../app/models/regexp_tree.rb'
 #require_relative '../../config/initializers/monkey/String.rb'
 # For a fixed string compute parse tree or sub trees that match
 class RegexpMatch
-attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
 # Normal new- 
 #	regexp_tree is a RegexpTree and 
 #	dataToParse is a String that may or may not match
@@ -19,11 +18,7 @@ attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
 # better explanation needed here, see tests.
 # Class methods
 module ClassMethods
-end #ClassMethods
-extend ClassMethods
-# Rescue bad regexp and return nil
-# Good regexp returns MatchData type or nil for no match
-def RegexpMatch.match_data?(regexp, string_to_match)
+def match_data?(regexp, string_to_match)
 	regexp=canonical_regexp(regexp)
 	raise "string_to_match='#{string_to_match.inspect}' of class #{string_to_match.class.name} must be String." unless string_to_match.instance_of?(String)
 	if regexp.nil? then
@@ -40,11 +35,16 @@ def RegexpMatch.match_data?(regexp, string_to_match)
 end #match_data?
 # return superclass instance converted to RegexpMatch
 # Used by [] and other methods shared with superclasses
-def RegexpMatch.promote(value, dataToParse)
+def promote(value, dataToParse)
 	return RegexpMatch.new(value, dataToParse)
 end #promote
+end #ClassMethods
+extend ClassMethods
+# Rescue bad regexp and return nil
+# Good regexp returns MatchData type or nil for no match
 
 # Instance methods
+attr_reader :regexp_tree, :dataToParse, :matched_data, :errors
 def initialize(regexp_tree,dataToParse)
 	@errors=[]
 	@regexp_tree=RegexpTree.promote(regexp_tree)
@@ -61,6 +61,7 @@ def initialize(regexp_tree,dataToParse)
 		end #if
 	end #if
 end #initialize
+#force match by adding alternative to regexp
 def force
 	force_match=clone
 	if modification.match_data.nil? then
