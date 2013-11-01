@@ -1,0 +1,10 @@
+Loaded suite test/unit/regexp_tree_test
+Started
+@model_class is not a ActiveRecord::Base.
+actual=#<RegexpTree:0xb70d070c @parseTree=["K"], @regexp="K", @tokenIndex=-1>
+expected=#<RegexpTree:0xb70d0748 @parseTree=["K"], @regexp="K", @tokenIndex=0>
+expected == actual=true
+.
+Finished in 0.015779 seconds.
+
+1 tests, 12 assertions, 0 failures, 0 errors

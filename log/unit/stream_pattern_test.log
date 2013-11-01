@@ -1,0 +1,26 @@
+Loaded suite test/unit/stream_pattern_test
+Started
+EEEE
+Finished in 258.982048 seconds.
+
+  1) Error:
+test_aaa_test_new_assertions(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
+
+  2) Error:
+test_general_associations(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
+
+  3) Error:
+test_id_equal(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
+
+  4) Error:
+test_specific,_stable_and_working(StreamPatternTest):
+SQLite3::BusyException: database is locked
+    
+
+4 tests, 0 assertions, 0 failures, 4 errors
