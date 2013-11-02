@@ -14,6 +14,12 @@ class WorkFlow
 #include Grit
 module Constants
 Branch_enhancement=[:passed, :testing, :edited]
+Branch_compression={:success	=> 0,
+			:single_test_fail 	=> 1,
+			:multiple_tests_fail	=> 1,
+			:initialization_fail => 2,
+			:syntax_error        => 2
+			}
 end #Constants
 attr_reader :related_files, :edit_files, :repository
 module ClassMethods
@@ -83,6 +89,8 @@ def minimal_comparison?
 		end #if
 	end.compact.join #map
 end #minimal_comparison
+def deserving_branch?
+end #deserving_branch
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
 	puts edit.command_string
@@ -98,8 +106,6 @@ def emacs(executable=@related_files.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
-def deserving_branch?
-end #deserving_branch
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=@repository.deserving_branch?(executable)
