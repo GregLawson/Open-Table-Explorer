@@ -90,6 +90,9 @@ def minimal_comparison?
 	end.compact.join #map
 end #minimal_comparison
 def deserving_branch?
+	error_score=@repository.error_score?(executable=@related_files.model_test_pathname?)
+	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+	Branch_enhancement[Branch_compression[error_classification]]
 end #deserving_branch
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
