@@ -24,6 +24,9 @@ def test_initialize
 	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
 end #initialize
+def test_version_comparison
+	assert_equal('', TestWorkFlow.version_comparison([]))
+end #version_comparison
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
@@ -37,31 +40,24 @@ def test_goldilocks
 	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
 end #goldilocks
-include WorkFlow::Examples
-def test_execute
-	assert_include(TestWorkFlow.related_files.edit_files, TestFile)
-#	assert_equal('', TestWorkFlow.version_comparison)
-#	assert_equal('', TestWorkFlow.test_files)
-end #execute
-def test_test_files
-	assert_equal('', TestWorkFlow.test_files([]))
-# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
-end #test_files
-def test_version_comparison
-	assert_equal('', TestWorkFlow.version_comparison([]))
-end #version_comparison
 def test_functional_parallelism
 	edit_files=TestWorkFlow.related_files.edit_files
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
 	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
 end #functional_parallelism
 def test_test_files
+	assert_equal('', TestWorkFlow.test_files([]))
+# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
 end #test_files
 def test_minimal_comparison
 	assert_equal(' -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb', TestWorkFlow.minimal_comparison?)
-	assert_equal(4, RelatedFile.new_from_path?('app/models/regexp_parse.rb').default_test_class_id?)
 	assert_equal(' -t app/models/regexp_parse.rb app/models/minimal4.rb -t test/unit/regexp_parse_test.rb test/unit/minimal4_test.rb -t test/assertions/regexp_parse_assertions.rb test/assertions/minimal4_assertions.rb -t test/unit/regexp_parse_assertions_test.rb test/unit/minimal4_assertions_test.rb', WorkFlow.new('test/unit/regexp_parse_test.rb').minimal_comparison?)
 end #minimal_comparison
+def deserving_branch?
+	error_score=error_score?(executable=@related_files.model_test_pathname?)
+	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+	Branch_assignment=Branch_enhancement[Branch_compression[error_classification]]
+end #deserving_branch
 def test_stage_files
 end #stage_files
 def test_local_assert_post_conditions
