@@ -14,6 +14,12 @@ class WorkFlow
 #include Grit
 module Constants
 Branch_enhancement=[:passed, :testing, :edited]
+Branch_compression={:success	=> 0,
+			:single_test_fail 	=> 1,
+			:multiple_tests_fail	=> 1,
+			:initialization_fail => 2,
+			:syntax_error        => 2
+			}
 end #Constants
 attr_reader :related_files, :edit_files, :repository
 module ClassMethods
@@ -83,6 +89,11 @@ def minimal_comparison?
 		end #if
 	end.compact.join #map
 end #minimal_comparison
+def deserving_branch?
+	error_score=error_score?(executable=@related_files.model_test_pathname?)
+	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+	Branch_enhancement[Branch_compression[error_classification]]
+end #deserving_branch
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
 	puts edit.command_string
@@ -171,6 +182,30 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
+def assert_deserving_branch(branch_expected, executable, message='')
+	deserving_branch=deserving_branch?(executable)
+	recent_test=shell_command("ruby "+executable)
+	message+="\nrecent_test="+recent_test.inspect
+	message+="\nrecent_test.process_status="+recent_test.process_status.inspect
+	syntax_test=shell_command("ruby -c "+executable)
+	message+="\nsyntax_test="+syntax_test.inspect
+	message+="\nsyntax_test.process_status="+syntax_test.process_status.inspect
+	message+="\nbranch_expected=#{branch_expected.inspect}"
+	message+="\ndeserving_branch=#{deserving_branch.inspect}"
+	case deserving_branch
+	when :edited then
+		assert_equal(1, recent_test.process_status.exitstatus, message)
+		assert_not_equal("Syntax OK\n", syntax_test.output, message)
+		assert_equal(1, syntax_test.process_status.exitstatus, message)
+	when :testing then
+		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	when :passed then
+		assert_equal(0, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	end #case
+	assert_equal(deserving_branch, branch_expected, message)
+end #deserving_branch
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
