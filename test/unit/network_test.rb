@@ -52,7 +52,6 @@ end #test
 def test_aaa_test_new_assertions_ # aaa to output first
 	assert_equal(fixtures(@table_name), @my_fixtures)
 end #test
-end #class
 def test_NetworkInterface
 	lines=parse(NetworkInterface::IFCONFIG.output, LINES)
 	double_lines=NetworkInterface::IFCONFIG.output.split("\n\n")
@@ -75,3 +74,4 @@ def test_NetworkInterface
 #	assert_equal('eth0,', NetworkInterface::IFCONFIG.inspect)
 #	assert_equal('', NetworkInterface::IFCONFIG.output)
 end #NetworkInterface
+end #Network
