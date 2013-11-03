@@ -7,8 +7,6 @@
 ###########################################################################
 require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
 class NetworkTest < TestCase
 @@test_name=self.name
 #        assert_equal('Test',@@test_name[-4..-1],"@test_name='#{@test_name}' does not follow the default naming convention.")
