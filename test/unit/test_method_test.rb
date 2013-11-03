@@ -12,9 +12,10 @@ include DefaultTests
 include TE.model_class?::Examples
 include Parse
 def test_initialize
-	grep=ShellCommands.new('grep "def test_" test/unit/work_flow_test.rb')
-	parse(grep.output, /def test_/.capture(:method_name))
-	assert_match(/def test_/*/[a-zA-Z0-9_]*/.capture(:method_name), grep.output)
-	assert_equal([:initialize], TestMethod.new($0).method_test_names)
+	test_executable=$0
+	grep=ShellCommands.new('grep "def test_" '+test_executable)
+	parse(grep.output, Parse_grep)
+	assert_match(Parse_grep, grep.output)
+	assert_equal([:initialize], TestMethod.new(test_executable).method_test_names)
 end #initialize
 end #TestMethod
