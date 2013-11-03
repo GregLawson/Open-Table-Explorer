@@ -1,10 +1,15 @@
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 require_relative 'stream_pattern.rb'
 class Network < ActiveRecord::Base
 include Generic_Table
-def initialize
-	super('Networks')
-end #initialize
-def self.whereAmI
+module ClassMethods
+def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
 	#puts ifconfig
 	s = StringScanner.new(ifconfig)
