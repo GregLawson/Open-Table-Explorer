@@ -1,3 +1,4 @@
+require_relative 'stream_pattern.rb'
 class Network < ActiveRecord::Base
 include Generic_Table
 def initialize
