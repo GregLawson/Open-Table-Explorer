@@ -23,7 +23,8 @@ def initialize(test_executable)
 	grep_test=ShellCommands.new(' grep "def test_" '+test_executable)
 	@test_executable=test_executable
 	@method_test_names=parse(grep_test, Parse_grep)
-	grep=ShellCommands.new(' grep "def test_" '+test_executable)
+	grep_library=ShellCommands.new(' grep "def test_" '+test_executable)
+	@method_names=parse(grep_library, Parse_grep)
 end #initialize
 module Assertions
 include Test::Unit::Assertions
