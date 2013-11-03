@@ -14,13 +14,19 @@ module ClassMethods
 end #ClassMethods
 extend ClassMethods
 module Constants
+Parse_grep=/def test_/*/[a-zA-Z0-9_?]*/.capture
+Parse_library_grep=/def /*/[a-zA-Z0-9_?]*/.capture
 end #Constants
 include Constants
-# attr_reader
+include Parse
+attr_reader :test_executable, :method_test_names, :method_names
 def initialize(test_executable)
-	grep=ShellCommand.new(' grep "def test_" '+test_executable)
+	grep_test=ShellCommands.new('grep "def test_" '+test_executable)
 	@test_executable=test_executable
-	@method_test_names=parse(grep.output, /def test_/.capture(:method_name))
+	@method_test_names=parse(grep_test.output, Parse_grep)
+	library_file=RelatedFile.new_from_path?(test_executable).pathname_pattern?(:model)
+	grep_library=ShellCommands.new('grep "def " '+library_file)
+	@method_names=parse(grep_library.output, Parse_library_grep)
 end #initialize
 module Assertions
 include Test::Unit::Assertions
