@@ -5,7 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/regexp.rb'
+require_relative '../../app/models/no_db.rb'
 class TestMethod
 module ClassMethods
 end #ClassMethods

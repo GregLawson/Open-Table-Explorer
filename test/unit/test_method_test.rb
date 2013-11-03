@@ -7,8 +7,6 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/test_method.rb'
-require_relative '../../app/models/shell_commands.rb'
-require_relative '../../app/models/regexp.rb'
 class TestMethodTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
