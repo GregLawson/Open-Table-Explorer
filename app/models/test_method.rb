@@ -14,6 +14,7 @@ module ClassMethods
 end #ClassMethods
 extend ClassMethods
 module Constants
+Parse_grep=/def test_/*/[a-zA-Z0-9_]*/.capture(:method_name)
 end #Constants
 include Constants
 include Parse
@@ -21,7 +22,7 @@ attr_reader :test_executable, :method_test_names
 def initialize(test_executable)
 	grep=ShellCommands.new(' grep "def test_" '+test_executable)
 	@test_executable=test_executable
-	@method_test_names=parse(grep.output, /def test_/.capture(:method_name))
+	@method_test_names=parse(Parse_grep)
 end #initialize
 module Assertions
 include Test::Unit::Assertions
