@@ -22,9 +22,9 @@ def test_initialize
 	assert_equal(['initialize'], TestMethod.new(test_executable).method_test_names)
 end #initialize
 def test_untested_methods
-	assert_empty(SELF_tested_methods.untested_methods)
+	assert_empty(SELF_tested_methods.untested_methods, SELF_tested_methods)
 end #untested_methods
 def test_tested_nonmethods
-	assert_empty(SELF_tested_methods.tested_nonmethods)
+	assert_empty(SELF_tested_methods.tested_nonmethods, SELF_tested_methods)
 end #tested_nonmethods
 end #TestMethod
