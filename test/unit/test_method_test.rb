@@ -14,6 +14,7 @@ include Parse
 def test_initialize
 	grep=ShellCommands.new('grep "def test_" test/unit/work_flow_test.rb')
 	parse(grep.output, /def test_/.capture(:method_name))
+	assert_match(/def test_/.capture(:method_name), grep.output)
 	assert_equal([:initialize], TestMethod.new($0).method_test_names)
 end #initialize
 end #TestMethod
