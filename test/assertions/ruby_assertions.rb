@@ -169,7 +169,7 @@ def assert_not_empty(object,message='')
 	assert_block(message){!object.empty?}
 end #assert_not_empty
 def assert_empty(object,message='')
-	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
+	message+=object.canonicalName+" is not empty but contains "+object.inspect)   
 	if !object.nil?  then # nil is empty
 		assert_block(message){object.empty? || object==Set[nil]}
 	end #if
