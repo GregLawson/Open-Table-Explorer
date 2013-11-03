@@ -19,7 +19,7 @@ include Constants
 def initialize(test_executable)
 	grep=ShellCommand.new(' grep "def test_" '+test_executable)
 	@test_executable=test_executable
-	@method_test_names=grep.output.parse(/def test_/.capture(:method_name))
+	@method_test_names=parse(grep.output, /def test_/.capture(:method_name))
 end #initialize
 module Assertions
 include Test::Unit::Assertions

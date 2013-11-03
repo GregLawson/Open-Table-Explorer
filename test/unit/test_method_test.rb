@@ -12,7 +12,7 @@ include DefaultTests
 include TE.model_class?::Examples
 def test_initialize
 	grep=ShellCommands.new('grep "def test_" test/unit/work_flow_test.rb')
-	grep.output.parse(/def test_/.capture(:method_name))
+	parse(grep.output, /def test_/.capture(:method_name))
 	assert_equal([:initialize], TestMethod.new($0))
 end #initialize
 end #TestMethod
