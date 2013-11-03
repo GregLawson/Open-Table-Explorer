@@ -53,3 +53,25 @@ def test_aaa_test_new_assertions_ # aaa to output first
 	assert_equal(fixtures(@table_name), @my_fixtures)
 end #test
 end #class
+def test_NetworkInterface
+	lines=parse(NetworkInterface::IFCONFIG.output, LINES)
+	double_lines=NetworkInterface::IFCONFIG.output.split("\n\n")
+	assert_instance_of(Array, double_lines)
+	assert_operator(2, :<=, double_lines.size)
+	assert_equal('eth0', double_lines[0].split(' ')[0])
+	words=parse(double_lines[0], WORDS)
+	assert_equal('eth0', words[0])
+#	assert_equal('Link', words[1], "words=#{words.inspect}, lines=#{lines.inspect}")
+	puts "words=#{words.inspect}, double_lines=#{double_lines.inspect}"
+	words=double_lines.map do |row|
+		words=parse(row, WORDS)
+		puts "words=#{words.inspect}, row=#{row.inspect}"
+		assert_match(words[0], /eth0|lo|wlan0/, "row=#{row.inspect}, words=#{words.inspect}")
+	end #map
+	parse(NetworkInterface::IFCONFIG.output, LINES).map  do |row| 
+		parse(row, WORDS)
+	end #map
+#	assert_equal('', NetworkInterface::IFCONFIG.rows_and_columns)
+#	assert_equal('eth0,', NetworkInterface::IFCONFIG.inspect)
+#	assert_equal('', NetworkInterface::IFCONFIG.output)
+end #NetworkInterface
