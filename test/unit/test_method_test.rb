@@ -15,8 +15,11 @@ def test_initialize
 	test_executable=$0
 	grep_test=ShellCommands.new('grep "def test_" '+test_executable)
 	grep_lines=parse(grep_test.output, LINES)
-	assert_match(Parse_grep, grep_test.output)
+	assert_match(Parse_grep, grep_lines[0])
+	assert_match(Parse_grep, grep_lines[1])
+	assert_match(Parse_grep, grep_lines[2])
 	assert_not_nil(parse(grep_lines, Parse_grep))
+	assert_not_empty(parse(grep_lines, Parse_grep))
 	assert_equal(["initialize"], parse(grep_lines, Parse_grep))
 	library_file=RelatedFile.new_from_path?(test_executable).pathname_pattern?(:model)
 	grep_library=ShellCommands.new('grep "def " '+library_file)
