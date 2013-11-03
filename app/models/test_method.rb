@@ -28,6 +28,12 @@ def initialize(test_executable)
 	grep_library=ShellCommands.new('grep "def " '+library_file)
 	@method_names=parse(grep_library.output, Parse_library_grep)
 end #initialize
+def untested_methods
+	@method_names-@method_test_names
+end #untested_methods
+def tested_nonmethods
+	@method_test_names-@method_names
+end #untested_methods
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -40,12 +46,14 @@ end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
+	assert(@method_test_names-@method_names!=@method_test_names)
 end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
+SELF_tested_methods=TestMethod.new($0)
 include Constants
 end #Examples
 end #TestMethod

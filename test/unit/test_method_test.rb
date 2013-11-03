@@ -21,4 +21,10 @@ def test_initialize
 	grep_library=ShellCommands.new('grep "def " '+library_file)
 	assert_equal(['initialize'], TestMethod.new(test_executable).method_test_names)
 end #initialize
+def test_untested_methods
+	assert_not_empty(SELF_tested_methods.untested_methods)
+end #untested_methods
+def test_tested_nonmethods
+	assert_not_empty(SELF_tested_methods.tested_nonmethods)
+end #tested_nonmethods
 end #TestMethod
