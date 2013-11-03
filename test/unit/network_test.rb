@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-# executed in alphabetical order. Longer names sort later.
+require_relative '../../app/models/network.rb'
 class NetworkTest < TestCase
 @@test_name=self.name
 #        assert_equal('Test',@@test_name[-4..-1],"@test_name='#{@test_name}' does not follow the default naming convention.")
