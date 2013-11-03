@@ -14,17 +14,19 @@ include Parse
 def test_initialize
 	test_executable=$0
 	grep_test=ShellCommands.new('grep "def test_" '+test_executable)
+	grep_lines=parse(grep_test.output, LINES)
 	assert_match(Parse_grep, grep_test.output)
-	assert_not_nil(parse(grep_test.output, Parse_grep))
-	assert_equal(["initialize"], parse(grep_test.output, Parse_grep))
+	assert_not_nil(parse(grep_lines, Parse_grep))
+	assert_equal(["initialize"], parse(grep_lines, Parse_grep))
 	library_file=RelatedFile.new_from_path?(test_executable).pathname_pattern?(:model)
 	grep_library=ShellCommands.new('grep "def " '+library_file)
+	grep_library_lines=parse(grep_library.output, LINES)
 	assert_equal(['initialize'], TestMethod.new(test_executable).method_test_names)
 end #initialize
 def test_untested_methods
-	assert_empty(SELF_tested_methods.untested_methods, SELF_tested_methods)
+	assert_empty(SELF_tested_methods.untested_methods, SELF_tested_methods.inspect)
 end #untested_methods
 def test_tested_nonmethods
-	assert_empty(SELF_tested_methods.tested_nonmethods, SELF_tested_methods)
+	assert_empty(SELF_tested_methods.tested_nonmethods, SELF_tested_methods.inspect)
 end #tested_nonmethods
 end #TestMethod

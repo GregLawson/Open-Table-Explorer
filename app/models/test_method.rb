@@ -22,11 +22,13 @@ include Parse
 attr_reader :test_executable, :method_test_names, :method_names
 def initialize(test_executable)
 	grep_test=ShellCommands.new('grep "def test_" '+test_executable)
+	grep_lines=parse(grep_test.output, LINES)
 	@test_executable=test_executable
-	@method_test_names=parse(grep_test.output, Parse_grep)
+	@method_test_names=parse(grep_lines, Parse_grep)
 	library_file=RelatedFile.new_from_path?(test_executable).pathname_pattern?(:model)
 	grep_library=ShellCommands.new('grep "def " '+library_file)
-	@method_names=parse(grep_library.output, Parse_library_grep)
+	grep_library_lines=parse(grep_library.output, LINES)
+	@method_names=parse(grep_library_lines, Parse_library_grep)
 end #initialize
 def untested_methods
 	@method_names-@method_test_names
