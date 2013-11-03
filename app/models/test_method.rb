@@ -18,7 +18,7 @@ end #Constants
 include Constants
 # attr_reader
 def initialize(test_executable)
-	grep=ShellCommand.new(' grep "def test_" '+test_executable)
+	grep=ShellCommands.new(' grep "def test_" '+test_executable)
 	@test_executable=test_executable
 	@method_test_names=parse(grep.output, /def test_/.capture(:method_name))
 end #initialize
