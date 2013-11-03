@@ -16,7 +16,7 @@ def test_initialize
 	grep_test=ShellCommands.new('grep "def test_" '+test_executable)
 	assert_match(Parse_grep, grep_test.output)
 	assert_not_nil(parse(grep_test.output, Parse_grep))
-	assert_equal({:method_name=>"initialize"}, parse(grep_test.output, Parse_grep))
+	assert_equal("initialize", parse(grep_test.output, Parse_grep))
 	library_file=RelatedFile.new_from_path?(test_executable).pathname_pattern?(:model)
 	grep_library=ShellCommands.new('grep "def " '+library_file)
 	assert_equal([:initialize], TestMethod.new(test_executable).method_test_names)
