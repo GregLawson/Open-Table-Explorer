@@ -14,8 +14,9 @@ include Parse
 def test_initialize
 	test_executable=$0
 	grep=ShellCommands.new('grep "def test_" '+test_executable)
-	parse(grep.output, Parse_grep)
 	assert_match(Parse_grep, grep.output)
+	assert_not_nil(parse(grep.output, Parse_grep))
+	assert_equal([], parse(grep.output, Parse_grep))
 	assert_equal([:initialize], TestMethod.new(test_executable).method_test_names)
 end #initialize
 end #TestMethod
