@@ -10,10 +10,10 @@ require_relative '../../app/models/regexp.rb'
 module Parse
 module Constants
 LINE=/[^\n]*/.capture
-Line_delimiter=/\n/
-Delimited_line=(LINE*Line_delimiter).group
+Line_terminator=/\n/
+Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
-LINES=(Delimited_line*Regexp::Any)*LINE*(Line_delimiter*Regexp::Optional)
+LINES=(Terminated_line*Regexp::Any)*LINE*(Line_terminator*Regexp::Optional)
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
@@ -80,6 +80,10 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 end #rows_and_columns
 module Assertions
 include Test::Unit::Assertions
+def assert_parse(answer, string, pattern, message='')
+	message+="string.match(pattern)=#{string.match(pattern).inspect}"
+	assert_equal(answer, parse_string(string, pattern), message)
+end #parse
 def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')

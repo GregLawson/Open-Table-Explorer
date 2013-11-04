@@ -16,8 +16,8 @@ def test_Constants
 	pattern=Parse::LINES
 	answer=['1', '2']
 	assert_equal(answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
-	assert_equal(['1'], parse_string("1\n2\n", Delimited_line), "string.match(pattern)=#{string.match(pattern).inspect}")
-	assert_equal(['1'], parse_string("1\n2\n", LINES_cryptic), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_equal(['1'], parse_string("1\n2\n", Terminated_line), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_equal(['1', '2'], parse_string("1\n2\n", Terminated_line*Regexp::Any), "string.match(pattern)=#{string.match(pattern).inspect}")
 	assert_equal(['1', '2'], parse_string("1\n2\n", LINES), "string.match(pattern)=#{string.match(pattern).inspect}")
 end #Constants
 def test_parse_string
@@ -113,4 +113,8 @@ def test_rows_and_columns
 end #rows_and_columns
 include Parse::Constants
 include Parse::Constants
-end #ParseTest
+def test_assert_parse
+	assert_equal(['1', '2'], parse_string("1\n2", LINES), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_parse(['1', '2'], "1\n2", LINES, 'test_assert_parse')
+end #parse
+end #Parse
