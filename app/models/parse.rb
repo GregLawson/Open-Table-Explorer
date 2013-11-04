@@ -12,9 +12,9 @@ module Parse
 module Constants
 LINE=/[^\n]*/.capture
 Line_delimiter=/\n/
-Delimited_line=(Line_delimiter*LINE).group
+Delimited_line=(LINE*Line_delimiter).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
-LINES=LINE*(Delimited_line)*Regexp::Any
+LINES=(Delimited_line*Regexp::Any)*LINE
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
