@@ -13,7 +13,7 @@ LINE=/[^\n]*/.capture
 Line_delimiter=/\n/
 Delimited_line=(LINE*Line_delimiter).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
-LINES=(Delimited_line*Regexp::Any)*LINE
+LINES=(Delimited_line*Regexp::Any)*LINE*(Line_delimiter*Regexp::Optional)
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
