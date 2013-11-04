@@ -5,6 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# Adds a algebraic syntax for composing Regexp
+# Also implements a Kleene algebra for Regexp
+# @see http://en.wikipedia.org/wiki/Kleene_algebra
 class Regexp
 #include Comparable
 module Constants
@@ -36,6 +39,7 @@ def regexp_rescued(regexp_string, options=Default_options)
 rescue RegexpError
 	return nil
 end #regexp_rescued
+# Returns text error message for bad Regexp
 def regexp_error(regexp_string, options=Default_options)
 	raise "expecting regexp_string=#{regexp_string.inspect}" unless regexp_string.instance_of?(String)
 	return Regexp.new(regexp_string, options)
@@ -109,10 +113,6 @@ include Constants
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
-Line_terminator=/\n/
-Line_pattern=/([^\n]*)/
-LINES=/([^\n]*)(?:\n([^\n]*))*/
-WORDS=/([^\s]*)(?:\s([^\s]*))*/
 Ip_number_pattern=/\d{1,3}/
 end #Examples
 end #Regexp
