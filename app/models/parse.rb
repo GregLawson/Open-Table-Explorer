@@ -1,6 +1,16 @@
-require_relative '../../app/models/shell_command.rb'
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+#require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/regexp.rb'
 module Parse
 module Constants
+LINE=/[^\n]*/.capture
+Line_delimiter=/\n/
 LINES=/([^\n]*)(?:\n([^\n]*))*/
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
@@ -8,7 +18,9 @@ end #Constants
 include Constants
 def parse_string(string, pattern=LINES)
 	matchData=string.match(pattern)
-	if matchData.names==[] then
+  if matchData.nil? then
+    []
+  elsif matchData.names==[] then
 		matchData[1..-1] # return unnamed subexpressions
 	else
 		named_hash={}
