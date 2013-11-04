@@ -7,11 +7,14 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
+
 module Parse
 module Constants
 LINE=/[^\n]*/.capture
 Line_delimiter=/\n/
-LINES=/([^\n]*)(?:\n([^\n]*))*/
+Delimited_line=(Line_delimiter*LINE).group
+LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
+LINES=LINE*(Delimited_line)*Regexp::Any
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
