@@ -114,7 +114,7 @@ end #rows_and_columns
 include Parse::Constants
 include Parse::Constants
 def test_assert_parse
-	assert_equal(['1', '2'], parse_string("1\n2", LINES), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_equal(['1', '2'], parse_string("1\n2", LINES))
 	assert_parse(['1', '2'], "1\n2", LINES, 'test_assert_parse')
 end #parse
 end #Parse

@@ -84,10 +84,6 @@ def assert_parse(answer, string, pattern, message='')
 	message+="string.match(pattern)=#{string.match(pattern).inspect}"
 	assert_equal(answer, parse_string(string, pattern), message)
 end #parse
-def assert_pre_conditions(message='')
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-end #assert_post_conditions
 end #Assertions
 include Assertions
 module Examples
