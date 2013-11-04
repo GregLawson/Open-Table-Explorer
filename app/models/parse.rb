@@ -78,4 +78,15 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 		parse(row, column_pattern)
 	end #map
 end #rows_and_columns
+module Assertions
+include Test::Unit::Assertions
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end #Assertions
+include Assertions
+module Examples
+include Constants
+end #Examples
 end #Parse
