@@ -7,7 +7,6 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
-
 module Parse
 module Constants
 LINE=/[^\n]*/.capture
