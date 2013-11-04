@@ -84,6 +84,10 @@ def assert_parse(answer, string, pattern, message='')
 	message+="string.match(pattern)=#{string.match(pattern).inspect}"
 	assert_equal(answer, parse_string(string, pattern), message)
 end #parse
+def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
+	message+="string.match(#{pattern1*pattern2})=#{string.match(pattern1*pattern2).inspect}"
+	assert_equal(answer, parse_string(string, pattern1*pattern2), message)
+end #parse
 end #Assertions
 include Assertions
 module Examples
