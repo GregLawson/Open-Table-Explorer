@@ -80,13 +80,16 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 end #rows_and_columns
 module Assertions
 include Test::Unit::Assertions
+def add_parse_message(string, pattern, message='')
+	"'#{string}'.match(/#{pattern}/)=#{string.match(pattern).inspect}"
+end #add_parse_message
 def assert_parse(answer, string, pattern, message='')
-	message+="string.match(pattern)=#{string.match(pattern).inspect}"
+	message=add_parse_message(string, pattern, message)
 	assert_equal(answer, parse_string(string, pattern), message)
 end #parse
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 	match1=parse_string(string, pattern1)
-	assert_equal(answer[0, match1.size], match1, "match1=#{match1.inspect} for /#{pattern1} in '#{string}'/")
+	assert_equal(answer[0, match1.size], match1, add_parse_message(string, pattern1, message))
 	match2=parse_string(string, pattern2)
 	assert_empty(match2-answer, "match2=#{match2.inspect}")
 	match12=parse_string(pattern1.match(string).post_match, pattern2)

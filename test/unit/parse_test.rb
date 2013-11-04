@@ -114,13 +114,19 @@ def test_rows_and_columns
 end #rows_and_columns
 include Parse::Constants
 include Parse::Constants
+def test_add_parse_message
+	assert_equal('', add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
+end #add_parse_message
 def test_assert_parse
 	assert_equal(['1', '2'], parse_string("1\n2", LINES))
 	assert_parse(['1', '2'], "1\n2", LINES, 'test_assert_parse')
 end #parse
 def test_assert_parse_sequence
 	assert_equal(['1'], parse_string("1\n2", LINE*Line_terminator))
-	assert_parse_sequence(['1'], "1\n2\n",  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
+	assert_equal([], ['2']-['1', '2'])
+
+	assert_empty(['2']-['1', '2'])
+	assert_parse_sequence(['1', '2'], "1\n2\n",  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
 end #parse_sequence
 def test_parse_repetition
 	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
