@@ -100,6 +100,22 @@ def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 		assert_equal(answer, parse_string(string, pattern1*pattern2), message)
 	end #if
 end #parse_sequence
+def assert_parse_repetition(answer, string, pattern, repetition_range, message='')
+	match1=parse_string(string, pattern)
+	assert_equal(match1, answer[0, match1.size], "match1=#{match1.inspect} for /#{pattern}/")
+	match_any=parse_string(string, pattern*Regexp::Any)
+	assert_equal(answer, match_any[-answer.size..-1], "match_any=#{match_any.inspect}")
+	match12=parse_string(pattern.match(string).post_match, pattern*repetition_range)
+	assert_equal(match12, answer[-match12.size..-1], "match12=#{match12.inspect}")
+	match=parse_string(string, pattern*repetition_range)
+	if match==[] || match=={} then
+		message+="match1=#{match1.inspect}\n"
+		message+="match2=#{match2.inspect}\n"
+		message+="match12=#{match12.inspect}\n"
+		message+="string.match(#{pattern*repetition_range})=#{string.match(pattern*repetition_range).inspect}"
+		assert_equal(answer, parse_string(string, pattern*repetition_range), message)
+	end #if
+end #parse_repetition
 end #Assertions
 include Assertions
 module Examples

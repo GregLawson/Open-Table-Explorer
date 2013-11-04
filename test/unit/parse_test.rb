@@ -122,4 +122,8 @@ def test_assert_parse_sequence
 	assert_equal(['1'], parse_string("1\n2", LINE*Line_terminator))
 	assert_parse_sequence(['1'], "1\n2",  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
 end #parse_sequence
+def test_parse_repetition
+	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
+	assert_parse_repetition(['1'], "1\n2\n",  Terminated_line, Any, 'test_assert_parse_sequence')
+end #parse_repetition
 end #Parse
