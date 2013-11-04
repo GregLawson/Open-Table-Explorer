@@ -16,6 +16,8 @@ def test_Constants
 	pattern=Parse::LINES
 	answer=['1', '2']
 	assert_equal(answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_equal(['1'], parse_string("1\n2\n", Delimited_line), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_equal(['1'], parse_string("1\n2\n", LINES_cryptic), "string.match(pattern)=#{string.match(pattern).inspect}")
 	assert_equal(['1', '2'], parse_string("1\n2\n", LINES), "string.match(pattern)=#{string.match(pattern).inspect}")
 end #Constants
 def test_parse_string
