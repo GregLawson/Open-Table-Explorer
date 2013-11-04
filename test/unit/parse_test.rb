@@ -12,13 +12,10 @@ include Parse
 include Parse::Constants
 def test_Constants
 #	assert_equal(LINES, LINES_cryptic)
-	string="1\n2"
-	pattern=Parse::LINES
-	answer=['1', '2']
-	assert_equal(answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
-	assert_equal(['1'], parse_string("1\n2\n", Terminated_line), "string.match(pattern)=#{string.match(pattern).inspect}")
-	assert_equal(['1', '2'], parse_string("1\n2\n", Terminated_line*Regexp::Any), "string.match(pattern)=#{string.match(pattern).inspect}")
-	assert_equal(['1', '2'], parse_string("1\n2\n", LINES), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_parse(['1', '2'], "1\n2", LINES, '')
+	assert_parse(['1'], "1\n2\n", Terminated_line, "")
+	assert_parse(['1', '2'], "1\n2\n", Terminated_line*Regexp::Any, "")
+	assert_parse(['1', '2'], "1\n2\n", LINES, "")
 end #Constants
 def test_parse_string
 	string="1\n2"
