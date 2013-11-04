@@ -10,11 +10,15 @@ require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
 include Parse
 include Parse::Constants
+include Regexp::Constants
 def test_Constants
 #	assert_equal(LINES, LINES_cryptic)
 	assert_parse(['1', '2'], "1\n2", LINES, '')
 	assert_parse(['1'], "1\n2\n", Terminated_line, "")
-	assert_parse(['1', '2'], "1\n2\n", Terminated_line*Regexp::Any, "")
+	assert_parse_sequence(['1', '2'], "1\n2\n", Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
+	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line*Regexp::Any, Terminated_line, "assert_parse_sequence")
+	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string, Terminated_line, "assert_parse_sequence")
+	assert_parse_sequence(['1', '2'], "1\n2\n", Terminated_line, Terminated_line, "assert_parse_sequence")
 	assert_parse(['1', '2'], "1\n2\n", LINES, "")
 end #Constants
 def test_parse_string
@@ -115,7 +119,7 @@ def test_assert_parse
 	assert_parse(['1', '2'], "1\n2", LINES, 'test_assert_parse')
 end #parse
 def test_assert_parse_sequence
-	assert_equal(['1', '2'], parse_string("1\n2", LINE*Line_terminator))
-	assert_parse_sequence(['1', '2'], "1\n2", LINE, Line_terminator, 'test_assert_parse_sequence')
+	assert_equal(['1'], parse_string("1\n2", LINE*Line_terminator))
+	assert_parse_sequence(['1'], "1\n2",  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
 end #parse_sequence
 end #Parse

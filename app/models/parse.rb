@@ -85,9 +85,21 @@ def assert_parse(answer, string, pattern, message='')
 	assert_equal(answer, parse_string(string, pattern), message)
 end #parse
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
-	message+="string.match(#{pattern1*pattern2})=#{string.match(pattern1*pattern2).inspect}"
-	assert_equal(answer, parse_string(string, pattern1*pattern2), message)
-end #parse
+	match1=parse_string(string, pattern1)
+	assert_equal(match1, answer[0, match1.size], "match1=#{match1.inspect} for /#{pattern1}/")
+	match2=parse_string(string, pattern2)
+	assert_equal(match2, answer[-match2.size..-1], "match2=#{match2.inspect}")
+	match12=parse_string(pattern1.match(string).post_match, pattern2)
+	assert_equal(match12, answer[-match12.size..-1], "match12=#{match12.inspect}")
+	match=parse_string(string, pattern1*pattern2)
+	if match==[] || match=={} then
+		message+="match1=#{match1.inspect}\n"
+		message+="match2=#{match2.inspect}\n"
+		message+="match12=#{match12.inspect}\n"
+		message+="string.match(#{pattern1*pattern2})=#{string.match(pattern1*pattern2).inspect}"
+		assert_equal(answer, parse_string(string, pattern1*pattern2), message)
+	end #if
+end #parse_sequence
 end #Assertions
 include Assertions
 module Examples
