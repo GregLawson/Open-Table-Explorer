@@ -10,7 +10,8 @@ require_relative '../../app/models/regexp.rb'
 module Parse
 module Constants
 LINE=/[^\n]*/.capture
-LINES=(LINE*/(?:\n([^\n]*))*/
+Line_delimiter=/\n/
+LINES=/([^\n]*)(?:\n([^\n]*))*/
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
