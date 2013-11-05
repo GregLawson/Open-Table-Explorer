@@ -81,7 +81,7 @@ end #rows_and_columns
 module Assertions
 include Test::Unit::Assertions
 def add_parse_message(string, pattern, message='')
-	"'#{string}'.match(/#{pattern}/)=#{string.match(pattern).inspect}"
+	"#{string.inspect}.match(/#{pattern}/)=#{string.match(pattern).inspect}"
 end #add_parse_message
 def assert_parse(answer, string, pattern, message='')
 	message=add_parse_message(string, pattern, message)
