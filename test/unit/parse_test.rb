@@ -48,6 +48,29 @@ def test_parse_string
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
 def test_parse_split
+	string="1\n2\n"
+	pattern=Terminated_line
+	ending=:optional
+	ret=case ending
+	when :optional then 
+		split=string.split(pattern)
+		if split[-1].nil? then
+			split[0..-2] #drop empty
+		else
+			split
+		end #if 
+	when :delimiter then string.split(pattern) 
+	when :terminator then
+		split=string.split(pattern)
+		if split[-1].nil? then
+			split[0..-2] #drop empty
+		else
+			split
+		end #if 
+	else
+	end #case
+	assert_equal(['1', '2'], ret)
+	assert_match("1\n2\n", Terminated_line, "assert_match")
 	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :terminator)
 	assert_equal(['1', '2', nil], parse_split("1\n2\n", Terminated_line, ""), :delimitor)
 	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :optional)
