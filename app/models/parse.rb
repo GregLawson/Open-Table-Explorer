@@ -25,6 +25,7 @@ def parse_string(string, pattern=LINES)
   elsif matchData.names==[] then
 		matchData[1..-1] # return unnamed subexpressions
 	else
+#     named_captures for captures.size > names.size
 		named_hash={}
 		matchData.names.each do |n| # return named subexpressions
 			named_hash[n.to_sym]=matchData[n]
@@ -32,6 +33,28 @@ def parse_string(string, pattern=LINES)
 		named_hash
 	end #if
 end #parse_string
+# Splits pattern match captures into an array of parses
+# Uses Regexp capture mechanism in String#split
+def parse_split(string, pattern=Terminated_line, ending=:optional)
+	case ending
+	when :optional then 
+		split=string.split(pattern)
+		if split[-1].nil? then
+			split[0..-2] #drop empty
+		else
+			split
+		end #if 
+	when :delimiter then string.split(pattern) 
+	when :terminator then
+		split=string.split(pattern)
+		if split[-1].nil? then
+			split[0..-2] #drop empty
+		else
+			split
+		end #if 
+	else
+	end #case
+end #parse_split
 def parse_array(string_array, pattern=WORDS)
 	string_array.map do |string|
 		parse(string,pattern)
@@ -80,8 +103,15 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 end #rows_and_columns
 module Assertions
 include Test::Unit::Assertions
+def newline_if_not_empty(message)
+	if message.empty? then
+		message
+	else
+		message+"\n"
+	end #if
+end #newline_if_not_empty
 def add_parse_message(string, pattern, message='')
-	"#{string.inspect}.match(/#{pattern}/)=#{string.match(pattern).inspect}"
+	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
 def assert_parse(answer, string, pattern, message='')
 	message=add_parse_message(string, pattern, message)

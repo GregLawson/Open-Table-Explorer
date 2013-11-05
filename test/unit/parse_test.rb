@@ -47,6 +47,12 @@ def test_parse_string
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
+def test_parse_split
+	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :terminator)
+	assert_equal(['1', '2', nil], parse_split("1\n2\n", Terminated_line, ""), :delimitor)
+	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :optional)
+	assert_equal(['1', '2'], parse_split("1\n2", Terminated_line, ""), :optional)
+end #parse_split
 def test_parse_array
 	string_array=["1 2","3 4"]
 	pattern=WORDS
@@ -115,7 +121,7 @@ include Parse::Constants
 include Parse::Constants
 def test_add_parse_message
 	assert_match(/match\(/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
-	assert_match(/-mix:/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
+	assert_match(/test_add_parse_message/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
 end #add_parse_message
 def test_assert_parse
 	assert_equal(['1', '2'], parse_string("1\n2", LINES))
@@ -130,6 +136,6 @@ def test_assert_parse_sequence
 end #parse_sequence
 def test_parse_repetition
 	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
-	assert_parse_repetition(['1'], "1\n2\n",  Terminated_line, Any, 'test_assert_parse_sequence')
+	assert_parse_repetition(['1','2'], "1\n2\n",  Terminated_line, Any, 'test_assert_parse_sequence')
 end #parse_repetition
 end #Parse
