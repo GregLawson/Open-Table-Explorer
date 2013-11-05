@@ -115,7 +115,8 @@ end #rows_and_columns
 include Parse::Constants
 include Parse::Constants
 def test_add_parse_message
-	assert_equal('', add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
+	assert_match(/match\(/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
+	assert_match(/-mix:/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
 end #add_parse_message
 def test_assert_parse
 	assert_equal(['1', '2'], parse_string("1\n2", LINES))
