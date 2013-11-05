@@ -10,6 +10,16 @@ require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
 include Parse
 include Parse::Constants
+include Regexp::Constants
+def test_Constants
+#	assert_equal(LINES, LINES_cryptic)
+	assert_parse(['1', '2'], "1\n2", LINES, '')
+	assert_parse(['1'], "1\n2\n", Terminated_line, "")
+	assert_parse_sequence(['1', '2'], "1\n2\n", Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
+	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
+	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line*Regexp::Any, Terminated_line, "assert_parse_sequence")
+	assert_parse(['1', '2'], "1\n2\n", LINES, "")
+end #Constants
 def test_parse_string
 	string="1\n2"
 	pattern=Parse::LINES
@@ -18,7 +28,9 @@ def test_parse_string
 	assert_equal(answer, ret[1..-1]) # return matched subexpressions
 	matchData=string.match(pattern)
 	assert_equal(matchData.names, [])
-	if matchData.names==[] then
+  if matchData.nil? then
+    []
+	elsif matchData.names==[] then
 		assert_equal(answer, matchData[1..-1], matchData) # return unnamed subexpressions
 	else
 		nc=pattern.named_captures
@@ -35,6 +47,35 @@ def test_parse_string
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
+def test_parse_split
+	string="1\n2\n"
+	pattern=Terminated_line
+	ending=:optional)
+	ret=case ending
+	when :optional then 
+		split=string.split(pattern)
+		if split[-1].nil? then
+			split[0..-2] #drop empty
+		else
+			split
+		end #if 
+	when :delimiter then string.split(pattern) 
+	when :terminator then
+		split=string.split(pattern)
+		if split[-1].nil? then
+			split[0..-2] #drop empty
+		else
+			split
+		end #if 
+	else
+	end #case
+	assert_equal(['1', '2'], ret)
+	assert_match("1\n2\n", Terminated_line, "assert_match")
+	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :terminator)
+	assert_equal(['1', '2', nil], parse_split("1\n2\n", Terminated_line, ""), :delimitor)
+	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :optional)
+	assert_equal(['1', '2'], parse_split("1\n2", Terminated_line, ""), :optional)
+end #parse_split
 def test_parse_array
 	string_array=["1 2","3 4"]
 	pattern=WORDS
@@ -100,30 +141,24 @@ def test_rows_and_columns
 #	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns(column_delimiter))
 end #rows_and_columns
 include Parse::Constants
-def test_assert_post_conditions
-	Hello_world.assert_post_conditions
-end #assert_post_conditions
 include Parse::Constants
-def test_NetworkInterface
-	lines=parse(NetworkInterface::IFCONFIG.output, LINES)
-	double_lines=NetworkInterface::IFCONFIG.output.split("\n\n")
-	assert_instance_of(Array, double_lines)
-	assert_operator(2, :<=, double_lines.size)
-	assert_equal('eth0', double_lines[0].split(' ')[0])
-	words=parse(double_lines[0], WORDS)
-	assert_equal('eth0', words[0])
-#	assert_equal('Link', words[1], "words=#{words.inspect}, lines=#{lines.inspect}")
-	puts "words=#{words.inspect}, double_lines=#{double_lines.inspect}"
-	words=double_lines.map do |row|
-		words=parse(row, WORDS)
-		puts "words=#{words.inspect}, row=#{row.inspect}"
-		assert_match(words[0], /eth0|lo|wlan0/, "row=#{row.inspect}, words=#{words.inspect}")
-	end #map
-	parse(NetworkInterface::IFCONFIG.output, LINES).map  do |row| 
-		parse(row, WORDS)
-	end #map
-#	assert_equal('', NetworkInterface::IFCONFIG.rows_and_columns)
-#	assert_equal('eth0,', NetworkInterface::IFCONFIG.inspect)
-#	assert_equal('', NetworkInterface::IFCONFIG.output)
-end #NetworkInterface
-end #ParseTest
+def test_add_parse_message
+	assert_match(/match\(/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
+	assert_match(/test_add_parse_message/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
+end #add_parse_message
+def test_assert_parse
+	assert_equal(['1', '2'], parse_string("1\n2", LINES))
+	assert_parse(['1', '2'], "1\n2", LINES, 'test_assert_parse')
+end #parse
+def test_assert_parse_sequence
+	assert_equal(['1'], parse_string("1\n2", LINE*Line_terminator))
+	assert_equal([], ['2']-['1', '2'])
+
+	assert_empty(['2']-['1', '2'])
+	assert_parse_sequence(['1', '2'], "1\n2\n",  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
+end #parse_sequence
+def test_parse_repetition
+	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
+	assert_parse_repetition(['1','2'], "1\n2\n",  Terminated_line, Any, 'test_assert_parse_sequence')
+end #parse_repetition
+end #Parse
