@@ -7,10 +7,6 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/parse.rb'
-def test_parse
-	assert_equal(['1', '2'], LINES.match("1\n2\n").parse)
-	assert_equal(['1', '2'], LINES.match("1\n2").parse)
-end #parse
 class ParseTest < TestCase
 include Parse
 include Parse::Constants
