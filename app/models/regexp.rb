@@ -63,7 +63,8 @@ def *(other)
 	when Regexp then return Regexp.new(self.source + other.source)
 	when String then return Regexp.new(self.source + other)
 	when Fixnum then return Regexp.new(self.source*other)
-	when NilClass then raise "Right argument of :* operator evaluated to nil.\nPossibly add parenthesis to control operator versus method precedence.\nself=#{self.inspect}"
+	when NilClass then raise "Right argument of :* operator evaluated to nil."+
+		"\nPossibly add parenthesis to control operator versus method precedence.\nself=#{self.inspect}"
 	else
 		raise "other.class=#{other.class.inspect}"
 	end #case
