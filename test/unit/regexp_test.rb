@@ -74,6 +74,10 @@ def test_capture
 	assert_match(regexp.capture(:digit), str, message)
 	assert_equal('2', regexp.capture(:digit).match('a2c')[:digit])
 end #capture
+def test_back_reference
+	assert_match(/(?<vowel>[aeiou]).\k<vowel>.\k<vowel>/, 'ototomy', 'Regexp doc example.')
+	assert_equal('oto', /(?<vowel>[aeiou]).\k<vowel>.\k<vowel>/.match('ototomy')[1])
+end #back_reference
 def test_group
 	regexp=/\d/
 	str='a2c'
@@ -81,9 +85,9 @@ def test_group
 	message="matchData.inspect=#{matchData.inspect}"
 	assert_equal('2', matchData[0], message)
 end #group
-def test_capture_names
+def test_capture_mapping
 	pattern=/\d/.capture(:a)*/\d+/.capture(:b)
 	assert_equal(['a', 'b'], pattern.names)
-	assert_equal([:a, :b], pattern.capture_name_array, "named_captures=#{pattern.named_captures.inspect}")
+	assert_equal([:a, :b], pattern.capture_mapping, "named_captures=#{pattern.named_captures.inspect}")
 end #capture_names
 end #Regexp

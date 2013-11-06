@@ -77,10 +77,15 @@ def capture(key=nil)
 		/(?<#{key.to_s}>#{self.source})/
 	end #if
 end #capture
+# capture backreferences must be all numbered or all named.
+def back_reference(key)
+		/#{self.source}\k<#{key.to_s}>/
+end #back_reference
 def group
 	/(?:#{self.source})/
 end #group
-def capture_name_array
+def capture_mapping
+	
 	names=[] # empty till added to
 	named_captures.each_pair do |key, index_array|
 		index_array.each do |index|
