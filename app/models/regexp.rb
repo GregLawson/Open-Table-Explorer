@@ -64,7 +64,9 @@ def *(other)
 	when String then return Regexp.new(self.source + other)
 	when Fixnum then return Regexp.new(self.source*other)
 	when NilClass then raise "Right argument of :* operator evaluated to nil."+
-		"\nPossibly add parenthesis to control operator versus method precedence.\nself=#{self.inspect}"
+		"\nPossibly add parenthesis to control operator versus method precedence."+
+		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
+		"\nself=#{self.inspect}"
 	else
 		raise "other.class=#{other.class.inspect}"
 	end #case
@@ -83,7 +85,9 @@ end #capture
 def back_reference(key)
 		/#{self.source}\k<#{key.to_s}>/
 rescue RegexpError => exception
-	warn "back_reference regexp=/#{self.source}\k<#{key.to_s}>/ failed"
+	warn "back_reference regexp=/#{self.source}\k<#{key.to_s}>/ failed."+
+		"\nPossibly add parenthesis to control operator versus method precedence."+
+		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
 end #back_reference
 def group
 	/(?:#{self.source})/
