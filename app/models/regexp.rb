@@ -80,6 +80,8 @@ end #capture
 # capture backreferences must be all numbered or all named.
 def back_reference(key)
 		/#{self.source}\k<#{key.to_s}>/
+rescue RegexpError => exception
+	warn "back_reference regexp=/#{self.source}\k<#{key.to_s}>/ failed"
 end #back_reference
 def group
 	/(?:#{self.source})/
