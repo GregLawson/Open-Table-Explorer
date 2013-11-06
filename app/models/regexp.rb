@@ -66,6 +66,10 @@ def *(other)
 	when Regexp then return Regexp.new(self.source + other.source)
 	when String then return Regexp.new(self.source + other)
 	when Fixnum then return Regexp.new(self.source*other)
+	when NilClass then raise "Right argument of :* operator evaluated to nil."+
+		"\nPossibly add parenthesis to control operator versus method precedence."+
+		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
+		"\nself=#{self.inspect}"
 	else
 		raise "other.class=#{other.class.inspect}"
 	end #case
@@ -80,18 +84,17 @@ def capture(key=nil)
 		/(?<#{key.to_s}>#{self.source})/
 	end #if
 end #capture
+# capture backreferences must be all numbered or all named.
+def back_reference(key)
+		/#{self.source}\k<#{key.to_s}>/
+rescue RegexpError => exception
+	fail "back_reference regexp=/#{self.source}\k<#{key.to_s}>/ failed."+
+		"\nPossibly add parenthesis to control operator versus method precedence."+
+		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
+end #back_reference
 def group
 	/(?:#{self.source})/
 end #group
-def capture_name_array
-	names=[] # empty till added to
-	named_captures.each_pair do |key, index_array|
-		index_array.each do |index|
-			names[index-1]=key.to_sym # delete zero index (not a capture)
-		end #each
-	end #each_pair
-	names
-end #capture_names
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
