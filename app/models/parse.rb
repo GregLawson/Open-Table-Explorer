@@ -7,6 +7,22 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
+class MatchData
+def parse
+	if nil? then
+    []
+	elsif names==[] then
+		self[1..-1] # return unnamed subexpressions
+	else
+#     named_captures for captures.size > names.size
+		named_hash={}
+		names.each do |n| # return named subexpressions
+			named_hash[n.to_sym]=self[n]
+		end # each
+		named_hash
+	end #if
+end #parse
+end #MatchData
 module Parse
 module Constants
 LINE=/[^\n]*/.capture
@@ -37,20 +53,19 @@ end #parse_string
 # Uses Regexp capture mechanism in String#split
 def parse_split(string, pattern=Terminated_line, ending=:optional)
 	case ending
+	ret=string.split(pattern)
 	when :optional then 
-		split=string.split(pattern)
-		if split[-1].nil? then
-			split[0..-2] #drop empty
+		if ret[-1].nil? then
+			ret[0..-2] #drop empty
 		else
-			split
+			ret
 		end #if 
 	when :delimiter then string.split(pattern) 
 	when :terminator then
-		split=string.split(pattern)
-		if split[-1].nil? then
-			split[0..-2] #drop empty
+		if ret[-1].nil? then
+			ret[0..-2] #drop empty
 		else
-			split
+			ret
 		end #if 
 	else
 	end #case

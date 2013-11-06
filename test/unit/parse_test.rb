@@ -7,6 +7,10 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/parse.rb'
+def test_parse
+	assert_equal(['1', '2'], LINES.match("1\n2\n").parse)
+	assert_equal(['1', '2'], LINES.match("1\n2").parse)
+end #parse
 class ParseTest < TestCase
 include Parse
 include Parse::Constants
@@ -49,8 +53,8 @@ def test_parse_string
 end #parse_string
 def test_parse_split
 	string="1\n2\n"
-	pattern=Terminated_line
-	ending=:optional
+	pattern=LINE*Line_terminator
+	ending=:terminator
 	ret=case ending
 	when :optional then 
 		split=string.split(pattern)
