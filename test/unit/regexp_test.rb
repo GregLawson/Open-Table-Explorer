@@ -78,9 +78,9 @@ def test_back_reference
 	regexp1=/(?<vowel>[aeiou]).\k<vowel>.\k<vowel>/
 	regexp2=/[aeiou]/.capture(:vowel)*/./.back_reference(:vowel)*/./.back_reference(:vowel)
 	assert_match(regexp1, 'ototomy', 'Regexp doc example.')
-	assert_match(regexp2, 'ototomy', 'Regexp doc example.')
 	assert_equal('ototo', regexp1.match('ototomy')[0])
 	assert_equal('o', regexp1.match('ototomy')[1])
+	assert_match(regexp2, 'ototomy', 'Regexp doc example.')
 end #back_reference
 def test_group
 	regexp=/\d/
