@@ -52,8 +52,8 @@ end #parse_string
 # Splits pattern match captures into an array of parses
 # Uses Regexp capture mechanism in String#split
 def parse_split(string, pattern=Terminated_line, ending=:optional)
-	case ending
 	ret=string.split(pattern)
+	case ending
 	when :optional then 
 		if ret[-1].nil? then
 			ret[0..-2] #drop empty
@@ -67,7 +67,6 @@ def parse_split(string, pattern=Terminated_line, ending=:optional)
 		else
 			ret
 		end #if 
-	else
 	end #case
 end #parse_split
 def parse_array(string_array, pattern=WORDS)
