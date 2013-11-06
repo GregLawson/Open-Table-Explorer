@@ -88,6 +88,7 @@ def test_path2model_name
 	path='test/long_test/rebuild_test.rb'
 	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
 	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
+	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
 end #path2model_name
 def test_project_root_dir
 	path=File.expand_path($0)
