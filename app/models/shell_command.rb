@@ -78,7 +78,7 @@ def inspect(echo_command=@errors!='' || !success?)
 		ret+="$ #{@command_string}\n"
 	end #if
 	if @errors!='' then
-		ret+="Shellwords.split(@command_string.inspect)=#{Shellwords.split(@command_string.inspect)}\n"
+		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n"
 		ret+="@errors=#{@errors.inspect}\n"
 	end #if
 	if !success? then
