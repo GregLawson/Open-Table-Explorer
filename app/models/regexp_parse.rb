@@ -9,6 +9,8 @@ require_relative 'unbounded_range.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
 class RegexpTree < NestedArray
+module ClassMethods
+end #ClassMethods
 def self.[](*regexp_array)
 	if regexp_array.size==1 then # no splat
 		regexp_array=regexp_array[0]	
@@ -103,6 +105,9 @@ ClosingBrackets=')}]'
 PostfixOperators='+*?|'
 end #Constants
 include Constants
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
 def initialize(regexp_string, options=Default_options)
 	@tokenIndex=-1 # start at end
 	if regexp_string.kind_of?(RegexpParse) then

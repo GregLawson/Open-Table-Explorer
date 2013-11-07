@@ -5,10 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-# Adds a algebraic syntax for composing Regexp
-# Also implements a Kleene algebra for Regexp
-# @see http://en.wikipedia.org/wiki/Kleene_algebra
 class Regexp
+# @see http://en.wikipedia.org/wiki/Kleene_algebra
 #include Comparable
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
@@ -39,7 +37,6 @@ def regexp_rescued(regexp_string, options=Default_options)
 rescue RegexpError
 	return nil
 end #regexp_rescued
-# Returns text error message for bad Regexp
 def regexp_error(regexp_string, options=Default_options)
 	raise "expecting regexp_string=#{regexp_string.inspect}" unless regexp_string.instance_of?(String)
 	return Regexp.new(regexp_string, options)
@@ -88,7 +85,7 @@ end #capture
 def back_reference(key)
 		/#{self.source}\k<#{key.to_s}>/
 rescue RegexpError => exception
-	fail "back_reference regexp=/#{self.source}\k<#{key.to_s}>/ failed."+
+	warn "back_reference regexp=/#{self.source}\k<#{key.to_s}>/ failed."+
 		"\nPossibly add parenthesis to control operator versus method precedence."+
 		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
 end #back_reference
