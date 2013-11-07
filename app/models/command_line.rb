@@ -14,26 +14,31 @@ require_relative '../../app/models/shell_command.rb'
 class CommandLine
 module ClassMethods
 def path_of_command(command)
-		whereis=ShellCommands.new("whereis "+command).execute.output
+		whereis=ShellCommands.new("whereis "+command).output
 end #path_of_command
 end #ClassMethods
 extend ClassMethods
-def initialize(path, description=nil, help_source=nil)
-	@path=File.expand_path(path)
+def initialize(command, description=nil, help_source=nil)
+	if /\//.match(command) then # pathname
+		@path=command
+	else
+		@type=ShellCommands.new('bash -c "type '+command+'"').output
+		@whereis=ShellCommands.new("whereis "+command).output
+		@path=@whereis.split(' ')[2]
+	end #if
 	@description=description
 	@help_source=help_source
-	@file_type=	ShellCommands.new("file -b "+@path).execute.output
-	@mime_type=	ShellCommands.new("file -b --mime "+@path).execute.output
+	@file_type=	ShellCommands.new("file -b "+@path).output
+	@mime_type=	ShellCommands.new("file -b --mime "+@path).output
 	@dpkg="grep "#{@path}$"  /var/lib/*/info/*.list"
 	if @mime_type=='application/octet' then
 		@basename=File.basename(path,File.extname(path))
-		@version=ShellCommands.new(@basename+" --version").execute.output
-		@v=ShellCommands.new(basename+" -v").execute.output
-		@man=ShellCommands.new("man "+@basename).execute.output
-		@info=ShellCommands.new("info "+@basename).execute.output
-		@help=ShellCommands.new(@basename+" --help").execute.output
-		@h=ShellCommands.new(@basename+" -h").execute.output
-		@whereis=ShellCommands.new("whereis "+command).execute.output
+		@version=ShellCommands.new(@basename+" --version").output
+		@v=ShellCommands.new(basename+" -v").output
+		@man=ShellCommands.new("man "+@basename).output
+		@info=ShellCommands.new("info "+@basename).output
+		@help=ShellCommands.new(@basename+" --help").output
+		@h=ShellCommands.new(@basename+" -h").output
 	end #if
 end #initialize
 #mime/types in a ruby library
