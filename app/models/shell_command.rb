@@ -18,8 +18,14 @@ def execute
 	@output, @errors, @process_status=system_output(@command_string)
 	self #allows command chaining
 end #execute
-def initialize(command_string)
-	@command_string=command_string
+# prefer command as array since each element is shell escaped.
+# Most common need for shell excape is spaces in pathnames (a common GUI style)
+def initialize(command)
+	if command.instance_of?(Array) then
+		@command_string=Shellwords.join(command)
+	else
+		@command_string=command
+	end #if
 	execute # do it first time, then execute
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
