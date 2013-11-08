@@ -23,6 +23,8 @@ end #execute
 def initialize(command)
 	if command.instance_of?(Array) then
 		@command_string=Shellwords.join(command)
+	elsif command.instance_of?(Hash) then
+		@command_string=Shellwords.join(command.values)
 	else
 		@command_string=command
 	end #if
