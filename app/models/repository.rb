@@ -197,7 +197,7 @@ def validate_commit(changes_branch, files)
 	if something_to_commit? then
 		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(',')+"\n"+@recent_test.errors)	
 		git_command('cola').assert_post_conditions
-		git_command('rebase --autosquash --interactive')
+#		git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
 def something_to_commit?
