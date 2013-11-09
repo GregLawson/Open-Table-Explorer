@@ -6,10 +6,7 @@
 #
 ###########################################################################
 # @see http://grit.rubyforge.org/
-require 'repository.rb'
-# partial API at less /usr/share/doc/ruby-grit/API.txt
-# code in /usr/lib/ruby/vendor_ruby/grit
-require_relative 'shell_command.rb'
+require_relative 'repository.rb'
 class Repository <Grit::Repo
 module Assertions
 include Test::Unit::Assertions
