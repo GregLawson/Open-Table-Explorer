@@ -195,7 +195,11 @@ def validate_commit(changes_branch, files)
 		git_command('checkout '+changes_branch.to_s+' '+p)
 	end #each
 	if something_to_commit? then
-		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(',')+"\n"+@recent_test.errors)	
+		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')
+		if !@recent_test.nil? then
+			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
+		end #if
+		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 		git_command('cola').assert_post_conditions
 #		git_command('rebase --autosquash --interactive')
 	end #if

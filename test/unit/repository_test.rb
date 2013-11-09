@@ -18,6 +18,7 @@ def test_Constants
 end #Constants
 def test_create_empty
 	Dir.mkdir(Unique_repository_directory_pathname)
+	assert_pathname_exists(Unique_repository_directory_pathname)
 	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
 	new_repository=Repository.new(Unique_repository_directory_pathname)
 	IO.write(Unique_repository_directory_pathname+'/README', README_start_text+"1\n") # two consecutive slashes = one slash
