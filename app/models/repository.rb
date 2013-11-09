@@ -27,7 +27,7 @@ module ClassMethods
 include Constants
 def create_empty(path)
 	Dir.mkdir(path)
-	ShellCommands.new('cd "'+path+'";git init')
+	ShellCommands.new('cd "'+Shellwords.escape(path)+'";git init')
 	new_repository=Repository.new(path)
 	IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
@@ -62,12 +62,22 @@ def initialize(path)
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
-		ret=ShellCommands.new("cd #{working_directory}; #{command}")
+	if command.instance_of?(Array) then
+		command_string=Shellwords.join(command)
+	else
+		command_string=command
+	end #if
+		ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}; #{command_string}")
 		ret.puts if $VERBOSE
 		ret
 end #shell_command
 def git_command(git_subcommand)
-	ret=shell_command("git "+git_subcommand)
+	if git_subcommand.instance_of?(Array) then
+		command_string=['git']+Shellwords.join(git_subcommand)
+	else
+		command_string='git '+git_subcommand
+	end #if
+	ret=shell_command(command_string)
 	if $VERBOSE && git_subcommand != 'status' then
 		shell_command("git status").puts
 	end #if
@@ -184,9 +194,11 @@ def validate_commit(changes_branch, files)
 		puts p.inspect  if $VERBOSE
 		git_command('checkout '+changes_branch.to_s+' '+p)
 	end #each
-	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(','))	
-	git_command('cola').assert_post_conditions
-	git_command('rebase --autosquash --interactive')
+	if something_to_commit? then
+		IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(',')+"\n"+@recent_test.errors)	
+		git_command('cola').assert_post_conditions
+		git_command('rebase --autosquash --interactive')
+	end #if
 end #validate_commit
 def something_to_commit?
 	status=@grit_repo.status
