@@ -67,7 +67,7 @@ def shell_command(command, working_directory=Shellwords.escape(@path))
 	else
 		command_string=command
 	end #if
-		ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}; #{command_string}")
+		ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}&& #{command_string}")
 		ret.puts if $VERBOSE
 		ret
 end #shell_command
