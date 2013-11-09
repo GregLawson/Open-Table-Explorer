@@ -140,7 +140,7 @@ def test_aaa_environment
 	end #if
 end #test_aaa_environment
 def test_class_assert_pre_conditions
-  existing_call(model_class?, :ssert_pre_conditions)
+  existing_call(model_class?, :assert_pre_conditions)
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_invariant
