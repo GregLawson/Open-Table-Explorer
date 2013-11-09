@@ -18,6 +18,7 @@ def test_initialize
 	assert_equal(0, EXAMPLE.process_status.exitstatus)
 	assert_equal("Hello World\n", Hello_world.output)
 	Hello_world.assert_post_conditions
+	assert_equal('', ShellCommands.new(['cd', '/tmp', ';', 'echo', '$SECONDS', '>', 'blank in filename.shell_command']).output)
 end #initialize
 def test_system_output
 	ret=[] #make method scope not block scope so it can be returned
