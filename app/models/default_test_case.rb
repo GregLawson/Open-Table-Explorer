@@ -136,7 +136,7 @@ def test_aaa_environment
    examples=constant_objects.select{|c| c.instance_of?(Regexp)}
    info "examples=#{examples}"
 	if examples.empty? then
-      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
+      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples.\nconstant_objects=#{constant_objects.inspect}"
 	end #if
 end #test_aaa_environment
 def test_class_assert_pre_conditions
