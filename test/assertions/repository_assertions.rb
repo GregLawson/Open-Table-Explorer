@@ -6,7 +6,7 @@
 #
 ###########################################################################
 # @see http://grit.rubyforge.org/
-require_relative 'repository.rb'
+require_relative '../../app/models/repository.rb'
 class Repository <Grit::Repo
 module Assertions
 include Test::Unit::Assertions
@@ -60,8 +60,8 @@ def assert_deserving_branch(branch_expected, executable, message='')
 end #deserving_branch
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 #TestWorkFlow.assert_pre_conditions
-include Constants
 module Examples
 include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
@@ -73,7 +73,6 @@ Modified_path=Empty_Repo_path+'/README'
 Unique_repository_directory_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 
 end #Examples
-include Examples
 end #Repository
 
 

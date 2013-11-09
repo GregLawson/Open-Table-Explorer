@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative '../unit/test_environment'
-require_relative "../../app/models/repository.rb"
+require_relative '../../test/assertions/repository_assertions.rb'
 class RepositoryTest < TestCase
 include DefaultTests
 include Repository::Examples
