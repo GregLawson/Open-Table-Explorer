@@ -12,14 +12,16 @@ module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
+def assert_pre_conditions
+end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
-	assert_pathname_exists(path)
-	assert_pathname_exists(path+'.git/')
-	assert_pathname_exists(path+'.git/logs/')
-	assert_pathname_exists(path+'.git/logs/refs/')
+	assert_pathname_exists(@path)
+	assert_pathname_exists(@path+'.git/')
+	assert_pathname_exists(@path+'.git/logs/')
+	assert_pathname_exists(@path+'.git/logs/refs/')
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
@@ -61,7 +63,7 @@ end #deserving_branch
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-#TestWorkFlow.assert_pre_conditions
+Repository.assert_pre_conditions
 module Examples
 include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
