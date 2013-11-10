@@ -19,11 +19,12 @@ def test_initialize
 	assert_equal("Hello World\n", Hello_world.output)
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
+	guaranteed_existing_directory=File.dirname($0)
+	guaranteed_existing_basename=File.basename($0)
+	cd_command=['cd', guaranteed_existing_directory]
+	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
+	assert_equal(guaranteed_existing_basename, ShellCommands.new([cd_command, ';', relative_command]).output)
 	assert_equal("# On branch testing\nnothing to commit, working directory clean\n", ShellCommands.new([['cd', File.dirname($0)], ';', ['git', 'status']]).output)
-	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
-	cd_command=['cd', '/tmp']
-	relative_command=['echo', '$SECONDS', '>', 'blank in filename.shell_command']
-	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([cd_command, ';', relative_command]).output)
 end #initialize
 def test_system_output
 	ret=[] #make method scope not block scope so it can be returned
