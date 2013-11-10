@@ -21,6 +21,9 @@ def test_initialize
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	assert_equal("# On branch testing\nnothing to commit, working directory clean\n", ShellCommands.new([['cd', File.dirname($0)], ';', ['git', 'status']]).output)
 	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
+	cd_command=['cd', '/tmp']
+	relative_command=['echo', '$SECONDS', '>', 'blank in filename.shell_command']
+	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([cd_command, ';', relative_command]).output)
 end #initialize
 def test_system_output
 	ret=[] #make method scope not block scope so it can be returned
