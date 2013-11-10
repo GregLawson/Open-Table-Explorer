@@ -20,7 +20,12 @@ def execute
 end #execute
 def initialize(command)
 	if command.instance_of?(Array) then
+			if command.instance_of?(Array) then
 		@command_string=Shellwords.join(command)
+	else
+		@command_string=command
+	end #
+	@command_string=Shellwords.join(command)
 	else
 		@command_string=command
 	end #if
