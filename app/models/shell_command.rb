@@ -20,7 +20,14 @@ def execute
 end #execute
 def initialize(command)
 	if command.instance_of?(Array) then
-		@command_string=Shellwords.join(command)
+		command.map do |e|
+			if e.instance_of?(Array) then
+				@command_string=Shellwords.join(e)
+			elsif e.instance_of?(Hash) then
+			else
+				@command_string=e
+			end #if
+		end #map
 	else
 		@command_string=command
 	end #if
