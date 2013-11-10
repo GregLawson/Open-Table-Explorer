@@ -24,6 +24,11 @@ def initialize(command)
 			if e.instance_of?(Array) then
 				@command_string=Shellwords.join(e)
 			elsif e.instance_of?(Hash) then
+				command_array=[]
+				e.each_pair do |key, value|
+					command_array+=Shellwords.escape(value)
+				end #each_pair
+				@command_string=command_array.join(' ')
 			else
 				@command_string=e
 			end #if
