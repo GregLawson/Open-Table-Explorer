@@ -18,9 +18,20 @@ def execute
 	@output, @errors, @process_status=system_output(@command_string)
 	self #allows command chaining
 end #execute
-def initialize(command_string)
-	@command_string=command_string
-	execute # do it first time, then execute
+def initialize(command)
+	if command.instance_of?(Array) then
+		command.map do |e|
+			if e.instance_of?(Array) then
+				@command_string=Shellwords.join(e)
+			elsif e.instance_of?(Hash) then
+			else
+				@command_string=e
+			end #if
+		end #map
+	else
+		@command_string=command
+	end #if
+	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
 		$stdout.puts trace # -W2
