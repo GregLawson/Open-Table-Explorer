@@ -25,11 +25,11 @@ def execute
 	}
 	self #allows command chaining
 end #execute
-def initialize(command)
+def assemble_command_string(command)
 	if command.instance_of?(Array) then
 		command.map do |e|
 			if e.instance_of?(Array) then
-				@command_string=Shellwords.join(e)
+				Shellwords.join(e)
 			elsif e.instance_of?(Hash) then
 				command_array=[]
 				e.each_pair do |key, word|
@@ -47,14 +47,17 @@ def initialize(command)
 						command_array << word
 					end #case
 				end #each_pair
-				@command_string=command_array.join(' ')
+				command_array.join(' ')
 			else
-				@command_string=e
+				e
 			end #if
 		end #map
 	else
-		@command_string=command
+		command
 	end #if
+end #assemble_command_string
+def initialize(command)
+	@command_string=assemble_command_string(command)
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
