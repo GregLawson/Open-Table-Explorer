@@ -11,6 +11,8 @@ require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
 include DefaultTests
 include ShellCommands::Examples
+def test_execute
+end #execute
 def test_initialize
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
@@ -27,25 +29,13 @@ def test_initialize
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
+#	shell_execution1=ShellCommands.new([cd_command]).assert_post_conditions(shell_execution1.command_string.inspect)
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	shell_execution=ShellCommands.new([cd_command, '&&', relative_command])
 	shell_execution.assert_post_conditions
+#	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
 end #initialize
-def test_system_output
-	ret=[] #make method scope not block scope so it can be returned
-	Open3.popen3(COMMAND_STRING) {|stdin, stdout, stderr, wait_thr|
-		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
-		output=stdout.read
-		stdout.close
-		errors=stderr.read
-		stderr.close
-		process_status = wait_thr.value  # Process::Status object returned.
-		process_status = wait_thr.value # Process::Status object returned.
-		ret=[output, errors, process_status]
-	}
-	ret
-end #system_output
 def test_success?
 	assert(EXAMPLE.success?)
 end #success
