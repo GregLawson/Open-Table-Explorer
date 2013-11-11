@@ -20,7 +20,7 @@ def test_assemble_command_string
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_hash))
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_array]))
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([['cd', '/tmp'], '&&', ['echo', '$SECONDS']]))
+	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([['cd', Guaranteed_existing_directory], '&&', ['echo', '$SECONDS']]))
 end #assemble_command_string
 def test_execute
 end #execute
