@@ -10,21 +10,6 @@ require 'shellwords.rb'
 class ShellCommands
 module ClassMethods
 include Shellwords
-end #ClassMethods
-extend ClassMethods
-attr_reader :command_string, :output, :errors, :process_status
-# execute same command again (also called by new.
-def execute
-	Open3.popen3(command_string) {|stdin, stdout, stderr, wait_thr|
-		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
-		@output=stdout.read
-		stdout.close
-		@errors=stderr.read
-		stderr.close
-		@process_status = wait_thr.value # Process::Status object returned.
-	}
-	self #allows command chaining
-end #execute
 def assemble_command_string(command)
 	if command.instance_of?(Array) then
 		command.map do |e|
@@ -56,8 +41,23 @@ def assemble_command_string(command)
 		command
 	end #if
 end #assemble_command_string
+end #ClassMethods
+extend ClassMethods
+attr_reader :command_string, :output, :errors, :process_status
+# execute same command again (also called by new.
+def execute
+	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
+		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
+		@output=stdout.read
+		stdout.close
+		@errors=stderr.read
+		stderr.close
+		@process_status = wait_thr.value # Process::Status object returned.
+	}
+	self #allows command chaining
+end #execute
 def initialize(command)
-	@command_string=assemble_command_string(command)
+	@command_string=ShellCommands.assemble_command_string(command)
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
@@ -143,7 +143,9 @@ Hello_world=ShellCommands.new('echo "Hello World"')
 Example_output="1 2;3 4\n"
 COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
-
+Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
+Cd_command_array=['cd', Guaranteed_existing_directory]
+Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
 end #Examples
 include Examples
 end #ShellCommands
