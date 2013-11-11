@@ -31,7 +31,7 @@ def test_initialize
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	shell_execution1=ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']])
-	shell_execution1=ShellCommands.new([['cd', '/tmp']])
+#	shell_execution1=ShellCommands.new([['cd', '/tmp']])
 	shell_execution1=ShellCommands.new('cd /tmp')
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_hash_command(Cd_command_hash))
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_command_string(Cd_command_hash))
