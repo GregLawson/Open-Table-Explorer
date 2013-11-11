@@ -13,8 +13,10 @@ include DefaultTests
 include ShellCommands::Examples
 def test_execute
 end #execute
-def test_initialize
+def test_assemble_command_string
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
+end #assemble_command_string
+def initialize(command)
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
 	assert_equal("", EXAMPLE.errors)
 	assert_equal(0, EXAMPLE.process_status.exitstatus)
@@ -22,11 +24,9 @@ def test_initialize
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	assert_pathname_exists($0)
-	guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 	guaranteed_existing_basename=File.basename($0)
-	cd_command=['cd', guaranteed_existing_directory]
-	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
-	shell_execution1=ShellCommands.new([cd_command])
+	shell_execution1=ShellCommands.new([Cd_command_hash])
+	shell_execution1=ShellCommands.new([Cd_command_array])
 	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
