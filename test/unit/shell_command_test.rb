@@ -37,11 +37,11 @@ def test_initialize
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_command_string(Cd_command_hash))
 	shell_execution1=ShellCommands.new(Cd_command_hash)
 	shell_execution1=ShellCommands.new([Cd_command_hash])
-	assert_pathname_exists($0)
-	guaranteed_existing_basename=File.basename($0)
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new([Cd_command_array])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
+	assert_pathname_exists($0)
+	guaranteed_existing_basename=File.basename($0)
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
