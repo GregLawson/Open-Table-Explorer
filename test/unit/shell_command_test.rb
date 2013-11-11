@@ -30,6 +30,7 @@ def test_initialize
 	assert_equal("Hello World\n", Hello_world.output)
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
+	shell_execution1=ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']])
 	shell_execution1=ShellCommands.new([['cd', '/tmp']])
 	shell_execution1=ShellCommands.new('cd /tmp')
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_hash_command(Cd_command_hash))
