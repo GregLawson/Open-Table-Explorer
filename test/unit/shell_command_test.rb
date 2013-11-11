@@ -25,7 +25,7 @@ def test_initialize
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	assert_pathname_exists($0)
 	guaranteed_existing_basename=File.basename($0)
-	shell_execution1=ShellCommands.new([Cd_command_hash])
+#	shell_execution1=ShellCommands.new([Cd_command_hash])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new([Cd_command_array])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
