@@ -24,10 +24,7 @@ def test_initialize
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	assert_pathname_exists($0)
-	guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 	guaranteed_existing_basename=File.basename($0)
-	cd_command=['cd', guaranteed_existing_directory]
-	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
 #	shell_execution1=ShellCommands.new([Cd_command_hash])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new([Cd_command_array])
@@ -36,8 +33,8 @@ def test_initialize
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
-	shell_execution=ShellCommands.new([cd_command, '&&', relative_command])
-	shell_execution.assert_post_conditions
+#	shell_execution=ShellCommands.new([cd_command, '&&', relative_command])
+#	shell_execution.assert_post_conditions
 #	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
 end #initialize
