@@ -26,14 +26,15 @@ def test_initialize
 	guaranteed_existing_basename=File.basename($0)
 	cd_command=['cd', guaranteed_existing_directory]
 	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
+	shell_execution1=ShellCommands.new([cd_command])
+	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
-#	shell_execution1=ShellCommands.new([cd_command]).assert_post_conditions(shell_execution1.command_string.inspect)
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	shell_execution=ShellCommands.new([cd_command, '&&', relative_command])
 	shell_execution.assert_post_conditions
-	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
+#	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
 end #initialize
 def test_success?
