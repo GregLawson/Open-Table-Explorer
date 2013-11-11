@@ -19,7 +19,14 @@ def test_initialize
 	assert_equal("Hello World\n", Hello_world.output)
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
-	assert_equal("# On branch testing\nnothing to commit, working directory clean\n", ShellCommands.new([['cd', File.dirname($0)], ';', ['git', 'status']]).output)
+	assert_pathname_exists($0)
+	guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
+	guaranteed_existing_basename=File.basename($0)
+	cd_command=['cd', guaranteed_existing_directory]
+	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
+	relative_command=['pwd']
+#	relative_command=['ls', guaranteed_existing_basename]
+#	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
 	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
 end #initialize
 def test_system_output
