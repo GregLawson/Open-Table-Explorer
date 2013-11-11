@@ -19,11 +19,19 @@ def test_initialize
 	assert_equal("Hello World\n", Hello_world.output)
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
-	guaranteed_existing_directory=File.dirname($0)
+	assert_pathname_exists($0)
+	guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 	guaranteed_existing_basename=File.basename($0)
 	cd_command=['cd', guaranteed_existing_directory]
-	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
-	assert_equal(guaranteed_existing_basename, ShellCommands.new([cd_command, ';', relative_command]).output)
+	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
+	relative_command=['pwd']
+#	relative_command=['ls', guaranteed_existing_basename]
+#	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
+	shell_execution1=ShellCommands.new([cd_command]).assert_post_conditions(shell_execution1.command_string.inspect)
+	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
+	shell_execution=ShellCommands.new([cd_command, '&&', relative_command])
+	shell_execution.assert_post_conditions
+	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("# On branch testing\nnothing to commit, working directory clean\n", ShellCommands.new([['cd', File.dirname($0)], ';', ['git', 'status']]).output)
 end #initialize
 def test_system_output
