@@ -24,10 +24,7 @@ def test_initialize
 	Hello_world.assert_post_conditions
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	assert_pathname_exists($0)
-	guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 	guaranteed_existing_basename=File.basename($0)
-	cd_command=['cd', guaranteed_existing_directory]
-	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
 	shell_execution1=ShellCommands.new([Cd_command_hash])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new([Cd_command_array])
