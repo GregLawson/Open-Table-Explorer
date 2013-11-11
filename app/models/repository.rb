@@ -27,7 +27,7 @@ include Constants
 def create_empty(path)
 	Dir.mkdir(path)
 	if File.exists?(path) then
-		ShellCommands.new(['cd', path, ';', 'git', 'init'])
+		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
 		new_repository=Repository.new(path)
 		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 		new_repository.git_command('add README')
