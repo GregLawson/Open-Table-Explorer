@@ -24,6 +24,23 @@ def initialize(command)
 			if e.instance_of?(Array) then
 				@command_string=Shellwords.join(e)
 			elsif e.instance_of?(Hash) then
+				command_array=[]
+				e.each_pair do |key, word|
+					case key
+					when :command then command_array << Shellwords.escape(word)
+					when :in then 
+						raise "Input file '#{word}' does not exist." if !File.exists?(word)
+						command_array << Shellwords.escape(word)
+					when :out then command_array << Shellwords.escape(word)
+					when :inout then command_array << Shellwords.escape(word)
+					when :glob then 
+						raise "Input pathname glob '#{word}' does not exist." if !Dir(word)==[]
+						command_array << Shellwords.escape(word)
+					else
+						command_array << word
+					end #case
+				end #each_pair
+				@command_string=command_array.join(' ')
 			else
 				@command_string=e
 			end #if
