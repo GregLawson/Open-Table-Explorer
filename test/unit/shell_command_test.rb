@@ -35,7 +35,7 @@ def test_initialize
 #	shell_execution1=ShellCommands.new('cd /tmp')
 #	shell_execution1=ShellCommands.new(ShellCommands.assemble_hash_command(Cd_command_hash))
 #	shell_execution1=ShellCommands.new(ShellCommands.assemble_command_string(Cd_command_hash))
-	shell_execution1=ShellCommands.new(Cd_command_hash)
+#	shell_execution1=ShellCommands.new(Cd_command_hash)
 	shell_execution1=ShellCommands.new([Cd_command_hash])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new([Cd_command_array])
