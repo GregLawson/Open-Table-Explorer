@@ -28,7 +28,8 @@ def test_initialize
 	guaranteed_existing_basename=File.basename($0)
 	cd_command=['cd', guaranteed_existing_directory]
 	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
-#	shell_execution1=ShellCommands.new([cd_command]).assert_post_conditions(shell_execution1.command_string.inspect)
+#	shell_execution1=ShellCommands.new([cd_command])
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
