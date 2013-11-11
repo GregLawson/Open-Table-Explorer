@@ -23,12 +23,26 @@ def assemble_hash_command(command)
 		when :glob then 
 			raise "Input pathname glob '#{word}' does not exist." if !Dir(word)==[]
 			command_array << Shellwords.escape(word)
+		when :environment then command_array << word
 		else
 			command_array << word
 		end #case
 	end #each_pair
 	command_array.join(' ')
 end #assemble_hash_command
+def assemble_array_command(command)
+	command.map do |e|
+		if e.instance_of?(Array) then
+			assemble_array_command(e)
+		elsif e.instance_of?(Hash) then
+			assemble_hash_command(e)
+		elsif /$/.match(e) then
+			e
+		else
+			Shellwords.escape(e)
+		end #if
+	end.join(' ') #map
+end #assemble_array_command
 def assemble_command_string(command)
 	if command.instance_of?(Array) then
 		command.map do |e|
@@ -63,6 +77,38 @@ def execute
 end #execute
 def initialize(command)
 	@command_string=ShellCommands.assemble_command_string(command)
+	copy_command_string=if command.instance_of?(Array) then
+		command.map do |e|
+			if e.instance_of?(Array) then
+				@command_string=Shellwords.join(e)
+			elsif e.instance_of?(Hash) then
+				command_array=[]
+				e.each_pair do |key, word|
+					case key
+					when :command then command_array << Shellwords.escape(word)
+					when :in then 
+						raise "Input file '#{word}' does not exist." if !File.exists?(word)
+						command_array << Shellwords.escape(word)
+					when :out then command_array << Shellwords.escape(word)
+					when :inout then command_array << Shellwords.escape(word)
+					when :glob then 
+						raise "Input pathname glob '#{word}' does not exist." if !Dir(word)==[]
+						command_array << Shellwords.escape(word)
+					else
+						command_array << word
+					end #case
+				end #each_pair
+				@command_string=command_array.join(' ')
+			else
+				@command_string=e
+			end #if
+		end #map.join(' ')
+	elsif command.instance_of?(Hash) then
+		assemble_hash_command(command)
+	else
+		@command_string=command
+	end #if
+	raise "copy_command_string!=@command_string=#{copy_command_string}!=#{@command_string}" if copy_command_string!=@command_string
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
@@ -151,6 +197,7 @@ EXAMPLE=ShellCommands.new(COMMAND_STRING)
 Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 Cd_command_array=['cd', Guaranteed_existing_directory]
 Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
+Guaranteed_existing_basename=File.basename($0)
 end #Examples
 include Examples
 end #ShellCommands
