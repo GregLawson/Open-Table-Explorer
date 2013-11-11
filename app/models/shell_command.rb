@@ -57,6 +57,7 @@ def execute
 	self #allows command chaining
 end #execute
 def initialize(command)
+	@command_string=ShellCommands.assemble_command_string(command)
 	if command.instance_of?(Array) then
 		command.map do |e|
 			if e.instance_of?(Array) then
