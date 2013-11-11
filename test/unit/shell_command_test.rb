@@ -20,6 +20,7 @@ def test_assemble_command_string
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_hash))
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_array]))
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
+	assert_equal('cd '+Guaranteed_existing_directory+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
 end #assemble_command_string
 def test_execute
 end #execute
@@ -42,7 +43,6 @@ def test_initialize
 #	shell_execution1=ShellCommands.new([Cd_command_array])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 	assert_pathname_exists($0)
-	guaranteed_existing_basename=File.basename($0)
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']

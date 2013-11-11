@@ -180,6 +180,7 @@ EXAMPLE=ShellCommands.new(COMMAND_STRING)
 Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 Cd_command_array=['cd', Guaranteed_existing_directory]
 Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
+Guaranteed_existing_basename=File.basename($0)
 end #Examples
 include Examples
 end #ShellCommands
