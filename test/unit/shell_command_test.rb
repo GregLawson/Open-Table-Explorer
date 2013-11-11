@@ -13,6 +13,8 @@ include DefaultTests
 include ShellCommands::Examples
 def test_execute
 end #execute
+def test_assemble_command_string
+end #assemble_command_string
 def test_initialize
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
