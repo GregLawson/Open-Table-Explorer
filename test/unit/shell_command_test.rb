@@ -15,7 +15,7 @@ def test_execute
 end #execute
 def test_assemble_command_string
 end #assemble_command_string
-def initialize(command)
+def test_initialize
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
 	assert_equal("", EXAMPLE.errors)
@@ -28,8 +28,8 @@ def initialize(command)
 	guaranteed_existing_basename=File.basename($0)
 	cd_command=['cd', guaranteed_existing_directory]
 	cd_command={:command => 'cd', :in => guaranteed_existing_directory}
-	shell_execution1=ShellCommands.new([cd_command])
-	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
+#	shell_execution1=ShellCommands.new([cd_command])
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
