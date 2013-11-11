@@ -11,11 +11,18 @@ require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
 include DefaultTests
 include ShellCommands::Examples
-def test_execute
-end #execute
+def test_assemble_hash_command
+	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_hash_command(Cd_command_hash))
+end #assemble_hash_command
 def test_assemble_command_string
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
+	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_array))
+	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_hash))
+	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_array]))
+	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
 end #assemble_command_string
+def test_execute
+end #execute
 def test_initialize
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
 	assert_equal("", EXAMPLE.errors)
