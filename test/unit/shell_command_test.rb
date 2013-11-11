@@ -27,6 +27,9 @@ def test_initialize
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
+	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
+	shell_execution=ShellCommands.new([cd_command, '&&', relative_command])
+	shell_execution.assert_post_conditions
 	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
 end #initialize
 def test_system_output
