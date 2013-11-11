@@ -171,7 +171,9 @@ Hello_world=ShellCommands.new('echo "Hello World"')
 Example_output="1 2;3 4\n"
 COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
-
+Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
+Cd_command_array=['cd', Guaranteed_existing_directory]
+Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
 end #Examples
 include Examples
 end #ShellCommands
