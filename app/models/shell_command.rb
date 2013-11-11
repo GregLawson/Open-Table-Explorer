@@ -57,6 +57,7 @@ def assemble_command_string(command)
 	end #if
 end #assemble_command_string
 def initialize(command)
+	@command_string=assemble_command_string(command)
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
