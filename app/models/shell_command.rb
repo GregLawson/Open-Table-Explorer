@@ -15,7 +15,14 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
-	@output, @errors, @process_status=system_output(@command_string)
+	Open3.popen3(command_string) {|stdin, stdout, stderr, wait_thr|
+		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
+		@output=stdout.read
+		stdout.close
+		@errors=stderr.read
+		stderr.close
+		@process_status = wait_thr.value # Process::Status object returned.
+	}
 	self #allows command chaining
 end #execute
 def initialize(command)
@@ -57,20 +64,6 @@ def initialize(command)
 	end #if
 
 end #initialize
-def system_output(command_string)
-	ret=[] #make method scope not block scope so it can be returned
-	Open3.popen3(command_string) {|stdin, stdout, stderr, wait_thr|
-		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
-		output=stdout.read
-		stdout.close
-		errors=stderr.read
-		stderr.close
-		process_status = wait_thr.value  # Process::Status object returned.
-		process_status = wait_thr.value # Process::Status object returned.
-		ret=[output, errors, process_status]
-	}
-	ret
-end #system_output
 def fork(cmd)
 	start(cmd)
 	self #allows command chaining
