@@ -16,7 +16,7 @@ end #execute
 def test_assemble_command_string
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
 end #assemble_command_string
-def initialize(command)
+def test_initialize
 	assert_equal("1 2;3 4\n", EXAMPLE.output)
 	assert_equal("", EXAMPLE.errors)
 	assert_equal(0, EXAMPLE.process_status.exitstatus)
@@ -25,9 +25,10 @@ def initialize(command)
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	assert_pathname_exists($0)
 	guaranteed_existing_basename=File.basename($0)
-	shell_execution1=ShellCommands.new([Cd_command_hash])
-	shell_execution1=ShellCommands.new([Cd_command_array])
-	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
+#	shell_execution1=ShellCommands.new([Cd_command_hash])
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
+#	shell_execution1=ShellCommands.new([Cd_command_array])
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 	relative_command=['pwd']
 #	relative_command=['ls', guaranteed_existing_basename]
 #	relative_command=['ls', 'guaranteed_existing_basename', '>', 'blank in filename.shell_command']
