@@ -41,7 +41,7 @@ def assemble_array_command(command)
 		elsif /[$;&|<>]/.match(e) then
 			e
 		else
-			Shellwords.escape(e)
+			e
 		end #if
 	end.join(' ') #map
 end #assemble_array_command
