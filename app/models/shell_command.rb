@@ -70,6 +70,7 @@ def execute
 	self #allows command chaining
 end #execute
 def initialize(command)
+	@command=command
 	@command_string=ShellCommands.assemble_command_string(command)
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
@@ -113,6 +114,7 @@ def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
 		ret+="$ #{@command_string}\n"
+		ret+="\n@command=#{@command}" if $VERBOSE || @errors!='' || !success?
 	end #if
 	if @errors!='' then
 		ret+="@errors=#{@errors.inspect}\n"
