@@ -14,6 +14,13 @@ include ShellCommands::Examples
 def test_assemble_hash_command
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_hash_command(Cd_command_hash))
 end #assemble_hash_command
+def test_assemble_array_command
+	assert_match(/[$]/, '$SECONDS')
+	assert_equal('$SECONDS', ShellCommands.assemble_array_command(["$SECONDS"]))
+	assert_equal('$SECONDS', ShellCommands.assemble_array_command(["$SECONDS"]))
+	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_array_command(["cd", "/tmp", ";", "echo", "$SECONDS"]))
+	assert_equal('ls /tmp ; echo $SECONDS', ShellCommands.assemble_array_command(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
+end #assemble_array_command
 def test_assemble_command_string
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_array))
@@ -21,7 +28,7 @@ def test_assemble_command_string
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_array]))
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
 	assert_equal('cd '+Guaranteed_existing_directory+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
-	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_command_string(["cd /tmp", ";", "echo \\$SECONDS"]))
+	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_command_string(["cd /tmp", ";", "echo", "$SECONDS"]))
 end #assemble_command_string
 def test_execute
 end #execute
@@ -50,11 +57,10 @@ def test_initialize
 #	assert_equal(Guaranteed_existing_directory, ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']]))
 #	assert_equal('shell_command_test.rb', ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
 	relative_command=['pwd']
-	relative_command=['ls', '*']
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	relative_command=['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
-	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
-	shell_execution=ShellCommands.new([cd_command, '&&', relative_command])
+#	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
+	shell_execution=ShellCommands.new([Cd_command_array, '&&', relative_command])
 	shell_execution.assert_post_conditions
 	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
