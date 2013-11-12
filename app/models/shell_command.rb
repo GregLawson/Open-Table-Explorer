@@ -166,8 +166,8 @@ COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
 Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 Cd_command_array=['cd', Guaranteed_existing_directory]
-Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
-Guaranteed_existing_basename=File.basename($0)
+Redirect_command=['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
+Redirect_command_string='ls'+ Guaranteed_existing_basename+ '> blank in filename.shell_command'
 end #Examples
 include Examples
 end #ShellCommands
