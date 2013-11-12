@@ -64,8 +64,6 @@ def test_initialize
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	relative_command=Redirect_command
 	relative_command=['ls', Guaranteed_existing_basename]
-#	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
-#	command_string=Redirect_command_string
 	assert_equal(Redirect_command_string, ShellCommands.assemble_array_command(Redirect_command))
 	shell_execution=ShellCommands.new([Cd_command_array, '&&', relative_command])
 	shell_execution.assert_post_conditions
