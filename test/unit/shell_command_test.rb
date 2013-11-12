@@ -60,31 +60,31 @@ def test_initialize
 	assert_not_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	assert_pathname_exists($0)
 end #initialize
-def test_1
+def test_01
 	shell_execution1=ShellCommands.new('cd /tmp')
 end #1
-def test_2
+def test_02
 	shell_execution1=ShellCommands.new([['cd', '/tmp']])
 end #2
-def test_3
+def test_03
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_hash_command(Cd_command_hash))
 end #3
-def test_4
+def test_04
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_command_string(Cd_command_hash))
 end #4
-def test_5
+def test_05
 	shell_execution1=ShellCommands.new(Cd_command_hash)
 end #5
-def test_6
+def test_06
 	shell_execution1=ShellCommands.new([Cd_command_hash])
 end #6
-def test_7
+def test_07
 	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 end #7
-def test_8
+def test_08
 	shell_execution1=ShellCommands.new([Cd_command_array])
 end #8
-def test_9
+def test_09
 	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 end #9
 def test_10
