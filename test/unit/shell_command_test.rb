@@ -29,9 +29,10 @@ def test_assemble_command_string
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_hash))
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_array]))
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
-	assert_equal('cd '+Guaranteed_existing_directory+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([Redirect_command]))
+	assert_equal('cd '+Guaranteed_existing_directory+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([Cd_command_hash, '&&', Relative_command]))
 	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_command_string(["cd /tmp", ";", "echo", "$SECONDS"]))
 	assert_equal(Redirect_command_string, ShellCommands.assemble_command_string(Redirect_command))
+	assert_equal(Redirect_command_string, ShellCommands.assemble_command_string([Redirect_command]))
 end #assemble_command_string
 def test_execute
 end #execute
@@ -62,16 +63,15 @@ def test_initialize
 	relative_command=['pwd']
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	relative_command=Redirect_command
-	relative_command=['ls', Guaranteed_existing_basename,]
+	relative_command=['ls', Guaranteed_existing_basename]
 #	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
-	command_string=Redirect_command_string
-	assert_equal(command_string, ShellCommands.assemble_command_string(Redirect_command))
-	assert_equal(command_string, ShellCommands.assemble_array_command(Redirect_command))
-	assert_equal(command_string, ShellCommands.assemble_command_string(Redirect_command))
+#	command_string=Redirect_command_string
+	assert_equal(Redirect_command_string, ShellCommands.assemble_array_command(Redirect_command))
 	shell_execution=ShellCommands.new([Cd_command_array, '&&', relative_command])
 	shell_execution.assert_post_conditions
-	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
-	assert_equal("$SECONDS > blank in filename.shell_command\n", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
+	assert_equal(Guaranteed_existing_basename+"\n", shell_execution.output, shell_execution.inspect)
+	assert_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
+	assert_not_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 end #initialize
 def test_success?
 	assert(EXAMPLE.success?)

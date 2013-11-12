@@ -47,15 +47,7 @@ def assemble_array_command(command)
 end #assemble_array_command
 def assemble_command_string(command)
 	if command.instance_of?(Array) then
-		command.map do |e|
-			if e.instance_of?(Array) then
-				Shellwords.join(e)
-			elsif e.instance_of?(Hash) then
-				assemble_hash_command(e)
-			else
-				e
-			end #if
-		end.join(' ') #map
+		assemble_array_command(command)
 	elsif command.instance_of?(Hash) then
 		assemble_hash_command(command)
 	else
@@ -166,8 +158,11 @@ COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
 Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
 Cd_command_array=['cd', Guaranteed_existing_directory]
+Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
+Guaranteed_existing_basename=File.basename($0)
 Redirect_command=['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
-Redirect_command_string='ls'+ Guaranteed_existing_basename+ '> blank in filename.shell_command'
+Redirect_command_string='ls '+ Shellwords.escape(Guaranteed_existing_basename)+' > '+Shellwords.escape('blank in filename.shell_command')
+Relative_command=['ls', Guaranteed_existing_basename]
 end #Examples
 include Examples
 end #ShellCommands
