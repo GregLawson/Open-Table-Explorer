@@ -58,8 +58,8 @@ def test_initialize
 #	shell_execution1=ShellCommands.new([Cd_command_array])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 	assert_pathname_exists($0)
-	assert_equal(Guaranteed_existing_directory, ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']]))
-	assert_equal('shell_command_test.rb', ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
+#	assert_equal(Guaranteed_existing_directory, ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']]))
+#	assert_equal('shell_command_test.rb', ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
 	relative_command=['pwd']
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	relative_command=Redirect_command
