@@ -48,7 +48,7 @@ def test_initialize
 	shell_execution1=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
 	shell_execution1=ShellCommands.new('cd /tmp;pwd')
 	shell_execution1=ShellCommands.new('cd /tmp;')
-	shell_execution1=ShellCommands.new('cd /tmp')
+#	shell_execution1=ShellCommands.new('cd /tmp')
 	shell_execution1=ShellCommands.new([['cd', '/tmp']])
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_hash_command(Cd_command_hash))
 	shell_execution1=ShellCommands.new(ShellCommands.assemble_command_string(Cd_command_hash))
