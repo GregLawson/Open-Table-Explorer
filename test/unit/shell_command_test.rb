@@ -65,9 +65,9 @@ def test_initialize
 #	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	command_string='ls '+Guaranteed_existing_basename+' > blank\ in\ filename.shell_command'
 	command=ShellCommands.assemble_array_command(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command'])
-	assert_equal(command_string, ShellCommands.assemble_command_string(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']))
-	assert_equal(command_string, ShellCommands.assemble_array_command(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']))
-	assert_equal(command_string, ShellCommands.assemble_command_string(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']))
+	assert_equal(command_string, ShellCommands.assemble_command_string(command))
+	assert_equal(command_string, ShellCommands.assemble_array_command(command))
+	assert_equal(command_string, ShellCommands.assemble_command_string(command))
 	shell_execution=ShellCommands.new([Cd_command_array, '&&', relative_command])
 	shell_execution.assert_post_conditions
 	assert_equal(guaranteed_existing_directory+"\n", shell_execution.output, shell_execution.inspect)
