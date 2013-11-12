@@ -62,6 +62,7 @@ def test_initialize
 	relative_command=['pwd']
 	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	relative_command=['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
+	relative_command=['ls', Guaranteed_existing_basename,]
 #	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
 	command_string='ls '+Guaranteed_existing_basename+' > blank\ in\ filename.shell_command'
 	command=ShellCommands.assemble_array_command(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command'])
