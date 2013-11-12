@@ -20,6 +20,8 @@ def test_assemble_array_command
 	assert_equal('$SECONDS', ShellCommands.assemble_array_command(["$SECONDS"]))
 	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_array_command(["cd", "/tmp", ";", "echo", "$SECONDS"]))
 	assert_equal('ls shell_command_test.rb > blank\ in\ filename.shell_command', ShellCommands.assemble_array_command(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']))
+	assert_equal('ls '+Guaranteed_existing_basename+' > blank in filename.shell_command', ShellCommands.assemble_array_command(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']))
+
 end #assemble_array_command
 def test_assemble_command_string
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
@@ -29,7 +31,7 @@ def test_assemble_command_string
 	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
 	assert_equal('cd '+Guaranteed_existing_directory+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
 	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_command_string(["cd /tmp", ";", "echo", "$SECONDS"]))
-	assert_equal('ls '+Guaranteed_existing_basename+' > blank in filename.shell_command', 'ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command')
+	assert_equal('ls '+Guaranteed_existing_basename+' > blank in filename.shell_command', ShellCommands.assemble_command_string(['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']))
 end #assemble_command_string
 def test_execute
 end #execute
