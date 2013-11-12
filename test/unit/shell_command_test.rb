@@ -48,11 +48,21 @@ def test_initialize
 	shell_execution1=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
 	shell_execution1=ShellCommands.new('cd /tmp;pwd')
 	shell_execution1=ShellCommands.new('cd /tmp;')
+	relative_command=['pwd']
+	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
+	relative_command=Redirect_command
+	relative_command=['ls', Guaranteed_existing_basename]
+	assert_equal(Redirect_command_string, ShellCommands.assemble_array_command(Redirect_command))
+	shell_execution=ShellCommands.new([Cd_command_array, '&&', relative_command])
+	shell_execution.assert_post_conditions
+	assert_equal(Guaranteed_existing_basename+"\n", shell_execution.output, shell_execution.inspect)
+	assert_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
+	assert_not_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 #	shell_execution1=ShellCommands.new('cd /tmp')
 #	shell_execution1=ShellCommands.new([['cd', '/tmp']])
 #	shell_execution1=ShellCommands.new(ShellCommands.assemble_hash_command(Cd_command_hash))
 #	shell_execution1=ShellCommands.new(ShellCommands.assemble_command_string(Cd_command_hash))
-#	shell_execution1=ShellCommands.new(Cd_command_hash)
+	shell_execution1=ShellCommands.new(Cd_command_hash)
 #	shell_execution1=ShellCommands.new([Cd_command_hash])
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new([Cd_command_array])
@@ -60,18 +70,6 @@ def test_initialize
 	assert_pathname_exists($0)
 #	assert_equal(Guaranteed_existing_directory, ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']]))
 #	assert_equal('shell_command_test.rb', ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
-	relative_command=['pwd']
-	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
-	relative_command=Redirect_command
-	relative_command=['ls', Guaranteed_existing_basename]
-	shell_execution2=ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
-	command_string=Redirect_command_string
-	assert_equal(Redirect_command_string, ShellCommands.assemble_array_command(Redirect_command))
-	shell_execution=ShellCommands.new([Cd_command_array, '&&', relative_command])
-	shell_execution.assert_post_conditions
-	assert_equal(Guaranteed_existing_basename+"\n", shell_execution.output, shell_execution.inspect)
-	assert_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
-	assert_not_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 end #initialize
 def test_success?
 	assert(EXAMPLE.success?)
