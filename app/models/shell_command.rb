@@ -36,12 +36,12 @@ def assemble_array_command(command)
 			assemble_array_command(e)
 		elsif e.instance_of?(Hash) then
 			assemble_hash_command(e)
-		elsif /[ ]/.match(e) then
+		elsif /[ \/.]/.match(e) then # pathnames
 			Shellwords.escape(e)
-		elsif /[$;&|<>]/.match(e) then
+		elsif /[$;&|<>]/.match(e) then #shell special characters
 			e
-		else
-			Shellwords.escape(e)
+		else # don't know
+			e
 		end #if
 	end.join(' ') #map
 end #assemble_array_command
@@ -59,6 +59,8 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
 	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
@@ -68,8 +70,18 @@ def execute
 		@process_status = wait_thr.value # Process::Status object returned.
 	}
 	self #allows command chaining
+rescue StandardError => exception
+	$stdout.puts "rescue exception "+exception.inspect
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
+	if @errors.nil? then
+		@errors=exception.inspect
+	else
+		@errors+=exception.inspect
+	end #if
 end #execute
 def initialize(command)
+	@command=command
 	@command_string=ShellCommands.assemble_command_string(command)
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
@@ -107,12 +119,17 @@ def close
 	self #allows command chaining
 end #close
 def success?
-	@process_status.success?
+	if @process_status.nil? then
+		false
+	else
+		@process_status.success?
+	end #if
 end #success
 def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
 		ret+="$ #{@command_string}\n"
+		ret+="@command=#{@command}\n" if $VERBOSE
 	end #if
 	if @errors!='' then
 		ret+="@errors=#{@errors.inspect}\n"
@@ -120,7 +137,11 @@ def inspect(echo_command=@errors!='' || !success?)
 	if !success? then
 		ret+="@process_status=#{@process_status.inspect}\n"
 	end #if
-	ret+@output.to_s
+	if @output.nil? then
+		ret
+	else
+		ret+@output.to_s
+	end #if
 end #inspect
 def puts
 	$stdout.puts inspect(:echo_command)
