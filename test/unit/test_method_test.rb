@@ -14,7 +14,7 @@ include Parse
 def test_initialize
 	test_executable=$0
 	grep_test=ShellCommands.new('grep "def test_" '+test_executable)
-	grep_lines=parse(grep_test.output, LINES)
+	grep_lines=parse_split(grep_test.output, LINES)
 	assert_match(Parse_grep, grep_lines[0])
 	assert_match(Parse_grep, grep_lines[1])
 	assert_match(Parse_grep, grep_lines[2])
