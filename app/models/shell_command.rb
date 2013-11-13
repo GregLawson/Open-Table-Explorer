@@ -62,7 +62,6 @@ def execute
 	info "@command="+@command.inspect
 	info "@command_string="+@command_string.inspect
 	$stdout.puts "@command_string="+@command_string.inspect
-	
 	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
@@ -72,9 +71,15 @@ def execute
 		@process_status = wait_thr.value # Process::Status object returned.
 	}
 	self #allows command chaining
-rescue RuntimeError => exception
-	puts "rescue exception"+exception.inspect
-	$stdout.puts self.inspect
+rescue Exception => exception
+	$stdout.puts "rescue exception"+exception.inspect
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
+	if @errors.nil? then
+		@errors=exception.inspect
+	else
+		@errors+=exception.inspect
+	end #if
 end #execute
 def initialize(command)
 	@command=command
@@ -115,13 +120,17 @@ def close
 	self #allows command chaining
 end #close
 def success?
-	@process_status.success?
+	if @process_status.nil? then
+		false
+	else
+		@process_status.success?
+	end #if
 end #success
 def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
 		ret+="$ #{@command_string}\n"
-		ret+="\n@command=#{@command}" if $VERBOSE || @errors!='' || !success?
+		ret+="\n@command=#{@command}" if $VERBOSE
 	end #if
 	if @errors!='' then
 		ret+="@errors=#{@errors.inspect}\n"
@@ -129,7 +138,11 @@ def inspect(echo_command=@errors!='' || !success?)
 	if !success? then
 		ret+="@process_status=#{@process_status.inspect}\n"
 	end #if
-	ret+@output.to_s
+	if @output.nil? then
+		ret
+	else
+		ret+@output.to_s
+	end #if
 end #inspect
 def puts
 	$stdout.puts inspect(:echo_command)
