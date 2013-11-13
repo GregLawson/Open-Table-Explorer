@@ -63,6 +63,8 @@ end #initialize
 def test_01
 	shell_execution1=ShellCommands.new('ls /tmp')
 	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
+	shell_execution1=ShellCommands.new('cd')
+	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new('pushd /tmp')
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new('cd /tmp')
@@ -98,8 +100,8 @@ def test_09
 end #9
 def test_10
 	switch_dir=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
-	assert_instance_of(String, switch_dir)
-	assert_equal(Guaranteed_existing_directory+"\n", switch_dir)
+	assert_instance_of(String, switch_dir.output)
+	assert_equal(Guaranteed_existing_directory+"\n", switch_dir.output)
 end #10
 def test_11
 #	assert_equal('shell_command_test.rb', ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
