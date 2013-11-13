@@ -70,7 +70,7 @@ def execute
 		@process_status = wait_thr.value # Process::Status object returned.
 	}
 	self #allows command chaining
-rescue Exception => exception
+rescue StandardError => exception
 	$stdout.puts "rescue exception "+exception.inspect
 	info "@command="+@command.inspect
 	info "@command_string="+@command_string.inspect
