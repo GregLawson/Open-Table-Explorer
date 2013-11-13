@@ -36,11 +36,11 @@ def assemble_array_command(command)
 			assemble_array_command(e)
 		elsif e.instance_of?(Hash) then
 			assemble_hash_command(e)
-		elsif /[ /.]/.match(e) then # pathnames
+		elsif /[ \/.]/.match(e) then # pathnames
 			Shellwords.escape(e)
 		elsif /[$;&|<>]/.match(e) then #shell special characters
 			e
-		else
+		else # don't know
 			e
 		end #if
 	end.join(' ') #map
@@ -59,6 +59,7 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
+	puts "@command="+@command.inspect
 	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
@@ -68,6 +69,9 @@ def execute
 		@process_status = wait_thr.value # Process::Status object returned.
 	}
 	self #allows command chaining
+rescue RuntimeError => exception
+	puts exception.inspect
+	self.puts
 end #execute
 def initialize(command)
 	@command=command
