@@ -59,8 +59,8 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
-	info "@command="+@command.inspect
-	info "@command_string="+@command_string.inspect
+#	info "@command="+@command.inspect
+#	info "@command_string="+@command_string.inspect
 	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
@@ -72,8 +72,8 @@ def execute
 	self #allows command chaining
 rescue StandardError => exception
 	$stdout.puts "rescue exception "+exception.inspect
-	info "@command="+@command.inspect
-	info "@command_string="+@command_string.inspect
+#	info "@command="+@command.inspect
+#	info "@command_string="+@command_string.inspect
 	if @errors.nil? then
 		@errors=exception.inspect
 	else
