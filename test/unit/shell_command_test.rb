@@ -63,8 +63,8 @@ end #initialize
 def test_01
 	shell_execution1=ShellCommands.new('ls /tmp')
 	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-	shell_execution1=ShellCommands.new('cd')
-	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
+#	shell_execution1=ShellCommands.new('cd')
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new('pushd /tmp')
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new('cd /tmp')
