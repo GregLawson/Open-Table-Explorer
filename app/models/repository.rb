@@ -67,9 +67,9 @@ def shell_command(command, working_directory=Shellwords.escape(@path))
 	else
 		command_string=command
 	end #if
-		ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}; #{command_string}")
-		ret.puts if $VERBOSE
-		ret
+	ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}&& #{command_string}")
+	ret.puts if $VERBOSE
+	ret
 end #shell_command
 def git_command(git_subcommand)
 	if git_subcommand.instance_of?(Array) then
