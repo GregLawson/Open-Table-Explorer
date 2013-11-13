@@ -145,19 +145,19 @@ def inspect(echo_command=@errors!='' || !success?)
 end #inspect
 def puts
 	$stdout.puts inspect(:echo_command)
-	self # return for comand chaining
+	self # return for command chaining
 end #puts
 def trace
 	$stdout.puts inspect(:echo_command)
 	shorter_callers=caller.grep(/^[^\/]/)
 	$stdout.puts shorter_callers.join("\n")
-	self # return for comand chaining
+	self # return for command chaining
 end #trace
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_pre_conditions(message='')
-	self # return for comand chaining
+	self # return for command chaining
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
@@ -168,7 +168,7 @@ def assert_post_conditions(message='')
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
 
-	self # return for comand chaining
+	self # return for command chaining
 end #assert_post_conditions
 end #Assertions
 include Assertions
@@ -177,7 +177,7 @@ Hello_world=ShellCommands.new('echo "Hello World"')
 Example_output="1 2;3 4\n"
 COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
-Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
+Guaranteed_existing_directory=File.expand_path(File.dirname($0))
 Cd_command_array=['cd', Guaranteed_existing_directory]
 Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
 Guaranteed_existing_basename=File.basename($0)
