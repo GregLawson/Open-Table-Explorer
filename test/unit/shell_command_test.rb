@@ -97,7 +97,9 @@ end #8
 def test_09
 end #9
 def test_10
-	assert_equal(Guaranteed_existing_directory, ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']]))
+	switch_dir=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
+	assert_instance_of(String, switch_dir)
+	assert_equal(Guaranteed_existing_directory+"\n", switch_dir)
 end #10
 def test_11
 #	assert_equal('shell_command_test.rb', ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
