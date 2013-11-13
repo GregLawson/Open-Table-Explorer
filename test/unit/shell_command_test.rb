@@ -78,15 +78,15 @@ def test_05
 end #5
 def test_06
 	shell_execution1=ShellCommands.new([Cd_command_hash])
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 end #6
 def test_07
 	shell_execution1=ShellCommands.new([Cd_command_array])
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 end #7
 def test_08
-#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 end #8
 def test_09
-#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 end #9
 def test_10
 #	assert_equal(Guaranteed_existing_directory, ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']]))
