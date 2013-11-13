@@ -145,19 +145,19 @@ def inspect(echo_command=@errors!='' || !success?)
 end #inspect
 def puts
 	$stdout.puts inspect(:echo_command)
-	self # return for comand chaining
+	self # return for command chaining
 end #puts
 def trace
 	$stdout.puts inspect(:echo_command)
 	shorter_callers=caller.grep(/^[^\/]/)
 	$stdout.puts shorter_callers.join("\n")
-	self # return for comand chaining
+	self # return for command chaining
 end #trace
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_pre_conditions(message='')
-	self # return for comand chaining
+	self # return for command chaining
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
@@ -168,7 +168,7 @@ def assert_post_conditions(message='')
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
 
-	self # return for comand chaining
+	self # return for command chaining
 end #assert_post_conditions
 end #Assertions
 include Assertions
