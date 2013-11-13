@@ -36,12 +36,12 @@ def assemble_array_command(command)
 			assemble_array_command(e)
 		elsif e.instance_of?(Hash) then
 			assemble_hash_command(e)
-		elsif /[ ]/.match(e) then
+		elsif /[ \/.]/.match(e) then # pathnames
 			Shellwords.escape(e)
-		elsif /[$;&|<>]/.match(e) then
+		elsif /[$;&|<>]/.match(e) then #shell special characters
 			e
-		else
-			Shellwords.escape(e)
+		else # don't know
+			e
 		end #if
 	end.join(' ') #map
 end #assemble_array_command
@@ -59,6 +59,8 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
 	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
@@ -68,8 +70,18 @@ def execute
 		@process_status = wait_thr.value # Process::Status object returned.
 	}
 	self #allows command chaining
+rescue StandardError => exception
+	$stdout.puts "rescue exception "+exception.inspect
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
+	if @errors.nil? then
+		@errors=exception.inspect
+	else
+		@errors+=exception.inspect
+	end #if
 end #execute
 def initialize(command)
+	@command=command
 	@command_string=ShellCommands.assemble_command_string(command)
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
@@ -107,12 +119,17 @@ def close
 	self #allows command chaining
 end #close
 def success?
-	@process_status.success?
+	if @process_status.nil? then
+		false
+	else
+		@process_status.success?
+	end #if
 end #success
 def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
 		ret+="$ #{@command_string}\n"
+		ret+="@command=#{@command}\n" if $VERBOSE
 	end #if
 	if @errors!='' then
 		ret+="@errors=#{@errors.inspect}\n"
@@ -120,23 +137,27 @@ def inspect(echo_command=@errors!='' || !success?)
 	if !success? then
 		ret+="@process_status=#{@process_status.inspect}\n"
 	end #if
-	ret+@output.to_s
+	if @output.nil? then
+		ret
+	else
+		ret+@output.to_s
+	end #if
 end #inspect
 def puts
 	$stdout.puts inspect(:echo_command)
-	self # return for comand chaining
+	self # return for command chaining
 end #puts
 def trace
 	$stdout.puts inspect(:echo_command)
 	shorter_callers=caller.grep(/^[^\/]/)
 	$stdout.puts shorter_callers.join("\n")
-	self # return for comand chaining
+	self # return for command chaining
 end #trace
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_pre_conditions(message='')
-	self # return for comand chaining
+	self # return for command chaining
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="self=#{inspect}"
@@ -147,7 +168,7 @@ def assert_post_conditions(message='')
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
 
-	self # return for comand chaining
+	self # return for command chaining
 end #assert_post_conditions
 end #Assertions
 include Assertions
@@ -156,7 +177,7 @@ Hello_world=ShellCommands.new('echo "Hello World"')
 Example_output="1 2;3 4\n"
 COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
-Guaranteed_existing_directory=File.expand_path(File.dirname($0))+'/'
+Guaranteed_existing_directory=File.expand_path(File.dirname($0))
 Cd_command_array=['cd', Guaranteed_existing_directory]
 Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
 Guaranteed_existing_basename=File.basename($0)
