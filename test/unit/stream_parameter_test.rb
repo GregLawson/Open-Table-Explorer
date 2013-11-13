@@ -6,9 +6,10 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+require_relative '../../app/models/stream_parameter.rb'
 
 class StreamParameterTest < TestCase
 def test_foreign_keys_not_nil
-	@@model_class.assert_foreign_keys_not_nil
+	model_class?.assert_foreign_keys_not_nil
 end #
 end #StreamParameterTest
