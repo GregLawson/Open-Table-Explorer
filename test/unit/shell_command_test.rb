@@ -61,6 +61,7 @@ def test_initialize
 	assert_pathname_exists($0)
 end #initialize
 def test_01
+	shell_execution1=ShellCommands.new('ls /tmp')
 	shell_execution1=ShellCommands.new('cd /tmp')
 end #1
 def test_02

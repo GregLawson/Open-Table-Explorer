@@ -61,6 +61,8 @@ attr_reader :command_string, :output, :errors, :process_status
 def execute
 	info "@command="+@command.inspect
 	info "@command_string="+@command_string.inspect
+	$stdout.puts "@command_string="+@command_string.inspect
+	
 	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
@@ -72,7 +74,7 @@ def execute
 	self #allows command chaining
 rescue RuntimeError => exception
 	puts "rescue exception"+exception.inspect
-	self.puts
+	$stdout.puts self.inspect
 end #execute
 def initialize(command)
 	@command=command
