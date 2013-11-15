@@ -197,9 +197,15 @@ def validate_commit(changes_branch, files)
 		puts p.inspect  if $VERBOSE
 		git_command('checkout '+changes_branch.to_s+' '+p)
 	end #each
-	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(','))	
-	git_command('cola').assert_post_conditions
-	git_command('rebase --autosquash --interactive')
+	if something_to_commit? then
+		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')
+		if !@recent_test.nil? then
+			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
+		end #if
+		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+		git_command('cola').assert_post_conditions
+#		git_command('rebase --autosquash --interactive')
+	end #if
 end #validate_commit
 def something_to_commit?
 	status=@grit_repo.status
@@ -223,15 +229,6 @@ end #downgrade_commit
 def test(executable=related_files.model_test_pathname?)
 	stage(deserving_branch?(executable), executable)
 end #test
-def upgrade(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #upgrade
-def best(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #best
-def downgrade(executable=related_files.model_test_pathname?)
-	downgrade_commit(deserving_branch?(executable), executable)
-end #downgrade
 def stage(target_branch, tested_files)
 	if current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
