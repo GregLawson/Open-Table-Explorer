@@ -7,8 +7,9 @@
 ###########################################################################
 # @see http://grit.rubyforge.org/
 require 'grit'  # sudo gem install grit
-# partial API at @see less /usr/share/doc/ruby-grit/API.txt
-# code in @see /usr/lib/ruby/vendor_ruby/grit
+# rdoc at http://grit.rubyforge.org/
+# partial API at less /usr/share/doc/ruby-grit/API.txt
+# code in /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
 class Repository <Grit::Repo
 module Constants
@@ -26,16 +27,12 @@ module ClassMethods
 include Constants
 def create_empty(path)
 	Dir.mkdir(path)
-	if File.exists?(path) then
-		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
-		new_repository=Repository.new(path)
-		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
-		new_repository.git_command('add README')
-		new_repository.git_command('commit -m "create_empty initial commit of README"')
-		new_repository.git_command('branch passed')
-	else
-		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
-	end #if
+	ShellCommands.new('cd "'+path+'";git init')
+	new_repository=Repository.new(path)
+	IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
+	new_repository.git_command('add README')
+	new_repository.git_command('commit -m "create_empty initial commit of README"')
+	new_repository.git_command('branch passed')
 	new_repository
 end #create_empty
 def delete_existing(path)
@@ -65,22 +62,12 @@ def initialize(path)
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
-	if command.instance_of?(Array) then
-		command_string=Shellwords.join(command)
-	else
-		command_string=command
-	end #if
-	ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}&& #{command_string}")
-	ret.puts if $VERBOSE
-	ret
+		ret=ShellCommands.new("cd #{working_directory}; #{command}")
+		ret.puts if $VERBOSE
+		ret
 end #shell_command
 def git_command(git_subcommand)
-	if git_subcommand.instance_of?(Array) then
-		command_string=['git']+Shellwords.join(git_subcommand)
-	else
-		command_string='git '+git_subcommand
-	end #if
-	ret=shell_command(command_string)
+	ret=shell_command("git "+git_subcommand)
 	if $VERBOSE && git_subcommand != 'status' then
 		shell_command("git status").puts
 	end #if
@@ -197,15 +184,9 @@ def validate_commit(changes_branch, files)
 		puts p.inspect  if $VERBOSE
 		git_command('checkout '+changes_branch.to_s+' '+p)
 	end #each
-	if something_to_commit? then
-		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')
-		if !@recent_test.nil? then
-			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
-		end #if
-		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
-		git_command('cola').assert_post_conditions
-#		git_command('rebase --autosquash --interactive')
-	end #if
+	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+unit_names?(files).uniq.join(','))	
+	git_command('cola').assert_post_conditions
+	git_command('rebase --autosquash --interactive')
 end #validate_commit
 def something_to_commit?
 	status=@grit_repo.status
@@ -229,6 +210,15 @@ end #downgrade_commit
 def test(executable=related_files.model_test_pathname?)
 	stage(deserving_branch?(executable), executable)
 end #test
+def upgrade(executable=related_files.model_test_pathname?)
+	upgrade_commit(deserving_branch?(executable), executable)
+end #upgrade
+def best(executable=related_files.model_test_pathname?)
+	upgrade_commit(deserving_branch?(executable), executable)
+end #best
+def downgrade(executable=related_files.model_test_pathname?)
+	downgrade_commit(deserving_branch?(executable), executable)
+end #downgrade
 def stage(target_branch, tested_files)
 	if current_branch_name? ==target_branch then
 		push_branch=target_branch # no need for stash popping
@@ -256,6 +246,11 @@ def commit_to_branch(target_branch, tested_files)
 		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
+def test_and_commit(executable, tested_files)
+	
+	commit_to_branch(deserving_branch?(executable), tested_files)
+
+end #test
 def CompilesSupersetOfMaster
 	git_command("log compiles..master")
 end #
@@ -268,6 +263,72 @@ end #force_change
 def revert_changes
 	git_command('reset --hard')
 end #revert_changes
+module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+def assert_post_conditions
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions
+	assert_pathname_exists(path)
+	assert_pathname_exists(path+'.git/')
+	assert_pathname_exists(path+'.git/logs/')
+	assert_pathname_exists(path+'.git/logs/refs/')
+end #assert_pre_conditions
+def assert_post_conditions
+end #assert_post_conditions
+def assert_nothing_to_commit(message='')
+	status=@grit_repo.status
+	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
+	assert_equal({}, status.added, 'added '+message)
+	assert_equal({}, status.changed, 'changed '+message)
+	assert_equal({}, status.deleted, 'deleted '+message)
+end #assert_nothing_to_commit
+def assert_something_to_commit(message='')
+	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
+	assert(something_to_commit?, message)
+end #assert_something_to_commit
+def assert_deserving_branch(branch_expected, executable, message='')
+	deserving_branch=deserving_branch?(executable)
+	recent_test=shell_command("ruby "+executable)
+	message+="\nrecent_test="+recent_test.inspect
+	message+="\nrecent_test.process_status="+recent_test.process_status.inspect
+	syntax_test=shell_command("ruby -c "+executable)
+	message+="\nsyntax_test="+syntax_test.inspect
+	message+="\nsyntax_test.process_status="+syntax_test.process_status.inspect
+	message+="\nbranch_expected=#{branch_expected.inspect}"
+	message+="\ndeserving_branch=#{deserving_branch.inspect}"
+	case deserving_branch
+	when :edited then
+		assert_equal(1, recent_test.process_status.exitstatus, message)
+		assert_not_equal("Syntax OK\n", syntax_test.output, message)
+		assert_equal(1, syntax_test.process_status.exitstatus, message)
+	when :testing then
+		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	when :passed then
+		assert_equal(0, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	end #case
+	assert_equal(deserving_branch, branch_expected, message)
+end #deserving_branch
+end #Assertions
+include Assertions
+#TestWorkFlow.assert_pre_conditions
+include Constants
+module Examples
+include Constants
+Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
+Repo= Grit::Repo.new(Root_directory)
+SELF_code_Repo=Repository.new(Root_directory)
+Empty_Repo_path=Source+'test_repository/'
+Empty_Repo=Repository.replace_or_create(Empty_Repo_path)
+Modified_path=Empty_Repo_path+'/README'
+Unique_repository_directory_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+
+end #Examples
+include Examples
 end #Repository
 
 
