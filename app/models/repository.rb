@@ -27,12 +27,16 @@ module ClassMethods
 include Constants
 def create_empty(path)
 	Dir.mkdir(path)
-	ShellCommands.new('cd "'+path+'";git init')
-	new_repository=Repository.new(path)
-	IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
-	new_repository.git_command('add README')
-	new_repository.git_command('commit -m "create_empty initial commit of README"')
-	new_repository.git_command('branch passed')
+	if File.exists?(path) then
+		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
+		new_repository=Repository.new(path)
+		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
+		new_repository.git_command('add README')
+		new_repository.git_command('commit -m "create_empty initial commit of README"')
+		new_repository.git_command('branch passed')
+	else
+		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
+	end #if
 	new_repository
 end #create_empty
 def delete_existing(path)
