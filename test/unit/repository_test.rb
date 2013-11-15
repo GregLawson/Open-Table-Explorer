@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative '../unit/test_environment'
-require_relative '../../test/assertions/repository_assertions.rb'
+require_relative "../../app/models/repository.rb"
 class RepositoryTest < TestCase
 include DefaultTests
 include Repository::Examples
@@ -18,7 +18,6 @@ def test_Constants
 end #Constants
 def test_create_empty
 	Dir.mkdir(Unique_repository_directory_pathname)
-	assert_pathname_exists(Unique_repository_directory_pathname)
 	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
 	new_repository=Repository.new(Unique_repository_directory_pathname)
 	IO.write(Unique_repository_directory_pathname+'/README', README_start_text+"1\n") # two consecutive slashes = one slash
@@ -230,6 +229,29 @@ def test_revert_changes
 	Minimal_repository.assert_nothing_to_commit
 	assert_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #revert_changes
+def test_assert_nothing_to_commit
+	Minimal_repository.assert_nothing_to_commit
+end #assert_nothing_to_commit
+def test_assert_something_to_commit
+	Minimal_repository.force_change
+	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
+	Minimal_repository.assert_something_to_commit
+	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
+	Minimal_repository.git_command('add README')
+	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
+	assert(Minimal_repository.something_to_commit?)
+#	Minimal_repository.git_command('commit -m "initial commit of README"')
+	Minimal_repository.assert_something_to_commit
+	Minimal_repository.revert_changes
+	Minimal_repository.assert_nothing_to_commit
+end #assert_something_to_commit
+def test_assert_deserving_branch
+	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
+	SELF_code_Repo.assert_deserving_branch(:passed, 'test/unit/minimal2_test.rb')
+	executable='/etc/mtab' #force syntax error with non-ruby text
+	SELF_code_Repo.assert_deserving_branch(:edited, executable)
+#	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
+end #deserving_branch
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")
@@ -245,4 +267,9 @@ end #revert_changes
 
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
+def test_Examples
+  path=Source+'test_recover'
+  assert_pathname_exists(path)
+#  development_old=Repository.new(path)
+end #Examples
 end #Repository
