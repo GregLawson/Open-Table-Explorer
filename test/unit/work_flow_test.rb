@@ -40,6 +40,19 @@ def test_goldilocks
 	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
 end #goldilocks
+include WorkFlow::Examples
+def test_execute
+	assert_include(TestWorkFlow.related_files.edit_files, TestFile)
+#	assert_equal('', TestWorkFlow.version_comparison)
+#	assert_equal('', TestWorkFlow.test_files)
+end #execute
+def test_test_files
+	assert_equal('', TestWorkFlow.test_files([]))
+# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
+end #test_files
+def test_version_comparison
+	assert_equal('', TestWorkFlow.version_comparison([]))
+end #version_comparison
 def test_functional_parallelism
 	edit_files=TestWorkFlow.related_files.edit_files
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
