@@ -256,11 +256,6 @@ def commit_to_branch(target_branch, tested_files)
 		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
-def test_and_commit(executable, tested_files)
-	
-	commit_to_branch(deserving_branch?(executable), tested_files)
-
-end #test
 def CompilesSupersetOfMaster
 	git_command("log compiles..master")
 end #
