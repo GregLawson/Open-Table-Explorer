@@ -12,7 +12,7 @@ class ShellCommandsTest < DefaultTestCase2
 include DefaultTests
 include ShellCommands::Examples
 def test_assemble_hash_command
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_hash_command(Cd_command_hash))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_hash_command(Cd_command_hash))
 end #assemble_hash_command
 def test_assemble_array_command
 	assert_match(/[$]/, '$SECONDS')
@@ -25,11 +25,11 @@ def test_assemble_array_command
 end #assemble_array_command
 def test_assemble_command_string
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_array))
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_hash))
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_array]))
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
-	assert_equal('cd '+Guaranteed_existing_directory+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([Cd_command_hash, '&&', Relative_command]))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string(Cd_command_array))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string(Cd_command_hash))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string([Cd_command_array]))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string([Cd_command_hash]))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory)+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([Cd_command_hash, '&&', Relative_command]))
 	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_command_string(["cd", "/tmp", ";", "echo", "$SECONDS"]))
 	assert_equal(Redirect_command_string, ShellCommands.assemble_command_string(Redirect_command))
 	assert_equal(Redirect_command_string, ShellCommands.assemble_command_string([Redirect_command]))
