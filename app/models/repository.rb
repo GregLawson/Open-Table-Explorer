@@ -75,7 +75,12 @@ def shell_command(command, working_directory=Shellwords.escape(@path))
 	ret
 end #shell_command
 def git_command(git_subcommand)
-	ret=shell_command("git "+git_subcommand)
+	if git_subcommand.instance_of?(Array) then
+		command_string=['git']+Shellwords.join(git_subcommand)
+	else
+		command_string='git '+git_subcommand
+	end #if
+	ret=shell_command(command_string)
 	if $VERBOSE && git_subcommand != 'status' then
 		shell_command("git status").puts
 	end #if
