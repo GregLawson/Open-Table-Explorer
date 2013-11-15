@@ -7,9 +7,8 @@
 ###########################################################################
 # @see http://grit.rubyforge.org/
 require 'grit'  # sudo gem install grit
-# rdoc at http://grit.rubyforge.org/
-# partial API at less /usr/share/doc/ruby-grit/API.txt
-# code in /usr/lib/ruby/vendor_ruby/grit
+# partial API at @see less /usr/share/doc/ruby-grit/API.txt
+# code in @see /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
 class Repository <Grit::Repo
 module Constants
@@ -66,9 +65,14 @@ def initialize(path)
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 def shell_command(command, working_directory=Shellwords.escape(@path))
-		ret=ShellCommands.new("cd #{working_directory}; #{command}")
-		ret.puts if $VERBOSE
-		ret
+	if command.instance_of?(Array) then
+		command_string=Shellwords.join(command)
+	else
+		command_string=command
+	end #if
+	ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}&& #{command_string}")
+	ret.puts if $VERBOSE
+	ret
 end #shell_command
 def git_command(git_subcommand)
 	ret=shell_command("git "+git_subcommand)
