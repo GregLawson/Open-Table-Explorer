@@ -45,7 +45,6 @@ def test_initialize
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	shell_execution1=ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']])
 	shell_execution1=ShellCommands.new([['cd', '/tmp'], '&&', ['echo', '$SECONDS']])
-	shell_execution1=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
 	shell_execution1=ShellCommands.new('cd /tmp;pwd')
 	shell_execution1=ShellCommands.new('cd /tmp;')
 	relative_command=['pwd']
@@ -58,7 +57,12 @@ def test_initialize
 	assert_equal(Guaranteed_existing_basename+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
 	assert_not_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
-	assert_pathname_exists($0)
+	switch_dir=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
+	assert_equal(Guaranteed_existing_directory+"\n", switch_dir.output)
+
+	assert_instance_of(Hash, :chdir=>"/")
+	switch_dir=ShellCommands.new('pwd', :chdir=>Guaranteed_existing_directory)
+	assert_equal(Guaranteed_existing_directory+"\n", switch_dir.output, switch_dir.inspect(true))
 end #initialize
 def test_01
 	shell_execution1=ShellCommands.new('ls /tmp')
