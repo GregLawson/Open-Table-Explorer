@@ -80,6 +80,8 @@ rescue StandardError => exception
 		@errors+=exception.inspect
 	end #if
 end #execute
+# prefer command as array since each element is shell escaped.
+# Most common need for shell excape is spaces in pathnames (a common GUI style)
 def initialize(*command)
 	parse_argument_array(command)
 	execute # do it first time, to repeat call execute
@@ -164,6 +166,7 @@ def inspect(echo_command=@errors!='' || !success?)
 		ret+="@opts=#{@opts.inspect}\n" if $VERBOSE
 	end #if
 	if @errors!='' then
+		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n"
 		ret+="@errors=#{@errors.inspect}\n"
 	end #if
 	if !success? then
