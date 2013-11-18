@@ -61,7 +61,7 @@ attr_reader :command_string, :output, :errors, :process_status
 def execute
 #	info "@command="+@command.inspect
 #	info "@command_string="+@command_string.inspect
-	Open3.popen3(@command_string) {|stdin, stdout, stderr, wait_thr|
+	Open3.popen3(@env, @command_string, @opts) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
 		stdout.close
@@ -80,9 +80,10 @@ rescue StandardError => exception
 		@errors+=exception.inspect
 	end #if
 end #execute
-def initialize(command)
-	@command=command
-	@command_string=ShellCommands.assemble_command_string(command)
+# prefer command as array since each element is shell escaped.
+# Most common need for shell excape is spaces in pathnames (a common GUI style)
+def initialize(*command)
+	parse_argument_array(command)
 	execute # do it first time, to repeat call execute
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
@@ -92,6 +93,37 @@ def initialize(command)
 	end #if
 
 end #initialize
+# Allow Process.spawn options and environment to be passed.
+def parse_argument_array(argument_array)
+	@argument_array=argument_array
+	case argument_array.size
+	when 3 then
+		@env=argument_array[0]
+		@command=argument_array[1]
+		@opts=argument_array[2]
+	when 2 then
+		if argument_array[0].instance_of?(Hash) then
+			if argument_array[1].instance_of?(Hash) then
+				@env={}
+				@command=argument_array[0]
+				@opts=argument_array[1]
+			else
+				@env=argument_array[0]
+				@command=argument_array[1]
+				@opts={}
+			end #if
+		else # command is not a Hash
+			@env={}
+			@command=argument_array[0]
+			@opts=argument_array[1]
+		end #if
+	when 1 then
+		@env={}
+		@command=argument_array[0]
+		@opts={}
+	end #case
+	@command_string=ShellCommands.assemble_command_string(@command)
+end #parse_argument_array
 def fork(cmd)
 	start(cmd)
 	self #allows command chaining
@@ -129,9 +161,12 @@ def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
 		ret+="$ #{@command_string}\n"
-		ret+="@command=#{@command}\n" if $VERBOSE
+		ret+="@env=#{@env.inspect}\n" if $VERBOSE
+		ret+="@command=#{@command.inspect}\n" if $VERBOSE
+		ret+="@opts=#{@opts.inspect}\n" if $VERBOSE
 	end #if
 	if @errors!='' then
+		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n"
 		ret+="@errors=#{@errors.inspect}\n"
 	end #if
 	if !success? then

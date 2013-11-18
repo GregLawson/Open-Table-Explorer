@@ -136,11 +136,11 @@ def test_aaa_environment
    examples=constant_objects.select{|c| c.instance_of?(Regexp)}
    info "examples=#{examples}"
 	if examples.empty? then
-      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
+      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples.\nconstant_objects=#{constant_objects.inspect}"
 	end #if
 end #test_aaa_environment
 def test_class_assert_pre_conditions
-  existing_call(model_class?, :ssert_pre_conditions)
+  existing_call(model_class?, :assert_pre_conditions)
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_invariant

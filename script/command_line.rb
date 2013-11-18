@@ -9,7 +9,7 @@
 # @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
 require 'pp'
 require_relative '../app/models/command_line.rb'
-pp ARGV
+pp ARGV if $VERBOSE
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
@@ -42,15 +42,15 @@ else
 	argv=ARGV
 end #case
 argv.each do |f|
-	editTestGit=WorkFlow.new(f)
+	work_flow=WorkFlow.new(f)
 	commands.each do |c|
 		case c.to_sym
-		when :execute then editTestGit.execute
-		when :edit then editTestGit.edit
-		when :test then editTestGit.test
-		when :upgrade then editTestGit.upgrade
-		when :downgrade then editTestGit.downgrade
-		when :merge_down then editTestGit.merge_down
+		when :execute then work_flow.execute
+		when :edit then work_flow.edit
+		when :test then work_flow.test
+		when :upgrade then work_flow.upgrade
+		when :downgrade then work_flow.downgrade
+		when :merge_down then work_flow.merge_down
 		end #case
 	end #each
 end #each
