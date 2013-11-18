@@ -74,6 +74,15 @@ def test_capture
 	assert_match(regexp.capture(:digit), str, message)
 	assert_equal('2', regexp.capture(:digit).match('a2c')[:digit])
 end #capture
+def test_back_reference
+	regexp1=/(?<vowel>[aeiou]).\k<vowel>.\k<vowel>/
+	assert_match(regexp1, 'ototomy', 'Regexp doc example.')
+	assert_equal('ototo', regexp1.match('ototomy')[0])
+	assert_equal('o', regexp1.match('ototomy')[1])
+	regexp2=/[aeiou]/.capture(:vowel)*/./
+	regexp2=((/[aeiou]/.capture(:vowel)*/./).back_reference(:vowel)*/./).back_reference(:vowel)
+	assert_match(regexp2, 'ototomy', 'Regexp doc example.')
+end #back_reference
 def test_group
 	regexp=/\d/
 	str='a2c'

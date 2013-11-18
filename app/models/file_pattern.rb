@@ -43,7 +43,7 @@ def path2model_name?(path=$0)
 	matches=all.map do |s| 
 		if s.suffix_match(path) && s.sub_directory_match(path) then
 			name_length=basename.size-s[:suffix].size
-			basename[0,name_length].classify.to_sym
+			basename[0,name_length].camelize.to_sym
 		else
 			nil
 		end #if	

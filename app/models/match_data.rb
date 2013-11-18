@@ -5,13 +5,19 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-class Minimal4
-module Constants
-end #Constants
-include Constants
-module ClassMethods
-end #ClassMethods
-extend ClassMethods
-def initialize
-end #initialize
-end #Minimal
+class MatchData
+def parse
+	if nil? then
+    []
+	elsif names==[] then
+		self[1..-1] # return unnamed subexpressions
+	else
+#     named_captures for captures.size > names.size
+		named_hash={}
+		names.each do |n| # return named subexpressions
+			named_hash[n.to_sym]=self[n]
+		end # each
+		named_hash
+	end #if
+end #parse
+end #MatchData

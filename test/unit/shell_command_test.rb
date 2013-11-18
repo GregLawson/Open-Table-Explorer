@@ -12,7 +12,7 @@ class ShellCommandsTest < DefaultTestCase2
 include DefaultTests
 include ShellCommands::Examples
 def test_assemble_hash_command
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_hash_command(Cd_command_hash))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_hash_command(Cd_command_hash))
 end #assemble_hash_command
 def test_assemble_array_command
 	assert_match(/[$]/, '$SECONDS')
@@ -25,11 +25,11 @@ def test_assemble_array_command
 end #assemble_array_command
 def test_assemble_command_string
 	assert_equal(COMMAND_STRING, EXAMPLE.command_string)
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_array))
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string(Cd_command_hash))
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_array]))
-	assert_equal('cd '+Guaranteed_existing_directory, ShellCommands.assemble_command_string([Cd_command_hash]))
-	assert_equal('cd '+Guaranteed_existing_directory+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([Cd_command_hash, '&&', Relative_command]))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string(Cd_command_array))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string(Cd_command_hash))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string([Cd_command_array]))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string([Cd_command_hash]))
+	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory)+' && ls shell_command_test.rb', ShellCommands.assemble_command_string([Cd_command_hash, '&&', Relative_command]))
 	assert_equal('cd /tmp ; echo $SECONDS', ShellCommands.assemble_command_string(["cd", "/tmp", ";", "echo", "$SECONDS"]))
 	assert_equal(Redirect_command_string, ShellCommands.assemble_command_string(Redirect_command))
 	assert_equal(Redirect_command_string, ShellCommands.assemble_command_string([Redirect_command]))
@@ -45,7 +45,6 @@ def test_initialize
 	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	shell_execution1=ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']])
 	shell_execution1=ShellCommands.new([['cd', '/tmp'], '&&', ['echo', '$SECONDS']])
-	shell_execution1=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
 	shell_execution1=ShellCommands.new('cd /tmp;pwd')
 	shell_execution1=ShellCommands.new('cd /tmp;')
 	relative_command=['pwd']
@@ -58,13 +57,18 @@ def test_initialize
 	assert_equal(Guaranteed_existing_basename+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
 	assert_not_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
-	assert_pathname_exists($0)
+	switch_dir=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
+	assert_equal(Guaranteed_existing_directory+"\n", switch_dir.output)
+
+	assert_instance_of(Hash, :chdir=>"/")
+	switch_dir=ShellCommands.new('pwd', :chdir=>Guaranteed_existing_directory)
+	assert_equal(Guaranteed_existing_directory+"\n", switch_dir.output, switch_dir.inspect(true))
 end #initialize
 def test_01
 	shell_execution1=ShellCommands.new('ls /tmp')
 	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-	shell_execution1=ShellCommands.new(cd')
-	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
+#	shell_execution1=ShellCommands.new('cd')
+#	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new('pushd /tmp')
 #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
 #	shell_execution1=ShellCommands.new('cd /tmp')

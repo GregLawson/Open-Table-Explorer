@@ -23,7 +23,7 @@ def test_Constants
 	assert_match(Basename_character_regexp, Project_root_directory)
 	assert_match(Basename_regexp, Project_root_directory)
 	assert_match(Pathname_character_regexp, Project_root_directory)
-	assert_match(Absolute_pathname_regexp, $0)
+#either	assert_match(Absolute_pathname_regexp, $0)
 	assert_match(Relative_directory_regexp, All[0][:sub_directory])
 	assert_match(Absolute_directory_regexp, Project_root_directory)
 #	assert_match(Relative_pathname_regexp, )
@@ -88,6 +88,7 @@ def test_path2model_name
 	path='test/long_test/rebuild_test.rb'
 	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
 	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
+	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
 end #path2model_name
 def test_project_root_dir
 	path=File.expand_path($0)
@@ -122,7 +123,6 @@ end #sub_directory_match
 def test_path
 end #path
 def test_parse_pathname_regexp
-	matchData=
 end #parse_pathname_regexp
 def test_pathname_glob
 end #pathname_glob
