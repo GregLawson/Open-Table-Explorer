@@ -24,6 +24,9 @@ end #Constants
 include Constants
 module ClassMethods
 include Constants
+def git_command(git_command, repository_dir)
+	ShellCommands.new('git '+ShellCommands.assemble_command_string(git_command), :chdir=>repository_dir)
+end #git_command
 def create_empty(path)
 	Dir.mkdir(path)
 	if File.exists?(path) then
@@ -64,27 +67,11 @@ def initialize(path)
   puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
-def shell_command(command, working_directory=Shellwords.escape(@path))
-	if command.instance_of?(Array) then
-		command_string=Shellwords.join(command)
-	else
-		command_string=command
-	end #if
-	ret=ShellCommands.new("cd #{Shellwords.escape(working_directory)}&& #{command_string}")
-	ret.puts if $VERBOSE
-	ret
+def shell_command(command, working_directory=@path)
+	ShellCommands.new(command, :chdir=>working_directory)
 end #shell_command
 def git_command(git_subcommand)
-	if git_subcommand.instance_of?(Array) then
-		command_string=['git']+Shellwords.join(git_subcommand)
-	else
-		command_string='git '+git_subcommand
-	end #if
-	ret=shell_command(command_string)
-	if $VERBOSE && git_subcommand != 'status' then
-		shell_command("git status").puts
-	end #if
-	ret
+	Repository.git_command(git_subcommand, @path)
 end #git_command
 def inspect
 	git_command('status --short --branch').output
@@ -195,7 +182,7 @@ def validate_commit(changes_branch, files)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
 		puts p.inspect  if $VERBOSE
-		git_command('checkout '+changes_branch.to_s+' '+p)
+		git_command(['checkout', changes_branch.to_s, p])
 	end #each
 	if something_to_commit? then
 		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')

@@ -16,10 +16,18 @@ def test_Constants
 	assert_pathname_exists(Root_directory)
 	assert_pathname_exists(Source)
 end #Constants
+def test_Repository_git_command
+	git_execution=Repository.git_command('branch', Empty_Repo_path)
+#	git_execution=Repository.git_command('branch --list --contains HEAD', Unique_repository_directory_pathname)
+	git_execution.assert_post_conditions
+end #git_command
 def test_create_empty
 	Dir.mkdir(Unique_repository_directory_pathname)
 	assert_pathname_exists(Unique_repository_directory_pathname)
-	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
+	switch_dir=ShellCommands.new([['cd', Unique_repository_directory_pathname], '&&', ['pwd']])
+	assert_equal(Unique_repository_directory_pathname+"\n", switch_dir.output)
+#	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
+	ShellCommands.new([['cd', Unique_repository_directory_pathname], '&&', ['git', 'init']])
 	new_repository=Repository.new(Unique_repository_directory_pathname)
 	IO.write(Unique_repository_directory_pathname+'/README', README_start_text+"1\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
