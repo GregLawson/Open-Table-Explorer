@@ -110,7 +110,10 @@ def test_error_score?
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(0, SELF_code_Repo.error_score?('test/unit/minimal2_test.rb'))
 	SELF_code_Repo.assert_deserving_branch(:passed, executable)
-
+	Error_classification.values.each_pair do {key, value}
+		executable=Data_source_directory+'/'+model_name?+value.to_s+'.rb'
+		assert_equal(key, error_score?(executable), executable)
+	end #each
 end #error_score
 def test_deserving_branch
 	executable='/etc/mtab' #force syntax error with non-ruby text
@@ -192,7 +195,7 @@ def test_validate_commit
 #	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
 	Minimal_repository.git_command('stash')
 	Minimal_repository.git_command('checkout passed')
-	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README']. :echo)
+	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
 end #validate_commit
 def test_something_to_commit?
 	assert_respond_to(Minimal_repository.grit_repo, :status)
