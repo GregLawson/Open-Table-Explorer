@@ -111,8 +111,8 @@ def test_error_score?
 	assert_equal(0, SELF_code_Repo.error_score?('test/unit/minimal2_test.rb'))
 	SELF_code_Repo.assert_deserving_branch(:passed, executable)
 	Error_classification.each_pair do |key, value|
-		executable=data_source_directory+'/'+model_name?+value.to_s+'.rb'
-		assert_equal(key, error_score?(executable), executable)
+		executable=data_source_directory?+'/'+value.to_s+'.rb'
+		assert_equal(key, SELF_code_Repo.error_score?(executable), SELF_code_Repo.recent_test.inspect)
 	end #each
 end #error_score
 def test_deserving_branch
