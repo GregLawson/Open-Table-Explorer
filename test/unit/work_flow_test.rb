@@ -69,8 +69,8 @@ end #minimal_comparison
 def test_deserving_branch?
 	Repository::Error_classification.each_pair do |key, value|
 		executable=data_source_directory?+'/'+value.to_s+'.rb'
-		error_score=SELF_code_Repo.error_score?(executable)
-		assert_equal(key, error_score, SELF_code_Repo.recent_test.inspect)
+		error_score=TestWorkFlow.repository.error_score?(executable)
+		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		branch_compression=Branch_compression[error_classification]
 		branch_enhancement= Branch_enhancement[branch_compression]
