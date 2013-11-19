@@ -21,6 +21,7 @@ Branch_compression={:success	=> 0,
 			:syntax_error        => 2
 			}
 end #Constants
+include Constants
 attr_reader :related_files, :edit_files, :repository
 module ClassMethods
 def revison_tag(branch)
