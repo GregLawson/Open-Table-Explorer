@@ -152,7 +152,7 @@ def test_safely_visit_branch
 		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
 		Minimal_repository.confirm_branch_switch(push_branch)
 	else
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
 	end #if
 	if push then
 		Minimal_repository.git_command('stash apply --quiet').assert_post_conditions
@@ -177,7 +177,7 @@ def test_stage_file
 	assert_pathname_exists(Minimal_repository.path+'README')
 
 	Minimal_repository.safely_visit_branch(:passed) do |changes_branch|
-		Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+		Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
 	end #safely_visit_branch
 
 	Minimal_repository.stage_files(:passed, [Minimal_repository.path+'README'])
@@ -189,10 +189,10 @@ def test_validate_commit
 	Minimal_repository.force_change
 	assert(Minimal_repository.something_to_commit?)
 	Minimal_repository.assert_something_to_commit
-#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'])
+#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
 	Minimal_repository.git_command('stash')
 	Minimal_repository.git_command('checkout passed')
-	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'])
+	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
 end #validate_commit
 def test_something_to_commit?
 	assert_respond_to(Minimal_repository.grit_repo, :status)
