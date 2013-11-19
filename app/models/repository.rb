@@ -190,9 +190,13 @@ def validate_commit(changes_branch, files, interact=:interactive)
 			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
-		if interact==:interactive then
+		case interact
+		when :interactive then
 			git_command('cola').assert_post_conditions
-		end #if
+		when :echo then
+			puts "changes_branch="+changes_branch.to_s
+			puts "files="+files.inspect
+		end #case
 #		git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
