@@ -220,6 +220,9 @@ end #names_of_tests
 def global_class_names
 	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
 end #global_class_names
+def data_source_directory?
+	'test/data_sources/'+model_name?.to_s+'/'
+end #data_source_directory?
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
 #include DefaultAssertions
