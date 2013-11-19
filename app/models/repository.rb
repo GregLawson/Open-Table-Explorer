@@ -182,11 +182,7 @@ def validate_commit(changes_branch, files)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
 		puts p.inspect  if $VERBOSE
-<<<<<<< HEAD
-		git_command('checkout '+changes_branch.to_s+' '+p)
-=======
 		git_command(['checkout', changes_branch.to_s, p])
->>>>>>> passed
 	end #each
 	if something_to_commit? then
 		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')
