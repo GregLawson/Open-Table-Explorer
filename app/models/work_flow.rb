@@ -112,11 +112,11 @@ end #emacs
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=@repository.deserving_branch?(executable)
-		@repository.recent_test.puts
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
+		@repository.recent_test.puts
 		edit
 	end until !@repository.something_to_commit? 
 end #test
