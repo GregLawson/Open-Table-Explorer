@@ -65,7 +65,6 @@ module DefaultTests0
 require 'test/unit'
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
-Data_source_directory='test/data_source/'+model_name?+'/'
 def related_files?
 	RelatedFile.new(model_name?)
 end #related_files
@@ -221,6 +220,7 @@ end #names_of_tests
 def global_class_names
 	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
 end #global_class_names
+Data_source_directory='test/data_source/'+DefaultTestCase0.model_name?+'/'
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
 #include DefaultAssertions
