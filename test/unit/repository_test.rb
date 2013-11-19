@@ -149,7 +149,7 @@ def test_safely_visit_branch
 
 	if push_branch!=target_branch then
 		Minimal_repository.confirm_branch_switch(target_branch)
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
 		Minimal_repository.confirm_branch_switch(push_branch)
 	else
 		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
