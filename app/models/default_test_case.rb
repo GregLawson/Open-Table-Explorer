@@ -133,7 +133,7 @@ def test_aaa_environment
 #	fail "got to end of related_files ."
     constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
 #verbose    info "constant_objects=#{constant_objects}"
-   examples=constant_objects.select{|c| c.instance_of?(Regexp)}
+   examples=constant_objects.select{|c| c.instance_of?(model_class?)}
    info "examples=#{examples}"
 	if examples.empty? then
       warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples.\nconstant_objects=#{constant_objects.inspect}"
