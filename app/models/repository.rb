@@ -194,7 +194,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 		when :interactive then
 			git_command('cola').assert_post_conditions
 		when :echo then
-			puts "changes_branch="+changes_branch
+			puts "changes_branch="+changes_branch.to_s
 			puts "files="+files.inspect
 		end #case
 #		git_command('rebase --autosquash --interactive')
@@ -289,7 +289,7 @@ def assert_something_to_commit(message='')
 end #assert_something_to_commit
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
-	recent_test=shell_command("ruby "+executable)
+	recent_test=shell_command(["ruby", executable])
 	message+="\nrecent_test="+recent_test.inspect
 	message+="\nrecent_test.process_status="+recent_test.process_status.inspect
 	syntax_test=shell_command("ruby -c "+executable)
