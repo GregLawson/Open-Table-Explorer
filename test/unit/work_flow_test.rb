@@ -40,6 +40,19 @@ def test_goldilocks
 	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
 end #goldilocks
+include WorkFlow::Examples
+def test_execute
+	assert_include(TestWorkFlow.related_files.edit_files, TestFile)
+#	assert_equal('', TestWorkFlow.version_comparison)
+#	assert_equal('', TestWorkFlow.test_files)
+end #execute
+def test_test_files
+	assert_equal('', TestWorkFlow.test_files([]))
+# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
+end #test_files
+def test_version_comparison
+	assert_equal('', TestWorkFlow.version_comparison([]))
+end #version_comparison
 def test_functional_parallelism
 	edit_files=TestWorkFlow.related_files.edit_files
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
@@ -54,9 +67,16 @@ def test_minimal_comparison
 	assert_equal(' -t app/models/regexp_parse.rb app/models/minimal4.rb -t test/unit/regexp_parse_test.rb test/unit/minimal4_test.rb -t test/assertions/regexp_parse_assertions.rb test/assertions/minimal4_assertions.rb -t test/unit/regexp_parse_assertions_test.rb test/unit/minimal4_assertions_test.rb', WorkFlow.new('test/unit/regexp_parse_test.rb').minimal_comparison?)
 end #minimal_comparison
 def test_deserving_branch?
-	error_score=TestWorkFlow.repository.error_score?(executable=TestWorkFlow.related_files.model_test_pathname?)
-	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
-	assert_equal(:passed, Branch_enhancement[Branch_compression[error_classification]])
+	Error_classification.each_pair do |key, value|
+		executable=data_source_directory?+'/'+value.to_s+'.rb'
+		error_score=SELF_code_Repo.error_score?(executable)
+		assert_equal(key, error_score, SELF_code_Repo.recent_test.inspect)
+		error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+		branch_compression=Branch_compression[error_classification]]
+		branch_enhancement= Branch_enhancement[branch_compression]
+	end #each
+#	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+#	assert_equal(:passed, Branch_enhancement[Branch_compression[error_classification]])
 end #deserving_branch
 def test_stage_files
 end #stage_files
