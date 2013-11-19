@@ -144,7 +144,7 @@ def test_class_assert_pre_conditions
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_invariant
-  existing_call(model_class?, :assert_invariant)
+#  existing_call(model_class?, :assert_invariant)
 #	fail "got to end of default test."
 end #def assert_invariant
 def test_class_assert_post_conditions
@@ -156,7 +156,7 @@ def test_assert_pre_conditions
   each_example {|e| existing_call(e, :assert_pre_conditions)}
 end #assert_pre_conditions
 def test_assert_invariant
-  each_example {|e| existing_call(e, :assert_invariant)}
+#  each_example {|e| existing_call(e, :assert_invariant)}
 end #def assert_invariant
 def test_assert_post_conditions
   each_example {|e| existing_call(e, :assert_post_conditions)}
