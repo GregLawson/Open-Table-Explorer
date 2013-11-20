@@ -16,7 +16,7 @@ module Constants
 Branch_enhancement=[:passed, :testing, :edited]
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
-			:multiple_tests_fail	=> 1,
+			:multiple_tests_fail	=> 2,
 			:initialization_fail => 2,
 			:syntax_error        => 2
 			}
