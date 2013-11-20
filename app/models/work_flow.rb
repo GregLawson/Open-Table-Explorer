@@ -113,7 +113,7 @@ def emacs(executable=@related_files.model_test_pathname?)
 end #emacs
 def test(executable=@related_files.model_test_pathname?)
 	begin
-		deserving_branch=@repository.deserving_branch?(executable)
+		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
@@ -124,7 +124,7 @@ def test(executable=@related_files.model_test_pathname?)
 end #test
 def unit_test(executable=@related_files.model_test_pathname?)
 	begin
-		deserving_branch=@repository.deserving_branch?(executable)
+		deserving_branch=deserving_branch?(executable)
 		if @repository.recent_test.success? then
 			break
 		end #if
@@ -153,7 +153,7 @@ def execute(executable=@related_files.model_test_pathname?)
 	push_branch=@repository.current_branch_name?
 	@repository.git_command("stash save").assert_post_conditions
 #	@repository.stage(:edited, @related_files.tested_files(executable))
-	deserving_branch=@repository.deserving_branch?(executable)
+	deserving_branch=deserving_branch?(executable)
 	@repository.stage(deserving_branch, @related_files.tested_files(executable))
 	@repository.git_command('checkout #{push_branch}')
 	@repository.git_command('stash apply')
