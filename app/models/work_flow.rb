@@ -22,29 +22,29 @@ Branch_compression={:success	=> 0,
 			}
 end #Constants
 include Constants
-attr_reader :related_files, :edit_files, :repository
+@@cached_unit_versions={}
 module ClassMethods
 def revison_tag(branch)
 		return '-r '+branch.to_s
 end #revison_tag
 end #ClassMethods
 extend ClassMethods
-# Define related versions (unit)
+# Define related (unit) versions
 # Use as current, lower/upper bound, branch history
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
-def initialize(*argv)
-	argv=argv.flatten
-	raise "Arguments (argv) for WorkFlow.initialize cannot be empty" if argv.empty? 
-	raise "argv must be an array." if !argv.instance_of?(Array)
-	raise "argv[0]=#{argv[0].inspect} must be an String." if !argv[0].instance_of?(String)
-	path2model_name=FilePattern.path2model_name?(argv[0])
-	@related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(argv[0]))
-	message= "edit_files do not exist\n argv=#{argv.inspect}" 
-	message+= "\n @related_files.edit_files=#{@related_files.edit_files.inspect}" 
-	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
+attr_reader :related_files, :edit_files, :repository
+def initialize(testable_file, related_files=nil)
+	path2model_name=FilePattern.path2model_name?(testable_file)
+	related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(testable_file))
+#	message= "edit_files do not exist\n argv=#{argv.inspect}" 
+#	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}" 
+#	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}" 
 #	raise message if  @related_files.edit_files.empty?
-  @repository=Repository.new(@related_files.project_root_dir)
+	repository=Repository.new(related_files.project_root_dir)
+	@testable_file=testable_file
+	@related_files=related_files
+	@repository=repository
 end #initialize
 def version_comparison(files=nil)
 	if files.nil? then
