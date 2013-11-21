@@ -101,7 +101,7 @@ def test_error_score?
 		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(10000, SELF_code_Repo.error_score?(executable))
-	SELF_code_Repo.assert_deserving_branch(:edited, executable)
+#	SELF_code_Repo.assert_deserving_branch(:edited, executable)
 
 	executable='test/unit/minimal2_test.rb'
 		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
@@ -109,7 +109,7 @@ def test_error_score?
 		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(0, SELF_code_Repo.error_score?('test/unit/minimal2_test.rb'))
-	SELF_code_Repo.assert_deserving_branch(:passed, executable)
+#	SELF_code_Repo.assert_deserving_branch(:passed, executable)
 	Error_classification.each_pair do |key, value|
 		executable=data_source_directory?+'/'+value.to_s+'.rb'
 		assert_equal(key, SELF_code_Repo.error_score?(executable), SELF_code_Repo.recent_test.inspect)
