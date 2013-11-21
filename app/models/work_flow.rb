@@ -16,30 +16,34 @@ module Constants
 Branch_enhancement=[:passed, :testing, :edited]
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
-			:multiple_tests_fail	=> 1,
+			:multiple_tests_fail	=> 2,
 			:initialization_fail => 2,
 			:syntax_error        => 2
 			}
 end #Constants
-attr_reader :related_files, :edit_files, :repository
+include Constants
+@@cached_unit_versions={}
 module ClassMethods
 def revison_tag(branch)
 		return '-r '+branch.to_s
 end #revison_tag
 end #ClassMethods
 extend ClassMethods
-def initialize(*argv)
-	argv=argv.flatten
-	raise "Arguments (argv) for WorkFlow.initialize cannot be empty" if argv.empty? 
-	raise "argv must be an array." if !argv.instance_of?(Array)
-	raise "argv[0]=#{argv[0].inspect} must be an String." if !argv[0].instance_of?(String)
-	path2model_name=FilePattern.path2model_name?(argv[0])
+# Define related (unit) versions
+# Use as current, lower/upper bound, branch history
+# parametized by related files, repository, branch_number, executable
+# record error_score, recent_test, time
+attr_reader :related_files, :edit_files, :repository
+def initialize(testable_file, related_files, 
+	repository=Repository.new(@related_files.project_root_dir))
+	@testable_file=testable_file
+	path2model_name=FilePattern.path2model_name?(@testable_file)
 	@related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(argv[0]))
 	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 	message+= "\n @related_files.edit_files=#{@related_files.edit_files.inspect}" 
 	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
 #	raise message if  @related_files.edit_files.empty?
-  @repository=Repository.new(@related_files.project_root_dir)
+  @repository=repository
 end #initialize
 def version_comparison(files=nil)
 	if files.nil? then
@@ -89,10 +93,11 @@ def minimal_comparison?
 		end #if
 	end.compact.join #map
 end #minimal_comparison
-def deserving_branch?
-	error_score=@repository.error_score?(executable=@related_files.model_test_pathname?)
-	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
-	Branch_enhancement[Branch_compression[error_classification]]
+def deserving_branch?(executable=@related_files.model_test_pathname?)
+		error_score=@repository.error_score?(executable)
+		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
+		branch_compression=Branch_compression[error_classification]
+		branch_enhancement=Branch_enhancement[branch_compression]
 end #deserving_branch
 def edit
 	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
@@ -111,7 +116,7 @@ def emacs(executable=@related_files.model_test_pathname?)
 end #emacs
 def test(executable=@related_files.model_test_pathname?)
 	begin
-		deserving_branch=@repository.deserving_branch?(executable)
+		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
@@ -122,7 +127,7 @@ def test(executable=@related_files.model_test_pathname?)
 end #test
 def unit_test(executable=@related_files.model_test_pathname?)
 	begin
-		deserving_branch=@repository.deserving_branch?(executable)
+		deserving_branch=deserving_branch?(executable)
 		if @repository.recent_test.success? then
 			break
 		end #if
@@ -151,7 +156,7 @@ def execute(executable=@related_files.model_test_pathname?)
 	push_branch=@repository.current_branch_name?
 	@repository.git_command("stash save").assert_post_conditions
 #	@repository.stage(:edited, @related_files.tested_files(executable))
-	deserving_branch=@repository.deserving_branch?(executable)
+	deserving_branch=deserving_branch?(executable)
 	@repository.stage(deserving_branch, @related_files.tested_files(executable))
 	@repository.git_command('checkout #{push_branch}')
 	@repository.git_command('stash apply')
