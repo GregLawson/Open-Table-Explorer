@@ -35,16 +35,16 @@ extend ClassMethods
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
 def initialize(testable_file, related_files=nil)
-	@testable_file=testable_file
-	path2model_name=FilePattern.path2model_name?(@testable_file)
+	path2model_name=FilePattern.path2model_name?(testable_file)
 	related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(argv[0]))
-	@related_files=related_files
-	message= "edit_files do not exist\n argv=#{argv.inspect}" 
+#	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 	message+= "\n @related_files.edit_files=#{@related_files.edit_files.inspect}" 
 	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
 #	raise message if  @related_files.edit_files.empty?
 	repository=Repository.new(related_files.project_root_dir)
-  @repository=repository
+	@testable_file=testable_file
+	@related_files=related_files
+	@repository=repository
 end #initialize
 def version_comparison(files=nil)
 	if files.nil? then
