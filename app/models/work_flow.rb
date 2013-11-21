@@ -38,8 +38,8 @@ def initialize(testable_file, related_files=nil)
 	path2model_name=FilePattern.path2model_name?(testable_file)
 	related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(testable_file))
 #	message= "edit_files do not exist\n argv=#{argv.inspect}" 
-	message+= "\n @related_files.edit_files=#{@related_files.edit_files.inspect}" 
-	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 
+	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}" 
+	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}" 
 #	raise message if  @related_files.edit_files.empty?
 	repository=Repository.new(related_files.project_root_dir)
 	@testable_file=testable_file
