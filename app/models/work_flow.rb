@@ -44,6 +44,12 @@ def initialize(testable_file,
 	@testable_file=testable_file
 	@related_files=related_files
 	@repository=repository
+	index=Branch_enhancement.index(repository.current_branch?)
+	if index.mil? then
+		@branch_index=-1
+	else
+		@branch_index=index
+	end #if
 end #initialize
 def version_comparison(files=nil)
 	if files.nil? then
