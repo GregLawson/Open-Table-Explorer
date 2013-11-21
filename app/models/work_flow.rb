@@ -29,6 +29,10 @@ def revison_tag(branch)
 end #revison_tag
 end #ClassMethods
 extend ClassMethods
+# Define related versions (unit)
+# Use as current, lower/upper bound, branch history
+# parametized by related files, repository, branch_number, executable
+# record error_score, recent_test, time
 def initialize(*argv)
 	argv=argv.flatten
 	raise "Arguments (argv) for WorkFlow.initialize cannot be empty" if argv.empty? 
