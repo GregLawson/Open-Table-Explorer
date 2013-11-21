@@ -35,8 +35,7 @@ extend ClassMethods
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
 def initialize(testable_file, related_files=nil)
-	path2model_name=FilePattern.path2model_name?(testable_file)
-	related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(testable_file))
+	related_files=RelatedFile.new_from_path?(testable_file)
 #	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 #	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}" 
 #	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}" 
