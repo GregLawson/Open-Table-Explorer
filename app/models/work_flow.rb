@@ -34,7 +34,7 @@ extend ClassMethods
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
-def initialize(testable_file, related_files, 
+def initialize(testable_file, related_files=nil, 
 	repository=Repository.new(@related_files.project_root_dir))
 	@testable_file=testable_file
 	path2model_name=FilePattern.path2model_name?(@testable_file)
