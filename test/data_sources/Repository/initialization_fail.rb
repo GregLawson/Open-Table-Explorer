@@ -1,4 +1,6 @@
-class Test<TestCase
+require 'test/unit'
+class InitializationFailTest<Test::Unit::TestCase
 def test_initialize
 	fail
-end #initializeend #Test
+end #initialize
+end #Test
