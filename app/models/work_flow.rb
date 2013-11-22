@@ -44,8 +44,8 @@ def initialize(testable_file,
 	@testable_file=testable_file
 	@related_files=related_files
 	@repository=repository
-	index=Branch_enhancement.index(repository.current_branch?)
-	if index.mil? then
+	index=Branch_enhancement.index(repository.current_branch_name?)
+	if index.nil? then
 		@branch_index=-1
 	else
 		@branch_index=index
