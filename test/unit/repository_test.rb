@@ -115,24 +115,6 @@ def test_error_score?
 		assert_equal(key, SELF_code_Repo.error_score?(executable), SELF_code_Repo.recent_test.inspect)
 	end #each
 end #error_score
-def test_deserving_branch
-	executable='/etc/mtab' #force syntax error with non-ruby text
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
-		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
-		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
-		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(:edited, SELF_code_Repo.deserving_branch?(executable))
-	SELF_code_Repo.assert_deserving_branch(:edited, executable)
-
-	executable='test/unit/minimal2_test.rb'
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
-		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
-		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(:passed, SELF_code_Repo.deserving_branch?('test/unit/minimal2_test.rb'))
-	SELF_code_Repo.assert_deserving_branch(:passed, executable)
-
-end #deserving_branch
 def test_confirm_branch_switch
 	assert_equal(:master, Minimal_repository.current_branch_name?)
 	Minimal_repository.confirm_branch_switch(:passed)
