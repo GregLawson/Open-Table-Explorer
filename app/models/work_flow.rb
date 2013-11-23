@@ -115,8 +115,9 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 		branch_enhancement=Branch_enhancement[branch_compression]
 end #deserving_branch
 def edit
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files)
-	puts edit.command_string
+	command_string=="diffuse"+ version_comparison + test_files
+	puts command_string if $VERBOSE
+	edit=ShellCommands.new(command_string)
 	edit.assert_post_conditions
 end #edit
 def minimal_edit
