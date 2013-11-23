@@ -115,7 +115,7 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 		branch_enhancement=Branch_enhancement[branch_compression]
 end #deserving_branch
 def edit
-	command_string=="diffuse"+ version_comparison + test_files
+	command_string="diffuse"+ version_comparison + test_files
 	puts command_string if $VERBOSE
 	edit=ShellCommands.new(command_string)
 	edit.assert_post_conditions
