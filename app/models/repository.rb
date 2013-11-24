@@ -88,7 +88,7 @@ end #corruption
 def standardize_position!
 	git_command("rebase --abort")
 	git_command("merge --abort")
-	git_command("stash save --include-untracked ").assert_post_conditions
+	git_command("stash save").assert_post_conditions
 	git_command("checkout master")
 end #standardize_position!
 def current_branch_name?
