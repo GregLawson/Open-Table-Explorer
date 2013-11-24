@@ -193,38 +193,6 @@ def something_to_commit?
 	puts message if $VERBOSE
 	ret
 end #something_to_commit
-def upgrade_commit(target_branch, executable)
-	target_index=WorkFlow::Branch_enhancement.index(target_branch)
-	WorkFlow::Branch_enhancement.each_index do |b, i|
-		commit_to_branch(b, executable) if i >= target_index
-	end #each
-end #upgrade_commit
-def downgrade_commit(target_branch, executable)
-	commit_to_branch(target_branch, executable)
-end #downgrade_commit
-def test(executable=related_files.model_test_pathname?)
-	stage(deserving_branch?(executable), executable)
-end #test
-def stage(target_branch, tested_files)
-	if current_branch_name? ==target_branch then
-		push_branch=target_branch # no need for stash popping
-	else
-		push_branch=current_branch_name?
-		switch_branch=git_command("checkout "+target_branch.to_s).execute
-		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
-		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
-		tested_files.each do |p|
-			git_command('checkout stash '+p).assert_post_conditions
-		end #each
-		if !switch_branch.errors.empty? then
-			puts "Why am I here?"+message
-			switch_branch.puts
-		end #if
-	end #if
-	git_command("add "+tested_files.join(' ')).assert_post_conditions	
-	git_command('cola').assert_post_conditions
-	push_branch
-end #stage
 def commit_to_branch(target_branch, tested_files)
 	push_branch=stage(target_branch, tested_files)
 	if push_branch!=target_branch then
@@ -232,11 +200,11 @@ def commit_to_branch(target_branch, tested_files)
 		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
-def CompilesSupersetOfMaster
+def testing_superset_of_passed
 	git_command("log compiles..master")
 end #
-def DevelopmentSupersetofCompiles
-	git_command("log development..compiles")
+def edited_superset_of_testing
+	git_command("log edited..testing")
 end #
 def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
 	IO.write(@path+'/README', content) # timestamp make file unique
