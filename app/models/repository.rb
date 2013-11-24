@@ -135,7 +135,7 @@ def safely_visit_branch(target_branch, &block)
 #		puts "status.changed=#{status.changed.inspect}"
 #		puts "status.deleted=#{status.deleted.inspect}"
 #		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save').assert_post_conditions
+		git_command('stash save --include-untracked').assert_post_conditions
 		changes_branch=:stash
 	end #if
 
