@@ -12,9 +12,9 @@ require 'grit'  # sudo gem install grit
 require_relative 'shell_command.rb'
 class Repository <Grit::Repo
 module Constants
-#Temporary='/mnt/working/Recover'
-#Root_directory=FilePattern.project_root_dir?
-#Source=File.dirname(Root_directory)+'/'
+Temporary='/mnt/working/Recover'
+Root_directory=FilePattern.project_root_dir?
+Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
 Error_classification={0 => :success,
 				1     => :single_test_fail,
