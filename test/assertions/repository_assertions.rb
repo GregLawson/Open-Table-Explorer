@@ -70,9 +70,9 @@ Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Repo= Grit::Repo.new(Root_directory)
 SELF_code_Repo=Repository.new(Root_directory)
 Empty_Repo_path=Source+'test_repository/'
-Empty_Repo=Repository.replace_or_create(Empty_Repo_path)
+Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
-Unique_repository_directory_pathname=Source+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+Unique_repository_directory_pathname=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 
 end #Examples
 end #Repository
