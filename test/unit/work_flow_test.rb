@@ -71,7 +71,7 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable=TestWorkFlow.repository.data_source_directory?('Repository')+'/'+value.to_s+'.rb'
+		executable=TestWorkFlow.related_files.data_source_directory?('Repository')+'/'+value.to_s+'.rb'
 		error_score=TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
