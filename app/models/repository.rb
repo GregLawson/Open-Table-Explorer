@@ -58,6 +58,9 @@ def create_if_missing(path)
 		create_empty(path)
 	end #if
 end #create_if_missing
+def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"))
+	replace_or_create(path)
+end #create_test_repository
 end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
