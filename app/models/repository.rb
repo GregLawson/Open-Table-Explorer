@@ -32,10 +32,6 @@ def create_empty(path)
 	if File.exists?(path) then
 		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
 		new_repository=Repository.new(path)
-		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
-		new_repository.git_command('add README')
-		new_repository.git_command('commit -m "create_empty initial commit of README"')
-		new_repository.git_command('branch passed')
 	else
 		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
 	end #if
@@ -60,6 +56,16 @@ def create_if_missing(path)
 end #create_if_missing
 def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"))
 	replace_or_create(path)
+	if File.exists?(path) then
+		new_repository=Repository.new(path)
+		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
+		new_repository.git_command('add README')
+		new_repository.git_command('commit -m "create_empty initial commit of README"')
+		new_repository.git_command('branch passed')
+	else
+		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
+	end #if
+	new_repository
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
