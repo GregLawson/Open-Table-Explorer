@@ -32,10 +32,6 @@ def create_empty(path)
 	if File.exists?(path) then
 		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
 		new_repository=Repository.new(path)
-		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
-		new_repository.git_command('add README')
-		new_repository.git_command('commit -m "create_empty initial commit of README"')
-		new_repository.git_command('branch passed')
 	else
 		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
 	end #if
@@ -58,6 +54,19 @@ def create_if_missing(path)
 		create_empty(path)
 	end #if
 end #create_if_missing
+def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"))
+	replace_or_create(path)
+	if File.exists?(path) then
+		new_repository=Repository.new(path)
+		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
+		new_repository.git_command('add README')
+		new_repository.git_command('commit -m "create_empty initial commit of README"')
+		new_repository.git_command('branch passed')
+	else
+		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
+	end #if
+	new_repository
+end #create_test_repository
 end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
@@ -115,23 +124,6 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end #error_score
-def deserving_branch?(executable=@related_files.model_test_pathname?)
-	@recent_test=shell_command("ruby "+executable)
-#	@recent_test.puts if $VERBOSE
-	if @recent_test.success? then
-		@deserving_branch=:passed
-	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test=shell_command("ruby -c "+executable)
-		if syntax_test.output=="Syntax OK\n" then
-			@deserving_branch=:testing
-		else
-			@deserving_branch=:edited
-		end #if
-	else
-		@deserving_branch=:testing
-	end #if
-	@deserving_branch
-end #deserving_branch
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
@@ -152,7 +144,7 @@ def safely_visit_branch(target_branch, &block)
 #		puts "status.changed=#{status.changed.inspect}"
 #		puts "status.deleted=#{status.deleted.inspect}"
 #		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save').assert_post_conditions
+		git_command('stash save --include-untracked').assert_post_conditions
 		changes_branch=:stash
 	end #if
 
@@ -210,38 +202,6 @@ def something_to_commit?
 	puts message if $VERBOSE
 	ret
 end #something_to_commit
-def upgrade_commit(target_branch, executable)
-	target_index=WorkFlow::Branch_enhancement.index(target_branch)
-	WorkFlow::Branch_enhancement.each_index do |b, i|
-		commit_to_branch(b, executable) if i >= target_index
-	end #each
-end #upgrade_commit
-def downgrade_commit(target_branch, executable)
-	commit_to_branch(target_branch, executable)
-end #downgrade_commit
-def test(executable=related_files.model_test_pathname?)
-	stage(deserving_branch?(executable), executable)
-end #test
-def stage(target_branch, tested_files)
-	if current_branch_name? ==target_branch then
-		push_branch=target_branch # no need for stash popping
-	else
-		push_branch=current_branch_name?
-		switch_branch=git_command("checkout "+target_branch.to_s).execute
-		message="#{current_branch_name?.inspect}!=#{target_branch.inspect}\n"
-		message+="current_branch_name? !=target_branch=#{current_branch_name? !=target_branch}\n"
-		tested_files.each do |p|
-			git_command('checkout stash '+p).assert_post_conditions
-		end #each
-		if !switch_branch.errors.empty? then
-			puts "Why am I here?"+message
-			switch_branch.puts
-		end #if
-	end #if
-	git_command("add "+tested_files.join(' ')).assert_post_conditions	
-	git_command('cola').assert_post_conditions
-	push_branch
-end #stage
 def commit_to_branch(target_branch, tested_files)
 	push_branch=stage(target_branch, tested_files)
 	if push_branch!=target_branch then
@@ -249,11 +209,11 @@ def commit_to_branch(target_branch, tested_files)
 		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
-def CompilesSupersetOfMaster
+def testing_superset_of_passed
 	git_command("log compiles..master")
 end #
-def DevelopmentSupersetofCompiles
-	git_command("log development..compiles")
+def edited_superset_of_testing
+	git_command("log edited..testing")
 end #
 def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
 	IO.write(@path+'/README', content) # timestamp make file unique
