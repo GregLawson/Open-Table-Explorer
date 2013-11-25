@@ -97,10 +97,10 @@ commands.each do |c|
 		when :minimal then work_flow.minimal_edit
 		when :related then
 			puts work_flow.related_files.inspect
-			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison?
-
+			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison? if $VERBOSE
 		end #case
 		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
+	work_flow.repository.stage_files(:passed, work_flow.related_files.tested_files($0))
 end #each
