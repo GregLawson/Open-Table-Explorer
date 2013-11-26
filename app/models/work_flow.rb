@@ -143,7 +143,7 @@ def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
-		merge_range(deserving_branch). each do |i|
+		WorkFlow.merge_range(deserving_branch). each do |i|
 			@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 				@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 			end #safely_visit_branch
