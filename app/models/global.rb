@@ -62,6 +62,9 @@ def info(message)
 		$stdout.puts message
 	end #if
 end #info     
+def data_source_directory?
+	'test/data_source/'+self.class.name+'/'
+end #data_source_directory?
 def object_identities
 	return "<#{objectClass} \##{object_id}{#{hash}},#{to_s},#{inspect}>"
 end #object_identities
