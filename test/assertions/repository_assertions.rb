@@ -13,8 +13,6 @@ include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 def assert_pre_conditions
-	assert_equal('test/data_source/Class', Class.data_source_directory?)
-	assert_equal('test/data_source/Repository', Repository.data_source_directory?)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
@@ -73,8 +71,8 @@ Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 SELF_code_Repo=Repository.new(Root_directory)
 Empty_Repo_path=Source+'test_repository/'
 Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
-#Modified_path=Empty_Repo_path+'/README'
-Unique_repository_directory_pathname=Repository.data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+Modified_path=Empty_Repo_path+'/README'
+Unique_repository_directory_pathname=RelatedFile.new($0).data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 
 end #Examples
 end #Repository
