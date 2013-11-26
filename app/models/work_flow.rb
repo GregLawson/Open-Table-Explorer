@@ -123,6 +123,14 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 		branch_compression=Branch_compression[error_classification]
 		branch_enhancement=Branch_enhancement[branch_compression]
 end #deserving_branch
+def merge(target_branch, source_branch)
+	@repository.safely_visit_branch(target_branch) do |changes_branch|
+		merge_status=git_command('merge '+source_branch.to_s)
+		if !merge_status.success? then
+			merge_status=git_command('mergetool')
+		end #if
+	end #safely_visit_branch
+end #merge
 def edit
 	command_string="diffuse"+ version_comparison + test_files
 	puts command_string if $VERBOSE
