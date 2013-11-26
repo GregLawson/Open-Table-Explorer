@@ -75,7 +75,9 @@ end #case
 commands.each do |c|
 	case c.to_sym
 		when :all then 
+#			WorkFlow.all(:model)
 			WorkFlow.all(:test)
+#			WorkFlow.all(:assertions)
 			WorkFlow.all(:assertions_test)
 			WorkFlow.all(:long_test)
 	else argv.each do |f|
