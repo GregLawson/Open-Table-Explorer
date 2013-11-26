@@ -16,6 +16,11 @@ include WorkFlow::Examples
 def test_revison_tag
 	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
 end #revison_tag
+def test_merge_range
+	assert_equal(0..2, WorkFlow.merge_range(:passed))
+	assert_equal(1..2, WorkFlow.merge_range(:testing))
+	assert_equal(2..2, WorkFlow.merge_range(:edited))
+end #merge_range
 def test_initialize
 	te=RelatedFile.new(TestFile)
 	assert_not_nil(te)
@@ -71,7 +76,7 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable=TestWorkFlow.related_files.data_source_directory?('Repository')+'/'+value.to_s+'.rb'
+		executable=data_source_directory?('Repository')+'/'+value.to_s+'.rb'
 		error_score=TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
@@ -87,8 +92,6 @@ def test_deserving_branch?
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
 #	assert_equal(:passed, Branch_enhancement[Branch_compression[error_classification]])
 end #deserving_branch
-def test_stage_files
-end #stage_files
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions

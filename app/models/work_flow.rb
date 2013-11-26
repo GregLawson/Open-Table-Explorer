@@ -36,6 +36,14 @@ end #test_unit_test_all
 def revison_tag(branch)
 		return '-r '+branch.to_s
 end #revison_tag
+def merge_range(deserving_branch)
+	deserving_index=Branch_enhancement.index(deserving_branch)
+	if deserving_index.nil? then
+		raise deserving_branch.inspect+'not found in '+Branch_enhancement.inspect
+	else
+		deserving_index..Branch_enhancement.size
+	end #if
+end #merge_range
 end #ClassMethods
 extend ClassMethods
 # Define related (unit) versions
@@ -158,23 +166,6 @@ def unit_test(executable=@related_files.model_test_pathname?)
 		edit
 	end until !@repository.something_to_commit? 
 end #unit_test
-def execute(executable=@related_files.model_test_pathname?)
-	begin
-	push_branch=@repository.current_branch_name?
-	@repository.git_command("stash save").assert_post_conditions
-#	@repository.stage(:edited, @related_files.tested_files(executable))
-	deserving_branch=deserving_branch?(executable)
-	@repository.stage(deserving_branch, @related_files.tested_files(executable))
-	@repository.git_command('checkout #{push_branch}')
-	@repository.git_command('stash apply')
-	@repository.git_command('checkout #{deserving_branch}')
-#	@repository.git_command('stash apply')
-	IO.binwrite('.git/GIT_COLA_MSG', 'fixup! '+@related_files.model_class_name.to_s)	
-	@repository.git_command('cola')
-	@repository.recent_test.puts
-	edit
-	end
-end #test
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
