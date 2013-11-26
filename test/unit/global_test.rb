@@ -91,7 +91,9 @@ def test_matching_class_methods
 	assert_equal([:classMethod],testClass.matching_class_methods(/classMethod/),true)
 	assert_equal([:classMethod],testClass.matching_class_methods(/classMethod/))
 end #matching_class_methods
-
+def test_data_source_directory?
+	assert_equal('test/data_source/Class', Class.data_source_directory?)
+end #data_source_directory?
 def test_object_identities
 	assert_match('<StreamPattern',StreamPattern.new.object_identities)
 	assert_match(/StreamPattern/,StreamPattern.new.object_identities)
