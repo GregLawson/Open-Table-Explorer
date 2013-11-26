@@ -24,6 +24,7 @@ end #Constants
 include Constants
 @@cached_unit_versions={}
 module ClassMethods
+include Constants
 def all(pattern_name=:test)
 	pattern=FilePattern.find_by_name(pattern_name)
 	glob=pattern.pathname_glob
