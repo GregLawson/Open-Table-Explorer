@@ -125,7 +125,7 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 end #deserving_branch
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=git_command('merge '+source_branch.to_s)
+		merge_status=@reository.git_command('merge '+source_branch.to_s)
 		if !merge_status.success? then
 			merge_status=git_command('mergetool')
 		end #if
