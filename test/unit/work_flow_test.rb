@@ -76,7 +76,7 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable=Repository.data_source_directory?+'/'+value.to_s+'.rb'
+		executable=data_source_directory?('Repository')+'/'+value.to_s+'.rb'
 		error_score=TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
@@ -92,6 +92,10 @@ def test_deserving_branch?
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
 #	assert_equal(:passed, Branch_enhancement[Branch_compression[error_classification]])
 end #deserving_branch
+def test_merge
+	TestWorkFlow.repository.edited_superset_of_testing
+	TestWorkFlow.merge(:edited, :passed) # not too long or too dangerous
+end #merge
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions
