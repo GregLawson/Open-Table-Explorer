@@ -80,6 +80,7 @@ commands.each do |c|
 #			WorkFlow.all(:assertions)
 			WorkFlow.all(:assertions_test)
 			WorkFlow.all(:long_test)
+			ShellCommands.new('yard doc')
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
