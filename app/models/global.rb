@@ -54,7 +54,10 @@ def matching_class_methods(regexp,all=false)
 		regexp=regexp.to_s
 	end #if
 	self.public_methods(all).select {|m| m[Regexp.new(regexp),0] }
-end #def
+end #matching_class_methods
+def data_source_directory?
+	'test/data_source/'+self.class.name+'/'
+end #data_source_directory?
 end #module
 class Object
 def info(message)
