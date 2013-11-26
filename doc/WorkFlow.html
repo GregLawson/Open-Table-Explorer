@@ -1,0 +1,1517 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WorkFlow
+  
+    &mdash; Documentation by YARD 0.8.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (W)</a> &raquo;
+    
+    
+    <span class="title">WorkFlow</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WorkFlow
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">WorkFlow</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><span class='object_link'><a href="WorkFlow/Assertions/ClassMethods.html" title="WorkFlow::Assertions::ClassMethods (module)">Assertions::ClassMethods</a></span>, <span class='object_link'><a href="WorkFlow/ClassMethods.html" title="WorkFlow::ClassMethods (module)">ClassMethods</a></span></dd>
+      
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="WorkFlow/Assertions.html" title="WorkFlow::Assertions (module)">Assertions</a></span>, <span class='object_link'><a href="WorkFlow/Constants.html" title="WorkFlow::Constants (module)">Constants</a></span>, <span class='object_link'><a href="WorkFlow/Examples.html" title="WorkFlow::Examples (module)">Examples</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/work_flow.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="Release.html" title="Release (class)">Release</a></span></p>
+</div>
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="WorkFlow/Assertions.html" title="WorkFlow::Assertions (module)">Assertions</a></span>, <span class='object_link'><a href="WorkFlow/ClassMethods.html" title="WorkFlow::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="WorkFlow/Constants.html" title="WorkFlow::Constants (module)">Constants</a></span>, <span class='object_link'><a href="WorkFlow/Examples.html" title="WorkFlow::Examples (module)">Examples</a></span>
+    
+  
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="cached_unit_versions-classvariable" class="">@@cached_unit_versions =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="WorkFlow/Constants.html" title="WorkFlow::Constants (module)">Constants</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="WorkFlow/Constants.html#Branch_compression-constant" title="WorkFlow::Constants::Branch_compression (constant)">Constants::Branch_compression</a></span>, <span class='object_link'><a href="WorkFlow/Constants.html#Branch_enhancement-constant" title="WorkFlow::Constants::Branch_enhancement (constant)">Constants::Branch_enhancement</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="WorkFlow/Examples.html" title="WorkFlow::Examples (module)">Examples</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="WorkFlow/Examples.html#TestFile-constant" title="WorkFlow::Examples::TestFile (constant)">Examples::TestFile</a></span>, <span class='object_link'><a href="WorkFlow/Examples.html#TestWorkFlow-constant" title="WorkFlow::Examples::TestWorkFlow (constant)">Examples::TestWorkFlow</a></span></p>
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#edit_files-instance_method" title="#edit_files (instance method)">- (Object) <strong>edit_files</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Define related (unit) versions Use as current, lower/upper bound, branch
+history parametized by related files, repository, branch_number, executable
+record error_score, recent_test, time.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#related_files-instance_method" title="#related_files (instance method)">- (Object) <strong>related_files</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Define related (unit) versions Use as current, lower/upper bound, branch
+history parametized by related files, repository, branch_number, executable
+record error_score, recent_test, time.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#repository-instance_method" title="#repository (instance method)">- (Object) <strong>repository</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Define related (unit) versions Use as current, lower/upper bound, branch
+history parametized by related files, repository, branch_number, executable
+record error_score, recent_test, time.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#deserving_branch%3F-instance_method" title="#deserving_branch? (instance method)">- (Boolean) <strong>deserving_branch?</strong>(executable = @related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>minimal_comparison.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#edit-instance_method" title="#edit (instance method)">- (Object) <strong>edit</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>merge.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#emacs-instance_method" title="#emacs (instance method)">- (Object) <strong>emacs</strong>(executable = @related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>minimal_edit.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#functional_parallelism-instance_method" title="#functional_parallelism (instance method)">- (Object) <strong>functional_parallelism</strong>(edit_files = @related_files.edit_files) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>goldilocks.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#goldilocks-instance_method" title="#goldilocks (instance method)">- (Object) <strong>goldilocks</strong>(filename, middle_branch = @repository.current_branch_name?.to_sym) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>version_comparison.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (WorkFlow) <strong>initialize</strong>(testable_file, related_files = RelatedFile.new_from_path?(testable_file), repository = Repository.new(related_files.project_root_dir)) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of WorkFlow.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#merge-instance_method" title="#merge (instance method)">- (Object) <strong>merge</strong>(target_branch, source_branch) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>deserving_branch.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#minimal_comparison%3F-instance_method" title="#minimal_comparison? (instance method)">- (Boolean) <strong>minimal_comparison?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>test_files.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#minimal_edit-instance_method" title="#minimal_edit (instance method)">- (Object) <strong>minimal_edit</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>edit.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test-instance_method" title="#test (instance method)">- (Object) <strong>test</strong>(executable = @related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>emacs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test_files-instance_method" title="#test_files (instance method)">- (Object) <strong>test_files</strong>(edit_files = @related_files.edit_files) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>functional_parallelism.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unit_test-instance_method" title="#unit_test (instance method)">- (Object) <strong>unit_test</strong>(executable = @related_files.model_test_pathname?) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>test.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#version_comparison-instance_method" title="#version_comparison (instance method)">- (Object) <strong>version_comparison</strong>(files = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>initialize.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="WorkFlow/Assertions/ClassMethods.html" title="WorkFlow::Assertions::ClassMethods (module)">Assertions::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="WorkFlow/Assertions/ClassMethods.html#assert_post_conditions-instance_method" title="WorkFlow::Assertions::ClassMethods#assert_post_conditions (method)">assert_post_conditions</a></span>, <span class='object_link'><a href="WorkFlow/Assertions/ClassMethods.html#assert_pre_conditions-instance_method" title="WorkFlow::Assertions::ClassMethods#assert_pre_conditions (method)">assert_pre_conditions</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="WorkFlow/ClassMethods.html" title="WorkFlow::ClassMethods (module)">ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="WorkFlow/ClassMethods.html#all-instance_method" title="WorkFlow::ClassMethods#all (method)">all</a></span>, <span class='object_link'><a href="WorkFlow/ClassMethods.html#merge_range-instance_method" title="WorkFlow::ClassMethods#merge_range (method)">merge_range</a></span>, <span class='object_link'><a href="WorkFlow/ClassMethods.html#revison_tag-instance_method" title="WorkFlow::ClassMethods#revison_tag (method)">revison_tag</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="WorkFlow/Assertions.html" title="WorkFlow::Assertions (module)">Assertions</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="WorkFlow/Assertions.html#assert_deserving_branch-instance_method" title="WorkFlow::Assertions#assert_deserving_branch (method)">#assert_deserving_branch</a></span>, <span class='object_link'><a href="WorkFlow/Assertions.html#assert_post_conditions-instance_method" title="WorkFlow::Assertions#assert_post_conditions (method)">#assert_post_conditions</a></span>, <span class='object_link'><a href="WorkFlow/Assertions.html#assert_pre_conditions-instance_method" title="WorkFlow::Assertions#assert_pre_conditions (method)">#assert_pre_conditions</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WorkFlow (class)">WorkFlow</a></span></tt>) <strong>initialize</strong>(testable_file, related_files = RelatedFile.new_from_path?(testable_file), repository = Repository.new(related_files.project_root_dir)) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of WorkFlow</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_testable_file'>testable_file</span><span class='comma'>,</span> 
+	<span class='id identifier rubyid_related_files'>related_files</span><span class='op'>=</span><span class='const'>RelatedFile</span><span class='period'>.</span><span class='id identifier rubyid_new_from_path?'>new_from_path?</span><span class='lparen'>(</span><span class='id identifier rubyid_testable_file'>testable_file</span><span class='rparen'>)</span><span class='comma'>,</span>
+	<span class='id identifier rubyid_repository'>repository</span><span class='op'>=</span><span class='const'>Repository</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_project_root_dir'>project_root_dir</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='comment'>#	message= &quot;edit_files do not exist\n argv=#{argv.inspect}&quot; 
+</span><span class='comment'>#	message+= &quot;\n related_files.edit_files=#{related_files.edit_files.inspect}&quot; 
+</span><span class='comment'>#	message+= &quot;\n related_files.missing_files=#{related_files.missing_files.inspect}&quot; 
+</span><span class='comment'>#	raise message if  @related_files.edit_files.empty?
+</span>	<span class='ivar'>@testable_file</span><span class='op'>=</span><span class='id identifier rubyid_testable_file'>testable_file</span>
+	<span class='ivar'>@related_files</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span>
+	<span class='ivar'>@repository</span><span class='op'>=</span><span class='id identifier rubyid_repository'>repository</span>
+	<span class='id identifier rubyid_index'>index</span><span class='op'>=</span><span class='const'>Branch_enhancement</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+		<span class='ivar'>@branch_index</span><span class='op'>=</span><span class='op'>-</span><span class='int'>1</span>
+	<span class='kw'>else</span>
+		<span class='ivar'>@branch_index</span><span class='op'>=</span><span class='id identifier rubyid_index'>index</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="edit_files-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>edit_files</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Define related (unit) versions Use as current, lower/upper bound, branch
+history parametized by related files, repository, branch_number, executable
+record error_score, recent_test, time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_edit_files'>edit_files</span>
+  <span class='ivar'>@edit_files</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="related_files-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>related_files</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Define related (unit) versions Use as current, lower/upper bound, branch
+history parametized by related files, repository, branch_number, executable
+record error_score, recent_test, time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_related_files'>related_files</span>
+  <span class='ivar'>@related_files</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="repository-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>repository</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Define related (unit) versions Use as current, lower/upper bound, branch
+history parametized by related files, repository, branch_number, executable
+record error_score, recent_test, time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_repository'>repository</span>
+  <span class='ivar'>@repository</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="deserving_branch?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>deserving_branch?</strong>(executable = @related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>minimal_comparison</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122
+123
+124
+125</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_error_score'>error_score</span><span class='op'>=</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_error_score?'>error_score?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_error_classification'>error_classification</span><span class='op'>=</span><span class='const'>Repository</span><span class='op'>::</span><span class='const'>Error_classification</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_error_score'>error_score</span><span class='comma'>,</span> <span class='symbol'>:multiple_tests_fail</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_branch_compression'>branch_compression</span><span class='op'>=</span><span class='const'>Branch_compression</span><span class='lbracket'>[</span><span class='id identifier rubyid_error_classification'>error_classification</span><span class='rbracket'>]</span>
+		<span class='id identifier rubyid_branch_enhancement'>branch_enhancement</span><span class='op'>=</span><span class='const'>Branch_enhancement</span><span class='lbracket'>[</span><span class='id identifier rubyid_branch_compression'>branch_compression</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="edit-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>edit</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>merge</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136
+137
+138
+139</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 134</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
+	<span class='id identifier rubyid_command_string'>command_string</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diffuse</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span> <span class='id identifier rubyid_version_comparison'>version_comparison</span> <span class='op'>+</span> <span class='id identifier rubyid_test_files'>test_files</span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_command_string'>command_string</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+	<span class='id identifier rubyid_edit'>edit</span><span class='op'>=</span><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_command_string'>command_string</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_edit'>edit</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="emacs-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>emacs</strong>(executable = @related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>minimal_edit</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145
+146
+147
+148
+149</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 145</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_emacs'>emacs</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_emacs'>emacs</span><span class='op'>=</span><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs --no-splash </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_edit_files'>edit_files</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_emacs'>emacs</span><span class='period'>.</span><span class='id identifier rubyid_command_string'>command_string</span>
+	<span class='id identifier rubyid_emacs'>emacs</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="functional_parallelism-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>functional_parallelism</strong>(edit_files = @related_files.edit_files) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>goldilocks</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 90</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_functional_parallelism'>functional_parallelism</span><span class='lparen'>(</span><span class='id identifier rubyid_edit_files'>edit_files</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_edit_files'>edit_files</span><span class='rparen'>)</span>
+	<span class='lbracket'>[</span>
+	<span class='lbracket'>[</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_pathname?'>model_pathname?</span><span class='comma'>,</span> <span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rbracket'>]</span><span class='comma'>,</span>
+	<span class='lbracket'>[</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_assertions_pathname?'>assertions_pathname?</span><span class='comma'>,</span> <span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rbracket'>]</span><span class='comma'>,</span>
+	<span class='lbracket'>[</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='comma'>,</span> <span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_pathname_pattern?'>pathname_pattern?</span><span class='lparen'>(</span><span class='symbol'>:integration_test</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='comma'>,</span>
+	<span class='lbracket'>[</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_assertions_pathname?'>assertions_pathname?</span><span class='comma'>,</span> <span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_assertions_test_pathname?'>assertions_test_pathname?</span><span class='rbracket'>]</span>
+	<span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fp'>fp</span><span class='op'>|</span>
+		<span class='id identifier rubyid_fp'>fp</span><span class='op'>-</span><span class='id identifier rubyid_edit_files'>edit_files</span><span class='op'>==</span><span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='comment'># files must exist to be edited?
+</span>	<span class='kw'>end</span> <span class='comment'>#map
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="goldilocks-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>goldilocks</strong>(filename, middle_branch = @repository.current_branch_name?.to_sym) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>version_comparison</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83
+84
+85
+86
+87
+88
+89</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 81</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_goldilocks'>goldilocks</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_middle_branch'>middle_branch</span><span class='op'>=</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_current_index'>current_index</span><span class='op'>=</span><span class='const'>WorkFlow</span><span class='op'>::</span><span class='const'>Branch_enhancement</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_middle_branch'>middle_branch</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_last_slot_index'>last_slot_index</span><span class='op'>=</span><span class='const'>WorkFlow</span><span class='op'>::</span><span class='const'>Branch_enhancement</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>-</span><span class='int'>1</span>
+	<span class='id identifier rubyid_right_index'>right_index</span><span class='op'>=</span><span class='lbracket'>[</span><span class='id identifier rubyid_current_index'>current_index</span><span class='op'>+</span><span class='int'>1</span><span class='comma'>,</span> <span class='id identifier rubyid_last_slot_index'>last_slot_index</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_min'>min</span>
+	<span class='id identifier rubyid_left_index'>left_index</span><span class='op'>=</span><span class='id identifier rubyid_right_index'>right_index</span><span class='op'>-</span><span class='int'>1</span> 
+	<span class='id identifier rubyid_relative_filename'>relative_filename</span><span class='op'>=</span>	<span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_relative_path_from'>relative_path_from</span><span class='lparen'>(</span><span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+
+	<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> -t </span><span class='embexpr_beg'>#{</span><span class='const'>WorkFlow</span><span class='period'>.</span><span class='id identifier rubyid_revison_tag'>revison_tag</span><span class='lparen'>(</span><span class='const'>WorkFlow</span><span class='op'>::</span><span class='const'>Branch_enhancement</span><span class='lbracket'>[</span><span class='id identifier rubyid_left_index'>left_index</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_relative_filename'>relative_filename</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_relative_filename'>relative_filename</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='const'>WorkFlow</span><span class='period'>.</span><span class='id identifier rubyid_revison_tag'>revison_tag</span><span class='lparen'>(</span><span class='const'>WorkFlow</span><span class='op'>::</span><span class='const'>Branch_enhancement</span><span class='lbracket'>[</span><span class='id identifier rubyid_right_index'>right_index</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_relative_filename'>relative_filename</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="merge-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>merge</strong>(target_branch, source_branch) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>deserving_branch</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126
+127
+128
+129
+130
+131
+132
+133</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 126</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_source_branch'>source_branch</span><span class='rparen'>)</span>
+	<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='op'>|</span>
+		<span class='id identifier rubyid_merge_status'>merge_status</span><span class='op'>=</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>merge </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_source_branch'>source_branch</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_merge_status'>merge_status</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_merge_status'>merge_status</span><span class='op'>=</span><span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>mergetool</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#safely_visit_branch
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="minimal_comparison?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>minimal_comparison?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>test_files</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 110</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_minimal_comparison?'>minimal_comparison?</span>
+	<span class='const'>FilePattern</span><span class='op'>::</span><span class='const'>All</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+		<span class='id identifier rubyid_min_path'>min_path</span><span class='op'>=</span><span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_pathname_glob'>pathname_glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>minimal</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_default_test_class_id?'>default_test_class_id?</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_relative_path_from'>relative_path_from</span><span class='lparen'>(</span><span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+		<span class='id identifier rubyid_path'>path</span><span class='op'>=</span><span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_pathname_glob'>pathname_glob</span><span class='lparen'>(</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_basename'>model_basename</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_relative_path_from'>relative_path_from</span><span class='lparen'>(</span><span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>File.exists?('</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_min_path'>min_path</span><span class='rbrace'>}</span><span class='tstring_content'>')==</span><span class='embexpr_beg'>#{</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_min_path'>min_path</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>, File.exists?('</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='tstring_content'>')==</span><span class='embexpr_beg'>#{</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+		<span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_min_path'>min_path</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> -t </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_path'>path</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_min_path'>min_path</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='comment'>#map
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="minimal_edit-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>minimal_edit</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>edit</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_minimal_edit'>minimal_edit</span>
+	<span class='id identifier rubyid_edit'>edit</span><span class='op'>=</span><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diffuse</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span> <span class='id identifier rubyid_version_comparison'>version_comparison</span> <span class='op'>+</span> <span class='id identifier rubyid_test_files'>test_files</span> <span class='op'>+</span> <span class='id identifier rubyid_minimal_comparison?'>minimal_comparison?</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_edit'>edit</span><span class='period'>.</span><span class='id identifier rubyid_command_string'>command_string</span>
+	<span class='id identifier rubyid_edit'>edit</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="test-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>test</strong>(executable = @related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>emacs</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 150</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='kw'>begin</span>
+		<span class='id identifier rubyid_deserving_branch'>deserving_branch</span><span class='op'>=</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_deserving_branch'>deserving_branch</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+		<span class='const'>WorkFlow</span><span class='period'>.</span><span class='id identifier rubyid_merge_range'>merge_range</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch'>deserving_branch</span><span class='rparen'>)</span><span class='period'>.</span> <span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+			<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='const'>Branch_enhancement</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='op'>|</span>
+				<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_validate_commit'>validate_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='comma'>,</span> <span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_tested_files'>tested_files</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='rparen'>)</span>
+			<span class='kw'>end</span> <span class='comment'>#safely_visit_branch
+</span>			<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_recent_test'>recent_test</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+			<span class='id identifier rubyid_edit'>edit</span>
+		<span class='kw'>end</span> <span class='comment'>#each
+</span>	<span class='kw'>end</span> <span class='kw'>until</span> <span class='op'>!</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span> 
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="test_files-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>test_files</strong>(edit_files = @related_files.edit_files) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>functional_parallelism</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 100</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_test_files'>test_files</span><span class='lparen'>(</span><span class='id identifier rubyid_edit_files'>edit_files</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_edit_files'>edit_files</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_pairs'>pairs</span><span class='op'>=</span><span class='id identifier rubyid_functional_parallelism'>functional_parallelism</span><span class='lparen'>(</span><span class='id identifier rubyid_edit_files'>edit_files</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+
+		<span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> -t </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+			<span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_relative_path_from'>relative_path_from</span><span class='lparen'>(</span><span class='const'>Pathname</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+			
+		<span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='comment'>#map
+</span>	<span class='kw'>end</span> <span class='comment'>#map
+</span>	<span class='id identifier rubyid_pairs'>pairs</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unit_test-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>unit_test</strong>(executable = @related_files.model_test_pathname?) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>test</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 163</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_unit_test'>unit_test</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
+	<span class='kw'>begin</span>
+		<span class='id identifier rubyid_deserving_branch'>deserving_branch</span><span class='op'>=</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_recent_test'>recent_test</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span> <span class='kw'>then</span>
+			<span class='kw'>break</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>		<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_recent_test'>recent_test</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+		<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_deserving_branch'>deserving_branch</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+		<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch'>deserving_branch</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='op'>|</span>
+			<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_validate_commit'>validate_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='comma'>,</span> <span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_tested_files'>tested_files</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='rparen'>)</span>
+		<span class='kw'>end</span> <span class='comment'>#safely_visit_branch
+</span>		<span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span> <span class='kw'>then</span>
+			<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_confirm_branch_switch'>confirm_branch_switch</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch'>deserving_branch</span><span class='rparen'>)</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>		<span class='id identifier rubyid_edit'>edit</span>
+	<span class='kw'>end</span> <span class='kw'>until</span> <span class='op'>!</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span> 
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="version_comparison-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>version_comparison</strong>(files = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>initialize</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_version_comparison'>version_comparison</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_files'>files</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_edit_files'>edit_files</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+		<span class='id identifier rubyid_goldilocks'>goldilocks</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#map
+</span>	<span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Nov 26 15:47:07 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
