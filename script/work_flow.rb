@@ -75,9 +75,9 @@ end #case
 commands.each do |c|
 	case c.to_sym
 		when :all then 
-			WorkFlow.new($0).all(:test)
-			WorkFlow.new($0).all(:assertions_test)
-			WorkFlow.new($0).all(:long_test)
+			WorkFlow.all(:test)
+			WorkFlow.all(:assertions_test)
+			WorkFlow.all(:long_test)
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
@@ -92,7 +92,7 @@ commands.each do |c|
 		when :testing then work_flow.repository.stage_files(:testing, [f])
 		when :edited then work_flow.repository.stage_files(:edited, [f])
 		when :deserve then 
-			$stdout.puts  'deserving branch='+work_flow.repository.deserving_branch?(f).to_s
+			$stdout.puts  'deserving branch='+work_flow.deserving_branch?(f).to_s
 			$stdout.puts  work_flow.repository.recent_test.inspect
 		when :minimal then work_flow.minimal_edit
 		when :related then
