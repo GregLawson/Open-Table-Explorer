@@ -75,9 +75,12 @@ end #case
 commands.each do |c|
 	case c.to_sym
 		when :all then 
+#			WorkFlow.all(:model)
 			WorkFlow.all(:test)
+#			WorkFlow.all(:assertions)
 			WorkFlow.all(:assertions_test)
 			WorkFlow.all(:long_test)
+			ShellCommands.new('yard doc')
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
@@ -97,9 +100,9 @@ commands.each do |c|
 		when :minimal then work_flow.minimal_edit
 		when :related then
 			puts work_flow.related_files.inspect
-			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison?
-
+			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison? if $VERBOSE
 		end #case
+		work_flow.repository.stage_files(:passed, work_flow.related_files.tested_files($0))
 		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case

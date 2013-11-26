@@ -93,7 +93,8 @@ def test_deserving_branch?
 #	assert_equal(:passed, Branch_enhancement[Branch_compression[error_classification]])
 end #deserving_branch
 def test_merge
-	TestWorkFlow.repository.edited_superset_of_testing
+	TestWorkFlow.repository.testing_superset_of_passed.assert_post_conditions
+	TestWorkFlow.repository.edited_superset_of_testing.assert_post_conditions
 	TestWorkFlow.merge(:edited, :passed) # not too long or too dangerous
 end #merge
 def test_local_assert_post_conditions
