@@ -131,7 +131,8 @@ end #error_score
 # safe is meant to mean no files or changes are lost or buried.
 def confirm_branch_switch(branch)
 	checkout_branch=git_command("checkout #{branch}")
-	if checkout_branch.errors!="Switched to branch '#{branch}'\n" then
+	if checkout_branch.errors!="Already on '#{branch}'\n"
+	&& checkout_branch.errors!="Switched to branch '#{branch}'\n" then
 		checkout_branch.assert_post_conditions
 	end #if
 	checkout_branch # for command chaining
