@@ -143,11 +143,13 @@ def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
-		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
-			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
-		end #safely_visit_branch
-		@repository.recent_test.puts
-		edit
+		merge_range(deserving_branch). each do |i|
+			@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
+				@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+			end #safely_visit_branch
+			@repository.recent_test.puts
+			edit
+		end #each
 	end until !@repository.something_to_commit? 
 end #test
 def unit_test(executable=@related_files.model_test_pathname?)
