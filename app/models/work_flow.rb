@@ -24,6 +24,7 @@ end #Constants
 include Constants
 @@cached_unit_versions={}
 module ClassMethods
+include Constants
 def all(pattern_name=:test)
 	pattern=FilePattern.find_by_name(pattern_name)
 	glob=pattern.pathname_glob
@@ -36,6 +37,14 @@ end #test_unit_test_all
 def revison_tag(branch)
 		return '-r '+branch.to_s
 end #revison_tag
+def merge_range(deserving_branch)
+	deserving_index=Branch_enhancement.index(deserving_branch)
+	if deserving_index.nil? then
+		raise deserving_branch.inspect+'not found in '+Branch_enhancement.inspect
+	else
+		deserving_index..Branch_enhancement.size-1
+	end #if
+end #merge_range
 end #ClassMethods
 extend ClassMethods
 # Define related (unit) versions
@@ -130,14 +139,6 @@ def emacs(executable=@related_files.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
-def merge_range(deserving_branch)
-	deserving_index=Branch_enhancement.index(deserving_branch)
-	if deserving_index.nil? then
-		raise deserving_branch.inspect+'not foun in '+Branch_enhancement.inspect
-	else
-		deserving_index..Branch_enhancement.size
-	end #if
-end #merge_range
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=deserving_branch?(executable)
