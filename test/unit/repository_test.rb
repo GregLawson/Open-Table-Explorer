@@ -202,11 +202,11 @@ end #setup
 def teardown
 	Minimal_repository.revert_changes # so next test starts clean
 end #teardown
-def testing_superset_of_passed
-	assert_equal('', testing_superset_of_passed.output)
+def test_testing_superset_of_passed
+	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
-def edited_superset_of_testing
-	assert_equal('', edited_superset_of_testing.output)
+def est_edited_superset_of_testing
+	assert_equal('', SELF_code_Repo.edited_superset_of_testing.assert_post_conditions.output)
 end #edited_superset_of_testing
 def test_force_change
 	Minimal_repository.assert_nothing_to_commit
