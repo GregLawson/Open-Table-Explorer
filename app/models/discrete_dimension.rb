@@ -1,23 +1,40 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
-=======
-#    Copyright (C) 2012 by Greg Lawson                                      
->>>>>>> passed
+#    Copyright (C) 2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../test/assertions/ruby_assertions.rb'
-require_relative '../../app/models/minimal4.rb'
-class Minimal4
+#require_relative '../../app/models/no_db.rb'
+class DiscreteDimension < Array
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
+module Constants
+end #Constants
+include Constants
+# attr_reader
+def initialize(enumerable, start_index=0)
+	super(enumerable)
+	@index=start_index
+end #initializE
+def next
+	@index=@index+1
+	if @index > size then
+		raise StopIteration
+	else
+		self[@index-1] #preincrement value
+	end #if
+end #next
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
 def assert_pre_conditions(message='')
-end #assert_post_conditions
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
 def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
@@ -27,7 +44,9 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
+#self.assert_pre_conditions
 module Examples
 include Constants
+Branches=DiscreteDimension.new([:master, :passed, :testing,:edited])
 end #Examples
-end #Minimal
+end #DiscreteDimension

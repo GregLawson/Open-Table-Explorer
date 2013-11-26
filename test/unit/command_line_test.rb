@@ -15,18 +15,18 @@ def test_path_of_command
 end #path_of_command
 def test_initialize
 	path=File.expand_path(__FILE__)
-	file_type=	ShellCommands.new("file -b "+path).execute.puts
-	mime_type=	ShellCommands.new("file -b --mime "+path).execute.puts
+	file_type=	ShellCommands.new("file -b "+path).puts
+	mime_type=	ShellCommands.new("file -b --mime "+path).puts
 	@dpkg="grep "#{@path}$"  /var/lib/*/info/*.list"
 	if mime_type=='application/octet' then
 		basename=File.basename(path)
-		version=ShellCommands.new(basename+" --version").execute.output
-		v=ShellCommands.new(basename+" -v").execute.output
-		man=ShellCommands.new("man "+basename).execute.output
-		info=ShellCommands.new("info "+basename).execute.assert_post_conditions.puts
-		help=ShellCommands.new(basename+" --help").execute.assert_post_conditions.puts
-		h=ShellCommands.new(basename+" -h").execute.assert_post_conditions.puts
-		whereis=ShellCommands.new("whereis "+command).execute.output
+		version=ShellCommands.new(basename+" --version").output
+		v=ShellCommands.new(basename+" -v").output
+		man=ShellCommands.new("man "+basename).output
+		info=ShellCommands.new("info "+basename).assert_post_conditions.puts
+		help=ShellCommands.new(basename+" --help").assert_post_conditions.puts
+		h=ShellCommands.new(basename+" -h").assert_post_conditions.puts
+		whereis=ShellCommands.new("whereis "+command).output
 	end #if
 end #initialize
 def test_ruby_mime

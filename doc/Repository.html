@@ -73,12 +73,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName">Grit::Repo</span>
+      <span class="inheritName"><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></span>
       
         <ul class="fullTree">
           <li><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></li>
-          
-            <li class="next">Grit::Repo</li>
           
             <li class="next">Repository</li>
           
@@ -109,11 +107,18 @@
 </dl>
 <div class="clear"></div>
 
-<div id="subclasses">
-  <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="Rebuild.html" title="Rebuild (class)">Rebuild</a></span></p>
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>&lt;Grit::Repo</p>
+
+
+  </div>
 </div>
-<h2>Defined Under Namespace</h2>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
 <p class="children">
   
     
@@ -349,32 +354,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#confirm_branch_switch-instance_method" title="#confirm_branch_switch (instance method)">- (Object) <strong>confirm_branch_switch</strong>(branch) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>This is safe in the sense that a stash saves all files and a stash apply
-restores all tracked files safe is meant to mean no files or changes are
-lost or buried.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#current_branch_name%3F-instance_method" title="#current_branch_name? (instance method)">- (Boolean) <strong>current_branch_name?</strong> </a>
     
 
@@ -390,7 +369,7 @@ lost or buried.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>standardize_position!.</p>
+<p>standardize_position.</p>
 </div></span>
   
 </li>
@@ -558,7 +537,9 @@ lost or buried.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>confirm_branch_switch.</p>
+<p>This is safe in the sense that a stash saves all files and a stash apply
+restores all tracked files safe is meant to mean no files or changes are
+lost or buried.</p>
 </div></span>
   
 </li>
@@ -591,30 +572,6 @@ lost or buried.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#something_to_commit%3F-instance_method" title="#something_to_commit? (instance method)">- (Boolean) <strong>something_to_commit?</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>validate_commit.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#stage-instance_method" title="#stage (instance method)">- (Object) <strong>stage</strong>(target_branch, tested_files) </a>
     
 
@@ -639,31 +596,7 @@ lost or buried.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#stage_files-instance_method" title="#stage_files (instance method)">- (Object) <strong>stage_files</strong>(branch, files) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>safely_visit_branch.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#standardize_position%21-instance_method" title="#standardize_position! (instance method)">- (Object) <strong>standardize_position!</strong> </a>
+      <a href="#standardize_position-instance_method" title="#standardize_position (instance method)">- (Object) <strong>standardize_position</strong> </a>
     
 
     
@@ -774,31 +707,7 @@ lost or buried.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>something_to_commit.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#validate_commit-instance_method" title="#validate_commit (instance method)">- (Object) <strong>validate_commit</strong>(changes_branch, files) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>stage_files.</p>
+<p>safely_visit_branch.</p>
 </div></span>
   
 </li>
@@ -840,9 +749,8 @@ lost or buried.</p>
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Repository/Assertions.html" title="Repository::Assertions (module)">Assertions</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Repository/Assertions.html#assert_deserving_branch-instance_method" title="Repository::Assertions#assert_deserving_branch (method)">#assert_deserving_branch</a></span>, <span class='object_link'><a href="Repository/Assertions.html#assert_nothing_to_commit-instance_method" title="Repository::Assertions#assert_nothing_to_commit (method)">#assert_nothing_to_commit</a></span>, <span class='object_link'><a href="Repository/Assertions.html#assert_post_conditions-instance_method" title="Repository::Assertions#assert_post_conditions (method)">#assert_post_conditions</a></span>, <span class='object_link'><a href="Repository/Assertions.html#assert_pre_conditions-instance_method" title="Repository::Assertions#assert_pre_conditions (method)">#assert_pre_conditions</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Repository/Assertions.html#assert_deserving_branch-instance_method" title="Repository::Assertions#assert_deserving_branch (method)">#assert_deserving_branch</a></span>, <span class='object_link'><a href="Repository/Assertions.html#assert_post_conditions-instance_method" title="Repository::Assertions#assert_post_conditions (method)">#assert_post_conditions</a></span>, <span class='object_link'><a href="Repository/Assertions.html#assert_pre_conditions-instance_method" title="Repository::Assertions#assert_pre_conditions (method)">#assert_pre_conditions</a></span></p>
 
-  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -872,19 +780,23 @@ lost or buried.</p>
       <pre class="lines">
 
 
-38
 39
 40
 41
 42
-43</pre>
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 	<span class='ivar'>@url</span><span class='op'>=</span><span class='id identifier rubyid_path'>path</span>
 	<span class='ivar'>@path</span><span class='op'>=</span><span class='id identifier rubyid_path'>path</span>
+	<span class='id identifier rubyid_source_path'>source_path</span><span class='op'>=</span><span class='ivar'>@path</span>
+	<span class='id identifier rubyid_temporary_path'>temporary_path</span><span class='op'>=</span><span class='const'>Temporary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>recover</span><span class='tstring_end'>'</span></span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>@path=</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='ivar'>@path</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
 	<span class='ivar'>@grit_repo</span><span class='op'>=</span><span class='const'>Grit</span><span class='op'>::</span><span class='const'>Repo</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@path</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -926,12 +838,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deserving_branch'>deserving_branch</span>
   <span class='ivar'>@deserving_branch</span>
@@ -969,12 +881,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_grit_repo'>grit_repo</span>
   <span class='ivar'>@grit_repo</span>
@@ -1012,12 +924,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
   <span class='ivar'>@path</span>
@@ -1055,12 +967,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recent_test'>recent_test</span>
   <span class='ivar'>@recent_test</span>
@@ -1103,12 +1015,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-157
-158
-159</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_best'>best</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_upgrade_commit'>upgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
@@ -1144,22 +1056,22 @@ lost or buried.</p>
       <pre class="lines">
 
 
-183
-184
-185
-186
-187
-188
-189</pre>
+142
+143
+144
+145
+146
+147
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_commit_to_branch'>commit_to_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>=</span><span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>!=</span><span class='id identifier rubyid_target_branch'>target_branch</span> <span class='kw'>then</span>
-		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_push_branch'>push_branch</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
-		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout stash apply</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_push_branch'>push_branch</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout stash apply</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
 	<span class='kw'>end</span> <span class='comment'>#if
 </span><span class='kw'>end</span></pre>
     </td>
@@ -1193,65 +1105,16 @@ lost or buried.</p>
       <pre class="lines">
 
 
-195
-196
-197</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='const'>CompilesSupersetOfMaster</span>
 	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log compiles..master</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="confirm_branch_switch-instance_method">
-  
-    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>confirm_branch_switch</strong>(branch) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>This is safe in the sense that a stash saves all files and a stash apply
-restores all tracked files safe is meant to mean no files or changes are
-lost or buried.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-85
-86
-87
-88
-89
-90</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 85</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_confirm_branch_switch'>confirm_branch_switch</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_checkout_branch'>checkout_branch</span><span class='op'>=</span><span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-	<span class='kw'>if</span> <span class='id identifier rubyid_checkout_branch'>checkout_branch</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span><span class='op'>!=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Switched to branch '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='rbrace'>}</span><span class='tstring_content'>'\n</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span>
-		<span class='id identifier rubyid_checkout_branch'>checkout_branch</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
-	<span class='kw'>end</span> <span class='comment'>#if
-</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1269,7 +1132,7 @@ lost or buried.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>standardize_position!</p>
+<p>standardize_position</p>
 
 
   </div>
@@ -1296,12 +1159,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-62
-63
-64</pre>
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span>
 	<span class='ivar'>@grit_repo</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1350,9 +1213,6 @@ lost or buried.</p>
       <pre class="lines">
 
 
-65
-66
-67
 68
 69
 70
@@ -1366,10 +1226,13 @@ lost or buried.</p>
 78
 79
 80
-81</pre>
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
 	<span class='ivar'>@recent_test</span><span class='op'>=</span><span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
@@ -1408,12 +1271,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-198
-199
-200</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='const'>DevelopmentSupersetofCompiles</span>
 	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log development..compiles</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1449,12 +1312,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-160
-161
-162</pre>
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downgrade'>downgrade</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_downgrade_commit'>downgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
@@ -1490,12 +1353,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-148
-149
-150</pre>
+107
+108
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downgrade_commit'>downgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_commit_to_branch'>commit_to_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
@@ -1531,16 +1394,16 @@ lost or buried.</p>
       <pre class="lines">
 
 
-49
-50
-51
 52
 53
 54
-55</pre>
+55
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='id identifier rubyid_git_subcommand'>git_subcommand</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_git_subcommand'>git_subcommand</span><span class='rparen'>)</span>
@@ -1566,7 +1429,9 @@ lost or buried.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>confirm_branch_switch</p>
+<p>This is safe in the sense that a stash saves all files and a stash apply
+restores all tracked files safe is meant to mean no files or changes are
+lost or buried.</p>
 
 
   </div>
@@ -1580,6 +1445,9 @@ lost or buried.</p>
       <pre class="lines">
 
 
+88
+89
+90
 91
 92
 93
@@ -1589,50 +1457,21 @@ lost or buried.</p>
 97
 98
 99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116</pre>
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>=</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span>
-	<span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='op'>=</span><span class='id identifier rubyid_push_branch'>push_branch</span>
-	<span class='id identifier rubyid_push'>push</span><span class='op'>=</span><span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span> <span class='comment'># remember
-</span>	<span class='kw'>if</span> <span class='id identifier rubyid_push'>push</span> <span class='kw'>then</span>
-<span class='comment'>#		status=@grit_repo.status
-</span><span class='comment'>#		puts &quot;status.added=#{status.added.inspect}&quot;
-</span><span class='comment'>#		puts &quot;status.changed=#{status.changed.inspect}&quot;
-</span><span class='comment'>#		puts &quot;status.deleted=#{status.deleted.inspect}&quot;
-</span><span class='comment'>#		puts &quot;something_to_commit?=#{something_to_commit?.inspect}&quot;
-</span>		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>stash save</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
-		<span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='op'>=</span><span class='symbol'>:stash</span>
-	<span class='kw'>end</span> <span class='comment'>#if
-</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_push_branch'>push_branch</span><span class='op'>!=</span><span class='id identifier rubyid_target_branch'>target_branch</span> <span class='kw'>then</span>
-		<span class='id identifier rubyid_confirm_branch_switch'>confirm_branch_switch</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='rparen'>)</span>
-		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='rparen'>)</span>
-		<span class='id identifier rubyid_confirm_branch_switch'>confirm_branch_switch</span><span class='lparen'>(</span><span class='id identifier rubyid_push_branch'>push_branch</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stash save</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout #{target_branch}</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout #{push_branch}</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>stash apply</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
 	<span class='kw'>else</span>
 		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-	<span class='kw'>end</span> <span class='comment'>#if
-</span>	<span class='kw'>if</span> <span class='id identifier rubyid_push'>push</span> <span class='kw'>then</span>
-		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>stash apply</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
 	<span class='kw'>end</span> <span class='comment'>#if
 </span>	<span class='id identifier rubyid_ret'>ret</span>
 <span class='kw'>end</span></pre>
@@ -1667,87 +1506,19 @@ lost or buried.</p>
       <pre class="lines">
 
 
-44
-45
-46
 47
-48</pre>
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shell_command'>shell_command</span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span><span class='comma'>,</span> <span class='id identifier rubyid_working_directory'>working_directory</span><span class='op'>=</span><span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='ivar'>@path</span><span class='rparen'>)</span><span class='rparen'>)</span>
 		<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cd </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_working_directory'>working_directory</span><span class='rbrace'>}</span><span class='tstring_content'>; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_command'>command</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 		<span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
 		<span class='id identifier rubyid_ret'>ret</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="something_to_commit?-instance_method">
-  
-    - (<tt>Boolean</tt>) <strong>something_to_commit?</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>validate_commit</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 132</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span>
-	<span class='id identifier rubyid_status'>status</span><span class='op'>=</span><span class='ivar'>@grit_repo</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span>
-	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_added'>added</span><span class='op'>!=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='op'>||</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_changed'>changed</span><span class='op'>!=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='op'>||</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_deleted'>deleted</span><span class='op'>!=</span><span class='lbrace'>{</span><span class='rbrace'>}</span>
-	<span class='id identifier rubyid_message'>message</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status.added=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_added'>added</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-	<span class='id identifier rubyid_message'>message</span><span class='op'>+=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nstatus.changed=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_changed'>changed</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-	<span class='id identifier rubyid_message'>message</span><span class='op'>+=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nstatus.deleted=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_deleted'>deleted</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-	<span class='id identifier rubyid_message'>message</span><span class='op'>+=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nstatus.added!={}||status.changed!={}||status.deleted!={}==</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ret'>ret</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-	<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_message'>message</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
-	<span class='id identifier rubyid_ret'>ret</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1780,29 +1551,29 @@ lost or buried.</p>
       <pre class="lines">
 
 
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182</pre>
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span> <span class='op'>==</span><span class='id identifier rubyid_target_branch'>target_branch</span> <span class='kw'>then</span>
@@ -1813,7 +1584,7 @@ lost or buried.</p>
 		<span class='id identifier rubyid_message'>message</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>!=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
 		<span class='id identifier rubyid_message'>message</span><span class='op'>+=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>current_branch_name? !=target_branch=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_branch_name?'>current_branch_name?</span> <span class='op'>!=</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
 		<span class='id identifier rubyid_tested_files'>tested_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
-			<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout stash </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
+			<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkout stash </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
 		<span class='kw'>end</span> <span class='comment'>#each
 </span>		<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_switch_branch'>switch_branch</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>then</span>
 			<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Why am I here?</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_message'>message</span>
@@ -1830,54 +1601,9 @@ lost or buried.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="stage_files-instance_method">
+  <h3 class="signature " id="standardize_position-instance_method">
   
-    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>stage_files</strong>(branch, files) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>safely_visit_branch</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-117
-118
-119
-120
-121</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 117</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_stage_files'>stage_files</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='comma'>,</span> <span class='id identifier rubyid_files'>files</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='op'>|</span>
-		<span class='id identifier rubyid_validate_commit'>validate_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_files'>files</span><span class='rparen'>)</span>
-	<span class='kw'>end</span> <span class='comment'>#safely_visit_branch
-</span><span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="standardize_position!-instance_method">
-  
-    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>standardize_position!</strong> 
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>standardize_position</strong> 
   
 
   
@@ -1900,17 +1626,17 @@ lost or buried.</p>
       <pre class="lines">
 
 
-56
-57
-58
 59
 60
-61</pre>
+61
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 59</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_standardize_position!'>standardize_position!</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_standardize_position'>standardize_position</span>
 	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rebase --abort</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>merge --abort</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stash save</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
@@ -1947,12 +1673,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-151
-152
-153</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
@@ -1988,14 +1714,14 @@ lost or buried.</p>
       <pre class="lines">
 
 
-190
-191
-192
-193
-194</pre>
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_test_and_commit'>test_and_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='comma'>,</span> <span class='id identifier rubyid_tested_files'>tested_files</span><span class='rparen'>)</span>
 	
@@ -2033,12 +1759,12 @@ lost or buried.</p>
       <pre class="lines">
 
 
-154
-155
-156</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade'>upgrade</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='op'>=</span><span class='id identifier rubyid_related_files'>related_files</span><span class='period'>.</span><span class='id identifier rubyid_model_test_pathname?'>model_test_pathname?</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_upgrade_commit'>upgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch?'>deserving_branch?</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
@@ -2060,7 +1786,7 @@ lost or buried.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>something_to_commit</p>
+<p>safely_visit_branch</p>
 
 
   </div>
@@ -2074,15 +1800,15 @@ lost or buried.</p>
       <pre class="lines">
 
 
-142
-143
-144
-145
-146
-147</pre>
+101
+102
+103
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_commit'>upgrade_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_target_index'>target_index</span><span class='op'>=</span><span class='const'>WorkFlow</span><span class='op'>::</span><span class='const'>Branch_enhancement</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_target_branch'>target_branch</span><span class='rparen'>)</span>
@@ -2095,67 +1821,12 @@ lost or buried.</p>
 </table>
 </div>
     
-      <div class="method_details ">
-  <h3 class="signature " id="validate_commit-instance_method">
-  
-    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>validate_commit</strong>(changes_branch, files) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>stage_files</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/repository.rb', line 122</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_validate_commit'>validate_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_files'>files</span><span class='rparen'>)</span>
-	<span class='kw'>if</span> <span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span> <span class='kw'>then</span>
-		<span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
-			<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checkout #{changes_branch} </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
-		<span class='kw'>end</span> <span class='comment'>#each
-</span>		<span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_binwrite'>binwrite</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.git/GIT_COLA_MSG</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>fixup! </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='const'>RelatedFile</span><span class='period'>.</span><span class='id identifier rubyid_new_from_path?'>new_from_path?</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_model_class_name'>model_class_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>	
-		<span class='id identifier rubyid_git_command'>git_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cola</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
-		<span class='const'>ShellCommand</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>git rebase --autosquash --interactive</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-	<span class='kw'>end</span> <span class='comment'>#if
-</span><span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
   </div>
 
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 09:13:47 2013 by
+  Generated on Fri Oct 18 17:07:28 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

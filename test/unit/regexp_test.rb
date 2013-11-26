@@ -81,6 +81,8 @@ def test_back_reference
 	assert_equal('o', regexp1.match('ototomy')[1])
 	regexp2=/[aeiou]/.capture(:vowel)*/./
 	regexp2=((/[aeiou]/.capture(:vowel)*/./).back_reference(:vowel)*/./).back_reference(:vowel)
+	regexp2=/[aeiou]/.capture(:vowel)*/./.back_reference(:vowel)*/./.back_reference(:vowel)
+	regexp2=/[aeiou]/.capture(:vowel)*/./.back_reference(:vowel)*/./.back_reference(:vowel)
 	assert_match(regexp2, 'ototomy', 'Regexp doc example.')
 end #back_reference
 def test_group
@@ -90,9 +92,4 @@ def test_group
 	message="matchData.inspect=#{matchData.inspect}"
 	assert_equal('2', matchData[0], message)
 end #group
-def test_capture_names
-	pattern=/\d/.capture(:a)*/\d+/.capture(:b)
-	assert_equal(['a', 'b'], pattern.names)
-	assert_equal([:a, :b], pattern.capture_name_array, "named_captures=#{pattern.named_captures.inspect}")
-end #capture_names
 end #Regexp

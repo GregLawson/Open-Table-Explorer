@@ -133,7 +133,7 @@ def test_aaa_environment
 #	fail "got to end of related_files ."
     constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
 #verbose    info "constant_objects=#{constant_objects}"
-   examples=constant_objects.select{|c| c.instance_of?(Regexp)}
+   examples=constant_objects.select{|c| c.instance_of?(model_class?)}
    info "examples=#{examples}"
 	if examples.empty? then
       warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples.\nconstant_objects=#{constant_objects.inspect}"
@@ -144,7 +144,7 @@ def test_class_assert_pre_conditions
 #	fail "got to end of default test."
 end #class_assert_pre_conditions
 def test_class_assert_invariant
-  existing_call(model_class?, :assert_invariant)
+#  existing_call(model_class?, :assert_invariant)
 #	fail "got to end of default test."
 end #def assert_invariant
 def test_class_assert_post_conditions
@@ -156,7 +156,7 @@ def test_assert_pre_conditions
   each_example {|e| existing_call(e, :assert_pre_conditions)}
 end #assert_pre_conditions
 def test_assert_invariant
-  each_example {|e| existing_call(e, :assert_invariant)}
+#  each_example {|e| existing_call(e, :assert_invariant)}
 end #def assert_invariant
 def test_assert_post_conditions
   each_example {|e| existing_call(e, :assert_post_conditions)}
@@ -220,6 +220,7 @@ end #names_of_tests
 def global_class_names
 	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
 end #global_class_names
+Data_source_directory='test/data_source/'+DefaultTestCase0.model_name?+'/'
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
 #include DefaultAssertions

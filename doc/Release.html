@@ -253,7 +253,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="WorkFlow.html" title="WorkFlow (class)">WorkFlow</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="WorkFlow.html#all-instance_method" title="WorkFlow#all (method)">#all</a></span>, <span class='object_link'><a href="WorkFlow.html#edit-instance_method" title="WorkFlow#edit (method)">#edit</a></span>, <span class='object_link'><a href="WorkFlow.html#emacs-instance_method" title="WorkFlow#emacs (method)">#emacs</a></span>, <span class='object_link'><a href="WorkFlow.html#execute-instance_method" title="WorkFlow#execute (method)">#execute</a></span>, <span class='object_link'><a href="WorkFlow.html#functional_parallelism-instance_method" title="WorkFlow#functional_parallelism (method)">#functional_parallelism</a></span>, <span class='object_link'><a href="WorkFlow.html#goldilocks-instance_method" title="WorkFlow#goldilocks (method)">#goldilocks</a></span>, <span class='object_link'><a href="WorkFlow.html#minimal_comparison%3F-instance_method" title="WorkFlow#minimal_comparison? (method)">#minimal_comparison?</a></span>, <span class='object_link'><a href="WorkFlow.html#minimal_edit-instance_method" title="WorkFlow#minimal_edit (method)">#minimal_edit</a></span>, <span class='object_link'><a href="WorkFlow.html#test-instance_method" title="WorkFlow#test (method)">#test</a></span>, <span class='object_link'><a href="WorkFlow.html#test_files-instance_method" title="WorkFlow#test_files (method)">#test_files</a></span>, <span class='object_link'><a href="WorkFlow.html#version_comparison-instance_method" title="WorkFlow#version_comparison (method)">#version_comparison</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="WorkFlow.html#edit-instance_method" title="WorkFlow#edit (method)">#edit</a></span>, <span class='object_link'><a href="WorkFlow.html#emacs-instance_method" title="WorkFlow#emacs (method)">#emacs</a></span>, <span class='object_link'><a href="WorkFlow.html#execute-instance_method" title="WorkFlow#execute (method)">#execute</a></span>, <span class='object_link'><a href="WorkFlow.html#functional_parallelism-instance_method" title="WorkFlow#functional_parallelism (method)">#functional_parallelism</a></span>, <span class='object_link'><a href="WorkFlow.html#goldilocks-instance_method" title="WorkFlow#goldilocks (method)">#goldilocks</a></span>, <span class='object_link'><a href="WorkFlow.html#test-instance_method" title="WorkFlow#test (method)">#test</a></span>, <span class='object_link'><a href="WorkFlow.html#test_files-instance_method" title="WorkFlow#test_files (method)">#test_files</a></span>, <span class='object_link'><a href="WorkFlow.html#version_comparison-instance_method" title="WorkFlow#version_comparison (method)">#version_comparison</a></span></p>
 
   
   
@@ -418,12 +418,12 @@
 		<span class='kw'>end</span> <span class='comment'>#if
 </span>		<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_recent_test'>recent_test</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
 		<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_deserving_branch'>deserving_branch</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
-		<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch'>deserving_branch</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='op'>|</span>
-			<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_validate_commit'>validate_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_changes_branch'>changes_branch</span><span class='comma'>,</span> <span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_tested_files'>tested_files</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='rparen'>)</span>
+		<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_safely_visit_branch'>safely_visit_branch</span><span class='lparen'>(</span><span class='id identifier rubyid_deserving_branch'>deserving_branch</span><span class='rparen'>)</span> <span class='kw'>do</span>
+			<span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_validate_commit'>validate_commit</span><span class='lparen'>(</span><span class='ivar'>@related_files</span><span class='period'>.</span><span class='id identifier rubyid_tested_files'>tested_files</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span><span class='rparen'>)</span>
 		<span class='kw'>end</span> <span class='comment'>#safely_visit_branch
 </span>		<span class='id identifier rubyid_edit'>edit</span>
-	<span class='kw'>end</span> <span class='kw'>until</span> <span class='op'>!</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span> 
-<span class='kw'>end</span></pre>
+	<span class='kw'>end</span> <span class='kw'>until</span> <span class='op'>!</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_something_to_commit?'>something_to_commit?</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_recent_test'>recent_test</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span> <span class='comment'># infinite? interactive loop
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -434,7 +434,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 09:13:37 2013 by
+  Generated on Fri Oct 18 17:07:24 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

@@ -31,7 +31,7 @@ def test_general_associations
 #more fixtures need to be loaded?	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
 	assert_test_id_equal
 end #id_equal
 end #Host

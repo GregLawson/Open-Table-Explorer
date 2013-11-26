@@ -20,7 +20,7 @@ def test_general_associations
 	assert_general_associations(@table_name)
 end
 def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
 	assert_test_id_equal
 end #def
 end

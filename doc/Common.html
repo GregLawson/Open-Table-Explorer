@@ -83,9 +83,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">app/models/no_db.rb<span class="defines">,<br />
-  app/models/generic_table.rb</span>
-</dd>
+    <dd class="r2 last">app/models/no_db.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -93,7 +91,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>class Base module ActiveRecord</p>
+<p>Methods in common bettween ActiveRecord::Base and NoDB</p>
 
 
   </div>
@@ -819,9 +817,7 @@ nil.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>activeRecordTableNotCreatedYet.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -2390,53 +2386,42 @@ nil</p>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>activeRecordTableNotCreatedYet</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223</pre>
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/generic_table.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'app/models/no_db.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_updates'>updates</span><span class='lparen'>(</span><span class='id identifier rubyid_variableHashes'>variableHashes</span><span class='rparen'>)</span>
 <span class='comment'>#	Global::log.info(&quot;variableHashes.inspect=#{variableHashes.inspect}&quot;)
@@ -2475,7 +2460,7 @@ nil</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 09:13:03 2013 by
+  Generated on Fri Oct 18 17:07:15 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>
