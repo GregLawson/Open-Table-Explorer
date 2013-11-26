@@ -130,6 +130,14 @@ def emacs(executable=@related_files.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
+def merge_range(deserving_branch)
+	deserving_index=Branch_enhancement.index(deserving_branch)
+	if deserving_index.nil? then
+		raise deserving_branch.inspect+'not foun in '+Branch_enhancement.inspect
+	else
+		deserving_index..Branch_enhancement.size
+	end #if
+end #merge_range
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=deserving_branch?(executable)
