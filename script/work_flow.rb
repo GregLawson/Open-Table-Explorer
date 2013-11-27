@@ -81,6 +81,14 @@ commands.each do |c|
 			WorkFlow.all(:assertions_test)
 			WorkFlow.all(:long_test)
 			ShellCommands.new('yard doc')
+			work_flow=WorkFlow.new($0)
+			work_flow.repository.git_command('checkout master')	
+			work_flow.repository.git_command('merge passed')	
+			work_flow.repository.git_command('mergetool')	
+			work_flow.merge(:master, :passed) 
+			work_flow.merge(:passed, :master) 
+			work_flow.merge(:testing, :master) 
+			work_flow.merge(:edited, :master) 
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
