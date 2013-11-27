@@ -113,6 +113,41 @@
         </dt>
         <dd><pre class="code"><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>COMMAND_STRING</span><span class='rparen'>)</span></pre></dd>
       
+        <dt id="Guaranteed_existing_directory-constant" class="">Guaranteed_existing_directory =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='gvar'>$0</span><span class='rparen'>)</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Cd_command_array-constant" class="">Cd_command_array =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cd</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='const'>Guaranteed_existing_directory</span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="Cd_command_hash-constant" class="">Cd_command_hash =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='symbol'>:command</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cd</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:in</span> <span class='op'>=&gt;</span> <span class='const'>Guaranteed_existing_directory</span><span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="Guaranteed_existing_basename-constant" class="">Guaranteed_existing_basename =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='gvar'>$0</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Redirect_command-constant" class="">Redirect_command =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ls</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='const'>Guaranteed_existing_basename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>blank in filename.shell_command</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="Redirect_command_string-constant" class="">Redirect_command_string =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ls </span><span class='tstring_end'>'</span></span><span class='op'>+</span> <span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='const'>Guaranteed_existing_basename</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> &gt; </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>blank in filename.shell_command</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Relative_command-constant" class="">Relative_command =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ls</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='const'>Guaranteed_existing_basename</span><span class='rbracket'>]</span></pre></dd>
+      
     </dl>
   
 
@@ -127,7 +162,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:22 2013 by
+  Generated on Tue Nov 26 15:46:36 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

@@ -173,13 +173,15 @@
 
 14
 15
-16</pre>
+16
+17</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/models/related_file.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_from_path?'>new_from_path?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
-	<span class='const'>RelatedFile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>FilePattern</span><span class='period'>.</span><span class='id identifier rubyid_path2model_name?'>path2model_name?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'>FilePattern</span><span class='period'>.</span><span class='id identifier rubyid_project_root_dir?'>project_root_dir?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_library_name'>library_name</span><span class='op'>=</span><span class='const'>FilePattern</span><span class='period'>.</span><span class='id identifier rubyid_path2model_name?'>path2model_name?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+	<span class='const'>RelatedFile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_library_name'>library_name</span><span class='comma'>,</span> <span class='const'>FilePattern</span><span class='period'>.</span><span class='id identifier rubyid_project_root_dir?'>project_root_dir?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -191,7 +193,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:21 2013 by
+  Generated on Tue Nov 26 15:46:34 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

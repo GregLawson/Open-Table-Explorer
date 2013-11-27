@@ -124,9 +124,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>assert_pre_conditions.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -172,29 +170,18 @@
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>assert_pre_conditions</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-123
-124
-125</pre>
+186
+187
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
 <span class='comment'>#	assert_pathname_exists(TestFile, &quot;assert_post_conditions&quot;)
@@ -219,19 +206,13 @@
       <pre class="lines">
 
 
-118
-119
-120
-121
-122</pre>
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'app/models/work_flow.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assert_pre_conditions'>assert_pre_conditions</span>
-	<span class='id identifier rubyid_assert_kind_of'>assert_kind_of</span><span class='lparen'>(</span><span class='ivar'>@repository</span><span class='comma'>,</span> <span class='const'>Grit</span><span class='op'>::</span><span class='const'>Repo</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_assert_respond_to'>assert_respond_to</span><span class='lparen'>(</span><span class='ivar'>@repository</span><span class='comma'>,</span> <span class='symbol'>:status</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_assert_respond_to'>assert_respond_to</span><span class='lparen'>(</span><span class='ivar'>@repository</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='symbol'>:changed</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -243,7 +224,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:18 2013 by
+  Generated on Tue Nov 26 15:46:26 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

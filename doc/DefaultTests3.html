@@ -188,7 +188,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="ExampleCall.html" title="ExampleCall (module)">ExampleCall</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ExampleCall.html#each_example-instance_method" title="ExampleCall#each_example (method)">#each_example</a></span>, <span class='object_link'><a href="ExampleCall.html#existing_call-instance_method" title="ExampleCall#existing_call (method)">#existing_call</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="ExampleCall.html#assert_optional_method-instance_method" title="ExampleCall#assert_optional_method (method)">#assert_optional_method</a></span>, <span class='object_link'><a href="ExampleCall.html#each_example-instance_method" title="ExampleCall#each_example (method)">#each_example</a></span>, <span class='object_link'><a href="ExampleCall.html#existing_call-instance_method" title="ExampleCall#existing_call (method)">#existing_call</a></span>, <span class='object_link'><a href="ExampleCall.html#named_object%3F-instance_method" title="ExampleCall#named_object? (method)">#named_object?</a></span></p>
 
   
   
@@ -234,13 +234,13 @@
       <pre class="lines">
 
 
-144
-145
-146
-147</pre>
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_test_assertion_inclusion'>test_assertion_inclusion</span>
 	<span class='id identifier rubyid_assert_include'>assert_include</span><span class='lparen'>(</span><span class='id identifier rubyid_model_class?'>model_class?</span><span class='period'>.</span><span class='id identifier rubyid_included_modules'>included_modules</span><span class='comma'>,</span> <span class='id identifier rubyid_model_class?'>model_class?</span><span class='op'>::</span><span class='const'>Assertions</span><span class='rparen'>)</span>
@@ -277,31 +277,31 @@
       <pre class="lines">
 
 
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169</pre>
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_test_related_files'>test_related_files</span>
 	<span class='id identifier rubyid_assert_include'>assert_include</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_included_modules'>included_modules</span><span class='comma'>,</span> <span class='const'>Test</span><span class='op'>::</span><span class='const'>Unit</span><span class='op'>::</span><span class='const'>Assertions</span><span class='rparen'>)</span>
@@ -335,7 +335,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:23 2013 by
+  Generated on Tue Nov 26 15:46:40 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

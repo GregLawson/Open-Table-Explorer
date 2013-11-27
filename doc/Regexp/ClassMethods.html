@@ -257,13 +257,13 @@ characters.</p>
       <pre class="lines">
 
 
-51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delimiter_regexp'>delimiter_regexp</span><span class='lparen'>(</span><span class='id identifier rubyid_delimiter'>delimiter</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>delimiters must be single characters not </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_delimiter'>delimiter</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_delimiter'>delimiter</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>!=</span><span class='int'>1</span>
@@ -289,7 +289,6 @@ characters.</p>
       <pre class="lines">
 
 
-22
 23
 24
 25
@@ -297,10 +296,11 @@ characters.</p>
 27
 28
 29
-30</pre>
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='kw'>then</span> 
@@ -342,15 +342,15 @@ characters.</p>
       <pre class="lines">
 
 
-39
 40
 41
 42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_regexp_error'>regexp_error</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='const'>Default_options</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expecting regexp_string=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
@@ -390,15 +390,15 @@ characters</p>
       <pre class="lines">
 
 
-33
 34
 35
 36
 37
-38</pre>
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_regexp_rescued'>regexp_rescued</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='const'>Default_options</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expecting regexp_string=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_regexp_string'>regexp_string</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
@@ -437,13 +437,13 @@ characters</p>
       <pre class="lines">
 
 
-46
 47
 48
-49</pre>
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_terminator_regexp'>terminator_regexp</span><span class='lparen'>(</span><span class='id identifier rubyid_delimiter'>delimiter</span><span class='rparen'>)</span>
 <span class='comment'>#	raise &quot;delimiter must be single characters not #{delimiter}.&quot; if delimiter.length!=1
@@ -459,7 +459,7 @@ characters</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:16 2013 by
+  Generated on Tue Nov 26 15:46:21 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

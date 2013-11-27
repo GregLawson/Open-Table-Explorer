@@ -132,6 +132,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#data_source_directory%3F-instance_method" title="#data_source_directory? (instance method)">- (Boolean) <strong>data_source_directory?</strong>(model_name = model_name?) ) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>global_class_names.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#global_class_names-instance_method" title="#global_class_names (instance method)">- (Object) <strong>global_class_names</strong> </a>
     
 
@@ -284,7 +308,62 @@ followed.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="global_class_names-instance_method">
+  <h3 class="signature first" id="data_source_directory?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>data_source_directory?</strong>(model_name = model_name?)
+) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>global_class_names</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+223
+224
+225</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 223</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_data_source_directory?'>data_source_directory?</span><span class='lparen'>(</span><span class='id identifier rubyid_model_name'>model_name</span><span class='op'>=</span><span class='id identifier rubyid_model_name?'>model_name?</span><span class='rparen'>)</span>
+	<span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test/data_sources/</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="global_class_names-instance_method">
   
     - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>global_class_names</strong> 
   
@@ -309,12 +388,12 @@ followed.</p>
       <pre class="lines">
 
 
-197
-198
-199</pre>
+220
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_global_class_names'>global_class_names</span>
 	<span class='const'>Module</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span><span class='rbrace'>}</span>
@@ -363,16 +442,16 @@ followed.</p>
       <pre class="lines">
 
 
-182
-183
-184
-185
-186
-187
-188</pre>
+205
+206
+207
+208
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 205</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_class?'>model_class?</span>
 	<span class='kw'>begin</span>
@@ -426,12 +505,12 @@ followed</p>
       <pre class="lines">
 
 
-179
-180
-181</pre>
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 179</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_name?'>model_name?</span>
 	<span class='id identifier rubyid_name_of_test?'>name_of_test?</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Test$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Assertions$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -480,12 +559,12 @@ followed</p>
       <pre class="lines">
 
 
-175
-176
-177</pre>
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name_of_test?'>name_of_test?</span>
 	<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -534,14 +613,14 @@ followed</p>
       <pre class="lines">
 
 
-192
-193
-194
-195
-196</pre>
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_names_of_tests?'>names_of_tests?</span>
 	<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_methods'>methods</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span>
@@ -592,12 +671,12 @@ followed</p>
       <pre class="lines">
 
 
-189
-190
-191</pre>
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'app/models/default_test_case.rb', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_name?'>table_name?</span>
 	<span class='id identifier rubyid_model_name?'>model_name?</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span>
@@ -612,7 +691,7 @@ followed</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:35 2013 by
+  Generated on Tue Nov 26 15:47:49 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

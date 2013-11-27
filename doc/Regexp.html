@@ -183,6 +183,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#back_reference-instance_method" title="#back_reference (instance method)">- (Object) <strong>back_reference</strong>(key) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>capture backreferences must be all numbered or all named.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#capture-instance_method" title="#capture (instance method)">- (Object) <strong>capture</strong>(key = nil) </a>
     
 
@@ -207,30 +231,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#capture_name_array-instance_method" title="#capture_name_array (instance method)">- (Object) <strong>capture_name_array</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>group.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#group-instance_method" title="#group (instance method)">- (Object) <strong>group</strong> </a>
     
 
@@ -246,7 +246,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>capture.</p>
+<p>back_reference.</p>
 </div></span>
   
 </li>
@@ -374,7 +374,6 @@
       <pre class="lines">
 
 
-60
 61
 62
 63
@@ -382,20 +381,78 @@
 65
 66
 67
-68</pre>
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
 	<span class='kw'>case</span> <span class='id identifier rubyid_other'>other</span>
 	<span class='kw'>when</span> <span class='const'>Regexp</span> <span class='kw'>then</span> <span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span> <span class='op'>+</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
 	<span class='kw'>when</span> <span class='const'>String</span> <span class='kw'>then</span> <span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span> <span class='op'>+</span> <span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
 	<span class='kw'>when</span> <span class='const'>Fixnum</span> <span class='kw'>then</span> <span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='op'>*</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
+	<span class='kw'>when</span> <span class='const'>NilClass</span> <span class='kw'>then</span> <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Right argument of :* operator evaluated to nil.</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span>
+		<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nPossibly add parenthesis to control operator versus method precedence.</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span>
+		<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nIn order to evaluate left to right, place parenthesis around operator expressions.</span><span class='tstring_end'>&quot;</span></span>
+		<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nself=</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
 	<span class='kw'>else</span>
 		<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>other.class=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
 	<span class='kw'>end</span> <span class='comment'>#case
 </span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="back_reference-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>back_reference</strong>(key) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>capture backreferences must be all numbered or all named.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_back_reference'>back_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+		<span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='rbrace'>}</span><span class='tstring_content'>\k&lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='regexp_end'>/</span></span>
+<span class='kw'>rescue</span> <span class='const'>RegexpError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_exception'>exception</span>
+	<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>back_reference regexp=/</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='rbrace'>}</span><span class='tstring_content'>\k&lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;/ failed.</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span>
+		<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nPossibly add parenthesis to control operator versus method precedence.</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span>
+		<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nIn order to evaluate left to right, place parenthesis around operator expressions.</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -427,16 +484,16 @@
       <pre class="lines">
 
 
-72
-73
-74
-75
-76
 77
-78</pre>
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_capture'>capture</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
@@ -445,59 +502,6 @@
 		<span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?&lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='regexp_end'>/</span></span>
 	<span class='kw'>end</span> <span class='comment'>#if
 </span><span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="capture_name_array-instance_method">
-  
-    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>capture_name_array</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>group</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-82
-83
-84
-85
-86
-87
-88
-89
-90</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 82</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_capture_name_array'>capture_name_array</span>
-	<span class='id identifier rubyid_names'>names</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='comment'># empty till added to
-</span>	<span class='id identifier rubyid_named_captures'>named_captures</span><span class='period'>.</span><span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_index_array'>index_array</span><span class='op'>|</span>
-		<span class='id identifier rubyid_index_array'>index_array</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
-			<span class='id identifier rubyid_names'>names</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>=</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='comment'># delete zero index (not a capture)
-</span>		<span class='kw'>end</span> <span class='comment'>#each
-</span>	<span class='kw'>end</span> <span class='comment'>#each_pair
-</span>	<span class='id identifier rubyid_names'>names</span>
-<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -515,7 +519,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>capture</p>
+<p>back_reference</p>
 
 
   </div>
@@ -529,12 +533,12 @@
       <pre class="lines">
 
 
-79
-80
-81</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_group'>group</span>
 	<span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?:</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='regexp_end'>/</span></span>
@@ -559,12 +563,12 @@
       <pre class="lines">
 
 
-57
 58
-59</pre>
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unescaped_string'>unescaped_string</span>
 	<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_source'>source</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -600,12 +604,12 @@
       <pre class="lines">
 
 
-69
-70
-71</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'app/models/regexp.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='op'>|</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span> <span class='comment'># |
 </span>	<span class='kw'>return</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_union'>union</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_promote'>promote</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
@@ -620,7 +624,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:24 2013 by
+  Generated on Tue Nov 26 15:46:54 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

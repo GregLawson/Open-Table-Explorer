@@ -96,7 +96,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>def module</p>
+<p>data_source_directory? module</p>
 
 
   </div>
@@ -193,6 +193,28 @@
   <span class="summary_signature">
     
       <a href="#enumerate_single-instance_method" title="#enumerate_single (instance method)">- (Object) <strong>enumerate_single</strong>(enumerator_method, &amp;proc) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#info-instance_method" title="#info (instance method)">- (Object) <strong>info</strong>(message) </a>
     
 
     
@@ -419,7 +441,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>~ define_class_methods { ~ } #define_class_methods.</p>
+<p>info.</p>
 </div></span>
   
 </li>
@@ -569,8 +591,6 @@
       <pre class="lines">
 
 
-124
-125
 126
 127
 128
@@ -612,10 +632,12 @@
 164
 165
 166
-167</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_canonicalName'>canonicalName</span>
 	<span class='comment'>#~ puts &quot;inspect=#{inspect}&quot;
@@ -692,12 +714,12 @@
       <pre class="lines">
 
 
-296
-297
-298</pre>
+298
+299
+300</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 298</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_context_names'>context_names</span><span class='lparen'>(</span><span class='id identifier rubyid_depth'>depth</span><span class='op'>=</span><span class='int'>0</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_method_contexts'>method_contexts</span><span class='lparen'>(</span><span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_canonicalName'>canonicalName</span><span class='rbrace'>}</span>
@@ -797,6 +819,40 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="info-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Object (class)">Object</a></span></tt>) <strong>info</strong>(message) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='gvar'>$VERBOSE</span> <span class='kw'>then</span>
+		<span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_message'>message</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="matching_methods_in_context-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="Object (class)">Object</a></span></tt>) <strong>matching_methods_in_context</strong>(regexp, depth = 0) 
@@ -822,17 +878,17 @@
       <pre class="lines">
 
 
-306
-307
 308
 309
 310
 311
 312
-313</pre>
+313
+314
+315</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 306</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 308</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching_methods_in_context'>matching_methods_in_context</span><span class='lparen'>(</span><span class='id identifier rubyid_regexp'>regexp</span><span class='comma'>,</span><span class='id identifier rubyid_depth'>depth</span><span class='op'>=</span><span class='int'>0</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -873,16 +929,16 @@
       <pre class="lines">
 
 
-299
-300
 301
 302
 303
 304
-305</pre>
+305
+306
+307</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 299</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 301</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_context'>method_context</span><span class='lparen'>(</span><span class='id identifier rubyid_methodName'>methodName</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_respond_to'>respond_to</span><span class='lparen'>(</span><span class='id identifier rubyid_methodName'>methodName</span><span class='rparen'>)</span> <span class='kw'>then</span>
@@ -922,16 +978,16 @@
       <pre class="lines">
 
 
-289
-290
 291
 292
 293
 294
-295</pre>
+295
+296
+297</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 291</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_contexts'>method_contexts</span><span class='lparen'>(</span><span class='id identifier rubyid_depth'>depth</span><span class='op'>=</span><span class='int'>0</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span> <span class='kw'>then</span>
@@ -984,12 +1040,12 @@
       <pre class="lines">
 
 
-272
-273
-274</pre>
+274
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_module?'>module?</span>
 	<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='op'>==</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Module</span><span class='tstring_end'>'</span></span>
@@ -1038,16 +1094,16 @@
       <pre class="lines">
 
 
-282
-283
 284
 285
 286
 287
-288</pre>
+288
+289
+290</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_module_included?'>module_included?</span><span class='lparen'>(</span><span class='id identifier rubyid_symbol'>symbol</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_symbol'>symbol</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span> <span class='kw'>then</span>
@@ -1087,16 +1143,16 @@
       <pre class="lines">
 
 
-275
-276
 277
 278
 279
 280
-281</pre>
+281
+282
+283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 275</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noninherited_modules'>noninherited_modules</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_module?'>module?</span> <span class='kw'>then</span>
@@ -1136,12 +1192,12 @@
       <pre class="lines">
 
 
-172
-173
-174</pre>
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noninherited_public_class_methods'>noninherited_public_class_methods</span>
 	<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_methods'>methods</span><span class='op'>-</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_superclass'>superclass</span><span class='period'>.</span><span class='id identifier rubyid_methods'>methods</span>
@@ -1166,13 +1222,13 @@
       <pre class="lines">
 
 
-168
-169
 170
-171</pre>
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noninherited_public_instance_methods'>noninherited_public_instance_methods</span>
 	<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noninherited_public_instance_methods in class Object called</span><span class='tstring_end'>&quot;</span></span>
@@ -1195,7 +1251,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>~ define_class_methods { ~ } #define_class_methods</p>
+<p>info</p>
 
 
   </div>
@@ -1209,12 +1265,12 @@
       <pre class="lines">
 
 
-66
-67
-68</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_object_identities'>object_identities</span>
 	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_objectClass'>objectClass</span><span class='rbrace'>}</span><span class='tstring_content'> \#</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_object_id'>object_id</span><span class='rbrace'>}</span><span class='tstring_content'>{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_hash'>hash</span><span class='rbrace'>}</span><span class='tstring_content'>},</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>,</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -1250,8 +1306,6 @@
       <pre class="lines">
 
 
-87
-88
 89
 90
 91
@@ -1265,10 +1319,12 @@
 99
 100
 101
-102</pre>
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_objectClass'>objectClass</span><span class='lparen'>(</span><span class='id identifier rubyid_verbose'>verbose</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
@@ -1317,8 +1373,6 @@
       <pre class="lines">
 
 
-69
-70
 71
 72
 73
@@ -1334,10 +1388,12 @@
 83
 84
 85
-86</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_objectKind'>objectKind</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
@@ -1388,8 +1444,6 @@
       <pre class="lines">
 
 
-103
-104
 105
 106
 107
@@ -1408,10 +1462,12 @@
 120
 121
 122
-123</pre>
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_objectName'>objectName</span><span class='lparen'>(</span><span class='id identifier rubyid_verbose'>verbose</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
@@ -1465,8 +1521,6 @@
       <pre class="lines">
 
 
-223
-224
 225
 226
 227
@@ -1513,10 +1567,12 @@
 268
 269
 270
-271</pre>
+271
+272
+273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_relationship'>relationship</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='op'>=</span><span class='kw'>self</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>self is </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_whoAmI'>whoAmI</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1598,8 +1654,6 @@
       <pre class="lines">
 
 
-175
-176
 177
 178
 179
@@ -1645,10 +1699,12 @@
 219
 220
 221
-222</pre>
+222
+223
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'app/models/global.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_whoAmI'>whoAmI</span><span class='lparen'>(</span><span class='id identifier rubyid_verbose'>verbose</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_obj'>obj</span><span class='op'>=</span><span class='kw'>self</span>
@@ -1708,7 +1764,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:23 2013 by
+  Generated on Tue Nov 26 15:46:55 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>

@@ -215,12 +215,12 @@
       <pre class="lines">
 
 
-116
 117
-118</pre>
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/related_file.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'app/models/related_file.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assert_invariant'>assert_invariant</span>
 <span class='comment'>#	fail &quot;end of assert_invariant &quot;
@@ -256,12 +256,12 @@
       <pre class="lines">
 
 
-125
 126
-127</pre>
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/related_file.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'app/models/related_file.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assert_post_conditions'>assert_post_conditions</span>
 	<span class='id identifier rubyid_assert_equal'>assert_equal</span><span class='lparen'>(</span><span class='const'>TE</span><span class='comma'>,</span> <span class='const'>FilePattern</span><span class='op'>::</span><span class='const'>Examples</span><span class='op'>::</span><span class='const'>SELF</span><span class='rparen'>)</span>
@@ -297,16 +297,16 @@
       <pre class="lines">
 
 
-120
 121
 122
-123</pre>
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/related_file.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'app/models/related_file.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assert_pre_conditions'>assert_pre_conditions</span>
-	<span class='id identifier rubyid_assert_respond_to'>assert_respond_to</span><span class='lparen'>(</span><span class='const'>FilePattern</span><span class='comma'>,</span> <span class='symbol'>:project_root_dir?</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_assert_respond_to'>assert_respond_to</span><span class='lparen'>(</span><span class='const'>FilePattern</span><span class='comma'>,</span> <span class='symbol'>:new_from_path?</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_assert_module_included'>assert_module_included</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='const'>FilePattern</span><span class='op'>::</span><span class='const'>Assertions</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -319,7 +319,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct 18 17:07:21 2013 by
+  Generated on Tue Nov 26 15:46:35 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>
