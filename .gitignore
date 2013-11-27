@@ -1,4 +1,5 @@
-/doc/rdoc/*
+/doc/*
+/.yardoc/*
 /test/data_sources/adc_loopback/R_loopback_workspace.RData
 /test/data_sources/taxes/*
 /test/data_sources/taxes/US_1040_OTS.json
