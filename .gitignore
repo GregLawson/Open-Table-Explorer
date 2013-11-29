@@ -1,4 +1,5 @@
 /doc/*
+!/doc/COPYING.html
 /.yardoc/*
 /test/data_sources/adc_loopback/R_loopback_workspace.RData
 /test/data_sources/taxes/*
