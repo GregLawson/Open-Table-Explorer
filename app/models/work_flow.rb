@@ -127,7 +127,7 @@ def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status=@repository.git_command('merge '+source_branch.to_s)
 		if !merge_status.success? then
-			merge_status=git_command('mergetool')
+			merge_status=@repository.git_command('mergetool')
 		end #if
 	end #safely_visit_branch
 end #merge
