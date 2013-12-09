@@ -72,7 +72,7 @@ def *(other)
 	end #case
 end #sequence
 def |(other) # |
-	return Regexp.union(self.source, Regexp.promote(other).source)
+	return Regexp.union(Regexp.new(self.source), Regexp.promote(other).source)
 end #alterative
 def capture(key=nil)
 	if key.nil? then
