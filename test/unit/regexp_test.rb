@@ -42,7 +42,7 @@ def test_sequence
   assert_equal('a', /a/.unescaped_string)
   assert_equal('(?-mix:\\n)', /\n/.to_s)
   assert_equal('/\\n/', /\n/.inspect)
-  assert_equal(/a/, Regexp.new(/a/.source))
+  assert_not_equal(/a/, Regexp.new(/a/.source))
   assert_equal('a', Regexp.promote(/a/).source)
   assert_equal('a', Regexp.promote(/a/).source)
   assert_equal(/a{3}/, /a/*"{3}")
