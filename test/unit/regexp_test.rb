@@ -50,7 +50,8 @@ end #sequence
 def test_alterative
 	assert_equal(/a|b/, /a/ | /b/)
 	assert_equal(/^a|^b/, /^a/ | /^b/)
-	assert_equal(/\n|\t/, /\n/ | /\t/)	assert_equal(/^no devices found\n/|/^hdhomerun device /)
+	assert_equal(/\n|\t/, /\n/ | /\t/)
+	assert_equal(/^no devices found\n/|/^hdhomerun device /)
 	assert_match(/^no devices found\n/|/^hdhomerun device /, "hdhomerun device 10311E80 found at 172.31.42.101\n")
 end #alterative
 def test_capture
