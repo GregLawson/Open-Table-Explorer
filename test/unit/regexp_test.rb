@@ -48,7 +48,10 @@ def test_sequence
   assert_equal(/a{3}/, /a/*"{3}")
 end #sequence
 def test_alterative
-  assert_equal(/a|b/, /a/ | /b/)
+	assert_equal(/a|b/, /a/ | /b/)
+	assert_equal(/^a|^b/, /^a/ | /^b/)
+	assert_equal(/\n|\t/, /\n/ | /\t/)	assert_equal(/^no devices found\n/|/^hdhomerun device /)
+	assert_match(/^no devices found\n/|/^hdhomerun device /, "hdhomerun device 10311E80 found at 172.31.42.101\n")
 end #alterative
 def test_capture
 	regexp=/\d/
@@ -81,8 +84,7 @@ def test_back_reference
 	assert_equal('o', regexp1.match('ototomy')[1])
 	regexp2=/[aeiou]/.capture(:vowel)*/./
 	regexp2=((/[aeiou]/.capture(:vowel)*/./).back_reference(:vowel)*/./).back_reference(:vowel)
-	regexp2=/[aeiou]/.capture(:vowel)*/./.back_reference(:vowel)*/./.back_reference(:vowel)
-	regexp2=/[aeiou]/.capture(:vowel)*/./.back_reference(:vowel)*/./.back_reference(:vowel)
+#	regexp2=/[aeiou]/.capture(:vowel)*/./.back_reference(:vowel)*/./.back_reference(:vowel)
 	assert_match(regexp2, 'ototomy', 'Regexp doc example.')
 end #back_reference
 def test_group
