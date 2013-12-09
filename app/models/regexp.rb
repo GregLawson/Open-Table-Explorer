@@ -22,7 +22,7 @@ include Constants
 module ClassMethods
 def promote(node)
 	if node.instance_of?(String) then 
-		Regexp.new(Regexp.new(Regexp.escape(node)))
+		Regexp.new(Regexp.escape(node))
 	elsif node.instance_of?(Regexp) then 
 		node
 	else
