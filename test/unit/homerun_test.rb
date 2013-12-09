@@ -17,7 +17,7 @@ def test_scan
 	assert_match(Scan_error|Scan_error_pass, scan.errors, "scan=#{scan.inspect}")
 end
 def test_Constants
-	Discover.execute
+#	Discover.execute
 	assert_operator(0, :<, Discover.output.size, "Discover=#{Discover.inspect}")
 	assert_match(Discover_error|/^hdhomerun device /, Discover.output, "Discover=#{Discover.inspect}")
 	assert_match(Id_pattern, Discover.output, "Discover=#{Discover.inspect}")
