@@ -62,9 +62,9 @@ def unescaped_string
 end #unescape
 def *(other)
 	case other
-	when Regexp then return Regexp.new(self.source + other.source)
-	when String then return Regexp.new(self.source + other)
-	when Fixnum then return Regexp.new(self.source*other)
+	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
+	when String then return Regexp.new(self.unescaped_string + other)
+	when Fixnum then return Regexp.new(self.unescaped_string*other)
 	when NilClass then raise "Right argument of :* operator evaluated to nil."+
 		"\nPossibly add parenthesis to control operator versus method precedence."+
 		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
@@ -74,7 +74,7 @@ def *(other)
 	end #case
 end #sequence
 def |(other) # |
-	return Regexp.union(Regexp.new(self.source), Regexp.promote(other).source)
+	return Regexp.union(self, Regexp.promote(other))
 end #alterative
 def capture(key=nil)
 	if key.nil? then
