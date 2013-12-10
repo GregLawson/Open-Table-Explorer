@@ -74,7 +74,7 @@ def *(other)
 	end #case
 end #sequence
 def |(other) # |
-	return Regexp.union(self, Regexp.promote(other))
+	return Regexp.union(Regexp.new(self.unescaped_string), Regexp.promote(other).unescaped_string)
 end #alterative
 def capture(key=nil)
 	if key.nil? then
@@ -104,6 +104,9 @@ def assert_pre_conditions
 end #assert_pre_conditions
 end #ClassMethods
 def assert_pre_conditions
+# by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
+	assert_equal(self, Regexp.promote(self))
+	assert_equal(self, /#{self.unescaped_string}/)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
@@ -113,5 +116,7 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 Ip_number_pattern=/\d{1,3}/
+Escape_string='\d'
+Back_reference=((/[aeiou]/.capture(:vowel)*/./).back_reference(:vowel)*/./).back_reference(:vowel)
 end #Examples
 end #Regexp
