@@ -49,6 +49,8 @@ def test_sequence
 end #sequence
 def test_alterative
 	assert_equal(/a/, Regexp.new(/a/.source))
+	assert_equal(/a^/, Regexp.new(/a^/.source))
+	assert_equal(/a\n/, Regexp.new(/a\n/.source))
 	assert_equal(/a|b/, /a/ | /b/)
 	assert_equal(/^a|^b/, /^a/ | /^b/)
 	assert_equal(/\n|\t/, /\n/ | /\t/)

@@ -17,8 +17,10 @@ def test_scan
 	assert_match(Scan_error|Scan_error_pass, scan.errors, "scan=#{scan.inspect}")
 end
 def test_Constants
-	Discover.execute
+#	Discover.execute
 	assert_operator(0, :<, Discover.output.size, "Discover=#{Discover.inspect}")
+	assert_match(/^hdhomerun device /, "hdhomerun device 10311E80 found at 172.31.42.101\n")
+	assert_match(/^no devices found\n/|/^hdhomerun device /, "hdhomerun device 10311E80 found at 172.31.42.101\n")
 	assert_match(Discover_error|/^hdhomerun device /, Discover.output, "Discover=#{Discover.inspect}")
 	assert_match(Id_pattern, Discover.output, "Discover=#{Discover.inspect}")
 	assert_match(Ip_pattern0, Discover.output, "Discover=#{Discover.inspect}")
