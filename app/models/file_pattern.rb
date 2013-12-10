@@ -8,6 +8,7 @@
 require 'test/unit'
 require 'pathname'
 require_relative 'regexp.rb'
+require 'active_support/all'
 class FilePattern <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare

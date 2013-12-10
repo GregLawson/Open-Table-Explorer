@@ -10,6 +10,8 @@ class Regexp
 #include Comparable
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+Ascii_characters=(0..127).to_a.map { |i| i.chr}
+Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
 Any='*'
 Many='+'
@@ -110,9 +112,6 @@ include Assertions
 extend Assertions::ClassMethods
 module Examples
 include Constants
-Ascii_characters=(0..127).to_a.map { |i| i.chr}
-Binary_bytes=(0..255).to_a.map { |i| i.chr}
-Any_binary_char_string='[\000-\377]'
 Ip_number_pattern=/\d{1,3}/
 end #Examples
 end #Regexp
