@@ -74,7 +74,7 @@ def *(other)
 	end #case
 end #sequence
 def |(other) # |
-	return Regexp.union(self, Regexp.promote(other))
+	return Regexp.union(Regexp.new(self.unescaped_string), Regexp.promote(other).unescaped_string)
 end #alterative
 def capture(key=nil)
 	if key.nil? then
