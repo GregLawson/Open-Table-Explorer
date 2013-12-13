@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
 include DefaultTests
-extend DefaultTests2
+extend DefaultTests
 #puts Regexp.methods(false)
 include Test::Unit::Assertions
 include Regexp::Examples
@@ -35,6 +35,10 @@ def test_unescaped_string
 	ip_pattern=Regexp.new(Array.new(4, Ip_number_pattern.unescaped_string).join('.'))
 	assert_match(ip_pattern, '123.2.3.4')
 end #unescape
+def test_propagate_options
+	regexp
+	assert_equal([], /a/x.propagate_options)
+end #propagate_options
 def test_sequence
   assert_equal('(?-mix:a)', /a/.to_s)
   assert_equal('/a/', /a/.inspect)
