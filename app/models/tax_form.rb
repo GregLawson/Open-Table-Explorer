@@ -181,6 +181,7 @@ def assert_build
 end #build
 def assert_pre_conditions(message='')
 	assert_pathname_exists(@open_tax_solver_input, message)
+	assert_pathname_exists(@open_tax_solver_data_directory, message)
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
