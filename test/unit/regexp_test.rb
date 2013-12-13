@@ -35,6 +35,10 @@ def test_unescaped_string
 	ip_pattern=Regexp.new(Array.new(4, Ip_number_pattern.unescaped_string).join('.'))
 	assert_match(ip_pattern, '123.2.3.4')
 end #unescape
+def test_propagate_options
+	regexp
+	assert_equal(, /a/x.propagate_options)
+end #propagate_options
 def test_sequence
   assert_equal('(?-mix:a)', /a/.to_s)
   assert_equal('/a/', /a/.inspect)

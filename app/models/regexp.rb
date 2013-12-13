@@ -60,6 +60,9 @@ extend ClassMethods
 def unescaped_string
 	"#{source}"
 end #unescape
+def propagate_options(regexp=self)
+	ret=(regexp.case_fold??Regexp::CASE_FOLD:0)
+end #propagate_options
 def *(other)
 	case other
 	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
