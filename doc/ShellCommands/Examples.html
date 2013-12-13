@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: ShellCommands::Examples
+  
+    &mdash; Documentation by YARD 0.8.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (E)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../ShellCommands.html" title="ShellCommands (class)">ShellCommands</a></span></span>
+     &raquo; 
+    <span class="title">Examples</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: ShellCommands::Examples
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><span class='object_link'><a href="../ShellCommands.html" title="ShellCommands (class)">ShellCommands</a></span></dd>
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/shell_command.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="Hello_world-constant" class="">Hello_world =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>echo &quot;Hello World&quot;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Example_output-constant" class="">Example_output =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1 2;3 4\n</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="COMMAND_STRING-constant" class="">COMMAND_STRING =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>echo &quot;1 2;3 4&quot;</span><span class='tstring_end'>'</span></span></pre></dd>
+      
+        <dt id="EXAMPLE-constant" class="">EXAMPLE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>ShellCommands</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>COMMAND_STRING</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Guaranteed_existing_directory-constant" class="">Guaranteed_existing_directory =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='gvar'>$0</span><span class='rparen'>)</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Cd_command_array-constant" class="">Cd_command_array =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cd</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='const'>Guaranteed_existing_directory</span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="Cd_command_hash-constant" class="">Cd_command_hash =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='symbol'>:command</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cd</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:in</span> <span class='op'>=&gt;</span> <span class='const'>Guaranteed_existing_directory</span><span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="Guaranteed_existing_basename-constant" class="">Guaranteed_existing_basename =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='gvar'>$0</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Redirect_command-constant" class="">Redirect_command =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ls</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='const'>Guaranteed_existing_basename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>blank in filename.shell_command</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="Redirect_command_string-constant" class="">Redirect_command_string =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ls </span><span class='tstring_end'>'</span></span><span class='op'>+</span> <span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='const'>Guaranteed_existing_basename</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> &gt; </span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>blank in filename.shell_command</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="Relative_command-constant" class="">Relative_command =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ls</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='const'>Guaranteed_existing_basename</span><span class='rbracket'>]</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Nov 26 15:46:36 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
