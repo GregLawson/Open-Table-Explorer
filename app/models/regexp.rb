@@ -62,7 +62,7 @@ def unescaped_string
 end #unescape
 def propagate_options(regexp=self)
 	ret=(regexp.casefold? ? Regexp::CASE_FOLD : 0)
-	encoding=regexp.encoding?
+	encoding=regexp.encoding
 	[ret, encoding]
 end #propagate_options
 def *(other)
