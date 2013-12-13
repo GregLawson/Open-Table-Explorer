@@ -36,7 +36,6 @@ def test_unescaped_string
 	assert_match(ip_pattern, '123.2.3.4')
 end #unescape
 def test_propagate_options
-	regexp
 	assert_equal([], /a/x.propagate_options)
 end #propagate_options
 def test_sequence
