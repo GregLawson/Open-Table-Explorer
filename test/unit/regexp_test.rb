@@ -36,7 +36,7 @@ def test_unescaped_string
 	assert_match(ip_pattern, '123.2.3.4')
 end #unescape
 def test_propagate_options
-	assert_equal([0, Encoding::US-ASCII], /a/x.propagate_options)
+	assert_equal([0, 'Encoding::US-ASCII'], /a/x.propagate_options)
 end #propagate_options
 def test_sequence
   assert_equal('(?-mix:a)', /a/.to_s)
