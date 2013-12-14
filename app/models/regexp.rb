@@ -24,7 +24,7 @@ include Constants
 module ClassMethods
 def promote(node)
 	if node.instance_of?(String) then 
-		Regexp.new(Regexp.new(Regexp.escape(node)))
+		Regexp.new(Regexp.escape(node))
 	elsif node.instance_of?(Regexp) then 
 		node
 	else
@@ -60,11 +60,16 @@ extend ClassMethods
 def unescaped_string
 	"#{source}"
 end #unescape
+def propagate_options(regexp=self)
+	ret=(regexp.casefold? ? Regexp::CASE_FOLD : 0)
+	encoding=regexp.encoding
+	[ret, encoding]
+end #propagate_options
 def *(other)
 	case other
-	when Regexp then return Regexp.new(self.source + other.source)
-	when String then return Regexp.new(self.source + other)
-	when Fixnum then return Regexp.new(self.source*other)
+	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
+	when String then return Regexp.new(self.unescaped_string + other)
+	when Fixnum then return Regexp.new(self.unescaped_string*other)
 	when NilClass then raise "Right argument of :* operator evaluated to nil."+
 		"\nPossibly add parenthesis to control operator versus method precedence."+
 		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
@@ -104,6 +109,10 @@ def assert_pre_conditions
 end #assert_pre_conditions
 end #ClassMethods
 def assert_pre_conditions
+# by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
+	assert_equal(self, Regexp.promote(self))
+	assert_equal(self, /#{self.unescaped_string}/)
+	assert_equal(self, Regexp.promote(self).unescaped_string)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
