@@ -37,7 +37,7 @@ def test_unescaped_string
 end #unescape
 def test_propagate_options
 	assert(defined? Regexp)
-	assert(defined? Regexp::CASE_FOLD)
+#	assert(defined? Regexp::CASE_FOLD)
 	assert_equal([0, Encoding.find('US-ASCII')], /a/x.propagate_options)
 end #propagate_options
 def test_sequence
