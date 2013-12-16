@@ -81,13 +81,6 @@ def test_corruption_gc
 end #corruption
 #exists Minimal_repository.git_command("branch details").assert_post_conditions
 #exists Minimal_repository.git_command("branch summary").assert_post_conditions
-def test_standardize_position
-	Minimal_repository.git_command("rebase --abort").puts
-	Minimal_repository.git_command("merge --abort").puts
-	Minimal_repository.git_command("stash save").assert_post_conditions
-	Minimal_repository.git_command("checkout master").puts
-	Minimal_repository.standardize_position!
-end #standardize_position
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
@@ -169,29 +162,6 @@ def test_stage_file
 	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
 	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #stage_files
-def test_something_to_commit?
-	assert_respond_to(Minimal_repository.grit_repo, :status)
-	assert_instance_of(Grit::Status, Minimal_repository.grit_repo.status)
-	status=Minimal_repository.grit_repo.status
-	assert_instance_of(Hash, status.added)
-	assert_instance_of(Hash, status.changed)
-	assert_instance_of(Hash, status.deleted)
-	assert_equal({}, status.added)
-	assert_equal({}, status.changed)
-	assert_equal({}, status.deleted)
-	assert((status.added=={}), status.inspect)
-	Minimal_repository.assert_nothing_to_commit
-	Minimal_repository.force_change
-	assert(Minimal_repository.something_to_commit?, Minimal_repository.grit_repo.status.inspect)
-end #something_to_commit
-def setup
-	Minimal_repository.revert_changes # so next test starts clean
-	Minimal_repository.assert_nothing_to_commit  # check if next test starts clean
-	Minimal_repository.git_command('checkout master')
-end #setup
-def teardown
-	Minimal_repository.revert_changes # so next test starts clean
-end #teardown
 def test_testing_superset_of_passed
 #	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
