@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 15</title>
+</head>
+<body>
+<center>
+<a href="text0.html">First page</a> <a href="text13.html">Back</a> <a href="text15.html">Continue</a> <a href="text19.html">Last page</a> <a href="Scale%20Git.html">Overview</a> <a href="img14.html">Graphics</a></center><br>
+<h1 style="direction:ltr;">Should you rewrite Git history by merging commits?</h1>
+<ul><li style="direction:ltr;"><h2>Gives a false sense of your genius</h2></li>
+<li style="direction:ltr;"><h2>Obscures latent bugs</h2></li>
+<li style="direction:ltr;"><h2>Limits cherry picking</h2></li>
+</ul><br>
+<h3>Notes:</h3>
+<p style="direction:ltr;">You can rewrite Git history by merging commits with either the git-commit –amend command or the git-rebase command. I frequently use the git-commit –amend command (actually the git-cola equivalent) when the same unit is sequentially edited. This obscures how many tries it took me to get it right, making me look more like a genius.</p>
+<p style="direction:ltr;">The git-rebase command allows you to easily merge consecutive commits by prefixing them with either fixup! or squash! then the name of the first commit. This works well as long as the merged commits are consecutive, you are careful about the case and spacing in the message, and the first commit does not have the prefix. Git-rebase gets more painful when you rearrange the order of the commits and generate merge conflicts.</p>
+<p style="direction:ltr;">The git-rebase –auto-squash command promises to automate this, but because it reorders commits, merge conflicts are likely.</p>
+<p style="direction:ltr;">A somewhat tedious but effective method is to use git-rebase without auto-squash and reorder the commits in small increments; using git-rebase –abort when merge conflicts occur. An automated bisection might be possible.</p>
+<p style="direction:ltr;">Whether you should you rewrite Git history by merging commits is subject to trade-offs including obscures latent bugs and limiting cherry picking.</p>
+</body>
+</html>

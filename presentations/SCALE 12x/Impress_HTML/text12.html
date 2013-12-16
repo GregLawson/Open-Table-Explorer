@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 13</title>
+</head>
+<body>
+<center>
+<a href="text0.html">First page</a> <a href="text11.html">Back</a> <a href="text13.html">Continue</a> <a href="text19.html">Last page</a> <a href="Scale%20Git.html">Overview</a> <a href="img12.html">Graphics</a></center><br>
+<h1 style="direction:ltr;">Bisection</h1>
+<ul><li style="direction:ltr;"><h2>Numerical Analysis</h2></li>
+<li style="direction:ltr;"><h2>Git bisect command</h2></li>
+<li style="direction:ltr;"><h2>Goldilocks the programmer and her three versions</h2></li>
+</ul><br>
+<h3>Notes:</h3>
+<p style="direction:ltr;">Bisection combines the divide-and-conquer and the successive refinement heuristics into a efficient search that makes minimal assumptions.</p>
+<p style="direction:ltr;">Bisection was originally a numerical analysis algorithm for finding x where f(x)=0. Initial conditions consist of an upper bound (too big) and a lower bound (too small). At each iteration the function is tested at the middle of the bounds, and one bound is replace by the tested middle value. Each iteration reduces the uncertainty by half. If there are multiple zeros, only one will be found.</p>
+<p style="direction:ltr;">Analogously git-bisect takes  a bad commit  descended from a good commit as the bounds and finds a bad commit directly followed by a good commit. Again if there are multiple bad/good transitions only one is found.</p>
+</body>
+</html>

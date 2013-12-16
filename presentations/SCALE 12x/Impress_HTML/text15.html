@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 16</title>
+</head>
+<body>
+<center>
+<a href="text0.html">First page</a> <a href="text14.html">Back</a> <a href="text16.html">Continue</a> <a href="text19.html">Last page</a> <a href="Scale%20Git.html">Overview</a> <a href="img15.html">Graphics</a></center><br>
+<h1 style="direction:ltr;">Why is Git so Painful?</h1>
+<ul><li style="direction:ltr;"><h2>Essential Complexity</h2></li>
+<ul><li style="direction:ltr;">Large projects are Hard</li>
+<li style="direction:ltr;">Integration is Hard</li>
+<li style="direction:ltr;">Small Bugs Can Break Systems</li>
+<li style="direction:ltr;">Multiple Bugs Confuse Testing</li>
+<li style="direction:ltr;">Latent bugs increase the probability of multiple bugs</li>
+<li style="direction:ltr;">End-to-end testing temptation</li>
+<ul><li style="direction:ltr;">Increases probability of multiple bugs</li>
+</ul></ul><li style="direction:ltr;"><h2>Artificial Complexity</h2></li>
+<ul><li style="direction:ltr;">Jargon</li>
+<li style="direction:ltr;">Forced Decisions with Obscured Transparency</li>
+<ul><li style="direction:ltr;">Bulk merges</li>
+<li style="direction:ltr;">Merge conflicts are untestable</li>
+</ul><li style="direction:ltr;">Repository corruption</li>
+</ul></ul><br>
+<h3>Notes:</h3>
+<p style="direction:ltr;">Why is Git so painful to use? To answer this question we need to distinguish between essential complexity which is not Git's fault and artificial complexity which is Git's fault.</p>
+<p style="direction:ltr;">Essential Complexity is because large project integration is hard, small bugs can break systems, multiple bugs confuse testing, and over-confidence  prevents enough test coverage to prevent masking bugs.</p>
+<p style="direction:ltr;">Artificial Complexity includes jargon, repository corruption, and forced decisions with obscured transparency. Forced decisions with obscured transparency occur in bulk merges. Until the merge conflicts are resolved no commits are possible and you cannot change branches. Adding insult to injury, you can't test any of the merge versions. The proposed merges have extra lines flagging the merge choices, but guaranteed to choke any compiler</p>
+<p style="direction:ltr;">Repository corruption can cause havoc. The best way to deal with it is frequent backups (cp -a) and checking with the git-fsck command. If you seldom execute global commands like git-fsck, git-gc, or git-rebase, corruption can lie latent for years.</p>
+</body>
+</html>
