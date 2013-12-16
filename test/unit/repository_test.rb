@@ -169,16 +169,6 @@ def test_stage_file
 	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
 	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #stage_files
-def test_validate_commit
-	Minimal_repository.assert_nothing_to_commit
-	Minimal_repository.force_change
-	assert(Minimal_repository.something_to_commit?)
-	Minimal_repository.assert_something_to_commit
-#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
-	Minimal_repository.git_command('stash')
-	Minimal_repository.git_command('checkout passed')
-	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
-end #validate_commit
 def test_something_to_commit?
 	assert_respond_to(Minimal_repository.grit_repo, :status)
 	assert_instance_of(Grit::Status, Minimal_repository.grit_repo.status)
