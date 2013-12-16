@@ -81,6 +81,13 @@ def test_corruption_gc
 end #corruption
 #exists Minimal_repository.git_command("branch details").assert_post_conditions
 #exists Minimal_repository.git_command("branch summary").assert_post_conditions
+def test_standardize_position
+	Minimal_repository.git_command("rebase --abort").puts
+	Minimal_repository.git_command("merge --abort").puts
+	Minimal_repository.git_command("stash save").assert_post_conditions
+	Minimal_repository.git_command("checkout master").puts
+	Minimal_repository.standardize_position!
+end #standardize_position
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
@@ -146,22 +153,16 @@ def test_safely_visit_branch
 		Minimal_repository.current_branch_name?
 	end #
 end #safely_visit_branch
-def test_stage_file
+def test_validate_commit
+	Minimal_repository.assert_nothing_to_commit
 	Minimal_repository.force_change
-	assert_pathname_exists(Minimal_repository.path)
-	assert_pathname_exists(Minimal_repository.path+'.git/')
-	assert_pathname_exists(Minimal_repository.path+'.git/logs/')
-#	assert_pathname_exists(Minimal_repository.path+'.git/logs/refs/')
-	assert_pathname_exists(Minimal_repository.path+'README')
-
-	Minimal_repository.safely_visit_branch(:passed) do |changes_branch|
-		Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
-	end #safely_visit_branch
-
-	Minimal_repository.stage_files(:passed, [Minimal_repository.path+'README'])
-	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
-	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
-end #stage_files
+	assert(Minimal_repository.something_to_commit?)
+	Minimal_repository.assert_something_to_commit
+#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
+	Minimal_repository.git_command('stash')
+	Minimal_repository.git_command('checkout passed')
+	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
+end #validate_commit
 def test_testing_superset_of_passed
 #	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
