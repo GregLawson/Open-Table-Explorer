@@ -130,11 +130,12 @@ def merge(target_branch, source_branch)
 		unmerged_files=@repository.git_command('status --short|grep "UU "').output
 		if File.exists?('.git/MERGE_HEAD') then
 			unmerged_files.split("\n").map do |line|
-				puts 'ruby script/workflow.rb --test '+line[3..-1]
-				rm_orig=@repository.shell_command('rm '+source_branch.to_s+'BASE.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+source_branch.to_s+'BACKUP.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+source_branch.to_s+'LOCAL.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+source_branch.to_s+'REMOTE.*').assert_post_conditions
+				file=line[3..-1]
+				puts 'ruby script/workflow.rb --test '+file
+				rm_orig=@repository.shell_command('rm '+file.to_s+'BASE.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'BACKUP.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'LOCAL.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'REMOTE.*').assert_post_conditions
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 			end #if
