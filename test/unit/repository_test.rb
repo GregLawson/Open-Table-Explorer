@@ -153,25 +153,7 @@ def test_safely_visit_branch
 		Minimal_repository.current_branch_name?
 	end #
 end #safely_visit_branch
-def test_stage_file
-	Minimal_repository.force_change
-	assert_pathname_exists(Minimal_repository.path)
-	assert_pathname_exists(Minimal_repository.path+'.git/')
-	assert_pathname_exists(Minimal_repository.path+'.git/logs/')
-#	assert_pathname_exists(Minimal_repository.path+'.git/logs/refs/')
-	assert_pathname_exists(Minimal_repository.path+'README')
-
-	Minimal_repository.safely_visit_branch(:passed) do |changes_branch|
-		Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
-	end #safely_visit_branch
-
-	Minimal_repository.stage_files(:passed, [Minimal_repository.path+'README'])
-	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
-	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
-end #stage_files
 def test_unit_names?
-	assert_include(Minimal_repository.methods, :unit_names?)
-#	assert_include(Minimal_repository.methods(false), :unit_names?)
 	assert_equal(['Repository'], Minimal_repository.unit_names?([$0]))	
 end #unit_names?
 def test_validate_commit

@@ -126,6 +126,12 @@ end #deserving_branch
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status=@repository.git_command('merge '+source_branch.to_s)
+		puts merge_status
+		unmerged_files=@repository.git_command('status --short|grep "UU "').output
+		unmerged_files.split("\n").map do |line|
+			puts 'ruby script/workflow.rb --test '+line[3..-1]
+		end #map
+		merge_abort=@repository.git_command('merge --abort')
 		if !merge_status.success? then
 			merge_status=@repository.git_command('mergetool')
 		end #if
