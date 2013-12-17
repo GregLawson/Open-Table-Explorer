@@ -172,7 +172,7 @@ end #stage_files
 def test_unit_names?
 	assert_include(Minimal_repository.methods, :unit_names?)
 #	assert_include(Minimal_repository.methods(false), :unit_names?)
-	assert_equal([], Minimal_repository.unit_names?($0))	
+	assert_equal([], Minimal_repository.unit_names?([$0]))	
 end #unit_names?
 def test_validate_commit
 	Minimal_repository.assert_nothing_to_commit
