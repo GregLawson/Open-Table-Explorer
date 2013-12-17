@@ -22,6 +22,8 @@ def assert_pre_conditions
 	assert_pathname_exists(@path+'.git/')
 	assert_pathname_exists(@path+'.git/logs/')
 	assert_pathname_exists(@path+'.git/logs/refs/')
+	assert_include(Minimal_repository.methods, :unit_names?)
+#	assert_include(Minimal_repository.methods(false), :unit_names?)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
