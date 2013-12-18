@@ -164,7 +164,7 @@ def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
-		WorkFlow.merge_range(deserving_branch). each do |i|
+		WorkFlow.merge_range(deserving_branch).each do |i|
 			@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 				merge(Branch_enhancement[i], deserving_branch)
 				@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
@@ -172,6 +172,9 @@ def test(executable=@related_files.model_test_pathname?)
 			@repository.recent_test.puts
 			edit
 		end #each
+		if (deserving_branch != @repository.current_branch_name?) && !@repository.something_to_commit? then
+			
+		end #if
 	end until !@repository.something_to_commit? 
 end #test
 def unit_test(executable=@related_files.model_test_pathname?)
