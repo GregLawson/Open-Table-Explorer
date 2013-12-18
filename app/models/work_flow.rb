@@ -40,6 +40,7 @@ def revison_tag(branch_index)
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
+	else :revison_tag_bug
 	end #case
 	return '-r '+branch_symbol.to_s
 end #revison_tag
