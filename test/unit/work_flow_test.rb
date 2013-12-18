@@ -52,14 +52,15 @@ def test_goldilocks
 	if left_index.nil? then
 		left_index=-1
 	end #if
-	assert_operator(left_index, :<=, current_index)
-	assert_operator(left_index, :<, right_index)
+	message="left_index=#{left_index}, right_index=#{right_index}"
+	assert_operator(left_index, :<=, current_index, message)
+	assert_operator(left_index, :<, right_index, message)
 	relative_filename=Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
 	assert_data_file(relative_filename)
 	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
 	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
-	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
+	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile), message)
 end #goldilocks
 include WorkFlow::Examples
 def test_execute
