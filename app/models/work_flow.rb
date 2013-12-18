@@ -34,8 +34,8 @@ def all(pattern_name=:test)
 		WorkFlow.new(test).unit_test
 	end #each
 end #test_unit_test_all
-def revison_tag(branch)
-		return '-r '+branch.to_s
+def revison_tag(branch_index)
+		return '-r '+WorkFlow::Branch_enhancement[branch_index].to_s
 end #revison_tag
 def merge_range(deserving_branch)
 	deserving_index=Branch_enhancement.index(deserving_branch)
