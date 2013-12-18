@@ -14,7 +14,7 @@ include DefaultTests
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
 def test_revison_tag
-	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
+	assert_equal('-r testing', WorkFlow.revison_tag(1))
 end #revison_tag
 def test_merge_range
 	assert_equal(0..2, WorkFlow.merge_range(:passed))
