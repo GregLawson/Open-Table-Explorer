@@ -38,7 +38,7 @@ def test_goldilocks
 	last_slot_index=WorkFlow::Branch_enhancement.size-1
 	right_index=[current_index, last_slot_index].min
 	left_index=right_index-1 
-	relative_filename=	Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	relative_filename=Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
 	assert_data_file(relative_filename)
 	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
 	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
