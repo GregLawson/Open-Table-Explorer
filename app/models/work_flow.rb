@@ -86,6 +86,7 @@ def version_comparison(files=nil)
 	ret.join(' ')
 end #version_comparison
 def working_different_from(filename, branch_index)
+#	diff_run=ShellCommands.new('git diff '+)
 end #working_different_from
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
@@ -145,7 +146,15 @@ def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status=@repository.git_command('merge '+source_branch.to_s)
 		puts merge_status
-		unmerged_files=@repository.git_command('status --short|grep "UU "').output
+# see man git status
+#          D           D    unmerged, both deleted
+#           A           U    unmerged, added by us
+#           U           D    unmerged, deleted by them
+#           U           A    unmerged, added by them
+#           D           U    unmerged, deleted by us
+#           A           A    unmerged, both added
+#           U           U    unmerged, both modified
+		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
 		if File.exists?('.git/MERGE_HEAD') then
 			unmerged_files.split("\n").map do |line|
 				file=line[3..-1]
@@ -154,6 +163,7 @@ def merge(target_branch, source_branch)
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig').assert_post_conditions
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 			end #if
