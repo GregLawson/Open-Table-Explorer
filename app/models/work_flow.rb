@@ -85,6 +85,8 @@ def version_comparison(files=nil)
 	end #map
 	ret.join(' ')
 end #version_comparison
+def working_different_from(filename, branch_index)
+end #working_different_from
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
 	right_index=(current_index+1..Last_slot_index).first do
@@ -93,7 +95,7 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	if right_index.nil? then
 		right_index=Last_slot_index
 	end #if
-	left_index=(current_index+1..-1).first do
+	left_index=(current_index..-1).first do
 		true #default
 	end #first
 	if left_index.nil? then
@@ -148,10 +150,10 @@ def merge(target_branch, source_branch)
 			unmerged_files.split("\n").map do |line|
 				file=line[3..-1]
 				puts 'ruby script/workflow.rb --test '+file
-				rm_orig=@repository.shell_command('rm '+file.to_s+'BASE.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'BACKUP.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'LOCAL.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'REMOTE.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 			end #if
