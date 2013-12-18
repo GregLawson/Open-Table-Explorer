@@ -35,7 +35,12 @@ def all(pattern_name=:test)
 	end #each
 end #test_unit_test_all
 def revison_tag(branch_index)
-		return '-r '+WorkFlow::Branch_enhancement[branch_index].to_s
+	branch_symbol=case branch_index
+	when -1 then :master
+	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
+	when WorkFlow::Branch_enhancement.size then :stash
+	end #case
+	return '-r '+branch_symbol.to_s
 end #revison_tag
 def merge_range(deserving_branch)
 	deserving_index=Branch_enhancement.index(deserving_branch)
