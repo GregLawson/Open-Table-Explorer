@@ -36,6 +36,12 @@ end #initialize
 def test_version_comparison
 	assert_equal('', TestWorkFlow.version_comparison([]))
 end #version_comparison
+def test_working_different_from?
+	message="diff_run=#{diff_run.inspect}"
+	diff_run=ShellCommands.new('git diff passed -- '+$0).assert_post_conditions(message)
+	
+	assert(!working_different_from($0, 0), message)
+end #working_different_from?
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
