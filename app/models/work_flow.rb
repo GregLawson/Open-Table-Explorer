@@ -14,7 +14,7 @@ class WorkFlow
 #include Grit
 module Constants
 Branch_enhancement=[:passed, :testing, :edited]
-Last_slot_index=WorkFlow::Branch_enhancement.size
+Last_slot_index=Branch_enhancement.size
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
 			:multiple_tests_fail	=> 2,
@@ -40,6 +40,7 @@ def revison_tag(branch_index)
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
+	else :revison_tag_bug
 	end #case
 	return '-r '+branch_symbol.to_s
 end #revison_tag
@@ -98,10 +99,9 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	if left_index.nil? then
 		left_index=-1
 	end #if
-	left_index=[-1, right_index-1].max 
 	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
-	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{relative_filename}"
+	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
 def functional_parallelism(edit_files=@related_files.edit_files)
 	[
