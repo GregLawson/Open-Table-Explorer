@@ -14,7 +14,11 @@ include DefaultTests
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
 def test_revison_tag
-	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
+	assert_equal('-r master', WorkFlow.revison_tag(-1))
+	assert_equal('-r passed', WorkFlow.revison_tag(0))
+	assert_equal('-r testing', WorkFlow.revison_tag(1))
+	assert_equal('-r edited', WorkFlow.revison_tag(2))
+	assert_equal('-r stash', WorkFlow.revison_tag(3))
 end #revison_tag
 def test_merge_range
 	assert_equal(0..2, WorkFlow.merge_range(:passed))
@@ -35,15 +39,28 @@ end #version_comparison
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
-	last_slot_index=WorkFlow::Branch_enhancement.size-1
-	right_index=[current_index, last_slot_index].min
-	left_index=right_index-1 
-	relative_filename=	Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	right_index=(current_index+1..Last_slot_index).first do
+		true #default
+	end #first
+	if right_index.nil? then
+		right_index=Last_slot_index
+	end #if
+	assert_operator(current_index, :<, right_index)
+	left_index=(current_index..-1).first do
+		true #default
+	end #first
+	if left_index.nil? then
+		left_index=-1
+	end #if
+	message="left_index=#{left_index}, right_index=#{right_index}"
+	assert_operator(left_index, :<=, current_index, message)
+	assert_operator(left_index, :<, right_index, message)
+	relative_filename=Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
 	assert_data_file(relative_filename)
 	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
 	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
-	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
+	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile), message)
 end #goldilocks
 include WorkFlow::Examples
 def test_execute
