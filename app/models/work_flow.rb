@@ -98,7 +98,7 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 		right_index=Last_slot_index
 	end #if
 	left_index=(current_index..-1).first do
-		true #default
+		working_different_from?(filename, branch_index)
 	end #first
 	if left_index.nil? then
 		left_index=-1
