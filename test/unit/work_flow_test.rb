@@ -42,8 +42,8 @@ def test_working_different_from?
 	diff_run=ShellCommands.new('git diff #{WorkFlow::Branch_enhancement[branch_index]} -- '+filename).assert_post_conditions
 	message="diff_run=#{diff_run.inspect}"
 	
-	assert(!working_different_from($0, 0), message)
-end #working_different_from
+	assert(!TestWorkFlow.working_different_from?($0, 0), message)
+end #working_different_from?
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
