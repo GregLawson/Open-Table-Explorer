@@ -48,14 +48,14 @@ def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
 	right_index=(current_index+1..Last_slot_index).first do
-		true #default
+		TestWorkFlow.working_different_from?(filename, branch_index)
 	end #first
 	if right_index.nil? then
 		right_index=Last_slot_index
 	end #if
 	assert_operator(current_index, :<, right_index)
 	left_index=(current_index..-1).first do
-		true #default
+		TestWorkFlow.working_different_from?(filename, branch_index)
 	end #first
 	if left_index.nil? then
 		left_index=-1
