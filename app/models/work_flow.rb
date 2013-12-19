@@ -160,7 +160,7 @@ def merge(target_branch, source_branch)
 			unmerged_files.split("\n").map do |line|
 				file=line[3..-1]
 				puts 'ruby script/workflow.rb --test '+file
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
