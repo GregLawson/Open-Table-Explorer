@@ -90,8 +90,8 @@ def working_different_from?(filename, branch_index)
 end #working_different_from?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
-	right_index=(current_index+1..Last_slot_index).first do
-		true #default
+	right_index=(current_index+1..Last_slot_index).first do |branch_index|
+		working_different_from?(filename, branch_index)
 	end #first
 	if right_index.nil? then
 		right_index=Last_slot_index
