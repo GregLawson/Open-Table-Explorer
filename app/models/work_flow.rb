@@ -86,8 +86,8 @@ def version_comparison(files=nil)
 	ret.join(' ')
 end #version_comparison
 def working_different_from?(filename, branch_index)
-	diff_run=ShellCommands.new('git diff '+)
-end #working_different_from
+	diff_run=ShellCommands.new('git diff #{WorkFlow::Branch_enhancement[branch_index]} -- '+filename).assert_post_conditions
+end #working_different_from?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
 	right_index=(current_index+1..Last_slot_index).first do
