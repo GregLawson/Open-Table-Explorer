@@ -169,7 +169,7 @@ def merge_conflict_recovery(merge_status)
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 		end #if
-end #merge_recovery
+end #merge_conflict_recovery
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status=@repository.git_command('merge '+source_branch.to_s)
