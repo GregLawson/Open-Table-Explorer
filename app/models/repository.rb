@@ -223,7 +223,7 @@ end #force_change
 def revert_changes
 	git_command('reset --hard')
 end #revert_changes
-def merge_conflict_files
+def merge_conflict_files?
 # see man git status
 #          D           D    unmerged, both deleted
 #           A           U    unmerged, added by us
@@ -248,8 +248,7 @@ def merge_conflict_files
 		merge_abort=git_command('merge --abort')
 	end #if
 	ret
-end #merge_conflict_recovery
-
+end #merge_conflict_files?
 end #Repository
 
 
