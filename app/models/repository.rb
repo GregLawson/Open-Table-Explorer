@@ -223,6 +223,33 @@ end #force_change
 def revert_changes
 	git_command('reset --hard')
 end #revert_changes
+def merge_conflict_files
+# see man git status
+#          D           D    unmerged, both deleted
+#           A           U    unmerged, added by us
+#           U           D    unmerged, deleted by them
+#           U           A    unmerged, added by them
+#           D           U    unmerged, deleted by us
+#           A           A    unmerged, both added
+#           U           U    unmerged, both modified
+	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
+	ret=[]
+	if File.exists?('.git/MERGE_HEAD') then
+		unmerged_files.split("\n").map do |line|
+			file=line[3..-1]
+			ret << {:conflict => line[0..1], :file => file}
+			puts 'ruby script/workflow.rb --test '+file
+			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
+			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
+			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
+			rm_orig=shell_command('rm '+file.to_s+'.orig').assert_post_conditions
+		end #map
+		merge_abort=git_command('merge --abort')
+	end #if
+	ret
+end #merge_conflict_recovery
+
 end #Repository
 
 
