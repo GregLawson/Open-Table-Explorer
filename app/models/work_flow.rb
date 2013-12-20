@@ -143,10 +143,7 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 		branch_compression=Branch_compression[error_classification]
 		branch_enhancement=Branch_enhancement[branch_compression]
 end #deserving_branch
-def merge(target_branch, source_branch)
-	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=@repository.git_command('merge '+source_branch.to_s)
-		puts merge_status
+def merge_conflict_recovery(merge_status)
 # see man git status
 #          D           D    unmerged, both deleted
 #           A           U    unmerged, added by us
@@ -155,6 +152,10 @@ def merge(target_branch, source_branch)
 #           D           U    unmerged, deleted by us
 #           A           A    unmerged, both added
 #           U           U    unmerged, both modified
+		puts merge_status if !$VERBOSE.nil?
+#		if !merge_status.success? then
+#			merge_status=@repository.git_command('mergetool')
+#		end #if
 		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
 		if File.exists?('.git/MERGE_HEAD') then
 			unmerged_files.split("\n").map do |line|
@@ -167,10 +168,12 @@ def merge(target_branch, source_branch)
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig').assert_post_conditions
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
-			end #if
-		if !merge_status.success? then
-			merge_status=@repository.git_command('mergetool')
 		end #if
+end #merge_recovery
+def merge(target_branch, source_branch)
+	@repository.safely_visit_branch(target_branch) do |changes_branch|
+		merge_status=@repository.git_command('merge '+source_branch.to_s)
+		merge_conflict_recovery(merge_status)
 	end #safely_visit_branch
 end #merge
 def edit
