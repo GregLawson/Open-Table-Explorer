@@ -162,6 +162,11 @@ def merge_conflict_recovery(merge_status)
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig').assert_post_conditions
+				case line[0..1]
+				when 'UU' then edit(file)
+				else
+					raise 'line'
+				end #case
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 		end #if
