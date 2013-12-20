@@ -152,10 +152,6 @@ def merge_conflict_recovery(merge_status)
 #           D           U    unmerged, deleted by us
 #           A           A    unmerged, both added
 #           U           U    unmerged, both modified
-		puts merge_status if !$VERBOSE.nil?
-#		if !merge_status.success? then
-#			merge_status=@repository.git_command('mergetool')
-#		end #if
 		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
 		if File.exists?('.git/MERGE_HEAD') then
 			unmerged_files.split("\n").map do |line|
