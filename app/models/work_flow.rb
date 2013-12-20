@@ -143,7 +143,7 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 		branch_compression=Branch_compression[error_classification]
 		branch_enhancement=Branch_enhancement[branch_compression]
 end #deserving_branch
-def merge_conflict_recovery(merge_status)
+def merge_conflict_recovery
 # see man git status
 #          D           D    unmerged, both deleted
 #           A           U    unmerged, added by us
@@ -162,6 +162,10 @@ def merge_conflict_recovery(merge_status)
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig').assert_post_conditions
+				case line[0..1]
+				when 'UU' then edit(file)
+				else
+					raise 'line'
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 		end #if
@@ -169,7 +173,7 @@ end #merge_conflict_recovery
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status=@repository.git_command('merge '+source_branch.to_s)
-		merge_conflict_recovery(merge_status)
+		merge_conflict_recovery
 	end #safely_visit_branch
 end #merge
 def edit
