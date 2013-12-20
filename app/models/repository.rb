@@ -240,10 +240,10 @@ def merge_conflict_files?
 			ret << {:conflict => line[0..1], :file => file}
 			puts 'ruby script/workflow.rb --test '+file
 			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
-			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
-			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
-			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
-			rm_orig=shell_command('rm '+file.to_s+'.orig').assert_post_conditions
+			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
+			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
+			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.orig')
 		end #map
 		merge_abort=git_command('merge --abort')
 	end #if
