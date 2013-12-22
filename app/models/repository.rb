@@ -147,6 +147,9 @@ def safely_visit_branch(target_branch, &block)
 #		puts "status.deleted=#{status.deleted.inspect}"
 #		puts "something_to_commit?=#{something_to_commit?.inspect}"
 		git_command('stash save --include-untracked').assert_post_conditions
+		merge_conflict_files?.each |conflict|
+			ShellCommands.new('diffuse -m '+conflict[:file])
+		end #each
 		changes_branch=:stash
 	end #if
 
@@ -240,10 +243,10 @@ def merge_conflict_files?
 			ret << {:conflict => line[0..1], :file => file}
 			puts 'ruby script/workflow.rb --test '+file
 			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
-			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
-			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
-			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
-			rm_orig=shell_command('rm '+file.to_s+'.orig')
+			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
+			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
+			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
+			rm_orig=shell_command('rm '+file.to_s+'.orig').assert_post_conditions
 		end #map
 		merge_abort=git_command('merge --abort')
 	end #if
