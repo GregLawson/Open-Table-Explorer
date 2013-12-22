@@ -166,6 +166,7 @@ def merge_conflict_recovery
 				when 'UU' then edit(file)
 				else
 					raise 'line'
+				end #case
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 		end #if
