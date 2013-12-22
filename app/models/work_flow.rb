@@ -8,7 +8,7 @@
 require 'grit'  # sudo gem install grit
 require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
-require_relative '../../app/models/shell_command.rb'
+require_relative 'shell_command.rb'
 require_relative 'repository.rb'
 class WorkFlow
 #include Grit
@@ -97,7 +97,7 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	if right_index.nil? then
 		right_index=Last_slot_index
 	end #if
-	left_index=(current_index..-1).first do  |branch_index|
+	left_index=(current_index..-1).first do
 		working_different_from?(filename, branch_index)
 	end #first
 	if left_index.nil? then
