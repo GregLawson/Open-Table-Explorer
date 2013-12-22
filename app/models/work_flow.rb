@@ -193,18 +193,25 @@ def emacs(executable=@related_files.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
+def merge_down(deserving_branch)
+	WorkFlow.merge_range(deserving_branch).each do |i|
+		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+			merge(Branch_enhancement[i], deserving_branch)
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+		end #safely_visit_branch
+		@repository.recent_test.puts
+		edit
+		end #each
+end #merge_down
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
-		WorkFlow.merge_range(deserving_branch).each do |i|
-			@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
-				merge(Branch_enhancement[i], deserving_branch)
-				@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
-			end #safely_visit_branch
-			@repository.recent_test.puts
-			edit
-		end #each
+		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+		end #safely_visit_branch
+		merge_down(deserving_branch)
 		if (deserving_branch != @repository.current_branch_name?) && !@repository.something_to_commit? then
 			@repository.confirm_branch_switch(deserving_branch)
 		end #if
