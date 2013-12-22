@@ -97,13 +97,13 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	if right_index.nil? then
 		right_index=Last_slot_index
 	end #if
-	left_index=(current_index..-1).first do
+	left_index=(current_index..-1).first do  |branch_index|
 		working_different_from?(filename, branch_index)
 	end #first
 	if left_index.nil? then
 		left_index=-1
 	end #if
-	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	relative_filename=Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
@@ -193,7 +193,7 @@ def emacs(executable=@related_files.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
-def merge_down(deserving_branch)
+def merge_down(deserving_branch, executable)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
@@ -211,7 +211,7 @@ def test(executable=@related_files.model_test_pathname?)
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
-		merge_down(deserving_branch)
+		merge_down(deserving_branch, executable)
 		if (deserving_branch != @repository.current_branch_name?) && !@repository.something_to_commit? then
 			@repository.confirm_branch_switch(deserving_branch)
 		end #if
