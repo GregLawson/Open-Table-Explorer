@@ -152,6 +152,24 @@ def merge_conflict_recovery
 #           D           U    unmerged, deleted by us
 #           A           A    unmerged, both added
 #           U           U    unmerged, both modified
+		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
+		if File.exists?('.git/MERGE_HEAD') then
+			unmerged_files.split("\n").map do |line|
+				file=line[3..-1]
+				puts 'ruby script/workflow.rb --test '+file
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig').assert_post_conditions
+				case line[0..1]
+				when 'UU' then edit(file)
+				else
+					raise 'line'
+				end #case
+			end #map
+			merge_abort=@repository.git_command('merge --abort')
+		end #if
 end #merge_conflict_recovery
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
