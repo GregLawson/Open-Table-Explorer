@@ -86,9 +86,27 @@ def version_comparison(files=nil)
 	ret.join(' ')
 end #version_comparison
 def working_different_from?(filename, branch_index)
+	raise filename+" does not exist." if !File.exists?(filename)
 	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	diff_run.output!=''
 end #working_different_from?
+def first_difference
+end #first_difference
+def bracketing_versions?(filename, current_index)
+	right_index=(current_index+1..Last_slot_index).first do |branch_index|
+		working_different_from?(filename, branch_index)
+	end #first
+	if right_index.nil? then
+		right_index=Last_slot_index
+	end #if
+	left_index=(current_index..-1).first do
+		working_different_from?(filename, branch_index)
+	end #first
+	if left_index.nil? then
+		left_index=-1
+	end #if
+	[left_index, right_index]
+end #bracketing_versions?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
 	right_index=(current_index+1..Last_slot_index).first do |branch_index|
@@ -103,7 +121,7 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	if left_index.nil? then
 		left_index=-1
 	end #if
-	relative_filename=Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
