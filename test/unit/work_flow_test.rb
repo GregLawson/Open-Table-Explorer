@@ -59,16 +59,6 @@ end #working_different_from?
 def test_bracketing_versions?
 	filename='test/unit/minimal.rb'
 	current_index=0
-	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		TestWorkFlow.working_different_from?(filename, branch_index)
-	end #first
-	assert(!TestWorkFlow.working_different_from?(filename, 1))
-	assert_false(TestWorkFlow.working_different_from?(filename, 1))
-	assert_nil(right_index)
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
-	assert_equal(Last_slot_index, right_index)
 	left_index=(current_index..-1).first do
 		TestWorkFlow.working_different_from?(filename, branch_index)
 	end #first
@@ -77,6 +67,16 @@ def test_bracketing_versions?
 		left_index=-1
 	end #if
 	assert_equal(-1, left_index)
+	right_index=(current_index+1..Last_slot_index).first do |branch_index|
+		TestWorkFlow.working_different_from?(filename, branch_index)
+	end #first
+	assert(!TestWorkFlow.working_different_from?(filename, 1))
+	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
+	assert_nil(right_index)
+	if right_index.nil? then
+		right_index=Last_slot_index
+	end #if
+	assert_equal(Last_slot_index, right_index)
 	assert_equal([-1, 4], TestWorkFlow.bracketing_versions?('test/unit/minimal.rb', 0))
 end #bracketing_versions?
 def test_goldilocks
