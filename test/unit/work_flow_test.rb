@@ -13,6 +13,13 @@ include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
+def test_branch_symbol?
+	assert_equal(:master, WorkFlow.branch_symbol?(-1))
+	assert_equal(:passed, WorkFlow.branch_symbol?(0))
+	assert_equal(:testing, WorkFlow.branch_symbol?(1))
+	assert_equal(:edited, WorkFlow.branch_symbol?(2))
+	assert_equal(:stash, WorkFlow.branch_symbol?(3))
+end #branch_symbol?
 def test_revison_tag
 	assert_equal('-r master', WorkFlow.revison_tag(-1))
 	assert_equal('-r passed', WorkFlow.revison_tag(0))
@@ -43,23 +50,29 @@ def test_working_different_from?
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', diff_run.output, message)
 	assert(!TestWorkFlow.working_different_from?(filename, 0), message)
-	assert(working_different_from?(filename, 0))
+	assert(!TestWorkFlow.working_different_from?(filename, 0))
+	assert(!TestWorkFlow.working_different_from?(filename, 1))
+	assert(!TestWorkFlow.working_different_from?(filename, 2))
+	assert(!TestWorkFlow.working_different_from?(filename, 3))
+	assert(!TestWorkFlow.working_different_from?(filename, -1))
 end #working_different_from?
 def test_bracketing_versions?
 	filename='test/unit/minimal.rb'
 	current_index=0
 	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		working_different_from?(filename, branch_index)
+		TestWorkFlow.working_different_from?(filename, branch_index)
 	end #first
+	assert(!TestWorkFlow.working_different_from?(filename, 1))
+	assert_false(TestWorkFlow.working_different_from?(filename, 1))
 	assert_nil(right_index)
 	if right_index.nil? then
 		right_index=Last_slot_index
 	end #if
 	assert_equal(Last_slot_index, right_index)
 	left_index=(current_index..-1).first do
-		working_different_from?(filename, branch_index)
+		TestWorkFlow.working_different_from?(filename, branch_index)
 	end #first
-	assert_nil(right_index)
+	assert_nil(left_index)
 	if left_index.nil? then
 		left_index=-1
 	end #if
