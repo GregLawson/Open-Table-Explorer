@@ -59,18 +59,18 @@ def working_different_from?(filename, branch_index)
 	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	diff_run.output!=''
 end #working_different_from?
-def differences?(filename, range)
+def different_indices?(filename, range)
 	differences=range.map do |branch_index|
 		working_different_from?(filename, branch_index)
 	end #map
-end #differences?
+	indices=[]
+	range.zip(differences){|n,s| indices<<(s ? n : nil)}
+	indices.compact
+end #different_indices?
 def scan_verions?(filename, range, direction)
-	differences=range.map do |branch_index|
-		working_different_from?(filename, branch_index)
-	end #map
 	case direction
-	when :first then
-	when :last then
+	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
+	when :last then ([-1]+different_indices?(filename, range)).max
 	else
 		raise 
 	end #case

@@ -45,23 +45,16 @@ def test_working_different_from?
 	assert(!WorkFlow.working_different_from?(filename, 3))
 	assert(!WorkFlow.working_different_from?(filename, -1))
 end #working_different_from?
-def test_differences?
+def test_different_indices?
 	range=1..3
 	filename='test/unit/minimal2_test.rb'
-	assert_equal([false,false,false], WorkFlow.differences?(filename, range))
-end #differences
+	assert_equal([], WorkFlow.different_indices?(filename, range))
+end #different_indices?
 def test_scan_verions?
 	range=1..3
 	filename='test/unit/minimal2_test.rb'
-	left_index=(current_index..-1).first do
-		WorkFlow.working_different_from?(filename, branch_index)
-	end #first
-	assert_nil(left_index)
-	if left_index.nil? then
-		left_index=-1
-	end #if
-	assert_equal(-1, scan_verions(filename, range, :last))
-	assert_equal(3, scan_verions(filename, range, :first))
+	assert_equal(-1, WorkFlow.scan_verions?(filename, range, :last))
+	assert_equal(3, WorkFlow.scan_verions?(filename, range, :first))
 	
 end #scan_verions?
 def test_bracketing_versions?
