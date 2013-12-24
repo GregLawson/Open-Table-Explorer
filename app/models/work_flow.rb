@@ -76,18 +76,8 @@ def scan_verions?(filename, range, direction)
 	end #case
 end #scan_verions?
 def bracketing_versions?(filename, current_index)
-	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		working_different_from?(filename, branch_index)
-	end #first
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
-	left_index=(current_index..-1).first do
-		working_different_from?(filename, branch_index)
-	end #first
-	if left_index.nil? then
-		left_index=-1
-	end #if
+	left_index=WorkFlow.scan_verions?(filename, -1..current_index, :last)
+	right_index=WorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
 	[left_index, right_index]
 end #bracketing_versions?
 end #ClassMethods
@@ -125,19 +115,8 @@ def version_comparison(files=nil)
 end #version_comparison
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
-	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		working_different_from?(filename, branch_index)
-	end #first
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
-	left_index=(current_index..-1).first do
-		working_different_from?(filename, branch_index)
-	end #first
-	if left_index.nil? then
-		left_index=-1
-	end #if
-	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	left_index,right_index=WorkFlow.bracketing_versions?(filename, current_index)
+	relative_filename=Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
