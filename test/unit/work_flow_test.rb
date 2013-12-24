@@ -32,6 +32,53 @@ def test_merge_range
 	assert_equal(1..2, WorkFlow.merge_range(:testing))
 	assert_equal(2..2, WorkFlow.merge_range(:edited))
 end #merge_range
+def test_working_different_from?
+	filename='test/unit/minimal2_test.rb'
+	branch_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
+	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
+	message="diff_run=#{diff_run.inspect}"
+	assert_equal('', diff_run.output, message)
+	assert(!WorkFlow.working_different_from?(filename, 0), message)
+	assert(!WorkFlow.working_different_from?(filename, 0))
+	assert(!WorkFlow.working_different_from?(filename, 1))
+	assert(!WorkFlow.working_different_from?(filename, 2))
+	assert(!WorkFlow.working_different_from?(filename, 3))
+	assert(!WorkFlow.working_different_from?(filename, -1))
+end #working_different_from?
+def test_scan_verions
+	left_index=(current_index..-1).first do
+		WorkFlow.working_different_from?(filename, branch_index)
+	end #first
+	assert_nil(left_index)
+	if left_index.nil? then
+		left_index=-1
+	end #if
+	assert_equal(-1, left_index)
+	
+end #scan_verions
+def test_bracketing_versions?
+	filename='test/unit/minimal.rb'
+	current_index=0
+	left_index=(current_index..-1).first do
+		WorkFlow.working_different_from?(filename, branch_index)
+	end #first
+	assert_nil(left_index)
+	if left_index.nil? then
+		left_index=-1
+	end #if
+	assert_equal(-1, left_index)
+	right_index=(current_index+1..Last_slot_index).first do |branch_index|
+		WorkFlow.working_different_from?(filename, branch_index)
+	end #first
+	assert(!WorkFlow.working_different_from?(filename, 1))
+	assert_equal(false, WorkFlow.working_different_from?(filename, 1))
+	assert_nil(right_index)
+	if right_index.nil? then
+		right_index=Last_slot_index
+	end #if
+	assert_equal(Last_slot_index, right_index)
+	assert_equal([-1, 4], WorkFlow.bracketing_versions?('test/unit/minimal.rb', 0))
+end #bracketing_versions?
 def test_initialize
 	te=RelatedFile.new(TestFile)
 	assert_not_nil(te)
@@ -43,42 +90,6 @@ end #initialize
 def test_version_comparison
 	assert_equal('', TestWorkFlow.version_comparison([]))
 end #version_comparison
-def test_working_different_from?
-	filename='test/unit/minimal2_test.rb'
-	branch_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
-	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
-	message="diff_run=#{diff_run.inspect}"
-	assert_equal('', diff_run.output, message)
-	assert(!TestWorkFlow.working_different_from?(filename, 0), message)
-	assert(!TestWorkFlow.working_different_from?(filename, 0))
-	assert(!TestWorkFlow.working_different_from?(filename, 1))
-	assert(!TestWorkFlow.working_different_from?(filename, 2))
-	assert(!TestWorkFlow.working_different_from?(filename, 3))
-	assert(!TestWorkFlow.working_different_from?(filename, -1))
-end #working_different_from?
-def test_bracketing_versions?
-	filename='test/unit/minimal.rb'
-	current_index=0
-	left_index=(current_index..-1).first do
-		TestWorkFlow.working_different_from?(filename, branch_index)
-	end #first
-	assert_nil(left_index)
-	if left_index.nil? then
-		left_index=-1
-	end #if
-	assert_equal(-1, left_index)
-	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		TestWorkFlow.working_different_from?(filename, branch_index)
-	end #first
-	assert(!TestWorkFlow.working_different_from?(filename, 1))
-	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
-	assert_nil(right_index)
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
-	assert_equal(Last_slot_index, right_index)
-	assert_equal([-1, 4], TestWorkFlow.bracketing_versions?('test/unit/minimal.rb', 0))
-end #bracketing_versions?
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
