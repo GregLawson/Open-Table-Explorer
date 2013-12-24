@@ -60,7 +60,10 @@ def working_different_from?(filename, branch_index)
 	diff_run.output!=''
 end #working_different_from?
 
-def scan_verions(filename, range)
+def scan_verions(filename, range, direction)
+	right_index=range.map do |branch_index|
+		working_different_from?(filename, branch_index)
+	end #map
 end #scan_verions
 def bracketing_versions?(filename, current_index)
 	right_index=(current_index+1..Last_slot_index).first do |branch_index|
