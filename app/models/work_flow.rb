@@ -116,7 +116,7 @@ end #version_comparison
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
 	left_index,right_index=WorkFlow.bracketing_versions?(filename, current_index)
-	relative_filename=Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
