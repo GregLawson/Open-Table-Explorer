@@ -59,6 +59,9 @@ def working_different_from?(filename, branch_index)
 	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	diff_run.output!=''
 end #working_different_from?
+
+def scan_verions(filename, range)
+end #scan_verions
 def bracketing_versions?(filename, current_index)
 	right_index=(current_index+1..Last_slot_index).first do |branch_index|
 		working_different_from?(filename, branch_index)

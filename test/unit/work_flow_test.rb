@@ -45,6 +45,8 @@ def test_working_different_from?
 	assert(!WorkFlow.working_different_from?(filename, 3))
 	assert(!WorkFlow.working_different_from?(filename, -1))
 end #working_different_from?
+def test_scan_verions
+end #scan_verions
 def test_bracketing_versions?
 	filename='test/unit/minimal.rb'
 	current_index=0
