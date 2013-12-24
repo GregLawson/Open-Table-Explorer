@@ -64,6 +64,12 @@ def scan_verions(filename, range, direction)
 	right_index=range.map do |branch_index|
 		working_different_from?(filename, branch_index)
 	end #map
+	case direction
+	when :first then
+	when :last then
+	else
+		raise 
+	end #case
 end #scan_verions
 def bracketing_versions?(filename, current_index)
 	right_index=(current_index+1..Last_slot_index).first do |branch_index|
@@ -182,10 +188,10 @@ def merge_conflict_recovery
 				file=line[3..-1]
 				puts 'ruby script/workflow.rb --test '+file
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig')
 				case line[0..1]
 				when 'UU' then edit(file)
 				else
@@ -230,6 +236,7 @@ def merge_down(deserving_branch, executable)
 end #merge_down
 def test(executable=@related_files.model_test_pathname?)
 	begin
+		merge_conflict_recovery
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
