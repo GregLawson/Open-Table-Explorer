@@ -35,14 +35,16 @@ def all(pattern_name=:test)
 		WorkFlow.new(test).unit_test
 	end #each
 end #test_unit_test_all
-def revison_tag(branch_index)
-	branch_symbol=case branch_index
+def branch_symbol?(branch_index)
+	case branch_index
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
 	else :revison_tag_bug
 	end #case
-	return '-r '+branch_symbol.to_s
+end #branch_symbol?
+def revison_tag(branch_index)
+	return '-r '+branch_symbol?(branch_index).to_s
 end #revison_tag
 def merge_range(deserving_branch)
 	deserving_index=Branch_enhancement.index(deserving_branch)
@@ -86,11 +88,9 @@ def version_comparison(files=nil)
 	ret.join(' ')
 end #version_comparison
 def working_different_from?(filename, branch_index)
-	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
+	diff_run=ShellCommands.new("git diff #{WorkFlow.branch_symbol?(branch_index)} -- "+filename).assert_post_conditions
 	diff_run.output!=''
 end #working_different_from?
-def first_difference
-end #first_difference
 def bracketing_versions(current_index)
 	right_index=(current_index+1..Last_slot_index).first do |branch_index|
 		working_different_from?(filename, branch_index)
