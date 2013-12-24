@@ -59,25 +59,25 @@ def working_different_from?(filename, branch_index)
 	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	diff_run.output!=''
 end #working_different_from?
-
-def scan_verions(filename, range, direction)
-	right_index=range.map do |branch_index|
+def different_indices?(filename, range)
+	differences=range.map do |branch_index|
 		working_different_from?(filename, branch_index)
 	end #map
-end #scan_verions
+	indices=[]
+	range.zip(differences){|n,s| indices<<(s ? n : nil)}
+	indices.compact
+end #different_indices?
+def scan_verions?(filename, range, direction)
+	case direction
+	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
+	when :last then ([-1]+different_indices?(filename, range)).max
+	else
+		raise 
+	end #case
+end #scan_verions?
 def bracketing_versions?(filename, current_index)
-	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		working_different_from?(filename, branch_index)
-	end #first
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
-	left_index=(current_index..-1).first do
-		working_different_from?(filename, branch_index)
-	end #first
-	if left_index.nil? then
-		left_index=-1
-	end #if
+	left_index=WorkFlow.scan_verions?(filename, -1..current_index, :last)
+	right_index=WorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
 	[left_index, right_index]
 end #bracketing_versions?
 end #ClassMethods
@@ -115,19 +115,8 @@ def version_comparison(files=nil)
 end #version_comparison
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
-	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		working_different_from?(filename, branch_index)
-	end #first
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
-	left_index=(current_index..-1).first do
-		working_different_from?(filename, branch_index)
-	end #first
-	if left_index.nil? then
-		left_index=-1
-	end #if
-	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	left_index,right_index=WorkFlow.bracketing_versions?(filename, current_index)
+	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
@@ -182,10 +171,10 @@ def merge_conflict_recovery
 				file=line[3..-1]
 				puts 'ruby script/workflow.rb --test '+file
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*').assert_post_conditions
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig').assert_post_conditions
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig')
 				case line[0..1]
 				when 'UU' then edit(file)
 				else
@@ -230,6 +219,7 @@ def merge_down(deserving_branch, executable)
 end #merge_down
 def test(executable=@related_files.model_test_pathname?)
 	begin
+		merge_conflict_recovery
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
