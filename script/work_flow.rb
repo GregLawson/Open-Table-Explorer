@@ -87,8 +87,9 @@ commands.each do |c|
 			work_flow=WorkFlow.new($0)
 			work_flow.merge(:master, :passed) 
 			work_flow.merge(:passed, :master) 
-			work_flow.merge(:testing, :master) 
-			work_flow.merge(:edited, :master) 
+			work_flow.merge(:testing, :passed) 
+			work_flow.merge(:edited, :testing) 
+		when :merge_down then work_flow.merge_down
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
@@ -96,7 +97,6 @@ commands.each do |c|
 		when :edit then work_flow.edit
 		when :test then work_flow.test(f)
 		when :upgrade then work_flow.upgrade(f)
-		when :merge_down then work_flow.merge_down
 		when :best then work_flow.best(f)
 		when :emacs then work_flow.emacs(f)
 		when :passed then work_flow.repository.stage_files(:passed, [f])
