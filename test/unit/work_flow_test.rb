@@ -49,36 +49,36 @@ def test_working_different_from?
 	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', diff_run.output, message)
-	assert(!WorkFlow.working_different_from?(filename, 0), message)
-	assert(!WorkFlow.working_different_from?(filename, 0))
-	assert(!WorkFlow.working_different_from?(filename, 1))
-	assert(!WorkFlow.working_different_from?(filename, 2))
-	assert(!WorkFlow.working_different_from?(filename, 3))
-	assert(!WorkFlow.working_different_from?(filename, -1))
+	assert(!TestWorkFlow.working_different_from?(filename, 0), message)
+	assert(!TestWorkFlow.working_different_from?(filename, 0))
+	assert(!TestWorkFlow.working_different_from?(filename, 1))
+	assert(!TestWorkFlow.working_different_from?(filename, 2))
+	assert(!TestWorkFlow.working_different_from?(filename, 3))
+	assert(!TestWorkFlow.working_different_from?(filename, -1))
 end #working_different_from?
 def test_different_indices?
 	range=1..3
 	filename='test/unit/minimal2_test.rb'
-	assert_equal([], WorkFlow.different_indices?(filename, range))
+	assert_equal([], TestWorkFlow.different_indices?(filename, range))
 end #different_indices?
 def test_scan_verions?
 	range=-1..3
 	filename='test/unit/minimal2_test.rb'
-	assert_equal(-1, WorkFlow.scan_verions?(filename, range, :last))
-	assert_equal(3, WorkFlow.scan_verions?(filename, range, :first))
+	assert_equal(-1, TestWorkFlow.scan_verions?(filename, range, :last))
+	assert_equal(3, TestWorkFlow.scan_verions?(filename, range, :first))
 	
 end #scan_verions?
 def test_bracketing_versions?
 	filename='test/unit/minimal2_test.rb'
 	current_index=0
-	left_index=WorkFlow.scan_verions?(filename, -1..current_index, :last)
-	right_index=WorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
-	assert_equal(-1, WorkFlow.scan_verions?(filename, -1..current_index, :last))
+	left_index=TestWorkFlow.scan_verions?(filename, -1..current_index, :last)
+	right_index=TestWorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
+	assert_equal(-1, TestWorkFlow.scan_verions?(filename, -1..current_index, :last))
 	assert_equal(-1, left_index)
-	assert(!WorkFlow.working_different_from?(filename, 1))
-	assert_equal(false, WorkFlow.working_different_from?(filename, 1))
+	assert(!TestWorkFlow.working_different_from?(filename, 1))
+	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
 	assert_equal(Last_slot_index, right_index)
-	assert_equal([-1, 3], WorkFlow.bracketing_versions?(filename, 0))
+	assert_equal([-1, 3], TestWorkFlow.bracketing_versions?(filename, 0))
 end #bracketing_versions?
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
