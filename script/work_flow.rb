@@ -66,7 +66,6 @@ end #if
 pp commands
 pp ARGV
 
-
 case ARGV.size # paths after switch removal?
 when 0 then # scite testing defaults command and file
 	puts "work_flow --<command> <file>"
