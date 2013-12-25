@@ -94,7 +94,6 @@ def test_goldilocks
 	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
 	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
-	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile), message)
 end #goldilocks
 include WorkFlow::Examples
 def test_execute
