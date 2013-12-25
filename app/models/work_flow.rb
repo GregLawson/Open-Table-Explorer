@@ -176,7 +176,7 @@ def merge_conflict_recovery
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*')
 				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig')
 				case line[0..1]
-				when 'UU' then edit(file)
+				when 'UU' then WorkFlow.new(file).edit
 				else
 					raise 'line'
 				end #case
