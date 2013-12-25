@@ -89,10 +89,9 @@ def test_goldilocks
 	assert_operator(left_index, :<=, current_index, message)
 	assert_operator(left_index, :<, right_index, message)
 	assert_data_file(filename)
+	assert_match(/ -t /, TestWorkFlow.goldilocks(filename))
 	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-	assert_data_file(relative_filename)
-	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
-	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
+	assert_match(/#{filename}/, TestWorkFlow.goldilocks(filename))
 	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile), message)
 end #goldilocks
 include WorkFlow::Examples
