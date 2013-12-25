@@ -45,30 +45,29 @@ def test_working_different_from?
 	assert(!WorkFlow.working_different_from?(filename, 3))
 	assert(!WorkFlow.working_different_from?(filename, -1))
 end #working_different_from?
-def test_scan_verions
-end #scan_verions
+def test_different_indices?
+	range=1..3
+	filename='test/unit/minimal2_test.rb'
+	assert_equal([], WorkFlow.different_indices?(filename, range))
+end #different_indices?
+def test_scan_verions?
+	range=-1..3
+	filename='test/unit/minimal2_test.rb'
+	assert_equal(-1, WorkFlow.scan_verions?(filename, range, :last))
+	assert_equal(3, WorkFlow.scan_verions?(filename, range, :first))
+	
+end #scan_verions?
 def test_bracketing_versions?
-	filename='test/unit/minimal.rb'
+	filename='test/unit/minimal2_test.rb'
 	current_index=0
-	left_index=(current_index..-1).first do
-		WorkFlow.working_different_from?(filename, branch_index)
-	end #first
-	assert_nil(left_index)
-	if left_index.nil? then
-		left_index=-1
-	end #if
+	left_index=WorkFlow.scan_verions?(filename, -1..current_index, :last)
+	right_index=WorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
+	assert_equal(-1, WorkFlow.scan_verions?(filename, -1..current_index, :last))
 	assert_equal(-1, left_index)
-	right_index=(current_index+1..Last_slot_index).first do |branch_index|
-		WorkFlow.working_different_from?(filename, branch_index)
-	end #first
 	assert(!WorkFlow.working_different_from?(filename, 1))
 	assert_equal(false, WorkFlow.working_different_from?(filename, 1))
-	assert_nil(right_index)
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
 	assert_equal(Last_slot_index, right_index)
-	assert_equal([-1, 3], WorkFlow.bracketing_versions?('test/unit/minimal.rb', 0))
+	assert_equal([-1, 3], WorkFlow.bracketing_versions?(filename, 0))
 end #bracketing_versions?
 def test_initialize
 	te=RelatedFile.new(TestFile)
@@ -84,25 +83,14 @@ end #version_comparison
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
-	right_index=(current_index+1..Last_slot_index).first do
-		TestWorkFlow.working_different_from?(filename, branch_index)
-	end #first
-	if right_index.nil? then
-		right_index=Last_slot_index
-	end #if
-	assert_operator(current_index, :<, right_index)
-	left_index=(current_index..-1).first do
-		TestWorkFlow.working_different_from?(filename, branch_index)
-	end #first
-	if left_index.nil? then
-		left_index=-1
-	end #if
+	filename='test/unit/minimal2_test.rb'
+	left_index,right_index=WorkFlow.bracketing_versions?(filename, current_index)
 	message="left_index=#{left_index}, right_index=#{right_index}"
 	assert_operator(left_index, :<=, current_index, message)
 	assert_operator(left_index, :<, right_index, message)
-	relative_filename=Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	assert_data_file(filename)
+	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 	assert_data_file(relative_filename)
-	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
 	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
 	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile), message)
@@ -113,13 +101,6 @@ def test_execute
 #	assert_equal('', TestWorkFlow.version_comparison)
 #	assert_equal('', TestWorkFlow.test_files)
 end #execute
-def test_test_files
-	assert_equal('', TestWorkFlow.test_files([]))
-# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
-end #test_files
-def test_version_comparison
-	assert_equal('', TestWorkFlow.version_comparison([]))
-end #version_comparison
 def test_functional_parallelism
 	edit_files=TestWorkFlow.related_files.edit_files
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)

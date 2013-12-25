@@ -206,16 +206,13 @@ def emacs(executable=@related_files.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
-def merge_down(deserving_branch, executable)
+def merge_down(deserving_branch=@repository.current_branch_name?)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
-			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 			merge(Branch_enhancement[i], deserving_branch)
-			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+			merge_conflict_recovery
 		end #safely_visit_branch
-		@repository.recent_test.puts
-		edit
-		end #each
+	end #each
 end #merge_down
 def test(executable=@related_files.model_test_pathname?)
 	begin
