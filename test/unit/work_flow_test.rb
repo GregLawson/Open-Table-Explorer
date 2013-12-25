@@ -84,7 +84,7 @@ def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
 	filename='test/unit/minimal2_test.rb'
-	left_index,right_index=WorkFlow.bracketing_versions?(filename, current_index)
+	left_index,right_index=TestWorkFlow.bracketing_versions?(filename, current_index)
 	assert_operator(current_index, :<, right_index)
 	message="left_index=#{left_index}, right_index=#{right_index}"
 	assert_operator(left_index, :<=, current_index, message)
