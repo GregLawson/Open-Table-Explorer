@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
 include DefaultTests
-extend DefaultTests2
+extend DefaultTests
 #puts Regexp.methods(false)
 include Test::Unit::Assertions
 include Regexp::Examples
