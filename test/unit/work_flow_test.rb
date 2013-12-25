@@ -32,6 +32,17 @@ def test_merge_range
 	assert_equal(2..2, WorkFlow.merge_range(:testing))
 	assert_equal(3..2, WorkFlow.merge_range(:edited))
 end #merge_range
+def test_initialize
+	te=RelatedFile.new(TestFile)
+	assert_not_nil(te)
+	wf=WorkFlow.new(TestFile)
+	assert_not_nil(wf)
+	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
+	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
+end #initialize
+def test_version_comparison
+	assert_equal('', TestWorkFlow.version_comparison([]))
+end #version_comparison
 def test_working_different_from?
 	filename='test/unit/minimal2_test.rb'
 	branch_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
@@ -69,17 +80,6 @@ def test_bracketing_versions?
 	assert_equal(Last_slot_index, right_index)
 	assert_equal([-1, 3], WorkFlow.bracketing_versions?(filename, 0))
 end #bracketing_versions?
-def test_initialize
-	te=RelatedFile.new(TestFile)
-	assert_not_nil(te)
-	wf=WorkFlow.new(TestFile)
-	assert_not_nil(wf)
-	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
-	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
-end #initialize
-def test_version_comparison
-	assert_equal('', TestWorkFlow.version_comparison([]))
-end #version_comparison
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
