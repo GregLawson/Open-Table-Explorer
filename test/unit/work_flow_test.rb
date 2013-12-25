@@ -28,9 +28,9 @@ def test_revison_tag
 	assert_equal('-r stash', WorkFlow.revison_tag(3))
 end #revison_tag
 def test_merge_range
-	assert_equal(0..2, WorkFlow.merge_range(:passed))
-	assert_equal(1..2, WorkFlow.merge_range(:testing))
-	assert_equal(2..2, WorkFlow.merge_range(:edited))
+	assert_equal(1..2, WorkFlow.merge_range(:passed))
+	assert_equal(2..2, WorkFlow.merge_range(:testing))
+	assert_equal(3..2, WorkFlow.merge_range(:edited))
 end #merge_range
 def test_working_different_from?
 	filename='test/unit/minimal2_test.rb'
