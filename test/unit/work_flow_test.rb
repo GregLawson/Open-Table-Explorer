@@ -28,9 +28,9 @@ def test_revison_tag
 	assert_equal('-r stash', WorkFlow.revison_tag(3))
 end #revison_tag
 def test_merge_range
-	assert_equal(0..2, WorkFlow.merge_range(:passed))
-	assert_equal(1..2, WorkFlow.merge_range(:testing))
-	assert_equal(2..2, WorkFlow.merge_range(:edited))
+	assert_equal(1..2, WorkFlow.merge_range(:passed))
+	assert_equal(2..2, WorkFlow.merge_range(:testing))
+	assert_equal(3..2, WorkFlow.merge_range(:edited))
 end #merge_range
 def test_working_different_from?
 	filename='test/unit/minimal2_test.rb'
@@ -89,11 +89,11 @@ def test_goldilocks
 	message="left_index=#{left_index}, right_index=#{right_index}"
 	assert_operator(left_index, :<=, current_index, message)
 	assert_operator(left_index, :<, right_index, message)
-	relative_filename=Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	assert_data_file(filename)
+	assert_match(/ -t /, TestWorkFlow.goldilocks(filename))
+	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	assert_match(/#{filename}/, TestWorkFlow.goldilocks(filename))
 	assert_data_file(relative_filename)
-	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
-	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
-	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
 end #goldilocks
 include WorkFlow::Examples
 def test_execute
@@ -101,13 +101,6 @@ def test_execute
 #	assert_equal('', TestWorkFlow.version_comparison)
 #	assert_equal('', TestWorkFlow.test_files)
 end #execute
-def test_test_files
-	assert_equal('', TestWorkFlow.test_files([]))
-# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
-end #test_files
-def test_version_comparison
-	assert_equal('', TestWorkFlow.version_comparison([]))
-end #version_comparison
 def test_functional_parallelism
 	edit_files=TestWorkFlow.related_files.edit_files
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
