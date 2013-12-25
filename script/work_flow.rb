@@ -89,7 +89,9 @@ commands.each do |c|
 			work_flow.merge(:passed, :master) 
 			work_flow.merge(:testing, :passed) 
 			work_flow.merge(:edited, :testing) 
-		when :merge_down then work_flow.merge_down
+		when :merge_down then 
+			work_flow=WorkFlow.new($0)
+			work_flow.merge_down
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
