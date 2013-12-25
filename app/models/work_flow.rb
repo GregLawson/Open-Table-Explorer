@@ -51,7 +51,7 @@ def merge_range(deserving_branch)
 	if deserving_index.nil? then
 		raise deserving_branch.inspect+'not found in '+Branch_enhancement.inspect
 	else
-		deserving_index..Branch_enhancement.size-1
+		deserving_index+1..Branch_enhancement.size-1
 	end #if
 end #merge_range
 def working_different_from?(filename, branch_index)
