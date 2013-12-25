@@ -8,7 +8,7 @@
 require 'grit'  # sudo gem install grit
 require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
-require_relative 'shell_command.rb'
+#require_relative 'shell_command.rb'
 require_relative 'repository.rb'
 class WorkFlow
 #include Grit
@@ -29,7 +29,7 @@ include Constants
 def all(pattern_name=:test)
 	pattern=FilePattern.find_by_name(pattern_name)
 	glob=pattern.pathname_glob
-	tests=Dir[glob]
+	tests=Dir[glob].sort
 	puts tests.inspect if $VERBOSE
 	tests.each do |test|
 		WorkFlow.new(test).unit_test
@@ -56,7 +56,7 @@ def merge_range(deserving_branch)
 end #merge_range
 def working_different_from?(filename, branch_index)
 	raise filename+" does not exist." if !File.exists?(filename)
-	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
+	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	diff_run.output!=''
 end #working_different_from?
 def different_indices?(filename, range)
