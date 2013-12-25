@@ -8,7 +8,7 @@
 require 'grit'  # sudo gem install grit
 require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
-#require_relative 'shell_command.rb'
+require_relative 'shell_command.rb'
 require_relative 'repository.rb'
 class WorkFlow
 #include Grit
@@ -29,7 +29,7 @@ include Constants
 def all(pattern_name=:test)
 	pattern=FilePattern.find_by_name(pattern_name)
 	glob=pattern.pathname_glob
-	tests=Dir[glob].sort
+	tests=Dir[glob]
 	puts tests.inspect if $VERBOSE
 	tests.each do |test|
 		WorkFlow.new(test).unit_test
@@ -54,32 +54,6 @@ def merge_range(deserving_branch)
 		deserving_index+1..Branch_enhancement.size-1
 	end #if
 end #merge_range
-def working_different_from?(filename, branch_index)
-	raise filename+" does not exist." if !File.exists?(filename)
-	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
-	diff_run.output!=''
-end #working_different_from?
-def different_indices?(filename, range)
-	differences=range.map do |branch_index|
-		working_different_from?(filename, branch_index)
-	end #map
-	indices=[]
-	range.zip(differences){|n,s| indices<<(s ? n : nil)}
-	indices.compact
-end #different_indices?
-def scan_verions?(filename, range, direction)
-	case direction
-	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
-	when :last then ([-1]+different_indices?(filename, range)).max
-	else
-		raise 
-	end #case
-end #scan_verions?
-def bracketing_versions?(filename, current_index)
-	left_index=WorkFlow.scan_verions?(filename, -1..current_index, :last)
-	right_index=WorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
-	[left_index, right_index]
-end #bracketing_versions?
 end #ClassMethods
 extend ClassMethods
 # Define related (unit) versions
@@ -113,9 +87,35 @@ def version_comparison(files=nil)
 	end #map
 	ret.join(' ')
 end #version_comparison
+def working_different_from?(filename, branch_index)
+	raise filename+" does not exist." if !File.exists?(filename)
+	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
+	diff_run.output!=''
+end #working_different_from?
+def different_indices?(filename, range)
+	differences=range.map do |branch_index|
+		working_different_from?(filename, branch_index)
+	end #map
+	indices=[]
+	range.zip(differences){|n,s| indices<<(s ? n : nil)}
+	indices.compact
+end #different_indices?
+def scan_verions?(filename, range, direction)
+	case direction
+	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
+	when :last then ([-1]+different_indices?(filename, range)).max
+	else
+		raise 
+	end #case
+end #scan_verions?
+def bracketing_versions?(filename, current_index)
+	left_index=scan_verions?(filename, -1..current_index, :last)
+	right_index=scan_verions?(filename, current_index+1..Last_slot_index, :first)
+	[left_index, right_index]
+end #bracketing_versions?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
-	left_index,right_index=WorkFlow.bracketing_versions?(filename, current_index)
+	left_index,right_index=bracketing_versions?(filename, current_index)
 	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
