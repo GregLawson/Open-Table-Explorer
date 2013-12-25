@@ -224,10 +224,17 @@ def test(executable=@related_files.model_test_pathname?)
 		end #safely_visit_branch
 		merge_down(deserving_branch)
 		edit
-		if (deserving_branch != @repository.current_branch_name?) && !@repository.something_to_commit? then
-			@repository.confirm_branch_switch(deserving_branch)
+		if @repository.something_to_commit? then
+			done=false
+		else
+			if deserving_branch == @repository.current_branch_name? then
+				done=true # branch already checked
+			else
+				done=false # check other branch
+				@repository.confirm_branch_switch(deserving_branch)
+			end #if
 		end #if
-	end until !@repository.something_to_commit? && (deserving_branch == @repository.current_branch_name?)
+	end until done
 end #test
 def unit_test(executable=@related_files.model_test_pathname?)
 	begin
