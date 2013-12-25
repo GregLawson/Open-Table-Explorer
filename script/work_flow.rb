@@ -18,8 +18,8 @@ OptionParser.new do |opts|
   opts.on("-e", "--[no-]edit", "Edit related files and versions in diffuse") do |e|
     commands+=[:edit] if e
   end
-  opts.on("-d", "--[no-]downgrade", "Test downgraded related files in git branches") do |d|
-    commands+=[:downgrade] if d
+  opts.on("-d", "--[no-]merge-down", "Test downgraded related files in git branches") do |d|
+    commands+=[:merge_down] if d
   end
   opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
     commands+=[:upgrade] if u
@@ -59,12 +59,15 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-commands=[:test] if commands.empty?
+if commands.empty? then
+	commands=[:test]
+	puts 'No command; assuming test.'
+end #if
 pp commands
 pp ARGV
 
 
-case ARGV.size
+case ARGV.size # paths after switch removal?
 when 0 then # scite testing defaults command and file
 	puts "work_flow --<command> <file>"
 	this_file=File.expand_path(__FILE__)
@@ -93,7 +96,7 @@ commands.each do |c|
 		when :edit then work_flow.edit
 		when :test then work_flow.test(f)
 		when :upgrade then work_flow.upgrade(f)
-		when :downgrade then work_flow.downgrade(f)
+		when :merge_down then work_flow.merge_down
 		when :best then work_flow.best(f)
 		when :emacs then work_flow.emacs(f)
 		when :passed then work_flow.repository.stage_files(:passed, [f])
