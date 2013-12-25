@@ -223,6 +223,7 @@ def test(executable=@related_files.model_test_pathname?)
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
 		merge_down(deserving_branch)
+		edit(executable)
 		if (deserving_branch != @repository.current_branch_name?) && !@repository.something_to_commit? then
 			@repository.confirm_branch_switch(deserving_branch)
 		end #if
