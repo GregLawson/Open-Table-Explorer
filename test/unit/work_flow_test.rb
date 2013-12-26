@@ -48,6 +48,7 @@ def test_working_different_from?
 	branch_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
 	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
 	assert_instance_of(ShellCommands, diff_run)
+	assert_operator(diff_run.output.size, :==, 0)
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', diff_run.output, message)
 	assert(!TestWorkFlow.working_different_from?(filename, 0), message)
