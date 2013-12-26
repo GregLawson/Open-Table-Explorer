@@ -8,10 +8,8 @@
 require 'grit'  # sudo gem install grit
 require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
-#require_relative 'shell_command.rb'
 require_relative 'repository.rb'
 class WorkFlow
-#include Grit
 module Constants
 Branch_enhancement=[:passed, :testing, :edited]
 Last_slot_index=Branch_enhancement.size
