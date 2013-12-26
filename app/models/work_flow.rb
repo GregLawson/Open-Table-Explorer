@@ -92,7 +92,7 @@ def working_different_from?(filename, branch_index)
 	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	if diff_run.output!='' then
 		false # no difference
-	elsif diff_run.split("\n").size>=2 then
+	elsif diff_run.output.split("\n").size>=2 then
 		false # missing version
 	else
 		true # real difference
