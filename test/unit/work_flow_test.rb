@@ -57,6 +57,7 @@ def test_working_different_from?
 	assert(!TestWorkFlow.working_different_from?(filename, 2))
 	assert(!TestWorkFlow.working_different_from?(filename, 3))
 	assert(!TestWorkFlow.working_different_from?(filename, -1))
+	assert(!TestWorkFlow.working_different_from?('test/long_test/repository_test.rb',-1))
 end #working_different_from?
 def test_different_indices?
 	range=1..3
