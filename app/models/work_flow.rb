@@ -188,6 +188,8 @@ def merge_conflict_recovery
 				end #case
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
+		else
+			@repository.git_command('cola')
 		end #if
 end #merge_conflict_recovery
 def merge(target_branch, source_branch)
