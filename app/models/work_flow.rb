@@ -90,7 +90,7 @@ end #version_comparison
 def working_different_from?(filename, branch_index)
 	raise filename+" does not exist." if !File.exists?(filename)
 	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
-	if diff_run.output!='' then
+	if diff_run.output=='' then
 		false # no difference
 	elsif diff_run.output.split("\n").size>=2 then
 		false # missing version
