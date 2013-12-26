@@ -175,6 +175,19 @@ def unit_names?(files)
 		FilePattern.path2model_name?(f).to_s
 	end #map
 end #unit_names?
+def confirm_commit(interact=:interactive)
+	if something_to_commit? then
+		case interact
+		when :interactive then
+			git_command('cola').assert_post_conditions
+		when :echo then
+			puts "changes_branch="+changes_branch.to_s
+			puts "files="+files.inspect
+		else
+			raise 'Unimplemented option='+interact
+		end #case
+	end #if
+end #confirm_commit
 def validate_commit(changes_branch, files, interact=:interactive)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
@@ -187,13 +200,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
-		case interact
-		when :interactive then
-			git_command('cola').assert_post_conditions
-		when :echo then
-			puts "changes_branch="+changes_branch.to_s
-			puts "files="+files.inspect
-		end #case
+		confirm_commit(interact)
 #		git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
