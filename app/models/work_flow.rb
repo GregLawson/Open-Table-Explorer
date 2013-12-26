@@ -186,7 +186,7 @@ def merge_conflict_recovery
 			end #map
 			merge_abort=@repository.git_command('merge --abort')
 		else
-			@repository.git_command('cola')
+			@repository.confirm_commit(:interactive)
 		end #if
 end #merge_conflict_recovery
 def merge(target_branch, source_branch)
