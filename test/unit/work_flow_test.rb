@@ -46,7 +46,7 @@ end #version_comparison
 def test_working_different_from?
 	filename='test/unit/minimal2_test.rb'
 	branch_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
-	diff_run=ShellCommands.new("git diff #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
+	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename).assert_post_conditions
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', diff_run.output, message)
 	assert(!TestWorkFlow.working_different_from?(filename, 0), message)
