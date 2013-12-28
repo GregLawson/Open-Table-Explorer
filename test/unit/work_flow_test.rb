@@ -13,6 +13,19 @@ include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
+def test_all
+	pattern=FilePattern.find_by_name(:test)
+	glob=pattern.pathname_glob
+	
+	tests=Dir[glob].sort do |x,y|
+		assert_pathname_exists(x)
+		assert_pathname_exists(y)
+		assert_instance_of(Date, File.mtime(x))
+		assert_instance_of(Date, File.mtime(y))
+		File.mtime(x) > File.mtime(y)
+	end #sort
+	puts tests.inspect if $VERBOSE
+end #all
 def test_branch_symbol?
 	assert_equal(:master, WorkFlow.branch_symbol?(-1))
 	assert_equal(:passed, WorkFlow.branch_symbol?(0))
