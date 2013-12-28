@@ -181,8 +181,6 @@ def confirm_commit(interact=:interactive)
 		when :interactive then
 			git_command('cola').assert_post_conditions
 		when :echo then
-			puts "changes_branch="+changes_branch.to_s
-			puts "files="+files.inspect
 		else
 			raise 'Unimplemented option='+interact
 		end #case
