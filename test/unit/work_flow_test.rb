@@ -16,7 +16,15 @@ include WorkFlow::Examples
 def test_all
 	pattern=FilePattern.find_by_name(:test)
 	glob=pattern.pathname_glob
-	
+	tests=Dir[glob]
+	x=tests[0]
+	y=tests[1]
+		assert_pathname_exists(x)
+		assert_pathname_exists(y)
+		assert_instance_of(Time, File.mtime(x))
+		assert_instance_of(Time, File.mtime(y))
+		assert_respond_to(File.mtime(x), :>)
+		File.mtime(x) > File.mtime(y)	
 	tests=Dir[glob].sort do |x,y|
 		assert_pathname_exists(x)
 		assert_pathname_exists(y)
