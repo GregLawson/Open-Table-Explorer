@@ -20,8 +20,9 @@ def test_all
 	tests=Dir[glob].sort do |x,y|
 		assert_pathname_exists(x)
 		assert_pathname_exists(y)
-		assert_instance_of(Date, File.mtime(x))
-		assert_instance_of(Date, File.mtime(y))
+		assert_instance_of(Time, File.mtime(x))
+		assert_instance_of(Time, File.mtime(y))
+		assert_respond_to(File.mtime(x), :>)
 		File.mtime(x) > File.mtime(y)
 	end #sort
 	puts tests.inspect if $VERBOSE
