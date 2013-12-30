@@ -164,7 +164,6 @@ def test_to_a
 	CONSTANT_PARSE_TREE.assert_post_conditions
 	assert_equal(['K'], CONSTANT_PARSE_TREE.parse_tree, "KC_parse=#{KC_parse.inspect}")
 	assert_equal(['K'], CONSTANT_PARSE_TREE.to_a, "KC_parse=#{KC_parse.inspect}")
-#	assert_equal(NestedArray::Examples::Asymmetrical_Tree_Array.flatten, Asymmetrical_Tree_Parse.to_a.flatten)
 	Dot_star_parse.assert_invariant
 	Dot_star_parse.assert_post_conditions
 	message="Dot_star_parse=#{Dot_star_parse.inspect}"
@@ -175,7 +174,6 @@ def test_to_a
 end #to_a
 def test_RegexpParse_to_s
 	assert_equal('.*', Dot_star_parse.to_s)
-#	assert_equal(Asymmetrical_Tree_Parse.regexp_string, Asymmetrical_Tree_Parse.parse_tree.to_s)
 end #to_s
 def test_to_regexp
 	regexp=/abc/
@@ -248,11 +246,8 @@ def test_postfix_operator
 	assert_equal(last_node, RegexpParse.postfix_operator?(last_node), "RegexpParse.postfix_operator?(last_node)=#{RegexpParse.postfix_operator?(last_node).inspect}")
 end #postfix_operator
 def test_postfix_operator_walk
-#	assert_equal(['1', '2', '3'], Asymmetrical_Tree_Parse.to_a.flatten)
-#	assert_equal([['1', '2'], '3'], Asymmetrical_Tree_Parse.to_a)
 	assert_equal('*',NestedArray::Examples::Constant_proc.call(Sequence_parse))
 	assert_equal(Sequence_parse,NestedArray::Examples::Echo_proc.call(Sequence_parse))
-#	assert_equal(Asymmetrical_Tree_Parse,NestedArray::Examples::Echo_proc.call(Asymmetrical_Tree_Parse))
 #	reverse_proc=Proc.new{|parse_tree| parse_tree.reverse}
 #	assert_equal(Sequence_parse.to_a.reverse, reverse_proc.call(Sequence_parse))
 	Dot_star_parse.assert_post_conditions
