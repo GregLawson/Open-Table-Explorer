@@ -200,16 +200,16 @@ end #merge
 def edit
 	command_string="diffuse"+ version_comparison + test_files
 	puts command_string if $VERBOSE
-	edit=ShellCommands.new(command_string)
+	edit=@repository.shell_command(command_string)
 	edit.assert_post_conditions
 end #edit
 def minimal_edit
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + minimal_comparison?)
+	edit=@repository.shell_command("diffuse"+ version_comparison + test_files + minimal_comparison?)
 	puts edit.command_string
 	edit.assert_post_conditions
 end #minimal_edit
 def emacs(executable=@related_files.model_test_pathname?)
-	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
+	emacs=@repository.shell_command("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
