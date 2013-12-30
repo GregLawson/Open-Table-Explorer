@@ -26,6 +26,7 @@ def test_all
 		assert_respond_to(File.mtime(x), :>)
 		assert_operator(File.mtime(x), :!=, File.mtime(y))
 		assert(File.mtime(x) != File.mtime(y))	
+		assert(File.mtime(x) > File.mtime(y))	
 	tests=Dir[glob].sort do |x,y|
 		assert_pathname_exists(x)
 		assert_pathname_exists(y)
