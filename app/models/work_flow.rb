@@ -33,7 +33,7 @@ def all(pattern_name=:test)
 	tests.each do |test|
 		WorkFlow.new(test).unit_test
 	end #each
-end #all
+end #test_unit_test_all
 def branch_symbol?(branch_index)
 	case branch_index
 	when -1 then :master
