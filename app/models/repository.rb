@@ -148,7 +148,7 @@ def safely_visit_branch(target_branch, &block)
 #		puts "something_to_commit?=#{something_to_commit?.inspect}"
 		git_command('stash save --include-untracked')
 		merge_conflict_files?.each do |conflict|
-			ShellCommands.new('diffuse -m '+conflict[:file])
+			shell_command('diffuse -m '+conflict[:file])
 		end #each
 		changes_branch=:stash
 	end #if
@@ -162,6 +162,9 @@ def safely_visit_branch(target_branch, &block)
 	end #if
 	if push then
 		git_command('stash apply --quiet').assert_post_conditions
+		merge_conflict_files?.each do |conflict|
+			shell_command('diffuse -m '+conflict[:file])
+		end #each
 	end #if
 	ret
 end #safely_visit_branch
