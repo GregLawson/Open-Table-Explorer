@@ -39,7 +39,7 @@ end #assert_class_invariant_conditions
 # conditions true after initialization of class constants.
 # pre-conditions of constants should now be true
 def assert_post_conditions
-	assert_invariant
+#	assert_invariant
 	assert_operator(Examples.parses.size, :>, 0)
 	Examples.parses.each do |parse|
 		parse.assert_pre_conditions
@@ -64,11 +64,11 @@ def assert_invariant
 	assert_instance_of(String, @regexp_string)
 	assert_instance_of(NestedArray, @parse_tree)
 	assert_equal(@regexp_string, rest+@parse_tree.to_s, message)
-	self.class.assert_pre_conditions
+#	self.class.assert_pre_conditions
 end #assert_invariant
 # assertions during object initialization (RegexpParse.new) or after restart parse!
 def assert_pre_conditions(parser=self)
-	assert_invariant
+#	assert_invariant
 	message="parser=#{parser.inspect}"
 	assert_equal(@regexp_string.length-1, parser.tokenIndex, message)
 	assert(!parser.beyondString?)
@@ -79,7 +79,7 @@ end #assert_pre_conditions
 # Post conditions are true after an operation
 # assert that an initialized RegexpParse instance is valid and fully parse
 def assert_post_conditions(parser=self)
-	assert_invariant
+#	assert_invariant
 	message="parser=#{parser.inspect}"
 	if parser.tokenIndex== -1 then
 		assert_equal(-1, parser.tokenIndex, message)
