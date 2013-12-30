@@ -11,7 +11,7 @@ require_relative '../../test/assertions/unbounded_range_assertions.rb'
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
-require_relative '../assertions/default_assertions.rb'
+#require_relative '../assertions/default_assertions.rb'
 require 'test/unit'
 module Assertions
 include Test::Unit::Assertions
