@@ -47,9 +47,10 @@ def assert_post_conditions
 end #assert_class_post_conditions
 # assert conversions to arrays and strings are correct and reversable (?).
 def assert_round_trip(array)
-	assert_equal(array, ::RegexpParse.new(array).parse_tree)
-	assert_equal(array.to_s, RegexpParse.new(array.to_s).to_s)
-	assert_equal(Regexp.new(array.to_s).source, RegexpParse.new(Regexp.new(array.to_s)).to_s)
+	message='In assert_round_trip: array='+array.inspect
+	assert_equal(array, ::RegexpParse.new(array).parse_tree, message)
+	assert_equal(array.to_s, RegexpParse.new(array.to_s).to_s, message)
+	assert_equal(Regexp.new(array.to_s).source, RegexpParse.new(Regexp.new(array.to_s)).to_s, message)
 end #assert_round_trip
 end #ClassMethods
 # invariant assertions that can be called during parsing for debugging parsing functions.
