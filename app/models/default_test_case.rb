@@ -156,7 +156,7 @@ def test_assert_pre_conditions
   each_example {|e| existing_call(e, :assert_pre_conditions)}
 end #assert_pre_conditions
 def test_assert_invariant
-#  each_example {|e| existing_call(e, :assert_invariant)}
+  each_example {|e| assert_optional_method(e, :assert_invariant)}
 end #def assert_invariant
 def test_assert_post_conditions
   each_example {|e| existing_call(e, :assert_post_conditions)}
