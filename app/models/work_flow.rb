@@ -27,7 +27,7 @@ def all(pattern_name=:test)
 	pattern=FilePattern.find_by_name(pattern_name)
 	glob=pattern.pathname_glob
 	tests=Dir[glob].sort do |x,y|
-		File.mtime(x) > File.mtime(y)
+		File.mtime(x) <=> File.mtime(y)
 	end #sort
 	puts tests.inspect if $VERBOSE
 	tests.each do |test|
