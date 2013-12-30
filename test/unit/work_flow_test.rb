@@ -13,6 +13,31 @@ include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
+def test_all
+	pattern=FilePattern.find_by_name(:test)
+	glob=pattern.pathname_glob
+	tests=Dir[glob]
+	x=tests[0]
+	y=tests[1]
+	message="File.mtime(#{x})="+File.mtime(x).inspect+", File.mtime(#{y})="+File.mtime(y).to_s
+		assert_pathname_exists(x)
+		assert_pathname_exists(y)
+		assert_instance_of(Time, File.mtime(x))
+		assert_instance_of(Time, File.mtime(y))
+		assert_respond_to(File.mtime(x), :>)
+		assert_operator(File.mtime(x), :!=, File.mtime(y))
+		assert(File.mtime(x) != File.mtime(y))	
+		assert_not_equal(0, File.mtime(x) <=> File.mtime(y), message)	
+	tests=Dir[glob].sort do |x,y|
+		assert_pathname_exists(x)
+		assert_pathname_exists(y)
+		assert_instance_of(Time, File.mtime(x))
+		assert_instance_of(Time, File.mtime(y))
+		assert_respond_to(File.mtime(x), :>)
+		File.mtime(x) <=> File.mtime(y)
+	end #sort
+	puts tests.inspect if $VERBOSE
+end #all
 def test_branch_symbol?
 	assert_equal(:master, WorkFlow.branch_symbol?(-1))
 	assert_equal(:passed, WorkFlow.branch_symbol?(0))
