@@ -113,6 +113,7 @@ commands.each do |c|
 			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison? if $VERBOSE
 		end #case
 		work_flow.repository.stage_files(:passed, work_flow.related_files.tested_files($0))
+		work_flow.merge_down(:passed)
 		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
