@@ -19,6 +19,7 @@ def test_all
 	tests=Dir[glob]
 	x=tests[0]
 	y=tests[1]
+	message="File.mtime(#{x})="+File.mtime(x)+", File.mtime(#{y})="+File.mtime(y)
 		assert_pathname_exists(x)
 		assert_pathname_exists(y)
 		assert_instance_of(Time, File.mtime(x))
@@ -26,7 +27,7 @@ def test_all
 		assert_respond_to(File.mtime(x), :>)
 		assert_operator(File.mtime(x), :!=, File.mtime(y))
 		assert(File.mtime(x) != File.mtime(y))	
-		assert(File.mtime(x) > File.mtime(y))	
+		assert(File.mtime(x) > File.mtime(y), message)	
 	tests=Dir[glob].sort do |x,y|
 		assert_pathname_exists(x)
 		assert_pathname_exists(y)
