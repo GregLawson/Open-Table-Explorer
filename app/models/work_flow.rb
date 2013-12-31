@@ -33,7 +33,7 @@ def all(pattern_name=:test)
 	tests.each do |test|
 		WorkFlow.new(test).unit_test
 	end #each
-end #test_unit_test_all
+end #all
 def branch_symbol?(branch_index)
 	case branch_index
 	when -1 then :master
@@ -216,7 +216,7 @@ end #emacs
 def merge_down(deserving_branch=@repository.current_branch_name?)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
-			merge(Branch_enhancement[i], Branch_enhancement[i+1])
+			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
 		end #safely_visit_branch
 	end #each
