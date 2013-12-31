@@ -13,8 +13,44 @@ include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
+def test_all
+	pattern=FilePattern.find_by_name(:test)
+	glob=pattern.pathname_glob
+	tests=Dir[glob]
+	x=tests[0]
+	y=tests[1]
+	message="File.mtime(#{x})="+File.mtime(x).inspect+", File.mtime(#{y})="+File.mtime(y).to_s
+		assert_pathname_exists(x)
+		assert_pathname_exists(y)
+		assert_instance_of(Time, File.mtime(x))
+		assert_instance_of(Time, File.mtime(y))
+		assert_respond_to(File.mtime(x), :>)
+		assert_operator(File.mtime(x), :!=, File.mtime(y))
+		assert(File.mtime(x) != File.mtime(y))	
+		assert_not_equal(0, File.mtime(x) <=> File.mtime(y), message)	
+	tests=Dir[glob].sort do |x,y|
+		assert_pathname_exists(x)
+		assert_pathname_exists(y)
+		assert_instance_of(Time, File.mtime(x))
+		assert_instance_of(Time, File.mtime(y))
+		assert_respond_to(File.mtime(x), :>)
+		File.mtime(x) <=> File.mtime(y)
+	end #sort
+	puts tests.inspect if $VERBOSE
+end #all
+def test_branch_symbol?
+	assert_equal(:master, WorkFlow.branch_symbol?(-1))
+	assert_equal(:passed, WorkFlow.branch_symbol?(0))
+	assert_equal(:testing, WorkFlow.branch_symbol?(1))
+	assert_equal(:edited, WorkFlow.branch_symbol?(2))
+	assert_equal(:stash, WorkFlow.branch_symbol?(3))
+end #branch_symbol?
 def test_revison_tag
-	assert_equal('-r compiles', WorkFlow.revison_tag(:compiles))
+	assert_equal('-r master', WorkFlow.revison_tag(-1))
+	assert_equal('-r passed', WorkFlow.revison_tag(0))
+	assert_equal('-r testing', WorkFlow.revison_tag(1))
+	assert_equal('-r edited', WorkFlow.revison_tag(2))
+	assert_equal('-r stash', WorkFlow.revison_tag(3))
 end #revison_tag
 def test_merge_range
 	assert_equal(0..2, WorkFlow.merge_range(:passed))
@@ -32,18 +68,60 @@ end #initialize
 def test_version_comparison
 	assert_equal('', TestWorkFlow.version_comparison([]))
 end #version_comparison
+def test_working_different_from?
+	filename='test/unit/minimal2_test.rb'
+	branch_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
+	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
+	assert_instance_of(ShellCommands, diff_run)
+	assert_operator(diff_run.output.size, :==, 0)
+	message="diff_run=#{diff_run.inspect}"
+	assert_equal('', diff_run.output, message)
+	assert(!TestWorkFlow.working_different_from?(filename, 0), message)
+	assert(!TestWorkFlow.working_different_from?(filename, 0))
+	assert(!TestWorkFlow.working_different_from?(filename, 1))
+	assert(!TestWorkFlow.working_different_from?(filename, 2))
+	assert(!TestWorkFlow.working_different_from?(filename, 3))
+	assert(!TestWorkFlow.working_different_from?(filename, -1))
+	assert(!TestWorkFlow.working_different_from?('test/long_test/repository_test.rb',-1))
+end #working_different_from?
+def test_different_indices?
+	range=1..3
+	filename='test/unit/minimal2_test.rb'
+	assert_equal([], TestWorkFlow.different_indices?(filename, range))
+end #different_indices?
+def test_scan_verions?
+	range=-1..3
+	filename='test/unit/minimal2_test.rb'
+	assert_equal(-1, TestWorkFlow.scan_verions?(filename, range, :last))
+	assert_equal(3, TestWorkFlow.scan_verions?(filename, range, :first))
+	
+end #scan_verions?
+def test_bracketing_versions?
+	filename='test/unit/minimal2_test.rb'
+	current_index=0
+	left_index=TestWorkFlow.scan_verions?(filename, -1..current_index, :last)
+	right_index=TestWorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
+	assert_equal(-1, TestWorkFlow.scan_verions?(filename, -1..current_index, :last))
+	assert_equal(-1, left_index)
+	assert(!TestWorkFlow.working_different_from?(filename, 1))
+	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
+	assert_equal(Last_slot_index, right_index)
+	assert_equal([-1, 3], TestWorkFlow.bracketing_versions?(filename, 0))
+end #bracketing_versions?
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
-	last_slot_index=WorkFlow::Branch_enhancement.size-1
-	right_index=[current_index, last_slot_index].min
-	left_index=right_index-1 
-	relative_filename=	Pathname.new(TestFile).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	filename='test/unit/minimal2_test.rb'
+	left_index,right_index=TestWorkFlow.bracketing_versions?(filename, current_index)
+	assert_operator(current_index, :<, right_index)
+	message="left_index=#{left_index}, right_index=#{right_index}"
+	assert_operator(left_index, :<=, current_index, message)
+	assert_operator(left_index, :<, right_index, message)
+	assert_data_file(filename)
+	assert_match(/ -t /, TestWorkFlow.goldilocks(filename))
+	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	assert_match(/#{filename}/, TestWorkFlow.goldilocks(filename))
 	assert_data_file(relative_filename)
-	assert_include(['test/unit/work_flow_test.rb', 'work_flow_test.rb'], relative_filename)
-	assert_match(/ -t /, TestWorkFlow.goldilocks(TestFile))
-	assert_match(/#{relative_filename}/, TestWorkFlow.goldilocks(TestFile))
-	assert_match(/#{TestWorkFlow.repository.current_branch_name?}/, TestWorkFlow.goldilocks(TestFile))
 end #goldilocks
 include WorkFlow::Examples
 def test_execute
@@ -51,13 +129,6 @@ def test_execute
 #	assert_equal('', TestWorkFlow.version_comparison)
 #	assert_equal('', TestWorkFlow.test_files)
 end #execute
-def test_test_files
-	assert_equal('', TestWorkFlow.test_files([]))
-# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
-end #test_files
-def test_version_comparison
-	assert_equal('', TestWorkFlow.version_comparison([]))
-end #version_comparison
 def test_functional_parallelism
 	edit_files=TestWorkFlow.related_files.edit_files
 	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)

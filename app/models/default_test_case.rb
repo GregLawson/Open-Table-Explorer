@@ -43,7 +43,7 @@ def existing_call(object, symbol)
    warn message
  end #if
 end #existing_call
-def named_object?
+def named_object?(object)
 	if object.respond_to?(:name) then
 		"named #{object.name}"
 	else
@@ -56,7 +56,7 @@ def assert_optional_method(object, symbol)
    assert_respond_to(object, symbol)
    object.method(symbol).call
  else
-	message="method #{symbol} does not exist for object "+named_object?
+	message="method #{symbol} does not exist for object "+named_object?(object)
    warn message
  end #if
 end #
@@ -156,7 +156,7 @@ def test_assert_pre_conditions
   each_example {|e| existing_call(e, :assert_pre_conditions)}
 end #assert_pre_conditions
 def test_assert_invariant
-#  each_example {|e| existing_call(e, :assert_invariant)}
+  each_example {|e| assert_optional_method(e, :assert_invariant)}
 end #def assert_invariant
 def test_assert_post_conditions
   each_example {|e| existing_call(e, :assert_post_conditions)}

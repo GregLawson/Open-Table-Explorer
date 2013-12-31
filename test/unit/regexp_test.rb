@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
 include DefaultTests
-extend DefaultTests2
+extend DefaultTests
 #puts Regexp.methods(false)
 include Test::Unit::Assertions
 include Regexp::Examples
@@ -24,18 +24,22 @@ end #terminator_regexp
 def test_delimiter_regexp
 end #delimiter_regexp
 def test_unescaped_string
-	escape_string='\d'
-	assert_equal(/#{escape_string}/, Regexp.new(escape_string))
-	assert_equal(escape_string, Regexp.new(escape_string).source)
-	assert_equal(escape_string, Regexp.new(escape_string).unescaped_string)
+	assert_equal(/#{Escape_string}/, Regexp.new(Escape_string))
+	assert_equal(Escape_string, Regexp.new(Escape_string).source)
+	assert_equal(Escape_string, Regexp.new(Escape_string).unescaped_string)
 	assert_equal('\\n', /\n/.source)
 	assert_match(Ip_number_pattern, '123')
 
-	assert_equal(escape_string, Regexp.new(escape_string).unescaped_string)
+	assert_equal(Escape_string, Regexp.new(Escape_string).unescaped_string)
 	assert_match(Regexp.new(Ip_number_pattern.unescaped_string), '123')
 	ip_pattern=Regexp.new(Array.new(4, Ip_number_pattern.unescaped_string).join('.'))
 	assert_match(ip_pattern, '123.2.3.4')
 end #unescape
+def test_propagate_options
+	assert(defined? Regexp)
+#	assert(defined? Regexp::CASE_FOLD)
+	assert_equal([0, Encoding.find('US-ASCII')], /a/x.propagate_options)
+end #propagate_options
 def test_sequence
   assert_equal('(?-mix:a)', /a/.to_s)
   assert_equal('/a/', /a/.inspect)
@@ -48,7 +52,9 @@ def test_sequence
   assert_equal(/a{3}/, /a/*"{3}")
 end #sequence
 def test_alterative
-  assert_equal(/a|b/, /a/ | /b/)
+	assert_equal(/a/, Regexp.new(/a/.source))
+	assert_equal(/a^/, Regexp.new(/a^/.source))
+	assert_equal(/a\n/, Regexp.new(/a\n/.source))
 end #alterative
 def test_capture
 	regexp=/\d/
@@ -79,9 +85,8 @@ def test_back_reference
 	assert_match(regexp1, 'ototomy', 'Regexp doc example.')
 	assert_equal('ototo', regexp1.match('ototomy')[0])
 	assert_equal('o', regexp1.match('ototomy')[1])
-	regexp2=/[aeiou]/.capture(:vowel)*/./
-	regexp2=((/[aeiou]/.capture(:vowel)*/./).back_reference(:vowel)*/./).back_reference(:vowel)
-	assert_match(regexp2, 'ototomy', 'Regexp doc example.')
+#	regexp2=/[aeiou]/.capture(:vowel)*/./.back_reference(:vowel)*/./.back_reference(:vowel)
+	assert_match(Back_reference, 'ototomy', 'Regexp doc example.')
 end #back_reference
 def test_group
 	regexp=/\d/

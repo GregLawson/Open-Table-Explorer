@@ -5,15 +5,13 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'grit'  # sudo gem install grit
 require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
-require_relative '../../app/models/shell_command.rb'
 require_relative 'repository.rb'
 class WorkFlow
-#include Grit
 module Constants
 Branch_enhancement=[:passed, :testing, :edited]
+Last_slot_index=Branch_enhancement.size
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
 			:multiple_tests_fail	=> 2,
@@ -28,21 +26,31 @@ include Constants
 def all(pattern_name=:test)
 	pattern=FilePattern.find_by_name(pattern_name)
 	glob=pattern.pathname_glob
-	tests=Dir[glob]
+	tests=Dir[glob].sort do |x,y|
+		-(File.mtime(x) <=> File.mtime(y)) # reverse order; most recently changed first
+	end #sort
 	puts tests.inspect if $VERBOSE
 	tests.each do |test|
 		WorkFlow.new(test).unit_test
 	end #each
 end #test_unit_test_all
-def revison_tag(branch)
-		return '-r '+branch.to_s
+def branch_symbol?(branch_index)
+	case branch_index
+	when -1 then :master
+	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
+	when WorkFlow::Branch_enhancement.size then :stash
+	else :revison_tag_bug
+	end #case
+end #branch_symbol?
+def revison_tag(branch_index)
+	return '-r '+branch_symbol?(branch_index).to_s
 end #revison_tag
 def merge_range(deserving_branch)
 	deserving_index=Branch_enhancement.index(deserving_branch)
 	if deserving_index.nil? then
 		raise deserving_branch.inspect+'not found in '+Branch_enhancement.inspect
 	else
-		deserving_index..Branch_enhancement.size-1
+		deserving_index+1..Branch_enhancement.size-1
 	end #if
 end #merge_range
 end #ClassMethods
@@ -78,14 +86,44 @@ def version_comparison(files=nil)
 	end #map
 	ret.join(' ')
 end #version_comparison
+def working_different_from?(filename, branch_index)
+	raise filename+" does not exist." if !File.exists?(filename)
+	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
+	if diff_run.output=='' then
+		false # no difference
+	elsif diff_run.output.split("\n").size>=2 then
+		false # missing version
+	else
+		true # real difference
+	end #if
+end #working_different_from?
+def different_indices?(filename, range)
+	differences=range.map do |branch_index|
+		working_different_from?(filename, branch_index)
+	end #map
+	indices=[]
+	range.zip(differences){|n,s| indices<<(s ? n : nil)}
+	indices.compact
+end #different_indices?
+def scan_verions?(filename, range, direction)
+	case direction
+	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
+	when :last then ([-1]+different_indices?(filename, range)).max
+	else
+		raise 
+	end #case
+end #scan_verions?
+def bracketing_versions?(filename, current_index)
+	left_index=scan_verions?(filename, -1..current_index, :last)
+	right_index=scan_verions?(filename, current_index+1..Last_slot_index, :first)
+	[left_index, right_index]
+end #bracketing_versions?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
-	last_slot_index=WorkFlow::Branch_enhancement.size-1
-	right_index=[current_index+1, last_slot_index].min
-	left_index=right_index-1 
-	relative_filename=	Pathname.new(filename).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	left_index,right_index=bracketing_versions?(filename, current_index)
+	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
-	" -t #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[left_index])} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(WorkFlow::Branch_enhancement[right_index])} #{relative_filename}"
+	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
 def functional_parallelism(edit_files=@related_files.edit_files)
 	[
@@ -123,43 +161,88 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 		branch_compression=Branch_compression[error_classification]
 		branch_enhancement=Branch_enhancement[branch_compression]
 end #deserving_branch
+def merge_conflict_recovery
+# see man git status
+#          D           D    unmerged, both deleted
+#           A           U    unmerged, added by us
+#           U           D    unmerged, deleted by them
+#           U           A    unmerged, added by them
+#           D           U    unmerged, deleted by us
+#           A           A    unmerged, both added
+#           U           U    unmerged, both modified
+		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
+		if File.exists?('.git/MERGE_HEAD') then
+			unmerged_files.split("\n").map do |line|
+				file=line[3..-1]
+				puts 'ruby script/workflow.rb --test '+file
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*')
+				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig')
+				case line[0..1]
+				when 'UU' then WorkFlow.new(file).edit
+				else
+					raise 'line'
+				end #case
+			end #map
+			merge_abort=@repository.git_command('merge --abort')
+		else
+			@repository.confirm_commit(:interactive)
+		end #if
+end #merge_conflict_recovery
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status=@repository.git_command('merge '+source_branch.to_s)
-		if !merge_status.success? then
-			merge_status=git_command('mergetool')
-		end #if
+		merge_conflict_recovery
 	end #safely_visit_branch
 end #merge
 def edit
 	command_string="diffuse"+ version_comparison + test_files
 	puts command_string if $VERBOSE
-	edit=ShellCommands.new(command_string)
+	edit=@repository.shell_command(command_string)
 	edit.assert_post_conditions
 end #edit
 def minimal_edit
-	edit=ShellCommands.new("diffuse"+ version_comparison + test_files + minimal_comparison?)
+	edit=@repository.shell_command("diffuse"+ version_comparison + test_files + minimal_comparison?)
 	puts edit.command_string
 	edit.assert_post_conditions
 end #minimal_edit
 def emacs(executable=@related_files.model_test_pathname?)
-	emacs=ShellCommands.new("emacs --no-splash " + @related_files.edit_files.join(' '))
+	emacs=@repository.shell_command("emacs --no-splash " + @related_files.edit_files.join(' '))
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end #emacs
+def merge_down(deserving_branch=@repository.current_branch_name?)
+	WorkFlow.merge_range(deserving_branch).each do |i|
+		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
+			merge(Branch_enhancement[i], Branch_enhancement[i-1])
+			merge_conflict_recovery
+		end #safely_visit_branch
+	end #each
+end #merge_down
 def test(executable=@related_files.model_test_pathname?)
 	begin
+		merge_conflict_recovery
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
-		WorkFlow.merge_range(deserving_branch). each do |i|
-			@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
-				merge(Branch_enhancement[i], deserving_branch)
-				@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
-			end #safely_visit_branch
-			@repository.recent_test.puts
-			edit
-		end #each
-	end until !@repository.something_to_commit? 
+		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
+			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+		end #safely_visit_branch
+		merge_down(deserving_branch)
+		@repository.recent_test.puts
+		edit
+		if @repository.something_to_commit? then
+			done=false
+		else
+			if deserving_branch == @repository.current_branch_name? then
+				done=true # branch already checked
+			else
+				done=false # check other branch
+				@repository.confirm_branch_switch(deserving_branch)
+			end #if
+		end #if
+	end until done
 end #test
 def unit_test(executable=@related_files.model_test_pathname?)
 	begin

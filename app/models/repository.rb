@@ -146,7 +146,10 @@ def safely_visit_branch(target_branch, &block)
 #		puts "status.changed=#{status.changed.inspect}"
 #		puts "status.deleted=#{status.deleted.inspect}"
 #		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save --include-untracked').assert_post_conditions
+		git_command('stash save --include-untracked')
+		merge_conflict_files?.each do |conflict|
+			shell_command('diffuse -m '+conflict[:file])
+		end #each
 		changes_branch=:stash
 	end #if
 
@@ -159,6 +162,9 @@ def safely_visit_branch(target_branch, &block)
 	end #if
 	if push then
 		git_command('stash apply --quiet').assert_post_conditions
+		merge_conflict_files?.each do |conflict|
+			shell_command('diffuse -m '+conflict[:file])
+		end #each
 	end #if
 	ret
 end #safely_visit_branch
@@ -172,6 +178,17 @@ def unit_names?(files)
 		FilePattern.path2model_name?(f).to_s
 	end #map
 end #unit_names?
+def confirm_commit(interact=:interactive)
+	if something_to_commit? then
+		case interact
+		when :interactive then
+			git_command('cola').assert_post_conditions
+		when :echo then
+		else
+			raise 'Unimplemented option='+interact
+		end #case
+	end #if
+end #confirm_commit
 def validate_commit(changes_branch, files, interact=:interactive)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
@@ -184,6 +201,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+<<<<<<< HEAD
 		case interact
 		when :interactive then
 			git_command('cola').assert_post_conditions
@@ -191,6 +209,9 @@ def validate_commit(changes_branch, files, interact=:interactive)
 			puts "changes_branch="+changes_branch.to_s
 			puts "files="+files.inspect
 		end #case
+=======
+		confirm_commit(interact)
+>>>>>>> passed
 #		git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
@@ -209,13 +230,16 @@ def commit_to_branch(target_branch, tested_files)
 	if push_branch!=target_branch then
 		git_command('checkout '+push_branch.to_s).assert_post_conditions
 		git_command('checkout stash apply').assert_post_conditions
+		merge_conflict_files?.each do |conflict|
+			git_command('diffuse -m '+conflict[:file])
+		end #each
 	end #if
 end #commit_to_branch
 def testing_superset_of_passed
-	git_command("log testing..master")
+	git_command("shortlog testing..master")
 end #testing_superset_of_passed
 def edited_superset_of_testing
-	git_command("log edited..testing")
+	git_command("shortlog edited..testing")
 end #edited_superset_of_testing
 def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
 	IO.write(@path+'/README', content) # timestamp make file unique
@@ -223,6 +247,32 @@ end #force_change
 def revert_changes
 	git_command('reset --hard')
 end #revert_changes
+def merge_conflict_files?
+# see man git status
+#          D           D    unmerged, both deleted
+#           A           U    unmerged, added by us
+#           U           D    unmerged, deleted by them
+#           U           A    unmerged, added by them
+#           D           U    unmerged, deleted by us
+#           A           A    unmerged, both added
+#           U           U    unmerged, both modified
+	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
+	ret=[]
+	if File.exists?('.git/MERGE_HEAD') then
+		unmerged_files.split("\n").map do |line|
+			file=line[3..-1]
+			ret << {:conflict => line[0..1], :file => file}
+			puts 'ruby script/workflow.rb --test '+file
+			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
+			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
+			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.orig')
+		end #map
+		merge_abort=git_command('merge --abort')
+	end #if
+	ret
+end #merge_conflict_files?
 end #Repository
 
 

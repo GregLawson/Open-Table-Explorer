@@ -10,6 +10,8 @@ class Regexp
 #include Comparable
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+Ascii_characters=(0..127).to_a.map { |i| i.chr}
+Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
 Any='*'
 Many='+'
@@ -22,7 +24,7 @@ include Constants
 module ClassMethods
 def promote(node)
 	if node.instance_of?(String) then 
-		Regexp.new(Regexp.new(Regexp.escape(node)))
+		Regexp.new(Regexp.escape(node))
 	elsif node.instance_of?(Regexp) then 
 		node
 	else
@@ -58,11 +60,16 @@ extend ClassMethods
 def unescaped_string
 	"#{source}"
 end #unescape
+def propagate_options(regexp=self)
+	ret=(regexp.casefold? ? Regexp::CASE_FOLD : 0)
+	encoding=regexp.encoding
+	[ret, encoding]
+end #propagate_options
 def *(other)
 	case other
-	when Regexp then return Regexp.new(self.source + other.source)
-	when String then return Regexp.new(self.source + other)
-	when Fixnum then return Regexp.new(self.source*other)
+	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
+	when String then return Regexp.new(self.unescaped_string + other)
+	when Fixnum then return Regexp.new(self.unescaped_string*other)
 	when NilClass then raise "Right argument of :* operator evaluated to nil."+
 		"\nPossibly add parenthesis to control operator versus method precedence."+
 		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
@@ -72,7 +79,7 @@ def *(other)
 	end #case
 end #sequence
 def |(other) # |
-	return Regexp.union(self.source, Regexp.promote(other).source)
+	return Regexp.union(Regexp.new(self.unescaped_string), Regexp.promote(other).unescaped_string)
 end #alterative
 def capture(key=nil)
 	if key.nil? then
@@ -102,6 +109,10 @@ def assert_pre_conditions
 end #assert_pre_conditions
 end #ClassMethods
 def assert_pre_conditions
+# by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
+	assert_equal(self, Regexp.promote(self))
+	assert_equal(self, /#{self.unescaped_string}/)
+	assert_equal(self, Regexp.promote(self).unescaped_string)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
@@ -110,9 +121,8 @@ include Assertions
 extend Assertions::ClassMethods
 module Examples
 include Constants
-Ascii_characters=(0..127).to_a.map { |i| i.chr}
-Binary_bytes=(0..255).to_a.map { |i| i.chr}
-Any_binary_char_string='[\000-\377]'
 Ip_number_pattern=/\d{1,3}/
+Escape_string='\d'
+Back_reference=((/[aeiou]/.capture(:vowel)*/./).back_reference(:vowel)*/./).back_reference(:vowel)
 end #Examples
 end #Regexp

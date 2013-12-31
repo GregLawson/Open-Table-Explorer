@@ -18,8 +18,8 @@ OptionParser.new do |opts|
   opts.on("-e", "--[no-]edit", "Edit related files and versions in diffuse") do |e|
     commands+=[:edit] if e
   end
-  opts.on("-d", "--[no-]downgrade", "Test downgraded related files in git branches") do |d|
-    commands+=[:downgrade] if d
+  opts.on("-d", "--[no-]merge-down", "Test downgraded related files in git branches") do |d|
+    commands+=[:merge_down] if d
   end
   opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
     commands+=[:upgrade] if u
@@ -59,12 +59,14 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-commands=[:test] if commands.empty?
+if commands.empty? then
+	commands=[:test]
+	puts 'No command; assuming test.'
+end #if
 pp commands
 pp ARGV
 
-
-case ARGV.size
+case ARGV.size # paths after switch removal?
 when 0 then # scite testing defaults command and file
 	puts "work_flow --<command> <file>"
 	this_file=File.expand_path(__FILE__)
@@ -84,8 +86,11 @@ commands.each do |c|
 			work_flow=WorkFlow.new($0)
 			work_flow.merge(:master, :passed) 
 			work_flow.merge(:passed, :master) 
-			work_flow.merge(:testing, :master) 
-			work_flow.merge(:edited, :master) 
+			work_flow.merge(:testing, :passed) 
+			work_flow.merge(:edited, :testing) 
+		when :merge_down then 
+			work_flow=WorkFlow.new($0)
+			work_flow.merge_down
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
@@ -93,21 +98,22 @@ commands.each do |c|
 		when :edit then work_flow.edit
 		when :test then work_flow.test(f)
 		when :upgrade then work_flow.upgrade(f)
-		when :downgrade then work_flow.downgrade(f)
 		when :best then work_flow.best(f)
 		when :emacs then work_flow.emacs(f)
 		when :passed then work_flow.repository.stage_files(:passed, [f])
 		when :testing then work_flow.repository.stage_files(:testing, [f])
 		when :edited then work_flow.repository.stage_files(:edited, [f])
 		when :deserve then 
-			$stdout.puts  'deserving branch='+work_flow.deserving_branch?(f).to_s
+			deserving_branch=work_flow.deserving_branch?(f).to_s
 			$stdout.puts  work_flow.repository.recent_test.inspect
+			$stdout.puts  'deserving branch='+deserving_branch.to_s
 		when :minimal then work_flow.minimal_edit
 		when :related then
 			puts work_flow.related_files.inspect
 			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison? if $VERBOSE
 		end #case
 		work_flow.repository.stage_files(:passed, work_flow.related_files.tested_files($0))
+		work_flow.merge_down(:passed)
 		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
