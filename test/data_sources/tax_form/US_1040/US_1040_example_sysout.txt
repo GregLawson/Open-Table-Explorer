@@ -31,7 +31,7 @@ Your Alternative Minimum Tax =     0.00
 Listing results from file: test/data_sources/tax_form//US_1040//US_1040_example_out.txt
 
 
-Title:  US Federal 1040 Tax Form - 2012 - EXAMPLE 	Mon Dec 30 06:44:29 2013
+Title:  US Federal 1040 Tax Form - 2012 - EXAMPLE 	Mon Dec 30 20:32:55 2013
 
 Status = Married/Joint (2)
  (Under65 = 2)
