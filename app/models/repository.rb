@@ -226,10 +226,10 @@ def commit_to_branch(target_branch, tested_files)
 	end #if
 end #commit_to_branch
 def testing_superset_of_passed
-	git_command("log testing..master")
+	git_command("shortlog testing..master")
 end #testing_superset_of_passed
 def edited_superset_of_testing
-	git_command("log edited..testing")
+	git_command("shortlog edited..testing")
 end #edited_superset_of_testing
 def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
 	IO.write(@path+'/README', content) # timestamp make file unique
