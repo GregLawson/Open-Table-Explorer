@@ -263,6 +263,12 @@ def merge_conflict_files?
 	end #if
 	ret
 end #merge_conflict_files?
+def branches?
+	git_command('branch --list').assert_post_conditions.output.split("\n")
+end #branches?
+def remotes?
+	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
+end #branches?
 end #Repository
 
 
