@@ -125,18 +125,8 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
-def functional_parallelism(edit_files=@related_files.edit_files)
-	[
-	[related_files.model_pathname?, related_files.model_test_pathname?],
-	[related_files.assertions_pathname?, related_files.model_test_pathname?],
-	[related_files.model_test_pathname?, related_files.pathname_pattern?(:integration_test)],
-	[related_files.assertions_pathname?, related_files.assertions_test_pathname?]
-	].select do |fp|
-		fp-edit_files==[] # files must exist to be edited?
-	end #map
-end #functional_parallelism
 def test_files(edit_files=@related_files.edit_files)
-	pairs=functional_parallelism(edit_files).map do |p|
+	pairs=@related_files.functional_parallelism(edit_files).map do |p|
 
 		' -t '+p.map do |f|
 			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
