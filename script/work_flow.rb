@@ -12,13 +12,9 @@ require 'pp'
 require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 scripting_workflow=WorkFlow.new($0)
-# good enough for testing; no syntax error
+# good enough for edited; no syntax error
 if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(:edited)) then
 	scripting_workflow.repository.stage_files(:edited, scripting_workflow.related_files.tested_files($0))
-end #if
-if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(:testing)) then
-	scripting_workflow.repository.stage_files(:testing, scripting_workflow.related_files.tested_files($0))
-	scripting_workflow.merge_down(:testing) # good enough for testing; no syntax error
 end #if
 
 commands = []
@@ -72,6 +68,11 @@ end.parse!
 if commands.empty? then
 	commands=[:test]
 	puts 'No command; assuming test.'
+end #if
+# good enough for testing; no syntax error
+if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(:testing)) then
+	scripting_workflow.repository.stage_files(:testing, scripting_workflow.related_files.tested_files($0))
+	scripting_workflow.merge_down(:testing) # good enough for testing; no syntax error
 end #if
 pp commands
 pp ARGV
