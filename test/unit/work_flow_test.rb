@@ -129,11 +129,6 @@ def test_execute
 #	assert_equal('', TestWorkFlow.version_comparison)
 #	assert_equal('', TestWorkFlow.test_files)
 end #execute
-def test_functional_parallelism
-	edit_files=TestWorkFlow.related_files.edit_files
-	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
-	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
-end #functional_parallelism
 def test_test_files
 	assert_equal('', TestWorkFlow.test_files([]))
 # 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
