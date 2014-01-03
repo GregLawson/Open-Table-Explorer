@@ -219,5 +219,6 @@ def test_remotes?
 	assert_includes(SELF_code_Repo.remotes?, Minimal_repository.current_branch_name?)
 end #branches?
 def test_rebase!
+	Minimal_repository.rebase!
 end #rebase!
 end #Repository

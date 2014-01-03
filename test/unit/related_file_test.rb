@@ -93,6 +93,11 @@ def test_default_tests_module_name
 end #default_tests_module?
 def test_test_case_class_name
 end #test_case_class?
+def test_functional_parallelism
+	edit_files=TestWorkFlow.related_files.edit_files
+	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
+	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
+end #functional_parallelism
 def test_tested_files
 	executable=SELF.model_test_pathname?
 	tested_files=SELF.tested_files(executable)

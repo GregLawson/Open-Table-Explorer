@@ -270,10 +270,10 @@ def remotes?
 	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
 end #branches?
 def rebase!
-	if remotes?.include?(@grit.current_branch_name?) then
-		git_command('rebase --list --remote').assert_post_conditions.output.split("\n")
+	if remotes?.include?(current_branch_name?) then
+		git_command('rebase --interactive origin/passed').assert_post_conditions.output.split("\n")
 	else
-		puts @grit.current_branch_name?+' has no remote branch in origin.'
+		puts current_branch_name?+' has no remote branch in origin.'
 	end #if
 end #rebase!
 end #Repository
