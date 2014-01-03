@@ -91,12 +91,12 @@ end #default_tests_module?
 def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
-def functional_parallelism(edit_files=@related_files.edit_files)
+def functional_parallelism(edit_files=@edit_files)
 	[
-	[related_files.model_pathname?, related_files.model_test_pathname?],
-	[related_files.assertions_pathname?, related_files.model_test_pathname?],
-	[related_files.model_test_pathname?, related_files.pathname_pattern?(:integration_test)],
-	[related_files.assertions_pathname?, related_files.assertions_test_pathname?]
+	[model_pathname?, model_test_pathname?],
+	[assertions_pathname?, model_test_pathname?],
+	[model_test_pathname?, pathname_pattern?(:integration_test)],
+	[assertions_pathname?, assertions_test_pathname?]
 	].select do |fp|
 		fp-edit_files==[] # files must exist to be edited?
 	end #map
