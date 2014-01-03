@@ -19,19 +19,21 @@ def test_Constants
 	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
 	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line*Regexp::Any, Terminated_line, "assert_parse_sequence")
 	assert_parse(['1', '2'], "1\n2\n", LINES, "")
+	string="1\n2"
+	pattern=Parse::LINES
+	assert_equal(Example_Answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
 end #Constants
 def test_parse_string
 	string="1\n2"
 	pattern=Parse::LINES
-	answer=['1', '2']
 	ret=string.match(pattern)
-	assert_equal(answer, ret[1..-1]) # return matched subexpressions
+	assert_equal(Example_Answer, ret[1..-1]) # return matched subexpressions
 	matchData=string.match(pattern)
 	assert_equal(matchData.names, [])
   if matchData.nil? then
     []
 	elsif matchData.names==[] then
-		assert_equal(answer, matchData[1..-1], matchData) # return unnamed subexpressions
+		assert_equal(Example_Answer, matchData[1..-1], matchData) # return unnamed subexpressions
 	else
 		nc=pattern.named_captures
 		assert_not_nil(nc)
@@ -41,9 +43,9 @@ def test_parse_string
 			named_hash[n.to_sym]=matchData[n]
 		end # each
 	end #if
-	assert_equal(answer, parse_string(string, Parse::LINES), "matchData=#{matchData.inspect}")
-	assert_equal(answer, parse_string(string), "matchData=#{matchData.inspect}")
-	assert_equal(['1', '2'], parse_string("1 2", Parse::WORDS))
+	assert_equal(Example_Answer, parse_string(string, Parse::LINES), "matchData=#{matchData.inspect}")
+	assert_equal(Example_Answer, parse_string(string), "matchData=#{matchData.inspect}")
+	assert_equal(Example_Answer, parse_string("1 2", Parse::WORDS))
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
@@ -75,7 +77,21 @@ def test_parse_split
 	assert_equal(['1', '2', nil], parse_split("1\n2\n", Terminated_line, ""), :delimitor)
 	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :optional)
 	assert_equal(['1', '2'], parse_split("1\n2", Terminated_line, ""), :optional)
+	assert_equal(['', '1', '2'], parse_split("1\n2", Terminated_line))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', "\n", '2'], parse_split("1\n2", LINE))
+	assert_equal(['', '1', "\n", '2', "\n"], parse_split("1\n2\n", LINE))
+	assert_equal(['', '1', '2'], parse_split("1\n2", Line_terminator))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Line_terminator))
+	assert_equal(['', '1', '2'], parse_split("1\n2", LINES))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", LINES))
 end #parse_split
+def test_parse_into_array
+	string="1\n2"
+	pattern=Terminated_line
+	ending=:delimiter
+	assert_equal(Example_Answer, parse_into_array(string, pattern, ending))
+end #parse_into_array
 def test_parse_array
 	string_array=["1 2","3 4"]
 	pattern=WORDS
@@ -161,4 +177,11 @@ def test_parse_repetition
 	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
 	assert_parse_repetition(['1','2'], "1\n2\n",  Terminated_line, Any, 'test_assert_parse_sequence')
 end #parse_repetition
+def test_assert_parse
+	answer=
+	string=
+	pattern=
+	message=''
+	assert_parse(answer, string, pattern, message='')
+end #parse
 end #Parse
