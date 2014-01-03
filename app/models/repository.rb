@@ -269,6 +269,13 @@ end #branches?
 def remotes?
 	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
 end #branches?
+def rebase!
+	if remotes?.include?(current_branch_name?) then
+		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+	else
+		puts current_branch_name?+' has no remote branch in origin.'
+	end #if
+end #rebase!
 end #Repository
 
 
