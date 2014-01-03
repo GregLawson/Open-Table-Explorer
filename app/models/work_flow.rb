@@ -212,10 +212,10 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 	end #each
 end #merge_down
 def script_deserves_commit!(deserving_branch)
-if working_different_from?($0, 	WorkFlow::Branch_enhancement.index(deserving_branch)) then
-	repository.stage_files(deserving_branch, related_files.tested_files($0))
-	merge_down(deserving_branch)
-end #if
+	if working_different_from?($0, 	WorkFlow::Branch_enhancement.index(deserving_branch)) then
+		repository.stage_files(deserving_branch, related_files.tested_files($0))
+		merge_down(deserving_branch)
+	end #if
 end #script_deserves_commit!
 def test(executable=@related_files.model_test_pathname?)
 	begin
