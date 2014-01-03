@@ -11,6 +11,11 @@ require 'ostruct'
 require 'pp'
 require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
+scripting_workflow=WorkFlow.new($0)
+# good enough for testing; no syntax error
+if scripting_workflow.repository.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(:testing)) then
+end #if
+
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
