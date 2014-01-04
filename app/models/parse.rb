@@ -153,6 +153,7 @@ end #Assertions
 include Assertions
 module Examples
 include Constants
+include Regexp::Constants
 Newline_Delimited_String="1\n2"
 Newline_Terminated_String="1\n2"
 Example_Answer=['1', '2']

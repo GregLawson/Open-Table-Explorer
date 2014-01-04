@@ -9,8 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
 include Parse
-include Parse::Constants
-include Regexp::Constants
+include Parse::Examples
 def test_Constants
 #	assert_equal(LINES, LINES_cryptic)
 	assert_parse(['1', '2'], "1\n2", LINES, '')
@@ -122,7 +121,6 @@ def test_default_name
 	index=11
 	prefix='Col_'
 	prefix+index.to_s
-end #
 	assert_equal('Col_1', default_name(1))
 end #default_name
 def test_parse_name_values
