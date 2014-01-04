@@ -123,6 +123,8 @@ def test_default_name
 	prefix='Col_'
 	prefix+index.to_s
 end #
+	assert_equal('Col_1', default_name(1))
+end #default_name
 def test_parse_name_values
 	array=[]
 	pairs=[]

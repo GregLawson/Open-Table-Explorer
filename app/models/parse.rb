@@ -75,7 +75,7 @@ def parse(string_or_array, pattern=WORDS)
 end #parse
 def default_name(index, prefix='Col_')
 	prefix+index.to_s
-end #
+end #default_name
 def parse_name_values(array, pairs, new_names, pattern)
 	ret={}
 	next_pair=pairs.pop
