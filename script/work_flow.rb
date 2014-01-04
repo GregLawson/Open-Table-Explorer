@@ -13,10 +13,7 @@ require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 scripting_workflow=WorkFlow.new($0)
 # good enough for edited; no syntax error
-if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(:edited)) then
-	scripting_workflow.repository.stage_files(:edited, scripting_workflow.related_files.tested_files($0))
-end #if
-
+script_deserves_commit!(:edited)
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
@@ -74,6 +71,8 @@ if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.
 	scripting_workflow.repository.stage_files(:testing, scripting_workflow.related_files.tested_files($0))
 	scripting_workflow.merge_down(:testing) # good enough for testing; no syntax error
 end #if
+script_deserves_commit!(:testing)
+
 pp commands
 pp ARGV
 
@@ -127,6 +126,7 @@ commands.each do |c|
 			scripting_workflow.repository.stage_files(:passed, scripting_workflow.related_files.tested_files($0))
 			scripting_workflow.merge_down(:passed)
 		end #if
+		script_deserves_commit!(:passed)
 		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
