@@ -16,7 +16,7 @@ scripting_workflow=WorkFlow.new($0)
 if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(:edited)) then
 	scripting_workflow.repository.stage_files(:edited, scripting_workflow.related_files.tested_files($0))
 end #if
-
+script_deserves_commit!(:edited)
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
