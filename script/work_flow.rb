@@ -13,7 +13,7 @@ require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 scripting_workflow=WorkFlow.new($0)
 # good enough for edited; no syntax error
-script_deserves_commit!(:edited)
+scripting_workflow.script_deserves_commit!(:edited)
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
