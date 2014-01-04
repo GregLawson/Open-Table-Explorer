@@ -121,6 +121,7 @@ def assert_parse(answer, string, pattern, message='')
 end #parse
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 	match1=parse_string(string, pattern1)
+	assert_not_nil(match1)
 	assert_equal(answer[0, match1.size], match1, add_parse_message(string, pattern1, message))
 	match2=parse_string(string, pattern2)
 	assert_empty(match2-answer, add_parse_message(string, pattern2, message))
