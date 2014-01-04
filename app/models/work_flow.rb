@@ -208,6 +208,8 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
+			repository.confirm_commit(:interactive)
+
 		end #safely_visit_branch
 	end #each
 end #merge_down
