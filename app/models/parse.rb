@@ -9,8 +9,8 @@
 require_relative '../../app/models/regexp.rb'
 module Parse
 module Constants
-LINE=/[^\n]*/.capture
-Line_terminator=/\n/
+LINE=/[^\n]*/.capture(:line)
+Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 LINES=(Terminated_line*Regexp::Any)*LINE*(Line_terminator*Regexp::Optional)
@@ -33,6 +33,12 @@ def parse_string(string, pattern=LINES)
 		named_hash
 	end #if
 end #parse_string
+def parse_delimited(string, item_pattern, delimiter, ending=:optional)
+	array=string.split(delimiter)
+	ret=array.map do |l|
+		parse_string(l, item_pattern)
+	end #map
+end #parse_delimied
 # Splits pattern match captures into an array of parses
 # Uses Regexp capture mechanism in String#split
 def parse_split(string, pattern=Terminated_line)
@@ -115,10 +121,15 @@ end #newline_if_not_empty
 def add_parse_message(string, pattern, message='')
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
-def assert_parse(answer, string, pattern, message='')
-	message=add_parse_message(string, pattern, message)
+def assert_parse_string(answer, string, pattern, message='')
+	message=add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"
+	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
+	assert_match(pattern, string, message)
+	matchData=pattern.match(string)
+	assert_equal(pattern.names.size, matchData.size-1, "All string parse captures should be named.\n"+message)
 	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
-end #parse
+
+end #parse_string
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 	match1=parse_string(string, pattern1)
 	assert_not_nil(match1)
@@ -138,6 +149,7 @@ def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 	end #if
 end #parse_sequence
 def assert_parse_repetition(answer, string, pattern, repetition_range, message='')
+	assert_parse_string(answer, string, pattern*repetition_range, message)
 	match1=parse_string(string, pattern)
 	assert_equal(match1, answer[0, match1.size], add_parse_message(string, pattern, message))
 	match_any=parse_string(string, pattern*Regexp::Any)
@@ -157,7 +169,8 @@ module Examples
 include Constants
 include Regexp::Constants
 Newline_Delimited_String="1\n2"
-Newline_Terminated_String="1\n2"
+Newline_Terminated_String="* 1\n  2"
+Branch_regexp=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
 Example_Answer=['1', '2']
 end #Examples
 end #Parse
