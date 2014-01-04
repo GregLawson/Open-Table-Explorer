@@ -9,16 +9,13 @@ require_relative 'test_environment'
 require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
 include Parse
-include Parse::Constants
-include Regexp::Constants
+include Parse::Examples
 def test_Constants
 #	assert_equal(LINES, LINES_cryptic)
 	assert_parse(['1', '2'], "1\n2", LINES, '')
 	assert_parse(['1'], "1\n2\n", Terminated_line, "")
 	assert_parse_sequence(['1', '2'], "1\n2\n", Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
 	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
-	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line*Regexp::Any, Terminated_line, "assert_parse_sequence")
-	assert_parse(['1', '2'], "1\n2\n", LINES, "")
 	string="1\n2"
 	pattern=Parse::LINES
 	assert_equal(Example_Answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
@@ -53,6 +50,26 @@ def test_parse_split
 	string="1\n2\n"
 	pattern=LINE*Line_terminator
 	ending=:terminator
+	ret=string.split(pattern)
+	assert_equal(['', '1', '', '2'], ret)
+	assert_equal(['', '1', '2'], parse_split("1\n2", Terminated_line))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', "\n", '2'], parse_split("1\n2", LINE))
+	assert_equal(['', '1', "\n", '2', "\n"], parse_split("1\n2\n", LINE))
+	assert_equal(['1', '2'], parse_split("1\n2", Line_terminator))
+	assert_equal(['1', '2'], parse_split("1\n2\n", Line_terminator))
+	assert_equal(['', '1', '2'], parse_split("1\n2", LINES))
+	assert_equal(['', '2'], parse_split("1\n2\n", LINES))
+	assert_match("1\n2\n", Terminated_line, "assert_match")
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', '2'], parse_split("1\n2", Terminated_line))
+end #parse_split
+def test_parse_into_array
+	string="1\n2"
+	pattern=Terminated_line
+	ending=:delimiter
 	ret=case ending
 	when :optional then 
 		split=string.split(pattern)
@@ -71,26 +88,8 @@ def test_parse_split
 		end #if 
 	else
 	end #case
-	assert_equal(['1', '2'], ret)
-	assert_match("1\n2\n", Terminated_line, "assert_match")
-	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :terminator)
-	assert_equal(['1', '2', nil], parse_split("1\n2\n", Terminated_line, ""), :delimitor)
-	assert_equal(['1', '2'], parse_split("1\n2\n", Terminated_line, ""), :optional)
-	assert_equal(['1', '2'], parse_split("1\n2", Terminated_line, ""), :optional)
-	assert_equal(['', '1', '2'], parse_split("1\n2", Terminated_line))
-	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
-	assert_equal(['', '1', "\n", '2'], parse_split("1\n2", LINE))
-	assert_equal(['', '1', "\n", '2', "\n"], parse_split("1\n2\n", LINE))
-	assert_equal(['', '1', '2'], parse_split("1\n2", Line_terminator))
-	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Line_terminator))
-	assert_equal(['', '1', '2'], parse_split("1\n2", LINES))
-	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", LINES))
-end #parse_split
-def test_parse_into_array
-	string="1\n2"
-	pattern=Terminated_line
-	ending=:delimiter
-	assert_equal(Example_Answer, parse_into_array(string, pattern, ending))
+#	assert_equal(['1', '2'], ret)
+#	assert_equal(Example_Answer, parse_into_array(string, pattern, ending))
 end #parse_into_array
 def test_parse_array
 	string_array=["1 2","3 4"]
@@ -122,7 +121,8 @@ def test_default_name
 	index=11
 	prefix='Col_'
 	prefix+index.to_s
-end #
+	assert_equal('Col_1', default_name(1))
+end #default_name
 def test_parse_name_values
 	array=[]
 	pairs=[]
@@ -178,9 +178,9 @@ def test_parse_repetition
 	assert_parse_repetition(['1','2'], "1\n2\n",  Terminated_line, Any, 'test_assert_parse_sequence')
 end #parse_repetition
 def test_assert_parse
-	answer=
-	string=
-	pattern=
+	answer=Example_Answer
+	string=Newline_Delimited_String
+	pattern=LINES
 	message=''
 	assert_parse(answer, string, pattern, message='')
 end #parse
