@@ -56,15 +56,15 @@ def test_parse_split
 	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
 	assert_equal(['', '1', "\n", '2'], parse_split("1\n2", LINE))
 	assert_equal(['', '1', "\n", '2', "\n"], parse_split("1\n2\n", LINE))
-	assert_equal(['', '1', '2'], parse_split("1\n2", Line_terminator))
-	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Line_terminator))
+	assert_equal(['1', '2'], parse_split("1\n2", Line_terminator))
+	assert_equal(['1', '2'], parse_split("1\n2\n", Line_terminator))
 	assert_equal(['', '1', '2'], parse_split("1\n2", LINES))
-	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", LINES))
-	assert_match("1\n2\n", "assert_match")
-	assert_equal(['1', '2'], parse_split("1\n2\n", ""), :terminator)
-	assert_equal(['1', '2', nil], parse_split("1\n2\n", ""), :delimitor)
-	assert_equal(['1', '2'], parse_split("1\n2\n", ""), :optional)
-	assert_equal(['1', '2'], parse_split("1\n2", ""), :optional)
+	assert_equal(['', '2'], parse_split("1\n2\n", LINES))
+	assert_match("1\n2\n", Terminated_line, "assert_match")
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', '', '2'], parse_split("1\n2\n", Terminated_line))
+	assert_equal(['', '1', '2'], parse_split("1\n2", Terminated_line))
 end #parse_split
 def test_parse_into_array
 	string="1\n2"
@@ -178,9 +178,9 @@ def test_parse_repetition
 	assert_parse_repetition(['1','2'], "1\n2\n",  Terminated_line, Any, 'test_assert_parse_sequence')
 end #parse_repetition
 def test_assert_parse
-	answer=
-	string=
-	pattern=
+	answer=Example_Answer
+	string=Newline_Delimited_String
+	pattern=LINES
 	message=''
 	assert_parse(answer, string, pattern, message='')
 end #parse
