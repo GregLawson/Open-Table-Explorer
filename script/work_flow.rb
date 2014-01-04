@@ -118,10 +118,6 @@ commands.each do |c|
 			puts work_flow.related_files.inspect
 			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison? if $VERBOSE
 		end #case
-		if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(work_flow.repository.current_branch_name?)) then
-			scripting_workflow.repository.stage_files(:passed, scripting_workflow.related_files.tested_files($0))
-			scripting_workflow.merge_down(:passed)
-		end #if
 		script_deserves_commit!(:passed)
 		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
