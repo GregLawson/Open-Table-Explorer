@@ -40,6 +40,7 @@ def test_parse_string
 		matchData.names.each do |n| # return named subexpressions
 			named_hash[n.to_sym]=matchData[n]
 		end # each
+		named_hash
 	end #if
 	assert_equal(ret, parse_string(string, Branch_regexp))
 end #parse_string
@@ -50,38 +51,25 @@ def test_parse_delimited
 	ending=:delimiter
 	array=string.split(delimiter)
 	delimiters=string.split(item_pattern)
-	case ending
+	ret=case ending
 	when :optional then 
 		assert_operator(delimiters.size, :<=, array.size)
 		assert_operator(delimiters.size+1, :>=, array.size)
+		array
 	when :delimiter then 
 		assert_equal(delimiters.size-1, array.size)
+		array
 	when :terminator then
 		assert_equal(delimiters.size, array.size)
+		array
 	else
 		raise 'bad ending symbol.'
 	end #case
-	items=array.map do |l|
+	items=ret.map do |l|
 		parse_string(l, item_pattern)
 	end #map
-	ret=case ending
-	when :optional then 
-		split=string.split(pattern)
-		if items[-1].nil? then
-			items[0..-2] #drop empty
-		else
-			items
-		end #if 
-	when :delimiter then
-	when :terminator then
-		split=string.split(pattern)
-		if items[-1].nil? then
-			items[0..-2] #drop empty
-		else
-			items
-		end #if 
-	else
-	end #case
+	assert_equal([{}], ret)
+	assert_equal([{}], parse_delimited(string, item_pattern, delimiter, ending))
 end #parse_delimied
 def test_parse_split
 	string=Newline_Terminated_String
@@ -148,8 +136,8 @@ def test_parse
 	end #if
 	assert_equal(["1", "2"], parse("1 2", WORDS))
 	assert_equal(['3', '4'], parse_string('3 4', WORDS))
-	assert_equal(["1 2", "3 4"], parse_string(string_or_array, LINES))
-	assert_equal(["1 2", "3 4"], parse(string_or_array, LINES))
+#	assert_equal(["1 2", "3 4"], parse_string(string_or_array, LINES))
+#	assert_equal(["1 2", "3 4"], parse(string_or_array, LINES))
 	assert_equal(answer, parse(parse(string_or_array, LINES), WORDS))
 end #parse
 def test_default_name

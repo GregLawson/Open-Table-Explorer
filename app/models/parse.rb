@@ -34,8 +34,19 @@ def parse_string(string, pattern=LINES)
 	end #if
 end #parse_string
 def parse_delimited(string, item_pattern, delimiter, ending=:optional)
-	array=string.split(delimiter)
-	ret=array.map do |l|
+	items=string.split(delimiter)
+	delimiters=string.split(item_pattern)
+	ret=case ending
+	when :optional then 
+		array
+	when :delimiter then 
+		array
+	when :terminator then
+		array
+	else
+		raise 'bad ending symbol.'
+	end #case
+	ret=items.map do |l|
 		parse_string(l, item_pattern)
 	end #map
 end #parse_delimied
@@ -168,7 +179,7 @@ include Assertions
 module Examples
 include Constants
 include Regexp::Constants
-Newline_Delimited_String="1\n2"
+Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String="* 1\n  2"
 Branch_regexp=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
 Example_Answer=['1', '2']
