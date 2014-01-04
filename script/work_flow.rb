@@ -67,11 +67,7 @@ if commands.empty? then
 	puts 'No command; assuming test.'
 end #if
 # good enough for testing; no syntax error
-if scripting_workflow.working_different_from?($0, 	WorkFlow::Branch_enhancement.index(:testing)) then
-	scripting_workflow.repository.stage_files(:testing, scripting_workflow.related_files.tested_files($0))
-	scripting_workflow.merge_down(:testing) # good enough for testing; no syntax error
-end #if
-script_deserves_commit!(:testing)
+scripting_workflow.script_deserves_commit!(:testing)
 
 pp commands
 pp ARGV
