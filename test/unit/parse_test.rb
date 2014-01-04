@@ -16,8 +16,6 @@ def test_Constants
 	assert_parse(['1'], "1\n2\n", Terminated_line, "")
 	assert_parse_sequence(['1', '2'], "1\n2\n", Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
 	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
-	assert_parse_sequence(['1', '2'], "1\n2\n", Start_string*Terminated_line*Regexp::Any, Terminated_line, "assert_parse_sequence")
-	assert_parse(['1', '2'], "1\n2\n", LINES, "")
 	string="1\n2"
 	pattern=Parse::LINES
 	assert_equal(Example_Answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
