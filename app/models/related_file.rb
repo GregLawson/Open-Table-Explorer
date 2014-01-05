@@ -20,8 +20,12 @@ extend ClassMethods
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
 def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
-	raise message if model_class_name.nil?
-	@model_class_name=model_class_name.to_sym
+	if model_class_name.nil? then
+		warn message if model_class_name.nil?
+		@model_class_name=nil
+	else
+		@model_class_name=model_class_name.to_sym
+	end #if
 	if project_root_dir.nil? then
 		@project_root_dir='' #empty string not nil
 	else
