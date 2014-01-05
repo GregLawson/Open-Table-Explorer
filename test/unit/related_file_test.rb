@@ -6,6 +6,7 @@
 #
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
+require 'test/unit'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
