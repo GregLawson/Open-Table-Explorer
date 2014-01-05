@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'default_test_case.rb'
+#require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
 require_relative 'repository.rb'
 class WorkFlow
@@ -14,7 +14,7 @@ Branch_enhancement=[:passed, :testing, :edited]
 Last_slot_index=Branch_enhancement.size
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
-			:multiple_tests_fail	=> 2,
+			:multiple_tests_fail	=> 1, # visibility boundary
 			:initialization_fail => 2,
 			:syntax_error        => 2
 			}
