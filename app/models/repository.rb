@@ -265,7 +265,7 @@ def merge_conflict_files?
 end #merge_conflict_files?
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
-	Parse.parse_split(branch_output, /[* ]/*/[a-z0-9A-Z-_]+/.capture*/\n/, ending=:optional)
+	Parse.parse_split(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
 end #branches?
 def remotes?
 	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
@@ -274,7 +274,7 @@ def rebase!
 	if remotes?.include?(current_branch_name?) then
 		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
 	else
-		puts current_branch_name?+' has no remote branch in origin.'
+		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
 end #rebase!
 end #Repository
