@@ -50,6 +50,11 @@ def warn(message='', &block)
     end #begin
   end #if
 end #warn
+def info(message)
+	if $VERBOSE then
+		$stdout.puts message
+	end #if
+end #info     
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
 	message+=" Class #{self.class.name}"
