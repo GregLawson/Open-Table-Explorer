@@ -35,8 +35,11 @@ def parse_string(string, pattern=LINES)
 end #parse_string
 # Splits pattern match captures into an array of parses
 # Uses Regexp capture mechanism in String#split
-def parse_split(string, pattern=Terminated_line, ending=:optional)
+def parse_split(string, pattern=Terminated_line)
 	ret=string.split(pattern)
+end #parse_split
+def parse_into_array(string, pattern=Terminated_line, ending=:optional)
+	ret=parse_split(string, pattern)
 	case ending
 	when :optional then 
 		if ret[-1].nil? then
@@ -52,7 +55,8 @@ def parse_split(string, pattern=Terminated_line, ending=:optional)
 			ret
 		end #if 
 	end #case
-end #parse_split
+	
+end #parse_into_array
 def parse_array(string_array, pattern=WORDS)
 	string_array.map do |string|
 		parse(string,pattern)
@@ -71,7 +75,7 @@ def parse(string_or_array, pattern=WORDS)
 end #parse
 def default_name(index, prefix='Col_')
 	prefix+index.to_s
-end #
+end #default_name
 def parse_name_values(array, pairs, new_names, pattern)
 	ret={}
 	next_pair=pairs.pop
@@ -149,5 +153,8 @@ end #Assertions
 include Assertions
 module Examples
 include Constants
+Newline_Delimited_String="1\n2"
+Newline_Terminated_String="1\n2"
+Example_Answer=['1', '2']
 end #Examples
 end #Parse

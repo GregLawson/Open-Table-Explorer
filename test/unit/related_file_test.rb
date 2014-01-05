@@ -6,6 +6,7 @@
 #
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
+require 'test/unit'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
@@ -93,6 +94,11 @@ def test_default_tests_module_name
 end #default_tests_module?
 def test_test_case_class_name
 end #test_case_class?
+def test_functional_parallelism
+	edit_files=SELF.edit_files
+	assert_operator(SELF.functional_parallelism(edit_files).size, :>=, 1)
+	assert_operator(SELF.functional_parallelism.size, :<=, 4)
+end #functional_parallelism
 def test_tested_files
 	executable=SELF.model_test_pathname?
 	tested_files=SELF.tested_files(executable)

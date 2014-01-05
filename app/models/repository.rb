@@ -11,7 +11,7 @@ require 'grit'  # sudo gem install grit
 # code in @see /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
-require_relative 'file_pattern.rb'
+require_relative 'parse.rb'
 class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
@@ -263,6 +263,20 @@ def merge_conflict_files?
 	end #if
 	ret
 end #merge_conflict_files?
+def branches?
+	branch_output=git_command('branch --list').assert_post_conditions.output
+	Parse.parse_split(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
+end #branches?
+def remotes?
+	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
+end #branches?
+def rebase!
+	if remotes?.include?(current_branch_name?) then
+		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+	else
+		puts current_branch_name?.to_s+' has no remote branch in origin.'
+	end #if
+end #rebase!
 end #Repository
 
 

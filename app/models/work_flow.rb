@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'default_test_case.rb'
+#require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
 require_relative 'repository.rb'
 class WorkFlow
@@ -14,7 +14,7 @@ Branch_enhancement=[:passed, :testing, :edited]
 Last_slot_index=Branch_enhancement.size
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
-			:multiple_tests_fail	=> 2,
+			:multiple_tests_fail	=> 1, # visibility boundary
 			:initialization_fail => 2,
 			:syntax_error        => 2
 			}
@@ -125,18 +125,8 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 
 	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
 end #goldilocks
-def functional_parallelism(edit_files=@related_files.edit_files)
-	[
-	[related_files.model_pathname?, related_files.model_test_pathname?],
-	[related_files.assertions_pathname?, related_files.model_test_pathname?],
-	[related_files.model_test_pathname?, related_files.pathname_pattern?(:integration_test)],
-	[related_files.assertions_pathname?, related_files.assertions_test_pathname?]
-	].select do |fp|
-		fp-edit_files==[] # files must exist to be edited?
-	end #map
-end #functional_parallelism
 def test_files(edit_files=@related_files.edit_files)
-	pairs=functional_parallelism(edit_files).map do |p|
+	pairs=@related_files.functional_parallelism(edit_files).map do |p|
 
 		' -t '+p.map do |f|
 			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
@@ -218,9 +208,17 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
+			repository.confirm_commit(:interactive)
+
 		end #safely_visit_branch
 	end #each
 end #merge_down
+def script_deserves_commit!(deserving_branch)
+	if working_different_from?($0, 	WorkFlow::Branch_enhancement.index(deserving_branch)) then
+		repository.stage_files(deserving_branch, related_files.tested_files($0))
+		merge_down(deserving_branch)
+	end #if
+end #script_deserves_commit!
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		merge_conflict_recovery

@@ -53,9 +53,9 @@ def test_revison_tag
 	assert_equal('-r stash', WorkFlow.revison_tag(3))
 end #revison_tag
 def test_merge_range
-	assert_equal(0..2, WorkFlow.merge_range(:passed))
-	assert_equal(1..2, WorkFlow.merge_range(:testing))
-	assert_equal(2..2, WorkFlow.merge_range(:edited))
+	assert_equal(1..2, WorkFlow.merge_range(:passed))
+	assert_equal(2..2, WorkFlow.merge_range(:testing))
+	assert_equal(3..2, WorkFlow.merge_range(:edited))
 end #merge_range
 def test_initialize
 	te=RelatedFile.new(TestFile)
@@ -129,11 +129,6 @@ def test_execute
 #	assert_equal('', TestWorkFlow.version_comparison)
 #	assert_equal('', TestWorkFlow.test_files)
 end #execute
-def test_functional_parallelism
-	edit_files=TestWorkFlow.related_files.edit_files
-	assert_operator(TestWorkFlow.functional_parallelism(edit_files).size, :>=, 1)
-	assert_operator(TestWorkFlow.functional_parallelism.size, :<=, 4)
-end #functional_parallelism
 def test_test_files
 	assert_equal('', TestWorkFlow.test_files([]))
 # 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
