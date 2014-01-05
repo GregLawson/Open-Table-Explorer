@@ -166,6 +166,21 @@ def test_validate_commit
 	Minimal_repository.git_command('checkout passed')
 	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
 end #validate_commit
+def test_something_to_commit?
+	assert_respond_to(Minimal_repository.grit_repo, :status)
+	assert_instance_of(Grit::Status, Minimal_repository.grit_repo.status)
+	status=Minimal_repository.grit_repo.status
+	assert_instance_of(Hash, status.added)
+	assert_instance_of(Hash, status.changed)
+	assert_instance_of(Hash, status.deleted)
+	assert_equal({}, status.added)
+	assert_equal({}, status.changed)
+	assert_equal({}, status.deleted)
+	assert((status.added=={}), status.inspect)
+	Minimal_repository.assert_nothing_to_commit
+	Minimal_repository.force_change
+	assert(Minimal_repository.something_to_commit?, Minimal_repository.grit_repo.status.inspect)
+end #something_to_commit
 def test_testing_superset_of_passed
 	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
