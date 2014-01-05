@@ -14,7 +14,7 @@ Branch_enhancement=[:passed, :testing, :edited]
 Last_slot_index=Branch_enhancement.size
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
-			:multiple_tests_fail	=> 2,
+			:multiple_tests_fail	=> 1, # visibility boundary
 			:initialization_fail => 2,
 			:syntax_error        => 2
 			}
