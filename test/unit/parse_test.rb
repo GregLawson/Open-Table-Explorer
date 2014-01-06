@@ -42,7 +42,7 @@ def test_parse_string
 		end # each
 		named_hash
 	end #if
-	assert_equal(Example_Answer, parse_string(string, Parse::LINES), "matchData=#{matchData.inspect}")
+	assert_equal(Example_Answer, parse_string(string, Parse::LINE), "matchData=#{matchData.inspect}")
 	assert_equal(Example_Answer, parse_string(string), "matchData=#{matchData.inspect}")
 #	assert_equal(Example_Answer, parse_string("1 2", Parse::WORDS))
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
