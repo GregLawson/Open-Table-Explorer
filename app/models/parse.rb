@@ -19,7 +19,7 @@ CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
 # Input String, Output Hash
-def parse_string(string, pattern=LINE)
+def parse_string(string, pattern=Terminated_line)
 	matchData=string.match(pattern)
   if matchData.nil? then
     []
