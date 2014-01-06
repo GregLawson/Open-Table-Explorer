@@ -181,7 +181,8 @@ include Constants
 include Regexp::Constants
 Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String="* 1\n  2"
-Branch_regexp=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
 Example_Answer={:line=>"1", :terminator=>"\n"}
+Branch_regexp=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
+Branch_answer=['1', '2']
 end #Examples
 end #Parse
