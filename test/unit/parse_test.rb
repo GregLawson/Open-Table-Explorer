@@ -42,7 +42,11 @@ def test_parse_string
 		end # each
 		named_hash
 	end #if
-	assert_equal(ret, parse_string(string, Branch_regexp))
+	assert_equal(Example_Answer, parse_string(string, Parse::LINES), "matchData=#{matchData.inspect}")
+	assert_equal(Example_Answer, parse_string(string), "matchData=#{matchData.inspect}")
+#	assert_equal(Example_Answer, parse_string("1 2", Parse::WORDS))
+#	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
+#	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
 def test_parse_delimited
 	string=Newline_Delimited_String
