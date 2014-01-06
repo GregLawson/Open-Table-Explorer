@@ -18,7 +18,8 @@ WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
-def parse_string(string, pattern=LINES)
+# Input String, Output Hash
+def parse_string(string, pattern=LINE)
 	matchData=string.match(pattern)
   if matchData.nil? then
     []
@@ -55,6 +56,7 @@ end #parse_delimied
 def parse_split(string, pattern=Terminated_line)
 	ret=string.split(pattern)
 end #parse_split
+# Input String, Output Array
 def parse_into_array(string, pattern=Terminated_line, ending=:optional)
 	ret=parse_split(string, pattern)
 	case ending
@@ -74,6 +76,7 @@ def parse_into_array(string, pattern=Terminated_line, ending=:optional)
 	end #case
 	
 end #parse_into_array
+# Input Array of Strings, Output Array of Hash
 def parse_array(string_array, pattern=WORDS)
 	string_array.map do |string|
 		parse(string,pattern)
@@ -180,9 +183,9 @@ module Examples
 include Constants
 include Regexp::Constants
 Newline_Delimited_String="* 1\n  2"
-Newline_Terminated_String="* 1\n  2"
-Example_Answer={:line=>"1", :terminator=>"\n"}
+Newline_Terminated_String=Newline_Delimited_String+"\n"
+Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Branch_regexp=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
-Branch_answer=['1', '2']
+Array_answer=['1', '2']
 end #Examples
 end #Parse
