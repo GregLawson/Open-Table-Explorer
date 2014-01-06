@@ -18,11 +18,11 @@ def test_Constants
 	assert_parse_sequence(['1', '2'], Newline_Terminated_String, Start_string*Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
 	string="1\n2"
 	pattern=Parse::LINES
-	assert_equal(Example_Answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
+	assert_equal(Hash_answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
 end #Constants
 def test_parse_string
 	string="* 1\n"
-	pattern=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
+	pattern=Branch_regexp
 	matchData=string.match(Branch_regexp)
 	assert_equal(['1'], matchData[1..-1], matchData.inspect) # return matched subexpressions
 	assert_equal({:branch => '1'}, parse_string(string, Branch_regexp)) # return matched subexpressions
@@ -31,7 +31,7 @@ def test_parse_string
 	ret=if matchData.nil? then
     []
 	elsif matchData.names==[] then
-		assert_equal(Example_Answer, matchData[1..-1], matchData) # return unnamed subexpressions
+		assert_equal(Hash_answer, matchData[1..-1], matchData) # return unnamed subexpressions
 	else
 		nc=pattern.named_captures
 		assert_not_nil(nc)
@@ -42,9 +42,9 @@ def test_parse_string
 		end # each
 		named_hash
 	end #if
-	assert_equal(Example_Answer, parse_string(string, Parse::LINE), "matchData=#{matchData.inspect}")
-	assert_equal(Example_Answer, parse_string(string), "matchData=#{matchData.inspect}")
-#	assert_equal(Example_Answer, parse_string("1 2", Parse::WORDS))
+	assert_equal(Hash_answer, parse_string(string, Parse::Terminated_line), "matchData=#{matchData.inspect}")
+	assert_equal(Hash_answer, parse_string(string), "matchData=#{matchData.inspect}")
+#	assert_equal(Hash_answer, parse_string("1 2", Parse::WORDS))
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
@@ -223,7 +223,7 @@ def test_parse_repetition
 	assert_parse_repetition(['1','2'], Newline_Terminated_String,  Terminated_line, Any, 'test_assert_parse_sequence')
 end #parse_repetition
 def test_assert_parse_string
-	answer=Example_Answer
+	answer=Hash_answer
 	string=Newline_Delimited_String
 	pattern=LINES
 	message=''
