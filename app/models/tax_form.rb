@@ -124,6 +124,8 @@ module ClassMethods
 include Test::Unit::Assertions
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
+	assert_not_nil(ENV['USER'], "ENV['USER']\n"+message) # defined inXfce & Gnome
+	warn {assert_not_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } #not defined in Xfce.
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
@@ -192,7 +194,7 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Example_Taxpayer=ENV['USERNAME'].to_sym
+Example_Taxpayer=ENV['USER'].to_sym
 US1040_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US)
 CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA)
 US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US, Default_tax_year, Data_source_directory)
