@@ -65,7 +65,8 @@ def assertions_test_pathname?
 	pathname_pattern?(:assertions_test)
 end #assertions_test_pathname?
 def data_sources_directory?
-	@project_root_dir+'test/data_sources/'
+	pathname_pattern?(:data_sources_dir)
+#	@project_root_dir+'test/data_sources/'
 end #data_sources_directory
 #  Initially the number of files for the model
 def pathnames?
