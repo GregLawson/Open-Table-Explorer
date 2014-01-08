@@ -151,6 +151,9 @@ def assert_open_tax_solver
 	assert_pathname_exists(@open_tax_solver_output)
 	assert_pathname_exists(@open_tax_solver_sysout)
 end #assert_open_tax_solver
+def assert_ots_to_json
+	@ots_to_json_run.assert_post_conditions
+end #assert_ots_to_json
 def assert_json_to_fdf
 	@json_to_fdf_run.assert_post_conditions
 end #assert_json_to_fdf
@@ -169,7 +172,7 @@ def assert_build
 	if !@open_tax_solver_run.success? then
 		assert_open_tax_solver
 	elsif !@ots_to_json_run.success? then
-		@json_to_fdf_run.assert_post_conditions
+		assert_ots_to_json
 	elsif !@json_to_fdf_run.success? then
 		assert_json_to_fdf
 	elsif !@fdf_to_pdf_run.success? then
