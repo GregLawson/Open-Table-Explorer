@@ -52,13 +52,13 @@ def test_initialize
 	assert_equal('CA_540_2012_template', CA540_template.taxpayer_basename)
 end #initialize
 def test_build
-	US1040_example.build.assert_build
-	CA540_example.build.assert_build
-	US1040_user.build.assert_build
-	CA540_user.build.assert_build
-	US1040_example1.build.assert_build
-	US1040_template.build.assert_build
-	CA540_template.build.assert_build
+	US1040_example.build.assert_build.assert_pdf_to_jpeg
+	CA540_example.build.assert_build.assert_pdf_to_jpeg
+	US1040_user.build.assert_build.assert_pdf_to_jpeg
+	CA540_user.build.assert_build.assert_pdf_to_jpeg
+	US1040_example1.build.assert_build.assert_open_tax_solver
+	US1040_template.build.assert_build.assert_open_tax_solver
+	CA540_template.build.assert_build.assert_open_tax_solver
 #	Repository.new(Data_source_directory).git_command('git diff edited -- test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt').assert_post_conditions
 end #build
 def test_run_tax_solver
