@@ -59,6 +59,7 @@ def test_build
 	US1040_example1.build.assert_build
 	US1040_template.build.assert_build
 	CA540_template.build.assert_build
+#	Repository.new(Data_source_directory).git_command('git diff edited -- test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt').assert_post_conditions
 end #build
 def test_run_tax_solver
 	form='1040'
