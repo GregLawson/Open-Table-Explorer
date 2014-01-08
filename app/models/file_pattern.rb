@@ -20,7 +20,7 @@ Patterns=[
 	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'},
-	{:suffix =>'*', :name => :data_sources_dir, :sub_directory => 'test/dsta_sources/'}
+	{:suffix =>'*', :name => :data_sources_dir, :sub_directory => 'test/data_sources/'}
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
 include Regexp::Constants
