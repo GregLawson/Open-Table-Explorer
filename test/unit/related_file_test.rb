@@ -56,7 +56,7 @@ def test_assertions_test_pathname
 	assert_data_file(UnboundedFixnumRelatedFile.assertions_test_pathname?)
 end #assertions_test_pathname?
 def test_data_sources_directory
-#	assert_pathname_exists(TE.data_sources_directory?)
+	assert_equal'', (TE.data_sources_directory?)
 end #data_sources_directory
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
