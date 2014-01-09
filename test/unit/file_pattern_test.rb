@@ -96,6 +96,29 @@ def test_project_root_dir
 	assert_not_nil(path)
 	assert_not_empty(path)
 	assert(File.exists?(path))
+	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
+	pattern=FilePattern.find_by_name(path)
+	script_directory_pathname=File.dirname(path)+'/'
+	script_directory_name=File.basename(script_directory_pathname)
+	ret=case script_directory_name
+	when 'unit' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'assertions' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'long_test' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'integration' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'script' then
+		File.dirname(script_directory_pathname)+'/'
+	when 'models'
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	else
+		warn "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
+		script_directory_name+'/'
+	end #case
+	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
+	assert_equal('', FilePattern.project_root_dir?(path))
 end #project_root_dir
 def test_find_by_name
 	FilePattern::All.each do |s|
