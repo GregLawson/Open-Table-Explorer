@@ -60,7 +60,7 @@ def test_data_sources_directory
 	message+='Dir[TE.data_sources_directory?]='+Dir[TE.data_sources_directory?].inspect+"\n"
 	assert_not_empty(TE.data_sources_directory?, message)
 	assert_empty(Dir[TE.data_sources_directory?], message)
-	related_file=RelatedFile.new('test/unit/tax_form_test.rb')
+	related_file=RelatedFile.new_from_path?('test/unit/tax_form_test.rb')
 	message='related_file='+related_file.inspect+"\n"
 	message+='related_file.data_sources_directory?='+related_file.data_sources_directory?+"\n"
 	message+='Dir[related_file.data_sources_directory?]='+Dir[related_file.data_sources_directory?].inspect+"\n"
