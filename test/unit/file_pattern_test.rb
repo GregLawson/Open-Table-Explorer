@@ -128,11 +128,16 @@ def test_find_by_name
 	end #find
 end #find_by_name
 def test_find_from_path
-	assert_equal(:model, FilePattern.find_from_path(SELF_Model), "Patterns[0], 'app/models/'")
-	assert_equal(:test, FilePattern.find_from_path(SELF_Test), "Patterns[2], 'test/unit/'")
-	assert_equal(:script, FilePattern.find_from_pathFilePattern.find_from_path(DCT_filename), "Patterns[1], 'script/'")
-	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb'), "(Patterns[3], 'test/assertions/'")
-	assert_equal(:assertions_test, FilePattern.find_from_path('test/unit/_assertions_test.rb'), "(Patterns[4], 'test/unit/'")
+	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
+	assert_equal(:test, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
+	assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
+	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
+	path='test/unit/_assertions_test.rb'
+	p=All[4]
+	assert(p.sub_directory_match(path))
+	assert(p.suffix_match(path))
+
+	assert_equal(:assertions_test, FilePattern.find_from_path(path)[:name], "(Patterns[4], 'test/unit/'")
 	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
 	pattern=FilePattern.find_from_path(path)
 	assert_not_nil(pattern, path)
