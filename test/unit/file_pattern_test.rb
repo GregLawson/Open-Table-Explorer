@@ -162,7 +162,7 @@ extend FilePattern::Assertions::ClassMethods
 #end # class_assert_invariant
 def test_sub_directory_match
 	path='test/unit/_assertions_test.rb'
-	p=All[4]
+	p=FilePattern.find_from_path(path)
 	assert(p.suffix_match(path))
 	assert(p.sub_directory_match(path))
 end #sub_directory_match
