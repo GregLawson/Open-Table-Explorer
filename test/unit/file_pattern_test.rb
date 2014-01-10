@@ -171,7 +171,7 @@ def test_sub_directory_match
 		match_length=expected_sub_directory.size
 		assert_operator(match_length, :<=, sub_directory.size, p)
 		assert_not_nil(sub_directory[-match_length,match_length], sub_directory)
-		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory)
+		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory, p.inspect)
 		assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory)
 		assert(p.sub_directory_match(p[:example_file]), p.inspect)
 	end #map
