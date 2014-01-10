@@ -98,6 +98,8 @@ def test_project_root_dir
 	assert(File.exists?(path))
 	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
 	pattern=FilePattern.find_by_name(path)
+	assert_not_nil(pattern, path)
+	assert_equal(:data_soures_dir, pattern[:name])
 	script_directory_pathname=File.dirname(path)+'/'
 	script_directory_name=File.basename(script_directory_pathname)
 	ret=case script_directory_name
@@ -114,7 +116,7 @@ def test_project_root_dir
 	when 'models'
 		File.expand_path(script_directory_pathname+'../../')+'/'
 	else
-		warn "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
+		fail "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
 		script_directory_name+'/'
 	end #case
 	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
@@ -125,6 +127,22 @@ def test_find_by_name
 		assert_equal(s, FilePattern.find_by_name(s[:name]), s.inspect)
 	end #find
 end #find_by_name
+def test_find_from_path
+	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
+	assert_equal(:test, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
+	assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
+	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
+	path='test/unit/_assertions_test.rb'
+	p=All[4]
+	assert(p.sub_directory_match(path))
+	assert(p.suffix_match(path))
+
+	assert_equal(:assertions_test, FilePattern.find_from_path(path)[:name], "(Patterns[4], 'test/unit/'")
+	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
+	pattern=FilePattern.find_from_path(path)
+	assert_not_nil(pattern, path)
+	assert_equal(:data_sources_dir, pattern[:name])
+end #find_from_path
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
 	assert_equal(All.size, FilePattern.pathnames?('test').size)
@@ -158,8 +176,8 @@ end #class_assert_pre_conditions
 def test_class_assert_post_conditions
 	FilePattern.assert_post_conditions
 end #class_assert_post_conditions
-def assert_pattern_srray(array)
-end #assert_pattern_srray
+def assert_pattern_array(array)
+end #assert_pattern_array
 def test_assert_naming_convention_match
 	expected_match=4
 	path='test/long_test/rebuild_test.rb'
