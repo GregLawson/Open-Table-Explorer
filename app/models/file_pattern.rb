@@ -18,7 +18,7 @@ Patterns=[
 	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/', :example_file => 'script/work_flow.rb'},
 	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/', :example_file => 'test/integration/repository_test.rb'}, 
 	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
-	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/repository_assertions.rb', :example_file => 'test/assertions/'}, 
+	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb'},
 	{:suffix =>'*', :name => :data_sources_dir, :sub_directory => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540'}
 	]
