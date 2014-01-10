@@ -165,7 +165,7 @@ def test_sub_directory_match
 	assert(p.suffix_match(path))
 	assert(p.sub_directory_match(path))
 	successes=All.map do |p|
-		sub_directory=File.dirname(path)
+		sub_directory=File.dirname(p[:example_file])
 		expected_sub_directory=p[:sub_directory][0..-2] # drops trailing /
 		match_length=expected_sub_directory.size
 		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory)
