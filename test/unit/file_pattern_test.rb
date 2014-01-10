@@ -134,9 +134,8 @@ def test_find_from_path
 	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
 	path='test/unit/_assertions_test.rb'
 	p=All[4]
-	assert(p.sub_directory_match(path))
 	assert(p.suffix_match(path))
-
+	assert(p.sub_directory_match(path))
 	assert_equal(:assertions_test, FilePattern.find_from_path(path)[:name], "(Patterns[4], 'test/unit/'")
 	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
 	pattern=FilePattern.find_from_path(path)
@@ -161,6 +160,10 @@ extend FilePattern::Assertions::ClassMethods
 #	FilePattern.assert_invariant
 #end # class_assert_invariant
 def test_sub_directory_match
+	path='test/unit/_assertions_test.rb'
+	p=All[4]
+	assert(p.suffix_match(path))
+	assert(p.sub_directory_match(path))
 end #sub_directory_match
 def test_path
 end #path

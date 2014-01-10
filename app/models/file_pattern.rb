@@ -13,14 +13,14 @@ class FilePattern <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns=[
-	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
-	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
-	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
-	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
-	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/'}, 
-	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
-	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'},
-	{:suffix =>'*', :name => :data_sources_dir, :sub_directory => 'test/data_sources/'}
+	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/', :example_file => __FILE__},
+	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/', :example_file => $0},
+	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/', :example_file => 'script/work_flow.rb'},
+	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/', :example_file => 'test/integration/repository_test.rb'}, 
+	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
+	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/', :example_file => 'test/assertions/'}, 
+	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/', :example_file => 'test/unit/'},
+	{:suffix =>'*', :name => :data_sources_dir, :sub_directory => 'test/data_sources/', :example_file => 'test/data_sources/'}
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
 include Regexp::Constants
