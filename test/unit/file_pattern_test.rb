@@ -165,7 +165,7 @@ def test_sub_directory_match
 	assert(p.suffix_match(path))
 	assert(p.sub_directory_match(path))
 	successes=All.map do |p|
-		assert(p.sub_directory_match(p[:example_file]), p)
+		assert(p.sub_directory_match(p[:example_file]), p.inspect)
 	end #map
 end #sub_directory_match
 def test_path
