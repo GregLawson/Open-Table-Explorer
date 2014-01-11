@@ -13,13 +13,14 @@ class FilePattern <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns=[
-	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/'}, 
-	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/'}, 
-	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/'}, 
-	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/'}, 
-	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/'}, 
-	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/'}, 
-	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/'}
+	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/', :example_file => __FILE__},
+	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/', :example_file => $0},
+	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/', :example_file => 'script/work_flow.rb'},
+	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/', :example_file => 'test/integration/repository_test.rb'}, 
+	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
+	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb'}, 
+	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb'},
+	{:suffix =>'*', :name => :data_sources_dir, :sub_directory => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540'}
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
 include Regexp::Constants
@@ -84,7 +85,7 @@ def find_from_path(path)
 	Constants::All.find do |p|
 		p.sub_directory_match(path) && p.suffix_match(path)
 	end #find
-end #pattern_from_path
+end #find_from_path
 def pathnames?(model_basename)
 #	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
 	raise "model_basename" if model_basename.nil?
@@ -105,7 +106,7 @@ def initialize(hash)
 	super(hash)
 end #initialize
 #def inspect
-#	message="FilePattern<instance_variables=#{instance_variables.inspect}, @self=#{self.inspect}>"
+#	message="FilePattern<instance_variables=#{instance_variables.inspect}, self=#{self.inspect}>"
 #end #inspect
 def suffix_match(path)
 	path[-self[:suffix].size, self[:suffix].size] == self[:suffix]
@@ -163,7 +164,7 @@ def assert_pattern_array(array, array_message='')
 		message=array_message+" \n n=#{n.inspect}"
 		n.assert_pre_conditions(message)
 	end #map
-end #assert_pattern_srray
+end #assert_pattern_array
 end #ClassMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
