@@ -215,16 +215,6 @@ def something_to_commit?
 	puts message if $VERBOSE
 	ret
 end #something_to_commit
-def commit_to_branch(target_branch, tested_files)
-	push_branch=stage(target_branch, tested_files)
-	if push_branch!=target_branch then
-		git_command('checkout '+push_branch.to_s).assert_post_conditions
-		git_command('checkout stash apply').assert_post_conditions
-		merge_conflict_files?.each do |conflict|
-			git_command('diffuse -m '+conflict[:file])
-		end #each
-	end #if
-end #commit_to_branch
 def testing_superset_of_passed
 	git_command("shortlog testing..master")
 end #testing_superset_of_passed
