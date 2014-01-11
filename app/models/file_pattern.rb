@@ -106,7 +106,7 @@ def initialize(hash)
 	super(hash)
 end #initialize
 #def inspect
-#	message="FilePattern<instance_variables=#{instance_variables.inspect}, @self=#{self.inspect}>"
+#	message="FilePattern<instance_variables=#{instance_variables.inspect}, self=#{self.inspect}>"
 #end #inspect
 def suffix_match(path)
 	path[-self[:suffix].size, self[:suffix].size] == self[:suffix]
