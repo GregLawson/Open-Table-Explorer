@@ -113,7 +113,7 @@ def suffix_match(path)
 end #suffix_match
 def sub_directory_match(path)
 	path=File.expand_path(path)
-	@sub_directory.match(path)
+	self[sub_directory].match(path)
 #	sub_directory=File.dirname(path)
 #	expected_sub_directory=self[:sub_directory][0..-2] # drops trailing /
 #	sub_directory[-expected_sub_directory.size,expected_sub_directory.size]==expected_sub_directory
