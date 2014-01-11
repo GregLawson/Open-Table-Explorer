@@ -163,7 +163,6 @@ extend FilePattern::Assertions::ClassMethods
 def test_sub_directory_match
 	path='test/unit/_assertions_test.rb'
 	p=FilePattern.find_from_path(path)
-	assert(p.suffix_match(path))
 	assert(p.sub_directory_match(path))
 	successes=All.map do |p|
 		sub_directory=File.dirname(p[:example_file])
@@ -172,9 +171,11 @@ def test_sub_directory_match
 		assert_operator(match_length, :<=, sub_directory.size, p)
 		assert_not_nil(sub_directory[-match_length,match_length], sub_directory)
 		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory, p.inspect)
-		assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory)
 		assert(p.sub_directory_match(p[:example_file]), p.inspect)
 	end #map
+	assert(successes.all? do |sub_directory_match|
+		sub_directory_match
+	end #all?, successes.inspect)
 end #sub_directory_match
 def test_path
 end #path
