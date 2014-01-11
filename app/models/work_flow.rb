@@ -36,6 +36,7 @@ def all(pattern_name=:test)
 end #all
 def branch_symbol?(branch_index)
 	case branch_index
+	when -2 then :'origin/master'
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
@@ -46,7 +47,7 @@ def revison_tag(branch_index)
 	return '-r '+branch_symbol?(branch_index).to_s
 end #revison_tag
 def merge_range(deserving_branch)
-	deserving_index=Branch_enhancement.index(deserving_branch)
+	deserving_index=WorkFlow.branch_symbol?(deserving_branch)
 	if deserving_index.nil? then
 		raise deserving_branch.inspect+'not found in '+Branch_enhancement.inspect
 	else
@@ -88,7 +89,7 @@ def version_comparison(files=nil)
 end #version_comparison
 def working_different_from?(filename, branch_index)
 	raise filename+" does not exist." if !File.exists?(filename)
-	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
+	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index)} -- "+filename)
 	if diff_run.output=='' then
 		false # no difference
 	elsif diff_run.output.split("\n").size>=2 then
@@ -119,7 +120,7 @@ def bracketing_versions?(filename, current_index)
 	[left_index, right_index]
 end #bracketing_versions?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
-	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
+	current_index=WorkFlow.branch_symbol?(middle_branch)
 	left_index,right_index=bracketing_versions?(filename, current_index)
 	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
@@ -214,7 +215,7 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 	end #each
 end #merge_down
 def script_deserves_commit!(deserving_branch)
-	if working_different_from?($0, 	WorkFlow::Branch_enhancement.index(deserving_branch)) then
+	if working_different_from?($0, 	WorkFlow.branch_symbol?(deserving_branch)) then
 		repository.stage_files(deserving_branch, related_files.tested_files($0))
 		merge_down(deserving_branch)
 	end #if
