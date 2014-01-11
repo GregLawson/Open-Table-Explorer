@@ -120,6 +120,9 @@ extend FilePattern::Assertions::ClassMethods
 #	FilePattern.assert_invariant
 #end # class_assert_invariant
 def test_sub_directory_match
+	path='test/unit/_assertions_test.rb'
+	p=FilePattern.find_from_path(path)
+	assert(p.sub_directory_match(path))
 end #sub_directory_match
 def test_path
 end #path
@@ -135,8 +138,8 @@ end #class_assert_pre_conditions
 def test_class_assert_post_conditions
 	FilePattern.assert_post_conditions
 end #class_assert_post_conditions
-def assert_pattern_srray(array)
-end #assert_pattern_srray
+def assert_pattern_array(array)
+end #assert_pattern_array
 def test_assert_naming_convention_match
 	expected_match=4
 	path='test/long_test/rebuild_test.rb'
