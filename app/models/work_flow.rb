@@ -177,26 +177,19 @@ def merge_conflict_recovery
 #           D           U    unmerged, deleted by us
 #           A           A    unmerged, both added
 #           U           U    unmerged, both modified
-		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
-		if File.exists?('.git/MERGE_HEAD') then
-			unmerged_files.split("\n").map do |line|
-				file=line[3..-1]
-				puts 'ruby script/workflow.rb --test '+file
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig')
-				case line[0..1]
-				when 'UU' then WorkFlow.new(file).edit
-				else
-					raise 'line'
-				end #case
-			end #map
-			merge_abort=@repository.git_command('merge --abort')
-		else
-			@repository.confirm_commit(:interactive)
-		end #if
+	if File.exists?('.git/MERGE_HEAD') then
+		merge_conflict_files?.each do |conflict|
+
+			case conflict[:conflict]
+			when 'UU' then WorkFlow.new(conflict[file]).edit
+			else
+				raise conflict.inspect
+			end #case
+		end #each
+		@repository.confirm_commit(:interactive)
+	else
+		puts 'No merge conflict'
+	end #if
 end #merge_conflict_recovery
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
