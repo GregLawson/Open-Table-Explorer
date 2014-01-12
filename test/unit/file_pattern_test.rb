@@ -146,11 +146,15 @@ end #class_assert_pre_conditions
 def test_class_assert_post_conditions
 	FilePattern.assert_post_conditions
 end #class_assert_post_conditions
-def assert_pattern_array(array)
+def test_assert_pattern_array
+	array=FilePattern::All
 	successes=array.map do |p|
+		p.assert_pre_conditions
 		p[:example_file].match(p[:sub_directory])
+		p[:example_file].match(p[:suffix])
 	end #map
 	assert(successes.all?, successes.inspect+"\n"+array.inspect)
+	assert_pattern_array(FilePattern::All)
 end #assert_pattern_array
 def test_assert_naming_convention_match
 	expected_match=4
