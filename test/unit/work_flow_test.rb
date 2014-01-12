@@ -111,7 +111,7 @@ end #different_indices?
 def test_scan_verions?
 	range=-1..3
 	filename='test/unit/minimal2_test.rb'
-	assert_equal(-1, TestWorkFlow.scan_verions?(filename, range, :last))
+	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last))
 	assert_equal(Last_slot_index, TestWorkFlow.scan_verions?(filename, range, :first))
 	
 end #scan_verions?
@@ -120,12 +120,12 @@ def test_bracketing_versions?
 	current_index=0
 	left_index=TestWorkFlow.scan_verions?(filename, -1..current_index, :last)
 	right_index=TestWorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
-	assert_equal(-1, TestWorkFlow.scan_verions?(filename, -1..current_index, :last))
-	assert_equal(-1, left_index)
+	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, -1..current_index, :last))
+	assert_equal(First_slot_index, left_index)
 	assert(!TestWorkFlow.working_different_from?(filename, 1))
 	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
 	assert_equal(Last_slot_index, right_index)
-	assert_equal([-1, Last_slot_index], TestWorkFlow.bracketing_versions?(filename, 0))
+	assert_equal([First_slot_index, Last_slot_index], TestWorkFlow.bracketing_versions?(filename, 0))
 end #bracketing_versions?
 def test_goldilocks
 	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
