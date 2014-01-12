@@ -28,11 +28,6 @@ def test_Constants
 	assert_match(Relative_directory_regexp, All[0][:sub_directory])
 	assert_match(Absolute_directory_regexp, Project_root_directory)
 #	assert_match(Relative_pathname_regexp, )
-	successes=All.map do |p|
-		p[:example_file].match(p.sub_directory)
-	end #map
-	assert(successes.all?, successes.inspect+"\n"+All.inspect)
-
 end #Constants
 def test_all
 	assert_not_empty(FilePattern.all)
@@ -43,12 +38,10 @@ def test_all
 	Patterns.each_with_index  do |p, i| 
 		n=FilePattern.new(p)
 		message=array_message+"\n recompute s=#{p.inspect}\n n=#{n.inspect}"
-#		fail message
 		n.assert_pre_conditions(message)
 		assert_equal(n, All[i], message)
 		assert_equal(n, FilePattern.all[i], message)
-#		All[i].assert_pre_conditions(message)
-#		FilePattern.all[i].assert_pre_conditions(message)
+		FilePattern.all[i].assert_pre_conditions(message)
 		all+=[n]
 	end #each_with_index
 	FilePattern.assert_pattern_array(all)
@@ -101,31 +94,6 @@ def test_project_root_dir
 	assert_not_nil(path)
 	assert_not_empty(path)
 	assert(File.exists?(path))
-	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
-	pattern=FilePattern.find_by_name(path)
-	assert_not_nil(pattern, path)
-	assert_equal(:data_soures_dir, pattern[:name])
-	script_directory_pathname=File.dirname(path)+'/'
-	script_directory_name=File.basename(script_directory_pathname)
-	ret=case script_directory_name
-	when 'unit' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'assertions' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'long_test' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'integration' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'script' then
-		File.dirname(script_directory_pathname)+'/'
-	when 'models'
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	else
-		fail "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
-		script_directory_name+'/'
-	end #case
-	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
-	assert_equal('', FilePattern.project_root_dir?(path))
 end #project_root_dir
 def test_find_by_name
 	FilePattern::All.each do |s|
@@ -138,11 +106,7 @@ def test_find_from_path
 	assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
 	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
 	path='test/unit/_assertions_test.rb'
-	p=All[4]
-	assert(p.sub_directory_match(path))
-	assert(p.suffix_match(path))
-
-	assert_equal(:assertions_test, FilePattern.find_from_path(path)[:name], "(Patterns[4], 'test/unit/'")
+	
 	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
 	pattern=FilePattern.find_from_path(path)
 	assert_not_nil(pattern, path)
@@ -169,10 +133,6 @@ def test_sub_directory_match
 	path='test/unit/_assertions_test.rb'
 	p=FilePattern.find_from_path(path)
 	assert(p.sub_directory_match(path))
-	successes=All.map do |p|
-		p.sub_directory_match(p[:example_file])
-	end #map
-	assert(successes.all?, successes.inspect)
 end #sub_directory_match
 def test_path
 end #path
@@ -189,6 +149,10 @@ def test_class_assert_post_conditions
 	FilePattern.assert_post_conditions
 end #class_assert_post_conditions
 def assert_pattern_array(array)
+	successes=array.map do |p|
+		p[:example_file].match(p[:sub_directory])
+	end #map
+	assert(successes.all?, successes.inspect+"\n"+array.inspect)
 end #assert_pattern_array
 def test_assert_naming_convention_match
 	expected_match=4
