@@ -46,15 +46,15 @@ def branch_symbol?(branch_index)
 		('stash~'+(branch_index-WorkFlow::Branch_enhancement.size).to_s).to_sym
 	end #case
 end #branch_symbol?
-def branch_index?(branch_bame)
-	branch_index=Branch_enhancement.index(branch_bame.to_sym)
+def branch_index?(branch_name)
+	branch_index=Branch_enhancement.index(branch_name.to_sym)
 	if branch_index.nil? then
-		if branch_bame.to_s[0, 5]== 'stash' then
-			stash_depth=branch_bame.to_s[6, 5-1].to_i
+		if branch_name.to_s[0, 5]== 'stash' then
+			stash_depth=branch_name.to_s[6, branch_name.size-1].to_i
 			branch_index=stash_depth+Branch_enhancement.size
 		end #if
 		Extended_branches.each_pair do |index, branch|
-			branch_index=index if branch==branch_bame.to_sym
+			branch_index=index if branch==branch_name.to_sym
 		end #each_pair
 	end #if
 	branch_index
@@ -89,7 +89,7 @@ def initialize(testable_file,
 	@repository=repository
 	index=Branch_enhancement.index(repository.current_branch_name?)
 	if index.nil? then
-		@branch_index=-1
+		@branch_index=First_slot_index
 	else
 		@branch_index=index
 	end #if
@@ -125,13 +125,13 @@ end #different_indices?
 def scan_verions?(filename, range, direction)
 	case direction
 	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
-	when :last then ([-1]+different_indices?(filename, range)).max
+	when :last then ([First_slot_index]+different_indices?(filename, range)).max
 	else
 		raise 
 	end #case
 end #scan_verions?
 def bracketing_versions?(filename, current_index)
-	left_index=scan_verions?(filename, -1..current_index, :last)
+	left_index=scan_verions?(filename, First_slot_index..current_index, :last)
 	right_index=scan_verions?(filename, current_index+1..Last_slot_index, :first)
 	[left_index, right_index]
 end #bracketing_versions?
