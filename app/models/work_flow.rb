@@ -170,13 +170,13 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 end #deserving_branch
 def merge_conflict_recovery
 # see man git status
-#          D           D    unmerged, both deleted
-#           A           U    unmerged, added by us
-#           U           D    unmerged, deleted by them
-#           U           A    unmerged, added by them
-#           D           U    unmerged, deleted by us
-#           A           A    unmerged, both added
-#           U           U    unmerged, both modified
+# DD unmerged, both deleted
+# AU unmerged, added by us
+# UD unmerged, deleted by them
+# UA unmerged, added by them
+# DU unmerged, deleted by us
+# AA unmerged, both added
+# UU unmerged, both modified
 	if File.exists?('.git/MERGE_HEAD') then
 		merge_conflict_files?.each do |conflict|
 
