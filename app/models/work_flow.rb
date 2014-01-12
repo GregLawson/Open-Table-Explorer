@@ -46,15 +46,15 @@ def branch_symbol?(branch_index)
 		('stash~'+(branch_index-WorkFlow::Branch_enhancement.size).to_s).to_sym
 	end #case
 end #branch_symbol?
-def branch_index?(branch_bame)
-	branch_index=Branch_enhancement.index(branch_bame.to_sym)
+def branch_index?(branch_name)
+	branch_index=Branch_enhancement.index(branch_name.to_sym)
 	if branch_index.nil? then
-		if branch_bame.to_s[0, 5]== 'stash' then
-			stash_depth=branch_bame.to_s[6, 5-1].to_i
+		if branch_name.to_s[0, 5]== 'stash' then
+			stash_depth=branch_name.to_s[6, branch_name.size-1].to_i
 			branch_index=stash_depth+Branch_enhancement.size
 		end #if
 		Extended_branches.each_pair do |index, branch|
-			branch_index=index if branch==branch_bame.to_sym
+			branch_index=index if branch==branch_name.to_sym
 		end #each_pair
 	end #if
 	branch_index
@@ -89,7 +89,7 @@ def initialize(testable_file,
 	@repository=repository
 	index=Branch_enhancement.index(repository.current_branch_name?)
 	if index.nil? then
-		@branch_index=-1
+		@branch_index=First_slot_index
 	else
 		@branch_index=index
 	end #if
@@ -125,13 +125,13 @@ end #different_indices?
 def scan_verions?(filename, range, direction)
 	case direction
 	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
-	when :last then ([-1]+different_indices?(filename, range)).max
+	when :last then ([First_slot_index]+different_indices?(filename, range)).max
 	else
 		raise 
 	end #case
 end #scan_verions?
 def bracketing_versions?(filename, current_index)
-	left_index=scan_verions?(filename, -1..current_index, :last)
+	left_index=scan_verions?(filename, First_slot_index..current_index, :last)
 	right_index=scan_verions?(filename, current_index+1..Last_slot_index, :first)
 	[left_index, right_index]
 end #bracketing_versions?
@@ -177,26 +177,19 @@ def merge_conflict_recovery
 #           D           U    unmerged, deleted by us
 #           A           A    unmerged, both added
 #           U           U    unmerged, both modified
-		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
-		if File.exists?('.git/MERGE_HEAD') then
-			unmerged_files.split("\n").map do |line|
-				file=line[3..-1]
-				puts 'ruby script/workflow.rb --test '+file
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig')
-				case line[0..1]
-				when 'UU' then WorkFlow.new(file).edit
-				else
-					raise 'line'
-				end #case
-			end #map
-			merge_abort=@repository.git_command('merge --abort')
-		else
-			@repository.confirm_commit(:interactive)
-		end #if
+	if File.exists?('.git/MERGE_HEAD') then
+		merge_conflict_files?.each do |conflict|
+
+			case conflict[:conflict]
+			when 'UU' then WorkFlow.new(conflict[file]).edit
+			else
+				raise conflict.inspect
+			end #case
+		end #each
+		@repository.confirm_commit(:interactive)
+	else
+		puts 'No merge conflict'
+	end #if
 end #merge_conflict_recovery
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
