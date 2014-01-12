@@ -44,18 +44,35 @@ def test_branch_symbol?
 	assert_equal(:testing, WorkFlow.branch_symbol?(1))
 	assert_equal(:edited, WorkFlow.branch_symbol?(2))
 	assert_equal(:stash, WorkFlow.branch_symbol?(3))
+	assert_equal(:'stash~1', WorkFlow.branch_symbol?(4))
+	assert_equal(:'stash~2', WorkFlow.branch_symbol?(5))
+	assert_equal(:'origin/master', WorkFlow.branch_symbol?(-2))
 end #branch_symbol?
-def test_revison_tag
-	assert_equal('-r master', WorkFlow.revison_tag(-1))
-	assert_equal('-r passed', WorkFlow.revison_tag(0))
-	assert_equal('-r testing', WorkFlow.revison_tag(1))
-	assert_equal('-r edited', WorkFlow.revison_tag(2))
-	assert_equal('-r stash', WorkFlow.revison_tag(3))
-end #revison_tag
+def test_branch_index?
+	assert_equal(0, WorkFlow.branch_index?(:passed))
+	assert_equal(1, WorkFlow.branch_index?(:testing))
+	assert_equal(2, WorkFlow.branch_index?(:edited))
+	assert_equal(3, WorkFlow.branch_index?(:stash))
+	assert_equal(4, WorkFlow.branch_index?(:'stash~1'))
+	assert_equal(5, WorkFlow.branch_index?(:'stash~2'))
+	assert_equal(-1, WorkFlow.branch_index?(:master))
+	assert_equal(-2, WorkFlow.branch_index?(:'origin/master'))
+end #branch_index?
+def test_revison_tag?
+	assert_equal('-r master', WorkFlow.revison_tag?(-1))
+	assert_equal('-r passed', WorkFlow.revison_tag?(0))
+	assert_equal('-r testing', WorkFlow.revison_tag?(1))
+	assert_equal('-r edited', WorkFlow.revison_tag?(2))
+	assert_equal('-r stash', WorkFlow.revison_tag?(3))
+	assert_equal('-r stash~1', WorkFlow.revison_tag?(4))
+	assert_equal('-r stash~2', WorkFlow.revison_tag?(5))
+	assert_equal('-r origin/master', WorkFlow.revison_tag?(-2))
+end #revison_tag?
 def test_merge_range
 	assert_equal(1..2, WorkFlow.merge_range(:passed))
 	assert_equal(2..2, WorkFlow.merge_range(:testing))
 	assert_equal(3..2, WorkFlow.merge_range(:edited))
+	assert_equal(0..2, WorkFlow.merge_range(:master))
 end #merge_range
 def test_initialize
 	te=RelatedFile.new(TestFile)
@@ -81,7 +98,9 @@ def test_working_different_from?
 	assert(!TestWorkFlow.working_different_from?(filename, 1))
 	assert(!TestWorkFlow.working_different_from?(filename, 2))
 	assert(!TestWorkFlow.working_different_from?(filename, 3))
+	assert(!TestWorkFlow.working_different_from?(filename, 4))
 	assert(!TestWorkFlow.working_different_from?(filename, -1))
+	assert(!TestWorkFlow.working_different_from?(filename, -2))
 	assert(!TestWorkFlow.working_different_from?('test/long_test/repository_test.rb',-1))
 end #working_different_from?
 def test_different_indices?
