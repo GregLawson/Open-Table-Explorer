@@ -28,6 +28,11 @@ def test_Constants
 	assert_match(Relative_directory_regexp, All[0][:sub_directory])
 	assert_match(Absolute_directory_regexp, Project_root_directory)
 #	assert_match(Relative_pathname_regexp, )
+	successes=All.map do |p|
+		p[:example_file].match(p.sub_directory)
+	end #map
+	assert(successes.all?, successes.inspect+"\n"+All.inspect)
+
 end #Constants
 def test_all
 	assert_not_empty(FilePattern.all)
