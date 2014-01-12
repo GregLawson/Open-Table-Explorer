@@ -170,17 +170,23 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 end #deserving_branch
 def merge_conflict_recovery
 # see man git status
-# DD unmerged, both deleted
-# AU unmerged, added by us
-# UD unmerged, deleted by them
-# UA unmerged, added by them
-# DU unmerged, deleted by us
-# AA unmerged, both added
-# UU unmerged, both modified
 	if File.exists?('.git/MERGE_HEAD') then
 		merge_conflict_files?.each do |conflict|
 
 			case conflict[:conflict]
+			# DD unmerged, both deleted
+			when 'DD' then raise conflict.inspect
+			# AU unmerged, added by us
+			when 'AU' then raise conflict.inspect
+			# UD unmerged, deleted by them
+			when 'UD' then raise conflict.inspect
+			# UA unmerged, added by them
+			when 'UA' then raise conflict.inspect
+			# DU unmerged, deleted by us
+			when 'DU' then raise conflict.inspect
+			# AA unmerged, both added
+			when 'AA' then raise conflict.inspect
+			# UU unmerged, both modified
 			when 'UU' then WorkFlow.new(conflict[file]).edit
 			else
 				raise conflict.inspect
