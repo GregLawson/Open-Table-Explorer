@@ -109,8 +109,6 @@ def test_find_from_path
 	
 	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
 	pattern=FilePattern.find_from_path(path)
-	assert_not_nil(pattern, path)
-	assert_equal(:data_sources_dir, pattern[:name])
 end #find_from_path
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
