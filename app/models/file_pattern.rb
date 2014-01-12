@@ -159,6 +159,10 @@ def assert_post_conditions
 #	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
+	successes=array.map do |p|
+		p[:example_file].match(p[:sub_directory])
+	end #map
+	assert(successes.all?, successes.inspect+"\n"+array.inspect)
 	assert_not_empty(array, array_message)
 	array.each_with_index do |n, i| 
 		message=array_message+" \n n=#{n.inspect}"
@@ -173,14 +177,16 @@ end #assert_invariant
 # conditions true while class is being defined
 # assertions true after class (and nested module Examples) is defined
 def assert_pre_conditions(message='')
+	assert_kind_of(FilePattern, self)
 	message+="\n self=#{self.inspect}\n self=#{self.inspect}"
 	assert_not_equal('{}',self.inspect, message)
 	assert_not_nil(self, message)
 	assert_instance_of(FilePattern, self, message)
 	assert(!self.keys.empty?, message)
 	assert_not_empty(self.values, message)
+	assert_include(self.keys, :suffix.to_s, inspect)
 #	fail message+"end of assert_pre_conditions "
-end #class_assert_pre_conditions
+end #assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
 	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
