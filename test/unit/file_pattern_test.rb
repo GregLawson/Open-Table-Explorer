@@ -28,11 +28,6 @@ def test_Constants
 	assert_match(Relative_directory_regexp, All[0][:sub_directory])
 	assert_match(Absolute_directory_regexp, Project_root_directory)
 #	assert_match(Relative_pathname_regexp, )
-	successes=All.map do |p|
-		p[:example_file].match(p[:sub_directory])
-	end #map
-	assert(successes.all?, successes.inspect+"\n"+All.inspect)
-
 end #Constants
 def test_all
 	assert_not_empty(FilePattern.all)
@@ -43,12 +38,10 @@ def test_all
 	Patterns.each_with_index  do |p, i| 
 		n=FilePattern.new(p)
 		message=array_message+"\n recompute s=#{p.inspect}\n n=#{n.inspect}"
-#		fail message
 		n.assert_pre_conditions(message)
 		assert_equal(n, All[i], message)
 		assert_equal(n, FilePattern.all[i], message)
-#		All[i].assert_pre_conditions(message)
-#		FilePattern.all[i].assert_pre_conditions(message)
+		FilePattern.all[i].assert_pre_conditions(message)
 		all+=[n]
 	end #each_with_index
 	FilePattern.assert_pattern_array(all)
@@ -107,6 +100,18 @@ def test_find_by_name
 		assert_equal(s, FilePattern.find_by_name(s[:name]), s.inspect)
 	end #find
 end #find_by_name
+def test_find_from_path
+	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
+	assert_equal(:test, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
+	assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
+	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
+	path='test/unit/_assertions_test.rb'
+	
+	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
+	pattern=FilePattern.find_from_path(path)
+	assert_not_nil(pattern, path)
+	assert_equal(:data_sources_dir, pattern[:name])
+end #find_from_path
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
 	assert_equal(All.size, FilePattern.pathnames?('test').size)
@@ -144,6 +149,10 @@ def test_class_assert_post_conditions
 	FilePattern.assert_post_conditions
 end #class_assert_post_conditions
 def assert_pattern_array(array)
+	successes=array.map do |p|
+		p[:example_file].match(p[:sub_directory])
+	end #map
+	assert(successes.all?, successes.inspect+"\n"+array.inspect)
 end #assert_pattern_array
 def test_assert_naming_convention_match
 	expected_match=4
