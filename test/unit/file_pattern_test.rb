@@ -166,8 +166,9 @@ def test_sub_directory_match
 		message='p='+p.inspect
 		message+="\nexpected_sub_directory="+expected_sub_directory
 		message+="\nsub_directory="+sub_directory
-		assert_operator(match_length, :>=, sub_directory.size, message)
+		assert_operator(match_length, :<=, sub_directory.size, message)
 		assert_not_nil(sub_directory[-match_length,match_length], message)
+		assert_match(p[:sub_directory], file, message)
 		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory, message)
 		assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory, message)
 		assert(p.sub_directory_match(p[:example_file]), message)
