@@ -173,7 +173,7 @@ def test_sub_directory_match
 		assert_not_nil(matchData, message)
 #		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory, message)
 #		assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory, message)
-#		assert(p.sub_directory_match(p[:example_file]), message)
+		assert(p.sub_directory_match(p[:example_file]), message)
 	end #map
 end #sub_directory_match
 def test_path
