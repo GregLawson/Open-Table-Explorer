@@ -216,7 +216,7 @@ def something_to_commit?
 	ret
 end #something_to_commit
 def testing_superset_of_passed
-	git_command("shortlog testing..master")
+	git_command("shortlog testing..passed")
 end #testing_superset_of_passed
 def edited_superset_of_testing
 	git_command("shortlog edited..testing")
