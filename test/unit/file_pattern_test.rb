@@ -154,7 +154,7 @@ def test_assert_pattern_array
 		p[:example_file].match(p[:suffix])
 	end #map
 	assert(successes.all?, successes.inspect+"\n"+array.inspect)
-	assert_pattern_array(FilePattern::All)
+	FilePattern.assert_pattern_array(FilePattern::All)
 end #assert_pattern_array
 def test_assert_naming_convention_match
 	expected_match=4
