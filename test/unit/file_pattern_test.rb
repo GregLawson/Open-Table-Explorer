@@ -94,6 +94,31 @@ def test_project_root_dir
 	assert_not_nil(path)
 	assert_not_empty(path)
 	assert(File.exists?(path))
+	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
+	pattern=FilePattern.find_by_name(path)
+	assert_not_nil(pattern, path)
+	assert_equal(:data_soures_dir, pattern[:name])
+	script_directory_pathname=File.dirname(path)+'/'
+	script_directory_name=File.basename(script_directory_pathname)
+	ret=case script_directory_name
+	when 'unit' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'assertions' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'long_test' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'integration' then
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	when 'script' then
+		File.dirname(script_directory_pathname)+'/'
+	when 'models'
+		File.expand_path(script_directory_pathname+'../../')+'/'
+	else
+		fail "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
+		script_directory_name+'/'
+	end #case
+	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
+	assert_equal('', FilePattern.project_root_dir?(path))
 end #project_root_dir
 def test_find_by_name
 	FilePattern::All.each do |s|
@@ -109,6 +134,8 @@ def test_find_from_path
 	
 	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
 	pattern=FilePattern.find_from_path(path)
+	assert_not_nil(pattern, path)
+	assert_equal(:data_sources_dir, pattern[:name])
 end #find_from_path
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
@@ -130,7 +157,18 @@ extend FilePattern::Assertions::ClassMethods
 def test_sub_directory_match
 	path='test/unit/_assertions_test.rb'
 	p=FilePattern.find_from_path(path)
+	assert(p.suffix_match(path))
 	assert(p.sub_directory_match(path))
+	successes=All.map do |p|
+		sub_directory=File.dirname(p[:example_file])
+		expected_sub_directory=p[:sub_directory][0..-2] # drops trailing /
+		match_length=expected_sub_directory.size
+		assert_operator(match_length, :>=, sub_directory.size, p)
+		assert_not_nil(sub_directory[-match_length,match_length], sub_directory)
+		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory)
+		assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory)
+		assert(p.sub_directory_match(p[:example_file]), p.inspect)
+	end #map
 end #sub_directory_match
 def test_path
 end #path
