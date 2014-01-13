@@ -174,8 +174,7 @@ end #ClassMethods
 def assert_invariant
 	fail "end of assert_invariant "
 end #assert_invariant
-# conditions true while class is being defined
-# assertions true after class (and nested module Examples) is defined
+# assertions true after instance is initialized
 def assert_pre_conditions(message='')
 	assert_kind_of(FilePattern, self)
 	message+="\n self=#{self.inspect}\n self=#{self.inspect}"
@@ -187,7 +186,7 @@ def assert_pre_conditions(message='')
 	assert_include(self.keys, :suffix.to_s, inspect)
 #	fail message+"end of assert_pre_conditions "
 end #assert_pre_conditions
-# assertions true after class (and nested module Examples) is defined
+# assertions true after any instance operations
 def assert_post_conditions
 	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
 	assert_not_empty(@project_root_dir, message)

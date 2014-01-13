@@ -163,11 +163,14 @@ def test_sub_directory_match
 		sub_directory=File.dirname(p[:example_file])
 		expected_sub_directory=p[:sub_directory][0..-2] # drops trailing /
 		match_length=expected_sub_directory.size
-		assert_operator(match_length, :>=, sub_directory.size, p)
-		assert_not_nil(sub_directory[-match_length,match_length], sub_directory)
-		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory)
-		assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory)
-		assert(p.sub_directory_match(p[:example_file]), p.inspect)
+		message='p='+p.inspect
+		message+="\nexpected_sub_directory="+expected_sub_directory
+		message+="\nsub_directory="+sub_directory
+		assert_operator(match_length, :>=, sub_directory.size, message)
+		assert_not_nil(sub_directory[-match_length,match_length], message)
+		assert_equal(sub_directory[-match_length,match_length], expected_sub_directory, message)
+		assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory, message)
+		assert(p.sub_directory_match(p[:example_file]), message)
 	end #map
 end #sub_directory_match
 def test_path
