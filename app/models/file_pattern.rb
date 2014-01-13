@@ -13,14 +13,14 @@ class FilePattern <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns=[
-	{:suffix =>'.rb', :name => :model, :sub_directory => 'app/models/', :example_file => __FILE__},
-	{:suffix =>'_test.rb', :name => :test, :sub_directory => 'test/unit/', :example_file => $0},
-	{:suffix =>'.rb', :name => :script, :sub_directory => 'script/', :example_file => 'script/work_flow.rb'},
-	{:suffix =>'_test.rb', :name => :integration_test, :sub_directory => 'test/integration/', :example_file => 'test/integration/repository_test.rb'}, 
-	{:suffix =>'_test.rb', :name => :long_test, :sub_directory => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
-	{:suffix =>'_assertions.rb', :name => :assertions, :sub_directory => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb'}, 
-	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :sub_directory => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb'},
-	{:suffix =>'', :name => :data_sources_dir, :sub_directory => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540'}
+	{:suffix =>'.rb', :name => :model, :prefix => 'app/models/', :example_file => __FILE__},
+	{:suffix =>'_test.rb', :name => :test, :prefix => 'test/unit/', :example_file => $0},
+	{:suffix =>'.rb', :name => :script, :prefix => 'script/', :example_file => 'script/work_flow.rb'},
+	{:suffix =>'_test.rb', :name => :integration_test, :prefix => 'test/integration/', :example_file => 'test/integration/repository_test.rb'}, 
+	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
+	{:suffix =>'_assertions.rb', :name => :assertions, :prefix => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb'}, 
+	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :prefix => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb'},
+	{:suffix =>'', :name => :data_sources_dir, :prefix => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540'}
 	]
 All=Patterns.map {|s| FilePattern.new(s)}	
 include Regexp::Constants
@@ -43,7 +43,7 @@ def path2model_name?(path=$0)
 	path=File.expand_path(path)
 	basename=File.basename(path)
 	matches=all.map do |s| 
-		if s.suffix_match(path) && s.sub_directory_match(path) then
+		if s.suffix_match(path) && s.prefix_match(path) then
 			name_length=basename.size-s[:suffix].size
 			basename[0,name_length].camelize.to_sym
 		else
@@ -83,7 +83,7 @@ def find_by_name(name)
 end #find_by_name
 def find_from_path(path)
 	Constants::All.find do |p|
-		p.sub_directory_match(path) && p.suffix_match(path)
+		p.prefix_match(path) && p.suffix_match(path)
 	end #find
 end #find_from_path
 def pathnames?(model_basename)
@@ -111,26 +111,26 @@ end #initialize
 def suffix_match(path)
 	path[-self[:suffix].size, self[:suffix].size] == self[:suffix]
 end #suffix_match
-def sub_directory_match(path)
+def prefix_match(path)
 	path=File.expand_path(path)
-	matchData=Regexp.new(self[:sub_directory]).match(path)
-#	sub_directory=File.dirname(path)
-#	expected_sub_directory=self[:sub_directory][0..-2] # drops trailing /
-#	sub_directory[-expected_sub_directory.size,expected_sub_directory.size]==expected_sub_directory
-end #sub_directory_match
+	matchData=Regexp.new(self[:prefix]).match(path)
+#	prefix=File.dirname(path)
+#	expected_prefix=self[:prefix][0..-2] # drops trailing /
+#	prefix[-expected_prefix.size,expected_prefix.size]==expected_prefix
+end #prefix_match
 def path?(model_basename)
 #	raise "" if !@@project_root_dir.instance_of?(String)
 	raise self.inspect if !self.instance_of?(FilePattern)
-	raise self.inspect if !self[:sub_directory].instance_of?(String)
+	raise self.inspect if !self[:prefix].instance_of?(String)
 	raise "model_basename-#{model_basename.inspect}" if !model_basename.instance_of?(String)
 	raise "" if !self[:suffix].instance_of?(String)
-	self[:sub_directory]+model_basename.to_s+self[:suffix]
+	self[:prefix]+model_basename.to_s+self[:suffix]
 end #path
 def parse_pathname_regexp
-	Absolute_directory_regexp.capture(:project_root_directory)*self[:sub_directory]+/[[:word:]]+/.capture(:model_basename)+self[:suffix]
+	Absolute_directory_regexp.capture(:project_root_directory)*self[:prefix]+/[[:word:]]+/.capture(:model_basename)+self[:suffix]
 end #parse_pathname_regexp
 def pathname_glob(model_basename='*')
-	Project_root_directory+self[:sub_directory]+model_basename+self[:suffix]
+	Project_root_directory+self[:prefix]+model_basename+self[:suffix]
 end #pathname_glob
 def relative_path?(model_basename)
 	Pathname.new(path?(model_basename)).relative_path_from(Pathname.new(Dir.pwd))
@@ -161,7 +161,7 @@ def assert_post_conditions
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
 	successes=array.map do |p|
-		p[:example_file].match(p[:sub_directory])
+		p[:example_file].match(p[:prefix])
 	end #map
 	assert(successes.all?, successes.inspect+"\n"+array.inspect)
 	assert_not_empty(array, array_message)
@@ -195,14 +195,14 @@ end #assert_post_conditions
 def assert_naming_convention_match(path)
 	path=File.expand_path(path)
 	assert_equal(path[-self[:suffix].size, self[:suffix].size], self[:suffix], caller_lines)
-	sub_directory=File.dirname(path)
-	expected_sub_directory=self[:sub_directory][0..-2] # drops trailing /
-	message="expected_sub_directory=#{expected_sub_directory}\nsub_directory=#{sub_directory}"
-	assert_not_nil(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], message+caller_lines)
-	assert_equal(sub_directory[-expected_sub_directory.size,expected_sub_directory.size], expected_sub_directory, message+caller_lines)
-	message="self=#{self}\nsub_directory=#{sub_directory}\nexpected_sub_directory=#{expected_sub_directory}"
-	message+="\n self.sub_directory_match(path)=#{self.sub_directory_match(path)}"
-	assert(self.sub_directory_match(path), message+caller_lines)
+	prefix=File.dirname(path)
+	expected_prefix=self[:prefix][0..-2] # drops trailing /
+	message="expected_prefix=#{expected_prefix}\nprefix=#{prefix}"
+	assert_not_nil(prefix[-expected_prefix.size,expected_prefix.size], message+caller_lines)
+	assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message+caller_lines)
+	message="self=#{self}\nprefix=#{prefix}\nexpected_prefix=#{expected_prefix}"
+	message+="\n self.prefix_match(path)=#{self.prefix_match(path)}"
+	assert(self.prefix_match(path), message+caller_lines)
 	message="self=#{self.inspect}, path=#{path.inspect}"
 end #naming_convention_match
 end #Assertions
