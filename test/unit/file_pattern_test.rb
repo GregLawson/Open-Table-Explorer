@@ -95,7 +95,7 @@ def test_project_root_dir
 	assert_not_empty(path)
 	assert(File.exists?(path))
 	roots=FilePattern::All.map do |p|
-		path=p[:example_file]
+		path=File.expand_path(p[:example_file])
 		matchData=Regexp.new(p[:prefix]).match(path)
 		test_root=matchData.pre_match
 		root=FilePattern.project_root_dir?(path)

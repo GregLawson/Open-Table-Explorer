@@ -54,27 +54,10 @@ def path2model_name?(path=$0)
 end #path2model_name
 def project_root_dir?(path=$0)
 	path=File.expand_path(path)
-	script_directory_pathname=File.dirname(path)+'/'
-	script_directory_name=File.basename(script_directory_pathname)
-	ret=case script_directory_name
-	when 'unit' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'assertions' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'long_test' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'integration' then
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	when 'script' then
-		File.dirname(script_directory_pathname)+'/'
-	when 'models'
-		File.expand_path(script_directory_pathname+'../../')+'/'
-	else
-		warn "can't find test directory. path=#{path.inspect}\n  script_directory_pathname=#{script_directory_pathname.inspect}\n script_directory_name=#{script_directory_name.inspect}"
-		script_directory_name+'/'
-	end #case
-	raise "ret=#{ret} does not end in a slash\npath=#{path}" if ret[-1,1]!= '/'
-	return ret
+	roots=FilePattern::All.map do |p|
+		matchData=Regexp.new(p[:prefix]).match(path)
+		test_root=matchData.pre_match
+	end #map
 end #project_root_dir
 def find_by_name(name)
 	Constants::All.find do |s|
