@@ -62,7 +62,7 @@ def project_root_dir?(path=$0)
 			test_root=matchData.pre_match
 		end #if
 	end #map
-	raise roots.inspect if roots.uniq!=1
+	raise roots.inspect if roots.uniq.compact.size!=1
 	roots.compact[0]
 end #project_root_dir
 def find_by_name(name)
