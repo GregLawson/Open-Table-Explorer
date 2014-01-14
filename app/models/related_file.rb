@@ -49,10 +49,10 @@ def pathname_pattern?(file_spec)
 	raise "project_root_dir" if @project_root_dir.nil?
 	file_pattern=FilePattern.find_by_name(file_spec)
 	raise "file_pattern file_spec=#{file_spec.inspect} not found" if file_pattern.nil?
-	raise "file_pattern[:sub_directory]" if file_pattern[:sub_directory].nil?
+	raise "file_pattern[:prefix]" if file_pattern[:prefix].nil?
 	raise "@model_basename" if @model_basename.nil?
 	raise "FilePattern.find_by_name(file_spec)[:suffix]" if FilePattern.find_by_name(file_spec)[:suffix].nil?
-	@project_root_dir+FilePattern.find_by_name(file_spec)[:sub_directory]+@model_basename.to_s+FilePattern.find_by_name(file_spec)[:suffix]
+	@project_root_dir+FilePattern.find_by_name(file_spec)[:prefix]+@model_basename.to_s+FilePattern.find_by_name(file_spec)[:suffix]
 end #pathname_pattern
 def model_pathname?
 	pathname_pattern?(:model)
