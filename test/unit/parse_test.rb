@@ -30,6 +30,8 @@ def test_captures2hash
 	message="matchData="+matchData.inspect
 	puts message
 	named_hash={}
+	possible_unnamed_capture_indices=1..captures.size.to_a
+	assert_equal([], possible_unnamed_capture_indices)
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
 		named_hash[n.to_sym]=captures[n]
@@ -189,7 +191,7 @@ def test_default_name
 	prefix='Col_'
 	prefix+index.to_s
 	assert_equal('Col_1', default_name(1))
-	assert_equal('name', default_name(1, 'name'))
+	assert_equal('name', default_name(0, 'name'))
 	assert_equal('name3', default_name(3, 'name'))
 	assert_equal('Var_1', default_name(1, 'Var_', :numbered))
 end #default_name
