@@ -27,15 +27,16 @@ def test_captures2hash
 	regexp=Branch_regexp
 	matchData=string.match(regexp)
 	captures=matchData #[1..-1]
+	assert_equal(2, captures.size, captures.inspect)
 	message="matchData="+matchData.inspect
 	puts message
-	named_hash={}
 	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.size-1).to_a
+		possible_unnamed_capture_indices=(1..captures.captures.size).to_a
 	else
 		possible_unnamed_capture_indices=(0..captures.size-1).to_a
 	end #if
-	assert_equal([1], possible_unnamed_capture_indices, captures.inspect)
+	named_hash={}
+	assert_equal([1, 2], possible_unnamed_capture_indices, captures.inspect)
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
 		named_hash[n.to_sym]=captures[n]
@@ -45,6 +46,11 @@ def test_captures2hash
 	splitData=string.split(regexp)
 	captures=splitData #[1..-1]
 	message="matchData="+matchData.inspect
+	if captures.instance_of?(MatchData) then
+		possible_unnamed_capture_indices=(1..captures.captures.size).to_a
+	else
+		possible_unnamed_capture_indices=(0..captures.size-1).to_a
+	end #if
 	named_hash={}
 	regexp.named_captures.each_pair do |n, indices| # return named subexpressions
 		assert_instance_of(String, n, message)
@@ -57,6 +63,7 @@ def test_captures2hash
 			end #each_index
 		end #if
 	end # each_pair
+	assert_equal([], possible_unnamed_capture_indices, regexp.named_captures.inspect+"\n"+captures.inspect)
 	possible_unnamed_capture_indices.each do |capture_index|
 		name=default_name(capture_index).to_sym
 		named_hash[name]=captures[capture_index]
