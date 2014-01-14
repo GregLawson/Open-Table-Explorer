@@ -21,11 +21,13 @@ include Constants
 def captures2hash(captures, regexp)
 #     named_captures for captures.size > names.size
 	named_hash={}
-	regexp.named_captures.each_pair do |n, indices| # return named subexpressions
-		named_hash[n.to_sym]=captures[indices[0]]
+	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
+		name=default_name(1, named_capture).to_sym
+		named_hash[name]=captures[indices[0]]
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
-				named_hash[n.to_sym]=captures[capture_index]
+				name=default_name(i, named_capture).to_sym
+				named_hash[name]=captures[capture_index]
 			end #each_index
 		end #if
 	end # each
@@ -106,8 +108,14 @@ def parse(string_or_array, pattern=WORDS)
 		nil
 	end #if
 end #parse
-def default_name(index, prefix='Col_')
-	prefix+index.to_s
+def default_name(index, prefix=nil, numbered=nil)
+	if prefix.nil? then
+		'Col_'+index.to_s
+	elsif numbered.nil? && index==1 then
+		prefix
+	else
+		prefix+index.to_s
+	end #if
 end #default_name
 def parse_name_values(array, pairs, new_names, pattern)
 	ret={}

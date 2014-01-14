@@ -189,6 +189,9 @@ def test_default_name
 	prefix='Col_'
 	prefix+index.to_s
 	assert_equal('Col_1', default_name(1))
+	assert_equal('name', default_name(1, 'name'))
+	assert_equal('name3', default_name(3, 'name'))
+	assert_equal('Var_1', default_name(1, 'Var_', :numbered))
 end #default_name
 def test_parse_name_values
 	array=[]
