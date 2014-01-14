@@ -31,11 +31,11 @@ def test_captures2hash
 	puts message
 	named_hash={}
 	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.size).to_a
+		possible_unnamed_capture_indices=(1..captures.size-1).to_a
 	else
-		possible_unnamed_capture_indices=(0..captures.size).to_a
+		possible_unnamed_capture_indices=(0..captures.size-1).to_a
 	end #if
-	assert_equal([1], possible_unnamed_capture_indices)
+	assert_equal([1], possible_unnamed_capture_indices, captures.inspect)
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
 		named_hash[n.to_sym]=captures[n]
