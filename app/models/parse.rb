@@ -22,7 +22,7 @@ def captures2hash(captures, regexp)
 #     named_captures for captures.size > names.size
 	named_hash={}
 	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
-		name=default_name(1, named_capture).to_sym
+		name=default_name(0, named_capture).to_sym
 		named_hash[name]=captures[indices[0]]
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
@@ -111,7 +111,7 @@ end #parse
 def default_name(index, prefix=nil, numbered=nil)
 	if prefix.nil? then
 		'Col_'+index.to_s
-	elsif numbered.nil? && index==1 then
+	elsif numbered.nil? && index==0 then
 		prefix
 	else
 		prefix+index.to_s
