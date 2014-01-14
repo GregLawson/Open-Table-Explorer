@@ -36,6 +36,21 @@ def test_captures2hash
 	end # each
 	named_hash
 	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
+	splitData=string.split(regexp)
+	captures=splitData #[1..-1]
+	message="matchData="+matchData.inspect
+	named_hash={}
+	regexp.named_captures.each_pair do |n, indices| # return named subexpressions
+		assert_instance_of(String, n, message)
+		named_hash[n.to_sym]=captures[indices[0]]
+		if indices.size>1 then
+			indices[1..-1].each_index do |capture_index,i|
+				named_hash[n.to_sym]=captures[capture_index]
+			end #each_index
+		end #if
+	end # each
+	assert_equal({:branch => '1'}, named_hash)
+	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
 end #captures2hash
 def test_parse_string
 	string="* 1\n"

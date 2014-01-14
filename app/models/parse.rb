@@ -21,8 +21,13 @@ include Constants
 def captures2hash(captures, regexp)
 #     named_captures for captures.size > names.size
 	named_hash={}
-	regexp.names.each do |n| # return named subexpressions
-		named_hash[n.to_sym]=captures[n]
+	regexp.named_captures.each_pair do |n, indices| # return named subexpressions
+		named_hash[n.to_sym]=captures[indices[0]]
+		if indices.size>1 then
+			indices[1..-1].each_index do |capture_index,i|
+				named_hash[n.to_sym]=captures[capture_index]
+			end #each_index
+		end #if
 	end # each
 	named_hash
 end #captures2hash
