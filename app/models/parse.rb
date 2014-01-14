@@ -22,9 +22,9 @@ def captures2hash(captures, regexp)
 #     named_captures for captures.size > names.size
 	named_hash={}
 	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.size).to_a
+		possible_unnamed_capture_indices=(1..captures.size-1).to_a
 	else
-		possible_unnamed_capture_indices=(0..captures.size).to_a
+		possible_unnamed_capture_indices=(0..captures.size-1).to_a
 	end #if
 	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
 		name=default_name(0, named_capture).to_sym
