@@ -35,7 +35,7 @@ def test_captures2hash
 	else
 		possible_unnamed_capture_indices=(0..captures.size).to_a
 	end #if
-	assert_equal([], possible_unnamed_capture_indices)
+	assert_equal([1], possible_unnamed_capture_indices)
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
 		named_hash[n.to_sym]=captures[n]
