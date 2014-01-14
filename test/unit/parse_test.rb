@@ -54,7 +54,7 @@ def test_parse_delimited
 	delimiter=Line_terminator
 	ending=:delimiter
 	array=string.split(delimiter)
-	assert_equal(['1', '2'], "1\n2",split("\n")
+	assert_equal(['1', '2'], "1\n2",split("\n"))
 	delimiters=string.split((item_pattern*delimiter).group)
 	message="item_pattern="+item_pattern.inspect
 	message+="\n array="+array.inspect
