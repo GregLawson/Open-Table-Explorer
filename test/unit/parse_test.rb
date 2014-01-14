@@ -55,6 +55,9 @@ def test_parse_delimited
 	ending=:delimiter
 	array=string.split(delimiter)
 	delimiters=string.split(item_pattern)
+	message="item_pattern="+item_pattern.inspect
+	message="\n array="+array.inspect
+	message="\n delimiters="+delimiters.inspect
 	ret=case ending
 	when :optional then 
 		assert_operator(delimiters.size, :<=, array.size)
