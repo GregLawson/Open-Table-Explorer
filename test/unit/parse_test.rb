@@ -54,7 +54,7 @@ def test_parse_delimited
 	delimiter=Line_terminator
 	ending=:delimiter
 	array=string.split(delimiter)
-	delimiters=string.split(item_pattern)
+	delimiters=string.split((item_pattern*delimiter).group)
 	message="item_pattern="+item_pattern.inspect
 	message="\n array="+array.inspect
 	message="\n delimiters="+delimiters.inspect
@@ -75,8 +75,8 @@ def test_parse_delimited
 	items=ret.map do |l|
 		parse_string(l, item_pattern)
 	end #map
-	assert_equal([{}], ret)
-	assert_equal([{}], parse_delimited(string, item_pattern, delimiter, ending))
+	assert_equal([{}], ret, message)
+	assert_equal([{}], parse_delimited(string, item_pattern, delimiter, ending), message)
 end #parse_delimied
 def test_parse_split
 	string=Newline_Terminated_String
