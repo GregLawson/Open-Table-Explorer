@@ -20,6 +20,23 @@ def test_Constants
 	pattern=Parse::LINES
 	assert_equal(Hash_answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
 end #Constants
+
+
+def test_captures2hash
+	string="* 1\n"
+	regexp=Branch_regexp
+	matchData=string.match(regexp)
+	captures=matchData #[1..-1]
+	message="matchData="+matchData.inspect
+	puts message
+	named_hash={}
+	regexp.names.each do |n| # return named subexpressions
+		assert_instance_of(String, n, message)
+		named_hash[n.to_sym]=captures[n]
+	end # each
+	named_hash
+	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
+end #captures2hash
 def test_parse_string
 	string="* 1\n"
 	pattern=Branch_regexp
@@ -54,21 +71,25 @@ def test_parse_delimited
 	delimiter=Line_terminator
 	ending=:delimiter
 	array=string.split(delimiter)
+	assert_equal(['* 1', '  2'], "* 1\n  2".split("\n"))
 	assert_equal(['1', '2'], "1\n2".split("\n"))
-	delimiters=string.split((item_pattern*delimiter).group)
+	assert_equal(['1', "\n", '2'], "1\n2".split(/\n/.capture(:terminator)))
+	assert_equal(['1', '2'], parse_split("1\n2", Line_terminator))
+	assert_equal(['1', '2'], parse_split("1\n2\n", Line_terminator))
+	delimiters=string.split((item_pattern).group)
 	message="item_pattern="+item_pattern.inspect
 	message+="\n array="+array.inspect
 	message+="\n delimiters="+delimiters.inspect
 	ret=case ending
 	when :optional then 
-		assert_operator(delimiters.size, :<=, array.size)
-		assert_operator(delimiters.size+1, :>=, array.size)
+		assert_operator(delimiters.size, :<=, array.size, message)
+		assert_operator(delimiters.size+1, :>=, array.size, message)
 		array
 	when :delimiter then 
-		assert_equal(delimiters.size-1, array.size)
+		assert_equal(delimiters.size/2, array.size, message)
 		array
 	when :terminator then
-		assert_equal(delimiters.size, array.size)
+		assert_equal(delimiters.size, array.size, message)
 		array
 	else
 		raise 'bad ending symbol.'
