@@ -42,11 +42,7 @@ def parse_string(string, pattern=Terminated_line)
 		matchData[1..-1] # return unnamed subexpressions
 	else
 #     named_captures for captures.size > names.size
-		named_hash={}
-		matchData.names.each do |n| # return named subexpressions
-			named_hash[n.to_sym]=matchData[n]
-		end # each
-		named_hash
+		captures2hash(matchData, pattern)
 	end #if
 end #parse_string
 def parse_delimited(string, item_pattern, delimiter, ending=:optional)
