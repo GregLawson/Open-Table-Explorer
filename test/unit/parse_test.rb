@@ -51,10 +51,16 @@ def test_captures2hash
 		named_hash[n.to_sym]=captures[indices[0]]
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
-				named_hash[n.to_sym]=captures[capture_index]
+				name=default_name(i, named_capture).to_sym
+				named_hash[name]=captures[capture_index]
+				possible_unnamed_capture_indices-=[capture_index]
 			end #each_index
 		end #if
-	end # each
+	end # each_pair
+	possible_unnamed_capture_indices.each do |capture_index|
+		name=default_name(capture_index).to_sym
+		named_hash[name]=captures[capture_index]
+	end #each
 	assert_equal({:branch => '1'}, named_hash)
 	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
 end #captures2hash
