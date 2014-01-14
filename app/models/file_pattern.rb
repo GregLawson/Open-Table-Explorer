@@ -56,8 +56,14 @@ def project_root_dir?(path=$0)
 	path=File.expand_path(path)
 	roots=FilePattern::All.map do |p|
 		matchData=Regexp.new(p[:prefix]).match(path)
-		test_root=matchData.pre_match
+		if matchData.nil? then
+			nil
+		else
+			test_root=matchData.pre_match
+		end #if
 	end #map
+	raise root.inspect if roots.uniq!=1
+	roots.compact[0]
 end #project_root_dir
 def find_by_name(name)
 	Constants::All.find do |s|
