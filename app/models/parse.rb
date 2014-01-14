@@ -10,7 +10,7 @@ require_relative '../../app/models/regexp.rb'
 module Parse
 module Constants
 LINE=/[^\n]*/.capture(:line)
-Line_terminator=/\n/.capture(:terminator)
+Line_terminator=/\n/ #.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 LINES=(Terminated_line*Regexp::Any)*LINE*(Line_terminator*Regexp::Optional)
@@ -18,6 +18,14 @@ WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
+def captures2hash(captures, regexp)
+#     named_captures for captures.size > names.size
+	named_hash={}
+	regexp.names.each do |n| # return named subexpressions
+		named_hash[n.to_sym]=captures[n]
+	end # each
+	named_hash
+end #captures2hash
 # Input String, Output Hash
 def parse_string(string, pattern=Terminated_line)
 	matchData=string.match(pattern)
