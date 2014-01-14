@@ -29,13 +29,19 @@ def captures2hash(captures, regexp)
 	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
 		name=default_name(0, named_capture).to_sym
 		named_hash[name]=captures[indices[0]]
+		possible_unnamed_capture_indices-=[indices[0]]
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
 				name=default_name(i, named_capture).to_sym
 				named_hash[name]=captures[capture_index]
+				possible_unnamed_capture_indices-=[capture_index]
 			end #each_index
 		end #if
-	end # each
+	end # each_pair
+	possible_unnamed_capture_indices.each do |capture_index|
+		name=default_name(capture_index).to_sym
+		named_hash[name]=captures[capture_index]
+	end #each
 	named_hash
 end #captures2hash
 # Input String, Output Hash
