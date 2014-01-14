@@ -97,7 +97,7 @@ def test_project_root_dir
 	roots=FilePattern::All.map do |p|
 		FilePattern.project_root_dir?(p[:example_file])
 	end #map
-	assert_equal(roots.Uniq.size, 1, roots.inspect)
+	assert_equal(roots.uniq.size, 1, roots.inspect)
 	assert_equal('', FilePattern.project_root_dir?(path))
 end #project_root_dir
 def test_find_by_name
