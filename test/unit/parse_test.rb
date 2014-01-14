@@ -30,7 +30,7 @@ def test_captures2hash
 	message="matchData="+matchData.inspect
 	puts message
 	named_hash={}
-	possible_unnamed_capture_indices=1..captures.size.to_a
+	possible_unnamed_capture_indices=(1..captures.size).to_a
 	assert_equal([], possible_unnamed_capture_indices)
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
