@@ -7,7 +7,7 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
-module Parse
+class Parse
 module Constants
 LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/ #.capture(:terminator)
@@ -18,6 +18,7 @@ WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
+module ClassMethods
 def captures2hash(captures, regexp)
 #     named_captures for captures.size > names.size
 	if captures.instance_of?(MatchData) then
@@ -151,6 +152,41 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 		parse(row, column_pattern)
 	end #map
 end #rows_and_columns
+end #ClassMethods
+# encapsulates the difference between parsing from MatchData and from Array#split
+def initialize(captures, regexp)
+	@captures=captures
+	@regexp=regexp
+#     named_captures for captures.size > names.size
+	possible_unnamed_capture_indices=all_capture_indices
+end #initialize
+def all_capture_indices
+	if @captures.instance_of?(MatchData) then
+		(1..@captures.size-1).to_a
+	else
+		(0..@captures.size-1).to_a
+	end #if
+end #all_capture_indices
+def named_hash(start_hash_captures=0)
+	named_hash={}
+	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
+		name=Parse.default_name(0, named_capture).to_sym
+		named_hash[name]=captures[indices[0]]
+		possible_unnamed_capture_indices-=[indices[0]]
+		if indices.size>1 then
+			indices[1..-1].each_index do |capture_index,i|
+				name=default_name(i, named_capture).to_sym
+				named_hash[name]=captures[capture_index]
+				possible_unnamed_capture_indices-=[capture_index]
+			end #each_index
+		end #if
+	end # each_pair
+	possible_unnamed_capture_indices.each do |capture_index|
+		name=default_name(capture_index).to_sym
+		named_hash[name]=captures[capture_index]
+	end #each
+	named_hash
+end #named_hash
 module Assertions
 include Test::Unit::Assertions
 def newline_if_not_empty(message)
