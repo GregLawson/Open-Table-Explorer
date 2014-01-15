@@ -166,7 +166,7 @@ def all_capture_indices
 	if @captures.instance_of?(MatchData) then
 		(1..@captures.size-1).to_a
 	else
-		(0..@captures.size-1).to_a
+		(1..@captures.size-1).to_a #skip delimiter
 	end #if
 end #all_capture_indices
 def named_hash(capture_indices=all_capture_indices)
@@ -184,6 +184,8 @@ def named_hash(capture_indices=all_capture_indices)
 			end #each_index
 		end #if
 	end # each_pair
+	# with the current ruby Regexp implementation, the following is impossible
+	# If there is a named capture in match or split, all unnamed captures are ignored
 	possible_unnamed_capture_indices.each do |capture_index|
 		name=default_name(capture_index).to_sym
 		named_hash[name]=@captures[capture_index]
@@ -252,7 +254,7 @@ include Regexp::Constants
 Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
-Branch_regexp=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
+Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
 Array_answer=['1', '2']
 Parse_string=Parse.new("* 1\n".match(Branch_regexp), Branch_regexp)
 Parse_array=Parse.new("* 1\n".split(Branch_regexp), Branch_regexp)

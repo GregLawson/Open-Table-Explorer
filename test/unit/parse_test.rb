@@ -342,9 +342,9 @@ def test_named_hash
 	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
 	splitData=string.split(regexp)
 	captures=splitData #[1..-1]
-	possible_unnamed_capture_indices=Parse_string.all_capture_indices
-	assert_equal([0, 1], possible_unnamed_capture_indices, Parse_string.all_capture_indices)
-	assert_equal([0, 1], Parse_string.all_capture_indices, Parse_string.all_capture_indices)
+	possible_unnamed_capture_indices=Parse_array.all_capture_indices
+	assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
+	assert_equal([1], Parse_array.all_capture_indices, Parse_array.all_capture_indices)
 	named_hash={}
 	assert_equal({'branch' => [1]}, regexp.named_captures)
 	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
@@ -353,32 +353,32 @@ def test_named_hash
 		assert_equal(:branch, name)
 		named_hash[name]=captures[indices[0]]
 		assert_equal({:branch => '1'}, named_hash)
-		assert_equal(possible_unnamed_capture_indices, Parse_string.all_capture_indices, )
-		assert_equal([0, 1], possible_unnamed_capture_indices, Parse_string.all_capture_indices)
+		assert_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
+		assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
 		assert_equal(1, indices[0])
 		assert_equal([1], [indices[0]])
 		possible_unnamed_capture_indices-=[indices[0]]
-		assert_not_equal(possible_unnamed_capture_indices, Parse_string.all_capture_indices, )
-		assert_equal([0], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
+		assert_not_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
+		assert_equal([], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
 				name=default_name(i, named_capture).to_sym
 				named_hash[name]=captures[capture_index]
 				assert_equal(named_hash[name], captures[capture_index])
 				possible_unnamed_capture_indices-=[capture_index]
-				assert_not_equal(possible_unnamed_capture_indices, Parse_string.all_capture_indices, )
+				assert_not_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
 			end #each_index
 		end #if
 	end # each_pair
-	assert_equal([0], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
-	assert_equal('*', captures[0], regexp.named_captures.inspect+"\n"+captures.inspect)
-	assert_equal([0], possible_unnamed_capture_indices, regexp.named_captures.inspect+"\n"+captures.inspect)
+	assert_equal([], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
+	assert_equal('', captures[0], regexp.named_captures.inspect+"\n"+captures.inspect)
+	assert_equal([], possible_unnamed_capture_indices, regexp.named_captures.inspect+"\n"+captures.inspect)
 	possible_unnamed_capture_indices.each do |capture_index|
 		name=default_name(capture_index).to_sym
 		named_hash[name]=captures[capture_index]
 	end #each
-	assert_equal({:branch => '1'}, named_hash)
-	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
+	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
+	assert_equal({:branch => '1'}, Parse.new(captures, regexp).named_hash) # return matched subexpressions
 end #named_hash
 include Parse::Constants
 include Parse::Constants
