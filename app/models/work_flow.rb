@@ -11,7 +11,9 @@ require_relative 'repository.rb'
 class WorkFlow
 module Constants
 Branch_enhancement=[:passed, :testing, :edited]
-Last_slot_index=Branch_enhancement.size
+Extended_branches={-2 => :'origin/master', -1 => :master}
+First_slot_index=Extended_branches.keys.min
+Last_slot_index=Branch_enhancement.size+10 # how many is too slow?
 Branch_compression={:success	=> 0,
 			:single_test_fail 	=> 1,
 			:multiple_tests_fail	=> 1, # visibility boundary
@@ -36,19 +38,34 @@ def all(pattern_name=:test)
 end #all
 def branch_symbol?(branch_index)
 	case branch_index
+	when -2 then :'origin/master'
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
-	else :revison_tag_bug
+	else 
+		('stash~'+(branch_index-WorkFlow::Branch_enhancement.size).to_s).to_sym
 	end #case
 end #branch_symbol?
-def revison_tag(branch_index)
+def branch_index?(branch_name)
+	branch_index=Branch_enhancement.index(branch_name.to_sym)
+	if branch_index.nil? then
+		if branch_name.to_s[0, 5]== 'stash' then
+			stash_depth=branch_name.to_s[6, branch_name.size-1].to_i
+			branch_index=stash_depth+Branch_enhancement.size
+		end #if
+		Extended_branches.each_pair do |index, branch|
+			branch_index=index if branch==branch_name.to_sym
+		end #each_pair
+	end #if
+	branch_index
+end #branch_index?
+def revison_tag?(branch_index)
 	return '-r '+branch_symbol?(branch_index).to_s
-end #revison_tag
+end #revison_tag?
 def merge_range(deserving_branch)
-	deserving_index=Branch_enhancement.index(deserving_branch)
+	deserving_index=WorkFlow.branch_index?(deserving_branch)
 	if deserving_index.nil? then
-		raise deserving_branch.inspect+'not found in '+Branch_enhancement.inspect
+		raise deserving_branch.inspect+' not found in '+Branch_enhancement.inspect+' or '+Extended_branches.inspect
 	else
 		deserving_index+1..Branch_enhancement.size-1
 	end #if
@@ -72,7 +89,7 @@ def initialize(testable_file,
 	@repository=repository
 	index=Branch_enhancement.index(repository.current_branch_name?)
 	if index.nil? then
-		@branch_index=-1
+		@branch_index=First_slot_index
 	else
 		@branch_index=index
 	end #if
@@ -88,7 +105,7 @@ def version_comparison(files=nil)
 end #version_comparison
 def working_different_from?(filename, branch_index)
 	raise filename+" does not exist." if !File.exists?(filename)
-	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
+	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
 	if diff_run.output=='' then
 		false # no difference
 	elsif diff_run.output.split("\n").size>=2 then
@@ -108,22 +125,22 @@ end #different_indices?
 def scan_verions?(filename, range, direction)
 	case direction
 	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
-	when :last then ([-1]+different_indices?(filename, range)).max
+	when :last then ([First_slot_index]+different_indices?(filename, range)).max
 	else
 		raise 
 	end #case
 end #scan_verions?
 def bracketing_versions?(filename, current_index)
-	left_index=scan_verions?(filename, -1..current_index, :last)
+	left_index=scan_verions?(filename, First_slot_index..current_index, :last)
 	right_index=scan_verions?(filename, current_index+1..Last_slot_index, :first)
 	[left_index, right_index]
 end #bracketing_versions?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
-	current_index=WorkFlow::Branch_enhancement.index(middle_branch)
+	current_index=WorkFlow.branch_index?(middle_branch)
 	left_index,right_index=bracketing_versions?(filename, current_index)
 	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
-	" -t #{WorkFlow.revison_tag(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag(right_index)} #{relative_filename}"
+	" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
 end #goldilocks
 def test_files(edit_files=@related_files.edit_files)
 	pairs=@related_files.functional_parallelism(edit_files).map do |p|
@@ -153,38 +170,38 @@ def deserving_branch?(executable=@related_files.model_test_pathname?)
 end #deserving_branch
 def merge_conflict_recovery
 # see man git status
-#          D           D    unmerged, both deleted
-#           A           U    unmerged, added by us
-#           U           D    unmerged, deleted by them
-#           U           A    unmerged, added by them
-#           D           U    unmerged, deleted by us
-#           A           A    unmerged, both added
-#           U           U    unmerged, both modified
-		unmerged_files=@repository.git_command('status --porcelain --untracked-files=no|grep "UU "').output
-		if File.exists?('.git/MERGE_HEAD') then
-			unmerged_files.split("\n").map do |line|
-				file=line[3..-1]
-				puts 'ruby script/workflow.rb --test '+file
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BASE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.BACKUP.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.LOCAL.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.REMOTE.*')
-				rm_orig=@repository.shell_command('rm '+file.to_s+'.orig')
-				case line[0..1]
-				when 'UU' then WorkFlow.new(file).edit
-				else
-					raise 'line'
-				end #case
-			end #map
-			merge_abort=@repository.git_command('merge --abort')
-		else
-			@repository.confirm_commit(:interactive)
-		end #if
+	if File.exists?('.git/MERGE_HEAD') then
+		@repository.merge_conflict_files?.each do |conflict|
+
+			case conflict[:conflict]
+			# DD unmerged, both deleted
+			when 'DD' then raise conflict.inspect
+			# AU unmerged, added by us
+			when 'AU' then raise conflict.inspect
+			# UD unmerged, deleted by them
+			when 'UD' then raise conflict.inspect
+			# UA unmerged, added by them
+			when 'UA' then raise conflict.inspect
+			# DU unmerged, deleted by us
+			when 'DU' then raise conflict.inspect
+			# AA unmerged, both added
+			when 'AA' then raise conflict.inspect
+			# UU unmerged, both modified
+			when 'UU' then WorkFlow.new(conflict[file]).edit
+			else
+				raise conflict.inspect
+			end #case
+		end #each
+		@repository.confirm_commit(:interactive)
+	else
+		puts 'No merge conflict'
+	end #if
 end #merge_conflict_recovery
-def merge(target_branch, source_branch)
+def merge(target_branch, source_branch, interact=:interactive)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=@repository.git_command('merge '+source_branch.to_s)
+		merge_status=@repository.git_command('merge --no-commit'+source_branch.to_s)
 		merge_conflict_recovery
+		@repository.confirm_commit(interact)
 	end #safely_visit_branch
 end #merge
 def edit
@@ -208,20 +225,32 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
-			repository.confirm_commit(:interactive)
+			@repository.confirm_commit(:interactive)
 
 		end #safely_visit_branch
 	end #each
 end #merge_down
 def script_deserves_commit!(deserving_branch)
-	if working_different_from?($0, 	WorkFlow::Branch_enhancement.index(deserving_branch)) then
+	if working_different_from?($0, 	WorkFlow.branch_index?(deserving_branch)) then
 		repository.stage_files(deserving_branch, related_files.tested_files($0))
 		merge_down(deserving_branch)
 	end #if
 end #script_deserves_commit!
 def test(executable=@related_files.model_test_pathname?)
+	merge_conflict_recovery
+	@repository.safely_visit_branch(:master) do |changes_branch|
+		begin
+			deserving_branch=deserving_branch?(executable)
+			if deserving_branch != :passed then #master corrupted
+				edit
+				done=false
+			else
+				done=true
+			end #if
+		end until done
+	end #safely_visit_branch
+	@repository.confirm_commit(:interactive)
 	begin
-		merge_conflict_recovery
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
