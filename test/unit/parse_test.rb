@@ -341,9 +341,11 @@ def test_named_hash
 	captures=splitData #[1..-1]
 	possible_unnamed_capture_indices=Parse_string.all_capture_indices
 	named_hash={}
-	regexp.named_captures.each_pair do |n, indices| # return named subexpressions
+	assert_equal({:branch => [1]}, regexp.named_captures)
+	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
 		assert_instance_of(String, named_capture, message)
 		name=Parse.default_name(0, named_capture).to_sym
+		assert_equal(:branch, name)
 		named_hash[name]=captures[indices[0]]
 		possible_unnamed_capture_indices-=[indices[0]]
 		assert_not_equal(possible_unnamed_capture_indices, Parse_string.all_capture_indices, )
