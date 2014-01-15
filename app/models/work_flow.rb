@@ -239,6 +239,13 @@ end #script_deserves_commit!
 def test(executable=@related_files.model_test_pathname?)
 	begin
 		merge_conflict_recovery
+		@repository.safely_visit_branch(:master) do |changes_branch|
+			deserving_branch=deserving_branch?(executable)
+			if deserving_branch != :passed then #master corrupted
+				edit
+			end #if
+		end #safely_visit_branch
+		
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
