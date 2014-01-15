@@ -171,7 +171,7 @@ end #deserving_branch
 def merge_conflict_recovery
 # see man git status
 	if File.exists?('.git/MERGE_HEAD') then
-		merge_conflict_files?.each do |conflict|
+		@repository.merge_conflict_files?.each do |conflict|
 
 			case conflict[:conflict]
 			# DD unmerged, both deleted
