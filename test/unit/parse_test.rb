@@ -10,6 +10,7 @@ require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
 include Parse::ClassMethods # treat class methods like module methods as local to test class
 include Parse::Examples
+include Parse::Assertions::ClassMethods
 def test_Constants
 #	assert_equal(LINES, LINES_cryptic)
 	assert_parse_string(['1', '2'], "1\n2", LINES, '')

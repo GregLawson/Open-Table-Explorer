@@ -10,7 +10,7 @@ require_relative '../../app/models/regexp.rb'
 class Parse
 module Constants
 LINE=/[^\n]*/.capture(:line)
-Line_terminator=/\n/ #.capture(:terminator)
+Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 LINES=(Terminated_line*Regexp::Any)*LINE*(Line_terminator*Regexp::Optional)
@@ -19,8 +19,9 @@ CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
 module ClassMethods
+include Constants
 # Input String, Output Hash
-def parse_string(string, pattern=Terminated_line)
+def parse_string(string, pattern=Terminated_line, options=nil)
 	matchData=string.match(pattern)
   if matchData.nil? then
     []
@@ -120,6 +121,21 @@ def initialize(captures, regexp, options=nil)
 			raise 'bad ending symbol.'
 		end #case
 		end #if
+		if options.nil? then
+			array
+		else
+			ret=case options[:ending]
+			when :optional then 
+				array
+			when :delimiter then 
+				array
+			when :terminator then
+				array
+			else
+				raise 'bad ending symbol.'
+			end #case
+		end #if
+	end #if
 end #initialize
 def all_capture_indices
 	if @captures.instance_of?(MatchData) then
@@ -149,6 +165,7 @@ def named_hash(hash_offset=0)
 	named_hash
 end #named_hash
 module Assertions
+module ClassMethods
 include Test::Unit::Assertions
 def newline_if_not_empty(message)
 	if message.empty? then
@@ -202,6 +219,7 @@ def assert_parse_repetition(answer, string, pattern, repetition_range, message='
 		assert_equal(answer, parse_string(string, pattern*repetition_range), message)
 	end #if
 end #parse_repetition
+end #ClassMethods
 end #Assertions
 include Assertions
 module Examples
