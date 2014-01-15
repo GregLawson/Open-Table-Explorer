@@ -110,17 +110,6 @@ def initialize(captures, regexp, options=nil)
 		array=(0..iterations-1).map do |i|
 			named_hash(i*(length_hash_captures+1))
 		end #map
-		ret=case options[:ending]
-		when :optional then 
-			array
-		when :delimiter then 
-			array
-		when :terminator then
-			array
-		else
-			raise 'bad ending symbol.'
-		end #case
-		end #if
 		if options.nil? then
 			array
 		else
