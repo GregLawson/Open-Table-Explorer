@@ -31,34 +31,14 @@ def parse_string(string, pattern=Terminated_line)
 		Parse.new(matchData, pattern, options).output
 	end #if
 end #parse_string
-def parse_delimited(string, item_pattern, delimiter, options={:ending => :optional})
-	items=string.split(delimiter)
-	delimiters=string.split(item_pattern, options)
-end #parse_delimied
+
 # Splits pattern match captures into an array of parses
 # Uses Regexp capture mechanism in String#split
-def parse_split(string, pattern=Terminated_line)
-	ret=string.split(pattern)
-end #parse_split
+
 # Input String, Output Array
-def parse_into_array(string, pattern=Terminated_line, ending=:optional)
-	ret=parse_split(string, pattern)
-	case ending
-	when :optional then 
-		if ret[-1].nil? then
-			ret[0..-2] #drop empty
-		else
-			ret
-		end #if 
-	when :delimiter then string.split(pattern) 
-	when :terminator then
-		if ret[-1].nil? then
-			ret[0..-2] #drop empty
-		else
-			ret
-		end #if 
-	end #case
-	
+def parse_into_array(string, item_pattern=Terminated_line, ending=:optional)
+	Parse.new(string.split(item_pattern, options), pattern, options).output
+
 end #parse_into_array
 # Input Array of Strings, Output Array of Hash
 def parse_array(string_array, pattern=WORDS)
