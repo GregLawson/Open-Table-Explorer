@@ -199,8 +199,9 @@ def merge_conflict_recovery
 end #merge_conflict_recovery
 def merge(target_branch, source_branch)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=@repository.git_command('merge '+source_branch.to_s)
+		merge_status=@repository.git_command('merge --no-commit'+source_branch.to_s)
 		merge_conflict_recovery
+#			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end #safely_visit_branch
 end #merge
 def edit
