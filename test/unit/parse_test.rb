@@ -248,50 +248,6 @@ end #rows_and_columns
 def test_initialize
 	string="* 1\n"
 	regexp=Branch_regexp
-	matchData=string.match(regexp)
-	captures=matchData #[1..-1]
-	assert_equal(2, captures.size, captures.inspect)
-	message="matchData="+matchData.inspect
-	puts message
-	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.captures.size).to_a
-	else
-		possible_unnamed_capture_indices=(0..captures.size-1).to_a
-	end #if
-	named_hash={}
-	assert_equal([1], possible_unnamed_capture_indices, captures.inspect+"\n"+captures.captures.inspect)
-	regexp.names.each do |n| # return named subexpressions
-		assert_instance_of(String, n, message)
-		named_hash[n.to_sym]=captures[n]
-	end # each
-	named_hash
-	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
-	splitData=string.split(regexp)
-	captures=splitData #[1..-1]
-	message="matchData="+matchData.inspect
-	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.captures.size).to_a
-	else
-		possible_unnamed_capture_indices=(0..captures.size-1).to_a
-	end #if
-	named_hash={}
-	regexp.named_captures.each_pair do |n, indices| # return named subexpressions
-		assert_instance_of(String, n, message)
-		named_hash[n.to_sym]=captures[indices[0]]
-		if indices.size>1 then
-			indices[1..-1].each_index do |capture_index,i|
-				name=default_name(i, named_capture).to_sym
-				named_hash[name]=captures[capture_index]
-				possible_unnamed_capture_indices-=[capture_index]
-			end #each_index
-		end #if
-	end # each_pair
-	assert_equal([], possible_unnamed_capture_indices, regexp.named_captures.inspect+"\n"+captures.inspect)
-	possible_unnamed_capture_indices.each do |capture_index|
-		name=default_name(capture_index).to_sym
-		named_hash[name]=captures[capture_index]
-	end #each
-	assert_equal({:branch => '1'}, named_hash)
 	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
 end #initialize
 def test_all_capture_indices
@@ -315,13 +271,13 @@ def test_all_capture_indices
 	if captures.instance_of?(MatchData) then
 		possible_unnamed_capture_indices=(1..captures.captures.size-1).to_a
 	else
-		possible_unnamed_capture_indices=(0..captures.size-1).to_a
+		possible_unnamed_capture_indices=(1..captures.size-1).to_a
 	end #if
-	assert_equal((0..captures.size-1).to_a, possible_unnamed_capture_indices)
+	assert_equal((1..captures.size-1).to_a, possible_unnamed_capture_indices)
 	named_hash={}
 	assert_equal(possible_unnamed_capture_indices, Parse.new(splitData, regexp).all_capture_indices)
 	assert_equal([1], Parse_string.all_capture_indices, Parse_string.all_capture_indices)
-	assert_equal([0, 1], Parse_array.all_capture_indices, Parse_string.all_capture_indices)
+	assert_equal([1], Parse_array.all_capture_indices, Parse_string.all_capture_indices)
 end #all_capture_indices
 def test_named_hash
 	string="* 1\n"
@@ -331,7 +287,7 @@ def test_named_hash
 	parse_string=Parse.new("* 1\n", Branch_regexp)
 	assert_equal(2, Parse_string.captures.size, Parse_string.inspect)
 	possible_unnamed_capture_indices=Parse_string.all_capture_indices
-	Parse_string.named_hash(possible_unnamed_capture_indices)
+	Parse_string.named_hash
 	named_hash={}
 	assert_equal([1], possible_unnamed_capture_indices, captures.inspect+"\n"+captures.captures.inspect)
 	regexp.names.each do |n| # return named subexpressions
