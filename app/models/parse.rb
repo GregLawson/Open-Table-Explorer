@@ -153,7 +153,9 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 	end #map
 end #rows_and_columns
 end #ClassMethods
+extend ClassMethods
 # encapsulates the difference between parsing from MatchData and from Array#split
+attr_reader :captures, :regexp
 def initialize(captures, regexp)
 	@captures=captures
 	@regexp=regexp
@@ -167,23 +169,24 @@ def all_capture_indices
 		(0..@captures.size-1).to_a
 	end #if
 end #all_capture_indices
-def named_hash(start_hash_captures=0)
+def named_hash(capture_indices=all_capture_indices)
+	possible_unnamed_capture_indices=capture_indices
 	named_hash={}
 	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
 		name=Parse.default_name(0, named_capture).to_sym
-		named_hash[name]=captures[indices[0]]
+		named_hash[name]=@captures[indices[0]]
 		possible_unnamed_capture_indices-=[indices[0]]
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
 				name=default_name(i, named_capture).to_sym
-				named_hash[name]=captures[capture_index]
+				named_hash[name]=@captures[capture_index]
 				possible_unnamed_capture_indices-=[capture_index]
 			end #each_index
 		end #if
 	end # each_pair
 	possible_unnamed_capture_indices.each do |capture_index|
 		name=default_name(capture_index).to_sym
-		named_hash[name]=captures[capture_index]
+		named_hash[name]=@captures[capture_index]
 	end #each
 	named_hash
 end #named_hash
@@ -251,5 +254,7 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Branch_regexp=/[* ]/*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
 Array_answer=['1', '2']
+Parse_string=Parse.new("* 1\n".match(Branch_regexp), Branch_regexp)
+Parse_array=Parse.new("* 1\n".split(Branch_regexp), Branch_regexp)
 end #Examples
 end #Parse
