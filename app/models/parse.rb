@@ -155,12 +155,20 @@ end #rows_and_columns
 end #ClassMethods
 extend ClassMethods
 # encapsulates the difference between parsing from MatchData and from Array#split
-attr_reader :captures, :regexp
+attr_reader :captures, :regexp, :output
 def initialize(captures, regexp)
 	@captures=captures
 	@regexp=regexp
 #     named_captures for captures.size > names.size
-	possible_unnamed_capture_indices=all_capture_indices
+	@output=if @captures.instance_of?(MatchData) then
+			named_hash(0)
+	else
+		length_hash_captures=@regexp.named_captures.values.flatten.size
+		iterations=(@captures.size/length_hash_captures).ceil
+		(0..iterations-1),map do |i|
+			named_hash(i*(length_hash_captures+1))
+		end #map
+	end #if
 end #initialize
 def all_capture_indices
 	if @captures.instance_of?(MatchData) then
@@ -252,8 +260,8 @@ Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
-Array_answer=['1', '2']
-Parse_string=Parse.new("* 1\n".match(Branch_regexp), Branch_regexp)
+Array_answer=[{:branch => '1'}, {:branch => '2'}]
+Parse_string=Parse.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
 Parse_array=Parse.new("* 1\n".split(Branch_regexp), Branch_regexp)
 end #Examples
 end #Parse

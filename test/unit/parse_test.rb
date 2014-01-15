@@ -248,7 +248,8 @@ end #rows_and_columns
 def test_initialize
 	string="* 1\n"
 	regexp=Branch_regexp
-	assert_equal({:branch => '1'}, captures2hash(captures, regexp)) # return matched subexpressions
+	assert_equal({:branch => '1'}, Parse.new(captures, regexp).output) # return matched subexpressions
+	assert_equal(Array_answer, Parse_array.output, Parse_array.inspect)
 end #initialize
 def test_all_capture_indices
 	Parse_string
@@ -333,7 +334,7 @@ def test_named_hash
 		name=default_name(capture_index).to_sym
 		named_hash[name]=captures[capture_index]
 	end #each
-	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
+	assert_equal(Array_answer, named_hash, regexp.inspect+"\n"+captures.inspect)
 	assert_equal({:branch => '1'}, Parse.new(captures, regexp).named_hash) # return matched subexpressions
 end #named_hash
 include Parse::Constants
