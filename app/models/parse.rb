@@ -19,32 +19,6 @@ CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
 module ClassMethods
-def captures2hash(captures, regexp)
-#     named_captures for captures.size > names.size
-	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.size-1).to_a
-	else
-		possible_unnamed_capture_indices=(0..captures.size-1).to_a
-	end #if
-	named_hash={}
-	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
-		name=default_name(0, named_capture).to_sym
-		named_hash[name]=captures[indices[0]]
-		possible_unnamed_capture_indices-=[indices[0]]
-		if indices.size>1 then
-			indices[1..-1].each_index do |capture_index,i|
-				name=default_name(i, named_capture).to_sym
-				named_hash[name]=captures[capture_index]
-				possible_unnamed_capture_indices-=[capture_index]
-			end #each_index
-		end #if
-	end # each_pair
-	possible_unnamed_capture_indices.each do |capture_index|
-		name=default_name(capture_index).to_sym
-		named_hash[name]=captures[capture_index]
-	end #each
-	named_hash
-end #captures2hash
 # Input String, Output Hash
 def parse_string(string, pattern=Terminated_line)
 	matchData=string.match(pattern)
@@ -54,25 +28,12 @@ def parse_string(string, pattern=Terminated_line)
 		matchData[1..-1] # return unnamed subexpressions
 	else
 #     named_captures for captures.size > names.size
-		captures2hash(matchData, pattern)
+		Parse.new(matchData, pattern, options).output
 	end #if
 end #parse_string
-def parse_delimited(string, item_pattern, delimiter, ending=:optional)
+def parse_delimited(string, item_pattern, delimiter, options={:ending => :optional})
 	items=string.split(delimiter)
-	delimiters=string.split(item_pattern)
-	ret=case ending
-	when :optional then 
-		array
-	when :delimiter then 
-		array
-	when :terminator then
-		array
-	else
-		raise 'bad ending symbol.'
-	end #case
-	ret=items.map do |l|
-		parse_string(l, item_pattern)
-	end #map
+	delimiters=string.split(item_pattern, options)
 end #parse_delimied
 # Splits pattern match captures into an array of parses
 # Uses Regexp capture mechanism in String#split
@@ -155,20 +116,30 @@ end #rows_and_columns
 end #ClassMethods
 extend ClassMethods
 # encapsulates the difference between parsing from MatchData and from Array#split
-attr_reader :captures, :regexp, :output
-def initialize(captures, regexp)
+attr_reader :captures, :regexp, :length_hash_captures, :iterations, :output
+def initialize(captures, regexp, options=nil)
 	@captures=captures
 	@regexp=regexp
 #     named_captures for captures.size > names.size
+	@length_hash_captures=@regexp.named_captures.values.flatten.size
+	@iterations=(@captures.size/(@length_hash_captures+1)).ceil
 	@output=if @captures.instance_of?(MatchData) then
 			named_hash(0)
 	else
-		length_hash_captures=@regexp.named_captures.values.flatten.size
-		iterations=(@captures.size/length_hash_captures).ceil
-		(0..iterations-1),map do |i|
+		array=(0..iterations-1).map do |i|
 			named_hash(i*(length_hash_captures+1))
 		end #map
-	end #if
+		ret=case options[:ending]
+		when :optional then 
+			array
+		when :delimiter then 
+			array
+		when :terminator then
+			array
+		else
+			raise 'bad ending symbol.'
+		end #case
+		end #if
 end #initialize
 def all_capture_indices
 	if @captures.instance_of?(MatchData) then
@@ -259,9 +230,9 @@ include Regexp::Constants
 Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
-Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)*/\n/
+Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 Array_answer=[{:branch => '1'}, {:branch => '2'}]
 Parse_string=Parse.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
-Parse_array=Parse.new("* 1\n".split(Branch_regexp), Branch_regexp)
+Parse_array=Parse.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
 end #Examples
 end #Parse
