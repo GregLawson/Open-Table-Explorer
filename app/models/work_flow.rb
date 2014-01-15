@@ -248,8 +248,9 @@ def test(executable=@related_files.model_test_pathname?)
 				done=true
 			end #if
 		end until done
+		@repository.confirm_commit(:interactive)
+#		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end #safely_visit_branch
-	@repository.confirm_commit(:interactive)
 	begin
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
