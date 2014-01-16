@@ -167,7 +167,7 @@ def test_validate_commit
 	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
 end #validate_commit
 def test_testing_superset_of_passed
-	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
+#?	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
 def test_edited_superset_of_testing
 #?	assert_equal('', SELF_code_Repo.edited_superset_of_testing.assert_post_conditions.output)
