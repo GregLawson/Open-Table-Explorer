@@ -228,14 +228,6 @@ def revert_changes
 	git_command('reset --hard')
 end #revert_changes
 def merge_conflict_files?
-# see man git status
-#          D           D    unmerged, both deleted
-#           A           U    unmerged, added by us
-#           U           D    unmerged, deleted by them
-#           U           A    unmerged, added by them
-#           D           U    unmerged, deleted by us
-#           A           A    unmerged, both added
-#           U           U    unmerged, both modified
 	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
 	ret=[]
 	if File.exists?('.git/MERGE_HEAD') then
