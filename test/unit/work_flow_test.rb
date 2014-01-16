@@ -87,7 +87,8 @@ def test_version_comparison
 end #version_comparison
 def test_working_different_from?
 	filename='test/unit/minimal2_test.rb'
-	branch_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
+	branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
+	assert_not_nil(branch_index)
 	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
 	assert_instance_of(ShellCommands, diff_run)
 	assert_operator(diff_run.output.size, :==, 0)
@@ -128,8 +129,9 @@ def test_bracketing_versions?
 	assert_equal([First_slot_index, Last_slot_index], TestWorkFlow.bracketing_versions?(filename, 0))
 end #bracketing_versions?
 def test_goldilocks
-	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
-	current_index=WorkFlow::Branch_enhancement.index(TestWorkFlow.repository.current_branch_name?.to_sym)
+	assert_not_nil(WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym))
+#	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
+	current_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
 	filename='test/unit/minimal2_test.rb'
 	left_index,right_index=TestWorkFlow.bracketing_versions?(filename, current_index)
 	assert_operator(current_index, :<, right_index)
