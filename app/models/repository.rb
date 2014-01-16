@@ -228,14 +228,6 @@ def revert_changes
 	git_command('reset --hard')
 end #revert_changes
 def merge_conflict_files?
-# see man git status
-#          D           D    unmerged, both deleted
-#           A           U    unmerged, added by us
-#           U           D    unmerged, deleted by them
-#           U           A    unmerged, added by them
-#           D           U    unmerged, deleted by us
-#           A           A    unmerged, both added
-#           U           U    unmerged, both modified
 	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
 	ret=[]
 	if File.exists?('.git/MERGE_HEAD') then
@@ -255,7 +247,7 @@ def merge_conflict_files?
 end #merge_conflict_files?
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
-	Parse.parse_split(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
+#?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
 end #branches?
 def remotes?
 	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
