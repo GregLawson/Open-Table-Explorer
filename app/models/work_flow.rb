@@ -225,7 +225,7 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
-			repository.confirm_commit(:interactive)
+			@repository.confirm_commit(:interactive)
 
 		end #safely_visit_branch
 	end #each
@@ -237,15 +237,21 @@ def script_deserves_commit!(deserving_branch)
 	end #if
 end #script_deserves_commit!
 def test(executable=@related_files.model_test_pathname?)
-	begin
-		merge_conflict_recovery
-		@repository.safely_visit_branch(:master) do |changes_branch|
+	merge_conflict_recovery
+	@repository.safely_visit_branch(:master) do |changes_branch|
+		begin
 			deserving_branch=deserving_branch?(executable)
 			if deserving_branch != :passed then #master corrupted
 				edit
+				done=false
+			else
+				done=true
 			end #if
-		end #safely_visit_branch
-		
+		end until done
+		@repository.confirm_commit(:interactive)
+#		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+	end #safely_visit_branch
+	begin
 		deserving_branch=deserving_branch?(executable)
 		puts deserving_branch if $VERBOSE
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
