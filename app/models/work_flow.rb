@@ -268,7 +268,7 @@ def test(executable=@related_files.model_test_pathname?)
 			else
 				done=false # check other branch
 				@repository.confirm_branch_switch(deserving_branch)
-				puts "Switching to deserving branch"+deserving_branch
+				puts "Switching to deserving branch"+deserving_branch.to_s
 			end #if
 		end #if
 	end until done
