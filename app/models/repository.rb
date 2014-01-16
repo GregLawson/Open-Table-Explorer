@@ -247,7 +247,7 @@ def merge_conflict_files?
 end #merge_conflict_files?
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
-	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
+#?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
 end #branches?
 def remotes?
 	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
