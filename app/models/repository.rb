@@ -188,6 +188,7 @@ def confirm_commit(interact=:interactive)
 			raise 'Unimplemented option='+interact
 		end #case
 	end #if
+	puts 'confirm_commit('+interact+" something_to_commit?="+something_to_commit?
 end #confirm_commit
 def validate_commit(changes_branch, files, interact=:interactive)
 	puts files.inspect if $VERBOSE
