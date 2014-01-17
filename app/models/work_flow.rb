@@ -189,7 +189,7 @@ def merge_conflict_recovery
 			# UU unmerged, both modified
 			when 'UU' then 
 				WorkFlow.new(conflict[:file]).edit
-				@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 			else
 				raise conflict.inspect
 			end #case
