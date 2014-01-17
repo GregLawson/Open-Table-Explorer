@@ -242,7 +242,9 @@ def merge_conflict_files?
 			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
 			rm_orig=shell_command('rm '+file.to_s+'.orig')
 		end #map
-		merge_abort=git_command('merge --abort')
+		if !unmerged_files.empty? then
+			merge_abort=git_command('merge --abort')
+		end #if
 	end #if
 	ret
 end #merge_conflict_files?
