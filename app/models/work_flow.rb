@@ -187,7 +187,7 @@ def merge_conflict_recovery
 			# AA unmerged, both added
 			when 'AA' then raise conflict.inspect
 			# UU unmerged, both modified
-			when 'UU' then WorkFlow.new(conflict[file]).edit
+			when 'UU' then WorkFlow.new(conflict[:file]).edit
 			else
 				raise conflict.inspect
 			end #case
@@ -226,7 +226,7 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
 			@repository.confirm_commit(:interactive)
-			puts 'merge('+Branch_enhancement[i]+', '+Branch_enhancement[i-1]+')'
+			puts 'merge('+Branch_enhancement[i].to_s+', '+Branch_enhancement[i-1].to_s+')'
 		end #safely_visit_branch
 	end #each
 end #merge_down
@@ -268,7 +268,7 @@ def test(executable=@related_files.model_test_pathname?)
 			else
 				done=false # check other branch
 				@repository.confirm_branch_switch(deserving_branch)
-				puts "Switching to deserving branch="+deserving_branch.to_s
+				puts "Switching to deserving branch"+deserving_branch.to_s
 			end #if
 		end #if
 	end until done
