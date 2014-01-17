@@ -187,7 +187,7 @@ def merge_conflict_recovery
 			# AA unmerged, both added
 			when 'AA' then raise conflict.inspect
 			# UU unmerged, both modified
-			when 'UU' then WorkFlow.new(conflict[:file]).edit
+			when 'UU' then WorkFlow.new(conflict[:file]).test
 			else
 				raise conflict.inspect
 			end #case
