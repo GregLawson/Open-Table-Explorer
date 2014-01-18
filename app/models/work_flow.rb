@@ -187,7 +187,9 @@ def merge_conflict_recovery
 			# AA unmerged, both added
 			when 'AA' then raise conflict.inspect
 			# UU unmerged, both modified
-			when 'UU' then WorkFlow.new(conflict[file]).edit
+			when 'UU' then 
+				WorkFlow.new(conflict[:file]).edit
+				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 			else
 				raise conflict.inspect
 			end #case
@@ -199,7 +201,7 @@ def merge_conflict_recovery
 end #merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=@repository.git_command('merge --no-commit'+source_branch.to_s)
+		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s).assert_post_conditions
 		merge_conflict_recovery
 		@repository.confirm_commit(interact)
 	end #safely_visit_branch
@@ -226,7 +228,7 @@ def merge_down(deserving_branch=@repository.current_branch_name?)
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
 			@repository.confirm_commit(:interactive)
-
+			puts 'merge('+Branch_enhancement[i].to_s+', '+Branch_enhancement[i-1].to_s+')'
 		end #safely_visit_branch
 	end #each
 end #merge_down
@@ -241,6 +243,7 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
 			deserving_branch=deserving_branch?(executable)
+			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
 			if deserving_branch != :passed then #master corrupted
 				edit
 				done=false
@@ -268,6 +271,7 @@ def test(executable=@related_files.model_test_pathname?)
 			else
 				done=false # check other branch
 				@repository.confirm_branch_switch(deserving_branch)
+				puts "Switching to deserving branch"+deserving_branch.to_s
 			end #if
 		end #if
 	end until done
