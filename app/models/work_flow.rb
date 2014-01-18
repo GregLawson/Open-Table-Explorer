@@ -244,6 +244,7 @@ def test(executable=@related_files.model_test_pathname?)
 		begin
 			deserving_branch=deserving_branch?(executable)
 			if deserving_branch != :passed then #master corrupted
+				puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
 				edit
 				done=false
 			else
