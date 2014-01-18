@@ -243,8 +243,8 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
 			deserving_branch=deserving_branch?(executable)
+			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
 			if deserving_branch != :passed then #master corrupted
-				puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
 				edit
 				done=false
 			else
