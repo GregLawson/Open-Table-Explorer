@@ -201,7 +201,7 @@ def merge_conflict_recovery
 end #merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s)
+		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s).assert_post_conditions
 		merge_conflict_recovery
 		@repository.confirm_commit(interact)
 	end #safely_visit_branch
