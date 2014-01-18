@@ -33,7 +33,10 @@ def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=F
 	end #
 	@model_basename=@model_class_name.to_s.tableize.singularize
 	raise "@model_basename" if @model_basename.nil?
-	@edit_files, @missing_files=pathnames?.partition do |p|
+	@edit_files, not_files=pathnames?.partition do |p|
+		File.file?(p)
+	end #partition
+	@directories, @missing_files=not_files.partition do |p|
 		File.exists?(p)
 	end #partition
 end #initialize
