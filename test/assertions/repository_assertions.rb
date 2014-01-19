@@ -70,7 +70,7 @@ module Examples
 include Constants
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 #Repo= Grit::Repo.new(Root_directory)
-SELF_code_Repo=Repository.new(Root_directory)
+#SELF_code_Repo=Repository.new(Root_directory)
 Empty_Repo_path=Source+'test_repository/'
 Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
