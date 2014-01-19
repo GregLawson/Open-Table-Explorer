@@ -61,7 +61,6 @@ def test_build
 	CA540_template.build.assert_build.assert_open_tax_solver
 #	Repository.new(Data_source_directory).git_command('git diff edited -- test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt').assert_post_conditions
 	commit_minor_change(Dir['test/data_sources/tax_form/*/*'], 'fixup! TaxForm update timestamps')
-
 end #build
 def test_commit_minor_change!
 	file='test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt'
