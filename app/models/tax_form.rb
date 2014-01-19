@@ -17,7 +17,7 @@ extend Test::Unit::Assertions
 module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
-#This_code_repository=Repository.new($0)
+This_code_repository=Repository.new(FilePattern.project_root_dir?(__FILE__))
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller-master'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
