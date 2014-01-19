@@ -64,8 +64,8 @@ def test_build
 end #build
 def test_commit_minor_change!
 	file='test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt'
-#	diff_run=This_code_repository.git_command('diff -- '+file)
-	assert_operator(diff_run.output.lines.size, :>=, 4, diff_run.inspect)
+	diff_run=Repository::This_code_repository.git_command('diff -- '+file)
+	assert_operator(diff_run.output.split.size, :>=, 4, diff_run.inspect)
 	
 #        modified:   test/data_sources/tax_form/CA_540/CA_540_2012_template_out.txt
 #        modified:   test/data_sources/tax_form/US_1040/US_1040_example1_out.txt
