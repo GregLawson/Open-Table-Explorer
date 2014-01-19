@@ -75,6 +75,9 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
+	if path[-1,1]!='/' then
+		path=path+'/'
+	end #if
 	@url=path
 	@path=path
   puts '@path='+@path if $VERBOSE
