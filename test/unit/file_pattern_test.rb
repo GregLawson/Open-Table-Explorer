@@ -25,7 +25,7 @@ def test_Constants
 	assert_match(Basename_regexp, Project_root_directory)
 	assert_match(Pathname_character_regexp, Project_root_directory)
 #either	assert_match(Absolute_pathname_regexp, $0)
-	assert_match(Relative_directory_regexp, All[0][:sub_directory])
+	assert_match(Relative_directory_regexp, All[0][:prefix])
 	assert_match(Absolute_directory_regexp, Project_root_directory)
 #	assert_match(Relative_pathname_regexp, )
 end #Constants
@@ -38,12 +38,10 @@ def test_all
 	Patterns.each_with_index  do |p, i| 
 		n=FilePattern.new(p)
 		message=array_message+"\n recompute s=#{p.inspect}\n n=#{n.inspect}"
-#		fail message
 		n.assert_pre_conditions(message)
 		assert_equal(n, All[i], message)
 		assert_equal(n, FilePattern.all[i], message)
-#		All[i].assert_pre_conditions(message)
-#		FilePattern.all[i].assert_pre_conditions(message)
+		FilePattern.all[i].assert_pre_conditions(message)
 		all+=[n]
 	end #each_with_index
 	FilePattern.assert_pattern_array(all)
@@ -66,7 +64,7 @@ def test_path2model_name
 	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
 	assert_equal(15, name_length, "basename.size=#{basename.size}, extension.size=#{extension.size}\n Patterns[expected_match]=#{Patterns[expected_match].inspect}\n Patterns[expected_match][:suffix].size=#{Patterns[expected_match][:suffix].size}, ")
 	matches=All.reverse.map do |s| #reversed from rare to common
-		if s.suffix_match(path) && s.sub_directory_match(path) then
+		if s.suffix_match(path) && s.prefix_match(path) then
 			name_length=basename.size-s[:suffix].size
 			basename[0,name_length].classify.to_sym
 		else
@@ -96,12 +94,34 @@ def test_project_root_dir
 	assert_not_nil(path)
 	assert_not_empty(path)
 	assert(File.exists?(path))
+	roots=FilePattern::All.map do |p|
+		path=File.expand_path(p[:example_file])
+		matchData=Regexp.new(p[:prefix]).match(path)
+		test_root=matchData.pre_match
+		root=FilePattern.project_root_dir?(path)
+		assert_equal(root, test_root)
+		test_root
+	end #map
+	assert_equal(roots.uniq.size, 1, roots.inspect)
+#	assert_equal('', FilePattern.project_root_dir?(path))
 end #project_root_dir
 def test_find_by_name
-	FilePattern::All.each do |s|
-		assert_equal(s, FilePattern.find_by_name(s[:name]), s.inspect)
-	end #find
+	FilePattern::All.each do |p|
+		assert_equal(p, FilePattern.find_by_name(p[:name]), p.inspect)
+	end #each
 end #find_by_name
+def test_find_from_path
+	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
+	assert_equal(:test, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
+	assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
+	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
+	path='test/unit/_assertions_test.rb'
+	
+	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
+	pattern=FilePattern.find_from_path(path)
+	assert_not_nil(pattern, path)
+	assert_equal(:data_sources_dir, pattern[:name])
+end #find_from_path
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
 	assert_equal(All.size, FilePattern.pathnames?('test').size)
@@ -119,8 +139,28 @@ extend FilePattern::Assertions::ClassMethods
 #def test_class_assert_invariant
 #	FilePattern.assert_invariant
 #end # class_assert_invariant
-def test_sub_directory_match
-end #sub_directory_match
+def test_prefix_match
+	path='test/unit/_assertions_test.rb'
+	p=FilePattern.find_from_path(path)
+	assert(p.suffix_match(path))
+	assert(p.prefix_match(path))
+	successes=All.map do |p|
+		prefix=File.dirname(p[:example_file])
+		expected_prefix=p[:prefix][0..-2] # drops trailing /
+		match_length=expected_prefix.size
+		message='p='+p.inspect
+		message+="\nexpected_prefix="+expected_prefix
+		message+="\nprefix="+prefix
+		assert_operator(match_length, :<=, prefix.size, message)
+		assert_not_nil(prefix[-match_length,match_length], message)
+		assert_match(p[:prefix], p[:example_file], message)
+		matchData=Regexp.new(p[:prefix]).match(p[:example_file])
+		assert_not_nil(matchData, message)
+#		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
+#		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
+		assert(p.prefix_match(p[:example_file]), message)
+	end #map
+end #prefix_match
 def test_path
 end #path
 def test_parse_pathname_regexp
@@ -135,8 +175,16 @@ end #class_assert_pre_conditions
 def test_class_assert_post_conditions
 	FilePattern.assert_post_conditions
 end #class_assert_post_conditions
-def assert_pattern_srray(array)
-end #assert_pattern_srray
+def test_assert_pattern_array
+	array=FilePattern::All
+	successes=array.map do |p|
+		p.assert_pre_conditions
+		p[:example_file].match(p[:prefix])
+		p[:example_file].match(p[:suffix])
+	end #map
+	assert(successes.all?, successes.inspect+"\n"+array.inspect)
+	FilePattern.assert_pattern_array(FilePattern::All)
+end #assert_pattern_array
 def test_assert_naming_convention_match
 	expected_match=4
 	path='test/long_test/rebuild_test.rb'
