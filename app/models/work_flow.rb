@@ -202,8 +202,16 @@ end #merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s).assert_post_conditions
-		merge_conflict_recovery
-		@repository.confirm_commit(interact)
+		if merge_status.output=="Automatic merge went well; stopped before committing as requested\n" then
+			@repository.confirm_commit(interact)
+		else
+			if merge_status.success? then
+				@repository.confirm_commit(interact)
+			else
+				merge_conflict_recovery
+				@repository.confirm_commit(interact)
+			end #if
+		end #if
 	end #safely_visit_branch
 end #merge
 def edit
