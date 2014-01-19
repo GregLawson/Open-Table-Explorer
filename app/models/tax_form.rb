@@ -10,12 +10,14 @@
 # need sudo apt-get install pdftk
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/repository.rb'
 module OpenTableExplorer
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
+#This_code_repository=Repository.new($0)
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller-master'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
@@ -205,6 +207,8 @@ CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA, De
 US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US, Default_tax_year, Data_source_directory)
 US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US, Default_tax_year, Data_source_directory)
 CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :CA, Default_tax_year, Data_source_directory)
+Expect_to_pass=[US1040_user, CA540_user, US1040_example, US1040_example1, CA540_example]
+Expect_to_fail=[US1040_template, CA540_template]
 end #Examples
 end #TaxForm
 end #Finance
