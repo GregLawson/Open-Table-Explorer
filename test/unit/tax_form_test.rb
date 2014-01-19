@@ -60,7 +60,20 @@ def test_build
 	US1040_template.build.assert_build.assert_open_tax_solver
 	CA540_template.build.assert_build.assert_open_tax_solver
 #	Repository.new(Data_source_directory).git_command('git diff edited -- test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt').assert_post_conditions
+	commit_minor_change(Dir['test/data_sources/tax_form/*/*'], 'fixup! TaxForm update timestamps')
+
 end #build
+def test_commit_minor_change!
+	file='test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt'
+#	diff_run=This_code_repository.git_command('diff -- '+file)
+	assert_operator(diff_run.output.lines.size, :>=, 4, diff_run.inspect)
+	
+#        modified:   test/data_sources/tax_form/CA_540/CA_540_2012_template_out.txt
+#        modified:   test/data_sources/tax_form/US_1040/US_1040_example1_out.txt
+#        modified:   test/data_sources/tax_form/US_1040/US_1040_example_out.txt
+#        modified:   test/data_sources/tax_form/US_1040/US_1040_example_sysout.txt
+#        modified:   test/data_sources/tax_form/US_1040/US_1040_template_out.txt
+end #commit_minor_change!
 def test_run_tax_solver
 	form='1040'
 	jurisdiction=:US

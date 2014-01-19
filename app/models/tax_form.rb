@@ -10,12 +10,14 @@
 # need sudo apt-get install pdftk
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/repository.rb'
 module OpenTableExplorer
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
+#This_code_repository=Repository.new($0)
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller-master'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
@@ -96,7 +98,7 @@ def run_json_to_fdf
 	end #if
 	@fdf='/tmp/output.fdf'
 	output_pdf="#{@open_tax_solver_data_directory}/#{@taxpayer_basename_with_year}_otff.pdf"
-	assert_pathname_exists(@ots_json)
+	assert_pathname_exists(@ots_json, @ots_json.inspect)
 	pdf_input="#{Open_Tax_Filler_Directory}/"
 	assert_pathname_exists(@ots_json)
 	command="nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{@tax_year}/definition/#{@otff_form}.json #{Open_Tax_Filler_Directory}/#{@tax_year}/transform/#{@otff_form}.json #{@ots_json} > #{@fdf}"
