@@ -10,6 +10,7 @@
 # need sudo apt-get install pdftk
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/repository.rb'
 module OpenTableExplorer
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
