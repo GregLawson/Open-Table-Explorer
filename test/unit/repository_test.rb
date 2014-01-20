@@ -48,7 +48,7 @@ def test_create_if_missing
 	FileUtils.remove_entry_secure(Unique_repository_directory_pathname) #, force = false)
 end #create_if_missing
 def test_initialize
-	assert_pathname_exists(SELF_code_Repo.path)
+	assert_pathname_exists(This_code_repository.path)
 	assert_pathname_exists(Empty_Repo.path)
 end #initialize
 def test_shell_command
@@ -94,9 +94,9 @@ def test_current_branch_name?
 
 end #current_branch_name
 def test_error_score?
-#	executable=SELF_code_Repo.related_files.model_test_pathname?
+#	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		recent_test=This_code_repository.shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
 		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
