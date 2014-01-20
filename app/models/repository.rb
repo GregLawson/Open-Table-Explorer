@@ -17,7 +17,6 @@ class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?(__FILE__)
-This_code_repository=Repository.new(Root_directory)
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
 Error_classification={0 => :success,
@@ -83,6 +82,9 @@ def initialize(path)
   puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
+module Constants
+This_code_repository=Repository.new(Root_directory)
+end #Constants
 def shell_command(command, working_directory=@path)
 	ShellCommands.new(command, :chdir=>working_directory)
 end #shell_command
