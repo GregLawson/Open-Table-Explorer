@@ -52,11 +52,11 @@ def test_initialize
 	assert_pathname_exists(Empty_Repo.path)
 end #initialize
 def test_shell_command
-	assert_equal(SELF_code_Repo.path, SELF_code_Repo.shell_command('pwd').output.chomp+'/')
+	assert_equal(This_code_repository.path, This_code_repository.shell_command('pwd').output.chomp+'/')
 	assert_equal(Empty_Repo.path, Empty_Repo.shell_command('pwd').output.chomp+'/')
 end #shell_command
 def test_git_command
-	assert_match(/branch/,SELF_code_Repo.git_command('status').output)
+	assert_match(/branch/,This_code_repository.git_command('status').output)
 	assert_match(/branch/,Empty_Repo.git_command('status').output)
 end #git_command
 def test_inspect
@@ -104,15 +104,15 @@ def test_error_score?
 #	This_code_repository.assert_deserving_branch(:edited, executable)
 
 	executable='test/unit/minimal2_test.rb'
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		recent_test=This_code_repository.shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(0, SELF_code_Repo.error_score?('test/unit/minimal2_test.rb'))
+	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
 #	This_code_repository.assert_deserving_branch(:passed, executable)
 	Error_classification.each_pair do |key, value|
 		executable=data_source_directory?+'/'+value.to_s+'.rb'
-		assert_equal(key, SELF_code_Repo.error_score?(executable), This_code_repository.recent_test.inspect)
+		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
 	end #each
 end #error_score
 def test_confirm_branch_switch
@@ -213,7 +213,7 @@ end #merge_conflict_files?
 def test_branches?
 	assert_equal(:master, Minimal_repository.current_branch_name?)
 #?	explain_assert_respond_to(Parse, :parse_split)
-	assert_includes(SELF_code_Repo.branches?, SELF_code_Repo.current_branch_name?.to_s)
+	assert_includes(This_code_repository.branches?, This_code_repository.current_branch_name?.to_s)
 	assert_includes(Minimal_repository.branches?, Minimal_repository.current_branch_name?.to_s)
 end #branches?
 def test_remotes?
