@@ -17,20 +17,20 @@ def test_Constants
 	assert_pathname_exists(Source)
 	assert_equal(FilePattern.project_root_dir?(__FILE__), FilePattern.project_root_dir?($0))
 	assert_equal(FilePattern.project_root_dir?, Root_directory)
-	message="SELF_code_Repo=#{SELF_code_Repo.inspect}"
+	message="This_code_repository=#{This_code_repository.inspect}"
 	message+="\nThis_code_repository=#{This_code_repository.inspect}"
 	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
 	this_code_repository=Repository.new(Root_directory)
 	sELF_code_Repo=Repository.new(Root_directory)
 	assert_equal(Root_directory, this_code_repository.path, message)
-	SELF_code_Repo.assert_pre_conditions
+	This_code_repository.assert_pre_conditions
 	this_code_repository.assert_pre_conditions
 	This_code_repository.assert_pre_conditions
 	assert_equal(Root_directory, This_code_repository.path, message)
 
-	assert_equal(SELF_code_Repo.path, Root_directory, message)
-	assert_equal(SELF_code_Repo.path, This_code_repository.path, message)
-	assert_equal(SELF_code_Repo, This_code_repository, message)
+	assert_equal(This_code_repository.path, Root_directory, message)
+	assert_equal(This_code_repository.path, This_code_repository.path, message)
+	assert_equal(This_code_repository, This_code_repository, message)
 end #Constants
 def test_Repository_git_command
 	git_execution=Repository.git_command('branch', Empty_Repo_path)
