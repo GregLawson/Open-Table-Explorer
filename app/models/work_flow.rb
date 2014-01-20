@@ -77,14 +77,14 @@ extend ClassMethods
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
-def initialize(testable_file, 
-	related_files=RelatedFile.new_from_path?(testable_file),
+def initialize(specific_file, 
+	related_files=RelatedFile.new_from_path?(specific_file),
 	repository=Repository.new(related_files.project_root_dir))
 #	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 #	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}" 
 #	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}" 
 #	raise message if  @related_files.edit_files.empty?
-	@testable_file=testable_file
+	@specific_file=specific_file
 	@related_files=related_files
 	@repository=repository
 	index=Branch_enhancement.index(repository.current_branch_name?)
@@ -213,7 +213,11 @@ def merge(target_branch, source_branch, interact=:interactive)
 	end #safely_visit_branch
 end #merge
 def edit
-	command_string="diffuse"+ version_comparison + test_files
+	if @related_files.edit_files.empty? then
+		command_string="diffuse"+ version_comparison([@specific_file]) + test_files
+	else
+		command_string="diffuse"+ version_comparison + test_files
+	end #if
 	puts command_string if $VERBOSE
 	edit=@repository.shell_command(command_string)
 	edit.assert_post_conditions
