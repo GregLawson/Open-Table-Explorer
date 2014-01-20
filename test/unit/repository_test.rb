@@ -167,10 +167,10 @@ def test_validate_commit
 	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
 end #validate_commit
 def test_testing_superset_of_passed
-#?	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
+#?	assert_equal('', This_code_repository.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
 def test_edited_superset_of_testing
-#?	assert_equal('', SELF_code_Repo.edited_superset_of_testing.assert_post_conditions.output)
+#?	assert_equal('', This_code_repository.edited_superset_of_testing.assert_post_conditions.output)
 end #edited_superset_of_testing
 def test_force_change
 	Minimal_repository.assert_nothing_to_commit
@@ -217,7 +217,7 @@ def test_branches?
 	assert_includes(Minimal_repository.branches?, Minimal_repository.current_branch_name?.to_s)
 end #branches?
 def test_remotes?
-	assert_includes(SELF_code_Repo.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
+	assert_includes(This_code_repository.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
 end #branches?
 def test_rebase!
 	Minimal_repository.rebase!
