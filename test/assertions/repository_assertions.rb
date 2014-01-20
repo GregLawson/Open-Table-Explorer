@@ -22,8 +22,6 @@ def assert_pre_conditions
 	assert_pathname_exists(@path+'.git/')
 	assert_pathname_exists(@path+'.git/logs/')
 	assert_pathname_exists(@path+'.git/logs/refs/')
-	assert_include(Minimal_repository.methods, :unit_names?)
-#	assert_include(Minimal_repository.methods(false), :unit_names?)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
@@ -44,14 +42,16 @@ extend Assertions::ClassMethods
 Repository.assert_pre_conditions
 module Examples
 include Constants
+	This_code_repository.assert_pre_conditions
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 #Repo= Grit::Repo.new(Root_directory)
 SELF_code_Repo=Repository.new(Root_directory)
+	SELF_code_Repo.assert_pre_conditions
 Empty_Repo_path=Source+'test_repository/'
 Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
 Unique_repository_directory_pathname=RelatedFile.new('test').data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
-
+	This_code_repository.assert_pre_conditions
 end #Examples
 end #Repository
 

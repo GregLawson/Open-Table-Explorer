@@ -21,6 +21,7 @@ def test_Constants
 	message+="\nThis_code_repository=#{This_code_repository.inspect}"
 	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
 	this_code_repository=Repository.new(Root_directory)
+	sELF_code_Repo=Repository.new(Root_directory)
 	assert_equal(Root_directory, this_code_repository.path, message)
 	SELF_code_Repo.assert_pre_conditions
 	this_code_repository.assert_pre_conditions
@@ -65,6 +66,7 @@ end #create_if_missing
 def test_initialize
 	assert_pathname_exists(This_code_repository.path)
 	assert_pathname_exists(Empty_Repo.path)
+	This_code_repository.assert_pre_conditions
 end #initialize
 def test_shell_command
 	assert_equal(This_code_repository.path, This_code_repository.shell_command('pwd').output.chomp+'/')
