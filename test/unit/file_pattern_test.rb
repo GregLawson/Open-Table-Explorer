@@ -195,7 +195,10 @@ def test_assert_naming_convention_match
 	assert(FilePattern.find_by_name(:script).assert_naming_convention_match(DCT_filename), "Patterns[1], 'script/'")
 	assert(FilePattern.find_by_name(:assertions).assert_naming_convention_match('test/assertions/_assertions.rb'), "(Patterns[3], 'test/assertions/'")
 	assert(FilePattern.find_by_name(:assertions_test).assert_naming_convention_match('test/unit/_assertions_test.rb'), "(Patterns[4], 'test/unit/'")
+	expected_pattern=FilePattern.find_by_name(:data_sources_dir)
+	expected_pattern.assert_naming_convention_match(Data_source_example)
 end #naming_convention_match
 def test_Examples
+	assert_data_file(Data_source_example)
 end #Examples
 end #FilePattern

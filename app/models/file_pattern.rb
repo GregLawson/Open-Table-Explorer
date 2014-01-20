@@ -184,14 +184,8 @@ end #assert_post_conditions
 def assert_naming_convention_match(path)
 	path=File.expand_path(path)
 	assert_equal(path[-self[:suffix].size, self[:suffix].size], self[:suffix], caller_lines)
-	prefix=File.dirname(path)
-	expected_prefix=self[:prefix][0..-2] # drops trailing /
-	message="expected_prefix=#{expected_prefix}\nprefix=#{prefix}"
-	assert_not_nil(prefix[-expected_prefix.size,expected_prefix.size], message+caller_lines)
-	assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message+caller_lines)
-	message="self=#{self}\nprefix=#{prefix}\nexpected_prefix=#{expected_prefix}"
-	message+="\n self.prefix_match(path)=#{self.prefix_match(path)}"
-	assert(self.prefix_match(path), message+caller_lines)
+	assert(self.suffix_match(path), self.inspect+caller_lines)
+	assert(self.prefix_match(path), self.inspect+caller_lines)
 	message="self=#{self.inspect}, path=#{path.inspect}"
 end #naming_convention_match
 end #Assertions
@@ -203,5 +197,6 @@ DCT_filename='script/dct.rb'
 SELF_Model=__FILE__
 SELF_Test=$0
 #SELF=FilePattern.new(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
+Data_source_example='test/data_sources/tax_form/US_1040/US_1040_example_sysout.txt'
 end #Examples
 end #FilePattern
