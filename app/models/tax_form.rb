@@ -74,6 +74,15 @@ def build
 	run_pdf_to_jpeg
 	self
 end #build
+def commit_minor_change!(files, commit_message)
+	files.each do |file|
+		diff_run=This_code_repository.git_command('diff -- '+file)
+		if diff_run.output.split.size==4 then
+			This_code_repository.git_command('add '+file)
+		end #if
+		This_code_repository.git_command('commit -m '+commit_message)
+	end #each
+end #commit_minor_change!
 def run_open_tax_solver
 
 	command="#{@open_tax_solver_binary} #{@open_tax_solver_input} >#{@open_tax_solver_sysout}"
@@ -98,9 +107,9 @@ def run_json_to_fdf
 	end #if
 	@fdf='/tmp/output.fdf'
 	output_pdf="#{@open_tax_solver_data_directory}/#{@taxpayer_basename_with_year}_otff.pdf"
-	assert_pathname_exists(@ots_json, @ots_json.inspect)
+#	assert_pathname_exists(@ots_json, @ots_json.inspect)
 	pdf_input="#{Open_Tax_Filler_Directory}/"
-	assert_pathname_exists(@ots_json)
+#	assert_pathname_exists(@ots_json)
 	command="nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{@tax_year}/definition/#{@otff_form}.json #{Open_Tax_Filler_Directory}/#{@tax_year}/transform/#{@otff_form}.json #{@ots_json} > #{@fdf}"
 	@json_to_fdf_run=ShellCommands.new(command)
 	self
