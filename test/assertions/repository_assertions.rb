@@ -38,30 +38,6 @@ def assert_something_to_commit(message='')
 	message+="git status=#{inspect}\n@grit_repo.status=#{@grit_repo.status.inspect}"
 	assert(something_to_commit?, message)
 end #assert_something_to_commit
-def assert_deserving_branch(branch_expected, executable, message='')
-	deserving_branch=deserving_branch?(executable)
-	recent_test=shell_command(["ruby", executable])
-	message+="\nrecent_test="+recent_test.inspect
-	message+="\nrecent_test.process_status="+recent_test.process_status.inspect
-	syntax_test=shell_command("ruby -c "+executable)
-	message+="\nsyntax_test="+syntax_test.inspect
-	message+="\nsyntax_test.process_status="+syntax_test.process_status.inspect
-	message+="\nbranch_expected=#{branch_expected.inspect}"
-	message+="\ndeserving_branch=#{deserving_branch.inspect}"
-	case deserving_branch
-	when :edited then
-		assert_equal(1, recent_test.process_status.exitstatus, message)
-		assert_not_equal("Syntax OK\n", syntax_test.output, message)
-		assert_equal(1, syntax_test.process_status.exitstatus, message)
-	when :testing then
-		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
-		assert_equal("Syntax OK\n", syntax_test.output, message)
-	when :passed then
-		assert_equal(0, recent_test.process_status.exitstatus, message)
-		assert_equal("Syntax OK\n", syntax_test.output, message)
-	end #case
-	assert_equal(deserving_branch, branch_expected, message)
-end #deserving_branch
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
