@@ -17,7 +17,6 @@ extend Test::Unit::Assertions
 module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
-This_code_repository=Repository.new(FilePattern.find_from_path($0).project_root_dir?)
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller-master'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
@@ -80,7 +79,7 @@ def commit_minor_change!(files, commit_message)
 		if diff_run.output.lines.size==4 then
 			This_code_repository.git_command('add '+file)
 		end #if
-		This_code_repository,git_command('commit -m '+commit_message)
+		This_code_repository.git_command('commit -m '+commit_message)
 	end #each
 end #commit_minor_change!
 def run_open_tax_solver

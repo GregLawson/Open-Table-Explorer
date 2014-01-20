@@ -19,6 +19,7 @@ include OpenTableExplorer::Finance::TaxForm::Examples
 def test_Constants
 	assert_pathname_exists(Data_source_directory, 'mkdir test/data_sources/tax_form')
 	assert_pathname_exists(Open_Tax_Filler_Directory)
+	assert_equal('', 'test/data_sources/tax_form/US_1040/US_1040_example1_out.txt')
 #	assert_pathname_exists(Open_tax_solver_examples_directory)
 #	assert_pathname_exists(Open_tax_solver_data_directory)
 #	assert_pathname_exists(Open_tax_solver_input)
