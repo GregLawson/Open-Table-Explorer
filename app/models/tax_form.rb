@@ -33,6 +33,7 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename, 
 :taxpayer_basename_with_year, :open_tax_solver_binary, :open_tax_solver_directory, 
+:open_tax_solver_run, :open_tax_solver_sysout,
 :open_tax_solver_to_filler_run, 
 :open_tax_solver_input, :open_tax_solver_data_directory, :open_tax_solver_output,
 :ots_template_filename, :ots_json, :ots_to_json_run,
@@ -49,10 +50,11 @@ def initialize(taxpayer='example', form='1040',
 	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"].sort[-1]
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
 	if open_tax_solver_data_directory.nil? then
-		@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
+		@open_tax_solver_data_base_directory=@open_tax_solver_directory
 	else
-		@open_tax_solver_data_directory=open_tax_solver_data_directory+"/#{@form_filename}/"
+		@open_tax_solver_data_base_directory=open_tax_solver_data_directory
 	end #if
+	@open_tax_solver_data_directory=@open_tax_solver_data_base_directory+"/examples_and_templates/#{@form_filename}/"
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_data_directory+'/'+@taxpayer_basename_with_year+'.txt') then
@@ -85,7 +87,7 @@ end #commit_minor_change!
 def run_open_tax_solver
 
 	command="#{@open_tax_solver_binary} #{@open_tax_solver_input} >#{@open_tax_solver_sysout}"
-	@open_tax_solver_run=ShellCommands.new(command)
+	@open_tax_solver_run=ShellCommands.new(command, :chdir => @open_tax_solver_data_base_directory)
 	self
 end #run_open_tax_solver
 def run_ots_to_json
@@ -93,7 +95,7 @@ def run_ots_to_json
 	@ots_json="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_OTS.json"
 	command="nodejs #{@open_tax_form_filler_ots_js} #{@open_tax_solver_output} > #{@ots_json}"
 	@ots_to_json_run=ShellCommands.new(command)
-	assert_pathname_exists(@ots_json)
+#	assert_pathname_exists(@ots_json)
 	self
 end #run_ots_to_json
 def run_json_to_fdf
@@ -106,9 +108,9 @@ def run_json_to_fdf
 	end #if
 	@fdf='/tmp/output.fdf'
 	output_pdf="#{@open_tax_solver_data_directory}/#{@taxpayer_basename_with_year}_otff.pdf"
-	assert_pathname_exists(@ots_json, @ots_json.inspect)
+#	assert_pathname_exists(@ots_json, @ots_json.inspect)
 	pdf_input="#{Open_Tax_Filler_Directory}/"
-	assert_pathname_exists(@ots_json)
+#	assert_pathname_exists(@ots_json)
 	command="nodejs #{Open_Tax_Filler_Directory}/script/apply_values.js #{Open_Tax_Filler_Directory}/#{@tax_year}/definition/#{@otff_form}.json #{Open_Tax_Filler_Directory}/#{@tax_year}/transform/#{@otff_form}.json #{@ots_json} > #{@fdf}"
 	@json_to_fdf_run=ShellCommands.new(command)
 	self
@@ -123,7 +125,7 @@ def run_fdf_to_pdf
 end #run_fdf_to_pdf
 def run_pdf_to_jpeg
 	
-	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{form_filename}")
+	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{form_filename}", :chdir=>@open_tax_solver_data_directory)
 	@display_jpeg_run=ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
 	@display_jpeg_run.assert_post_conditions if $VERBOSE
 	self
@@ -152,12 +154,19 @@ def assert_open_tax_solver
 	@open_tax_solver_run.puts
 	puts "peculiar_status=#{peculiar_status}"
 	puts "message='#{message}'"
-	if peculiar_status then
+	case peculiar_status
+	when 0 then 
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	when 1 then
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	when 2 then
+		assert_pathname_exists(@open_tax_solver_output)
+		assert_pathname_exists(@open_tax_solver_sysout)
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	else
 		warn(message)
 		warn('!@open_tax_solver_run.success?='+(!@open_tax_solver_run.success?).to_s)
-	else
-		@open_tax_solver_run.assert_post_conditions('else peculiar_status')
-	end #if
+	end #case
 	assert_pathname_exists(@open_tax_solver_output)
 	assert_pathname_exists(@open_tax_solver_sysout)
 end #assert_open_tax_solver
