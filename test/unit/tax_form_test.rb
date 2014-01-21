@@ -151,6 +151,13 @@ def test_run_fdf_to_pdf
 #	CA540_user.run_fdf_to_pdf.assert_fdf_to_pdf
 end #run_json_to_pdf
 def 	test_run_pdf_to_jpeg
+#	output_pdf=Pathname.new(@output_pdf).cleanpath.relative_path_from(@open_tax_solver_data_directory)
+	output_pdf_pathname=Pathname.new(File.expand_path(US1040_example.output_pdf))
+	assert_instance_of(Pathname, output_pdf_pathname)
+	cleanpath_name=output_pdf_pathname.cleanpath
+	clean_directory=Pathname.new(File.expand_path(US1040_example.open_tax_solver_data_directory)).cleanpath
+	output_pdf=cleanpath_name.relative_path_from(clean_directory)
+	US1040_example.build.assert_pdf_to_jpeg
 #	US1040_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
 #	US1040_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
 #	CA540_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
