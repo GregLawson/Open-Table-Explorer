@@ -50,10 +50,11 @@ def initialize(taxpayer='example', form='1040',
 	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"].sort[-1]
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
 	if open_tax_solver_data_directory.nil? then
-		@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
+		@open_tax_solver_data_base_directory=@open_tax_solver_directory
 	else
-		@open_tax_solver_data_directory=open_tax_solver_data_directory+"/examples_and_templates/#{@form_filename}/"
+		@open_tax_solver_data_base_directory=open_tax_solver_data_directory
 	end #if
+	@open_tax_solver_data_directory=@open_tax_solver_data_base_directory+"/examples_and_templates/#{@form_filename}/"
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_data_directory+'/'+@taxpayer_basename_with_year+'.txt') then
@@ -86,7 +87,7 @@ end #commit_minor_change!
 def run_open_tax_solver
 
 	command="#{@open_tax_solver_binary} #{@open_tax_solver_input} >#{@open_tax_solver_sysout}"
-	@open_tax_solver_run=ShellCommands.new(command)
+	@open_tax_solver_run=ShellCommands.new(command, :chdir => @open_tax_solver_data_base_directory)
 	self
 end #run_open_tax_solver
 def run_ots_to_json
