@@ -125,7 +125,7 @@ def run_fdf_to_pdf
 end #run_fdf_to_pdf
 def run_pdf_to_jpeg
 	
-	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{form_filename}", :chdir=>@open_tax_solver_data_directory)
+	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{@output_pdf} #{@taxpayer_basename_with_year}", :chdir=>@open_tax_solver_data_directory)
 	@display_jpeg_run=ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
 	@display_jpeg_run.assert_post_conditions if $VERBOSE
 	self
