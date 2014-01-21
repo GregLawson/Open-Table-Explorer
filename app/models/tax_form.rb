@@ -64,7 +64,7 @@ def initialize(taxpayer='example', form='1040',
 	@open_tax_solver_input="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
 	@open_tax_solver_output="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
 	@open_tax_solver_sysout="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
-	@output_pdf="#{@open_tax_solver_data_directory}/taxes/#{@taxpayer_basename}_otff.pdf"
+	@output_pdf="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_otff.pdf"
 	
 end #initialize
 def build
