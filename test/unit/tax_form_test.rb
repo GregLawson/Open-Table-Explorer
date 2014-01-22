@@ -57,23 +57,21 @@ def test_example
 	CA540_example.build
 	CA540_example.assert_open_tax_solver
 	CA540_example.assert_ots_to_json
-	CA540_example.assert_json_to_fdf
-	CA540_example.assert_pdf_to_jpeg
 	US1040_example.commit_minor_change!(Dir['test/data_sources/tax_form/*/*'], 'fixup! TaxForm update timestamps')
 	CA540_example.build.assert_build
-	CA540_example.build.assert_build.assert_pdf_to_jpeg
+	CA540_example.build.assert_build.assert_ots_to_json
 	CA540_example.assert_build
 end #example
 def test_user
 	US1040_user.build.assert_build.assert_pdf_to_jpeg
-	CA540_user.build.assert_build.assert_pdf_to_jpeg
+	CA540_user.build.assert_ots_to_json
 end #user
 def test_example1
-	US1040_example1.build.assert_build.assert_open_tax_solver
+	US1040_example1.build.assert_open_tax_solver
 end #build
 def test_template
-	US1040_template.build.assert_build.assert_open_tax_solver
-	CA540_template.build.assert_build.assert_open_tax_solver
+	US1040_template.build.assert_open_tax_solver
+	CA540_template.build.assert_ots_to_json
 #	Repository.new(Data_source_directory).git_command('git diff edited -- test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt').assert_post_conditions
 end #build
 def test_commit_minor_change!
@@ -151,7 +149,6 @@ def test_run_fdf_to_pdf
 #	CA540_user.run_fdf_to_pdf.assert_fdf_to_pdf
 end #run_json_to_pdf
 def 	test_run_pdf_to_jpeg
-#	output_pdf=Pathname.new(@output_pdf).cleanpath.relative_path_from(@open_tax_solver_data_directory)
 	output_pdf_pathname=Pathname.new(File.expand_path(US1040_example.output_pdf))
 	assert_instance_of(Pathname, output_pdf_pathname)
 	cleanpath_name=output_pdf_pathname.cleanpath
@@ -199,7 +196,7 @@ def test_assert_open_tax_solver
 end #assert_open_tax_solver
 def test_assert_build
 	CA540_example.build.assert_build
-	CA540_example.build.assert_build.assert_pdf_to_jpeg
+	CA540_example.build.assert_build.assert_ots_to_json
 end #build
 def test_Examples
 	OpenTableExplorer::Finance::TaxForm::Examples.constants.each do |e|

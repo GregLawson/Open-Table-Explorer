@@ -64,7 +64,7 @@ def initialize(taxpayer='example', form='1040',
 	@open_tax_solver_input="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
 	@open_tax_solver_output="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
 	@open_tax_solver_sysout="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
-	@output_pdf="#{@open_tax_solver_data_directory}/taxes/#{@taxpayer_basename}_otff.pdf"
+	@output_pdf="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_otff.pdf"
 	
 end #initialize
 def build
@@ -77,11 +77,11 @@ def build
 end #build
 def commit_minor_change!(files, commit_message)
 	files.each do |file|
-		diff_run=This_code_repository.git_command('diff -- '+file)
-		if diff_run.output.lines.size==4 then
-			This_code_repository.git_command('add '+file)
+		diff_run=Repository::This_code_repository.git_command('diff -- '+file)
+		if diff_run.output.split.size==4 then
+			Repository::This_code_repository.git_command('add '+file)
 		end #if
-		This_code_repository.git_command('commit -m '+commit_message)
+		Repository::This_code_repository.git_command('commit -m '+commit_message)
 	end #each
 end #commit_minor_change!
 def run_open_tax_solver
@@ -124,8 +124,13 @@ def run_fdf_to_pdf
 	self
 end #run_fdf_to_pdf
 def run_pdf_to_jpeg
-	
-	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{form_filename}", :chdir=>@open_tax_solver_data_directory)
+	output_pdf_pathname=Pathname.new(File.expand_path(@output_pdf))
+	assert_instance_of(Pathname, output_pdf_pathname)
+	cleanpath_name=output_pdf_pathname.cleanpath
+	clean_directory=Pathname.new(File.expand_path(@open_tax_solver_data_directory)).cleanpath
+	output_pdf=cleanpath_name.relative_path_from(clean_directory)
+
+	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@taxpayer_basename_with_year}", :chdir=>@open_tax_solver_data_directory)
 	@display_jpeg_run=ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
 	@display_jpeg_run.assert_post_conditions if $VERBOSE
 	self
