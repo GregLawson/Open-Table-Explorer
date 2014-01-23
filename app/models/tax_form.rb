@@ -147,6 +147,16 @@ end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
 end #ClassMethods
+def assert_pre_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_input, message)
+	assert_pathname_exists(@open_tax_solver_data_directory, message)
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_data_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
+end #assert_post_conditions
+# Assertions custom instance methods
 def assert_open_tax_solver
 #	@open_tax_solver_run.assert_post_conditions
 	peculiar_status=@open_tax_solver_run.process_status.exitstatus==1
@@ -206,15 +216,6 @@ def assert_build
 	end #if
 	self
 end #build
-def assert_pre_conditions(message='')
-	assert_pathname_exists(@open_tax_solver_input, message)
-	assert_pathname_exists(@open_tax_solver_data_directory, message)
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
-	assert_pathname_exists(@open_tax_solver_data_directory, message+caller_lines)
-	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
-end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods

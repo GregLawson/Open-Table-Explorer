@@ -102,7 +102,7 @@ def test_run_tax_solver
 	CA540_example.run_open_tax_solver.assert_open_tax_solver
 	US1040_example1.run_open_tax_solver.assert_open_tax_solver
 end #run_open_tax_solver
-def 	test_run_tax_solver_to_filler
+def test_run_ots_to_json
 	assert_pathname_exists(Open_Tax_Filler_Directory)
 	open_tax_form_filler_ots_js="#{Open_Tax_Filler_Directory}/script/json_ots.js"
 	assert_pathname_exists(open_tax_form_filler_ots_js)
@@ -162,6 +162,7 @@ def 	test_run_pdf_to_jpeg
 #	US1040_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
 #	CA540_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
 end #run_pdf_to_jpeg
+# Assertions custom instance methods
 def test_assert_open_tax_solver
 	CA540_example.build
 	peculiar_status=CA540_example.open_tax_solver_run.process_status.exitstatus
@@ -171,9 +172,9 @@ def test_assert_open_tax_solver
 		message="file=#{CA540_example.open_tax_solver_sysout} does not exist"
 	end #if
 	message+=CA540_example.open_tax_solver_run.errors
-	CA540_example.open_tax_solver_run.puts
-	puts "peculiar_status=#{peculiar_status}"
-	puts "message='#{message}'"
+	CA540_example.open_tax_solver_run.puts if $VERBOSE
+	puts "peculiar_status=#{peculiar_status}" if $VERBOSE
+	puts "message='#{message}'" if $VERBOSE
 	case peculiar_status
 	when 0 then 
 		CA540_example.open_tax_solver_run.assert_post_conditions('else peculiar_status '+message)
@@ -185,6 +186,7 @@ def test_assert_open_tax_solver
 	when 2 then
 		assert_pathname_exists(CA540_example.open_tax_solver_output)
 		assert_pathname_exists(CA540_example.open_tax_solver_sysout)
+		CA540_example.run_open_tax_solver.assert_open_tax_solver
 		CA540_example.open_tax_solver_run.assert_post_conditions('else peculiar_status '+message)
 	else
 		warn(message)
@@ -194,6 +196,14 @@ def test_assert_open_tax_solver
 	CA540_example.build.assert_build
 	CA540_example.build.assert_build.assert_pdf_to_jpeg
 end #assert_open_tax_solver
+def test_assert_ots_to_json
+end #assert_ots_to_json
+def test_assert_json_to_fdf
+end #assert_json_to_fdf
+def test_assert_fdf_to_pdf
+end #assert_json_to_fdf
+def test_assert_pdf_to_jpeg
+end #assert_json_to_fdf
 def test_assert_build
 	CA540_example.build.assert_build
 	CA540_example.build.assert_build.assert_ots_to_json
