@@ -187,14 +187,13 @@ def test_assert_open_tax_solver
 		assert_pathname_exists(CA540_example.open_tax_solver_output)
 		assert_pathname_exists(CA540_example.open_tax_solver_sysout)
 		CA540_example.run_open_tax_solver.assert_open_tax_solver
-		CA540_example.open_tax_solver_run.assert_post_conditions('else peculiar_status '+message)
 	else
 		warn(message)
 		warn('!CA540_example.open_tax_solver_run.success?='+(!CA540_example.open_tax_solver_run.success?).to_s)
 	end #case
-	CA540_example.build.assert_pdf_to_jpeg
+#	CA540_example.build.assert_pdf_to_jpeg
 	CA540_example.build.assert_build
-	CA540_example.build.assert_build.assert_pdf_to_jpeg
+#	CA540_example.build.assert_build.assert_pdf_to_jpeg
 end #assert_open_tax_solver
 def test_assert_ots_to_json
 end #assert_ots_to_json
