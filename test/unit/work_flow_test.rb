@@ -102,7 +102,12 @@ def test_working_different_from?
 	assert(!TestWorkFlow.working_different_from?(filename, 4))
 	assert(!TestWorkFlow.working_different_from?(filename, -1))
 	assert(!TestWorkFlow.working_different_from?(filename, -2))
-	assert(!TestWorkFlow.working_different_from?('test/long_test/repository_test.rb',-1))
+	filename='test/long_test/repository_test.rb'
+	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat origin/master -- "+filename)
+	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
+	assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
+	assert_nil(TestWorkFlow.working_different_from?('test/long_test/repository_test.rb',-2))
+	assert_nil(TestWorkFlow.working_different_from?(filename, -2))
 end #working_different_from?
 def test_different_indices?
 	range=1..3
