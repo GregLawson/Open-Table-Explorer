@@ -102,18 +102,29 @@ def test_working_different_from?
 	assert(!TestWorkFlow.working_different_from?(filename, 4))
 	assert(!TestWorkFlow.working_different_from?(filename, -1))
 	assert(!TestWorkFlow.working_different_from?(filename, -2))
-	filename='test/long_test/repository_test.rb'
+	filename=File_not_in_oldest_branch
 	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat origin/master -- "+filename)
 	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
 	assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
-	assert_nil(TestWorkFlow.working_different_from?('test/long_test/repository_test.rb',-2))
+	assert_nil(TestWorkFlow.working_different_from?(File_not_in_oldest_branch,-2))
 	assert_nil(TestWorkFlow.working_different_from?(filename, -2))
 end #working_different_from?
-def test_different_indices?
-	range=1..3
+def test_differences?
+	range=-2..0
+	filename=File_not_in_oldest_branch
+	assert_nil(TestWorkFlow.working_different_from?(File_not_in_oldest_branch,-2))
+	differences=range.map do |branch_index|
+		TestWorkFlow.working_different_from?(filename, branch_index)
+	end #map
+	assert_nil(differences[0])
+	indices=[]
+	range.zip(differences){|n,s| indices<<(s ? n : nil)}
+	assert_equal([-1], indices, differences.inspect)
+	indices.compact
 	filename='test/unit/minimal2_test.rb'
-	assert_equal([], TestWorkFlow.different_indices?(filename, range))
-end #different_indices?
+	assert_equal([], TestWorkFlow.differences?(filename, range))
+	assert_equal([], TestWorkFlow.differences?(File_not_in_oldest_branch, range))
+end #differences?
 def test_scan_verions?
 	range=-1..3
 	filename='test/unit/minimal2_test.rb'
