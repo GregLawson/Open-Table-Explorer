@@ -159,9 +159,9 @@ end #scan_verions?
 def test_bracketing_versions?
 	filename=Most_stable_file
 	current_index=0
-	left_index=TestWorkFlow.scan_verions?(filename, -1..current_index, :last)
+	left_index=TestWorkFlow.scan_verions?(filename, First_slot_index..current_index, :last)
 	right_index=TestWorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
-	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, -1..current_index, :last))
+	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..current_index, :last))
 	assert_equal(First_slot_index, left_index)
 	assert(!TestWorkFlow.working_different_from?(filename, 1))
 	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
