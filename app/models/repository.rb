@@ -168,7 +168,14 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 	end #if
 	if push then
-		git_command('stash apply --quiet').assert_post_conditions
+		apply_run=git_command('stash apply --quiet')
+		if apply_run.errors.match(/Could not restore untracked files from stash/) then
+			puts apply_run.errors
+			puts git_command('status').output
+			puts git_command('stash show').output
+		else
+			apply_run.assert_post_conditions
+		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
 		end #each
