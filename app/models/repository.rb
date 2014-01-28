@@ -133,9 +133,6 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end #error_score
-# This is safe in the sense that a stash saves all files
-# and a stash apply restores all tracked files
-# safe is meant to mean no files or changes are lost or buried.
 def confirm_branch_switch(branch)
 	checkout_branch=git_command("checkout #{branch}")
 	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
@@ -143,6 +140,9 @@ def confirm_branch_switch(branch)
 	end #if
 	checkout_branch # for command chaining
 end #confirm_branch_switch
+# This is safe in the sense that a stash saves all files
+# and a stash apply restores all tracked files
+# safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
 	changes_branch=push_branch # 
@@ -168,7 +168,14 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 	end #if
 	if push then
-		git_command('stash apply --quiet').assert_post_conditions
+		apply_run=git_command('stash apply --quiet')
+		if apply_run.errors.match(/Could not restore untracked files from stash/) then
+			puts apply_run.errors
+			puts git_command('status').output
+			puts git_command('stash show').output
+		else
+			apply_run.assert_post_conditions
+		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
 		end #each
