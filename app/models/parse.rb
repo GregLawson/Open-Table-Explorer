@@ -140,7 +140,7 @@ def named_hash(hash_offset=0)
 		named_hash[name]=@captures[hash_offset+indices[0]]
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
-				name=default_name(i, named_capture).to_sym
+				name=Parse.default_name(i, named_capture).to_sym
 				named_hash[name]=@captures[capture_index]
 			end #each_index
 		end #if
@@ -148,7 +148,7 @@ def named_hash(hash_offset=0)
 	# with the current ruby Regexp implementation, the following is impossible
 	# If there is a named capture in match or split, all unnamed captures are ignored
 #	possible_unnamed_capture_indices.each do |capture_index|
-#		name=default_name(capture_index).to_sym
+#		name=Parse.default_name(capture_index).to_sym
 #		named_hash[name]=@captures[capture_index]
 #	end #each
 	named_hash
@@ -171,7 +171,7 @@ def assert_parse_string(answer, string, pattern, message='')
 	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
 	assert_match(pattern, string, message)
 	matchData=pattern.match(string)
-	assert_equal(pattern.names.size, matchData.size-1, "All string parse captures should be named.\n"+message)
+	assert_operator(pattern.named_captures.values.flatten.size, :<=, matchData.size-1, "All string parse captures should be named.\n"+message)
 	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
 
 end #parse_string
