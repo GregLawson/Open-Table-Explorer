@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
 require_relative 'repository.rb'
 class WorkFlow
@@ -120,17 +119,24 @@ def differences?(filename, range)
 	end #map
 end #differences?
 def scan_verions?(filename, range, direction)
-	different_indices=differences?(filename, range)
-	indices=[]
-	range.zip(differences) do |n,s| 
-		indices<<(s ? n : nil)
+	differences=differences?(filename, range)
+	different_indices=[]
+	existing_indices=[]
+	range.zip(differences) do |index,s| 
+		case s
+		when true then
+			different_indices<<index
+			existing_indices<<index
+		when nil then
+		when false then
+			existing_indices<<index
+		end #case
 	end #zip
-	indices.compact
 	case direction
 	when :first then 
-		(different_indices+[Last_slot_index]).min
+		(different_indices+[existing_indices[-1]]).min
 	when :last then 
-		([First_slot_index]+different_indices).max
+		([existing_indices[0]]+different_indices).max
 	else
 		raise 
 	end #case
@@ -368,7 +374,7 @@ module Examples
 TestFile=File.expand_path($0)
 TestWorkFlow=WorkFlow.new(TestFile)
 File_not_in_oldest_branch='test/long_test/repository_test.rb'
-
+Most_stable_file='test/unit/minimal2_test.rb'
 include Constants
 end #Examples
 include Examples
