@@ -86,7 +86,7 @@ def test_version_comparison
 	assert_equal('', TestWorkFlow.version_comparison([]))
 end #version_comparison
 def test_working_different_from?
-	filename='test/unit/minimal2_test.rb'
+	filename=Most_stable_file
 	branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
 	assert_not_nil(branch_index)
 	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
@@ -107,7 +107,6 @@ def test_working_different_from?
 	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
 	assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
 	assert_nil(TestWorkFlow.working_different_from?(File_not_in_oldest_branch,-2))
-	assert_nil(TestWorkFlow.working_different_from?(filename, -2))
 end #working_different_from?
 def test_differences?
 	range=-2..0
@@ -117,27 +116,52 @@ def test_differences?
 		TestWorkFlow.working_different_from?(filename, branch_index)
 	end #map
 	assert_nil(differences[0])
-	indices=[]
-	range.zip(differences){|n,s| indices<<(s ? n : nil)}
-	assert_equal([-1], indices, differences.inspect)
-	indices.compact
-	filename='test/unit/minimal2_test.rb'
-	assert_equal([], TestWorkFlow.differences?(filename, range))
-	assert_equal([], TestWorkFlow.differences?(File_not_in_oldest_branch, range))
+	assert_nil(TestWorkFlow.differences?(File_not_in_oldest_branch, range)[0], message)
+	assert_equal([false, false, false], TestWorkFlow.differences?(Most_stable_file, range), message)
 end #differences?
 def test_scan_verions?
-	range=-1..3
-	filename='test/unit/minimal2_test.rb'
-	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last))
-	assert_equal(Last_slot_index, TestWorkFlow.scan_verions?(filename, range, :first))
-	
+	filename=File_not_in_oldest_branch
+	range=-2..3
+	direction=:last
+	differences=TestWorkFlow.differences?(filename, range)
+	different_indices=[]
+	existing_indices=[]
+	range.zip(differences) do |index,s| 
+		case s
+		when true then
+			different_indices<<index
+			existing_indices<<index
+		when nil then
+		when false then
+			existing_indices<<index
+		end #case
+	end #zip
+	scan_verions=case direction
+	when :first then 
+		(different_indices+[existing_indices[-1]]).min
+	when :last then 
+		([existing_indices[0]]+different_indices).max
+	else
+		raise 
+	end #case
+	message="filename="+filename.inspect
+	message+="\nrange="+range.inspect
+	message+="\ndirection="+direction.inspect
+	message+="\ndifferences="+differences.inspect
+	message+="\ndifferent_indices="+different_indices.inspect
+	message+="\nexisting_indices="+existing_indices.inspect
+	message+="\nscan_verions="+scan_verions.inspect
+	assert_equal(existing_indices[0], scan_verions, message)
+	filename=Most_stable_file
+	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last), message)
+	assert_equal(Last_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..Last_slot_index, :first), message)
 end #scan_verions?
 def test_bracketing_versions?
-	filename='test/unit/minimal2_test.rb'
+	filename=Most_stable_file
 	current_index=0
-	left_index=TestWorkFlow.scan_verions?(filename, -1..current_index, :last)
+	left_index=TestWorkFlow.scan_verions?(filename, First_slot_index..current_index, :last)
 	right_index=TestWorkFlow.scan_verions?(filename, current_index+1..Last_slot_index, :first)
-	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, -1..current_index, :last))
+	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..current_index, :last))
 	assert_equal(First_slot_index, left_index)
 	assert(!TestWorkFlow.working_different_from?(filename, 1))
 	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
@@ -148,7 +172,7 @@ def test_goldilocks
 	assert_not_nil(WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym))
 #	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
 	current_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
-	filename='test/unit/minimal2_test.rb'
+	filename=Most_stable_file
 	left_index,right_index=TestWorkFlow.bracketing_versions?(filename, current_index)
 	assert_operator(current_index, :<, right_index)
 	message="left_index=#{left_index}, right_index=#{right_index}"
