@@ -187,6 +187,7 @@ def assert_open_tax_solver
 end #assert_open_tax_solver
 def assert_ots_to_json
 	@ots_to_json_run.assert_post_conditions
+	assert_empty(Dir[' test/data_sources/tax_form/examples_and_templates/US_1040/US_1040_*_OTS.json~passed'])
 end #assert_ots_to_json
 def assert_json_to_fdf
 	@json_to_fdf_run.assert_post_conditions
