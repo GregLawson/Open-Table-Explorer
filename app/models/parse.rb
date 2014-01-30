@@ -13,7 +13,6 @@ LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
-LINES=(Terminated_line*Regexp::Any)*LINE*(Line_terminator*Regexp::Optional)
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
@@ -37,21 +36,22 @@ end #parse_string
 # Uses Regexp capture mechanism in String#split
 
 # Input String, Output Array
-def parse_into_array(string, item_pattern=Terminated_line, ending=:optional)
-	Parse.new(string.split(item_pattern, options), pattern, options).output
+def parse_into_array(string, item_pattern=Terminated_line, options=nil)
+	Parse.new(string.split(item_pattern), item_pattern, options).output
+
 
 end #parse_into_array
 # Input Array of Strings, Output Array of Hash
 def parse_array(string_array, pattern=WORDS)
 	string_array.map do |string|
-		parse(string,pattern)
+		parse_into_array(string,pattern)
 	end #map
 end #parse_array
 # parse takes an input string or possibly nested array of strings and returns an array of regexp captures per string.
 # The array of captures replacing the input strings adds one additional layer of Array nesting.
 def parse(string_or_array, pattern=WORDS)
 	if string_or_array.instance_of?(String) then
-		parse_string(string_or_array, pattern)
+		parse_into_array(string_or_array, pattern)
 	elsif string_or_array.instance_of?(Array) then
 		parse_array(string_or_array, pattern)
 	else
@@ -89,7 +89,7 @@ def parse_name_values(array, pairs, new_names, pattern)
 		end #if
 	end #map
 end #parse_name_values
-def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
+def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::Terminated_line)
 	parse(@output, row_pattern).map  do |row| 
 		parse(row, column_pattern)
 	end #map
@@ -97,6 +97,7 @@ end #rows_and_columns
 end #ClassMethods
 extend ClassMethods
 # encapsulates the difference between parsing from MatchData and from Array#split
+# opions include delimiter, and ending
 attr_reader :captures, :regexp, :length_hash_captures, :iterations, :output
 def initialize(captures, regexp, options=nil)
 	@captures=captures
