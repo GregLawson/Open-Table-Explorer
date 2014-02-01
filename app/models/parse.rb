@@ -14,7 +14,6 @@ Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 WORD=/([^\s]*)/.capture(:word)
-WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
@@ -50,7 +49,7 @@ def parse_array(string_array, pattern=WORDS)
 end #parse_array
 # parse takes an input string or possibly nested array of strings and returns an array of regexp captures per string.
 # The array of captures replacing the input strings adds one additional layer of Array nesting.
-def parse(string_or_array, pattern=WORDS)
+def parse(string_or_array, pattern=WORD)
 	if string_or_array.instance_of?(String) then
 		parse_into_array(string_or_array, pattern)
 	elsif string_or_array.instance_of?(Array) then
@@ -101,7 +100,7 @@ def name2array(node, name)
 		node
 	end #if
 end #name2array
-def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::Terminated_line)
+def rows_and_columns(column_pattern=Parse::WORD, row_pattern=Parse::Terminated_line)
 	parse(@output, row_pattern).map  do |row| 
 		parse(row, column_pattern)
 	end #map
