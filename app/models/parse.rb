@@ -90,10 +90,16 @@ def parse_name_values(array, pairs, new_names, pattern)
 		end #if
 	end #map
 end #parse_name_values
-def name2array(array, name)
-	array.map do |element|
-		element[name]
-	end #map
+def name2array(node, name)
+	if node.instance_of?(Array) then
+		node.map do |element|
+			name2array(element, name)
+		end #map
+	elsif node.instance_of?(Hash) then
+		node[name]
+	else
+		node
+	end #if
 end #name2array
 def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::Terminated_line)
 	parse(@output, row_pattern).map  do |row| 
@@ -226,6 +232,8 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 Array_answer=[{:branch => '1'}, {:branch => '2'}]
+Nested_string="1 2\n3 4\n"
+Nested_answer=[['1', '2'], ['3', '4']]
 Parse_string=Parse.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
 Parse_array=Parse.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
 end #Examples

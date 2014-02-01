@@ -64,7 +64,7 @@ end #parse_into_array
 def test_parse_array
 	string_array=["1 2","3 4"]
 	pattern=WORD
-	answer=[['1', '2'], ['3', '4']]
+	answer=Nested_answer
 	assert_equal(['1', '2'], parse_string(string_array[0], Parse::WORD))
 	assert_equal(['3', '4'], parse_string(string_array[1], Parse::WORD))
 	string_array.map do |string|
@@ -73,8 +73,8 @@ def test_parse_array
 	assert_equal(answer, parse_array(string_array))	
 end #parse_array
 def test_parse
-	string_or_array="1 2\n3 4\n"
-	answer=[['1', '2'], ['3', '4']]
+	string_or_array=Nested_string
+	answer=Nested_answer
 	pattern=WORD
 	if string_or_array.instance_of?(String) then
 		parse_string(string_or_array, pattern)
@@ -86,8 +86,8 @@ def test_parse
 #	assert_equal(["1 2", "3 4"], parse_string(string_or_array, Terminated_line))
 #	assert_equal(["1 2", "3 4"], parse(string_or_array, Terminated_line))
 	assert_equal([{:line=>"1 2", :terminator=>"\n"}, {:line=>"3 4", :terminator=>"\n"}], parse(string_or_array, Terminated_line))
-	assert_equal(answer, name2array(parse(string_or_array, Terminated_line), :word))
-	assert_equal(answer, parse(name2array(parse(string_or_array, Terminated_line), :word), WORD))
+	assert_equal(["1 2", "3 4"], name2array(parse(string_or_array, Terminated_line), :line))
+	assert_equal(answer, name2array(parse(name2array(parse(string_or_array, Terminated_line), :line), WORD), :word))
 end #parse
 def test_default_name
 	index=11
@@ -126,13 +126,14 @@ def test_parse_name_values
 end #parse_name_values
 def test_name2array
 	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
+	assert_equal(Nested_answer, name2array(parse(name2array(parse(Nested_string, Terminated_line), :line), WORD), :word))
 end #name2array
 def test_rows_and_columns
 	column_delimiter=';'
 	row_delimiter="\n"
 #	name_tag=nil
 #	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(row_delimiter))) 
-#	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns(column_delimiter))
+#	assert_equal(Nested_answer,EXAMPLE.rows_and_columns(column_delimiter))
 end #rows_and_columns
 def test_initialize
 	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
