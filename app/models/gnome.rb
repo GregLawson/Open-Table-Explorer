@@ -8,7 +8,7 @@
 require_relative '../../app/models/shell_command.rb'
 class Gnome
 module Constants
-Data_Sources_Dir=TE.data_sources_directory?+'gnome_hangs/'
+Data_Sources_Dir=TE.data_sources_directory?+'/'
 end #Constants
 include Constants
 module ClassMethods
