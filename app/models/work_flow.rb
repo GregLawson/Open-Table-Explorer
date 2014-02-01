@@ -224,7 +224,7 @@ def merge(target_branch, source_branch, interact=:interactive)
 	end #safely_visit_branch
 end #merge
 def edit
-	@repository.recent_test.puts
+	@repository.recent_test.puts if !@repository.recent_test.nil?
 	if @related_files.edit_files.empty? then
 		command_string="diffuse"+ version_comparison([@specific_file]) + test_files
 	else
