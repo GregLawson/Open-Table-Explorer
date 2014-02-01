@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment.rb'
-require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/gnome.rb'
 include Gnome::Constants
 class GnomeTest < TestCase
 include DefaultTests
