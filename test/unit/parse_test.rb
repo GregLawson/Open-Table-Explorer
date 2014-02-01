@@ -73,7 +73,7 @@ def test_parse_array
 	assert_equal(answer, parse_array(string_array))	
 end #parse_array
 def test_parse
-	string_or_array="1 2\n3 4"
+	string_or_array="1 2\n3 4\n"
 	answer=[['1', '2'], ['3', '4']]
 	pattern=WORD
 	if string_or_array.instance_of?(String) then
@@ -85,7 +85,7 @@ def test_parse
 	assert_equal(["3", "4"], Parse.name2array(parse("3 4", WORD), :word))
 #	assert_equal(["1 2", "3 4"], parse_string(string_or_array, Terminated_line))
 #	assert_equal(["1 2", "3 4"], parse(string_or_array, Terminated_line))
-	assert_equal({}, parse(string_or_array, Terminated_line))
+	assert_equal([{:line=>"1 2", :terminator=>"\n"}, {:line=>"3 4", :terminator=>"\n"}], parse(string_or_array, Terminated_line))
 	assert_equal(answer, name2array(parse(string_or_array, Terminated_line), :word))
 	assert_equal(answer, parse(name2array(parse(string_or_array, Terminated_line), :word), WORD))
 end #parse
