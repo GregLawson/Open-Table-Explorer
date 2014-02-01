@@ -13,6 +13,7 @@ LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
+WORD=/([^\s]*)/.capture(:word)
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
@@ -89,6 +90,11 @@ def parse_name_values(array, pairs, new_names, pattern)
 		end #if
 	end #map
 end #parse_name_values
+def name2array(array, name)
+	array.map do |element|
+		element[name]
+	end #map
+end #name2array
 def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::Terminated_line)
 	parse(@output, row_pattern).map  do |row| 
 		parse(row, column_pattern)
