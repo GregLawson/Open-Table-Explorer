@@ -224,6 +224,7 @@ def merge(target_branch, source_branch, interact=:interactive)
 	end #safely_visit_branch
 end #merge
 def edit
+	@repository.recent_test.puts
 	if @related_files.edit_files.empty? then
 		command_string="diffuse"+ version_comparison([@specific_file]) + test_files
 	else
@@ -266,6 +267,7 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end #safely_visit_branch
+	deserving_branch
 end #test
 def loop(executable=@related_files.model_test_pathname?)
 	merge_conflict_recovery
@@ -284,13 +286,8 @@ def loop(executable=@related_files.model_test_pathname?)
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end #safely_visit_branch
 	begin
-		deserving_branch=deserving_branch?(executable)
-		puts deserving_branch if $VERBOSE
-		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
-			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
-		end #safely_visit_branch
+		deserving_branch=test(executable)
 		merge_down(deserving_branch)
-		@repository.recent_test.puts
 		edit
 		if @repository.something_to_commit? then
 			done=false
