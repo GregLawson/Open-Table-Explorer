@@ -13,8 +13,7 @@ LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
-LINES=(Terminated_line*Regexp::Any)*LINE*(Line_terminator*Regexp::Optional)
-WORDS=/([^\s]*)(?:\s([^\s]*))*/
+WORD=/([^\s]*)/.capture(:word)
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
@@ -37,21 +36,22 @@ end #parse_string
 # Uses Regexp capture mechanism in String#split
 
 # Input String, Output Array
-def parse_into_array(string, item_pattern=Terminated_line, ending=:optional)
-	Parse.new(string.split(item_pattern, options), pattern, options).output
+def parse_into_array(string, item_pattern=Terminated_line, options=nil)
+	Parse.new(string.split(item_pattern), item_pattern, options).output
+
 
 end #parse_into_array
 # Input Array of Strings, Output Array of Hash
 def parse_array(string_array, pattern=WORDS)
 	string_array.map do |string|
-		parse(string,pattern)
+		parse_into_array(string,pattern)
 	end #map
 end #parse_array
 # parse takes an input string or possibly nested array of strings and returns an array of regexp captures per string.
 # The array of captures replacing the input strings adds one additional layer of Array nesting.
-def parse(string_or_array, pattern=WORDS)
+def parse(string_or_array, pattern=WORD)
 	if string_or_array.instance_of?(String) then
-		parse_string(string_or_array, pattern)
+		parse_into_array(string_or_array, pattern)
 	elsif string_or_array.instance_of?(Array) then
 		parse_array(string_or_array, pattern)
 	else
@@ -89,7 +89,18 @@ def parse_name_values(array, pairs, new_names, pattern)
 		end #if
 	end #map
 end #parse_name_values
-def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
+def name2array(node, name)
+	if node.instance_of?(Array) then
+		node.map do |element|
+			name2array(element, name)
+		end #map
+	elsif node.instance_of?(Hash) then
+		node[name]
+	else
+		node
+	end #if
+end #name2array
+def rows_and_columns(column_pattern=Parse::WORD, row_pattern=Parse::Terminated_line)
 	parse(@output, row_pattern).map  do |row| 
 		parse(row, column_pattern)
 	end #map
@@ -97,6 +108,7 @@ end #rows_and_columns
 end #ClassMethods
 extend ClassMethods
 # encapsulates the difference between parsing from MatchData and from Array#split
+# opions include delimiter, and ending
 attr_reader :captures, :regexp, :length_hash_captures, :iterations, :output
 def initialize(captures, regexp, options=nil)
 	@captures=captures
@@ -140,7 +152,7 @@ def named_hash(hash_offset=0)
 		named_hash[name]=@captures[hash_offset+indices[0]]
 		if indices.size>1 then
 			indices[1..-1].each_index do |capture_index,i|
-				name=default_name(i, named_capture).to_sym
+				name=Parse.default_name(i, named_capture).to_sym
 				named_hash[name]=@captures[capture_index]
 			end #each_index
 		end #if
@@ -148,7 +160,7 @@ def named_hash(hash_offset=0)
 	# with the current ruby Regexp implementation, the following is impossible
 	# If there is a named capture in match or split, all unnamed captures are ignored
 #	possible_unnamed_capture_indices.each do |capture_index|
-#		name=default_name(capture_index).to_sym
+#		name=Parse.default_name(capture_index).to_sym
 #		named_hash[name]=@captures[capture_index]
 #	end #each
 	named_hash
@@ -171,7 +183,7 @@ def assert_parse_string(answer, string, pattern, message='')
 	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
 	assert_match(pattern, string, message)
 	matchData=pattern.match(string)
-	assert_equal(pattern.names.size, matchData.size-1, "All string parse captures should be named.\n"+message)
+	assert_operator(pattern.named_captures.values.flatten.size, :<=, matchData.size-1, "All string parse captures should be named.\n"+message)
 	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
 
 end #parse_string
@@ -219,6 +231,8 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 Array_answer=[{:branch => '1'}, {:branch => '2'}]
+Nested_string="1 2\n3 4\n"
+Nested_answer=[['1', '2'], ['3', '4']]
 Parse_string=Parse.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
 Parse_array=Parse.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
 end #Examples
