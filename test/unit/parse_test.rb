@@ -12,6 +12,7 @@ include Parse::ClassMethods # treat class methods like module methods as local t
 include Parse::Examples
 include Parse::Assertions::ClassMethods
 def test_Constants
+#	assert_equal(LINES, LINES_cryptic)
 #	assert_equal(Terminated_line, Terminated_line_cryptic)
 	assert_parse_string(Hash_answer, Newline_Delimited_String, Terminated_line, '')
 	assert_parse_string(Hash_answer, Newline_Terminated_String, Terminated_line, "")
@@ -228,7 +229,7 @@ def test_named_hash
 #		named_hash[name]=captures[capture_index]
 #	end #each
 	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
-#	assert_equal(Array_answer, Parse.new(captures, regexp).output, captures.inspect) # return matched subexpressions
+	assert_equal(Array_answer, Parse.new(captures, regexp).output, captures.inspect) # return matched subexpressions
 end #named_hash
 include Parse::Constants
 include Parse::Constants
