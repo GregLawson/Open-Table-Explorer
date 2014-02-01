@@ -14,7 +14,6 @@ Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 WORD=/([^\s]*)/.capture(:word)
-WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
@@ -50,7 +49,7 @@ def parse_array(string_array, pattern=WORDS)
 end #parse_array
 # parse takes an input string or possibly nested array of strings and returns an array of regexp captures per string.
 # The array of captures replacing the input strings adds one additional layer of Array nesting.
-def parse(string_or_array, pattern=WORDS)
+def parse(string_or_array, pattern=WORD)
 	if string_or_array.instance_of?(String) then
 		parse_into_array(string_or_array, pattern)
 	elsif string_or_array.instance_of?(Array) then
@@ -90,12 +89,18 @@ def parse_name_values(array, pairs, new_names, pattern)
 		end #if
 	end #map
 end #parse_name_values
-def name2array(array, name)
-	array.map do |element|
-		element[name]
-	end #map
+def name2array(node, name)
+	if node.instance_of?(Array) then
+		node.map do |element|
+			name2array(element, name)
+		end #map
+	elsif node.instance_of?(Hash) then
+		node[name]
+	else
+		node
+	end #if
 end #name2array
-def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::Terminated_line)
+def rows_and_columns(column_pattern=Parse::WORD, row_pattern=Parse::Terminated_line)
 	parse(@output, row_pattern).map  do |row| 
 		parse(row, column_pattern)
 	end #map
@@ -226,6 +231,8 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 Array_answer=[{:branch => '1'}, {:branch => '2'}]
+Nested_string="1 2\n3 4\n"
+Nested_answer=[['1', '2'], ['3', '4']]
 Parse_string=Parse.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
 Parse_array=Parse.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
 end #Examples

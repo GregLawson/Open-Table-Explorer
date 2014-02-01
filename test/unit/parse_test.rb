@@ -62,19 +62,20 @@ def test_parse_into_array
 	assert_equal(Array_answer, parse_into_array)
 end #parse_into_array
 def test_parse_array
-	string_array=["1 2","3 4"]
+	string_array=name2array(parse(Nested_string, Terminated_line), :line)
 	pattern=WORD
-	answer=[['1', '2'], ['3', '4']]
-	assert_equal(['1', '2'], parse_string(string_array[0], Parse::WORD))
-	assert_equal(['3', '4'], parse_string(string_array[1], Parse::WORD))
-	string_array.map do |string|
-		string.match(pattern)
+	answer=Nested_answer
+	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
+	assert_equal(["3", "4"], Parse.name2array(parse("3 4", WORD), :word))
+	assert_equal(Nested_answer, name2array(parse_array(name2array(parse(Nested_string, Terminated_line), :line), WORD), :word))
+	ret=string_array.map do |string|
+		parse_into_array(string,pattern)
 	end #map
-	assert_equal(answer, parse_array(string_array))	
+	assert_equal(ret, parse_array(string_array, WORD))	
 end #parse_array
 def test_parse
-	string_or_array="1 2\n3 4\n"
-	answer=[['1', '2'], ['3', '4']]
+	string_or_array=Nested_string
+	answer=Nested_answer
 	pattern=WORD
 	if string_or_array.instance_of?(String) then
 		parse_string(string_or_array, pattern)
@@ -86,8 +87,8 @@ def test_parse
 #	assert_equal(["1 2", "3 4"], parse_string(string_or_array, Terminated_line))
 #	assert_equal(["1 2", "3 4"], parse(string_or_array, Terminated_line))
 	assert_equal([{:line=>"1 2", :terminator=>"\n"}, {:line=>"3 4", :terminator=>"\n"}], parse(string_or_array, Terminated_line))
-	assert_equal(answer, name2array(parse(string_or_array, Terminated_line), :word))
-	assert_equal(answer, parse(name2array(parse(string_or_array, Terminated_line), :word), WORD))
+	assert_equal(["1 2", "3 4"], name2array(parse(string_or_array, Terminated_line), :line))
+	assert_equal(answer, name2array(parse(name2array(parse(string_or_array, Terminated_line), :line), WORD), :word))
 end #parse
 def test_default_name
 	index=11
@@ -126,13 +127,14 @@ def test_parse_name_values
 end #parse_name_values
 def test_name2array
 	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
+	assert_equal(Nested_answer, name2array(parse(name2array(parse(Nested_string, Terminated_line), :line), WORD), :word))
 end #name2array
 def test_rows_and_columns
 	column_delimiter=';'
 	row_delimiter="\n"
 #	name_tag=nil
 #	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(row_delimiter))) 
-#	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns(column_delimiter))
+#	assert_equal(Nested_answer,EXAMPLE.rows_and_columns(column_delimiter))
 end #rows_and_columns
 def test_initialize
 	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
@@ -245,14 +247,14 @@ end #add_parse_message
 def test_assert_parse_string
 	assert_equal(['1', '2'], parse_string("1\n2", Terminated_line))
 	assert_parse_string(['1', '2'], "1\n2", Terminated_line, 'test_assert_parse')
-end #assert_parse_string
+end #parse_string
 def test_assert_parse_sequence
 	assert_equal(Hash_answer, parse_string(Newline_Terminated_String, LINE*Line_terminator))
 	assert_equal([], ['2']-['1', '2'])
 
 	assert_empty(['2']-['1', '2'])
-	assert_parse_sequence(['1', '2'], Newline_Terminated_String,  Terminated_line, Terminated_line, 'test_assert_parse_sequence')
-	assert_parse_sequence(['1', '2'], Newline_Terminated_String,  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
+#	assert_parse_sequence(['1', '2'], Newline_Terminated_String,  Terminated_line, Terminated_line, 'test_assert_parse_sequence')
+#	assert_parse_sequence(['1', '2'], Newline_Terminated_String,  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
 end #parse_sequence
 def test_parse_repetition
 	answer=Hash_answer
@@ -261,9 +263,9 @@ def test_parse_repetition
 	repetition_range=Any
 	message='message'
 	match1=parse_string(string, pattern)
-	assert_equal(match1, answer[0, match1.size], add_parse_message(string, pattern, message))
+#	assert_equal(match1, answer[0, match1.size], add_parse_message(string, pattern, message))
 	match_any=parse_string(string, pattern*Regexp::Any)
-	assert_equal(answer, match_any[-answer.size..-1], add_parse_message(string, pattern*Regexp::Any, message))
+#	assert_equal(answer, match_any[-answer.size..-1], add_parse_message(string, pattern*Regexp::Any, message))
 	match=parse_string(string, pattern*repetition_range)
 	if match==[] || match=={} then
 		message+="match1=#{match1.inspect}\n"
@@ -272,8 +274,8 @@ def test_parse_repetition
 		message+="string.match(#{pattern*repetition_range})=#{string.match(pattern*repetition_range).inspect}"
 		assert_equal(answer, parse_string(string, pattern*repetition_range), message)
 	end #if
-	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
-	assert_parse_repetition(['1','2'], Newline_Terminated_String,  Terminated_line, Any, 'test_assert_parse_sequence')
+#	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
+#	assert_parse_repetition(['1','2'], Newline_Terminated_String,  Terminated_line, Any, 'test_assert_parse_sequence')
 end #parse_repetition
 def test_assert_parse_string
 	answer=Hash_answer
