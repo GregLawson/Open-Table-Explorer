@@ -48,7 +48,7 @@ def test_parse_string
 	end #if
 	assert_equal(Hash_answer, parse_string(string, Parse::Terminated_line), "matchData=#{matchData.inspect}")
 	assert_equal(Hash_answer, parse_string(string), "matchData=#{matchData.inspect}")
-#	assert_equal(Hash_answer, parse_string("1 2", Parse::WORDS))
+#	assert_equal(Hash_answer, parse_string("1 2", Parse::WORD))
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::Terminated_line.capture(:a)*Parse::Terminated_line.capture(:b)))
 end #parse_string
@@ -63,29 +63,31 @@ def test_parse_into_array
 end #parse_into_array
 def test_parse_array
 	string_array=["1 2","3 4"]
-	pattern=WORDS
+	pattern=WORD
 	answer=[['1', '2'], ['3', '4']]
-	assert_equal(['1', '2'], parse_string(string_array[0], Parse::WORDS))
-	assert_equal(['3', '4'], parse_string(string_array[1], Parse::WORDS))
+	assert_equal(['1', '2'], parse_string(string_array[0], Parse::WORD))
+	assert_equal(['3', '4'], parse_string(string_array[1], Parse::WORD))
 	string_array.map do |string|
 		string.match(pattern)
 	end #map
 	assert_equal(answer, parse_array(string_array))	
 end #parse_array
 def test_parse
-	string_or_array="1 2\n3 4"
+	string_or_array="1 2\n3 4\n"
 	answer=[['1', '2'], ['3', '4']]
-	pattern=WORDS
+	pattern=WORD
 	if string_or_array.instance_of?(String) then
 		parse_string(string_or_array, pattern)
 	else
 		parse_array(string_or_array, pattern)
 	end #if
-	assert_equal(["1", "2"], parse("1 2", WORDS))
-	assert_equal(['3', '4'], parse_string('3 4', WORDS))
+	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
+	assert_equal(["3", "4"], Parse.name2array(parse("3 4", WORD), :word))
 #	assert_equal(["1 2", "3 4"], parse_string(string_or_array, Terminated_line))
 #	assert_equal(["1 2", "3 4"], parse(string_or_array, Terminated_line))
-	assert_equal(answer, parse(parse(string_or_array, Terminated_line), WORDS))
+	assert_equal([{:line=>"1 2", :terminator=>"\n"}, {:line=>"3 4", :terminator=>"\n"}], parse(string_or_array, Terminated_line))
+	assert_equal(answer, name2array(parse(string_or_array, Terminated_line), :word))
+	assert_equal(answer, parse(name2array(parse(string_or_array, Terminated_line), :word), WORD))
 end #parse
 def test_default_name
 	index=11
@@ -122,6 +124,9 @@ def test_parse_name_values
 		end #if
 	end #map
 end #parse_name_values
+def test_name2array
+	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
+end #name2array
 def test_rows_and_columns
 	column_delimiter=';'
 	row_delimiter="\n"
@@ -229,7 +234,7 @@ def test_named_hash
 #		named_hash[name]=captures[capture_index]
 #	end #each
 	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
-	assert_equal(Array_answer, Parse.new(captures, regexp).output, captures.inspect) # return matched subexpressions
+#	assert_equal(Array_answer, Parse.new(captures, regexp).output, captures.inspect) # return matched subexpressions
 end #named_hash
 include Parse::Constants
 include Parse::Constants
