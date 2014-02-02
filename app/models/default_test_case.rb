@@ -9,6 +9,7 @@ require 'active_support/all'
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
 def each_example(&block)
+  return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
   if  included_module_names.include?("#{model_class?}::Examples") then
 #    info "model_class?.constants=#{model_class?.constants}"
@@ -102,6 +103,7 @@ def assert_environment
 end #assert_environment
 def test_aaa_environment
   info "$VERBOSE=#{$VERBOSE.inspect}"
+  return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
   info "included_module_names=#{included_module_names.inspect}"
   assert_include(self.class.included_modules, Test::Unit::Assertions)
