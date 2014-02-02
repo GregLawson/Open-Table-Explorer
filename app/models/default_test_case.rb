@@ -9,6 +9,7 @@ require 'active_support/all'
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
 def each_example(&block)
+  return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
   if  included_module_names.include?("#{model_class?}::Examples") then
 #    info "model_class?.constants=#{model_class?.constants}"
