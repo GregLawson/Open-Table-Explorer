@@ -93,10 +93,11 @@ commands.each do |c|
 			WorkFlow.all(:long_test)
 			ShellCommands.new('yard doc')
 			work_flow=WorkFlow.new($0)
-			work_flow.merge(:master, :passed) 
-			work_flow.merge(:passed, :master) 
-			work_flow.merge(:testing, :passed) 
-			work_flow.merge(:edited, :testing) 
+			current_branch=work_flow.repository.current_branch_name?
+			if current_branch==:master then
+				work_flow.merge(:master, :passed) 
+			end #if
+			work_flow.merge_down(current_branch) 
 		when :merge_down then 
 			work_flow=WorkFlow.new($0)
 			work_flow.merge_down
