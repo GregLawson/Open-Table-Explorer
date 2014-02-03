@@ -1,3 +1,3 @@
-Writing results to file:  test/data_sources/tax_form//examples_and_templates/CA_540//CA_540_2012_template_out.txt
+Writing results to file:  test/data_sources/tax_form//CA_540//CA_540_2012_template_out.txt
 CA-540 2012 - v10.00
 Error: Could not open Federal return 'examples_and_templates/US_1040/fed_out.txt'
