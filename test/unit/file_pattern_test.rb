@@ -107,6 +107,7 @@ def test_repository_dir?
 			done=true
 		elsif dirname.size<2 then
 			dirname=nil
+			done=true
 		else
 			dirname=File.dirname(path)
 			done=false
@@ -115,6 +116,7 @@ def test_repository_dir?
 	end until done
 	assert_pathname_exists(dirname)
 	assert_pathname_exists(git_directory)
+	assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
 end #repository_dir?
 def test_project_root_dir
 	path=File.expand_path($0)

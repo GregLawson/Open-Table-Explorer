@@ -65,6 +65,7 @@ def repository_dir?(path=$0)
 			done=true
 		elsif dirname.size<2 then
 			dirname=nil
+			done=true
 		else
 			dirname=File.dirname(path)
 			done=false
