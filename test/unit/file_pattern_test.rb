@@ -110,6 +110,7 @@ def test_repository_dir?
 			dirname=nil
 			done=true
 		else
+			assert_operator(dirname.size, :>, File.dirname(dirname).size)
 			assert_not_equal(dirname, File.dirname(dirname))
 			dirname=File.dirname(dirname)
 			done=false
@@ -144,31 +145,6 @@ def test_project_root_dir
 	path='.gitignore'
 	path=File.expand_path(path)
 	assert_pathname_exists(path)
-	if File.directory?(path) then
-		dirname=path
-	else
-		dirname=File.dirname(path)
-	end #if
-	assert_pathname_exists(dirname)
-		begin
-			git_directory=dirname+'/.git'
-			assert_pathname_exists(git_directory)
-			assert_operator(dirname.size, :>=, 2, dirname.inspect)
-		assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?($0))
-		assert_equal(FilePattern.repository_dir?($0),dirname)
-			if File.exists?(git_directory) then
-				done=true
-			elsif dirname.size<2 then
-				dirname=nil
-			else
-				dirname=File.dirname(path)
-				done=false
-			end #if
-			assert(done, 'first iteration.')
-		end until done
-		assert_pathname_exists(dirname)
-		assert_pathname_exists(git_directory)
-	assert_pathname_exists(FilePattern.project_root_dir?('.gitignore'))
 end #project_root_dir
 def test_find_by_name
 	FilePattern::All.each do |p|
