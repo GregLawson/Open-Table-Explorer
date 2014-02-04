@@ -147,6 +147,8 @@ def test_project_root_dir
 			git_directory=dirname+'/.git'
 			assert_pathname_exists(git_directory)
 			assert_operator(dirname.size, :>=, 2, dirname.inspect)
+		assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?($0))
+		assert_equal(FilePattern.repository_dir?($0),dirname)
 			if File.exists?(git_directory) then
 				done=true
 			elsif dirname.size<2 then
