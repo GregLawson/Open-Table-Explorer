@@ -90,7 +90,8 @@ def test_path2model_name
 	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
 end #path2model_name
 def test_repository_dir?
-	path='.gitignore'
+	path=$0
+#	path='.gitignore'
 	path=File.expand_path(path)
 	assert_pathname_exists(path)
 	if File.directory?(path) then
@@ -101,7 +102,7 @@ def test_repository_dir?
 	assert_pathname_exists(dirname)
 	begin
 		git_directory=dirname+'/.git'
-		assert_pathname_exists(git_directory)
+#		assert_pathname_exists(git_directory)
 		assert_operator(dirname.size, :>=, 2, dirname.inspect)
 		if File.exists?(git_directory) then
 			done=true
@@ -112,7 +113,7 @@ def test_repository_dir?
 			dirname=File.dirname(path)
 			done=false
 		end #if
-		assert(done, 'first iteration.')
+#		assert(done, 'first iteration.')
 	end until done
 	assert_pathname_exists(dirname)
 	assert_pathname_exists(git_directory)
