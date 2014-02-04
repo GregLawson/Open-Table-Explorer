@@ -53,7 +53,7 @@ def path2model_name?(path=$0)
 	matches.compact.last
 end #path2model_name
 # searches up pathname for .git sub-directory
-# returns null if not in a git repository
+# returns nil if not in a git repository
 def repository_dir?(path=$0)
 	if File.directory?(path) then
 		dirname=path
