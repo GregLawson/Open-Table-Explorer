@@ -116,10 +116,10 @@ def test_repository_dir?
 			done=false
 		end #if
 #		assert(done, 'first iteration.')
-		puts 'path='+path.inspect
-		puts 'dirname='+dirname.inspect
-		puts 'git_directory='+git_directory.inspect
-		puts 'done='+done.inspect
+		puts 'path='+path.inspect if $VERBOSE
+		puts 'dirname='+dirname.inspect if $VERBOSE
+		puts 'git_directory='+git_directory.inspect if $VERBOSE
+		puts 'done='+done.inspect if $VERBOSE
 	end until done
 	assert_pathname_exists(dirname)
 	assert_pathname_exists(git_directory)
