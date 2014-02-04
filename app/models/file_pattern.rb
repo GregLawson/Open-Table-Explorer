@@ -52,7 +52,8 @@ def path2model_name?(path=$0)
 	end #map
 	matches.compact.last
 end #path2model_name
-# returns nil if file does not follow any pattern
+# searches up pathname for .git sub-directory
+# returns null if not in a git repository
 def repository_dir?(path=$0)
 	if File.directory?(path) then
 		dirname=path
@@ -62,17 +63,19 @@ def repository_dir?(path=$0)
 	begin
 		git_directory=dirname+'/.git'
 		if File.exists?(git_directory) then
+			dirname=File.expand_path(dirname)+'/'
 			done=true
 		elsif dirname.size<2 then
 			dirname=nil
 			done=true
 		else
-			dirname=File.dirname(dirname)
+			dirname=File.expand_path(File.dirname(dirname))+'/'
 			done=false
 		end #if
 	end until done
-	File.expand_path(dirname)+'/'
+	dirname
 end #repository_dir?
+# returns nil if file does not follow any pattern
 def project_root_dir?(path=$0)
 	path=File.expand_path(path)
 	roots=FilePattern::All.map do |p|

@@ -110,6 +110,7 @@ def test_repository_dir?
 			dirname=nil
 			done=true
 		else
+			assert_operator(dirname.size, :>, File.dirname(dirname).size)
 			assert_not_equal(dirname, File.dirname(dirname))
 			dirname=File.dirname(dirname)
 			done=false
