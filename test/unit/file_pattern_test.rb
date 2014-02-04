@@ -110,13 +110,19 @@ def test_repository_dir?
 			dirname=nil
 			done=true
 		else
-			dirname=File.dirname(path)
+			assert_not_equal(dirname, File.dirname(dirname))
+			dirname=File.dirname(dirname)
 			done=false
 		end #if
 #		assert(done, 'first iteration.')
+		puts 'path='+path.inspect
+		puts 'dirname='+dirname.inspect
+		puts 'git_directory='+git_directory.inspect
+		puts 'done='+done.inspect
 	end until done
 	assert_pathname_exists(dirname)
 	assert_pathname_exists(git_directory)
+	assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?($0))
 	assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
 end #repository_dir?
 def test_project_root_dir
@@ -148,6 +154,8 @@ def test_project_root_dir
 			git_directory=dirname+'/.git'
 			assert_pathname_exists(git_directory)
 			assert_operator(dirname.size, :>=, 2, dirname.inspect)
+		assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?($0))
+		assert_equal(FilePattern.repository_dir?($0),dirname)
 			if File.exists?(git_directory) then
 				done=true
 			elsif dirname.size<2 then

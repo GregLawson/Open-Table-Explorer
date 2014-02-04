@@ -67,7 +67,7 @@ def repository_dir?(path=$0)
 			dirname=nil
 			done=true
 		else
-			dirname=File.dirname(path)
+			dirname=File.dirname(dirname)
 			done=false
 		end #if
 	end until done
