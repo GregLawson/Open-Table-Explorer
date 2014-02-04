@@ -37,6 +37,7 @@ def all(pattern_name=:test)
 end #all
 def branch_symbol?(branch_index)
 	case branch_index
+	when nil then raise 'branch_index='+branch_index.inspect
 	when -2 then :'origin/master'
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
