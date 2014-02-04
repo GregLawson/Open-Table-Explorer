@@ -89,6 +89,33 @@ def test_path2model_name
 	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
 	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
 end #path2model_name
+def test_repository_dir?
+	path='.gitignore'
+	path=File.expand_path(path)
+	assert_pathname_exists(path)
+	if File.directory?(path) then
+		dirname=path
+	else
+		dirname=File.dirname(path)
+	end #if
+	assert_pathname_exists(dirname)
+	begin
+		git_directory=dirname+'/.git'
+		assert_pathname_exists(git_directory)
+		assert_operator(dirname.size, :>=, 2, dirname.inspect)
+		if File.exists?(git_directory) then
+			done=true
+		elsif dirname.size<2 then
+			dirname=nil
+		else
+			dirname=File.dirname(path)
+			done=false
+		end #if
+		assert(done, 'first iteration.')
+	end until done
+	assert_pathname_exists(dirname)
+	assert_pathname_exists(git_directory)
+end #repository_dir?
 def test_project_root_dir
 	path=File.expand_path($0)
 	assert_not_nil(path)

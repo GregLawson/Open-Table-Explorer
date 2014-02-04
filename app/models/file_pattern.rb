@@ -53,6 +53,25 @@ def path2model_name?(path=$0)
 	matches.compact.last
 end #path2model_name
 # returns nil if file does not follow any pattern
+def repository_dir?(path=$0)
+	if File.directory?(path) then
+		dirname=path
+	else
+		dirname=File.dirname(path)
+	end #if
+	begin
+		git_directory=dirname+'/.git'
+		if File.exists?(git_directory) then
+			done=true
+		elsif dirname.size<2 then
+			dirname=nil
+		else
+			dirname=File.dirname(path)
+			done=false
+		end #if
+	end until done
+	dirname
+end #repository_dir?
 def project_root_dir?(path=$0)
 	path=File.expand_path(path)
 	roots=FilePattern::All.map do |p|
