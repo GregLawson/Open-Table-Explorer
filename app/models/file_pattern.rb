@@ -52,6 +52,7 @@ def path2model_name?(path=$0)
 	end #map
 	matches.compact.last
 end #path2model_name
+# returns nil if file does not follow any pattern
 def project_root_dir?(path=$0)
 	path=File.expand_path(path)
 	roots=FilePattern::All.map do |p|
@@ -62,8 +63,30 @@ def project_root_dir?(path=$0)
 			test_root=matchData.pre_match
 		end #if
 	end #map
-	raise roots.inspect if roots.uniq.compact.size!=1
-	roots.compact[0]
+	message='path='+path.inspect
+	message+="\nroots="+roots.inspect
+	raise message if roots.uniq.compact.size>1
+	if roots.uniq.compact.size<=1 then
+		roots.compact[0]
+	else
+		if File.directory?(path) then
+			dirname=path
+		else
+			dirname=File.dirname(path)
+		end #if
+		begin
+			git_directory=dirname+'/.git'
+			if File.exists?(git_directory) then
+				done=true
+			elsif dirname.size<2 then
+				dirname=nil
+			else
+				dirname=File.dirname(path)
+				done=false
+			end #if
+		end until done
+		dirname
+	end #if
 end #project_root_dir
 def find_by_name(name)
 	Constants::All.find do |s|
@@ -197,6 +220,6 @@ DCT_filename='script/dct.rb'
 SELF_Model=__FILE__
 SELF_Test=$0
 #SELF=FilePattern.new(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
-Data_source_example='test/data_sources/tax_form/US_1040/US_1040_example_sysout.txt'
+Data_source_example='test/data_sources/tax_form/examples_and_templates/US_1040/US_1040_example_sysout.txt'
 end #Examples
 end #FilePattern
