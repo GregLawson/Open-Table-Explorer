@@ -79,7 +79,7 @@ extend ClassMethods
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file, 
 	related_files=RelatedFile.new_from_path?(specific_file),
-	repository=Repository.new(related_files.project_root_dir))
+	repository=Repository.new(FilePattern.repository_dir?))
 #	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 #	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}" 
 #	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}" 
