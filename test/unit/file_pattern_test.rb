@@ -89,6 +89,7 @@ def test_path2model_name
 	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
 	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
 end #path2model_name
+def test_repository_dir?
 	path='.gitignore'
 	path=File.expand_path(path)
 	assert_pathname_exists(path)
