@@ -52,6 +52,7 @@ def path2model_name?(path=$0)
 	end #map
 	matches.compact.last
 end #path2model_name
+# returns nil if file does not follow any pattern
 def project_root_dir?(path=$0)
 	path=File.expand_path(path)
 	roots=FilePattern::All.map do |p|
@@ -65,6 +66,7 @@ def project_root_dir?(path=$0)
 	message='path='+path.inspect
 	message+="\nroots="+roots.inspect
 	raise message if roots.uniq.compact.size!=1
+	raise roots.inspect if roots.uniq.compact.size>1
 	roots.compact[0]
 end #project_root_dir
 def find_by_name(name)
