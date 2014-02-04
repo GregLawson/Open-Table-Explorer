@@ -89,6 +89,34 @@ def test_path2model_name
 	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
 	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
 end #path2model_name
+	path='.gitignore'
+	path=File.expand_path(path)
+	assert_pathname_exists(path)
+	if File.directory?(path) then
+		dirname=path
+	else
+		dirname=File.dirname(path)
+	end #if
+	assert_pathname_exists(dirname)
+	begin
+		git_directory=dirname+'/.git'
+		assert_pathname_exists(git_directory)
+		assert_operator(dirname.size, :>=, 2, dirname.inspect)
+		if File.exists?(git_directory) then
+			done=true
+		elsif dirname.size<2 then
+			dirname=nil
+		else
+			dirname=File.dirname(path)
+			done=false
+		end #if
+		assert(done, 'first iteration.')
+	end until done
+	assert_pathname_exists(dirname)
+	assert_pathname_exists(git_directory)
+	assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?($0))
+	assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
+end #repository_dir?
 def test_project_root_dir
 	path=File.expand_path($0)
 	assert_not_nil(path)
@@ -103,7 +131,34 @@ def test_project_root_dir
 		test_root
 	end #map
 	assert_equal(roots.uniq.size, 1, roots.inspect)
-#	assert_equal('', FilePattern.project_root_dir?(path))
+	assert_not_empty(FilePattern.project_root_dir?(path))
+	assert_pathname_exists(FilePattern.project_root_dir?(path))
+	path='.gitignore'
+	path=File.expand_path(path)
+	assert_pathname_exists(path)
+	if File.directory?(path) then
+		dirname=path
+	else
+		dirname=File.dirname(path)
+	end #if
+	assert_pathname_exists(dirname)
+		begin
+			git_directory=dirname+'/.git'
+			assert_pathname_exists(git_directory)
+			assert_operator(dirname.size, :>=, 2, dirname.inspect)
+			if File.exists?(git_directory) then
+				done=true
+			elsif dirname.size<2 then
+				dirname=nil
+			else
+				dirname=File.dirname(path)
+				done=false
+			end #if
+			assert(done, 'first iteration.')
+		end until done
+		assert_pathname_exists(dirname)
+		assert_pathname_exists(git_directory)
+	assert_pathname_exists(FilePattern.project_root_dir?('.gitignore'))
 end #project_root_dir
 def test_find_by_name
 	FilePattern::All.each do |p|
