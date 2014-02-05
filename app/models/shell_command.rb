@@ -7,7 +7,7 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
-require 'test/unit'
+require 'test/unit/assertions.rb'
 class ShellCommands
 module ClassMethods
 include Shellwords
