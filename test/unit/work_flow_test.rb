@@ -232,6 +232,9 @@ def test_local_assert_pre_conditions
 end #assert_pre_conditions
 def test_non_interactive_scripts
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
-	deserve_run=ShellCommands.new('ruby  script/work_flow.rb --deserve'+$0).assert_post_conditions
+	assert_match(/#{$0}/, help_run.outut)
+	assert_not_match(/skips/, help_run.outut.split("/n")[-1])
+	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
+#	deserve_run=ShellCommands.new('ruby  script/work_flow.rb --deserve '+$0).assert_post_conditions
 end #non_interactive_scripts
 end #WorkFlow
