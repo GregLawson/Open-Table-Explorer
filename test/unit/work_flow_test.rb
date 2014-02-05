@@ -233,9 +233,6 @@ end #assert_pre_conditions
 def test_non_interactive_scripts
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
 	assert_equal('', help_run.errors)
-	assert_equal(" files\n", help_run.output[-7..-1])
-#	assert_match(/skips/, help_run.output)
-#	assert_match(/skips/, help_run.output.split("\n")[-1])
 	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
 	assert_match(/#{$0}/, related_run.output)
 #	deserve_run=ShellCommands.new('ruby  script/work_flow.rb --deserve '+$0).assert_post_conditions
