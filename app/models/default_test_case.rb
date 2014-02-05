@@ -63,7 +63,7 @@ def assert_optional_method(object, symbol)
 end #
 end #ExampleCall
 module DefaultTests0
-require 'test/unit'
+require 'test/unit/assertions.rb'
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def related_files?
@@ -238,7 +238,7 @@ class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 end #DefaultTestCase3
 
 class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
-require 'test/unit'
+require 'test/unit/assertions.rb'
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 #assert_include(methods, :model_class?)
