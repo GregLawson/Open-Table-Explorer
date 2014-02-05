@@ -91,10 +91,10 @@ commands.each do |c|
 #			WorkFlow.all(:assertions)
 			WorkFlow.all(:assertions_test)
 			WorkFlow.all(:long_test)
-			ShellCommands.new('yard doc')
+			ShellCommands.new('yard doc').assert_post_conditions
 			work_flow=WorkFlow.new($0)
 			current_branch=work_flow.repository.current_branch_name?
-			if current_branch==:master then
+			if current_branch==:passed then
 				work_flow.merge(:master, :passed) 
 			end #if
 			work_flow.merge_down(current_branch) 

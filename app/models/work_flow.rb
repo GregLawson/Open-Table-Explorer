@@ -269,6 +269,11 @@ def test(executable=@related_files.model_test_pathname?)
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end #safely_visit_branch
+	current_branch=repository.current_branch_name?
+
+	if WorkFlow.branch_index?(current_branch) > WorkFlow.branch_index?(deserving_branch) then
+		@repository.validate_commit(current_branch, @related_files.tested_files(executable))
+	end #if
 	deserving_branch
 end #test
 def loop(executable=@related_files.model_test_pathname?)
