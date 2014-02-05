@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit'
+require 'test/unit/assertions.rb'
 require 'pathname'
 require_relative 'regexp.rb'
 require 'active_support/all'
