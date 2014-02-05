@@ -175,10 +175,14 @@ def minimal_comparison?
 	end.compact.join #map
 end #minimal_comparison
 def deserving_branch?(executable=@related_files.model_test_pathname?)
+	if File.exists?(executable) then
 		error_score=@repository.error_score?(executable)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		branch_compression=Branch_compression[error_classification]
 		branch_enhancement=Branch_enhancement[branch_compression]
+	else
+		:edited
+	end #if
 end #deserving_branch
 def merge_conflict_recovery
 # see man git status
@@ -282,7 +286,9 @@ def loop(executable=@related_files.model_test_pathname?)
 		begin
 			deserving_branch=deserving_branch?(executable)
 			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
-			if deserving_branch != :passed then #master corrupted
+			if !File.exists?(executable) then
+				done=true
+			elsif deserving_branch != :passed then #master corrupted
 				edit
 				done=false
 			else
