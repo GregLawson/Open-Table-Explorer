@@ -22,7 +22,7 @@ end #initialize
 def scan
 	scan=ShellCommands.new("hdhomerun_config #{@id} scan")
 end #scan
-require 'test/unit'
+require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
