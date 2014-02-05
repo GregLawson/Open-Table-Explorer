@@ -17,7 +17,6 @@ extend Test::Unit::Assertions
 module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
-This_code_repository=Repository.new(FilePattern.project_root_dir?(__FILE__))
 Default_tax_year=2012
 Open_Tax_Filler_Directory='../OpenTaxFormFiller-master'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
@@ -34,6 +33,7 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename, 
 :taxpayer_basename_with_year, :open_tax_solver_binary, :open_tax_solver_directory, 
+:open_tax_solver_run, :open_tax_solver_sysout,
 :open_tax_solver_to_filler_run, 
 :open_tax_solver_input, :open_tax_solver_data_directory, :open_tax_solver_output,
 :ots_template_filename, :ots_json, :ots_to_json_run,
@@ -50,10 +50,11 @@ def initialize(taxpayer='example', form='1040',
 	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"].sort[-1]
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
 	if open_tax_solver_data_directory.nil? then
-		@open_tax_solver_data_directory="#{@open_tax_solver_directory}/examples_and_templates/#{@form_filename}/"
+		@open_tax_solver_data_base_directory=@open_tax_solver_directory
 	else
-		@open_tax_solver_data_directory=open_tax_solver_data_directory+"/#{@form_filename}/"
+		@open_tax_solver_data_base_directory=open_tax_solver_data_directory
 	end #if
+	@open_tax_solver_data_directory=@open_tax_solver_data_base_directory+"/examples_and_templates/#{@form_filename}/"
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_data_directory+'/'+@taxpayer_basename_with_year+'.txt') then
@@ -63,7 +64,7 @@ def initialize(taxpayer='example', form='1040',
 	@open_tax_solver_input="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
 	@open_tax_solver_output="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
 	@open_tax_solver_sysout="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
-	@output_pdf="#{@open_tax_solver_data_directory}/taxes/#{@taxpayer_basename}_otff.pdf"
+	@output_pdf="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_otff.pdf"
 	
 end #initialize
 def build
@@ -76,17 +77,17 @@ def build
 end #build
 def commit_minor_change!(files, commit_message)
 	files.each do |file|
-		diff_run=This_code_repository.git_command('diff -- '+file)
+		diff_run=Repository::This_code_repository.git_command('diff -- '+file)
 		if diff_run.output.split.size==4 then
-			This_code_repository.git_command('add '+file)
+			Repository::This_code_repository.git_command('add '+file)
 		end #if
-		This_code_repository.git_command('commit -m '+commit_message)
+		Repository::This_code_repository.git_command('commit -m '+commit_message)
 	end #each
 end #commit_minor_change!
 def run_open_tax_solver
 
 	command="#{@open_tax_solver_binary} #{@open_tax_solver_input} >#{@open_tax_solver_sysout}"
-	@open_tax_solver_run=ShellCommands.new(command)
+	@open_tax_solver_run=ShellCommands.new(command, :chdir => @open_tax_solver_data_base_directory)
 	self
 end #run_open_tax_solver
 def run_ots_to_json
@@ -94,7 +95,7 @@ def run_ots_to_json
 	@ots_json="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_OTS.json"
 	command="nodejs #{@open_tax_form_filler_ots_js} #{@open_tax_solver_output} > #{@ots_json}"
 	@ots_to_json_run=ShellCommands.new(command)
-	assert_pathname_exists(@ots_json)
+#	assert_pathname_exists(@ots_json)
 	self
 end #run_ots_to_json
 def run_json_to_fdf
@@ -123,8 +124,13 @@ def run_fdf_to_pdf
 	self
 end #run_fdf_to_pdf
 def run_pdf_to_jpeg
-	
-	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{form_filename}")
+	output_pdf_pathname=Pathname.new(File.expand_path(@output_pdf))
+	assert_instance_of(Pathname, output_pdf_pathname)
+	cleanpath_name=output_pdf_pathname.cleanpath
+	clean_directory=Pathname.new(File.expand_path(@open_tax_solver_data_directory)).cleanpath
+	output_pdf=cleanpath_name.relative_path_from(clean_directory)
+
+	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@taxpayer_basename_with_year}", :chdir=>@open_tax_solver_data_directory)
 	@display_jpeg_run=ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
 	@display_jpeg_run.assert_post_conditions if $VERBOSE
 	self
@@ -141,6 +147,16 @@ end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
 end #ClassMethods
+def assert_pre_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_input, message)
+	assert_pathname_exists(@open_tax_solver_data_directory, message)
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_data_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
+end #assert_post_conditions
+# Assertions custom instance methods
 def assert_open_tax_solver
 #	@open_tax_solver_run.assert_post_conditions
 	peculiar_status=@open_tax_solver_run.process_status.exitstatus==1
@@ -153,17 +169,25 @@ def assert_open_tax_solver
 	@open_tax_solver_run.puts
 	puts "peculiar_status=#{peculiar_status}"
 	puts "message='#{message}'"
-	if peculiar_status then
+	case peculiar_status
+	when 0 then 
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	when 1 then
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	when 2 then
+		assert_pathname_exists(@open_tax_solver_output)
+		assert_pathname_exists(@open_tax_solver_sysout)
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	else
 		warn(message)
 		warn('!@open_tax_solver_run.success?='+(!@open_tax_solver_run.success?).to_s)
-	else
-		@open_tax_solver_run.assert_post_conditions('else peculiar_status')
-	end #if
+	end #case
 	assert_pathname_exists(@open_tax_solver_output)
 	assert_pathname_exists(@open_tax_solver_sysout)
 end #assert_open_tax_solver
 def assert_ots_to_json
 	@ots_to_json_run.assert_post_conditions
+	assert_empty(Dir[' test/data_sources/tax_form/examples_and_templates/US_1040/US_1040_*_OTS.json~passed'])
 end #assert_ots_to_json
 def assert_json_to_fdf
 	@json_to_fdf_run.assert_post_conditions
@@ -193,15 +217,6 @@ def assert_build
 	end #if
 	self
 end #build
-def assert_pre_conditions(message='')
-	assert_pathname_exists(@open_tax_solver_input, message)
-	assert_pathname_exists(@open_tax_solver_data_directory, message)
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
-	assert_pathname_exists(@open_tax_solver_data_directory, message+caller_lines)
-	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
-end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods

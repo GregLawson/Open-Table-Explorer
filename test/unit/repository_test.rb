@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2012-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -15,6 +15,22 @@ def test_Constants
 #	assert_pathname_exists(Temporary)
 	assert_pathname_exists(Root_directory)
 	assert_pathname_exists(Source)
+	assert_equal(FilePattern.project_root_dir?(__FILE__), FilePattern.project_root_dir?($0))
+	assert_equal(FilePattern.project_root_dir?, Root_directory)
+#	message="SELF_code_Repo=#{SELF_code_Repo.inspect}"
+#	message+="\nThis_code_repository=#{This_code_repository.inspect}"
+#	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
+	this_code_repository=Repository.new(Root_directory)
+	sELF_code_Repo=Repository.new(Root_directory)
+	assert_equal(Root_directory, this_code_repository.path, message)
+#	SELF_code_Repo.assert_pre_conditions
+	this_code_repository.assert_pre_conditions
+	This_code_repository.assert_pre_conditions
+	assert_equal(Root_directory, This_code_repository.path, message)
+
+#	assert_equal(SELF_code_Repo.path, Root_directory, message)
+#	assert_equal(SELF_code_Repo.path, This_code_repository.path, message)
+#	assert_equal(SELF_code_Repo, This_code_repository, message)
 end #Constants
 def test_Repository_git_command
 	git_execution=Repository.git_command('branch', Empty_Repo_path)
@@ -48,15 +64,16 @@ def test_create_if_missing
 	FileUtils.remove_entry_secure(Unique_repository_directory_pathname) #, force = false)
 end #create_if_missing
 def test_initialize
-	assert_pathname_exists(SELF_code_Repo.path)
+	assert_pathname_exists(This_code_repository.path)
 	assert_pathname_exists(Empty_Repo.path)
+	This_code_repository.assert_pre_conditions
 end #initialize
 def test_shell_command
-	assert_equal(SELF_code_Repo.path, SELF_code_Repo.shell_command('pwd').output.chomp+'/')
+	assert_equal(This_code_repository.path, This_code_repository.shell_command('pwd').output.chomp+'/')
 	assert_equal(Empty_Repo.path, Empty_Repo.shell_command('pwd').output.chomp+'/')
 end #shell_command
 def test_git_command
-	assert_match(/branch/,SELF_code_Repo.git_command('status').output)
+	assert_match(/branch/,This_code_repository.git_command('status').output)
 	assert_match(/branch/,Empty_Repo.git_command('status').output)
 end #git_command
 def test_inspect
@@ -94,25 +111,25 @@ def test_current_branch_name?
 
 end #current_branch_name
 def test_error_score?
-#	executable=SELF_code_Repo.related_files.model_test_pathname?
+#	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		recent_test=This_code_repository.shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
-		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(10000, SELF_code_Repo.error_score?(executable))
-#	SELF_code_Repo.assert_deserving_branch(:edited, executable)
+	assert_equal(10000, This_code_repository.error_score?(executable))
+#	This_code_repository.assert_deserving_branch(:edited, executable)
 
 	executable='test/unit/minimal2_test.rb'
-		recent_test=SELF_code_Repo.shell_command("ruby "+executable)
+		recent_test=This_code_repository.shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-		syntax_test=SELF_code_Repo.shell_command("ruby -c "+executable)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(0, SELF_code_Repo.error_score?('test/unit/minimal2_test.rb'))
-#	SELF_code_Repo.assert_deserving_branch(:passed, executable)
+	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
+#	This_code_repository.assert_deserving_branch(:passed, executable)
 	Error_classification.each_pair do |key, value|
 		executable=data_source_directory?+'/'+value.to_s+'.rb'
-		assert_equal(key, SELF_code_Repo.error_score?(executable), SELF_code_Repo.recent_test.inspect)
+		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
 	end #each
 end #error_score
 def test_confirm_branch_switch
@@ -167,10 +184,10 @@ def test_validate_commit
 	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
 end #validate_commit
 def test_testing_superset_of_passed
-#?	assert_equal('', SELF_code_Repo.testing_superset_of_passed.assert_post_conditions.output)
+#?	assert_equal('', This_code_repository.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
 def test_edited_superset_of_testing
-#?	assert_equal('', SELF_code_Repo.edited_superset_of_testing.assert_post_conditions.output)
+#?	assert_equal('', This_code_repository.edited_superset_of_testing.assert_post_conditions.output)
 end #edited_superset_of_testing
 def test_force_change
 	Minimal_repository.assert_nothing_to_commit
@@ -213,11 +230,11 @@ end #merge_conflict_files?
 def test_branches?
 	assert_equal(:master, Minimal_repository.current_branch_name?)
 #?	explain_assert_respond_to(Parse, :parse_split)
-	assert_includes(SELF_code_Repo.branches?, SELF_code_Repo.current_branch_name?.to_s)
+	assert_includes(This_code_repository.branches?, This_code_repository.current_branch_name?.to_s)
 	assert_includes(Minimal_repository.branches?, Minimal_repository.current_branch_name?.to_s)
 end #branches?
 def test_remotes?
-	assert_includes(SELF_code_Repo.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
+	assert_includes(This_code_repository.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
 end #branches?
 def test_rebase!
 	Minimal_repository.rebase!

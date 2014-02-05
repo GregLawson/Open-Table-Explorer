@@ -89,6 +89,43 @@ def test_path2model_name
 	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
 	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
 end #path2model_name
+def test_repository_dir?
+	path=$0
+#	path='.gitignore'
+	path=File.expand_path(path)
+	assert_pathname_exists(path)
+	if File.directory?(path) then
+		dirname=path
+	else
+		dirname=File.dirname(path)
+	end #if
+	assert_pathname_exists(dirname)
+	begin
+		git_directory=dirname+'/.git'
+#		assert_pathname_exists(git_directory)
+		assert_operator(dirname.size, :>=, 2, dirname.inspect)
+		if File.exists?(git_directory) then
+			done=true
+		elsif dirname.size<2 then
+			dirname=nil
+			done=true
+		else
+			assert_operator(dirname.size, :>, File.dirname(dirname).size)
+			assert_not_equal(dirname, File.dirname(dirname))
+			dirname=File.dirname(dirname)
+			done=false
+		end #if
+#		assert(done, 'first iteration.')
+		puts 'path='+path.inspect if $VERBOSE
+		puts 'dirname='+dirname.inspect if $VERBOSE
+		puts 'git_directory='+git_directory.inspect if $VERBOSE
+		puts 'done='+done.inspect if $VERBOSE
+	end until done
+	assert_pathname_exists(dirname)
+	assert_pathname_exists(git_directory)
+	assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?($0))
+	assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
+end #repository_dir?
 def test_project_root_dir
 	path=File.expand_path($0)
 	assert_not_nil(path)
@@ -103,7 +140,11 @@ def test_project_root_dir
 		test_root
 	end #map
 	assert_equal(roots.uniq.size, 1, roots.inspect)
-#	assert_equal('', FilePattern.project_root_dir?(path))
+	assert_not_empty(FilePattern.project_root_dir?(path))
+	assert_pathname_exists(FilePattern.project_root_dir?(path))
+	path='.gitignore'
+	path=File.expand_path(path)
+	assert_pathname_exists(path)
 end #project_root_dir
 def test_find_by_name
 	FilePattern::All.each do |p|
@@ -195,7 +236,10 @@ def test_assert_naming_convention_match
 	assert(FilePattern.find_by_name(:script).assert_naming_convention_match(DCT_filename), "Patterns[1], 'script/'")
 	assert(FilePattern.find_by_name(:assertions).assert_naming_convention_match('test/assertions/_assertions.rb'), "(Patterns[3], 'test/assertions/'")
 	assert(FilePattern.find_by_name(:assertions_test).assert_naming_convention_match('test/unit/_assertions_test.rb'), "(Patterns[4], 'test/unit/'")
+	expected_pattern=FilePattern.find_by_name(:data_sources_dir)
+	expected_pattern.assert_naming_convention_match(Data_source_example)
 end #naming_convention_match
 def test_Examples
+	assert_data_file(Data_source_example)
 end #Examples
 end #FilePattern

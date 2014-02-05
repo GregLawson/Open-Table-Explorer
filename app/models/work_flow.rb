@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'default_test_case.rb'
 require_relative 'related_file.rb'
 require_relative 'repository.rb'
 class WorkFlow
@@ -38,6 +37,7 @@ def all(pattern_name=:test)
 end #all
 def branch_symbol?(branch_index)
 	case branch_index
+	when nil then raise 'branch_index='+branch_index.inspect
 	when -2 then :'origin/master'
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
@@ -77,14 +77,14 @@ extend ClassMethods
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
-def initialize(testable_file, 
-	related_files=RelatedFile.new_from_path?(testable_file),
-	repository=Repository.new(related_files.project_root_dir))
+def initialize(specific_file, 
+	related_files=RelatedFile.new_from_path?(specific_file),
+	repository=Repository.new(FilePattern.repository_dir?))
 #	message= "edit_files do not exist\n argv=#{argv.inspect}" 
 #	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}" 
 #	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}" 
 #	raise message if  @related_files.edit_files.empty?
-	@testable_file=testable_file
+	@specific_file=specific_file
 	@related_files=related_files
 	@repository=repository
 	index=Branch_enhancement.index(repository.current_branch_name?)
@@ -108,24 +108,36 @@ def working_different_from?(filename, branch_index)
 	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
 	if diff_run.output=='' then
 		false # no difference
-	elsif diff_run.output.split("\n").size>=2 then
-		false # missing version
+	elsif diff_run.output.split("\n").size==2 then
+		nil # missing version
 	else
 		true # real difference
 	end #if
 end #working_different_from?
-def different_indices?(filename, range)
+def differences?(filename, range)
 	differences=range.map do |branch_index|
 		working_different_from?(filename, branch_index)
 	end #map
-	indices=[]
-	range.zip(differences){|n,s| indices<<(s ? n : nil)}
-	indices.compact
-end #different_indices?
+end #differences?
 def scan_verions?(filename, range, direction)
+	differences=differences?(filename, range)
+	different_indices=[]
+	existing_indices=[]
+	range.zip(differences) do |index,s| 
+		case s
+		when true then
+			different_indices<<index
+			existing_indices<<index
+		when nil then
+		when false then
+			existing_indices<<index
+		end #case
+	end #zip
 	case direction
-	when :first then (different_indices?(filename, range)+[Last_slot_index]).min
-	when :last then ([First_slot_index]+different_indices?(filename, range)).max
+	when :first then 
+		(different_indices+[existing_indices[-1]]).min
+	when :last then 
+		([existing_indices[0]]+different_indices).max
 	else
 		raise 
 	end #case
@@ -200,14 +212,26 @@ def merge_conflict_recovery
 	end #if
 end #merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
+	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s).assert_post_conditions
-		merge_conflict_recovery
+		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s)
+		if merge_status.output=="Automatic merge went well; stopped before committing as requested\n" then
+		else
+			if merge_status.success? then
+			else
+				merge_conflict_recovery
+			end #if
+		end #if
 		@repository.confirm_commit(interact)
 	end #safely_visit_branch
 end #merge
 def edit
-	command_string="diffuse"+ version_comparison + test_files
+	@repository.recent_test.puts if !@repository.recent_test.nil?
+	if @related_files.edit_files.empty? then
+		command_string="diffuse"+ version_comparison([@specific_file]) + test_files
+	else
+		command_string="diffuse"+ version_comparison + test_files
+	end #if
 	puts command_string if $VERBOSE
 	edit=@repository.shell_command(command_string)
 	edit.assert_post_conditions
@@ -240,6 +264,20 @@ def script_deserves_commit!(deserving_branch)
 end #script_deserves_commit!
 def test(executable=@related_files.model_test_pathname?)
 	merge_conflict_recovery
+	deserving_branch=deserving_branch?(executable)
+	puts deserving_branch if $VERBOSE
+	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
+		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
+	end #safely_visit_branch
+	current_branch=repository.current_branch_name?
+
+	if WorkFlow.branch_index?(current_branch) > WorkFlow.branch_index?(deserving_branch) then
+		@repository.validate_commit(current_branch, @related_files.tested_files(executable))
+	end #if
+	deserving_branch
+end #test
+def loop(executable=@related_files.model_test_pathname?)
+	merge_conflict_recovery
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
 			deserving_branch=deserving_branch?(executable)
@@ -255,13 +293,8 @@ def test(executable=@related_files.model_test_pathname?)
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end #safely_visit_branch
 	begin
-		deserving_branch=deserving_branch?(executable)
-		puts deserving_branch if $VERBOSE
-		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
-			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
-		end #safely_visit_branch
+		deserving_branch=test(executable)
 		merge_down(deserving_branch)
-		@repository.recent_test.puts
 		edit
 		if @repository.something_to_commit? then
 			done=false
@@ -287,9 +320,9 @@ def unit_test(executable=@related_files.model_test_pathname?)
 		@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 			@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 		end #safely_visit_branch
-		if !@repository.something_to_commit? then
-			@repository.confirm_branch_switch(deserving_branch)
-		end #if
+#		if !@repository.something_to_commit? then
+#			@repository.confirm_branch_switch(deserving_branch)
+#		end #if
 		edit
 	end until !@repository.something_to_commit? 
 end #unit_test
@@ -344,6 +377,8 @@ include Constants
 module Examples
 TestFile=File.expand_path($0)
 TestWorkFlow=WorkFlow.new(TestFile)
+File_not_in_oldest_branch='test/long_test/repository_test.rb'
+Most_stable_file='test/unit/minimal2_test.rb'
 include Constants
 end #Examples
 include Examples

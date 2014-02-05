@@ -27,7 +27,7 @@ OptionParser.new do |opts|
   opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
     commands+=[:upgrade] if u
   end
-  opts.on("-t", "--[no-]test", "Test. No commit. ") do |t|
+  opts.on("-t", "--[no-]test", "Test, commit. ") do |t|
     commands+=[:test] if t
   end
   opts.on("-b", "--[no-]best", "Best. Merge down, no conflicts. ") do |t|
@@ -54,8 +54,11 @@ OptionParser.new do |opts|
   opts.on("-a", "--[no-]all", "All files tested ") do |t|
     commands+=[:all] if t
   end
-  opts.on("-l", "--[no-]minimal", "edit with minimal comparison. ") do |t|
+  opts.on("-n", "--[no-]minimal", "edit with minimal comparison. ") do |t|
     commands+=[:minimal] if t
+  end
+  opts.on("-l", "--[no-]loop", "Test, commit, edit, loop.") do |t|
+    commands+=[:loop] if t
   end
   opts.on("-r", "--[no-]related", "Related files") do |t|
     commands+=[:related] if t
@@ -90,10 +93,11 @@ commands.each do |c|
 			WorkFlow.all(:long_test)
 			ShellCommands.new('yard doc')
 			work_flow=WorkFlow.new($0)
-			work_flow.merge(:master, :passed) 
-			work_flow.merge(:passed, :master) 
-			work_flow.merge(:testing, :passed) 
-			work_flow.merge(:edited, :testing) 
+			current_branch=work_flow.repository.current_branch_name?
+			if current_branch==:passed then
+				work_flow.merge(:master, :passed) 
+			end #if
+			work_flow.merge_down(current_branch) 
 		when :merge_down then 
 			work_flow=WorkFlow.new($0)
 			work_flow.merge_down
@@ -103,6 +107,7 @@ commands.each do |c|
 		when :execute then work_flow.execute(f)
 		when :edit then work_flow.edit
 		when :test then work_flow.test(f)
+		when :loop then work_flow.loop(f)
 		when :upgrade then work_flow.upgrade(f)
 		when :best then work_flow.best(f)
 		when :emacs then work_flow.emacs(f)

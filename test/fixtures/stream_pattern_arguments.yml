@@ -1,0 +1,78 @@
+###########################################################################
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+Parameters,Value:
+  stream_pattern: Parameters
+  name: Value
+  ruby_type: String
+  direction: Output
+  parameter_type: Stream
+
+Acquisition,URI:
+  stream_pattern: Acquisition
+  name: URI
+  ruby_type: String
+  direction: Input
+  parameter_type: Stream
+
+Acquisition,Acquisition:
+  stream_pattern: Acquisition
+  name: Acquisition
+  ruby_type: Acquisition
+  direction: Output
+  parameter_type: Stream
+
+Parse,Unparsed_String:
+  stream_pattern: Parse
+  name: Unparsed_String
+  ruby_type: String
+  direction: Input
+  parameter_type: Stream
+
+Storage,Parsed_Data:
+  stream_pattern: Storage
+  name: Parsed_Data
+  ruby_type: Array
+  direction: Input
+  parameter_type: Stream
+
+Storage,Headers:
+  stream_pattern: Storage
+  name: Headers
+  ruby_type: Array
+  direction: Input
+  parameter_type: Stream
+
+Storage,Model_Class:
+  stream_pattern: Storage
+  name: Model_Class
+  ruby_type: String
+  direction: Input
+  parameter_type: Stream
+
+Storage,Name_Value_Pairs:
+  stream_pattern: Storage
+  name: Name_Value_Pairs
+  ruby_type: Array
+  direction: Output
+  parameter_type: Stream
+
+R_Report,Query:
+  stream_pattern: R_Report
+  name: Query
+  ruby_type: String
+  direction: Input
+  parameter_type: Stream
+
+R_Report,Report:
+  stream_pattern: R_Report
+  name: Report
+  ruby_type: String
+  direction: Output
+  parameter_type: Stream

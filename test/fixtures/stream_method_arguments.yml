@@ -1,0 +1,29 @@
+###########################################################################
+#    Copyright (C) 2011 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+File,URL:
+  stream_method: File
+  name: URL
+  ruby_type: URI
+  direction: Input
+File,acquisitions:
+  stream_method: File
+  name: acquisitions
+  ruby_type: Acquisition
+  direction: Output
+Regexp,acquisitions:
+  stream_method: Regexp
+  name: acquisitions
+  ruby_type: Acquisition
+  direction: Output
+Regexp,name_value_pairs:
+  stream_method: Regexp
+  name: name_value_pairs
+  ruby_type: Acquisition
+  direction: Output
