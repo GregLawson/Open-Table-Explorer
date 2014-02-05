@@ -8,7 +8,6 @@
 require 'optparse'
 require 'ostruct'
 require 'pp'
-require 'test/unit'
 require 'mime/types' # new ruby detailed library
 require_relative '../../app/models/shell_command.rb'
 class CommandLine
@@ -47,6 +46,7 @@ def ruby_mime
     # returns [text/plain, text/plain]
     text      = plaintext.first
 end #ruby_mime
+require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
