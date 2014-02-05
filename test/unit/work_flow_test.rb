@@ -230,4 +230,7 @@ end #assert_post_conditions
 def test_local_assert_pre_conditions
 		TestWorkFlow.assert_pre_conditions
 end #assert_pre_conditions
+def test_non_interactive_scripts
+
+end #non_interactive_scripts
 end #WorkFlow
