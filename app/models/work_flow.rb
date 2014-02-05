@@ -148,15 +148,11 @@ def bracketing_versions?(filename, current_index)
 	[left_index, right_index]
 end #bracketing_versions?
 def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
-	if File.exists?(filename) then
-		current_index=WorkFlow.branch_index?(middle_branch)
-		left_index,right_index=bracketing_versions?(filename, current_index)
-		relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+	current_index=WorkFlow.branch_index?(middle_branch)
+	left_index,right_index=bracketing_versions?(filename, current_index)
+	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 
-		" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
-	else
-		''
-	end #if
+	" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
 end #goldilocks
 def test_files(edit_files=@related_files.edit_files)
 	pairs=@related_files.functional_parallelism(edit_files).map do |p|
