@@ -10,27 +10,19 @@ First Header  | Second Header
 Content Cell  | Content Cell
 Content Cell  | Content Cell
 
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
-
-First Header  | Second Header
-Content Cell  | Content Cell
-Content Cell  | Content Cell
-
-Content Cell  | Content Cell
-Content Cell  | Content Cell
 
 # Domain Specific Language
-| Regexp | |
+Class | branch
 |----- | ---|  
-|  # NoDB | |
-|  # R | |
+| Regexp | |
+|   NoDB | |
+|   R | |
 
 # Applications
 
-|     Finance | testing
+|     Class / Module | branch
 ----------|----------
+|     Finance | testing
 |      TaxForm | master
 |      Account | testing
 |      Transfer | testing
