@@ -152,8 +152,19 @@ def goldilocks(filename, middle_branch=@repository.current_branch_name?.to_sym)
 		current_index=WorkFlow.branch_index?(middle_branch)
 		left_index,right_index=bracketing_versions?(filename, current_index)
 		relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-
-		" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
+		ret=' -t '
+		if left_index.nil? then
+			ret+=" #{relative_filename} "
+		else
+			ret+="#{WorkFlow.revison_tag?(left_index)} #{relative_filename} "
+		end #if
+		ret+=relative_filename
+		if right_index.nil? then
+			ret+=" #{relative_filename} "
+		else
+			ret+=" #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
+		end #if
+		ret
 	else
 		''
 	end #if
