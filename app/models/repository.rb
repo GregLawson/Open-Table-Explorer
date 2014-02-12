@@ -156,6 +156,7 @@ def safely_visit_branch(target_branch, &block)
 		git_command('stash save --include-untracked')
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
+			confirm_commit(:interactive)
 		end #each
 		changes_branch=:stash
 	end #if
@@ -178,6 +179,7 @@ def safely_visit_branch(target_branch, &block)
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
+			confirm_commit(:interactive)
 		end #each
 	end #if
 	ret
@@ -198,6 +200,11 @@ def confirm_commit(interact=:interactive)
 		when :interactive then
 			git_command('cola').assert_post_conditions
 		when :echo then
+		when :staged then
+			git_command('commit ').assert_post_conditions			
+		when :all then
+			git_command('add . ').assert_post_conditions
+			git_command('commit ').assert_post_conditions
 		else
 			raise 'Unimplemented option='+interact
 		end #case
