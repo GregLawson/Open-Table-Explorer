@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 #require_relative 'default_test_case.rb'
+require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/open_tax_form_filler.rb'
 class GenericJsonsTest < TestCase
 include DefaultTests
