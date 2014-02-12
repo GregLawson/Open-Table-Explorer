@@ -227,7 +227,7 @@ def merge_conflict_recovery
 		end #each
 		@repository.confirm_commit(:interactive)
 	else
-		puts 'No merge conflict'
+		puts 'No merge conflict' if !$VERBOSE.nil?
 	end #if
 end #merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
@@ -268,10 +268,10 @@ end #emacs
 def merge_down(deserving_branch=@repository.current_branch_name?)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
+			puts 'merge('+Branch_enhancement[i].to_s+', '+Branch_enhancement[i-1].to_s+')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
 			@repository.confirm_commit(:interactive)
-			puts 'merge('+Branch_enhancement[i].to_s+', '+Branch_enhancement[i-1].to_s+')'
 		end #safely_visit_branch
 	end #each
 end #merge_down
