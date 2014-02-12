@@ -10,7 +10,7 @@ require_relative '../../app/models/no_db.rb'
 module OpenTaxFormFiller
 module Constants
 Default_tax_year=2012
-Data_source_directory='test/data_sources/taxes/'
+Data_source_directory='test/data_sources/open_tax_form_filler/'
 end #Constants
 
 class Definitions
@@ -58,7 +58,7 @@ All=Definitions.all_initialize
 
 
 end #Examples
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 
 include Examples
 end #Definitions

@@ -13,9 +13,9 @@ include OpenTaxFormFiller::Definitions::Examples
 include OpenTaxFormFiller
 def test_CLASS_constants
 	
-	assert(File.exists?(Open_tax_filler_directory), Dir["#{Open_tax_filler_directory}/*"].inspect)
-	assert(File.exists?(OTF_definition_filename), "File #{OTF_definition_filename} doesnot exist.")
-	assert(File.exists?(Data_source_directory), Dir["#{Data_source_directory}/*"].inspect)
+	assert_pathname_exists(Open_tax_filler_directory, Dir["#{Open_tax_filler_directory}/*"].inspect)
+	assert_pathname_exists(OTF_definition_filename, "File #{OTF_definition_filename} doesnot exist.")
+	assert_pathname_exists(Data_source_directory, Dir["#{Data_source_directory}/*"].inspect)
 	assert(File.exists?(OTF_SQL_dump_filename), Dir["#{Data_source_directory}/*"].inspect)
 	assert_match(/#{Symbol_pattern}/, Simple_acquisition)
 	assert_match(/#{Delimiter}/, Simple_acquisition)
@@ -30,10 +30,10 @@ def test_CLASS_constants
 end #Constants
 include DefaultTests2
 def test_initialize
-	assert_not_nil(OpenTaxFormFiller.new)
+	assert_not_nil(OpenTaxFormFiller::Definitions.new)
 end #initialize
 def model_class?
-	OpenTaxFormFiller::Definitions
+	assert_equal(OpenTaxFormFiller::Definitions, )
 end #model_name?
 def test_parse
 	hash={:year => Default_tax_year, :form => 'f1040', 'fields'=> {'L1' => "Amount"}}
