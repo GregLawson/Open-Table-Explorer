@@ -333,7 +333,7 @@ end #test
 def unit_test(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=deserving_branch?(executable)
-		if @repository.recent_test.success? then
+		if !@repository.recent_test.nil? && @repository.recent_test.success? then
 			break
 		end #if
 		@repository.recent_test.puts
