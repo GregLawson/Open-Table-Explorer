@@ -63,6 +63,10 @@ OptionParser.new do |opts|
   opts.on("-r", "--[no-]related", "Related files") do |t|
     commands+=[:related] if t
   end
+  opts.on("-c", "--[no-]merge-conflict-recovery", "merge_conflict_recovery") do |t|
+    commands+=[:merge_conflict_recovery] if t
+  end
+  
 end.parse!
 
 if commands.empty? then
@@ -101,6 +105,9 @@ commands.each do |c|
 		when :merge_down then 
 			work_flow=WorkFlow.new($0)
 			work_flow.merge_down
+		when :merge_conflict_recovery then 
+			work_flow=WorkFlow.new($0)
+			work_flow.repository.merge_conflict_recovery
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
