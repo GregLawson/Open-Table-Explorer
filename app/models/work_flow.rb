@@ -366,6 +366,7 @@ def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
 	odd_files=Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
+	assert_empty(odd_files, 'WorkFlow#assert_post_conditions')
 end #assert_post_conditions
 def assert_deserving_branch(branch_expected, executable, message='')
 	deserving_branch=deserving_branch?(executable)
