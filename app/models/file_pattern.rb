@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit'
+require 'test/unit/assertions.rb'
 require 'pathname'
 require_relative 'regexp.rb'
 require 'active_support/all'
@@ -105,11 +105,12 @@ def find_from_path(path)
 		p.prefix_match(path) && p.suffix_match(path)
 	end #find
 end #find_from_path
-def pathnames?(model_basename)
+#returns Array of all possible pathnames for a unit_base_name
+def pathnames?(unit_base_name)
 #	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
-	raise "model_basename" if model_basename.nil?
+	raise "unit_base_name" if unit_base_name.nil?
 	FilePattern::Constants::All.map do |p|
-		p.path?(model_basename)
+		p.path?(unit_base_name)
 	end #
 end #pathnames
 #FilePattern.assert_pre_conditions
@@ -137,22 +138,22 @@ def prefix_match(path)
 #	expected_prefix=self[:prefix][0..-2] # drops trailing /
 #	prefix[-expected_prefix.size,expected_prefix.size]==expected_prefix
 end #prefix_match
-def path?(model_basename)
+def path?(unit_base_name)
 #	raise "" if !@@project_root_dir.instance_of?(String)
 	raise self.inspect if !self.instance_of?(FilePattern)
 	raise self.inspect if !self[:prefix].instance_of?(String)
-	raise "model_basename-#{model_basename.inspect}" if !model_basename.instance_of?(String)
+	raise "unit_base_name-#{unit_base_name.inspect}" if !unit_base_name.instance_of?(String)
 	raise "" if !self[:suffix].instance_of?(String)
-	self[:prefix]+model_basename.to_s+self[:suffix]
+	self[:prefix]+unit_base_name.to_s+self[:suffix]
 end #path
 def parse_pathname_regexp
-	Absolute_directory_regexp.capture(:project_root_directory)*self[:prefix]+/[[:word:]]+/.capture(:model_basename)+self[:suffix]
+	Absolute_directory_regexp.capture(:project_root_directory)*self[:prefix]+/[[:word:]]+/.capture(:unit_base_name)+self[:suffix]
 end #parse_pathname_regexp
-def pathname_glob(model_basename='*')
-	Project_root_directory+self[:prefix]+model_basename+self[:suffix]
+def pathname_glob(unit_base_name='*')
+	Project_root_directory+self[:prefix]+unit_base_name+self[:suffix]
 end #pathname_glob
-def relative_path?(model_basename)
-	Pathname.new(path?(model_basename)).relative_path_from(Pathname.new(Dir.pwd))
+def relative_path?(unit_base_name)
+	Pathname.new(path?(unit_base_name)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
 include Constants
 module Assertions
