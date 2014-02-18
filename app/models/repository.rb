@@ -224,7 +224,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 		confirm_commit(interact)
-#		git_command('rebase --autosquash --interactive')
+		git_command('cola rebase '+changes_branch.to_s)
 	end #if
 end #validate_commit
 def something_to_commit?
