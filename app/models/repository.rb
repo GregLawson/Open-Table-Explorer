@@ -175,7 +175,7 @@ def safely_visit_branch(target_branch, &block)
 			puts git_command('status').output
 			puts git_command('stash show').output
 		else
-			apply_run.assert_post_conditions
+			apply_run.assert_post_conditions('unexpected stash apply fail')
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
@@ -224,7 +224,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 		confirm_commit(interact)
-#		git_command('rebase --autosquash --interactive')
+		git_command('cola rebase '+changes_branch.to_s)
 	end #if
 end #validate_commit
 def something_to_commit?
