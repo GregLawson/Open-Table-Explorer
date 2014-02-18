@@ -219,7 +219,7 @@ def merge_conflict_recovery
 			when 'AA' then raise conflict.inspect
 			# UU unmerged, both modified
 			when 'UU' then 
-				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+				WorkFlow.new(conflict[:file]).edit
 				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 			else
 				raise conflict.inspect
@@ -244,12 +244,7 @@ def merge(target_branch, source_branch, interact=:interactive)
 		@repository.confirm_commit(interact)
 	end #safely_visit_branch
 end #merge
-def edit(context=nil)
-	if context.nil? then
-		context_label=''
-	else
-		context_label='--label "'+context.to_s+'"'
-	end #if
+def edit
 	@repository.recent_test.puts if !@repository.recent_test.nil?
 	if @related_files.edit_files.empty? then
 		command_string="diffuse"+ version_comparison([@specific_file]) + test_files
@@ -309,7 +304,7 @@ def loop(executable=@related_files.model_test_pathname?)
 			if !File.exists?(executable) then
 				done=true
 			elsif deserving_branch != :passed then #master corrupted
-				edit('master branch not passing')
+				edit
 				done=false
 			else
 				done=true
@@ -321,7 +316,7 @@ def loop(executable=@related_files.model_test_pathname?)
 	begin
 		deserving_branch=test(executable)
 		merge_down(deserving_branch)
-		edit('loop')
+		edit
 		if @repository.something_to_commit? then
 			done=false
 		else
@@ -349,7 +344,7 @@ def unit_test(executable=@related_files.model_test_pathname?)
 #		if !@repository.something_to_commit? then
 #			@repository.confirm_branch_switch(deserving_branch)
 #		end #if
-		edit('unit_test')
+		edit
 	end until !@repository.something_to_commit? 
 end #unit_test
 module Assertions
