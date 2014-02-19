@@ -131,6 +131,8 @@ def scan_verions?(filename, range, direction)
 		when nil then
 		when false then
 			existing_indices << index
+		else
+			fail 'else ' + 
 		end # case
 	end # zip
 	case direction
