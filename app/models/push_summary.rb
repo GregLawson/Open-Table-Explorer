@@ -1,16 +1,17 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-class Minimal2
+class Rebase
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
 module Constants
+Hex_number=/[0-9a-f]+/
 end #Constants
 include Constants
 # attr_reader
@@ -38,4 +39,4 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 end #Examples
-end #Minimal2
+end #Rebase
