@@ -6,7 +6,8 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-class Rebase
+require_relative 'repository.rb'
+class PushSummary
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
@@ -15,7 +16,8 @@ Hex_number=/[0-9a-f]+/
 end #Constants
 include Constants
 # attr_reader
-def initialize
+def initialize(repository)
+	@repository=repository
 end #initialize
 module Assertions
 include Test::Unit::Assertions
@@ -39,4 +41,4 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 end #Examples
-end #Rebase
+end # PushSummary
