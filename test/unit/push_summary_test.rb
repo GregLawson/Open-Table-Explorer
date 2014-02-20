@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/minimal2.rb'
-class RebaseTest < TestCase
+class PushSummaryTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
 end #Rebase
