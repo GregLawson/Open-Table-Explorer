@@ -6,8 +6,7 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative '../unit/test_environment'
-require_relative '../../test/assertions/repository_assertions.rb'
+require_relative 'repository.rb'
 class PushSummary
 module ClassMethods
 end #ClassMethods
