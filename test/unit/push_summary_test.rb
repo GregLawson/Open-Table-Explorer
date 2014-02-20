@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/minimal2.rb'
+require_relative '../../app/models/push_summary.rb'
 class PushSummaryTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
