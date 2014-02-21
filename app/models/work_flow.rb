@@ -132,7 +132,7 @@ def scan_verions?(filename, range, direction)
 		when false then
 			existing_indices << index
 		else
-			fail 'else ' + 
+			fail 'else ' + local_variables.map{|v| eval(v).inspect}.join("\n")
 		end # case
 	end # zip
 	case direction
