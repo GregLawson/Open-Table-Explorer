@@ -199,6 +199,9 @@ def confirm_commit(interact=:interactive)
 		case interact
 		when :interactive then
 			git_command('cola').assert_post_conditions
+			if !something_to_commit? then
+				git_command('cola rebase '+current_branch_name?.to_s)
+			end # if
 		when :echo then
 		when :staged then
 			git_command('commit ').assert_post_conditions			
@@ -209,7 +212,7 @@ def confirm_commit(interact=:interactive)
 			raise 'Unimplemented option='+interact
 		end #case
 	end #if
-	puts 'confirm_commit('+interact.inspect+" something_to_commit?="+something_to_commit?.inspect
+	puts 'confirm_commit('+interact.inspect+"), something_to_commit?="+something_to_commit?.inspect
 end #confirm_commit
 def validate_commit(changes_branch, files, interact=:interactive)
 	puts files.inspect if $VERBOSE
@@ -224,7 +227,6 @@ def validate_commit(changes_branch, files, interact=:interactive)
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 		confirm_commit(interact)
-		git_command('cola rebase '+changes_branch.to_s)
 	end #if
 end #validate_commit
 def something_to_commit?
