@@ -236,7 +236,4 @@ end #branches?
 def test_remotes?
 	assert_includes(This_code_repository.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
 end #branches?
-def test_rebase!
-	Minimal_repository.rebase!
-end #rebase!
 end #Repository
