@@ -104,9 +104,13 @@ def corruption_gc
 	git_command("gc")
 end #corruption
 def standardize_position!
-	git_command("rebase --abort")
-	git_command("merge --abort")
-	git_command("stash save").assert_post_conditions
+	if File.exists?('.git/rebase-merge/git-rebase-todo') then
+		git_command("rebase --abort")
+	end
+#	git_command("stash save").assert_post_conditions
+	if File.exists?('.git/MERGE_HEAD') then
+		git_command("merge --abort")
+	end # if
 	git_command("checkout master")
 end #standardize_position!
 def current_branch_name?
@@ -280,7 +284,6 @@ def remotes?
 end #branches?
 def rebase!
 	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
 	else
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
