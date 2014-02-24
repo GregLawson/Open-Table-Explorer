@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/push_summary.rb'
+require_relative '../../app/models/branch.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 class PushSummaryTest < TestCase
 include DefaultTests
