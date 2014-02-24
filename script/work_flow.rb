@@ -12,6 +12,10 @@ require 'pp'
 require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 scripting_workflow=WorkFlow.new($0)
+if File.exists?('.git/MERGE_HEAD') then
+	scripting_workflow.repository.merge_conflict_recovery
+else
+end
 # good enough for edited; no syntax error
 scripting_workflow.script_deserves_commit!(:edited)
 commands = []
