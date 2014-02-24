@@ -12,6 +12,12 @@ class PushSummaryTest < TestCase
 include DefaultTests
 #include TE.model_class?::Examples
 include Repository::Examples
+def test_branches?
+end #branches?
+def test_remotes?
+end #remotes?
+def test_initialize
+end # initialize
 def test_find_origin
 end # find_origin
 def test_todo_list

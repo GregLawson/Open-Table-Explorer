@@ -7,8 +7,8 @@
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
 require_relative 'repository.rb'
-class Branch
-module ClassMethods
+# reopen for patch
+class Repository
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
 #?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
@@ -16,6 +16,12 @@ end #branches?
 def remotes?
 	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
 end #remotes?
+end # Repository
+class Branch
+module Constants
+Executing_branch=Branch.new
+end #Constants
+module ClassMethods
 end #ClassMethods
 extend ClassMethods
 def initialize(repository=This_code_repository, branch=current_branch_name?, remote_branch=nil)
@@ -33,7 +39,12 @@ def find_origin
 		nil
 	end #if
 end # find_origin
+module Examples
+include Constants
+	
+end #Examples
 end # Branch
+
 class TodoList
 module ClassMethods
 end #ClassMethods
