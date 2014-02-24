@@ -18,27 +18,34 @@ def remotes?
 end #remotes?
 end # Repository
 class Branch
-module Constants
-Executing_branch=Branch.new
-end #Constants
+include Repository::Constants
 module ClassMethods
+include Repository::Constants
+def this_code?
+end # this_code?
 end #ClassMethods
 extend ClassMethods
-def initialize(repository=This_code_repository, branch=current_branch_name?, remote_branch=nil)
-	@branch=branch
-	if remote_branch.nil? then
-		@remote_branch=find_origin(@branch)
-	else
-		@remote_branch=remote_branch
-	end # if
-end # initialize
 def find_origin
-	if remotes?.include?(current_branch_name?) then
+	if @repository.remotes?.include?(@repository.current_branch_name?) then
 		'origin/'+@branch.to_s
 	else
 		nil
 	end #if
 end # find_origin
+attr_reader :repository, :branch, :remote_branch
+def initialize(repository=This_code_repository, branch=repository.current_branch_name?, remote_branch=nil)
+	@repository=repository
+	@branch=branch
+	if remote_branch.nil? then
+		@remote_branch=find_origin
+	else
+		@remote_branch=remote_branch
+	end # if
+end # initialize
+module Constants
+Executing_branch=Branch.new
+end #Constants
+include Constants
 module Examples
 include Constants
 	
