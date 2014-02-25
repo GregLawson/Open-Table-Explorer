@@ -13,11 +13,11 @@ Branch_enhancement = [:passed, :testing, :edited]
 Extended_branches = { -2 => :'origin/master', -1 => :master }
 First_slot_index = Extended_branches.keys.min
 Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
-Branch_compression = { success: 0,
-			                    single_test_fail: 1,
-			                    multiple_tests_fail: 1, # visibility boundary
-			                    initialization_fail: 2,
-			                    syntax_error: 2
+Branch_compression = { success:             0,
+							  single_test_fail:    1,
+			              multiple_tests_fail: 1, # visibility boundary
+			              initialization_fail: 2,
+			              syntax_error:        2
 			}
 end # Constants
 include Constants
