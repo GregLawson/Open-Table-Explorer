@@ -63,6 +63,9 @@ OptionParser.new do |opts|
   end
   opts.on("-l", "--[no-]loop", "Test, commit, edit, loop.") do |t|
     commands+=[:loop] if t
+  opts.on("-s", "--[no-]split", "split off new class and edit") do |t|
+    commands+=[:split] if t
+  end
   end
   opts.on("-r", "--[no-]related", "Related files") do |t|
     commands+=[:related] if t
@@ -112,6 +115,8 @@ commands.each do |c|
 		when :merge_conflict_recovery then 
 			work_flow=WorkFlow.new($0)
 			work_flow.repository.merge_conflict_recovery
+		when :split then
+			work_flow.split(argv[0], argv[1])
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
