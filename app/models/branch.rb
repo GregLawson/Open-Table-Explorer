@@ -44,6 +44,10 @@ def initialize(repository=This_code_repository, branch=repository.current_branch
 		@remote_branch=remote_branch
 	end # if
 end # initialize
+# Allows Branch objects to be used in most contexts where a branch name Symbol is expected
+def to_s
+	@branch
+end # to_s
 module Constants
 Executing_branch=Branch.new
 Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
