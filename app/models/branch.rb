@@ -10,6 +10,10 @@ require_relative 'repository.rb'
 # reopen for patch
 class Repository
 Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+def shell_parse(command, pattern)
+	output=git_command(command).assert_post_conditions.output
+	parse=Parse.parse_into_array(output, pattern, {ending: :optional})
+end # 
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
 	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
