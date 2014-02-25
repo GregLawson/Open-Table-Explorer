@@ -9,9 +9,11 @@
 require_relative 'repository.rb'
 # reopen for patch
 class Repository
+Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
-#?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
+	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
+	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
 end #branches?
 def remotes?
 	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
@@ -44,6 +46,7 @@ def initialize(repository=This_code_repository, branch=repository.current_branch
 end # initialize
 module Constants
 Executing_branch=Branch.new
+Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants
 module Examples
