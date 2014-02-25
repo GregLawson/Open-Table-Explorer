@@ -32,7 +32,8 @@ def test_branches?
 	assert_includes(This_code_repository.branches?.map{|b| b.branch}, This_code_repository.current_branch_name?)
 end #branches?
 def test_remotes?
-	assert_includes(This_code_repository.remotes?, "  origin/"+Empty_Repo.current_branch_name?.to_s)
+	assert_includes(This_code_repository.remotes?, "origin/"+Empty_Repo.current_branch_name?.to_s)
+	assert_empty(Empty_Repo.remotes?)
 end #remotes?
 def test_Constants
 	assert_equal(This_code_repository, Branch::Executing_branch.repository)

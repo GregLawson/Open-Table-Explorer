@@ -21,7 +21,7 @@ def branches?
 end #branches?
 def remotes?
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	shell_parse('branch --list --remote', pattern)
+	shell_parse('branch --list --remote', pattern).map{|h| h[:remote]}
 end #remotes?
 end # Repository
 class Branch
