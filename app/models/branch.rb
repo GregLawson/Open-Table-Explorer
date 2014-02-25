@@ -20,7 +20,8 @@ def branches?
 	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
 end #branches?
 def remotes?
-	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	shell_parse('branch --list --remote', pattern)
 end #remotes?
 end # Repository
 class Branch
