@@ -78,7 +78,7 @@ extend ClassMethods
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file,
-	related_files = RelatedFile.new_from_path?(specific_file),
+	related_files = Unit.new_from_path?(specific_file),
 	repository = Repository.new(FilePattern.repository_dir?),
 	interactive =  :interactive)
 
@@ -261,7 +261,7 @@ def edit(context = nil)
 end # edit
 def split(executable, new_base_name)
 	related_files = work_flow.related_files
-	new_unit = RelatedFiles.new(new_base_name, project_root_dir)
+	new_unit = Unit.new(new_base_name, project_root_dir)
 	related_files.edited_files. map do |f|
 		pattern_name = FilePattern.find_by_file(f)
 		split_tab += ' -t ' + f + new_unit.pattern?(pattern_name)
