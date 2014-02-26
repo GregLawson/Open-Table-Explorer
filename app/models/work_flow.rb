@@ -260,6 +260,17 @@ def edit(context = nil)
 	edit = @repository.shell_command(command_string)
 	edit.assert_post_conditions
 end # edit
+def split(executable, new_base_name)
+	related_files = work_flow.related_files
+	new_unit = RelatedFiles.new(new_base_name, project_root_dir)
+	related_files.edited_files. map do |f|
+		pattern_name = FilePattern.find_by_file(f)
+		split_tab += ' -t ' + f + new_unit.pattern?(pattern_name)
+	end #map
+	edit = @repository.shell_command('diffuse' + version_comparison + test_files + split_tab)
+	puts edit.command_string
+	edit.assert_post_conditions
+end # split
 def minimal_edit
 	edit = @repository.shell_command('diffuse' + version_comparison + test_files + minimal_comparison?)
 	puts edit.command_string
