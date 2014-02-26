@@ -79,14 +79,13 @@ extend ClassMethods
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file,
 	related_files = RelatedFile.new_from_path?(specific_file),
-	repository = Repository.new(FilePattern.repository_dir?))
-#	message= "edit_files do not exist\n argv=#{argv.inspect}"
-#	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}"
-#	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}"
-#	raise message if  @related_files.edit_files.empty?
+	repository = Repository.new(FilePattern.repository_dir?),
+	interactive =  :interactive)
+
 	@specific_file = specific_file
 	@related_files = related_files
 	@repository = repository
+	@interactive = interactive
 	index = Branch_enhancement.index(repository.current_branch_name?)
 	if index.nil? then
 		@branch_index = First_slot_index
@@ -227,13 +226,13 @@ def merge_conflict_recovery
 				fail conflict.inspect
 			end # case
 		end # each
-		@repository.confirm_commit(:interactive)
+		@repository.confirm_commit(@interactive)
 	else
 		puts 'No merge conflict' if !$VERBOSE.nil?
 	end # if
 end # merge_conflict_recovery
-def merge(target_branch, source_branch, interact = :interactive)
-	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + interact.inspect + ')'
+def merge(target_branch, source_branch)
+	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + @interactive.inspect + ')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
@@ -243,7 +242,7 @@ def merge(target_branch, source_branch, interact = :interactive)
 				merge_conflict_recovery
 			end # if
 		end # if
-		@repository.confirm_commit(interact)
+		@repository.confirm_commit(@interactive)
 	end # safely_visit_branch
 end # merge
 def edit(context = nil)
@@ -287,7 +286,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
 			merge_conflict_recovery
-			@repository.confirm_commit(:interactive)
+			@repository.confirm_commit(@interactive)
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -326,7 +325,7 @@ def loop(executable = @related_files.model_test_pathname?)
 				done = true
 			end # if
 		end until done
-		@repository.confirm_commit(:interactive)
+		@repository.confirm_commit(@interactive)
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end # safely_visit_branch
 	begin
