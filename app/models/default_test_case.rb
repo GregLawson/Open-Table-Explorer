@@ -67,7 +67,7 @@ require 'test/unit/assertions.rb'
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def related_files?
-	RelatedFile.new(model_name?)
+	Unit.new(model_name?)
 end #related_files
 end #DefaultTests0
 module DefaultTests1

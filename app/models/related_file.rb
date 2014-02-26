@@ -190,4 +190,12 @@ UnboundedFixnumRelatedFile=RelatedFile.new(:UnboundedFixnum)
 SELF=RelatedFile.new #defaults to this unit
 end #Examples
 include Examples
-end #RelatedFile
+end # RelatedFile
+class Unit < RelatedFile
+module Constants
+end #Constants
+include Constants
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
+end # Unit
