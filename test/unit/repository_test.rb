@@ -17,14 +17,6 @@ def test_Constants
 	assert_pathname_exists(Source)
 	assert_equal(FilePattern.project_root_dir?(__FILE__), FilePattern.project_root_dir?($0))
 	assert_equal(FilePattern.project_root_dir?, Root_directory)
-#	message="SELF_code_Repo=#{SELF_code_Repo.inspect}"
-#	message+="\nThis_code_repository=#{This_code_repository.inspect}"
-#	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
-	this_code_repository=Repository.new(Root_directory)
-	sELF_code_Repo=Repository.new(Root_directory)
-	assert_equal(Root_directory, this_code_repository.path, message)
-#	SELF_code_Repo.assert_pre_conditions
-	this_code_repository.assert_pre_conditions
 	This_code_repository.assert_pre_conditions
 	assert_equal(Root_directory, This_code_repository.path, message)
 
@@ -227,16 +219,4 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
-def test_branches?
-	assert_equal(:master, Minimal_repository.current_branch_name?)
-#?	explain_assert_respond_to(Parse, :parse_split)
-	assert_includes(This_code_repository.branches?, This_code_repository.current_branch_name?.to_s)
-	assert_includes(Minimal_repository.branches?, Minimal_repository.current_branch_name?.to_s)
-end #branches?
-def test_remotes?
-	assert_includes(This_code_repository.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
-end #branches?
-def test_rebase!
-	Minimal_repository.rebase!
-end #rebase!
 end #Repository

@@ -73,7 +73,7 @@ end #create_test_repository
 end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
-def initialize(path)
+def initialize(path, interactive = :interactive)
 	if path[-1,1]!='/' then
 		path=path+'/'
 	end #if
@@ -160,7 +160,7 @@ def safely_visit_branch(target_branch, &block)
 		git_command('stash save --include-untracked')
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit(:interactive)
+			confirm_commit(@interactive)
 		end #each
 		changes_branch=:stash
 	end #if
@@ -183,7 +183,7 @@ def safely_visit_branch(target_branch, &block)
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit(:interactive)
+			confirm_commit(@interactive)
 		end #each
 	end #if
 	ret
@@ -198,10 +198,10 @@ def unit_names?(files)
 		FilePattern.path2model_name?(f).to_s
 	end #map
 end #unit_names?
-def confirm_commit(interact=:interactive)
+def confirm_commit(interact=@interactive)
 	if something_to_commit? then
 		case interact
-		when :interactive then
+		when @interactive then
 			git_command('cola').assert_post_conditions
 			if !something_to_commit? then
 				git_command('cola rebase '+current_branch_name?.to_s)
@@ -218,7 +218,7 @@ def confirm_commit(interact=:interactive)
 	end #if
 	puts 'confirm_commit('+interact.inspect+"), something_to_commit?="+something_to_commit?.inspect
 end #confirm_commit
-def validate_commit(changes_branch, files, interact=:interactive)
+def validate_commit(changes_branch, files, interact=@interactive)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
 		puts p.inspect  if $VERBOSE
