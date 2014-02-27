@@ -79,13 +79,11 @@ extend ClassMethods
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file,
 	related_files = Unit.new_from_path?(specific_file),
-	repository = Repository.new(FilePattern.repository_dir?),
-	interactive =  :interactive)
+	repository = Repository.new(FilePattern.repository_dir?, :interactive))
 
 	@specific_file = specific_file
 	@related_files = related_files
 	@repository = repository
-	@interactive = interactive
 	index = Branch_enhancement.index(repository.current_branch_name?)
 	if index.nil? then
 		@branch_index = First_slot_index
@@ -226,7 +224,7 @@ def merge_conflict_recovery
 				fail conflict.inspect
 			end # case
 		end # each
-		@repository.confirm_commit(@interactive)
+		@repository.confirm_commit
 	else
 		puts 'No merge conflict' if !$VERBOSE.nil?
 	end # if
@@ -242,7 +240,7 @@ def merge(target_branch, source_branch)
 				merge_conflict_recovery
 			end # if
 		end # if
-		@repository.confirm_commit(@interactive)
+		@repository.confirm_commit
 	end # safely_visit_branch
 end # merge
 def edit(context = nil)
@@ -286,7 +284,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
 			merge_conflict_recovery
-			@repository.confirm_commit(@interactive)
+			@repository.confirm_commit
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -325,7 +323,7 @@ def loop(executable = @related_files.model_test_pathname?)
 				done = true
 			end # if
 		end until done
-		@repository.confirm_commit(@interactive)
+		@repository.confirm_commit
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end # safely_visit_branch
 	begin
