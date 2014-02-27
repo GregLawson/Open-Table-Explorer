@@ -14,6 +14,21 @@ require_relative '../../app/models/unbounded_fixnum.rb'
 TE=Unit.new
 DefaultTests=eval(TE.default_tests_module_name?)
 TestCase=eval(TE.test_case_class_name?)
+class UnitTest <  DefaultTestCase2
+include DefaultTests2 
+#include DefaultTests0    #less error messages
+def test_equals
+	assert(Unit.new==Unit.new)
+end #==
+include Unit::Assertions
+extend Unit::Assertions::ClassMethods
+def test_class_assert_pre_conditions
+#	Unit.assert_pre_conditions
+end #class_assert_pre_conditions
+def test_class_assert_post_conditions
+#	Unit.assert_post_conditions
+end #class_assert_post_conditions
+end #Unit
 class UnitTest < TestCase
 include DefaultTests
 include Unit::Examples
@@ -32,9 +47,6 @@ def test_initialize
 	assert_equal(:Unit, te.model_class_name)
 	assert_equal(:Unit, SELF.model_class_name)
 end #initialize
-def test_equals
-	assert(Unit.new==Unit.new)
-end #==
 def test_model_pathname
 	assert(File.exists?(UnboundedFixnumUnit.model_pathname?), UnboundedFixnumUnit.model_pathname?)
 	assert_data_file(UnboundedFixnumUnit.model_pathname?)
@@ -94,8 +106,8 @@ def test_default_test_class_id
 	test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
 	tests=eval("DefaultTests"+default_test_class_id.to_s)
 #till split	assert_equal(2, default_test_class_id, te.inspect)
-#till split	assert_equal(2, RelatedFile.new(te.model_name?).default_test_class_id?, te.inspect)
-#	assert_equal(1, RelatedFile.new('DefaultTestCase').default_test_class_id?)
+#till split	assert_equal(2, Unit.new(te.model_name?).default_test_class_id?, te.inspect)
+#	assert_equal(1, Unit.new('DefaultTestCase').default_test_class_id?)
 end #default_test_class_id
 def test_default_tests_module_name
 end #default_tests_module?

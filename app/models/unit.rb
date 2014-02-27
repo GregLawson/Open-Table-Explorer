@@ -136,6 +136,17 @@ end #model_name?
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
+end #ClassMethods
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Constants
+end #Constants
+include Constants
+module ClassMethods
+extend ClassMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "
@@ -150,6 +161,8 @@ def assert_post_conditions
 	assert_equal(TE, FilePattern::Examples::SELF)
 end #class_assert_post_conditions
 end #ClassMethods
+module KernelMethods
+end #KernelMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
 	fail "end of assert_invariant "
@@ -183,4 +196,10 @@ UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
 SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
+module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+end #ClassMethods
+end #Assertions
 end # Unit
