@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'related_file.rb'
+require_relative 'unit.rb'
 require_relative 'repository.rb'
 class WorkFlow
 module Constants

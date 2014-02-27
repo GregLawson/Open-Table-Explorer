@@ -6,14 +6,14 @@
 #
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
-class RelatedFile
+class Unit
 module Constants
 end #Constants
 include Constants
 module ClassMethods
 def new_from_path?(path)
 	library_name=FilePattern.path2model_name?(path)
-	RelatedFile.new(library_name, FilePattern.project_root_dir?(path))
+	Unit.new(library_name, FilePattern.project_root_dir?(path))
 end #new_from_path?
 end #ClassMethods
 extend ClassMethods
@@ -136,26 +136,13 @@ end #model_name?
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
-include Test::Unit::Assertions
-end #ClassMethods
-end #Assertions
-include Assertions
-extend Assertions::ClassMethods
-#self.assert_pre_conditions
-end # RelatedFile
-class Unit < RelatedFile
-module Constants
-end #Constants
-include Constants
-module ClassMethods
-extend ClassMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "
 end # class_assert_invariant
 # conditions true while class is being defined
 def assert_pre_conditions
-	assert_respond_to(RelatedFile, :new_from_path?)
+	assert_respond_to(Unit, :new_from_path?)
 	assert_module_included(self, FilePattern::Assertions)
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
@@ -163,8 +150,6 @@ def assert_post_conditions
 	assert_equal(TE, FilePattern::Examples::SELF)
 end #class_assert_post_conditions
 end #ClassMethods
-module KernelMethods
-end #KernelMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
 	fail "end of assert_invariant "
@@ -198,10 +183,4 @@ UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
 SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
-module Assertions
-include Test::Unit::Assertions
-module ClassMethods
-include Test::Unit::Assertions
-end #ClassMethods
-end #Assertions
 end # Unit
