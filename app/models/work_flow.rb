@@ -263,6 +263,7 @@ def split(executable, new_base_name)
 	related_files.edited_files. map do |f|
 		pattern_name = FilePattern.find_by_file(f)
 		split_tab += ' -t ' + f + new_unit.pattern?(pattern_name)
+		@repository.shell_command('cp ' + f +  new_unit.pattern?(pattern_name))
 	end #map
 	edit = @repository.shell_command('diffuse' + version_comparison + test_files + split_tab)
 	puts edit.command_string
