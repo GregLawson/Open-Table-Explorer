@@ -53,7 +53,7 @@ def test_replace_or_create
 end #replace_or_create
 def test_create_if_missing
 	Repository.create_if_missing(Unique_repository_directory_pathname, :echo)
-	FileUtils.remove_entry_secure(Unique_repository_directory_pathname, :echo) #, force = false)
+	FileUtils.remove_entry_secure(Unique_repository_directory_pathname) #, force = false)
 end #create_if_missing
 def test_initialize
 	assert_pathname_exists(This_code_repository.path)
