@@ -137,6 +137,18 @@ module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
+end #ClassMethods
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+end # RelatedFile
+class Unit < RelatedFile
+module Constants
+end #Constants
+include Constants
+module ClassMethods
+extend ClassMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "
@@ -180,22 +192,16 @@ def assert_default_test_class_id(expected_id, message='')
 	assert_equal(expected_id, default_test_class_id?, message+caller_lines)
 end #default_test_class_id
 
-end #Assertions
-include Assertions
-extend Assertions::ClassMethods
-#self.assert_pre_conditions
 module Examples
 include Constants
-UnboundedFixnumRelatedFile=RelatedFile.new(:UnboundedFixnum)
-SELF=RelatedFile.new #defaults to this unit
+UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
+SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
-end # RelatedFile
-class Unit < RelatedFile
-module Constants
-end #Constants
-include Constants
+module Assertions
+include Test::Unit::Assertions
 module ClassMethods
+include Test::Unit::Assertions
 end #ClassMethods
-extend ClassMethods
+end #Assertions
 end # Unit
