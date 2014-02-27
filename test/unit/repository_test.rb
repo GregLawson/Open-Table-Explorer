@@ -36,24 +36,24 @@ def test_create_empty
 	assert_equal(Unique_repository_directory_pathname+"\n", switch_dir.output)
 #	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
 	ShellCommands.new([['cd', Unique_repository_directory_pathname], '&&', ['git', 'init']])
-	new_repository=Repository.new(Unique_repository_directory_pathname)
+	new_repository=Repository.new(Unique_repository_directory_pathname, :echo)
 	IO.write(Unique_repository_directory_pathname+'/README', README_start_text+"1\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
 	new_repository.git_command('commit -m "test_create_empty initial commit of README"')
 	Repository.delete_existing(Unique_repository_directory_pathname)
-	Repository.create_empty(Unique_repository_directory_pathname)
+	Repository.create_empty(Unique_repository_directory_pathname, :echo)
 	Repository.delete_existing(Unique_repository_directory_pathname)
 end #create_empty
 def test_delete_existing
-	Repository.create_if_missing(Unique_repository_directory_pathname)
+	Repository.create_if_missing(Unique_repository_directory_pathname, :echo)
 	Repository.delete_existing(Unique_repository_directory_pathname)
 	assert(!File.exists?(Unique_repository_directory_pathname))
 end #delete_existing
 def test_replace_or_create
 end #replace_or_create
 def test_create_if_missing
-	Repository.create_if_missing(Unique_repository_directory_pathname)
-	FileUtils.remove_entry_secure(Unique_repository_directory_pathname) #, force = false)
+	Repository.create_if_missing(Unique_repository_directory_pathname, :echo)
+	FileUtils.remove_entry_secure(Unique_repository_directory_pathname, :echo) #, force = false)
 end #create_if_missing
 def test_initialize
 	assert_pathname_exists(This_code_repository.path)
@@ -143,10 +143,10 @@ def test_safely_visit_branch
 
 	if push_branch!=target_branch then
 		Minimal_repository.confirm_branch_switch(target_branch)
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
 		Minimal_repository.confirm_branch_switch(push_branch)
 	else
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
 	end #if
 	if push then
 		Minimal_repository.git_command('stash apply --quiet').assert_post_conditions
@@ -170,10 +170,10 @@ def test_validate_commit
 	Minimal_repository.force_change
 	assert(Minimal_repository.something_to_commit?)
 	Minimal_repository.assert_something_to_commit
-#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
+#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'])
 	Minimal_repository.git_command('stash')
 	Minimal_repository.git_command('checkout passed')
-	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
+	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'])
 end #validate_commit
 def test_testing_superset_of_passed
 #?	assert_equal('', This_code_repository.testing_superset_of_passed.assert_post_conditions.output)
