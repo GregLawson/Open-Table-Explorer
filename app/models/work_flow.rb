@@ -230,7 +230,7 @@ def merge_conflict_recovery
 	end # if
 end # merge_conflict_recovery
 def merge(target_branch, source_branch)
-	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + @interactive.inspect + ')'
+	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + ')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
