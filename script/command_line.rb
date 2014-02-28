@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -8,9 +8,12 @@
 ###########################################################################
 # @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
 require 'pp'
+require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 require_relative '../app/models/unit.rb'
-pp ARGV if $VERBOSE
+scripting_workflow=WorkFlow.new($0)
+# good enough for edited; no syntax error
+scripting_workflow.script_deserves_commit!(:edited)
 commands = []
 script = CommandLineScript.new($0)
 script.add_option('Edit.', :edit)
