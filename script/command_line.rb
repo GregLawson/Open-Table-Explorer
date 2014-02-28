@@ -18,14 +18,16 @@ unit_files = Unit.new_from_path?($0)
 require_relative "../app/models/#{unit_files.model_basename}"
 commands = []
 script = CommandLineScript.new($0)
-script.add_option('Edit.', :edit)
 script.add_option('Inspect.', :inspect)
+script.add_option('Test.', :test)
 script.parse_options
+# good enough for testing; no syntax error
+scripting_workflow.script_deserves_commit!(:testing)
 
 pp commands
 pp ARGV
 
-case ARGV.size
+case ARGV.size # paths after switch removal?
 when 0 then # scite testing defaults command and file
 	puts script.banner
 	this_file=File.expand_path(__FILE__)
