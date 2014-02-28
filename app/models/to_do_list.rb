@@ -45,6 +45,7 @@ def rebase!
 	end #if
 end #rebase!
 def cola_rebase!
+		git_command('cola rebase ' + @branch.to_s + ' --onto ' + @onto.to_s).assert_post_conditions.output.split("\n")
 end # 
 def command_line_rebase!
 		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
