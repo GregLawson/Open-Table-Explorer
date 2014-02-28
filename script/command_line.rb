@@ -38,7 +38,7 @@ unit_files = Unit.new($0)
 
 case ARGV.size
 when 0 then # scite testing defaults command and file
-	puts "work_flow --<command> <file>"
+	puts "unit --<command> <file>"
 	this_file=File.expand_path(__FILE__)
 	argv=[this_file] # incestuous default test case for scite
 	commands=[:test]
