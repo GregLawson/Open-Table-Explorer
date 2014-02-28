@@ -17,48 +17,41 @@ scripting_workflow.script_deserves_commit!(:edited)
 commands = []
 script = CommandLineScript.new($0)
 script.add_option('Edit.', :edit)
-script.add_option('Test.', :test)
-OptionParser.new do |opts|
-  opts.banner = "Usage: work_flow.rb --<command> files"
-
-  opts.on("-e", "--[no-]edit", "Edit related files and versions in diffuse") do |e|
-    commands+=[:edit] if e
-  end
-  opts.on("-d", "--[no-]downgrade", "Test downgraded related files in git branches") do |d|
-    commands+=[:downgrade] if d
-  end
-  opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
-    commands+=[:upgrade] if u
-  end
-  opts.on("-t", "--[no-]test", "Test. No commit. ") do |t|
-    commands+=[:test] if t
-  end
-end.parse!
+script.add_option('Inspect.', :inspect)
+script.parse_options
 
 pp commands
 pp ARGV
-unit_files = Unit.new($0)
+unit_files = Unit.new_from_path?($0)
 
 case ARGV.size
 when 0 then # scite testing defaults command and file
+	puts script.banner
 	puts "unit --<command> <file>"
 	this_file=File.expand_path(__FILE__)
 	argv=[this_file] # incestuous default test case for scite
-	commands=[:test]
+	commands=[:inspect]
 else
 	argv=ARGV
 end #case
-argv.each do |f|
-	work_flow=WorkFlow.new(f)
-	commands.each do |c|
+commands.each do |c|
+	case c.to_sym
+	when :all then
+	
+	else argv.each do |f|
+		unit=CommandLine.new(f)
 		case c.to_sym
-		when :execute then work_flow.execute
-		when :edit then work_flow.edit
-		when :test then work_flow.test
-		when :upgrade then work_flow.upgrade
-		when :downgrade then work_flow.downgrade
-		when :merge_down then work_flow.merge_down
+		when :inspect then puts unit.inspect
+		when :test then unit.test
+		else
+			if unit.respond_to?(c.to_sym) then
+				unit.send(c.to_sym, *argv)
+			else
+				puts "#{c.to_sym} is not a method in #{unit_files.inspect}"
+			end # if
 		end #case
+		scripting_workflow.script_deserves_commit!(:passed)
 	end #each
-end #each
-WorkFlow::Git_status.execute.puts
+	end #case
+	end #each
+1 # successfully completed

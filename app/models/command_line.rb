@@ -17,6 +17,7 @@ def path_of_command(command)
 end #path_of_command
 end #ClassMethods
 extend ClassMethods
+attr_reader :banner
 def initialize(command, description=nil, help_source=nil)
 	if /\//.match(command) then # pathname
 		@path=command
@@ -26,6 +27,7 @@ def initialize(command, description=nil, help_source=nil)
 		@path=@whereis.split(' ')[2]
 	end #if
 	@description=description
+	@banner = "Usage: #{File.basename(command, '.rb')} --<command> files\n#{@description}"
 	@help_source=help_source
 	@file_type=	ShellCommands.new("file -b "+@path).output
 	@mime_type=	ShellCommands.new("file -b --mime "+@path).output
@@ -73,14 +75,14 @@ def add_option(name, description=name, long_option=name, short_option=name[0])
 	option=CommandLineOption.new(name, description, long_option, short_option)
 	@options = (@options.nil? ? [] : @options)+[option]
 end #add_option
-def parse_options
+def parse_options(banner= @banner)
 	@commands = []
 	OptionParser.new do |opts|
-		opts.banner = "Usage: #{@basename} --<command> files"
+		opts.banner = banner
 		@options.each do |option|
-			opts.on(option.short_option, "--[no-]#{option.long_option}", option.description) do |o|
-				@commands+=[option.name] if o
-		  end #on
+#			opts.on(option.short_option, "--[no-]#{option.long_option}", option.description) do |o|
+#				@commands+=[option.name] if o
+#		  end #on
 	  end #each
 	end.parse!
 end #parse_options
