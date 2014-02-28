@@ -80,9 +80,9 @@ def parse_options(banner= @banner)
 	OptionParser.new do |opts|
 		opts.banner = banner
 		@options.each do |option|
-#			opts.on(option.short_option, "--[no-]#{option.long_option}", option.description) do |o|
-#				@commands+=[option.name] if o
-#		  end #on
+			opts.on(option.short_option, "--[no-]#{option.long_option}", option.description) do |o|
+				@commands+=[option.name] if o
+		  end #on
 	  end #each
 	end.parse!
 end #parse_options
@@ -130,8 +130,8 @@ include Examples
 end #CommandLineScript
 class CommandLineOption
 attr_reader :name, :description, :short_option, :long_option
-def initialize(name, description=name, long_option=name, short_option=name[0])
-	@name=name
+def initialize(name, description=name.to_s, long_option=name.to_s, short_option=name[0])
+	@name=name.to_s
 	@description=description
 	@short_option=short_option
 	@short_option=long_option
