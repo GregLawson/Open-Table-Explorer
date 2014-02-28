@@ -44,6 +44,11 @@ def rebase!
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
 end #rebase!
+def cola_rebase!
+end # 
+def command_line_rebase!
+		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+end # command_line_rebase!
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
