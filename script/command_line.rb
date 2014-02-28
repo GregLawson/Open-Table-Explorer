@@ -9,8 +9,12 @@
 # @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
 require 'pp'
 require_relative '../app/models/command_line.rb'
+require_relative '../app/models/unit.rb'
 pp ARGV if $VERBOSE
 commands = []
+script = CommandLineScript.new($0)
+script.add_option('Edit.', :edit)
+script.add_option('Test.', :test)
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
 
@@ -30,7 +34,7 @@ end.parse!
 
 pp commands
 pp ARGV
-
+unit_files = Unit.new($0)
 
 case ARGV.size
 when 0 then # scite testing defaults command and file
