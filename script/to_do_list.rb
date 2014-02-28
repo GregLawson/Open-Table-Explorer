@@ -25,7 +25,7 @@ script.parse_options
 
 pp commands
 pp ARGV
-case ARGV.size
+case ARGV.size # paths after switch removal?
 when 0 then # scite testing defaults command and file
 	puts script.banner
 	this_file=File.expand_path(__FILE__)
