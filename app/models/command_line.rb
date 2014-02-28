@@ -46,7 +46,6 @@ def ruby_mime
     # returns [text/plain, text/plain]
     text      = plaintext.first
 end #ruby_mime
-require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -77,7 +76,7 @@ end #add_option
 def parse_options
 	@commands = []
 	OptionParser.new do |opts|
-		opts.banner = "Usage: #@basename} --<command> files"
+		opts.banner = "Usage: #{@basename} --<command> files"
 		@options.each do |option|
 			opts.on(option.short_option, "--[no-]#{option.long_option}", option.description) do |o|
 				@commands+=[option.name] if o
@@ -128,11 +127,12 @@ end #Examples
 include Examples
 end #CommandLineScript
 class CommandLineOption
+attr_reader :name, :description, :short_option, :long_option
 def initialize(name, description=name, long_option=name, short_option=name[0])
 	@name=name
 	@description=description
 	@short_option=short_option
-	@long_option=long_option
+	@short_option=long_option
 end #initialize
 module Assertions
 include Test::Unit::Assertions
