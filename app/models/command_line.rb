@@ -86,22 +86,28 @@ def parse_options(banner= @banner)
 	  end #each
 	end.parse!
 end #parse_options
-def run
-	case ARGV.size
+def run(&non_default_actions)
+	case ARGV.size # paths after switch removal?
 	when 0 then # scite testing defaults command and file
-		puts "work_flow --<command> <file>"
+		puts script.banner
 		this_file=File.expand_path(__FILE__)
 		argv=[this_file] # incestuous default test case for scite
+		@commands=[:test]
 	else
 		argv=ARGV
 	end #case
-	if @coomands.size=0 then
-		@commands=[:test]
-	end #if
-	argv.each do |f|
-		command_line=CommandLine.new(f)
-		@commands.each do |c|
-			command_line.method(c)
+	commands.each do |c|
+		ret = non_default_actions.call
+		if ret.nil? then
+		else argv.each do |f|
+			unit=CommandLine.new(f)
+			if unit.respond_to?(c.to_sym) then
+				unit.send(c.to_sym, *argv)
+			else
+				puts "#{c.to_sym} is not a method in #{unit_files.inspect}"
+			end # if
+		end # if
+		scripting_workflow.script_deserves_commit!(:passed)
 		end #each
 	end #each
 end #run
