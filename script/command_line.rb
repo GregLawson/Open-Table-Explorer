@@ -24,12 +24,10 @@ script.parse_options
 
 pp commands
 pp ARGV
-unit_files = Unit.new_from_path?($0)
 
 case ARGV.size
 when 0 then # scite testing defaults command and file
 	puts script.banner
-	puts "unit --<command> <file>"
 	this_file=File.expand_path(__FILE__)
 	argv=[this_file] # incestuous default test case for scite
 	commands=[:inspect]
@@ -41,6 +39,7 @@ commands.each do |c|
 	when :all then
 	
 	else argv.each do |f|
+		puts "#{unit_files.inspect}"
 		unit=CommandLine.new(f)
 		case c.to_sym
 		when :inspect then puts unit.inspect
