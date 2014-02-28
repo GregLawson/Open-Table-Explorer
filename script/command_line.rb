@@ -14,6 +14,8 @@ require_relative '../app/models/unit.rb'
 scripting_workflow=WorkFlow.new($0)
 # good enough for edited; no syntax error
 scripting_workflow.script_deserves_commit!(:edited)
+unit_files = Unit.new_from_path?($0)
+require_relative "../app/models/#{unit_files.model_basename}"
 commands = []
 script = CommandLineScript.new($0)
 script.add_option('Edit.', :edit)
