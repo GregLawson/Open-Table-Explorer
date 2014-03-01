@@ -18,12 +18,7 @@ include Constants
 #        String =>previous commit starts rebase ('--root' possible)
 def initialize(branch, onto=branch.remote_branch)
 	@branch=branch
-	if onto.instance_of?(Fixnum) then
-		@onto=@branch + '~' + onto.to_s
-	
-	else
-		@onto=onto
-	end # if
+	@onto=onto
 end #initialize
 def todo_list
 	git_command('git shortlog '+find_origin+'..'+@branch.to_s).output
@@ -50,12 +45,22 @@ def rebase!
 	else
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
-end #rebase!
-def cola_rebase!
-		git_command('cola rebase ' + @branch.to_s + ' --onto ' + @onto.to_s).assert_post_conditions.output.split("\n")
+end #rebase
+def rebase_editor?(editor='emacs')
+	'GIT_SEQUENCE_EDITOR='+editor.to_s
+end #rebase_editor?
+def rebase!(sequence_editor=COLA_SEQUENCE_EDITOR)
+		git_command(rebase_editor?, command_line_rebase_string?).assert_post_conditions # only on configured remote
 end # 
-def command_line_rebase!
-		git_command('rebase --interactive '+ @branch.to_s + ' --onto ' + @onto.to_s).assert_post_conditions.output.split("\n")
+def command_line_rebase_string?
+	command_string = 'rebase --interactive ' + @branch.to_s + ' --onto '# beginning
+	if @onto.nil? then
+		command_string += Branch.new(@branch).remote_branch.to_s
+	elsif @onto.instance_of?(Fixnum) then
+		command_string += @branch.to_s + '~' + onto.to_s
+	else
+		command_string += @onto.to_s
+	end # if
 end # command_line_rebase!
 module Assertions
 include Test::Unit::Assertions
