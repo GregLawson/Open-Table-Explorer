@@ -14,9 +14,16 @@ Hex_number=/[0-9a-f]+/
 end #Constants
 include Constants
 # attr_reader
+# onto origin/<branch> for default
+#        String =>previous commit starts rebase ('--root' possible)
 def initialize(branch, onto=branch.remote_branch)
 	@branch=branch
-	@onto=onto
+	if onto.instance_of?(Fixnum) then
+		@onto=@branch + '~' + onto.to_s
+	
+	else
+		@onto=onto
+	end # if
 end #initialize
 def todo_list
 	git_command('git shortlog '+find_origin+'..'+@branch.to_s).output
@@ -48,7 +55,7 @@ def cola_rebase!
 		git_command('cola rebase ' + @branch.to_s + ' --onto ' + @onto.to_s).assert_post_conditions.output.split("\n")
 end # 
 def command_line_rebase!
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+		git_command('rebase --interactive '+ @branch.to_s + ' --onto ' + @onto.to_s).assert_post_conditions.output.split("\n")
 end # command_line_rebase!
 module Assertions
 include Test::Unit::Assertions
