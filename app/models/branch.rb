@@ -38,7 +38,10 @@ def initialize(repository, branch=repository.current_branch_name?, remote_branch
 end # initialize
 # Allows Branch objects to be used in most contexts where a branch name Symbol is expected
 def to_s
-	@branch
+	@branch.to_s
+end # to_s
+def to_sym
+	@branch.to_sym
 end # to_s
 module Constants
 end #Constants
