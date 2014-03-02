@@ -5,19 +5,30 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../test/assertions/branch_assertions.rb'
 class ToDoList
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
 module Constants
 Hex_number=/[0-9a-f]+/
+SED_SEQUENCE_EDITOR="sed -i -re 's/^pick /e /' | git rebase -i"
+COLA_SEQUENCE_EDITOR='/usr/share/git-cola/bin/git-xbase'
+EMACS_SEQUENCE_EDITOR='emacs'
+DEFAULT_SEQUENCE_EDITOR=EMACS_SEQUENCE_EDITOR
 end #Constants
 include Constants
 # attr_reader
 # onto origin/<branch> for default
 #        String =>previous commit starts rebase ('--root' possible)
-def initialize(branch, onto=branch.remote_branch)
-	@branch=branch
+def initialize(branch, onto=nil)
+	if branch.instance_of?(Branch) then
+		@branch=branch
+	elsif branch.instance_of?(Symbol) then
+		fail "branch=#{branch.inspect} should be type Branch."
+	else
+		fail "branch=#{branch.inspect} should be type Branch."
+	end # if
 	@onto=onto
 end #initialize
 def todo_list
@@ -39,26 +50,30 @@ end # flip_start_fixup
 def fixup_until_fail
 	run=git_command('git rebase --continue')
 end # fixup_until_fail
-def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase
-def rebase_editor?(editor='emacs')
+def rebase_editor?(editor=DEFAULT_SEQUENCE_EDITOR)
 	'GIT_SEQUENCE_EDITOR='+editor.to_s
 end #rebase_editor?
-def rebase!(sequence_editor=COLA_SEQUENCE_EDITOR)
-		git_command(rebase_editor?, command_line_rebase_string?).assert_post_conditions # only on configured remote
-end # 
+def rebase!(sequence_editor=rebase_editor?)
+	# rebase only on clean working directory
+	if !@branch.repository.something_to_commit? then
+		@branch.repository.shell_command(rebase_editor?(sequence_editor), command_line_rebase_string?).assert_post_conditions # only on configured remote
+	end # if
+end # rebase!
 def command_line_rebase_string?
-	command_string = 'rebase --interactive ' + @branch.to_s + ' --onto '# beginning
+	command_string = 'git rebase ' # beginning
+	if @branch.repository.interactive == :interactive then
+		command_string += '--interactive '
+	end # if
+		command_string +=  @branch.to_s + ' --onto '
 	if @onto.nil? then
-		command_string += Branch.new(@branch).remote_branch.to_s
+		if @branch.remote_branch.nil? then
+			command_string += ' --root '
+		else
+			command_string += Branch.new(@branch).remote_branch.to_s
+		end
 	elsif @onto.instance_of?(Fixnum) then
-		command_string += @branch.to_s + '~' + onto.to_s
-	else
+		command_string += @branch.to_s + '~' + @onto.to_s
+	else # normal String ref
 		command_string += @onto.to_s
 	end # if
 end # command_line_rebase!
@@ -83,6 +98,11 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-
+Test_rebase = ToDoList.new(Branch::Examples::Empty_repo_master_branch)
+Test_rebase_4 = ToDoList.new(Branch::Examples::Empty_repo_master_branch, 4)
+Test_rebase_passed = ToDoList.new(Branch::Examples::Empty_repo_master_branch, :passed)
+Executing_rebase = ToDoList.new(Branch::Examples::Executing_master_branch)
+Executing_rebase_4 = ToDoList.new(Branch::Examples::Executing_master_branch, 4)
+Executing_rebase_passed = ToDoList.new(Branch::Examples::Executing_master_branch, :passed)
 end #Examples
 end # ToDoList
