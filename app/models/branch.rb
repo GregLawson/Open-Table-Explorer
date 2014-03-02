@@ -6,28 +6,11 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative 'repository.rb'
-# reopen for patch
-class Repository
-Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
-def shell_parse(command, pattern)
-	output=git_command(command).assert_post_conditions.output
-	parse=Parse.parse_into_array(output, pattern, {ending: :optional})
-end # 
-def branches?
-	branch_output=git_command('branch --list').assert_post_conditions.output
-	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
-	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
-end #branches?
-def remotes?
-	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	shell_parse('branch --list --remote', pattern).map{|h| h[:remote]}
-end #remotes?
-end # Repository
+#require_relative 'repository.rb'
 class Branch
-include Repository::Constants
+#include Repository::Constants
 module ClassMethods
-include Repository::Constants
+#include Repository::Constants
 def this_code?
 end # this_code?
 end #ClassMethods
@@ -40,7 +23,11 @@ def find_origin
 	end #if
 end # find_origin
 attr_reader :repository, :branch, :remote_branch
-def initialize(repository=This_code_repository, branch=repository.current_branch_name?, remote_branch=nil)
+def initialize(repository, branch=repository.current_branch_name?, remote_branch=nil)
+	fail "Branch.new first argument must be of type Repository" unless repository.instance_of?(Repository)
+#	fail "@repository must respond to :remotes?\n"+
+#		"repository.inspect=#{repository.inspect}\n" +
+#		"repository.methods(false)=#{repository.methods(false).inspect}" unless repository.respond_to?(:remotes?)
 	@repository=repository
 	@branch=branch
 	if remote_branch.nil? then
@@ -54,12 +41,6 @@ def to_s
 	@branch
 end # to_s
 module Constants
-Executing_branch=Branch.new
-Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants
-module Examples
-include Constants
-	
-end #Examples
 end # Branch
