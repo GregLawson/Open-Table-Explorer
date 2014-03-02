@@ -22,7 +22,6 @@ def assert_pre_conditions
 	assert_pathname_exists(@path+'.git/')
 	assert_pathname_exists(@path+'.git/logs/')
 	assert_pathname_exists(@path+'.git/logs/refs/')
-	fail " must be of type Repository" unless self.instance_of?(Repository)
 	fail "self must respond to :remotes?\n"+
 		"self.inspect=#{self.inspect}\n" +
 		"self.methods(false)=#{self.methods(false).inspect}" unless respond_to?(:remotes?)

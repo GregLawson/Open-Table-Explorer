@@ -13,6 +13,7 @@ require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
 require_relative 'parse.rb'
+require_relative 'branch.rb'
 class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
@@ -23,6 +24,7 @@ Error_classification={0 => :success,
 				1     => :single_test_fail,
 				100 => :initialization_fail,
 				10000 => :syntax_error}
+Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants
 module ClassMethods
@@ -74,7 +76,7 @@ def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :interactive
 def initialize(path, interactive)
 	if path[-1,1]!='/' then
 		path=path+'/'
@@ -279,7 +281,6 @@ def merge_conflict_files?
 	ret
 end #merge_conflict_files?
 
-Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 def shell_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
 	parse=Parse.parse_into_array(output, pattern, {ending: :optional})
