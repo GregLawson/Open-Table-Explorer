@@ -278,6 +278,21 @@ def merge_conflict_files?
 	end #if
 	ret
 end #merge_conflict_files?
-end #Repository
+
+Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+def shell_parse(command, pattern)
+	output=git_command(command).assert_post_conditions.output
+	parse=Parse.parse_into_array(output, pattern, {ending: :optional})
+end # 
+def branches?
+	branch_output=git_command('branch --list').assert_post_conditions.output
+	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
+	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
+end #branches?
+def remotes?
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	shell_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+end #remotes?
+end # Repository
 
 
