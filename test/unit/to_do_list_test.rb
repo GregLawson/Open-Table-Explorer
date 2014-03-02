@@ -32,11 +32,11 @@ def test_rebase
 #	test_rebase = Test_rebase.rebase!
 end #rebase!
 def test_command_line_rebase_string?
-	assert_equal('git rebase master --onto master~4', Test_rebase_4.command_line_rebase_string?)
-#	assert_equal('git rebase --interactive master --onto master', Executing_rebase.command_line_rebase_string?)
+	assert_equal('git rebase master --onto master~4', 					 Test_rebase_4.command_line_rebase_string?)
 	assert_equal('git rebase --interactive master --onto master~4', Executing_rebase_4.command_line_rebase_string?)
-	assert_equal('git rebase --interactive master --onto passed', Executing_rebase_passed.command_line_rebase_string?)
-#	assert_equal('git rebase master --onto master~4', Test_rebase.command_line_rebase_string?)
-	assert_equal('git rebase master --onto passed', Test_rebase_passed.command_line_rebase_string?)
+	assert_equal('git rebase master --onto passed', 					 Test_rebase_passed.command_line_rebase_string?)
+	assert_equal('git rebase --interactive master --onto passed', 	 Executing_rebase_passed.command_line_rebase_string?)
+#	assert_equal('git rebase master --onto origin/master', 					 Test_rebase.command_line_rebase_string?)
+#	assert_equal('git rebase --interactive master --onto /originmaster', 	 Executing_rebase.command_line_rebase_string?)
 end # command_line_rebase!
 end #ToDoList
