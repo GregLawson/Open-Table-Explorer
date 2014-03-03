@@ -64,15 +64,6 @@ def test_initialize
 	switch_dir=ShellCommands.new('pwd', :chdir=>Guaranteed_existing_directory)
 	assert_equal(Guaranteed_existing_directory+"\n", switch_dir.output, switch_dir.inspect(true))
 end #initialize
-def test_parse_argument_array
-	argument_array=[{'G' => 'e'}, 'git rebase']
-	command=ShellCommands.new
-	command.parse_argument_array(argument_array)
-	assert_include(command.methods(true), :env)
-	assert_equal(argument_array[0], command.env)
-	assert_equal(argument_array[1], command.command)
-	assert_equal({}, command.opts)
-end #parse_argument_array
 def test_01
 	shell_execution1=ShellCommands.new('ls /tmp')
 	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)

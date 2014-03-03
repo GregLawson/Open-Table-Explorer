@@ -60,8 +60,8 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
-	info "@command="+@command.inspect
-	info "@command_string="+@command_string.inspect
+#	info "@command="+@command.inspect
+#	info "@command_string="+@command_string.inspect
 	Open3.popen3(@env, @command_string, @opts) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
@@ -83,18 +83,16 @@ rescue StandardError => exception
 end #execute
 # prefer command as array since each element is shell escaped.
 # Most common need for shell excape is spaces in pathnames (a common GUI style)
-attr_reader :argument_array, :env, :command, :opts, :command_string
 def initialize(*command)
-	if command.size >= 1 then # empty command is primarily for testing
-		parse_argument_array(command)
-		execute # do it first time, to repeat call execute
-		if $VERBOSE.nil? then
-		elsif $VERBOSE then
-			$stdout.puts trace # -W2
-		else 
-			$stdout.puts inspect(:echo_command) # -W1
-		end #if
-	end # if
+	parse_argument_array(command)
+	execute # do it first time, to repeat call execute
+	if $VERBOSE.nil? then
+	elsif $VERBOSE then
+		$stdout.puts trace # -W2
+	else 
+		$stdout.puts inspect(:echo_command) # -W1
+	end #if
+
 end #initialize
 # Allow Process.spawn options and environment to be passed.
 def parse_argument_array(argument_array)
@@ -168,11 +166,9 @@ def inspect(echo_command=@errors!='' || !success?)
 		ret+="@command=#{@command.inspect}\n" if $VERBOSE
 		ret+="@opts=#{@opts.inspect}\n" if $VERBOSE
 	end #if
-	if !@errors.empty? then
+	if @errors!='' then
+		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n" if $VERBOSE
 		ret+="@errors=#{@errors.inspect}\n"
-		if $VERBOSE && !@command_string.empty?
-			ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n"
-		end #if
 	end #if
 	if !success? then
 		ret+="@process_status=#{@process_status.inspect}\n"
