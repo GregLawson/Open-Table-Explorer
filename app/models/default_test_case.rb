@@ -9,6 +9,7 @@ require 'active_support/all'
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
 def each_example(&block)
+  return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
   if  included_module_names.include?("#{model_class?}::Examples") then
 #    info "model_class?.constants=#{model_class?.constants}"
@@ -43,7 +44,7 @@ def existing_call(object, symbol)
    warn message
  end #if
 end #existing_call
-def named_object?
+def named_object?(object)
 	if object.respond_to?(:name) then
 		"named #{object.name}"
 	else
@@ -56,17 +57,17 @@ def assert_optional_method(object, symbol)
    assert_respond_to(object, symbol)
    object.method(symbol).call
  else
-	message="method #{symbol} does not exist for object "+named_object?
+	message="method #{symbol} does not exist for object "+named_object?(object)
    warn message
  end #if
 end #
 end #ExampleCall
 module DefaultTests0
-require 'test/unit'
+require 'test/unit/assertions.rb'
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def related_files?
-	RelatedFile.new(model_name?)
+	Unit.new(model_name?)
 end #related_files
 end #DefaultTests0
 module DefaultTests1
@@ -102,6 +103,7 @@ def assert_environment
 end #assert_environment
 def test_aaa_environment
   info "$VERBOSE=#{$VERBOSE.inspect}"
+  return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
   info "included_module_names=#{included_module_names.inspect}"
   assert_include(self.class.included_modules, Test::Unit::Assertions)
@@ -125,8 +127,8 @@ def test_aaa_environment
 	assert_not_nil(self.class.name, message)
 	assert_not_nil(TE.model_name?, message)
 	assert_not_nil(model_class?, message)
-	assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
-	assert_include(model_class?.included_modules, Test::Unit::Assertions)
+	warn{assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")}
+	warn{assert_include(model_class?.included_modules, Test::Unit::Assertions)}
 #	assert_equal('Test::Unit::Assertions', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
@@ -156,7 +158,7 @@ def test_assert_pre_conditions
   each_example {|e| existing_call(e, :assert_pre_conditions)}
 end #assert_pre_conditions
 def test_assert_invariant
-#  each_example {|e| existing_call(e, :assert_invariant)}
+  each_example {|e| assert_optional_method(e, :assert_invariant)}
 end #def assert_invariant
 def test_assert_post_conditions
   each_example {|e| existing_call(e, :assert_post_conditions)}
@@ -236,7 +238,6 @@ class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 end #DefaultTestCase3
 
 class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
-require 'test/unit'
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
 #assert_include(methods, :model_class?)
