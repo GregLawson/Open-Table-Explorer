@@ -124,7 +124,7 @@ commands.each do |c|
 		when :edit then work_flow.edit
 		when :test then 
 			deserving_branch = work_flow.test(f)
-			work_flow.merge_down(deserving_branch)
+#			work_flow.merge_down(deserving_branch)
 		when :loop then work_flow.loop(f)
 		when :upgrade then work_flow.upgrade(f)
 		when :best then work_flow.best(f)
