@@ -72,6 +72,15 @@ def build
 	run_pdf_to_jpeg
 	self
 end #build
+def commit_minor_change!(files, commit_message)
+	files.each do |file|
+		diff_run=Repository::This_code_repository.git_command('diff -- '+file)
+		if diff_run.output.split.size==4 then
+			Repository::This_code_repository.git_command('add '+file)
+		end #if
+		Repository::This_code_repository.git_command('commit -m '+commit_message)
+	end #each
+end #commit_minor_change!
 def run_open_tax_solver
 
 	command="#{@open_tax_solver_binary} #{@open_tax_solver_input} >#{@open_tax_solver_sysout}"
@@ -112,8 +121,13 @@ def run_fdf_to_pdf
 	self
 end #run_fdf_to_pdf
 def run_pdf_to_jpeg
+	output_pdf_pathname=Pathname.new(File.expand_path(@output_pdf))
+	assert_instance_of(Pathname, output_pdf_pathname)
+	cleanpath_name=output_pdf_pathname.cleanpath
+	clean_directory=Pathname.new(File.expand_path(@open_tax_solver_data_directory)).cleanpath
+	output_pdf=cleanpath_name.relative_path_from(clean_directory)
 	
-	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{form_filename}")
+	@pdf_to_jpeg_run=ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@taxpayer_basename_with_year}", :chdir=>@open_tax_solver_data_directory)
 	@display_jpeg_run=ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
 	@display_jpeg_run.assert_post_conditions if $VERBOSE
 	self
@@ -124,10 +138,22 @@ module ClassMethods
 include Test::Unit::Assertions
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
+	assert_not_nil(ENV['USER'], "ENV['USER']\n"+message) # defined inXfce & Gnome
+	warn {assert_not_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } #not defined in Xfce.
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
 end #ClassMethods
+def assert_pre_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_input, message)
+	assert_pathname_exists(@open_tax_solver_data_directory, message)
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_data_directory, message+caller_lines)
+	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
+end #assert_post_conditions
+# Assertions custom instance methods
 def assert_open_tax_solver
 #	@open_tax_solver_run.assert_post_conditions
 	peculiar_status=@open_tax_solver_run.process_status.exitstatus==1
@@ -140,15 +166,26 @@ def assert_open_tax_solver
 	@open_tax_solver_run.puts
 	puts "peculiar_status=#{peculiar_status}"
 	puts "message='#{message}'"
-	if peculiar_status then
+	case peculiar_status
+	when 0 then 
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	when 1 then
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	when 2 then
+		assert_pathname_exists(@open_tax_solver_output)
+		assert_pathname_exists(@open_tax_solver_sysout)
+		@open_tax_solver_run.assert_post_conditions('else peculiar_status ')
+	else
 		warn(message)
 		warn('!@open_tax_solver_run.success?='+(!@open_tax_solver_run.success?).to_s)
-	else
-		@open_tax_solver_run.assert_post_conditions('else peculiar_status')
-	end #if
+	end #case
 	assert_pathname_exists(@open_tax_solver_output)
 	assert_pathname_exists(@open_tax_solver_sysout)
 end #assert_open_tax_solver
+def assert_ots_to_json
+	@ots_to_json_run.assert_post_conditions
+	assert_empty(Dir[' test/data_sources/tax_form/examples_and_templates/US_1040/US_1040_*_OTS.json~passed'])
+end #assert_ots_to_json
 def assert_json_to_fdf
 	@json_to_fdf_run.assert_post_conditions
 end #assert_json_to_fdf
@@ -192,7 +229,7 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Example_Taxpayer=ENV['USERNAME'].to_sym
+Example_Taxpayer=ENV['USER'].to_sym
 US1040_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US)
 CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA)
 US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US, Default_tax_year, Data_source_directory)
@@ -200,6 +237,8 @@ CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA, De
 US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US, Default_tax_year, Data_source_directory)
 US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US, Default_tax_year, Data_source_directory)
 CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :CA, Default_tax_year, Data_source_directory)
+Expect_to_pass=[US1040_user, CA540_user, US1040_example, US1040_example1, CA540_example]
+Expect_to_fail=[US1040_template, CA540_template]
 end #Examples
 end #TaxForm
 end #Finance
