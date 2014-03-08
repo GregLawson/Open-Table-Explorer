@@ -11,6 +11,10 @@ class RepositoryTest < TestCase
 include DefaultTests
 include Repository::Examples
 Minimal_repository=Empty_Repo
+def test_assert_pre_conditions
+	assert_include(Minimal_repository.methods, :unit_names?)
+#	assert_include(Minimal_repository.methods(false), :unit_names?)
+end #assert_pre_conditions
 def test_assert_nothing_to_commit
 	Minimal_repository.assert_nothing_to_commit
 end #assert_nothing_to_commit
@@ -27,13 +31,6 @@ def test_assert_something_to_commit
 	Minimal_repository.revert_changes
 	Minimal_repository.assert_nothing_to_commit
 end #assert_something_to_commit
-def test_assert_deserving_branch
-	SELF_code_Repo.assert_deserving_branch(:passed, '/dev/null')
-	SELF_code_Repo.assert_deserving_branch(:passed, 'test/unit/minimal2_test.rb')
-	executable='/etc/mtab' #force syntax error with non-ruby text
-	SELF_code_Repo.assert_deserving_branch(:edited, executable)
-#	assert_equal(:testing, SELF_code_Repo.deserving_branch?(''))
-end #deserving_branch
 
 #add_commits("postgres", :postgres, Temporary+"details")
 #add_commits("activeRecord", :activeRecord, Temporary+"details")
