@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'test/unit'
 require 'active_support/all'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
