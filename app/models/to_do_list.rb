@@ -13,7 +13,7 @@ extend ClassMethods
 module Constants
 Hex_number=/[0-9a-f]+/
 SED_SEQUENCE_EDITOR="sed -i -re 's/^pick /e /' | git rebase -i"
-COLA_SEQUENCE_EDITOR='/usr/share/git-cola/bin/git-xbase'
+COLA_SEQUENCE_EDITOR='/usr/share/git-cola/bin/git-xbase' # blank so far
 EMACS_SEQUENCE_EDITOR='emacs'
 DEFAULT_SEQUENCE_EDITOR=EMACS_SEQUENCE_EDITOR
 # git-cola interface to rebase not working yet
