@@ -11,7 +11,7 @@ module Constants
 Temporary='/tmp/recover/'
 Full_SHA_digits=40
 end #Constants
-module ClassMethodsFull_SHA_digits
+module ClassMethods
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
