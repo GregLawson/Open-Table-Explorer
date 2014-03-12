@@ -1,4 +1,5 @@
-/doc/rdoc/*
+.yardoc/*
+doc/*
 *.RData
 *.bak
 db/*.sqlite3
