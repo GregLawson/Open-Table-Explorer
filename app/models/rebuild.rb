@@ -8,7 +8,7 @@
 require_relative "../../app/models/repository.rb"
 class Rebuild < Repository
 module Constants
-Temporary='/mnt/working/Recover'
+Temporary='/tmp/recover/'
 end #Constants
 module ClassMethods
 end #ClassMethods
@@ -16,11 +16,11 @@ extend ClassMethods
 require_relative "shell_command.rb"
 #subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
 #puts "cd_command=#{cd_command.inspect}"
-def initialize(url)
-	@url=url
-	@path=url
-	source_path=@path
-	temporary_path=Temporary+'recover'
+attr_reader :target_repository, :import_repository
+def initialize(target_repository)
+	@target_repository=target_repository
+end # initialize
+def import
 	if File.exists?(@path) then
 		command_string='rsync '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
@@ -28,33 +28,26 @@ def initialize(url)
 		command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 	end #if
-	standardize_position
-end #initialize
-def git_command(git_subcommand)
-	ret=ShellCommands.new("cd #{Shellwords.escape(@path)}; git "+git_subcommand)
-	if $VERBOSE && git_subcommand != 'status' then
-		ShellCommands.new("cd #{Shellwords.escape(@path)}; git status").inspect
-	end #if
-	ret
-end #git_command
-def standardize_position
-	git_command("rebase --abort")
-	git_command("merge --abort")
-	git_command("stash save").assert_post_conditions
-	git_command("checkout master")
-end #standardize_position
-def fetch_commits(name, commit, repository_file)
-	Clean_Example.git_command("fetch file://"+repository+" "+name)
-end #fetch_commits
+end # import
+def fetch_repository(repository_file)
+	@import_repository=Repository.new(repository_file)
+	@run=@target_repository.git_command("fetch file://"+Shellwords.escape(repository_file))
+	if @run.success?
+		@target_repository.git_command("merge "+'FETCH_HEAD'.to_s).assert_post_conditions
+	else
+		@run.assert_post_conditions
+	end # if
+#	@target_repository.git_command("fetch file://"+repository_file+" "+name)
+end #fetch_repository
 def initialize_branch(name, commit, repository_file)
 	Clean_Example.git_command("fetch file://"+repository+" "+name)
 	Clean_Example.git_command("symbolic-link #{name.to_s} "+commit.to_s).assert_post_conditions
 end #initialize_branch
 
 def add_commits(from_repository, last_commit_to_add, branch, history_options='--squash -Xthiers ')
-	Clean_Example.git_command("fetch file://"+repository+" "+name)
-	Clean_Example.git_command("checkout  #{branch}").assert_post_conditions
-	Clean_Example.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
+	@target_repository.git_command("fetch file://"+repository+" "+name)
+	@target_repository.git_command("checkout  #{branch}").assert_post_conditions
+	@target_repository.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
 module Assertions
 include Test::Unit::Assertions
@@ -64,8 +57,21 @@ def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions
+	assert_pathname_exists(@target_repository.path)
+	assert_pathname_exists(@target_repository.path+'.git/')
+	assert_pathname_exists(@target_repository.path+'.git/branches/')
+	assert_pathname_exists(@target_repository.path+'.git/config')
+	assert_pathname_exists(@target_repository.path+'.git/description')
+	assert_pathname_exists(@target_repository.path+'.git/HEAD')
+	assert_pathname_exists(@target_repository.path+'.git/hooks/')
+	assert_pathname_exists(@target_repository.path+'.git/info/')
+	assert_pathname_exists(@target_repository.path+'.git/refs/')
+	assert_pathname_exists(@target_repository.path+'.git/objects/')
+#	fail 'assert_pre_conditions called'
 end #assert_pre_conditions
 def assert_post_conditions
+#	assert_pathname_exists(@target_repository.path+'.git/logs/')
+#	assert_pathname_exists(@target_repository.path+'.git/logs/refs/')
 end #assert_post_conditions
 end #Assertions
 include Assertions
@@ -73,9 +79,15 @@ include Assertions
 include Constants
 module Examples
 include Constants
-Source='/media/greg/SD_USB_32G/Repository Backups/'
+Source='/media/sdf1/Repository Backups/'
+Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
+Real_repository=Repository.create_if_missing(Temporary+'real_repository')
+Clean_Example=Rebuild.new(Toy_repository)
+From_repository=Source+"copy-master"
+History_options='--squash -Xthiers '
+
 end #Examples
-include Examples
+#include Examples
 end #Rebuild
 
 
