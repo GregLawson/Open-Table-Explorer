@@ -14,6 +14,13 @@ include Rebuild::Examples
 def test_inspect
 	puts Clean_Example.target_repository.git_command('log --format="%h %aD"').output.split("\n")[0]
 end # inspect
+def test_latest_commit
+	latest_log=@latest_commit=Clean_Example.target_repository.git_command('log --format="%H %aD" --max-count=1').output.split("\n")[0]
+	
+	commit_SHA1=latest_log[0..Full_SHA_digits-1]
+	commit_timestamp=latest_log[Full_SHA_digits..-1]
+	assert_equal({commit_SHA1: commit_SHA1, commit_timestamp: commit_timestamp}, Clean_Example.latest_commit)
+end # latest_commit
 def test_corruption_fsck
 #	Toy_repository.git_command("fsck").assert_post_conditions
 end #corruption
