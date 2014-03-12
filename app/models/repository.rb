@@ -200,7 +200,6 @@ def confirm_commit(interact=:interactive)
 		when :interactive then
 			git_command('cola').assert_post_conditions
 			if !something_to_commit? then
-				git_command('cola rebase '+current_branch_name?.to_s)
 			end # if
 		when :echo then
 		when :staged then
