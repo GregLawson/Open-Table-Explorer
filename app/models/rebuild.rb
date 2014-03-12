@@ -9,6 +9,7 @@ require_relative "../../app/models/repository.rb"
 class Rebuild < Repository
 module Constants
 Temporary='/tmp/recover/'
+Full_SHA_digits=40
 end #Constants
 module ClassMethods
 end #ClassMethods
@@ -20,6 +21,14 @@ attr_reader :target_repository, :import_repository
 def initialize(target_repository)
 	@target_repository=target_repository
 end # initialize
+def inspect
+end # inspect
+def latest_commit
+	latest_log=@latest_commit=@target_repository.git_command('log --format="%H %aD" --max-count=1').output.split("\n")[0]
+	commit_SHA1=latest_log[0..Full_SHA_digits-1]
+	commit_timestamp=latest_log[Full_SHA_digits..-1]
+	{commit_SHA1: commit_SHA1, commit_timestamp: commit_timestamp}
+end # latest_commit
 def import
 	if File.exists?(@path) then
 		command_string='rsync '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
