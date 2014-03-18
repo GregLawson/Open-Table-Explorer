@@ -10,6 +10,14 @@ require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
+def test_clone
+end # clone
+def test_fetch
+end # fetch
+def test_copy(target_repository)
+	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+end # copy
 #puts "cd_command=#{cd_command.inspect}"
 def test_inspect
 	puts Clean_Example.target_repository.git_command('log --format="%h %aD"').output.split("\n")[0]
@@ -21,11 +29,22 @@ def test_latest_commit
 	commit_timestamp=latest_log[Full_SHA_digits..-1]
 	assert_equal({commit_SHA1: commit_SHA1, commit_timestamp: commit_timestamp}, Clean_Example.latest_commit)
 end # latest_commit
-def test_destructive_status
+def test_graft
+# cd /tmp/
+#	git_command('git clone good-host:/path/to/good-repo')
+#	git_command('cd /home/user/broken-repo')
+	shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
+	git_command('repack -a -d')
+#	shell_command('rm -rf /tmp/good-repo')
+end # graft
+def test_destructive_status!
 #	Toy_repository.git_command("fsck").assert_post_conditions
 #	Toy_repository.git_command("rebase").assert_post_conditions
 	Toy_repository.git_command("gc").assert_post_conditions
-end #corruption
+	Real_repository.git_command("gc").assert_post_conditions
+	Toy_repository.destructive_status!
+	Real_repository.destructive_status!
+end #destructive_status!
 #exists Toy_repository.git_command("branch details").assert_post_conditions
 #exists Toy_repository.git_command("branch summary").assert_post_conditions
 def test_fetch_repository

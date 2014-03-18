@@ -11,15 +11,6 @@ class RebuildTest < TestCase
 include Rebuild::Examples
 Clean_Example=Rebuild.new(Source+'development_old')
 #puts "cd_command=#{cd_command.inspect}"
-def test_corruption_fsck
-	Clean_Example.git_command("fsck").assert_post_conditions
-end #corruption
-def test_corruption_rebase
-#	Clean_Example.git_command("rebase").assert_post_conditions
-end #corruption
-def test_corruption_gc
-	Clean_Example.git_command("gc").assert_post_conditions
-end #corruption
 #exists Clean_Example.git_command("branch details").assert_post_conditions
 #exists Clean_Example.git_command("branch summary").assert_post_conditions
 
