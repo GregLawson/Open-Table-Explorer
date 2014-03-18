@@ -21,24 +21,13 @@ def test_latest_commit
 	commit_timestamp=latest_log[Full_SHA_digits..-1]
 	assert_equal({commit_SHA1: commit_SHA1, commit_timestamp: commit_timestamp}, Clean_Example.latest_commit)
 end # latest_commit
-def test_corruption_fsck
+def test_destructive_status
 #	Toy_repository.git_command("fsck").assert_post_conditions
-end #corruption
-def test_corruption_rebase
 #	Toy_repository.git_command("rebase").assert_post_conditions
-end #corruption
-def test_corruption_gc
 	Toy_repository.git_command("gc").assert_post_conditions
 end #corruption
 #exists Toy_repository.git_command("branch details").assert_post_conditions
 #exists Toy_repository.git_command("branch summary").assert_post_conditions
-def test_standardize_position
-	Toy_repository.git_command("rebase --abort").puts
-	Toy_repository.git_command("merge --abort").puts
-#	Toy_repository.git_command("stash save").assert_post_conditions
-	Toy_repository.git_command("checkout master").puts
-#	Toy_repository.standardize_position!
-end #standardize_position
 def test_fetch_repository
 	repository_file=From_repository
 	Clean_Example.assert_pre_conditions

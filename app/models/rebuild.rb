@@ -29,7 +29,9 @@ def latest_commit
 	commit_timestamp=latest_log[Full_SHA_digits..-1]
 	{commit_SHA1: commit_SHA1, commit_timestamp: commit_timestamp}
 end # latest_commit
-def import
+def test_destructive_status
+end #destructive_status
+def graft_backup
 	if File.exists?(@path) then
 		command_string='rsync '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
@@ -37,7 +39,7 @@ def import
 		command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 	end #if
-end # import
+end # graft_backup
 def fetch_repository(repository_file)
 	@import_repository=Repository.new(repository_file)
 	@run=@target_repository.git_command("fetch file://"+Shellwords.escape(repository_file))
