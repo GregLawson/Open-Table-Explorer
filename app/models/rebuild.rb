@@ -88,7 +88,7 @@ include Assertions
 include Constants
 module Examples
 include Constants
-Source='/media/sdf1/Repository Backups/'
+Source=Dir['/media/**/Repository Backups/'].first # first found
 Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
 Clean_Example=Rebuild.new(Toy_repository)

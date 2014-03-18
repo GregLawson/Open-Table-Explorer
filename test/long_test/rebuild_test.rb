@@ -22,13 +22,6 @@ def test_corruption_gc
 end #corruption
 #exists Clean_Example.git_command("branch details").assert_post_conditions
 #exists Clean_Example.git_command("branch summary").assert_post_conditions
-def test_standardize_position
-	Clean_Example.git_command("rebase --abort").puts
-	Clean_Example.git_command("merge --abort").puts
-	Clean_Example.git_command("stash save").assert_post_conditions
-	Clean_Example.git_command("checkout master").puts
-	Clean_Example.standardize_position
-end #standardize_position
 
 
 #add_commits("postgres", :postgres, Temporary+"details")
