@@ -33,9 +33,10 @@ end # named_repository_directories
 #	copy - brute force directory copy (corruption untouched)
 #	clone - copy of valid repository (copies object and pack corruption)
 #	fetch - copy of valid repository (fails if object or pack corruption)
-def clone(target_repository)
+def clone(source_repository_path)
+	command_string='git clone '+Shellwords.escape(source_repository_path)
 end # clone
-def fetch(target_repository)
+def fetch(source_repository_path)
 end # fetch
 def copy(source_repository_path)
 	command_string='cp -a '+Shellwords.escape(source_repository)+' '+Shellwords.escape(temporary_path)
@@ -139,14 +140,14 @@ if !File.exist?(Temporary) then
 	ShellCommands.new('mkdir ' + Temporary)
 end # if
 Directories_of_repositories=['/media/*/Repository Backups/',
-Source=Repository_directories.first # first found
   '/media/*/*/Repository Backups/', '/tmp/rebuild','../']
+Source=Dir['/media/**/Repository Backups/'].first # first found
 Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
 Clean_Example=Rebuild.new(Toy_repository)
 Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
 Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
-From_repository=:"copy-master"
+From_repository=Source+"copy-master"
 History_options='--squash -Xthiers '
 
 end #Examples

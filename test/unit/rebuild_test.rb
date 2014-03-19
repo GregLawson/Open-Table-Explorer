@@ -49,7 +49,7 @@ def test_copy
 #	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # copy
 def test_rsync
-	source_repository_path=
+	source_repository_path = Toy_repository.path
 end # rsync
 #puts "cd_command=#{cd_command.inspect}"
 def test_inspect
