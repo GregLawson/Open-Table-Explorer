@@ -10,7 +10,6 @@ require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
-def test_clone
 def test_named_repository_directories
 	directories_of_repositories = ['../']
 	repository_directories= directories_of_repositories.map do |directory|
@@ -31,14 +30,27 @@ def test_named_repository_directories
 	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
 	
 end # named_repository_directories
+#
+#
+#
+#
+#
+def test_clone
+	source_repository_path = Toy_repository.path
+	command_string='git clone '+Shellwords.escape(source_repository_path)+' '+Shellwords.escape(temporary_path)
 end # clone
 def test_fetch
+	source_repository_path = Toy_repository.path
 end # fetch
 def test_copy
+	source_repository_path = Toy_repository.path
 	target_repository= Toy_repository
 #	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 #	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # copy
+def test_rsync
+	source_repository_path = Toy_repository.path
+end # rsync
 #puts "cd_command=#{cd_command.inspect}"
 def test_inspect
 	puts Clean_Example.target_repository.git_command('log --format="%h %aD"').output.split("\n")[0]
