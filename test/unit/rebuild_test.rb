@@ -11,12 +11,33 @@ class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
 def test_clone
+def test_named_repository_directories
+	directories_of_repositories = ['../']
+	repository_directories= directories_of_repositories.map do |directory|
+		files=Dir[directory + Repository_glob]
+		files.map do |file|
+			dot_git_just_seen = false
+			Pathname.new(file).ascend do |parent|
+				if dot_git_just_seen then
+					dot_git_just_seen = false # not any more
+					repository = {name: File.basename(parent).to_sym, dir: parent}
+				elsif File.basename(parent) == '.git'
+					dot_git_just_seen = true
+				end # if
+			end # ascend
+		end # map
+	end.flatten # map
+	assert_equal([{name: :'Open-Table_Explorer', dir: This_repository.path}], repository_directories)
+	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
+	
+end # named_repository_directories
 end # clone
 def test_fetch
 end # fetch
-def test_copy(target_repository)
-	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
-	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+def test_copy
+	target_repository= Toy_repository
+#	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+#	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # copy
 #puts "cd_command=#{cd_command.inspect}"
 def test_inspect
@@ -33,8 +54,8 @@ def test_graft
 # cd /tmp/
 #	git_command('git clone good-host:/path/to/good-repo')
 #	git_command('cd /home/user/broken-repo')
-	shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
-	git_command('repack -a -d')
+#	shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
+#	git_command('repack -a -d')
 #	shell_command('rm -rf /tmp/good-repo')
 end # graft
 def test_destructive_status!
@@ -42,8 +63,8 @@ def test_destructive_status!
 #	Toy_repository.git_command("rebase").assert_post_conditions
 	Toy_repository.git_command("gc").assert_post_conditions
 	Real_repository.git_command("gc").assert_post_conditions
-	Toy_repository.destructive_status!
-	Real_repository.destructive_status!
+#	Toy_repository.destructive_status!
+#	Real_repository.destructive_status!
 end #destructive_status!
 #exists Toy_repository.git_command("branch details").assert_post_conditions
 #exists Toy_repository.git_command("branch summary").assert_post_conditions
