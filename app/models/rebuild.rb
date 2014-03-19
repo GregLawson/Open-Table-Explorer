@@ -8,7 +8,7 @@
 require_relative "../../app/models/repository.rb"
 class Rebuild < Repository
 module Constants
-Temporary='/tmp/recover/'
+Temporary='/tmp/rebuild/'
 Full_SHA_digits=40
 end #Constants
 module ClassMethods
@@ -37,16 +37,16 @@ def clone(target_repository)
 end # clone
 def fetch(target_repository)
 end # fetch
-def copy(target_repository)
-	command_string='cp -a '+Shellwords.escape(target_repository)+' '+Shellwords.escape(temporary_path)
+def copy(source_repository_path)
+	command_string='cp -a '+Shellwords.escape(source_repository)+' '+Shellwords.escape(temporary_path)
 	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # copy
-def rsync(target_repository)
+def rsync(source_repository_path)
 	if File.exists?(@path) then
-		command_string='rsync '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		command_string='rsync '+Shellwords.escape(source_repository_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 	else
-		command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		command_string='cp -a '+Shellwords.escape(source_repository_path)+' '+Shellwords.escape(temporary_path)
 		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 	end #if
 end # rsync
@@ -55,7 +55,7 @@ extend ClassMethods
 require_relative "shell_command.rb"
 #subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
 #puts "cd_command=#{cd_command.inspect}"
-attr_reader :target_repository, :import_repository
+attr_reader :source_repository, :import_repository
 def initialize(target_repository)
 	if target_repository.instance_of?(Repository) then
 		@target_repository=target_repository
@@ -135,9 +135,12 @@ include Constants
 module Examples
 include Constants
 Repository_glob='*/.git/refs/heads/stash' # my active development inncludes stashes
+if !File.exist?(Temporary) then
+	ShellCommands.new('mkdir ' + Temporary)
+end # if
 Directories_of_repositories=['/media/*/Repository Backups/',
-  '/media/*/*/Repository Backups/', '../']
 Source=Repository_directories.first # first found
+  '/media/*/*/Repository Backups/', '/tmp/rebuild','../']
 Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
 Clean_Example=Rebuild.new(Toy_repository)
