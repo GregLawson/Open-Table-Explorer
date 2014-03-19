@@ -10,14 +10,33 @@ require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
+def test_named_repository_directories
+	directories_of_repositories = ['../']
+	repository_directories= directories_of_repositories.map do |directory|
+		files=Dir[directory + Repository_glob]
+		files.map do |file|
+			dot_git_just_seen = false
+			Pathname.new(file).ascend do |parent|
+				if dot_git_just_seen then
+					dot_git_just_seen = false # not any more
+					repository = {name: File.basename(parent).to_sym, dir: parent}
+				elsif File.basename(parent) == '.git'
+					dot_git_just_seen = true
+				end # if
+			end # ascend
+		end # map
+	end.flatten # map
+	assert_equal([{name: :'Open-Table_Explorer', dir: This_repository.path}], repository_directories)
+	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
+	
+end # named_repository_directories
 def test_clone
 end # clone
 def test_fetch
 end # fetch
-def test_copy
-	target_repository= Toy_repository
 	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+def test_copy
 end # copy
 #puts "cd_command=#{cd_command.inspect}"
 def test_inspect
@@ -80,7 +99,7 @@ def test_add_commits
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 end #add_commits
-def test_Constants
+def test_Examples
   path=Source+'test_recover'
   assert_pathname_exists(path)
 #  development_old=Rebuild.new(path)
