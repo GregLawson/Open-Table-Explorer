@@ -11,6 +11,26 @@ class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
 def test_clone
+def test_named_repository_directories
+	directories_of_repositories = ['../']
+	repository_directories= directories_of_repositories.map do |directory|
+		files=Dir[directory + Repository_glob]
+		files.map do |file|
+			dot_git_just_seen = false
+			Pathname.new(file).ascend do |parent|
+				if dot_git_just_seen then
+					dot_git_just_seen = false # not any more
+					repository = {name: File.basename(parent).to_sym, dir: parent}
+				elsif File.basename(parent) == '.git'
+					dot_git_just_seen = true
+				end # if
+			end # ascend
+		end # map
+	end.flatten # map
+	assert_equal([{name: :'Open-Table_Explorer', dir: This_repository.path}], repository_directories)
+	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
+	assert_include([{name: :'Open-Table_Explorer', dir: This_repository.path}], repository_directories)
+end # named_repository_directories
 end # clone
 def test_fetch
 end # fetch
@@ -80,7 +100,7 @@ def test_add_commits
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 end #add_commits
-def test_Constants
+def test_Examples
   path=Source+'test_recover'
   assert_pathname_exists(path)
 #  development_old=Rebuild.new(path)

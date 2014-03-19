@@ -12,6 +12,22 @@ Temporary='/tmp/recover/'
 Full_SHA_digits=40
 end #Constants
 module ClassMethods
+def named_repository_directories(directories_of_repositories, repository_glob)
+	repository_directories= directories_of_repositories.map do |directory|
+		files=Dir[directory + repository_glob]
+		files.map do |file|
+			dot_git_just_seen = false
+			Pathname.new(file).ascend do |parent|
+				if dot_git_just_seen then
+					dot_git_just_seen = false # not any more
+					repository = {name: File.basename(parent).to_sym, dir: parent}
+				elsif File.basename(parent) == '.git'
+					dot_git_just_seen = true
+				end # if
+			end # ascend
+		end # map
+	end.flatten # map
+end # named_repository_directories
 # The following class methods produce a Rebuild object with a copy
 # of a repository. The copy can be made in different ways:
 #	copy - brute force directory copy (corruption untouched)
@@ -118,10 +134,15 @@ include Assertions
 include Constants
 module Examples
 include Constants
+Repository_glob='*/.git/refs/heads/stash' # my active development inncludes stashes
+Directories_of_repositories=['/media/*/Repository Backups/',
+  '/media/*/*/Repository Backups/', '../']
 Source=Dir['/media/**/Repository Backups/'].first # first found
 Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
 Clean_Example=Rebuild.new(Toy_repository)
+Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
+Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
 From_repository=Source+"copy-master"
 History_options='--squash -Xthiers '
 
