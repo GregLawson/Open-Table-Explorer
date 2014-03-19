@@ -14,7 +14,8 @@ def test_clone
 end # clone
 def test_fetch
 end # fetch
-def test_copy(target_repository)
+def test_copy
+	target_repository= Toy_repository
 	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # copy

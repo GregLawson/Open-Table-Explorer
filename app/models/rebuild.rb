@@ -118,13 +118,30 @@ include Assertions
 include Constants
 module Examples
 include Constants
-Source=Dir['/media/**/Repository Backups/'].first # first found
+Repository_glob='*/.git/refs/heads/stash' # my active development inncludes stashes
+Directories_of_repositories=['/media/*/Repository Backups/',
+  '/media/*/*/Repository Backups/', '../']
+Repository_directories= Directories_of_repositories.map do |directory|
+	files=Dir[directory + Repository_glob]
+	files.map do |file|
+		dot_git_just_seen = false
+		Pathname.new(file).ascend do |parent|
+			if dot_git_just_seen then
+				dot_git_just_seen = false # not any more
+				repository = {name: File.basename(parent).to_sym, dir: parent}
+			elsif File.basename(parent) == '.git'
+				dot_git_just_seen = true
+			end # if
+		end # ascend
+	end # map
+end.flatten # map
+Source=Repository_directories.first # first found
 Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
 Clean_Example=Rebuild.new(Toy_repository)
-Corrupt_object_rebuild=Rebuild.clone(Source+'corrupt_object_repository')
-Corrupt_pack_rebuild=Rebuild.clone(Source+'Open-Table-Explorer')
-From_repository=Source+"copy-master"
+Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
+Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
+From_repository=:"copy-master"
 History_options='--squash -Xthiers '
 
 end #Examples
