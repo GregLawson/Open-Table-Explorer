@@ -12,6 +12,28 @@ Temporary='/tmp/recover/'
 Full_SHA_digits=40
 end #Constants
 module ClassMethods
+# The following class methods produce a Rebuild object with a copy
+# of a repository. The copy can be made in different ways:
+#	copy - brute force directory copy (corruption untouched)
+#	clone - copy of valid repository (copies object and pack corruption)
+#	fetch - copy of valid repository (fails if object or pack corruption)
+def clone(target_repository)
+end # clone
+def fetch(target_repository)
+end # fetch
+def copy(target_repository)
+	command_string='cp -a '+Shellwords.escape(target_repository)+' '+Shellwords.escape(temporary_path)
+	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+end # copy
+def rsync(target_repository)
+	if File.exists?(@path) then
+		command_string='rsync '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+	else
+		command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
+		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
+	end #if
+end # rsync
 end #ClassMethods
 extend ClassMethods
 require_relative "shell_command.rb"
@@ -19,7 +41,12 @@ require_relative "shell_command.rb"
 #puts "cd_command=#{cd_command.inspect}"
 attr_reader :target_repository, :import_repository
 def initialize(target_repository)
-	@target_repository=target_repository
+	if target_repository.instance_of?(Repository) then
+		@target_repository=target_repository
+	elsif target_repository.instance_of?(String) then
+
+		@target_repository=Repository.new(target_repository)
+	end # if
 end # initialize
 def inspect
 end # inspect
@@ -29,16 +56,16 @@ def latest_commit
 	commit_timestamp=latest_log[Full_SHA_digits..-1]
 	{commit_SHA1: commit_SHA1, commit_timestamp: commit_timestamp}
 end # latest_commit
-def test_destructive_status
-end #destructive_status
+def graft(graft_replacement_repository)
+	shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
+	git_command('repack -a -d')
+end # graft
+def destructive_status!
+#	@gc_command = git_command("fsck").assert_post_conditions
+#	@gc_command = git_command("rebase").assert_post_conditions
+	@gc_command = git_command("gc")
+end #destructive_status!
 def graft_backup
-	if File.exists?(@path) then
-		command_string='rsync '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
-		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
-	else
-		command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
-		ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
-	end #if
 end # graft_backup
 
 def fetch_repository(repository_file)
