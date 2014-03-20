@@ -52,9 +52,7 @@ def test_sequence
   assert_equal(/a{3}/, /a/*"{3}")
 end #sequence
 def test_alterative
-	assert_equal(/a/, Regexp.new(/a/.source))
-	assert_equal(/a^/, Regexp.new(/a^/.source))
-	assert_equal(/a\n/, Regexp.new(/a\n/.source))
+  assert_equal(/a|b/, /a/ | /b/)
 end #alterative
 def test_capture
 	regexp=/\d/
