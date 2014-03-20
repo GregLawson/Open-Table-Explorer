@@ -12,23 +12,36 @@ include DefaultTests
 include Rebuild::Examples
 def test_named_repository_directories
 	directories_of_repositories = ['../']
+	repository_glob = Repository_glob
 	repository_directories= directories_of_repositories.map do |directory|
-		files=Dir[directory + Repository_glob]
-		files.map do |file|
+		assert_pathname_exists(directory)
+		files=Dir[directory + repository_glob]
+		assert_not_empty(files, 'Looking for directory + Repository_glob=' + directory + Repository_glob)
+		repositories=files.map do |file|
+			assert_pathname_exists(file)
 			dot_git_just_seen = false
+			repository = nil # need scope outside of ascend block=
 			Pathname.new(file).ascend do |parent|
 				if dot_git_just_seen then
-					dot_git_just_seen = false # not any more
-					repository = {name: File.basename(parent).to_sym, dir: parent}
+					dot_git_just_seen = nil # not any more
+					repository = {name: File.basename(parent).to_sym, dir: Pathname.new(parent).expand_path + '/'}
 				elsif File.basename(parent) == '.git'
 					dot_git_just_seen = true
 				end # if
 			end # ascend
+			message= 'defined?(dot_git_just_seen) = '+ defined?(dot_git_just_seen) + ' for file ' + file
+			assert(defined?(dot_git_just_seen), message)
+			assert_instance_of(Hash, repository)
+			repository
 		end # map
+		assert_not_empty(files)
+		repositories
 	end.flatten # map
-	assert_equal([{name: :'Open-Table_Explorer', dir: This_repository.path}], repository_directories)
+	assert_not_empty(repository_directories)
+	executing_repo = {name: :'Open-Table_Explorer', dir: Pathname.new(Repository::This_code_repository.path)}
+	assert_equal([executing_repo], repository_directories)
 	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
-	
+	assert_include([executing_repo], repository_directories)
 end # named_repository_directories
 #
 #
@@ -37,14 +50,13 @@ end # named_repository_directories
 #
 def test_clone
 	source_repository_path = Toy_repository.path
-	command_string='git clone '+Shellwords.escape(source_repository_path)+' '+Shellwords.escape(temporary_path)
+	command_string='git clone '+Shellwords.escape(source_repository_path)
 end # clone
 def test_fetch
 	source_repository_path = Toy_repository.path
 end # fetch
 def test_copy
 	source_repository_path = Toy_repository.path
-	target_repository= Toy_repository
 #	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 #	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # copy
@@ -53,10 +65,10 @@ def test_rsync
 end # rsync
 #puts "cd_command=#{cd_command.inspect}"
 def test_inspect
-	puts Clean_Example.target_repository.git_command('log --format="%h %aD"').output.split("\n")[0]
+	puts Clean_Example.source_repository.git_command('log --format="%h %aD"').output.split("\n")[0]
 end # inspect
 def test_latest_commit
-	latest_log=@latest_commit=Clean_Example.target_repository.git_command('log --format="%H %aD" --max-count=1').output.split("\n")[0]
+	latest_log=@latest_commit=Clean_Example.source_repository.git_command('log --format="%H %aD" --max-count=1').output.split("\n")[0]
 	
 	commit_SHA1=latest_log[0..Full_SHA_digits-1]
 	commit_timestamp=latest_log[Full_SHA_digits..-1]
@@ -83,7 +95,7 @@ end #destructive_status!
 def test_fetch_repository
 	repository_file=From_repository
 	Clean_Example.assert_pre_conditions
-	run=Clean_Example.target_repository.git_command("fetch file://"+Shellwords.escape(repository_file))
+	run=Clean_Example.source_repository.git_command("fetch file://"+Shellwords.escape(repository_file))
 	run.assert_post_conditions unless run.success?
 	Clean_Example.fetch_repository(repository_file)
 #	Clean_Example.fetch_repository(Source+"clone-reconstruct-newer")
