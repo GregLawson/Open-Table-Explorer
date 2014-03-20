@@ -12,23 +12,36 @@ include DefaultTests
 include Rebuild::Examples
 def test_named_repository_directories
 	directories_of_repositories = ['../']
+	repository_glob = Repository_glob
 	repository_directories= directories_of_repositories.map do |directory|
-		files=Dir[directory + Repository_glob]
-		files.map do |file|
+		assert_pathname_exists(directory)
+		files=Dir[directory + repository_glob]
+		assert_not_empty(files, 'Looking for directory + Repository_glob=' + directory + Repository_glob)
+		repositories=files.map do |file|
+			assert_pathname_exists(file)
 			dot_git_just_seen = false
+			repository = nil # need scope outside of ascend block=
 			Pathname.new(file).ascend do |parent|
 				if dot_git_just_seen then
-					dot_git_just_seen = false # not any more
-					repository = {name: File.basename(parent).to_sym, dir: parent}
+					dot_git_just_seen = nil # not any more
+					repository = {name: File.basename(parent).to_sym, dir: Pathname.new(parent).expand_path + '/'}
 				elsif File.basename(parent) == '.git'
 					dot_git_just_seen = true
 				end # if
 			end # ascend
+			message= 'defined?(dot_git_just_seen) = '+ defined?(dot_git_just_seen) + ' for file ' + file
+			assert(defined?(dot_git_just_seen), message)
+			assert_instance_of(Hash, repository)
+			repository
 		end # map
+		assert_not_empty(files)
+		repositories
 	end.flatten # map
-#	assert_equal([{name: :'Open-Table_Explorer', dir: This_repository.path}], repository_directories)
+	assert_not_empty(repository_directories)
+	executing_repo = {name: :'Open-Table_Explorer', dir: Pathname.new(Repository::This_code_repository.path)}
+	assert_equal([executing_repo], repository_directories)
 	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
-#	assert_include([{name: :'Open-Table_Explorer', dir: This_repository.path}], repository_directories)
+	assert_include([executing_repo], repository_directories)
 end # named_repository_directories
 #
 #
