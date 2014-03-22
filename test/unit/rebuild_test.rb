@@ -78,8 +78,8 @@ def test_graft
 # cd /tmp/
 #	git_command('git clone good-host:/path/to/good-repo')
 #	git_command('cd /home/user/broken-repo')
-#	shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
-#	git_command('repack -a -d')
+	Toy_repository.shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
+	Toy_repository.git_command('repack -a -d')
 #	shell_command('rm -rf /tmp/good-repo')
 end # graft
 def test_destructive_status!
