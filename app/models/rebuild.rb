@@ -15,17 +15,20 @@ module ClassMethods
 def named_repository_directories(directories_of_repositories, repository_glob)
 	repository_directories= directories_of_repositories.map do |directory|
 		files=Dir[directory + repository_glob]
-		files.map do |file|
+		repositories=files.map do |file|
 			dot_git_just_seen = false
+			repository = nil # need scope outside of ascend block=
 			Pathname.new(file).ascend do |parent|
 				if dot_git_just_seen then
 					dot_git_just_seen = false # not any more
-					repository = {name: File.basename(parent).to_sym, dir: parent}
+					repository = {name: File.basename(parent).to_sym, dir: Pathname.new(parent).expand_path + '/'}
 				elsif File.basename(parent) == '.git'
 					dot_git_just_seen = true
 				end # if
 			end # ascend
+			repository
 		end # map
+		repositories
 	end.flatten # map
 end # named_repository_directories
 # The following class methods produce a Rebuild object with a copy
@@ -135,7 +138,7 @@ include Assertions
 include Constants
 module Examples
 include Constants
-Repository_glob='*/.git/refs/heads/stash' # my active development inncludes stashes
+Repository_glob='*/.git/refs/stash' # my active development inncludes stashes
 if !File.exist?(Temporary) then
 	ShellCommands.new('mkdir ' + Temporary)
 end # if
