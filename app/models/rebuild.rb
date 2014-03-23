@@ -6,6 +6,29 @@
 #
 ###########################################################################
 require_relative "../../app/models/repository.rb"
+class Repository
+module ClassMethods
+def git_path_to_repository(file)
+	dot_git_just_seen = false
+	repository = nil # need scope outside of ascend block=
+	Pathname.new(file).ascend do |parent|
+		if dot_git_just_seen then
+			dot_git_just_seen = nil # not any more
+			repo_path = Pathname.new(Pathname.new(parent).expand_path.to_s + '/')
+			repository = {name: File.basename(parent).to_sym, dir: Pathname.new(Pathname.new(parent).expand_path.to_s + '/')}
+		elsif File.basename(parent) == '.git'
+			dot_git_just_seen = true
+		end # if
+	end # ascend
+repository
+end # git_path_to_repository
+end # ClassMethods
+extend ClassMethods
+# names are not unique, directories make them unique
+def get_name(name)
+	File.basename(@path)
+end # set_name
+end # Repository
 class Rebuild < Repository
 module Constants
 Temporary='/tmp/rebuild/'
@@ -15,18 +38,8 @@ module ClassMethods
 def named_repository_directories(directories_of_repositories, repository_glob)
 	repository_directories= directories_of_repositories.map do |directory|
 		files=Dir[directory + repository_glob]
-		repositories=files.map do |file|
-			dot_git_just_seen = false
-			repository = nil # need scope outside of ascend block=
-			Pathname.new(file).ascend do |parent|
-				if dot_git_just_seen then
-					dot_git_just_seen = false # not any more
-					repository = {name: File.basename(parent).to_sym, dir: Pathname.new(parent).expand_path + '/'}
-				elsif File.basename(parent) == '.git'
-					dot_git_just_seen = true
-				end # if
-			end # ascend
-			repository
+		repositories=files.map do |path|
+			Repository.git_path_to_repository(path)
 		end # map
 		repositories
 	end.flatten # map
@@ -148,8 +161,8 @@ Source=Dir['/media/**/Repository Backups/'].first # first found
 Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
 Clean_Example=Rebuild.new(Toy_repository)
-Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
-Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
+#Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
+#Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
 From_repository=Source+"copy-master"
 History_options='--squash -Xthiers '
 
