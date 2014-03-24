@@ -5,11 +5,12 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
+require_relative '../../app/models/generic_file.rb'
+require_relative '../../app/models/no_db.rb'
 module OpenTaxFormFiller
 module Constants
 Default_tax_year=2012
-Data_source_directory='test/data_sources'
+Data_source_directory='test/data_sources/taxes/'
 end #Constants
 
 class Definitions
@@ -114,6 +115,8 @@ include NoDB
 extend NoDB::ClassMethods
 include GenericFiles
 extend GenericFiles::ClassMethods
+include GenericFiles::Assertions
+extend GenericFiles::Assertions::ClassMethods
 module Constants
 include OpenTaxFormFiller::Constants
 Open_tax_filler_directory="../OpenTaxFormFiller/#{Default_tax_year}"
@@ -204,7 +207,7 @@ end #coarse_filter
 
 include Assertions
 extend Assertions::ClassMethods
-Pjsons.assert_pre_conditions
+#Pjsons.assert_pre_conditions
 module Examples
 Simple_acquisition="{\"year\":2012,\"form\":\"f1040\",\"fields\":[{}]}"
 

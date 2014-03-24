@@ -1,19 +1,58 @@
-require_relative '../../app/models/shell_command.rb'
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+#require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/regexp.rb'
 module Parse
 module Constants
-LINES=/([^\n]*)(?:\n([^\n]*))*/
+LINE=/[^\n]*/.capture
+Line_terminator=/\n/
+Terminated_line=(LINE*Line_terminator).group
+LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
+LINES=(Terminated_line*Regexp::Any)*LINE*(Line_terminator*Regexp::Optional)
 WORDS=/([^\s]*)(?:\s([^\s]*))*/
 CSV=/([^,]*)(?:,([^,]*?))*?/
 end #Constants
 include Constants
 def parse_string(string, pattern=LINES)
-	ret=string.match(pattern)
-	if named_capture=={} then
-		ret[1..-1] # return matched subexpressions
+	matchData=string.match(pattern)
+  if matchData.nil? then
+    []
+  elsif matchData.names==[] then
+		matchData[1..-1] # return unnamed subexpressions
 	else
-		ret.named_capture # return matched subexpressions
+#     named_captures for captures.size > names.size
+		named_hash={}
+		matchData.names.each do |n| # return named subexpressions
+			named_hash[n.to_sym]=matchData[n]
+		end # each
+		named_hash
 	end #if
 end #parse_string
+# Splits pattern match captures into an array of parses
+# Uses Regexp capture mechanism in String#split
+def parse_split(string, pattern=Terminated_line, ending=:optional)
+	ret=string.split(pattern)
+	case ending
+	when :optional then 
+		if ret[-1].nil? then
+			ret[0..-2] #drop empty
+		else
+			ret
+		end #if 
+	when :delimiter then string.split(pattern) 
+	when :terminator then
+		if ret[-1].nil? then
+			ret[0..-2] #drop empty
+		else
+			ret
+		end #if 
+	end #case
+end #parse_split
 def parse_array(string_array, pattern=WORDS)
 	string_array.map do |string|
 		parse(string,pattern)
@@ -60,4 +99,55 @@ def rows_and_columns(column_pattern=Parse::WORDS, row_pattern=Parse::LINES)
 		parse(row, column_pattern)
 	end #map
 end #rows_and_columns
+module Assertions
+include Test::Unit::Assertions
+def newline_if_not_empty(message)
+	if message.empty? then
+		message
+	else
+		message+"\n"
+	end #if
+end #newline_if_not_empty
+def add_parse_message(string, pattern, message='')
+	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
+end #add_parse_message
+def assert_parse(answer, string, pattern, message='')
+	message=add_parse_message(string, pattern, message)
+	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
+end #parse
+def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
+	match1=parse_string(string, pattern1)
+	assert_equal(answer[0, match1.size], match1, add_parse_message(string, pattern1, message))
+	match2=parse_string(string, pattern2)
+	assert_empty(match2-answer, add_parse_message(string, pattern2, message))
+	match12=parse_string(pattern1.match(string).post_match, pattern2)
+	assert_equal(match12, answer[-match12.size..-1], add_parse_message(pattern1.match(string).post_match, pattern2, message))
+	match=parse_string(string, pattern1*pattern2)
+	if match==[] || match=={} then
+		message+="match1=#{match1.inspect}\n"
+		message+="match2=#{match2.inspect}\n"
+		message+="match12=#{match12.inspect}\n"
+		message+="string.match(#{pattern1*pattern2})=#{string.match(pattern1*pattern2).inspect}"
+		assert_equal(answer, parse_string(string, pattern1*pattern2), message)
+	end #if
+end #parse_sequence
+def assert_parse_repetition(answer, string, pattern, repetition_range, message='')
+	match1=parse_string(string, pattern)
+	assert_equal(match1, answer[0, match1.size], add_parse_message(string, pattern, message))
+	match_any=parse_string(string, pattern*Regexp::Any)
+	assert_equal(answer, match_any[-answer.size..-1], add_parse_message(string, pattern*Regexp::Any, message))
+	match=parse_string(string, pattern*repetition_range)
+	if match==[] || match=={} then
+		message+="match1=#{match1.inspect}\n"
+		message+="match2=#{match2.inspect}\n"
+		message+="match12=#{match12.inspect}\n"
+		message+="string.match(#{pattern*repetition_range})=#{string.match(pattern*repetition_range).inspect}"
+		assert_equal(answer, parse_string(string, pattern*repetition_range), message)
+	end #if
+end #parse_repetition
+end #Assertions
+include Assertions
+module Examples
+include Constants
+end #Examples
 end #Parse

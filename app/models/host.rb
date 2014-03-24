@@ -6,6 +6,7 @@
 #
 ###########################################################################
 class Host < ActiveRecord::Base
+require_relative '../../app/models/generic_table.rb'
 include Generic_Table
 has_many :ports
 has_many :routers

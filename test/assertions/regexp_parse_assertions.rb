@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/regexp_parse.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/unbounded_range_assertions.rb'
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse

@@ -36,6 +36,25 @@ def assert(test, msg = UNASSIGNED)
   super caller_lines+msg.to_s
 end
 =end
+def warn(message='', &block)
+	if !$VERBOSE.nil? then
+		$stdout.puts message
+	end #if
+  if block_given? then
+    begin
+      block.call
+    rescue Exception => exception_raised
+      puts exception_raised.inspect
+    rescue String => exception_raised
+      puts MiniTest::Assertion_raised.inspect
+    end #begin
+  end #if
+end #warn
+def info(message)
+	if $VERBOSE then
+		$stdout.puts message
+	end #if
+end #info     
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
 	message+=" Class #{self.class.name}"
@@ -150,7 +169,7 @@ def assert_not_empty(object,message='')
 	assert_block(message){!object.empty?}
 end #assert_not_empty
 def assert_empty(object,message='')
-	message=build_message(message, "? is not empty but contains ?.", object.canonicalName,object.inspect)   
+	message+=object.canonicalName+" is not empty but contains "+object.inspect  
 	if !object.nil?  then # nil is empty
 		assert_block(message){object.empty? || object==Set[nil]}
 	end #if
@@ -298,6 +317,9 @@ end #assert_module_included
 def global_name?(name)
 	Module.constants.include?(name)
 end #global_name
+def assert_global_name(name)
+	assert_include(Module.constants, name)
+end #global_name
 def assert_scope_path(*names)
 	return [] if names.size==0
 	assert_not_empty(names, "Expect non-empty scope path.")
@@ -367,37 +389,18 @@ def assert_constant_instance_respond_to(*names)
 		assert_public_instance_method(path, method_name, message)
 	end #
 end #assert_constant_instance_respond_to
-def assert_pathname_exists(pathname)
-	assert_not_nil(pathname)
-	assert_not_empty(pathname, "Assume pathname to not be empty.")
-	assert(File.exists?(pathname), "File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
-	assert(File.exists?(File.expand_path(pathname)), "File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
+def assert_pathname_exists(pathname, message='')
+	assert_not_nil(pathname, message)
+	assert_not_empty(pathname, message+"Assume pathname to not be empty.")
+	assert(File.exists?(pathname), message+"File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
+	assert(File.exists?(File.expand_path(pathname)), message+"File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
 end #assert_pathname_exists
-def assert_data_file(pathname)
-	assert_pathname_exists(pathname)
+def assert_data_file(pathname, message='')
+	assert_pathname_exists(pathname, message)
 	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it aa directory?")
-	assert_not_nil(File.size?(pathname))
-	assert_not_equal(0, File.size?(pathname))
+	assert_not_nil(File.size?(pathname), message)
+	assert_not_equal(0, File.size?(pathname), message)
 end #assert_data_file
-def warn(message='', &block)
-	if !$VERBOSE.nil? then
-		puts message
-	end #if
-  if block_given? then
-    begin
-      block.call
-    rescue Exception => exception_raised
-      puts exception_raised.inspect
-    rescue String => exception_raised
-      puts MiniTest::Assertion_raised.inspect
-    end #begin
-  end #if
-end #warn
-def info(message)
-	if $VERBOSE then
-		puts message
-	end #if
-end #info     
 end #Assertions
 end #Unit
 end #Test

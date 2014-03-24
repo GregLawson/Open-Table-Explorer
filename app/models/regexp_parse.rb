@@ -7,11 +7,13 @@
 ###########################################################################
 require_relative 'unbounded_range.rb'
 require_relative 'nested_array.rb'
-
+require_relative 'regexp.rb'
 class RegexpTree < NestedArray
+module ClassMethods
+end #ClassMethods
 def self.[](*regexp_array)
 	if regexp_array.size==1 then # no splat
-		regexp_array=regexp[0]	
+		regexp_array=regexp_array[0]	
 	end #if
 #	regexp_array=[*regexp_array].map{|r| RegexpParse.promote(r)}
 	RegexpParse.typed?(regexp_array)
@@ -95,6 +97,7 @@ end #RegexpEmpty
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
+include Regexp::Constants
 attr_reader :regexp_string,:tokenIndex,:parse_tree, :errors
 module Constants
 OpeningBrackets='({['
@@ -102,6 +105,9 @@ ClosingBrackets=')}]'
 PostfixOperators='+*?|'
 end #Constants
 include Constants
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
 def initialize(regexp_string, options=Default_options)
 	@tokenIndex=-1 # start at end
 	if regexp_string.kind_of?(RegexpParse) then
@@ -481,6 +487,7 @@ end #case
 #	end #if
 #end #typed
 module Constants
+include Regexp::Constants
 Any_binary_string="#{Any_binary_char_string}*"
 Any_binary_char=RegexpParse.new(Any_binary_char_string)
 Any_binary_char_parse=RegexpParse.new(Any_binary_char_string)

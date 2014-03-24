@@ -7,38 +7,124 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
+require 'test/unit'
 class ShellCommands
 module ClassMethods
 include Shellwords
+def assemble_hash_command(command)
+	command_array=[]
+	command.each_pair do |key, word|
+		case key
+		when :command then command_array << Shellwords.escape(word)
+		when :in then 
+			raise "Input file '#{word}' does not exist." if !File.exists?(word)
+			command_array << Shellwords.escape(word)
+		when :out then command_array << Shellwords.escape(word)
+		when :inout then command_array << Shellwords.escape(word)
+		when :glob then 
+			raise "Input pathname glob '#{word}' does not exist." if !Dir(word)==[]
+			command_array << Shellwords.escape(word)
+		when :environment then command_array << word
+		else
+			command_array << word
+		end #case
+	end #each_pair
+	command_array.join(' ')
+end #assemble_hash_command
+def assemble_array_command(command)
+	command.map do |e|
+		if e.instance_of?(Array) then
+			assemble_array_command(e)
+		elsif e.instance_of?(Hash) then
+			assemble_hash_command(e)
+		elsif /[ \/.]/.match(e) then # pathnames
+			Shellwords.escape(e)
+		elsif /[$;&|<>]/.match(e) then #shell special characters
+			e
+		else # don't know
+			e
+		end #if
+	end.join(' ') #map
+end #assemble_array_command
+def assemble_command_string(command)
+	if command.instance_of?(Array) then
+		assemble_array_command(command)
+	elsif command.instance_of?(Hash) then
+		assemble_hash_command(command)
+	else
+		command
+	end #if
+end #assemble_command_string
 end #ClassMethods
 extend ClassMethods
-attr_reader :command_string, :output, :errors, :exit_status, :pid
+attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new.
 def execute
-	@output, @errors, @exit_status, @pid=system_output(command_string)
-	self #allows command chaining
-end #execute
-def initialize(command_string, delay_execution=nil)
-	@command_string=command_string
-	if delay_execution.nil? then
-		execute # do it first time, then execute
-	end #if
-end #initialize
-def system_output(command_string)
-	ret=[] #make method scope not block scope so it can be returned
-	Open3.popen3(command_string) {|stdin, stdout, stderr, wait_thr|
+#	info "@command="+@command.inspect
+#	info "@command_string="+@command_string.inspect
+	Open3.popen3(@env, @command_string, @opts) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
-		output=stdout.read
+		@output=stdout.read
 		stdout.close
-		errors=stderr.read
+		@errors=stderr.read
 		stderr.close
-		exit_status = wait_thr.value  # Process::Status object returned.
-		pid = wait_thr.pid # pid of the started process.
-		exit_status = wait_thr.value # Process::Status object returned.
-		ret=[output, errors, exit_status, pid]
+		@process_status = wait_thr.value # Process::Status object returned.
 	}
-	ret
-end #system_output
+	self #allows command chaining
+rescue StandardError => exception
+	$stdout.puts "rescue exception "+exception.inspect
+#	info "@command="+@command.inspect
+#	info "@command_string="+@command_string.inspect
+	if @errors.nil? then
+		@errors=exception.inspect
+	else
+		@errors+=exception.inspect
+	end #if
+end #execute
+# prefer command as array since each element is shell escaped.
+# Most common need for shell excape is spaces in pathnames (a common GUI style)
+def initialize(*command)
+	parse_argument_array(command)
+	execute # do it first time, to repeat call execute
+	if $VERBOSE.nil? then
+	elsif $VERBOSE then
+		$stdout.puts trace # -W2
+	else 
+		$stdout.puts inspect(:echo_command) # -W1
+	end #if
+
+end #initialize
+# Allow Process.spawn options and environment to be passed.
+def parse_argument_array(argument_array)
+	@argument_array=argument_array
+	case argument_array.size
+	when 3 then
+		@env=argument_array[0]
+		@command=argument_array[1]
+		@opts=argument_array[2]
+	when 2 then
+		if argument_array[0].instance_of?(Hash) then
+			if argument_array[1].instance_of?(Hash) then
+				@env={}
+				@command=argument_array[0]
+				@opts=argument_array[1]
+			else
+				@env=argument_array[0]
+				@command=argument_array[1]
+				@opts={}
+			end #if
+		else # command is not a Hash
+			@env={}
+			@command=argument_array[0]
+			@opts=argument_array[1]
+		end #if
+	when 1 then
+		@env={}
+		@command=argument_array[0]
+		@opts={}
+	end #case
+	@command_string=ShellCommands.assemble_command_string(@command)
+end #parse_argument_array
 def fork(cmd)
 	start(cmd)
 	self #allows command chaining
@@ -52,77 +138,90 @@ def start(cmd)
 	self #allows command chaining
 end #start
 def wait
-	@exit_status = @wait_thr.value # Process::Status object returned.
+	@process_status = @wait_thr.value # Process::Status object returned.
 	close
 	self #allows command chaining
 end #wait
 def close
-	@pid = @wait_thr[:pid]  # pid of the started process
 	@stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 	@output=@stdout.read
 	@stdout.close
 	@errors=@stderr.read
 	@stderr.close
-	@exit_status = @wait_thr.value  # Process::Status object returned.
+	@process_status = @wait_thr.value  # Process::Status object returned.
 	self #allows command chaining
 end #close
 def success?
-	@exit_status==0
+	if @process_status.nil? then
+		false
+	else
+		@process_status.success?
+	end #if
 end #success
-def inspect
+def inspect(echo_command=@errors!='' || !success?)
 	ret=''
-	if @errors!='' || @exit_status!=0 then
-		ret+="@command_string=#{@command_string.inspect}\n"
+	if echo_command then
+		ret+="$ #{@command_string}\n"
+		ret+="@env=#{@env.inspect}\n" if $VERBOSE
+		ret+="@command=#{@command.inspect}\n" if $VERBOSE
+		ret+="@opts=#{@opts.inspect}\n" if $VERBOSE
 	end #if
 	if @errors!='' then
+		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n"
 		ret+="@errors=#{@errors.inspect}\n"
 	end #if
-	if @exit_status!=0 then
-		ret+="@exit_status=#{@exit_status.inspect}\n"
-		ret+="@pid=#{@pid.inspect}\n"
+	if !success? then
+		ret+="@process_status=#{@process_status.inspect}\n"
 	end #if
-	ret
+	if @output.nil? then
+		ret
+	else
+		ret+@output.to_s
+	end #if
 end #inspect
 def puts
-	$stdout.puts @output,@errors
-	self # return for comand chaining
+	$stdout.puts inspect(:echo_command)
+	self # return for command chaining
 end #puts
-def inspect
-	ret=''
-	if @errors!='' || @exit_status!=0 then
-		ret+="@command_string=#{@command_string.inspect}\n"
-	end #if
-	if @errors!='' then
-		ret+="@errors=#{@errors.inspect}\n"
-	end #if
-	if @exit_status!=0 then
-		ret+="@exit_status=#{@exit_status.inspect}\n"
-		ret+="@pid=#{@pid.inspect}\n"
-	end #if
-	ret+@output
-end #inspect
+def trace
+	$stdout.puts inspect(:echo_command)
+	shorter_callers=caller.grep(/^[^\/]/)
+	$stdout.puts shorter_callers.join("\n")
+	self # return for command chaining
+end #trace
+module Assertions
+include Test::Unit::Assertions
+extend Test::Unit::Assertions
+def assert_pre_conditions(message='')
+	self # return for command chaining
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="self=#{inspect}"
+	puts unless success?&& @errors.empty?
+	assert_empty(@errors, message+'expected errors to be empty\n')
+	assert_equal(0, @process_status.exitstatus, message)
+	assert_not_nil(@errors, "expect @errors to not be nil.")
+	assert_not_nil(@process_status)
+	assert_instance_of(Process::Status, @process_status)
+
+	self # return for command chaining
+end #assert_post_conditions
+end #Assertions
+include Assertions
 module Examples
 Hello_world=ShellCommands.new('echo "Hello World"')
 Example_output="1 2;3 4\n"
 COMMAND_STRING='echo "1 2;3 4"'
 EXAMPLE=ShellCommands.new(COMMAND_STRING)
-
+Guaranteed_existing_directory=File.expand_path(File.dirname($0))
+Cd_command_array=['cd', Guaranteed_existing_directory]
+Cd_command_hash={:command => 'cd', :in => Guaranteed_existing_directory}
+Guaranteed_existing_basename=File.basename($0)
+Redirect_command=['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
+Redirect_command_string='ls '+ Shellwords.escape(Guaranteed_existing_basename)+' > '+Shellwords.escape('blank in filename.shell_command')
+Relative_command=['ls', Guaranteed_existing_basename]
 end #Examples
 include Examples
-module Assertions
-include Test::Unit::Assertions
-extend Test::Unit::Assertions
-def assert_pre_conditions(message='')
-	self # return for comand chaining
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="self=#{inspect}"
-	assert_empty(@errors, message)
-	assert_equal(0, @exit_status, message)
-	self # return for comand chaining
-end #assert_post_conditions
-end #Assertions
-include Assertions
 end #ShellCommands
 class NetworkInterface
 IFCONFIG=ShellCommands.new('/sbin/ifconfig')

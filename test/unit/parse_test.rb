@@ -10,14 +10,39 @@ require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
 include Parse
 include Parse::Constants
+def test_Constants
+#	assert_equal(LINES, LINES_cryptic)
+	string="1\n2"
+	pattern=Parse::LINES
+	answer=['1', '2']
+	assert_equal(answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
+end #Constants
 def test_parse_string
 	string="1\n2"
 	pattern=Parse::LINES
 	answer=['1', '2']
 	ret=string.match(pattern)
 	assert_equal(answer, ret[1..-1]) # return matched subexpressions
-	assert_equal(answer, parse_string(string), "ret=#{ret.inspect}")
+	matchData=string.match(pattern)
+	assert_equal(matchData.names, [])
+  if matchData.nil? then
+    []
+	elsif matchData.names==[] then
+		assert_equal(answer, matchData[1..-1], matchData) # return unnamed subexpressions
+	else
+		nc=pattern.named_captures
+		assert_not_nil(nc)
+		assert_not_empty(nc)
+		named_hash={}
+		matchData.names.each do |n| # return named subexpressions
+			named_hash[n.to_sym]=matchData[n]
+		end # each
+	end #if
+	assert_equal(answer, parse_string(string, Parse::LINES), "matchData=#{matchData.inspect}")
+	assert_equal(answer, parse_string(string), "matchData=#{matchData.inspect}")
 	assert_equal(['1', '2'], parse_string("1 2", Parse::WORDS))
+#	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
+#	assert_equal({:a => "1", :b => "2"}, parse_string(string, Parse::LINES.capture(:a)*Parse::LINES.capture(:b)))
 end #parse_string
 def test_parse_array
 	string_array=["1 2","3 4"]
@@ -80,38 +105,9 @@ def test_rows_and_columns
 	column_delimiter=';'
 	row_delimiter="\n"
 #	name_tag=nil
-	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(row_delimiter))) 
-	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns(column_delimiter))
+#	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(row_delimiter))) 
+#	assert_equal([['1', '2'], ['3', '4']],EXAMPLE.rows_and_columns(column_delimiter))
 end #rows_and_columns
-def test_inspect
-	Hello_world.assert_post_conditions
-	assert_equal("Hello World\n", Hello_world.output)
-	assert_equal("Hello World\n", Hello_world.inspect)
-	assert_equal("", EXAMPLE.inspect)
-end #inspect
-def test_assert_post_conditions
-	Hello_world.assert_post_conditions
-end #assert_post_conditions
-def test_NetworkInterface
-	lines=parse(NetworkInterface::IFCONFIG.output, LINES)
-	double_lines=NetworkInterface::IFCONFIG.output.split("\n\n")
-	assert_instance_of(Array, double_lines)
-	assert_operator(2, :<=, double_lines.size)
-	assert_equal('eth0', double_lines[0].split(' ')[0])
-	words=parse(double_lines[0], WORDS)
-	assert_equal('eth0', words[0])
-	assert_equal('Link', words[1], "words=#{words.inspect}, lines=#{lines.inspect}")
-	puts "words=#{words.inspect}, double_lines=#{double_lines.inspect}"
-	words=double_lines.map do |row|
-		words=parse(row, WORDS)
-		puts "words=#{words.inspect}, row=#{row.inspect}"
-		assert_match(words[0], /eth0|lo|wlan0/, "row=#{row.inspect}, words=#{words.inspect}")
-	end #map
-	parse(NetworkInterface::IFCONFIG.output, LINES).map  do |row| 
-		parse(row, WORDS)
-	end #map
-	assert_equal('', NetworkInterface::IFCONFIG.rows_and_columns)
-	assert_equal('eth0,', NetworkInterface::IFCONFIG.inspect)
-	assert_equal('', NetworkInterface::IFCONFIG.output)
-end #NetworkInterface
+include Parse::Constants
+include Parse::Constants
 end #ParseTest

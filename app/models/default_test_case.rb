@@ -6,11 +6,65 @@
 #
 ###########################################################################
 require 'active_support/all'
-#include TestIntrospection
 BaseTestCase=ActiveSupport::TestCase
+module ExampleCall
+def each_example(&block)
+  included_module_names=model_class?.included_modules.map{|m| m.name}
+  if  included_module_names.include?("#{model_class?}::Examples") then
+#    info "model_class?.constants=#{model_class?.constants}"
+    constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
+#verbose    info "constant_objects=#{constant_objects}"
+    examples=constant_objects.select{|c| c.instance_of?(Regexp)}
+    if examples.empty? then
+#once      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
+    else
+      examples.each do |c|
+        info "calling block on #{c.inspect}"
+        block.call(c)
+      end #each
+    end #if
+  else
+    warn "There is no module #{model_class?}::Examples."
+  end #if
+end #each_example
+# Call method symbol on object if method exists
+def existing_call(object, symbol)
+ if object.respond_to?(symbol) then
+   info "method #{symbol.inspect} does  exist for object of type #{object.class.name}"
+   assert_respond_to(object, symbol)
+   object.method(symbol).call
+ else
+	message="method #{symbol} does not exist for object "
+	if object.respond_to?(:name) then
+		message+="named #{object.name}"
+	else
+		message+="of type #{object.class.name}"
+	end #if
+   warn message
+ end #if
+end #existing_call
+def named_object?
+	if object.respond_to?(:name) then
+		"named #{object.name}"
+	else
+		"of type #{object.class.name}"
+	end #if
+end #named_object?
+def assert_optional_method(object, symbol)
+ if object.respond_to?(symbol) then
+   info "method #{symbol.inspect} does exist for object of type #{object.class.name}"
+   assert_respond_to(object, symbol)
+   object.method(symbol).call
+ else
+	message="method #{symbol} does not exist for object "+named_object?
+   warn message
+ end #if
+end #
+end #ExampleCall
 module DefaultTests0
 require 'test/unit'
 include Test::Unit::Assertions
+extend Test::Unit::Assertions
 def related_files?
 	RelatedFile.new(model_name?)
 end #related_files
@@ -32,60 +86,7 @@ end # class_assert_invariant
 end #DefaultTests1
 module DefaultTests2
 include DefaultTests1
-def test_class_assert_pre_conditions
-	model_class?.assert_pre_conditions
-#	fail "got to end of default test."
-end #class_assert_pre_conditions
-def test_class_assert_invariant
-  existing_call(model_class?, :assert_invariant)
-#	fail "got to end of default test."
-end #def assert_invariant
-def test_class_assert_post_conditions
-	model_class?.assert_post_conditions
-#	fail "got to end of default test."
-end #class_assert_post_conditions
-#ClassMethods
-def each_example(&block)
-  info "$VERBOSE=#{$VERBOSE.inspect}"
-  included_module_names=model_class?.included_modules.map{|m| m.name}
-  info "included_module_names=#{included_module_names.inspect}"
-  if  included_module_names.include?("#{model_class?}::Examples") then
-    info "model_class?.constants=#{model_class?.constants}"
-    constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
-#verbose    info "constant_objects=#{constant_objects}"
-    examples=constant_objects.select{|c| c.instance_of?(Regexp)}
-    info "examples=#{examples}"
-    if examples.empty? then
-      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
-    else
-      examples.each do |c|
-        info "calling block on #{c.inspect}"
-        block.call(c)
-      end #each
-    end #if
-  else
-    warn "There is no module #{model_class?}::Examples."
-  end #if
-end #each_example
-# Call method symbol on object if it exists
-def existing_call(object, symbol)
- if object.respond_to?(symbol) then
-   info "method #{symbol.inspect} does  exist for object of type #{object.class.name}"
-   assert_respond_to(object, symbol)
-   object.method(symbol).call
- else
-   warn "method #{symbol} does not exist for object of type #{object.class.name}"
- end #if
-end #assertion_call
-def test_assert_pre_conditions
-  each_example {|e| existing_call(e, :assert_pre_conditions)}
-end #assert_pre_conditions
-def test_assert_invariant
-  each_example {|e| existing_call(e, :assert_invariant)}
-end #def assert_invariant
-def test_assert_post_conditions
-  each_example {|e| existing_call(e, :assert_post_conditions)}
-end #assert_post_conditions
+include ExampleCall
 def assert_environment
   warn {assert_equal(TestCase, self.class.superclass)}
   message= "self=#{self.inspect}"
@@ -98,11 +99,13 @@ def assert_environment
   assert_include(TE.model_class?.included_modules, Regexp::Assertions, message)
 #?  assert_include(TE.model_class?.included_modules, Regexp::Assertions::ClassMethods, message)
   assert_include(TE.model_class?.included_modules, Regexp::Examples, message)
-end #test_test_environment
+end #assert_environment
 def test_aaa_environment
+  info "$VERBOSE=#{$VERBOSE.inspect}"
+  included_module_names=model_class?.included_modules.map{|m| m.name}
+  info "included_module_names=#{included_module_names.inspect}"
   assert_include(self.class.included_modules, Test::Unit::Assertions)
-#	assert_include(self.class.included_modules, DefaultAssertionTests)
-#	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{assertions_pathname?}")
+#	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
@@ -128,25 +131,47 @@ def test_aaa_environment
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of related_files ."
-end #test_related_files
+    constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
+#verbose    info "constant_objects=#{constant_objects}"
+   examples=constant_objects.select{|c| c.instance_of?(model_class?)}
+   info "examples=#{examples}"
+	if examples.empty? then
+      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples.\nconstant_objects=#{constant_objects.inspect}"
+	end #if
+end #test_aaa_environment
+def test_class_assert_pre_conditions
+  existing_call(model_class?, :assert_pre_conditions)
+#	fail "got to end of default test."
+end #class_assert_pre_conditions
+def test_class_assert_invariant
+#  existing_call(model_class?, :assert_invariant)
+#	fail "got to end of default test."
+end #def assert_invariant
+def test_class_assert_post_conditions
+  existing_call(model_class?, :assert_post_conditions)
+#	fail "got to end of default test."
+end #class_assert_post_conditions
+#ClassMethods
+def test_assert_pre_conditions
+  each_example {|e| existing_call(e, :assert_pre_conditions)}
+end #assert_pre_conditions
+def test_assert_invariant
+#  each_example {|e| existing_call(e, :assert_invariant)}
+end #def assert_invariant
+def test_assert_post_conditions
+  each_example {|e| existing_call(e, :assert_post_conditions)}
+end #assert_post_conditions
 end #DefaultTests2
 module DefaultTests3
 include DefaultTests2
 def test_assertion_inclusion
 	assert_include(model_class?.included_modules, model_class?::Assertions)
 	assert_include(model_class?.ancestors, Test::Unit::Assertions)
-	assert_include(model_class?.ancestors, model_class?::Examples, "module #{model_class?}::Examples  should exist in class #{model_class?}.\nPlace 'include Examples' within class #{model_class?} scope in assertions file.")
-	assert_include(model_class?.ancestors, DefaultAssertions, "module DefaultAssertions  should exist in class #{model_class?}.\nPlace 'include DefaultAssertions' within class #{model_class?} scope in assertions file.")
-	assert_include(model_class?.included_modules, model_class?::Examples, "module Examples  should be included in class #{model_class?}")
-	assert_include(model_class?.methods, :example_constant_names_by_class, "module DefaultAssertions::ClassMethods (including :example_constant_names_by_class) should exist in class #{model_class?}.\nPlace 'extend DefaultAssertions::ClassMethods' within class #{model_class?} scope in assertions file.")
-	assert_respond_to(model_class?, :example_constant_names_by_class, "model_class?=#{model_class?}")
-#	assert_respond_to(model_class?, :example_constant_names_by_class)
-#	assert_include(model_class?.methods, :example_constant_names_by_class, "model_class?=#{model_class?}")
 end #test_assertion_inclusion
 def test_related_files
 	assert_include(self.class.included_modules, Test::Unit::Assertions)
 #	assert_include(self.class.included_modules, DefaultAssertionTests)
-	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{assertions_pathname?}")
+	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in ?")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
@@ -195,6 +220,9 @@ end #names_of_tests
 def global_class_names
 	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
 end #global_class_names
+def data_source_directory?(model_name=model_name?)
+	'test/data_sources/'+model_name.to_s+'/'
+end #data_source_directory?
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
 #include DefaultAssertions

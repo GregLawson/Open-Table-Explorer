@@ -1,4 +1,8 @@
+/doc/*
+/.yardoc/*
 /test/data_sources/adc_loopback/R_loopback_workspace.RData
+/test/data_sources/taxes/*
+/test/data_sources/taxes/US_1040_OTS.json
 /test/data_sources/taxes/Federal_f1040-1.jpg
 /test/data_sources/taxes/Federal_f1040-2.jpg
 /test/data_sources/taxes/Federal_f1040_otff.pdf
@@ -7,3 +11,6 @@
 /Federal_f1040-2.jpg
 /Federal_f1040-1.jpg
 /db/SQL/separate.mwb.bak
+.bundle
+db/*.sqlite3
+log/*.log

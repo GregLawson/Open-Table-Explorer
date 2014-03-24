@@ -5,139 +5,224 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# @see http://grit.rubyforge.org/
 require 'grit'  # sudo gem install grit
+# partial API at @see less /usr/share/doc/ruby-grit/API.txt
+# code in @see /usr/lib/ruby/vendor_ruby/grit
 require_relative 'shell_command.rb'
-class Repository
+require_relative 'global.rb'
+require_relative 'file_pattern.rb'
+class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
+Root_directory=FilePattern.project_root_dir?
+Source=File.dirname(Root_directory)+'/'
+README_start_text='Minimal repository.'
+Error_classification={0 => :success,
+				1     => :single_test_fail,
+				100 => :initialization_fail,
+				10000 => :syntax_error}
 end #Constants
+include Constants
 module ClassMethods
+include Constants
+def git_command(git_command, repository_dir)
+	ShellCommands.new('git '+ShellCommands.assemble_command_string(git_command), :chdir=>repository_dir)
+end #git_command
+def create_empty(path)
+	Dir.mkdir(path)
+	if File.exists?(path) then
+		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
+		new_repository=Repository.new(path)
+	else
+		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
+	end #if
+	new_repository
+end #create_empty
+def delete_existing(path)
+# @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
+	FileUtils.remove_entry_secure(path) #, force = false)
+end #delete_existing
+def replace_or_create(path)
+	if File.exists?(path) then
+		delete_existing(path)
+	end #if
+	create_empty(path)
+end #replace_or_create
+def create_if_missing(path)
+	if File.exists?(path) then
+		Repository.new(path)
+	else
+		create_empty(path)
+	end #if
+end #create_if_missing
+def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"))
+	replace_or_create(path)
+	if File.exists?(path) then
+		new_repository=Repository.new(path)
+		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
+		new_repository.git_command('add README')
+		new_repository.git_command('commit -m "create_empty initial commit of README"')
+		new_repository.git_command('branch passed')
+	else
+		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
+	end #if
+	new_repository
+end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-require_relative "shell_command.rb"
-#subshell (cd_command=ShellCommands.new("cd #{Temporary}recover")).assert_post_conditions
-#puts "cd_command=#{cd_command.inspect}"
-def initialize(url)
-	@url=url
-	@path=url
-	source_path=@path
-	temporary_path=Temporary+'recover'
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch
+def initialize(path)
+	@url=path
+	@path=path
+  puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
+def shell_command(command, working_directory=@path)
+	ShellCommands.new(command, :chdir=>working_directory)
+end #shell_command
 def git_command(git_subcommand)
-	ret=ShellCommands.new("cd #{Shellwords.escape(@path)}; git "+git_subcommand)
-	if $VERBOSE && git_subcommand != 'status' then
-		ShellCommands.new("cd #{Shellwords.escape(@path)}; git status").inspect
-	end #if
-	ret
+	Repository.git_command(git_subcommand, @path)
 end #git_command
-def standardize_position
+def inspect
+	git_command('status --short --branch').output
+end #inspect
+def corruption_fsck
+	git_command("fsck")
+end #corruption
+def corruption_rebase
+#	git_command("rebase")
+end #corruption
+def corruption_gc
+	git_command("gc")
+end #corruption
+def standardize_position!
 	git_command("rebase --abort")
 	git_command("merge --abort")
 	git_command("stash save").assert_post_conditions
 	git_command("checkout master")
-end #standardize_position
+end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
-end #branch
-def deserving_branch?(executable=related_files.model_test_pathname?)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
-	if test.success? then
-		:master
-	elsif test.exit_status==1 then # 1 error or syntax error
-		:development
+end #current_branch_name
+def error_score?(executable=@related_files.model_test_pathname?)
+	@recent_test=shell_command("ruby "+executable)
+#	@recent_test.puts if $VERBOSE
+	if @recent_test.success? then
+		0
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test=shell_command("ruby -c "+executable)
+		if syntax_test.output=="Syntax OK\n" then
+			initialize_test=shell_command("ruby "+executable+' -n test_initialize')
+			if initialize_test.success? then
+				1
+			else # initialization  failure or test_initialize failure
+				100 # may prevent other tests from running
+			end #if
+		else
+			10000 # syntax error can hide many sins
+		end #if
 	else
-		:compiles
+		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
-end #
-def upgrade_commit(target_branch, executable)
-	target_index=WorkFlow::Branch_enhancement.index(target_branch)
-	WorkFlow::Branch_enhancement.each_index do |b, i|
-		commit_to_branch(b, executable) if i >= target_index
-	end #each
-end #upgrade_commit
-def downgrade_commit(target_branch, executable)
-	commit_to_branch(target_branch, executable)
-end #downgrade_commit
-def test(executable=related_files.model_test_pathname?)
-	stage(deserving_branch?(executable), executable)
-end #test
-def upgrade(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #upgrade
-def best(executable=related_files.model_test_pathname?)
-	upgrade_commit(deserving_branch?(executable), executable)
-end #best
-def downgrade(executable=related_files.model_test_pathname?)
-	downgrade_commit(deserving_branch?(executable), executable)
-end #downgrade
-def stage(target_branch, executable)
-	if WorkFlow.current_branch_name? ==target_branch then
-		push_branch=target_branch # no need for stash popping
-	else
-		push_branch=WorkFlow.current_branch_name?
-		Stash_Save.execute.assert_post_conditions
-		switch_branch=ShellCommands.new("git checkout "+target_branch.to_s).execute
-		message="#{WorkFlow.current_branch_name?.inspect}!=#{target_branch.inspect}\n"
-		message+="WorkFlow.current_branch_name? !=target_branch=#{WorkFlow.current_branch_name? !=target_branch}\n"
-		tested_files(executable).each do |p|
-			ShellCommands.new("git checkout stash "+p).execute.assert_post_conditions
-		end #each
-		switch_branch.puts.assert_post_conditions(message)
+end #error_score
+# This is safe in the sense that a stash saves all files
+# and a stash apply restores all tracked files
+# safe is meant to mean no files or changes are lost or buried.
+def confirm_branch_switch(branch)
+	checkout_branch=git_command("checkout #{branch}")
+	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
+		checkout_branch.assert_post_conditions
 	end #if
-	ShellCommands.new("git add "+tested_files(executable).join(' ')).execute.assert_post_conditions	
-	Git_Cola.execute.assert_post_conditions
-	push_branch
-end #stage
-def commit_to_branch(target_branch, executable)
-	push_branch=stage(target_branch, executable)
+	checkout_branch # for command chaining
+end #confirm_branch_switch
+def safely_visit_branch(target_branch, &block)
+	push_branch=current_branch_name?
+	changes_branch=push_branch # 
+	push=something_to_commit? # remember
+	if push then
+#		status=@grit_repo.status
+#		puts "status.added=#{status.added.inspect}"
+#		puts "status.changed=#{status.changed.inspect}"
+#		puts "status.deleted=#{status.deleted.inspect}"
+#		puts "something_to_commit?=#{something_to_commit?.inspect}"
+		git_command('stash save --include-untracked').assert_post_conditions
+		changes_branch=:stash
+	end #if
+
 	if push_branch!=target_branch then
-		ShellCommands.new("git checkout "+push_branch.to_s).execute.assert_post_conditions
-		ShellCommands.new("git checkout stash pop").execute.assert_post_conditions
+		confirm_branch_switch(target_branch)
+		ret=block.call(changes_branch)
+		confirm_branch_switch(push_branch)
+	else
+		ret=block.call(changes_branch)
+	end #if
+	if push then
+		git_command('stash apply --quiet').assert_post_conditions
+	end #if
+	ret
+end #safely_visit_branch
+def stage_files(branch, files)
+	safely_visit_branch(branch) do |changes_branch|
+		validate_commit(changes_branch, files)
+	end #safely_visit_branch
+end #stage_files
+def unit_names?(files)
+	files.map do |f|
+		FilePattern.path2model_name?(f).to_s
+	end #map
+end #unit_names?
+def validate_commit(changes_branch, files, interact=:interactive)
+	puts files.inspect if $VERBOSE
+	files.each do |p|
+		puts p.inspect  if $VERBOSE
+		git_command(['checkout', changes_branch.to_s, p])
+	end #each
+	if something_to_commit? then
+		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')
+		if !@recent_test.nil? then
+			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
+		end #if
+		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+		case interact
+		when :interactive then
+			git_command('cola').assert_post_conditions
+		when :echo then
+			puts "changes_branch="+changes_branch.to_s
+			puts "files="+files.inspect
+		end #case
+#		git_command('rebase --autosquash --interactive')
+	end #if
+end #validate_commit
+def something_to_commit?
+	status=@grit_repo.status
+	ret=status.added!={}||status.changed!={}||status.deleted!={}
+	message="status.added=#{status.added.inspect}"
+	message+="\nstatus.changed=#{status.changed.inspect}"
+	message+="\nstatus.deleted=#{status.deleted.inspect}"
+	message+="\nstatus.added!={}||status.changed!={}||status.deleted!={}==#{ret}"
+	puts message if $VERBOSE
+	ret
+end #something_to_commit
+def commit_to_branch(target_branch, tested_files)
+	push_branch=stage(target_branch, tested_files)
+	if push_branch!=target_branch then
+		git_command('checkout '+push_branch.to_s).assert_post_conditions
+		git_command('checkout stash apply').assert_post_conditions
 	end #if
 end #commit_to_branch
-def test_and_commit(executable)
-	test=ShellCommands.new("ruby "+executable, :delay_execution)
-	test.execute
-	if test.success? then
-		commit_to_branch(:master, executable)
-	elsif test.exit_status==1 then # 1 error or syntax error
-		commit_to_branch(:development, executable)
-	else
-		commit_to_branch(:compiles, executable)
-	end #if
-end #test
-module Assertions
-include Test::Unit::Assertions
-module ClassMethods
-include Test::Unit::Assertions
-def assert_post_conditions
-end #assert_post_conditions
-end #ClassMethods
-def assert_pre_conditions
-end #assert_pre_conditions
-def assert_post_conditions
-end #assert_post_conditions
-end #Assertions
-include Assertions
-#TestWorkFlow.assert_pre_conditions
-Stash_Save=ShellCommands.new("git stash save", :delay_execution)
-Stash_Pop=ShellCommands.new("git stash pop", :delay_execution)
-Git_status=ShellCommands.new("git status", :delay_execution)
-Master_Checkout=ShellCommands.new("git checkout master", :delay_execution)
-Compiles_Checkout=ShellCommands.new("git checkout compiles", :delay_execution)
-Development_Checkout=ShellCommands.new("git checkout development", :delay_execution)
-CompilesSupersetOfMaster=ShellCommands.new("git log compiles..master", :delay_execution)
-DevelopmentSupersetofCompiles=ShellCommands.new("git log development..compiles", :delay_execution)
-Root_directory=FilePattern.project_root_dir?
-Repo= Grit::Repo.new(Root_directory)
-include Constants
-module Examples
-include Constants
-Source='/media/greg/SD_USB_32G/Repository Backups/'
-end #Examples
-include Examples
+def testing_superset_of_passed
+	git_command("log testing..master")
+end #testing_superset_of_passed
+def edited_superset_of_testing
+	git_command("log edited..testing")
+end #edited_superset_of_testing
+def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
+	IO.write(@path+'/README', content) # timestamp make file unique
+end #force_change
+def revert_changes
+	git_command('reset --hard')
+end #revert_changes
 end #Repository
 
 

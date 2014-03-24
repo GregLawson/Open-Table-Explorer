@@ -54,15 +54,17 @@ def matching_class_methods(regexp,all=false)
 		regexp=regexp.to_s
 	end #if
 	self.public_methods(all).select {|m| m[Regexp.new(regexp),0] }
-end #def
+end #matching_class_methods
+def data_source_directory?
+	'test/data_source/'+self.name+'/'
+end #data_source_directory?
 end #module
 class Object
-#~ require 'IncludeModuleClassMethods.rb'
- #~ mixin_class_methods { |klass|
- #~ puts "Module Acquisition has been included by #{klass}" if $VERBOSE
- #~ }
-#~ define_class_methods {
-#~ } #define_class_methods
+def info(message)
+	if $VERBOSE then
+		$stdout.puts message
+	end #if
+end #info     
 def object_identities
 	return "<#{objectClass} \##{object_id}{#{hash}},#{to_s},#{inspect}>"
 end #object_identities

@@ -6,7 +6,19 @@
 #
 ###########################################################################
 class Regexp
+# @see http://en.wikipedia.org/wiki/Kleene_algebra
 #include Comparable
+module Constants
+Default_options=Regexp::EXTENDED | Regexp::MULTILINE
+Any_binary_char_string='[\000-\377]'
+Any='*'
+Many='+'
+Optional='?'
+Start_string=/\A/
+End_string=/\z/
+End_string_less_newline=/\Z/
+end #Constants
+include Constants
 module ClassMethods
 def promote(node)
 	if node.instance_of?(String) then 
@@ -51,6 +63,10 @@ def *(other)
 	when Regexp then return Regexp.new(self.source + other.source)
 	when String then return Regexp.new(self.source + other)
 	when Fixnum then return Regexp.new(self.source*other)
+	when NilClass then raise "Right argument of :* operator evaluated to nil."+
+		"\nPossibly add parenthesis to control operator versus method precedence."+
+		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
+		"\nself=#{self.inspect}"
 	else
 		raise "other.class=#{other.class.inspect}"
 	end #case
@@ -65,6 +81,14 @@ def capture(key=nil)
 		/(?<#{key.to_s}>#{self.source})/
 	end #if
 end #capture
+# capture backreferences must be all numbered or all named.
+def back_reference(key)
+		/#{self.source}\k<#{key.to_s}>/
+rescue RegexpError => exception
+	warn "back_reference regexp=/#{self.source}\k<#{key.to_s}>/ failed."+
+		"\nPossibly add parenthesis to control operator versus method precedence."+
+		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
+end #back_reference
 def group
 	/(?:#{self.source})/
 end #group
@@ -84,20 +108,11 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-module Constants
-Default_options=Regexp::EXTENDED | Regexp::MULTILINE
-end #Constants
-include Constants
 module Examples
 include Constants
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
 Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
-Line_terminator=/\n/
-Line_pattern=/([^\n]*)/
-LINES=/([^\n]*)(?:\n([^\n]*))*/
-WORDS=/([^\s]*)(?:\s([^\s]*))*/
 Ip_number_pattern=/\d{1,3}/
 end #Examples
-include Examples
 end #Regexp
