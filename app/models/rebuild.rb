@@ -20,14 +20,14 @@ def git_path_to_repository(file)
 			dot_git_just_seen = true
 		end # if
 	end # ascend
-repository
+	repository
 end # git_path_to_repository
 end # ClassMethods
 extend ClassMethods
 # names are not unique, directories make them unique
-def get_name(name)
+def get_name
 	File.basename(@path)
-end # set_name
+end # get_name
 end # Repository
 class Rebuild < Repository
 module Constants
@@ -51,8 +51,10 @@ end # named_repository_directories
 #	fetch - copy of valid repository (fails if object or pack corruption)
 def clone(source_repository_path)
 	command_string='git clone '+Shellwords.escape(source_repository_path)
+	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # clone
 def fetch(source_repository_path)
+	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # fetch
 def copy(source_repository_path)
 	command_string='cp -a '+Shellwords.escape(source_repository)+' '+Shellwords.escape(temporary_path)
@@ -98,8 +100,11 @@ def destructive_status!
 #	@gc_command = git_command("rebase").assert_post_conditions
 	@gc_command = git_command("gc")
 end #destructive_status!
-def graft_backup
-end # graft_backup
+def repack
+	ShellCommands.new('mv .git/objects/pack/* /tmp/rebuild/corrupt_packs/')
+	ShellCommands.new('for i in /tmp/rebuild/corrupt_packs/*.pack; do;git unpack-objects -r < $i;done')
+	ShellCommands.new('rm /tmp/rebuild/corrupt_packs/*')
+end # repack
 
 def fetch_repository(repository_file)
 	@import_repository=Repository.new(repository_file)

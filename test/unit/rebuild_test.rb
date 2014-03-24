@@ -10,7 +10,7 @@ require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
-def test_git_path_to_repository
+def test_git_path_to_repositor
 	executing_repo = {name: :'Open-Table-Explorer', dir: Pathname.new(Repository::This_code_repository.path)}
 	file = Repository::This_code_repository.path + '.git/'
 	dot_git_just_seen = false
@@ -31,6 +31,9 @@ def test_git_path_to_repository
 	assert_instance_of(Hash, repository)
 	assert_equal(executing_repo, repository)
 end # git_path_to_repository
+def test_get_name
+	assert_equal('Open-Table-Explorer', Repository::This_code_repository.get_name)
+end # get_name
 def test_named_repository_directories
 	directories_of_repositories = ['../']
 	repository_glob = Repository_glob
@@ -98,8 +101,8 @@ def test_destructive_status!
 	Toy_repository.destructive_status!
 	Real_repository.destructive_status!
 end #destructive_status!
-#exists Toy_repository.git_command("branch details").assert_post_conditions
-#exists Toy_repository.git_command("branch summary").assert_post_conditions
+def test_repack
+end # repack
 def test_fetch_repository
 	repository_file=From_repository
 	Clean_Example.assert_pre_conditions
@@ -131,6 +134,8 @@ def test_add_commits
 
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
+#exists Toy_repository.git_command("branch details").assert_post_conditions
+#exists Toy_repository.git_command("branch summary").assert_post_conditions
 end #add_commits
 def test_Examples
   path=Source+'test_recover'
