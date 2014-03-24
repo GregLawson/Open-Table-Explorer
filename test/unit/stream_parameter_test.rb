@@ -1,13 +1,15 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/minimal2.rb'
-class RebaseTest < TestCase
-include DefaultTests
-include TE.model_class?::Examples
-end #Rebase
+require_relative '../../app/models/stream_parameter.rb'
+
+class StreamParameterTest < TestCase
+def test_foreign_keys_not_nil
+	model_class?.assert_foreign_keys_not_nil
+end #
+end #StreamParameterTest

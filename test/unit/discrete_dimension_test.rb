@@ -6,8 +6,11 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/minimal2.rb'
-class RebaseTest < TestCase
+require_relative '../../app/models/discrete_dimension.rb'
+class DiscreteDimensionTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
-end #Rebase
+def test_next
+	assert_equal(:passed, Branches.next)
+end #next
+end #DiscreteDimension

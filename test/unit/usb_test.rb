@@ -5,9 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
-require_relative '../../app/models/minimal2.rb'
-class RebaseTest < TestCase
-include DefaultTests
-include TE.model_class?::Examples
-end #Rebase
+require_relative 'test_environment_ruby'
+require_relative '../../app/models/usb.rb'
+class UsbBbusTest < TestCase
+def test_usb_gem
+end #usb_gem
+end #MinimalTest

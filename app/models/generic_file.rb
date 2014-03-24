@@ -8,7 +8,7 @@
 require_relative '../../app/models/no_db.rb'
 require_relative '../../test/assertions/regexp_parse_assertions.rb'
 require_relative '../../app/models/regexp_match.rb'
-module GenericFiles
+module GenericFile
 include NoDB
 extend NoDB::ClassMethods
 module ClassMethods
@@ -68,9 +68,9 @@ end #Examples
 end #GenericFiles
 
 module GenericJsons
-include GenericFiles
+include GenericFile
 module ClassMethods
-include GenericFiles::ClassMethods
+include GenericFile::ClassMethods
 #return Array of Hash
 def coarse_filter
 	raw_acquisitions.map do |r|

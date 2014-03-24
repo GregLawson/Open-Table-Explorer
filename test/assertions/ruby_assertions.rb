@@ -54,7 +54,26 @@ def info(message)
 	if $VERBOSE then
 		$stdout.puts message
 	end #if
-end #info     
+end #info
+# make requires quieter by supressing debug logging
+def quieter(&block)
+	old_verbose = $VERBOSE
+	$VERBOSE = case
+	when nil then nil
+	when false then nil
+	when true then false
+	end # case
+  if block_given? then
+    begin
+      block.call
+    rescue Exception => exception_raised
+      puts exception_raised.inspect
+    rescue String => exception_raised
+      puts MiniTest::Assertion_raised.inspect
+    end #begin
+  end #if
+	$VERBOSE = old_verbose
+end # quieter
 def default_message
 	message="Module.nesting=#{Module.nesting.inspect}"
 	message+=" Class #{self.class.name}"
