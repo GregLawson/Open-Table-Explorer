@@ -130,6 +130,11 @@ module Assertions
 include Test::Unit::Assertions
 module ClassMethods
 include Test::Unit::Assertions
+def assert_pre_conditions
+	assert_include(Test::Unit::Assertions.instance_methods, :quieter)
+	quieter do
+	end # quieter
+end #assert_post_conditions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
@@ -152,6 +157,8 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
+Rebuild.assert_pre_conditions
 #TestWorkFlow.assert_pre_conditions
 include Constants
 module Examples
