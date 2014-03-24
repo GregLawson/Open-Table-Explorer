@@ -10,25 +10,46 @@ require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
+def test_git_path_to_repositor
+	executing_repo = {name: :'Open-Table-Explorer', dir: Pathname.new(Repository::This_code_repository.path)}
+	file = Repository::This_code_repository.path + '.git/'
+	dot_git_just_seen = false
+	repository = nil # need scope outside of ascend block=
+	Pathname.new(file).ascend do |parent|
+		if dot_git_just_seen then
+			dot_git_just_seen = nil # not any more
+			assert_equal(Pathname.new('/home/pi/Desktop/src/Open-Table-Explorer'), Pathname.new(parent).expand_path)
+			repo_path = Pathname.new(Pathname.new(parent).expand_path.to_s + '/')
+#			assert_equal(repo_path, Pathname.new(parent).expand_path + '/')
+			repository = {name: File.basename(parent).to_sym, dir: repo_path}
+		elsif File.basename(parent) == '.git'
+			dot_git_just_seen = true
+		end # if
+	end # ascend
+	message= 'defined?(dot_git_just_seen) = '+ defined?(dot_git_just_seen) + ' for file ' + file
+	assert(defined?(dot_git_just_seen), message)
+	assert_instance_of(Hash, repository)
+	assert_equal(executing_repo, repository)
+end # git_path_to_repository
 def test_named_repository_directories
 	directories_of_repositories = ['../']
+	repository_glob = Repository_glob
 	repository_directories= directories_of_repositories.map do |directory|
-		files=Dir[directory + Repository_glob]
-		files.map do |file|
-			dot_git_just_seen = false
-			Pathname.new(file).ascend do |parent|
-				if dot_git_just_seen then
-					dot_git_just_seen = false # not any more
-					repository = {name: File.basename(parent).to_sym, dir: parent}
-				elsif File.basename(parent) == '.git'
-					dot_git_just_seen = true
-				end # if
-			end # ascend
+		assert_pathname_exists(directory)
+		files=Dir[directory + repository_glob]
+		assert_not_empty(files, 'Looking for directory + Repository_glob=' + directory + Repository_glob)
+		repositories=files.map do |path|
+			assert_pathname_exists(path)
+			Repository.git_path_to_repository(path)
 		end # map
+		assert_not_empty(files)
+		repositories
 	end.flatten # map
-#	assert_equal([{name: :'Open-Table_Explorer', dir: This_code_repository.path}], repository_directories)
+	assert_not_empty(repository_directories)
+	executing_repo = {name: :'Open-Table-Explorer', dir: Pathname.new(Repository::This_code_repository.path)}
+	assert_include(repository_directories, executing_repo)
 	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
-#	assert_include([{name: :'Open-Table_Explorer', dir: This_code_repository.path}], repository_directories)
+	assert_include(repository_directories, executing_repo)
 end # named_repository_directories
 #
 #
@@ -65,8 +86,8 @@ def test_graft
 # cd /tmp/
 #	git_command('git clone good-host:/path/to/good-repo')
 #	git_command('cd /home/user/broken-repo')
-#	shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
-#	git_command('repack -a -d')
+#	Toy_repository.shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
+#	Toy_repository.git_command('repack -a -d')
 #	shell_command('rm -rf /tmp/good-repo')
 end # graft
 def test_destructive_status!
