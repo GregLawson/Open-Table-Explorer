@@ -15,7 +15,6 @@ include Generic_Table
 extend Generic_Table::ClassMethods
 #include GenericTableAssertions
 include GenericTableAssertion::KernelMethods
-set_class_variables BatteryMeasurement
 @@table_name='stream_patterns'
 	fixtures :table_specs
 	fixtures :acquisition_stream_specs
@@ -43,7 +42,7 @@ def test_column_symbols
 		assert_instance_of(Hash, r)
 		r.keys.map {|name| name.downcase.to_sym}
 	end.flatten.uniq #map
-	column_symbols=@@model_class.column_symbols
+	column_symbols=model_class?.column_symbols
 	wanted_columns=[:multimeter_id, :id, :created_at, :updated_at, :load_current_ma, :battery_id, :load_current_mA, :voltage, :status, :closed_circuit_current_ma]
 	assert_equal([], column_symbols-wanted_columns, "Unwanted columns:")
 end #column_symbols

@@ -8,7 +8,6 @@
 require_relative 'test_environment'
 
 class StreamMethodCallTest < TestCase
-set_class_variables
 def test_stream_links
 	streamCall=StreamMethodCall.first
 	assert_equal(64810937,streamCall.id)
@@ -33,7 +32,7 @@ def test_fire
 	end #each
 end #fire
 def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
 	assert_test_id_equal
 end #id_equal
 end #StreamMethodCall

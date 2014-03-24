@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,13 +9,14 @@
 require 'grit'  # sudo gem install grit
 # partial API at @see less /usr/share/doc/ruby-grit/API.txt
 # code in @see /usr/lib/ruby/vendor_ruby/grit
+require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
-require_relative 'file_pattern.rb'
+require_relative 'parse.rb'
 class Repository <Grit::Repo
 module Constants
 Temporary='/mnt/working/Recover'
-Root_directory=FilePattern.project_root_dir?
+Root_directory=FilePattern.project_root_dir?(__FILE__)
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
 Error_classification={0 => :success,
@@ -73,11 +74,17 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
+	if path[-1,1]!='/' then
+		path=path+'/'
+	end #if
 	@url=path
 	@path=path
   puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
+module Constants
+This_code_repository=Repository.new(Root_directory)
+end #Constants
 def shell_command(command, working_directory=@path)
 	ShellCommands.new(command, :chdir=>working_directory)
 end #shell_command
@@ -126,9 +133,6 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end #error_score
-# This is safe in the sense that a stash saves all files
-# and a stash apply restores all tracked files
-# safe is meant to mean no files or changes are lost or buried.
 def confirm_branch_switch(branch)
 	checkout_branch=git_command("checkout #{branch}")
 	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
@@ -136,6 +140,9 @@ def confirm_branch_switch(branch)
 	end #if
 	checkout_branch # for command chaining
 end #confirm_branch_switch
+# This is safe in the sense that a stash saves all files
+# and a stash apply restores all tracked files
+# safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
 	push_branch=current_branch_name?
 	changes_branch=push_branch # 
@@ -146,7 +153,11 @@ def safely_visit_branch(target_branch, &block)
 #		puts "status.changed=#{status.changed.inspect}"
 #		puts "status.deleted=#{status.deleted.inspect}"
 #		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save --include-untracked').assert_post_conditions
+		git_command('stash save --include-untracked')
+		merge_conflict_files?.each do |conflict|
+			shell_command('diffuse -m '+conflict[:file])
+			confirm_commit(:interactive)
+		end #each
 		changes_branch=:stash
 	end #if
 
@@ -158,7 +169,18 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 	end #if
 	if push then
-		git_command('stash apply --quiet').assert_post_conditions
+		apply_run=git_command('stash apply --quiet')
+		if apply_run.errors.match(/Could not restore untracked files from stash/) then
+			puts apply_run.errors
+			puts git_command('status').output
+			puts git_command('stash show').output
+		else
+			apply_run.assert_post_conditions('unexpected stash apply fail')
+		end #if
+		merge_conflict_files?.each do |conflict|
+			shell_command('diffuse -m '+conflict[:file])
+			confirm_commit(:interactive)
+		end #each
 	end #if
 	ret
 end #safely_visit_branch
@@ -172,6 +194,26 @@ def unit_names?(files)
 		FilePattern.path2model_name?(f).to_s
 	end #map
 end #unit_names?
+def confirm_commit(interact=:interactive)
+	if something_to_commit? then
+		case interact
+		when :interactive then
+			git_command('cola').assert_post_conditions
+			if !something_to_commit? then
+				git_command('cola rebase '+current_branch_name?.to_s)
+			end # if
+		when :echo then
+		when :staged then
+			git_command('commit ').assert_post_conditions			
+		when :all then
+			git_command('add . ').assert_post_conditions
+			git_command('commit ').assert_post_conditions
+		else
+			raise 'Unimplemented option='+interact
+		end #case
+	end #if
+	puts 'confirm_commit('+interact.inspect+"), something_to_commit?="+something_to_commit?.inspect
+end #confirm_commit
 def validate_commit(changes_branch, files, interact=:interactive)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
@@ -184,14 +226,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
-		case interact
-		when :interactive then
-			git_command('cola').assert_post_conditions
-		when :echo then
-			puts "changes_branch="+changes_branch.to_s
-			puts "files="+files.inspect
-		end #case
-#		git_command('rebase --autosquash --interactive')
+		confirm_commit(interact)
 	end #if
 end #validate_commit
 def something_to_commit?
@@ -204,18 +239,11 @@ def something_to_commit?
 	puts message if $VERBOSE
 	ret
 end #something_to_commit
-def commit_to_branch(target_branch, tested_files)
-	push_branch=stage(target_branch, tested_files)
-	if push_branch!=target_branch then
-		git_command('checkout '+push_branch.to_s).assert_post_conditions
-		git_command('checkout stash apply').assert_post_conditions
-	end #if
-end #commit_to_branch
 def testing_superset_of_passed
-	git_command("log testing..master")
+	git_command("shortlog testing..passed")
 end #testing_superset_of_passed
 def edited_superset_of_testing
-	git_command("log edited..testing")
+	git_command("shortlog edited..testing")
 end #edited_superset_of_testing
 def force_change(content=README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n")
 	IO.write(@path+'/README', content) # timestamp make file unique
@@ -223,6 +251,40 @@ end #force_change
 def revert_changes
 	git_command('reset --hard')
 end #revert_changes
+def merge_conflict_files?
+	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
+	ret=[]
+	if File.exists?('.git/MERGE_HEAD') then
+		unmerged_files.split("\n").map do |line|
+			file=line[3..-1]
+			ret << {:conflict => line[0..1], :file => file}
+			puts 'ruby script/workflow.rb --test '+file
+			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
+			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
+			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.orig')
+		end #map
+		if !unmerged_files.empty? then
+			merge_abort=git_command('merge --abort')
+		end #if
+	end #if
+	ret
+end #merge_conflict_files?
+def branches?
+	branch_output=git_command('branch --list').assert_post_conditions.output
+#?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
+end #branches?
+def remotes?
+	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
+end #branches?
+def rebase!
+	if remotes?.include?(current_branch_name?) then
+		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+	else
+		puts current_branch_name?.to_s+' has no remote branch in origin.'
+	end #if
+end #rebase!
 end #Repository
 
 

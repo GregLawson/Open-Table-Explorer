@@ -8,7 +8,6 @@
 require_relative 'test_environment'
 require_relative 'default_test_case.rb'
 class StreamPatternTest < TestCase
-set_class_variables
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
 	define_model_of_test # allow generic tests
@@ -21,7 +20,7 @@ def test_general_associations
 	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
+	assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
 	assert_test_id_equal
 end #test_id_equal
 def test_specific__stable_and_working

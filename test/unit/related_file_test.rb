@@ -6,6 +6,7 @@
 #
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
+require 'test/unit'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
@@ -55,7 +56,15 @@ def test_assertions_test_pathname
 	assert_data_file(UnboundedFixnumRelatedFile.assertions_test_pathname?)
 end #assertions_test_pathname?
 def test_data_sources_directory
-#	assert_pathname_exists(TE.data_sources_directory?)
+	message='TE.data_sources_directory?='+TE.data_sources_directory?+"\n"
+	message+='Dir[TE.data_sources_directory?]='+Dir[TE.data_sources_directory?].inspect+"\n"
+	assert_not_empty(TE.data_sources_directory?, message)
+	assert_empty(Dir[TE.data_sources_directory?], message)
+	related_file=RelatedFile.new_from_path?('test/unit/tax_form_test.rb')
+	message='related_file='+related_file.inspect+"\n"
+	message+='related_file.data_sources_directory?='+related_file.data_sources_directory?+"\n"
+	message+='Dir[related_file.data_sources_directory?]='+Dir[related_file.data_sources_directory?].inspect+"\n"
+	assert_not_empty(Dir[related_file.data_sources_directory?], message)
 end #data_sources_directory
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumRelatedFile.pathnames?)
@@ -93,6 +102,11 @@ def test_default_tests_module_name
 end #default_tests_module?
 def test_test_case_class_name
 end #test_case_class?
+def test_functional_parallelism
+	edit_files=SELF.edit_files
+	assert_operator(SELF.functional_parallelism(edit_files).size, :>=, 1)
+	assert_operator(SELF.functional_parallelism.size, :<=, 4)
+end #functional_parallelism
 def test_tested_files
 	executable=SELF.model_test_pathname?
 	tested_files=SELF.tested_files(executable)

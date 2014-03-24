@@ -20,9 +20,9 @@ def initialize(id='10311E80')
 	@id=id
 end #initialize
 def scan
-	scan=ShellCommands.new("hdhomerun_config #{@id} scan").execute
+	scan=ShellCommands.new("hdhomerun_config #{@id} scan")
 end #scan
-require 'test/unit'
+require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -40,7 +40,7 @@ end #Assertions
 include Assertions
 #TestWorkFlow.assert_pre_conditions
 module Constants
-Discover=ShellCommands.new('hdhomerun_config discover', :delay_execution)
+Discover=ShellCommands.new('hdhomerun_config discover')
 Discover_example="hdhomerun device 10311E80 found at 172.31.42.101\n"
 Id_pattern=/(?<hr_id>[[:xdigit:]]{8})/
 Ip_pattern0=/\d{1,3}\./

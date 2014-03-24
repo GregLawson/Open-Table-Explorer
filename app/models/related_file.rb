@@ -20,8 +20,12 @@ extend ClassMethods
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
 def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
-	raise message if model_class_name.nil?
-	@model_class_name=model_class_name.to_sym
+	if model_class_name.nil? then
+		warn message if model_class_name.nil?
+		@model_class_name=nil
+	else
+		@model_class_name=model_class_name.to_sym
+	end #if
 	if project_root_dir.nil? then
 		@project_root_dir='' #empty string not nil
 	else
@@ -29,7 +33,10 @@ def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=F
 	end #
 	@model_basename=@model_class_name.to_s.tableize.singularize
 	raise "@model_basename" if @model_basename.nil?
-	@edit_files, @missing_files=pathnames?.partition do |p|
+	@edit_files, not_files=pathnames?.partition do |p|
+		File.file?(p)
+	end #partition
+	@directories, @missing_files=not_files.partition do |p|
 		File.exists?(p)
 	end #partition
 end #initialize
@@ -43,10 +50,16 @@ def ==(other)
 end #==
 def pathname_pattern?(file_spec)
 	raise "project_root_dir" if @project_root_dir.nil?
-	raise "FilePattern.find_by_name(file_spec)[:sub_directory]" if FilePattern.find_by_name(file_spec)[:sub_directory].nil?
+	file_pattern=FilePattern.find_by_name(file_spec)
+	raise "FilePattern.find_by_name(#{file_spec.inspect})=#{file_pattern.inspect} not found" if file_pattern.nil?
 	raise "@model_basename" if @model_basename.nil?
-	raise "FilePattern.find_by_name(file_spec)[:suffix]" if FilePattern.find_by_name(file_spec)[:suffix].nil?
-	@project_root_dir+FilePattern.find_by_name(file_spec)[:sub_directory]+@model_basename.to_s+FilePattern.find_by_name(file_spec)[:suffix]
+	raise "file_pattern[:prefix]"+file_pattern.inspect if file_pattern[:prefix].nil?
+	directory=@project_root_dir+file_pattern[:prefix]
+	raise "directory"+file_pattern.inspect if directory.nil?
+	raise "file_pattern[:suffix]"+file_pattern.inspect if file_pattern[:suffix].nil?
+	filename=@model_basename.to_s+file_pattern[:suffix]
+	raise "filename"+file_pattern.inspect if filename.nil?
+	directory+filename
 end #pathname_pattern
 def model_pathname?
 	pathname_pattern?(:model)
@@ -61,7 +74,8 @@ def assertions_test_pathname?
 	pathname_pattern?(:assertions_test)
 end #assertions_test_pathname?
 def data_sources_directory?
-	@project_root_dir+'test/data_sources/'
+	pathname_pattern?(:data_sources_dir)
+#	@project_root_dir+'test/data_sources/'
 end #data_sources_directory
 #  Initially the number of files for the model
 def pathnames?
@@ -91,6 +105,16 @@ end #default_tests_module?
 def test_case_class_name?
 	"DefaultTestCase"+default_test_class_id?.to_s
 end #test_case_class?
+def functional_parallelism(edit_files=@edit_files)
+	[
+	[model_pathname?, model_test_pathname?],
+	[assertions_pathname?, model_test_pathname?],
+	[model_test_pathname?, pathname_pattern?(:integration_test)],
+	[assertions_pathname?, assertions_test_pathname?]
+	].select do |fp|
+		fp-edit_files==[] # files must exist to be edited?
+	end #map
+end #functional_parallelism
 def tested_files(executable)
 	if executable==pathname_pattern?(:script) then # script only
 		[model_pathname?, executable]
@@ -119,7 +143,7 @@ def assert_invariant
 end # class_assert_invariant
 # conditions true while class is being defined
 def assert_pre_conditions
-	assert_respond_to(FilePattern, :new_from_path?)
+	assert_respond_to(RelatedFile, :new_from_path?)
 	assert_module_included(self, FilePattern::Assertions)
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined

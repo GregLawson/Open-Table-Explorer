@@ -6,6 +6,7 @@
 #
 ###########################################################################
 #require_relative 'test_environment'
+require 'test/unit'
 require_relative '../../app/models/default_test_case.rb'
 class EmptyTest
 end #EmptyTest

@@ -6,14 +6,10 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+require_relative '../../app/models/stream_parameter.rb'
 
 class StreamParameterTest < TestCase
-set_class_variables
-def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
-	assert_test_id_equal
-end #id_equal
 def test_foreign_keys_not_nil
-	@@model_class.assert_foreign_keys_not_nil
+	model_class?.assert_foreign_keys_not_nil
 end #
 end #StreamParameterTest

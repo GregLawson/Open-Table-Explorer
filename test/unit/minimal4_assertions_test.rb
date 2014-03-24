@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../test/assertions/minimal4_assertions.rb'
-class Minimal4Test < TestCase
+class Minimal4AssertionsTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
 end #Minimal

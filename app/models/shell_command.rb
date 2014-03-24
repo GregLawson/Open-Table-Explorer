@@ -7,7 +7,7 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
-require 'test/unit'
+require 'test/unit/assertions.rb'
 class ShellCommands
 module ClassMethods
 include Shellwords
@@ -167,7 +167,7 @@ def inspect(echo_command=@errors!='' || !success?)
 		ret+="@opts=#{@opts.inspect}\n" if $VERBOSE
 	end #if
 	if @errors!='' then
-		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n"
+		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n" if $VERBOSE
 		ret+="@errors=#{@errors.inspect}\n"
 	end #if
 	if !success? then
