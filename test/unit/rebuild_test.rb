@@ -32,7 +32,7 @@ def test_git_path_to_repositor
 	assert_equal(executing_repo, repository)
 end # git_path_to_repository
 def test_get_name
-	assert_equal('', Repository::This_code_repository.get_name)
+	assert_equal('Open-Table-Explorer', Repository::This_code_repository.get_name)
 end # get_name
 def test_named_repository_directories
 	directories_of_repositories = ['../']
