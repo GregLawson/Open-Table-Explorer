@@ -132,7 +132,7 @@ module ClassMethods
 include Test::Unit::Assertions
 def assert_pre_conditions
 	assert_include(Test::Unit::Assertions.instance_methods, :quieter)
-	Test::Unit::Assertions.quieter do
+	quieter do
 	end # quieter
 end #assert_post_conditions
 def assert_post_conditions
