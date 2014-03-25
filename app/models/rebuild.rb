@@ -170,9 +170,9 @@ end # if
 Directories_of_repositories=['/media/*/Repository Backups/',
   '/media/*/*/Repository Backups/', '/tmp/rebuild','../']
 Source=Dir['/media/**/Repository Backups/'].first # first found
-Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
+Small_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
-Clean_Example=Rebuild.new(Toy_repository)
+Clean_Example=Rebuild.new(Small_repository)
 #Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
 #Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
 From_repository=Source+"copy-master"
