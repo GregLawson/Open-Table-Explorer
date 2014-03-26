@@ -74,11 +74,11 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
-	if path[-1,1]!='/' then
+	if path.to_s[-1,1]!='/' then
 		path=path+'/'
 	end #if
 	@url=path
-	@path=path
+	@path=path.to_s
   puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
@@ -92,7 +92,7 @@ def git_command(git_subcommand)
 	Repository.git_command(git_subcommand, @path)
 end #git_command
 def inspect
-	git_command('status --short --branch').output
+	@path.inspect
 end #inspect
 def corruption_fsck
 	git_command("fsck")
