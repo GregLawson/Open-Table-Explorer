@@ -10,7 +10,7 @@ require_relative "../../app/models/rebuild.rb"
 class RebuildTest < TestCase
 include DefaultTests
 include Rebuild::Examples
-def test_git_path_to_repositor
+def test_git_path_to_repository
 	executing_repo = {name: :'Open-Table-Explorer', dir: Pathname.new(Repository::This_code_repository.path)}
 	file = Repository::This_code_repository.path + '.git/'
 	dot_git_just_seen = false
@@ -49,8 +49,10 @@ def test_named_repository_directories
 		repositories
 	end.flatten # map
 	assert_not_empty(repository_directories)
-	executing_repo = {name: :'Open-Table-Explorer', dir: Pathname.new(Repository::This_code_repository.path)}
-	assert_include(repository_directories, executing_repo)
+	executing_repo = Repository::This_code_repository
+	message = 'executing_repo='+executing_repo.inspect
+	assert_equal(repository_directories[1], executing_repo, message)
+	assert_include(repository_directories, executing_repo, message)
 	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
 	assert_include(repository_directories, executing_repo)
 end # named_repository_directories
@@ -89,8 +91,8 @@ def test_graft
 # cd /tmp/
 #	git_command('git clone good-host:/path/to/good-repo')
 #	git_command('cd /home/user/broken-repo')
-	Small_repository.shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
-	Small_repository.git_command('repack -a -d')
+#	Small_repository.shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
+#	Small_repository.git_command('repack -a -d')
 #	shell_command('rm -rf /tmp/good-repo')
 end # graft
 def test_destructive_status!
@@ -98,8 +100,8 @@ def test_destructive_status!
 #	Small_repository.git_command("rebase").assert_post_conditions
 	Small_repository.git_command("gc").assert_post_conditions
 	Real_repository.git_command("gc").assert_post_conditions
-	Small_repository.destructive_status!
-	Real_repository.destructive_status!
+#	Small_repository.destructive_status!
+#	Real_repository.destructive_status!
 end #destructive_status!
 def test_repack
 end # repack
