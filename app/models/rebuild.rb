@@ -24,6 +24,18 @@ def git_path_to_repository(file)
 end # git_path_to_repository
 end # ClassMethods
 extend ClassMethods
+def initialize(path)
+	if path.to_s[-1,1]!='/' then
+ 		path=path+'/'
+ 	end #if
+ 	@url=path
+	@path=path.to_s
+   puts '@path='+@path if $VERBOSE
+ 	@grit_repo=Grit::Repo.new(@path)
+ end #initialize
+ def inspect
+	@path.inspect
+ end #inspect
 # names are not unique, directories make them unique
 def get_name
 	File.basename(@path)
