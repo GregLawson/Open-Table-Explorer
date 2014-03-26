@@ -15,7 +15,7 @@ def git_path_to_repository(file)
 		if dot_git_just_seen then
 			dot_git_just_seen = nil # not any more
 			repo_path = Pathname.new(Pathname.new(parent).expand_path.to_s + '/')
-			repository = {name: File.basename(parent).to_sym, dir: Pathname.new(Pathname.new(parent).expand_path.to_s + '/')}
+			repository = Repository.new(Pathname.new(Pathname.new(parent).expand_path.to_s + '/'))
 		elsif File.basename(parent) == '.git'
 			dot_git_just_seen = true
 		end # if
@@ -24,10 +24,28 @@ def git_path_to_repository(file)
 end # git_path_to_repository
 end # ClassMethods
 extend ClassMethods
+def initialize(path)
+	if path.to_s[-1,1]!='/' then
+ 		path=path+'/'
+ 	end #if
+ 	@url=path
+	@path=path.to_s
+   puts '@path='+@path if $VERBOSE
+ 	@grit_repo=Grit::Repo.new(@path)
+ end #initialize
+ def inspect
+	@path.inspect
+ end #inspect
 # names are not unique, directories make them unique
 def get_name
 	File.basename(@path)
 end # get_name
+def <=>(other)
+	path.to_s <=> other.path.to_s
+end # <=>
+def ==(other)
+	path.== other.path.to_s
+end # ==
 end # Repository
 class Rebuild < Repository
 module Constants
@@ -49,7 +67,7 @@ end # named_repository_directories
 #	copy - brute force directory copy (corruption untouched)
 #	clone - copy of valid repository (copies object and pack corruption)
 #	fetch - copy of valid repository (fails if object or pack corruption)
-def clone(source_repository_path)
+def clone(name, source_repository_path = nil)
 	command_string='git clone '+Shellwords.escape(source_repository_path)
 	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # clone
@@ -170,9 +188,9 @@ end # if
 Directories_of_repositories=['/media/*/Repository Backups/',
   '/media/*/*/Repository Backups/', '/tmp/rebuild','../']
 Source=Dir['/media/**/Repository Backups/'].first # first found
-Toy_repository=Repository.replace_or_create(Temporary+'toy_repository')
+Small_repository=Repository.replace_or_create(Temporary+'toy_repository')
 Real_repository=Repository.create_if_missing(Temporary+'real_repository')
-Clean_Example=Rebuild.new(Toy_repository)
+Clean_Example=Rebuild.new(Small_repository)
 #Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
 #Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
 From_repository=Source+"copy-master"
