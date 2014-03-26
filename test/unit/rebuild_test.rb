@@ -60,19 +60,19 @@ end # named_repository_directories
 #
 #
 def test_clone
-	source_repository_path = Toy_repository.path
+	source_repository_path = Small_repository.path
 	command_string='git clone '+Shellwords.escape(source_repository_path)
 end # clone
 def test_fetch
-	source_repository_path = Toy_repository.path
+	source_repository_path = Small_repository.path
 end # fetch
 def test_copy
-	source_repository_path = Toy_repository.path
+	source_repository_path = Small_repository.path
 #	command_string='cp -a '+Shellwords.escape(source_path)+' '+Shellwords.escape(temporary_path)
 #	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # copy
 def test_rsync
-	source_repository_path = Toy_repository.path
+	source_repository_path = Small_repository.path
 end # rsync
 #puts "cd_command=#{cd_command.inspect}"
 def test_inspect
@@ -89,16 +89,16 @@ def test_graft
 # cd /tmp/
 #	git_command('git clone good-host:/path/to/good-repo')
 #	git_command('cd /home/user/broken-repo')
-#	Toy_repository.shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
-#	Toy_repository.git_command('repack -a -d')
+#	Small_repository.shell_command('echo '+graft_replacement_repository+'/.git/objects/ > '+@path+'.git/objects/info/alternates')
+#	Small_repository.git_command('repack -a -d')
 #	shell_command('rm -rf /tmp/good-repo')
 end # graft
 def test_destructive_status!
-#	Toy_repository.git_command("fsck").assert_post_conditions
-#	Toy_repository.git_command("rebase").assert_post_conditions
-	Toy_repository.git_command("gc").assert_post_conditions
+#	Small_repository.git_command("fsck").assert_post_conditions
+#	Small_repository.git_command("rebase").assert_post_conditions
+	Small_repository.git_command("gc").assert_post_conditions
 	Real_repository.git_command("gc").assert_post_conditions
-#	Toy_repository.destructive_status!
+#	Small_repository.destructive_status!
 #	Real_repository.destructive_status!
 end #destructive_status!
 def test_repack
@@ -134,8 +134,8 @@ def test_add_commits
 
 
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
-#exists Toy_repository.git_command("branch details").assert_post_conditions
-#exists Toy_repository.git_command("branch summary").assert_post_conditions
+#exists Small_repository.git_command("branch details").assert_post_conditions
+#exists Small_repository.git_command("branch summary").assert_post_conditions
 end #add_commits
 def test_Examples
   path=Source+'test_recover'
