@@ -15,7 +15,7 @@ def git_path_to_repository(file)
 		if dot_git_just_seen then
 			dot_git_just_seen = nil # not any more
 			repo_path = Pathname.new(Pathname.new(parent).expand_path.to_s + '/')
-			repository = {name: File.basename(parent).to_sym, dir: Pathname.new(Pathname.new(parent).expand_path.to_s + '/')}
+			repository = Repository.new(Pathname.new(Pathname.new(parent).expand_path.to_s + '/'))
 		elsif File.basename(parent) == '.git'
 			dot_git_just_seen = true
 		end # if
@@ -28,6 +28,12 @@ extend ClassMethods
 def get_name
 	File.basename(@path)
 end # get_name
+def <=>(other)
+	path.to_s <=> other.path.to_s
+end # <=>
+def ==(other)
+	path.== other.path.to_s
+end # ==
 end # Repository
 class Rebuild < Repository
 module Constants
@@ -49,7 +55,7 @@ end # named_repository_directories
 #	copy - brute force directory copy (corruption untouched)
 #	clone - copy of valid repository (copies object and pack corruption)
 #	fetch - copy of valid repository (fails if object or pack corruption)
-def clone(source_repository_path)
+def clone(name, source_repository_path = nil)
 	command_string='git clone '+Shellwords.escape(source_repository_path)
 	ShellCommands.new(command_string).assert_post_conditions #uncorrupted old backup to start
 end # clone
