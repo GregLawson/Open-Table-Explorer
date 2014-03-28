@@ -1,14 +1,28 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative '../../app/models/stream_method.rb'
 class StreamMethod < ActiveRecord::Base
 include Test::Unit::Assertions
-require 'rails/test_help'
+#require 'rails/test_help'
+module Examples
+HTTP_method=StreamMethod.find_by_name(:HTTP)
+end #Examples
+include Examples
+module Assertions
+include DefaultAssertions
+module ClassMethods
+include DefaultAssertions::ClassMethods
+def assert_pre_conditions
+	assert(!self.sequential_id?, "class=#{self}, should not be a sequential_id.")
+	StreamMethod.all.map do |u|
+	end #map
+#	fail "end of class assert_pre_conditions "
+end #assert_pre_conditions
 def self.assert_no_syntax_error(code)
 	method_def= "def syntax_check_temp_method\n#{code}\nend\n"
 	instance_eval(method_def)
@@ -16,10 +30,11 @@ def self.assert_no_syntax_error(code)
 rescue  SyntaxError => exception_raised
 	return false
 end #def
+end #ClassMethods
 
 def assert_acq_and_rescue
 	stream=acquisition_stream_specs(@testURL.to_sym)
-	acq=ruby_interfaces(:HTTP)
+	acq=HTTP_method.clone
 	acq.interface_method
 	assert(!acq.interaction.error.nil? || !acq.interaction.acquisition_data.empty?)
 rescue  StandardError => exception_raised
@@ -27,19 +42,19 @@ rescue  StandardError => exception_raised
 	puts "$!=#{$!}"
 end #def	  
 def assert_gui_name
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	assert_equal("@input", acq.gui_name('input'))
 end #gui_name
 def assert_instance_name_reference
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	assert_equal("self[:input]", acq.instance_name_reference('input'))
 end #instance_name_reference
 def assert_default_method
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	assert_equal('@acquisition=@uri', acq.default_method)
 end #default_method
 def assert_map_io
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	code=acq.default_method
 	name='uri'
 	assert_equal('@acquisition=self[:uri]', code.gsub(acq.gui_name(name), acq.instance_name_reference(name)))
@@ -55,7 +70,7 @@ def assert_map_io
 	assert_equal('self[:acquisition]=self[:uri]', acq.map_io(acq.default_method))
 end #map_io
 def assert_eval_method
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	code=acq.interface_code
 	if code.nil? || code.empty? then
 		rows=0
@@ -77,7 +92,7 @@ def assert_eval_method
 	assert_not_nil(acq.interface_code_rows)
 end #eval_method
 def assert_compile_code
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	assert_instance_of(StreamMethod,acq)
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
@@ -130,7 +145,7 @@ def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
 	assert_not_nil(expected_errors)
 end #assert_no_syntax_error
 def assert_input_stream_names
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
 	stream_inputs=stream_pattern_arguments.select{|a| a.direction=='Input'}
 	assert_equal(['URI'], stream_inputs.map{|a| a.name})
@@ -138,7 +153,7 @@ def assert_input_stream_names
 
 end #input_stream_names
 def assert_output_stream_names
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	stream_pattern_arguments=acq.stream_pattern.stream_pattern_arguments
 	stream_outputs=stream_pattern_arguments.select{|a| a.direction=='Output'}
 	assert_equal(['Acquisition'], stream_outputs.map{|a| a.name})
@@ -171,7 +186,7 @@ def assert_field_firing_error(field=nil, expected_error_message_regexp=nil)
 	firing.errors.clear # so we can run more tests
 end #assert_field_firing_error
 def assert_fire
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	fire_check(acq.interface_code, ['#<NoMethodError: undefined method `uri\' for "http://192.168.100.1":String>'], ['is empty.'])
 	fire_check(acq.default_method, [], [])
 	assert_equal("http://192.168.100.1", acq[:acquisition])
@@ -181,7 +196,7 @@ def assert_fire
 	end #each
 end #fire
 def assert_errors
-	acq=stream_methods(:HTTP)
+	acq=HTTP_method.clone
 	assert(!acq.has_attribute?(:errors))
 	assert_instance_of(ActiveModel::Errors, acq.errors)
 	assert_instance_of(Array, acq.errors.full_messages)
@@ -201,7 +216,33 @@ def assert_errors
 	assert_equal(["Acquisition is bad.", "Errors is worse."], acq.errors.full_messages)
 	assert_equal(["Acquisition is bad.", "Errors is worse."], acq.errors.to_a)
 	acq.errors.clear      
-	assert_equal(0, acq.errors.count)
 end #errors
+def assert_invariant
+	assert_instance_of(StreamMethod, self)
+	assert(!respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
+
+	input_streams.each do |stream|
+		assert_instance_of(StreamMethodArgument, stream)
+		code=code.gsub(stream.gui_name, stream.instance_name_reference)
+#		code=code+":input(#{stream.gui_name}, #{instance_name_reference(stream)})"
+	end #each
+end # class_assert_invariant
+def assert_pre_conditions
+	input_streams.each do |input|
+	end #each
+	assert_empty(syntax_errors?)
+	assert_equal(0, errors.count)
+#	fail "end of instance assert_pre_conditions"
+end #assert_pre_conditions
+def assert_post_conditions
+	input_streams.each do |input|
+	end #each
+	assert(!respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
+	assert_empty(syntax_errors?)
+#	fail "end of instance assert_pre_conditions"
+end #assert_pre_conditions
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
 
 end #StreamMethod
