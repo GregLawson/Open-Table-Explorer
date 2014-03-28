@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/global.rb'
+#require 'app/models/global.rb'
 module ColumnGroup
 module ClassMethods
 def defaulted_primary_logical_key?
@@ -134,7 +134,7 @@ def is_logical_primary_key?(attribute_names)
 		end #if
 	end #if
 	attribute_names.each do |attribute_name|
-		if attribute_name='id' then
+		if attribute_name=='id' then
 			return false
 		elsif !column_names.include(attribute_name.to_s) then
 			return false

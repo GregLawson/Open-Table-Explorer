@@ -1,17 +1,16 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
-# Copyright: See COPYING pathname that comes with this distribution
+# Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
-# executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
-class UrlTest < ActiveSupport::TestCase
-set_class_variables
-@@test_url_record=Url.find_by_name('nmap_local_network_0')
+require_relative 'test_environment'
+require_relative 'default_test_case.rb'
+require_relative '../../app/models/url.rb'
+class UrlTest < DefaultTestCase2
+include DefaultTests2
+Test_url_record=Url.find_by_name('nmap_local_network_0')
 def test_find_by_name
  	assert_equal('EEG', Url.find_by_name('EEG').href)
 end #find_by_name
@@ -27,27 +26,34 @@ end #def
 def test_uriHash
 end #def
 def test_scheme
-	assert_equal('shell', @@test_url_record.scheme)
+	assert_equal('shell', Test_url_record.scheme)
 end #scheme
 def test_stream_method
-	scheme_name=@@test_url_record.scheme
+	scheme_name=Test_url_record.scheme
 	scheme_name=scheme_name[0..0].upcase+scheme_name[1..-1]
 	assert_equal('Shell', scheme_name)
-	stream_method= StreamMethod.find_by_name(scheme_name)
-	assert_not_nil(@@test_url_record.stream_method)
+	stream_method= StreamMethod.find_all_by_name(scheme_name)
+	assert_not_nil(stream_method)
+	assert_instance_of(Array, stream_method)
+	stream_method.all? do |s|
+		assert_instance_of(StreamMethod, s)
+		assert_equal('Shell', s.name)
+	end #all
 end #stream_method
 def implicit_stream_link
 end #implicit_stream_link
 def setup
 	@testURL='http://192.168.3.193/api/LiveData.xml'
-	define_model_of_test # allow generic tests
-	assert_module_included(@model_class,Generic_Table)
-	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+#	assert_module_included(model_class?,Generic_Table)
+	explain_assert_respond_to(model_class?,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(model_class?,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 #	define_association_names #38271 associations
 end #stream_method
 def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
-	assert_test_id_equal
+	assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
+#	assert_test_id_equal
 end #test_id_equal
+def test_assert_pre_conditions
+	Test_url_record.assert_pre_conditions
+end #assert_pre_conditions
 end #Url

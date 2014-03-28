@@ -5,13 +5,12 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
-class BatteryMeasurementTest < ActiveSupport::TestCase
-set_class_variables
+require_relative 'test_environment.rb'
+class BatteryMeasurementTest < TestCase
 def test_initialize
 end #initialize
 def test_all
-	records=@@model_class.all
+	records=model_class?.all
 	assert_not_empty(records)
 	assert_instance_of(Array, records)
 	assert_kind_of(Hash, records.first)

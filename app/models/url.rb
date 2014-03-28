@@ -1,12 +1,15 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/generic_table.rb' # in test_helper?
+require_relative '../../app/models/stream_method.rb'
 class Url < ActiveRecord::Base
-include Generic_Table
+#include Generic_Table # really needed?
 has_many :stream_methods
 after_initialize :init
 def init
@@ -62,4 +65,34 @@ end #stream_method
 def implicit_stream_link
 	return StreamLink.new
 end #implicit_stream_link
+require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/default_assertions.rb'
+module Examples
+Test_url_record=Url.find_by_name('nmap_local_network_0')
+end #Examples
+include Examples
+module Assertions
+include DefaultAssertions
+module ClassMethods
+include DefaultAssertions::ClassMethods
+def assert_pre_conditions
+	Url.all.map do |u|
+		stream_methods= StreamMethod.find_all_by_name(u.scheme)
+		assert_not_nil(stream_methods)
+		assert_instance_of(Array, stream_methods)
+	end #map
+#	fail "end of class assert_pre_conditions "
+end #assert_pre_conditions
+end #ClassMethods
+def assert_pre_conditions
+	assert_instance_of(Url, self)
+	stream_methods= StreamMethod.find_all_by_name(scheme)
+	assert_not_nil(stream_methods)
+	assert_instance_of(Array, stream_methods)
+	assert_single_element_array(stream_methods)
+#	fail "end of instance assert_pre_conditions"
+end #assert_pre_conditions
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
 end #Url

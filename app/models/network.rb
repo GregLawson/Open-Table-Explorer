@@ -1,9 +1,15 @@
+###########################################################################
+#    Copyright (C) 2013 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+require_relative 'stream_pattern.rb'
 class Network < ActiveRecord::Base
 include Generic_Table
-def initialize
-	super('Networks')
-end #initialize
-def self.whereAmI
+module ClassMethods
+def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
 	#puts ifconfig
 	s = StringScanner.new(ifconfig)
@@ -30,8 +36,8 @@ def self.whereAmI
 	network.dumpAcquisitions if $DEBUG
 	network.save
 end #whereAmI
-def self.acquire
-	self.whereAmI
+def acquire
+	whereAmI
 # now do incremental ping and nmapScan
 	Global::log.debug("networks before find @row=#{@row}")
 	network=Networks.first(:order => 'last_scan ASC')
@@ -40,7 +46,7 @@ def self.acquire
 	host=Hosts.first(:order => 'last_detection ASC')
 	Hosts.nmapScan(host.ip)
 end
-def self.ping(nmapScan)
+def ping(nmapScan)
 	network=Networks.find_or_initialize_by_nmap_addresses(nmapScan)
 	puts "nmap -sP #{nmapScan}"     #if $VERBOSE
 	@pingNmap=`nmap -sP #{nmapScan}`
@@ -69,4 +75,35 @@ def self.ping(nmapScan)
 	network.inspect if $VERBOSE
 	network.save
 end
+end #ClassMethods
+extend ClassMethods
+module Constants
+end #Constants
+include Constants
+# attr_reader
+def initialize
+	super('Networks')
+end #initialize
+module Assertions
+include Test::Unit::Assertions
+module ClassMethods
+include Test::Unit::Assertions
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end #Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+include Constants
+end #Examples
 end #Network

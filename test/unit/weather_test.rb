@@ -1,6 +1,6 @@
-require 'test/test_helper'
+require_relative 'test_environment'
 
-class WeatherTest < ActiveSupport::TestCase
+class WeatherTest < TestCase
   # Replace this with your real tests.
   def test_truth
     assert true

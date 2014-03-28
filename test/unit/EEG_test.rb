@@ -5,13 +5,11 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class EegTest < ActiveSupport::TestCase
-set_class_variables('Eeg', false)
-#file not fixture fixtures @@table_name.to_sym
+class EegTest < TestCase
 def test_initialize
 end #initialize
 def test_all
@@ -72,8 +70,4 @@ def test_associations
 	assert_equal('Acquisition',StreamPatternArgument.where("name='Acquisition'").first[:name])
 #	assert_equal([],StreamMethodArgument.where("stream_pattern='Acquisition'").name)
 end #test_associations
-def test_id_equal
-	assert(!@@model_class.sequential_id?, "@@model_class=#{@@model_class}, should not be a sequential_id.")
-	assert_test_id_equal
-end #id_equal
 end #EEG

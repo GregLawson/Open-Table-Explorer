@@ -1,6 +1,6 @@
-require 'test/test_helper'
+require_relative 'test_environment'
 
-class ProductionTest < ActiveSupport::TestCase
+class ProductionTest < TestCase
   # Replace this with your real tests.
   def test_truth
     assert true
