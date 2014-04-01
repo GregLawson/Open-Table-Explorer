@@ -41,9 +41,9 @@ def unit_test(executable=@related_files.model_test_pathname?)
 	end until !@repository.something_to_commit? 
 end #unit_test
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

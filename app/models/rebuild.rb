@@ -24,6 +24,18 @@ def git_path_to_repository(file)
 end # git_path_to_repository
 end # ClassMethods
 extend ClassMethods
+def initialize(path)
+	if path.to_s[-1,1]!='/' then
+ 		path=path+'/'
+ 	end #if
+ 	@url=path
+	@path=path.to_s
+   puts '@path='+@path if $VERBOSE
+ 	@grit_repo=Grit::Repo.new(@path)
+ end #initialize
+ def inspect
+	@path.inspect
+ end #inspect
 # names are not unique, directories make them unique
 def get_name
 	File.basename(@path)
@@ -133,9 +145,9 @@ def add_commits(from_repository, last_commit_to_add, branch, history_options='--
 	@source_repository.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def assert_pre_conditions
 	assert_include(Test::Unit::Assertions.instance_methods, :quieter)
 	quieter do

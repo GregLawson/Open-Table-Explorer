@@ -84,9 +84,9 @@ def merge_single_element_arrays?
 
 end #merge_single_element_arrays
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

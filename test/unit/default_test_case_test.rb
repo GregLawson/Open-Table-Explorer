@@ -22,7 +22,7 @@ class MinimalTest < DefaultTestCase0
 end #MinimalTest
 #require_relative '../../test/assertions/default_assertions.rb'
 class ClassExists
-include Test::Unit::Assertions
+include Minitest::Assertions
 extend Test::Unit::Assertions
 #include DefaultAssertions
 #extend DefaultAssertions::ClassMethods

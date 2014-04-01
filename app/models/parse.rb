@@ -167,7 +167,7 @@ def named_hash(hash_offset=0)
 end #named_hash
 module Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def newline_if_not_empty(message)
 	if message.empty? then
 		message
