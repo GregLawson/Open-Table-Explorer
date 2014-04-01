@@ -1,3 +1,4 @@
+require_relative '../assertions/ruby_assertions.rb'
 module Test
 module Unit
 module Assertions

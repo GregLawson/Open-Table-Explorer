@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require 'test/unit'
 require "minitest/autorun"
 require 'active_support/all'
 # gem install mintest
