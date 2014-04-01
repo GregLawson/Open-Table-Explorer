@@ -145,9 +145,9 @@ def add_commits(from_repository, last_commit_to_add, branch, history_options='--
 	@source_repository.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def assert_pre_conditions
 	assert_include(Test::Unit::Assertions.instance_methods, :quieter)
 	quieter do

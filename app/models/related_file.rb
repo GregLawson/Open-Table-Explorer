@@ -134,9 +134,9 @@ def model_name?
 	@model_class_name
 end #model_name?
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "

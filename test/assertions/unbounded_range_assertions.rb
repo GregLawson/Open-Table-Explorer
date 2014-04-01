@@ -5,13 +5,13 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit'
+require_relative '../assertions/assertions.rb'
 require_relative '../../app/models/unbounded_range.rb'
 require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
 class UnboundedRange < Range
 require_relative '../assertions/default_assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
 end #ClassMethods
 def assert_post_conditions

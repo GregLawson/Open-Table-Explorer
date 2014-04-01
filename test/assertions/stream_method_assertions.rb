@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/stream_method.rb'
 class StreamMethod < ActiveRecord::Base
-include Test::Unit::Assertions
+include Minitest::Assertions
 #require 'rails/test_help'
 module Examples
 HTTP_method=StreamMethod.find_by_name(:HTTP)
