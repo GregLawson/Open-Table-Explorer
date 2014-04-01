@@ -7,7 +7,6 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
-require 'test/unit/assertions.rb'
 class ShellCommands
 module ClassMethods
 include Shellwords
@@ -189,9 +188,10 @@ def trace
 	$stdout.puts shorter_callers.join("\n")
 	self # return for command chaining
 end #trace
+require_relative '../../test/assertions/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
-extend Test::Unit::Assertions
+include Minitest::Assertions
+extend Minitest::Assertions
 def assert_pre_conditions(message='')
 	self # return for command chaining
 end #assert_pre_conditions
