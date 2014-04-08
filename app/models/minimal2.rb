@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -16,6 +16,7 @@ include Constants
 # attr_reader
 def initialize
 end #initialize
+require_relative '../../test/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods

@@ -15,18 +15,21 @@ end #Constants
 include Constants
 # attr_reader
 def initialize(pairing={dir: '', backup: '/media/central/'})
-	@source_dir = pairing.source_dir
-	@destination_dir = pairing.destination_dir
+	@source_dir = pairing[:source_dir]
+	@destination_dir = pairing[:destination_dir]
 	@options = '-ruav --links'
 end #initialize
 def backup
-	command_string = 'rsync ' + @options + ' ' + @source_dir + ' ' + @destination_dir
-	ShellCommands.new(command_string)
-end # rsync
+	command_string = 'rsync ' + @options + ' ' + @source_dir + '* ' + @destination_dir
+#	ShellCommands.new(command_string)
+end # backup
+def merge_back
+	command_string = 'rsync ' + @options + ' ' + @destination_dir + '* ' + @source_dir
+#	ShellCommands.new(command_string)
+end # merge_back
+require_relative '../../test/assertions.rb'
 module Assertions
-include Minitest::Assertions
 module ClassMethods
-include Minitest::Assertions
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions
@@ -43,6 +46,18 @@ include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
+include Constants
+end #Examples
+end # Rsync
+class Backup
+module ClassMethods
+end #ClassMethods
+extend ClassMethods
+module Constants
+end #Constants
+include Constants
+# attr_reader
+module Examples
 Backups_dir='/media/central-greg/'
 Media_dir = '/media/central/'
 Space = {dir:'/mnt/space', backup: Backups_dir}
@@ -51,4 +66,4 @@ WD1TG_videos  = {dir: '/media/usb0/My_Videos/*', backup:'/media/central/Videos/'
 WD1TG = {dir: '/media/usb0/*', backup: Backups_dir + '/WD1TB'}
 include Constants
 end #Examples
-end # Rsync
+end # Backup
