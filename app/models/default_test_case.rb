@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require 'active_support/all'
-BaseTestCase=ActiveSupport::TestCase
+BaseTestCase=Minitest::Test
 module ExampleCall
 def each_example(&block)
   return if model_class?.nil?
@@ -63,8 +63,8 @@ def assert_optional_method(object, symbol)
 end #
 end #ExampleCall
 module DefaultTests0
-require 'test/unit/assertions.rb'
-include Test::Unit::Assertions
+require 'minitest/assertions.rb'
+include Minitest::Assertions
 extend Test::Unit::Assertions
 def related_files?
 	RelatedFile.new(model_name?)
@@ -238,8 +238,8 @@ class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 end #DefaultTestCase3
 
 class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
-require 'test/unit/assertions.rb'
-include Test::Unit::Assertions
+require 'minitest/assertions.rb'
+include Minitest::Assertions
 extend Test::Unit::Assertions
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)

@@ -12,7 +12,7 @@ require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/shell_command.rb'
 module OpenTableExplorer
-include Test::Unit::Assertions
+include Minitest::Assertions
 extend Test::Unit::Assertions
 module Finance
 module Constants
@@ -58,9 +58,9 @@ def run_open_tax_solver_to_filler
 	ShellCommands.new(command).assert_post_conditions
 end #run_open_tax_solver_to_filler
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
@@ -168,7 +168,7 @@ end #Examples
 require_relative '../../test/assertions/default_assertions.rb'
 
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 extend Test::Unit::Assertions
 def assert_pre_conditions
 		assert_instance_of(OpenTaxSolver, self)
@@ -186,7 +186,7 @@ end #assert_pre_conditions
 module ClassMethods
 include OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
-include Test::Unit::Assertions
+include Minitest::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions

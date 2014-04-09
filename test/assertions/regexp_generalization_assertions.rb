@@ -6,7 +6,7 @@
 #
 ###########################################################################
 module RegexpGeneralizationAssertions #file context
-include Test::Unit::Assertions
+include Minitest::Assertions
 require 'rails/test_help'
 #include Squeeze_Display
 # Assertions (validations)

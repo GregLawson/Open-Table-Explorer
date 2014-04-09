@@ -8,9 +8,9 @@
 require_relative '../../test/assertions/ruby_assertions.rb'
 class Minimal3
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

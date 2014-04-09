@@ -6,10 +6,10 @@
 #
 ###########################################################################
 module DefaultAssertions
-require 'test/unit'
-include Test::Unit::Assertions
+require_relative '../assertions/assertions.rb'
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
 	assert_instance_of(Class, self)

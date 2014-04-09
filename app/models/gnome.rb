@@ -25,9 +25,9 @@ def ps
 	IO.binwrite(Data_Sources_Dir+'test.ps', ps.output)
 end #lsof
 module Assertions
-include Test::Unit::Assertions
+include Minitest::Assertions
 module ClassMethods
-include Test::Unit::Assertions
+include Minitest::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
