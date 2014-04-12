@@ -10,13 +10,13 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 class UnboundedFixnum < Numeric # Fixnum blocks new
 require_relative '../assertions/default_assertions.rb'
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
 	assert_include(UnboundedFixnum.ancestors, Numeric)
 end # class_assert_invariant
-include Minitest::Assertions
+include Test::Unit::Assertions
 end #ClassMethods
 # Instance methods
 def assert_invariant

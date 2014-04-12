@@ -9,9 +9,9 @@
 require_relative '../../app/models/repository.rb'
 class Repository <Grit::Repo
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions

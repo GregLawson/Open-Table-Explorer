@@ -12,12 +12,12 @@ require_relative '../../test/assertions/unbounded_range_assertions.rb'
 # Postfix operators and brackets end embeddded arrays
 class RegexpParse
 #require_relative '../assertions/default_assertions.rb'
-require_relative '../assertions/assertions.rb'
+require 'test/unit'
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 extend Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_invariant
 	assert_equal(RegexpParse, self)
 	assert_include(instance_methods(false), :parseOneTerm!)

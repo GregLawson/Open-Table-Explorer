@@ -12,7 +12,7 @@ class RegexpTree
 #require_relative '../assertions/default_assertions.rb'
 module Assertions
 # Assertions (validations)
-include Minitest::Assertions
+include Test::Unit::Assertions
 #require 'rails/test_help'
 module ClassMethods
 def assert_pre_conditions

@@ -35,7 +35,7 @@ end #Constants
 include Constants
 require_relative '../../test/assertions/default_assertions.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
-include Minitest::Assertions
+include Test::Unit::Assertions
 extend Test::Unit::Assertions
 module Assertions
 def assert_invariant

@@ -100,9 +100,9 @@ def group
 	/(?:#{self.source})/
 end #group
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_pre_conditions

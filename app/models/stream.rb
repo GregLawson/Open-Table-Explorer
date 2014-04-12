@@ -17,9 +17,9 @@ def initialize(*args)
   end #if
 end #initialize
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

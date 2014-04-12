@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative '../assertions/assertions.rb'
+require 'test/unit'
 require_relative '../../app/models/global.rb'
 require 'set'
 module Test
@@ -423,5 +423,5 @@ end #assert_data_file
 end #Assertions
 end #Unit
 end #Test
-#include Minitest::Assertions
+#include Test::Unit::Assertions
 #Test::Unit::Assertions.assert_pre_conditions

@@ -85,9 +85,9 @@ def initialize
 	super('Networks')
 end #initialize
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions

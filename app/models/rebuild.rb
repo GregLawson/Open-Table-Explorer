@@ -46,6 +46,13 @@ end # <=>
 def ==(other)
 	path.== other.path.to_s
 end # ==
+module Constants
+Directories_of_repositories=['/media/*/Repository Backups/',
+  '/media/*/*/Repository Backups/', '/tmp/rebuild','../']
+Source=Dir['/media/**/Repository Backups/'].first # first found
+Small_repository=Repository.replace_or_create(Temporary+'toy_repository')
+Real_repository=Repository.create_if_missing(Temporary+'real_repository')
+end # Constants
 end # Repository
 class Rebuild < Repository
 module Constants
@@ -145,9 +152,9 @@ def add_commits(from_repository, last_commit_to_add, branch, history_options='--
 	@source_repository.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_pre_conditions
 	assert_include(Test::Unit::Assertions.instance_methods, :quieter)
 	quieter do
@@ -185,19 +192,11 @@ Repository_glob='*/.git/refs/stash' # my active development inncludes stashes
 if !File.exist?(Temporary) then
 	ShellCommands.new('mkdir ' + Temporary)
 end # if
-Directories_of_repositories=['/media/*/Repository Backups/',
-  '/media/*/*/Repository Backups/', '/tmp/rebuild','../']
-Source=Dir['/media/**/Repository Backups/'].first # first found
-Small_repository=Repository.replace_or_create(Temporary+'toy_repository')
-Real_repository=Repository.create_if_missing(Temporary+'real_repository')
 Clean_Example=Rebuild.new(Small_repository)
 #Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
 #Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
 From_repository=Source+"copy-master"
 History_options='--squash -Xthiers '
-
 end #Examples
 #include Examples
 end #Rebuild
-
-

@@ -7,7 +7,7 @@
 require 'test/test_helper'
 class ExampleType < ActiveRecord::Base
 # Assertions (validations)
-include Minitest::Assertions
+include Test::Unit::Assertions
 require 'rails/test_help'
 # 2) an example should not match at least one of its specialization regexps
 

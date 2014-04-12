@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'minitest/assertions.rb'
+require 'test/unit/assertions.rb'
 require 'pathname'
 require_relative 'regexp.rb'
 require 'active_support/all'
@@ -157,9 +157,9 @@ def relative_path?(unit_base_name)
 end #relative_path
 include Constants
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "

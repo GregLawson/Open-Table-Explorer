@@ -13,7 +13,7 @@ require 'test/test_helper'
 # 4) specialization regexps have fewer choices (including case) or more restricted repetition
 module GenericTypeAssertions
 # Assertions (validations)
-include Minitest::Assertions
+include Test::Unit::Assertions
 require 'rails/test_help'
 module ClassMethods
 end #module ClassMethods

@@ -40,9 +40,9 @@ Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
@@ -88,9 +88,9 @@ extend ClassMethods
 module Constants
 end #Constants
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions

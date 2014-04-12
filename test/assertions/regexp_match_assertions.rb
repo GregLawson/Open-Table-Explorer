@@ -8,8 +8,8 @@
 require_relative '../../app/models/regexp_match.rb'
 class RegexpMatch
 module Assertions
-require_relative '../assertions/assertions.rb'
-include Minitest::Assertions
+require 'test/unit'
+include Test::Unit::Assertions
 # Assertions (validations)
 module ClassMethods
 def assert_invariant

@@ -13,7 +13,7 @@ class Definitions
 require_relative '../../test/assertions/default_assertions.rb'
 
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_invariant
 	assert_instance_of(Definitions, self)
@@ -27,7 +27,7 @@ end #assert_invariant
 module ClassMethods
 #include Constants
 #include Examples
-include Minitest::Assertions
+include Test::Unit::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
@@ -57,7 +57,7 @@ extend GenericJsons::Assertions::ClassMethods
 require_relative '../../test/assertions/default_assertions.rb'
 
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_invariant
 	assert_instance_of(Definitions, self)
@@ -69,7 +69,7 @@ def assert_invariant
 	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
-include Minitest::Assertions
+include Test::Unit::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
@@ -97,7 +97,7 @@ extend GenericFiles::Assertions::ClassMethods
 require_relative '../../test/assertions/default_assertions.rb'
 
 module Assertions
-include Minitest::Assertions
+include Test::Unit::Assertions
 extend Test::Unit::Assertions
 def assert_invariant
 #	assert_equal(MiniTest::Assertion, self)
@@ -110,7 +110,7 @@ def assert_invariant
 	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
-#include Minitest::Assertions
+#include Test::Unit::Assertions
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_match_regexp_array(acquisition, combination_indices=Array.new(full_regexp_array.size){|i| i})
