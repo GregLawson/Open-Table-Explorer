@@ -18,19 +18,23 @@ def initialize
 end #initialize
 require_relative '../../test/assertions.rb'
 module Assertions
-include Minitest::Assertions
 module ClassMethods
-include Minitest::Assertions
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
+	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
+	self
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+	self
 end #assert_post_conditions
 end #Assertions
 include Assertions
