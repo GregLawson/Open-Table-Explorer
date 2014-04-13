@@ -10,66 +10,8 @@ require 'ostruct'
 require 'pp'
 require 'mime/types' # new ruby detailed library
 require_relative '../../app/models/shell_command.rb'
-class CommandLine
-module ClassMethods
-def path_of_command(command)
-		whereis=ShellCommands.new("whereis "+command).output
-end #path_of_command
-end #ClassMethods
-extend ClassMethods
-def initialize(command, description=nil, help_source=nil)
-	if /\//.match(command) then # pathname
-		@path=command
-	else
-		@type=ShellCommands.new('bash -c "type '+command+'"').output
-		@whereis=ShellCommands.new("whereis "+command).output
-		@path=@whereis.split(' ')[2]
-	end #if
-	@description=description
-	@help_source=help_source
-	@file_type=	ShellCommands.new("file -b "+@path).output
-	@mime_type=	ShellCommands.new("file -b --mime "+@path).output
-	@dpkg="grep "#{@path}$"  /var/lib/*/info/*.list"
-	if @mime_type=='application/octet' then
-		@basename=File.basename(path,File.extname(path))
-		@version=ShellCommands.new(@basename+" --version").output
-		@v=ShellCommands.new(basename+" -v").output
-		@man=ShellCommands.new("man "+@basename).output
-		@info=ShellCommands.new("info "+@basename).output
-		@help=ShellCommands.new(@basename+" --help").output
-		@h=ShellCommands.new(@basename+" -h").output
-	end #if
-end #initialize
-#mime/types in a ruby library
-def ruby_mime
-    plaintext = MIME::Types[@mime_type]
-    # returns [text/plain, text/plain]
-    text      = plaintext.first
-end #ruby_mime
-require 'test/unit/assertions.rb'
-module Assertions
-include Test::Unit::Assertions
-module ClassMethods
-include Test::Unit::Assertions
-def assert_post_conditions
-end #assert_post_conditions
-end #ClassMethods
-def assert_pre_conditions
-end #assert_pre_conditions
-def assert_post_conditions
-end #assert_post_conditions
-end #Assertions
-include Assertions
-#TestWorkFlow.assert_pre_conditions
-module Constants
-end #Constants
-include Constants
-module Examples
-include Constants
-end #Examples
-include Examples
-end #CommandLine
-class CommandLineScript < CommandLine
+require_relative '../../app/models/command.rb'
+class CommandLineScript < Command
 def add_option(name, description=name, long_option=name, short_option=name[0])
 	option=CommandLineOption.new(name, description, long_option, short_option)
 	@options = (@options.nil? ? [] : @options)+[option]
