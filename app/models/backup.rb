@@ -32,9 +32,11 @@ module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
+	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
+	self
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
@@ -42,8 +44,11 @@ def assert_pre_conditions(message='')
 	assert_not_nil(@source_dir, message)
 	assert_not_nil(@backup_dir, message)
 	assert_not_nil(@options, message)
+	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+	self
 end #assert_post_conditions
 end #Assertions
 include Assertions
