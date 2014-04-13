@@ -409,7 +409,7 @@ def assert_constant_instance_respond_to(*names)
 	end #
 end #assert_constant_instance_respond_to
 def assert_pathname_exists(pathname, message='')
-	assert_not_nil(pathname, message)
+	assert_not_nil(pathname, 'In assert_pathname_exists, passed pathname is nil ' + message)
 	assert_not_empty(pathname, message+"Assume pathname to not be empty.")
 	assert(File.exists?(pathname), message+"File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
 	assert(File.exists?(File.expand_path(pathname)), message+"File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
