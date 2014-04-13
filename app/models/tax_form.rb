@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -17,8 +17,11 @@ extend Test::Unit::Assertions
 module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
-Default_tax_year=2012
-Open_Tax_Filler_Directory='../OpenTaxFormFiller-master'
+Downloaded_src_dir='/media/central-greg/Non-media/Git_repositories/'
+Possible_tax_years=[2011, 2012, 2013].sort
+Default_tax_year=Possible_tax_years[-1]
+
+Open_Tax_Filler_Directory=Downloaded_src_dir+'OpenTaxFormFiller'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
 #Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_example.txt"
 #Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_example_sysout.txt"
@@ -47,7 +50,7 @@ def initialize(taxpayer='example', form='1040',
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
 	@tax_year=tax_year
-	@open_tax_solver_directory=Dir["../OpenTaxSolver#{@tax_year}_*"].sort[-1]
+	@open_tax_solver_directory=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}_*"].sort[-1]
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
 	if open_tax_solver_data_directory.nil? then
 		@open_tax_solver_data_base_directory=@open_tax_solver_directory
@@ -143,18 +146,31 @@ def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_not_nil(ENV['USER'], "ENV['USER']\n"+message) # defined inXfce & Gnome
 	warn {assert_not_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } #not defined in Xfce.
+	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Downloaded_src_dir)
+	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
+	assert(File.directory?(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory))
+	OpenTableExplorer::Finance::Constants::Possible_tax_years. each do |tax_year|
+		default_open_tax_solver_glob = OpenTableExplorer::Finance::Constants::Downloaded_src_dir+"OpenTaxSolver#{tax_year}_*"
+		default_open_tax_solver_directories=Dir[default_open_tax_solver_glob]
+		assert_not_empty(default_open_tax_solver_directories, 'default_open_tax_solver_glob='+ default_open_tax_solver_glob)
+		assert_pathname_exists(default_open_tax_solver_directories.sort[-1], default_open_tax_solver_directories.inspect)
+	end # each
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_pathname_exists(@open_tax_solver_input, message)
 	assert_pathname_exists(@open_tax_solver_data_directory, message)
+	assert_pathname_exists(@open_tax_solver_binary, message)
 end #assert_pre_conditions
 def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
 	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
 	assert_pathname_exists(@open_tax_solver_data_directory, message+caller_lines)
 	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
+	self
 end #assert_post_conditions
 # Assertions custom instance methods
 def assert_open_tax_solver
@@ -220,7 +236,7 @@ end #build
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-#self.assert_pre_conditions
+OpenTableExplorer::Finance::TaxForm.assert_pre_conditions # verify Constants can be created
 module Examples
 include Constants
 Example_Taxpayer=ENV['USER'].to_sym
@@ -234,6 +250,7 @@ CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :C
 Expect_to_pass=[US1040_user, CA540_user, US1040_example, US1040_example1, CA540_example]
 Expect_to_fail=[US1040_template, CA540_template]
 end #Examples
+OpenTableExplorer::Finance::TaxForm.assert_post_conditions # verify Constants were created correctly
 end #TaxForm
 end #Finance
 end #OpenTableExplorer
