@@ -32,7 +32,7 @@ def test_initialize
 #	sysout=`#{Command}`
 #	puts "test_run_tax_solver sysout=#{sysout}"
 	form=OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction)
-	assert_pathname_exists(form.open_tax_solver_directory)
+	assert_pathname_exists(form.open_tax_solver_data_base_directory)
 	assert_pathname_exists(form.open_tax_solver_data_directory)
 #	assert_pathname_exists(form.ots_template_filename)
 #	assert_pathname_exists(form.output_pdf)
@@ -216,8 +216,8 @@ def test_Examples
 			assert_not_empty("../OpenTaxSolver#{Default_tax_year}_*")
 			assert_not_empty(Dir["../OpenTaxSolver#{Default_tax_year}_*"], Dir["../OpenTaxSolver*"].inspect)
 			assert_not_nil(Dir["../OpenTaxSolver#{Default_tax_year}_*"].sort[-1])
-			assert_not_nil(value.open_tax_solver_directory, 'constant name='+e.to_s+"\n"+message)
-			assert_pathname_exists(value.open_tax_solver_directory, 'constant name='+e.to_s+"\n"+"")
+			assert_not_nil(value.open_tax_solver_data_base_directory, 'constant name='+e.to_s+"\n"+message)
+			assert_pathname_exists(value.open_tax_solver_data_base_directory, 'constant name='+e.to_s+"\n"+"")
 			assert_pathname_exists(value.open_tax_solver_data_directory, 'constant name='+e.to_s+"\n")
 			assert_pathname_exists(value.open_tax_solver_input, 'constant name='+e.to_s+"\n")
 			value.assert_pre_conditions('constant name='+e.to_s+"\n")

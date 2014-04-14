@@ -408,17 +408,38 @@ def assert_constant_instance_respond_to(*names)
 		assert_public_instance_method(path, method_name, message)
 	end #
 end #assert_constant_instance_respond_to
+def missing_file_message(pathname)
+	pathname = Pathname.new(pathname).expand_path
+	if pathname.exist? then
+		''
+	else
+		existing_dir = nil
+		pathname.ascend { |f| existing_dir = f and break if f.exist? }
+		'parent directory ' + 
+		existing_dir.to_s + 
+		' does exists containing ' + 
+		Dir[existing_dir+ '*'].map {|f| File.basename(f)}.inspect
+	end # if
+end # missing_file_message
 def assert_pathname_exists(pathname, message='')
-	assert_not_nil(pathname, 'In assert_pathname_exists, passed pathname is nil ' + message)
-	assert_not_empty(pathname, message+"Assume pathname to not be empty.")
+	assert_not_nil(pathname, message)
+	assert_not_empty(pathname.to_s, message+"Assume pathname to not be empty.")
+	pathname = Pathname.new(pathname).expand_path
+	message += "\nPathname(#{pathname}).exist?=" + pathname.exist?.to_s + "\n" + missing_file_message(pathname)
+	assert(pathname.exist?, message)
 	assert(File.exists?(pathname), message+"File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
-	assert(File.exists?(File.expand_path(pathname)), message+"File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
+	pathname # allow chaining
 end #assert_pathname_exists
+def assert_directory_exists(pathname, message='')
+	pathname = assert_pathname_exists(pathname, message)
+	assert(pathname.directory?, message+"Pathname(#{pathname.to_s}).directory?=#{pathname.directory?.inspect}")
+	pathname # allow chaining
+end #assert_directory_exists
 def assert_data_file(pathname, message='')
-	assert_pathname_exists(pathname, message)
-	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it aa directory?")
+	pathname = assert_pathname_exists(pathname, message)
 	assert_not_nil(File.size?(pathname), message)
 	assert_not_equal(0, File.size?(pathname), message)
+	pathname # allow chaining
 end #assert_data_file
 end #Assertions
 end #Unit

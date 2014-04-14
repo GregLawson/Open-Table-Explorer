@@ -19,7 +19,7 @@ module Constants
 Data_source_directory='test/data_sources/tax_form/'
 Downloaded_src_dir='/media/central-greg/Non-media/Git_repositories/'
 Possible_tax_years=[2011, 2012, 2013].sort
-Default_tax_year=Possible_tax_years[-2]
+Default_tax_year=Possible_tax_years[-1]
 
 Open_Tax_Filler_Directory=Downloaded_src_dir+'OpenTaxFormFiller'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
@@ -51,7 +51,10 @@ def initialize(taxpayer='example', form='1040',
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
 	@tax_year=tax_year
-	@open_tax_solver_distribution_directory=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}_*"].sort[-1]+'/'
+	@open_tax_solver_distribution_directories=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}_*"].select do |f|
+		File.directory?(f)
+	end.sort
+	@open_tax_solver_distribution_directory=@open_tax_solver_distribution_directories.last+'/'
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
 	if open_tax_solver_data_directory.nil? then
 		@open_tax_solver_data_base_directory=@open_tax_solver_distribution_directory
@@ -164,10 +167,10 @@ end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-	assert_data_file(@open_tax_solver_input, message)
 	assert_directory_exists(@open_tax_solver_distribution_directory, message+caller_lines)
 	assert_directory_exists(@open_tax_solver_data_directory, message)
 	assert_pathname_exists(@open_tax_solver_binary, message)
+	assert_data_file(@open_tax_solver_input, message)
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
@@ -216,7 +219,7 @@ def assert_fdf_to_pdf
 	@fdf_to_pdf_run.assert_post_conditions
 end #assert_json_to_fdf
 def assert_pdf_to_jpeg
-	@pdf_to_jpeg_run.assert_post_conditions
+#message	@pdf_to_jpeg_run.assert_post_conditions
 end #assert_json_to_fdf
 def assert_build
 #	@open_tax_solver_run.assert_open_tax_solver
