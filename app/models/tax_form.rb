@@ -35,7 +35,8 @@ module ClassMethods
 end #ClassMethods
 extend ClassMethods
 attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename, 
-:taxpayer_basename_with_year, :open_tax_solver_binary, :open_tax_solver_directory, 
+:taxpayer_basename_with_year, :open_tax_solver_binary, 
+:open_tax_solver_distribution_directory, :open_tax_solver_data_base_directory,
 :open_tax_solver_run, :open_tax_solver_sysout,
 :open_tax_solver_to_filler_run, 
 :open_tax_solver_input, :open_tax_solver_data_directory, :open_tax_solver_output,
@@ -50,20 +51,22 @@ def initialize(taxpayer='example', form='1040',
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
 	@tax_year=tax_year
-	@open_tax_solver_directory=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}_*"].sort[-1]
+	@open_tax_solver_distribution_directory=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}_*"].sort[-1]+'/'
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
 	if open_tax_solver_data_directory.nil? then
-		@open_tax_solver_data_base_directory=@open_tax_solver_directory
+		@open_tax_solver_data_base_directory=@open_tax_solver_distribution_directory
 	else
-		@open_tax_solver_data_base_directory=open_tax_solver_data_directory
+		@open_tax_solver_data_base_directory = open_tax_solver_data_directory
+		@open_tax_solver_data_base_directory += @tax_year.to_s
+		@open_tax_solver_data_base_directory += '/'
 	end #if
-	@open_tax_solver_data_directory=@open_tax_solver_data_base_directory+"/examples_and_templates/#{@form_filename}/"
+	@open_tax_solver_data_directory=@open_tax_solver_data_base_directory+"examples_and_templates/#{@form_filename}/"
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_data_directory+'/'+@taxpayer_basename_with_year+'.txt') then
 		@taxpayer_basename=@taxpayer_basename_with_year
 	end #if
-	@open_tax_solver_binary="#{@open_tax_solver_directory}/bin/taxsolve_#{@form_filename}_#{@tax_year}"
+	@open_tax_solver_binary="#{@open_tax_solver_distribution_directory}/bin/taxsolve_#{@form_filename}_#{@tax_year}"
 	@open_tax_solver_input="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
 	@open_tax_solver_output="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
 	@open_tax_solver_sysout="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
@@ -148,6 +151,7 @@ def assert_pre_conditions(message='')
 	warn {assert_not_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } #not defined in Xfce.
 	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Downloaded_src_dir)
 	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
+	assert_directory_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
 	OpenTableExplorer::Finance::Constants::Possible_tax_years. each do |tax_year|
 		default_open_tax_solver_glob = OpenTableExplorer::Finance::Constants::Downloaded_src_dir+"OpenTaxSolver#{tax_year}_*"
 		default_open_tax_solver_directories=Dir[default_open_tax_solver_glob]
@@ -160,15 +164,17 @@ end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-	assert_pathname_exists(@open_tax_solver_input, message)
-	assert_pathname_exists(@open_tax_solver_data_directory, message)
+	assert_data_file(@open_tax_solver_input, message)
+	assert_directory_exists(@open_tax_solver_distribution_directory, message+caller_lines)
+	assert_directory_exists(@open_tax_solver_data_directory, message)
 	assert_pathname_exists(@open_tax_solver_binary, message)
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
-	assert_pathname_exists(@open_tax_solver_directory, message+caller_lines)
+	assert_directory_exists(@open_tax_solver_distribution_directory, message+caller_lines)
+	assert_directory_exists(@open_tax_solver_data_directory, message+caller_lines)
+	assert_data_file(@open_tax_solver_output, message+caller_lines)
 	self
-	assert_pathname_exists(@open_tax_solver_output, message+caller_lines)
 end #assert_post_conditions
 # Assertions custom instance methods
 def assert_open_tax_solver
@@ -247,6 +253,7 @@ US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US, 
 CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :CA, Default_tax_year, Data_source_directory)
 Expect_to_pass=[US1040_user, CA540_user, US1040_example, US1040_example1, CA540_example]
 Expect_to_fail=[US1040_template, CA540_template]
+US1040_example.assert_pre_conditions
 end #Examples
 OpenTableExplorer::Finance::TaxForm.assert_post_conditions # verify Constants were created correctly
 end #TaxForm
