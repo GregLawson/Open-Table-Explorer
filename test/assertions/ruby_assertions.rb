@@ -418,15 +418,16 @@ def missing_file_message(pathname)
 		'parent directory ' + 
 		existing_dir.to_s + 
 		' does exists containing ' + 
-		Dir[existing_dir+ '*'].inspect
+		Dir[existing_dir+ '*'].map {|f| File.basename(f)}.inspect
 	end # if
 end # missing_file_message
 def assert_pathname_exists(pathname, message='')
 	assert_not_nil(pathname, message)
 	assert_not_empty(pathname.to_s, message+"Assume pathname to not be empty.")
 	pathname = Pathname.new(pathname).expand_path
+	message += "\nPathname(#{pathname}).exist?=" + pathname.exist?.to_s + "\n" + missing_file_message(pathname)
+	assert(pathname.exist?, message)
 	assert(File.exists?(pathname), message+"File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
-	assert(File.exists?(File.expand_path(pathname)), message+"File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
 	pathname # allow chaining
 end #assert_pathname_exists
 def assert_directory_exists(pathname, message='')
