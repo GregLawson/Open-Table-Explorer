@@ -219,6 +219,19 @@ def test_assert_constant_instance_respond_to
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
 	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
 end #assert_constant_instance_respond_to
+def test_missing_file_message
+	missing_pathname = '/root-kit/bad_stuff/exploit.sh'
+	existing_data_file = '~/.profile'
+	assert_empty(missing_file_message(existing_data_file))
+	missing_pathname = Pathname.new(missing_pathname).expand_path
+	existing_dir = nil
+	missing_pathname.ascend do |f| 
+		existing_dir = f and break if f.exist? 
+		assert(!File.exists?(f))
+	end # ascend
+	assert_directory_exists(existing_dir)
+	assert_match(/^parent directory \/ /, missing_file_message(missing_pathname))
+end # missing_file_message
 def test_assert_pathname_exists
 	assert_pathname_exists('/dev/zero')
 	bad_pathname='/catfish'
@@ -227,8 +240,14 @@ def test_assert_pathname_exists
 	bad_pathname='../../test/unit/TestIntrospection::TestEnvironment_assertions_test.rb'
 	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
 end #assert_pathname_exists
+def test_assert_directory_exists
+	assert_directory_exists('~/')
+end #assert_pathname_exists
 def test_assert_data_file
-	assert_pathname_exists('/dev/zero')
+	existing_data_file = '~/.profile'
+	assert_pathname_exists(existing_data_file)
+	assert_data_file(File.expand_path(existing_data_file))
+	assert_data_file(existing_data_file)
 	bad_pathname='/catfish'
 	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
 	
