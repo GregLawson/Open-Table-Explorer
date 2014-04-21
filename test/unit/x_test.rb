@@ -13,11 +13,16 @@ include TE.model_class?::Examples
 def test_logs
   logs = Dir['/var/log/X*']
   assert_not_empty(logs)
+  assert_not_empty(Logs)
+  
 end # logs
 def test_log
-  logs = Dir['/var/log/X*']
-  log_file = logs[0]
+  log_file = Logs[0]
   log = IO.read(log_file)
   assert_not_empty(log)
+  assert_equal({sequence: '1'}, Parse.parse_string('/var/log/Xorg.1.log', Prefix * Sequence))
+  assert_equal({sequence: '1'}, Parse.parse_string('/var/log/Xorg.1.log', Prefix * Sequence * /.log/))
+  assert_equal({sequence: '1', old: nil}, Parse.parse_string('/var/log/Xorg.1.log', Prefix * Sequence * /.log/ * Suffix.group * Optional))
+  assert_equal({sequence: '1', old: nil}, Parse.parse_string('/var/log/Xorg.1.log', File_pattern))
 end # log
-end #Minimal
+end # X
