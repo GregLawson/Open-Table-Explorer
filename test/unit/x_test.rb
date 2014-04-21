@@ -24,5 +24,6 @@ def test_log
   assert_equal({sequence: '1'}, Parse.parse_string('/var/log/Xorg.1.log', Prefix * Sequence * /.log/))
   assert_equal({sequence: '1', old: nil}, Parse.parse_string('/var/log/Xorg.1.log', Prefix * Sequence * /.log/ * Suffix.group * Optional))
   assert_equal({sequence: '1', old: nil}, Parse.parse_string('/var/log/Xorg.1.log', File_pattern))
+  assert_equal({sequence: '1', old: '.old'}, Parse.parse_string('/var/log/Xorg.1.log.old', File_pattern))
 end # log
 end # X
