@@ -21,6 +21,22 @@ Prefix = %r{/var/log/Xorg.}
 Sequence = /[0-9]+/.capture(:sequence)
 Suffix = /\.old/.capture(:old)
 File_pattern = Prefix * Sequence * /.log/ * Suffix.group * Optional
+Time_seconds = /[0-9]+\.[0-9]{3}/.capture(:time)
+Time_regexp = /^\[/ * /[ ]{0,6}/ * Time_seconds * /\] /
+Source_explanation = {'--' => 'probed',
+ '**' => 'from config file',
+ '==' => 'default setting',
+ '++' => 'from command line',
+ '!!' => 'notice',
+ 'II' => 'informational',
+ 'WW' => 'warning',
+ 'EE' => 'error',
+ 'NI' => 'not implemented',
+ '??' => 'unknown'}
+Source_alternatives = Source_explanation.keys.map {|s| Regexp.new(Regexp.escape(s))}.reduce(:|).capture(:source)
+Source_regexp = /\(/ * Source_alternatives * /\) /
+Message_regexp = /[^\n]*/.capture(:message)
+Log_pattern = Time_regexp * Source_regexp * Optional * Message_regexp
 end #Constants
 include Constants
 # attr_reader :sequence, :old
@@ -58,5 +74,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+Test_lines = IO.read('/var/log/Xorg.1.log')[0..800]
 end #Examples
 end # X
