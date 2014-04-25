@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -51,7 +51,7 @@ end #parse_array
 # The array of captures replacing the input strings adds one additional layer of Array nesting.
 def parse(string_or_array, pattern=WORD)
 	if string_or_array.instance_of?(String) then
-		parse_into_array(string_or_array, pattern)
+		parse_string(string_or_array, pattern)
 	elsif string_or_array.instance_of?(Array) then
 		parse_array(string_or_array, pattern)
 	else
