@@ -58,7 +58,7 @@ end #assemble_command_string
 end #ClassMethods
 extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
-# execute same command again (also called by new.
+# execute same command again (also called by new).
 def execute
 #	info "@command="+@command.inspect
 #	info "@command_string="+@command_string.inspect
@@ -158,6 +158,14 @@ def success?
 		@process_status.success?
 	end #if
 end #success
+def tolerate(pattern=/warning/)
+	if @errors.match(pattern) then
+		warn(@errors) if $VERBOSE
+		@errors = ''
+		@process_status.exitstatus = 0
+	end # if
+	self # for command chaining
+end # tolerate
 def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
@@ -220,6 +228,8 @@ Guaranteed_existing_basename=File.basename($0)
 Redirect_command=['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
 Redirect_command_string='ls '+ Shellwords.escape(Guaranteed_existing_basename)+' > '+Shellwords.escape('blank in filename.shell_command')
 Relative_command=['ls', Guaranteed_existing_basename]
+Bad_status = ShellCommands.new('$?=1')
+Error_message_run = ShellCommands.new('ls happyHappyFailFail.junk')
 end #Examples
 include Examples
 end #ShellCommands
