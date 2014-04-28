@@ -86,13 +86,13 @@ end #execute
 def initialize(*command)
 	parse_argument_array(command)
 	execute # do it first time, to repeat call execute
+	@accumulated_tolerance_bits = 0x00 # all errors reported (not tolerated)
 	if $VERBOSE.nil? then
 	elsif $VERBOSE then
 		$stdout.puts trace # -W2
 	else 
 		$stdout.puts inspect(:echo_command) # -W1
 	end #if
-
 end #initialize
 # Allow Process.spawn options and environment to be passed.
 def parse_argument_array(argument_array)
@@ -155,17 +155,37 @@ def success?
 	if @process_status.nil? then
 		false
 	else
-		@process_status.success?
+		@process_status.exitstatus ^ @accumulated_tolerance_bits # explicit toleration
 	end #if
 end #success
-def tolerate(pattern=/warning/)
-	if @errors.match(pattern) then
-		warn(@errors) if $VERBOSE
-		@errors = ''
-		@process_status.exitstatus = 0
+def force_success(tolerated_status)
+	modified_self = self.clone
+	warn(@errors) if $VERBOSE
+	@errors = ''
+	@accumulated_tolerance_bits = @accumulated_tolerance_bits | tolerated_status # accumulated_tolerance_bits
+	modified_self # for command chaining
+end # force_success
+def tolerate_status(tolerated_status = 1)
+	if @process_status.exitstatus == tolerated_status then
+		force_success(tolerated_status)
+	else
+		self # for command chaining
 	end # if
-	self # for command chaining
-end # tolerate
+end # tolerate_status
+def tolerate_error_pattern(tolerated_error_pattern = /^warning/)
+	if tolerated_error_pattern.match(@error) then
+		force_success(tolerated_status)
+	else
+		self # for command chaining
+	end # if
+end # tolerate_error_pattern
+def tolerate_status_and_error_pattern(tolerated_status = 1, tolerated_error_pattern = /^warning/)
+	if @process_status.exitstatus == tolerated_status && tolerated_error_pattern.match(@error) then
+		force_success(tolerated_status)
+	else
+		self # for command chaining
+	end # if
+end # tolerate_status_and_error_message
 def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
@@ -204,10 +224,10 @@ def assert_pre_conditions(message='')
 	self # return for command chaining
 end #assert_pre_conditions
 def assert_post_conditions(message='')
-	message+="self=#{inspect}"
+	message+="self=#{self.inspect(true)}"
 	puts unless success?&& @errors.empty?
 	assert_empty(@errors, message+'expected errors to be empty\n')
-	assert_equal(0, @process_status.exitstatus, message)
+	assert_equal(0, @process_status.exitstatus ^ @accumulated_tolerance_bits, message)
 	assert_not_nil(@errors, "expect @errors to not be nil.")
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
