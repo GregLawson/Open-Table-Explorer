@@ -155,14 +155,18 @@ def success?
 	if @process_status.nil? then
 		false
 	else
-		@process_status.exitstatus ^ @accumulated_tolerance_bits # explicit toleration
+		@process_status.exitstatus & ~@accumulated_tolerance_bits # explicit toleration
 	end #if
 end #success
-def force_success(tolerated_status)
-	modified_self = self.clone
-	warn(@errors) if $VERBOSE
+def clear_error_message!(tolerated_status)
 	@errors = ''
 	@accumulated_tolerance_bits = @accumulated_tolerance_bits | tolerated_status # accumulated_tolerance_bits
+	self # for command chaining
+end # clear_error_message!
+def force_success(tolerated_status)
+	warn(@errors) if $VERBOSE
+	modified_self = self.clone
+	modified_self.clear_error_message!(tolerated_status)
 	modified_self # for command chaining
 end # force_success
 def tolerate_status(tolerated_status = 1)
@@ -173,14 +177,14 @@ def tolerate_status(tolerated_status = 1)
 	end # if
 end # tolerate_status
 def tolerate_error_pattern(tolerated_error_pattern = /^warning/)
-	if tolerated_error_pattern.match(@error) then
-		force_success(tolerated_status)
+	if tolerated_error_pattern.match(@errors) then
+		force_success(0xFF) # tolerate all error codes
 	else
 		self # for command chaining
 	end # if
 end # tolerate_error_pattern
 def tolerate_status_and_error_pattern(tolerated_status = 1, tolerated_error_pattern = /^warning/)
-	if @process_status.exitstatus == tolerated_status && tolerated_error_pattern.match(@error) then
+	if @process_status.exitstatus == tolerated_status && tolerated_error_pattern.match(@errors) then
 		force_success(tolerated_status)
 	else
 		self # for command chaining
@@ -227,7 +231,7 @@ def assert_post_conditions(message='')
 	message+="self=#{self.inspect(true)}"
 	puts unless success?&& @errors.empty?
 	assert_empty(@errors, message+'expected errors to be empty\n')
-	assert_equal(0, @process_status.exitstatus ^ @accumulated_tolerance_bits, message)
+	assert_equal(0, @process_status.exitstatus & ~@accumulated_tolerance_bits, message)
 	assert_not_nil(@errors, "expect @errors to not be nil.")
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
