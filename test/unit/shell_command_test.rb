@@ -112,10 +112,44 @@ def test_11
 end #11
 def test_success?
 	assert(EXAMPLE.success?)
+	assert(Hello_world.success?)
+	assert_equal(127, Bad_status.success?)
+	assert_equal(2, Error_message_run.success?)
 end #success
+def test_clear_error_message
+	assert_equal(0, Hello_world.clone.clear_error_message!(0xFF).success?)
+	assert_equal(0, Bad_status.clone.clear_error_message!(0xFF).success?)
+	assert_equal(0, Error_message_run.clone.clear_error_message!(0xFF).success?)
+	assert_equal(0, Hello_world.clone.clear_error_message!(0).success?)
+	assert_equal(0, Bad_status.clone.clear_error_message!(127).success?)
+	assert_equal(0, Error_message_run.clone.clear_error_message!(2).success?)
+end # clear_error_message!
+def test_force_success
+	Hello_world.force_success(0).assert_post_conditions
+	Bad_status.force_success(127).assert_post_conditions
+	Error_message_run.force_success(2).assert_post_conditions
+	assert_equal(0, Error_message_run.clone.clear_error_message!(0xFF).success?)
+	Error_message_run.force_success(0xFF).assert_post_conditions
+end # force_success
+def test_tolerate_status(tolerated_status = 1)
+	Hello_world.tolerate_status.assert_post_conditions
+	Bad_status.tolerate_status(127).assert_post_conditions
+end # tolerate_status
+def test_tolerate_error_pattern(tolerated_error_pattern = /^warning/)
+	Hello_world.tolerate_error_pattern.assert_post_conditions
+	Error_message_run.tolerate_error_pattern(/No such file/).assert_post_conditions
+end # tolerate_error_pattern
+def test_tolerate_status_and_error_message(tolerated_status = 1, tolerated_error_pattern = /^warning/)
+	Hello_world.tolerate_status_and_error_pattern.assert_post_conditions
+	assert_equal(Bad_status.process_status.exitstatus, 127, Bad_status.inspect)
+	assert_match(/not found/, Bad_status.errors, Bad_status.inspect)
+	assert(Bad_status.process_status.exitstatus == 127 && /not found/.match(Bad_status.errors), Bad_status.inspect)
+	Bad_status.tolerate_status_and_error_pattern(127, /not found/).assert_post_conditions
+	assert_match(/No such file/, Error_message_run.errors, Error_message_run.inspect)
+	assert_equal(2, Error_message_run.process_status.exitstatus, Error_message_run.inspect)
+	Error_message_run.tolerate_status_and_error_pattern(2, /No such file/).assert_post_conditions
+end # tolerate_status_and_error_message
 def test_tolerate
-	pattern=/warning/
-	
 end # tolerate
 def test_inspect
 	Hello_world.assert_post_conditions
