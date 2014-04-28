@@ -113,6 +113,10 @@ end #11
 def test_success?
 	assert(EXAMPLE.success?)
 end #success
+def test_tolerate
+	pattern=/warning/
+	
+end # tolerate
 def test_inspect
 	Hello_world.assert_post_conditions
 	assert_equal("Hello World\n", Hello_world.output)
