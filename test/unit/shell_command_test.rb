@@ -113,9 +113,26 @@ end #11
 def test_success?
 	assert(EXAMPLE.success?)
 end #success
+def test_force_success
+	Hello_world.force_success(0).assert_post_conditions
+	Bad_status.force_success(127).assert_post_conditions
+	Error_message_run.force_success(3).assert_post_conditions
+end # force_success
+def test_tolerate_status(tolerated_status = 1)
+	Hello_world.tolerate_status.assert_post_conditions
+	Bad_status.tolerate_status(127).assert_post_conditions
+	Bad_status.assert_post_conditions
+end # tolerate_status
+def test_tolerate_error_pattern(tolerated_error_pattern = /^warning/)
+	Hello_world.tolerate_error_pattern.assert_post_conditions
+	Error_message_run.tolerate_error_pattern.assert_post_conditions
+	Error_message_run.assert_post_conditions
+end # tolerate_error_pattern
+def test_tolerate_status_and_error_message(tolerated_status = 1, tolerated_error_pattern = /^warning/)
+	Hello_world.tolerate_status_and_error_pattern.assert_post_conditions
+	Error_message_run.tolerate_status_and_error_pattern(3).assert_post_conditions
+end # tolerate_status_and_error_message
 def test_tolerate
-	pattern=/warning/
-	
 end # tolerate
 def test_inspect
 	Hello_world.assert_post_conditions
