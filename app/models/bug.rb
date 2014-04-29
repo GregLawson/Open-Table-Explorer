@@ -1,4 +1,4 @@
-require "app/models/generic_table.rb"
+#require "app/models/generic_table.rb"
 class Bug < ActiveRecord::Base
 has_many :test_runs
 belongs_to :error_type
