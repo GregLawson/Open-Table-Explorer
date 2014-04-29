@@ -258,6 +258,7 @@ def edit(context = nil)
 	end # if
 	puts command_string if $VERBOSE
 	edit = @repository.shell_command(command_string)
+	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
 	edit.assert_post_conditions
 end # edit
 def minimal_edit

@@ -75,7 +75,7 @@ extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	if path.to_s[-1,1]!='/' then
-		path=path+'/'
+		path=path.to_s+'/'
 	end #if
 	@url=path
 	@path=path.to_s
@@ -92,7 +92,7 @@ def git_command(git_subcommand)
 	Repository.git_command(git_subcommand, @path)
 end #git_command
 def inspect
-	@path.inspect
+	git_command('status --short --branch').output
 end #inspect
 def corruption_fsck
 	git_command("fsck")
@@ -198,8 +198,11 @@ def confirm_commit(interact=:interactive)
 	if something_to_commit? then
 		case interact
 		when :interactive then
-			git_command('cola').assert_post_conditions
+			cola_run = git_command('cola')
+			cola_run = cola_run.tolerate_status_and_error_pattern(1, /Warning/)
+			cola_run.assert_post_conditions
 			if !something_to_commit? then
+#				git_command('cola rebase '+current_branch_name?.to_s)
 			end # if
 		when :echo then
 		when :staged then
