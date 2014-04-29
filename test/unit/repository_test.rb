@@ -228,7 +228,7 @@ def test_branches?
 					/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch),
 					pattern]
 	patterns.each do |p|
-		assert_match(branch_output, p)
+		assert_match(p, branch_output)
 		branches=Parse.parse_into_array(branch_output, p, {ending: :optional})
 		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches, branch_output.inspect)
 	end # each
