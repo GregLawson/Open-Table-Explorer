@@ -74,11 +74,11 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
-	if path[-1,1]!='/' then
-		path=path+'/'
+	if path.to_s[-1,1]!='/' then
+		path=path.to_s+'/'
 	end #if
 	@url=path
-	@path=path
+	@path=path.to_s
   puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
@@ -198,8 +198,11 @@ def confirm_commit(interact=:interactive)
 	if something_to_commit? then
 		case interact
 		when :interactive then
-			git_command('cola').assert_post_conditions
+			cola_run = git_command('cola')
+			cola_run = cola_run.tolerate_status_and_error_pattern(1, /Warning/)
+			cola_run.assert_post_conditions
 			if !something_to_commit? then
+#				git_command('cola rebase '+current_branch_name?.to_s)
 			end # if
 		when :echo then
 		when :staged then
