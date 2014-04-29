@@ -219,7 +219,7 @@ def assert_fdf_to_pdf
 	@fdf_to_pdf_run.assert_post_conditions
 end #assert_json_to_fdf
 def assert_pdf_to_jpeg
-#message	@pdf_to_jpeg_run.assert_post_conditions
+	@pdf_to_jpeg_run.assert_post_conditions
 end #assert_json_to_fdf
 def assert_build
 #	@open_tax_solver_run.assert_open_tax_solver

@@ -5,19 +5,25 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'related_file.rb'
+require_relative 'unit.rb'
 require_relative 'repository.rb'
 class WorkFlow
 module Constants
-Branch_enhancement = [:passed, :testing, :edited]
+Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
 Extended_branches = { -2 => :'origin/master', -1 => :master }
 First_slot_index = Extended_branches.keys.min
 Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
-Branch_compression = { success: 0,
-			                    single_test_fail: 1,
-			                    multiple_tests_fail: 1, # visibility boundary
-			                    initialization_fail: 2,
-			                    syntax_error: 2
+Deserving_commit_to_branch = { success:             0,
+				single_test_fail:    1,
+			              multiple_tests_fail: 1, # visibility boundary
+			              initialization_fail: 2,
+			              syntax_error:        2
+			}
+Expected_next_commit_branch = { success:             0,
+							  single_test_fail:    0,
+			              multiple_tests_fail: 1, # visibility boundary
+			              initialization_fail: 1,
+			              syntax_error:        2
 			}
 end # Constants
 include Constants
@@ -78,12 +84,9 @@ extend ClassMethods
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file,
-	related_files = RelatedFile.new_from_path?(specific_file),
-	repository = Repository.new(FilePattern.repository_dir?))
-#	message= "edit_files do not exist\n argv=#{argv.inspect}"
-#	message+= "\n related_files.edit_files=#{related_files.edit_files.inspect}"
-#	message+= "\n related_files.missing_files=#{related_files.missing_files.inspect}"
-#	raise message if  @related_files.edit_files.empty?
+	related_files = Unit.new_from_path?(specific_file),
+	repository = Repository.new(FilePattern.repository_dir?, :interactive))
+
 	@specific_file = specific_file
 	@related_files = related_files
 	@repository = repository
@@ -193,10 +196,11 @@ def minimal_comparison?
 end # minimal_comparison
 def deserving_branch?(executable = @related_files.model_test_pathname?)
 	if File.exists?(executable) then
-		error_score = @repository.error_score?(executable)
-		error_classification = Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
-		branch_compression = Branch_compression[error_classification]
-		branch_enhancement = Branch_enhancement[branch_compression]
+		@error_score = @repository.error_score?(executable)
+		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+		@deserving_commit_to_branch = Deserving_commit_to_branch[@error_classification]
+		@expected_next_commit_branch = Expected_next_commit_branch[@error_classification]
+		@branch_enhancement = Branch_enhancement[@deserving_commit_to_branch]
 	else
 		:edited
 	end # if
@@ -227,13 +231,13 @@ def merge_conflict_recovery
 				fail conflict.inspect
 			end # case
 		end # each
-		@repository.confirm_commit(:interactive)
+		@repository.confirm_commit
 	else
 		puts 'No merge conflict' if !$VERBOSE.nil?
 	end # if
 end # merge_conflict_recovery
-def merge(target_branch, source_branch, interact = :interactive)
-	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + interact.inspect + ')'
+def merge(target_branch, source_branch)
+	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + ')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
@@ -243,7 +247,7 @@ def merge(target_branch, source_branch, interact = :interactive)
 				merge_conflict_recovery
 			end # if
 		end # if
-		@repository.confirm_commit(interact)
+		@repository.confirm_commit
 	end # safely_visit_branch
 end # merge
 def edit(context = nil)
@@ -258,9 +262,20 @@ def edit(context = nil)
 	end # if
 	puts command_string if $VERBOSE
 	edit = @repository.shell_command(command_string)
-	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
 	edit.assert_post_conditions
 end # edit
+def split(executable, new_base_name)
+	related_files = work_flow.related_files
+	new_unit = Unit.new(new_base_name, project_root_dir)
+	related_files.edited_files. map do |f|
+		pattern_name = FilePattern.find_by_file(f)
+		split_tab += ' -t ' + f + new_unit.pattern?(pattern_name)
+		@repository.shell_command('cp ' + f +  new_unit.pattern?(pattern_name))
+	end #map
+	edit = @repository.shell_command('diffuse' + version_comparison + test_files + split_tab)
+	puts edit.command_string
+	edit.assert_post_conditions
+end # split
 def minimal_edit
 	edit = @repository.shell_command('diffuse' + version_comparison + test_files + minimal_comparison?)
 	puts edit.command_string
@@ -277,7 +292,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
 			merge_conflict_recovery
-			@repository.confirm_commit(:interactive)
+			@repository.confirm_commit
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -316,7 +331,7 @@ def loop(executable = @related_files.model_test_pathname?)
 				done = true
 			end # if
 		end until done
-		@repository.confirm_commit(:interactive)
+		@repository.confirm_commit
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end # safely_visit_branch
 	begin
@@ -326,12 +341,12 @@ def loop(executable = @related_files.model_test_pathname?)
 		if @repository.something_to_commit? then
 			done = false
 		else
-			if deserving_branch == @repository.current_branch_name? then
+			if @expected_next_commit_branch == @repository.current_branch_name? then
 				done = true # branch already checked
 			else
 				done = false # check other branch
-				@repository.confirm_branch_switch(deserving_branch)
-				puts 'Switching to deserving branch' + deserving_branch.to_s
+				@repository.confirm_branch_switch(@expected_next_commit_branch)
+				puts 'Switching to deserving branch' + @expected_next_commit_branch.to_s
 			end # if
 		end # if
 	end until done

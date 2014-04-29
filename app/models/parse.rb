@@ -116,21 +116,24 @@ def initialize(captures, regexp, options=nil)
 #     named_captures for captures.size > names.size
 	@length_hash_captures=@regexp.named_captures.values.flatten.size
 	@iterations=(@captures.size/(@length_hash_captures+1)).ceil
+	@options=options
 	@output=if @captures.instance_of?(MatchData) then
 			named_hash(0)
 	else
 		array=(0..iterations-1).map do |i|
 			named_hash(i*(length_hash_captures+1))
 		end #map
-		if options.nil? then
+		if @options.nil? then
 			array
 		else
-			ret=case options[:ending]
+			ret=case @options.fetch(:ending, nil)
 			when :optional then 
 				array
 			when :delimiter then 
 				array
 			when :terminator then
+				array
+			when nil
 				array
 			else
 				raise 'bad ending symbol.'

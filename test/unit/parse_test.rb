@@ -60,6 +60,9 @@ def test_parse_into_array
 	assert_equal(Hash_answer, parse_into_array[0])
 	parse_into_array=parse_into_array(string, Branch_regexp, options)
 	assert_equal(Array_answer, parse_into_array)
+	string="* master\n  passed\n"
+	assert_not_equal(Newline_Terminated_String, string)
+	parse_into_array=parse_into_array(string, Branch_regexp, options)
 end #parse_into_array
 def test_parse_array
 	string_array=name2array(parse(Nested_string, Terminated_line), :line)
