@@ -19,7 +19,7 @@ extend ClassMethods
 def initialize(executable)
 	raise "executable=#{executable.inspect} must be an String." if !executable.instance_of?(String)
 	path2model_name=FilePattern.path2model_name?(executable)
-	@related_files=RelatedFile.new(path2model_name, FilePattern.project_root_dir?(executable))
+	@related_files=Unit.new(path2model_name, FilePattern.project_root_dir?(executable))
 	message= "edit_files do not exist\n executable=#{executable.inspect}" 
 	message+= "\n @related_files.edit_files=#{@related_files.edit_files.inspect}" 
 	message+= "\n @related_files.missing_files=#{@related_files.missing_files.inspect}" 

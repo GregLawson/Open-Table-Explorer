@@ -10,13 +10,16 @@ require 'mime/types' # new ruby detailed library
 require_relative '../../app/models/shell_command.rb'
 class Command
 module ClassMethods
+def path_of_command(command)
+		whereis=ShellCommands.new("whereis "+command).output
+end #path_of_command
 def paths?
 	command_string = 'echo $PATH'
 	ShellCommands.new(command_string).output.chomp.split(':')
 end # paths?
 end #ClassMethods
 extend ClassMethods
-# attr_reader
+attr_reader :banner
 def initialize(command, description=nil, help_source=nil)
 	@command_name = command
 	if /\//.match(command) then # pathname
@@ -27,6 +30,7 @@ def initialize(command, description=nil, help_source=nil)
 		@path=@whereis.split(' ')[2]
 	end #if
 	@description=description
+	@banner = "Usage: #{File.basename(command, '.rb')} --<command> files\n#{@description}"
 	@help_source=help_source
 	@file_type=	ShellCommands.new("file -b "+@path).output
 	@mime_type=	ShellCommands.new("file -b --mime "+@path).output

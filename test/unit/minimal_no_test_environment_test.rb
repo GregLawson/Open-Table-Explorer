@@ -10,7 +10,7 @@ require 'test/unit'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/related_file.rb'
-TE=RelatedFile.new
+TE=Unit.new
 DefaultTests=eval(TE.default_tests_module_name?)
 TestCase=eval(TE.test_case_class_name?)
 class MinimalTest < TestCase

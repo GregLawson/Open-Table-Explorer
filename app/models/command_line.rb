@@ -16,10 +16,10 @@ def add_option(name, description=name, long_option=name, short_option=name[0])
 	option=CommandLineOption.new(name, description, long_option, short_option)
 	@options = (@options.nil? ? [] : @options)+[option]
 end #add_option
-def parse_options
+def parse_options(banner= @banner)
 	@commands = []
 	OptionParser.new do |opts|
-		opts.banner = "Usage: #@basename} --<command> files"
+		opts.banner = banner
 		@options.each do |option|
 			opts.on(option.short_option, "--[no-]#{option.long_option}", option.description) do |o|
 				@commands+=[option.name] if o
@@ -27,22 +27,28 @@ def parse_options
 	  end #each
 	end.parse!
 end #parse_options
-def run
-	case ARGV.size
+def run(&non_default_actions)
+	case ARGV.size # paths after switch removal?
 	when 0 then # scite testing defaults command and file
-		puts "work_flow --<command> <file>"
+		puts script.banner
 		this_file=File.expand_path(__FILE__)
 		argv=[this_file] # incestuous default test case for scite
+		@commands=[:test]
 	else
 		argv=ARGV
 	end #case
-	if @coomands.size=0 then
-		@commands=[:test]
-	end #if
-	argv.each do |f|
-		command_line=CommandLine.new(f)
-		@commands.each do |c|
-			command_line.method(c)
+	commands.each do |c|
+		ret = non_default_actions.call
+		if ret.nil? then
+		else argv.each do |f|
+			unit=CommandLine.new(f)
+			if unit.respond_to?(c.to_sym) then
+				unit.send(c.to_sym, *argv)
+			else
+				puts "#{c.to_sym} is not a method in #{unit_files.inspect}"
+			end # if
+		end # if
+		scripting_workflow.script_deserves_commit!(:passed)
 		end #each
 	end #each
 end #run
@@ -70,11 +76,12 @@ end #Examples
 include Examples
 end #CommandLineScript
 class CommandLineOption
-def initialize(name, description=name, long_option=name, short_option=name[0])
-	@name=name
+attr_reader :name, :description, :short_option, :long_option
+def initialize(name, description=name.to_s, long_option=name.to_s, short_option=name[0])
+	@name=name.to_s
 	@description=description
 	@short_option=short_option
-	@long_option=long_option
+	@short_option=long_option
 end #initialize
 module Assertions
 include Test::Unit::Assertions
