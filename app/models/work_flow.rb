@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson
+#    Copyright (C) 2013-14 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -258,6 +258,7 @@ def edit(context = nil)
 	end # if
 	puts command_string if $VERBOSE
 	edit = @repository.shell_command(command_string)
+	edit = edit.tolerate_error_pattern(/Warning/)
 	edit.assert_post_conditions
 end # edit
 def minimal_edit
