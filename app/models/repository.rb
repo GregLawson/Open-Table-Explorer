@@ -199,7 +199,7 @@ def confirm_commit(interact=:interactive)
 		case interact
 		when :interactive then
 			cola_run = git_command('cola')
-			cola_run = cola_run.tolerate_status_and_error_pattern(1, /Warning/)
+			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
 			cola_run.assert_post_conditions
 			if !something_to_commit? then
 #				git_command('cola rebase '+current_branch_name?.to_s)
