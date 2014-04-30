@@ -7,7 +7,6 @@
 ###########################################################################
 #require_relative '../../app/models/generic_table.rb'
 require_relative '../../app/models/no_db.rb'
-require_relative '../../test/assertions/default_assertions.rb'
 class Chemistry < ActiveRecord::Base
 def import
 	update(BatteryType.chemistries)
@@ -59,8 +58,5 @@ module Assertions
 end #Assertions
 module Examples
 end #Examples
-include Examples
 include Assertions
-include DefaultAssertions
-extend DefaultAssertions::ClassMethods
 end #BatteryType
