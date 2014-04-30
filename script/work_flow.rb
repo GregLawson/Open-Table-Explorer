@@ -63,9 +63,9 @@ OptionParser.new do |opts|
   end
   opts.on("-l", "--[no-]loop", "Test, commit, edit, loop.") do |t|
     commands+=[:loop] if t
+  end
   opts.on("-s", "--[no-]split", "split off new class and edit") do |t|
     commands+=[:split] if t
-  end
   end
   opts.on("-r", "--[no-]related", "Related files") do |t|
     commands+=[:related] if t
