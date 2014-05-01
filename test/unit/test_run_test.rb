@@ -7,11 +7,9 @@
 ###########################################################################
 require_relative 'test_environment'
 require 'active_support' # for singularize and pluralize
+require_relative '../../app/models/test_run.rb'
 # executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
 class TestRunTest < TestCase
-fixtures :test_runs
 def assert_logical_primary_key_defined(instance,message=nil)
 	message=build_message(message, "instance=?", instance.inspect)	
 	assert_not_nil(instance, message)
@@ -138,14 +136,6 @@ def test_parse_header
 	assert_not_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 end #parse_header
-def setup
-	@testURL='http://192.168.3.193/api/LiveData.xml'
-	define_model_of_test # allow generic tests
-	assert_module_included(@model_class,Generic_Table)
-	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-#	define_association_names #38271 associations
-end #def
 def test_fixture_function_ # aaa to output first
 	define_association_names #38271 associations
 	assert_equal(@my_fixtures,fixtures(@table_name))
