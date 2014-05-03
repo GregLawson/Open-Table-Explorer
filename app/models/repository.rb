@@ -13,6 +13,7 @@ require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
 require_relative 'parse.rb'
+require_relative 'branch.rb'
 class Repository <Grit::Repo
 module Constants
 #Temporary='/mnt/working/Recover'
@@ -23,6 +24,7 @@ Error_classification={0 => :success,
 				1     => :single_test_fail,
 				100 => :initialization_fail,
 				10000 => :syntax_error}
+Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants
 module ClassMethods
@@ -30,11 +32,12 @@ include Constants
 def git_command(git_command, repository_dir)
 	ShellCommands.new('git '+ShellCommands.assemble_command_string(git_command), :chdir=>repository_dir)
 end #git_command
-def create_empty(path)
+def create_empty(path, interactive)
 	Dir.mkdir(path)
+	@interactive = interactive
 	if File.exists?(path) then
 		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
-		new_repository=Repository.new(path)
+		new_repository=Repository.new(path, @interactive)
 	else
 		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
 	end #if
@@ -44,23 +47,24 @@ def delete_existing(path)
 # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
 	FileUtils.remove_entry_secure(path) #, force = false)
 end #delete_existing
-def replace_or_create(path)
+def replace_or_create(path, interactive)
 	if File.exists?(path) then
 		delete_existing(path)
 	end #if
-	create_empty(path)
+	create_empty(path, interactive)
 end #replace_or_create
-def create_if_missing(path)
+def create_if_missing(path, interactive)
 	if File.exists?(path) then
-		Repository.new(path)
+		Repository.new(path, interactive)
 	else
-		create_empty(path)
+		create_empty(path, interactive)
 	end #if
 end #create_if_missing
-def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"))
-	replace_or_create(path)
+def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"), interactive)
+	replace_or_create(path, interactive)
+  @interactive = interactive
 	if File.exists?(path) then
-		new_repository=Repository.new(path)
+		new_repository=Repository.new(path, @interactive)
 		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 		new_repository.git_command('add README')
 		new_repository.git_command('commit -m "create_empty initial commit of README"')
@@ -72,18 +76,19 @@ def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch
-def initialize(path)
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :interactive
+def initialize(path, interactive)
 	if path.to_s[-1,1]!='/' then
 		path=path.to_s+'/'
 	end #if
 	@url=path
 	@path=path.to_s
   puts '@path='+@path if $VERBOSE
+  @interactive = interactive
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
-This_code_repository=Repository.new(Root_directory)
+This_code_repository=Repository.new(Root_directory, :interactive)
 end #Constants
 def shell_command(command, working_directory=@path)
 	ShellCommands.new(command, :chdir=>working_directory)
@@ -103,12 +108,34 @@ end #corruption
 def corruption_gc
 	git_command("gc")
 end #corruption
+def abort_rebase_and_merge!
+	if File.exists?('.git/rebase-merge/git-rebase-todo') then
+		git_command("rebase --abort")
+	end
+#	git_command("stash save").assert_post_conditions
+	if File.exists?('.git/MERGE_HEAD') then
+		git_command("merge --abort")
+	end # if
+end # abort_rebase_and_merge!
 def standardize_position!
-	git_command("rebase --abort")
-	git_command("merge --abort")
-	git_command("stash save").assert_post_conditions
+	 abort_rebase_and_merge!
 	git_command("checkout master")
 end #standardize_position!
+def state?
+	state=[]
+	if File.exists?('.git/rebase-merge/git-rebase-todo') then
+		state << :rebase
+	end
+	if File.exists?('.git/MERGE_HEAD') then
+		state << :merge
+	end # if
+	if something_to_commit? then
+		state << :dirty
+	else
+		state << :clean
+	end # if
+	return state
+end # state?
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
@@ -156,7 +183,7 @@ def safely_visit_branch(target_branch, &block)
 		git_command('stash save --include-untracked')
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit(:interactive)
+			confirm_commit
 		end #each
 		changes_branch=:stash
 	end #if
@@ -179,7 +206,7 @@ def safely_visit_branch(target_branch, &block)
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit(:interactive)
+			confirm_commit
 		end #each
 	end #if
 	ret
@@ -194,9 +221,9 @@ def unit_names?(files)
 		FilePattern.path2model_name?(f).to_s
 	end #map
 end #unit_names?
-def confirm_commit(interact=:interactive)
+def confirm_commit
 	if something_to_commit? then
-		case interact
+		case @interactive
 		when :interactive then
 			cola_run = git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
@@ -214,9 +241,9 @@ def confirm_commit(interact=:interactive)
 			raise 'Unimplemented option='+interact
 		end #case
 	end #if
-	puts 'confirm_commit('+interact.inspect+"), something_to_commit?="+something_to_commit?.inspect
+	puts 'confirm_commit '+@interactive.inspect+"), something_to_commit?="+something_to_commit?.inspect
 end #confirm_commit
-def validate_commit(changes_branch, files, interact=:interactive)
+def validate_commit(changes_branch, files)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
 		puts p.inspect  if $VERBOSE
@@ -228,7 +255,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
-		confirm_commit(interact)
+		confirm_commit
 	end #if
 end #validate_commit
 def something_to_commit?
@@ -273,13 +300,20 @@ def merge_conflict_files?
 	end #if
 	ret
 end #merge_conflict_files?
+
+def shell_parse(command, pattern)
+	output=git_command(command).assert_post_conditions.output
+	parse=Parse.parse_into_array(output, pattern, {ending: :optional})
+end # 
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
-#?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
+	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
+	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
 end #branches?
 def remotes?
-	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
-end #branches?
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	shell_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+end #remotes?
 def rebase!
 	if remotes?.include?(current_branch_name?) then
 		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
@@ -287,6 +321,6 @@ def rebase!
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
 end #rebase!
-end #Repository
+end # Repository
 
 
