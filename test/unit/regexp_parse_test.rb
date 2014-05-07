@@ -13,6 +13,44 @@ include RegexpParse::Examples
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
+# Example from readme
+def test_regexp_parser
+	regex = /a?(b)*[c]+/m
+
+	# using #to_s on the Regexp object to include options
+	root = Regexp::Parser.parse( regex.to_s, 'ruby/1.8')
+
+	assert_equal(root.multiline?, true)
+	assert_equal(root.case_insensitive?, false)
+
+	# simple tree walking method
+	def walk(e, depth = 0)
+	  puts "#{'  ' * depth}> #{e.class}"
+	termination_condition = e.instance_of?(Regexp::Expression::Literal) # no subexpressions
+#	termination_condition ||= e.expressions.empty?
+	termination_condition = e.terminal?
+	if termination_condition then
+	else
+	    e.each {|s| walk(s, depth+1) }
+	end
+	end # walk
+	assert_equal('Regexp::Expression::Root', root.class.name)
+	assert_instance_of(Regexp::Parser::Root, root)
+	assert_include(root.methods, :expressions)
+	puts 'root=' + root.inspect
+	walk(root)
+	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')	" })
+	# output
+#	> Regexp::Expression::Root
+#	  > Regexp::Expression::Literal
+#	  > Regexp::Expression::Group::Capture
+#	    > Regexp::Expression::Literal
+#	  > Regexp::Expression::CharacterSet
+end # regexp_parser
+def test_inspect
+	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')	" })
+	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')	" })
+end # inspect
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
 	assert_not_nil(RegexpTree[Any_binary_char_parse])
