@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -17,18 +17,43 @@
 #require_relative '../../app/models/no_db.rb'
 # make as many methods in common between Array and Hash
 # [] is the obvious method in common
-# each_index and each_pair seem synonyms
+# each_index and each_pair seem synonyms but with thier arguments reversed
+# Hash#to_a converts a hash to a nested array of key, value pairs 
+# Array#to_h reverses my expectation and makes the array the keys not the values
+# I've added Array#to_hash to create the indexes as keys
 # map should be added analogously to Hash
 class Array
-def each_pair
+def each_pair(&block)
+	each_with_index do |element, index|
+		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
+			block.call(element[0], element[1])
+		else
+			block.call(index, element)
+		end # if
+	end # if
 end # each_pair
 def values
+	self
 end # values
 def keys
+	(0..self.size-1).to_a
 end # keys
+def to_hash
+	hash = {}
+	each_pair do |key, value|
+		hash[key] = value
+	end # each_pair
+end # to_hash
+def to_hash_from_to_a
+	hash = {}
+	each_pair do |key, value|
+		hash[key] = value
+	end # each_pair
+end # to_hash_from_to_a
 end # Array
 class Hash
-def each_index
+def each_with_index(*args, &block)
+	each_pair(args, block)
 end # each_index
 def map
 end # map
@@ -76,5 +101,11 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+Example_array = [1, 2, 3]
+Example_hash = {name: 'Fred', salary: 10, department: :Engineering}
+Example_tuples = [Example_hash, {name: 'Bob', salary: 11}]
+Example_department = {department: :Engineering, manager: 'Bob'}
+Example_database = {employees: Example_tuples, departments: Example_department}
+
 end #Examples
 end #StreamTree
