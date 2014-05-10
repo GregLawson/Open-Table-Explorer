@@ -10,6 +10,7 @@ require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
 include RegexpParse::Examples
+include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
@@ -39,7 +40,11 @@ def test_regexp_parser
 	assert_include(root.methods, :expressions)
 	puts 'root=' + root.inspect
 	walk(root)
-	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')	" })
+	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
+	assert_instance_of(String, root.map_recursive(:expressions){|e, depth| "#{e.class.name[20..-1]}(:#{e.type}, :#{e.token}, '#{e.text}')\n"}.join)
+	inspect_a = "Literal(:literal, :literal, 'a')\n"
+	assert_equal(inspect_a, root.map_recursive(:expressions){|e, depth| "#{e.class.name[20..-1]}(:#{e.type}, :#{e.token}, '#{e.text}')\n"}.join)
+	assert_equal(inspect_a, root.inspect)
 	# output
 #	> Regexp::Expression::Root
 #	  > Regexp::Expression::Literal
@@ -47,9 +52,46 @@ def test_regexp_parser
 #	    > Regexp::Expression::Literal
 #	  > Regexp::Expression::CharacterSet
 end # regexp_parser
-def test_inspect
-	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')	" })
-	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')	" })
+def test_Constants
+	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
+	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
+	assert_equal("Group::Options(:group, :options, '(?-mix:')", Dump_format.call(true, Sequence_example.expressions[0], 0))
+	assert_equal(1, Sequence_example.expressions.size)
+	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
+	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
+end # Constants
+def test_map_recursive
+	children_method_name = :to_a
+	depth=0
+	children_method_name = children_method_name.to_sym
+	assert_respond_to(Sequence_example, children_method_name)
+		children = Sequence_example.send(children_method_name)
+		if children.empty? then # termination condition
+			visit_proc.call(true, self, depth)  # end recursion
+		else
+			children.map_pair do |key, sub_tree|
+				if sub_tree.respond_to?(:map_recursive) then
+					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
+				else
+					fail 'sub_tree=' + sub_tree.inspect + ' of ' + self.inspect
+				end # if
+			end # map
+		end # if
+end # map_recursive
+def test_inspect_Regexp
+	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
+	assert_equal("Group::Options(:group, :options, '(?-mix:')", Dump_format.call(true, Sequence_example.expressions[0], 0))
+	assert_equal(1, Sequence_example.expressions.size)
+	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
+	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
+	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
+	assert_equal("", [1].map_recursive(:expressions, Minimal_format))
+	assert_equal("", {cat: fish}.map_recursive(:expressions, Minimal_format))
+	assert_equal("", Sequence_example.expressions[0].expressions[0].map_recursive(:expressions, Minimal_format))
+	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, Minimal_format))
+	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, Dump_format))
+	assert_equal("", Sequence_example.map_recursive(:expressions, Dump_format))
+	assert_equal("", Alternative_example.map_recursive(:expressions, Dump_format))
 end # inspect
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree

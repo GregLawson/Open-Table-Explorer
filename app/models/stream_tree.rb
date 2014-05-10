@@ -55,8 +55,26 @@ class Hash
 def each_with_index(*args, &block)
 	each_pair(args, block)
 end # each_index
-def map
+# More like Array#map.uniq since Hash does not allow duplicate keys
+# If you want to process duplicates try Hash#to_a.map.group_by
+def map(&block)
+	ret = {} # return Hash
+	each_pair {|key, value| ret.merge(block.call(key, element))}
+	ret
 end # map
+def map_pair_with_collisions(&block)
+	 to_a.map_pair(block).group_by{|key, value| key}
+end # map_pair_with_collisions
+def merge_collisions(&block)
+	 to_a.map_pair{|key, values| block.call(key, values)}
+end # merge_collisions
+def map_with_collisions(&block)
+	to_a.map{|pair_array| call.block(pair_array[0], pair_array[1])}
+end # map_with_collisions
+# More like Array#.uniq since Hash does not allow duplicate keys
+def +(other)
+	merge(other)
+end # :+
 end # Hash
 module Stream # see http://rgl.rubyforge.org/stream/classes/Stream.html
 include Enumerable

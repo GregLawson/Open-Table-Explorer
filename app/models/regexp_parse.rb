@@ -7,11 +7,31 @@
 ###########################################################################
 require 'regexp_parser'
 require_relative 'unbounded_range.rb'
+require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
 class Regexp
 class Expression::Base
-# Apply block to each leaf.
+module Constants
+Minimal_format = proc do |terminal, e, depth|
+	if terminal then
+#		"'#{e.text}')"
+	"cat"
+	else
+#		terminal.to_s + e.to_s + depth.to_s
+		'dog'
+	end # if
+end # proc
+Dump_format = proc do |terminal, e, depth|
+	"#{e.class.name[20..-1]}(:#{e.type}, :#{e.token}, '#{e.text}')"
+end # proc
+Default_format = Dump_format
+Terminal_example = Regexp::Parser.parse(/a/.to_s, 'ruby/1.8')
+Sequence_example = Regexp::Parser.parse(/ab/.to_s, 'ruby/1.8')
+Alternative_example = Regexp::Parser.parse(/a|b/.to_s, 'ruby/1.8')
+end # Constants
+include Constants
+# Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
 def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
@@ -19,18 +39,25 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 	if respond_to?(children_method_name) then
 		children = send(children_method_name)
 		if children.empty? then # termination condition
-			visit_proc.call(self)  # end recursion
+			visit_proc.call(true, self, depth)  # end recursion
 		else
-			children.map do |sub_tree|
-				sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(p, depth)}
+			children.map_pair do |key, sub_tree|
+				if sub_tree.respond_to?(:map_recursive) then
+					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
+				else
+					fail 'sub_tree=' + sub_tree.inspect + ' of ' + self.inspect
+				end # if
 			end # map
 		end # if
 	else
-		visit_proc.call(self) # end recursion
+		visit_proc.call(nil, self, depth) # end recursion
 	end # if
+end # map_recursive
+def inspect
+	map_recursive(:expressions, Minimal_format).join
+	map_recursive(:expressions, Dump_format).join
 
-end #map_recursive
-
+end # inspect
 # Apply block to each non-leaf or branching node
 # Provides a postfix walk
 # Two passes:
@@ -50,9 +77,6 @@ def map_branches(depth=0, &visit_proc)
 	end
 	return visit_proc.call(visited_subtrees, &visit_proc)
 end #map_branches
-def inspect
-	map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')	" }
-end # inspect
 end # Expression
 end # Regexp
 class RegexpTree < NestedArray
