@@ -67,8 +67,6 @@ def test_inspect_Regexp
 	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
 	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
 	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
-	assert_equal("", [1].map_recursive(:expressions, Minimal_format))
-	assert_equal("", {cat: fish}.map_recursive(:expressions, Minimal_format))
 	assert_equal("", Sequence_example.expressions[0].expressions[0].map_recursive(:expressions, Minimal_format))
 	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, Minimal_format))
 	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, Dump_format))
