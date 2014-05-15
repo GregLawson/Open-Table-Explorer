@@ -10,21 +10,28 @@ require_relative '../../app/models/stream_tree.rb'
 class StreamTreeTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
+include Tree::Examples
+def test_map_recursive_simple_block
+#	assert_equal([Flat_array], Flat_array.map_recursive{|terminal, e, depth| e})
+	assert_equal([Flat_array], Flat_array.map_recursive(Identity_map))
+	assert_equal(Flat_hash, Flat_hash.map_recursive(Identity_map))
+end # test_map_recursive_simple_block
 def test_map_recursive
 	children_method_name = :to_a
 	depth=0
 	children_method_name = children_method_name.to_sym
-	assert_respond_to(Sequence_example, children_method_name)
-		children = Sequence_example.send(children_method_name)
+	assert_respond_to([0], children_method_name)
+		children = [0].send(children_method_name)
 		if children.empty? then # termination condition
+			assert_empty(children)
 			visit_proc.call(true, self, depth)  # end recursion
 		else
 			children.map_pair do |key, sub_tree|
-				if sub_tree.respond_to?(:map_recursive) then
+				assert_respond_to(sub_tree, :map_recursive)
 					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
-				else
-					fail 'sub_tree=' + sub_tree.inspect + ' of ' + self.inspect
-				end # if
+#				else
+#					fail 'sub_tree=' + sub_tree.inspect #+ ' of ' + self.inspect
+#				end # if
 			end # map
 		end # if
 end # map_recursive

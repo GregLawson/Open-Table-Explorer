@@ -26,6 +26,10 @@ module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
 end # Graph
 module Tree
 include Graph
+module Constants
+Identity_map = proc {|terminal, e, depth| e}
+end # Constants
+include Constants
 # delegate to Array, Enumable and Hash
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
@@ -41,7 +45,7 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 				if sub_tree.respond_to?(:map_recursive) then
 					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
 				else
-					fail 'sub_tree=' + sub_tree.inspect + ' of ' + self.inspect
+					visit_proc.call(nil, self, depth) # end recursion
 				end # if
 			end # map
 		end # if
@@ -49,6 +53,31 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		visit_proc.call(nil, self, depth) # end recursion
 	end # if
 end # map_recursive
+# Apply block to each non-leaf or branching node
+# Provides a postfix walk
+# Two passes:
+# 1) Recursively visit descendants
+# 2) Visit branching nodes (Arrays)
+# Desirable since result tree is constructed bottom-up
+# Descendants have the block applied before they are reassembled into a tree.
+# Branching node block can take into account changes in subtrees.
+
+def map_branches(depth=0, &visit_proc)
+	visited_subtrees= self.map do |sub_tree| 
+		if sub_tree.respond_to?(:expressions) then
+			self.class.new(sub_tree).map_branches(depth+1){|p| visit_proc.call(p, depth)}
+		else
+			sub_tree
+		end #if
+	end
+	return visit_proc.call(visited_subtrees, &visit_proc)
+end #map_branches
+module Examples
+include Constants
+Flat_array = [0]
+Flat_hash = {cat: :fish}
+end # Examples
+include Examples
 end # Tree
 class Array
 include Tree
