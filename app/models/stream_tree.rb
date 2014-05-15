@@ -28,6 +28,7 @@ module Tree
 include Graph
 module Constants
 Identity_map = proc {|terminal, e, depth| e}
+Trace_map = proc {|terminal, e, depth| [terminal, e, depth]}
 end # Constants
 include Constants
 # delegate to Array, Enumable and Hash
@@ -35,6 +36,14 @@ include Constants
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
 def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
+# Handle missing parameters (since any and all can be missing)
+#	puts 'children_method_name.inspect =' + children_method_name.inspect
+#	puts 'depth.inspect =' + depth.inspect
+#	puts 'visit_proc.inspect =' + visit_proc.inspect
+#	puts 'block_given? =' + block_given?.inspect
+	if !block_given? && (children_method_name.instance_of?(Proc) || depth.instance_of?(Proc)) then
+		raise "Block proc argument should be preceded with ampersand."
+	end # if
 	children_method_name = children_method_name.to_sym
 	if respond_to?(children_method_name) then
 		children = send(children_method_name)
@@ -112,10 +121,19 @@ def map_pair(&block)
 	ret = [] # return Array
 	each_pair {|key, value| ret. << block.call(key, value)}
 	ret
-end # map
+end # map_pair
+module Constants
+Identity_map_pair = proc {|key, value| value}
+end # Constants
+include Constants
 end # Array
+
 class Hash
 include Tree
+module Constants
+Identity_map_pair = proc {|key, value| {key => value}}
+end # Constants
+include Constants
 def each_with_index(*args, &block)
 	each_pair(args, block)
 end # each_index
@@ -123,9 +141,9 @@ end # each_index
 # If you want to process duplicates try Hash#to_a.map.group_by
 def map_pair(&block)
 	ret = {} # return Hash
-	each_pair {|key, value| ret.merge(block.call(key, element))}
+	each_pair {|key, value| ret = ret.merge(block.call(key, value))}
 	ret
-end # map
+end # map_pair
 def map_pair_with_collisions(&block)
 	 to_a.map_pair(block).group_by{|key, value| key}
 end # map_pair_with_collisions

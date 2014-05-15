@@ -12,9 +12,10 @@ include DefaultTests
 include TE.model_class?::Examples
 include Tree::Examples
 def test_map_recursive_simple_block
-#	assert_equal([Flat_array], Flat_array.map_recursive{|terminal, e, depth| e})
-	assert_equal([Flat_array], Flat_array.map_recursive(Identity_map))
-	assert_equal(Flat_hash, Flat_hash.map_recursive(Identity_map))
+	assert_equal([Flat_array], Flat_array.map_recursive{|terminal, e, depth| e})
+	assert_equal([Flat_array], Flat_array.map_recursive(&Identity_map))
+	assert_equal([Flat_hash], Flat_hash.map_recursive(&Identity_map))
+	assert_equal([[nil, [0], 0]], Flat_array.map_recursive(&Trace_map))
 end # test_map_recursive_simple_block
 def test_map_recursive
 	children_method_name = :to_a
@@ -27,10 +28,10 @@ def test_map_recursive
 			visit_proc.call(true, self, depth)  # end recursion
 		else
 			children.map_pair do |key, sub_tree|
-				assert_respond_to(sub_tree, :map_recursive)
-					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
+				assert_not_respond_to(sub_tree, :map_recursive)
+#					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
 #				else
-#					fail 'sub_tree=' + sub_tree.inspect #+ ' of ' + self.inspect
+					assert_equal(Flat_array, Identity_map.call(nil, Flat_array, depth)) # end recursion
 #				end # if
 			end # map
 		end # if
@@ -49,8 +50,16 @@ end # keys
 def test_to_hash
 	assert_equal(Example_array, Example_array.to_hash.to_a.values)
 end # to_hash
+def test_map_pair_Array
+	tree = Flat_array
+	idenity_map  = tree.class::Constants::Identity_map_pair
+	assert_equal(tree, tree.map_pair(&idenity_map))
+end # map_pair
 def test_each_index
 end # each_index
-def test_map
-end # map
+def test_map_pair_Hash
+	tree = Flat_hash
+	idenity_map  = tree.class::Constants::Identity_map_pair
+	assert_equal(tree, tree.map_pair(&idenity_map))
+end # map_pair
 end #StreamTree
