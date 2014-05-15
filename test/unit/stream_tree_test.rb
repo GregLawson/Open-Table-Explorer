@@ -10,6 +10,24 @@ require_relative '../../app/models/stream_tree.rb'
 class StreamTreeTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
+def test_map_recursive
+	children_method_name = :to_a
+	depth=0
+	children_method_name = children_method_name.to_sym
+	assert_respond_to(Sequence_example, children_method_name)
+		children = Sequence_example.send(children_method_name)
+		if children.empty? then # termination condition
+			visit_proc.call(true, self, depth)  # end recursion
+		else
+			children.map_pair do |key, sub_tree|
+				if sub_tree.respond_to?(:map_recursive) then
+					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
+				else
+					fail 'sub_tree=' + sub_tree.inspect + ' of ' + self.inspect
+				end # if
+			end # map
+		end # if
+end # map_recursive
 def test_each_pair
 	collect = []
 	Example_array.each_pair {|key, value| collect << [key, value]}

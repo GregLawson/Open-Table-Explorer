@@ -22,7 +22,36 @@
 # Array#to_h reverses my expectation and makes the array the keys not the values
 # I've added Array#to_hash to create the indexes as keys
 # map should be added analogously to Hash
+module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
+end # Graph
+module Tree
+include Graph
+# delegate to Array, Enumable and Hash
+# Apply block to each node (branch & leaf).
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
+def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
+	children_method_name = children_method_name.to_sym
+	if respond_to?(children_method_name) then
+		children = send(children_method_name)
+		if children.empty? then # termination condition
+			visit_proc.call(true, self, depth)  # end recursion
+		else
+			children.map_pair do |key, sub_tree|
+				if sub_tree.respond_to?(:map_recursive) then
+					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
+				else
+					fail 'sub_tree=' + sub_tree.inspect + ' of ' + self.inspect
+				end # if
+			end # map
+		end # if
+	else
+		visit_proc.call(nil, self, depth) # end recursion
+	end # if
+end # map_recursive
+end # Tree
 class Array
+include Tree
 def each_pair(&block)
 	each_with_index do |element, index|
 		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
@@ -50,14 +79,20 @@ def to_hash_from_to_a
 		hash[key] = value
 	end # each_pair
 end # to_hash_from_to_a
+def map_pair(&block)
+	ret = [] # return Array
+	each_pair {|key, value| ret. << block.call(key, value)}
+	ret
+end # map
 end # Array
 class Hash
+include Tree
 def each_with_index(*args, &block)
 	each_pair(args, block)
 end # each_index
 # More like Array#map.uniq since Hash does not allow duplicate keys
 # If you want to process duplicates try Hash#to_a.map.group_by
-def map(&block)
+def map_pair(&block)
 	ret = {} # return Hash
 	each_pair {|key, value| ret.merge(block.call(key, element))}
 	ret
@@ -74,17 +109,14 @@ end # map_with_collisions
 # More like Array#.uniq since Hash does not allow duplicate keys
 def +(other)
 	merge(other)
+end # +
+def <<(other)
+	merge(other)
 end # :+
 end # Hash
 module Stream # see http://rgl.rubyforge.org/stream/classes/Stream.html
 include Enumerable
 end # Stream
-module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
-end # Graph
-module Tree
-include Graph
-# delegate to Array, Enumable and Hash
-end # Tree
 module StreamTree
 include Stream
 include Tree
