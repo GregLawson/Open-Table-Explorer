@@ -60,24 +60,6 @@ def test_Constants
 	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
 	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
 end # Constants
-def test_map_recursive
-	children_method_name = :to_a
-	depth=0
-	children_method_name = children_method_name.to_sym
-	assert_respond_to(Sequence_example, children_method_name)
-		children = Sequence_example.send(children_method_name)
-		if children.empty? then # termination condition
-			visit_proc.call(true, self, depth)  # end recursion
-		else
-			children.map_pair do |key, sub_tree|
-				if sub_tree.respond_to?(:map_recursive) then
-					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
-				else
-					fail 'sub_tree=' + sub_tree.inspect + ' of ' + self.inspect
-				end # if
-			end # map
-		end # if
-end # map_recursive
 def test_inspect_Regexp
 	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
 	assert_equal("Group::Options(:group, :options, '(?-mix:')", Dump_format.call(true, Sequence_example.expressions[0], 0))
