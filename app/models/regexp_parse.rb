@@ -12,30 +12,37 @@ require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
 class Regexp
 class Expression::Base
-module Constants
-Minimal_format = proc do |terminal, e, depth|
-	if terminal then
-#		"'#{e.text}')"
-	"cat"
+include Tree
+def expression_class_symbol?
+	self.class.name[20..-1].to_sym # should be magic-number-free
+end # expression_class_symbol?
+def inspect
+	ret = map_recursive(:expressions, &Inspect_format)
+	if ret.instance_of?(Array) then
+		ret.join
 	else
-#		terminal.to_s + e.to_s + depth.to_s
-		'dog'
+		'map_recursive(:expressions, &Dump_format) = ' + ret.inspect
 	end # if
-end # proc
+
+end # inspect
+module Constants
 Dump_format = proc do |terminal, e, depth|
-	"#{e.class.name[20..-1]}(:#{e.type}, :#{e.token}, '#{e.text}')"
+	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
 end # proc
-Default_format = Dump_format
+Inspect_format = Dump_format
+end # Constants
+include Constants
+module Examples
+include Constants
+Minimal_format = proc do |terminal, e, depth|
+	terminal.to_s + ',' + e.to_s + ',' + depth.to_s
+
+end # proc
 Terminal_example = Regexp::Parser.parse(/a/.to_s, 'ruby/1.8')
 Sequence_example = Regexp::Parser.parse(/ab/.to_s, 'ruby/1.8')
 Alternative_example = Regexp::Parser.parse(/a|b/.to_s, 'ruby/1.8')
-end # Constants
-include Constants
-def inspect
-	map_recursive(:expressions, Minimal_format).join
-	map_recursive(:expressions, Dump_format).join
-
-end # inspect
+end # Examples
+include Examples
 end # Expression
 end # Regexp
 class RegexpTree < NestedArray

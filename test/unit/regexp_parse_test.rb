@@ -10,12 +10,13 @@ require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
 include RegexpParse::Examples
-include Regexp::Expression::Base::Constants
+include Regexp::Expression::Base::Examples
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
+include Tree::Constants
 # Example from readme
-def test_regexp_parser
+def test_readme
 	regex = /a?(b)*[c]+/m
 
 	# using #to_s on the Regexp object to include options
@@ -51,7 +52,32 @@ def test_regexp_parser
 #	  > Regexp::Expression::Group::Capture
 #	    > Regexp::Expression::Literal
 #	  > Regexp::Expression::CharacterSet
-end # regexp_parser
+end # readme
+def test_expression_class_symbol?
+	assert_equal(:Literal, expression_class_symbol?)
+end # expression_class_symbol?
+def test_inspect_Regexp
+	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
+	assert_equal("Group::Options(:group, :options, '(?-mix:')", Dump_format.call(true, Sequence_example.expressions[0], 0))
+	assert_equal(1, Sequence_example.expressions.size)
+	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
+	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
+	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
+	leaf_expression = Sequence_example.expressions[0].expressions[0].map_recursive(:expressions, &Trace_map)[1]
+	assert_instance_of(Regexp::Expression::Literal, leaf_expression)
+	assert_equal(:Literal, leaf_expression.expression_class_symbol?)
+	assert_equal(:literal, leaf_expression.type)
+	assert_equal(:literal, leaf_expression.token)
+	assert_equal('ab', leaf_expression.text)
+#	assert_equal(true, leaf_expression.expressions.empty?)
+	assert_equal(true, leaf_expression.terminal?)
+	assert_equal(true, leaf_expression.map_recursive(:expressions, &Trace_map))
+	assert_equal([true, leaf_expression, 0], leaf_expression.map_recursive(:expressions, &Minimal_format))
+	assert_equal(["dog"], Sequence_example.expressions[0].map_recursive(:expressions, &Minimal_format))
+	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, &Dump_format))
+	assert_equal("", Sequence_example.map_recursive(:expressions, &Dump_format))
+	assert_equal("", Alternative_example.map_recursive(:expressions, &Dump_format))
+end # inspect
 def test_Constants
 	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
 	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
@@ -60,19 +86,6 @@ def test_Constants
 	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
 	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
 end # Constants
-def test_inspect_Regexp
-	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
-	assert_equal("Group::Options(:group, :options, '(?-mix:')", Dump_format.call(true, Sequence_example.expressions[0], 0))
-	assert_equal(1, Sequence_example.expressions.size)
-	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
-	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
-	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
-	assert_equal("", Sequence_example.expressions[0].expressions[0].map_recursive(:expressions, Minimal_format))
-	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, Minimal_format))
-	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, Dump_format))
-	assert_equal("", Sequence_example.map_recursive(:expressions, Dump_format))
-	assert_equal("", Alternative_example.map_recursive(:expressions, Dump_format))
-end # inspect
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
 	assert_not_nil(RegexpTree[Any_binary_char_parse])
