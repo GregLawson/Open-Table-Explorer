@@ -22,6 +22,16 @@
 # Array#to_h reverses my expectation and makes the array the keys not the values
 # I've added Array#to_hash to create the indexes as keys
 # map should be added analogously to Hash
+module Node
+module ParentLinked
+def all
+end # all
+def parent?
+end # parent?
+end # ChildLinked
+module ChildLinked
+end # ChildLinked
+end # Node
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
 end # Graph
 module Tree
