@@ -305,8 +305,8 @@ def assert_no_duplicates(array, columns_to_ignore=[])
 	array.sort{|a1,a2| a1.inspect<=>a2.inspect}.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary.size}
 	assert_instance_of(Hash, frequencies, frequencies.inspect)
 	sorted_by_frequency=frequencies.to_a.sort{|x,y| x[1]<=>y[1]}
-	message="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
-	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[0..10]}"+caller_lines
+	message="Array has duplicates. First ten most common elements are #{sorted_by_frequency[-10..-1]}"+caller_lines
+#	message+="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
 	assert_equal(array.size, array.uniq.size, message)
 end #assert_no_duplicates
 def assert_single_element_array(obj)

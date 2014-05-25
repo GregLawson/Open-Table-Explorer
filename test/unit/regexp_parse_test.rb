@@ -88,6 +88,7 @@ def test_Constants
 end # Constants
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
+	assert_not_nil(RegexpParse.typed?(Any_binary_char_parse))
 	assert_not_nil(RegexpTree[Any_binary_char_parse])
 	assert_kind_of(NestedArray, RegexpTree[Any_binary_char_parse])
 	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char_parse])
@@ -143,6 +144,9 @@ def test_to_sym_RegexpToken
 	assert_equal(RegexpToken["\n"].to_sym, :newline)
 	assert_equal(RegexpToken["a"].to_sym, :a)
 end #string
+def test_Constants_RegexpToken
+	puts To_s.inspect
+end #Constants_RegexpToken
 def test_to_pathname_glob_RegexpSequence
 #	assert_instance_of(RegexpSequence, RegexpTree[/ab/])
 #	assert_equal('ab', RegexpTree[/ab/].to_pathname_glob)	
@@ -547,10 +551,18 @@ def test_typed
 
 	node='ab'
 	node=RegexpParse.promote(node)
+#	node='c' # terminal
 	if node.instance_of?(Array) then
 		node.map{|e| typed?(e)}
 	end #if
-#	assert_equal(RegexpSequence[RegexpToken["a"], RegexpToken["b"]], node)
+	type=RegexpParse.case?(node)
+	assert_equal(:String, RegexpParse.case?('c'))
+	if type==:String then
+		RegexpToken[node]	
+	else
+		eval(type.to_s).new(node.parse_tree)
+	end #if
+	assert_equal(RegexpSequence[RegexpToken["a"], RegexpToken["b"]], node)
 	assert_equal(["a", "b"], RegexpParse.new('ab').parse_tree)
 #	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
 #	assert_equal([:a, :b], RegexpParse.typed?('ab'))
