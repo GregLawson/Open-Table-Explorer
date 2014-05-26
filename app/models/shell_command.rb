@@ -37,6 +37,8 @@ def assemble_array_command(command)
 			assemble_array_command(e)
 		elsif e.instance_of?(Hash) then
 			assemble_hash_command(e)
+		elsif e.instance_of?(Pathname) then
+			e.to_s
 		elsif /[ \/.]/.match(e) then # pathnames
 			Shellwords.escape(e)
 		elsif /[$;&|<>]/.match(e) then #shell special characters
