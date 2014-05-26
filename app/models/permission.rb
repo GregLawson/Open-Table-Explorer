@@ -18,7 +18,7 @@ def initialize(pathname)
 	super(pathname)
 end #initialize
 def touch_rescued!
-	FileUtils.touch(probe_path)
+	FileUtils.touch(self.to_s)
 	true # returned if success (updated times or created)
 rescue Exception => exception
 	exception
@@ -31,10 +31,12 @@ def creatable_rescued?(probe_name = 'junk')
 		probe_path = self
 	end # if
 	if File.exists?(probe_path) then
-		touch_rescued!(probe_path)
+		probe_path.touch_rescued!
 	else
-		ret = touch_rescued!(probe_path)
-		File.rm(probe_path) # if succesfully created
+		ret = probe_path.touch_rescued!
+		if ret == true then # get rid of side-effect
+			FileUtils.rm(probe_path) # if succesfully created
+		end # if
 		ret
 
 	end # if

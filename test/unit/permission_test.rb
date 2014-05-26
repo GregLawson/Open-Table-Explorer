@@ -12,8 +12,10 @@ class PermissionTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
 def test_touch_rescued!
+	assert_kind_of(Exception, Example_no_write.touch_rescued!)
 end # touch_rescued
 def test_creatable_rescued?(probe_name = 'junk')
+	assert_kind_of(Exception, Example_no_write.creatable_rescued?)
 end # creatable_rescued?
 def test_Examples
 #	assert_pathname_exists(Example_no_write)
