@@ -5,8 +5,23 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative '../../app/models/no_db.rb'
-class Permission < Pathname
+require_relative 'shell_command.rb'
+class Ssh
+attr_reader :user
+
+def initialize(user)
+	@user = user
+end # initialize
+def [](command_on_remote)
+	command_string = 'ssh ' + @user + ' ' + command_on_remote
+	ShellCommands.new(command_string)
+	
+end # []
+module Examples
+Central = Ssh.new('greg@172.31.42.104')
+end # Examples
+end # Ssh
+class Pathname
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
@@ -14,9 +29,6 @@ module Constants
 end #Constants
 include Constants
 # attr_reader
-def initialize(pathname)
-	super(pathname)
-end #initialize
 def touch_rescued!
 	FileUtils.touch(self.to_s)
 	true # returned if success (updated times or created)
@@ -41,6 +53,14 @@ def creatable_rescued?(probe_name = 'junk')
 
 	end # if
 end # creatable_rescued?
+def mode
+	if exist? then
+		stat = File.stat(self)
+		stat.gid.to_s + ', ' + stat.uid.to_s + ' ' + "%o" % stat.mode + ' '
+	else
+		'not exist'
+	end # if
+end # mode
 require_relative '../../test/assertions.rb'
 module Assertions
 #include Minitest::Assertions
@@ -63,6 +83,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Example_no_write = Permission.new('/media/central/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects/pack/tmp_pack_XXXXXX')
+Example_no_write = Pathname.new('/media/central/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects/pack/tmp_pack_XXXXXX')
 end #Examples
-end # Permission
+end # Pathname

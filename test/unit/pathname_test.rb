@@ -6,11 +6,17 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/permission.rb'
-require_relative '../../app/models/shell_command.rb'
-class PermissionTest < TestCase
+require_relative '../../app/models/pathname.rb'
+class PathnameTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
+include Ssh::Examples
+def test_Ssh_initialize
+	assert_not_empty(Central.user)	
+end # initialize
+def test_command_on_remote
+	assert_equal("cat\n", Central['echo "cat"'].output)	
+end # []
 def test_touch_rescued!
 	assert_kind_of(Exception, Example_no_write.touch_rescued!)
 end # touch_rescued
@@ -20,19 +26,11 @@ end # creatable_rescued?
 def test_Examples
 #	assert_pathname_exists(Example_no_write)
 	Example_no_write.ascend do |ancestral_pathname| 
-		if ancestral_pathname.directory? then
-			probe_path = ancestral_pathname + 'junk'
-			if File.exists?(probe_path) then
-				FileUtils.touch(probe_path)
-			else begin
-			
-				FileUtils.touch(probe_path)
-				File.rm(probe_path) # if succesfully created
-				rescue Exception => exception
-				
-			end end # if
-		end # if
-		p ancestral_pathname.inspect + ' ' + ancestral_pathname.writable?.to_s
+		print ancestral_pathname.creatable_rescued?.inspect[0,4]
+		print ' ' + (ancestral_pathname.writable? ? 'writable' : 'not-writable')
+		print ' ' + (ancestral_pathname.owned? ? 'owned' : 'not-owned')
+		print ' ' + ancestral_pathname.mode
+		p ' ' + ancestral_pathname.inspect
 	end # ascend
 end # Examples
-end # Permission
+end # Pathname
