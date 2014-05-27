@@ -11,6 +11,19 @@ require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
 include DefaultTests
 include ShellCommands::Examples
+include Shell::Ssh::Examples
+def self.startup
+	ssh_pid = ShellCommands.new('echo $SSH_AGENT_PID $SSH_AUTH_SOCK')
+	ps =ShellCommands.new('ps -C ssh-agent').assert_post_conitions.output.split("\n")[1..-1]
+	assert_equal(1, ps.size, ps)
+end # self.startup
+def test_Ssh_initialize
+	assert_not_empty(Central.user)	
+end # initialize
+def test_command_on_remote
+	assert_equal("cat\n", Central['echo "cat"'].output)	
+	assert_equal("greg", Central['ls -l /shares/Public/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects'].output)	
+end # []
 def test_assemble_hash_command
 	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_hash_command(Cd_command_hash))
 end #assemble_hash_command

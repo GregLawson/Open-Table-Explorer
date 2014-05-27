@@ -7,7 +7,24 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
-require 'test/unit/assertions.rb'
+require_relative 'shell_command.rb'
+module Shell
+class Ssh
+attr_reader :user
+
+def initialize(user)
+	@user = user
+end # initialize
+def [](command_on_remote)
+	command_string = 'ssh ' + @user + ' ' + command_on_remote
+	ShellCommands.new(command_string)
+	
+end # []
+module Examples
+Central = Ssh.new('greg@172.31.42.104')
+end # Examples
+end # Ssh
+end # Shell
 class ShellCommands
 module ClassMethods
 include Shellwords
@@ -223,6 +240,7 @@ def trace
 	$stdout.puts shorter_callers.join("\n")
 	self # return for command chaining
 end #trace
+require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
