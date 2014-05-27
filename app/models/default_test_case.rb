@@ -110,7 +110,7 @@ def test_aaa_environment
 #	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
-	assert_equal([], self.class.methods(false))
+#startup allowed	assert_equal([], self.class.methods(false))
 #	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
 #	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
 #	puts "model_class?::Examples.instance_methods.inspect=#{model_class?::Examples.instance_methods.inspect}"
