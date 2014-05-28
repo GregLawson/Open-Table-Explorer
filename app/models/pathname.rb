@@ -5,22 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'shell_command.rb'
-class Ssh
-attr_reader :user
 
-def initialize(user)
-	@user = user
-end # initialize
-def [](command_on_remote)
-	command_string = 'ssh ' + @user + ' ' + command_on_remote
-	ShellCommands.new(command_string)
-	
-end # []
-module Examples
-Central = Ssh.new('greg@172.31.42.104')
-end # Examples
-end # Ssh
 class Pathname
 module ClassMethods
 end #ClassMethods

@@ -10,13 +10,6 @@ require_relative '../../app/models/pathname.rb'
 class PathnameTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
-include Ssh::Examples
-def test_Ssh_initialize
-	assert_not_empty(Central.user)	
-end # initialize
-def test_command_on_remote
-	assert_equal("cat\n", Central['echo "cat"'].output)	
-end # []
 def test_touch_rescued!
 	assert_kind_of(Exception, Example_no_write.touch_rescued!)
 end # touch_rescued
