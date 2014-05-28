@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014 by Greg Lawson                                      
+#    Copyright (C) 2013=2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -10,17 +10,17 @@ require_relative '../../app/models/regexp.rb'
 class Capture
 # encapsulates the difference between parsing from MatchData and from Array#split
 # options include delimiter, and ending
-attr_reader :captures, :regexp, :length_hash_captures, :iterations, :output
+attr_reader :captures, :regexp, :length_hash_captures, :repetitions, :output
 def initialize(captures, regexp, options=nil)
 	@captures=captures
 	@regexp=regexp
 #     named_captures for captures.size > names.size
 	@length_hash_captures=@regexp.named_captures.values.flatten.size
-	@iterations=(@captures.size/(@length_hash_captures+1)).ceil
+	@repetitions=(@captures.size/(@length_hash_captures+1)).ceil
 	@output=if @captures.instance_of?(MatchData) then
 			named_hash(0)
 	else
-		array=(0..iterations-1).map do |i|
+		array=(0..repetitions-1).map do |i|
 			named_hash(i*(length_hash_captures+1))
 		end #map
 		if options.nil? then
@@ -67,6 +67,28 @@ def named_hash(hash_offset=0)
 	named_hash
 end #named_hash
 end # Capture
+class String
+# Match pattern without repetition
+def parse_unrepeated(pattern=Terminated_line)
+	matchData=self.match(pattern)
+	if matchData.nil? then
+		[]
+	elsif matchData.names==[] then
+		matchData[1..-1] # return unnamed subexpressions
+	else
+#     		named_captures for captures.size > names.size
+		Capture.new(matchData, pattern, options).output
+	end #if
+end # parse
+# Handle repetion and returns an Array
+# Splits pattern match captures into an array of parses
+# Uses Regexp capture mechanism in String#split
+# Input String, Output Array
+def parse_repetition(item_pattern=Terminated_line)
+	Capture.new(self.split(item_pattern), item_pattern).output
+end # parse_repetition
+end # String
+
 class Parse
 module Constants
 LINE=/[^\n]*/.capture(:line)
@@ -149,17 +171,20 @@ def parse_name_values(array, pairs, new_names, pattern)
 		end #if
 	end #map
 end #parse_name_values
-def name2array(node, name)
+# promote named value,
+# Nested Array structure maintained, Hashed collaped to one named value
+# Consider another version that collapses only is key present or only if single key
+def fetch_recursive(node, name)
 	if node.instance_of?(Array) then
 		node.map do |element|
-			name2array(element, name)
+			fetch_recursive(element, name)
 		end #map
 	elsif node.instance_of?(Hash) then
 		node[name]
 	else
 		node
 	end #if
-end #name2array
+end #fetch_recursive
 def rows_and_columns(column_pattern=Parse::WORD, row_pattern=Parse::Terminated_line)
 	parse(@output, row_pattern).map  do |row| 
 		parse(row, column_pattern)

@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013=2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -11,6 +11,110 @@ class ParseTest < TestCase
 include Parse::ClassMethods # treat class methods like module methods as local to test class
 include Parse::Examples
 include Parse::Assertions::ClassMethods
+def test_initialize
+	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
+	repetitions=(Parse_array.captures.size/length_hash_captures).ceil
+	assert_equal(1, Parse_array.length_hash_captures, Parse_array.captures.inspect+Parse_array.regexp.named_captures.inspect)
+	assert_equal(2, Parse_array.repetitions)
+	output=if Parse_array.captures.instance_of?(MatchData) then
+			Parse_array.named_hash(0)
+	else
+		(0..repetitions-1).map do |i|
+			Parse_array.named_hash(i*(length_hash_captures+1))
+		end #map
+	end #if
+	assert_equal({:branch => '1'}, Capture.new(Branch_regexp.match("* 1\n"), Branch_regexp).output) # return matched subexpressions
+	assert_equal(Array_answer, Parse_array.output, Parse_array.inspect)
+#	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
+end #initialize
+def test_all_capture_indices
+	Parse_string
+	string="* 1\n"
+	regexp=Branch_regexp
+	matchData=string.match(regexp)
+	captures=matchData
+	assert_equal(2, captures.size, captures.inspect)
+	message="matchData="+matchData.inspect
+	puts message
+	if captures.instance_of?(MatchData) then
+		possible_unnamed_capture_indices=(1..captures.size-1).to_a
+	else
+		possible_unnamed_capture_indices=(1..captures.size-1).to_a
+	end #if
+	assert_equal(possible_unnamed_capture_indices, Capture.new(matchData, regexp).all_capture_indices)
+	splitData=string.split(regexp)
+	captures=splitData
+	assert_instance_of(Array, captures)
+	if captures.instance_of?(MatchData) then
+		possible_unnamed_capture_indices=(1..captures.captures.size-1).to_a
+	else
+		possible_unnamed_capture_indices=(1..captures.size-1).to_a
+	end #if
+	assert_equal((1..captures.size-1).to_a, possible_unnamed_capture_indices)
+	named_hash={}
+	assert_equal(possible_unnamed_capture_indices, Capture.new(splitData, regexp).all_capture_indices)
+	assert_equal([1], Parse_string.all_capture_indices, Parse_string.all_capture_indices)
+#	assert_equal([1], Parse_array.all_capture_indices, Parse_array.inspect)
+end #all_capture_indices
+def test_named_hash
+	string="* 1\n"
+	regexp=Branch_regexp
+	message = 'regexp.inspect = ' + regexp.inspect
+	matchData=string.match(regexp)
+	captures=matchData #[1..-1]
+	parse_string=Capture.new("* 1\n", Branch_regexp)
+	assert_equal(2, Parse_string.captures.size, Parse_string.inspect)
+	possible_unnamed_capture_indices=Parse_string.all_capture_indices
+	Parse_string.named_hash
+	named_hash={}
+	assert_equal([1], possible_unnamed_capture_indices, captures.inspect+"\n"+captures.captures.inspect)
+	regexp.names.each do |n| # return named subexpressions
+		assert_instance_of(String, n, message)
+		named_hash[n.to_sym]=captures[n]
+	end # each
+	named_hash
+	assert_equal({:branch => '1'}, named_hash) # return matched subexpressions
+	splitData=string.split(regexp)
+	captures=splitData #[1..-1]
+	possible_unnamed_capture_indices=Parse_array.all_capture_indices
+#	assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
+#	assert_equal([1], Parse_array.all_capture_indices, Parse_array.all_capture_indices)
+	named_hash={}
+	assert_equal({'branch' => [1]}, regexp.named_captures)
+	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
+		assert_instance_of(String, named_capture, message)
+		name=Parse.default_name(0, named_capture).to_sym
+		assert_equal(:branch, name)
+		named_hash[name]=captures[indices[0]]
+		assert_equal({:branch => '1'}, named_hash)
+#		assert_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
+#		assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
+		assert_equal(1, indices[0])
+		assert_equal([1], [indices[0]])
+#		possible_unnamed_capture_indices-=[indices[0]]
+#		assert_not_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
+#		assert_equal([], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
+		if indices.size>1 then
+			indices[1..-1].each_index do |capture_index,i|
+				name=default_name(i, named_capture).to_sym
+				named_hash[name]=captures[capture_index]
+				assert_equal(named_hash[name], captures[capture_index])
+#				possible_unnamed_capture_indices-=[capture_index]
+#				assert_not_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
+			end #each_index
+		end #if
+	end # each_pair
+#	assert_equal([], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
+	assert_equal('', captures[0], regexp.named_captures.inspect+"\n"+captures.inspect)
+#	assert_equal([], possible_unnamed_capture_indices, regexp.named_captures.inspect+"\n"+captures.inspect)
+#	possible_unnamed_capture_indices.each do |capture_index|
+#		name=default_name(capture_index).to_sym
+#		named_hash[name]=captures[capture_index]
+#	end #each
+	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
+#	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
+end #named_hash
+# Parse tests
 def test_Constants
 #	assert_equal(LINES, LINES_cryptic)
 #	assert_equal(Terminated_line, Terminated_line_cryptic)
@@ -62,12 +166,12 @@ def test_parse_into_array
 	assert_equal(Array_answer, parse_into_array)
 end #parse_into_array
 def test_parse_array
-	string_array=name2array(parse(Nested_string, Terminated_line), :line)
+	string_array=fetch_recursive(parse(Nested_string, Terminated_line), :line)
 	pattern=WORD
 	answer=Nested_answer
-	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
-	assert_equal(["3", "4"], Parse.name2array(parse("3 4", WORD), :word))
-	assert_equal(Nested_answer, name2array(parse_array(name2array(parse(Nested_string, Terminated_line), :line), WORD), :word))
+	assert_equal(["1", "2"], Parse.fetch_recursive(parse_into_array("1 2", WORD), :word))
+	assert_equal(["3", "4"], Parse.fetch_recursive(parse_into_array("3 4", WORD), :word))
+	assert_equal(Nested_answer, fetch_recursive(parse_array(fetch_recursive(parse(Nested_string, Terminated_line), :line), WORD), :word))
 	ret=string_array.map do |string|
 		parse_into_array(string,pattern)
 	end #map
@@ -82,13 +186,13 @@ def test_parse
 	else
 		parse_array(string_or_array, pattern)
 	end #if
-	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
-	assert_equal(["3", "4"], Parse.name2array(parse("3 4", WORD), :word))
+	assert_equal(["1", "2"], Parse.fetch_recursive(parse_into_array("1 2", WORD), :word))
+	assert_equal(["3", "4"], Parse.fetch_recursive(parse_into_array("3 4", WORD), :word))
 #	assert_equal(["1 2", "3 4"], parse_string(string_or_array, Terminated_line))
 #	assert_equal(["1 2", "3 4"], parse(string_or_array, Terminated_line))
 	assert_equal([{:line=>"1 2", :terminator=>"\n"}, {:line=>"3 4", :terminator=>"\n"}], parse(string_or_array, Terminated_line))
-	assert_equal(["1 2", "3 4"], name2array(parse(string_or_array, Terminated_line), :line))
-	assert_equal(answer, name2array(parse(name2array(parse(string_or_array, Terminated_line), :line), WORD), :word))
+	assert_equal(["1 2", "3 4"], fetch_recursive(parse(string_or_array, Terminated_line), :line))
+	assert_equal(answer, fetch_recursive(parse_into_array(fetch_recursive(parse(string_or_array, Terminated_line), :line), WORD), :word))
 end #parse
 def test_default_name
 	index=11
@@ -125,10 +229,11 @@ def test_parse_name_values
 		end #if
 	end #map
 end #parse_name_values
-def test_name2array
-	assert_equal(["1", "2"], Parse.name2array(parse("1 2", WORD), :word))
-	assert_equal(Nested_answer, name2array(parse(name2array(parse(Nested_string, Terminated_line), :line), WORD), :word))
-end #name2array
+def test_fetch_recursive
+	assert_equal(["1", "2"], Parse.fetch_recursive([{word: "1"}, {word: "2"}], :word))
+	assert_equal(["1", "2"], Parse.fetch_recursive(parse_into_array("1 2", WORD), :word))
+	assert_equal(Nested_answer, Parse.fetch_recursive(parse_into_array(fetch_recursive(parse(Nested_string, Terminated_line), :line), WORD), :word))
+end #fetch_recursive
 def test_rows_and_columns
 	column_delimiter=';'
 	row_delimiter="\n"
@@ -136,108 +241,6 @@ def test_rows_and_columns
 #	assert_equal(['1 2', '3 4'], parse(EXAMPLE.output, Parse.delimiter_regexp(row_delimiter))) 
 #	assert_equal(Nested_answer,EXAMPLE.rows_and_columns(column_delimiter))
 end #rows_and_columns
-def test_initialize
-	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
-	iterations=(Parse_array.captures.size/length_hash_captures).ceil
-	assert_equal(1, Parse_array.length_hash_captures, Parse_array.captures.inspect+Parse_array.regexp.named_captures.inspect)
-	assert_equal(2, Parse_array.iterations)
-	output=if Parse_array.captures.instance_of?(MatchData) then
-			Parse_array.named_hash(0)
-	else
-		(0..iterations-1).map do |i|
-			Parse_array.named_hash(i*(length_hash_captures+1))
-		end #map
-	end #if
-	assert_equal({:branch => '1'}, Parse.new(Branch_regexp.match("* 1\n"), Branch_regexp).output) # return matched subexpressions
-	assert_equal(Array_answer, Parse_array.output, Parse_array.inspect)
-#	assert_equal(Array_answer, Parse.new(captures, regexp).output, captures.inspect) # return matched subexpressions
-end #initialize
-def test_all_capture_indices
-	Parse_string
-	string="* 1\n"
-	regexp=Branch_regexp
-	matchData=string.match(regexp)
-	captures=matchData
-	assert_equal(2, captures.size, captures.inspect)
-	message="matchData="+matchData.inspect
-	puts message
-	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.size-1).to_a
-	else
-		possible_unnamed_capture_indices=(1..captures.size-1).to_a
-	end #if
-	assert_equal(possible_unnamed_capture_indices, Parse.new(matchData, regexp).all_capture_indices)
-	splitData=string.split(regexp)
-	captures=splitData
-	assert_instance_of(Array, captures)
-	if captures.instance_of?(MatchData) then
-		possible_unnamed_capture_indices=(1..captures.captures.size-1).to_a
-	else
-		possible_unnamed_capture_indices=(1..captures.size-1).to_a
-	end #if
-	assert_equal((1..captures.size-1).to_a, possible_unnamed_capture_indices)
-	named_hash={}
-	assert_equal(possible_unnamed_capture_indices, Parse.new(splitData, regexp).all_capture_indices)
-	assert_equal([1], Parse_string.all_capture_indices, Parse_string.all_capture_indices)
-#	assert_equal([1], Parse_array.all_capture_indices, Parse_array.inspect)
-end #all_capture_indices
-def test_named_hash
-	string="* 1\n"
-	regexp=Branch_regexp
-	matchData=string.match(regexp)
-	captures=matchData #[1..-1]
-	parse_string=Parse.new("* 1\n", Branch_regexp)
-	assert_equal(2, Parse_string.captures.size, Parse_string.inspect)
-	possible_unnamed_capture_indices=Parse_string.all_capture_indices
-	Parse_string.named_hash
-	named_hash={}
-	assert_equal([1], possible_unnamed_capture_indices, captures.inspect+"\n"+captures.captures.inspect)
-	regexp.names.each do |n| # return named subexpressions
-		assert_instance_of(String, n, message)
-		named_hash[n.to_sym]=captures[n]
-	end # each
-	named_hash
-	assert_equal({:branch => '1'}, named_hash) # return matched subexpressions
-	splitData=string.split(regexp)
-	captures=splitData #[1..-1]
-	possible_unnamed_capture_indices=Parse_array.all_capture_indices
-#	assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
-#	assert_equal([1], Parse_array.all_capture_indices, Parse_array.all_capture_indices)
-	named_hash={}
-	assert_equal({'branch' => [1]}, regexp.named_captures)
-	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
-		assert_instance_of(String, named_capture, message)
-		name=Parse.default_name(0, named_capture).to_sym
-		assert_equal(:branch, name)
-		named_hash[name]=captures[indices[0]]
-		assert_equal({:branch => '1'}, named_hash)
-#		assert_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
-#		assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
-		assert_equal(1, indices[0])
-		assert_equal([1], [indices[0]])
-#		possible_unnamed_capture_indices-=[indices[0]]
-#		assert_not_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
-#		assert_equal([], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
-		if indices.size>1 then
-			indices[1..-1].each_index do |capture_index,i|
-				name=default_name(i, named_capture).to_sym
-				named_hash[name]=captures[capture_index]
-				assert_equal(named_hash[name], captures[capture_index])
-#				possible_unnamed_capture_indices-=[capture_index]
-#				assert_not_equal(possible_unnamed_capture_indices, Parse_array.all_capture_indices, )
-			end #each_index
-		end #if
-	end # each_pair
-#	assert_equal([], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
-	assert_equal('', captures[0], regexp.named_captures.inspect+"\n"+captures.inspect)
-#	assert_equal([], possible_unnamed_capture_indices, regexp.named_captures.inspect+"\n"+captures.inspect)
-#	possible_unnamed_capture_indices.each do |capture_index|
-#		name=default_name(capture_index).to_sym
-#		named_hash[name]=captures[capture_index]
-#	end #each
-	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
-#	assert_equal(Array_answer, Parse.new(captures, regexp).output, captures.inspect) # return matched subexpressions
-end #named_hash
 include Parse::Constants
 include Parse::Constants
 def test_add_parse_message
