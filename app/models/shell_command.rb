@@ -8,8 +8,17 @@
 require 'open3'
 require 'shellwords.rb'
 require_relative 'shell_command.rb'
+require_relative 'parse.rb'
 module Shell
 class Ssh
+module ClassMethods
+def agent_processes
+end # agent_processes
+end # ClassMethods
+extend ClassMethods
+module Constants
+end # Constants
+include Constants
 attr_reader :user
 
 def initialize(user)
@@ -20,6 +29,24 @@ def [](command_on_remote)
 	ShellCommands.new(command_string)
 	
 end # []
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
 module Examples
 Central = Ssh.new('greg@172.31.42.104')
 end # Examples
