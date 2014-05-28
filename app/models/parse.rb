@@ -7,6 +7,66 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
+class Capture
+# encapsulates the difference between parsing from MatchData and from Array#split
+# options include delimiter, and ending
+attr_reader :captures, :regexp, :length_hash_captures, :iterations, :output
+def initialize(captures, regexp, options=nil)
+	@captures=captures
+	@regexp=regexp
+#     named_captures for captures.size > names.size
+	@length_hash_captures=@regexp.named_captures.values.flatten.size
+	@iterations=(@captures.size/(@length_hash_captures+1)).ceil
+	@output=if @captures.instance_of?(MatchData) then
+			named_hash(0)
+	else
+		array=(0..iterations-1).map do |i|
+			named_hash(i*(length_hash_captures+1))
+		end #map
+		if options.nil? then
+			array
+		else
+			ret=case options[:ending]
+			when :optional then 
+				array
+			when :delimiter then 
+				array
+			when :terminator then
+				array
+			else
+				raise 'bad ending symbol.'
+			end #case
+		end #if
+	end #if
+end #initialize
+def all_capture_indices
+	if @captures.instance_of?(MatchData) then
+		(1..@captures.size-1).to_a
+	else
+		(1..@captures.size-1).to_a #skip delimiter
+	end #if
+end #all_capture_indices
+def named_hash(hash_offset=0)
+	named_hash={}
+	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
+		name=Parse.default_name(0, named_capture).to_sym
+		named_hash[name]=@captures[hash_offset+indices[0]]
+		if indices.size>1 then
+			indices[1..-1].each_index do |capture_index,i|
+				name=Parse.default_name(i, named_capture).to_sym
+				named_hash[name]=@captures[capture_index]
+			end #each_index
+		end #if
+	end # each_pair
+	# with the current ruby Regexp implementation, the following is impossible
+	# If there is a named capture in match or split, all unnamed captures are ignored
+#	possible_unnamed_capture_indices.each do |capture_index|
+#		name=Parse.default_name(capture_index).to_sym
+#		named_hash[name]=@captures[capture_index]
+#	end #each
+	named_hash
+end #named_hash
+end # Capture
 class Parse
 module Constants
 LINE=/[^\n]*/.capture(:line)
@@ -28,7 +88,7 @@ def parse_string(string, pattern=Terminated_line, options=nil)
 		matchData[1..-1] # return unnamed subexpressions
 	else
 #     named_captures for captures.size > names.size
-		Parse.new(matchData, pattern, options).output
+		Capture.new(matchData, pattern, options).output
 	end #if
 end #parse_string
 
@@ -37,7 +97,7 @@ end #parse_string
 
 # Input String, Output Array
 def parse_into_array(string, item_pattern=Terminated_line, options=nil)
-	Parse.new(string.split(item_pattern), item_pattern, options).output
+	Capture.new(string.split(item_pattern), item_pattern, options).output
 
 
 end #parse_into_array
@@ -107,64 +167,6 @@ def rows_and_columns(column_pattern=Parse::WORD, row_pattern=Parse::Terminated_l
 end #rows_and_columns
 end #ClassMethods
 extend ClassMethods
-# encapsulates the difference between parsing from MatchData and from Array#split
-# opions include delimiter, and ending
-attr_reader :captures, :regexp, :length_hash_captures, :iterations, :output
-def initialize(captures, regexp, options=nil)
-	@captures=captures
-	@regexp=regexp
-#     named_captures for captures.size > names.size
-	@length_hash_captures=@regexp.named_captures.values.flatten.size
-	@iterations=(@captures.size/(@length_hash_captures+1)).ceil
-	@output=if @captures.instance_of?(MatchData) then
-			named_hash(0)
-	else
-		array=(0..iterations-1).map do |i|
-			named_hash(i*(length_hash_captures+1))
-		end #map
-		if options.nil? then
-			array
-		else
-			ret=case options[:ending]
-			when :optional then 
-				array
-			when :delimiter then 
-				array
-			when :terminator then
-				array
-			else
-				raise 'bad ending symbol.'
-			end #case
-		end #if
-	end #if
-end #initialize
-def all_capture_indices
-	if @captures.instance_of?(MatchData) then
-		(1..@captures.size-1).to_a
-	else
-		(1..@captures.size-1).to_a #skip delimiter
-	end #if
-end #all_capture_indices
-def named_hash(hash_offset=0)
-	named_hash={}
-	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
-		name=Parse.default_name(0, named_capture).to_sym
-		named_hash[name]=@captures[hash_offset+indices[0]]
-		if indices.size>1 then
-			indices[1..-1].each_index do |capture_index,i|
-				name=Parse.default_name(i, named_capture).to_sym
-				named_hash[name]=@captures[capture_index]
-			end #each_index
-		end #if
-	end # each_pair
-	# with the current ruby Regexp implementation, the following is impossible
-	# If there is a named capture in match or split, all unnamed captures are ignored
-#	possible_unnamed_capture_indices.each do |capture_index|
-#		name=Parse.default_name(capture_index).to_sym
-#		named_hash[name]=@captures[capture_index]
-#	end #each
-	named_hash
-end #named_hash
 module Assertions
 module ClassMethods
 include Test::Unit::Assertions
@@ -233,7 +235,7 @@ Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 Array_answer=[{:branch => '1'}, {:branch => '2'}]
 Nested_string="1 2\n3 4\n"
 Nested_answer=[['1', '2'], ['3', '4']]
-Parse_string=Parse.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
-Parse_array=Parse.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
+Parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
+Parse_array=Capture.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
 end #Examples
 end #Parse
