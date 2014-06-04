@@ -56,11 +56,23 @@ end #logical_primary_key
 def self.column_remap
 end #column_remap
 module Assertions
-end #Assertions
-module Examples
-end #Examples
-include Examples
+module ClassMethods
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
 include Assertions
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
+module Examples
+include Constants
+end #Examples
 end #BatteryType
