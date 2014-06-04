@@ -5,9 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'stream_pattern.rb'
+#require_relative 'stream_pattern.rb'
 class Network < ActiveRecord::Base
-include Generic_Table
+#include Generic_Table
 module ClassMethods
 def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
