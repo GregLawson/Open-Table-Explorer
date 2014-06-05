@@ -8,7 +8,6 @@
 require 'open3'
 require 'shellwords.rb'
 require_relative 'shell_command.rb'
-require_relative 'parse.rb'
 module Shell
 class Ssh
 module ClassMethods
@@ -304,7 +303,3 @@ Error_message_run = ShellCommands.new('ls happyHappyFailFail.junk')
 end #Examples
 include Examples
 end #ShellCommands
-class NetworkInterface
-IFCONFIG=ShellCommands.new('/sbin/ifconfig')
-#puts IFCONFIG.inspect
-end #NetworkInterface
