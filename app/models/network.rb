@@ -1,11 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'stream_pattern.rb'
+require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/shell_command.rb'
 class Network < ActiveRecord::Base
 #include Generic_Table
 module ClassMethods
@@ -13,7 +14,7 @@ def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
 	#puts ifconfig
 	s = StringScanner.new(ifconfig)
-	@myContext=s.after(/\s*inet addr:/,/[0-9]*\.[0-9]*\./)
+	@myContext=s.rest(/\s*inet addr:/,/[0-9]*\.[0-9]*\./)
 	@myNetwork=s.scan(/[0-9]+\./)
 	@myNode=s.scan(/[0-9]+/)
 	#puts "@myContext=#{@myContext}"
@@ -23,7 +24,7 @@ def whereAmI
 	#puts "@myIP=#{@myIP}"
 	#ip=IPAddr.new(@myIP)
 	#puts "ip=#{ip}"
-	@myNetmask=s.after(/.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/)
+	@myNetmask=s.rest(/.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/)
 	#puts "@myNetmask=#{@myNetmask}"
 	#ip=ip.mask(@myNetmask)
 	#puts "ip=#{ip}"
@@ -78,16 +79,16 @@ end
 end #ClassMethods
 extend ClassMethods
 module Constants
+IFCONFIG=ShellCommands.new('/sbin/ifconfig')
 end #Constants
 include Constants
 # attr_reader
 def initialize
 	super('Networks')
 end #initialize
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
 module ClassMethods
-include Test::Unit::Assertions
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions
