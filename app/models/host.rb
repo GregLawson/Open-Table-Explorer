@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -96,10 +96,10 @@ def Host.nmapScan(candidateIP)
 end
 def Host.scanNmapSummary(s)
 	puts "s.rest=#{s.rest}" if $VERBOSE
-	plural=  s.after(/.*IP address/,/e?s? /)
-	up=s.after(/\(/,/[0-9.]+/)
+	plural=  s.rest(/.*IP address/,/e?s? /)
+	up=s.rest(/\(/,/[0-9.]+/)
 	puts "up=#{up}" if $VERBOSE
-	nmap_execution_time= s.after(/ hosts? up\) scanned in /,/[0-9.]+/)
+	nmap_execution_time= s.rest(/ hosts? up\) scanned in /,/[0-9.]+/)
 	puts "nmap_execution_time=#{nmap_execution_time}" if $DEBUG
 	return [up,nmap_execution_time]
 end
