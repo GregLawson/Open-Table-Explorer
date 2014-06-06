@@ -22,6 +22,7 @@
 # Array#to_h reverses my expectation and makes the array the keys not the values
 # I've added Array#to_hash to create the indexes as keys
 # map should be added analogously to Hash
+require_relative 'parse.rb'
 module Node
 module ParentLinked
 def all
