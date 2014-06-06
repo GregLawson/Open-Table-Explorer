@@ -11,6 +11,13 @@ require 'set'
 module Test
 module Unit
 module Assertions
+def newline_if_not_empty(message)
+	if message.empty? then
+		message
+	else
+		message+"\n"
+	end #if
+end #newline_if_not_empty
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
