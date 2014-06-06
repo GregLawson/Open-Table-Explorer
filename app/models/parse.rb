@@ -187,7 +187,6 @@ LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 WORD=/([^\s]*)/.capture(:word)
 CSV=/([^,]*)(?:,([^,]*?))*?/
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
-Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n"}]
 Nested_string="1 2\n3 4\n"
 Nested_answer=[['1', '2'], ['3', '4']]
@@ -278,11 +277,7 @@ include Assertions
 module Examples
 include Constants
 include Regexp::Constants
-Newline_Delimited_String="* 1\n  2"
-Newline_Terminated_String=Newline_Delimited_String+"\n"
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
-Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
-Array_answer=[{:branch => '1'}, {:branch => '2'}]
 Nested_string="1 2\n3 4\n"
 Nested_answer=[['1', '2'], ['3', '4']]
 end #Examples

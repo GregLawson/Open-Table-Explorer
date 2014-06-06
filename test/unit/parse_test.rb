@@ -35,7 +35,7 @@ def test_initialize
 		end #map
 	end #if
 	assert_equal({:branch => '1'}, Capture.new(Branch_regexp.match("* 1\n"), Branch_regexp).output) # return matched subexpressions
-	assert_equal(Array_answer, Parse_array.output, Parse_array.inspect)
+	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output, Parse_array.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
 end #initialize
 def test_all_capture_indices
@@ -186,7 +186,7 @@ def test_parse_into_array
 	parse_into_array=parse_into_array(string, pattern, options)
 	assert_equal(Hash_answer, parse_into_array[0])
 	parse_into_array=parse_into_array(string, Branch_regexp, options)
-	assert_equal(Array_answer, parse_into_array)
+	assert_equal([{:branch=>"1"}, {:branch=>"2"}], parse_into_array)
 end #parse_into_array
 def test_add_parse_message
 	assert_match(/match\(/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
