@@ -25,29 +25,22 @@ attr_reader :captures, :regexp, :length_hash_captures, :repetitions, :output
 def initialize(captures, regexp, options=nil)
 	@captures=captures
 	@regexp=regexp
+	@options = options
 #     named_captures for captures.size > names.size
 	@length_hash_captures=@regexp.named_captures.values.flatten.size
 	@repetitions=(@captures.size/(@length_hash_captures+1)).ceil
-	@output=if @captures.instance_of?(MatchData) then
-			named_hash(0)
-	else
-		array=(0..repetitions-1).map do |i|
+	if @captures.instance_of?(MatchData) then
+		@output=named_hash(0)
+		@pre_match = @captures.pre_match
+		@post_match = @captures.post_match
+		@delimiters = []
+	else # from split
+		@output = (0..repetitions-1).map do |i|
 			named_hash(i*(length_hash_captures+1))
 		end #map
-		if options.nil? then
-			array
-		else
-			ret=case options[:ending]
-			when :optional then 
-				array
-			when :delimiter then 
-				array
-			when :terminator then
-				array
-			else
-				raise 'bad ending symbol.'
-			end #case
-		end #if
+		@pre_match = @captures[0]
+		@post_match = @captures[-1]
+		@delimiters = (2..-3).map {|i| (i.even? ? @captures[i] : nil)}.compact
 	end #if
 end #initialize
 def all_capture_indices
@@ -77,6 +70,41 @@ def named_hash(hash_offset=0)
 #	end #each
 	named_hash
 end #named_hash
+module Assertions
+def assert_pre_conditions(message='')
+	if options.nil? then
+		array
+	else
+		ret=case options[:ending]
+		when :optional then 
+			array
+		when :delimiter then 
+			array
+		when :terminator then
+			array
+		else
+			raise 'bad ending symbol.'
+		end #case
+	end #if
+end # assert_pre_conditions
+def assert_post_conditions(message='')
+end # assert_post_conditions
+def add_parse_message(string, pattern, message='')
+	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
+end #add_parse_message
+def assert_parse_string(answer, string, pattern, message='')
+	message=add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"
+	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
+	assert_match(pattern, string, message)
+	matchData=pattern.match(string)
+	assert_operator(pattern.named_captures.values.flatten.size, :<=, matchData.size-1, "All string parse captures should be named.\n"+message)
+	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
+
+end #parse_string
+module ClassMethods
+end #ClassMethods
+end #Assertions
+include Assertions
 module Examples
 Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
@@ -90,12 +118,12 @@ class String
 def parse_unrepeated(pattern, options = nil)
 	matchData=self.match(pattern)
 	if matchData.nil? then
-		return [], self, ''
+		[]
 	elsif matchData.names==[] then
-		return matchData[1..-1], matchData.post_match, matchData.pre_match # return unnamed subexpressions
+		matchData[1..-1] # return unnamed subexpressions
 	else
 #     		named_captures for captures.size > names.size
-		return Capture.new(matchData, pattern, options).output, matchData.post_match, matchData.pre_match
+		Capture.new(matchData, pattern, options).output
 	end #if
 end # parse_unrepeated
 # Handle repetion and returns an Array
@@ -104,7 +132,7 @@ end # parse_unrepeated
 # Input String, Output Array
 def parse_repetition(item_pattern)
 	captures = self.split(item_pattern)
-	return Capture.new(captures, item_pattern).output, captures[-1], captures[0]
+	Capture.new(captures, item_pattern).output
 end # parse_repetition
 # Try to unify parse_repetition and parse_unrepeated
 # What is the dcifference between an Object and an Array of size 1?
@@ -129,13 +157,6 @@ include Constants
 module Assertions
 module ClassMethods
 include Test::Unit::Assertions
-def newline_if_not_empty(message)
-	if message.empty? then
-		message
-	else
-		message+"\n"
-	end #if
-end #newline_if_not_empty
 def add_parse_message(string, pattern, message='')
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
