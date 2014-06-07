@@ -90,12 +90,12 @@ class String
 def parse_unrepeated(pattern, options = nil)
 	matchData=self.match(pattern)
 	if matchData.nil? then
-		[]
+		return [], self, ''
 	elsif matchData.names==[] then
-		matchData[1..-1] # return unnamed subexpressions
+		return matchData[1..-1], matchData.post_match, matchData.pre_match # return unnamed subexpressions
 	else
 #     		named_captures for captures.size > names.size
-		Capture.new(matchData, pattern, options).output
+		return Capture.new(matchData, pattern, options).output, matchData.post_match, matchData.pre_match
 	end #if
 end # parse_unrepeated
 # Handle repetion and returns an Array
@@ -103,17 +103,24 @@ end # parse_unrepeated
 # Uses Regexp capture mechanism in String#split
 # Input String, Output Array
 def parse_repetition(item_pattern)
-	Capture.new(self.split(item_pattern), item_pattern).output
+	captures = self.split(item_pattern)
+	return Capture.new(captures, item_pattern).output, captures[-1], captures[0]
 end # parse_repetition
 # Try to unify parse_repetition and parse_unrepeated
 # What is the dcifference between an Object and an Array of size 1?
 # Should difference be derived from recursive analysis of RegexpParse?
 def parse(pattern)
-	ret = parse_repetition(pattern)
-	if ret.size == 1 then
-		ret[0]
+	if pattern.instance_of?(Array) then
+		pattern.map do |p|
+			parse(p)
+		end # map
 	else
-		ret
+		ret = parse_repetition(pattern)
+		if ret.size == 1 then
+			ret[0]
+		else
+			ret
+		end # if
 	end # if
 end # parse
 module Constants
@@ -277,6 +284,8 @@ include Assertions
 module Examples
 include Constants
 include Regexp::Constants
+include Capture::Examples
+include String::Examples
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Nested_string="1 2\n3 4\n"
 Nested_answer=[['1', '2'], ['3', '4']]
