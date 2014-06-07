@@ -9,12 +9,30 @@ require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
 class Network < ActiveRecord::Base
 #include Generic_Table
+module Constants
+IFCONFIG=ShellCommands.new('/sbin/ifconfig')
+
+Quad_Pattern = /[0-2]?[0-9]?[09]/
+Private_A = /10\./.capture(:network) * (Quad_Pattern * Quad_Pattern * Quad_Pattern).capture(:host)
+B_Quad2 = /16/ | /17/ | /18/ | /19/ | /20/ | /21/ | /22/ | /23/ | /24/ | /25/ | /26/ | /27/ | /28/ | /29/ | /30/ | /31/
+Private_B = (/172\./ * B_Quad2).capture(:network) * (Quad_Pattern * Quad_Pattern).capture(:host)
+Private_C = /192\.168\./.capture(:network) * (Quad_Pattern * Quad_Pattern).capture(:host)
+Zero_Config_Pattern = /169\.254./.capture(:network)
+Private_Network_Pattern = Private_A | Private_B | Private_C | Zero_Config_Pattern
+
+Context_Pattern = [/\s*inet addr:/,/[0-9]*\.[0-9]*\./]
+Network_Pattern =/[0-9]+\./
+Node_Pattern = /[0-9]+/
+IP_Pattern = [Context_Pattern, Network_Pattern, Node_Pattern]
+Netmask_Pattern = /.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/
+end #Constants
+include Constants
 module ClassMethods
 def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
 	#puts ifconfig
 	s = StringScanner.new(ifconfig)
-	@myContext=s.rest(/\s*inet addr:/,/[0-9]*\.[0-9]*\./)
+	@myContext=s.after(/\s*inet addr:/,/[0-9]*\.[0-9]*\./)
 	@myNetwork=s.scan(/[0-9]+\./)
 	@myNode=s.scan(/[0-9]+/)
 	#puts "@myContext=#{@myContext}"
@@ -24,7 +42,7 @@ def whereAmI
 	#puts "@myIP=#{@myIP}"
 	#ip=IPAddr.new(@myIP)
 	#puts "ip=#{ip}"
-	@myNetmask=s.rest(/.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/)
+	@myNetmask=s.after(/.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/)
 	#puts "@myNetmask=#{@myNetmask}"
 	#ip=ip.mask(@myNetmask)
 	#puts "ip=#{ip}"
@@ -78,9 +96,6 @@ def ping(nmapScan)
 end
 end #ClassMethods
 extend ClassMethods
-module Constants
-IFCONFIG=ShellCommands.new('/sbin/ifconfig')
-end #Constants
 include Constants
 # attr_reader
 def initialize
