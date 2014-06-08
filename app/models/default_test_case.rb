@@ -8,6 +8,16 @@
 require 'active_support/all'
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
+def examples_submodule
+  model_class?::Examples
+end # example_submodule
+# klass filters example constants by type
+def example_constants(klass = nil)
+  all = examples_submodule.constants
+  unless klass.nil? then
+	all.select {|ec| ec.instance_of(klass)}
+  end #
+end # example_submodule
 def each_example(&block)
   return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
@@ -27,6 +37,7 @@ def each_example(&block)
   else
     warn "There is no module #{model_class?}::Examples."
   end #if
+  assert_include(included_module_names, "#{model_class?}::Examples")
 end #each_example
 # Call method symbol on object if method exists
 def existing_call(object, symbol)
@@ -134,7 +145,7 @@ def test_aaa_environment
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of related_files ."
     constant_names=model_class?::Examples.constants
-    info "constant_names=#{constant_names}"
+    info "constant_names=#{constant_names}" if $VERBOSE
     constant_objects=constant_names.map do |c|
 	assert_instance_of(Symbol, c)
 	hiearchical_name = c.to_s.split('::')
@@ -142,9 +153,11 @@ def test_aaa_environment
 	model_class?::Examples.class_eval(c.to_s)
     end # map
    examples=constant_objects.select{|c| c.instance_of?(model_class?)}
-   info "examples=#{examples}"
+   info "examples=#{examples}"  if $VERBOSE
 	if examples.empty? then
-      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples.\nconstant_objects=#{constant_objects.inspect}"
+		message = "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
+		message += "\nconstant_objects=#{constant_objects.inspect}" if $VERBOSE
+		warn message
 	end #if
 end #test_aaa_environment
 def test_class_assert_pre_conditions
@@ -233,8 +246,6 @@ def data_source_directory?(model_name=model_name?)
 end #data_source_directory?
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
-#include DefaultAssertions
-#extend DefaultAssertions::ClassMethods
 end #DefaultTestCase1
 
 class DefaultTestCase2 < DefaultTestCase1 # test and model files

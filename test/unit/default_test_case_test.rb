@@ -26,6 +26,14 @@ end # class_assert_invariant
 end #ClassExists
 
 class ClassExistsTest < DefaultTestCase1
+
+def test_examples_submodule
+end # example_submodule
+# klass filters example constants by type
+def test_example_constants
+end # example_submodule
+
+
 def test_each_example
   included_module_names=model_class?.included_modules.map{|m| m.name}
 end #each_example
