@@ -133,8 +133,14 @@ def test_aaa_environment
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of related_files ."
-    constant_objects=model_class?::Examples.constants.map{|c| model_class?.class_eval(c.to_s)}
-#verbose    info "constant_objects=#{constant_objects}"
+    constant_names=model_class?::Examples.constants
+    info "constant_names=#{constant_names}"
+    constant_objects=constant_names.map do |c|
+	assert_instance_of(Symbol, c)
+	hiearchical_name = c.to_s.split('::')
+	assert_equal(1, hiearchical_name.size)
+	model_class?::Examples.class_eval(c.to_s)
+    end # map
    examples=constant_objects.select{|c| c.instance_of?(model_class?)}
    info "examples=#{examples}"
 	if examples.empty? then
