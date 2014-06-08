@@ -98,7 +98,7 @@ end # assert_pre_conditions
 def assert_post_conditions(message='')
 	assert_empty(@pre_match, self.inspect)
 	assert_empty(@delimiters, self.inspect)
-	case options[:ending]
+	options && case options[:ending]
 	when :optional then 
 	when :delimiter then 
 		assert_empty(@post_match, self.inspect)
