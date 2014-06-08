@@ -126,7 +126,27 @@ def test_named_hash
 	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
 end #named_hash
-# Parse tests
+
+# Capture::Assertions
+def test_assert_pre_conditions
+	Parse_string.assert_pre_conditions
+	Parse_array.assert_pre_conditions
+end # assert_pre_conditions
+def test_assert_post_conditions
+	Parse_string.assert_post_conditions
+	Parse_array.assert_post_conditions
+end # assert_post_conditions
+def test_assert_parse_string
+	assert_equal(['1', '2'], parse_string("1\n2", Terminated_line))
+	assert_parse_string(['1', '2'], "1\n2", Terminated_line, 'test_assert_parse')
+end #parse_string
+def test_Capture_Examples
+	Parse_string.assert_pre_conditions
+	Parse_array.assert_pre_conditions
+	Parse_string.assert_post_conditions
+	Parse_array.assert_post_conditions
+end # Examples
+# String
 def test_parse_unrepeated
 	assert_equal(Hash_answer, Newline_Delimited_String.parse_unrepeated(Terminated_line))
 	assert_equal(Hash_answer, Newline_Terminated_String.parse_unrepeated(Terminated_line))

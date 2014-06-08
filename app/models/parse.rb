@@ -78,8 +78,24 @@ def named_hash(hash_offset=0)
 	named_hash
 end #named_hash
 require_relative '../../test/assertions.rb'
+
+# Capture::Assertions
 module Assertions
+
+# Any match at all
 def assert_pre_conditions(message='')
+	assert_not_nil(@captures, 'no match at all.')
+	if @output == {} then
+
+#		assert_equal({}. @captures, 'MatchData but no captures.')
+	elsif @output == [] then
+		assert_not_empty(@captures, 'split but no captures.')
+	end # if
+
+end # assert_pre_conditions
+
+# exact match, no left-overs
+def assert_post_conditions(message='')
 	assert_empty(@pre_match, self.inspect)
 	assert_empty(@delimiters, self.inspect)
 	case options[:ending]
@@ -91,14 +107,12 @@ def assert_pre_conditions(message='')
 	else
 		raise 'bad ending symbol.'
 	end #case
-end # assert_pre_conditions
-def assert_post_conditions(message='')
 end # assert_post_conditions
 def add_parse_message(string, pattern, message='')
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
 def assert_parse_string(answer, string, pattern, message='')
-	message=add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"
+	message = add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"
 	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
 	assert_match(pattern, string, message)
 	matchData=pattern.match(string)
@@ -118,6 +132,8 @@ Parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_r
 Parse_array=Capture.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
 end # Examples
 end # Capture
+
+# String
 class String
 # Match pattern without repetition
 def parse_unrepeated(pattern, options = nil)
@@ -225,6 +241,8 @@ Nested_string="1 2\n3 4\n"
 Nested_answer=[['1', '2'], ['3', '4']]
 end #Examples
 end # String
+
+# Parse
 # options include delimiter, and ending
 class Parse
 module Constants
