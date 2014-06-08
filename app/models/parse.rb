@@ -21,7 +21,9 @@ def default_name(index, prefix=nil, numbered=nil)
 end #default_name
 end # ClassMethods
 extend ClassMethods
-attr_reader :captures, :regexp, :length_hash_captures, :repetitions, :output
+attr_reader :captures, :regexp, :options # arguments
+attr_reader :length_hash_captures, :repetitions
+attr_reader :output, :pre_match, :post_match, :delimiters  # outputs
 def initialize(captures, regexp, options=nil)
 	@captures=captures
 	@regexp=regexp
@@ -29,7 +31,12 @@ def initialize(captures, regexp, options=nil)
 #     named_captures for captures.size > names.size
 	@length_hash_captures=@regexp.named_captures.values.flatten.size
 	@repetitions=(@captures.size/(@length_hash_captures+1)).ceil
-	if @captures.instance_of?(MatchData) then
+	if @captures.nil? then
+		@output= {}
+		@pre_match = ''
+		@post_match = ''
+		@delimiters = []
+	elsif @captures.instance_of?(MatchData) then
 		@output=named_hash(0)
 		@pre_match = @captures.pre_match
 		@post_match = @captures.post_match
@@ -70,22 +77,20 @@ def named_hash(hash_offset=0)
 #	end #each
 	named_hash
 end #named_hash
+require_relative '../../test/assertions.rb'
 module Assertions
 def assert_pre_conditions(message='')
-	if options.nil? then
-		array
+	assert_empty(@pre_match, self.inspect)
+	assert_empty(@delimiters, self.inspect)
+	case options[:ending]
+	when :optional then 
+	when :delimiter then 
+		assert_empty(@post_match, self.inspect)
+	when :terminator then
+		assert_not_empty(@post_match, self.inspect)
 	else
-		ret=case options[:ending]
-		when :optional then 
-			array
-		when :delimiter then 
-			array
-		when :terminator then
-			array
-		else
-			raise 'bad ending symbol.'
-		end #case
-	end #if
+		raise 'bad ending symbol.'
+	end #case
 end # assert_pre_conditions
 def assert_post_conditions(message='')
 end # assert_post_conditions
