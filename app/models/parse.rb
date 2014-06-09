@@ -21,13 +21,12 @@ def default_name(index, prefix=nil, numbered=nil)
 end #default_name
 end # ClassMethods
 extend ClassMethods
-attr_reader :captures, :regexp, :options # arguments
+attr_reader :captures, :regexp # arguments
 attr_reader :length_hash_captures, :repetitions
 attr_reader :output, :pre_match, :post_match, :delimiters  # outputs
-def initialize(captures, regexp, options=nil)
+def initialize(captures, regexp)
 	@captures=captures
 	@regexp=regexp
-	@options = options
 #     named_captures for captures.size > names.size
 	@length_hash_captures=@regexp.named_captures.values.flatten.size
 	@repetitions=(@captures.size/(@length_hash_captures+1)).ceil
@@ -98,17 +97,23 @@ end # assert_pre_conditions
 def assert_post_conditions(message='')
 	assert_empty(@pre_match, self.inspect)
 	assert_empty(@delimiters, self.inspect)
-	options && case options[:ending]
-	when :optional then 
-	when :delimiter then 
-		assert_empty(@post_match, self.inspect)
-	when :terminator then
-		assert_not_empty(@post_match, self.inspect)
-	else
-		raise 'bad ending symbol.'
-	end #case
 end # assert_post_conditions
+def assert_options(options)
+	if options.nil? then
+		assert_empty(@post_match, add_default_message(message))
+	else case options[:ending]
+		when :optional then 
+		when :delimiter then 
+			assert_empty(@post_match, self.inspect)
+		when :terminator then
+			assert_not_empty(@post_match, self.inspect)
+		else
+			raise 'bad ending symbol.'
+		end #case
+	end # if
+end # assert_options
 def add_parse_message(string, pattern, message='')
+	message = add_default_message(message)
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
 def assert_parse_string(answer, string, pattern, message='')
@@ -129,6 +134,7 @@ Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
 Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 Parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
+Parse_delimited_array=Capture.new(Newline_Delimited_String.split(Branch_regexp), Branch_regexp)
 Parse_array=Capture.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
 end # Examples
 end # Capture

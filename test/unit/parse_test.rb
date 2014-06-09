@@ -35,6 +35,11 @@ def test_initialize
 			Parse_array.named_hash(i*(length_hash_captures+1))
 		end #map
 	end #if
+	assert_equal(["\n"], Parse_string.delimiters)
+	assert_equal(["\n"], Parse_delimited_array.delimiters)
+	assert_equal(["\n"], Parse_array.delimiters)
+	assert_equal(["\n"], Parse_string.post_match)
+
 	assert_equal({:branch => '1'}, Capture.new(Branch_regexp.match("* 1\n"), Branch_regexp).output) # return matched subexpressions
 	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output, Parse_array.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
@@ -128,14 +133,19 @@ def test_named_hash
 end #named_hash
 
 # Capture::Assertions
-def test_assert_pre_conditions
+def test_Capture_assert_pre_conditions
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
 end # assert_pre_conditions
-def test_assert_post_conditions
-	Parse_string.assert_post_conditions
+def test_Capture_assert_post_conditions
 	Parse_array.assert_post_conditions
+	assert_not_equal('', Parse_string.post_match)
+	assert_raises(Exception) {Parse_string.assert_post_conditions}
+	assert_raises(Exception) {Parse_delimited_array.assert_post_conditions}
+	assert_not_equal('', Parse_delimited_array.post_match)
 end # assert_post_conditions
+def test_assert_options
+end # assert_options
 def test_assert_parse_string
 	assert_equal(['1', '2'], parse_string("1\n2", Terminated_line))
 	assert_parse_string(['1', '2'], "1\n2", Terminated_line, 'test_assert_parse')
