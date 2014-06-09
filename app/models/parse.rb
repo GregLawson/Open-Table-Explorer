@@ -22,7 +22,7 @@ end #default_name
 end # ClassMethods
 extend ClassMethods
 attr_reader :captures, :regexp # arguments
-attr_reader :length_hash_captures, :repetitions
+attr_reader :length_hash_captures, :repetitions, :matched_characters
 attr_reader :output, :pre_match, :post_match, :delimiters  # outputs
 def initialize(captures, regexp)
 	@captures=captures
@@ -35,20 +35,32 @@ def initialize(captures, regexp)
 		@pre_match = ''
 		@post_match = ''
 		@delimiters = []
+		@matched_characters = 0
 	elsif @captures.instance_of?(MatchData) then
-		@output=named_hash(0)
+		if @captures.names==[] then
+			@output = matchData[1..-1] # return unnamed subexpressions
+		else
+			@output=named_hash(0)
+		end # if
 		@pre_match = @captures.pre_match
 		@post_match = @captures.post_match
 		@delimiters = []
+		@matched_characters = @captures[0].length
+
 	else # from split
 		@output = (0..repetitions-1).map do |i|
 			named_hash(i*(length_hash_captures+1))
 		end #map
 		@pre_match = @captures[0]
-		@post_match = @captures[-1]
-		@delimiters = (2..-3).map {|i| (i.even? ? @captures[i] : nil)}.compact
+		if @captures.size.odd? then
+			@post_match = @captures[-1]
+		else
+			@post_match = ''
+		end # if
+		@delimiters = (2..@captures.size - 2).map {|i| (i.even? ? @captures[i] : nil)}.compact
+		@matched_characters = @captures.reduce(0){|sum, s| sum + s.length} - @captures[0].length
 	end #if
-end #initialize
+(0)end #initialize
 def all_capture_indices
 	if @captures.instance_of?(MatchData) then
 		(1..@captures.size-1).to_a
@@ -97,21 +109,34 @@ end # assert_pre_conditions
 def assert_post_conditions(message='')
 	assert_empty(@pre_match, self.inspect)
 	assert_empty(@delimiters, self.inspect)
+	assert_empty(@post_match, add_default_message(message))
 end # assert_post_conditions
-def assert_options(options)
-	if options.nil? then
-		assert_empty(@post_match, add_default_message(message))
-	else case options[:ending]
+def repetition_options?
+	if @regexp.respond_to?(:repetition_options) then
+		@regexp.repetition_options
+	else
+		nil
+	end # if
+end # repetition_options?
+def assert_repetition_options(repetition_options = repetition_options?)
+	if repetition_options.nil? then
+		assert_pre_conditions
+	else
+		delimiter = repetition_options.fetch(:delimiter, "\n")
+		assert_empty(@delimiters.compact.uniq - [delimiter])
+		assert_empty([@post_match] - [delimiter] - [''])
+		case repetition_options[:ending]
 		when :optional then 
 		when :delimiter then 
-			assert_empty(@post_match, self.inspect)
+			assert_not_match(Regexp.new(delimiter), @post_match)
+			assert_empty(@delimiters.compact.uniq - [delimiter])
 		when :terminator then
-			assert_not_empty(@post_match, self.inspect)
+			assert_match(delimiter, @post_match)
 		else
 			raise 'bad ending symbol.'
 		end #case
 	end # if
-end # assert_options
+end # assert_repetition_options
 def add_parse_message(string, pattern, message='')
 	message = add_default_message(message)
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
@@ -142,41 +167,50 @@ end # Capture
 # String
 class String
 # Match pattern without repetition
-def parse_unrepeated(pattern, options = nil)
+def match_unrepeated(pattern)
 	matchData=self.match(pattern)
-	if matchData.nil? then
-		[]
-	elsif matchData.names==[] then
-		matchData[1..-1] # return unnamed subexpressions
-	else
-#     		named_captures for captures.size > names.size
-		Capture.new(matchData, pattern, options).output
-	end #if
+	Capture.new(matchData, pattern)
+end # parse_unrepeated
+def parse_unrepeated(pattern)
+	match_unrepeated(pattern).output
 end # parse_unrepeated
 # Handle repetion and returns an Array
 # Splits pattern match captures into an array of parses
 # Uses Regexp capture mechanism in String#split
 # Input String, Output Array
-def parse_repetition(item_pattern)
+def match_repetition(item_pattern)
 	captures = self.split(item_pattern)
-	Capture.new(captures, item_pattern).output
+	Capture.new(captures, item_pattern)
+end # parse_repetition
+def parse_repetition(item_pattern)
+	match_repetition(item_pattern).output
 end # parse_repetition
 # Try to unify parse_repetition and parse_unrepeated
 # What is the dcifference between an Object and an Array of size 1?
 # Should difference be derived from recursive analysis of RegexpParse?
-def parse(pattern)
+def match?(pattern)
 	if pattern.instance_of?(Array) then
+		pos = 0
 		pattern.map do |p|
-			parse(p)
+			ret = self[pos..-1].match?(p) # recurse
+			pos += ret.matched_characters
+			ret
 		end # map
 	else
-		ret = parse_repetition(pattern)
-		if ret.size == 1 then
-			ret[0]
+		@match_unrepeated = match_unrepeated(pattern)
+		# limit repetitions to pattern, get all captures
+		@split = self[0, @match_unrepeated.matched_characters].match_repetition(pattern)
+		if @split.repetitions == 1 then
+			@match_unrepeated
+		elsif @match_unrepeated.output == @split.output[-1] then # over-written captures
+			@split
 		else
-			ret
+			@match_unrepeated
 		end # if
 	end # if
+end # match?
+def parse(regexp)
+	match?(regexp).output
 end # parse
 module Constants
 end #Constants
@@ -249,37 +283,34 @@ end #Examples
 end # String
 
 # Parse
-# options include delimiter, and ending
-class Parse
+# repetition_options include delimiter, and ending
+class Parse < Regexp
 module Constants
 end #Constants
 include Constants
 module ClassMethods
 include Constants
 # Input String, Output Hash
-def parse_string(string, pattern, options=nil)
-	matchData=string.match(pattern)
-  if matchData.nil? then
-    []
-  elsif matchData.names==[] then
-		matchData[1..-1] # return unnamed subexpressions
-	else
-#     named_captures for captures.size > names.size
-		Capture.new(matchData, pattern, options).output
-	end #if
+def parse_string(string, pattern)
+	string.parse_unrepeated(pattern)
 end #parse_string
 
 # Splits pattern match captures into an array of parses
 # Uses Regexp capture mechanism in String#split
 
 # Input String, Output Array
-def parse_into_array(string, item_pattern, options=nil)
-	Capture.new(string.split(item_pattern), item_pattern, options).output
+def parse_into_array(string, item_pattern)
+	string.parse_repetition(item_pattern)
 
 
 end #parse_into_array
 end #ClassMethods
 extend ClassMethods
+attr_reader :repetition_options
+def initialize(regexp, repetition_options = nil)
+	super(regexp)
+	@repetition_options = repetition_options
+end # initialize
 module Assertions
 module ClassMethods
 include Test::Unit::Assertions
