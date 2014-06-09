@@ -18,6 +18,14 @@ def newline_if_not_empty(message)
 		message+"\n"
 	end #if
 end #newline_if_not_empty
+def add_default_message(message='')
+	if message == '' then
+		"self = #{self.inspect}"
+	else
+		message
+	end # if
+end #add_parse_message
+
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
@@ -195,7 +203,7 @@ def assert_not_empty(object,message='')
 	assert_block(message){!object.empty?}
 end #assert_not_empty
 def assert_empty(object,message='')
-	message+= object.inspect + " is not empty but contains "  
+	message = newline_if_not_empty(message) + object.inspect + " is not empty."
 	if !object.nil?  then # nil is empty
 		assert_block(message){object.empty? || object==Set[nil]}
 	end #if
