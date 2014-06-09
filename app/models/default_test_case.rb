@@ -8,11 +8,11 @@
 require 'active_support/all'
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
-def examples_submodule
+def examples_submodule?
   model_class?::Examples
 end # example_submodule
 # klass filters example constants by type
-def example_constants(klass = nil)
+def example_constants?(klass = nil)
   all = examples_submodule.constants
   unless klass.nil? then
 	all.select {|ec| ec.instance_of(klass)}
@@ -20,8 +20,9 @@ def example_constants(klass = nil)
 end # example_submodule
 def each_example(&block)
   return if model_class?.nil?
-  included_module_names=model_class?.included_modules.map{|m| m.name}
-  if  included_module_names.include?("#{model_class?}::Examples") then
+  assert_equal(examples_submodule?, model_class?::Examples)
+  assert(model_class?.const_defined?(:Examples))
+  if  model_class?.const_defined?(:Examples) then
 #    info "model_class?.constants=#{model_class?.constants}"
     constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
 #verbose    info "constant_objects=#{constant_objects}"
@@ -35,9 +36,8 @@ def each_example(&block)
       end #each
     end #if
   else
-    warn "There is no module #{model_class?}::Examples."
+    warn "There is no module #{model_class?.to_s}::Examples."
   end #if
-  assert_include(included_module_names, "#{model_class?}::Examples")
 end #each_example
 # Call method symbol on object if method exists
 def existing_call(object, symbol)

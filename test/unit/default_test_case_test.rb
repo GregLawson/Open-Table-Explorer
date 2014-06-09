@@ -31,6 +31,7 @@ def test_examples_submodule
 end # example_submodule
 # klass filters example constants by type
 def test_example_constants
+#	assert_(, ExampleCall.example_constants?)
 end # example_submodule
 
 
