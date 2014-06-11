@@ -17,13 +17,12 @@ def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
 def inspect
-	ret = map_recursive(:expressions, &Inspect_format)
+	ret = map_recursive(:expressions){|e, depth| "#{e.class.name[20..-1]}(:#{e.type}, :#{e.token}, '#{e.text}')\n" }.join
 	if ret.instance_of?(Array) then
 		ret.join
 	else
-		'map_recursive(:expressions, &Dump_format) = ' + ret.inspect
+		ret
 	end # if
-
 end # inspect
 module Constants
 Dump_format = proc do |terminal, e, depth|
@@ -32,6 +31,36 @@ end # proc
 Inspect_format = Dump_format
 end # Constants
 include Constants
+# Apply block to each leaf.
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
+def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
+# Handle missing parameters (since any and all can be missing)
+#	puts 'children_method_name.inspect =' + children_method_name.inspect
+#	puts 'depth.inspect =' + depth.inspect
+#	puts 'visit_proc.inspect =' + visit_proc.inspect
+#	puts 'block_given? =' + block_given?.inspect
+	if !block_given? && (children_method_name.instance_of?(Proc) || depth.instance_of?(Proc)) then
+		raise "Block proc argument should be preceded with ampersand."
+	end # if
+	children_method_name = children_method_name.to_sym
+	if respond_to?(children_method_name) then
+		children = send(children_method_name)
+		if children.empty? then # termination condition
+			visit_proc.call(self, depth)  # end recursion
+		else
+			children.map_pair do |key, sub_tree|
+				if sub_tree.respond_to?(:map_recursive) then
+					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(p, depth)}
+				else
+					visit_proc.call(self, depth) # end recursion
+				end # if
+			end # map
+		end # if
+	else
+		visit_proc.call(self, depth) # end recursion
+	end # if
+end #map_recursive
 module Examples
 include Constants
 Minimal_format = proc do |terminal, e, depth|

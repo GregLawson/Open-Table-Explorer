@@ -10,13 +10,14 @@ require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
 include RegexpParse::Examples
-include Regexp::Expression::Base::Examples
+include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
-include Tree::Constants
+def test_Constants
+end # Constants
 # Example from readme
-def test_readme
+def test_regexp_parser
 	regex = /a?(b)*[c]+/m
 
 	# using #to_s on the Regexp object to include options
@@ -52,43 +53,13 @@ def test_readme
 #	  > Regexp::Expression::Group::Capture
 #	    > Regexp::Expression::Literal
 #	  > Regexp::Expression::CharacterSet
-end # readme
-def test_expression_class_symbol?
-	assert_equal(:Literal, expression_class_symbol?)
-end # expression_class_symbol?
-def test_inspect_Regexp
-	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
-	assert_equal("Group::Options(:group, :options, '(?-mix:')", Dump_format.call(true, Sequence_example.expressions[0], 0))
-	assert_equal(1, Sequence_example.expressions.size)
-	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
-	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
-	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
-	leaf_expression = Sequence_example.expressions[0].expressions[0].map_recursive(:expressions, &Trace_map)[1]
-	assert_instance_of(Regexp::Expression::Literal, leaf_expression)
-	assert_equal(:Literal, leaf_expression.expression_class_symbol?)
-	assert_equal(:literal, leaf_expression.type)
-	assert_equal(:literal, leaf_expression.token)
-	assert_equal('ab', leaf_expression.text)
-#	assert_equal(true, leaf_expression.expressions.empty?)
-	assert_equal(true, leaf_expression.terminal?)
-	assert_equal(true, leaf_expression.map_recursive(:expressions, &Trace_map))
-	assert_equal([true, leaf_expression, 0], leaf_expression.map_recursive(:expressions, &Minimal_format))
-	assert_equal(["dog"], Sequence_example.expressions[0].map_recursive(:expressions, &Minimal_format))
-	assert_equal("", Sequence_example.expressions[0].map_recursive(:expressions, &Dump_format))
-	assert_equal("", Sequence_example.map_recursive(:expressions, &Dump_format))
-	assert_equal("", Alternative_example.map_recursive(:expressions, &Dump_format))
+end # regexp_parser
+def test_inspect
+	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
+	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
 end # inspect
-def test_Constants
-	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Terminal_example, 0))
-	assert_equal("Root(:expression, :root, '')", Dump_format.call(true, Sequence_example, 0))
-	assert_equal("Group::Options(:group, :options, '(?-mix:')", Dump_format.call(true, Sequence_example.expressions[0], 0))
-	assert_equal(1, Sequence_example.expressions.size)
-	assert_equal("Literal(:literal, :literal, 'ab')", Dump_format.call(true, Sequence_example.expressions[0].expressions[0], 0))
-	assert_equal("Alternation(:meta, :alternation, '|')", Dump_format.call(true, Alternative_example.expressions[0].expressions[0], 0))
-end # Constants
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
-	assert_not_nil(RegexpParse.typed?(Any_binary_char_parse))
 	assert_not_nil(RegexpTree[Any_binary_char_parse])
 	assert_kind_of(NestedArray, RegexpTree[Any_binary_char_parse])
 	assert_instance_of(CharacterClass, RegexpTree[Any_binary_char_parse])
@@ -144,9 +115,6 @@ def test_to_sym_RegexpToken
 	assert_equal(RegexpToken["\n"].to_sym, :newline)
 	assert_equal(RegexpToken["a"].to_sym, :a)
 end #string
-def test_Constants_RegexpToken
-	puts To_s.inspect
-end #Constants_RegexpToken
 def test_to_pathname_glob_RegexpSequence
 #	assert_instance_of(RegexpSequence, RegexpTree[/ab/])
 #	assert_equal('ab', RegexpTree[/ab/].to_pathname_glob)	
@@ -551,18 +519,10 @@ def test_typed
 
 	node='ab'
 	node=RegexpParse.promote(node)
-#	node='c' # terminal
 	if node.instance_of?(Array) then
 		node.map{|e| typed?(e)}
 	end #if
-	type=RegexpParse.case?(node)
-	assert_equal(:String, RegexpParse.case?('c'))
-	if type==:String then
-		RegexpToken[node]	
-	else
-		eval(type.to_s).new(node.parse_tree)
-	end #if
-	assert_equal(RegexpSequence[RegexpToken["a"], RegexpToken["b"]], node)
+#	assert_equal(RegexpSequence[RegexpToken["a"], RegexpToken["b"]], node)
 	assert_equal(["a", "b"], RegexpParse.new('ab').parse_tree)
 #	assert_instance_of(RegexpSequence, RegexpParse.typed?('ab'))
 #	assert_equal([:a, :b], RegexpParse.typed?('ab'))
