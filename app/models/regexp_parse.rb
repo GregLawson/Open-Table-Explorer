@@ -28,10 +28,10 @@ def inspect(&inspect_proc)
 	end # if
 end # inspect
 module Constants
-Dump_format = proc do |e, depth|
+Arg2_format = proc do |e, depth|
 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')\n"
-end # proc
-Minimal_format = proc do |terminal, e, depth|
+end # Arg2_format
+Arg3_format = proc do |terminal, e, depth|
 	if terminal then
 		ret = 'terminal'
 	else
@@ -45,8 +45,8 @@ Minimal_format = proc do |terminal, e, depth|
 		ret += e.to_s 
 	end # if
 
-end # Minimal_format
-Inspect_format = Minimal_format
+end # Arg3_format
+Inspect_format = Arg2_format
 end # Constants
 include Constants
 # Apply block to each leaf.
@@ -65,18 +65,18 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 	if respond_to?(children_method_name) then
 		children = send(children_method_name)
 		if children.empty? then # termination condition
-			visit_proc.call(true, self, depth)  # end recursion
+			visit_proc.call(self)  # end recursion
 		else
 			children.map_pair do |key, sub_tree|
 				if sub_tree.respond_to?(:map_recursive) then
-					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
+				sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(p, depth)}
 				else
-					visit_proc.call(nil, self, depth) # end recursion
+					visit_proc.call(self) # end recursion
 				end # if
 			end # map
 		end # if
 	else
-		visit_proc.call(nil, self, depth) # end recursion
+		visit_proc.call(self) # end recursion
 	end # if
 end #map_recursive
 module Examples

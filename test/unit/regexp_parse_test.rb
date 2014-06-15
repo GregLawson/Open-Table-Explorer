@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2010-2013 by Greg Lawson                                      
+#    Copyright (C) 2010-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -45,8 +45,8 @@ def test_regexp_parser
 	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
 	assert_instance_of(String, root.map_recursive(:expressions, &Inspect_format).join)
 	inspect_a = "Literal(:literal, :literal, 'a')\n"
-#	assert_equal(inspect_a, root.map_recursive(:expressions, &Inspect_format))
-#	assert_equal(inspect_a, root.inspect)
+	assert_equal(inspect_a, root.map_recursive(:expressions, &Inspect_format).join)
+	assert_equal(inspect_a, root.inspect)
 	# output
 #	> Regexp::Expression::Root
 #	  > Regexp::Expression::Literal
