@@ -43,10 +43,10 @@ def test_regexp_parser
 	puts 'root=' + root.inspect
 	walk(root)
 	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-	assert_instance_of(String, root.map_recursive(:expressions){|e, depth| "#{e.class.name[20..-1]}(:#{e.type}, :#{e.token}, '#{e.text}')\n"}.join)
+	assert_instance_of(String, root.map_recursive(:expressions, &Inspect_format).join)
 	inspect_a = "Literal(:literal, :literal, 'a')\n"
-	assert_equal(inspect_a, root.map_recursive(:expressions){|e, depth| "#{e.class.name[20..-1]}(:#{e.type}, :#{e.token}, '#{e.text}')\n"}.join)
-	assert_equal(inspect_a, root.inspect)
+#	assert_equal(inspect_a, root.map_recursive(:expressions, &Inspect_format))
+#	assert_equal(inspect_a, root.inspect)
 	# output
 #	> Regexp::Expression::Root
 #	  > Regexp::Expression::Literal
@@ -54,9 +54,10 @@ def test_regexp_parser
 #	    > Regexp::Expression::Literal
 #	  > Regexp::Expression::CharacterSet
 end # regexp_parser
-def test_inspect
-	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
-	assert_equal([], root.map_recursive(:expressions){|e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
+def test_Base_inspect
+	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
+#	assert_equal([], root.map_recursive(:expressions, &Inspect_format))
+#	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
 end # inspect
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
