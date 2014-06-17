@@ -12,7 +12,7 @@ class NetworkTest < TestCase
 #include DefaultTests
 include TE.model_class?::Examples
 def test_whereAmI
-	ifconfig=`/sbin/ifconfig|grep "inet addr" `
+	ifconfig= ShellCommands.new('/sbin/ifconfig|grep "inet addr" ').assert_post_conditions.output
 	private_C = ifconfig.parse(Private_C)
 	private_network = ifconfig.parse(Private_Network_Pattern)
 	context = ifconfig.parse(Context_Pattern)
