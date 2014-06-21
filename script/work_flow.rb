@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -12,6 +12,10 @@ require 'pp'
 require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 scripting_workflow=WorkFlow.new($0)
+if File.exists?('.git/MERGE_HEAD') then
+	scripting_workflow.repository.merge_conflict_recovery
+else
+end
 # good enough for edited; no syntax error
 scripting_workflow.script_deserves_commit!(:edited)
 commands = []
@@ -59,6 +63,9 @@ OptionParser.new do |opts|
   end
   opts.on("-l", "--[no-]loop", "Test, commit, edit, loop.") do |t|
     commands+=[:loop] if t
+  end
+  opts.on("-s", "--[no-]split", "split off new class and edit") do |t|
+    commands+=[:split] if t
   end
   opts.on("-r", "--[no-]related", "Related files") do |t|
     commands+=[:related] if t
@@ -108,12 +115,16 @@ commands.each do |c|
 		when :merge_conflict_recovery then 
 			work_flow=WorkFlow.new($0)
 			work_flow.repository.merge_conflict_recovery
+		when :split then
+			work_flow.split(argv[0], argv[1])
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
 		when :execute then work_flow.execute(f)
 		when :edit then work_flow.edit
-		when :test then work_flow.test(f)
+		when :test then 
+			deserving_branch = work_flow.test(f)
+#			work_flow.merge_down(deserving_branch)
 		when :loop then work_flow.loop(f)
 		when :upgrade then work_flow.upgrade(f)
 		when :best then work_flow.best(f)

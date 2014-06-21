@@ -1,0 +1,22 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
+    diff-lcs (1.2.5)
+    grit (2.5.0)
+      diff-lcs (~> 1.1)
+      mime-types (~> 1.15)
+      posix-spawn (~> 0.3.6)
+    i18n (0.6.9)
+    mime-types (1.25.1)
+    posix-spawn (0.3.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  active_support
+  grit
+  i18n

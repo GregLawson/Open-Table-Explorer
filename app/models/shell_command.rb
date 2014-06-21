@@ -7,7 +7,50 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
-require 'test/unit/assertions.rb'
+require_relative 'shell_command.rb'
+module Shell
+class Ssh
+module ClassMethods
+def agent_processes
+end # agent_processes
+end # ClassMethods
+extend ClassMethods
+module Constants
+end # Constants
+include Constants
+attr_reader :user
+
+def initialize(user)
+	@user = user
+end # initialize
+def [](command_on_remote)
+	command_string = 'ssh ' + @user + ' ' + command_on_remote
+	ShellCommands.new(command_string)
+	
+end # []
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+Central = Ssh.new('greg@172.31.42.104')
+end # Examples
+end # Ssh
+end # Shell
 class ShellCommands
 module ClassMethods
 include Shellwords
@@ -37,6 +80,8 @@ def assemble_array_command(command)
 			assemble_array_command(e)
 		elsif e.instance_of?(Hash) then
 			assemble_hash_command(e)
+		elsif e.instance_of?(Pathname) then
+			e.to_s
 		elsif /[ \/.]/.match(e) then # pathnames
 			Shellwords.escape(e)
 		elsif /[$;&|<>]/.match(e) then #shell special characters
@@ -221,6 +266,7 @@ def trace
 	$stdout.puts shorter_callers.join("\n")
 	self # return for command chaining
 end #trace
+require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 extend Test::Unit::Assertions
@@ -257,7 +303,3 @@ Error_message_run = ShellCommands.new('ls happyHappyFailFail.junk')
 end #Examples
 include Examples
 end #ShellCommands
-class NetworkInterface
-IFCONFIG=ShellCommands.new('/sbin/ifconfig')
-#puts IFCONFIG.inspect
-end #NetworkInterface

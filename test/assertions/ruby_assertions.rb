@@ -11,6 +11,21 @@ require 'set'
 module Test
 module Unit
 module Assertions
+def newline_if_not_empty(message)
+	if message.empty? then
+		message
+	else
+		message+"\n"
+	end #if
+end #newline_if_not_empty
+def add_default_message(message='')
+	if message == '' then
+		"self = #{self.inspect}"
+	else
+		message
+	end # if
+end #add_parse_message
+
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
@@ -188,7 +203,7 @@ def assert_not_empty(object,message='')
 	assert_block(message){!object.empty?}
 end #assert_not_empty
 def assert_empty(object,message='')
-	message+=object.canonicalName+" is not empty but contains "+object.inspect  
+	message = newline_if_not_empty(message) + object.inspect + " is not empty."
 	if !object.nil?  then # nil is empty
 		assert_block(message){object.empty? || object==Set[nil]}
 	end #if
@@ -305,8 +320,8 @@ def assert_no_duplicates(array, columns_to_ignore=[])
 	array.sort{|a1,a2| a1.inspect<=>a2.inspect}.chunk{|hash| hash}.map{|key, ary|frequencies[key]=ary.size}
 	assert_instance_of(Hash, frequencies, frequencies.inspect)
 	sorted_by_frequency=frequencies.to_a.sort{|x,y| x[1]<=>y[1]}
-	message="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
-	message+="Array has duplicates. First ten most common elements are #{sorted_by_frequency[0..10]}"+caller_lines
+	message="Array has duplicates. First ten most common elements are #{sorted_by_frequency[-10..-1]}"+caller_lines
+#	message+="frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
 	assert_equal(array.size, array.uniq.size, message)
 end #assert_no_duplicates
 def assert_single_element_array(obj)
@@ -408,17 +423,38 @@ def assert_constant_instance_respond_to(*names)
 		assert_public_instance_method(path, method_name, message)
 	end #
 end #assert_constant_instance_respond_to
+def missing_file_message(pathname)
+	pathname = Pathname.new(pathname).expand_path
+	if pathname.exist? then
+		''
+	else
+		existing_dir = nil
+		pathname.ascend { |f| existing_dir = f and break if f.exist? }
+		'parent directory ' + 
+		existing_dir.to_s + 
+		' does exists containing ' + 
+		Dir[existing_dir+ '*'].map {|f| File.basename(f)}.inspect
+	end # if
+end # missing_file_message
 def assert_pathname_exists(pathname, message='')
 	assert_not_nil(pathname, message)
-	assert_not_empty(pathname, message+"Assume pathname to not be empty.")
+	assert_not_empty(pathname.to_s, message+"Assume pathname to not be empty.")
+	pathname = Pathname.new(pathname).expand_path
+	message += "\nPathname(#{pathname}).exist?=" + pathname.exist?.to_s + "\n" + missing_file_message(pathname)
+	assert(pathname.exist?, message)
 	assert(File.exists?(pathname), message+"File.exists?(#{pathname})=#{File.exists?(pathname).inspect}")
-	assert(File.exists?(File.expand_path(pathname)), message+"File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
+	pathname # allow chaining
+end #assert_pathname_exists
+def assert_directory_exists(pathname, message='')
+	pathname = assert_pathname_exists(pathname, message)
+	assert(pathname.directory?, message+"File.exists?(File.expand_path(pathname))=#{File.directory?(File.expand_path(pathname)).inspect}")
+	pathname # allow chaining
 end #assert_pathname_exists
 def assert_data_file(pathname, message='')
-	assert_pathname_exists(pathname, message)
-	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it aa directory?")
+	pathname = assert_pathname_exists(pathname, message)
 	assert_not_nil(File.size?(pathname), message)
 	assert_not_equal(0, File.size?(pathname), message)
+	pathname # allow chaining
 end #assert_data_file
 end #Assertions
 end #Unit

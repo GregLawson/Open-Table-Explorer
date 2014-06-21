@@ -5,8 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'app/models/generic_table.rb'
-require 'app/models/bug.rb'
+require_relative '../../app/models/generic_table.rb'
+require_relative '../../app/models/bug.rb'
 class TestRun  < ActiveRecord::Base
 include Generic_Table
 has_many :bugs

@@ -6,11 +6,12 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-class Minimal2
+class Rebase
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
 module Constants
+Hex_number=/[0-9a-f]+/
 end #Constants
 include Constants
 # attr_reader
@@ -38,4 +39,4 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 end #Examples
-end #Minimal2
+end #Rebase

@@ -7,10 +7,44 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
 include DefaultTests
 include ShellCommands::Examples
+include Shell::Ssh::Examples
+extend Test::Unit
+def self.startup
+	ssh_pid = ShellCommands.new('echo $SSH_AGENT_PID $SSH_AUTH_SOCK')
+	ps =ShellCommands.new('ps -C ssh-agent').assert_post_conditions.output.split("\n")[1..-1]
+	spaced_column_regexp = /[^\s]+/.capture(:column) * /\s/
+	integer_regexp = /[0-9]+/
+	white_space = /\s/
+	string_spaceless = /[^\s]/
+	ps.map do |process_line|
+		columns = Parse.parse_into_array(process_line, spaced_column_regexp)
+		puts columns.inspect
+		ps_regexp = integer_regexp.capture(:pid)
+		assert_instance_of(Fixnum, Parse.parse(process_line, ps_regexp)[:pid].to_i)
+		ps_regexp *= white_space * string_spaceless.capture(:tty) * white_space
+		assert_equal('?', Parse.parse(process_line, ps_regexp)[:tty])
+		ps_regexp *= white_space * string_spaceless.capture(:time) * white_space
+		assert_instance_of(Hash, Parse.parse(process_line, ps_regexp))
+		assert_equal('00:00:00', Parse.parse(process_line, ps_regexp)[:time])
+		ps_regexp *= string_spaceless.capture(:command)
+		assert_equal('ssh-agent', Parse.parse(process_line, ps_regexp)[:command])
+		process = Parse.parse(process_line, ps_regexp)
+		puts process.inspect
+	end # map
+	assert_equal(1, ps.size, ps)
+end # self.startup
+def test_Ssh_initialize
+	assert_not_empty(Central.user)	
+end # initialize
+def test_command_on_remote
+	assert_equal("cat\n", Central['echo "cat"'].output)	
+	assert_equal("greg", Central['ls -l /shares/Public/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects'].output)	
+end # []
 def test_assemble_hash_command
 	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_hash_command(Cd_command_hash))
 end #assemble_hash_command
