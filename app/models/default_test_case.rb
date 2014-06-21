@@ -8,10 +8,21 @@
 require 'active_support/all'
 BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
+def examples_submodule?
+  model_class?::Examples
+end # example_submodule
+# klass filters example constants by type
+def example_constants?(klass = nil)
+  all = examples_submodule.constants
+  unless klass.nil? then
+	all.select {|ec| ec.instance_of(klass)}
+  end #
+end # example_submodule
 def each_example(&block)
   return if model_class?.nil?
-  included_module_names=model_class?.included_modules.map{|m| m.name}
-  if  included_module_names.include?("#{model_class?}::Examples") then
+  assert_equal(examples_submodule?, model_class?::Examples)
+  assert(model_class?.const_defined?(:Examples))
+  if  model_class?.const_defined?(:Examples) then
 #    info "model_class?.constants=#{model_class?.constants}"
     constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
 #verbose    info "constant_objects=#{constant_objects}"
@@ -25,7 +36,7 @@ def each_example(&block)
       end #each
     end #if
   else
-    warn "There is no module #{model_class?}::Examples."
+    warn "There is no module #{model_class?.to_s}::Examples."
   end #if
 end #each_example
 # Call method symbol on object if method exists
@@ -110,7 +121,7 @@ def test_aaa_environment
 #	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
-	assert_equal([], self.class.methods(false))
+#startup allowed	assert_equal([], self.class.methods(false))
 #	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
 #	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
 #	puts "model_class?::Examples.instance_methods.inspect=#{model_class?::Examples.instance_methods.inspect}"
@@ -133,12 +144,20 @@ def test_aaa_environment
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of related_files ."
-    constant_objects=model_class?.constants.map{|c| model_class?.class_eval(c.to_s)}
-#verbose    info "constant_objects=#{constant_objects}"
+    constant_names=model_class?::Examples.constants
+    info "constant_names=#{constant_names}" if $VERBOSE
+    constant_objects=constant_names.map do |c|
+	assert_instance_of(Symbol, c)
+	hiearchical_name = c.to_s.split('::')
+	assert_equal(1, hiearchical_name.size)
+	model_class?::Examples.class_eval(c.to_s)
+    end # map
    examples=constant_objects.select{|c| c.instance_of?(model_class?)}
-   info "examples=#{examples}"
+   info "examples=#{examples}"  if $VERBOSE
 	if examples.empty? then
-      warn "There are no example constants of type #{model_class?} in #{model_class?}::Examples.\nconstant_objects=#{constant_objects.inspect}"
+		message = "There are no example constants of type #{model_class?} in #{model_class?}::Examples."
+		message += "\nconstant_objects=#{constant_objects.inspect}" if $VERBOSE
+		warn message
 	end #if
 end #test_aaa_environment
 def test_class_assert_pre_conditions
@@ -227,8 +246,6 @@ def data_source_directory?(model_name=model_name?)
 end #data_source_directory?
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
-#include DefaultAssertions
-#extend DefaultAssertions::ClassMethods
 end #DefaultTestCase1
 
 class DefaultTestCase2 < DefaultTestCase1 # test and model files

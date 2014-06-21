@@ -1,13 +1,130 @@
 ###########################################################################
-#    Copyright (C) 2010-2013 by Greg Lawson                                      
+#    Copyright (C) 2010-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'regexp_parser'
 require_relative 'unbounded_range.rb'
+require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
+class Regexp
+class Expression::Base
+include Tree
+def expression_class_symbol?
+	self.class.name[20..-1].to_sym # should be magic-number-free
+end # expression_class_symbol?
+def inspect_node(&inspect_proc)
+	if !block_given? then
+		inspect_proc = Dump_proc
+	end # if
+	inspect_proc.call(self)
+end # inspect
+def inspect_recursive(&inspect_proc)
+	if !block_given? then
+		inspect_proc = Inspect_format
+	end # if
+	ret = map_recursive(:expressions, &inspect_proc)
+	ret = if ret.instance_of?(Array) then
+		ret.join("\n")
+	else
+		ret
+	end # if
+	ret + "\n"
+end # inspect_recursive
+module Constants
+Dump_proc = proc do |e|
+	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+end # Dump_proc
+Arg2_format = proc do |e, depth, terminal|
+	ret = case terminal
+	when true then	'terminal'
+	when false then 'nonterminal'
+	when nil then 'nil'
+	else 'unknown'
+	end # case
+	ret += '[' + depth.to_s + ']'
+	ret += ', ' 
+	if e.kind_of?(Expression::Base) then
+		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+	else
+		ret += 	e.to_s + e.class.ancestors.inspect
+	end # if
+end # Arg2_format
+Arg3_format = proc do |terminal, e, depth|
+	if terminal then
+		ret = 'terminal'
+	else
+		ret = 'nonterminal'
+	end # if
+	ret += '[' + depth.to_s + ']'
+	ret += ',' 
+	if e.instance_of?(Expression::Base) then
+		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')\n"
+	else
+		ret += e.to_s 
+	end # if
+
+end # Arg3_format
+Inspect_format = Arg2_format
+end # Constants
+include Constants
+# returns
+# true  - terminal, recursion stops
+# false - nonterminal  - recurse
+# nil   - 
+def leaf?(children_method_name)
+	children_method_name = children_method_name.to_sym
+	if respond_to?(children_method_name) then
+		children = send(children_method_name)
+		if children.empty? then # termination condition
+			true  # end recursion
+		else
+			false
+		end # if
+	else
+		true # end recursion
+	end # if
+end # leaf?
+# Apply block to each leaf.
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
+def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
+# Handle missing parameters (since any and all can be missing)
+#	puts 'children_method_name.inspect =' + children_method_name.inspect
+#	puts 'depth.inspect =' + depth.inspect
+#	puts 'visit_proc.inspect =' + visit_proc.inspect
+#	puts 'block_given? =' + block_given?.inspect
+	if !block_given? && (children_method_name.instance_of?(Proc) || depth.instance_of?(Proc)) then
+		raise "Block proc argument should be preceded with ampersand."
+	end # if
+	children_method_name = children_method_name.to_sym
+	if leaf?(children_method_name) then
+		visit_proc.call(self, depth, true)  # end recursion
+	else
+		children = send(children_method_name)
+		children.map_pair do |key, sub_tree|
+			if sub_tree.respond_to?(:map_recursive) then
+				sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(p, depth, false)}
+			else
+				visit_proc.call(self, depth, nil) # end recursion
+			end # if
+		end # map
+	end # if
+end #map_recursive
+module Examples
+include Constants
+Inspect_root = "Root(:expression, :root, '')"
+Literal_a = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
+Inspect_a = "Literal(:literal, :literal, 'a')"
+Sequence_example = Regexp::Parser.parse(/ab/.to_s, 'ruby/1.8')
+Alternative_example = Regexp::Parser.parse(/a|b/.to_s, 'ruby/1.8')
+end # Examples
+include Examples
+end # Expression
+end # Regexp
 class RegexpTree < NestedArray
 module ClassMethods
 end #ClassMethods

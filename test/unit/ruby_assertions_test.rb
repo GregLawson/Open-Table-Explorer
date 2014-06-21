@@ -7,6 +7,8 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
+def test_newline_if_not_empty
+end #newline_if_not_empty
 class RubyAssertionsTest < TestCase
 def test_caller_lines
 	ignore_lines=19

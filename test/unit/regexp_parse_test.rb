@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2010-2013 by Greg Lawson                                      
+#    Copyright (C) 2010-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,10 +9,105 @@ require_relative 'test_environment'
 require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
+include Regexp::Expression::Base::Examples
 include RegexpParse::Examples
+include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
+def test_Constants
+end # Constants
+def test_Base_inspect
+	assert_equal(Inspect_root, Dump_proc.call(Literal_a))
+	assert_equal(Inspect_root, Literal_a.inspect_node)
+end # inspect
+def test_inspect_recursive
+	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
+#	assert_equal([], root.map_recursive(:expressions, &Inspect_format))
+#	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
+end # inspect_recursive
+def test_Constants
+end # Constants
+def test_leaf?
+	children_method_name = :expressions
+	assert_respond_to(Literal_a, children_method_name)
+	assert_equal(Inspect_root, Dump_proc.call(Literal_a))
+	children = Literal_a.send(children_method_name)
+	assert_equal(1, children.size)
+	son = children[0]
+	assert_respond_to(son, children_method_name)
+	grandchildren = son.expressions
+	assert_instance_of(Array, grandchildren)
+	assert_equal(1, grandchildren.size)
+	grandson = grandchildren[0]
+	assert_equal(true, grandson.leaf?(:expressions), grandson.inspect)
+	assert_equal(false, Literal_a.leaf?(:expressions), Literal_a.inspect)
+	assert_equal(false, son.leaf?(:expressions), son.inspect)
+end # leaf?
+def test_map_recursive
+	children_method_name = :expressions
+	depth=0
+	visit_proc = Inspect_format
+	assert_respond_to(Literal_a, children_method_name)
+	assert_equal(Inspect_root, visit_proc.call(Literal_a, depth, false))
+	children = Literal_a.send(children_method_name)
+	assert_equal(1, children.size)
+	son = children[0]
+	assert_respond_to(son, children_method_name)
+	grandchildren = son.expressions
+	assert_instance_of(Array, grandchildren)
+	assert_equal(1, grandchildren.size)
+	grandson = grandchildren[0]
+	assert_not_respond_to(grandson, children_method_name)
+	assert_equal(Inspect_a, grandson.inspect)
+
+	assert_equal(Inspect_a, grandson.inspect)
+	assert_equal(Inspect_a, son.inspect)
+	assert_empty(children) # termination condition
+	assert_instance_of(String, Literal_a.map_recursive(:expressions, &Inspect_format).join)
+end # map_recursive
+def test_Examples
+	assert_equal(Inspect_a, Literal_a.map_recursive(:expressions, &Inspect_format).join)
+	assert_equal(Inspect_a, Literal_a.inspect)
+end # Examples
+# Example from readme
+def test_readme
+	regex = /a?(b)*[c]+/m
+
+	# using #to_s on the Regexp object to include options
+	root = Regexp::Parser.parse( regex.to_s, 'ruby/1.8')
+
+	assert_equal(root.multiline?, true)
+	assert_equal(root.case_insensitive?, false)
+
+	# simple tree walking method
+	def walk(e, depth = 0)
+	  puts "#{'  ' * depth}> #{e.class}"
+	termination_condition = e.instance_of?(Regexp::Expression::Literal) # no subexpressions
+#	termination_condition ||= e.expressions.empty?
+	termination_condition = e.terminal?
+	if termination_condition then
+	else
+	    e.each {|s| walk(s, depth+1) }
+	end
+	end # walk
+	assert_equal('Regexp::Expression::Root', root.class.name)
+	assert_instance_of(Regexp::Parser::Root, root)
+	assert_include(root.methods, :expressions)
+	puts 'root=' + root.inspect
+	walk(root)
+	# output
+#	> Regexp::Expression::Root
+#	  > Regexp::Expression::Literal
+#	  > Regexp::Expression::Group::Capture
+#	    > Regexp::Expression::Literal
+#	  > Regexp::Expression::CharacterSet
+end # readme
+def test_Base_inspect
+	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
+#	assert_equal([], root.map_recursive(:expressions, &Inspect_format))
+#	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
+end # inspect
 RegexpParse.assert_pre_conditions #verify class
 def test_brackets_RegexpTree
 	assert_not_nil(RegexpTree[Any_binary_char_parse])

@@ -9,10 +9,7 @@ require_relative 'test_environment'
 require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/test_run.rb'
 # executed in alphabetical order. Longer names sort later.
-# place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
-# move passing tests toward end
 class TestRunTest < TestCase
-#fixtures :test_runs
 def assert_logical_primary_key_defined(instance,message=nil)
 	message=build_message(message, "instance=?", instance.inspect)	
 	assert_not_nil(instance, message)
@@ -147,7 +144,7 @@ def test_general_associations
 #	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	if @model_class.sequential_id? then
+	if TE.model_class?.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
 			message="Check that logical key (#{ar_from_fixture.class.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."

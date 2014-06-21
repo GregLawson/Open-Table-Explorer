@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/generic_table.rb'
 class StreamPattern < ActiveRecord::Base
 include Generic_Table
 has_many :stream_pattern_arguments

@@ -5,16 +5,16 @@ require_relative 'test_environment'
 class FrequencyTest < TestCase
 def setup
 	define_model_of_test # allow generic tests
-	assert_module_included(@model_class,Generic_Table)
-	explain_assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
-	assert_respond_to(@model_class,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_module_included(TE.model_class?,Generic_Table)
+	explain_assert_respond_to(TE.model_class?,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
+	assert_respond_to(TE.model_class?,:sequential_id?,"#{@model_name}.rb probably does not include include Generic_Table statement.")
 	define_association_names
 end #def
 def test_general_associations
 	assert_general_associations(@table_name)
 end #test
 def test_id_equal
-	if @model_class.sequential_id? then
+	if TE.model_class?.sequential_id? then
 	else
 		@my_fixtures.each_value do |ar_from_fixture|
 			message="Check that logical key (#{ar_from_fixture.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
@@ -26,7 +26,7 @@ end #test
 def test_specific__stable_and_working
 end #test
 def test_aaa_test_new_assertions_ # aaa to output first
-  assert_equal(@model_class.new.foreign_key_association_names-@model_class.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)},[])
+  assert_equal(TE.model_class?.new.foreign_key_association_names-TE.model_class?.new.Match_and_strip(/=$/).select {|a| Generic_Table.is_generic_table?(a)},[])
 	assert_matching_association(@table_name,"table_specs")
 end #test
 end #class
