@@ -68,6 +68,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Example_no_write = Pathname.new('/media/central/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects/pack/tmp_pack_XXXXXX')
+Example_no_write = Pathname.new('/media/central/Non-media/src/github_mirror/Open-Table-Explorer/.git/./objects/pack/tmp_pack_XXXXXX')
 end #Examples
 end # Pathname
