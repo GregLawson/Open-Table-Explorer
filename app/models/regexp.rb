@@ -79,7 +79,8 @@ def *(other)
 	end #case
 end #sequence
 def |(other) # |
-	return Regexp.union(Regexp.new(self.unescaped_string), Regexp.promote(other).unescaped_string)
+	return Regexp.new(self.unescaped_string + '|' + other.unescaped_string)
+#	return Regexp.union(Regexp.new(self.unescaped_string), Regexp.promote(other).unescaped_string)
 end #alterative
 def capture(key=nil)
 	if key.nil? then
@@ -112,7 +113,7 @@ def assert_pre_conditions
 # by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
 	assert_equal(self, Regexp.promote(self))
 	assert_equal(self, /#{self.unescaped_string}/)
-	assert_equal(self, Regexp.promote(self).unescaped_string)
+#	assert_equal(self, Regexp.promote(self).unescaped_string)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
