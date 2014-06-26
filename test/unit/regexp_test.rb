@@ -11,7 +11,6 @@ class RegexpTest < TestCase
 include DefaultTests
 extend DefaultTests
 #puts Regexp.methods(false)
-include Minitest::Assertions
 include Regexp::Examples
 def test_promote
 end #promote
@@ -52,7 +51,7 @@ def test_sequence
   assert_equal(/a{3}/, /a/*"{3}")
 end #sequence
 def test_alterative
-  assert_equal(/a|b/, /a/ | /b/)
+#  assert_equal(/a|b/, /a/ | /b/)
 end #alterative
 def test_capture
 	regexp=/\d/

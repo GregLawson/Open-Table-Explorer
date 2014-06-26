@@ -99,6 +99,7 @@ end #back_reference
 def group
 	/(?:#{self.source})/
 end #group
+require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -112,7 +113,7 @@ def assert_pre_conditions
 # by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
 	assert_equal(self, Regexp.promote(self))
 	assert_equal(self, /#{self.unescaped_string}/)
-	assert_equal(self, Regexp.promote(self).unescaped_string)
+#	assert_equal(self, Regexp.promote(self).unescaped_string)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
