@@ -8,7 +8,7 @@
 require 'pathname'
 require_relative 'regexp.rb'
 require 'active_support/all'
-class FilePattern <  ActiveSupport::HashWithIndifferentAccess
+class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns=[
@@ -134,11 +134,9 @@ end #pathnames
 #assert_pre_conditions
 end #ClassMethods
 extend ClassMethods
-module Constants
-Project_root_directory=FilePattern.project_root_dir?($0)
-end #Constants
 attr_reader :path, :pattern, :project_root_dir, :repository_dir, :unit_base_name
 def initialize(path)
+	raise path.inspect if !path.instance_of?(String)
 	@path=File.expand_path(path)
 	@unit_base_name=File.basename(path)
 	@pattern = FilePattern.find_from_path(@path)
@@ -146,24 +144,28 @@ def initialize(path)
 	@repository_dir = FilePattern.repository_dir?(@path)
 end #initialize
 #def inspect
-#	message="FilePattern<instance_variables=#{instance_variables.inspect}, self=#{self.inspect}>"
-#end #inspect
+#	message="FilePattern<instance_variables=#{instance_variables.inspect}>"
+#e#nd #inspect
 def path?(unit_base_name=@basename)
 	raise @pattern.inspect if !@pattern.instance_of?(FilePattern)
 	raise @pattern.inspect if !@pattern[:prefix].instance_of?(String)
 	raise "unit_base_name-#{unit_base_name.inspect}" if !unit_base_name.instance_of?(String)
 	raise "" if !@pattern[:suffix].instance_of?(String)
-	@pattern[:prefix]+unit_base_name.to_s+@pattern[:suffix]
+	@project_root_dir + '/' + @pattern[:prefix]+unit_base_name.to_s+@pattern[:suffix]
 end #path
 def parse_pathname_regexp
 	Absolute_directory_regexp.capture(:project_root_directory)*@pattern[:prefix]+/[[:word:]]+/.capture(:unit_base_name)+@pattern[:suffix]
 end #parse_pathname_regexp
-def pathname_glob(unit_base_name='*')
-	Project_root_directory+@pattern[:prefix]+unit_base_name+@pattern[:suffix]
+def pathname_glob(unit_base_name='*', project_root_directory = Library.project_root_directory)
+	project_root_directory+@pattern[:prefix]+unit_base_name+@pattern[:suffix]
 end #pathname_glob
 def relative_path?(unit_base_name)
 	Pathname.new(path?(unit_base_name)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
+module Constants
+Library = FilePattern.new(__FILE__)
+Executable = FilePattern.new($0)
+end #Constants
 include Constants
 require_relative '../../test/assertions.rb'
 module Assertions
@@ -183,6 +185,7 @@ end #class_assert_pre_conditions
 def assert_post_conditions
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
+	message = "\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
 	successes=array.map do |p|
 		p[:example_file].match(p[:prefix])
 		p[:example_file].match(p[:suffix])
@@ -197,12 +200,8 @@ def assert_invariant
 end #assert_invariant
 # assertions true after instance is initialized
 def assert_pre_conditions(message='')
-	assert_not_nil(@path)
+	assert_not_nil(@path, 'Path is nil'+ self.inspect)
 	assert_not_empty(@path)
-	assert(File.exists?(@path))
-	assert_pathname_exists(@project_root_dir)
-	find_all_from_path = FilePattern.find_all_from_path(@path)
-	assert_equal(1, find_all_from_path.size, find_all_from_path)
 	message+="\n @pattern=#{@pattern.inspect}\n @pattern=#{@pattern.inspect}"
 	assert_not_equal('{}',@pattern.inspect, message)
 	assert_not_nil(@pattern, message)
@@ -214,9 +213,12 @@ def assert_pre_conditions(message='')
 #	fail message+"end of assert_pre_conditions "
 end #assert_pre_conditions
 # assertions true after any instance operations
-def assert_post_conditions
-	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
+def assert_post_conditions(message = 'self = '+self.inspect)
 	assert_not_empty(@project_root_dir, message)
+	assert_pathname_exists(@project_root_dir)
+	assert(File.exists?(@path))
+	find_all_from_path = FilePattern.find_all_from_path(@path)
+	assert_equal(1, find_all_from_path.size, find_all_from_path)
 end #assert_post_conditions
 end #Assertions
 include Assertions

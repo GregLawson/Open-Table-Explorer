@@ -19,14 +19,18 @@ include FilePattern::Examples
 #include FilePattern::Assertions::KernelMethods
 extend FilePattern::Assertions::ClassMethods
 def test_Constants
-
-	assert_match(Directory_delimiter, Project_root_directory)
-	assert_match(Basename_character_regexp, Project_root_directory)
-	assert_match(Basename_regexp, Project_root_directory)
-	assert_match(Pathname_character_regexp, Project_root_directory)
+	Executable.assert_pre_conditions
+	Library.assert_pre_conditions
+	assert_not_nil(Library, Library.inspect)
+	assert_not_nil(Library.project_root_dir, Library.inspect)
+	assert_match(Basename_character_regexp, Library.project_root_dir)
+	assert_match(Directory_delimiter, Library.project_root_dir)
+	assert_match(Basename_character_regexp, Library.project_root_dir)
+	assert_match(Basename_regexp, Library.project_root_dir)
+	assert_match(Pathname_character_regexp, Library.project_root_dir)
 #either	assert_match(Absolute_pathname_regexp, $0)
 	assert_match(Relative_directory_regexp, Patterns[0][:prefix])
-	assert_match(Absolute_directory_regexp, Project_root_directory)
+	assert_match(Absolute_directory_regexp, Library.project_root_dir)
 #	assert_match(Relative_pathname_regexp, )
 end #Constants
 def test_path2model_name
@@ -167,9 +171,16 @@ end #pathnames
 def test_initialize
 	n=FilePattern.new($0)
 	n.assert_pre_conditions
+#	assert_equal(Executable, n)
 	file_pattern=n
 	assert(!file_pattern.pattern.keys.empty?, "file_pattern=#{file_pattern.inspect}")
 	FilePattern.assert_post_conditions
+	FilePattern.assert_pre_conditions
+	n.assert_pre_conditions
+	Executable.assert_post_conditions
+	Library.assert_post_conditions
+	Executable.assert_pre_conditions
+	Library.assert_pre_conditions
 end #initialize
 include FilePattern::Assertions
 extend FilePattern::Assertions::ClassMethods
