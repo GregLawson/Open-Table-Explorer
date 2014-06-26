@@ -78,7 +78,7 @@ end #repository_dir?
 # returns nil if file does not follow any pattern
 def project_root_dir?(path=$0)
 	path=File.expand_path(path)
-	matched_pattern = find_from_path(path)
+#	matched_pattern = find_from_path(path)
 	roots=FilePattern::All.map do |p|
 		matchData=Regexp.new(p[:prefix]).match(path)
 		if matchData.nil? then
@@ -104,7 +104,7 @@ end #find_by_name
 def match_path(p, path)
 		p[:path] = path
 		p[:prefix_match] = Regexp.new(p[:prefix]).match(path)
-		p[:full_match] = p[:matchData] && path[-p[:suffix].size, p[:suffix].size] == p[:suffix]
+		p[:full_match] = p[:prefix_match] && path[-p[:suffix].size, p[:suffix].size] == p[:suffix]
 	p
 end # match_path
 def match_all?(path)
@@ -124,7 +124,6 @@ def find_from_path(path)
 	match_all?(path).find do |p|
 		p[:full_match]
 	end #find
-	
 end #find_from_path
 #returns Array of all possible pathnames for a unit_base_name
 def pathnames?(unit_base_name)

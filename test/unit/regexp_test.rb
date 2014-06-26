@@ -11,7 +11,7 @@ class RegexpTest < TestCase
 include DefaultTests
 extend DefaultTests
 #puts Regexp.methods(false)
-include Minitest::Assertions
+#include Minitest::Assertions
 include Regexp::Examples
 def test_promote
 end #promote
