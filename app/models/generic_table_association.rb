@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ###########################################################################
 #    Copyright (C) 2011-2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
@@ -360,7 +361,7 @@ First_stream_method=StreamMethod.first
 end #Examples
 include Examples
 require_relative '../../test/assertions/default_assertions.rb'
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 include DefaultAssertions
 module ClassMethods
 include DefaultAssertions::ClassMethods

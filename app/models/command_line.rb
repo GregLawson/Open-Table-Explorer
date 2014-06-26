@@ -46,11 +46,11 @@ def ruby_mime
     # returns [text/plain, text/plain]
     text      = plaintext.first
 end #ruby_mime
-require 'test/unit/assertions.rb'
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
@@ -104,10 +104,10 @@ def run
 		end #each
 	end #each
 end #run
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
@@ -134,10 +134,10 @@ def initialize(name, description=name, long_option=name, short_option=name[0])
 	@short_option=short_option
 	@long_option=long_option
 end #initialize
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

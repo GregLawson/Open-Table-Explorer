@@ -13,7 +13,7 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/repository.rb'
 require 'fileutils'
 module OpenTableExplorer
-include Test::Unit::Assertions
+
 extend Test::Unit::Assertions
 module Finance
 module Constants
@@ -143,9 +143,9 @@ def run_pdf_to_jpeg
 	self
 end #run_pdf_to_jpeg
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_not_nil(ENV['USER'], "ENV['USER']\n"+message) # defined inXfce & Gnome

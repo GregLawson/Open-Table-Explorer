@@ -176,11 +176,11 @@ def relative_path?(unit_base_name)
 	Pathname.new(path?(unit_base_name)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
 include Constants
-require 'test/unit/assertions.rb'
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "

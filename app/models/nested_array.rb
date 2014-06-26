@@ -83,10 +83,10 @@ def merge_single_element_arrays?
 	end #map_branches
 
 end #merge_single_element_arrays
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

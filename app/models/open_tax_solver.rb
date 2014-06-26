@@ -113,8 +113,8 @@ Short_acquisition='L  {e}'
 end #Examples
 require_relative '../../test/assertions/default_assertions.rb'
 
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 extend Test::Unit::Assertions
 def assert_pre_conditions
 		assert_instance_of(OpenTaxSolver, self)
@@ -132,7 +132,7 @@ end #assert_pre_conditions
 module ClassMethods
 include OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
-include Test::Unit::Assertions
+
 extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions

@@ -133,10 +133,10 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "

@@ -133,10 +133,10 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 end #ClassMethods
 end #Assertions
 include Assertions
@@ -196,10 +196,10 @@ UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
 SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 end #ClassMethods
 end #Assertions
 end # Unit
