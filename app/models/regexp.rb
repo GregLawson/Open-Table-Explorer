@@ -79,7 +79,8 @@ def *(other)
 	end #case
 end #sequence
 def |(other) # |
-	return Regexp.union(Regexp.new(self.unescaped_string), Regexp.promote(other).unescaped_string)
+	return Regexp.new(self.unescaped_string + '|' + other.unescaped_string)
+#	return Regexp.union(Regexp.new(self.unescaped_string), Regexp.promote(other).unescaped_string)
 end #alterative
 def capture(key=nil)
 	if key.nil? then
@@ -101,9 +102,7 @@ def group
 end #group
 require 'test/unit/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
 module ClassMethods
-include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_pre_conditions
