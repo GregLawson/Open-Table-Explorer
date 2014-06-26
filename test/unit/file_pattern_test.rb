@@ -230,7 +230,7 @@ def test_assert_naming_convention_match
 	expected_match=4
 	path='test/long_test/rebuild_test.rb'
 	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
-#	te=Unit.new
+#	te=RelatedFile.new
 	assert(FilePattern.find_by_name(:model).assert_naming_convention_match(SELF_Model), "Patterns[0], 'app/models/'")
 	assert(FilePattern.find_by_name(:test).assert_naming_convention_match(SELF_Test), "Patterns[2], 'test/unit/'")
 	assert(FilePattern.find_by_name(:script).assert_naming_convention_match(DCT_filename), "Patterns[1], 'script/'")
