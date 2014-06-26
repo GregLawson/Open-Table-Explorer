@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit/assertions.rb'
 require 'pathname'
 require_relative 'regexp.rb'
 require 'active_support/all'
@@ -41,6 +40,7 @@ end #all
 def path2model_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
+	matched_pattern = find_from_path(path)
 	basename=File.basename(path)
 	matches=all.map do |s| 
 		if s.suffix_match(path) && s.prefix_match(path) then
@@ -78,6 +78,7 @@ end #repository_dir?
 # returns nil if file does not follow any pattern
 def project_root_dir?(path=$0)
 	path=File.expand_path(path)
+#	matched_pattern = find_from_path(path)
 	roots=FilePattern::All.map do |p|
 		matchData=Regexp.new(p[:prefix]).match(path)
 		if matchData.nil? then
@@ -100,9 +101,28 @@ def find_by_name(name)
 		s[:name]==name
 	end #find
 end #find_by_name
+def match_path(p, path)
+		p[:path] = path
+		p[:prefix_match] = Regexp.new(p[:prefix]).match(path)
+		p[:full_match] = p[:prefix_match] && path[-p[:suffix].size, p[:suffix].size] == p[:suffix]
+	p
+end # match_path
+def match_all?(path)
+	path=File.expand_path(path)
+	ret = Constants::All.map do |p|
+		match = match_path(p, path)
+	end # map
+	ret
+end # match_all
+def find_all_from_path(path)
+	ret = match_all?(path).select do |p|
+		p[:full_match]
+	end # select
+	ret
+end #find_from_path
 def find_from_path(path)
-	Constants::All.find do |p|
-		p.prefix_match(path) && p.suffix_match(path)
+	match_all?(path).find do |p|
+		p[:full_match]
 	end #find
 end #find_from_path
 #returns Array of all possible pathnames for a unit_base_name
@@ -156,6 +176,7 @@ def relative_path?(unit_base_name)
 	Pathname.new(path?(unit_base_name)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
 include Constants
+require 'test/unit/assertions.rb'
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -228,6 +249,6 @@ DCT_filename='script/dct.rb'
 SELF_Model=__FILE__
 SELF_Test=$0
 #SELF=FilePattern.new(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
-Data_source_example='test/data_sources/tax_form/examples_and_templates/US_1040/US_1040_example_sysout.txt'
+Data_source_example='test/data_sources/tax_form/2012/examples_and_templates/US_1040/US_1040_example_sysout.txt'
 end #Examples
 end #FilePattern
