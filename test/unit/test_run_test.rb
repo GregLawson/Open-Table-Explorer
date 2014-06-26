@@ -10,6 +10,51 @@ require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/test_run.rb'
 # executed in alphabetical order. Longer names sort later.
 class TestRunTest < TestCase
+include Repository::Constants
+def test_error_score?
+#	executable=This_code_repository.related_files.model_test_pathname?
+	executable='/etc/mtab' #force syntax error with non-ruby text
+		recent_test=This_code_repository.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
+		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(10000, This_code_repository.error_score?(executable))
+#	This_code_repository.assert_deserving_branch(:edited, executable)
+
+	executable='test/unit/minimal2_test.rb'
+		recent_test=This_code_repository.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
+		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
+#	This_code_repository.assert_deserving_branch(:passed, executable)
+	Error_classification.each_pair do |key, value|
+		executable=data_source_directory?+'/'+value.to_s+'.rb'
+		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
+	end #each
+end # error_score
+def test_ruby_run_and_log
+#	executable=This_code_repository.related_files.model_test_pathname?
+	executable='/etc/mtab' #force syntax error with non-ruby text
+		recent_test=This_code_repository.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
+		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(10000, This_code_repository.error_score?(executable))
+#	This_code_repository.assert_deserving_branch(:edited, executable)
+
+	executable='test/unit/minimal2_test.rb'
+		recent_test=This_code_repository.shell_command("ruby "+executable)
+		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
+		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
+#	This_code_repository.assert_deserving_branch(:passed, executable)
+	Error_classification.each_pair do |key, value|
+		executable=data_source_directory?+'/'+value.to_s+'.rb'
+		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
+	end #each
+end # ruby_run_and_log
 def assert_logical_primary_key_defined(instance,message=nil)
 	message=build_message(message, "instance=?", instance.inspect)	
 	assert_not_nil(instance, message)
