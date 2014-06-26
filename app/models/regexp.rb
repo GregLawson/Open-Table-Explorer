@@ -100,10 +100,9 @@ end #back_reference
 def group
 	/(?:#{self.source})/
 end #group
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
 module ClassMethods
-include Test::Unit::Assertions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_pre_conditions
