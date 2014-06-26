@@ -81,7 +81,7 @@ def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumUnit.pathnames?)
 	assert_operator(5, :<=, UnboundedFixnumUnit.pathnames?.size)
 	assert_array_of(UnboundedFixnumUnit.pathnames?, String)
-	pathnames=FilePattern::All.map do |p|
+	pathnames=FilePattern::Patterns.map do |p|
 		UnboundedFixnumUnit.		pathname_pattern?(p[:name])
 	end #map
 	assert_equal(UnboundedFixnumUnit.pathnames?, pathnames)

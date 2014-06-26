@@ -18,7 +18,8 @@ end #new_from_path?
 end #ClassMethods
 extend ClassMethods
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
-def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
+def initialize(model_class_name=FilePattern.path2model_name?, 
+					project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
 	if model_class_name.nil? then
 		warn message if model_class_name.nil?
@@ -82,8 +83,8 @@ def pathnames?
 #	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
 	raise "project_root_dir" if @project_root_dir.nil?
 	raise "@model_basename" if @model_basename.nil?
-	FilePattern::All.map do |p|
-		pathname_pattern?(p[:name])
+	FilePattern::Patterns.map do |pattern|
+		@project_root_dir + FilePattern.path?(pattern, @model_basename)
 	end #
 end #pathnames
 def default_test_class_id?
