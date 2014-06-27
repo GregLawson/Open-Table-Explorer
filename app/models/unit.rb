@@ -49,18 +49,17 @@ def ==(other)
 		false
 	end #if
 end #==
-def pathname_pattern?(file_spec)
+def pathname_pattern?(file_spec, test = nil)
 	raise "project_root_dir" if @project_root_dir.nil?
 	file_pattern=FilePattern.find_by_name(file_spec)
 	raise "FilePattern.find_by_name(#{file_spec.inspect})=#{file_pattern.inspect} not found" if file_pattern.nil?
 	raise "@model_basename" if @model_basename.nil?
-	raise "file_pattern[:prefix]"+file_pattern.inspect if file_pattern[:prefix].nil?
-	directory=@project_root_dir+file_pattern[:prefix]
-	raise "directory"+file_pattern.inspect if directory.nil?
-	raise "file_pattern[:suffix]"+file_pattern.inspect if file_pattern[:suffix].nil?
-	filename=@model_basename.to_s+file_pattern[:suffix]
-	raise "filename"+file_pattern.inspect if filename.nil?
-	directory+filename
+	if test.nil? then
+		unit_base_name = @model_basename
+	else
+		unit_base_name = @model_basename + '_' + test
+	end # if
+	@project_root_dir + FilePattern.path?(file_pattern, unit_base_name)
 end #pathname_pattern
 def model_pathname?
 	pathname_pattern?(:model)
