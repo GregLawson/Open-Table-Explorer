@@ -1,10 +1,17 @@
-require "app/models/generic_table.rb"
-class Bug < ActiveRecord::Base
-has_many :test_runs
-belongs_to :error_type
+###########################################################################
+#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    <GregLawson123@gmail.com>                                                             
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+require_relative '../../app/models/no_db.rb'
+class Bug # < ActiveRecord::Base
+#has_many :test_runs
+#belongs_to :error_type
 
-include Generic_Table
-extend Generic_Table::ClassMethods
+#include Generic_Table
+#extend Generic_Table::ClassMethods
 def self.logical_primary_key
 	return [:created_at]
 end #def
