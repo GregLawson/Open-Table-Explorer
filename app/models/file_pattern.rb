@@ -19,6 +19,10 @@ Patterns=[
 	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :prefix => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :prefix => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb'},
+	{:suffix =>'.log', :name => :library_log, :prefix => 'log/library/', :example_file => 'log/library/repository.log'},
+	{:suffix =>'.log', :name => :assertions_log, :prefix => 'log/assertions/', :example_file => 'log/assertions/repository.log'},
+	{:suffix =>'.log', :name => :integration_log, :prefix => 'log/integration/', :example_file => 'log/integration/repository.log'},
+	{:suffix =>'.log', :name => :long_log, :prefix => 'log/long/', :example_file => 'log/long/repository.log'},
 	{:suffix =>'', :name => :data_sources_dir, :prefix => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540'}
 	]
 include Regexp::Constants
