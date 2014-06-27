@@ -43,7 +43,7 @@ end # error_score
 def ruby_run_and_log(ruby_source,log_file,test=nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
-	log_file = unit.log_file?(unit.)
+	log_file = unit.pathname_pattern?(:library_log)
 	if test.nil? then
 		ruby_test=ruby_source
 	else
