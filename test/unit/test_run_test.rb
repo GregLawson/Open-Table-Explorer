@@ -42,7 +42,6 @@ def test_ruby_run_and_log
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(10000, This_code_repository.error_score?(executable))
 #	This_code_repository.assert_deserving_branch(:edited, executable)
-
 	executable='test/unit/minimal2_test.rb'
 		recent_test=This_code_repository.shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)

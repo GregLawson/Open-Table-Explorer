@@ -39,7 +39,6 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end # error_score
-
 def ruby_run_and_log(ruby_source,log_file,test=nil)
 	if test.nil? then
 		ruby_test=ruby_source
@@ -81,18 +80,12 @@ rescue SyntaxError => exception_raised
 end # ruby_run_and_log
 def shell(command, &proc)
 #	puts "command='#{command}'"
-	output=`#{command}`
-#	puts "$?=#{$?}"
-#	puts "output='#{output}'"
-	if $?==0 then
-		proc.call(true,output)
-#		puts output
-		return output
+	run =ShellCommands.new(command)
+	if block_given? then
+		proc.call(run)
 	else
-		proc.call(false,"$?=#{$?}"+output)
-#		puts output
-		return nil
-	end #if
+		run.assert_post_conditions
+	end # if
 end #shell
 # Run rubyinterpreter passing arguments
 def ruby(args, &proc)
