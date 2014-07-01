@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2012 by Greg Lawson                                      
+#    Copyright (C) 2011-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -40,6 +40,9 @@ def error_score?(executable=@related_files.model_test_pathname?)
 	end #if
 end # error_score
 def ruby_run_and_log(ruby_source,log_file,test=nil)
+	file_pattern = FilePattern.find_from_path(ruby_source)
+	unit = Unit.new_from_File(ruby_source)
+	log_file = unit.pathname_pattern?(:library_log)
 	if test.nil? then
 		ruby_test=ruby_source
 	else
