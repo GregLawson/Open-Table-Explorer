@@ -122,7 +122,7 @@ end #find_from_path
 def path?(pattern, unit_base_name)
 	raise pattern.inspect if !pattern.instance_of?(Hash)
 	raise pattern.inspect if !pattern[:prefix].instance_of?(String)
-	raise "unit_base_name-#{unit_base_name.inspect}" if !unit_base_name.instance_of?(String)
+	raise "unit_base_name-#{unit_base_name.inspect}" if !unit_base_name.respond_to?(:to_s)
 	raise "" if !pattern[:suffix].instance_of?(String)
 	pattern[:prefix]+unit_base_name.to_s+pattern[:suffix]
 end # path?
