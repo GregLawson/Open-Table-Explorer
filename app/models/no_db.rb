@@ -43,7 +43,10 @@ def dump
 	end #map
 end #dump
 def data_source_yaml(yaml_table_name=table_name)
-	yaml = YAML::load( File.open("test/data_sources/#{yaml_table_name}.yml" ) )
+  unit = Unit.new(self.name)
+  unit_data_source_directory = unit.data_sources_directory?
+  data_source_file =  unit_data_source_directory + "/#{yaml_table_name}.yml"
+	yaml = YAML::load( File.open(data_source_file) )
 end #data_source_yaml
 def get_field_names
 	feild_names=all.first.keys
