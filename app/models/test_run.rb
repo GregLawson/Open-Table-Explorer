@@ -17,7 +17,7 @@ end # Constants
 include Constants
 include Virtus.model
   attribute :test_type, Symbol, :default => :unit
-  attribute :singular_table, String, :default => TE.model_name?
+  attribute :singular_table, String, :default => TE.model_name?.to_s.underscore
   attribute :plural_table, String, :default => nil
   attribute :test, String, :default => nil # all tests in file
   attribute :test_processor, String, :default => 'ruby'
@@ -229,7 +229,7 @@ end #initialize
 def unit?
 	Unit.new(@singular_table)
 end # unit?
-def test_file
+def test_file?
 	case @test_type
 	when :unit
 		return "test/unit/#{@singular_table}_test.rb"
@@ -237,10 +237,10 @@ def test_file
 		return "test/functional/#{@plural_table}_controller_test.rb"
 	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
 	end #case
-end #test_file
+end #test_file?
 # log_file => String
 # Filename of log file from test run
-def log_file
+def log_file?
 	case @test_type
 	when :unit
 		unit?.pathname_pattern?(:library_log, @test)
@@ -248,18 +248,41 @@ def log_file
 		unit?.pathname_pattern?(:controller_log, @test)
 	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
 	end #case
-end #log_file
+end #log_file?
 # Unconditionally run the test
 def run
-	TestRun.ruby_run_and_log(test_file,log_file,@test)
+#  attribute :test_type, Symbol, :default => :unit
+#  attribute :singular_table, String, :default => TE.model_name?
+#  attribute :plural_table, String, :default => nil
+#  attribute :test, String, :default => nil # all tests in file
+#  attribute :test_processor, String, :default => 'ruby'
+#  attribute :processor_version, String, :default => nil # system version
+#  attribute :options, String, :default => nil
+#  attribute :timestamp, Time, :default => Time.now
+
+#	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
+	FileUtils.mkdir_p(File.dirname(log_file?))
+	command =[test_processor, options, test_file?]
+	if !@test.nil? then
+		command +="-n #{@test}"
+	end #if
+	run =ShellCommands.new(command)
+rescue StandardError => exception_raised
+	puts  '-StandardError Error: ' + exception_raised.inspect 
+	puts exception_raised.backtrace.join("\n")
+
+	return run
+rescue SyntaxError => exception_raised
+	puts  '-SyntaxError Error: ' + exception_raised.inspect 
+	return run
 end #run
 # Run a shell
 def ruby_run_and_log
-	TestRun.ruby_run_and_log(test_file,log_file,@test)
+	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
 end #ruby_run_and_log
 
 def file_bug_reports
-	TestRun.file_bug_reports(test_file,log_file,@test)
+	TestRun.file_bug_reports(test_file?,log_file?,@test)
 end #file_bug_reports
 require_relative '../../test/assertions.rb'
 module Assertions
