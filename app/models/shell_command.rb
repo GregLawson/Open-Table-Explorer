@@ -271,9 +271,9 @@ def trace
 	$stdout.puts shorter_callers.join("\n")
 	self # return for command chaining
 end #trace
-require 'test/unit/assertions.rb'
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 extend Test::Unit::Assertions
 def assert_pre_conditions(message='')
 	self # return for command chaining

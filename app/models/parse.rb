@@ -91,7 +91,7 @@ end #named_hash
 require_relative '../../test/assertions.rb'
 
 # Capture::Assertions
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 
 # Any match at all
 def assert_pre_conditions(message='')
@@ -215,9 +215,9 @@ end # parse
 module Constants
 end #Constants
 include Constants
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 module ClassMethods
-include Test::Unit::Assertions
+
 def add_parse_message(string, pattern, message='')
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
@@ -311,9 +311,9 @@ def initialize(regexp, repetition_options = nil)
 	super(regexp)
 	@repetition_options = repetition_options
 end # initialize
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 module ClassMethods
-include Test::Unit::Assertions
+
 def add_parse_message(string, pattern, message='')
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message

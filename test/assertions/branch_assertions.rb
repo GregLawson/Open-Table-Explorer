@@ -5,14 +5,24 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../test/assertions/repository_assertions.rb' # get Examples
-require_relative '../../app/models/branch.rb' # get Examples
-class Branch
-#include Repository::Constants
-module Assertions
-include Test::Unit::Assertions
+#require_relative '../../app/models/no_db.rb'
+require_relative 'repository.rb'
+class PushSummary
 module ClassMethods
-include Test::Unit::Assertions
+end #ClassMethods
+extend ClassMethods
+module Constants
+Hex_number=/[0-9a-f]+/
+end #Constants
+include Constants
+# attr_reader
+def initialize(repository)
+	@repository=repository
+end #initialize
+require_relative '../../test/assertions.rb';module Assertions
+
+module ClassMethods
+
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions

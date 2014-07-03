@@ -368,10 +368,11 @@ def unit_test(executable = @related_files.model_test_pathname?)
 		edit('unit_test')
 	end until !@repository.something_to_commit?
 end # unit_test
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_pre_conditions
 end # assert_pre_conditions
 def assert_post_conditions

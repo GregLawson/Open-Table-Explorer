@@ -66,7 +66,7 @@ module Constants
 end #Constants
 include Constants
 # attr_reader
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"

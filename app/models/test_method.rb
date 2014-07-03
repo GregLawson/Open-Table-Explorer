@@ -36,10 +36,10 @@ end #untested_methods
 def tested_nonmethods
 	@method_test_names-@method_names
 end #untested_methods
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions

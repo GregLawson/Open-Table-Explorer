@@ -65,7 +65,7 @@ def test_shell
 	assert_not_empty(TestRun.shell('pwd'){|run| run.inspect})
 end #shell
 def test_file_bug_reports
-	header,errors,summary=TestRun.parse_log_file(Odd_plural_testRun.log_file)
+	header,errors,summary=TestRun.parse_log_file(Odd_plural_testRun.log_file?)
 	headerArray=header.split("\n")
 	assert_instance_of(Array, headerArray)
 	sysout=headerArray[0..-2]
@@ -84,7 +84,7 @@ def test_file_bug_reports
 	assert_operator(run_time, :>=, 0)
 end #file_bug_reports
 def test_parse_log_file
-	log_file = Default_testRun.log_file
+	log_file = Default_testRun.log_file?
 	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
 #	puts "blocks='#{blocks.inspect}'"
 	header= blocks[0]
@@ -107,14 +107,14 @@ def test_parse_log_file
 	sysout,run_time=TestRun.parse_header(header)
 	assert_not_nil(run_time)
 	assert_operator(run_time, :>=, 0)
-	header,errors,summary=TestRun.parse_log_file(testRun.log_file)
+	header,errors,summary=TestRun.parse_log_file(testRun.log_file?)
 	assert_not_nil(header)
 	assert_not_nil(summary)
 end #parse_log_file
 def test_parse_summary
 end #parse_summary
 def test_parse_header
-	header,errors,summary=TestRun.parse_log_file(Odd_plural_testRun.log_file)
+	header,errors,summary=TestRun.parse_log_file(Odd_plural_testRun.log_file?)
 	assert_operator(header.size,:>,0)
 	headerArray=header.split("\n")
 	assert_instance_of(Array, headerArray)
@@ -158,9 +158,9 @@ def test_initialize
 	test=TestRun.new(:unit)
 	assert_logical_primary_key_defined(test)
 end #initialize
-def test_test_file
-	assert_equal('test/unit/code_base_test.rb',Odd_plural_testRun.test_file)
-end #test_file
+def test_test_file?
+	assert_equal('test/unit/code_base_test.rb',Odd_plural_testRun.test_file?)
+end #test_file?
 def test_log_file
 	test_virtus_initialize
 	assert_equal(:unit, Odd_plural_testRun.test_type)
@@ -172,6 +172,6 @@ def test_log_file
 	assert_equal(File.expand_path('log/library/code_base.log'), Odd_plural_testRun.log_file, Odd_plural_testRun.inspect)
 end #log_file
 def test_run
-#	TestRun.new(:unit, 'test_run').run
+	Unit_testRun.run.assert_post_conditions
 end #run
 end # TestRun

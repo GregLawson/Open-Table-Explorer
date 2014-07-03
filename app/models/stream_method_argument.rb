@@ -33,7 +33,7 @@ First_stream_argument=StreamMethodArgument.first
 end #Examples
 include Examples
 require_relative '../../test/assertions/default_assertions.rb'
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 include DefaultAssertions
 module ClassMethods
 include DefaultAssertions::ClassMethods
