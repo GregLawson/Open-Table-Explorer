@@ -52,10 +52,11 @@ def run(&non_default_actions)
 		end #each
 	end #each
 end #run
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods
@@ -81,12 +82,13 @@ def initialize(name, description=name.to_s, long_option=name.to_s, short_option=
 	@name=name.to_s
 	@description=description
 	@short_option=short_option
-	@short_option=long_option
+	@long_option=long_option
 end #initialize
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

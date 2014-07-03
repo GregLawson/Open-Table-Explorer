@@ -7,14 +7,23 @@
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 require 'virtus'
+require 'fileutils'
 require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/bug.rb'
 class TestRun # < ActiveRecord::Base
+module Constants
+Ruby_version = ShellCommands.new('ruby --version').output.split(' ')
+end # Constants
+include Constants
 include Virtus.model
-  attribute :testType, String
-  attribute :singular_table, String
-  attribute :plural_table, String
-  attribute :test, String
+  attribute :test_type, Symbol, :default => :unit
+  attribute :singular_table, String, :default => TE.model_name?
+  attribute :plural_table, String, :default => nil
+  attribute :test, String, :default => nil # all tests in file
+  attribute :test_processor, String, :default => 'ruby'
+  attribute :processor_version, String, :default => nil # system version
+  attribute :options, String, :default => nil
+  attribute :timestamp, Time, :default => Time.now
 #include Generic_Table
 #has_many :bugs
 module ClassMethods
@@ -39,10 +48,11 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end # error_score
-def ruby_run_and_log(ruby_source,log_file,test=nil)
+def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
 	log_file = unit.pathname_pattern?(:library_log)
+	mkdir_p(File.dirname(log_file))
 	if test.nil? then
 		ruby_test=ruby_source
 	else
@@ -170,20 +180,17 @@ def parse_header(header)
 end #parse_header
 end # ClassMethods
 extend ClassMethods
-module Constants
-end # Constants
-include Constants
 # attr_reader
 def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
 	if testType.instance_of?(Hash) then
 		super(testType) # actually hash of attributes
 #		attributes=testType 
 	else
-		super(nil) #
+#		super(nil) #
 		if !testType.nil? then
 			raise "initialize test run with bad testType=#{testType}" unless [:unit,:controller].include?(testType.to_sym)
 			#~ puts "testType is not nil. testType=#{testType} singular_table=#{singular_table}"
-			self[:test_type]=testType
+			@test_type=testType
 			if singular_table.nil? then
 				if plural_table.nil? then
 					@singular_table = "code_base"
@@ -204,13 +211,13 @@ def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil
 			#~ puts "@singular_table=#{@singular_table} @plural_table=#{@plural_table}"
 			#~ model = @singular_table # canonical form since plurals are more irregular?
 			#~ puts "model=#{model} self.model=#{self.model} self['model']=#{self['model']}"
-			self.model = @singular_table # canonical form since plurals are more irregular?
+			@model = @singular_table # canonical form since plurals are more irregular?
 			#~ puts "model=#{model} self.model=#{self.model} self['model']=#{self['model']}"
-			#~ self[:model] = @singular_table # canonical form since plurals are more irregular?
+			#~ @model = @singular_table # canonical form since plurals are more irregular?
 			#~ puts "model=#{model} self.model=#{self.model} self['model']=#{self['model']}"
 			#~ self['model'] = @singular_table # canonical form since class is accessible
 			#~ puts "model=#{model} self.model=#{self.model} self['model']=#{self['model']}"
-			self.test = test 
+			@test = test 
 		else
 			#~ puts "nil testType"
 		end #if
@@ -219,42 +226,40 @@ def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil
 #	puts "End of initialize: self=#{self.inspect}"
 #	puts "End of initialize: testType=#{testType.inspect}"
 end #initialize
+def unit?
+	Unit.new(@singular_table)
+end # unit?
 def test_file
-	case self[:test_type].to_sym
+	case @test_type
 	when :unit
 		return "test/unit/#{@singular_table}_test.rb"
 	when :controller
 		return "test/functional/#{@plural_table}_controller_test.rb"
-	else raise "Unnown self[:test_type]=#{self[:test_type]} for singular_table=#{singular_table}"
+	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
 	end #case
 end #test_file
 # log_file => String
 # Filename of log file from test run
 def log_file
-	if self[:test].nil? then
-		test_suffix=''
-	else
-		test_suffix=".#{self[:test]}"
-	end #if
-	case self[:test_type].to_sym
+	case @test_type
 	when :unit
-		return CodeBase.unit_target(@singular_table.to_s+test_suffix)
+		unit?.pathname_pattern?(:library_log, @test)
 	when :controller
-		return CodeBase.controller_target(@plural_table.to_s+test_suffix)
-	else raise "Unnown self[:test_type]=#{self[:test_type]} for singular_table=#{singular_table}"
+		unit?.pathname_pattern?(:controller_log, @test)
+	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
 	end #case
 end #log_file
 # Unconditionally run the test
 def run
-	TestRun.ruby_run_and_log(test_file,log_file,self[:test])
+	TestRun.ruby_run_and_log(test_file,log_file,@test)
 end #run
 # Run a shell
 def ruby_run_and_log
-	TestRun.ruby_run_and_log(test_file,log_file,self[:test])
+	TestRun.ruby_run_and_log(test_file,log_file,@test)
 end #ruby_run_and_log
 
 def file_bug_reports
-	TestRun.file_bug_reports(test_file,log_file,self[:test])
+	TestRun.file_bug_reports(test_file,log_file,@test)
 end #file_bug_reports
 require_relative '../../test/assertions.rb'
 module Assertions
@@ -270,11 +275,31 @@ def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
+def assert_logical_primary_key_defined(instance,message=nil)
+	message=build_message(message, "instance=?", instance.inspect)	
+	assert_not_nil(instance, message)
+	assert_instance_of(TestRun,instance, message)
+	assert_kind_of(ActiveRecord::Base,instance, message)
+
+#	puts "instance=#{instance.inspect}"
+	assert_not_nil(instance.attributes, message)
+	assert_not_nil(instance[:test_type], message)
+	assert_not_nil(instance.test_type, message)
+	assert_not_nil(instance['test_type'], message)
+	assert_not_nil(instance.model, message)
+end #assert_logical_primary_key_defined
 end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+Default_testRun = TestRun.new
+Unit_testRun = TestRun.new(:test_type => :unit)
+#Plural_testRun = TestRun.new({:test_type => :unit, :model => 'test_runs'})
+Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
+Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
+Odd_plural_testRun=TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
+
 end # Examples
 end # TestRun
