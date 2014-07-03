@@ -34,13 +34,13 @@ include DefaultTests
 include Unit::Examples
 def test_initialize
 	assert_respond_to(UnboundedFixnumUnit, :model_basename)
-	assert_equal('unbounded_fixnum', UnboundedFixnumUnit.model_basename)	
-	assert_equal('unbounded_fixnum', Unit.new(:UnboundedFixnum).model_basename)
+	assert_equal(:unbounded_fixnum, UnboundedFixnumUnit.model_basename)	
+	assert_equal(:unbounded_fixnum, Unit.new(:UnboundedFixnum).model_basename)
 	model_class_name=FilePattern.path2model_name?
 	assert_equal(:Unit, model_class_name)
 	project_root_dir=FilePattern.project_root_dir?
 	assert_equal(:Unit, SELF.model_class_name)
-	assert_equal('unit', SELF.model_basename)
+	assert_equal(:unit, SELF.model_basename)
 	assert_not_empty(SELF.project_root_dir)
 	SELF.assert_pre_conditions
 	te=Unit.new(SELF.model_name?)
@@ -81,7 +81,7 @@ def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumUnit.pathnames?)
 	assert_operator(5, :<=, UnboundedFixnumUnit.pathnames?.size)
 	assert_array_of(UnboundedFixnumUnit.pathnames?, String)
-	pathnames=FilePattern::All.map do |p|
+	pathnames=FilePattern::Patterns.map do |p|
 		UnboundedFixnumUnit.		pathname_pattern?(p[:name])
 	end #map
 	assert_equal(UnboundedFixnumUnit.pathnames?, pathnames)

@@ -18,7 +18,8 @@ end #new_from_path?
 end #ClassMethods
 extend ClassMethods
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
-def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=FilePattern.project_root_dir?)
+def initialize(model_class_name=FilePattern.path2model_name?, 
+					project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
 	if model_class_name.nil? then
 		warn message if model_class_name.nil?
@@ -31,7 +32,7 @@ def initialize(model_class_name=FilePattern.path2model_name?, project_root_dir=F
 	else
 		@project_root_dir= project_root_dir  #not nil
 	end #
-	@model_basename=@model_class_name.to_s.tableize.singularize
+	@model_basename=@model_class_name.to_s.underscore.to_sym
 	raise "@model_basename" if @model_basename.nil?
 	@edit_files, not_files=pathnames?.partition do |p|
 		File.file?(p)
@@ -48,18 +49,17 @@ def ==(other)
 		false
 	end #if
 end #==
-def pathname_pattern?(file_spec)
+def pathname_pattern?(file_spec, test = nil)
 	raise "project_root_dir" if @project_root_dir.nil?
 	file_pattern=FilePattern.find_by_name(file_spec)
 	raise "FilePattern.find_by_name(#{file_spec.inspect})=#{file_pattern.inspect} not found" if file_pattern.nil?
 	raise "@model_basename" if @model_basename.nil?
-	raise "file_pattern[:prefix]"+file_pattern.inspect if file_pattern[:prefix].nil?
-	directory=@project_root_dir+file_pattern[:prefix]
-	raise "directory"+file_pattern.inspect if directory.nil?
-	raise "file_pattern[:suffix]"+file_pattern.inspect if file_pattern[:suffix].nil?
-	filename=@model_basename.to_s+file_pattern[:suffix]
-	raise "filename"+file_pattern.inspect if filename.nil?
-	directory+filename
+	if test.nil? then
+		unit_base_name = @model_basename
+	else
+		unit_base_name = @model_basename + '_' + test
+	end # if
+	@project_root_dir + FilePattern.path?(file_pattern, unit_base_name)
 end #pathname_pattern
 def model_pathname?
 	pathname_pattern?(:model)
@@ -82,8 +82,8 @@ def pathnames?
 #	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
 	raise "project_root_dir" if @project_root_dir.nil?
 	raise "@model_basename" if @model_basename.nil?
-	FilePattern::All.map do |p|
-		pathname_pattern?(p[:name])
+	FilePattern::Patterns.map do |pattern|
+		@project_root_dir + FilePattern.path?(pattern, @model_basename)
 	end #
 end #pathnames
 def default_test_class_id?
@@ -133,10 +133,10 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 end #ClassMethods
 end #Assertions
 include Assertions
@@ -196,10 +196,10 @@ UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
 SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 end #ClassMethods
 end #Assertions
 end # Unit
