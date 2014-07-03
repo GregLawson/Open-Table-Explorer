@@ -7,14 +7,23 @@
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 require 'virtus'
+require 'fileutils'
 require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/bug.rb'
 class TestRun # < ActiveRecord::Base
+module Constants
+Ruby_version = ShellCommands.new('ruby --version').output.split(' ')
+end # Constants
+include Constants
 include Virtus.model
   attribute :test_type, Symbol, :default => :unit
   attribute :singular_table, String, :default => TE.model_name?
   attribute :plural_table, String, :default => nil
-  attribute :test, String, :default => nil # all tests in fil
+  attribute :test, String, :default => nil # all tests in file
+  attribute :test_processor, String, :default => 'ruby'
+  attribute :processor_version, String, :default => nil # system version
+  attribute :options, String, :default => nil
+  attribute :timestamp, Time, :default => Time.now
 #include Generic_Table
 #has_many :bugs
 module ClassMethods
@@ -39,10 +48,11 @@ def error_score?(executable=@related_files.model_test_pathname?)
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end # error_score
-def ruby_run_and_log(ruby_source,log_file,test=nil)
+def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
 	log_file = unit.pathname_pattern?(:library_log)
+	mkdir_p(File.dirname(log_file))
 	if test.nil? then
 		ruby_test=ruby_source
 	else
@@ -170,9 +180,6 @@ def parse_header(header)
 end #parse_header
 end # ClassMethods
 extend ClassMethods
-module Constants
-end # Constants
-include Constants
 # attr_reader
 def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
 	if testType.instance_of?(Hash) then
