@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -10,7 +10,14 @@ require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/test_run.rb'
 # executed in alphabetical order. Longer names sort later.
 class TestRunTest < TestCase
+include TestRun::Examples
 include Repository::Constants
+def test_virtus_initialize
+	assert_equal(:unit, Odd_plural_testRun.test_type)
+	assert_equal('code_base', Odd_plural_testRun.singular_table)
+	assert_equal('code_bases', Odd_plural_testRun.plural_table)
+	assert_equal(nil, Odd_plural_testRun.test)
+end # virtus_initialize
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
@@ -54,67 +61,11 @@ def test_ruby_run_and_log
 		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
 	end #each
 end # ruby_run_and_log
-def assert_logical_primary_key_defined(instance,message=nil)
-	message=build_message(message, "instance=?", instance.inspect)	
-	assert_not_nil(instance, message)
-	assert_instance_of(TestRun,instance, message)
-	assert_kind_of(ActiveRecord::Base,instance, message)
-
-#	puts "instance=#{instance.inspect}"
-	assert_not_nil(instance.attributes, message)
-	assert_not_nil(instance[:test_type], message)
-	assert_not_nil(instance.test_type, message)
-	assert_not_nil(instance['test_type'], message)
-	assert_not_nil(instance.model, message)
-end #assert_logical_primary_key_defined
-def test_initialize
-	testRun=TestRun.new
-	TestRun.column_names.each do |n|
-		assert_instance_of(String,n)
-	end #each
-	# prove equivalence of attribute access
-	assert_respond_to(testRun, 'model')
-	testRun.model='method'
-	assert_equal('method', testRun.model)
-	assert_equal('method', testRun[:model])
-	assert_equal('method', testRun['model'])
-	
-	testRun[:model]='sym_hash'
-	assert_equal('sym_hash', testRun.model)
-	assert_equal('sym_hash', testRun[:model])
-	assert_equal('sym_hash', testRun['model'])
-	
-	testRun['model']='string_hash'
-	assert_equal('string_hash', testRun.model)
-	assert_equal('string_hash', testRun[:model])
-	assert_equal('string_hash', testRun['model'])
-	
-	assert_logical_primary_key_defined(TestRun.new({:test_type => :unit, :model => 'test_runs'}))
-	assert_logical_primary_key_defined(TestRun.new(:unit, 'stream_pattern'))
-	assert_logical_primary_key_defined(TestRun.new(:unit, 'test_run'))
-	test=TestRun.new(:unit)
-	assert_logical_primary_key_defined(test)
-end #initialize
-def test_test_file
-	testRun=TestRun.new(:unit,:code_base, :code_bases,nil)
-	assert_equal('test/unit/code_base_test.rb',testRun.test_file)
-end #test_file
-def test_log_file
-	testRun=TestRun.new(:unit,:code_base, :code_bases,nil)
-	assert_equal('log/unit/code_base_test.log',testRun.log_file)
-end #log_file
-def test_run
-#	TestRun.new(:unit, 'test_run').run
-end #run
 def test_shell
-	assert_not_empty(TestRun.shell('pwd'){|ok, res| puts ok,res})
+	assert_not_empty(TestRun.shell('pwd'){|run| run.inspect})
 end #shell
-def test_ruby_run_and_log
-#	TestRun.ruby_run_and_log('/dev/null','/dev/null')
-end #ruby_run_and_log
 def test_file_bug_reports
-	testRun=TestRun.new(:unit,:code_base, :code_bases,nil)
-	header,errors,summary=TestRun.parse_log_file(testRun.log_file)
+	header,errors,summary=TestRun.parse_log_file(Odd_plural_testRun.log_file)
 	headerArray=header.split("\n")
 	assert_instance_of(Array, headerArray)
 	sysout=headerArray[0..-2]
@@ -133,8 +84,8 @@ def test_file_bug_reports
 	assert_operator(run_time, :>=, 0)
 end #file_bug_reports
 def test_parse_log_file
-	testRun=TestRun.new(:unit,:code_base, :code_bases,nil)
-	blocks=IO.read(testRun.log_file).split("\n\n")# delimited by multiple successive newlines
+	log_file = Default_testRun.log_file
+	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
 #	puts "blocks='#{blocks.inspect}'"
 	header= blocks[0]
 	errors=blocks[1..-2]
@@ -163,8 +114,7 @@ end #parse_log_file
 def test_parse_summary
 end #parse_summary
 def test_parse_header
-	testRun=TestRun.new(:unit,:code_base, :code_bases,nil)
-	header,errors,summary=TestRun.parse_log_file(testRun.log_file)
+	header,errors,summary=TestRun.parse_log_file(Odd_plural_testRun.log_file)
 	assert_operator(header.size,:>,0)
 	headerArray=header.split("\n")
 	assert_instance_of(Array, headerArray)
@@ -180,23 +130,48 @@ def test_parse_header
 	assert_not_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 end #parse_header
-def test_fixture_function_ # aaa to output first
-	define_association_names #38271 associations
-	assert_equal(@my_fixtures,fixtures(@table_name))
-end #test
-def test_general_associations
-#	assert_general_associations(@table_name)
-end #test
-def test_id_equal
-	if TE.model_class?.sequential_id? then
-	else
-		@my_fixtures.each_value do |ar_from_fixture|
-			message="Check that logical key (#{ar_from_fixture.class.logical_primary_key}) value (#{ar_from_fixture.logical_primary_key_value}) exactly matches yaml label for record."
-			message+=" identify != id. ar_from_fixture.inspect=#{ar_from_fixture.inspect} ar_from_fixture.logical_primary_key_value=#{ar_from_fixture.logical_primary_key_value}"
-			assert_equal(Fixtures::identify(ar_from_fixture.logical_primary_key_value),ar_from_fixture.id,message)
-		end
-	end
-end #def
-def test_specific__stable_and_working
-end #test
-end #class
+def test_initialize
+	testRun=TestRun.new
+#	TestRun.column_names.each do |n|
+#		assert_instance_of(String,n)
+#	end #each
+	# prove equivalence of attribute access
+	assert_respond_to(testRun, 'model')
+	testRun.model='method'
+	assert_equal('method', testRun.model)
+	assert_equal('method', testRun[:model])
+	assert_equal('method', testRun['model'])
+	
+	testRun[:model]='sym_hash'
+	assert_equal('sym_hash', testRun.model)
+	assert_equal('sym_hash', testRun[:model])
+	assert_equal('sym_hash', testRun['model'])
+	
+	testRun['model']='string_hash'
+	assert_equal('string_hash', testRun.model)
+	assert_equal('string_hash', testRun[:model])
+	assert_equal('string_hash', testRun['model'])
+	
+	assert_logical_primary_key_defined(TestRun.new({:test_type => :unit, :model => 'test_runs'}))
+	assert_logical_primary_key_defined(TestRun.new(:unit, 'stream_pattern'))
+	assert_logical_primary_key_defined(TestRun.new(:unit, 'test_run'))
+	test=TestRun.new(:unit)
+	assert_logical_primary_key_defined(test)
+end #initialize
+def test_test_file
+	assert_equal('test/unit/code_base_test.rb',Odd_plural_testRun.test_file)
+end #test_file
+def test_log_file
+	test_virtus_initialize
+	assert_equal(:unit, Odd_plural_testRun.test_type)
+	assert_equal('code_base', Odd_plural_testRun.singular_table)
+	assert_equal(:code_base, Odd_plural_testRun.unit?.model_class_name, Odd_plural_testRun.inspect)
+	assert_equal(:code_base, Odd_plural_testRun.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_testRun.inspect)
+
+	assert_equal(:code_base, Odd_plural_testRun.unit?.model_basename, Odd_plural_testRun.inspect)
+	assert_equal(File.expand_path('log/library/code_base.log'), Odd_plural_testRun.log_file, Odd_plural_testRun.inspect)
+end #log_file
+def test_run
+#	TestRun.new(:unit, 'test_run').run
+end #run
+end # TestRun

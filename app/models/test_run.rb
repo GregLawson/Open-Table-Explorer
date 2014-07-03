@@ -240,7 +240,7 @@ def test_file
 end #test_file
 # log_file => String
 # Filename of log file from test run
-def log_file
+def log_file?
 	case @test_type
 	when :unit
 		unit?.pathname_pattern?(:library_log, @test)
@@ -248,18 +248,65 @@ def log_file
 		unit?.pathname_pattern?(:controller_log, @test)
 	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
 	end #case
-end #log_file
+end #log_file?
 # Unconditionally run the test
 def run
-	TestRun.ruby_run_and_log(test_file,log_file,@test)
+#  attribute :test_type, Symbol, :default => :unit
+#  attribute :singular_table, String, :default => TE.model_name?
+#  attribute :plural_table, String, :default => nil
+#  attribute :test, String, :default => nil # all tests in file
+#  attribute :test_processor, String, :default => 'ruby'
+#  attribute :processor_version, String, :default => nil # system version
+#  attribute :options, String, :default => nil
+#  attribute :timestamp, Time, :default => Time.now
+
+#	TestRun.ruby_run_and_log(test_file,log_file?,@test)
+	mkdir_p(File.dirname(log_file?))
+	if @test.nil? then
+		ruby_test=ruby_source
+	else
+		ruby_test="#{ruby_source} -n #{@test}"
+	end #if
+	puts "ruby_test=#{ruby_test}"
+	stop=ruby %Q{-I test #{ruby_test} | tee #{log_file?}}  do |ok, res|
+		if  ok
+#		puts "ruby ok(status = #{res.inspect})"
+			#~ sh "git add #{ruby_source}"
+			 puts "IO.read('#{log_file?}')='#{IO.read(log_file?)}'"
+		else
+			puts "ruby failed(status = #{res.exitstatus})!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+			#~ sh "tail --lines=2 #{log_file?}"
+		end
+#		puts "calling file_bug_reports"
+		stop=TestRun.file_bug_reports(ruby_source,log_file?,test)
+		#c#		puts "local_variables=#{local_variables.inspect}"
+		return stop
+	end # ruby
+	if local_variables.include?('stop') then
+		puts "stop is defined here."
+		return stop
+	else
+		puts "stop is nil or undefined? local_variables=#{local_variables.inspect}"
+		puts "Did ruby block not execute?"
+		return true
+	end
+rescue StandardError => exception_raised
+	puts  '-StandardError Error: ' + exception_raised.inspect 
+	puts exception_raised.backtrace.join("\n")
+
+	return true
+rescue SyntaxError => exception_raised
+	puts  '-SyntaxError Error: ' + exception_raised.inspect 
+	return true
+
 end #run
 # Run a shell
 def ruby_run_and_log
-	TestRun.ruby_run_and_log(test_file,log_file,@test)
+	TestRun.ruby_run_and_log(test_file,log_file?,@test)
 end #ruby_run_and_log
 
 def file_bug_reports
-	TestRun.file_bug_reports(test_file,log_file,@test)
+	TestRun.file_bug_reports(test_file,log_file?,@test)
 end #file_bug_reports
 require_relative '../../test/assertions.rb'
 module Assertions
