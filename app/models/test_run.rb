@@ -20,9 +20,9 @@ include Virtus.model
   attribute :singular_table, String, :default => TE.model_name?.to_s.underscore
   attribute :plural_table, String, :default => nil
   attribute :test, String, :default => nil # all tests in file
-  attribute :test_processor, String, :default => 'ruby'
+  attribute :test_command, String, :default => 'ruby'
   attribute :processor_version, String, :default => nil # system version
-  attribute :options, String, :default => nil
+  attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
 #include Generic_Table
 #has_many :bugs
@@ -262,7 +262,11 @@ def run
 
 #	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
 	FileUtils.mkdir_p(File.dirname(log_file?))
-	command =[test_processor, options, test_file?]
+	command = [test_command]
+	if !options.nil? then
+		command += [options]
+	end # if
+	command += [test_file?]
 	if !@test.nil? then
 		command +="-n #{@test}"
 	end #if
