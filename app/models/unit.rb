@@ -38,7 +38,7 @@ def initialize(model_class_name=FilePattern.path2model_name?,
 		File.file?(p)
 	end #partition
 	@directories, @missing_files=not_files.partition do |p|
-		File.exists?(p)
+		File.exist?(p)
 	end #partition
 end #initialize
 # Equality of defining content
@@ -87,13 +87,13 @@ def pathnames?
 	end #
 end #pathnames
 def default_test_class_id?
-	if File.exists?(self.assertions_test_pathname?) then
+	if File.exist?(self.assertions_test_pathname?) then
 		4
-	elsif File.exists?(self.assertions_pathname?) then
+	elsif File.exist?(self.assertions_pathname?) then
 		3
-	elsif File.exists?(self.model_pathname?) then
+	elsif File.exist?(self.model_pathname?) then
 		2
-	elsif File.exists?(self.model_test_pathname?) then
+	elsif File.exist?(self.model_test_pathname?) then
 		1
 	else
 		0 # fewest assumptions, no files
