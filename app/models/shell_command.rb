@@ -129,15 +129,17 @@ end #execute
 # prefer command as array since each element is shell escaped.
 # Most common need for shell excape is spaces in pathnames (a common GUI style)
 def initialize(*command)
-	parse_argument_array(command)
-	execute # do it first time, to repeat call execute
-	@accumulated_tolerance_bits = 0x00 # all errors reported (not tolerated)
-	if $VERBOSE.nil? then
-	elsif $VERBOSE then
-		$stdout.puts trace # -W2
-	else 
-		$stdout.puts inspect(:echo_command) # -W1
-	end #if
+	if command.size >= 1 then # empty command is primarily for testing
+		parse_argument_array(command)
+		execute # do it first time, to repeat call execute
+		@accumulated_tolerance_bits = 0x00 # all errors reported (not tolerated)
+		if $VERBOSE.nil? then
+		elsif $VERBOSE then
+			$stdout.puts trace # -W2
+		else 
+			$stdout.puts inspect(:echo_command) # -W1
+		end #if
+	end # if
 end #initialize
 # Allow Process.spawn options and environment to be passed.
 def parse_argument_array(argument_array)

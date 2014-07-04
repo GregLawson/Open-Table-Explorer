@@ -42,7 +42,8 @@ def test_Ssh_initialize
 	assert_not_empty(Central.user)	
 end # initialize
 def test_command_on_remote
-	assert_equal("cat\n", Central['echo "cat"'].output)	
+	remote_run = Central['echo "cat"'].assert_post_conditions
+	assert_equal("cat\n", remote_run.output)	
 	assert_equal("greg", Central['ls -l /shares/Public/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects'].output)	
 end # []
 def test_assemble_hash_command
