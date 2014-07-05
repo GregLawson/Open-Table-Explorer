@@ -302,18 +302,17 @@ def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
-def assert_logical_primary_key_defined(instance,message=nil)
-	message=build_message(message, "instance=?", instance.inspect)	
-	assert_not_nil(instance, message)
-	assert_instance_of(TestRun,instance, message)
-	assert_kind_of(ActiveRecord::Base,instance, message)
+def assert_logical_primary_key_defined(message=nil)
+	message=build_message(message, "self=?", self.inspect)	
+	assert_not_nil(self, message)
+	assert_instance_of(TestRun,self, message)
 
-#	puts "instance=#{instance.inspect}"
-	assert_not_nil(instance.attributes, message)
-	assert_not_nil(instance[:test_type], message)
-	assert_not_nil(instance.test_type, message)
-	assert_not_nil(instance['test_type'], message)
-	assert_not_nil(instance.model, message)
+#	puts "self=#{self.inspect}"
+	assert_not_nil(self.attributes, message)
+	assert_not_nil(self[:test_type], message)
+	assert_not_nil(self.test_type, message)
+	assert_not_nil(self['test_type'], message)
+	assert_not_nil(self.singular_table, message)
 end #assert_logical_primary_key_defined
 end # Assertions
 include Assertions
@@ -323,7 +322,7 @@ module Examples
 include Constants
 Default_testRun = TestRun.new
 Unit_testRun = TestRun.new(:test_type => :unit)
-#Plural_testRun = TestRun.new({:test_type => :unit, :model => 'test_runs'})
+Plural_testRun = TestRun.new({:test_type => :unit, :plural_table => 'test_runs'})
 Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
 Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
 Odd_plural_testRun=TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)

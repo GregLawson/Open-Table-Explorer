@@ -137,27 +137,23 @@ def test_initialize
 #		assert_instance_of(String,n)
 #	end #each
 	# prove equivalence of attribute access
-	assert_respond_to(testRun, 'model')
-	testRun.model='method'
-	assert_equal('method', testRun.model)
-	assert_equal('method', testRun[:model])
-	assert_equal('method', testRun['model'])
+	assert_respond_to(testRun, 'singular_table')
+	testRun.singular_table='method'
+	assert_equal('method', testRun.singular_table)
+	assert_equal('method', testRun.attributes[:singular_table])
+	assert_nil(testRun.attributes['singular_table'])
 	
-	testRun[:model]='sym_hash'
-	assert_equal('sym_hash', testRun.model)
-	assert_equal('sym_hash', testRun[:model])
-	assert_equal('sym_hash', testRun['model'])
+	testRun[:singular_table]='sym_hash'
+	assert_equal('sym_hash', testRun.singular_table)
+	assert_equal('sym_hash', testRun[:singular_table])
 	
-	testRun['model']='string_hash'
-	assert_equal('string_hash', testRun.model)
-	assert_equal('string_hash', testRun[:model])
-	assert_equal('string_hash', testRun['model'])
+	testRun['singular_table']='string_hash'
+	assert_equal('string_hash', testRun.singular_table)
+	assert_equal('string_hash', testRun[:singular_table])
 	
-	assert_logical_primary_key_defined(TestRun.new({:test_type => :unit, :model => 'test_runs'}))
-	assert_logical_primary_key_defined(TestRun.new(:unit, 'stream_pattern'))
-	assert_logical_primary_key_defined(TestRun.new(:unit, 'test_run'))
-	test=TestRun.new(:unit)
-	assert_logical_primary_key_defined(test)
+	Singular_testRun.assert_logical_primary_key_defined
+	Stream_pattern_testRun.assert_logical_primary_key_defined()
+	Unit_testRun.assert_logical_primary_key_defined()
 end #initialize
 def test_test_file?
 	assert_equal('test/unit/code_base_test.rb',Odd_plural_testRun.test_file?)
