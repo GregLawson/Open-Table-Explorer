@@ -91,7 +91,8 @@ end #named_hash
 require_relative '../../test/assertions.rb'
 
 # Capture::Assertions
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 
 # Any match at all
 def assert_pre_conditions(message='')
@@ -186,7 +187,7 @@ def parse_repetition(item_pattern)
 	match_repetition(item_pattern).output
 end # parse_repetition
 # Try to unify parse_repetition and parse_unrepeated
-# What is the dcifference between an Object and an Array of size 1?
+# What is the difference between an Object and an Array of size 1?
 # Should difference be derived from recursive analysis of RegexpParse?
 def match?(pattern)
 	if pattern.instance_of?(Array) then
@@ -210,7 +211,12 @@ def match?(pattern)
 	end # if
 end # match?
 def parse(regexp)
-	match?(regexp).output
+	matches = match?(regexp)
+	if matches.instance_of?(Array) then
+		matches.map {|m| m.output}
+	else
+		matches.output
+	end # if
 end # parse
 module Constants
 end #Constants
@@ -311,7 +317,9 @@ def initialize(regexp, repetition_options = nil)
 	super(regexp)
 	@repetition_options = repetition_options
 end # initialize
-require_relative '../../test/assertions.rb';module Assertions
+
+require_relative '../../test/assertions.rb'
+module Assertions
 module ClassMethods
 
 def add_parse_message(string, pattern, message='')
