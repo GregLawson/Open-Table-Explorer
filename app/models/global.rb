@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011 by Greg Lawson                                      
+#    Copyright (C) 2011-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -12,23 +12,6 @@ def set_inspect
 end #set_inspect
 
 end #Set
-class Object
-def enumerate_single(enumerator_method, &proc)
-	result=[self].enumerate(enumerator_method, &proc) #simulate array
-	if result.instance_of?(Array) then # map
-		return result[0] #discard simulated array
-	else # reduction method (not map)
-		return result
-	end #if
-end #enumerate_single
-def enumerate(enumerator_method, &proc)
-	if instance_of?(Array) then
-		method(enumerator_method).call(&proc)
-	else
-		enumerate_single(enumerator_method, &proc)		
-	end #if
-end #enumerate
-end #Object
 class Module
 def instance_methods_from_class(all=false)
 	return self.instance_methods(all)
