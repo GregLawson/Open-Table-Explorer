@@ -29,13 +29,13 @@ def initialize(captures, regexp)
 	@regexp=regexp
 #     named_captures for captures.size > names.size
 	@length_hash_captures=@regexp.named_captures.values.flatten.size
-	@repetitions=(@captures.size/(@length_hash_captures+1)).ceil
-	if @captures.nil? then
+	if @captures.nil? || @captures == [] then
 		@output= {}
 		@pre_match = ''
 		@post_match = ''
 		@delimiters = []
 		@matched_characters = 0
+		@repetitions = 0
 	elsif @captures.instance_of?(MatchData) then
 		if @captures.names==[] then
 			@output = matchData[1..-1] # return unnamed subexpressions
@@ -46,9 +46,10 @@ def initialize(captures, regexp)
 		@post_match = @captures.post_match
 		@delimiters = []
 		@matched_characters = @captures[0].length
-
+		@repetitions=(@captures.size/(@length_hash_captures+1)).ceil
 	else # from split
-		@output = (0..repetitions-1).map do |i|
+		@repetitions=(@captures.size/(@length_hash_captures+1)).ceil
+		@output = (0..@repetitions-1).map do |i|
 			named_hash(i*(length_hash_captures+1))
 		end #map
 		@pre_match = @captures[0]
@@ -58,9 +59,10 @@ def initialize(captures, regexp)
 			@post_match = ''
 		end # if
 		@delimiters = (2..@captures.size - 2).map {|i| (i.even? ? @captures[i] : nil)}.compact
+		raise self.inspect if @captures[0].nil?
 		@matched_characters = @captures.reduce(0){|sum, s| sum + s.length} - @captures[0].length
 	end #if
-(0)end #initialize
+end #initialize
 def all_capture_indices
 	if @captures.instance_of?(MatchData) then
 		(1..@captures.size-1).to_a
@@ -108,9 +110,9 @@ end # assert_pre_conditions
 
 # exact match, no left-overs
 def assert_post_conditions(message='')
-	assert_empty(@pre_match, self.inspect)
-	assert_empty(@delimiters, self.inspect)
+	assert_empty(@pre_match, add_default_message(message))
 	assert_empty(@post_match, add_default_message(message))
+	assert_empty(@delimiters, self.inspect)
 end # assert_post_conditions
 def repetition_options?
 	if @regexp.respond_to?(:repetition_options) then
@@ -189,6 +191,8 @@ end # parse_repetition
 # Try to unify parse_repetition and parse_unrepeated
 # What is the difference between an Object and an Array of size 1?
 # Should difference be derived from recursive analysis of RegexpParse?
+# Where repetitions produce Array, others produe Hash
+# complicated by fact regular expressions simulate repetitions with recursive alternatives
 def match?(pattern)
 	if pattern.instance_of?(Array) then
 		pos = 0
@@ -211,17 +215,13 @@ def match?(pattern)
 	end # if
 end # match?
 def parse(regexp)
-	matches = match?(regexp)
-	if matches.instance_of?(Array) then
-		matches.map {|m| m.output}
-	else
-		matches.output
-	end # if
+	match?(regexp).output
 end # parse
 module Constants
 end #Constants
 include Constants
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 module ClassMethods
 
 def add_parse_message(string, pattern, message='')
@@ -317,9 +317,7 @@ def initialize(regexp, repetition_options = nil)
 	super(regexp)
 	@repetition_options = repetition_options
 end # initialize
-
-require_relative '../../test/assertions.rb'
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 module ClassMethods
 
 def add_parse_message(string, pattern, message='')
@@ -375,8 +373,5 @@ include Constants
 include Regexp::Constants
 include Capture::Examples
 include String::Examples
-Hash_answer={:line=>"* 1", :terminator=>"\n"}
-Nested_string="1 2\n3 4\n"
-Nested_answer=[['1', '2'], ['3', '4']]
 end #Examples
 end #Parse
