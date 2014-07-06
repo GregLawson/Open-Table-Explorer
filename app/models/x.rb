@@ -45,9 +45,12 @@ def initialize(log_file)
   @parse_filename = Parse.parse_string(log_file, File_pattern)
   @sequence = @parse_filename[:sequence].to_i
   @old = @parse_filename[:old] ? true : false
-  assert_equal({sequence: '1', old: '.old'}, Parse.parse_string('/var/log/Xorg.1.log.old', File_pattern))
-  @log = IO.read(@log_file)
+
 end #initialize
+def parse
+  @log = IO.read(@log_file)  
+  @lines = @log.parse(Log_pattern)
+end # parse
 def log
   logs = Dir['/var/log/X*']
   log_file = logs[0]
