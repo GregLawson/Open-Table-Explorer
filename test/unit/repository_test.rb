@@ -215,15 +215,15 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
-def test_shell_parse
+def test_git_parse
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
 	command = 'branch --list --remote'
 	output=This_code_repository.git_command(command).assert_post_conditions.output
 	parse = output.parse(Parse.new(pattern, {ending: :optional}))
 	assert_instance_of(Hash, parse, self.inspect)
 	assert_equal({remote: :master}, parse, output.inspect)
-	shell_parse(command, pattern)[:remote]
-end # shell_parse
+	git_parse(command, pattern)[:remote]
+end # git_parse
 def test_branches?
 	assert_equal(:master, Empty_Repo.current_branch_name?)
 #?	explain_assert_respond_to(Parse, :parse_split)
@@ -241,13 +241,18 @@ def test_branches?
 	
 	assert_includes(Empty_Repo.branches?.map{|b| b.branch}, Empty_Repo.current_branch_name?)
 	assert_equal([:master, :passed], Empty_Repo.branches?.map{|b| b.branch})
-	assert_includes(This_code_repository.branches?.map{|b| b.branch}, This_code_repository.current_branch_name?)
+	assert_includes(This_code_repository.branch_names?.map{|b| b.branch}, This_code_repository.current_branch_name?)
 end #branches?
 def test_remotes?
 	assert_includes(This_code_repository.remotes?, "origin/"+Empty_Repo.current_branch_name?.to_s)
 	assert_empty(Empty_Repo.remotes?)
-	assert_not_empty(This_code_repository.remotes?)
+	assert_not_empty(This_code_repository.remotes_names?)
 end #remotes?
+def test_remote_branch_names?
+	assert_includes(This_code_repository.remote_branch_names?, "origin/"+Empty_Repo.current_branch_name?.to_s)
+	assert_empty(Empty_Repo.remote_branch_names?)
+	assert_not_empty(This_code_repository.remote_branch_names?)
+end # remote_branch_names?
 def test_rebase!
 	Minimal_repository.rebase!
 end #rebase!

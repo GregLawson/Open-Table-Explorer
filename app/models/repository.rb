@@ -301,19 +301,25 @@ def merge_conflict_files?
 	ret
 end #merge_conflict_files?
 
-def shell_parse(command, pattern)
+def git_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
 	output.parse(Parse.new(pattern, {ending: :optional}))
-end # shell_parse
-def branches?
+end # git_parse
+def branch_names?
 	branch_output=git_command('branch --list').assert_post_conditions.output
 	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
 	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
-end #branches?
-def remotes?
-	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	shell_parse('branch --list --remote', pattern).map{|h| h[:remote]}
-end #remotes?
+end #branches_names?
+def remote_names?
+	git_name = /[a-z0-9\/A-Z]+/.capture(:name)
+	remote_line_pattern = git_name * /\n/
+	remote_command_pattern = remote_line_pattern * Any
+	git_parse('remote', remote_command_pattern).map{|h| h[:remote]}
+end #remotes_names?
+def remote_branch_names?
+	pattern = /[a-z0-9\/A-Z]+/.capture(:remote)
+	git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+end # remote_branch_names?
 def rebase!
 	if remotes?.include?(current_branch_name?) then
 		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
