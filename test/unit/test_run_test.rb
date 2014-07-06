@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require 'active_support' # for singularize and pluralize
+require_relative '../../app/models/regexp.rb'
 require_relative '../../app/models/test_run.rb'
 # executed in alphabetical order. Longer names sort later.
 class TestRunTest < TestCase
@@ -136,27 +137,23 @@ def test_initialize
 #		assert_instance_of(String,n)
 #	end #each
 	# prove equivalence of attribute access
-	assert_respond_to(testRun, 'model')
-	testRun.model='method'
-	assert_equal('method', testRun.model)
-	assert_equal('method', testRun[:model])
-	assert_equal('method', testRun['model'])
+	assert_respond_to(testRun, 'singular_table')
+	testRun.singular_table='method'
+	assert_equal('method', testRun.singular_table)
+	assert_equal('method', testRun.attributes[:singular_table])
+	assert_nil(testRun.attributes['singular_table'])
 	
-	testRun[:model]='sym_hash'
-	assert_equal('sym_hash', testRun.model)
-	assert_equal('sym_hash', testRun[:model])
-	assert_equal('sym_hash', testRun['model'])
+	testRun[:singular_table]='sym_hash'
+	assert_equal('sym_hash', testRun.singular_table)
+	assert_equal('sym_hash', testRun[:singular_table])
 	
-	testRun['model']='string_hash'
-	assert_equal('string_hash', testRun.model)
-	assert_equal('string_hash', testRun[:model])
-	assert_equal('string_hash', testRun['model'])
+	testRun['singular_table']='string_hash'
+	assert_equal('string_hash', testRun.singular_table)
+	assert_equal('string_hash', testRun[:singular_table])
 	
-	assert_logical_primary_key_defined(TestRun.new({:test_type => :unit, :model => 'test_runs'}))
-	assert_logical_primary_key_defined(TestRun.new(:unit, 'stream_pattern'))
-	assert_logical_primary_key_defined(TestRun.new(:unit, 'test_run'))
-	test=TestRun.new(:unit)
-	assert_logical_primary_key_defined(test)
+	Singular_testRun.assert_logical_primary_key_defined
+	Stream_pattern_testRun.assert_logical_primary_key_defined()
+	Unit_testRun.assert_logical_primary_key_defined()
 end #initialize
 def test_test_file?
 	assert_equal('test/unit/code_base_test.rb',Odd_plural_testRun.test_file?)
@@ -172,6 +169,28 @@ def test_log_file
 	assert_equal(File.expand_path('log/library/code_base.log'), Odd_plural_testRun.log_file, Odd_plural_testRun.inspect)
 end #log_file
 def test_run
-	Unit_testRun.run.assert_post_conditions
+	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)
+	ruby_pattern = /ruby / * /2.1.2p95/
+	parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
+	bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
+	version_pattern = ruby_pattern * parenthetical_date_pattern * bracketed_os
+	assert_match(ruby_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(parenthetical_date_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(ruby_pattern * parenthetical_date_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(parenthetical_date_pattern * bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(version_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	output = TestRun.new(test_command: 'ruby', singular_table: 'unit').run.assert_post_conditions.output
+	tests_pattern = /[0-9]+/.capture(:tests) * / / * /tests/
+	assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/
+	failures_pattern = /[0-9]+/.capture(:failures) * / / * /failures/
+	errors_pattern = /[0-9]+/.capture(:errors) * / / * /errors/
+	pendings_pattern = /[0-9]+/.capture(:pendings) * / / * /pendings/
+	omissions_pattern = /[0-9]+/.capture(:omissions) * / / * /omissions/
+	notifications_pattern = /[0-9]+/.capture(:notifications) * / / * /notifications/
+	output_pattern = [tests_pattern, assertions_pattern, failures_pattern, errors_pattern,pendings_pattern]
+	output_pattern += [omissions_pattern, notifications_pattern]
+	test_results = output.parse(output_pattern)
+	assert_instance_of(Array, test_results)
 end #run
 end # TestRun

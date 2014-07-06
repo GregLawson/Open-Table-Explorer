@@ -20,9 +20,9 @@ include Virtus.model
   attribute :singular_table, String, :default => TE.model_name?.to_s.underscore
   attribute :plural_table, String, :default => nil
   attribute :test, String, :default => nil # all tests in file
-  attribute :test_processor, String, :default => 'ruby'
+  attribute :test_command, String, :default => 'ruby'
   attribute :processor_version, String, :default => nil # system version
-  attribute :options, String, :default => nil
+  attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
 #include Generic_Table
 #has_many :bugs
@@ -157,13 +157,13 @@ def log_passed?(log_file)
 			return false
 		end #if
 	end #if
-end #def
+end # log_passed?
 def summarize
 	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/empty_tests.tmp)	
 	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
 	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
 	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
-end #def
+end # summarize
 def parse_summary(summary)
 	summary=summary.split(' ')
 	tests=summary[0].to_i
@@ -171,7 +171,7 @@ def parse_summary(summary)
 	failures=summary[4].to_i
 	tests_stop_on_error=summary[6].to_i
 	return [tests,assertions,failures,tests_stop_on_error]
-end #parse_summary
+end # parse_summary
 def parse_header(header)
 	headerArray=header.split("\n")
 	sysout=headerArray[0..-2]
@@ -262,7 +262,11 @@ def run
 
 #	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
 	FileUtils.mkdir_p(File.dirname(log_file?))
-	command =[test_processor, options, test_file?]
+	command = [test_command]
+	if !options.nil? then
+		command += [options]
+	end # if
+	command += [test_file?]
 	if !@test.nil? then
 		command +="-n #{@test}"
 	end #if
@@ -298,18 +302,17 @@ def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 end #assert_post_conditions
-def assert_logical_primary_key_defined(instance,message=nil)
-	message=build_message(message, "instance=?", instance.inspect)	
-	assert_not_nil(instance, message)
-	assert_instance_of(TestRun,instance, message)
-	assert_kind_of(ActiveRecord::Base,instance, message)
+def assert_logical_primary_key_defined(message=nil)
+	message=build_message(message, "self=?", self.inspect)	
+	assert_not_nil(self, message)
+	assert_instance_of(TestRun,self, message)
 
-#	puts "instance=#{instance.inspect}"
-	assert_not_nil(instance.attributes, message)
-	assert_not_nil(instance[:test_type], message)
-	assert_not_nil(instance.test_type, message)
-	assert_not_nil(instance['test_type'], message)
-	assert_not_nil(instance.model, message)
+#	puts "self=#{self.inspect}"
+	assert_not_nil(self.attributes, message)
+	assert_not_nil(self[:test_type], message)
+	assert_not_nil(self.test_type, message)
+	assert_not_nil(self['test_type'], message)
+	assert_not_nil(self.singular_table, message)
 end #assert_logical_primary_key_defined
 end # Assertions
 include Assertions
@@ -319,7 +322,7 @@ module Examples
 include Constants
 Default_testRun = TestRun.new
 Unit_testRun = TestRun.new(:test_type => :unit)
-#Plural_testRun = TestRun.new({:test_type => :unit, :model => 'test_runs'})
+Plural_testRun = TestRun.new({:test_type => :unit, :plural_table => 'test_runs'})
 Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
 Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
 Odd_plural_testRun=TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
