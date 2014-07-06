@@ -215,9 +215,15 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
-def test_rebase!
-	Minimal_repository.rebase!
-end #rebase!
+def test_shell_parse
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	command = 'branch --list --remote'
+	output=This_code_repository.git_command(command).assert_post_conditions.output
+	parse = output.parse(Parse.new(pattern, {ending: :optional}))
+	assert_instance_of(Hash, parse, self.inspect)
+	assert_equal({remote: :master}, parse, output.inspect)
+	shell_parse(command, pattern)[:remote]
+end # shell_parse
 def test_branches?
 	assert_equal(:master, Empty_Repo.current_branch_name?)
 #?	explain_assert_respond_to(Parse, :parse_split)
@@ -242,4 +248,7 @@ def test_remotes?
 	assert_empty(Empty_Repo.remotes?)
 	assert_not_empty(This_code_repository.remotes?)
 end #remotes?
+def test_rebase!
+	Minimal_repository.rebase!
+end #rebase!
 end #Repository

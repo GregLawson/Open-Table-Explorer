@@ -303,8 +303,8 @@ end #merge_conflict_files?
 
 def shell_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
-	parse=Parse.parse_into_array(output, pattern, {ending: :optional})
-end # 
+	output.parse(Parse.new(pattern, {ending: :optional}))
+end # shell_parse
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
 	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
