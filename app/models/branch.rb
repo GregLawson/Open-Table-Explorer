@@ -6,7 +6,7 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-#require_relative 'repository.rb'
+require_relative 'repository.rb'
 class Branch
 #include Repository::Constants
 module ClassMethods

@@ -6,8 +6,9 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative 'repository.rb'
-class PushSummary
+require_relative '../../test/assertions/repository_assertions.rb'
+require_relative '../../app/models/branch.rb'
+class Branch
 module ClassMethods
 end #ClassMethods
 extend ClassMethods
@@ -15,11 +16,8 @@ module Constants
 Hex_number=/[0-9a-f]+/
 end #Constants
 include Constants
-# attr_reader
-def initialize(repository)
-	@repository=repository
-end #initialize
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
