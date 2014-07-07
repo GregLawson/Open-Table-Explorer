@@ -23,7 +23,6 @@
 # I've added Array#to_hash to create the indexes as keys
 # map should be added analogously to Hash
 require_relative 'parse.rb'
-require_relative 'parse_tree.rb'
 module Node
 module ParentLinked
 def all
