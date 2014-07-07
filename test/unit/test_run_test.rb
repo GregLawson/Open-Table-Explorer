@@ -19,6 +19,24 @@ def test_virtus_initialize
 	assert_equal('code_bases', Odd_plural_testRun.plural_table)
 	assert_equal(nil, Odd_plural_testRun.test)
 end # virtus_initialize
+def test_Constants
+	assert_match(Ruby_pattern, Ruby_version)
+	assert_match(Parenthetical_date_pattern, Ruby_version)
+	assert_match(Bracketed_os, Ruby_version)
+	assert_match(Ruby_pattern * Parenthetical_date_pattern, Ruby_version)
+	assert_match(Parenthetical_date_pattern * Bracketed_os, Ruby_version)
+	assert_match(Version_pattern, Ruby_version)
+end # Constants
+def test_ruby_version
+	executable_suffix = ''
+	version_digits = /[0-9]{1,4}/
+	version = [version_digits.capture(:major), '.']
+	version += version_digits.capture(:minor) * '.' * version_digits.capture(:release)
+	ruby_pattern = /ruby / * version
+	parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
+	bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
+	version_pattern = [ruby_pattern, parenthetical_date_pattern, bracketed_os]
+end # ruby_version
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
@@ -170,16 +188,6 @@ def test_log_file
 end #log_file
 def test_run
 	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)
-	ruby_pattern = /ruby / * /2.1.2p95/
-	parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
-	bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
-	version_pattern = ruby_pattern * parenthetical_date_pattern * bracketed_os
-	assert_match(ruby_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
-	assert_match(parenthetical_date_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
-	assert_match(bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
-	assert_match(ruby_pattern * parenthetical_date_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
-	assert_match(parenthetical_date_pattern * bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
-	assert_match(version_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
 	output = TestRun.new(test_command: 'ruby', singular_table: 'unit').run.assert_post_conditions.output
 	tests_pattern = /[0-9]+/.capture(:tests) * / / * /tests/
 	assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/
