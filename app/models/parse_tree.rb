@@ -6,7 +6,7 @@
 #
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
-require_relative '../../app/models/regexp.rb'
+#require_relative '../../app/models/regexp.rb'
 # options include delimiter, and ending
 class Parse
 module ClassMethods

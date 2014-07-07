@@ -7,6 +7,8 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
+require_relative '../../app/models/stream_tree.rb'
+require_relative '../../app/models/regexp_parse.rb'
 class Capture
 # encapsulates the difference between parsing from MatchData and from Array#split
 module ClassMethods
@@ -215,7 +217,8 @@ def match?(pattern)
 	end # if
 end # match?
 def parse(regexp)
-	match?(regexp).output
+	match = match?(regexp)
+	match.enumerate(:map) {|e| e.output}
 end # parse
 module Constants
 end #Constants
@@ -227,6 +230,30 @@ module ClassMethods
 def add_parse_message(string, pattern, message='')
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
+def assert_parse(pattern, message='')
+	match = match?(pattern)
+	if match.nil? || match == [] then
+		if pattern.instance_of?(Array) then
+			pos = 0
+			pattern.map do |p|
+				ret = self[pos..-1].assert_parse(p) # recurse
+				pos += ret.matched_characters
+				ret
+			end # map
+		else
+			@match_unrepeated = match_unrepeated(pattern)
+			# limit repetitions to pattern, get all captures
+			@split = self[0, @match_unrepeated.matched_characters].match_repetition(pattern)
+			if @split.repetitions == 1 then
+				@match_unrepeated
+			elsif @match_unrepeated.output == @split.output[-1] then # over-written captures
+				@split
+			else
+				@match_unrepeated
+			end # if
+		end # if
+	end # if
+end # assert_parse
 def assert_parse_string(answer, string, pattern, message='')
 	message=add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"
 	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
