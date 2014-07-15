@@ -53,6 +53,30 @@ def test_Capture_initialize
 	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output, Parse_array.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
 end #initialize
+def test_repetitions?
+	regexp= Branch_regexp * "\n"
+	parse_string=Capture.new(Newline_Delimited_String, regexp , :match)
+	parse_delimited_array= Capture.new(Newline_Delimited_String, regexp, :split)
+#	assert_equal(0, .repetitions?)
+	assert_equal(1, parse_string.repetitions?)
+	assert_equal(1, parse_delimited_array.repetitions?)
+	assert_equal(2, Capture.new(Newline_Delimited_String, Branch_regexp, :split).repetitions?)
+end # repetitions?
+def test_to_a?
+	regexp= Branch_regexp * "\n"
+	parse_string=Capture.new(Newline_Delimited_String, regexp , :match)
+	parse_delimited_array=Capture.new(Newline_Delimited_String, regexp, :split)
+	Newline_Delimited_String.assert_parse_once(regexp)
+
+	assert_equal(parse_string.to_a?.join, parse_delimited_array.captures.join)
+	assert_equal(parse_string.to_a?, parse_delimited_array.captures)
+	assert_equal(parse_string, parse_delimited_array)
+end # to_a?
+def test_normalize_capture
+	assert_equal
+end # normalize_capture
+def test_plus
+end # +
 def test_all_capture_indices
 #	Parse_string
 	string="* 1\n"
@@ -207,7 +231,16 @@ def test_String_parse
 #	pend(message)
 #	assert_equal(Array_answer, Newline_Terminated_String.parse(Terminated_line.group*'*'), self.inspect)
 end # parse
-def test_parse_string
+def test_add_message
+end #add_message
+def test_add_parse_message
+end #add_parse_message
+def test_assert_parse_once
+	assert_include(String.included_modules, String::Assertions)
+	explain_assert_respond_to(Newline_Delimited_String, :assert_parse_once)
+	Newline_Delimited_String.assert_parse_once(Branch_regexp)
+end # assert_parse_once
+def test_assert_parse_string
 	string="* 1\n"
 	pattern=Branch_regexp
 	matchData=string.match(Branch_regexp)
@@ -234,6 +267,14 @@ def test_parse_string
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Terminated_line.capture(:a)*Terminated_line.capture(:b)))
 end #parse_string
+def test_assert_parse
+	parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
+	parse_delimited_array=Capture.new(Newline_Delimited_String.split(Branch_regexp), Branch_regexp)
+
+	assert_equal(parse_string.to_a?.join, parse_delimited_array.captures.join)
+	assert_equal(parse_string.to_a?, parse_delimited_array.captures)
+	assert_equal(parse_string, parse_delimited_array)
+end # assert_parse
 def test_parse_into_array
 	string=Newline_Terminated_String
 	pattern=Terminated_line
