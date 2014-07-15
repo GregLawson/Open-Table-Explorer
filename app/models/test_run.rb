@@ -24,11 +24,11 @@ include Virtus.model
 module Constants
 # see http://semver.org/
 Version_digits = /[0-9]{1,4}/
-Version = Version_digits.capture(:major) * 
-	'.' * Version_digits.capture(:minor) * 
-	'.' * Version_digits.capture(:patch) *
-	'.' * /[-.a-zA-Z0-9]*/.capture(:pre_release)
-Ruby_pattern = /ruby / * Version
+Version = [Version_digits.capture(:major), '.'] + 
+	[Version_digits.capture(:minor)] + 
+	[Version_digits.capture(:patch)] +
+	[/[-.a-zA-Z0-9]*/.capture(:pre_release)]
+Ruby_pattern = [/ruby /, Version]
 Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
 Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
 Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]

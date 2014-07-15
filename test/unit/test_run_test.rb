@@ -29,13 +29,13 @@ def test_Constants
 end # Constants
 def test_ruby_version
 	executable_suffix = ''
-	version_digits = /[0-9]{1,4}/
-	version = [version_digits.capture(:major), '.']
-	version += version_digits.capture(:minor) * '.' * version_digits.capture(:release)
-	ruby_pattern = /ruby / * version
-	parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
-	bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
-	version_pattern = [ruby_pattern, parenthetical_date_pattern, bracketed_os]
+	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
+	parse = testRun.output.parse(Version_pattern).output
+	assert_instance_of(Hash, parse)
+	assert_operator(parse[:major], :>=, '1')
+	assert_operator(parse[:minor], :>=, '1')
+	assert_operator(parse[:patch], :>=, '1')
+	assert_instance_of(String, parse[:pre_release])
 end # ruby_version
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
