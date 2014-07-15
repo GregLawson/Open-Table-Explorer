@@ -9,8 +9,9 @@
 require_relative '../../app/models/regexp.rb'
 require_relative '../../app/models/stream_tree.rb'
 require_relative '../../app/models/regexp_parse.rb'
-class Capture
 # encapsulates the difference between parsing from MatchData and from Array#split
+# regexp are Regexp not Arrays or Strings (see String#parse)
+class Capture
 module ClassMethods
 def default_name(index, prefix=nil, numbered=nil)
 	if prefix.nil? then
@@ -27,20 +28,33 @@ attr_reader :captures, :regexp # arguments
 attr_reader :length_hash_captures, :repetitions, :matched_characters
 attr_reader :output, :pre_match, :post_match, :delimiters  # outputs
 def initialize(captures, regexp)
-	@captures=captures
 	@regexp=regexp
-#     named_captures for captures.size > names.size
 	@length_hash_captures=@regexp.named_captures.values.flatten.size
+	normalize_capture(captures) # standardize captures
+#     named_captures for captures.size > names.size
+end #initialize
+# Tranform split and MatchData captures into single form
+def to_split_capture
+	if @captures.nil? || @captures == [] then
+		@captures
+	elsif @captures.instance_of?(MatchData) then
+		[@captures.pre_match, @captures[1..-1],@captures.post_match]
+	else # from split, already in nomalize form
+		@captures
+	end #if
+end # to_split_capture
+def normalize_capture(captures)
+	@captures=captures # save original for debugging
 	if @captures.nil? || @captures == [] then
 		@output= {}
 		@pre_match = ''
-		@post_match = ''
+		@post_match = nil # missing
 		@delimiters = []
 		@matched_characters = 0
 		@repetitions = 0
 	elsif @captures.instance_of?(MatchData) then
 		if @captures.names==[] then
-			@output = matchData[1..-1] # return unnamed subexpressions
+			@output = @captures[1..-1] # return unnamed subexpressions
 		else
 			@output=named_hash(0)
 		end # if
@@ -64,7 +78,13 @@ def initialize(captures, regexp)
 		raise self.inspect if @captures[0].nil?
 		@matched_characters = @captures.reduce(0){|sum, s| sum + s.length} - @captures[0].length
 	end #if
-end #initialize
+end # normalize_capture
+# return a capture object for two Capture instances (assumed consecutive)
+def +(other_capture)
+	raise "Only Capture instances can be added." if !other_capture.instance_of?(Capture)
+	Capture.new(self.captures + other_capture.captures, [self.regexp, other_capture.regexp])
+		
+end # reduce
 def all_capture_indices
 	if @captures.instance_of?(MatchData) then
 		(1..@captures.size-1).to_a
@@ -195,14 +215,19 @@ end # parse_repetition
 # Should difference be derived from recursive analysis of RegexpParse?
 # Where repetitions produce Array, others produe Hash
 # complicated by fact regular expressions simulate repetitions with recursive alternatives
+# match? returns a tree of Capture objects while parse returns only the output Hash
 def match?(pattern)
 	if pattern.instance_of?(Array) then
 		pos = 0
 		pattern.map do |p|
-			ret = self[pos..-1].match?(p) # recurse
+			ret = self[pos..-1].match?(p) # recurse returning Capture
+			
 			pos += ret.matched_characters
 			ret
 		end # map
+	elsif pattern.instance_of?(String) then
+		# see http://stackoverflow.com/questions/3518161/another-way-instead-of-escaping-regex-patterns
+		match?(Regexp.new(Regexp.quote(pattern)))
 	else
 		@match_unrepeated = match_unrepeated(pattern)
 		# limit repetitions to pattern, get all captures
