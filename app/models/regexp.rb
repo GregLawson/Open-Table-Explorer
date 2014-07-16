@@ -68,8 +68,9 @@ end #propagate_options
 def *(other)
 	case other
 	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
-	when String then return Regexp.new(self.unescaped_string + other)
-	when Fixnum then return Regexp.new(self.unescaped_string*other)
+	when String then return Regexp.new(self.unescaped_string + Regexp.escape(other))
+	when Fixnum then return Regexp.new(self.unescaped_string  + '{' + other.to_s + '}')
+	when Range then return Regexp.new(self.unescaped_string + '{' + other.begin.to_s + ',' + other.end.to_s + '}')
 	when NilClass then raise "Right argument of :* operator evaluated to nil."+
 		"\nPossibly add parenthesis to control operator versus method precedence."+
 		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
