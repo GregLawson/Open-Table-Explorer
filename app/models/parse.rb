@@ -25,8 +25,9 @@ end #default_name
 end # ClassMethods
 extend ClassMethods
 attr_reader :string, :regexp, :method_name # arguments
-attr_reader :captures, :length_hash_captures, :repetitions, :matched_characters
-attr_reader :output, :pre_match, :post_match, :delimiters  # outputs
+# attr_reader :captures, :length_hash_captures, :repetitions, :matched_characters
+attr_reader :raw_captures
+# attr_reader :output, :pre_match, :post_match, :delimiters  # outputs
 def initialize(string, regexp, method_name = :split)
 	@string = string
 	@regexp=regexp
@@ -38,7 +39,7 @@ def initialize(string, regexp, method_name = :split)
 end #initialize
 def raw_captures?(method_name = self.method_name)
 	@string.method(method_name).call(@regexp)
-end # raw_capture
+end # raw_captures?
 def success?(raw_captures = self.raw_captures?)
 	if raw_captures.nil? || raw_captures == [] then
 		false
@@ -121,7 +122,7 @@ def delimiters?(raw_captures = self.raw_captures?)
 		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
 		raise self.inspect if raw_captures[0].nil?
 	end #if
-end # normalize_capture
+end # delimiters
 # return a capture object for two Capture instances (assumed consecutive)
 def +(other_capture)
 	raise "Only Capture instances can be added." if !other_capture.instance_of?(Capture)
@@ -219,16 +220,28 @@ def assert_parse_string(answer, string, pattern, message='')
 
 end #parse_string
 module ClassMethods
+def assert_method(match_capture, limit_capture, argumentless_method_name = :output?, message = '')
+	message += "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
+	match_method_object = match_capture.method(argumentless_method_name)
+	limit_method_object = limit_capture.method(argumentless_method_name)
+	assert_equal(match_method_object.call, limit_method_object.call, message)
+end # assert_method
 end #ClassMethods
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 module Examples
 Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
-Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+#Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
+Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
+Branch_line = Branch_regexp * "/n"
 Parse_string=Capture.new(Newline_Delimited_String, Branch_regexp, :match)
 Parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp, :split)
 Parse_array=Capture.new(Newline_Terminated_String, Branch_regexp, :split)
+	Match_capture = Capture.new(Newline_Delimited_String, Branch_line, :match)
+	Split_capture = Capture.new(Newline_Delimited_String, Branch_line, :split)
+	Limit_capture = Capture.new(Newline_Delimited_String[0, Match_capture.matched_characters?], Branch_line, :split)
 end # Examples
 end # Capture
 
@@ -299,7 +312,6 @@ end #add_message
 def add_parse_message(string, pattern, message='')
 	add_message("\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}")
 end #add_parse_message
-# pattern matches only once in both match and split
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 	match1=parse_string(string, pattern1)
 	assert_not_nil(match1)
@@ -334,23 +346,25 @@ def assert_parse_repetition(answer, string, pattern, repetition_range, message='
 	end #if
 end #parse_repetition
 end #ClassMethods
-def assert_method(match_capture, limit_capture, argumentless_method_name = :output?, message = '')
-	message += "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
-	match_method_object = match_capture.method(argumentless_method_name)
-	limit_method_object = limit_capture.method(argumentless_method_name)
-	assert_equal(match_method_object.call, limit_method_object.call, message)
-end # assert_method
+# pattern matches only once in both match and split
 def assert_parse_once(pattern, message='')
 	match_capture = Capture.new(self, pattern, :match)
 	split_capture = Capture.new(self, pattern, :split)
 	limit_capture = Capture.new(self[0, match_capture.matched_characters?], pattern, :split)
 	message = "match_capture = #{match_capture.inspect}\nsplit_capture = #{split_capture.inspect}"
-	assert_equal(match_capture.output, limit_capture.output, message)
+	assert_equal(match_capture.output?, limit_capture.output?[0], message)
 	assert_equal(match_capture.to_a?, limit_capture.captures, message)
 	assert_equal(match_capture.to_a?.join, limit_capture.captures.join, message)
-	assert_method(match_capture, limit_capture, :output?, message)
+#	assert_method(match_capture, limit_capture, :string, message)
+	assert_method(match_capture, limit_capture, :regexp, message)
+	assert_method(match_capture, limit_capture, :length_hash_captures, message)
+	assert_method(match_capture, limit_capture, :captures, message)
+	assert_method(match_capture, limit_capture, :repetitions?, message)
+	assert_method(match_capture, limit_capture, :matched_characters?, message)
+	assert_method(match_capture, limit_capture, :pre_match?, message)
+#	assert_method(match_capture, limit_capture, :post_match?, message)
+	assert_method(match_capture, limit_capture, :delimiters?, message)
 	assert_method(match_capture, limit_capture, :to_a?, message)
-	assert_method(match_capture, limit_capture, :capture?, message)
 end # assert_parse_once
 def assert_parse_string(answer, string, pattern, message='')
 	message=add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"

@@ -53,6 +53,19 @@ def test_Capture_initialize
 	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output, Parse_array.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
 end #initialize
+def test_raw_captures?
+	assert_match(Branch_regexp, Split_capture.string, Split_capture.inspect)
+	assert_match(Branch_line, Split_capture.string, Split_capture.inspect)
+	assert_match( Split_capture.regexp, Split_capture.string, Split_capture.inspect)
+	assert_equal(['', '1'], Split_capture.string.split(Split_capture.regexp), Split_capture.inspect)
+	assert_equal(['', '1'], Split_capture.string.match?.output?, Split_capture.inspect)
+	assert_equal(['', '1'], Split_capture.raw_captures, Split_capture.inspect)
+	assert_equal(2, Split_capture.raw_captures.size, Split_capture.inspect)
+
+end # raw_captures?
+def test_success?
+	raw_captures = self.raw_captures?
+end # success?
 def test_repetitions?
 	regexp= Branch_regexp * "\n"
 	parse_string=Capture.new(Newline_Delimited_String, regexp , :match)
@@ -72,9 +85,28 @@ def test_to_a?
 	assert_equal(parse_string.to_a?, parse_delimited_array.captures)
 	assert_equal(parse_string, parse_delimited_array)
 end # to_a?
-def test_normalize_capture
-	assert_equal
-end # normalize_capture
+def test_post_match?
+end # post_match?
+def test_pre_match?
+end # pre_match?
+def test_matched_characters?
+end # matched_characters?
+def test_output?
+end # output?
+def test_delimiters?
+	message = "Match_capture = #{Match_capture.inspect}\nSplit_capture = #{Split_capture.inspect}"
+	assert_equal([], Match_capture.delimiters?, message)
+	assert_equal([], Limit_capture.delimiters?, message)
+	assert_equal(2, Split_capture.raw_captures.size, message)
+	assert_equal(2..0, (2..Split_capture.raw_captures.size - 2), message)
+	assert_equal([], (2..Split_capture.raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}, message)
+	assert_equal([], (2..Split_capture.raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact, message)
+	assert_equal([], Split_capture.delimiters?, message)
+	assert_include(Capture::Assertions::ClassMethods.instance_methods, :assert_method, message)
+	assert_include(Capture.methods, :assert_method, message)
+	Capture::Assertions::ClassMethods.assert_method(Match_capture, Limit_capture, :delimiters?, message)
+	Capture.assert_method(Match_capture, Limit_capture, :delimiters?, message)
+end # delimiters
 def test_plus
 end # +
 def test_all_capture_indices
@@ -188,6 +220,8 @@ def test_assert_parse_string
 	assert_equal(['1', '2'], parse_string("1\n2", Terminated_line))
 	assert_parse_string(['1', '2'], "1\n2", Terminated_line, 'test_assert_parse')
 end #parse_string
+def test_assert_method
+end # assert_method
 def test_Capture_Examples
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
