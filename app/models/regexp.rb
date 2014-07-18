@@ -22,14 +22,32 @@ End_string_less_newline=/\Z/
 end #Constants
 include Constants
 module ClassMethods
-def promote(node)
-	if node.instance_of?(String) then 
-		Regexp.new(Regexp.escape(node))
-	elsif node.instance_of?(Regexp) then 
-		node
+def [](array_form)
+	array_form.reduce(:*) do |regexp|
+		case regexp.class
+		when Regexp then regexp
+		when String then Regexp.new(Regexp.escape(node))
+		else
+			raise "unexpected node = #{node.inspect}"
+		end # case
+	end # reduce
+end # []
+def to_regexp_escaped_string(alternative_form)
+		case alternative_form.class.to_s
+		when 'Regexp' then alternative_form.source
+		when 'String' then Regexp.escape(alternative_form)
+		when 'Fixnum' then '{' + alternative_form.to_s + '}'
+		when 'Range' then '{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+		else raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
+		end # case
+end # to_regexp_escaped_string
+def promote(alternative_form)
+	case alternative_form.class.to_s
+	when 'Regexp' then alternative_form
+	when 'String' then Regexp.new(to_regexp_escaped_string(alternative_form))
 	else
-		raise "unexpected node=#{node.inspect}"
-	end #if
+		raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
+	end # case
 end #promote
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
