@@ -8,6 +8,8 @@
 require 'test/unit'
 require_relative '../../app/models/global.rb'
 require 'set'
+class Object
+end # Object
 module Test
 module Unit
 module Assertions
@@ -18,14 +20,20 @@ def newline_if_not_empty(message)
 		message+"\n"
 	end #if
 end #newline_if_not_empty
+# Default message if message is empty
 def add_default_message(message='')
 	if message == '' then
-		"self = #{self.inspect}"
+		default_message
 	else
 		message
 	end # if
 end #add_parse_message
-
+def trace_to_s(expression_string)
+	"\n" + expression_string.to_s + ' = ' + eval(expression_string.to_s)
+end # trace_to_s
+def trace(expression_string)
+		"\n" + expression_string.to_s + '.inspect = ' + eval(expression_string.to_s).inspect
+end # trace
 def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
@@ -96,7 +104,7 @@ def default_message
 	message+=" self=#{self.inspect}"
 	message+=" local_variables=#{local_variables.inspect}"
 	message+=" instance_variables=#{instance_variables.inspect}"
-	message+=" callers=#{caller_lines}"
+#	message+=" callers=#{caller_lines}"
 	return message
 end #default_message
 # File of ruby assertions not requiring ActiveRecord or fixtures

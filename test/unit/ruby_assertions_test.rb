@@ -7,9 +7,22 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
+class RubyAssertionsTest < TestCase
 def test_newline_if_not_empty
 end #newline_if_not_empty
-class RubyAssertionsTest < TestCase
+def test_add_default_message
+end #add_parse_message
+def test_trace_to_s
+end # trace_to_s
+def test_trace
+	expression_string = '1+1'
+	eval_string = eval(expression_string)
+	assert_equal(2, eval_string) 
+	assert_match(/\n/, trace(expression_string))
+	assert_match(/#{expression_string}/, trace(expression_string))
+	assert_match(/#{expression_string}.inspect = #{2}/, trace(expression_string))
+	assert_match(/\n#{expression_string}.inspect = #{2}/, trace(expression_string))
+end # trace
 def test_caller_lines
 	ignore_lines=19
 	assert_equal("\ntest/unit/ruby_assertions_test.rb:13:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
