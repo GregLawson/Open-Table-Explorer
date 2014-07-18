@@ -98,12 +98,12 @@ def quieter(&block)
 	$VERBOSE = old_verbose
 end # quieter
 def default_message
-	message="Module.nesting=#{Module.nesting.inspect}"
-	message+=" Class #{self.class.name}"
+	message="\nModule.nesting=#{Module.nesting.inspect}"
+	message+="\n Class #{self.class.name}"
 	message+=" unknown method"
-	message+=" self=#{self.inspect}"
-	message+=" local_variables=#{local_variables.inspect}"
-	message+=" instance_variables=#{instance_variables.inspect}"
+	message+="\n self=#{self.inspect}\n"
+	message+="\n local_variables=#{local_variables.inspect}"
+	message+="\n instance_variables=#{instance_variables.inspect}"
 #	message+=" callers=#{caller_lines}"
 	return message
 end #default_message
