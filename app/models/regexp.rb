@@ -22,14 +22,32 @@ End_string_less_newline=/\Z/
 end #Constants
 include Constants
 module ClassMethods
-def promote(node)
-	if node.instance_of?(String) then 
-		Regexp.new(Regexp.escape(node))
-	elsif node.instance_of?(Regexp) then 
-		node
+def [](array_form)
+	array_form.reduce(:*) do |regexp|
+		case regexp.class
+		when Regexp then regexp
+		when String then Regexp.new(Regexp.escape(node))
+		else
+			raise "unexpected node = #{node.inspect}"
+		end # case
+	end # reduce
+end # []
+def to_regexp_escaped_string(alternative_form)
+		case alternative_form.class.to_s
+		when 'Regexp' then alternative_form.source
+		when 'String' then Regexp.escape(alternative_form)
+		when 'Fixnum' then '{' + alternative_form.to_s + '}'
+		when 'Range' then '{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+		else raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
+		end # case
+end # to_regexp_escaped_string
+def promote(alternative_form)
+	case alternative_form.class.to_s
+	when 'Regexp' then alternative_form
+	when 'String' then Regexp.new(to_regexp_escaped_string(alternative_form))
 	else
-		raise "unexpected node=#{node.inspect}"
-	end #if
+		raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
+	end # case
 end #promote
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
@@ -68,8 +86,9 @@ end #propagate_options
 def *(other)
 	case other
 	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
-	when String then return Regexp.new(self.unescaped_string + other)
-	when Fixnum then return Regexp.new(self.unescaped_string*other)
+	when String then return Regexp.new(self.unescaped_string + Regexp.escape(other))
+	when Fixnum then return Regexp.new(self.unescaped_string  + '{' + other.to_s + '}')
+	when Range then return Regexp.new(self.unescaped_string + '{' + other.begin.to_s + ',' + other.end.to_s + '}')
 	when NilClass then raise "Right argument of :* operator evaluated to nil."+
 		"\nPossibly add parenthesis to control operator versus method precedence."+
 		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
@@ -100,7 +119,7 @@ end #back_reference
 def group
 	/(?:#{self.source})/
 end #group
-require 'test/unit/assertions.rb'
+require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_post_conditions

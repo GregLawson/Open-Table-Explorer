@@ -11,8 +11,22 @@ class RegexpTest < TestCase
 include DefaultTests
 extend DefaultTests
 #puts Regexp.methods(false)
+#include Minitest::Assertions
 include Regexp::Examples
+def test_square_brackets
+	assert_equal(/ab/, ['a', /b/].reduce(//, :*))
+end # []
+def test_to_regexp_escaped_string
+	assert_equal('ab', Regexp.to_regexp_escaped_string('ab'))
+	assert_equal('ab', Regexp.to_regexp_escaped_string(/ab/))
+	assert_equal('{5}', Regexp.to_regexp_escaped_string(5))
+	assert_equal('{2,5}', Regexp.to_regexp_escaped_string(2..5))
+end # to_regexp_escaped_string
 def test_promote
+	assert_equal(/ab/, Regexp.promote(/ab/))
+	assert_equal(/ab/, Regexp.promote('ab'))
+	assert_raises(RuntimeError) {Regexp.promote(5)}
+	assert_raises(RuntimeError) {Regexp.promote(2..5)}
 end #promote
 def test_regexp_rescued
 end #regexp_rescued
@@ -48,10 +62,13 @@ def test_sequence
   assert_equal(/a/, Regexp.new(/a/.source))
   assert_equal('a', Regexp.promote(/a/).source)
   assert_equal('a', Regexp.promote(/a/).source)
-  assert_equal(/a{3}/, /a/*"{3}")
+  assert_equal(/a{3}/, /a/ * 3)
+  assert_equal(/a{1,3}/, /a/ * (1..3))
+  assert_equal(/a\n/, /a/ * "\n")
+  assert_match(/a/ * "\n", "a\n")
 end #sequence
 def test_alterative
-#  assert_equal(/a|b/, /a/ | /b/)
+  assert_equal(/a|b/, /a/ | /b/)
 end #alterative
 def test_capture
 	regexp=/\d/
