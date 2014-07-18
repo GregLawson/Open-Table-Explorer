@@ -58,7 +58,7 @@ def test_raw_captures?
 	assert_match(Branch_line, Split_capture.string, Split_capture.inspect)
 	assert_match( Split_capture.regexp, Split_capture.string, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.string.split(Split_capture.regexp), Split_capture.inspect)
-	assert_equal({branch: '1'}, Split_capture.string.match?(Split_capture.regexp).output?, Split_capture.inspect)
+	assert_equal({branch: '1'}, Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.raw_captures, Split_capture.inspect)
 	assert_equal(3, Split_capture.raw_captures.size, Split_capture.inspect)
 
@@ -67,8 +67,8 @@ def test_case?
 	assert_equal(:match, Match_capture.case?)
 	assert_equal(:split, Split_capture.case?)
 	assert_equal(:split, Limit_capture.case?)
-	assert_equal(:no_match, Capture.new('cat', /fish/, :match).success?)
-	assert_equal(:no_match, Failed_capture.success?, Failed_capture.inspect)
+	assert_equal(:no_match, Capture.new('cat', /fish/, :match).case?)
+	assert_equal(:no_match, Failed_capture.case?, Failed_capture.inspect)
 end # case?
 def test_success?
 	raw_captures = Split_capture.raw_captures?
@@ -252,7 +252,7 @@ def test_String_parse_repetition
 	assert_equal(Array_answer, Newline_Terminated_String.parse_repetition(Terminated_line))
 	assert_equal([Hash_answer], Newline_Delimited_String.parse_repetition(Terminated_line))
 end # parse_repetition
-def test_String_match?
+def test_String_capture?
 	assert_equal([Hash_answer], Newline_Delimited_String.parse_repetition(Terminated_line))
 	pattern = Terminated_line
 	ret = Newline_Delimited_String.parse_repetition(pattern)
@@ -267,7 +267,7 @@ def test_String_match?
 		match_unrepeated = Newline_Terminated_String.match_unrepeated(pattern)
 		split = Newline_Terminated_String[0, match_unrepeated.matched_characters].match_repetition(pattern)
 	assert_equal([match_unrepeated.output?], split.output?)
-end # match?
+end # capture?
 def test_String_parse
 	assert_equal(Hash_answer, Newline_Delimited_String.parse(Terminated_line), self.inspect)
 	message = 'unimlemented corect mapping of regexp Repetition to parse_repetition'
@@ -348,17 +348,14 @@ def test_parse_repetition
 	string=Newline_Terminated_String
 	pattern=Terminated_line
 	repetition_range=Any
-	message = default_message
 	match1=parse_string(string, pattern)
 #	assert_equal(match1, answer[0, match1.size], add_parse_message(string, pattern, message))
 	match_any=parse_string(string, pattern*Regexp::Any)
 #	assert_equal(answer, match_any[-answer.size..-1], add_parse_message(string, pattern*Regexp::Any, message))
 	match=parse_string(string, pattern*repetition_range)
 	if match==[] || match=={} then
-		message+="match1=#{match1.inspect}\n"
-		message+="match_any=#{match_any.inspect}\n"
-		message+="match=#{match.inspect}\n"
-		message+="string.match(#{pattern*repetition_range})=#{string.match(pattern*repetition_range).inspect}"
+		message = "string.match(#{pattern*repetition_range})=#{string.match(pattern*repetition_range).inspect}"
+		message += default_message{local_variables}
 		assert_equal(answer, string.parse(pattern*repetition_range), message)
 	end #if
 #	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))

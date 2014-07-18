@@ -39,7 +39,12 @@ def initialize(string, regexp, method_name = :split)
 #     named_captures for captures.size > names.size
 end #initialize
 def raw_captures?(method_name = self.method_name)
-	@string.method(method_name).call(@regexp)
+	if method_name == :limit then # limit match to :match length of string
+		string =  @string[0,Capture.new(@string, @regexp, :match).matched_characters?]# regexp matched string
+	else
+		string = @string # full string
+	end #if
+	string.method(method_name).call(@regexp)
 end # raw_captures?
 def case?(raw_captures = self.raw_captures?)
 	if !success?(raw_captures) then
@@ -280,18 +285,18 @@ end # parse_repetition
 # Where repetitions produce Array, others produe Hash
 # complicated by fact regular expressions simulate repetitions with recursive alternatives
 # match? returns a tree of Capture objects while parse returns only the output Hash
-def match?(pattern)
+def capture?(pattern)
 	if pattern.instance_of?(Array) then
 		pos = 0
 		pattern.map do |p|
-			ret = self[pos..-1].match?(p) # recurse returning Capture
+			ret = self[pos..-1].capture?(p) # recurse returning Capture
 			
 			pos += ret.matched_characters?
 			ret
 		end # map
 	elsif pattern.instance_of?(String) then
 		# see http://stackoverflow.com/questions/3518161/another-way-instead-of-escaping-regex-patterns
-		match?(Regexp.new(Regexp.quote(pattern)))
+		capture?(Regexp.new(Regexp.quote(pattern)))
 	else
 		@match_unrepeated = match_unrepeated(pattern)
 		# limit repetitions to pattern, get all captures
@@ -304,9 +309,9 @@ def match?(pattern)
 			@match_unrepeated
 		end # if
 	end # if
-end # match?
+end # capture?
 def parse(regexp)
-	match = match?(regexp)
+	match = capture?(regexp)
 	match.enumerate(:map) {|e| e.output?}
 end # parse
 module Constants
@@ -363,12 +368,16 @@ def assert_parse_once(pattern, message='')
 	limit_capture = Capture.new(self[0, match_capture.matched_characters?], pattern, :split)
 	message = "match_capture = #{match_capture.inspect}\nsplit_capture = #{split_capture.inspect}"
 	assert_equal(match_capture.output?, limit_capture.output?[0], message)
-	assert_equal(match_capture.to_a?.join, split_capture.captures.join, message)
-	assert_equal(match_capture.to_a?, split_capture.captures, message)
+	common_capture = match_capture.to_a?[0..-2]
+	last_common_capture = common_capture.size - 1
+	assert_equal(common_capture.join, split_capture.captures[0..last_common_capture].join, message)
+	assert_equal(common_capture, split_capture.captures[0..last_common_capture], message)
+	assert_equal(common_capture, limit_capture.captures[0..last_common_capture], message)
+	assert_equal(common_capture, limit_capture.captures, message)
 #	Capture.assert_method(match_capture, limit_capture, :string, message)
 	Capture.assert_method(match_capture, limit_capture, :regexp, message)
 	Capture.assert_method(match_capture, limit_capture, :length_hash_captures, message)
-	Capture.assert_method(match_capture, split_capture, :captures, message)
+#	Capture.assert_method(match_capture, split_capture, :captures, message)
 	Capture.assert_method(match_capture, limit_capture, :repetitions?, message)
 	Capture.assert_method(match_capture, limit_capture, :matched_characters?, message)
 	Capture.assert_method(match_capture, limit_capture, :pre_match?, message)
