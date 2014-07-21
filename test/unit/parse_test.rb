@@ -211,6 +211,8 @@ def test_Capture_assert_pre_conditions
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
 end # assert_pre_conditions
+def test_assert_left_match
+end # assert_left_match
 def test_Capture_assert_post_conditions
 	assert_not_equal('', Parse_string.post_match)
 	assert_raises(AssertionFailedError) {Parse_string.assert_post_conditions}
@@ -232,10 +234,19 @@ end #parse_string
 def test_assert_method
 end # assert_method
 def test_Capture_Examples
+	Match_capture.assert_pre_conditions
+	Split_capture.assert_pre_conditions
+	Limit_capture.assert_pre_conditions
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
+	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
+
+	Match_capture.assert_left_match
+	Split_capture.assert_left_match
+	Limit_capture.assert_post_conditions
 	assert_raises(AssertionFailedError) {Parse_string.assert_post_conditions}
 	assert_raises(AssertionFailedError) {Parse_array.assert_post_conditions}
+	assert_raises(AssertionFailedError) {Failed_capture.assert_post_conditions}
 end # Examples
 # String
 def test_parse_unrepeated

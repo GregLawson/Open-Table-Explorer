@@ -185,14 +185,17 @@ def assert_pre_conditions(message='')
 	elsif output? == [] then
 		assert_not_empty(@captures, 'split but no captures.')
 	end # if
-
+	assert(success?)
 end # assert_pre_conditions
-
-# exact match, no left-overs
-def assert_post_conditions(message='')
+def assert_left_match(message = '')
+	assert(success?)
 	assert_empty(pre_match?, add_default_message(message))
-	assert_empty(post_match?, add_default_message(message))
-	assert_empty(delimiters?, self.inspect)
+	assert_empty(delimiters?, add_default_message(message))
+end # assert_left_match
+# exact match, no left-overs
+def assert_post_conditions(message = '')
+	assert_left_match(add_default_message(message))
+	assert_empty(post_match?, 'Only a left match.' + add_default_message(message))
 end # assert_post_conditions
 def repetition_options?
 	if @regexp.respond_to?(:repetition_options) then
@@ -250,13 +253,21 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 #Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line = Branch_regexp * "\n"
-Parse_string=Capture.new(Newline_Delimited_String, Branch_regexp, :match)
-Parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp, :split)
 Parse_array=Capture.new(Newline_Terminated_String, Branch_regexp, :split)
 	Match_capture = Capture.new(Newline_Delimited_String, Branch_line, :match)
 	Split_capture = Capture.new(Newline_Delimited_String, Branch_line, :split)
 	Limit_capture = Capture.new(Newline_Delimited_String[0, Match_capture.matched_characters?], Branch_line, :split)
 	Failed_capture = Capture.new('cat', /fish/, :split)
+Parse_string=Capture.new(Newline_Delimited_String, Branch_regexp, :match)
+Parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp, :split)
+LINE=/[^\n]*/.capture(:line)
+Line_terminator=/\n/.capture(:terminator)
+Terminated_line=(LINE*Line_terminator).group
+Hash_answer={:line=>"* 1", :terminator=>"\n"}
+Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n"}]
+
+Nested_string="1 2\n3 4\n"
+Nested_answer=[['1', '2'], ['3', '4']]
 end # Examples
 end # Capture
 
@@ -426,16 +437,9 @@ include Assertions
 module Examples
 include Constants
 include Regexp::Constants
-LINE=/[^\n]*/.capture(:line)
-Line_terminator=/\n/.capture(:terminator)
-Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 WORD=/([^\s]*)/.capture(:word)
 CSV=/([^,]*)(?:,([^,]*?))*?/
-Hash_answer={:line=>"* 1", :terminator=>"\n"}
-Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n"}]
-Nested_string="1 2\n3 4\n"
-Nested_answer=[['1', '2'], ['3', '4']]
 end #Examples
 end # String
 
