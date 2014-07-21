@@ -8,10 +8,14 @@
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
+def test_caller_lines
+	ignore_lines=19
+	assert_equal("\ntest/unit/ruby_assertions_test.rb:13:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
+end #caller_lines
+def test_add_default_message
+end #add_default_message
 def test_newline_if_not_empty
 end #newline_if_not_empty
-def test_add_default_message
-end #add_parse_message
 def test_trace_to_s
 end # trace_to_s
 def test_trace
@@ -23,10 +27,12 @@ def test_trace
 	assert_match(/#{expression_string}.inspect = #{2}/, trace(expression_string))
 	assert_match(/\n#{expression_string}.inspect = #{2}/, trace(expression_string))
 end # trace
-def test_caller_lines
-	ignore_lines=19
-	assert_equal("\ntest/unit/ruby_assertions_test.rb:13:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
-end #caller_lines
+def test_trace_names?
+	name_list_method = :instance_variables
+	name_list_method = :local_variables
+	name_list_method = :nesting
+	name_list_method = :included_modules
+end # trace_names?
 class TestClass < Object
 TestConstant=3.2
 def test_instance_method
