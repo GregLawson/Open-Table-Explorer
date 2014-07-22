@@ -31,7 +31,7 @@ attr_reader :raw_captures
 # attr_reader :pre_match  # outputs
 def initialize(string, regexp, method_name = :split)
 	@string = string
-	@regexp=regexp
+	@regexp = Regexp.promote(regexp)
 	@method_name = method_name
 	@length_hash_captures = @regexp.named_captures.values.flatten.size
 	@raw_captures = raw_captures?
@@ -258,6 +258,7 @@ Parse_array=Capture.new(Newline_Terminated_String, Branch_regexp, :split)
 	Split_capture = Capture.new(Newline_Delimited_String, Branch_line, :split)
 	Limit_capture = Capture.new(Newline_Delimited_String[0, Match_capture.matched_characters?], Branch_line, :split)
 	Failed_capture = Capture.new('cat', /fish/, :split)
+	Syntax_failed_capture = Capture.new('cat', 'f)i]s}h', :split)
 Parse_string=Capture.new(Newline_Delimited_String, Branch_regexp, :match)
 Parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp, :split)
 LINE=/[^\n]*/.capture(:line)
