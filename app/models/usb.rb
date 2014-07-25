@@ -5,7 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'usb'
+require 'libusb'
+require_relative 'shell_command.rb'
 class UsbBus
 module ClassMethods
 end #ClassMethods
@@ -15,4 +16,4 @@ end #Constants
 include Constants
 module Examples
 end #Examples
-end #WorkFlow
+end # UsbBus
