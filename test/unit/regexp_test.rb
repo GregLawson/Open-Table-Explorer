@@ -29,8 +29,16 @@ def test_promote
 	assert_raises(RuntimeError) {Regexp.promote(2..5)}
 end #promote
 def test_regexp_rescued
+	assert_equal(/]/mx, Regexp.regexp_rescued(']'))
+	assert_raises(RuntimeError) {assert_equal(/]/, Regexp.regexp_rescued(/]/))} # String only
+	assert_equal(nil, Regexp.regexp_rescued('['))
+	assert_equal(/}/, Regexp.regexp_rescued('}'))
+	assert_equal(/}/, Regexp.regexp_rescued('{'))
+	assert_equal(nil, Regexp.regexp_rescued(')'))
+	assert_equal(nil, Regexp.regexp_rescued('('))
 end #regexp_rescued
 def test_regexp_error
+	assert_equal('', Regexp.regexp_error(/]/))
 end #regexp_error
 def test_terminator_regexp
 end #terminator_regexp

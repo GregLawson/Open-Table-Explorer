@@ -5,9 +5,12 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'active_model/naming'
+require 'active_model/errors'
 class Regexp
 # @see http://en.wikipedia.org/wiki/Kleene_algebra
 #include Comparable
+extend ActiveModel::Naming # allow ActiveModel / ActiveRecord style error attributes. Naming clash?
 module Constants
 Default_options=Regexp::EXTENDED | Regexp::MULTILINE
 Ascii_characters=(0..127).to_a.map { |i| i.chr}
@@ -51,10 +54,12 @@ def promote(alternative_form)
 end #promote
 # Rescue bad regexp and return nil
 # Example regexp with unbalanced bracketing characters
-def regexp_rescued(regexp_string, options=Default_options)
+def regexp_rescued(regexp_string, options=Regexp::Default_options)
 	raise "expecting regexp_string=#{regexp_string}" unless regexp_string.instance_of?(String)
 	return Regexp.new(regexp_string, options)
-rescue RegexpError
+rescue  RegexpError => exception_raised
+	@regexp_string = regexp_string
+	errors.add(name, 'RegexpError: ' + exception_raised.inspect, options = {}) 
 	return nil
 end #regexp_rescued
 def regexp_error(regexp_string, options=Default_options)
