@@ -193,9 +193,13 @@ def assert_pre_conditions(message='')
 	assert(success?)
 end # assert_pre_conditions
 def assert_left_match(message = '')
-	assert(success?)
-	assert_empty(pre_match?, add_default_message(message))
-	assert_empty(delimiters?, add_default_message(message))
+	message = add_default_message(message)
+	assert(success?, message)
+	message += "\nregexp = " + regexp.inspect
+	message += "\nstring... = " + string[0..50].inspect
+	pre_match_message = message + "\nA left match requires pre_match? = #{pre_match?} to be empty."
+	assert_empty(pre_match?, message + "\nA left match requires pre_match? = #{pre_match?} to be empty.")
+	assert_empty(delimiters?.join("\n")[0..100], message + "\nDelimiters were found in a split match.")
 end # assert_left_match
 # exact match, no left-overs
 def assert_post_conditions(message = '')
@@ -412,11 +416,36 @@ def assert_parse_string(answer, string, pattern, message='')
 	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
 
 end #parse_string
+def assert_left_parse(pattern, message='')
+	if pattern.instance_of?(Array) then
+		pos = 0
+		pattern.map do |p|
+			ret = self[pos..-1].assert_left_parse(p) # recurse
+			pos += ret.matched_characters?
+			ret
+		end # map
+	else
+		match_capture = Capture.new(self, pattern, :match)
+		split_capture = Capture.new(self, pattern, :split)
+		limit_capture = Capture.new(self, pattern, :limit)
+		match_capture.assert_left_match
+		split_capture.assert_pre_conditions
+		limit_capture.assert_left_match
+		# limit repetitions to pattern, get all captures
+		if split_capture.repetitions? == 1 then
+			match_capture
+		elsif match_capture.output? == split_capture.output?[-1] then # over-written captures
+			split_capture
+		else
+			match_capture
+		end # if
+	end # if
+end # assert_parse
 def assert_parse(pattern, message='')
 	if pattern.instance_of?(Array) then
 		pos = 0
 		pattern.map do |p|
-			ret = self[pos..-1].assert_parse(p) # recurse
+			ret = self[pos..-1].assert_left_parse(p) # recurse
 			pos += ret.matched_characters?
 			ret
 		end # map
