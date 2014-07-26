@@ -18,6 +18,19 @@ def test_find_devices
 	lsusb = ShellCommands.new('lsusb').assert_post_conditions.output
 	disk_devs = ShellCommands.new('ls -l /dev/disk/by-*|grep usb').assert_post_conditions.output
 	drivers = ShellCommands.new("find /sys/ -name driver -ls").assert_post_conditions.output
+	ls_octet_pattern = /rwx/
+	ls_permission_pattern = [/1/,
+					ls_octet_pattern.capture(:system),
+					ls_octet_pattern.capture(:group), 
+					ls_octet_pattern.capture(:owner)] 
+	filename_pattern = /[-_0-9a-zA-Z\/]+/
+	driver_pattern = ['/sys/devices', ls_permission_pattern,
+							'  ', /[0-9]+/.capture(:number), /    /,
+							ls_permission_pattern,
+							filename_pattern.capture(:device),
+							' -> ', 
+							filename_pattern.capture(:driver)]
+	drivers.assert_parse(driver_pattern)
 	events =Dir['ls /dev/event*']
 	events_by_id = ShellCommands.new('ls -l /dev/input/by-id*').assert_post_conditions.output
 	events_by_path = ShellCommands.new('ls -l /dev/input/by-path/*').assert_post_conditions.output
