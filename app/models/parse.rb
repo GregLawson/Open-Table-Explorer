@@ -28,7 +28,6 @@ extend ClassMethods
 attr_reader :string, :regexp, :method_name # arguments
 attr_reader :captures, :length_hash_captures
 attr_reader :raw_captures
-# attr_reader :pre_match  # outputs
 def initialize(string, regexp, method_name = :split)
 	@string = string
 	@regexp = Regexp.promote(regexp)
@@ -38,13 +37,19 @@ def initialize(string, regexp, method_name = :split)
 	@captures = to_a?(@raw_captures) # standardize captures
 #     named_captures for captures.size > names.size
 end #initialize
+def ==(other)
+	instance_variables.all? do |iv_name|
+		self.instance_variable_get(iv_name) == other.instance_variable_get(iv_name)
+	end # All?
+end # equal
 def raw_captures?(method_name = self.method_name)
 	if method_name == :limit then # limit match to :match length of string
 		string =  @string[0,Capture.new(@string, @regexp, :match).matched_characters?]# regexp matched string
+		string.method(:split).call(@regexp) # after string shortened
 	else
 		string = @string # full string
+		string.method(method_name).call(@regexp)
 	end #if
-	string.method(method_name).call(@regexp)
 end # raw_captures?
 def case?(raw_captures = self.raw_captures?)
 	if !success?(raw_captures) then
@@ -256,7 +261,7 @@ Branch_line = Branch_regexp * "\n"
 Parse_array=Capture.new(Newline_Terminated_String, Branch_regexp, :split)
 	Match_capture = Capture.new(Newline_Delimited_String, Branch_line, :match)
 	Split_capture = Capture.new(Newline_Delimited_String, Branch_line, :split)
-	Limit_capture = Capture.new(Newline_Delimited_String[0, Match_capture.matched_characters?], Branch_line, :split)
+	Limit_capture = Capture.new(Newline_Delimited_String, Branch_line, :limit)
 	Failed_capture = Capture.new('cat', /fish/, :split)
 	Syntax_failed_capture = Capture.new('cat', 'f)i]s}h', :split)
 Parse_string=Capture.new(Newline_Delimited_String, Branch_regexp, :match)
@@ -296,7 +301,7 @@ end # parse_repetition
 # Should difference be derived from recursive analysis of RegexpParse?
 # Where repetitions produce Array, others produe Hash
 # complicated by fact regular expressions simulate repetitions with recursive alternatives
-# match? returns a tree of Capture objects while parse returns only the output Hash
+# capture? returns a tree of Capture objects while parse returns only the output Hash
 def capture?(pattern)
 	if pattern.instance_of?(Array) then
 		pos = 0
@@ -310,15 +315,16 @@ def capture?(pattern)
 		# see http://stackoverflow.com/questions/3518161/another-way-instead-of-escaping-regex-patterns
 		capture?(Regexp.new(Regexp.quote(pattern)))
 	else
-		@match_unrepeated = match_unrepeated(pattern)
+		match_capture = Capture.new(self, pattern, :match)
+		split_capture = Capture.new(self, pattern, :split)
+		limit_capture = Capture.new(self, pattern, :limit)
 		# limit repetitions to pattern, get all captures
-		@split = self[0, @match_unrepeated.matched_characters?].match_repetition(pattern)
-		if @split.repetitions? == 1 then
-			@match_unrepeated
-		elsif @match_unrepeated.output? == @split.output?[-1] then # over-written captures
-			@split
+		if split_capture.repetitions? == 1 then
+			match_capture
+		elsif match_capture.output? == split_capture.output?[-1] then # over-written captures
+			split_capture
 		else
-			@match_unrepeated
+			match_capture
 		end # if
 	end # if
 end # capture?
@@ -407,29 +413,27 @@ def assert_parse_string(answer, string, pattern, message='')
 
 end #parse_string
 def assert_parse(pattern, message='')
-	match_capture=Capture.new(self, Branch_regexp, :match)
-	split_capture=Capture.new(self, Branch_regexp, :split)
-	capture = capture?(pattern)
-	match = match?(pattern)
-	if match.nil? || match == [] then
-		if pattern.instance_of?(Array) then
-			pos = 0
-			pattern.map do |p|
-				ret = self[pos..-1].assert_parse(p) # recurse
-				pos += ret.matched_characters?
-				ret
-			end # map
+	if pattern.instance_of?(Array) then
+		pos = 0
+		pattern.map do |p|
+			ret = self[pos..-1].assert_parse(p) # recurse
+			pos += ret.matched_characters?
+			ret
+		end # map
+	else
+		match_capture = Capture.new(self, pattern, :match)
+		split_capture = Capture.new(self, pattern, :split)
+		limit_capture = Capture.new(self, pattern, :limit)
+		match_capture.assert_post_conditions
+		split_capture.assert_post_conditions
+		limit_capture.assert_post_conditions
+		# limit repetitions to pattern, get all captures
+		if split_capture.repetitions? == 1 then
+			match_capture
+		elsif match_capture.output? == split_capture.output?[-1] then # over-written captures
+			split_capture
 		else
-			@match_unrepeated = match_unrepeated(pattern)
-			# limit repetitions to pattern, get all captures
-			@split = self[0, @match_unrepeated.matched_characters?].match_repetition(pattern)
-			if @split.repetitions? == 1 then
-				@match_unrepeated
-			elsif @match_unrepeated.output? == @split.output?[-1] then # over-written captures
-				@split
-			else
-				@match_unrepeated
-			end # if
+			match_capture
 		end # if
 	end # if
 end # assert_parse
