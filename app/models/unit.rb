@@ -19,7 +19,7 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
 def initialize(model_class_name=FilePattern.path2model_name?, 
-					project_root_dir=FilePattern.project_root_dir?)
+	project_root_dir=FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
 	if model_class_name.nil? then
 		warn message if model_class_name.nil?
@@ -133,7 +133,8 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
@@ -196,7 +197,8 @@ UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
 SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
