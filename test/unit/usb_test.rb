@@ -23,11 +23,30 @@ def test_find_devices
 					ls_octet_pattern.capture(:system),
 					ls_octet_pattern.capture(:group), 
 					ls_octet_pattern.capture(:owner)] 
-	filename_pattern = /[-_0-9a-zA-Z]+/
-	driver_pattern = ['/sys/devices', ls_permission_pattern,
+	filename_pattern = /[-_0-9a-zA-Z\/]+/
+	assert_match(/\s/, drivers)
+	driver_pattern = [
+							'  ', /[0-9]+/.capture(:number), /    /,
+							'  ', /[0-9]+/.capture(:number), /    /,
+							ls_permission_pattern,
+							'/sys/devices',
 							filename_pattern.capture(:device),
-							'->', 
+							' -> ', 
 							filename_pattern.capture(:driver)]
+	short = drivers[0..10]
+	short = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
+	assert_match(/ /, short)
+	assert_match(/\s/, drivers)
+	assert_match(/\s/, drivers)
+	assert_match('  ', short)
+	assert_match(/  /, short)
+	assert_match(/\ \ /, short)
+	'  '.assert_parse(/  /)
+	short.assert_parse(/  /)
+	short.assert_parse([/\s/])
+	short.assert_parse([/\s+/])
+	short.assert_parse([/  /])
+	short.assert_parse(['  '])
 	drivers.assert_parse(driver_pattern)
 	events =Dir['ls /dev/event*']
 	events_by_id = ShellCommands.new('ls -l /dev/input/by-id*').assert_post_conditions.output
@@ -35,4 +54,11 @@ def test_find_devices
 	event_by_path_pattern = ['/dev/input/', /[a-zA-Z0-9]+/.capture(:name)]
 	eventPaths = events_by_path.parse(event_by_path_pattern)
 end # find_devices
+def test_libusb
+	usb = LIBUSB::Context.new
+	device = usb.devices(:idVendor => 0x04b4, :idProduct => 0x8613).first
+#example	device.open_interface(0) do |handle|
+#	  handle.control_transfer(:bmRequestType => 0x40, :bRequest => 0xa0, :wValue => 0xe600, :wIndex => 0x0000, :dataOut => 1.chr)
+#	end
+end # libusb
 end # UsbBus
