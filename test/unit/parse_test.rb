@@ -61,7 +61,7 @@ def test_raw_captures?
 	assert_equal({branch: '1'}, Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.raw_captures, Split_capture.inspect)
 	assert_equal(3, Split_capture.raw_captures.size, Split_capture.inspect)
-	assert_equal(Limit_capture, Capture.new(Newline_Delimited_String, Branch_line, :limit))
+
 end # raw_captures?
 def test_case?
 	assert_equal(:match, Match_capture.case?)
@@ -321,13 +321,38 @@ def test_assert_parse_string
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Terminated_line.capture(:a)*Terminated_line.capture(:b)))
 end #parse_string
-def test_assert_parse
+def test_assert_left_parse
 	parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
 	parse_delimited_array=Capture.new(Newline_Delimited_String.split(Branch_regexp), Branch_regexp)
 
 	assert_equal(parse_string.to_a?.join, parse_delimited_array.captures.join)
 	assert_equal(parse_string.to_a?, parse_delimited_array.captures)
 	assert_equal(parse_string, parse_delimited_array)
+	ls_octet_pattern = /rwx/
+	ls_permission_pattern = [/1/,
+					ls_octet_pattern.capture(:system),
+					ls_octet_pattern.capture(:group), 
+					ls_octet_pattern.capture(:owner)] 
+	filename_pattern = /[-_0-9a-zA-Z\/]+/
+end # assert_left_parse
+def test_assert_parse
+	drivers = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
+	assert_match(/\s/, drivers)
+	driver_pattern = [
+							'  ', /[0-9]+/.capture(:number), /    /,
+							'  ', /[0-9]+/.capture(:number), /    /,
+							ls_permission_pattern,
+							'/sys/devices',
+							filename_pattern.capture(:device),
+							' -> ', 
+							filename_pattern.capture(:driver)]
+	assert_match(/ /, drivers)
+	assert_match(/\s/, drivers)
+	assert_match(/\s/, drivers)
+	assert_match('  ', drivers)
+	assert_match(/  /, drivers)
+	assert_match(/\ \ /, drivers)
+	'  '.assert_parse(/  /)
 end # assert_parse
 def test_parse_into_array
 	string=Newline_Terminated_String
@@ -372,7 +397,7 @@ def test_parse_repetition
 		assert_equal(answer, string.parse(pattern*repetition_range), message)
 	end #if
 #	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
-#	assert_parse_repetition(['1','2'], Newline_Terminated_String,  Terminated_line, Any, 'test_assert_parse_sequence')
+	assert_parse_repetition(['1','2'], Newline_Terminated_String,  Terminated_line, Any, 'test_assert_parse_sequence')
 end #parse_repetition
 def test_assert_parse_string
 	answer=Hash_answer
