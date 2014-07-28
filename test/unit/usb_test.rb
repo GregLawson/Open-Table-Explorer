@@ -24,9 +24,11 @@ def test_find_devices
 					ls_octet_pattern.capture(:group), 
 					ls_octet_pattern.capture(:owner)] 
 	filename_pattern = /[-_0-9a-zA-Z\/]+/
-	driver_pattern = ['/sys/devices', ls_permission_pattern,
+	driver_pattern = [
+							'  ', /[0-9]+/.capture(:number), /    /,
 							'  ', /[0-9]+/.capture(:number), /    /,
 							ls_permission_pattern,
+							'/sys/devices',
 							filename_pattern.capture(:device),
 							' -> ', 
 							filename_pattern.capture(:driver)]
@@ -37,4 +39,11 @@ def test_find_devices
 	event_by_path_pattern = ['/dev/input/', /[a-zA-Z0-9]+/.capture(:name)]
 	eventPaths = events_by_path.parse(event_by_path_pattern)
 end # find_devices
+def test_libusb
+	usb = LIBUSB::Context.new
+	device = usb.devices(:idVendor => 0x04b4, :idProduct => 0x8613).first
+#example	device.open_interface(0) do |handle|
+#	  handle.control_transfer(:bmRequestType => 0x40, :bRequest => 0xa0, :wValue => 0xe600, :wIndex => 0x0000, :dataOut => 1.chr)
+#	end
+end # libusb
 end # UsbBus
