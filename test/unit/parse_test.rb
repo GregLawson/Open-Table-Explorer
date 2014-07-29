@@ -53,6 +53,9 @@ def test_Capture_initialize
 	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output?, Parse_array.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 end #initialize
+def test_equal
+	assert(Match_capture == Limit_capture)
+end # equal
 def test_raw_captures?
 	assert_match(Branch_regexp, Split_capture.string, Split_capture.inspect)
 	assert_match(Branch_line, Split_capture.string, Split_capture.inspect)
@@ -77,6 +80,8 @@ def test_success?
 	assert(Limit_capture.success?)
 	assert_equal(false, Capture.new('cat', /fish/, :match).success?)
 	assert_equal(false, Failed_capture.success?, Failed_capture.inspect)
+	assert(Capture.new('  ', /  /, :split).success?)
+	'  '.assert_parse(/  /)
 end # success?
 def test_repetitions?
 	parse_string=Capture.new(Newline_Delimited_String, Branch_line , :match)
@@ -207,10 +212,23 @@ def test_named_hash
 end #named_hash
 
 # Capture::Assertions
+def test_assert_method
+end # assert_method
 def test_Capture_assert_pre_conditions
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
 end # assert_pre_conditions
+def test_assert_success
+	Capture.new(Newline_Delimited_String, Branch_line, :match).assert_success
+	Capture.new('   ', /  /, :match).assert_success
+	Capture.new('  ', /  /, :match).assert_success
+	assert_equal(:no_match, Failed_capture.case?, Failed_capture.inspect)
+	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
+	assert_raises(AssertionFailedError) {Failed_capture.assert_success}
+	assert_raises(AssertionFailedError) {Capture.new('cat', /fish/, :split).assert_success}
+	Capture.new('cat', /cat/, :split).assert_success
+	Capture.new('  ', /  /, :split).assert_success
+end # assert_success
 def test_assert_left_match
 end # assert_left_match
 def test_Capture_assert_post_conditions
@@ -231,8 +249,6 @@ def test_assert_parse_string
 	assert_equal(['1', '2'], parse_string("1\n2", Terminated_line))
 	assert_parse_string(['1', '2'], "1\n2", Terminated_line, 'test_assert_parse')
 end #parse_string
-def test_assert_method
-end # assert_method
 def test_Capture_Examples
 	Match_capture.assert_pre_conditions
 	Split_capture.assert_pre_conditions
@@ -284,30 +300,6 @@ def test_String_parse
 	message = 'unimlemented corect mapping of regexp Repetition to parse_repetition'
 #	pend(message)
 #	assert_equal(Array_answer, Newline_Terminated_String.parse(Terminated_line.group*'*'), self.inspect)
-	ls_octet_pattern = /rwx/
-	ls_permission_pattern = [/1/,
-					ls_octet_pattern.capture(:system),
-					ls_octet_pattern.capture(:group), 
-					ls_octet_pattern.capture(:owner)] 
-	filename_pattern = /[-_0-9a-zA-Z\/]+/
-	assert_match(/\s/, drivers)
-	driver_pattern = [
-							'  ', /[0-9]+/.capture(:number), /    /,
-							'  ', /[0-9]+/.capture(:number), /    /,
-							ls_permission_pattern,
-							'/sys/devices',
-							filename_pattern.capture(:device),
-							' -> ', 
-							filename_pattern.capture(:driver)]
-	short = drivers[0..10]
-	short = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
-	assert_match(/ /, short)
-	assert_match(/\s/, drivers)
-	assert_match(/\s/, drivers)
-	assert_match('  ', short)
-	assert_match(/  /, short)
-	assert_match(/\ \ /, short)
-	'  '.assert_parse(/  /)
 end # parse
 def test_add_message
 end #add_message
@@ -345,6 +337,29 @@ def test_assert_parse_string
 #	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
 #	assert_equal({:a => "1", :b => "2"}, parse_string(string, Terminated_line.capture(:a)*Terminated_line.capture(:b)))
 end #parse_string
+def test_assert_left_parse
+	ls_octet_pattern = /r|w|x/
+	ls_permission_pattern = [/1/,
+					ls_octet_pattern.capture(:system),
+					ls_octet_pattern.capture(:group), 
+					ls_octet_pattern.capture(:owner)] 
+	filename_pattern = /[-_0-9a-zA-Z\/]+/
+	driver_pattern = [
+							'  ', /[0-9]+/.capture(:number), /    /,
+							'  ', /[0-9]+/.capture(:number), /    /,
+							ls_permission_pattern,
+							'/sys/devices',
+							filename_pattern.capture(:device),
+							' -> ', 
+							filename_pattern.capture(:driver)]
+	drivers = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
+	assert_match(/ /, drivers)
+	assert_match(/\s/, drivers)
+	assert_match('  ', drivers)
+	assert_match(/  /, drivers)
+	assert_match(/\ \ /, drivers)
+	'  '.assert_parse(/  /)
+end # assert_left_parse
 def test_assert_parse
 	parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
 	parse_delimited_array=Capture.new(Newline_Delimited_String.split(Branch_regexp), Branch_regexp)

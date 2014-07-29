@@ -65,10 +65,17 @@ def success?(raw_captures = self.raw_captures?)
 		false
 	elsif raw_captures.instance_of?(MatchData) then
 		true
-	elsif raw_captures.size < 2 then # split failed
-		false
-	else # split succeeded
-		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = Capture.new(string, regexp, :match)
+			match_capture.success?(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				false
+			else # split succeeded
+				true
+			end #if
+		end # if
 	end #if
 end # success?
 def repetitions?(raw_captures = self.raw_captures?)
@@ -180,7 +187,16 @@ require_relative '../../test/assertions.rb'
 # Capture::Assertions
 require_relative '../../test/assertions.rb'
 module Assertions
-
+module ClassMethods
+def assert_pre_conditions(message='')
+end # assert_pre_conditions
+def assert_method(match_capture, limit_capture, argumentless_method_name = :output?, message = '')
+	message += "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
+	match_method_object = match_capture.method(argumentless_method_name)
+	limit_method_object = limit_capture.method(argumentless_method_name)
+	assert_equal(match_method_object.call, limit_method_object.call, message)
+end # assert_method
+end #ClassMethods
 # Any match at all
 def assert_pre_conditions(message='')
 	assert_not_nil(@captures, 'no match at all.')
@@ -192,6 +208,25 @@ def assert_pre_conditions(message='')
 	end # if
 	assert(success?)
 end # assert_pre_conditions
+def assert_success(raw_captures = self.raw_captures?)
+	if raw_captures.nil? then 
+		assert(false, self.inspect)
+	elsif raw_captures.instance_of?(MatchData) then
+		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = Capture.new(string, regexp, :match)
+			match_capture.assert_success(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				assert(false, self.inspect)
+			else # split succeeded
+				true
+			end #if
+		end # if
+	end #if
+	assert(success?, self.inspect)
+end # assert_success
 def assert_left_match(message = '')
 	message = add_default_message(message)
 	assert(success?, message)
@@ -199,7 +234,8 @@ def assert_left_match(message = '')
 	message += "\nstring... = " + string[0..50].inspect
 	pre_match_message = message + "\nA left match requires pre_match? = #{pre_match?} to be empty."
 	assert_empty(pre_match?, message + "\nA left match requires pre_match? = #{pre_match?} to be empty.")
-	assert_empty(delimiters?.join("\n")[0..100], message + "\nDelimiters were found in a split match.")
+	assert_empty(delimiters?.join("\n")[0..100], message + "\nDelimiters were found in a split match = "+delimiters?.inspect)
+	assert_success
 end # assert_left_match
 # exact match, no left-overs
 def assert_post_conditions(message = '')
@@ -245,14 +281,6 @@ def assert_parse_string(answer, string, pattern, message='')
 	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
 
 end #parse_string
-module ClassMethods
-def assert_method(match_capture, limit_capture, argumentless_method_name = :output?, message = '')
-	message += "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
-	match_method_object = match_capture.method(argumentless_method_name)
-	limit_method_object = limit_capture.method(argumentless_method_name)
-	assert_equal(match_method_object.call, limit_method_object.call, message)
-end # assert_method
-end #ClassMethods
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
@@ -429,7 +457,7 @@ def assert_left_parse(pattern, message='')
 		split_capture = Capture.new(self, pattern, :split)
 		limit_capture = Capture.new(self, pattern, :limit)
 		match_capture.assert_left_match
-		split_capture.assert_pre_conditions
+		split_capture.assert_left_match
 		limit_capture.assert_left_match
 		# limit repetitions to pattern, get all captures
 		if split_capture.repetitions? == 1 then
@@ -440,7 +468,7 @@ def assert_left_parse(pattern, message='')
 			match_capture
 		end # if
 	end # if
-end # assert_parse
+end # assert_left_parse
 def assert_parse(pattern, message='')
 	if pattern.instance_of?(Array) then
 		pos = 0
