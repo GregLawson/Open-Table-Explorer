@@ -16,7 +16,6 @@ require_relative 'parse.rb'
 require_relative 'branch.rb'
 class Repository <Grit::Repo
 module Constants
-#Temporary='/mnt/working/Recover'
 Root_directory=FilePattern.project_root_dir?(__FILE__)
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'

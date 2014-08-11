@@ -24,7 +24,6 @@ def test_find_devices
 					ls_octet_pattern.capture(:group), 
 					ls_octet_pattern.capture(:owner)] 
 	filename_pattern = /[-_0-9a-zA-Z\/]+/
-	assert_match(/\s/, drivers)
 	driver_pattern = [
 							'  ', /[0-9]+/.capture(:number), /    /,
 							'  ', /[0-9]+/.capture(:number), /    /,
@@ -33,20 +32,6 @@ def test_find_devices
 							filename_pattern.capture(:device),
 							' -> ', 
 							filename_pattern.capture(:driver)]
-	short = drivers[0..10]
-	short = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
-	assert_match(/ /, short)
-	assert_match(/\s/, drivers)
-	assert_match(/\s/, drivers)
-	assert_match('  ', short)
-	assert_match(/  /, short)
-	assert_match(/\ \ /, short)
-	'  '.assert_parse(/  /)
-	short.assert_parse(/  /)
-	short.assert_parse([/\s/])
-	short.assert_parse([/\s+/])
-	short.assert_parse([/  /])
-	short.assert_parse(['  '])
 	drivers.assert_parse(driver_pattern)
 	events =Dir['ls /dev/event*']
 	events_by_id = ShellCommands.new('ls -l /dev/input/by-id*').assert_post_conditions.output

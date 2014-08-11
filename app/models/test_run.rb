@@ -9,12 +9,9 @@ require_relative '../../app/models/no_db.rb'
 require 'virtus'
 require 'fileutils'
 require_relative '../../app/models/repository.rb'
+require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/bug.rb'
 class TestRun # < ActiveRecord::Base
-module Constants
-Ruby_version = ShellCommands.new('ruby --version').output.split(' ')
-end # Constants
-include Constants
 include Virtus.model
   attribute :test_type, Symbol, :default => :unit
   attribute :singular_table, String, :default => TE.model_name?.to_s.underscore
@@ -24,18 +21,42 @@ include Virtus.model
   attribute :processor_version, String, :default => nil # system version
   attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
+module Constants
+# see http://semver.org/
+Version_digits = /[0-9]{1,4}/
+Version = [Version_digits.capture(:major), '.'] + 
+	[Version_digits.capture(:minor)] + 
+	[Version_digits.capture(:patch)] +
+	[/[-.a-zA-Z0-9]*/.capture(:pre_release)]
+Ruby_pattern = [/ruby /, Version]
+Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
+Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
+Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
+end # Constants
+include Constants
 #include Generic_Table
 #has_many :bugs
 module ClassMethods
-def error_score?(executable=@related_files.model_test_pathname?)
-	@recent_test=shell_command("ruby "+executable)
-#	@recent_test.puts if $VERBOSE
-	if @recent_test.success? then
+def ruby_version(executable_suffix = '')
+	ShellCommands.new('ruby --version').output.split(' ')
+	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
+	testRun.output.parse(Version_pattern).output
+end # ruby_version
+def error_score?(executable)
+	file_pattern = FilePattern.find_from_path(executable)
+	test_type = file_pattern[:name][0..-6]
+	@@recent_test = TestRun.new(test_type: test_type).run
+	unit = Unit.new_from_File(executable)
+
+	if @@recent_test.success? then
 		0
-	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test=shell_command("ruby -c "+executable)
+	elsif @@recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test = TestRun.new(test_type: test_type,
+			options: '-c').run
+
 		if syntax_test.output=="Syntax OK\n" then
-			initialize_test=shell_command("ruby "+executable+' -n test_initialize')
+			initialize_test = TestRun.new(test_type: test_type,
+			options: '-n test_initialize').run
 			if initialize_test.success? then
 				1
 			else # initialization  failure or test_initialize failure
@@ -326,6 +347,6 @@ Plural_testRun = TestRun.new({:test_type => :unit, :plural_table => 'test_runs'}
 Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
 Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
 Odd_plural_testRun=TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
-
+Ruby_version = ShellCommands.new('ruby --version').output
 end # Examples
 end # TestRun

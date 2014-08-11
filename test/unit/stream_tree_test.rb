@@ -62,4 +62,24 @@ def test_map_pair_Hash
 	idenity_map  = tree.class::Constants::Identity_map_pair
 	assert_equal(tree, tree.map_pair(&idenity_map))
 end # map_pair
+def test_enumerate_single
+	atom=/5/
+	single=atom.enumerate_single(:map){|e| e}
+	assert_not_nil(single)
+	assert_equal(5, 5.enumerate_single(:map){|e| e})
+	assert_equal(5, 5.enumerate_single(:select){|e| e==5})
+	assert_equal(nil, 5.enumerate_single(:select){|e| e==6})
+	assert_equal(false, 5.enumerate_single(:all?){|e| e==6})
+	assert_equal(true, 5.enumerate_single(:all?){|e| e==5})
+end #enumerate_single
+def test_enumerate
+	atom=[/5/]
+	single=atom.enumerate(:map){|e| e}
+	assert_not_nil(single)
+	assert_equal([5], [5].enumerate(:map){|e| e})
+	assert_equal([5], [5].enumerate(:select){|e| e==5})
+	assert_equal([], [5].enumerate(:select){|e| e==6})
+	assert_equal(false, [5].enumerate(:all?){|e| e==6})
+	assert_equal(true, [5].enumerate(:all?){|e| e==5})
+end #enumerate
 end #StreamTree

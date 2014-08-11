@@ -8,9 +8,34 @@
 require 'test/unit'
 require_relative '../../app/models/global.rb'
 require 'set'
-module Test
-module Unit
-module Assertions
+# add introspective for default error_messages
+class Object
+def default_message
+	message = "\n self=#{self.inspect}\n"
+	message += "\n instance_variables=#{instance_variables.inspect}"
+end #default_message
+end # Object
+class Module
+def default_message
+	message = "\nModule.nesting=#{Module.nesting.inspect}"
+	message+="\n Class #{self.class.name}"
+	name_list_method = :included_modules
+end #default_message
+end # Module
+class Method
+def caller_lines(ignore_lines=19)
+	"\n#{caller[0..-ignore_lines].join("\n")}\n"
+end #caller_lines
+end # Method
+module Kernel
+# Default message if message is empty
+def add_default_message(message='')
+	if message == '' then
+		default_message
+	else
+		message
+	end # if
+end # add_default_message
 def newline_if_not_empty(message)
 	if message.empty? then
 		message
@@ -18,17 +43,32 @@ def newline_if_not_empty(message)
 		message+"\n"
 	end #if
 end #newline_if_not_empty
-def add_default_message(message='')
-	if message == '' then
-		"self = #{self.inspect}"
-	else
-		message
-	end # if
-end #add_parse_message
-
-def caller_lines(ignore_lines=19)
-	"\n#{caller[0..-ignore_lines].join("\n")}\n"
-end #caller_lines
+def trace_to_s(expression_string)
+	"\n" + expression_string.to_s + ' = ' + eval(expression_string.to_s)
+end # trace_to_s
+def trace(expression_string)
+		"\n" + expression_string.to_s + '.inspect = ' + eval(expression_string.to_s).inspect
+end # trace
+def trace_names?(name_list_method = :instance_variables)
+	name_list = self.method(name_list_method).call
+	name_list.map do |name|
+		trace(name)
+	end # map
+end # trace_names?
+def default_message
+	message="\nModule.nesting=#{Module.nesting.inspect}"
+	message+="\n Class #{self.class.name}"
+	message+=" unknown method"
+	message+="\n self=#{self.inspect}\n"
+	message+="\n local_variables=#{local_variables.inspect}"
+	message+="\n instance_variables=#{instance_variables.inspect}"
+#	message+=" callers=#{caller_lines}"
+	return message
+end # default_message
+end # Kernel
+module Test
+module Unit
+module Assertions
 # returns to ruby 1.8 behavior
 =begin
 def build_message(head, template=nil, *arguments)
@@ -89,16 +129,6 @@ def quieter(&block)
   end #if
 	$VERBOSE = old_verbose
 end # quieter
-def default_message
-	message="Module.nesting=#{Module.nesting.inspect}"
-	message+=" Class #{self.class.name}"
-	message+=" unknown method"
-	message+=" self=#{self.inspect}"
-	message+=" local_variables=#{local_variables.inspect}"
-	message+=" instance_variables=#{instance_variables.inspect}"
-	message+=" callers=#{caller_lines}"
-	return message
-end #default_message
 # File of ruby assertions not requiring ActiveRecord or fixtures
 
 def assert_call_result(obj,methodName,*arguments)

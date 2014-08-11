@@ -185,7 +185,7 @@ def test_files(edit_files = @related_files.edit_files)
 	pairs.join(' ')
 end # test_files
 def minimal_comparison?
-	FilePattern::All.map do |p|
+	FilePattern::Constants::Patterns.map do |p|
 		min_path = Pathname.new(p.pathname_glob('minimal' + @related_files.default_test_class_id?.to_s)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 		path = Pathname.new(p.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE

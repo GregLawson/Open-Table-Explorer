@@ -19,6 +19,24 @@ def test_virtus_initialize
 	assert_equal('code_bases', Odd_plural_testRun.plural_table)
 	assert_equal(nil, Odd_plural_testRun.test)
 end # virtus_initialize
+def test_Constants
+	assert_match(Ruby_pattern, Ruby_version)
+	assert_match(Parenthetical_date_pattern, Ruby_version)
+	assert_match(Bracketed_os, Ruby_version)
+	assert_match(Ruby_pattern * Parenthetical_date_pattern, Ruby_version)
+	assert_match(Parenthetical_date_pattern * Bracketed_os, Ruby_version)
+	assert_match(Version_pattern, Ruby_version)
+end # Constants
+def test_ruby_version
+	executable_suffix = ''
+	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
+	parse = testRun.output.parse(Version_pattern).output
+	assert_instance_of(Hash, parse)
+	assert_operator(parse[:major], :>=, '1')
+	assert_operator(parse[:minor], :>=, '1')
+	assert_operator(parse[:patch], :>=, '1')
+	assert_instance_of(String, parse[:pre_release])
+end # ruby_version
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text

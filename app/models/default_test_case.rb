@@ -76,7 +76,7 @@ end #ExampleCall
 module DefaultTests0
 require_relative '../../test/assertions.rb'
 
-extend Test::Unit::Assertions
+#extend Test::Unit::Assertions
 def related_files?
 	Unit.new(model_name?)
 end #related_files
@@ -244,6 +244,15 @@ end #global_class_names
 def data_source_directory?(model_name=model_name?)
 	'test/data_sources/'+model_name.to_s+'/'
 end #data_source_directory?
+def default_message(&local_variables_block)
+#TMI	message = "\n self=#{self.inspect}\n"
+	caller_binding = local_variables_block.binding
+	"\nlocal_variables:" +
+	local_variables_block.yield.map do |name|
+		"\n  " + name.to_s + ' = ' +
+		caller_binding.local_variable_get(name).inspect
+	end.join # map
+end # default_message
 end #DefaultTestCase0
 class DefaultTestCase1 < DefaultTestCase0 # test file only
 end #DefaultTestCase1

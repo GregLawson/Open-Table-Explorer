@@ -23,7 +23,6 @@
 # I've added Array#to_hash to create the indexes as keys
 # map should be added analogously to Hash
 require_relative 'parse.rb'
-require_relative 'parse_tree.rb'
 module Node
 module ParentLinked
 def all
@@ -173,6 +172,23 @@ def <<(other)
 	merge(other)
 end # :+
 end # Hash
+class Object
+def enumerate_single(enumerator_method = :map, &proc)
+	result=[self].enumerate(enumerator_method, &proc) #simulate array
+	if result.instance_of?(Array) then # map
+		return result[0] #discard simulated array
+	else # reduction method (not map)
+		return result
+	end #if
+end #enumerate_single
+def enumerate(enumerator_method=:map, &proc)
+	if instance_of?(Array) then
+		method(enumerator_method).call(&proc)
+	else
+		enumerate_single(enumerator_method, &proc)		
+	end #if
+end #enumerate
+end #Object
 module Stream # see http://rgl.rubyforge.org/stream/classes/Stream.html
 include Enumerable
 end # Stream
@@ -189,7 +205,8 @@ include Constants
 def initialize
 end #initialize
 require_relative '../../test/assertions.rb'
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
