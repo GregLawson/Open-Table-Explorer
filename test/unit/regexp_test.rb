@@ -17,6 +17,7 @@ def test_square_brackets
 	assert_equal(/a/, Regexp[/a/])
 	assert_equal(/a/, Regexp['a'])
 	assert_equal(/ab/, ['a', /b/].reduce(//, :*))
+	assert_equal(/ab/, Regexp['a', /b/])
 end # []
 def test_to_regexp_escaped_string
 	assert_equal('ab', Regexp.to_regexp_escaped_string('ab'))
@@ -59,23 +60,31 @@ end #terminator_regexp
 def test_delimiter_regexp
 end #delimiter_regexp
 def test_propagate_options
-	
-	assert_equal([0, US_ASCII_encoding], Regexp.propagate_options(/a/))
-
+	assert_equal([0, Encoding::US_ASCII], Regexp.propagate_options(/a/))
     assert_equal([0, Encoding::UTF_8], Regexp.propagate_options(/pat/u)) # UTF-8
-
     assert_equal([0, Encoding::EUC_JP], Regexp.propagate_options(/pat/e)) # EUC-JP
-
     assert_equal([0, Encoding::Windows_31J], Regexp.propagate_options(/pat/s)) # Windows-31J
-    assert_equal(Encoding::ASCII_8BIT, /pat/n.encoding) # ASCII-8BIT
-    assert_equal([0, Encoding::BINARY], Regexp.propagate_options(/pat/n)) # ASCII-8BIT
-    assert_equal([0, Encoding::ASCII_8BIT], Regexp.propagate_options(/pat/n)) # ASCII-8BIT
-	
-
 	assert(defined? Regexp)
 #	assert(defined? Regexp::CASE_FOLD)
-	assert_equal([0, Encoding.find('US-ASCII')], /a/x.propagate_options)
+	assert_equal([0, Encoding::US_ASCII], Regexp.propagate_options(/a/x))
+#ruby-bug    assert_equal(Encoding::ASCII_8BIT, /pat/n.encoding) # ASCII-8BIT
+#ruby-bug    assert_equal([0, Encoding::BINARY], Regexp.propagate_options(/pat/n)) # ASCII-8BIT
+#ruby-bug    assert_equal([0, Encoding::ASCII_8BIT], Regexp.propagate_options(/pat/n)) # ASCII-8BIT
 end #propagate_options
+def test_canonical_repetition_tree
+	assert_equal(["{", 0, ',', "}"], Regexp.canonical_repetition_tree(Any))
+	assert_equal(["{", 2, "}"], Regexp.canonical_repetition_tree(2,2))
+	assert_equal(["{", 1, ",", 2, "}"], Regexp.canonical_repetition_tree(1,2))
+end #canonical_repetition_tree
+def test_concise_repetition_node
+	assert_equal("*", Regexp.concise_repetition_node(0,  Float::INFINITY))
+	assert_equal("+", Regexp.concise_repetition_node(1, Float::INFINITY))
+	assert_equal("?", Regexp.concise_repetition_node(0, 1))
+	assert_equal('', Regexp.concise_repetition_node(1, 1))
+	assert_equal("{1,2}", Regexp.concise_repetition_node(1,2))
+	assert_equal("{1,2}", Regexp.concise_repetition_node(1,2))
+	assert_equal("{2}", Regexp.concise_repetition_node(2, 2))
+end #concise_repetition_node
 def test_coerce_escaped_string
 end # coerce_escaped_string
 def test_unescaped_string

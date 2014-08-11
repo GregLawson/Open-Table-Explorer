@@ -22,8 +22,6 @@ Optional='?'
 Start_string=/\A/
 End_string=/\z/
 End_string_less_newline=/\Z/
-US_ASCII_encoding = Encoding::US_ASCII # Encoding.find('US-ASCII')
-Binary_encoding = Encoding::ASCII_8BIT
 end #Constants
 include Constants
 module ClassMethods
@@ -89,6 +87,42 @@ def propagate_options(regexp)
 		[Regexp::Default_options, Encoding::US_ASCII]
 	end # if
 end #propagate_options
+# the useful inverse function of new. String to regexp
+def canonical_repetition_tree(min, max = nil)
+	if max.nil? then
+		if min.instance_of?(Range) then
+			max = min.end
+			min = min.begin
+		elsif
+			max = min # fixed repetitions
+		end # if 
+	end # if
+	if max == Float::INFINITY then
+		return ['{', min.to_i, ',',  '}']
+	elsif min==max then
+		return ['{', min.to_i, '}']
+	else
+		return ['{', min.to_i, ',', max.to_i, '}']
+	end # if
+end #canonical_repetition_tree
+# Return a RegexpTree node for self
+# Concise means to use abbreviations like '*', '+', ''
+# rather than the canonical {n,m}
+# If no repetition returns '' equivalent to {1,1}
+def concise_repetition_node(min, max = nil)
+	if max==Float::INFINITY then
+		if min.to_i == 0 then
+			return '*'
+		elsif min.to_i == 1 then
+			return '+'
+		end #if
+	elsif min.to_i == 0 && max.to_i == 1 then
+		return '?'
+	elsif min.to_i == 1 && max.to_i == 1 then
+		return ''
+	end #if
+	return canonical_repetition_tree(min, max).join
+end #concise_repetition_node
 end #ClassMethods
 extend ClassMethods
 # Modeled on Numeric.coerce
