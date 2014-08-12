@@ -10,9 +10,6 @@ require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
 include Capture::Examples
 include String::Examples
-include Parse::ClassMethods # treat class methods like module methods as local to test class
-include Parse::Examples
-include Parse::Assertions::ClassMethods
 include DefaultTests
 def test_default_name
 	index=11
@@ -54,6 +51,11 @@ def test_Capture_initialize
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 end #initialize
 def test_equal
+	Match_capture.instance_variables.each do |iv_name|
+		if !([:@method_name, :@raw_captures,:@captures].include?(iv_name)) then
+			assert_equal(Match_capture.instance_variable_get(iv_name), Limit_capture.instance_variable_get(iv_name), iv_name)
+		end # if
+	end # each
 	assert(Match_capture == Limit_capture)
 end # equal
 def test_raw_captures?
@@ -61,7 +63,7 @@ def test_raw_captures?
 	assert_match(Branch_line, Split_capture.string, Split_capture.inspect)
 	assert_match( Split_capture.regexp, Split_capture.string, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.string.split(Split_capture.regexp), Split_capture.inspect)
-	assert_equal({branch: '1'}, Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
+	assert_equal([{branch: '1'}], Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.raw_captures, Split_capture.inspect)
 	assert_equal(3, Split_capture.raw_captures.size, Split_capture.inspect)
 
@@ -78,8 +80,8 @@ def test_success?
 	assert(Match_capture.success?)
 	assert(Split_capture.success?)
 	assert(Limit_capture.success?)
-	assert_equal(false, Capture.new('cat', /fish/, :match).success?)
-	assert_equal(false, Failed_capture.success?, Failed_capture.inspect)
+	assert_equal(nil, Capture.new('cat', /fish/, :match).success?)
+	assert_equal(nil, Failed_capture.success?, Failed_capture.inspect)
 	assert(Capture.new('  ', /  /, :split).success?)
 	'  '.assert_parse(/  /)
 end # success?
@@ -102,8 +104,15 @@ end # to_a?
 def test_post_match?
 end # post_match?
 def test_pre_match?
+	assert_equal('', Capture.new('a', /a/, :match).pre_match?)
+	assert_equal('b', Capture.new('ba', /a/, :match).pre_match?)
+	assert_equal('', Capture.new('a', /a/.capture(:a),:match).pre_match?)
+	assert_equal(nil, Capture.new('b', /a/, :match).pre_match?)
 end # pre_match?
 def test_matched_characters?
+	assert_equal(1, Capture.new('a', /a/, :match).matched_characters?)
+	assert_equal(1, Capture.new('a', /a/, :match).matched_characters?)
+	assert_equal(1, Capture.new('ab', /a/.capture(:a), :match).matched_characters?)
 end # matched_characters?
 def test_output?
 end # output?
@@ -159,22 +168,16 @@ def test_named_hash
 	matchData=string.match(regexp)
 	captures=matchData #[1..-1]
 #	parse_string=Capture.new("* 1\n", Branch_regexp)
-	assert_equal(2, Parse_string.captures.size, Parse_string.inspect)
-	possible_unnamed_capture_indices=Parse_string.all_capture_indices
+	assert_equal(3, Parse_string.captures.size, Parse_string.inspect)
 	Parse_string.named_hash
 	named_hash={}
-	assert_equal([1], possible_unnamed_capture_indices, captures.inspect+"\n"+captures.captures.inspect)
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
 		named_hash[n.to_sym]=captures[n]
 	end # each
-	named_hash
 	assert_equal({:branch => '1'}, named_hash) # return matched subexpressions
 	splitData=string.split(regexp)
 	captures=splitData #[1..-1]
-	possible_unnamed_capture_indices=Parse_array.all_capture_indices
-#	assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
-#	assert_equal([1], Parse_array.all_capture_indices, Parse_array.all_capture_indices)
 	named_hash={}
 	assert_equal({'branch' => [1]}, regexp.named_captures)
 	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
@@ -200,6 +203,11 @@ def test_named_hash
 			end #each_index
 		end #if
 	end # each_pair
+	possible_unnamed_capture_indices = Parse_string.all_capture_indices
+#	assert_equal([1], possible_unnamed_capture_indices, captures.inspect+"\n"+captures.captures.inspect)
+	possible_unnamed_capture_indices=Parse_array.all_capture_indices
+#	assert_equal([1], possible_unnamed_capture_indices, Parse_array.all_capture_indices)
+#	assert_equal([1], Parse_array.all_capture_indices, Parse_array.all_capture_indices)
 #	assert_equal([], possible_unnamed_capture_indices, possible_unnamed_capture_indices.inspect)
 	assert_equal('', captures[0], regexp.named_captures.inspect+"\n"+captures.inspect)
 #	assert_equal([], possible_unnamed_capture_indices, regexp.named_captures.inspect+"\n"+captures.inspect)
@@ -238,17 +246,7 @@ def test_Capture_assert_post_conditions
 	assert_equal('', Parse_delimited_array.post_match, Parse_delimited_array.inspect)
 	Parse_array.assert_post_conditions
 end # assert_post_conditions
-def test_assert_repetition_options
-	Parse_array.assert_repetition_options({ending: :terminator, delimiter: "\n"})
-	assert_equal('', Parse_delimited_array.post_match)
-	Parse_delimited_array.assert_repetition_options({ending: :delimiter, delimiter: "\n"})
-	Parse_string.assert_repetition_options
-end # assert_repetition_options
 
-def test_assert_parse_string
-	assert_equal(['1', '2'], parse_string("1\n2", Terminated_line))
-	assert_parse_string(['1', '2'], "1\n2", Terminated_line, 'test_assert_parse')
-end #parse_string
 def test_Capture_Examples
 	Match_capture.assert_pre_conditions
 	Split_capture.assert_pre_conditions
@@ -265,24 +263,10 @@ def test_Capture_Examples
 	assert_raises(AssertionFailedError) {Failed_capture.assert_post_conditions}
 end # Examples
 # String
-def test_parse_unrepeated
-	assert_equal(Hash_answer, Newline_Delimited_String.parse_unrepeated(Terminated_line))
-	assert_equal(Hash_answer, Newline_Terminated_String.parse_unrepeated(Terminated_line))
-end # parse_unrepeated
-def test_String_parse_repetition
-	assert_parse_string(Hash_answer, Newline_Delimited_String, Terminated_line, '')
-	assert_parse_string(Hash_answer, Newline_Terminated_String, Terminated_line, "")
-	string=Newline_Terminated_String
-	pattern=Terminated_line
-	assert_equal(Hash_answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
-
-	assert_equal(Array_answer, Newline_Terminated_String.parse_repetition(Terminated_line))
-	assert_equal([Hash_answer], Newline_Delimited_String.parse_repetition(Terminated_line))
-end # parse_repetition
 def test_String_capture?
-	assert_equal([Hash_answer], Newline_Delimited_String.parse_repetition(Terminated_line))
+	assert_equal([Hash_answer], Newline_Delimited_String.parse(Terminated_line))
 	pattern = Terminated_line
-	ret = Newline_Delimited_String.parse_repetition(pattern)
+	ret = Newline_Delimited_String.parse(pattern)
 	assert_instance_of(Array, ret)
 	assert_not_equal(1, Array_answer.size, Array_answer)
 	assert_equal(1, ret.size, ret)
@@ -297,9 +281,15 @@ def test_String_capture?
 end # capture?
 def test_String_parse
 	assert_equal(Hash_answer, Newline_Delimited_String.parse(Terminated_line), self.inspect)
-	message = 'unimlemented corect mapping of regexp Repetition to parse_repetition'
+	message = 'unimlemented corect mapping of regexp Repetition to parse'
 #	pend(message)
 #	assert_equal(Array_answer, Newline_Terminated_String.parse(Terminated_line.group*'*'), self.inspect)
+	answer=Hash_answer
+	string=Newline_Terminated_String
+	pattern=Terminated_line
+	repetition_range = Any
+	match1=string.parse(pattern)
+	match1=string.parse([pattern])
 end # parse
 def test_add_message
 end #add_message
@@ -310,33 +300,6 @@ def test_assert_parse_once
 	explain_assert_respond_to(Newline_Delimited_String, :assert_parse_once)
 	Newline_Delimited_String.assert_parse_once(Branch_regexp)
 end # assert_parse_once
-def test_assert_parse_string
-	string="* 1\n"
-	pattern=Branch_regexp
-	matchData=string.match(Branch_regexp)
-	assert_equal(['1'], matchData[1..-1], matchData.inspect) # return matched subexpressions
-	assert_equal({:branch => '1'}, parse_string(string, Branch_regexp)) # return matched subexpressions
-	assert_parse_string({:branch => '1'}, string, Branch_regexp) # return matched subexpressions
-	assert_equal(["branch"], Branch_regexp.names, matchData)
-	ret=if matchData.nil? then
-		[]
-	elsif matchData.names==[] then
-		assert_equal(Hash_answer, matchData[1..-1], matchData) # return unnamed subexpressions
-	else
-		nc=pattern.named_captures
-		assert_not_nil(nc)
-		assert_not_empty(nc)
-		named_hash={}
-		matchData.names.each do |n| # return named subexpressions
-			named_hash[n.to_sym]=matchData[n]
-		end # each
-		named_hash
-	end #if
-	assert_equal(Hash_answer, parse_string(string, Terminated_line), "matchData=#{matchData.inspect}")
-#	assert_equal(Hash_answer, parse_string("1 2", WORD))
-#	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
-#	assert_equal({:a => "1", :b => "2"}, parse_string(string, Terminated_line.capture(:a)*Terminated_line.capture(:b)))
-end #parse_string
 def test_assert_left_parse
 	ls_octet_pattern = /r|w|x/
 	ls_permission_pattern = [/1/,
@@ -361,72 +324,19 @@ def test_assert_left_parse
 	'  '.assert_parse(/  /)
 end # assert_left_parse
 def test_assert_parse
-	parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
-	parse_delimited_array=Capture.new(Newline_Delimited_String.split(Branch_regexp), Branch_regexp)
+	parse_string=Capture.new(Newline_Delimited_String, Branch_regexp)
+	parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp)
 
 	assert_equal(parse_string.to_a?.join, parse_delimited_array.captures.join)
 	assert_equal(parse_string.to_a?, parse_delimited_array.captures)
 	assert_equal(parse_string, parse_delimited_array)
+	Driver_string[0..1].assert_parse(Driver_pattern[0..0])
+	Driver_string.assert_parse(Driver_pattern[0..0])
+	first_capture = Driver_string[2..-1].capture?(Driver_pattern[1], :match)
+	assert_equal(first_capture.method_name, :match)
+	assert_instance_of(Capture, first_capture)
+	assert_equal(4, first_capture.matched_characters?, first_capture.inspect)
+	Driver_string[2..-1].assert_parse(Driver_pattern[1..-1])
+	Driver_string.assert_parse(Driver_pattern)
 end # assert_parse
-def test_parse_into_array
-	string=Newline_Terminated_String
-	pattern=Terminated_line
-	repetition_options={:ending => :delimiter}
-	parse_into_array=parse_into_array(string, pattern)
-	assert_equal(Hash_answer, parse_into_array[0])
-	parse_into_array=parse_into_array(string, Branch_regexp)
-	assert_equal([{:branch=>"1"}, {:branch=>"2"}], parse_into_array)
-end #parse_into_array
-def test_add_parse_message
-	assert_match(/match\(/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
-	assert_match(/test_add_parse_message/, add_parse_message("1\n2", Terminated_line, 'test_add_parse_message'))
-end #add_parse_message
-def test_assert_parse_string
-	assert_equal(['1', '2'], parse_string("1\n2", Terminated_line))
-	assert_parse_string(['1', '2'], "1\n2", Terminated_line, 'test_assert_parse')
-end #parse_string
-def test_assert_parse_sequence
-	assert_equal(Hash_answer, parse_string(Newline_Terminated_String, LINE*Line_terminator))
-	assert_equal([], ['2']-['1', '2'])
-
-	assert_empty(['2']-['1', '2'])
-#	assert_parse_sequence(['1', '2'], Newline_Terminated_String,  Terminated_line, Terminated_line, 'test_assert_parse_sequence')
-#	assert_parse_sequence(['1', '2'], Newline_Terminated_String,  Terminated_line, Terminated_line*End_string, 'test_assert_parse_sequence')
-end #parse_sequence
-def test_parse_repetition
-	answer=Hash_answer
-	string=Newline_Terminated_String
-	pattern=Terminated_line
-	repetition_range=Any
-	match1=parse_string(string, pattern)
-#	assert_equal(match1, answer[0, match1.size], add_parse_message(string, pattern, message))
-	match_any=parse_string(string, pattern*Regexp::Any)
-#	assert_equal(answer, match_any[-answer.size..-1], add_parse_message(string, pattern*Regexp::Any, message))
-	match=parse_string(string, pattern*repetition_range)
-	if match==[] || match=={} then
-		message = "string.match(#{pattern*repetition_range})=#{string.match(pattern*repetition_range).inspect}"
-		message += default_message{local_variables}
-		assert_equal(answer, string.parse(pattern*repetition_range), message)
-	end #if
-#	assert_equal(['1'], parse_string("1\n2", Terminated_line*Any))
-	assert_parse_repetition(['1','2'], Newline_Terminated_String,  Terminated_line, Any, 'test_assert_parse_sequence')
-end #parse_repetition
-def test_assert_parse_string
-	answer=Hash_answer
-	string=Newline_Delimited_String
-	pattern=Terminated_line
-	message=''
-	assert_parse_string(answer, string, pattern, message='')
-end #parse
-def test_Examples
-#	assert_equal(LINES, LINES_cryptic)
-#	assert_equal(Terminated_line, Terminated_line_cryptic)
-	assert_parse_string(Hash_answer, Newline_Delimited_String, Terminated_line, '')
-	assert_parse_string(Hash_answer, Newline_Terminated_String, Terminated_line, "")
-#	assert_parse_sequence(Hash_answer, Newline_Terminated_String, Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
-#	assert_parse_sequence(Hash_answer, Newline_Terminated_String, Start_string*Terminated_line, Terminated_line*End_string, "assert_parse_sequence")
-	string=Newline_Terminated_String
-	pattern=Terminated_line
-	assert_equal(Hash_answer, parse_string(string, pattern), "string.match(pattern)=#{string.match(pattern).inspect}")
-end # Examples
-end #Parse
+end #String
