@@ -89,7 +89,11 @@ end # repetitions?
 def to_a?(raw_captures = self.raw_captures?)
 	case case?(raw_captures)
 	when :no_match then []
-	when :match  then [pre_match?] + raw_captures[1..-1] + [post_match?]
+	when :match  then if raw_captures.size == 0 then
+		[pre_match?] + raw_captures[0] + [post_match?]
+	else
+		[pre_match?] + raw_captures[1..-1] + [post_match?]
+	end # if
 	when :split then raw_captures
 	end #case
 end # to_a?
@@ -232,8 +236,8 @@ def assert_left_match(message = '')
 	assert(success?, message)
 	message += "\nregexp = " + regexp.inspect
 	message += "\nstring... = " + string[0..50].inspect
-	pre_match_message = message + "\nA left match requires pre_match? = #{pre_match?} to be empty."
-	assert_empty(pre_match?, message + "\nA left match requires pre_match? = #{pre_match?} to be empty.")
+	assert_not_match(regexp, pre_match?)
+	assert_empty(pre_match?, message + "\nA left match requires pre_match? = #{pre_match?.inspect} to be empty.")
 	assert_empty(delimiters?.join("\n")[0..100], message + "\nDelimiters were found in a split match = "+delimiters?.inspect)
 	assert_success
 end # assert_left_match
@@ -278,7 +282,7 @@ def assert_parse_string(answer, string, pattern, message='')
 	assert_match(pattern, string, message)
 	matchData=pattern.match(string)
 	assert_operator(pattern.named_captures.values.flatten.size, :<=, matchData.size-1, "All string parse captures should be named.\n"+message)
-	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
+	assert_equal(answer, string.parse(pattern), add_parse_message(string, pattern, message))
 
 end #parse_string
 end #Assertions
@@ -311,30 +315,13 @@ end # Capture
 
 # String
 class String
-# Match pattern without repetition
-def match_unrepeated(pattern)
-	Capture.new(self, pattern, :match)
-end # parse_unrepeated
-def parse_unrepeated(pattern)
-	match_unrepeated(pattern).output?
-end # parse_unrepeated
-# Handle repetion and returns an Array
-# Splits pattern match captures into an array of parses
-# Uses Regexp capture mechanism in String#split
-# Input String, Output Array
-def match_repetition(item_pattern)
-	Capture.new(self, item_pattern, :split)
-end # parse_repetition
-def parse_repetition(item_pattern)
-	match_repetition(item_pattern).output?
-end # parse_repetition
-# Try to unify parse_repetition and parse_unrepeated
+# Try to unify match and split (with Regexp delimiter)
 # What is the difference between an Object and an Array of size 1?
 # Should difference be derived from recursive analysis of RegexpParse?
 # Where repetitions produce Array, others produe Hash
 # complicated by fact regular expressions simulate repetitions with recursive alternatives
 # capture? returns a tree of Capture objects while parse returns only the output Hash
-def capture?(pattern)
+def capture?(pattern, method_name = :limit)
 	if pattern.instance_of?(Array) then
 		pos = 0
 		pattern.map do |p|
@@ -347,22 +334,13 @@ def capture?(pattern)
 		# see http://stackoverflow.com/questions/3518161/another-way-instead-of-escaping-regex-patterns
 		capture?(Regexp.new(Regexp.quote(pattern)))
 	else
-		match_capture = Capture.new(self, pattern, :match)
-		split_capture = Capture.new(self, pattern, :split)
-		limit_capture = Capture.new(self, pattern, :limit)
-		# limit repetitions to pattern, get all captures
-		if split_capture.repetitions? == 1 then
-			match_capture
-		elsif match_capture.output? == split_capture.output?[-1] then # over-written captures
-			split_capture
-		else
-			match_capture
-		end # if
+		capture = Capture.new(self, pattern, method_name)
 	end # if
 end # capture?
 def parse(regexp)
-	match = capture?(regexp)
-	match.enumerate(:map) {|e| e.output?}
+	regexp.enumerate(:map) do |reg|
+		capture?(reg).output?
+	end # enumerate
 end # parse
 module Constants
 end #Constants
@@ -457,7 +435,7 @@ def assert_left_parse(pattern, message='')
 		split_capture = Capture.new(self, pattern, :split)
 		limit_capture = Capture.new(self, pattern, :limit)
 		match_capture.assert_left_match
-		split_capture.assert_left_match
+#		split_capture.assert_left_match
 		limit_capture.assert_left_match
 		# limit repetitions to pattern, get all captures
 		if split_capture.repetitions? == 1 then
@@ -473,24 +451,26 @@ def assert_parse(pattern, message='')
 	if pattern.instance_of?(Array) then
 		pos = 0
 		pattern.map do |p|
-			ret = self[pos..-1].assert_left_parse(p) # recurse
-			pos += ret.matched_characters?
+			message += "\nMatched " + self.inspect + ' with ' + p.inspect
+			ret = self[pos..-1].assert_left_parse(p, message) # recurse
+			limit_capture = Capture.new(self[pos..1], p, :limit)
+			pos += limit_capture.matched_characters?
 			ret
 		end # map
 	else
 		match_capture = Capture.new(self, pattern, :match)
 		split_capture = Capture.new(self, pattern, :split)
 		limit_capture = Capture.new(self, pattern, :limit)
-		match_capture.assert_post_conditions
-		split_capture.assert_post_conditions
-		limit_capture.assert_post_conditions
+		match_capture.assert_post_conditions(message)
+		split_capture.assert_post_conditions(message)
+		limit_capture.assert_post_conditions(message)
 		# limit repetitions to pattern, get all captures
 		if split_capture.repetitions? == 1 then
-			match_capture
+			puts message + "\n" + match_capture.inspect
 		elsif match_capture.output? == split_capture.output?[-1] then # over-written captures
-			split_capture
+			puts message + "\n" + split_capture.inspect
 		else
-			match_capture
+			puts message + "\n" + match_capture.inspect
 		end # if
 	end # if
 end # assert_parse
@@ -502,6 +482,27 @@ include Regexp::Constants
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
 WORD=/([^\s]*)/.capture(:word)
 CSV=/([^,]*)(?:,([^,]*?))*?/
+Ls_octet_pattern = /rwx/
+Ls_permission_pattern = [/1|l/,
+					Ls_octet_pattern.capture(:system_permissions),
+					Ls_octet_pattern.capture(:group_permissions), 
+					Ls_octet_pattern.capture(:owner_permissions)] 
+Filename_pattern = /[-_0-9a-zA-Z\/]+/
+Driver_pattern = [
+							/\s+/, /[0-9]+/.capture(:permissions),
+							/\s+/, /[0-9]+/.capture(:size),
+							/ /, Ls_permission_pattern,
+							/\s+/, /[a-z]+/.capture(:owner),
+							/\s+/, /[a-z]+/.capture(:group),
+							/\s+/, /[0-9]+/.capture(:size_2),
+							/\s+/, /[A-Za-z]+/.capture(:month),
+							/\s+/, /[0-9]+/.capture(:date),
+							/\s+/, /[0-9]+/.capture(:time),
+							/\s+/, '/sys/devices',
+							Filename_pattern.capture(:device),
+							' -> ', 
+							Filename_pattern.capture(:driver)]
+Driver_string = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
 end #Examples
 end # String
 
@@ -515,7 +516,7 @@ module ClassMethods
 include Constants
 # Input String, Output Hash
 def parse_string(string, pattern)
-	string.parse_unrepeated(pattern)
+	string.parse(pattern)
 end #parse_string
 
 # Splits pattern match captures into an array of parses
