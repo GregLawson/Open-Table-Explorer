@@ -26,6 +26,7 @@ end #default_name
 end # ClassMethods
 extend ClassMethods
 attr_reader :string, :regexp, :method_name # arguments
+# method_name default should be best parse capture; currently :limit
 attr_reader :captures, :length_hash_captures
 attr_reader :raw_captures
 def initialize(string, regexp, method_name = :split)
@@ -48,22 +49,28 @@ def ==(other)
 end # equal
 def raw_captures?(method_name = self.method_name)
 	if method_name == :limit then # limit match to :match length of string
-		string =  @string[0,Capture.new(@string, @regexp, :match).matched_characters?]# regexp matched string
-		string.method(:split).call(@regexp) # after string shortened
+		match = string.method(:match).call(@regexp)
+		string =  @string[0,matched_characters?(match)]# regexp matched string
+		split = string.method(:split).call(@regexp) # after string shortened
+		if repetitions?(split) == 1 then
+			match
+		else
+			split
+		end # if
 	else
 		string = @string # full string
 		string.method(method_name).call(@regexp)
 	end #if
 end # raw_captures?
-def case?(raw_captures = self.raw_captures?)
-	if raw_captures.nil? then
+def raw_capture_class?(raw_captures = self.raw_captures?)
+	if raw_captures.nil? || (@method_name == :split && [@string] == @raw_captures) then
 		:no_match
 	elsif raw_captures.instance_of?(MatchData) then
 		:match
 	else # raw_capture from split, already in normalized form
 		:split
 	end # case
-end # case?
+end # raw_capture_class?
 def success?(raw_captures = self.raw_captures?)
 	if raw_captures.nil? then 
 		nil
@@ -83,7 +90,7 @@ def success?(raw_captures = self.raw_captures?)
 	end #if
 end # success?
 def repetitions?(raw_captures = self.raw_captures?)
-	case case?(raw_captures)
+	case raw_capture_class?(raw_captures)
 	when :no_match then 0
 	when :match  then 1
 	when :split then (raw_captures.size/(@length_hash_captures+1)).ceil
@@ -91,7 +98,7 @@ def repetitions?(raw_captures = self.raw_captures?)
 end # repetitions?
 # Tranform split and MatchData captures into single form
 def to_a?(raw_captures = self.raw_captures?)
-	case case?(raw_captures)
+	case raw_capture_class?(raw_captures)
 	when :no_match then []
 	when :match  then if raw_captures.size == 0 then
 		[pre_match?] + raw_captures[0] + [post_match?]
@@ -102,7 +109,7 @@ def to_a?(raw_captures = self.raw_captures?)
 	end #case
 end # to_a?
 def post_match?(raw_captures = self.raw_captures?)
-	case case?(raw_captures)
+	case raw_capture_class?(raw_captures)
 	when :no_match then nil
 	when :match  then raw_captures.post_match
 	when :split then 
@@ -156,7 +163,7 @@ def delimiters?(raw_captures = self.raw_captures?)
 		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
 #		raise self.inspect if raw_captures[0].nil?
 	end #if
-end # delimiters
+end # delimiters?
 # return a capture object for two Capture instances (assumed consecutive)
 def +(other_capture)
 	raise "Only Capture instances can be added." if !other_capture.instance_of?(Capture)
