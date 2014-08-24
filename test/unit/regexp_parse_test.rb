@@ -17,14 +17,17 @@ include RegexpParse::Assertions
 include NestedArray::Examples
 def test_Constants
 end # Constants
-def test_Base_inspect
-	assert_equal(Inspect_root, Dump_proc.call(Literal_a))
+def test_inspect_node
+	assert_equal(Inspect_root, Inspect_format.call(Literal_a, depth=0, false))
+#	assert_equal(Inspect_root, Inspect_format.call(Literal_a))
 	assert_equal(Inspect_root, Literal_a.inspect_node)
-end # inspect
+	assert_equal('', Mx_proc.call(Literal_a))
+end # inspect_node
 def test_inspect_recursive
 	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-#	assert_equal([], root.map_recursive(:expressions, &Inspect_format))
-#	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
+	assert_equal(Inspect_root, Inspect_format.call(Literal_a, depth=0, false))
+	assert_equal([[Inspect_a]], Literal_a.map_recursive(:expressions, &Inspect_format))
+	assert_equal(Inspect_a + "\n", Literal_a.inspect_recursive)
 end # inspect_recursive
 def test_Constants
 end # Constants

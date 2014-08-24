@@ -18,10 +18,10 @@ def expression_class_symbol?
 end # expression_class_symbol?
 def inspect_node(&inspect_proc)
 	if !block_given? then
-		inspect_proc = Dump_proc
+		inspect_proc = Inspect_format
 	end # if
 	inspect_proc.call(self)
-end # inspect
+end # inspect_node
 def inspect_recursive(&inspect_proc)
 	if !block_given? then
 		inspect_proc = Inspect_format
@@ -38,6 +38,21 @@ module Constants
 Dump_proc = proc do |e|
 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
 end # Dump_proc
+Mx_proc = proc do |e, depth, terminal|
+	ret = case terminal
+	when true then	'terminal'
+	when false then 'nonterminal'
+	when nil then 'nil'
+	else 'unknown'
+	end # case
+	ret += '[' + depth.to_s + ']'
+	ret += ', ' 
+	if e.kind_of?(Expression::Base) then
+		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+	else
+		ret += 	e.to_s + e.class.ancestors.inspect
+	end # if
+end # Mx_proc
 Arg2_format = proc do |e, depth, terminal|
 	ret = case terminal
 	when true then	'terminal'
@@ -116,9 +131,9 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 end #map_recursive
 module Examples
 include Constants
-Inspect_root = "Root(:expression, :root, '')"
+Inspect_root = "nonterminal[0], Root(:expression, :root, '')"
 Literal_a = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-Inspect_a = "Literal(:literal, :literal, 'a')"
+Inspect_a = "nonterminal[0], Literal(:literal, :literal, 'a')"
 Sequence_example = Regexp::Parser.parse(/ab/.to_s, 'ruby/1.8')
 Alternative_example = Regexp::Parser.parse(/a|b/.to_s, 'ruby/1.8')
 end # Examples
