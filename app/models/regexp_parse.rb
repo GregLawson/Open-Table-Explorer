@@ -18,7 +18,7 @@ def expression_class_symbol?
 end # expression_class_symbol?
 def inspect_node(&inspect_proc)
 	if !block_given? then
-		inspect_proc = Inspect_format
+		inspect_proc = Node_format
 	end # if
 	inspect_proc.call(self)
 end # inspect_node
@@ -35,10 +35,14 @@ def inspect_recursive(&inspect_proc)
 	ret + "\n"
 end # inspect_recursive
 module Constants
-Dump_proc = proc do |e|
+Node_format = proc do |e|
 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
-end # Dump_proc
-Mx_proc = proc do |e, depth, terminal|
+end # Node_format
+Mx_format = proc do |e, depth, terminal|
+	ret = ' ' * depth + e.text + ' # '
+	ret + Inspect_format.call(e, depth, terminal)
+end # Mx_format
+Tree_node_format = proc do |e, depth, terminal|
 	ret = case terminal
 	when true then	'terminal'
 	when false then 'nonterminal'
@@ -48,49 +52,19 @@ Mx_proc = proc do |e, depth, terminal|
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
 	if e.kind_of?(Expression::Base) then
-		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+		ret += Node_format.call(e, depth, terminal)
 	else
-		ret += 	e.to_s + e.class.ancestors.inspect
+		ret += 	'Unexpected ' + "'" + e.inspect + "'" + ' with super class ' + e.class.superclass.inspect+ ' with ancestors ' + e.class.ancestors.inspect
 	end # if
-end # Mx_proc
-Arg2_format = proc do |e, depth, terminal|
-	ret = case terminal
-	when true then	'terminal'
-	when false then 'nonterminal'
-	when nil then 'nil'
-	else 'unknown'
-	end # case
-	ret += '[' + depth.to_s + ']'
-	ret += ', ' 
-	if e.kind_of?(Expression::Base) then
-		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
-	else
-		ret += 	e.to_s + e.class.ancestors.inspect
-	end # if
-end # Arg2_format
-Arg3_format = proc do |terminal, e, depth|
-	if terminal then
-		ret = 'terminal'
-	else
-		ret = 'nonterminal'
-	end # if
-	ret += '[' + depth.to_s + ']'
-	ret += ',' 
-	if e.instance_of?(Expression::Base) then
-		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')\n"
-	else
-		ret += e.to_s 
-	end # if
-
-end # Arg3_format
-Inspect_format = Arg2_format
+end # Tree_node_format
+Inspect_format = Tree_node_format
 end # Constants
 include Constants
 # returns
 # true  - terminal, recursion stops
 # false - nonterminal  - recurse
 # nil   - 
-def leaf?(children_method_name)
+def leaf?(children_method_name = :to_a)
 	children_method_name = children_method_name.to_sym
 	if respond_to?(children_method_name) then
 		children = send(children_method_name)
@@ -131,9 +105,19 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 end #map_recursive
 module Examples
 include Constants
-Inspect_root = "nonterminal[0], Root(:expression, :root, '')"
+Children_method_name = :expressions
 Literal_a = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-Inspect_a = "nonterminal[0], Literal(:literal, :literal, 'a')"
+Children_a = Literal_a.send(Children_method_name)
+Son_a = Children_a[0]
+Grandchildren_a = Son_a.expressions
+Grandson_a = Grandchildren_a[0]
+Node_a = "Literal(:literal, :literal, 'a')"
+Inspect_node_root = "Root(:expression, :root, '')"
+Node_options = "Group::Options(:group, :options, '(?-mix:')"
+Tree_node_root = "nonterminal[0], " + Inspect_node_root
+Tree_node_options = "nonterminal[1], " + Node_options
+Tree_node_a = "terminal[2], " + Node_a
+Inspect_a = 'nonterminal[0], ' + Node_a
 Sequence_example = Regexp::Parser.parse(/ab/.to_s, 'ruby/1.8')
 Alternative_example = Regexp::Parser.parse(/a|b/.to_s, 'ruby/1.8')
 end # Examples
