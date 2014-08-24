@@ -28,7 +28,8 @@ extend ClassMethods
 attr_reader :string, :regexp, :method_name # arguments
 attr_reader :captures, :length_hash_captures
 attr_reader :raw_captures
-def initialize(string, regexp, method_name = :split)
+# method_name default should be best parse capture; currently :limit
+def initialize(string, regexp, method_name = :limit)
 	@string = string
 	@regexp = Regexp.promote(regexp)
 	@method_name = method_name
@@ -326,8 +327,11 @@ def capture?(pattern, method_name = :limit)
 		pos = 0
 		pattern.map do |p|
 			ret = self[pos..-1].capture?(p) # recurse returning Capture
-			
-			pos += ret.matched_characters?
+			if ret.instance_of?(Array) then
+				pos += ret.reduce(0) {|sum, c| sum + c.matched_characters?}
+			else
+				pos += ret.matched_characters?
+			end # if
 			ret
 		end # map
 	elsif pattern.instance_of?(String) then

@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
-class Network < ActiveRecord::Base
+class Network # < ActiveRecord::Base
 #include Generic_Table
 module Constants
 IFCONFIG=ShellCommands.new('/sbin/ifconfig')

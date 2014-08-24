@@ -16,6 +16,7 @@ def test_whereAmI
 	private_C = ifconfig.parse(Private_C)
 	private_network = ifconfig.parse(Private_Network_Pattern)
 	context = ifconfig.parse(Context_Pattern)
+	captures = ifconfig.capture?(IP_Pattern)
 	ip = ifconfig.parse(IP_Pattern)
 	netmask = ifconfig.parse(Netmask_Pattern)
 #	acquire=StreamPattern.find_by_name('Acquisition')
