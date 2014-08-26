@@ -26,13 +26,12 @@ def test_inspect_node
 	assert_match(Literal_a.inspect_node(&Node_format), Tree_node_root)
 end # inspect_node
 def test_inspect_recursive
-	assert_equal([[Inspect_a]], Literal_a.map_recursive(:expressions, &Inspect_format))
-	assert_equal(Inspect_a + "\n", Literal_a.inspect_recursive)
-	assert_equal(Inspect_a + "\n", Literal_a.inspect_recursive(&Inspect_format))
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive, Literal_a.inspect_recursive)
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(&Inspect_format), Literal_a.inspect_recursive(&Inspect_format))
 
 
-#	assert_equal('ab # ' + Inspect_a + "\n", Sequence_example.inspect_recursive(&Mx_format))
-#	assert_equal('a # ' + Inspect_a + "\n", Alternative_example.inspect_recursive(&Mx_format))
+#	assert_equal('ab # ' + Literal_a_map + "\n", Sequence_example.inspect_recursive(&Mx_format))
+#	assert_equal('a # ' + Literal_a_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
 end # inspect_recursive
 def test_Node_format
 	assert_equal(Inspect_node_root, Literal_a.inspect_node)
@@ -40,7 +39,10 @@ def test_Node_format
 end # Node_format
 def test_Mx_format
 	assert_match(Tree_node_root, Mx_format.call(Literal_a, 0, false))
-	assert_equal('a # ' + Inspect_a + "\n", Literal_a.inspect_recursive(&Mx_format))
+	assert_equal(Mx_node_root, Mx_format.call(Literal_a, depth=0, false))
+	assert_equal(Mx_node_options, Mx_format.call(Son_a, depth=1, false))
+	assert_equal(Mx_node_a, Mx_format.call(Grandson_a, depth=2, true))
+	assert_equal([Mx_node_root, Mx_node_options, Mx_node_a].map{|s| s + "\n"}.join, Literal_a.inspect_recursive(&Mx_format))
 end # Mx_format
 def test_Tree_node_format
 	assert_equal(Tree_node_root, Tree_node_format.call(Literal_a, depth=0, false))
@@ -79,10 +81,11 @@ def test_map_recursive
 
 	assert_equal(Node_options, Son_a.inspect_node, Son_a.inspect)
 	assert(Grandson_a.leaf?(:expressions), Grandson_a.inspect) # termination condition
-	assert_equal(Tree_node_a, Grandson_a.map_recursive(:expressions, depth=2, &Inspect_format))
+	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Inspect_format))
+	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Inspect_format))
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Inspect_format))
 end # map_recursive
 def test_Examples
-	assert_equal(Inspect_a, Literal_a.map_recursive(:expressions, &Inspect_format).join)
 end # Examples
 # Example from readme
 def test_readme

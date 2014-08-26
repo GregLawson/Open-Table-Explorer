@@ -94,13 +94,13 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
-		children.map_pair do |key, sub_tree|
+		[visit_proc.call(self, depth, false), children.map_pair do |key, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
-				sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(p, depth, false)}
+				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
 			else
-				visit_proc.call(self, depth, nil) # end recursion
+				visit_proc.call(sub_tree, depth, nil) # end recursion
 			end # if
-		end # map
+		end ] # map
 	end # if
 end #map_recursive
 module Examples
@@ -117,7 +117,12 @@ Node_options = "Group::Options(:group, :options, '(?-mix:')"
 Tree_node_root = "nonterminal[0], " + Inspect_node_root
 Tree_node_options = "nonterminal[1], " + Node_options
 Tree_node_a = "terminal[2], " + Node_a
-Inspect_a = 'nonterminal[0], ' + Node_a
+Grandson_a_map =	Tree_node_a
+Son_a_map =	[Tree_node_options, [Grandson_a_map]]
+Literal_a_map = [Tree_node_root, [Son_a_map]]
+Mx_node_root = ' # ' + Tree_node_root
+Mx_node_options = ' (?-mix: # ' + Tree_node_options
+Mx_node_a = '  a # ' + Tree_node_a
 Sequence_example = Regexp::Parser.parse(/ab/.to_s, 'ruby/1.8')
 Alternative_example = Regexp::Parser.parse(/a|b/.to_s, 'ruby/1.8')
 end # Examples
