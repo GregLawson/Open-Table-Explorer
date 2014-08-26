@@ -15,6 +15,17 @@ include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
+include TreeAddress::Constants
+def test_initialize
+	assert_equal(Root_index, TreeAddress.new(nil, 0))
+end # initialize
+def test_deeper
+end # deeper
+def test_index
+#	assert_equal(Literal_a, Literal_a.at(Root_index))
+#	assert_equal(Son_a, Literal_a.at(Root_index))
+#	assert_equal(Grandson_a, Literal_a.at(Root_index))
+end # index
 def test_Constants
 end # Constants
 def test_inspect_node
@@ -69,7 +80,7 @@ def test_leaf?
 end # leaf?
 def test_map_recursive
 	depth=0
-	visit_proc = Inspect_format
+	visit_proc = Tree_node_format
 	assert_respond_to(Literal_a, Children_method_name)
 	assert_equal(Tree_node_root, visit_proc.call(Literal_a, depth, false))
 	assert_equal(1, Children_a.size)
@@ -81,9 +92,9 @@ def test_map_recursive
 
 	assert_equal(Node_options, Son_a.inspect_node, Son_a.inspect)
 	assert(Grandson_a.leaf?(:expressions), Grandson_a.inspect) # termination condition
-	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Inspect_format))
-	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Inspect_format))
-	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Inspect_format))
+	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Tree_node_format))
+	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Tree_node_format))
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
 end # map_recursive
 def test_Examples
 end # Examples
@@ -122,7 +133,7 @@ def test_readme
 end # readme
 def test_Base_inspect
 	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-#	assert_equal([], root.map_recursive(:expressions, &Inspect_format))
+#	assert_equal([], root.map_recursive(:expressions, &Tree_node_format))
 #	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
 end # inspect
 RegexpParse.assert_pre_conditions #verify class

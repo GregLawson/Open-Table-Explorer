@@ -7,12 +7,42 @@
 ###########################################################################
 require 'regexp_parser'
 require_relative 'unbounded_range.rb'
+require 'virtus'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
+# TreeAddress
+# Useful for indexing parallel trees.
+class TreeAddress < Array # nested Array
+include Virtus.model
+  attribute :parent, TreeAddress, :default => nil # default root
+  attribute :index, Object, :default => nil
+#def initialize(parent, index)
+#	@parent, @index = parent, index
+#	if !parent.nil? && parent.instance_of?(TreeAddress) then
+#		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
+#	end # if
+#end # initialize
+def deeper
+	TreeAddress.new(self, 0)
+end # deeper
+module Constants
+Root_index = TreeAddress.new(parent: nil, index: 0)
+end # 
+end # TreeAddress
 class Regexp
 class Expression::Base
 include Tree
+# [] is already taken
+def at(address)
+	if address.parent.instance_of?(TreeAddress) then
+		self[address.parent][address.index]
+	else
+		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
+	end # if
+end # index
+def leaf_addresses
+end # 
 def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
@@ -40,7 +70,7 @@ Node_format = proc do |e|
 end # Node_format
 Mx_format = proc do |e, depth, terminal|
 	ret = ' ' * depth + e.text + ' # '
-	ret + Inspect_format.call(e, depth, terminal)
+	ret + Tree_node_format.call(e, depth, terminal)
 end # Mx_format
 Tree_node_format = proc do |e, depth, terminal|
 	ret = case terminal
@@ -77,7 +107,7 @@ def leaf?(children_method_name = :to_a)
 		true # end recursion
 	end # if
 end # leaf?
-# Apply block to each leaf.
+# Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
 def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
@@ -94,7 +124,7 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
-		[visit_proc.call(self, depth, false), children.map_pair do |key, sub_tree|
+		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
 				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
 			else
