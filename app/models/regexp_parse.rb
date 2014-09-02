@@ -10,18 +10,48 @@ require_relative 'unbounded_range.rb'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
+# TreeAddress
+require 'virtus'
+# Useful for indexing parallel trees.
+class TreeAddress < Array # nested Array
+include Virtus.model
+  attribute :parent, TreeAddress, :default => nil # default root
+  attribute :index, Object, :default => nil
+#def initialize(parent, index)
+#	@parent, @index = parent, index
+#	if !parent.nil? && parent.instance_of?(TreeAddress) then
+#		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
+#	end # if
+#end # initialize
+def deeper
+	TreeAddress.new(self, 0)
+end # deeper
+module Constants
+#Root_index = TreeAddress.new(nil, 0)
+end # 
+end # TreeAddress
 class Regexp
 class Expression::Base
 include Tree
+# [] is already taken
+def at(address)
+	if address.parent.instance_of?(TreeAddress) then
+		self[address.parent][address.index]
+	else
+		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
+	end # if
+end # index
+def leaf_addresses
+end # 
 def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
 def inspect_node(&inspect_proc)
 	if !block_given? then
-		inspect_proc = Dump_proc
+		inspect_proc = Node_format
 	end # if
 	inspect_proc.call(self)
-end # inspect
+end # inspect_node
 def inspect_recursive(&inspect_proc)
 	if !block_given? then
 		inspect_proc = Inspect_format
@@ -35,10 +65,14 @@ def inspect_recursive(&inspect_proc)
 	ret + "\n"
 end # inspect_recursive
 module Constants
-Dump_proc = proc do |e|
+Node_format = proc do |e|
 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
-end # Dump_proc
-Arg2_format = proc do |e, depth, terminal|
+end # Node_format
+Mx_format = proc do |e, depth, terminal|
+	ret = ' ' * depth + e.text + ' # '
+	ret + Tree_node_format.call(e, depth, terminal)
+end # Mx_format
+Tree_node_format = proc do |e, depth, terminal|
 	ret = case terminal
 	when true then	'terminal'
 	when false then 'nonterminal'
@@ -48,34 +82,19 @@ Arg2_format = proc do |e, depth, terminal|
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
 	if e.kind_of?(Expression::Base) then
-		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+		ret += Node_format.call(e, depth, terminal)
 	else
-		ret += 	e.to_s + e.class.ancestors.inspect
+		ret += 	'Unexpected ' + "'" + e.inspect + "'" + ' with super class ' + e.class.superclass.inspect+ ' with ancestors ' + e.class.ancestors.inspect
 	end # if
-end # Arg2_format
-Arg3_format = proc do |terminal, e, depth|
-	if terminal then
-		ret = 'terminal'
-	else
-		ret = 'nonterminal'
-	end # if
-	ret += '[' + depth.to_s + ']'
-	ret += ',' 
-	if e.instance_of?(Expression::Base) then
-		ret += 	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')\n"
-	else
-		ret += e.to_s 
-	end # if
-
-end # Arg3_format
-Inspect_format = Arg2_format
+end # Tree_node_format
+Inspect_format = Tree_node_format
 end # Constants
 include Constants
 # returns
 # true  - terminal, recursion stops
 # false - nonterminal  - recurse
 # nil   - 
-def leaf?(children_method_name)
+def leaf?(children_method_name = :to_a)
 	children_method_name = children_method_name.to_sym
 	if respond_to?(children_method_name) then
 		children = send(children_method_name)
@@ -88,7 +107,7 @@ def leaf?(children_method_name)
 		true # end recursion
 	end # if
 end # leaf?
-# Apply block to each leaf.
+# Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
 def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
@@ -105,20 +124,35 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
-		children.map_pair do |key, sub_tree|
+		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
-				sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(p, depth, false)}
+				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
 			else
-				visit_proc.call(self, depth, nil) # end recursion
+				visit_proc.call(sub_tree, depth, nil) # end recursion
 			end # if
-		end # map
+		end ] # map
 	end # if
 end #map_recursive
 module Examples
 include Constants
-Inspect_root = "Root(:expression, :root, '')"
+Children_method_name = :expressions
 Literal_a = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-Inspect_a = "Literal(:literal, :literal, 'a')"
+Children_a = Literal_a.send(Children_method_name)
+Son_a = Children_a[0]
+Grandchildren_a = Son_a.expressions
+Grandson_a = Grandchildren_a[0]
+Node_a = "Literal(:literal, :literal, 'a')"
+Inspect_node_root = "Root(:expression, :root, '')"
+Node_options = "Group::Options(:group, :options, '(?-mix:')"
+Tree_node_root = "nonterminal[0], " + Inspect_node_root
+Tree_node_options = "nonterminal[1], " + Node_options
+Tree_node_a = "terminal[2], " + Node_a
+Grandson_a_map =	Tree_node_a
+Son_a_map =	[Tree_node_options, [Grandson_a_map]]
+Literal_a_map = [Tree_node_root, [Son_a_map]]
+Mx_node_root = ' # ' + Tree_node_root
+Mx_node_options = ' (?-mix: # ' + Tree_node_options
+Mx_node_a = '  a # ' + Tree_node_a
 Sequence_example = Regexp::Parser.parse(/ab/.to_s, 'ruby/1.8')
 Alternative_example = Regexp::Parser.parse(/a|b/.to_s, 'ruby/1.8')
 end # Examples

@@ -15,6 +15,17 @@ include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
+include TreeAddress::Constants
+def test_initialize
+	assert_equal(Root_index, TreeAddress.new(nil, 0))
+end # initialize
+def test_deeper
+end # deeper
+def test_index
+	assert_equal(Literal_a, Literal_a.at(Root_index))
+	assert_equal(Son_a, Literal_a.at(Root_index))
+	assert_equal(Grandson_a, Literal_a.at(Root_index))
+end # index
 def test_Constants
 end # Constants
 def test_Base_inspect
