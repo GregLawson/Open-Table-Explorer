@@ -12,29 +12,28 @@ include DefaultTests
 include TE.model_class?::Examples
 include Tree::Examples
 def test_map_recursive_simple_block
-	assert_equal([Flat_array], Flat_array.map_recursive{|terminal, e, depth| e})
+	assert_equal([[[0], 0, false], [[0, 0, nil]]], Flat_array.map_recursive(&Trace_map))
+	assert_equal([Flat_array], Flat_array.map_recursive(&Leaf_map))
 	assert_equal([Flat_array], Flat_array.map_recursive(&Identity_map))
 	assert_equal([Flat_hash], Flat_hash.map_recursive(&Identity_map))
-	assert_equal([[nil, [0], 0]], Flat_array.map_recursive(&Trace_map))
 end # test_map_recursive_simple_block
 def test_map_recursive
-	children_method_name = :to_a
 	depth=0
-	children_method_name = children_method_name.to_sym
-	assert_respond_to([0], children_method_name)
-		children = [0].send(children_method_name)
-		if children.empty? then # termination condition
-			assert_empty(children)
-			visit_proc.call(true, self, depth)  # end recursion
-		else
-			children.map_pair do |key, sub_tree|
-				assert_not_respond_to(sub_tree, :map_recursive)
-#					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
-#				else
-					assert_equal(Flat_array, Identity_map.call(nil, Flat_array, depth)) # end recursion
-#				end # if
-			end # map
-		end # if
+	visit_proc = Tree_node_format
+	assert_respond_to(Literal_a, Children_method_name)
+	assert_equal(Tree_node_root, visit_proc.call(Literal_a, depth, false))
+	assert_equal(1, Children_a.size)
+	assert_respond_to(Son_a, Children_method_name)
+	assert_instance_of(Array, Grandchildren_a)
+	assert_equal(1, Grandchildren_a.size)
+	assert_not_respond_to(Grandson_a, Children_method_name)
+	assert_equal(Node_a, Grandson_a.inspect_node)
+
+	assert_equal(Node_options, Son_a.inspect_node, Son_a.inspect)
+	assert(Grandson_a.leaf?(:expressions), Grandson_a.inspect) # termination condition
+	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Inspect_format))
+	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Inspect_format))
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Inspect_format))
 end # map_recursive
 def test_each_pair
 	collect = []

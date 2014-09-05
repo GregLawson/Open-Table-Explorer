@@ -38,11 +38,44 @@ end # Graph
 module Tree
 include Graph
 module Constants
-Identity_map = proc {|terminal, e, depth| e}
-Trace_map = proc {|terminal, e, depth| [terminal, e, depth]}
+Identity_map = proc {|e, depth, terminal| e}
+Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
+# unlike the usual assumption nil means the node has no children_function
+Leaf_map = proc {|e, depth, terminal| (terminal.nil? || terminal ? e : nil)}
+Node_format = proc do |e|
+	e.inspect
+end # Node_format
+Tree_node_format = proc do |e, depth, terminal|
+	ret = case terminal
+	when true then	'terminal'
+	when false then 'nonterminal'
+	when nil then 'nil'
+	else 'unknown'
+	end # case
+	ret += '[' + depth.to_s + ']'
+	ret += ', ' 
+	ret += Node_format.call(e, depth, terminal)
+end # Tree_node_format
 end # Constants
 include Constants
 # delegate to Array, Enumable and Hash
+# returns
+# true  - terminal, recursion stops
+# false - nonterminal  - recurse
+# nil   - 
+def leaf?(children_method_name = :to_a)
+	children_method_name = children_method_name.to_sym
+	if respond_to?(children_method_name) then
+		children = send(children_method_name)
+		if children.empty? then # termination condition
+			true  # end recursion
+		else
+			false
+		end # if
+	else
+		true # end recursion
+	end # if
+end # leaf?
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
@@ -56,21 +89,17 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		raise "Block proc argument should be preceded with ampersand."
 	end # if
 	children_method_name = children_method_name.to_sym
-	if respond_to?(children_method_name) then
-		children = send(children_method_name)
-		if children.empty? then # termination condition
-			visit_proc.call(true, self, depth)  # end recursion
-		else
-			children.map_pair do |key, sub_tree|
-				if sub_tree.respond_to?(:map_recursive) then
-					sub_tree.map_recursive(children_method_name, depth+1){|p| visit_proc.call(false, p, depth)}
-				else
-					visit_proc.call(nil, self, depth) # end recursion
-				end # if
-			end # map
-		end # if
+	if leaf?(children_method_name) then
+		visit_proc.call(self, depth, true)  # end recursion
 	else
-		visit_proc.call(nil, self, depth) # end recursion
+		children = send(children_method_name)
+		[visit_proc.call(self, depth, false), children.map_pair do |key, sub_tree|
+			if sub_tree.respond_to?(:map_recursive) then
+				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
+			else
+				visit_proc.call(sub_tree, depth, nil) # end recursion
+			end # if
+		end ] # map
 	end # if
 end # map_recursive
 # Apply block to each non-leaf or branching node
