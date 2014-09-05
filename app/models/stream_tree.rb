@@ -15,13 +15,6 @@
 # sharing nodes would give a directed acyclic graph
 # loops might be possible since ruby objects are references and self references are possible
 #require_relative '../../app/models/no_db.rb'
-# make as many methods in common between Array and Hash
-# [] is the obvious method in common
-# each_index and each_pair seem synonyms but with thier arguments reversed
-# Hash#to_a converts a hash to a nested array of key, value pairs 
-# Array#to_h reverses my expectation and makes the array the keys not the values
-# I've added Array#to_hash to create the indexes as keys
-# map should be added analogously to Hash
 #require_relative 'parse.rb'
 module Node
 module ParentLinked
@@ -34,9 +27,19 @@ module ChildLinked
 end # ChildLinked
 end # Node
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
-end # Graph
-module Tree
-include Graph
+# [] is already taken
+def at(address)
+	if address.parent.instance_of?(TreeAddress) then
+		self[address.parent][address.index]
+	else
+		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
+	end # if
+end # at
+def leaf_addresses
+end # 
+def expression_class_symbol?
+	self.class.name[20..-1].to_sym # should be magic-number-free
+end # expression_class_symbol?
 module Constants
 Identity_map = proc {|e, depth, terminal| e}
 Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
@@ -58,23 +61,63 @@ Tree_node_format = proc do |e, depth, terminal|
 end # Tree_node_format
 end # Constants
 include Constants
+def inspect_node(&inspect_proc)
+	if !block_given? then
+		inspect_proc = Node_format
+	end # if
+	inspect_proc.call(self)
+end # inspect_node
+end # Graph
+module DAG
+include Graph
+include Graph::Constants
+def inspect_recursive(children_method_name = :to_a, &inspect_proc)
+	if !block_given? then
+		inspect_proc = Tree_node_format
+	end # if
+	ret = map_recursive(children_method_name, &inspect_proc)
+	ret = if ret.instance_of?(Array) then
+		ret.join("\n")
+	else
+		ret
+	end # if
+	ret + "\n"
+end # inspect_recursive
+end # DAG
+module Forest
+include DAG
+end # Forest
+module Leaf
+include Graph
+def leaf?(children_method_name = :to_a)
+			true  # end recursion
+end # leaf?
+end # Leaf
+module Tree
+include DAG
+module Constants
+include Graph::Constants
+end # Constants
+include Constants
 # delegate to Array, Enumable and Hash
 # returns
-# true  - terminal, recursion stops
-# false - nonterminal  - recurse
+# Array of children from children_method, recursion continues
+# []  - terminal, children_method returns empty array, recursion stops
+# nil - terminal  - children method does not exist, end recursion for bipartite trees where terminal is a different class.
 # nil   - 
-def leaf?(children_method_name = :to_a)
+def children?(children_method_name = :to_a)
 	children_method_name = children_method_name.to_sym
 	if respond_to?(children_method_name) then
 		children = send(children_method_name)
-		if children.empty? then # termination condition
-			true  # end recursion
-		else
-			false
-		end # if
+		raise 'Method named ' + children_method_name.to_s + 'does not return an Array (Enumerable?).' unless children.instance_of?(Array)
+		children
 	else
-		true # end recursion
+		nil # end recursion
 	end # if
+end # children?
+# Shortcut for lack of children is a leaf node.
+def leaf?(children_method_name = :to_a)
+	children?(children_method_name).to_a.empty? # nil.to_a == []
 end # leaf?
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
@@ -93,7 +136,7 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
-		[visit_proc.call(self, depth, false), children.map_pair do |key, sub_tree|
+		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
 				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
 			else
@@ -128,6 +171,13 @@ Flat_hash = {cat: :fish}
 end # Examples
 include Examples
 end # Tree
+# make as many methods in common between Array and Hash
+# [] is the obvious method in common
+# each_index and each_pair seem synonyms but with thier arguments reversed
+# Hash#to_a converts a hash to a nested array of key, value pairs 
+# Array#to_h reverses my expectation and makes the array the keys not the values
+# I've added Array#to_hash to create the indexes as keys
+# map should be added analogously to Hash
 class Array
 include Tree
 def each_pair(&block)
@@ -176,7 +226,7 @@ end # Constants
 include Constants
 def each_with_index(*args, &block)
 	each_pair(args, block)
-end # each_index
+end # each_with_index
 # More like Array#map.uniq since Hash does not allow duplicate keys
 # If you want to process duplicates try Hash#to_a.map.group_by
 def map_pair(&block)
@@ -255,7 +305,27 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+Children_method_name = :to_a
 Example_array = [1, 2, 3]
+Nested_array = [1, [2, [3], 4], 5]
+Inspect_node_root = '[1, [2, [3], 4], 5]'
+Children_nested_array = [[2, 3, 4]]
+Son_nested_array = [2, [3], 4]
+Grandchildren_nested_array = [[3]]
+Grandson_nested_array = 3
+Tree_node_root = 'nonterminal[0], [1, [2, [3], 4], 5]'
+Grandson_nested_array_map = "terminal[2], 3"
+Son_nested_array_map = ["nonterminal[1], [2, [3], 4]",
+   ["terminal[2], 2",
+    ["nonterminal[2], [3]", ["terminal[3], 3"]],
+    "terminal[2], 4"]]
+Nested_array_map = ["nonterminal[0], [1, [2, [3], 4], 5]",
+   ["terminal[1], 1",
+    ["nonterminal[1], [2, [3], 4]",
+     ["terminal[2], 2",
+      ["nonterminal[2], [3]", ["terminal[3], 3"]],
+      "terminal[2], 4"]],
+    "terminal[1], 5"]]
 Example_hash = {name: 'Fred', salary: 10, department: :Engineering}
 Example_tuples = [Example_hash, {name: 'Bob', salary: 11}]
 Example_department = {department: :Engineering, manager: 'Bob'}
