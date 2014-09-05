@@ -19,19 +19,21 @@ def test_find_devices
 	disk_devs = ShellCommands.new('ls -l /dev/disk/by-*|grep usb').assert_post_conditions.output
 	drivers = ShellCommands.new("find /sys/ -name driver -ls").assert_post_conditions.output
 	ls_octet_pattern = /rwx/
-	ls_permission_pattern = [/1/,
+	ls_permission_pattern = [/1|l/,
 					ls_octet_pattern.capture(:system),
 					ls_octet_pattern.capture(:group), 
 					ls_octet_pattern.capture(:owner)] 
 	filename_pattern = /[-_0-9a-zA-Z\/]+/
 	driver_pattern = [
-							'  ', /[0-9]+/.capture(:number), /    /,
-							'  ', /[0-9]+/.capture(:number), /    /,
-							ls_permission_pattern,
+							'  ', /[0-9]+/.capture(:number),
+							/\s+/, /[0-9]+/.capture(:number),
+							/ /, ls_permission_pattern,
 							'/sys/devices',
 							filename_pattern.capture(:device),
 							' -> ', 
 							filename_pattern.capture(:driver)]
+	short = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
+	short.assert_parse(driver_pattern)
 	drivers.assert_parse(driver_pattern)
 	events =Dir['ls /dev/event*']
 	events_by_id = ShellCommands.new('ls -l /dev/input/by-id*').assert_post_conditions.output
