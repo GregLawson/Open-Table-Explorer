@@ -57,7 +57,7 @@ Tree_node_format = proc do |e, depth, terminal|
 	end # case
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
-	ret += Node_format.call(e, depth, terminal)
+	ret += e.inspect_node
 end # Tree_node_format
 end # Constants
 include Constants
