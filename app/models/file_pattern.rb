@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2012-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -160,7 +160,7 @@ end #path
 def parse_pathname_regexp
 	Absolute_directory_regexp.capture(:project_root_directory)*@pattern[:prefix]+/[[:word:]]+/.capture(:unit_base_name)+@pattern[:suffix]
 end #parse_pathname_regexp
-def pathname_glob(unit_base_name='*', project_root_directory = Library.project_root_directory)
+def pathname_glob(unit_base_name='*', project_root_directory = @project_root_dir)
 	project_root_directory+@pattern[:prefix]+unit_base_name+@pattern[:suffix]
 end #pathname_glob
 def relative_path?(unit_base_name)
@@ -213,7 +213,7 @@ def assert_pre_conditions(message='')
 	assert(!@pattern.keys.empty?, message)
 	assert_not_empty(@pattern.values, message)
 	assert_include(@pattern.keys, :suffix, inspect)
-	assert_equal(@path[-@pattern[:suffix].size, @pattern[:suffix].size], @pattern[:suffix], caller_lines)
+	assert_equal(@path[-@pattern[:suffix].size, @pattern[:suffix].size], @pattern[:suffix])
 #	fail message+"end of assert_pre_conditions "
 end #assert_pre_conditions
 # assertions true after any instance operations
