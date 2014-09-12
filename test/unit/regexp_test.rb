@@ -13,6 +13,8 @@ extend DefaultTests
 #puts Regexp.methods(false)
 #include Minitest::Assertions
 include Regexp::Examples
+def test_Constants
+end # Constants
 def test_square_brackets
 	assert_equal(/a/, Regexp[/a/])
 	assert_equal(/a/, Regexp['a'])
@@ -22,9 +24,17 @@ def test_square_brackets
 	assert_equal(/ab/, Regexp['a', [/b/]])
 end # []
 def test_to_regexp_escaped_string
-	assert_equal('ab', Regexp.to_regexp_escaped_string('ab'))
 	assert_equal('ab', Regexp.to_regexp_escaped_string(/ab/))
+	assert_equal('ab', Regexp.to_regexp_escaped_string('ab'))
 	assert_equal('{5}', Regexp.to_regexp_escaped_string(5))
+	assert_equal('', Regexp.to_regexp_escaped_string(1..1))
+	assert_equal('{5}', Regexp.to_regexp_escaped_string(5..5))
+	assert_equal('*', Regexp.to_regexp_escaped_string(Any))
+	assert_equal('+', Regexp.to_regexp_escaped_string(Many))
+	assert_equal('{5,}', Regexp.to_regexp_escaped_string(5..Float::INFINITY))
+	assert_equal('?', Regexp.to_regexp_escaped_string(Optional))
+	assert_equal('{1,5}', Regexp.to_regexp_escaped_string(1..5))
+	assert_equal('{,5}', Regexp.to_regexp_escaped_string(0..5))
 	assert_equal('{2,5}', Regexp.to_regexp_escaped_string(2..5))
 end # to_regexp_escaped_string
 def test_promote

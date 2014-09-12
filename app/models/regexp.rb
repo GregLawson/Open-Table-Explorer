@@ -18,7 +18,7 @@ Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
 Any = 0..Float::INFINITY
 Many = 1..Float::INFINITY
-Optional='?'
+Optional = 0..1
 Start_string=/\A/
 End_string=/\z/
 End_string_less_newline=/\Z/
@@ -44,7 +44,35 @@ def to_regexp_escaped_string(alternative_form)
 		when 'Regexp' then alternative_form.source
 		when 'String' then Regexp.escape(alternative_form)
 		when 'Fixnum' then '{' + alternative_form.to_s + '}'
-		when 'Range' then '{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+		when 'Range' then 
+			if alternative_form.begin == alternative_form.end then
+				if alternative_form.begin == 1 then
+					'' # default for {1,1}
+				else
+					'{' + alternative_form.begin.to_s + '}'
+				end # if
+			else case alternative_form.end 
+			when Float::INFINITY then
+				case alternative_form.begin
+				when 0 then '*'
+				when 1 then '+'
+				else
+					'{' + alternative_form.begin.to_s + ',' + '}'
+				end # if
+			when 1 then
+				case alternative_form.begin
+				when 0 then '?'
+				when 1 then ''
+				else
+					'{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+				end # if
+			else
+				if alternative_form.begin == 0 then
+					'{' + ',' + alternative_form.end.to_s + '}'
+				else
+					'{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+				end # if
+			end end # if and case
 		when 'Array' then alternative_form.map {|a| Regexp.to_regexp_escaped_string(a)}.join
 		else raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
 		end # case
