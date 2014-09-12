@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-3014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -169,7 +169,7 @@ def test_pathnames
 	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
 def test_initialize
-	n=FilePattern.new($0)
+	n=FilePattern.new_from_path($0)
 	n.assert_pre_conditions
 #	assert_equal(Executable, n)
 	file_pattern=n
@@ -192,6 +192,13 @@ end #path
 def test_parse_pathname_regexp
 end #parse_pathname_regexp
 def test_pathname_glob
+# :path, :pattern, :project_root_dir, :repository_dir, :unit_base_name
+	assert_not_nil(Library.project_root_dir)
+	assert_equal('file_pattern.rb', Library.unit_base_name)
+#	assert_equal(FilePattern.find_by_name(:model), Library.pattern)
+	assert_not_nil(Library.pattern[:prefix])
+	assert_not_nil(Library.pattern[:suffix])
+	assert_not_equal([], Dir[Library.pathname_glob('minimal[1-4]')])
 end #pathname_glob
 def test_relative_path
 end #relative_path

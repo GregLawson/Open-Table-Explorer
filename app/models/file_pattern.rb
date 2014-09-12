@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2012-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -133,42 +133,52 @@ def pathnames?(unit_base_name)
 		path?(p, unit_base_name)
 	end #
 end #pathnames
+def new_from_path(path)
+	raise path.inspect unless path.instance_of?(String) || path.instance_of?(Pathname)
+	path=File.expand_path(path)
+	FilePattern.new(FilePattern.find_from_path(path),
+						File.basename(path),
+						FilePattern.project_root_dir?(path),
+						FilePattern.repository_dir?(path))
+end #initialize
 #FilePattern.assert_pre_conditions
 #assert_include(FilePattern.included_modules, :Assertions)
 #assert_pre_conditions
 end #ClassMethods
 extend ClassMethods
 attr_reader :path, :pattern, :project_root_dir, :repository_dir, :unit_base_name
-def initialize(path)
-	raise path.inspect if !path.instance_of?(String)
-	@path=File.expand_path(path)
-	@unit_base_name=File.basename(path)
-	@pattern = FilePattern.find_from_path(@path)
-	@project_root_dir = FilePattern.project_root_dir?(@path)
-	@repository_dir = FilePattern.repository_dir?(@path)
+def initialize(pattern,
+					 unit_base_name = '*',
+					 project_root_dir = Library.project_root_dir,
+					 repository_dir = project_root_dir)
+	raise 'initialize' unless pattern.instance_of?(Hash)
+	@unit_base_name = unit_base_name
+	@pattern = pattern
+	@project_root_dir = project_root_dir
+	@repository_dir = repository_dir
 end #initialize
 #def inspect
 #	message="FilePattern<instance_variables=#{instance_variables.inspect}>"
 #e#nd #inspect
 def path?(unit_base_name=@basename)
-	raise @pattern.inspect if !@pattern.instance_of?(FilePattern)
+	raise @pattern.inspect unless @pattern.instance_of?(Hash)
 	raise @pattern.inspect if !@pattern[:prefix].instance_of?(String)
-	raise "unit_base_name-#{unit_base_name.inspect}" if !unit_base_name.instance_of?(String)
+	raise "unit_base_name-#{unit_base_name.inspect}" unless unit_base_name.instance_of?(String) || unit_base_name.instance_of?(Symbol)
 	raise "" if !@pattern[:suffix].instance_of?(String)
 	@project_root_dir + '/' + @pattern[:prefix]+unit_base_name.to_s+@pattern[:suffix]
 end #path
 def parse_pathname_regexp
 	Absolute_directory_regexp.capture(:project_root_directory)*@pattern[:prefix]+/[[:word:]]+/.capture(:unit_base_name)+@pattern[:suffix]
 end #parse_pathname_regexp
-def pathname_glob(unit_base_name='*', project_root_directory = Library.project_root_directory)
-	project_root_directory+@pattern[:prefix]+unit_base_name+@pattern[:suffix]
+def pathname_glob(unit_base_name='*', project_root_directory = @project_root_dir)
+	project_root_directory+@pattern[:prefix]+unit_base_name.to_s+@pattern[:suffix]
 end #pathname_glob
 def relative_path?(unit_base_name)
 	Pathname.new(path?(unit_base_name)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
 module Constants
-Library = FilePattern.new(__FILE__)
-Executable = FilePattern.new($0)
+Library = FilePattern.new_from_path(__FILE__)
+Executable = FilePattern.new_from_path($0)
 end #Constants
 include Constants
 require_relative '../../test/assertions.rb'
@@ -204,35 +214,35 @@ def assert_invariant
 end #assert_invariant
 # assertions true after instance is initialized
 def assert_pre_conditions(message='')
-	assert_not_nil(@path, 'Path is nil'+ self.inspect)
-	assert_not_empty(@path)
+#	assert_not_nil(@path, 'Path is nil'+ self.inspect)
+#	assert_not_empty(@path)
 	message+="\n @pattern=#{@pattern.inspect}\n @pattern=#{@pattern.inspect}"
 	assert_not_equal('{}',@pattern.inspect, message)
 	assert_not_nil(@pattern, message)
 	assert_instance_of(Hash, @pattern, message)
 	assert(!@pattern.keys.empty?, message)
 	assert_not_empty(@pattern.values, message)
-	assert_include(@pattern.keys, :suffix, inspect)
-	assert_equal(@path[-@pattern[:suffix].size, @pattern[:suffix].size], @pattern[:suffix], caller_lines)
+#	assert_include(@pattern.keys, :suffix, inspect)
+#	assert_equal(@path[-@pattern[:suffix].size, @pattern[:suffix].size], @pattern[:suffix])
 #	fail message+"end of assert_pre_conditions "
 end #assert_pre_conditions
 # assertions true after any instance operations
 def assert_post_conditions(message = 'self = '+self.inspect)
 	assert_not_empty(@project_root_dir, message)
 	assert_pathname_exists(@project_root_dir)
-	assert(File.exists?(@path))
-	find_all_from_path = FilePattern.find_all_from_path(@path)
-	assert_equal(1, find_all_from_path.size, find_all_from_path)
+#	assert(File.exists?(@path))
+#	find_all_from_path = FilePattern.find_all_from_path(@path)
+#	assert_equal(1, find_all_from_path.size, find_all_from_path)
 end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 module Examples
 DCT_filename='script/dct.rb'
-#DCT=FilePattern.new(FilePattern.path2model_name?(DCT_filename), FilePattern.project_root_dir?(DCT_filename))
+#DCT=FilePattern.new_from_path(FilePattern.path2model_name?(DCT_filename), FilePattern.project_root_dir?(DCT_filename))
 SELF_Model=__FILE__
 SELF_Test=$0
-#SELF=FilePattern.new(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
+#SELF=FilePattern.new_from_path(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
 Data_source_example='test/data_sources/tax_form/2012/examples_and_templates/US_1040/US_1040_example_sysout.txt'
 end #Examples
 end #FilePattern
