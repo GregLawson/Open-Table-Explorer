@@ -7,11 +7,11 @@
 ###########################################################################
 require 'regexp_parser'
 require_relative 'unbounded_range.rb'
+require 'virtus'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
 # TreeAddress
-require 'virtus'
 # Useful for indexing parallel trees.
 class TreeAddress < Array # nested Array
 include Virtus.model
@@ -27,12 +27,13 @@ def deeper
 	TreeAddress.new(self, 0)
 end # deeper
 module Constants
-#Root_index = TreeAddress.new(nil, 0)
+Root_index = TreeAddress.new(parent: nil, index: 0)
 end # 
 end # TreeAddress
 class Regexp
 class Expression::Base
 include Tree
+<<<<<<< HEAD
 # [] is already taken
 def at(address)
 	if address.parent.instance_of?(TreeAddress) then
@@ -46,23 +47,30 @@ end #
 def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
+=======
+module Constants
+include Graph::Constants
+Node_format = proc do |e|
+	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+end # Node_format
+Mx_format = proc do |e, depth, terminal|
+	ret = ' ' * depth + e.text + ' # '
+	ret + Tree_node_format.call(e, depth, terminal)
+end # Mx_format
+end # Constants
+include Constants
+>>>>>>> testing
 def inspect_node(&inspect_proc)
 	if !block_given? then
 		inspect_proc = Node_format
 	end # if
 	inspect_proc.call(self)
 end # inspect_node
-def inspect_recursive(&inspect_proc)
+def inspect_recursive(children_method_name = :to_a, &inspect_proc)
 	if !block_given? then
-		inspect_proc = Inspect_format
+		inspect_proc = Tree_node_format
 	end # if
-	ret = map_recursive(:expressions, &inspect_proc)
-	ret = if ret.instance_of?(Array) then
-		ret.join("\n")
-	else
-		ret
-	end # if
-	ret + "\n"
+	super(children_method_name, &inspect_proc)
 end # inspect_recursive
 module Constants
 Node_format = proc do |e|

@@ -15,6 +15,7 @@ include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
+include Graph::Constants
 include TreeAddress::Constants
 def test_initialize
 	assert_equal(Root_index, TreeAddress.new(nil, 0))
@@ -28,58 +29,79 @@ def test_index
 end # index
 def test_Constants
 end # Constants
-def test_Base_inspect
-	assert_equal(Inspect_root, Dump_proc.call(Literal_a))
-	assert_equal(Inspect_root, Literal_a.inspect_node)
-end # inspect
+def test_inspect_node
+	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
+	assert_equal(Inspect_node_root, Literal_a.inspect_node)
+	assert_equal(Node_options, Son_a.inspect_node)
+	assert_equal(Node_a, Grandson_a.inspect_node)
+	assert_match(Literal_a.inspect_node, Tree_node_root)
+	assert_match(Literal_a.inspect_node(&Node_format), Tree_node_root)
+end # inspect_node
+def test_Node_format
+	assert_equal(Inspect_node_root, Literal_a.inspect_node)
+	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
+end # Node_format
 def test_inspect_recursive
-	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-#	assert_equal([], root.map_recursive(:expressions, &Inspect_format))
-#	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
+	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Tree_node_format))
+	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Tree_node_format))
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(:expressions, &Tree_node_format), Literal_a.inspect_recursive(:expressions, &Tree_node_format))
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(:expressions), Literal_a.inspect_recursive)
+
+
+#	assert_equal('ab # ' + Literal_a_map + "\n", Sequence_example.inspect_recursive(&Mx_format))
+#	assert_equal('a # ' + Literal_a_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
 end # inspect_recursive
+def test_Mx_format
+	assert_match(Tree_node_root, Mx_format.call(Literal_a, 0, false))
+	assert_equal(Mx_node_root, Mx_format.call(Literal_a, depth=0, false))
+	assert_equal(Mx_node_options, Mx_format.call(Son_a, depth=1, false))
+	assert_equal(Mx_node_a, Mx_format.call(Grandson_a, depth=2, true))
+	assert_equal([Mx_node_root, Mx_node_options, Mx_node_a].map{|s| s + "\n"}.join, Literal_a.inspect_recursive(:expressions, &Mx_format))
+end # Mx_format
+def test_Tree_node_format
+	assert_equal(Tree_node_root, Tree_node_format.call(Literal_a, depth=0, false))
+	assert_equal(Tree_node_options, Tree_node_format.call(Son_a, depth=1, false))
+	assert_equal(Tree_node_a, Tree_node_format.call(Grandson_a, depth=2, true))
+	assert_equal('terminal[1], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=1, true))
+	assert_equal('nil[2], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=2, nil))
+	assert_equal('unknown[3], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=3, 1)) # unknown
+end # Tree_node_format
 def test_Constants
 end # Constants
 def test_leaf?
-	children_method_name = :expressions
-	assert_respond_to(Literal_a, children_method_name)
-	assert_equal(Inspect_root, Dump_proc.call(Literal_a))
-	children = Literal_a.send(children_method_name)
-	assert_equal(1, children.size)
-	son = children[0]
-	assert_respond_to(son, children_method_name)
-	grandchildren = son.expressions
-	assert_instance_of(Array, grandchildren)
-	assert_equal(1, grandchildren.size)
-	grandson = grandchildren[0]
-	assert_equal(true, grandson.leaf?(:expressions), grandson.inspect)
+	assert_respond_to(Literal_a, Children_method_name)
+	assert_equal(Inspect_node_root, Node_format.call(Literal_a))
+	assert_equal(1, Children_a.size)
 	assert_equal(false, Literal_a.leaf?(:expressions), Literal_a.inspect)
-	assert_equal(false, son.leaf?(:expressions), son.inspect)
+	assert_equal(true, Literal_a.leaf?, Literal_a.inspect) # to_a not a method. Watch out!
+	assert_respond_to(Son_a, Children_method_name)
+	assert_instance_of(Array, Grandchildren_a)
+	assert_equal(1, Grandchildren_a.size)
+	assert_equal(true, Grandson_a.leaf?(:expressions), Grandson_a.inspect)
+	assert_equal(false, Son_a.leaf?(:expressions), Son_a.inspect)
 end # leaf?
 def test_map_recursive
-	children_method_name = :expressions
+	assert_include(Graph::Constants.constants, :Tree_node_format)
+	assert_include(RegexpParseTest.constants, :Tree_node_format)
 	depth=0
-	visit_proc = Inspect_format
-	assert_respond_to(Literal_a, children_method_name)
-	assert_equal(Inspect_root, visit_proc.call(Literal_a, depth, false))
-	children = Literal_a.send(children_method_name)
-	assert_equal(1, children.size)
-	son = children[0]
-	assert_respond_to(son, children_method_name)
-	grandchildren = son.expressions
-	assert_instance_of(Array, grandchildren)
-	assert_equal(1, grandchildren.size)
-	grandson = grandchildren[0]
-	assert_not_respond_to(grandson, children_method_name)
-	assert_equal(Inspect_a, grandson.inspect)
+	visit_proc = Tree_node_format
+	assert_respond_to(Literal_a, Children_method_name)
+	assert_equal(Tree_node_root, visit_proc.call(Literal_a, depth, false))
+	assert_equal(1, Children_a.size)
+	assert_respond_to(Son_a, Children_method_name)
+	assert_instance_of(Array, Grandchildren_a)
+	assert_equal(1, Grandchildren_a.size)
+	assert_not_respond_to(Grandson_a, Children_method_name)
+	assert_equal(Node_a, Grandson_a.inspect_node)
 
-	assert_equal(Inspect_a, grandson.inspect)
-	assert_equal(Inspect_a, son.inspect)
-	assert_empty(children) # termination condition
-	assert_instance_of(String, Literal_a.map_recursive(:expressions, &Inspect_format).join)
+	assert_equal(Node_options, Son_a.inspect_node, Son_a.inspect)
+	assert(Grandson_a.leaf?(:expressions), Grandson_a.inspect) # termination condition
+	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Tree_node_format))
+	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Tree_node_format))
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
 end # map_recursive
 def test_Examples
-	assert_equal(Inspect_a, Literal_a.map_recursive(:expressions, &Inspect_format).join)
-	assert_equal(Inspect_a, Literal_a.inspect)
 end # Examples
 # Example from readme
 def test_readme
@@ -116,7 +138,7 @@ def test_readme
 end # readme
 def test_Base_inspect
 	root = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
-#	assert_equal([], root.map_recursive(:expressions, &Inspect_format))
+#	assert_equal([], root.map_recursive(:expressions, &Tree_node_format))
 #	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
 end # inspect
 RegexpParse.assert_pre_conditions #verify class

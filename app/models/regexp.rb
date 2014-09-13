@@ -18,20 +18,22 @@ Binary_bytes=(0..255).to_a.map { |i| i.chr}
 Any_binary_char_string='[\000-\377]'
 Any = 0..Float::INFINITY
 Many = 1..Float::INFINITY
-Optional='?'
+Optional = 0..1
 Start_string=/\A/
 End_string=/\z/
 End_string_less_newline=/\Z/
-US_ASCII_encoding = Encoding::US_ASCII # Encoding.find('US-ASCII')
-Binary_encoding = Encoding::ASCII_8BIT
 end #Constants
 include Constants
 module ClassMethods
 def [](*array_form)
+	if array_form.size == 1 && array_form[0].instance_of?(Array) then
+		array_form = array_form[0] # trim double Array nestingas Syntactic sugar
+	end # if
 	array_form.reduce(//, :*) do |regexp|
 		case regexp.class.to_s
 		when 'Regexp' then regexp
 		when 'String' then Regexp.new(Regexp.escape(node))
+		when 'Array' then regexp.map {|e| Regexp[e]}.join
 		else
 			raise "unexpected node = #{regexp.inspect}"
 		end # case
@@ -42,16 +44,45 @@ def to_regexp_escaped_string(alternative_form)
 		when 'Regexp' then alternative_form.source
 		when 'String' then Regexp.escape(alternative_form)
 		when 'Fixnum' then '{' + alternative_form.to_s + '}'
-		when 'Range' then '{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+		when 'Range' then 
+			if alternative_form.begin == alternative_form.end then
+				if alternative_form.begin == 1 then
+					'' # default for {1,1}
+				else
+					'{' + alternative_form.begin.to_s + '}'
+				end # if
+			else case alternative_form.end 
+			when Float::INFINITY then
+				case alternative_form.begin
+				when 0 then '*'
+				when 1 then '+'
+				else
+					'{' + alternative_form.begin.to_s + ',' + '}'
+				end # if
+			when 1 then
+				case alternative_form.begin
+				when 0 then '?'
+				when 1 then ''
+				else
+					'{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+				end # if
+			else
+				if alternative_form.begin == 0 then
+					'{' + ',' + alternative_form.end.to_s + '}'
+				else
+					'{' + alternative_form.begin.to_s + ',' + alternative_form.end.to_s + '}'
+				end # if
+			end end # if and case
+		when 'Array' then alternative_form.map {|a| Regexp.to_regexp_escaped_string(a)}.join
 		else raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
 		end # case
 end # to_regexp_escaped_string
 def promote(alternative_form)
 	case alternative_form.class.to_s
 	when 'Regexp' then alternative_form
-	when 'String' then Regexp.new(to_regexp_escaped_string(alternative_form))
 	else
-		raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
+		Regexp.new(to_regexp_escaped_string(alternative_form))
+#		raise "unexpected regexp alternative_form = #{alternative_form.inspect}\nalternative_form.class = #{alternative_form.class.to_s}"
 	end # case
 end #promote
 # Rescue bad regexp and return nil
@@ -81,14 +112,42 @@ def delimiter_regexp(delimiter)
 	raise "delimiters must be single characters not #{delimiter.inspect}." if delimiter.length!=1
 	/([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
 end #delimiter_regexp
-def propagate_options(regexp)
-	if regexp.instance_of?(Regexp) then
-		ret= [(regexp.casefold? ? Regexp::CASE_FOLD : 0)]
-		ret += [regexp.encoding]
-	else
-		[Regexp::Default_options, Encoding::US_ASCII]
+# the useful inverse function of new. String to regexp
+def canonical_repetition_tree(min, max = nil)
+	if max.nil? then
+		if min.instance_of?(Range) then
+			max = min.end
+			min = min.begin
+		elsif
+			max = min # fixed repetitions
+		end # if 
 	end # if
-end #propagate_options
+	if max == Float::INFINITY then
+		return ['{', min.to_i, ',',  '}']
+	elsif min==max then
+		return ['{', min.to_i, '}']
+	else
+		return ['{', min.to_i, ',', max.to_i, '}']
+	end # if
+end #canonical_repetition_tree
+# Return a RegexpTree node for self
+# Concise means to use abbreviations like '*', '+', ''
+# rather than the canonical {n,m}
+# If no repetition returns '' equivalent to {1,1}
+def concise_repetition_node(min, max = nil)
+	if max==Float::INFINITY then
+		if min.to_i == 0 then
+			return '*'
+		elsif min.to_i == 1 then
+			return '+'
+		end #if
+	elsif min.to_i == 0 && max.to_i == 1 then
+		return '?'
+	elsif min.to_i == 1 && max.to_i == 1 then
+		return ''
+	end #if
+	return canonical_repetition_tree(min, max).join
+end #concise_repetition_node
 end #ClassMethods
 extend ClassMethods
 # Modeled on Numeric.coerce
@@ -100,29 +159,41 @@ extend ClassMethods
 # 1.2.coerce(3)   #=> [3.0, 1.2]
 # 1.coerce(2)     #=> [2, 1]
 def coerce_escaped_string(alternative_form)
-	if self.class == alternative_form.class then
-		[alternative_form, self]
-	else
-		[Regexp.to_regexp_escaped_string(alternative_form), Regexp.to_regexp_escaped_string(self)]
-	end # if
+#	if self.class == alternative_form.class then
+#		[alternative_form, self]
+#	else
+		[Regexp.to_regexp_escaped_string(self), Regexp.to_regexp_escaped_string(alternative_form)]
+#	end # if
 end # coerce_escaped_string
+def propagate_options(regexp)
+	if regexp.instance_of?(Regexp) then
+		ret= [(self.casefold? && regexp.casefold? ? Regexp::IGNORECASE : 0)]
+		ret += [regexp.encoding]
+	else
+		[Regexp::Default_options, Encoding::US_ASCII]
+	end # if
+end #propagate_options
 def unescaped_string
 	"#{source}"
 end #unescape
 def *(other)
 	coerced_arguments = coerce_escaped_string(other)
-	options = [Regexp.propagate_options(other), Regexp.propagate_options(self)]
+	options = self.propagate_options(other)
 	case other
-	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
-	when String then return Regexp.new(self.unescaped_string + Regexp.escape(other))
-	when Fixnum then return Regexp.new(self.unescaped_string  + '{' + other.to_s + '}')
-	when Range then return Regexp.new(self.unescaped_string + '{' + other.begin.to_s + ',' + other.end.to_s + '}')
+#	when Regexp then return Regexp.new(self.unescaped_string + other.unescaped_string)
+#	when String then return Regexp.new(self.unescaped_string + Regexp.escape(other))
+#	when Fixnum then return Regexp.new(self.unescaped_string  + '{' + other.to_s + '}')
+#	when Range then return Regexp.new(self.unescaped_string + '{' + other.begin.to_s + ',' + other.end.to_s + '}')
 	when NilClass then raise "Right argument of :* operator evaluated to nil."+
 		"\nPossibly add parenthesis to control operator versus method precedence."+
 		"\nIn order to evaluate left to right, place parenthesis around operator expressions."
 		"\nself=#{self.inspect}"
 	else
-		raise "other.class=#{other.class.inspect}"
+		escaped_string = coerced_arguments[0] + coerced_arguments[1]
+		encoded_string = escaped_string.force_encoding(options[1])
+		
+		Regexp.new(encoded_string, options[0])
+#		raise "other.class=#{other.class.inspect}"
 	end #case
 end #sequence
 def |(other) # |

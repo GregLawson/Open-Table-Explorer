@@ -31,8 +31,12 @@ end # inspect_node
 def test_Node_format
 	assert_equal(Inspect_node_root, Nested_array.inspect_node)
 	assert_equal(Inspect_node_root, Nested_array.inspect_node(&Node_format))
+#	assert_match(/cat/, Tree_node_format.call('cat', depth=0, false))
 end # Node_format
 def test_inspect_recursive
+	assert_equal(Grandson_nested_array_map, Grandson_nested_array.map_recursive(:to_a, depth=2, &Tree_node_format))
+	assert_equal(Son_nested_array_map, Son_nested_array.map_recursive(:to_a, depth=1, &Tree_node_format))
+	assert_equal(Nested_array_map, Nested_array.map_recursive(:to_a, &Tree_node_format))
 	assert_equal((Nested_array_map.flatten.map{|s| s + "\n"}).join, Nested_array.inspect_recursive(&Tree_node_format), Nested_array.inspect_recursive(&Tree_node_format))
 	assert_equal((Nested_array_map.flatten.map{|s| s + "\n"}).join, Nested_array.inspect_recursive, Nested_array.inspect_recursive)
 

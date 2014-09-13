@@ -7,10 +7,10 @@
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 #require_relative '../../app/models/generic_table.rb'
-class Host < ActiveRecord::Base
+class Host # < ActiveRecord::Base
 #include Generic_Table
-has_many :ports
-has_many :routers
+#has_many :ports
+#has_many :routers
 module ClassMethods
 end # ClassMethods
 extend ClassMethods

@@ -53,6 +53,7 @@ def test_raw_captures?
 	assert_match(Branch_line, Split_capture.string, Split_capture.inspect)
 	assert_match( Split_capture.regexp, Split_capture.string, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.string.split(Split_capture.regexp), Split_capture.inspect)
+	assert_equal([{branch: '1'}], Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.raw_captures, Split_capture.inspect)
 	assert_equal(3, Split_capture.raw_captures.size, Split_capture.inspect)
 
@@ -61,6 +62,7 @@ def test_raw_capture_class?
 	assert_equal(:match, Match_capture.raw_capture_class?)
 	assert_equal(:split, Split_capture.raw_capture_class?)
 	assert_include([:split, :match], Limit_capture.raw_capture_class?)
+	assert_equal(:split, Limit_capture.raw_capture_class?)
 	assert_equal(:no_match, Capture.new('cat', /fish/, :match).raw_capture_class?)
 	assert_equal(:no_match, Failed_capture.raw_capture_class?, Failed_capture.inspect)
 end # raw_raw_capture_class?
@@ -249,12 +251,6 @@ def test_Capture_assert_post_conditions
 	assert_equal('', Parse_delimited_array.post_match, Parse_delimited_array.inspect)
 	Parse_array.assert_post_conditions
 end # assert_post_conditions
-def test_assert_repetition_options
-	Parse_array.assert_repetition_options({ending: :terminator, delimiter: "\n"})
-	assert_equal('', Parse_delimited_array.post_match)
-	Parse_delimited_array.assert_repetition_options({ending: :delimiter, delimiter: "\n"})
-	Parse_string.assert_repetition_options
-end # assert_repetition_options
 
 def test_Capture_Examples
 	Match_capture.assert_pre_conditions
@@ -309,33 +305,6 @@ def test_assert_parse_once
 	explain_assert_respond_to(Newline_Delimited_String, :assert_parse_once)
 	Newline_Delimited_String.assert_parse_once(Branch_regexp)
 end # assert_parse_once
-def test_assert_parse_string
-	string="* 1\n"
-	pattern=Branch_regexp
-	matchData=string.match(Branch_regexp)
-	assert_equal(['1'], matchData[1..-1], matchData.inspect) # return matched subexpressions
-	assert_equal({:branch => '1'}, parse_string(string, Branch_regexp)) # return matched subexpressions
-	assert_parse_string({:branch => '1'}, string, Branch_regexp) # return matched subexpressions
-	assert_equal(["branch"], Branch_regexp.names, matchData)
-	ret=if matchData.nil? then
-		[]
-	elsif matchData.names==[] then
-		assert_equal(Hash_answer, matchData[1..-1], matchData) # return unnamed subexpressions
-	else
-		nc=pattern.named_captures
-		assert_not_nil(nc)
-		assert_not_empty(nc)
-		named_hash={}
-		matchData.names.each do |n| # return named subexpressions
-			named_hash[n.to_sym]=matchData[n]
-		end # each
-		named_hash
-	end #if
-	assert_equal(Hash_answer, parse_string(string, Terminated_line), "matchData=#{matchData.inspect}")
-#	assert_equal(Hash_answer, parse_string("1 2", WORD))
-#	assert_equal({:a => "1", :b => "2"}, '12'.match(/\d/.capture(:a)*/\d+/.capture(:b)))
-#	assert_equal({:a => "1", :b => "2"}, parse_string(string, Terminated_line.capture(:a)*Terminated_line.capture(:b)))
-end #parse_string
 def test_assert_left_parse
 	ls_octet_pattern = /r|w|x/
 	ls_permission_pattern = [/1/,

@@ -40,12 +40,6 @@ end #
 def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
-def inspect_node(&inspect_proc)
-	if !block_given? then
-		inspect_proc = Constants::Node_format
-	end # if
-	inspect_proc.call(self)
-end # inspect_node
 module Constants
 Identity_map = proc {|e, depth, terminal| e}
 Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
@@ -63,12 +57,35 @@ Tree_node_format = proc do |e, depth, terminal|
 	end # case
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
-	ret += Node_format.call(e, depth, terminal)
+	ret += e.inspect_node
 end # Tree_node_format
 end # Constants
+include Constants
+def inspect_node(&inspect_proc)
+	if !block_given? then
+		inspect_proc = Node_format
+	end # if
+	inspect_proc.call(self)
+end # inspect_node
 end # Graph
-module Forest
+module DAG
 include Graph
+include Graph::Constants
+def inspect_recursive(children_method_name = :to_a, &inspect_proc)
+	if !block_given? then
+		inspect_proc = Tree_node_format
+	end # if
+	ret = map_recursive(children_method_name, &inspect_proc)
+	ret = if ret.instance_of?(Array) then
+		ret.join("\n")
+	else
+		ret
+	end # if
+	ret + "\n"
+end # inspect_recursive
+end # DAG
+module Forest
+include DAG
 end # Forest
 module Leaf
 include Graph
@@ -77,19 +94,7 @@ def leaf?(children_method_name = :to_a)
 end # leaf?
 end # Leaf
 module Tree
-include Graph
-def inspect_recursive(&inspect_proc)
-	if !block_given? then
-		inspect_proc = Tree_node_format
-	end # if
-	ret = map_recursive(:expressions, &inspect_proc)
-	ret = if ret.instance_of?(Array) then
-		ret.join("\n")
-	else
-		ret
-	end # if
-	ret + "\n"
-end # inspect_recursive
+include DAG
 module Constants
 include Graph::Constants
 end # Constants
@@ -112,7 +117,7 @@ def children?(children_method_name = :to_a)
 end # children?
 # Shortcut for lack of children is a leaf node.
 def leaf?(children_method_name = :to_a)
-	children?(children_method_name).to_a.empty?
+	children?(children_method_name).to_a.empty? # nil.to_a == []
 end # leaf?
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
@@ -131,7 +136,7 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
-		[visit_proc.call(self, depth, false), children.map_pair do |key, sub_tree|
+		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
 				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
 			else

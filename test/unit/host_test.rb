@@ -12,5 +12,7 @@ class HostTest < TestCase
 #include DefaultTests
 include TE.model_class?::Examples
 def test_nmapScan
-	candidateIP = 
+#	candidateIP = 
+#	assert_test_id_equal
+end # nmapScan
 end #Host
