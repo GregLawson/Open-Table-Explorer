@@ -8,6 +8,7 @@
 require 'pathname'
 require_relative 'regexp.rb'
 require 'active_support/all'
+
 class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
@@ -34,17 +35,21 @@ Relative_pathname_regexp=Start_string*Pathname_character_regexp*Many*End_string
 Absolute_pathname_regexp=Start_string*Directory_delimiter*Pathname_character_regexp*Many*End_string
 Relative_directory_regexp=Start_string*Pathname_character_regexp*Many*End_string
 Absolute_directory_regexp=Start_string*Directory_delimiter*Pathname_character_regexp*Many*End_string
-end  #Constants
+end # Constants
 include Constants
 module ClassMethods
 def path2model_name?(path=$0)
+	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
+	unit_base_name?(path).to_s.camelize.to_sym
+end #path2model_name
+def unit_base_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
 	matched_pattern = find_from_path(path)
 	basename=File.basename(path)
 	name_length=basename.size-matched_pattern[:suffix].size
-	basename[0,name_length].camelize.to_sym
-end #path2model_name
+	basename[0,name_length].to_sym
+end # unit_base_name
 # searches up pathname for .git sub-directory
 # returns nil if not in a git repository
 def repository_dir?(path=$0)
@@ -136,17 +141,18 @@ end #pathnames
 def new_from_path(path)
 	raise path.inspect unless path.instance_of?(String) || path.instance_of?(Pathname)
 	path=File.expand_path(path)
-	FilePattern.new(FilePattern.find_from_path(path),
-						File.basename(path),
+	pattern = FilePattern.find_from_path(path)
+	FilePattern.new(pattern,
+						FilePattern.unit_base_name?(path),
 						FilePattern.project_root_dir?(path),
 						FilePattern.repository_dir?(path))
-end #initialize
+end # new_from_path
 #FilePattern.assert_pre_conditions
 #assert_include(FilePattern.included_modules, :Assertions)
 #assert_pre_conditions
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :pattern, :project_root_dir, :repository_dir, :unit_base_name
+attr_reader :pattern, :project_root_dir, :repository_dir, :unit_base_name
 def initialize(pattern,
 					 unit_base_name = '*',
 					 project_root_dir = Library.project_root_dir,
