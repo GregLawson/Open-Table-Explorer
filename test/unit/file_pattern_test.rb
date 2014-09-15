@@ -169,7 +169,7 @@ def test_pathnames
 	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
 def test_initialize
-	n=FilePattern.new($0)
+	n=FilePattern.new_from_path($0)
 	n.assert_pre_conditions
 #	assert_equal(Executable, n)
 	file_pattern=n
