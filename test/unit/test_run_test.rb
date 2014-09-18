@@ -188,7 +188,10 @@ def test_log_file
 end #log_file
 def test_run
 	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)
-	output = TestRun.new(test_command: 'ruby', singular_table: 'unit').run.assert_post_conditions.output
+	unit_run = TestRun.new(test_command: 'ruby', singular_table: 'unit').run
+	assert_equal(0, unit_run.process_status, unit_run.inspect)
+	unit_run.assert_post_conditions
+	output = unit_run.output
 	tests_pattern = /[0-9]+/.capture(:tests) * / / * /tests/
 	assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/
 	failures_pattern = /[0-9]+/.capture(:failures) * / / * /failures/
