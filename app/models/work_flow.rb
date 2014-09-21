@@ -199,10 +199,10 @@ def minimal_comparison?
 		unit_path = Pathname.new(pattern.path?(unit_name))
 #		path = Pathname.new(start_file_pattern.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 #		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
-#		if File.exists?(min_path)  then
+		if File.exists?(min_path)  then
 			' -t ' + unit_path.relative_path_from(pwd).to_s + ' ' + 
 				min_path.relative_path_from(pwd).to_s
-#		end # if
+		end # if
 	end.compact.join # map
 end # minimal_comparison
 def deserving_branch?(executable = @related_files.model_test_pathname?)
