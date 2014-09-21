@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-3014 by Greg Lawson                                      
+#    Copyright (C) 2012-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -32,8 +32,14 @@ def test_Constants
 	assert_match(Relative_directory_regexp, Patterns[0][:prefix])
 	assert_match(Absolute_directory_regexp, Library.project_root_dir)
 #	assert_match(Relative_pathname_regexp, )
-end #Constants
+end # Constants
 def test_path2model_name
+	path='test/long_test/rebuild_test.rb'
+#	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
+	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
+	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
+end #path2model_name
+def test_unit_base_name
 	path=File.expand_path($0)
 	extension=File.extname(path)
 	assert_equal('.rb', extension)
@@ -66,10 +72,9 @@ def test_path2model_name
 	assert_equal(3, name_length, "basename.size=#{basename.size}, extension.size=#{extension.size}\n Patterns[expected_match]=#{Patterns[expected_match].inspect}\n Patterns[expected_match][:suffix].size=#{Patterns[expected_match][:suffix].size}, ")
 	expected_match=4
 	path='test/long_test/rebuild_test.rb'
-#	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
-	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
-	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
-end #path2model_name
+	assert_equal(:rebuild, FilePattern.unit_base_name?(path))
+	assert_equal(:match_data, FilePattern.unit_base_name?('app/models/match_data.rb'))
+end # unit_base_name
 def test_repository_dir?
 	path=$0
 #	path='.gitignore'
@@ -163,38 +168,45 @@ def test_find_from_path
 	assert_not_nil(pattern, path)
 	assert_equal(:data_sources_dir, pattern[:name])
 end #find_from_path
+def test_path?
+end # path?
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
 	assert_equal(Patterns.size, FilePattern.pathnames?('test').size)
 	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
-def test_initialize
+def test_new_from_path
 	n=FilePattern.new_from_path($0)
 	n.assert_pre_conditions
 #	assert_equal(Executable, n)
 	file_pattern=n
 	assert(!file_pattern.pattern.keys.empty?, "file_pattern=#{file_pattern.inspect}")
-	FilePattern.assert_post_conditions
-	FilePattern.assert_pre_conditions
 	n.assert_pre_conditions
-	Executable.assert_post_conditions
-	Library.assert_post_conditions
-	Executable.assert_pre_conditions
-	Library.assert_pre_conditions
-end #initialize
+	assert_equal(:file_pattern, FilePattern.new_from_path(__FILE__).unit_base_name)
+end # new_from_path
 include FilePattern::Assertions
 extend FilePattern::Assertions::ClassMethods
 #def test_class_assert_invariant
 #	FilePattern.assert_invariant
 #end # class_assert_invariant
 def test_path
+def test_initialize
+	FilePattern.assert_post_conditions
+	FilePattern.assert_pre_conditions
+	assert_equal(:file_pattern, Library.unit_base_name)
+	assert_equal(:file_pattern, Executable.unit_base_name)
+	Executable.assert_post_conditions
+	Library.assert_post_conditions
+	Executable.assert_pre_conditions
+	Library.assert_pre_conditions
+end #initialize
 end #path
 def test_parse_pathname_regexp
 end #parse_pathname_regexp
 def test_pathname_glob
 # :path, :pattern, :project_root_dir, :repository_dir, :unit_base_name
 	assert_not_nil(Library.project_root_dir)
-	assert_equal('file_pattern.rb', Library.unit_base_name)
+	assert_equal(:file_pattern, Library.unit_base_name)
 #	assert_equal(FilePattern.find_by_name(:model), Library.pattern)
 	assert_not_nil(Library.pattern[:prefix])
 	assert_not_nil(Library.pattern[:suffix])

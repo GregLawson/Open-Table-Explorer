@@ -190,18 +190,18 @@ def minimal_comparison?
 	else
 		unit_pattern = FilePattern.new_from_path(@related_files.edit_files[0])
 	end # if
-	unit_name = unit_pattern.unit_basename
+	unit_name = unit_pattern.unit_base_name
 	FilePattern::Constants::Patterns.map do |p|
+		pattern = FilePattern.new(p)
 		pwd = Pathname.new(Dir.pwd)
 		default_test_class_id = @related_files.default_test_class_id?.to_s
-		pattern = FilePattern.new(p)
-		min_path = Pathname.new(pattern.path'minimal' + default_test_class_id).relative_path_from(pwd).to_s
-		unit_pattern = FilePattern.new(p)
-		unit_path = Pathname.new(pattern.path?(unit_pattern.unit_basename)).relative_path_from(pwd).to_s
+		min_path = Pathname.new(pattern.path?('minimal' + default_test_class_id))
+		unit_path = Pathname.new(pattern.path?(unit_name))
 #		path = Pathname.new(start_file_pattern.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 #		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
 #		if File.exists?(min_path)  then
-			' -t ' + unit_path + ' ' + min_path
+			' -t ' + unit_path.relative_path_from(pwd).to_s + ' ' + 
+				min_path.relative_path_from(pwd).to_s
 #		end # if
 	end.compact.join # map
 end # minimal_comparison
@@ -273,6 +273,7 @@ def edit(context = nil)
 	end # if
 	puts command_string if $VERBOSE
 	edit = @repository.shell_command(command_string)
+	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
 	edit.assert_post_conditions
 end # edit
 def split(executable, new_base_name)

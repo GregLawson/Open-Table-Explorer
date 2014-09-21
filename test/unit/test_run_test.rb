@@ -199,6 +199,10 @@ def test_run
 	assert_match(parenthetical_date_pattern * bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
 	assert_match(version_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
 	output = TestRun.new(test_command: 'ruby', singular_table: 'unit').run.assert_post_conditions.output
+	unit_run = TestRun.new(test_command: 'ruby', singular_table: 'unit').run
+	assert_equal(0, unit_run.process_status, unit_run.inspect)
+	unit_run.assert_post_conditions
+	output = unit_run.output
 	tests_pattern = /[0-9]+/.capture(:tests) * / / * /tests/
 	assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/
 	failures_pattern = /[0-9]+/.capture(:failures) * / / * /failures/

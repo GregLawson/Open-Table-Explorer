@@ -6,9 +6,19 @@
 #
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
+require 'virtus'
 #require_relative '../../app/models/generic_table.rb'
 class Host # < ActiveRecord::Base
-#include Generic_Table
+include Virtus.model
+  attribute :ip, String, :default => nil
+  attribute :nmap, String, :default => ''
+  attribute :otherPorts, Fixnum, :default => nil
+  attribute :otherState, String, :default => nil
+  attribute :mac, String, :default => nil # 
+  attribute :nicVendor, String, :default => nil
+  attribute :name, String, :default => nil
+  attribute :last_detection, Time, :default => Time.now
+  attribute :nmap_execution_time, Time, :default => nil
 #has_many :ports
 #has_many :routers
 module ClassMethods
