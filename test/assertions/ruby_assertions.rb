@@ -14,6 +14,9 @@ def default_message
 	message = "\n self=#{self.inspect}\n"
 	message += "\n instance_variables=#{instance_variables.inspect}"
 end #default_message
+def caller_lines(ignore_lines=19)
+	"\n#{caller_locations[0..-ignore_lines].join("\n")}\n"
+end #caller_lines
 end # Object
 class Module
 def default_message
@@ -23,9 +26,6 @@ def default_message
 end #default_message
 end # Module
 class Method
-def caller_lines(ignore_lines=19)
-	"\n#{caller[0..-ignore_lines].join("\n")}\n"
-end #caller_lines
 end # Method
 module Kernel
 # Default message if message is empty
