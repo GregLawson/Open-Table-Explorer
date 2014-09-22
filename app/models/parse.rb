@@ -7,7 +7,7 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
-require_relative '../../app/models/stream_tree.rb'
+#require_relative '../../app/models/stream_tree.rb'
 require_relative '../../app/models/regexp_parse.rb'
 # encapsulates the difference between parsing from MatchData and from Array#split
 # regexp are Regexp not Arrays or Strings (see String#parse)
@@ -26,10 +26,10 @@ end #default_name
 end # ClassMethods
 extend ClassMethods
 attr_reader :string, :regexp, :method_name # arguments
-# method_name default should be best parse capture; currently :limit
 attr_reader :captures, :length_hash_captures
 attr_reader :raw_captures
-def initialize(string, regexp, method_name = :split)
+# method_name default should be best parse capture; currently :limit
+def initialize(string, regexp, method_name = :limit)
 	@string = string
 	@regexp = Regexp.promote(regexp)
 	@method_name = method_name
@@ -293,6 +293,7 @@ Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n
 
 Nested_string="1 2\n3 4\n"
 Nested_answer=[['1', '2'], ['3', '4']]
+WORD=/([^\s]*)/.capture(:word)
 end # Examples
 end # Capture
 
@@ -309,8 +310,11 @@ def capture?(pattern, method_name = :limit)
 		pos = 0
 		pattern.map do |p|
 			ret = self[pos..-1].capture?(p) # recurse returning Capture
-			
-			pos += ret.matched_characters?
+			if ret.instance_of?(Array) then
+				pos += ret.reduce(0) {|sum, c| sum + c.matched_characters?}
+			else
+				pos += ret.matched_characters?
+			end # if
 			ret
 		end # map
 	elsif pattern.instance_of?(String) then
@@ -322,7 +326,7 @@ def capture?(pattern, method_name = :limit)
 end # capture?
 def parse(regexp)
 	regexp.enumerate(:map) do |reg|
-		capture?(reg).output?
+		capture?(reg).enumerate(:map) {|c| c.output?}
 	end # enumerate
 end # parse
 module Constants
@@ -453,7 +457,6 @@ module Examples
 include Constants
 include Regexp::Constants
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
-WORD=/([^\s]*)/.capture(:word)
 CSV=/([^,]*)(?:,([^,]*?))*?/
 Ls_octet_pattern = /rwx/
 Ls_permission_pattern = [/1|l/,
