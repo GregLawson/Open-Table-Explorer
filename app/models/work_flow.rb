@@ -106,9 +106,20 @@ def version_comparison(files = nil)
 	end # map
 	ret.join(' ')
 end # version_comparison
-def working_different_from?(filename, branch_index)
+def diff_command?(filename, branch_index)
 	fail filename + ' does not exist.' if !File.exists?(filename)
 	diff_run = @repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- " + filename)
+end # diff_command?
+def reflog?(filename)
+	@repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
+end # reflog?
+def last_change?(filename)
+		reflog?(filename).output.split("/n")[0].split(',')[0]
+end # last_change?
+# What happens to non-existant versions? returns nil Are they different? 
+# What do I want?
+def working_different_from?(filename, branch_index)
+	diff_run = diff_command?(filename, branch_index)
 	if diff_run.output == '' then
 		false # no difference
 	elsif diff_run.output.split("\n").size == 2 then
@@ -169,10 +180,10 @@ def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym
 		else
 			ret += " #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
 		end # if
-		ret
 	else
-		''
+		ret = ''
 	end # if
+	ret += ' -r ' + last_change?(filename) + ' ' + filename
 end # goldilocks
 def test_files(edit_files = @related_files.edit_files)
 	pairs = @related_files.functional_parallelism(edit_files).map do |p|
@@ -436,6 +447,7 @@ TestFile = File.expand_path($PROGRAM_NAME)
 TestWorkFlow = WorkFlow.new(TestFile)
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'
 Most_stable_file = 'test/unit/minimal2_test.rb'
+Formerly_existant_file = 'test/unit/related_file.rb'
 include Constants
 end # Examples
 include Examples

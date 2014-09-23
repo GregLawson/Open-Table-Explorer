@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -85,23 +85,32 @@ end #initialize
 def test_version_comparison
 	assert_equal('', TestWorkFlow.version_comparison([]))
 end #version_comparison
-def test_working_different_from?
+def test_diff_command?
 	filename=Most_stable_file
 	branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
 	assert_not_nil(branch_index)
-	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow::Branch_enhancement[branch_index]} -- "+filename)
+	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
+	diff_run.assert_post_conditions
 	assert_instance_of(ShellCommands, diff_run)
 	assert_operator(diff_run.output.size, :==, 0)
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', diff_run.output, message)
-	assert(!TestWorkFlow.working_different_from?(filename, 0), message)
-	assert(!TestWorkFlow.working_different_from?(filename, 0))
-	assert(!TestWorkFlow.working_different_from?(filename, 1))
-	assert(!TestWorkFlow.working_different_from?(filename, 2))
-	assert(!TestWorkFlow.working_different_from?(filename, 3))
-	assert(!TestWorkFlow.working_different_from?(filename, 4))
-	assert(!TestWorkFlow.working_different_from?(filename, -1))
-	assert(!TestWorkFlow.working_different_from?(filename, -2))
+	message="diff_run=#{diff_run.inspect}"
+	assert_equal('', TestWorkFlow.diff_command?(Most_stable_file, branch_index).output)
+end # diff_command?
+def test_reflog
+end # reflog
+def last_change?
+	assert_equal('', WorkFlow.last_cchange?())
+end # last_change?
+def test_working_different_from?
+	current_branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
+	assert_equal('', TestWorkFlow.diff_command?(Most_stable_file, current_branch_index).output)
+	assert_equal(false, TestWorkFlow.working_different_from?(Most_stable_file, current_branch_index))
+	assert(!TestWorkFlow.working_different_from?(Most_stable_file, current_branch_index + 1))
+	assert(!TestWorkFlow.working_different_from?(Most_stable_file, current_branch_index + 2))
+	assert(!TestWorkFlow.working_different_from?(Most_stable_file, current_branch_index + 3))
+	assert(!TestWorkFlow.working_different_from?(Most_stable_file, current_branch_index + 4))
 	filename=File_not_in_oldest_branch
 	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat origin/master -- "+filename)
 	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
