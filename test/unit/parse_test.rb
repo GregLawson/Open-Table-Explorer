@@ -53,7 +53,6 @@ def test_raw_captures?
 	assert_match(Branch_line, Split_capture.string, Split_capture.inspect)
 	assert_match( Split_capture.regexp, Split_capture.string, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.string.split(Split_capture.regexp), Split_capture.inspect)
-	assert_equal([{branch: '1'}], Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
 	assert_equal(['', '1', '  2'], Split_capture.raw_captures, Split_capture.inspect)
 	assert_equal(3, Split_capture.raw_captures.size, Split_capture.inspect)
 
@@ -62,7 +61,6 @@ def test_raw_capture_class?
 	assert_equal(:match, Match_capture.raw_capture_class?)
 	assert_equal(:split, Split_capture.raw_capture_class?)
 	assert_include([:split, :match], Limit_capture.raw_capture_class?)
-	assert_equal(:split, Limit_capture.raw_capture_class?)
 	assert_equal(:no_match, Capture.new('cat', /fish/, :match).raw_capture_class?)
 	assert_equal(:no_match, Failed_capture.raw_capture_class?, Failed_capture.inspect)
 end # raw_raw_capture_class?
@@ -114,7 +112,7 @@ def test_matched_characters?
 	assert_equal(1, Capture.new('ab', /a/.capture(:a), :match).matched_characters?)
 end # matched_characters?
 def test_output?
-	assert_equal([{branch: '1'}], Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
+	assert_equal({branch: '1'}, Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
 end # output?
 def test_delimiters?
 	assert_equal([], Parse_string.delimiters?)
@@ -172,10 +170,8 @@ def test_named_hash
 	captures=matchData #[1..-1]
 #	parse_string=Capture.new("* 1\n", Branch_regexp)
 	assert_equal(3, Parse_string.captures.size, Parse_string.inspect)
-	possible_unnamed_capture_indices=Parse_string.all_capture_indices
 	Parse_string.named_hash
 	named_hash={}
-	assert_equal([1], possible_unnamed_capture_indices, captures.inspect+"\n"+captures.captures.inspect)
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
 		named_hash[n.to_sym]=captures[n]

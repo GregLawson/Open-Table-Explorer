@@ -7,11 +7,13 @@
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/host.rb'
 class Network # < ActiveRecord::Base
 #include Generic_Table
 module Constants
 IFCONFIG=ShellCommands.new('/sbin/ifconfig')
-
+#Hosts = Host.new
 Quad_Pattern = /[0-2]?[0-9]?[09]/
 Private_A = /10\./.capture(:network) * (Quad_Pattern * Quad_Pattern * Quad_Pattern).capture(:host)
 B_Quad2 = /16/ | /17/ | /18/ | /19/ | /20/ | /21/ | /22/ | /23/ | /24/ | /25/ | /26/ | /27/ | /28/ | /29/ | /30/ | /31/
@@ -25,16 +27,20 @@ Network_Pattern =/[0-9]+\./
 Node_Pattern = /[0-9]+/
 IP_Pattern = [Context_Pattern, Network_Pattern, Node_Pattern]
 Netmask_Pattern = /.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/
+MyContext = /\s*inet addr:/,/[0-9]*\.[0-9]*\./.capture(:myContext)
+MyNetwork = /[0-9]+/.capture(:myNode)
+MyNetmask = /.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/
+Ifconfig_pattern = []
+IFCONFIG_cappture = IFCONFIG.output.capture?(Ifconfig_pattern)
 end #Constants
 include Constants
 module ClassMethods
 def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
 	#puts ifconfig
-	s = StringScanner.new(ifconfig)
-	@myContext=s.after(/\s*inet addr:/,/[0-9]*\.[0-9]*\./)
-	@myNetwork=s.scan(/[0-9]+\./)
-	@myNode=s.scan(/[0-9]+/)
+	@myContext = ifconfig.parse([/\s*inet addr:/,/[0-9]*\.[0-9]*\./.capture(:myContext)])
+	@myNetwork = ifconfig.scan(/[0-9]+\./.capture(:myNetwork))
+	@myNode = ifconfig.scan(/[0-9]+/.capture(:myNode))
 	#puts "@myContext=#{@myContext}"
 	#puts "@myNetwork=#{@myNetwork}"
 	#puts "@myNode=#{@myNode}"
@@ -42,13 +48,12 @@ def whereAmI
 	#puts "@myIP=#{@myIP}"
 	#ip=IPAddr.new(@myIP)
 	#puts "ip=#{ip}"
-	@myNetmask=s.after(/.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/)
 	#puts "@myNetmask=#{@myNetmask}"
 	#ip=ip.mask(@myNetmask)
 	#puts "ip=#{ip}"
 	#puts "masklen(\"cidr #{@myNetmask}\")"
-	#@hosts=Hosts.new
-	Hosts.recordDetection(@myIP)
+	#@hosts=Host.new
+	Host.recordDetection(@myIP)
 	@nmapScan="#{@myContext}#{@myNetwork}1-254"
 	network=find_or_initialize_by_nmap_addresses(@nmapScan)
 	network.update_attribute('nmap_addresses',@nmapScan)
@@ -62,8 +67,8 @@ def acquire
 	network=Networks.first(:order => 'last_scan ASC')
 	puts "nmap_addresses=#{network.nmap_addresses}"  if $VERBOSE
 	Networks.ping(network.nmap_addresses)
-	host=Hosts.first(:order => 'last_detection ASC')
-	Hosts.nmapScan(host.ip)
+	host=Host.first(:order => 'last_detection ASC')
+	Host.nmapScan(host.ip)
 end
 def ping(nmapScan)
 	network=Networks.find_or_initialize_by_nmap_addresses(nmapScan)
@@ -78,10 +83,10 @@ def ping(nmapScan)
 		if s.scan(/Host /) then
 			matchData=/[0-9.]{1,3}\.[0-9.]{1,3}\.[0-9.]{1,3}\.[0-9.]{1,3}/.match(r)
 			candidateIP= matchData[0]
-			Hosts.recordDetection(candidateIP)
+			Host.recordDetection(candidateIP)
 			Global::log.debug("candidateIP=#{candidateIP}")
 		elsif  s.scan(/Nmap done:/)
-			up,nmap_execution_time=Hosts.scanNmapSummary(s)
+			up,nmap_execution_time=Host.scanNmapSummary(s)
 			network.update_attribute('nmap_execution_time', nmap_execution_time)
 			puts "nmap_execution_time=#{nmap_execution_time}" #if $VERBOSE
 		elsif s.scan(/^\s*$|Starting Nmap/)   then
