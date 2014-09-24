@@ -216,18 +216,20 @@ end #revert_changes
 def test_merge_conflict_files?
 end #merge_conflict_files?
 def test_git_parse
-	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote)) * "\n"
 	command = 'branch --list --remote'
 	output=This_code_repository.git_command(command).assert_post_conditions.output
-	parse = output.parse(Parse.new(pattern, {ending: :optional}))
+	parse = output.parse(pattern)
 	assert_instance_of(Hash, parse, self.inspect)
-	assert_equal({remote: :master}, parse, output.inspect)
+	assert_include(parse, {remote: :master}, output.inspect)
 	git_parse(command, pattern)[:remote]
 end # git_parse
 def test_branches?
 	assert_equal(:master, Empty_Repo.current_branch_name?)
 #?	explain_assert_respond_to(Parse, :parse_split)
 	branch_output=Empty_Repo.git_command('branch --list').assert_post_conditions.output
+	branch_name_pattern = /[a-z0-9A-Z_-]+/
+	branch_name_alternative = branch_name_pattern.capture(:branch) * ' -> ' * branch_name_pattern.capture(:referenced)
 	pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
 	patterns = [Branch_regexp,
 					/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
@@ -248,11 +250,6 @@ def test_remotes?
 	assert_empty(Empty_Repo.remotes?)
 	assert_not_empty(This_code_repository.remotes_names?)
 end #remotes?
-def test_remote_branch_names?
-	assert_includes(This_code_repository.remote_branch_names?, "origin/"+Empty_Repo.current_branch_name?.to_s)
-	assert_empty(Empty_Repo.remote_branch_names?)
-	assert_not_empty(This_code_repository.remote_branch_names?)
-end # remote_branch_names?
 def test_rebase!
 	Minimal_repository.rebase!
 end #rebase!
