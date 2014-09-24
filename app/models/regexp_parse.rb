@@ -33,21 +33,6 @@ end # TreeAddress
 class Regexp
 class Expression::Base
 include Tree
-<<<<<<< HEAD
-# [] is already taken
-def at(address)
-	if address.parent.instance_of?(TreeAddress) then
-		self[address.parent][address.index]
-	else
-		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
-	end # if
-end # index
-def leaf_addresses
-end # 
-def expression_class_symbol?
-	self.class.name[20..-1].to_sym # should be magic-number-free
-end # expression_class_symbol?
-=======
 module Constants
 include Graph::Constants
 Node_format = proc do |e|
@@ -59,7 +44,6 @@ Mx_format = proc do |e, depth, terminal|
 end # Mx_format
 end # Constants
 include Constants
->>>>>>> testing
 def inspect_node(&inspect_proc)
 	if !block_given? then
 		inspect_proc = Node_format
