@@ -31,6 +31,8 @@ module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
 def at(address)
 	if address.parent.instance_of?(TreeAddress) then
 		self[address.parent][address.index]
+	elsif address.parent.nil? then
+		address
 	else
 		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
 	end # if
