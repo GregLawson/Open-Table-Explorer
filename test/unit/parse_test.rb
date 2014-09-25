@@ -117,7 +117,7 @@ end # output?
 def test_delimiters?
 	assert_equal([], Parse_string.delimiters?)
 	assert_equal(["\n"], Parse_array.delimiters?, Parse_array.inspect)
-	assert_equal(["\n"], Parse_delimited_array.delimiters, Parse_delimited_array.inspect)
+	assert_equal(["\n"], Parse_delimited_array.delimiters?, Parse_delimited_array.inspect)
 	message = "Match_capture = #{Match_capture.inspect}\nSplit_capture = #{Split_capture.inspect}"
 	assert_equal([], Match_capture.delimiters?, message)
 	assert_equal(3, Split_capture.raw_captures.size, message)
@@ -323,8 +323,19 @@ def test_assert_left_parse
 	assert_match(/  /, drivers)
 	assert_match(/\ \ /, drivers)
 	'  '.assert_parse(/  /)
+	Driver_string[0..1].assert_left_parse(Driver_pattern[0..0])
+	Driver_string.assert_left_parse(Driver_pattern[0..0])
 end # assert_left_parse
 def test_assert_parse
+	string = Driver_string
+	pattern = Driver_pattern
+	capture = string.capture?(pattern)
+	assert_instance_of(Array, capture)
+	puts capture.inspect
+	capture_runs = capture.enumerate(:chunk) do |c|
+		c.success?
+	end # chunk
+	puts capture_runs.inspect
 	parse_string=Capture.new(Newline_Delimited_String, Branch_regexp)
 	parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp)
 
@@ -332,7 +343,7 @@ def test_assert_parse
 	assert_equal(parse_string.to_a?, parse_delimited_array.captures)
 	assert_equal(parse_string, parse_delimited_array)
 	Driver_string[0..1].assert_parse(Driver_pattern[0..0])
-	Driver_string.assert_parse(Driver_pattern[0..0])
+	Driver_string.assert_left_parse(Driver_pattern[0..0])
 	first_capture = Driver_string[2..-1].capture?(Driver_pattern[1], :match)
 	assert_equal(first_capture.method_name, :match)
 	assert_instance_of(Capture, first_capture)

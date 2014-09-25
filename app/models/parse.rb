@@ -296,7 +296,16 @@ Nested_answer=[['1', '2'], ['3', '4']]
 WORD=/([^\s]*)/.capture(:word)
 end # Examples
 end # Capture
-
+class RawCapture
+end # RawCapture
+class MatchFailed < RawCapture
+end # MatchFailed
+class MatchDataCapture < RawCapture
+end # MatchDataCapture
+class SplitCapture < RawCapture
+end # SplitCapture
+class ParsedCapture < RawCapture
+end # SplitCapture
 # String
 class String
 # Try to unify match and split (with Regexp delimiter)
