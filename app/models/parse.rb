@@ -7,6 +7,10 @@
 ###########################################################################
 #require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/regexp.rb'
+#require_relative '../../app/models/stream_tree.rb'
+require_relative '../../app/models/regexp_parse.rb'
+# encapsulates the difference between parsing from MatchData and from Array#split
+# regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
 # encapsulates the difference between parsing from MatchData and from Array#split
 module ClassMethods
@@ -21,6 +25,10 @@ def default_name(index, prefix=nil, numbered=nil)
 end #default_name
 end # ClassMethods
 extend ClassMethods
+attr_reader :string, :regexp, :method_name # arguments
+attr_reader :captures, :length_hash_captures
+attr_reader :raw_captures
+# method_name default should be best parse capture; currently :limit
 attr_reader :captures, :regexp # arguments
 attr_reader :length_hash_captures, :repetitions, :matched_characters
 attr_reader :output, :pre_match, :post_match, :delimiters  # outputs
@@ -60,7 +68,139 @@ def initialize(captures, regexp)
 		@delimiters = (2..@captures.size - 2).map {|i| (i.even? ? @captures[i] : nil)}.compact
 		@matched_characters = @captures.reduce(0){|sum, s| sum + s.length} - @captures[0].length
 	end #if
-(0)end #initialize
+end #initialize
+def ==(other)
+	instance_variables.all? do |iv_name|
+		if !([:@method_name, :@raw_captures,:@captures].include?(iv_name)) then
+			self.instance_variable_get(iv_name) == other.instance_variable_get(iv_name)
+		else
+			true # pass all? for cetain instance variables
+		end # if
+	end # All?
+end # equal
+def raw_captures?(method_name = self.method_name)
+	if method_name == :limit then # limit match to :match length of string
+		match = string.method(:match).call(@regexp)
+		string =  @string[0,matched_characters?(match)]# regexp matched string
+		split = string.method(:split).call(@regexp) # after string shortened
+		if repetitions?(split) == 1 then
+			match
+		else
+			split
+		end # if
+	else
+		string = @string # full string
+		string.method(method_name).call(@regexp)
+	end #if
+end # raw_captures?
+def raw_capture_class?(raw_captures = self.raw_captures?)
+	if raw_captures.nil? || (@method_name == :split && [@string] == @raw_captures) then
+		:no_match
+	elsif raw_captures.instance_of?(MatchData) then
+		:match
+	else # raw_capture from split, already in normalized form
+		:split
+	end # case
+end # raw_capture_class?
+def success?(raw_captures = self.raw_captures?)
+	if raw_captures.nil? then 
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = Capture.new(string, regexp, :match)
+			match_capture.success?(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				false
+			else # split succeeded
+				true
+			end #if
+		end # if
+	end #if
+end # success?
+def repetitions?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then 0
+	when :match  then 1
+	when :split then (raw_captures.size/(@length_hash_captures+1)).ceil
+	end #case
+end # repetitions?
+# Tranform split and MatchData captures into single form
+def to_a?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then []
+	when :match  then if raw_captures.size == 0 then
+		[pre_match?] + raw_captures[0] + [post_match?]
+	else
+		[pre_match?] + raw_captures[1..-1] + [post_match?]
+	end # if
+	when :split then raw_captures
+	end #case
+end # to_a?
+def post_match?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then nil
+	when :match  then raw_captures.post_match
+	when :split then 
+			if raw_captures.size.odd? then
+				raw_captures[-1]
+			else
+				''
+			end # if
+	end #case
+
+end # post_match?
+def pre_match?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures.pre_match
+	else # from split, already in nomalize form
+			raw_captures[0]
+	end #if
+end # pre_match?
+def matched_characters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		0
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures[0].length
+	else # 
+		@string.length - raw_captures?(:match).post_match.length
+	end #if
+end # matched_characters?
+def output?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		{}
+	elsif raw_captures.instance_of?(MatchData) then
+		if raw_captures.names==[] then
+			raw_captures[1..-1] # return unnamed subexpressions
+		else
+			named_hash(0)
+		end # if
+	else # 
+		(0..repetitions?(raw_captures)-1).map do |i|
+			named_hash(i*(length_hash_captures+1))
+		end #map
+	end # if
+end # output?
+def delimiters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		[]
+	elsif raw_captures.instance_of?(MatchData) then
+		[]
+	else # from split
+		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
+#		raise self.inspect if raw_captures[0].nil?
+	end #if
+end # delimiters?
+# return a capture object for two Capture instances (assumed consecutive)
+def +(other_capture)
+	raise "Only Capture instances can be added." if !other_capture.instance_of?(Capture)
+	Capture.new(self.string + other_capture.string, [self.regexp, other_capture.regexp])
+		
+end # +
 def all_capture_indices
 	if @captures.instance_of?(MatchData) then
 		(1..@captures.size-1).to_a
@@ -88,11 +228,20 @@ def named_hash(hash_offset=0)
 #	end #each
 	named_hash
 end #named_hash
-require_relative '../../test/assertions.rb'
 
 # Capture::Assertions
+require_relative '../../test/assertions.rb'
 module Assertions
-
+module ClassMethods
+def assert_pre_conditions(message='')
+end # assert_pre_conditions
+def assert_method(match_capture, limit_capture, argumentless_method_name = :output?, message = '')
+	message += "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
+	match_method_object = match_capture.method(argumentless_method_name)
+	limit_method_object = limit_capture.method(argumentless_method_name)
+	assert_equal(match_method_object.call, limit_method_object.call, message)
+end # assert_method
+end #ClassMethods
 # Any match at all
 def assert_pre_conditions(message='')
 	assert_not_nil(@captures, 'no match at all.')
@@ -104,7 +253,35 @@ def assert_pre_conditions(message='')
 	end # if
 
 end # assert_pre_conditions
-
+def assert_success(raw_captures = self.raw_captures?)
+	if raw_captures.nil? then 
+		assert(false, self.inspect)
+	elsif raw_captures.instance_of?(MatchData) then
+		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = Capture.new(string, regexp, :match)
+			match_capture.assert_success(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				assert(false, self.inspect)
+			else # split succeeded
+				true
+			end #if
+		end # if
+	end #if
+	assert(success?, self.inspect)
+end # assert_success
+def assert_left_match(message = '')
+	message = add_default_message(message)
+	assert(success?, message)
+	message += "\nregexp = " + regexp.inspect
+	message += "\nstring... = " + string[0..50].inspect
+	assert_not_match(regexp, pre_match?)
+	assert_empty(pre_match?, message + "\nA left match requires pre_match? = #{pre_match?.inspect} to be empty.")
+	assert_empty(delimiters?.join("\n")[0..100], message + "\nDelimiters were found in a split match = "+delimiters?.inspect)
+	assert_success
+end # assert_left_match
 # exact match, no left-overs
 def assert_post_conditions(message='')
 	assert_empty(@pre_match, self.inspect)
@@ -118,49 +295,30 @@ def repetition_options?
 		nil
 	end # if
 end # repetition_options?
-def assert_repetition_options(repetition_options = repetition_options?)
-	if repetition_options.nil? then
-		assert_pre_conditions
-	else
-		delimiter = repetition_options.fetch(:delimiter, "\n")
-		assert_empty(@delimiters.compact.uniq - [delimiter])
-		assert_empty([@post_match] - [delimiter] - [''])
-		case repetition_options[:ending]
-		when :optional then 
-		when :delimiter then 
-			assert_not_match(Regexp.new(delimiter), @post_match)
-			assert_empty(@delimiters.compact.uniq - [delimiter])
-		when :terminator then
-			assert_match(delimiter, @post_match)
-		else
-			raise 'bad ending symbol.'
-		end #case
-	end # if
-end # assert_repetition_options
 def add_parse_message(string, pattern, message='')
 	message = add_default_message(message)
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
-def assert_parse_string(answer, string, pattern, message='')
-	message = add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"
-	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
-	assert_match(pattern, string, message)
-	matchData=pattern.match(string)
-	assert_operator(pattern.named_captures.values.flatten.size, :<=, matchData.size-1, "All string parse captures should be named.\n"+message)
-	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
-
-end #parse_string
-module ClassMethods
-end #ClassMethods
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 module Examples
 Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
-Branch_regexp=/[* ]/.capture*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+Branch_regexp = /[* ]/.capture * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Parse_string=Capture.new(Newline_Delimited_String.match(Branch_regexp), Branch_regexp)
 Parse_delimited_array=Capture.new(Newline_Delimited_String.split(Branch_regexp), Branch_regexp)
+Branch_line = Branch_regexp * "\n"
 Parse_array=Capture.new(Newline_Terminated_String.split(Branch_regexp), Branch_regexp)
+LINE=/[^\n]*/.capture(:line)
+Line_terminator=/\n/.capture(:terminator)
+Terminated_line=(LINE*Line_terminator).group
+Hash_answer={:line=>"* 1", :terminator=>"\n"}
+Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n"}]
+
+Nested_string="1 2\n3 4\n"
+Nested_answer=[['1', '2'], ['3', '4']]
+WORD=/([^\s]*)/.capture(:word)
 end # Examples
 end # Capture
 
@@ -215,21 +373,15 @@ end # parse
 module Constants
 end #Constants
 include Constants
+require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
-include Test::Unit::Assertions
+def add_message(message='')
+	newline_if_not_empty(message)+"\n#self.inspect = #{self.inspect}"
+end #add_message
 def add_parse_message(string, pattern, message='')
 	newline_if_not_empty(message)+"\n#{string.inspect}.match(#{pattern.inspect})=#{string.match(pattern).inspect}"
 end #add_parse_message
-def assert_parse_string(answer, string, pattern, message='')
-	message=add_parse_message(string, pattern, message)+"\nnames=#{pattern.names.inspect}"
-	message+="\nnamed_captures=#{pattern.named_captures.inspect}"
-	assert_match(pattern, string, message)
-	matchData=pattern.match(string)
-	assert_operator(pattern.named_captures.values.flatten.size, :<=, matchData.size-1, "All string parse captures should be named.\n"+message)
-	assert_equal(answer, parse_string(string, pattern), add_parse_message(string, pattern, message))
-
-end #parse_string
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 	match1=parse_string(string, pattern1)
 	assert_not_nil(match1)
@@ -264,21 +416,109 @@ def assert_parse_repetition(answer, string, pattern, repetition_range, message='
 	end #if
 end #parse_repetition
 end #ClassMethods
+# pattern matches only once in both match and split
+def assert_parse_once(pattern, message='')
+	match_capture = Capture.new(self, pattern, :match)
+	split_capture = Capture.new(self, pattern, :split)
+	limit_capture = Capture.new(self[0, match_capture.matched_characters?], pattern, :split)
+	message = "match_capture = #{match_capture.inspect}\nsplit_capture = #{split_capture.inspect}"
+	assert_equal(match_capture.output?, limit_capture.output?[0], message)
+	common_capture = match_capture.to_a?[0..-2]
+	last_common_capture = common_capture.size - 1
+	assert_equal(common_capture.join, split_capture.captures[0..last_common_capture].join, message)
+	assert_equal(common_capture, split_capture.captures[0..last_common_capture], message)
+	assert_equal(common_capture, limit_capture.captures[0..last_common_capture], message)
+	assert_equal(common_capture, limit_capture.captures, message)
+#	Capture.assert_method(match_capture, limit_capture, :string, message)
+	Capture.assert_method(match_capture, limit_capture, :regexp, message)
+	Capture.assert_method(match_capture, limit_capture, :length_hash_captures, message)
+#	Capture.assert_method(match_capture, split_capture, :captures, message)
+	Capture.assert_method(match_capture, limit_capture, :repetitions?, message)
+	Capture.assert_method(match_capture, limit_capture, :matched_characters?, message)
+	Capture.assert_method(match_capture, limit_capture, :pre_match?, message)
+#	Capture.assert_method(match_capture, limit_capture, :post_match?, message)
+	Capture.assert_method(match_capture, limit_capture, :delimiters?, message)
+#	Capture.assert_method(match_capture, limit_capture, :to_a?, message)
+end # assert_parse_once
+def assert_left_parse(pattern, message='')
+	if pattern.instance_of?(Array) then
+		pos = 0
+		pattern.map do |p|
+			ret = self[pos..-1].assert_left_parse(p) # recurse
+			pos += ret.matched_characters?
+			ret
+		end # map
+	else
+		match_capture = Capture.new(self, pattern, :match)
+		split_capture = Capture.new(self, pattern, :split)
+		limit_capture = Capture.new(self, pattern, :limit)
+		match_capture.assert_left_match
+#		split_capture.assert_left_match
+		limit_capture.assert_left_match
+		# limit repetitions to pattern, get all captures
+		if split_capture.repetitions? == 1 then
+			match_capture
+		elsif match_capture.output? == split_capture.output?[-1] then # over-written captures
+			split_capture
+		else
+			match_capture
+		end # if
+	end # if
+end # assert_left_parse
+def assert_parse(pattern, message='')
+	capture = capture?(pattern)
+	capture_runs = capture.enumerate(:chunk) do |c|
+		success = c.success?
+	end # chunk
+	capture_runs.each do |success, run|
+		case success
+		when true then message+= ' matched'
+		when nil then message+= ' unmatched'
+		end # case
+	end # each
+		match_capture = Capture.new(self, pattern, :match)
+		split_capture = Capture.new(self, pattern, :split)
+		limit_capture = Capture.new(self, pattern, :limit)
+		match_capture.assert_post_conditions(message)
+		split_capture.assert_post_conditions(message)
+		limit_capture.assert_post_conditions(message)
+		# limit repetitions to pattern, get all captures
+		if split_capture.repetitions? == 1 then
+			puts message + "\n" + match_capture.inspect
+		elsif match_capture.output? == split_capture.output?[-1] then # over-written captures
+			puts message + "\n" + split_capture.inspect
+		else
+			puts message + "\n" + match_capture.inspect
+		end # if
+end # assert_parse
 end #Assertions
 include Assertions
 module Examples
 include Constants
 include Regexp::Constants
-LINE=/[^\n]*/.capture(:line)
-Line_terminator=/\n/.capture(:terminator)
-Terminated_line=(LINE*Line_terminator).group
 LINES_cryptic=/([^\n]*)(?:\n([^\n]*))*/
-WORD=/([^\s]*)/.capture(:word)
 CSV=/([^,]*)(?:,([^,]*?))*?/
-Hash_answer={:line=>"* 1", :terminator=>"\n"}
-Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n"}]
-Nested_string="1 2\n3 4\n"
-Nested_answer=[['1', '2'], ['3', '4']]
+Ls_octet_pattern = /rwx/
+Ls_permission_pattern = [/1|l/,
+					Ls_octet_pattern.capture(:system_permissions),
+					Ls_octet_pattern.capture(:group_permissions), 
+					Ls_octet_pattern.capture(:owner_permissions)] 
+Filename_pattern = /[-_0-9a-zA-Z\/]+/
+Driver_pattern = [
+							/\s+/, /[0-9]+/.capture(:permissions),
+							/\s+/, /[0-9]+/.capture(:size),
+							/ /, Ls_permission_pattern,
+							/\s+/, /[a-z]+/.capture(:owner),
+							/\s+/, /[a-z]+/.capture(:group),
+							/\s+/, /[0-9]+/.capture(:size_2),
+							/\s+/, /[A-Za-z]+/.capture(:month),
+							/\s+/, /[0-9]+/.capture(:date),
+							/\s+/, /[0-9]+/.capture(:time),
+							/\s+/, '/sys/devices',
+							Filename_pattern.capture(:device),
+							' -> ', 
+							Filename_pattern.capture(:driver)]
+Driver_string = '  7771    0 lrwxrwxrwx   1 root     root            0 Jul 27 08:20 /sys/devices/pnp0/00:0d/driver -> ../../../bus/pnp/drivers/ns558'
 end #Examples
 end # String
 
