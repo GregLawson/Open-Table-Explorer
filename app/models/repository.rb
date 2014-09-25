@@ -23,7 +23,12 @@ Error_classification={0 => :success,
 				1     => :single_test_fail,
 				100 => :initialization_fail,
 				10000 => :syntax_error}
-Branch_regexp=/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+Branch_name_regexp = /[-a-z0-9A-Z_]+/
+Branch_name_alternative = [Branch_name_regexp.capture(:branch), 
+									' -> ', Branch_name_regexp.capture(:referenced), Regexp::Optional]
+Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
+Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
+Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants
 module ClassMethods
@@ -300,10 +305,10 @@ def merge_conflict_files?
 	ret
 end #merge_conflict_files?
 
-def shell_parse(command, pattern)
+def git_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
-	parse=Parse.parse_into_array(output, pattern, {ending: :optional})
-end # 
+	output.parse(pattern)
+end # git_parse
 def branches?
 	branch_output=git_command('branch --list').assert_post_conditions.output
 	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
@@ -311,7 +316,7 @@ def branches?
 end #branches?
 def remotes?
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	shell_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+	git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
 end #remotes?
 def rebase!
 	if remotes?.include?(current_branch_name?) then
