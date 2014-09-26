@@ -8,10 +8,11 @@
 require_relative 'test_environment'
 require_relative '../../app/models/parse.rb'
 class ParseTest < TestCase
-include MatchCapture::Examples
-include SplitCapture::Examples
-include LimitCapture::Examples
+#include MatchCapture::Examples
+#include SplitCapture::Examples
+#include LimitCapture::Examples
 include Capture::Examples
+include Regexp::Expression::Base::Examples
 include String::Examples
 include DefaultTests
 def test_default_name
@@ -42,38 +43,31 @@ def test_Capture_initialize
 #	assert_equal(Array_answer, LimitCapture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 end #initialize
 def test_equal
-	Match_capture.instance_variables.each do |iv_name|
+	MatchCapture::Examples::Branch_line.instance_variables.each do |iv_name|
 		if !([:@method_name, :@raw_captures,:@captures].include?(iv_name)) then
-			assert_equal(Match_capture.instance_variable_get(iv_name), Limit_capture.instance_variable_get(iv_name), iv_name)
+			assert_equal(MatchCapture::Examples::Branch_line.instance_variable_get(iv_name), LimitCapture::Examples::Branch_line.instance_variable_get(iv_name), iv_name)
 		end # if
 	end # each
-	assert(Match_capture == Limit_capture)
+	assert(MatchCapture::Examples::Branch_line == LimitCapture::Examples::Branch_line)
 end # equal
 def test_raw_captures?
-	assert_equal(:limit, Capture.new("* 1\n", Branch_regexp).method_name) 
-	assert_instance_of(MatchData, Capture.new("* 1\n", Branch_regexp).raw_captures?) 
-	assert_match(Branch_regexp, Split_capture.string, Split_capture.inspect)
-	assert_match(Branch_line, Split_capture.string, Split_capture.inspect)
-	assert_match( Split_capture.regexp, Split_capture.string, Split_capture.inspect)
-	assert_equal(['', '1', '  2'], Split_capture.string.split(Split_capture.regexp), Split_capture.inspect)
-	assert_equal(['', '1', '  2'], Split_capture.raw_captures, Split_capture.inspect)
-	assert_equal(3, Split_capture.raw_captures.size, Split_capture.inspect)
+	assert_equal(LimitCapture, LimitCapture.new("* 1\n", Branch_regexp).class) 
+	assert_instance_of(LimitCapture, LimitCapture.new("* 1\n", Branch_regexp).raw_captures?) 
+	assert_match(Branch_regexp, SplitCapture::Examples::Branch_line.string, SplitCapture::Examples::Branch_lineSplitCapture::Examples::Branch_line.inspect)
+	assert_match(Branch_line, SplitCapture::Examples::Branch_line.string, SplitCapture::Examples::Branch_line.inspect)
+	assert_match( SplitCapture::Examples::Branch_line.regexp, SplitCapture::Examples::Branch_line.string, SplitCapture::Examples::Branch_line.inspect)
+	assert_equal(['', '1', '  2'], SplitCapture::Examples::Branch_line.string.split(SplitCapture::Examples::Branch_line.regexp), SplitCapture::Examples::Branch_line.inspect)
+	assert_equal(['', '1', '  2'], SplitCapture::Examples::Branch_line.raw_captures, SplitCapture::Examples::Branch_line.inspect)
+	assert_equal(3, SplitCapture::Examples::Branch_line.raw_captures.size, SplitCapture::Examples::Branch_line.inspect)
 
 end # raw_captures?
-def test_raw_capture_class?
-	assert_equal(:match, Match_capture.raw_capture_class?)
-	assert_equal(:split, Split_capture.raw_capture_class?)
-	assert_include([:split, :match], Limit_capture.raw_capture_class?)
-	assert_equal(:no_match, Capture.new('cat', /fish/, :match).raw_capture_class?)
-	assert_equal(:no_match, Failed_capture.raw_capture_class?, Failed_capture.inspect)
-end # raw_raw_capture_class?
 def test_success?
-	raw_captures = Split_capture.raw_captures?
-	assert(Match_capture.success?)
-	assert(Split_capture.success?)
-	assert(Limit_capture.success?)
+	raw_captures = SplitCapture::Examples::Branch_line.raw_captures?
+	assert(MatchCapture::Examples::Branch_line.success?)
+	assert(SplitCapture::Examples::Branch_line.success?)
+	assert(LimitCapture::Examples::Branch_line.success?)
 	assert_equal(nil, MatchCapture.new('cat', /fish/).success?)
-	assert_equal(nil, Failed_capture.success?, Failed_capture.inspect)
+	assert_equal(nil, SplitCapture::Examples::Failed_capture.success?, SplitCapture::Examples::Failed_capture.inspect)
 	assert(SplitCapture.new('  ', /  /).success?)
 	'  '.assert_parse(/  /)
 end # success?
@@ -115,24 +109,24 @@ def test_matched_characters?
 	assert_equal(1, MatchCapture.new('ab', /a/.capture(:a)).matched_characters?)
 end # matched_characters?
 def test_output?
-	assert_equal({branch: '1'}, Split_capture.string.capture?(Split_capture.regexp).output?, Split_capture.inspect)
+	assert_equal({branch: '1'}, SplitCapture::Examples::Branch_line.string.capture?(SplitCapture::Examples::Branch_line.regexp).output?, SplitCapture::Examples::Branch_line.inspect)
 end # output?
 def test_delimiters?
 	assert_equal([], Parse_string.delimiters?)
 	assert_equal(["\n"], Parse_array.delimiters?, Parse_array.inspect)
 	assert_equal(["\n"], Parse_delimited_array.delimiters?, Parse_delimited_array.inspect)
-	message = "Match_capture = #{Match_capture.inspect}\nSplit_capture = #{Split_capture.inspect}"
-	assert_equal([], Match_capture.delimiters?, message)
-	assert_equal(3, Split_capture.raw_captures.size, message)
-	assert_equal(2..1, (2..Split_capture.raw_captures.size - 2), message)
-	assert_equal([], (2..Split_capture.raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}, message)
-	assert_equal([], (2..Split_capture.raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact, message)
-	assert_equal([], Split_capture.delimiters?, message)
-	assert_equal([], Limit_capture.delimiters?, message)
+	message = "MatchCapture::Examples::Branch_line = #{MatchCapture::Examples::Branch_line.inspect}\nSplitCapture::Examples::Branch_line = #{SplitCapture::Examples::Branch_line.inspect}"
+	assert_equal([], MatchCapture::Examples::Branch_line.delimiters?, message)
+	assert_equal(3, SplitCapture::Examples::Branch_line.raw_captures.size, message)
+	assert_equal(2..1, (2..SplitCapture::Examples::Branch_line.raw_captures.size - 2), message)
+	assert_equal([], (2..SplitCapture::Examples::Branch_line.raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}, message)
+	assert_equal([], (2..SplitCapture::Examples::Branch_line.raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact, message)
+	assert_equal([], SplitCapture::Examples::Branch_line.delimiters?, message)
+	assert_equal([], LimitCapture::Examples::Branch_line.delimiters?, message)
 	assert_include(Capture::Assertions::ClassMethods.instance_methods, :assert_method, message)
 	assert_include(Capture.methods, :assert_method, message)
-#	Capture::Assertions::ClassMethods.assert_method(Match_capture, Limit_capture, :delimiters?, message)
-	Capture.assert_method(Match_capture, Limit_capture, :delimiters?, message)
+#	Capture::Assertions::ClassMethods.assert_method(MatchCapture::Examples::Branch_line, LimitCapture::Examples::Branch_line, :delimiters?, message)
+	Capture.assert_method(MatchCapture::Examples::Branch_line, LimitCapture::Examples::Branch_line, :delimiters?, message)
 end # delimiters?
 def test_plus
 end # +
@@ -234,9 +228,9 @@ def test_assert_success
 	MatchCapture.new(Newline_Delimited_String, Branch_line).assert_success
 	MatchCapture.new('   ', /  /).assert_success
 	MatchCapture.new('  ', /  /).assert_success
-	assert_equal(:no_match, Failed_capture.raw_capture_class?, Failed_capture.inspect)
-	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
-	assert_raises(AssertionFailedError) {Failed_capture.assert_success}
+	assert_equal(:no_match, SplitCapture::Examples::Failed_capture.raw_capture_class?, SplitCapture::Examples::Failed_capture.inspect)
+	assert_raises(AssertionFailedError) {SplitCapture::Examples::Failed_capture.assert_pre_conditions}
+	assert_raises(AssertionFailedError) {SplitCapture::Examples::Failed_capture.assert_success}
 	assert_raises(AssertionFailedError) {SplitCapture.new('cat', /fish/).assert_success}
 	SplitCapture.new('cat', /cat/).assert_success
 	SplitCapture.new('  ', /  /).assert_success
@@ -252,20 +246,31 @@ def test_Capture_assert_post_conditions
 end # assert_post_conditions
 
 def test_Capture_Examples
-	Match_capture.assert_pre_conditions
-	Split_capture.assert_pre_conditions
-	Limit_capture.assert_pre_conditions
+	MatchCapture::Examples::Branch_line.assert_pre_conditions
+	SplitCapture::Examples::Branch_line.assert_pre_conditions
+	LimitCapture::Examples::Branch_line.assert_pre_conditions
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
-	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
+	assert_raises(AssertionFailedError) {SplitCapture::Examples::Failed_capture.assert_pre_conditions}
 
-	Match_capture.assert_left_match
-	Split_capture.assert_left_match
-	Limit_capture.assert_post_conditions
+	MatchCapture::Examples::Branch_line.assert_left_match
+	SplitCapture::Examples::Branch_line.assert_left_match
+	LimitCapture::Examples::Branch_line.assert_post_conditions
 	assert_raises(AssertionFailedError) {Parse_string.assert_post_conditions}
 	assert_raises(AssertionFailedError) {Parse_array.assert_post_conditions}
-	assert_raises(AssertionFailedError) {Failed_capture.assert_post_conditions}
+	assert_raises(AssertionFailedError) {SplitCapture::Examples::Failed_capture.assert_post_conditions}
 end # Examples
+# class ParsedCapturee
+def test_ParsedCapture_initialize
+	assert_include(Module.constants, :MatchCapture)
+	assert_include(MatchCapture.constants, :Examples)
+	assert_include(MatchCapture::Examples.constants, :Branch_line)
+	assert_scope_path(:MatchCapture, :Examples, :Branch_line)
+	assert_path_to_constant(:MatchCapture, :Examples, :Branch_line)
+	parsed_capture = ParsedCapture.new(Newline_Terminated_String, Branch_line)
+	parsed_display = parsed_capture.parsed_regexp.inspect_recursive(:expressions, &Mx_dump_format)
+	assert_equal('', parsed_display, parsed_display + "\n" + parsed_capture.inspect)
+end # ParsedCapture_initialize
 # String
 def test_String_capture?
 	assert_equal([Hash_answer], Newline_Delimited_String.parse(Terminated_line))
@@ -351,7 +356,7 @@ def test_assert_parse
 	Driver_string[0..1].assert_parse(Driver_pattern[0..0])
 	Driver_string.assert_left_parse(Driver_pattern[0..0])
 	first_capture = Driver_string[2..-1].capture?(Driver_pattern[1], :match)
-	assert_equal(first_capture.method_name, :match)
+	assert_equal(first_capture.class, MatchCapture)
 	assert_instance_of(Capture, first_capture)
 	assert_equal(4, first_capture.matched_characters?, first_capture.inspect)
 	Driver_string[2..-1].assert_parse(Driver_pattern[1..-1])
