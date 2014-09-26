@@ -423,7 +423,7 @@ def raw_captures?
 end # raw_captures?
 module Examples
 include Capture::Examples
-Branch = LimitCapture.new(Newline_Delimited_String, Branch_line)
+Branch_line = LimitCapture.new(Newline_Delimited_String, Branch_line)
 end # Examples
 end # LimitCapture
 class MatchFailed < Capture
@@ -527,6 +527,11 @@ def delimiters?(raw_captures = self.raw_captures?)
 #		raise self.inspect if raw_captures[0].nil?
 	end #if
 end # delimiters?
+module Examples
+include Capture::Examples
+	Failed_capture = SplitCapture.new('cat', /fish/)
+	Syntax_failed_capture = SplitCapture.new('cat', 'f)i]s}h')
+end # Examples
 end # MatchFailed
 class ParsedCapture < Capture
 attr_reader :string, :regexp, :method_name # arguments
