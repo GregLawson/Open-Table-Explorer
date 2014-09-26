@@ -9,7 +9,6 @@
 require_relative '../../app/models/regexp.rb'
 #require_relative '../../app/models/stream_tree.rb'
 require_relative '../../app/models/regexp_parse.rb'
-# encapsulates the difference between parsing from MatchData and from Array#split
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
 # encapsulates the difference between parsing from MatchData and from Array#split
@@ -34,9 +33,6 @@ def initialize(string, regexp, method_name = :limit)
 	@regexp = Regexp.promote(regexp)
 	@method_name = method_name
 	@length_hash_captures = @regexp.named_captures.values.flatten.size
-	@raw_captures = raw_captures?
-	@captures = to_a?(@raw_captures) # standardize captures
-#     named_captures for captures.size > names.size
 end #initialize
 def ==(other)
 	instance_variables.all? do |iv_name|
@@ -47,21 +43,6 @@ def ==(other)
 		end # if
 	end # All?
 end # equal
-def raw_captures?(method_name = self.method_name)
-	if method_name == :limit then # limit match to :match length of string
-		match = string.method(:match).call(@regexp)
-		string =  @string[0,matched_characters?(match)]# regexp matched string
-		split = string.method(:split).call(@regexp) # after string shortened
-		if repetitions?(split) == 1 then
-			match
-		else
-			split
-		end # if
-	else
-		string = @string # full string
-		string.method(method_name).call(@regexp)
-	end #if
-end # raw_captures?
 def raw_capture_class?(raw_captures = self.raw_captures?)
 	if raw_captures.nil? || (@method_name == :split && [@string] == @raw_captures) then
 		:no_match
@@ -71,99 +52,6 @@ def raw_capture_class?(raw_captures = self.raw_captures?)
 		:split
 	end # case
 end # raw_capture_class?
-def success?(raw_captures = self.raw_captures?)
-	if raw_captures.nil? then 
-		nil
-	elsif raw_captures.instance_of?(MatchData) then
-		true
-	else # :split
-		if @length_hash_captures == 0 then # no captures
-			match_capture = Capture.new(string, regexp, :match)
-			match_capture.success?(match_capture.raw_captures?)
-		else # captures
-			if raw_captures.size < 2 then # split failed
-				false
-			else # split succeeded
-				true
-			end #if
-		end # if
-	end #if
-end # success?
-def repetitions?(raw_captures = self.raw_captures?)
-	case raw_capture_class?(raw_captures)
-	when :no_match then 0
-	when :match  then 1
-	when :split then (raw_captures.size/(@length_hash_captures+1)).ceil
-	end #case
-end # repetitions?
-# Tranform split and MatchData captures into single form
-def to_a?(raw_captures = self.raw_captures?)
-	case raw_capture_class?(raw_captures)
-	when :no_match then []
-	when :match  then if raw_captures.size == 0 then
-		[pre_match?] + raw_captures[0] + [post_match?]
-	else
-		[pre_match?] + raw_captures[1..-1] + [post_match?]
-	end # if
-	when :split then raw_captures
-	end #case
-end # to_a?
-def post_match?(raw_captures = self.raw_captures?)
-	case raw_capture_class?(raw_captures)
-	when :no_match then nil
-	when :match  then raw_captures.post_match
-	when :split then 
-			if raw_captures.size.odd? then
-				raw_captures[-1]
-			else
-				''
-			end # if
-	end #case
-
-end # post_match?
-def pre_match?(raw_captures = self.raw_captures?)
-	if !success?(raw_captures) then
-		nil
-	elsif raw_captures.instance_of?(MatchData) then
-		raw_captures.pre_match
-	else # from split, already in nomalize form
-			raw_captures[0]
-	end #if
-end # pre_match?
-def matched_characters?(raw_captures = self.raw_captures?)
-	if !success?(raw_captures) then
-		0
-	elsif raw_captures.instance_of?(MatchData) then
-		raw_captures[0].length
-	else # 
-		@string.length - raw_captures?(:match).post_match.length
-	end #if
-end # matched_characters?
-def output?(raw_captures = self.raw_captures?)
-	if !success?(raw_captures) then
-		{}
-	elsif raw_captures.instance_of?(MatchData) then
-		if raw_captures.names==[] then
-			raw_captures[1..-1] # return unnamed subexpressions
-		else
-			named_hash(0)
-		end # if
-	else # 
-		(0..repetitions?(raw_captures)-1).map do |i|
-			named_hash(i*(length_hash_captures+1))
-		end #map
-	end # if
-end # output?
-def delimiters?(raw_captures = self.raw_captures?)
-	if !success?(raw_captures) then
-		[]
-	elsif raw_captures.instance_of?(MatchData) then
-		[]
-	else # from split
-		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
-#		raise self.inspect if raw_captures[0].nil?
-	end #if
-end # delimiters?
 # return a capture object for two Capture instances (assumed consecutive)
 def +(other_capture)
 	raise "Only Capture instances can be added." if !other_capture.instance_of?(Capture)
@@ -177,6 +65,8 @@ def all_capture_indices
 		(1..@captures.size-1).to_a #skip delimiter
 	end #if
 end #all_capture_indices
+#     named_captures for captures.size > names.size
+
 def named_hash(hash_offset=0)
 	named_hash={}
 	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
@@ -277,14 +167,6 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 #Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line = Branch_regexp * "\n"
-Parse_array=Capture.new(Newline_Terminated_String, Branch_regexp, :split)
-	Match_capture = Capture.new(Newline_Delimited_String, Branch_line, :match)
-	Split_capture = Capture.new(Newline_Delimited_String, Branch_line, :split)
-	Limit_capture = Capture.new(Newline_Delimited_String, Branch_line, :limit)
-	Failed_capture = Capture.new('cat', /fish/, :split)
-	Syntax_failed_capture = Capture.new('cat', 'f)i]s}h', :split)
-Parse_string=Capture.new(Newline_Delimited_String, Branch_regexp, :match)
-Parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp, :split)
 LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
@@ -296,15 +178,457 @@ Nested_answer=[['1', '2'], ['3', '4']]
 WORD=/([^\s]*)/.capture(:word)
 end # Examples
 end # Capture
-class RawCapture
+# encapsulates the difference between parsing from MatchData and from Array#split
+class RawCapture < Capture
+def initialize(string, regexp)
+	super(string, regexp)
+	@raw_captures = raw_captures?
+	@captures = to_a?(@raw_captures) # standardize captures
+#     named_captures for captures.size > names.size
+end #initialize
 end # RawCapture
-class MatchFailed < RawCapture
-end # MatchFailed
-class MatchDataCapture < RawCapture
-end # MatchDataCapture
+class MatchCapture < RawCapture
+attr_reader :string, :regexp, :method_name # arguments
+attr_reader :captures, :length_hash_captures
+attr_reader :raw_captures
+# method_name default should be best parse capture; currently :limit
+def initialize(string, regexp, method_name = :limit)
+	super(string, regexp)
+end #initialize
+def raw_captures?
+	@string.match(@regexp)
+end # raw_captures?
+def success?(raw_captures = self.raw_captures?)
+	if raw_captures.nil? then 
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = MatchCapture.new(string, regexp)
+			match_capture.success?(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				false
+			else # split succeeded
+				true
+			end #if
+		end # if
+	end #if
+end # success?
+def repetitions?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then 0
+	when :match  then 1
+	when :split then (raw_captures.size/(@length_hash_captures+1)).ceil
+	end #case
+end # repetitions?
+# Tranform split and MatchData captures into single form
+def to_a?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then []
+	when :match  then if raw_captures.size == 0 then
+		[pre_match?] + raw_captures[0] + [post_match?]
+	else
+		[pre_match?] + raw_captures[1..-1] + [post_match?]
+	end # if
+	when :split then raw_captures
+	end #case
+end # to_a?
+def post_match?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then nil
+	when :match  then raw_captures.post_match
+	when :split then 
+			if raw_captures.size.odd? then
+				raw_captures[-1]
+			else
+				''
+			end # if
+	end #case
+
+end # post_match?
+def pre_match?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures.pre_match
+	else # from split, already in nomalize form
+			raw_captures[0]
+	end #if
+end # pre_match?
+def matched_characters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		0
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures[0].length
+	else # 
+		@string.length - raw_captures?.post_match.length
+	end #if
+end # matched_characters?
+def output?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		{}
+	elsif raw_captures.instance_of?(MatchData) then
+		if raw_captures.names==[] then
+			raw_captures[1..-1] # return unnamed subexpressions
+		else
+			named_hash(0)
+		end # if
+	else # 
+		(0..repetitions?(raw_captures)-1).map do |i|
+			named_hash(i*(length_hash_captures+1))
+		end #map
+	end # if
+end # output?
+def delimiters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		[]
+	elsif raw_captures.instance_of?(MatchData) then
+		[]
+	else # from split
+		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
+#		raise self.inspect if raw_captures[0].nil?
+	end #if
+end # delimiters?
+module Examples
+include Capture::Examples
+Parse_string = MatchCapture.new(Newline_Delimited_String, Branch_regexp)
+Branch_line  = MatchCapture.new(Newline_Delimited_String, Branch_line)
+end # Examples
+end # MatchCapture
 class SplitCapture < RawCapture
+attr_reader :string, :regexp, :method_name # arguments
+attr_reader :captures, :length_hash_captures
+attr_reader :raw_captures
+def initialize(string, regexp, method_name = :limit)
+	super(string, regexp)
+end #initialize
+def raw_captures?
+	@string.split(@regexp)
+end # raw_captures?
+def success?(raw_captures = self.raw_captures?)
+	if raw_captures.nil? then 
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = MatchCapture.new(string, regexp)
+			match_capture.success?(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				false
+			else # split succeeded
+				true
+			end #if
+		end # if
+	end #if
+end # success?
+def repetitions?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then 0
+	when :match  then 1
+	when :split then (raw_captures.size/(@length_hash_captures+1)).ceil
+	end #case
+end # repetitions?
+# Tranform split and MatchData captures into single form
+def to_a?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then []
+	when :match  then if raw_captures.size == 0 then
+		[pre_match?] + raw_captures[0] + [post_match?]
+	else
+		[pre_match?] + raw_captures[1..-1] + [post_match?]
+	end # if
+	when :split then raw_captures
+	end #case
+end # to_a?
+def post_match?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then nil
+	when :match  then raw_captures.post_match
+	when :split then 
+			if raw_captures.size.odd? then
+				raw_captures[-1]
+			else
+				''
+			end # if
+	end #case
+
+end # post_match?
+def pre_match?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures.pre_match
+	else # from split, already in nomalize form
+			raw_captures[0]
+	end #if
+end # pre_match?
+def matched_characters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		0
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures[0].length
+	else # 
+		@string.length - raw_captures?.post_match.length
+	end #if
+end # matched_characters?
+def output?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		{}
+	elsif raw_captures.instance_of?(MatchData) then
+		if raw_captures.names==[] then
+			raw_captures[1..-1] # return unnamed subexpressions
+		else
+			named_hash(0)
+		end # if
+	else # 
+		(0..repetitions?(raw_captures)-1).map do |i|
+			named_hash(i*(length_hash_captures+1))
+		end #map
+	end # if
+end # output?
+def delimiters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		[]
+	elsif raw_captures.instance_of?(MatchData) then
+		[]
+	else # from split
+		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
+#		raise self.inspect if raw_captures[0].nil?
+	end #if
+end # delimiters?
+module Examples
+include Capture::Examples
+Parse_array=SplitCapture.new(Newline_Terminated_String, Branch_regexp)
+	Failed_capture = SplitCapture.new('cat', /fish/)
+	Syntax_failed_capture = SplitCapture.new('cat', 'f)i]s}h')
+Branch_line = SplitCapture.new(Newline_Delimited_String, Branch_line)
+Branch_regexp = SplitCapture.new(Newline_Delimited_String, Branch_regexp)
+end # Examples
 end # SplitCapture
-class ParsedCapture < RawCapture
+class LimitCapture < SplitCapture
+# limit match to :match length of string
+def raw_captures?
+		match = string.method(:match).call(@regexp)
+		string =  @string[0,matched_characters?(match)]# regexp matched string
+		split = string.method(:split).call(@regexp) # after string shortened
+		if repetitions?(split) == 1 then
+			match
+		else
+			split
+		end # if
+end # raw_captures?
+module Examples
+include Capture::Examples
+Branch = LimitCapture.new(Newline_Delimited_String, Branch_line)
+end # Examples
+end # LimitCapture
+class MatchFailed < Capture
+attr_reader :string, :regexp, :method_name # arguments
+attr_reader :captures, :length_hash_captures
+attr_reader :raw_captures
+# method_name default should be best parse capture; currently :limit
+def initialize(string, regexp)
+	super(string, regexp)
+end #initialize
+def success?(raw_captures = self.raw_captures?)
+	if raw_captures.nil? then 
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = SplitCapture.new(string, regexp)
+			match_capture.success?(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				false
+			else # split succeeded
+				true
+			end #if
+		end # if
+	end #if
+end # success?
+def repetitions?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then 0
+	when :match  then 1
+	when :split then (raw_captures.size/(@length_hash_captures+1)).ceil
+	end #case
+end # repetitions?
+# Tranform split and MatchData captures into single form
+def to_a?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then []
+	when :match  then if raw_captures.size == 0 then
+		[pre_match?] + raw_captures[0] + [post_match?]
+	else
+		[pre_match?] + raw_captures[1..-1] + [post_match?]
+	end # if
+	when :split then raw_captures
+	end #case
+end # to_a?
+def post_match?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then nil
+	when :match  then raw_captures.post_match
+	when :split then 
+			if raw_captures.size.odd? then
+				raw_captures[-1]
+			else
+				''
+			end # if
+	end #case
+
+end # post_match?
+def pre_match?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures.pre_match
+	else # from split, already in nomalize form
+			raw_captures[0]
+	end #if
+end # pre_match?
+def matched_characters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		0
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures[0].length
+	else # 
+		@string.length - raw_captures?.post_match.length
+	end #if
+end # matched_characters?
+def output?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		{}
+	elsif raw_captures.instance_of?(MatchData) then
+		if raw_captures.names==[] then
+			raw_captures[1..-1] # return unnamed subexpressions
+		else
+			named_hash(0)
+		end # if
+	else # 
+		(0..repetitions?(raw_captures)-1).map do |i|
+			named_hash(i*(length_hash_captures+1))
+		end #map
+	end # if
+end # output?
+def delimiters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		[]
+	elsif raw_captures.instance_of?(MatchData) then
+		[]
+	else # from split
+		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
+#		raise self.inspect if raw_captures[0].nil?
+	end #if
+end # delimiters?
+end # MatchFailed
+class ParsedCapture < Capture
+attr_reader :string, :regexp, :method_name # arguments
+attr_reader :captures, :length_hash_captures
+attr_reader :raw_captures
+# method_name default should be best parse capture; currently :limit
+def initialize(string, regexp, method_name = :limit)
+	super(string, regexp)
+end #initialize
+def success?(raw_captures = self.raw_captures?)
+	if raw_captures.nil? then 
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		true
+	else # :split
+		if @length_hash_captures == 0 then # no captures
+			match_capture = MatchCapture.new(string, regexp)
+			match_capture.success?(match_capture.raw_captures?)
+		else # captures
+			if raw_captures.size < 2 then # split failed
+				false
+			else # split succeeded
+				true
+			end #if
+		end # if
+	end #if
+end # success?
+def repetitions?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then 0
+	when :match  then 1
+	when :split then (raw_captures.size/(@length_hash_captures+1)).ceil
+	end #case
+end # repetitions?
+# Tranform split and MatchData captures into single form
+def to_a?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then []
+	when :match  then if raw_captures.size == 0 then
+		[pre_match?] + raw_captures[0] + [post_match?]
+	else
+		[pre_match?] + raw_captures[1..-1] + [post_match?]
+	end # if
+	when :split then raw_captures
+	end #case
+end # to_a?
+def post_match?(raw_captures = self.raw_captures?)
+	case raw_capture_class?(raw_captures)
+	when :no_match then nil
+	when :match  then raw_captures.post_match
+	when :split then 
+			if raw_captures.size.odd? then
+				raw_captures[-1]
+			else
+				''
+			end # if
+	end #case
+
+end # post_match?
+def pre_match?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		nil
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures.pre_match
+	else # from split, already in nomalize form
+			raw_captures[0]
+	end #if
+end # pre_match?
+def matched_characters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		0
+	elsif raw_captures.instance_of?(MatchData) then
+		raw_captures[0].length
+	else # 
+		@string.length - raw_captures?.post_match.length
+	end #if
+end # matched_characters?
+def output?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		{}
+	elsif raw_captures.instance_of?(MatchData) then
+		if raw_captures.names==[] then
+			raw_captures[1..-1] # return unnamed subexpressions
+		else
+			named_hash(0)
+		end # if
+	else # 
+		(0..repetitions?(raw_captures)-1).map do |i|
+			named_hash(i*(length_hash_captures+1))
+		end #map
+	end # if
+end # output?
+def delimiters?(raw_captures = self.raw_captures?)
+	if !success?(raw_captures) then
+		[]
+	elsif raw_captures.instance_of?(MatchData) then
+		[]
+	else # from split
+		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
+#		raise self.inspect if raw_captures[0].nil?
+	end #if
+end # delimiters?
 end # SplitCapture
 # String
 class String
@@ -387,9 +711,9 @@ end #parse_repetition
 end #ClassMethods
 # pattern matches only once in both match and split
 def assert_parse_once(pattern, message='')
-	match_capture = Capture.new(self, pattern, :match)
-	split_capture = Capture.new(self, pattern, :split)
-	limit_capture = Capture.new(self[0, match_capture.matched_characters?], pattern, :split)
+	match_capture = MatchCapture.new(self, pattern)
+	split_capture = SplitCapture.new(self, pattern)
+	limit_capture = SplitCapture.new(self[0, match_capture.matched_characters?], pattern)
 	message = "match_capture = #{match_capture.inspect}\nsplit_capture = #{split_capture.inspect}"
 	assert_equal(match_capture.output?, limit_capture.output?[0], message)
 	common_capture = match_capture.to_a?[0..-2]
@@ -418,9 +742,9 @@ def assert_left_parse(pattern, message='')
 			ret
 		end # map
 	else
-		match_capture = Capture.new(self, pattern, :match)
-		split_capture = Capture.new(self, pattern, :split)
-		limit_capture = Capture.new(self, pattern, :limit)
+		match_capture = MatchCapture.new(self, pattern)
+		split_capture = SplitCapture.new(self, pattern)
+		limit_capture = LimitCapture.new(self, pattern)
 		match_capture.assert_left_match
 #		split_capture.assert_left_match
 		limit_capture.assert_left_match
@@ -445,7 +769,7 @@ def assert_parse(pattern, message='')
 		when nil then message+= ' unmatched'
 		end # case
 	end # each
-		match_capture = Capture.new(self, pattern, :match)
+		match_capture = MatchCapture.new(self, pattern)
 		split_capture = Capture.new(self, pattern, :split)
 		limit_capture = Capture.new(self, pattern, :limit)
 		match_capture.assert_post_conditions(message)
