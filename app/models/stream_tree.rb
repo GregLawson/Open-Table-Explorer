@@ -180,6 +180,16 @@ end # Tree
 # map should be added analogously to Hash
 class Array
 include Tree
+# Array#each_with_index yields only index
+def each_and_index(&block)
+	each_with_index do |index|
+		if element[index].instance_of?(Array) && element.size == 2 then # from Hash#to_a
+			block.call(element[0], element[1])
+		else
+			block.call(index, element)
+		end # if
+	end # if
+end # each_pair
 def each_pair(&block)
 	each_with_index do |element, index|
 		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
