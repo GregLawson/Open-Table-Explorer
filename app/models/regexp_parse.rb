@@ -30,6 +30,7 @@ module Constants
 Root_index = TreeAddress.new(parent: nil, index: 0)
 end # 
 end # TreeAddress
+
 class Regexp
 class Expression::Base
 include Tree
@@ -42,6 +43,10 @@ Mx_format = proc do |e, depth, terminal|
 	ret = ' ' * depth + e.text + ' # '
 	ret + Tree_node_format.call(e, depth, terminal)
 end # Mx_format
+Mx_dump_format = proc do |e, depth, terminal|
+	ret = ' ' * depth + e.text + ' # '
+	ret + e.inspect
+end # Mx_dump_format
 end # Constants
 include Constants
 def inspect_node(&inspect_proc)
