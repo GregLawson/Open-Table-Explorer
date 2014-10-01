@@ -419,6 +419,11 @@ def delimiters?(raw_captures = self.raw_captures?)
 #		raise self.inspect if raw_captures[0].nil?
 	end #if
 end # delimiters?
+module Examples
+include Capture::Examples
+	Failed_capture = SplitCapture.new('cat', /fish/)
+	Syntax_failed_capture = SplitCapture.new('cat', 'f)i]s}h')
+end # Examples
 end # MatchFailed
 # class ParsedCapturee
 class ParsedCapture < Capture
