@@ -275,13 +275,7 @@ def pre_match?(raw_captures = self.raw_captures?)
 	raw_captures[0]
 end # pre_match?
 def matched_characters?(raw_captures = self.raw_captures?)
-	if !success?(raw_captures) then
-		0
-	elsif raw_captures.instance_of?(MatchData) then
-		raw_captures[0].length
-	else # 
-		@string.length - raw_captures?.post_match.length
-	end #if
+	@string.length - raw_captures?.post_match.length
 end # matched_characters?
 def output?(raw_captures = self.raw_captures?)
 	(0..repetitions?(raw_captures)-1).map do |i|
@@ -428,7 +422,6 @@ attr_reader :raw_captures
 def initialize(string, regexp)
 	super(string, regexp)
 	@parsed_regexp = Regexp::Parser.parse( regexp.to_s, 'ruby/1.8')
-.new(regexp)
 end #initialize
 def success?(raw_captures = self.raw_captures?)
 	if raw_captures.nil? then 
