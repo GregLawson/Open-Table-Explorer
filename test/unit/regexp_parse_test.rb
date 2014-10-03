@@ -16,14 +16,6 @@ include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
 include Graph::Constants
-include TreeAddress::Constants
-def test_initialize
-	assert_equal(Root_index, TreeAddress.new(nil, 0))
-end # initialize
-def test_deeper
-end # deeper
-def test_Constants
-end # Constants
 def test_inspect_node
 	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
 	assert_equal(Inspect_node_root, Literal_a.inspect_node)

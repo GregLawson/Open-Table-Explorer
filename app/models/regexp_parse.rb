@@ -7,29 +7,9 @@
 ###########################################################################
 require 'regexp_parser'
 require_relative 'unbounded_range.rb'
-require 'virtus'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
-# TreeAddress
-# Useful for indexing parallel trees.
-class TreeAddress < Array # nested Array
-include Virtus.model
-  attribute :parent, TreeAddress, :default => nil # default root
-  attribute :index, Object, :default => nil
-#def initialize(parent, index)
-#	@parent, @index = parent, index
-#	if !parent.nil? && parent.instance_of?(TreeAddress) then
-#		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
-#	end # if
-#end # initialize
-def deeper
-	TreeAddress.new(self, 0)
-end # deeper
-module Constants
-Root_index = TreeAddress.new(parent: nil, index: 0)
-end # 
-end # TreeAddress
 
 class Regexp
 class Expression::Base
@@ -55,6 +35,13 @@ def inspect_node(&inspect_proc)
 	end # if
 	inspect_proc.call(self)
 end # inspect_node
+def raw_capture?
+	if quantifier? then
+		SplitCapture.new()
+	else
+		MatchCapture.new()
+	end # if
+end # raw_capture
 def inspect_recursive(children_method_name = :to_a, &inspect_proc)
 	if !block_given? then
 		inspect_proc = Tree_node_format
