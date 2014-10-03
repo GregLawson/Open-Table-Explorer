@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-
+require 'virtus'
 # An attempt at a universal data type?
 # Or is it duck typing modules without inheritance?
 # A Stream is a generalization of Array, Enumerable allowing infinite length part of which can be a Tree data store
@@ -16,6 +16,25 @@
 # loops might be possible since ruby objects are references and self references are possible
 #require_relative '../../app/models/no_db.rb'
 #require_relative 'parse.rb'
+# TreeAddress
+# Useful for indexing parallel trees.
+class TreeAddress < Array # nested Array
+include Virtus.model
+  attribute :parent, TreeAddress, :default => nil # default root
+  attribute :index, Object, :default => nil
+#def initialize(parent, index)
+#	@parent, @index = parent, index
+#	if !parent.nil? && parent.instance_of?(TreeAddress) then
+#		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
+#	end # if
+#end # initialize
+def deeper
+	TreeAddress.new(self, 0)
+end # deeper
+module Constants
+Root_index = TreeAddress.new(parent: nil, index: 0)
+end # Constants
+end # TreeAddress
 module Node
 module ParentLinked
 def all

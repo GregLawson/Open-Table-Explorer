@@ -14,7 +14,15 @@ end # Fixnum
 class StreamTreeTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
+include TreeAddress::Constants
 include Tree::Examples
+def test_initialize
+	assert_equal(Root_index, TreeAddress.new(nil, 0))
+end # initialize
+def test_deeper
+end # deeper
+def test_Constants
+end # Constants
 def test_at
 #	assert_equal(Nested_array, Nested_array.at(Root_index))
 #	assert_equal(Son_nested_array, Nested_array.at(Root_index))
