@@ -35,13 +35,18 @@ def inspect_node(&inspect_proc)
 	end # if
 	inspect_proc.call(self)
 end # inspect_node
-def raw_capture?
-	if quantifier? then
-		SplitCapture.new()
-	else
-		MatchCapture.new()
-	end # if
-end # raw_capture
+def raw_capture?(string)
+	map_recursive(:expressions) do |e, depth, terminal|
+		sub_regexp = Regexp.new(e.to_s)
+		if e.quantifier then
+			unquantified_regexp = to_s[0, -e.quantifier.to_s.size]
+			unquantified_regexp = Regexp.new(to_s[0, -e.quantifier.to_s.size])
+			LimitCapture.new(string, unquantified_regexp)
+		else
+			MatchCapture.new(string, sub_regexp)
+		end # if
+	end # map_recursive
+end # raw_capture?
 def inspect_recursive(children_method_name = :to_a, &inspect_proc)
 	if !block_given? then
 		inspect_proc = Tree_node_format
@@ -51,7 +56,7 @@ end # inspect_recursive
 module Examples
 include Constants
 Children_method_name = :expressions
-Literal_a = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
+Literal_a = Regexp::Parser.parse( /a*/.to_s, 'ruby/1.8')
 Children_a = Literal_a.send(Children_method_name)
 Son_a = Children_a[0]
 Grandchildren_a = Son_a.expressions

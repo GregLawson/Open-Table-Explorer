@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../assertions/regexp_parse_assertions.rb'
+require_relative '../../app/models/parse.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
 include Regexp::Expression::Base::Examples
@@ -28,6 +29,17 @@ def test_Node_format
 	assert_equal(Inspect_node_root, Literal_a.inspect_node)
 	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
 end # Node_format
+def test_raw_capture?
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
+#	assert_equal([], Literal_a.map_recursive(:expressions){|e, depth, terminal| [e.quantifier, e.to_s]}, Literal_a_map)
+	assert_equal('*', Grandson_a.quantifier.text)
+	assert_equal('*', Grandson_a.quantifier.to_s)
+	e = Grandson_a
+	assert_equal('a', to_s[0, -e.quantifier.to_s.size])
+	assert_instance_of(Array, Literal_a.raw_capture?('a'))
+	assert_instance_of(SplitCapture, Regexp::Parser.parse( /a*/.to_s, 'ruby/1.8').raw_capture?('aa'))
+	assert_instance_of(MatchCapture, Regexp::Parser.parse( /a*b/.to_s, 'ruby/1.8').raw_capture?('aab'))
+end # raw_capture?
 def test_inspect_recursive
 	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Tree_node_format))
 	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Tree_node_format))
