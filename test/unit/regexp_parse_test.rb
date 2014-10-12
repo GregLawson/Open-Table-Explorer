@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../assertions/regexp_parse_assertions.rb'
+require_relative '../../app/models/parse.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
 include Regexp::Expression::Base::Examples
@@ -15,45 +16,36 @@ include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
-include TreeAddress::Constants
-def test_initialize
-	assert_equal(Root_index, TreeAddress.new(nil, 0))
-end # initialize
-def test_deeper
-end # deeper
-def test_index
-#	assert_equal(Literal_a, Literal_a.at(Root_index))
-#	assert_equal(Son_a, Literal_a.at(Root_index))
-#	assert_equal(Grandson_a, Literal_a.at(Root_index))
-end # index
-def test_Constants
-end # Constants
+include Graph::Constants
 def test_inspect_node
-	assert_equal(Inspect_node_root, Literal_a.inspect_node)
 	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
+	assert_equal(Inspect_node_root, Literal_a.inspect_node)
 	assert_equal(Node_options, Son_a.inspect_node)
 	assert_equal(Node_a, Grandson_a.inspect_node)
 	assert_match(Literal_a.inspect_node, Tree_node_root)
 	assert_match(Literal_a.inspect_node(&Node_format), Tree_node_root)
 end # inspect_node
+def test_Node_format
+	assert_equal(Inspect_node_root, Literal_a.inspect_node)
+	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
+end # Node_format
 def test_inspect_recursive
-	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive, Literal_a.inspect_recursive)
-	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(&Inspect_format), Literal_a.inspect_recursive(&Inspect_format))
+	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Tree_node_format))
+	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Tree_node_format))
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(:expressions, &Tree_node_format), Literal_a.inspect_recursive(:expressions, &Tree_node_format))
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(:expressions), Literal_a.inspect_recursive)
 
 
 #	assert_equal('ab # ' + Literal_a_map + "\n", Sequence_example.inspect_recursive(&Mx_format))
 #	assert_equal('a # ' + Literal_a_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
 end # inspect_recursive
-def test_Node_format
-	assert_equal(Inspect_node_root, Literal_a.inspect_node)
-	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
-end # Node_format
 def test_Mx_format
 	assert_match(Tree_node_root, Mx_format.call(Literal_a, 0, false))
 	assert_equal(Mx_node_root, Mx_format.call(Literal_a, depth=0, false))
 	assert_equal(Mx_node_options, Mx_format.call(Son_a, depth=1, false))
 	assert_equal(Mx_node_a, Mx_format.call(Grandson_a, depth=2, true))
-	assert_equal([Mx_node_root, Mx_node_options, Mx_node_a].map{|s| s + "\n"}.join, Literal_a.inspect_recursive(&Mx_format))
+	assert_equal([Mx_node_root, Mx_node_options, Mx_node_a].map{|s| s + "\n"}.join, Literal_a.inspect_recursive(:expressions, &Mx_format))
 end # Mx_format
 def test_Tree_node_format
 	assert_equal(Tree_node_root, Tree_node_format.call(Literal_a, depth=0, false))
@@ -62,8 +54,21 @@ def test_Tree_node_format
 	assert_equal('terminal[1], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=1, true))
 	assert_equal('nil[2], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=2, nil))
 	assert_equal('unknown[3], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=3, 1)) # unknown
-	assert_match(/cat/, Tree_node_format.call('cat', depth=0, false))
 end # Tree_node_format
+def test_raw_capture?
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
+#	assert_equal([], Literal_a.map_recursive(:expressions){|e, depth, terminal| [e.quantifier, e.to_s]}, Literal_a_map)
+	assert_equal('*', Grandson_a.quantifier.text)
+	assert_equal('*', Grandson_a.quantifier.to_s)
+	e = Grandson_a
+	assert_equal(-2,-1-e.quantifier.to_s.size)
+	assert_equal('a*', Grandson_a.to_s)
+	assert_equal('a', Grandson_a.to_s[0..-2])
+	assert_equal('a', Grandson_a.to_s[0..-1-e.quantifier.to_s.size], Grandson_a.inspect)
+	assert_instance_of(Array, Literal_a.raw_capture?('a'))
+	assert_instance_of(Array, Regexp::Parser.parse( /a*/.to_s, 'ruby/1.8').raw_capture?('aa'))
+	assert_instance_of(Array, Regexp::Parser.parse( /a*b/.to_s, 'ruby/1.8').raw_capture?('aab'))
+end # raw_capture?
 def test_Constants
 end # Constants
 def test_leaf?
@@ -79,6 +84,8 @@ def test_leaf?
 	assert_equal(false, Son_a.leaf?(:expressions), Son_a.inspect)
 end # leaf?
 def test_map_recursive
+	assert_include(Graph::Constants.constants, :Tree_node_format)
+	assert_include(RegexpParseTest.constants, :Tree_node_format)
 	depth=0
 	visit_proc = Tree_node_format
 	assert_respond_to(Literal_a, Children_method_name)
