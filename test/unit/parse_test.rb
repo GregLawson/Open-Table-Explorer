@@ -51,6 +51,11 @@ def test_equal
 	assert(MatchCapture::Examples::Branch_line == LimitCapture::Examples::Branch_line)
 end # equal
 def test_raw_captures?
+	assert_equal(['1'], '1aa'.split(/a/))
+	assert_equal(['1', 'a', '', 'a'], '1aa'.split(/(a)/))
+	assert_equal(['1','2'], '1a2a'.split(/a/))
+	assert_equal(['', 'a', '', 'a'], 'aa'.split(/(a)/))
+	assert_equal(['', 'a', '', 'a', '2'], 'aa2'.split(/(a)/))
 	assert_equal(LimitCapture, LimitCapture.new("* 1\n", Branch_regexp).class) 
 	assert_instance_of(LimitCapture, LimitCapture.new("* 1\n", Branch_regexp).raw_captures?) 
 	assert_match(Branch_regexp, SplitCapture::Examples::Branch_line.string, SplitCapture::Examples::Branch_lineSplitCapture::Examples::Branch_line.inspect)
