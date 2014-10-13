@@ -39,11 +39,11 @@ def raw_capture?(string)
 	map_recursive(:expressions) do |e, depth, terminal|
 		sub_regexp = Regexp.new(e.to_s)
 		if e.quantifier then
-			unquantified_regexp = to_s[0, -e.quantifier.to_s.size]
-			unquantified_regexp = Regexp.new(to_s[0, -e.quantifier.to_s.size])
-			LimitCapture.new(string, unquantified_regexp)
+			unquantified_regexp = e.to_s[0, -1-e.quantifier.to_s.size]
+			unquantified_regexp = Regexp.new(e.to_s[0..-1-e.quantifier.to_s.size])
+			{:parse => e, :raw_capture=> LimitCapture.new(string, unquantified_regexp)}
 		else
-			MatchCapture.new(string, sub_regexp)
+			{:parse => e, :raw_capture=> MatchCapture.new(string, sub_regexp)}
 		end # if
 	end # map_recursive
 end # raw_capture?

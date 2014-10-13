@@ -29,17 +29,6 @@ def test_Node_format
 	assert_equal(Inspect_node_root, Literal_a.inspect_node)
 	assert_equal(Inspect_node_root, Literal_a.inspect_node(&Node_format))
 end # Node_format
-def test_raw_capture?
-	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
-#	assert_equal([], Literal_a.map_recursive(:expressions){|e, depth, terminal| [e.quantifier, e.to_s]}, Literal_a_map)
-	assert_equal('*', Grandson_a.quantifier.text)
-	assert_equal('*', Grandson_a.quantifier.to_s)
-	e = Grandson_a
-	assert_equal('a', to_s[0, -e.quantifier.to_s.size])
-	assert_instance_of(Array, Literal_a.raw_capture?('a'))
-	assert_instance_of(SplitCapture, Regexp::Parser.parse( /a*/.to_s, 'ruby/1.8').raw_capture?('aa'))
-	assert_instance_of(MatchCapture, Regexp::Parser.parse( /a*b/.to_s, 'ruby/1.8').raw_capture?('aab'))
-end # raw_capture?
 def test_inspect_recursive
 	assert_equal(Grandson_a_map, Grandson_a.map_recursive(:expressions, depth=2, &Tree_node_format))
 	assert_equal(Son_a_map, Son_a.map_recursive(:expressions, depth=1, &Tree_node_format))
@@ -66,6 +55,20 @@ def test_Tree_node_format
 	assert_equal('nil[2], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=2, nil))
 	assert_equal('unknown[3], ' + Inspect_node_root, Tree_node_format.call(Literal_a, depth=3, 1)) # unknown
 end # Tree_node_format
+def test_raw_capture?
+	assert_equal(Literal_a_map, Literal_a.map_recursive(:expressions, &Tree_node_format))
+#	assert_equal([], Literal_a.map_recursive(:expressions){|e, depth, terminal| [e.quantifier, e.to_s]}, Literal_a_map)
+	assert_equal('*', Grandson_a.quantifier.text)
+	assert_equal('*', Grandson_a.quantifier.to_s)
+	e = Grandson_a
+	assert_equal(-2,-1-e.quantifier.to_s.size)
+	assert_equal('a*', Grandson_a.to_s)
+	assert_equal('a', Grandson_a.to_s[0..-2])
+	assert_equal('a', Grandson_a.to_s[0..-1-e.quantifier.to_s.size], Grandson_a.inspect)
+	assert_instance_of(Array, Literal_a.raw_capture?('a'))
+	assert_instance_of(Array, Regexp::Parser.parse( /a*/.to_s, 'ruby/1.8').raw_capture?('aa'))
+	assert_instance_of(Array, Regexp::Parser.parse( /a*b/.to_s, 'ruby/1.8').raw_capture?('aab'))
+end # raw_capture?
 def test_Constants
 end # Constants
 def test_leaf?
