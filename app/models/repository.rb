@@ -27,7 +27,7 @@ Branch_name_regexp = /[-a-z0-9A-Z_]+/
 Branch_name_alternative = [Branch_name_regexp.capture(:branch), 
 									' -> ', Branch_name_regexp.capture(:referenced), Regexp::Optional]
 Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
-Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative.capture(:branch)]
+Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
 Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants

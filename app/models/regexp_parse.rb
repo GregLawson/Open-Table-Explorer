@@ -7,29 +7,10 @@
 ###########################################################################
 require 'regexp_parser'
 require_relative 'unbounded_range.rb'
-require 'virtus'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
-# TreeAddress
-# Useful for indexing parallel trees.
-class TreeAddress < Array # nested Array
-include Virtus.model
-  attribute :parent, TreeAddress, :default => nil # default root
-  attribute :index, Object, :default => nil
-#def initialize(parent, index)
-#	@parent, @index = parent, index
-#	if !parent.nil? && parent.instance_of?(TreeAddress) then
-#		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
-#	end # if
-#end # initialize
-def deeper
-	TreeAddress.new(self, 0)
-end # deeper
-module Constants
-Root_index = TreeAddress.new(parent: nil, index: 0)
-end # 
-end # TreeAddress
+
 class Regexp
 class Expression::Base
 include Tree
@@ -42,6 +23,10 @@ Mx_format = proc do |e, depth, terminal|
 	ret = ' ' * depth + e.text + ' # '
 	ret + Tree_node_format.call(e, depth, terminal)
 end # Mx_format
+Mx_dump_format = proc do |e, depth, terminal|
+	ret = ' ' * depth + e.text + ' # '
+	ret + e.inspect
+end # Mx_dump_format
 end # Constants
 include Constants
 def inspect_node(&inspect_proc)
@@ -50,6 +35,18 @@ def inspect_node(&inspect_proc)
 	end # if
 	inspect_proc.call(self)
 end # inspect_node
+def raw_capture?(string)
+	map_recursive(:expressions) do |e, depth, terminal|
+		sub_regexp = Regexp.new(e.to_s)
+		if e.quantifier then
+			unquantified_regexp = e.to_s[0, -1-e.quantifier.to_s.size]
+			unquantified_regexp = Regexp.new(e.to_s[0..-1-e.quantifier.to_s.size])
+			{:parse => e, :raw_capture=> LimitCapture.new(string, unquantified_regexp)}
+		else
+			{:parse => e, :raw_capture=> MatchCapture.new(string, sub_regexp)}
+		end # if
+	end # map_recursive
+end # raw_capture?
 def inspect_recursive(children_method_name = :to_a, &inspect_proc)
 	if !block_given? then
 		inspect_proc = Tree_node_format
@@ -59,7 +56,7 @@ end # inspect_recursive
 module Examples
 include Constants
 Children_method_name = :expressions
-Literal_a = Regexp::Parser.parse( /a/.to_s, 'ruby/1.8')
+Literal_a = Regexp::Parser.parse( /a*/.to_s, 'ruby/1.8')
 Children_a = Literal_a.send(Children_method_name)
 Son_a = Children_a[0]
 Grandchildren_a = Son_a.expressions

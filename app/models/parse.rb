@@ -275,7 +275,7 @@ def pre_match?(raw_captures = self.raw_captures?)
 	raw_captures[0]
 end # pre_match?
 def matched_characters?(raw_captures = self.raw_captures?)
-	@string.length - raw_captures?.post_match.length
+	@string.length - raw_captures.post_match.length
 end # matched_characters?
 def output?(raw_captures = self.raw_captures?)
 	(0..repetitions?(raw_captures)-1).map do |i|
@@ -433,7 +433,7 @@ def raw_captures?
 		Regexp::Parser.parse(@regexp.to_s, 'ruby/1.8').raw_capture?(@string)
 end #raw_captures?
 def success?
-	@raw_captures?[0].success?
+	@raw_captures[0].success?
 end # success?
 def repetitions?(raw_captures = self.raw_captures?)
 	case raw_capture_class?(raw_captures)
@@ -443,14 +443,14 @@ def repetitions?(raw_captures = self.raw_captures?)
 	end #case
 end # repetitions?
 def post_match?
-	@raw_captures?[0].post_match?
+	@raw_captures[0].post_match?
 
 end # post_match?
 def pre_match?(raw_captures = self.raw_captures?)
-	@raw_captures?[0].pre_match?
+	@raw_captures[0].pre_match?
 end # pre_match?
 def matched_characters?(raw_captures = self.raw_captures?)
-	@raw_captures?[0].matched_characters?
+	@raw_captures[0].matched_characters?
 end # matched_characters?
 def output?(raw_captures = self.raw_captures?)
 	if !success?(raw_captures) then

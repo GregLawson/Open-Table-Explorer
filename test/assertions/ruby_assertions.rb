@@ -43,11 +43,13 @@ def newline_if_not_empty(message)
 		message+"\n"
 	end #if
 end #newline_if_not_empty
+def trace_value(value, name = nil)
+end # trace_value
 def trace_to_s(expression_string)
 	"\n" + expression_string.to_s + ' = ' + eval(expression_string.to_s)
 end # trace_to_s
 def trace(expression_string)
-		"\n" + expression_string.to_s + '.inspect = ' + eval(expression_string.to_s).inspect
+	"\n" + expression_string.to_s + '.inspect = ' + eval(expression_string.to_s).inspect
 end # trace
 def trace_names?(name_list_method = :instance_variables)
 	name_list = self.method(name_list_method).call
@@ -392,20 +394,28 @@ def assert_scope_path(*names)
 #		puts "after adding self, names=#{names.inspect}"
 	end #if
 	names.each_index do |i|
-		testRange=0..i
-	#	puts "testRange=#{testRange.inspect}"
-		assert_instance_of(Symbol, names[i], "names[#{i}]=#{names[i].inspect},testRange=#{testRange}")
-	#	puts "names[testRange]=#{names[testRange].inspect}"
-		path=names[testRange].join('::')
-		message="assert_scope_path: names=#{names.inspect}, testRange=#{testRange.inspect}, path=#{path.inspect}"
-		begin
-			object=eval(path)
-		rescue
-			fail message
-		end #begin
-		assert_not_nil(object, message)
-		assert_kind_of(Module, object, message)
-	end#if
+		if i == 0 then
+			assert_include(Module.constants, names[i], 'Global constants should be in Module.constants')
+		else
+			testRange=0..(i-1)
+		#	puts "testRange=#{testRange.inspect}"
+			assert_instance_of(Symbol, names[i], "names[#{i}]=#{names[i].inspect},testRange=#{testRange}")
+		#	puts "names[testRange]=#{names[testRange].inspect}"
+			path=names[testRange].join('::')
+			message = 'assert_scope_path: '
+			message += " names=#{names.inspect}"
+			message += " testRange=#{testRange.inspect}, path=#{path.inspect}"
+			message += " path=#{path.inspect}"
+	#		message += trace_names?(:names)
+	#		message += trace('names')
+			begin
+				object=eval(path)
+				assert_not_nil(object, message)
+				assert_kind_of(Module, object, message)
+				assert_include(object.constants, names[i], names[i].to_s + ' is not a constant in module ' + path)
+			end #begin
+		end # if
+	end# each_index
 	return names # with inserted local module
 end #assert_scope_path
 def assert_path_to_constant(*names)
