@@ -16,25 +16,133 @@ require 'virtus'
 # loops might be possible since ruby objects are references and self references are possible
 #require_relative '../../app/models/no_db.rb'
 #require_relative 'parse.rb'
-# TreeAddress
+# GraphPath
 # Useful for indexing parallel trees.
-class TreeAddress < Array # nested Array
-include Virtus.model
-  attribute :parent, TreeAddress, :default => nil # default root
-  attribute :index, Object, :default => nil
-#def initialize(parent, index)
-#	@parent, @index = parent, index
-#	if !parent.nil? && parent.instance_of?(TreeAddress) then
-#		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
-#	end # if
-#end # initialize
+class GraphPath < Array # nested Array
+def initialize(*params)
+	if params.size == 0 then
+		super([]) # root?
+	elsif params.size == 1 && params.kind_of?(Array) then
+		super(params)
+	elsif params.size == 2 && params[0].instance_of(GraphPath) && params[0].instance_of(Fixnum) then
+		super([params[0], params[1]])
+	else
+		message = "Parent address in GraphPath.new must be a GraphPath or nil for root."
+		message += 'params = ' + params.inspect
+		raise message
+	end # if
+end # initialize
 def deeper
-	TreeAddress.new(self, 0)
+	GraphPath.new(self, 0)
 end # deeper
+def parent_index
+end # parent_index
+	self[0]
+def child_index
+	self[1]
+end # child_index
 module Constants
-Root_index = TreeAddress.new(parent: nil, index: 0)
+Root_index = GraphPath.new(nil)
 end # Constants
-end # TreeAddress
+include Constants
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	assert_include(Array, self.ancestors)
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+	assert_nil(self[0])
+	self[1..-1].assert_Array_of_Class(Fixnum) # parent id nil index
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+include Constants
+Redundant_root = [Root_index, nil]
+First_son = [Root_index, 0]
+Seventh_son = [Root_index, 6]
+First_granson = [First_son, 0]
+end # Examples
+end # GraphPath
+
+# GraphWalk
+class GraphWalk
+include Virtus.model
+  attribute :node, Object # root
+  attribute :currently, GraphPath, :default => GraphPath::Root_index
+  attribute :children_method_name, Symbol, :default => :to_a
+  attribute :bipartite, TrueClass, :default => true # leaves are different type than nonterminals
+end # GraphWalk
+class DirectedWalk < GraphWalk
+def children?
+	if @node.respond_to?(@children_method_name) then
+		children = @node.send(@children_method_name)
+		raise 'Method named ' + @children_method_name.to_s + 'does not return an Array (Enumerable?).' unless @node.children.instance_of?(Array)
+		@node.children
+	else
+		nil # end recursion
+	end # if
+end # children?
+# Shortcut for lack of children is a leaf node.
+def leaf?
+	@node.children.to_a.empty? # nil.to_a == []
+end # leaf?
+# [] is already taken
+def at(address)
+	if address.parent_index.instance_of?(GraphPath) then
+		address.parent_index[address.child_index]
+	elsif address.parent_index.nil? then
+		if address.child_index.nil? then
+			@node # addresses root
+		else
+			address.parent_index
+		end # if
+	else
+		message = "Parent address in GraphPath.new must be a GraphPath or nil for root."
+		message += 'params = ' + params.inspect
+		raise message
+	end # if
+end # at
+def leaf_addresses
+end # 
+end # DirectedWalk
+class DAGWalk < GraphWalk
+# Apply block to each node (branch & leaf).
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
+def map_recursive(depth=0, &visit_proc)
+# Handle missing parameters (since any and all can be missing)
+#	puts 'children_method_name.inspect =' + children_method_name.inspect
+#	puts 'depth.inspect =' + depth.inspect
+#	puts 'visit_proc.inspect =' + visit_proc.inspect
+#	puts 'block_given? =' + block_given?.inspect
+	if !block_given? && depth.instance_of?(Proc) then
+		raise "Block proc argument should be preceded with ampersand."
+	end # if
+	if leaf? then
+		visit_proc.call(self, depth, true)  # end recursion
+	else
+		children = send(@children_method_name)
+		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
+			if sub_tree.respond_to?(:map_recursive) then
+				sub_tree.map_recursive(depth+1, &visit_proc)
+			else
+				visit_proc.call(sub_tree, depth, nil) # end recursion
+			end # if
+		end ] # map
+	end # if
+end # map_recursive
+end # DAGWalk
 module Node
 module ParentLinked
 def all
@@ -46,16 +154,6 @@ module ChildLinked
 end # ChildLinked
 end # Node
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
-# [] is already taken
-def at(address)
-	if address.parent.instance_of?(TreeAddress) then
-		self[address.parent][address.index]
-	else
-		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
-	end # if
-end # at
-def leaf_addresses
-end # 
 def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
