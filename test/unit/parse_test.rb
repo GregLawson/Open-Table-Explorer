@@ -295,11 +295,24 @@ def test_ParsedCapture_raw_captures?
 	regexp = /a/.capture(:label)
 	answer = []
 	assert_equal('a', MatchCapture.new(string, regexp).raw_captures?[0])
-	assert_equal(['', 'a'], SplitCapture.new('a\na', regexp).raw_captures?)
+	assert_equal(["", "a", "\\n", "a"], SplitCapture.new('a\na', regexp).raw_captures?)
 	assert_equal(['', 'a'], ParsedCapture.new('a\na', regexp).raw_captures?)
 	assert_equal(['', 'a', 'a'], ParsedCapture.new('a\na', /a\n/.group).raw_captures?)
 	assert_equal([], LimitCapture::Examples::Branch_line_capture.raw_captures?)
 end # raw_captures?
+def test_output?
+	assert_equal([], ParsedCapture::Examples::Branch_line_capture.output?)
+end # output?
+def test_delimiters?
+	assert_equal([], ParsedCapture::Examples::Branch_line_capture.delimiters?)
+end # delimiters?
+def test_ParsedCapture_Examples
+	assert_instance_of(ParsedCapture, ParsedCapture::Examples::Branch_line_capture)
+	explain_assert_respond_to(ParsedCapture::Examples::Branch_line_capture, :success?)
+	assert(ParsedCapture::Examples::Branch_line_capture.success?)
+	ParsedCapture::Examples::Branch_line_capture.assert_pre_conditions
+	ParsedCapture::Examples::Branch_line_capture.assert_post_conditions
+end # Examples
 # String
 def test_map_captures?
 	string = 'a'

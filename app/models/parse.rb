@@ -438,13 +438,13 @@ attr_reader :parsed_regexp, :length_hash_captures
 attr_reader :raw_captures
 def initialize(string, regexp)
 	super(string, regexp)
-	@parsed_regexp = Regexp::Parser.parse( regexp.to_s, 'ruby/1.8')
+#	@parsed_regexp = Regexp::Parser.parse( regexp.to_s, 'ruby/1.8')
 end # ParsedCapture_initialize
 def raw_captures?
 		Regexp::Parser.parse(@regexp.to_s, 'ruby/1.8').raw_capture?(@string)
 end #raw_captures?
 def success?
-	@raw_captures[0].success?
+	@raw_captures[0][:raw_capture].success?
 end # success?
 def repetitions?(raw_captures = self.raw_captures?)
 	case raw_capture_class?(raw_captures)
@@ -454,40 +454,26 @@ def repetitions?(raw_captures = self.raw_captures?)
 	end #case
 end # repetitions?
 def post_match?
-	@raw_captures[0].post_match?
+	@raw_captures[0][:raw_capture].post_match?
 
 end # post_match?
 def pre_match?(raw_captures = self.raw_captures?)
-	@raw_captures[0].pre_match?
+	@raw_captures[0][:raw_capture].pre_match?
 end # pre_match?
 def matched_characters?
-	@raw_captures.reduce('', :+) {|c| c.matched_characters?}
+	@raw_captures.reduce('', :+) {|c| c[:raw_capture].matched_characters?}
 end # matched_characters?
 def output?(raw_captures = self.raw_captures?)
-	if !success?(raw_captures) then
-		{}
-	elsif raw_captures.instance_of?(MatchData) then
-		if raw_captures.names==[] then
-			raw_captures[1..-1] # return unnamed subexpressions
-		else
-			named_hash(0)
-		end # if
-	else # 
-		(0..repetitions?(raw_captures)-1).map do |i|
-			named_hash(i*(length_hash_captures+1))
-		end #map
-	end # if
+	@raw_captures.reduce({}, :merge) {|c| c[:raw_capture].output?}
 end # output?
-def delimiters?(raw_captures = self.raw_captures?)
-	if !success?(raw_captures) then
-		[]
-	elsif raw_captures.instance_of?(MatchData) then
-		[]
-	else # from split
-		(2..raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact
-#		raise self.inspect if raw_captures[0].nil?
-	end #if
+def delimiters?
+	@raw_captures.reduce('', :+) {|c| c[:raw_capture].delimiters?}
 end # delimiters?
+module Examples
+include Capture::Examples
+Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
+Parsed_a_capture = ParsedCapture.new('a\na', /a/.capture(:label))
+end # Examples
 end # ParsedCapture
 # String
 class String
