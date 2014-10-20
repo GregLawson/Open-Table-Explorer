@@ -20,12 +20,12 @@ require 'virtus'
 # Useful for indexing parallel trees.
 class GraphPath < Array # nested Array
 def initialize(*params)
-	if params.size == 0 then
-		super([]) # root?
-	elsif params.size == 1 && params.kind_of?(Array) then
-		super(params)
+	if params.size == 0 || params == [nil] then
+		super(0) # root?
+	elsif params.size == 1 && params[0].kind_of?(Array) then
+		super(2) {|index| params[0][index] } # how I wish super(params) would work
 	elsif params.size == 2 && params[0].instance_of(GraphPath) && params[0].instance_of(Fixnum) then
-		super([params[0], params[1]])
+		super(2) {|index| params[index] } # how I wish super(params) would work
 	else
 		message = "Parent address in GraphPath.new must be a GraphPath or nil for root."
 		message += 'params = ' + params.inspect
@@ -36,13 +36,17 @@ def deeper
 	GraphPath.new(self, 0)
 end # deeper
 def parent_index
+	GraphPath.new(self[0])
 end # parent_index
-	self[0]
 def child_index
 	self[1]
 end # child_index
 module Constants
-Root_index = GraphPath.new(nil)
+Root_path = GraphPath.new
+Redundant_root = [Root_path, nil]
+First_son = [Root_path, 0]
+Seventh_son = [Root_path, 6]
+First_grandson = [First_son, 0]
 end # Constants
 include Constants
 require_relative '../../test/assertions.rb'
@@ -68,10 +72,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Redundant_root = [Root_index, nil]
-First_son = [Root_index, 0]
-Seventh_son = [Root_index, 6]
-First_granson = [First_son, 0]
 end # Examples
 end # GraphPath
 
@@ -79,7 +79,7 @@ end # GraphPath
 class GraphWalk
 include Virtus.model
   attribute :node, Object # root
-  attribute :currently, GraphPath, :default => GraphPath::Root_index
+  attribute :currently, GraphPath, :default => GraphPath::Root_path
   attribute :children_method_name, Symbol, :default => :to_a
   attribute :bipartite, TrueClass, :default => true # leaves are different type than nonterminals
 end # GraphWalk
@@ -98,25 +98,23 @@ def leaf?
 	@node.children.to_a.empty? # nil.to_a == []
 end # leaf?
 # [] is already taken
-def at(address)
-	if address.parent_index.instance_of?(GraphPath) then
-		address.parent_index[address.child_index]
-	elsif address.parent_index.nil? then
-		if address.child_index.nil? then
-			@node # addresses root
-		else
-			address.parent_index
-		end # if
+def at(*params)
+	path = GraphPath.new(params)
+	if path.parent_index.nil? || path.parent_index == [nil] then
+		parent = @node
 	else
-		message = "Parent address in GraphPath.new must be a GraphPath or nil for root."
-		message += 'params = ' + params.inspect
-		raise message
+		parent = self.at(path.parent_index)
+	end # if
+	if path.child_index.nil? then
+		parent
+	else
+		parent[path.child_index]
 	end # if
 end # at
 def leaf_addresses
 end # 
 end # DirectedWalk
-class DAGWalk < GraphWalk
+class DAGWalk < DirectedWalk
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
@@ -142,7 +140,42 @@ def map_recursive(depth=0, &visit_proc)
 		end ] # map
 	end # if
 end # map_recursive
+module Constants
+Node_format = proc do |e|
+	e.inspect
+end # Node_format
+Tree_node_format = proc do |e, depth, terminal|
+	ret = case terminal
+	when true then	'terminal'
+	when false then 'nonterminal'
+	when nil then 'nil'
+	else 'unknown'
+	end # case
+	ret += '[' + depth.to_s + ']'
+	ret += ', ' 
+	ret += e.inspect_node
+end # Tree_node_format
+def inspect_node(&inspect_proc)
+	if !block_given? then
+		inspect_proc = Node_format
+	end # if
+	inspect_proc.call(self)
+end # inspect_node
+def inspect_recursive(children_method_name = :to_a, &inspect_proc)
+	if !block_given? then
+		inspect_proc = Tree_node_format
+	end # if
+	ret = map_recursive(children_method_name, &inspect_proc)
+	ret = if ret.instance_of?(Array) then
+		ret.join("\n")
+	else
+		ret
+	end # if
+	ret + "\n"
+end # inspect_recursive
+end # Constants
 end # DAGWalk
+
 module Node
 module ParentLinked
 def all
@@ -435,6 +468,7 @@ include Constants
 Children_method_name = :to_a
 Example_array = [1, 2, 3]
 Nested_array = [1, [2, [3], 4], 5]
+Nested_array_walk = DAGWalk.new(node: Nested_array)
 Inspect_node_root = '[1, [2, [3], 4], 5]'
 Children_nested_array = [[2, 3, 4]]
 Son_nested_array = [2, [3], 4]
