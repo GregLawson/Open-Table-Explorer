@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+#require 'virtus'
 #require_relative '../../app/models/no_db.rb'
 class Minimal2
 module ClassMethods
