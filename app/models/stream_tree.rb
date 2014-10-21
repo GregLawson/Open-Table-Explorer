@@ -20,14 +20,21 @@ require 'virtus'
 # Useful for indexing parallel trees.
 class GraphPath < Array # nested Array
 def initialize(*params)
-	if params.size == 0 || params == [nil] then
+	if params.size == 0 || params == [nil] || params == nil || params == [Root_path] then
 		super(0) # root?
-	elsif params.size == 1 && params[0].kind_of?(Array) then
-		super(2) {|index| params[0][index] } # how I wish super(params) would work
-	elsif params.size == 2 && params[0].instance_of(GraphPath) && params[0].instance_of(Fixnum) then
+	elsif params.size == 1 then
+		if params[0].kind_of?(Array) then
+			super(2) {|index| params[0][index] } # how I wish super(params) would work
+			
+		else
+			[]
+		end # if
+	elsif params.size == 2 && (params[0].instance_of?(GraphPath) || params[0].nil?) && params[1].instance_of?(Fixnum) then
 		super(2) {|index| params[index] } # how I wish super(params) would work
 	else
 		message = "Parent address in GraphPath.new must be a GraphPath or nil for root."
+		message += 'params.class = ' + params.class.name
+		message += 'params.size = ' + params.size.to_s
 		message += 'params = ' + params.inspect
 		raise message
 	end # if
@@ -84,27 +91,32 @@ include Virtus.model
   attribute :bipartite, TrueClass, :default => true # leaves are different type than nonterminals
 end # GraphWalk
 class DirectedWalk < GraphWalk
-def children?
-	if @node.respond_to?(@children_method_name) then
-		children = @node.send(@children_method_name)
-		raise 'Method named ' + @children_method_name.to_s + 'does not return an Array (Enumerable?).' unless @node.children.instance_of?(Array)
-		@node.children
+def children?(node)
+	if node.respond_to?(@children_method_name) then
+		children = node.send(@children_method_name)
+		message = 'Method named ' + @children_method_name.to_s + 'does not return an Array (Enumerable?).' 
+		raise message unless children.instance_of?(Array)
+		children
 	else
 		nil # end recursion
 	end # if
 end # children?
 # Shortcut for lack of children is a leaf node.
-def leaf?
-	@node.children.to_a.empty? # nil.to_a == []
+def leaf?(node)
+	children?(node).to_a.empty? # nil.to_a == []
 end # leaf?
-# [] is already taken
-def at(*params)
-	path = GraphPath.new(params)
-	if path.parent_index.nil? || path.parent_index == [nil] then
+def parent_at(*params)
+	path = GraphPath.new(*params)
+	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
 		parent = @node
 	else
 		parent = self.at(path.parent_index)
 	end # if
+end # parent_at
+# [] is already taken
+def at(*params)
+	path = GraphPath.new(*params)
+	parent = parent_at(path)
 	if path.child_index.nil? then
 		parent
 	else
