@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-
+require 'virtus'
 # An attempt at a universal data type?
 # Or is it duck typing modules without inheritance?
 # A Stream is a generalization of Array, Enumerable allowing infinite length part of which can be a Tree data store
@@ -16,6 +16,178 @@
 # loops might be possible since ruby objects are references and self references are possible
 #require_relative '../../app/models/no_db.rb'
 #require_relative 'parse.rb'
+# GraphPath
+# Useful for indexing parallel trees.
+class GraphPath < Array # nested Array
+def initialize(*params)
+	if params.size == 0 || params == [nil] || params == nil || params == [Root_path] then
+		super(0) # root?
+	elsif params.size == 1 then
+		if params[0].kind_of?(Array) then
+			super(2) {|index| params[0][index] } # how I wish super(params) would work
+			
+		else
+			[]
+		end # if
+	elsif params.size == 2 && (params[0].instance_of?(GraphPath) || params[0].nil?) && params[1].instance_of?(Fixnum) then
+		super(2) {|index| params[index] } # how I wish super(params) would work
+	else
+		message = "Parent address in GraphPath.new must be a GraphPath or nil for root."
+		message += 'params.class = ' + params.class.name
+		message += 'params.size = ' + params.size.to_s
+		message += 'params = ' + params.inspect
+		raise message
+	end # if
+end # initialize
+def deeper
+	GraphPath.new(self, 0)
+end # deeper
+def parent_index
+	GraphPath.new(self[0])
+end # parent_index
+def child_index
+	self[1]
+end # child_index
+module Constants
+Root_path = GraphPath.new
+Redundant_root = [Root_path, nil]
+First_son = [Root_path, 0]
+Seventh_son = [Root_path, 6]
+First_grandson = [First_son, 0]
+end # Constants
+include Constants
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	assert_include(Array, self.ancestors)
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+	assert_nil(self[0])
+	self[1..-1].assert_Array_of_Class(Fixnum) # parent id nil index
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+include Constants
+end # Examples
+end # GraphPath
+
+# GraphWalk
+class GraphWalk
+include Virtus.model
+  attribute :node, Object # root
+  attribute :currently, GraphPath, :default => GraphPath::Root_path
+  attribute :children_method_name, Symbol, :default => :to_a
+  attribute :bipartite, TrueClass, :default => true # leaves are different type than nonterminals
+end # GraphWalk
+class DirectedWalk < GraphWalk
+def children?(node)
+	if node.respond_to?(@children_method_name) then
+		children = node.send(@children_method_name)
+		message = 'Method named ' + @children_method_name.to_s + 'does not return an Array (Enumerable?).' 
+		raise message unless children.instance_of?(Array)
+		children
+	else
+		nil # end recursion
+	end # if
+end # children?
+# Shortcut for lack of children is a leaf node.
+def leaf?(node)
+	children?(node).to_a.empty? # nil.to_a == []
+end # leaf?
+def parent_at(*params)
+	path = GraphPath.new(*params)
+	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
+		parent = @node
+	else
+		parent = self.at(path.parent_index)
+	end # if
+end # parent_at
+# [] is already taken
+def at(*params)
+	path = GraphPath.new(*params)
+	parent = parent_at(path)
+	if path.child_index.nil? then
+		parent
+	else
+		parent[path.child_index]
+	end # if
+end # at
+def leaf_addresses
+end # 
+end # DirectedWalk
+class DAGWalk < DirectedWalk
+# Apply block to each node (branch & leaf).
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
+def map_recursive(depth=0, &visit_proc)
+# Handle missing parameters (since any and all can be missing)
+#	puts 'children_method_name.inspect =' + children_method_name.inspect
+#	puts 'depth.inspect =' + depth.inspect
+#	puts 'visit_proc.inspect =' + visit_proc.inspect
+#	puts 'block_given? =' + block_given?.inspect
+	if !block_given? && depth.instance_of?(Proc) then
+		raise "Block proc argument should be preceded with ampersand."
+	end # if
+	if leaf? then
+		visit_proc.call(self, depth, true)  # end recursion
+	else
+		children = send(@children_method_name)
+		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
+			if sub_tree.respond_to?(:map_recursive) then
+				sub_tree.map_recursive(depth+1, &visit_proc)
+			else
+				visit_proc.call(sub_tree, depth, nil) # end recursion
+			end # if
+		end ] # map
+	end # if
+end # map_recursive
+module Constants
+Node_format = proc do |e|
+	e.inspect
+end # Node_format
+Tree_node_format = proc do |e, depth, terminal|
+	ret = case terminal
+	when true then	'terminal'
+	when false then 'nonterminal'
+	when nil then 'nil'
+	else 'unknown'
+	end # case
+	ret += '[' + depth.to_s + ']'
+	ret += ', ' 
+	ret += e.inspect_node
+end # Tree_node_format
+def inspect_node(&inspect_proc)
+	if !block_given? then
+		inspect_proc = Node_format
+	end # if
+	inspect_proc.call(self)
+end # inspect_node
+def inspect_recursive(children_method_name = :to_a, &inspect_proc)
+	if !block_given? then
+		inspect_proc = Tree_node_format
+	end # if
+	ret = map_recursive(children_method_name, &inspect_proc)
+	ret = if ret.instance_of?(Array) then
+		ret.join("\n")
+	else
+		ret
+	end # if
+	ret + "\n"
+end # inspect_recursive
+end # Constants
+end # DAGWalk
+
 module Node
 module ParentLinked
 def all
@@ -27,25 +199,9 @@ module ChildLinked
 end # ChildLinked
 end # Node
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
-# [] is already taken
-def at(address)
-	if address.parent.instance_of?(TreeAddress) then
-		self[address.parent][address.index]
-	else
-		raise "Parent address in TreeAddress.new must be a TreeAddress or nil for root."
-	end # if
-end # at
-def leaf_addresses
-end # 
 def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
-def inspect_node(&inspect_proc)
-	if !block_given? then
-		inspect_proc = Constants::Node_format
-	end # if
-	inspect_proc.call(self)
-end # inspect_node
 module Constants
 Identity_map = proc {|e, depth, terminal| e}
 Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
@@ -63,9 +219,16 @@ Tree_node_format = proc do |e, depth, terminal|
 	end # case
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
-	ret += Node_format.call(e, depth, terminal)
+	ret += e.inspect_node
 end # Tree_node_format
 end # Constants
+include Constants
+def inspect_node(&inspect_proc)
+	if !block_given? then
+		inspect_proc = Node_format
+	end # if
+	inspect_proc.call(self)
+end # inspect_node
 end # Graph
 module DAG
 include Graph
@@ -135,7 +298,7 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
-		[visit_proc.call(self, depth, false), children.map_pair do |key, sub_tree|
+		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
 				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
 			else
@@ -179,6 +342,16 @@ end # Tree
 # map should be added analogously to Hash
 class Array
 include Tree
+# Array#each_with_index yields only index
+def each_and_index(&block)
+	each_with_index do |index|
+		if element[index].instance_of?(Array) && element.size == 2 then # from Hash#to_a
+			block.call(element[0], element[1])
+		else
+			block.call(index, element)
+		end # if
+	end # if
+end # each_pair
 def each_pair(&block)
 	each_with_index do |element, index|
 		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
@@ -307,6 +480,7 @@ include Constants
 Children_method_name = :to_a
 Example_array = [1, 2, 3]
 Nested_array = [1, [2, [3], 4], 5]
+Nested_array_walk = DAGWalk.new(node: Nested_array)
 Inspect_node_root = '[1, [2, [3], 4], 5]'
 Children_nested_array = [[2, 3, 4]]
 Son_nested_array = [2, [3], 4]
