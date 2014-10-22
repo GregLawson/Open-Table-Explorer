@@ -153,29 +153,26 @@ def map_recursive(depth=0, &visit_proc)
 	end # if
 end # map_recursive
 module Constants
-Node_format = proc do |e|
-	e.inspect
-end # Node_format
-Tree_node_format = proc do |e, depth, terminal|
-	ret = case terminal
-	when true then	'terminal'
-	when false then 'nonterminal'
-	when nil then 'nil'
-	else 'unknown'
-	end # case
-	ret += '[' + depth.to_s + ']'
-	ret += ', ' 
-	ret += e.inspect_node
-end # Tree_node_format
 def inspect_node(&inspect_proc)
-	if !block_given? then
-		inspect_proc = Node_format
+	if !block_given? then # default node inspection
+		inspect_proc = proc {|e|	e.inspect}
+
 	end # if
 	inspect_proc.call(self)
 end # inspect_node
 def inspect_recursive(children_method_name = :to_a, &inspect_proc)
 	if !block_given? then
-		inspect_proc = Tree_node_format
+		inspect_proc = proc do |e, depth, terminal|
+			ret = case terminal
+			when true then	'terminal'
+			when false then 'nonterminal'
+			when nil then 'nil'
+			else 'unknown'
+			end # case
+			ret += '[' + depth.to_s + ']'
+			ret += ', ' 
+			ret += e.inspect_node
+		end # Tree_node_format
 	end # if
 	ret = map_recursive(children_method_name, &inspect_proc)
 	ret = if ret.instance_of?(Array) then
@@ -188,16 +185,6 @@ end # inspect_recursive
 end # Constants
 end # DAGWalk
 
-module Node
-module ParentLinked
-def all
-end # all
-def parent?
-end # parent?
-end # ChildLinked
-module ChildLinked
-end # ChildLinked
-end # Node
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
 def expression_class_symbol?
 	self.class.name[20..-1].to_sym # should be magic-number-free

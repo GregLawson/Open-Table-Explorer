@@ -16,14 +16,14 @@ include DefaultTests
 include TE.model_class?::Examples
 include GraphPath::Constants
 include Tree::Examples
-def test_initialize
+def test_GraphPath_initialize
 	assert_equal(GraphPath.new(nil), Root_path)
 	assert_equal(GraphPath.new(nil), [])
 	assert_equal(GraphPath.new, [])
 	assert_equal(First_son, GraphPath.new(First_son))
 	assert_equal(GraphPath.new(First_son), First_son, First_son.inspect)
 	assert_equal(GraphPath.new(First_son[0], First_son[1]), First_son, First_son.inspect)
-	assert_equal(GraphPath.new(First_son[0], First_son[1]), [nil, 0], First_son.inspect)
+	assert_equal([[], 0], GraphPath.new(First_son[0], First_son[1]), First_son.inspect)
 	assert_equal(GraphPath.new(First_grandson), First_grandson, First_grandson.inspect)
 end # initialize
 def test_deeper
@@ -46,7 +46,7 @@ def test_Constants
 	assert_equal(Root_path, GraphPath.new(nil))
 end # Constants
 # GraphWalk
-def test_initialize
+def test_GraphWalk_initialize
 	example_array = GraphWalk.new(node: [1, 2, 3], currently: Root_path)
 	example_array = GraphWalk.new(node: [1, 2, 3])
 	nested_array = GraphWalk.new(node: [1, [2, [3], 4], 5])
