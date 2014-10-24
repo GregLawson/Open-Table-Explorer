@@ -50,10 +50,6 @@ def child_index
 end # child_index
 module Constants
 Root_path = GraphPath.new
-Redundant_root = [Root_path, nil]
-First_son = [Root_path, 0]
-Seventh_son = [Root_path, 6]
-First_grandson = [First_son, 0]
 end # Constants
 include Constants
 require_relative '../../test/assertions.rb'
@@ -79,18 +75,18 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+Redundant_root = [Root_path, nil]
+First_son = [Root_path, 0]
+Seventh_son = [Root_path, 6]
+First_grandson = [First_son, 0]
 end # Examples
 end # GraphPath
 
-# GraphWalk
-class GraphWalk
+# Connectivity
+class Connectivity
 include Virtus.model
-  attribute :node, Object # root
-  attribute :currently, GraphPath, :default => GraphPath::Root_path
   attribute :children_method_name, Symbol, :default => :to_a
-  attribute :bipartite, TrueClass, :default => true # leaves are different type than nonterminals
-end # GraphWalk
-class DirectedWalk < GraphWalk
+  attribute :leaf_typed, TrueClass, :default => true # leaves are different type than nonterminals
 def children?(node)
 	if node.respond_to?(@children_method_name) then
 		children = node.send(@children_method_name)
@@ -105,6 +101,24 @@ end # children?
 def leaf?(node)
 	children?(node).to_a.empty? # nil.to_a == []
 end # leaf?
+def [] (*params)
+	if params.size == 1 then
+		Node.new(node: params[0])
+	else
+		
+		Node.new(node: params)
+	end # if
+end # square_brackets
+def inspect_node(node, &inspect_proc)
+	if !block_given? then # default node inspection
+		inspect_proc = proc {|e|	e.inspect}
+
+	end # if
+	inspect_proc.call(node)
+end # inspect_node
+end # Connectivity
+NestedArrayType = Connectivity.new(children_method_name: :to_a, leaf_typed: true)
+class DirectedWalk < Connectivity
 def parent_at(*params)
 	path = GraphPath.new(*params)
 	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
@@ -127,73 +141,11 @@ def leaf_addresses
 end # 
 end # DirectedWalk
 class DAGWalk < DirectedWalk
-# Apply block to each node (branch & leaf).
-# Nesting structure remains the same.
-# Array#map will only process the top level Array. 
-def map_recursive(depth=0, &visit_proc)
-# Handle missing parameters (since any and all can be missing)
-#	puts 'children_method_name.inspect =' + children_method_name.inspect
-#	puts 'depth.inspect =' + depth.inspect
-#	puts 'visit_proc.inspect =' + visit_proc.inspect
-#	puts 'block_given? =' + block_given?.inspect
-	if !block_given? && depth.instance_of?(Proc) then
-		raise "Block proc argument should be preceded with ampersand."
-	end # if
-	if leaf? then
-		visit_proc.call(self, depth, true)  # end recursion
-	else
-		children = send(@children_method_name)
-		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
-			if sub_tree.respond_to?(:map_recursive) then
-				sub_tree.map_recursive(depth+1, &visit_proc)
-			else
-				visit_proc.call(sub_tree, depth, nil) # end recursion
-			end # if
-		end ] # map
-	end # if
-end # map_recursive
 module Constants
-def inspect_node(&inspect_proc)
-	if !block_given? then # default node inspection
-		inspect_proc = proc {|e|	e.inspect}
-
-	end # if
-	inspect_proc.call(self)
-end # inspect_node
-def inspect_recursive(children_method_name = :to_a, &inspect_proc)
-	if !block_given? then
-		inspect_proc = proc do |e, depth, terminal|
-			ret = case terminal
-			when true then	'terminal'
-			when false then 'nonterminal'
-			when nil then 'nil'
-			else 'unknown'
-			end # case
-			ret += '[' + depth.to_s + ']'
-			ret += ', ' 
-			ret += e.inspect_node
-		end # Tree_node_format
-	end # if
-	ret = map_recursive(children_method_name, &inspect_proc)
-	ret = if ret.instance_of?(Array) then
-		ret.join("\n")
-	else
-		ret
-	end # if
-	ret + "\n"
-end # inspect_recursive
 end # Constants
-end # DAGWalk
-
-module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
-def expression_class_symbol?
-	self.class.name[20..-1].to_sym # should be magic-number-free
-end # expression_class_symbol?
-module Constants
-Identity_map = proc {|e, depth, terminal| e}
-Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
+include Constants
+module Examples
 # unlike the usual assumption nil means the node has no children_function
-Leaf_map = proc {|e, depth, terminal| (terminal.nil? || terminal ? e : nil)}
 Node_format = proc do |e|
 	e.inspect
 end # Node_format
@@ -206,25 +158,73 @@ Tree_node_format = proc do |e, depth, terminal|
 	end # case
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
-	ret += e.inspect_node
+	ret += e.inspect
 end # Tree_node_format
-end # Constants
-include Constants
-def inspect_node(&inspect_proc)
-	if !block_given? then
-		inspect_proc = Node_format
+end # Examples
+end # DAGWalk
+
+class Node < Connectivity
+include Virtus.model
+  attribute :node, Object # root
+  attribute :graph_type, Connectivity
+def parent_at(*params)
+	path = GraphPath.new(*params)
+	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
+		parent = @node
+	else
+		parent = self.at(path.parent_index)
 	end # if
-	inspect_proc.call(self)
-end # inspect_node
-end # Graph
-module DAG
-include Graph
-include Graph::Constants
-def inspect_recursive(children_method_name = :to_a, &inspect_proc)
-	if !block_given? then
-		inspect_proc = Tree_node_format
+end # parent_at
+# [] is already taken
+def at(*params)
+	path = GraphPath.new(*params)
+	parent = parent_at(path)
+	if path.child_index.nil? then
+		parent
+	else
+		parent[path.child_index]
 	end # if
-	ret = map_recursive(children_method_name, &inspect_proc)
+end # at
+# Apply block to each node (branch & leaf).
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
+def map_recursive(node, depth=0, &visit_proc)
+# Handle missing parameters (since any and all can be missing)
+#	puts 'children_method_name.inspect =' + children_method_name.inspect
+#	puts 'depth.inspect =' + depth.inspect
+#	puts 'visit_proc.inspect =' + visit_proc.inspect
+#	puts 'block_given? =' + block_given?.inspect
+	if !block_given? && depth.instance_of?(Proc) then
+		raise "Block proc argument should be preceded with ampersand."
+	end # if
+	if leaf?(node) then
+		visit_proc.call(node, depth, true)  # end recursion
+	else
+		children = node.send(@children_method_name)
+		[visit_proc.call(node, depth, false), children.map_pair do |index, sub_tree|
+			if sub_tree.respond_to?(:map_recursive) then
+				map_recursive(sub_tree, depth+1, &visit_proc)
+			else
+				visit_proc.call(sub_tree, depth, nil) # end recursion
+			end # if
+		end ] # map
+	end # if
+end # map_recursive
+def inspect_recursive(node = @node, &inspect_proc)
+	if !block_given? then
+		inspect_proc = proc do |e, depth, terminal|
+			ret = case terminal
+			when true then	'terminal'
+			when false then 'nonterminal'
+			when nil then 'nil'
+			else 'unknown'
+			end # case
+			ret += '[' + depth.to_s + ']'
+			ret += ', ' 
+			ret += e.inspect
+		end # Tree_node_format
+	end # if
+	ret = map_recursive(node, &inspect_proc)
 	ret = if ret.instance_of?(Array) then
 		ret.join("\n")
 	else
@@ -232,6 +232,22 @@ def inspect_recursive(children_method_name = :to_a, &inspect_proc)
 	end # if
 	ret + "\n"
 end # inspect_recursive
+end # node
+
+module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
+def expression_class_symbol?
+	self.class.name[20..-1].to_sym # should be magic-number-free
+end # expression_class_symbol?
+module Constants
+Identity_map = proc {|e, depth, terminal| e}
+Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
+Leaf_map = proc {|e, depth, terminal| (terminal.nil? || terminal ? e : nil)}
+end # Constants
+include Constants
+end # Graph
+module DAG
+include Graph
+include Graph::Constants
 end # DAG
 module Forest
 include DAG
@@ -467,7 +483,7 @@ include Constants
 Children_method_name = :to_a
 Example_array = [1, 2, 3]
 Nested_array = [1, [2, [3], 4], 5]
-Nested_array_walk = DAGWalk.new(node: Nested_array)
+Nested_array_root = NestedArrayType[Nested_array]
 Inspect_node_root = '[1, [2, [3], 4], 5]'
 Children_nested_array = [[2, 3, 4]]
 Son_nested_array = [2, [3], 4]
