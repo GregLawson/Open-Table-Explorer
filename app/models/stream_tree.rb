@@ -82,8 +82,8 @@ First_grandson = [First_son, 0]
 end # Examples
 end # GraphPath
 
-# GraphWalk
-class GraphWalk
+# Connectivity
+class Connectivity
 include Virtus.model
   attribute :children_method_name, Symbol, :default => :to_a
   attribute :leaf_typed, TrueClass, :default => true # leaves are different type than nonterminals
@@ -109,9 +109,16 @@ def [] (*params)
 		Node.new(node: params)
 	end # if
 end # square_brackets
-end # GraphWalk
-NestedArrayType = GraphWalk.new(children_method_name: :to_a, leaf_typed: true)
-class DirectedWalk < GraphWalk
+def inspect_node(node, &inspect_proc)
+	if !block_given? then # default node inspection
+		inspect_proc = proc {|e|	e.inspect}
+
+	end # if
+	inspect_proc.call(node)
+end # inspect_node
+end # Connectivity
+NestedArrayType = Connectivity.new(children_method_name: :to_a, leaf_typed: true)
+class DirectedWalk < Connectivity
 def parent_at(*params)
 	path = GraphPath.new(*params)
 	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
@@ -154,10 +161,10 @@ end # Constants
 include Constants
 end # DAGWalk
 
-class Node
+class Node < Connectivity
 include Virtus.model
   attribute :node, Object # root
-  attribute :graph_type, GraphWalk
+  attribute :graph_type, Connectivity
 def parent_at(*params)
 	path = GraphPath.new(*params)
 	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
@@ -201,14 +208,7 @@ def map_recursive(node, depth=0, &visit_proc)
 		end ] # map
 	end # if
 end # map_recursive
-def inspect_node(node, &inspect_proc)
-	if !block_given? then # default node inspection
-		inspect_proc = proc {|e|	e.inspect}
-
-	end # if
-	inspect_proc.call(node)
-end # inspect_node
-def inspect_recursive(node, &inspect_proc)
+def inspect_recursive(node = @node, &inspect_proc)
 	if !block_given? then
 		inspect_proc = proc do |e, depth, terminal|
 			ret = case terminal
@@ -219,7 +219,7 @@ def inspect_recursive(node, &inspect_proc)
 			end # case
 			ret += '[' + depth.to_s + ']'
 			ret += ', ' 
-			ret += inspect_node(e)
+			ret += e.inspect
 		end # Tree_node_format
 	end # if
 	ret = map_recursive(node, &inspect_proc)
@@ -481,7 +481,6 @@ include Constants
 Children_method_name = :to_a
 Example_array = [1, 2, 3]
 Nested_array = [1, [2, [3], 4], 5]
-
 Nested_array_root = NestedArrayType[Nested_array]
 Inspect_node_root = '[1, [2, [3], 4], 5]'
 Children_nested_array = [[2, 3, 4]]

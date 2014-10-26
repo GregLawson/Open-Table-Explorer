@@ -46,11 +46,11 @@ end # child_index
 def test_Constants
 	assert_equal(Root_path, GraphPath.new(nil))
 end # Constants
-# GraphWalk
-def test_GraphWalk_initialize
-	example_array = GraphWalk.new(node: [1, 2, 3], currently: Root_path)
-	example_array = GraphWalk.new(node: [1, 2, 3])
-	nested_array = GraphWalk.new(node: [1, [2, [3], 4], 5])
+# Connectivity
+def test_Connectivity_initialize
+	example_array = Connectivity.new(node: [1, 2, 3], currently: Root_path)
+	example_array = Connectivity.new(node: [1, 2, 3])
+	nested_array = Connectivity.new(node: [1, [2, [3], 4], 5])
 	example_array = DAGWalk.new(node: [1, 2, 3])
 	nested_array = DAGWalk.new(node: [1, [2, [3], 4], 5])
 end # initialize
