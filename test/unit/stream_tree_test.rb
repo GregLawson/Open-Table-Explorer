@@ -129,10 +129,10 @@ def test_inspect_recursive
 #	assert_equal('a # ' + Nested_array_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
 end # inspect_recursive
 def test_map_recursive_simple_block
-	assert_equal([[[0], 0, false], [[0, 1, true]]], Flat_array.map_recursive(&Trace_map))
-#	assert_equal([Flat_array], Flat_array.map_recursive(&Leaf_map).compact)
-	assert_equal([[0], [0]], Flat_array.map_recursive(&Identity_map))
-#	assert_equal([Flat_hash, Flat_hash.values], Flat_hash.map_recursive(&Identity_map))
+	assert_equal([[[0], 0, false], [[0, 1, true]]], NestedArrayType.map_recursive(Flat_array, &Trace_map))
+#	assert_equal([Flat_array], NestedArrayType.map_recursive(Flat_array, &Leaf_map).compact)
+	assert_equal([[0], [0]], NestedArrayType.map_recursive(Flat_array, &Identity_map))
+#	assert_equal([Flat_hash, NestedArrayType.values], Flat_hash.map_recursive(Flat_array, &Identity_map))
 end # test_map_recursive_simple_block
 def test_each_pair
 	collect = []
@@ -151,7 +151,7 @@ end # to_hash
 def test_map_pair_Array
 	tree = Flat_array
 	idenity_map  = Array::Constants::Identity_map_pair
-	assert_equal(tree.node, tree.node.map_pair(&idenity_map))
+	assert_equal(tree, tree.map_pair(&idenity_map))
 end # map_pair
 def test_each_with_index
 end # each_with_index

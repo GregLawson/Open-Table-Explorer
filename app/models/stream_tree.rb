@@ -185,7 +185,7 @@ class NestedArrayType < Connectivity
 def initialize
 	super(children_method_name: :to_a, leaf_typed: true)
 end # initialize
-def children?(node)
+def NestedArrayType.children?(node)
 	children_if_exist?(node, :to_a)
 end # children
 def each_pair(&block)
@@ -319,7 +319,7 @@ def map_branches(depth=0, &visit_proc)
 end #map_branches
 module Examples
 include Constants
-Flat_array = NestedArrayType[0]
+Flat_array = [0]
 Flat_hash = {cat: :fish}
 end # Examples
 include Examples
