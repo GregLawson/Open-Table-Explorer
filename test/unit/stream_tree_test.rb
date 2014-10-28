@@ -115,6 +115,11 @@ def test_inspect_node
 	assert_equal('3', Nested_array_root.inspect_node(Grandson_nested_array))
 	assert_match(Nested_array_root.inspect_node(Nested_array), Tree_node_root)
 end # inspect_node
+def test_each_pair
+	collect = []
+	Example_array.each_pair {|key, value| collect << [key, value]}
+	assert_equal(collect, [[0, 1], [1, 2], [2, 3]])
+end # each_pair
 def test_inspect_recursive
 	assert_equal(Grandson_nested_array_map, Nested_array_root.map_recursive(Grandson_nested_array, depth=2, &Tree_node_format))
 	assert_equal(Son_nested_array_map, Nested_array_root.map_recursive(Son_nested_array, depth=1, &Tree_node_format))
@@ -136,11 +141,6 @@ def test_map_recursive_simple_block
 	assert_equal([[0], [0]], Flat_array.map_recursive(&Identity_map))
 	assert_equal([Flat_hash, Flat_hash.values], Flat_hash.map_recursive(&Identity_map))
 end # test_map_recursive_simple_block
-def test_each_pair
-	collect = []
-	Example_array.each_pair {|key, value| collect << [key, value]}
-	assert_equal(collect, [[0, 1], [1, 2], [2, 3]])
-end # each_pair
 def test_values
 	assert_equal(Example_array, Example_array.values)
 end # values
