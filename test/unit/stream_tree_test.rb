@@ -133,7 +133,7 @@ def test_Node_format
 end # Node_format
 def test_map_recursive_simple_block
 	assert_equal([[[0], 0, false], [[0, 1, true]]], Flat_array.map_recursive(&Trace_map))
-	assert_equal([Flat_array], Flat_array.map_recursive(&Leaf_map).compact)
+#	assert_equal([Flat_array], Flat_array.map_recursive(&Leaf_map).compact)
 	assert_equal([[0], [0]], Flat_array.map_recursive(&Identity_map))
 	assert_equal([Flat_hash, Flat_hash.values], Flat_hash.map_recursive(&Identity_map))
 end # test_map_recursive_simple_block
@@ -153,7 +153,7 @@ def test_to_hash
 end # to_hash
 def test_map_pair_Array
 	tree = Flat_array
-	idenity_map  = tree.class::Constants::Identity_map_pair
+	idenity_map  = Array::Constants::Identity_map_pair
 	assert_equal(tree, tree.map_pair(&idenity_map))
 end # map_pair
 def test_each_with_index
