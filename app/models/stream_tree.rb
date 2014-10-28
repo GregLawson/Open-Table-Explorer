@@ -255,9 +255,6 @@ end # inspect_recursive
 end # node
 
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
-def expression_class_symbol?
-	self.class.name[20..-1].to_sym # should be magic-number-free
-end # expression_class_symbol?
 module Constants
 Identity_map = proc {|e, depth, terminal| e}
 Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
