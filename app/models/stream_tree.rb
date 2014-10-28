@@ -178,6 +178,31 @@ Tree_node_format = proc do |e, depth, terminal|
 	ret += ', ' 
 	ret += e.inspect
 end # Tree_node_format
+Children_method_name = :to_a
+Example_array = [1, 2, 3]
+Nested_array = [1, [2, [3], 4], 5]
+Inspect_node_root = '[1, [2, [3], 4], 5]'
+Children_nested_array = [[2, 3, 4]]
+Son_nested_array = [2, [3], 4]
+Grandchildren_nested_array = [[3]]
+Grandson_nested_array = 3
+Tree_node_root = 'nonterminal[0], [1, [2, [3], 4], 5]'
+Grandson_nested_array_map = "terminal[2], 3"
+Son_nested_array_map = ["nonterminal[1], [2, [3], 4]",
+   ["terminal[2], 2",
+    ["nonterminal[2], [3]", ["terminal[3], 3"]],
+    "terminal[2], 4"]]
+Nested_array_map = ["nonterminal[0], [1, [2, [3], 4], 5]",
+   ["terminal[1], 1",
+    ["nonterminal[1], [2, [3], 4]",
+     ["terminal[2], 2",
+      ["nonterminal[2], [3]", ["terminal[3], 3"]],
+      "terminal[2], 4"]],
+    "terminal[1], 5"]]
+Example_hash = {name: 'Fred', salary: 10, department: :Engineering}
+Example_tuples = [Example_hash, {name: 'Bob', salary: 11}]
+Example_department = {department: :Engineering, manager: 'Bob'}
+Example_database = {employees: Example_tuples, departments: Example_department}
 end # Examples
 end # Connectivity
 
@@ -185,7 +210,7 @@ class NestedArrayType < Connectivity
 def initialize
 	super(children_method_name: :to_a, leaf_typed: true)
 end # initialize
-def children?(node)
+def NestedArrayType.children?(node)
 	children_if_exist?(node, :to_a)
 end # children
 def each_pair(&block)
@@ -197,10 +222,12 @@ def each_pair(&block)
 		end # if
 	end # if
 end # each_pair
+module Examples
+end # Examples
+include Examples
 end # NestedArrayType
 class HashConnectivity < Connectivity
 end # HashConnectivity
-
 
 class Node < Connectivity
 include Virtus.model
@@ -227,6 +254,10 @@ end # at
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
+module Examples
+Nested_array_root = NestedArrayType.ref(Connectivity::Examples::Nested_array)
+end # Examples
+include Examples
 end # node
 
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
@@ -319,7 +350,7 @@ def map_branches(depth=0, &visit_proc)
 end #map_branches
 module Examples
 include Constants
-Flat_array = NestedArrayType[0]
+Flat_array = [0]
 Flat_hash = {cat: :fish}
 end # Examples
 include Examples
@@ -414,6 +445,7 @@ def <<(other)
 	merge(other)
 end # :+
 end # Hash
+
 class Object
 def enumerate_single(enumerator_method = :map, &proc)
 	result=[self].enumerate(enumerator_method, &proc) #simulate array
@@ -434,66 +466,3 @@ end #Object
 module Stream # see http://rgl.rubyforge.org/stream/classes/Stream.html
 include Enumerable
 end # Stream
-module StreamTree
-include Stream
-include Tree
-module ClassMethods
-end #ClassMethods
-extend ClassMethods
-module Constants
-end #Constants
-include Constants
-# attr_reader
-def initialize
-end #initialize
-require_relative '../../test/assertions.rb'
-module Assertions
-
-module ClassMethods
-
-def assert_pre_conditions(message='')
-	message+="In assert_pre_conditions, self=#{inspect}"
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-end #assert_post_conditions
-end #ClassMethods
-def assert_pre_conditions(message='')
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-end #assert_post_conditions
-end #Assertions
-include Assertions
-extend Assertions::ClassMethods
-#self.assert_pre_conditions
-module Examples
-include Constants
-Children_method_name = :to_a
-Example_array = [1, 2, 3]
-Nested_array = [1, [2, [3], 4], 5]
-Nested_array_root = NestedArrayType.ref(Nested_array)
-Inspect_node_root = '[1, [2, [3], 4], 5]'
-Children_nested_array = [[2, 3, 4]]
-Son_nested_array = [2, [3], 4]
-Grandchildren_nested_array = [[3]]
-Grandson_nested_array = 3
-Tree_node_root = 'nonterminal[0], [1, [2, [3], 4], 5]'
-Grandson_nested_array_map = "terminal[2], 3"
-Son_nested_array_map = ["nonterminal[1], [2, [3], 4]",
-   ["terminal[2], 2",
-    ["nonterminal[2], [3]", ["terminal[3], 3"]],
-    "terminal[2], 4"]]
-Nested_array_map = ["nonterminal[0], [1, [2, [3], 4], 5]",
-   ["terminal[1], 1",
-    ["nonterminal[1], [2, [3], 4]",
-     ["terminal[2], 2",
-      ["nonterminal[2], [3]", ["terminal[3], 3"]],
-      "terminal[2], 4"]],
-    "terminal[1], 5"]]
-Example_hash = {name: 'Fred', salary: 10, department: :Engineering}
-Example_tuples = [Example_hash, {name: 'Bob', salary: 11}]
-Example_department = {department: :Engineering, manager: 'Bob'}
-Example_database = {employees: Example_tuples, departments: Example_department}
-
-end #Examples
-end #StreamTree
