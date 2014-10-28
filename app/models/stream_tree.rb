@@ -86,7 +86,7 @@ end # GraphPath
 class Connectivity
 include Virtus.model
   attribute :children_method_name, Symbol, :default => :to_a
-  attribute :leaf_typed, TrueClass, :default => true # leaves are different type than nonterminals
+  attribute :leaf_typed, TrueClass, :default => true # leaves are different type than nonterminals e.g. Array, Hash
 module ClassMethods
 def ref (tree)
 		Node.new(node: tree)
@@ -106,9 +106,14 @@ def children_if_exist?(node, children_method_name)
 	end # if
 end # children?
 # Shortcut for lack of children is a leaf node.
-def leaf?(node)
-	children?(node).to_a.empty? # nil.to_a == []
-end # leaf?
+def nonterminal?(node)
+	children = children?(node)
+	if children.nil? then
+		nil
+	else
+		!children.empty?
+	end # if
+end # nonterminal?
 def inspect_node(node, &inspect_proc)
 	if !block_given? then # default node inspection
 		inspect_proc = proc {|e|	e.inspect}
@@ -125,9 +130,7 @@ def map_recursive(node = @node, depth=0, &visit_proc)
 	if !block_given? && depth.instance_of?(Proc) then
 		raise "Block proc argument should be preceded with ampersand."
 	end # if
-	if leaf?(node) then
-		visit_proc.call(node, depth, true)  # end recursion
-	else
+	if nonterminal?(node) then
 		children = children?(node)
 		[visit_proc.call(node, depth, false), children.map_pair do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
@@ -136,8 +139,19 @@ def map_recursive(node = @node, depth=0, &visit_proc)
 				visit_proc.call(sub_tree, depth, nil) # end recursion
 			end # if
 		end ] # map
+	else
+		visit_proc.call(node, depth, true)  # end recursion
 	end # if
 end # map_recursive
+def inspect_nonterminal?(node)
+	case nonterminal?(node)
+		when true then	'nonterminal'
+		when false then if @leaf_typed then 'leaf_typed is childless error' else 'leaf childless' end
+		when nil then  if @leaf_typed then 'leaf typed' else 'leaf_typed error' end
+		else 'unknown'
+	end # case
+	
+end # inspect_nonterminal?
 def inspect_recursive(node = @node, &inspect_proc)
 	if !block_given? then
 		inspect_proc = proc do |e, depth, terminal|
@@ -277,9 +291,9 @@ include DAG
 end # Forest
 module Leaf
 include Graph
-def leaf?(children_method_name = :to_a)
+def nonterminal?(children_method_name = :to_a)
 			true  # end recursion
-end # leaf?
+end # nonterminal?
 end # Leaf
 module Tree
 include DAG
@@ -316,7 +330,7 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		raise "Block proc argument should be preceded with ampersand."
 	end # if
 	children_method_name = children_method_name.to_sym
-	if leaf?(children_method_name) then
+	if nonterminal?(children_method_name) then
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
@@ -445,7 +459,6 @@ def <<(other)
 	merge(other)
 end # :+
 end # Hash
-
 class Object
 def enumerate_single(enumerator_method = :map, &proc)
 	result=[self].enumerate(enumerator_method, &proc) #simulate array
