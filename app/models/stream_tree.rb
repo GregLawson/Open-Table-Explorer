@@ -87,6 +87,16 @@ class Connectivity
 include Virtus.model
   attribute :children_method_name, Symbol, :default => :to_a
   attribute :leaf_typed, TrueClass, :default => true # leaves are different type than nonterminals
+module ClassMethods
+def ref (tree)
+		Node.new(node: tree)
+end # ref
+def [] (*params)
+		
+		Node.new(node: params)
+end # square_brackets
+end # ClassMethods
+extend ClassMethods
 def children?(node)
 	if node.respond_to?(@children_method_name) then
 		children = node.send(@children_method_name)
@@ -101,14 +111,6 @@ end # children?
 def leaf?(node)
 	children?(node).to_a.empty? # nil.to_a == []
 end # leaf?
-def [] (*params)
-	if params.size == 1 then
-		Node.new(node: params[0])
-	else
-		
-		Node.new(node: params)
-	end # if
-end # square_brackets
 def inspect_node(node, &inspect_proc)
 	if !block_given? then # default node inspection
 		inspect_proc = proc {|e|	e.inspect}
@@ -117,7 +119,25 @@ def inspect_node(node, &inspect_proc)
 	inspect_proc.call(node)
 end # inspect_node
 end # Connectivity
-NestedArrayType = Connectivity.new(children_method_name: :to_a, leaf_typed: true)
+class NestedArrayType < Connectivity
+def initialize
+	super(children_method_name: :to_a, leaf_typed: true)
+end # initialize
+def children
+	to_a
+end # children
+def each_pair(&block)
+	each_with_index do |element, index|
+		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
+			block.call(element[0], element[1])
+		else
+			block.call(index, element)
+		end # if
+	end # if
+end # each_pair
+end # NestedArrayType
+class HashConnectivity < Connectivity
+end # HashConnectivity
 class DirectedWalk < Connectivity
 def parent_at(*params)
 	path = GraphPath.new(*params)
@@ -142,6 +162,9 @@ end #
 end # DirectedWalk
 class DAGWalk < DirectedWalk
 module Constants
+end # Constants
+include Constants
+module Examples
 # unlike the usual assumption nil means the node has no children_function
 Node_format = proc do |e|
 	e.inspect
@@ -157,8 +180,7 @@ Tree_node_format = proc do |e, depth, terminal|
 	ret += ', ' 
 	ret += e.inspect
 end # Tree_node_format
-end # Constants
-include Constants
+end # Examples
 end # DAGWalk
 
 class Node < Connectivity
@@ -186,7 +208,7 @@ end # at
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
-def map_recursive(node, depth=0, &visit_proc)
+def map_recursive(node = @node, depth=0, &visit_proc)
 # Handle missing parameters (since any and all can be missing)
 #	puts 'children_method_name.inspect =' + children_method_name.inspect
 #	puts 'depth.inspect =' + depth.inspect
@@ -278,10 +300,6 @@ def children?(children_method_name = :to_a)
 		nil # end recursion
 	end # if
 end # children?
-# Shortcut for lack of children is a leaf node.
-def leaf?(children_method_name = :to_a)
-	children?(children_method_name).to_a.empty? # nil.to_a == []
-end # leaf?
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
@@ -329,7 +347,7 @@ def map_branches(depth=0, &visit_proc)
 end #map_branches
 module Examples
 include Constants
-Flat_array = [0]
+Flat_array = NestedArrayType[0]
 Flat_hash = {cat: :fish}
 end # Examples
 include Examples
@@ -347,15 +365,6 @@ include Tree
 def each_and_index(&block)
 	each_with_index do |index|
 		if element[index].instance_of?(Array) && element.size == 2 then # from Hash#to_a
-			block.call(element[0], element[1])
-		else
-			block.call(index, element)
-		end # if
-	end # if
-end # each_pair
-def each_pair(&block)
-	each_with_index do |element, index|
-		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
 			block.call(element[0], element[1])
 		else
 			block.call(index, element)
@@ -481,7 +490,7 @@ include Constants
 Children_method_name = :to_a
 Example_array = [1, 2, 3]
 Nested_array = [1, [2, [3], 4], 5]
-Nested_array_root = NestedArrayType[Nested_array]
+Nested_array_root = NestedArrayType.ref(Nested_array)
 Inspect_node_root = '[1, [2, [3], 4], 5]'
 Children_nested_array = [[2, 3, 4]]
 Son_nested_array = [2, [3], 4]
