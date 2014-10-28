@@ -116,101 +116,6 @@ def inspect_node(node, &inspect_proc)
 	end # if
 	inspect_proc.call(node)
 end # inspect_node
-end # Connectivity
-class NestedArrayType < Connectivity
-def initialize
-	super(children_method_name: :to_a, leaf_typed: true)
-end # initialize
-def children
-	to_a
-end # children
-def each_pair(&block)
-	each_with_index do |element, index|
-		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
-			block.call(element[0], element[1])
-		else
-			block.call(index, element)
-		end # if
-	end # if
-end # each_pair
-end # NestedArrayType
-class HashConnectivity < Connectivity
-end # HashConnectivity
-class DirectedWalk < Connectivity
-def parent_at(*params)
-	path = GraphPath.new(*params)
-	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
-		parent = @node
-	else
-		parent = self.at(path.parent_index)
-	end # if
-end # parent_at
-# [] is already taken
-def at(*params)
-	path = GraphPath.new(*params)
-	parent = parent_at(path)
-	if path.child_index.nil? then
-		parent
-	else
-		parent[path.child_index]
-	end # if
-end # at
-def leaf_addresses
-end # 
-end # DirectedWalk
-class DAGWalk < DirectedWalk
-module Constants
-end # Constants
-include Constants
-module Examples
-# unlike the usual assumption nil means the node has no children_function
-Node_format = proc do |e|
-	e.inspect
-end # Node_format
-Tree_node_format = proc do |e, depth, terminal|
-	ret = case terminal
-	when true then	'terminal'
-	when false then 'nonterminal'
-	when nil then 'nil'
-	else 'unknown'
-	end # case
-	ret += '[' + depth.to_s + ']'
-	ret += ', ' 
-	ret += e.inspect
-end # Tree_node_format
-end # Examples
-end # DAGWalk
-
-class Node < Connectivity
-include Virtus.model
-  attribute :node, Object # root
-  attribute :graph_type, Connectivity
-def parent_at(*params)
-	path = GraphPath.new(*params)
-	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
-		parent = @node
-	else
-		parent = self.at(path.parent_index)
-	end # if
-end # parent_at
-# [] is already taken
-def at(*params)
-	path = GraphPath.new(*params)
-	parent = parent_at(path)
-	if path.child_index.nil? then
-		parent
-	else
-		parent[path.child_index]
-	end # if
-end # at
-# Apply block to each node (branch & leaf).
-# Nesting structure remains the same.
-# Array#map will only process the top level Array. 
-=======
-	end # if
-	inspect_proc.call(node)
-end # inspect_node
->>>>>>> testing
 def map_recursive(node = @node, depth=0, &visit_proc)
 # Handle missing parameters (since any and all can be missing)
 #	puts 'children_method_name.inspect =' + children_method_name.inspect
@@ -295,7 +200,6 @@ end # each_pair
 end # NestedArrayType
 class HashConnectivity < Connectivity
 end # HashConnectivity
-
 
 class Node < Connectivity
 include Virtus.model
