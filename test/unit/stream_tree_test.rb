@@ -15,9 +15,8 @@ class StreamTreeTest < TestCase
 include DefaultTests
 include TE.model_class?::Examples
 include GraphPath::Examples
-include DAGWalk::Constants
 include Tree::Examples
-include DAGWalk::Examples
+include Connectivity::Examples
 def test_GraphPath_initialize
 	assert_equal(GraphPath.new(nil), Root_path)
 	assert_equal(GraphPath.new(nil), [])
@@ -52,8 +51,6 @@ def test_Connectivity_initialize
 	example_array = Connectivity.new(node: [1, 2, 3], currently: Root_path)
 	example_array = Connectivity.new(node: [1, 2, 3])
 	nested_array = Connectivity.new(node: [1, [2, [3], 4], 5])
-	example_array = DAGWalk.new(node: [1, 2, 3])
-	nested_array = DAGWalk.new(node: [1, [2, [3], 4], 5])
 end # initialize
 def test_children?
 	assert_empty(nil)
@@ -66,13 +63,19 @@ def test_leaf?
 	assert_respond_to(Nested_array, Children_method_name)
 	assert_equal(Inspect_node_root, Node_format.call(Nested_array))
 	assert_equal(1, Children_nested_array.size)
-	assert_equal(false, Nested_array_root.leaf?(Nested_array), Nested_array_root.inspect)
+	assert_equal(false, NestedArrayType.leaf?(Nested_array), NestedArrayType.inspect)
 	assert_respond_to(Son_nested_array, Children_method_name)
 	assert_instance_of(Array, Grandchildren_nested_array)
 	assert_equal(1, Grandchildren_nested_array.size)
-	assert_equal(true, Nested_array_root.leaf?(Grandson_nested_array), Grandson_nested_array.inspect)
-	assert_equal(false, Nested_array_root.leaf?(Son_nested_array), Son_nested_array.inspect)
+	assert_equal(true, NestedArrayType.leaf?(Grandson_nested_array), Grandson_nested_array.inspect)
+	assert_equal(false, NestedArrayType.leaf?(Son_nested_array), Son_nested_array.inspect)
 end # leaf?
+def test_inspect_node
+	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
+	assert_equal('[2, [3], 4]', NestedArrayType.inspect_node(Son_nested_array))
+	assert_equal('3', NestedArrayType.inspect_node(Grandson_nested_array))
+	assert_match(NestedArrayType.inspect_node(Nested_array), Tree_node_root)
+end # inspect_node
 def test_parent_at
 	assert_equal(Nested_array_root.parent_at(nil, 0), Nested_array)
 	assert_equal(Nested_array_root.parent_at(nil), Nested_array)
@@ -93,6 +96,11 @@ def test_at
 #	assert_equal(Son_nested_array, Nested_array_root.at(First_son), First_son.inspect)
 #	assert_equal(Grandson_nested_array, Nested_array_root.at(First_grandson), First_grandson.inspect)
 end # at
+def test_Node_format
+	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
+	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array, &Node_format))
+#	assert_match(/cat/, Tree_node_format.call('cat', depth=0, false))
+end # Node_format
 def test_map_recursive
 	depth=0
 	visit_proc = Tree_node_format
@@ -102,46 +110,35 @@ def test_map_recursive
 	assert_instance_of(Array, Grandchildren_nested_array)
 	assert_equal(1, Grandchildren_nested_array.size)
 	assert_not_respond_to(Grandson_nested_array, Children_method_name)
-	assert_equal('3', Nested_array_root.inspect_node(Grandson_nested_array))
+	assert_equal('3', NestedArrayType.inspect_node(Grandson_nested_array))
 
-	assert_equal('[2, [3], 4]', Nested_array_root.inspect_node(Son_nested_array), Son_nested_array.inspect)
-	assert(Nested_array_root.leaf?(Grandson_nested_array), Grandson_nested_array.inspect) # termination condition
-	assert_equal(Grandson_nested_array_map, Nested_array_root.map_recursive(Grandson_nested_array,depth=2, &Tree_node_format))
-	assert_equal(Son_nested_array_map, Nested_array_root.map_recursive(Son_nested_array, depth=1, &Tree_node_format))
-	assert_equal(Nested_array_map, Nested_array_root.map_recursive(Nested_array, &Tree_node_format))
+	assert_equal('[2, [3], 4]', NestedArrayType.inspect_node(Son_nested_array), Son_nested_array.inspect)
+	assert(NestedArrayType.leaf?(Grandson_nested_array), Grandson_nested_array.inspect) # termination condition
+	assert_equal(Grandson_nested_array_map, NestedArrayType.map_recursive(Grandson_nested_array,depth=2, &Tree_node_format))
+	assert_equal(Son_nested_array_map, NestedArrayType.map_recursive(Son_nested_array, depth=1, &Tree_node_format))
+	assert_equal(Nested_array_map, NestedArrayType.map_recursive(Nested_array, &Tree_node_format))
 end # map_recursive
-def test_inspect_node
-	assert_equal(Inspect_node_root, Nested_array_root.inspect_node(Nested_array))
-	assert_equal('[2, [3], 4]', Nested_array_root.inspect_node(Son_nested_array))
-	assert_equal('3', Nested_array_root.inspect_node(Grandson_nested_array))
-	assert_match(Nested_array_root.inspect_node(Nested_array), Tree_node_root)
-end # inspect_node
+def test_inspect_recursive
+	assert_equal(Grandson_nested_array_map, NestedArrayType.map_recursive(Grandson_nested_array, depth=2, &Tree_node_format))
+	assert_equal(Son_nested_array_map, NestedArrayType.map_recursive(Son_nested_array, depth=1, &Tree_node_format))
+	assert_equal(Nested_array_map, NestedArrayType.map_recursive(Nested_array, &Tree_node_format))
+	assert_equal((Nested_array_map.flatten.map{|s| s + "\n"}).join, NestedArrayType.inspect_recursive(Nested_array, &Tree_node_format), NestedArrayType.inspect_recursive(Nested_array, &Tree_node_format))
+	assert_equal((Nested_array_map.flatten.map{|s| s + "\n"}).join, NestedArrayType.inspect_recursive(Nested_array), NestedArrayType.inspect_recursive(Nested_array))
+
+#	assert_equal('ab # ' + Nested_array_map + "\n", Sequence_example.inspect_recursive(&Mx_format))
+#	assert_equal('a # ' + Nested_array_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
+end # inspect_recursive
+def test_map_recursive_simple_block
+	assert_equal([[[0], 0, false], [[0, 1, true]]], NestedArrayType.map_recursive(Flat_array, &Trace_map))
+#	assert_equal([Flat_array], NestedArrayType.map_recursive(Flat_array, &Leaf_map).compact)
+	assert_equal([[0], [0]], NestedArrayType.map_recursive(Flat_array, &Identity_map))
+#	assert_equal([Flat_hash, NestedArrayType.values], Flat_hash.map_recursive(Flat_array, &Identity_map))
+end # test_map_recursive_simple_block
 def test_each_pair
 	collect = []
 	Example_array.each_pair {|key, value| collect << [key, value]}
 	assert_equal(collect, [[0, 1], [1, 2], [2, 3]])
 end # each_pair
-def test_inspect_recursive
-	assert_equal(Grandson_nested_array_map, Nested_array_root.map_recursive(Grandson_nested_array, depth=2, &Tree_node_format))
-	assert_equal(Son_nested_array_map, Nested_array_root.map_recursive(Son_nested_array, depth=1, &Tree_node_format))
-	assert_equal(Nested_array_map, Nested_array_root.map_recursive(Nested_array, &Tree_node_format))
-	assert_equal((Nested_array_map.flatten.map{|s| s + "\n"}).join, Nested_array_root.inspect_recursive(Nested_array, &Tree_node_format), Nested_array_root.inspect_recursive(Nested_array, &Tree_node_format))
-	assert_equal((Nested_array_map.flatten.map{|s| s + "\n"}).join, Nested_array_root.inspect_recursive(Nested_array), Nested_array_root.inspect_recursive(Nested_array))
-
-#	assert_equal('ab # ' + Nested_array_map + "\n", Sequence_example.inspect_recursive(&Mx_format))
-#	assert_equal('a # ' + Nested_array_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
-end # inspect_recursive
-def test_Node_format
-	assert_equal(Inspect_node_root, Nested_array_root.inspect_node(Nested_array))
-	assert_equal(Inspect_node_root, Nested_array_root.inspect_node(Nested_array, &Node_format))
-#	assert_match(/cat/, Tree_node_format.call('cat', depth=0, false))
-end # Node_format
-def test_map_recursive_simple_block
-	assert_equal([[[0], 0, false], [[0, 1, true]]], Flat_array.map_recursive(&Trace_map))
-#	assert_equal([Flat_array], Flat_array.map_recursive(&Leaf_map).compact)
-	assert_equal([[0], [0]], Flat_array.map_recursive(&Identity_map))
-	assert_equal([Flat_hash, Flat_hash.values], Flat_hash.map_recursive(&Identity_map))
-end # test_map_recursive_simple_block
 def test_values
 	assert_equal(Example_array, Example_array.values)
 end # values

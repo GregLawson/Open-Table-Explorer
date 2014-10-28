@@ -11,6 +11,9 @@ require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
 class RegexpParseType < Connectivity
+def RegexpParseType.children?(node)
+		children_if_exist?(node, :expressions)
+end # children
 end # RegexpParseType
 
 class Regexp

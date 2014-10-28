@@ -95,12 +95,10 @@ def [] (*params)
 		
 		Node.new(node: params)
 end # square_brackets
-end # ClassMethods
-extend ClassMethods
-def children?(node)
-	if node.respond_to?(@children_method_name) then
-		children = node.send(@children_method_name)
-		message = 'Method named ' + @children_method_name.to_s + 'does not return an Array (Enumerable?).' 
+def children_if_exist?(node, children_method_name)
+	if node.respond_to?(children_method_name) then
+		children = node.send(children_method_name)
+		message = 'Method named ' + children_method_name.to_s + 'does not return an Array (Enumerable?).' 
 		raise message unless children.instance_of?(Array)
 		children
 	else
@@ -208,6 +206,11 @@ end # at
 # Apply block to each node (branch & leaf).
 # Nesting structure remains the same.
 # Array#map will only process the top level Array. 
+=======
+	end # if
+	inspect_proc.call(node)
+end # inspect_node
+>>>>>>> testing
 def map_recursive(node = @node, depth=0, &visit_proc)
 # Handle missing parameters (since any and all can be missing)
 #	puts 'children_method_name.inspect =' + children_method_name.inspect
@@ -220,7 +223,7 @@ def map_recursive(node = @node, depth=0, &visit_proc)
 	if leaf?(node) then
 		visit_proc.call(node, depth, true)  # end recursion
 	else
-		children = node.send(@children_method_name)
+		children = children?(node)
 		[visit_proc.call(node, depth, false), children.map_pair do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
 				map_recursive(sub_tree, depth+1, &visit_proc)
@@ -252,12 +255,76 @@ def inspect_recursive(node = @node, &inspect_proc)
 	end # if
 	ret + "\n"
 end # inspect_recursive
+end # ClassMethods
+extend ClassMethods
+module Examples
+# unlike the usual assumption nil means the node has no children_function
+Node_format = proc do |e|
+	e.inspect
+end # Node_format
+Tree_node_format = proc do |e, depth, terminal|
+	ret = case terminal
+	when true then	'terminal'
+	when false then 'nonterminal'
+	when nil then 'nil'
+	else 'unknown'
+	end # case
+	ret += '[' + depth.to_s + ']'
+	ret += ', ' 
+	ret += e.inspect
+end # Tree_node_format
+end # Examples
+end # Connectivity
+
+class NestedArrayType < Connectivity
+def initialize
+	super(children_method_name: :to_a, leaf_typed: true)
+end # initialize
+def NestedArrayType.children?(node)
+	children_if_exist?(node, :to_a)
+end # children
+def each_pair(&block)
+	each_with_index do |element, index|
+		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
+			block.call(element[0], element[1])
+		else
+			block.call(index, element)
+		end # if
+	end # if
+end # each_pair
+end # NestedArrayType
+class HashConnectivity < Connectivity
+end # HashConnectivity
+
+
+class Node < Connectivity
+include Virtus.model
+  attribute :node, Object # root
+  attribute :graph_type, Connectivity
+def parent_at(*params)
+	path = GraphPath.new(*params)
+	if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil] then
+		parent = @node
+	else
+		parent = self.at(path.parent_index)
+	end # if
+end # parent_at
+# [] is already taken
+def at(*params)
+	path = GraphPath.new(*params)
+	parent = parent_at(path)
+	if path.child_index.nil? then
+		parent
+	else
+		parent[path.child_index]
+	end # if
+end # at
+# Apply block to each node (branch & leaf).
+# Nesting structure remains the same.
+# Array#map will only process the top level Array. 
 end # node
 
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
-def expression_class_symbol?
-	self.class.name[20..-1].to_sym # should be magic-number-free
-end # expression_class_symbol?
 module Constants
 Identity_map = proc {|e, depth, terminal| e}
 Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
@@ -347,7 +414,7 @@ def map_branches(depth=0, &visit_proc)
 end #map_branches
 module Examples
 include Constants
-Flat_array = NestedArrayType[0]
+Flat_array = [0]
 Flat_hash = {cat: :fish}
 end # Examples
 include Examples
