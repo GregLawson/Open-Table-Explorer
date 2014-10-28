@@ -10,6 +10,8 @@ require_relative 'unbounded_range.rb'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
+class RegexpParseType < Connectivity
+end # RegexpParseType
 
 class Regexp
 class Expression::Base
@@ -36,7 +38,7 @@ def inspect_node(&inspect_proc)
 	inspect_proc.call(self)
 end # inspect_node
 def raw_capture?(string)
-	map_recursive(:expressions) do |e, depth, terminal|
+	RegexpParseType.map_recursive(self) do |e, depth, terminal|
 		sub_regexp = Regexp.new(e.to_s)
 		if e.quantifier then
 			unquantified_regexp = e.to_s[0, -1-e.quantifier.to_s.size]
