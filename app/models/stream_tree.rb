@@ -106,9 +106,9 @@ def children_if_exist?(node, children_method_name)
 	end # if
 end # children?
 # Shortcut for lack of children is a leaf node.
-def leaf?(node)
+def nonterminal?(node)
 	children?(node).to_a.empty? # nil.to_a == []
-end # leaf?
+end # nonterminal?
 def inspect_node(node, &inspect_proc)
 	if !block_given? then # default node inspection
 		inspect_proc = proc {|e|	e.inspect}
@@ -125,7 +125,7 @@ def map_recursive(node = @node, depth=0, &visit_proc)
 	if !block_given? && depth.instance_of?(Proc) then
 		raise "Block proc argument should be preceded with ampersand."
 	end # if
-	if leaf?(node) then
+	if nonterminal?(node) then
 		visit_proc.call(node, depth, true)  # end recursion
 	else
 		children = children?(node)
@@ -277,9 +277,9 @@ include DAG
 end # Forest
 module Leaf
 include Graph
-def leaf?(children_method_name = :to_a)
+def nonterminal?(children_method_name = :to_a)
 			true  # end recursion
-end # leaf?
+end # nonterminal?
 end # Leaf
 module Tree
 include DAG
@@ -316,7 +316,7 @@ def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
 		raise "Block proc argument should be preceded with ampersand."
 	end # if
 	children_method_name = children_method_name.to_sym
-	if leaf?(children_method_name) then
+	if nonterminal?(children_method_name) then
 		visit_proc.call(self, depth, true)  # end recursion
 	else
 		children = send(children_method_name)
@@ -445,7 +445,6 @@ def <<(other)
 	merge(other)
 end # :+
 end # Hash
-
 class Object
 def enumerate_single(enumerator_method = :map, &proc)
 	result=[self].enumerate(enumerator_method, &proc) #simulate array
