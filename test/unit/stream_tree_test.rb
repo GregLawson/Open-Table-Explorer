@@ -7,8 +7,12 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/stream_tree.rb'
+class Fixnum
+include Tree # used as leaf node in test tree
+include Leaf # used as leaf node in test tree
+end # Fixnum
 class StreamTreeTest < TestCase
-include DefaultTests
+#include DefaultTests
 #include TE.model_class?::Examples
 include GraphPath::Examples
 include Tree::Examples
@@ -59,17 +63,17 @@ def test_children?
 	assert_equal(Son_nested_array, Son_nested_array.children?, 'Son_nested_array = ' + Son_nested_array.inspect)
 	assert_equal(nil, Grandson_nested_array.children?, 'Grandson_nested_array = ' + Grandson_nested_array.inspect)
 end # children?
-def test_leaf?
+def test_nonterminal?
 	assert_respond_to(Nested_array, Children_method_name)
 	assert_equal(Inspect_node_root, Node_format.call(Nested_array))
 	assert_equal(1, Children_nested_array.size)
-	assert_equal(false, NestedArrayType.leaf?(Nested_array), NestedArrayType.inspect)
+	assert_equal(false, NestedArrayType.nonterminal?(Nested_array), NestedArrayType.inspect)
 	assert_respond_to(Son_nested_array, Children_method_name)
 	assert_instance_of(Array, Grandchildren_nested_array)
 	assert_equal(1, Grandchildren_nested_array.size)
-	assert_equal(true, NestedArrayType.leaf?(Grandson_nested_array), Grandson_nested_array.inspect)
-	assert_equal(false, NestedArrayType.leaf?(Son_nested_array), Son_nested_array.inspect)
-end # leaf?
+	assert_equal(true, NestedArrayType.nonterminal?(Grandson_nested_array), Grandson_nested_array.inspect)
+	assert_equal(false, NestedArrayType.nonterminal?(Son_nested_array), Son_nested_array.inspect)
+end # nonterminal?
 def test_inspect_node
 	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
 	assert_equal('[2, [3], 4]', NestedArrayType.inspect_node(Son_nested_array))
@@ -88,7 +92,7 @@ def test_map_recursive
 	assert_equal('3', NestedArrayType.inspect_node(Grandson_nested_array))
 
 	assert_equal('[2, [3], 4]', NestedArrayType.inspect_node(Son_nested_array), Son_nested_array.inspect)
-	assert(NestedArrayType.leaf?(Grandson_nested_array), Grandson_nested_array.inspect) # termination condition
+	assert(NestedArrayType.nonterminal?(Grandson_nested_array), Grandson_nested_array.inspect) # termination condition
 	assert_equal(Grandson_nested_array_map, NestedArrayType.map_recursive(Grandson_nested_array,depth=2, &Tree_node_format))
 	assert_equal(Son_nested_array_map, NestedArrayType.map_recursive(Son_nested_array, depth=1, &Tree_node_format))
 	assert_equal(Nested_array_map, NestedArrayType.map_recursive(Nested_array, &Tree_node_format))
