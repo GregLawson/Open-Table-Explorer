@@ -7,13 +7,9 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/stream_tree.rb'
-class Fixnum
-include Tree # used as leaf node in test tree
-include Leaf # used as leaf node in test tree
-end # Fixnum
 class StreamTreeTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+#include TE.model_class?::Examples
 include GraphPath::Examples
 include Tree::Examples
 include Connectivity::Examples
@@ -52,6 +48,10 @@ def test_Connectivity_initialize
 	example_array = Connectivity.new(node: [1, 2, 3])
 	nested_array = Connectivity.new(node: [1, [2, [3], 4], 5])
 end # initialize
+def test_ref (tree)
+end # ref
+def test_square_brackets (*params)
+end # square_brackets
 def test_children?
 	assert_empty(nil)
 	assert(nil.to_a.empty?) # allows uniform testing of empty Array and nil
@@ -76,31 +76,6 @@ def test_inspect_node
 	assert_equal('3', NestedArrayType.inspect_node(Grandson_nested_array))
 	assert_match(NestedArrayType.inspect_node(Nested_array), Tree_node_root)
 end # inspect_node
-def test_parent_at
-	assert_equal(Nested_array_root.parent_at(nil, 0), Nested_array)
-	assert_equal(Nested_array_root.parent_at(nil), Nested_array)
-	assert_equal(Nested_array_root.parent_at([nil, 0]), Nested_array)
-end # parent_at
-def test_at
-	assert_include(Nested_array_root.methods, :at, Nested_array_root.inspect)
-	explain_assert_respond_to(Nested_array_root, :at, Nested_array_root.inspect)
-	assert_equal(GraphPath.new(*Root_path), Root_path)
-	path = GraphPath.new(Root_path)
-	assert_empty(Root_path.parent_index)
-	assert_empty(path.parent_index)
-	assert(path.parent_index == [])
-	assert_equal(Nested_array_root.at(nil, 0), Nested_array[0])
-	assert_equal(Nested_array_root.at(Root_path), Nested_array)
-#	assert_equal(Nested_array, Nested_array_root.at(Root_path))
-	assert_equal(0, GraphPath.new(First_son).child_index, First_son.inspect)
-#	assert_equal(Son_nested_array, Nested_array_root.at(First_son), First_son.inspect)
-#	assert_equal(Grandson_nested_array, Nested_array_root.at(First_grandson), First_grandson.inspect)
-end # at
-def test_Node_format
-	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
-	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array, &Node_format))
-#	assert_match(/cat/, Tree_node_format.call('cat', depth=0, false))
-end # Node_format
 def test_map_recursive
 	depth=0
 	visit_proc = Tree_node_format
@@ -128,17 +103,42 @@ def test_inspect_recursive
 #	assert_equal('ab # ' + Nested_array_map + "\n", Sequence_example.inspect_recursive(&Mx_format))
 #	assert_equal('a # ' + Nested_array_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
 end # inspect_recursive
+def test_each_pair
+	collect = []
+	Example_array.each_pair {|key, value| collect << [key, value]}
+	assert_equal(collect, [[0, 1], [1, 2], [2, 3]])
+end # each_pair
+def test_parent_at
+	assert_equal(Node::Examples::Nested_array_root.parent_at(nil, 0), Nested_array)
+	assert_equal(Node::Examples::Nested_array_root.parent_at(nil), Nested_array)
+	assert_equal(Node::Examples::Nested_array_root.parent_at([nil, 0]), Nested_array)
+end # parent_at
+def test_at
+	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
+	explain_assert_respond_to(Node::Examples::Nested_array_root, :at, Node::Examples::Nested_array_root.inspect)
+	assert_equal(GraphPath.new(*Root_path), Root_path)
+	path = GraphPath.new(Root_path)
+	assert_empty(Root_path.parent_index)
+	assert_empty(path.parent_index)
+	assert(path.parent_index == [])
+	assert_equal(Node::Examples::Nested_array_root.at(nil, 0), Nested_array[0])
+	assert_equal(Node::Examples::Nested_array_root.at(Root_path), Nested_array)
+#	assert_equal(Nested_array, Node::Examples::Nested_array_root.at(Root_path))
+	assert_equal(0, GraphPath.new(First_son).child_index, First_son.inspect)
+#	assert_equal(Son_nested_array, Node::Examples::Nested_array_root.at(First_son), First_son.inspect)
+#	assert_equal(Grandson_nested_array, Node::Examples::Nested_array_root.at(First_grandson), First_grandson.inspect)
+end # at
+def test_Node_format
+	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
+	assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array, &Node_format))
+#	assert_match(/cat/, Tree_node_format.call('cat', depth=0, false))
+end # Node_format
 def test_map_recursive_simple_block
 	assert_equal([[[0], 0, false], [[0, 1, true]]], NestedArrayType.map_recursive(Flat_array, &Trace_map))
 #	assert_equal([Flat_array], NestedArrayType.map_recursive(Flat_array, &Leaf_map).compact)
 	assert_equal([[0], [0]], NestedArrayType.map_recursive(Flat_array, &Identity_map))
 #	assert_equal([Flat_hash, NestedArrayType.values], Flat_hash.map_recursive(Flat_array, &Identity_map))
 end # test_map_recursive_simple_block
-def test_each_pair
-	collect = []
-	Example_array.each_pair {|key, value| collect << [key, value]}
-	assert_equal(collect, [[0, 1], [1, 2], [2, 3]])
-end # each_pair
 def test_values
 	assert_equal(Example_array, Example_array.values)
 end # values
