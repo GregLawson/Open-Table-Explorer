@@ -52,24 +52,6 @@ module Constants
 Root_path = GraphPath.new
 end # Constants
 include Constants
-require_relative '../../test/assertions.rb'
-module Assertions
-module ClassMethods
-def assert_pre_conditions(message='')
-	assert_include(Array, self.ancestors)
-	message+="In assert_pre_conditions, self=#{inspect}"
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-end #assert_post_conditions
-end #ClassMethods
-def assert_pre_conditions(message='')
-	assert_nil(self[0])
-	self[1..-1].assert_Array_of_Class(Fixnum) # parent id nil index
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-end #assert_post_conditions
-end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
@@ -83,11 +65,9 @@ end # Examples
 end # GraphPath
 
 # Connectivity
-class Connectivity
-include Virtus.model
-  attribute :children_method_name, Symbol, :default => :to_a
-  attribute :leaf_typed, TrueClass, :default => true # leaves are different type than nonterminals
+module Connectivity
 module ClassMethods
+extend Connectivity
 def ref (tree)
 		Node.new(node: tree)
 end # ref
@@ -95,6 +75,10 @@ def [] (*params)
 		
 		Node.new(node: params)
 end # square_brackets
+# override if terminals are same type as nonterminals
+def leaf_typed?
+	true
+end # leaf_typed?
 def children_if_exist?(node, children_method_name)
 	if node.respond_to?(children_method_name) then
 		children = node.send(children_method_name)
@@ -105,10 +89,34 @@ def children_if_exist?(node, children_method_name)
 		nil # end recursion
 	end # if
 end # children?
+# override for non-default ways of finding children
+def children?(node)
+	children_if_exist?(node, :to_a)
+end # children?
 # Shortcut for lack of children is a leaf node.
+# unlike the usual assumption nil means the node has no children_function
 def nonterminal?(node)
-	children?(node).to_a.empty? # nil.to_a == []
+	children = children?(node)
+	if children.nil? then
+		nil
+	else
+		!children.empty?
+	end # if
 end # nonterminal?
+def each_pair(children, &block)
+	children.each_with_index do |element, index|
+		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
+			block.call(element[0], element[1])
+		else
+			block.call(index, element)
+		end # if
+	end # if
+end # each_pair
+def map_pair(children, &block)
+	ret = [] # return Array
+	each_pair(children) {|key, value| ret. << block.call(key, value)}
+	ret
+end # map_pair
 def inspect_node(node, &inspect_proc)
 	if !block_given? then # default node inspection
 		inspect_proc = proc {|e|	e.inspect}
@@ -126,18 +134,27 @@ def map_recursive(node = @node, depth=0, &visit_proc)
 		raise "Block proc argument should be preceded with ampersand."
 	end # if
 	if nonterminal?(node) then
-		visit_proc.call(node, depth, true)  # end recursion
-	else
 		children = children?(node)
-		[visit_proc.call(node, depth, false), children.map_pair do |index, sub_tree|
+		[visit_proc.call(node, depth, false), map_pair(children) do |index, sub_tree|
 			if sub_tree.respond_to?(:map_recursive) then
 				map_recursive(sub_tree, depth+1, &visit_proc)
 			else
 				visit_proc.call(sub_tree, depth, nil) # end recursion
 			end # if
 		end ] # map
+	else
+		visit_proc.call(node, depth, true)  # end recursion
 	end # if
 end # map_recursive
+def inspect_nonterminal?(node)
+	case nonterminal?(node)
+		when true then	'nonterminal'
+		when false then if leaf_typed? then 'leaf_typed is childless error' else 'leaf childless' end
+		when nil then  if leaf_typed? then 'leaf typed' else 'leaf_typed error' end
+		else 'unknown'
+	end # case
+	
+end # inspect_nonterminal?
 def inspect_recursive(node = @node, &inspect_proc)
 	if !block_given? then
 		inspect_proc = proc do |e, depth, terminal|
@@ -160,20 +177,51 @@ def inspect_recursive(node = @node, &inspect_proc)
 	end # if
 	ret + "\n"
 end # inspect_recursive
-end # ClassMethods
+end #ClassMethods
 extend ClassMethods
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+# assertions before module has been completely defined
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+	assert_equal(self, Connectivity, message)
+	assert_include(self.ancestors, Connectivity)
+#	assert_equal(self.ancestors, [Connectivity])
+#	assert_equal(self.included_modules, [], message)
+	assert_empty(self.methods(false), message)
+	assert_empty(self.methods(false), message)
+	assert_include(Connectivity.ancestors, Connectivity)
+	assert_equal(Connectivity.ancestors, [Connectivity])
+	assert_equal(Connectivity.included_modules, [], message)
+	assert_empty(Connectivity.methods(false), message)
+	assert_empty(Connectivity::ClassMethods.methods(false), message)
+	assert_include(Connectivity::ClassMethods.instance_methods(false), :each_pair)
+	assert_include(Connectivity::ClassMethods.instance_methods(false), :ref)
+	assert_empty(Connectivity.methods(false))
+	assert_empty(Connectivity.instance_methods(false))
+	assert_not_include(Connectivity.methods(false), :each_pair)
+	assert_include(Connectivity.methods, :each_pair)
+	assert_include(Connectivity.methods, :ref)
+	assert_include(Connectivity.methods, :map_recursive)
+	assert_respond_to(Connectivity, :inspect_node)
+	assert_respond_to(Connectivity, :map_recursive)
+	assert_equal('1', Connectivity.inspect_node(1))
+end #assert_pre_conditions
+# assertions after module has been completely defined
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+end # Assertions
+extend Assertions::ClassMethods
+self.assert_pre_conditions
 module Examples
-# unlike the usual assumption nil means the node has no children_function
 Node_format = proc do |e|
 	e.inspect
 end # Node_format
 Tree_node_format = proc do |e, depth, terminal|
-	ret = case terminal
-	when true then	'terminal'
-	when false then 'nonterminal'
-	when nil then 'nil'
-	else 'unknown'
-	end # case
+	ret = Connectivity.inspect_nonterminal?(e)
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
 	ret += e.inspect
@@ -187,49 +235,66 @@ Son_nested_array = [2, [3], 4]
 Grandchildren_nested_array = [[3]]
 Grandson_nested_array = 3
 Tree_node_root = 'nonterminal[0], [1, [2, [3], 4], 5]'
-Grandson_nested_array_map = "terminal[2], 3"
+Grandson_nested_array_map = "leaf typed[2], 3"
 Son_nested_array_map = ["nonterminal[1], [2, [3], 4]",
-   ["terminal[2], 2",
-    ["nonterminal[2], [3]", ["terminal[3], 3"]],
-    "terminal[2], 4"]]
+   ["leaf typed[2], 2",
+    ["nonterminal[2], [3]", ["leaf typed[3], 3"]],
+    "leaf typed[2], 4"]]
 Nested_array_map = ["nonterminal[0], [1, [2, [3], 4], 5]",
-   ["terminal[1], 1",
+   ["leaf typed[1], 1",
     ["nonterminal[1], [2, [3], 4]",
-     ["terminal[2], 2",
-      ["nonterminal[2], [3]", ["terminal[3], 3"]],
-      "terminal[2], 4"]],
-    "terminal[1], 5"]]
+     ["leaf typed[2], 2",
+      ["nonterminal[2], [3]", ["leaf typed[3], 3"]],
+      "leaf typed[2], 4"]],
+    "leaf typed[1], 5"]]
 Example_hash = {name: 'Fred', salary: 10, department: :Engineering}
 Example_tuples = [Example_hash, {name: 'Bob', salary: 11}]
 Example_department = {department: :Engineering, manager: 'Bob'}
 Example_database = {employees: Example_tuples, departments: Example_department}
 end # Examples
 end # Connectivity
+Connectivity.assert_post_conditions
 
-class NestedArrayType < Connectivity
-def initialize
-	super(children_method_name: :to_a, leaf_typed: true)
-end # initialize
-def NestedArrayType.children?(node)
+module NestedArrayType
+module ClassMethods
+def children?(node)
 	children_if_exist?(node, :to_a)
 end # children
-def each_pair(&block)
-	each_with_index do |element, index|
-		if element.instance_of?(Array) && element.size == 2 then # from Hash#to_a
-			block.call(element[0], element[1])
-		else
-			block.call(index, element)
-		end # if
-	end # if
-end # each_pair
+end #ClassMethods
+extend Connectivity::ClassMethods
+extend ClassMethods
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+	assert_equal(self, NestedArrayType, message)
+	assert_include(self.ancestors, NestedArrayType)
+	assert_equal(self.ancestors, [NestedArrayType, NestedArrayType::Examples])
+	assert_equal(self.included_modules, [NestedArrayType::Examples], message)
+	assert_empty(self.methods(false), message)
+	assert_empty(self.methods(false), message)
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+	assert_equal(self, NestedArrayType, message)
+	assert_equal(NestedArrayType.ancestors, [NestedArrayType, NestedArrayType::Examples])
+	assert_equal(NestedArrayType.included_modules, [NestedArrayType::Examples], message)
+	assert_empty(NestedArrayType.methods(false), message)
+	assert_empty(NestedArrayType::ClassMethods.methods(false), message)
+end #assert_post_conditions
+end #ClassMethods
+end # Assertions
+extend Assertions::ClassMethods
 module Examples
 end # Examples
 include Examples
 end # NestedArrayType
-class HashConnectivity < Connectivity
+module HashConnectivity
+include Connectivity
 end # HashConnectivity
 
-class Node < Connectivity
+class Node
+include Connectivity
 include Virtus.model
   attribute :node, Object # root
   attribute :graph_type, Connectivity
