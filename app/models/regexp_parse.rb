@@ -10,20 +10,30 @@ require_relative 'unbounded_range.rb'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
-class RegexpParseType < Connectivity
+class RegexpParseType 
+extend Connectivity
+module ClassMethods
 def RegexpParseType.children?(node)
 		children_if_exist?(node, :expressions)
 end # children
-end # RegexpParseType
+def expression_class_symbol?(node)
+	node.class.name[20..-1].to_sym # should be magic-number-free
+end # expression_class_symbol?
+def inspect_node(node, &inspect_proc)
+	if !block_given? then # default node inspection
+		inspect_proc = proc {|e| 	"#{expression_class_symbol?(e).to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"}
 
-class Regexp
-class Expression::Base
-include Tree
-module Constants
-include Graph::Constants
-Node_format = proc do |e|
-	"#{e.expression_class_symbol?.to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
-end # Node_format
+	end # if
+	inspect_proc.call(node)
+end # inspect_node
+end #ClassMethods
+extend Connectivity::ClassMethods
+extend ClassMethods
+module Examples
+include Connectivity::Examples
+#Node_format = proc do |e|
+#	"#{expression_class_symbol?(e).to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+#end # Node_format
 Mx_format = proc do |e, depth, terminal|
 	ret = ' ' * depth + e.text + ' # '
 	ret + Tree_node_format.call(e, depth, terminal)
@@ -32,6 +42,13 @@ Mx_dump_format = proc do |e, depth, terminal|
 	ret = ' ' * depth + e.text + ' # '
 	ret + e.inspect
 end # Mx_dump_format
+end # Examples
+end # RegexpParseType
+
+class Regexp
+class Expression::Base
+include Tree
+module Constants
 end # Constants
 include Constants
 def inspect_node(&inspect_proc)
@@ -71,7 +88,7 @@ Inspect_node_root = "Root(:expression, :root, '')"
 Node_options = "Group::Options(:group, :options, '(?-mix:')"
 Tree_node_root = "nonterminal[0], " + Inspect_node_root
 Tree_node_options = "nonterminal[1], " + Node_options
-Tree_node_a = "terminal[2], " + Node_a
+Tree_node_a = "leaf typed[2], " + Node_a
 Grandson_a_map =	Tree_node_a
 Son_a_map =	[Tree_node_options, [Grandson_a_map]]
 Literal_a_map = [Tree_node_root, [Son_a_map]]
