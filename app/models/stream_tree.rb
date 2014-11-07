@@ -69,11 +69,11 @@ module Connectivity
 module ClassMethods
 extend Connectivity
 def ref (tree)
-		Node.new(node: tree)
+		Node.new(node: tree, graph_type: self)
 end # ref
 def [] (*params)
 		
-		Node.new(node: params)
+		Node.new(node: params, graph_type: self)
 end # square_brackets
 # override if terminals are same type as nonterminals
 def leaf_typed?
@@ -133,17 +133,14 @@ def map_recursive(node = @node, depth=0, &visit_proc)
 	if !block_given? && depth.instance_of?(Proc) then
 		raise "Block proc argument should be preceded with ampersand."
 	end # if
-	if nonterminal?(node) then
+	nonterminal = nonterminal?(node)
+	if nonterminal then
 		children = children?(node)
-		[visit_proc.call(node, depth, false), map_pair(children) do |index, sub_tree|
-			if sub_tree.respond_to?(:map_recursive) then
-				map_recursive(sub_tree, depth+1, &visit_proc)
-			else
-				visit_proc.call(sub_tree, depth, nil) # end recursion
-			end # if
+		[visit_proc.call(ref(node), depth, false), map_pair(children) do |index, sub_tree|
+			map_recursive(sub_tree, depth+1, &visit_proc)
 		end ] # map
 	else
-		visit_proc.call(node, depth, true)  # end recursion
+		visit_proc.call(ref(node), depth, nonterminal)  # end recursion
 	end # if
 end # map_recursive
 def inspect_nonterminal?(node)
@@ -220,11 +217,11 @@ module Examples
 Node_format = proc do |e|
 	e.inspect
 end # Node_format
-Tree_node_format = proc do |e, depth, terminal|
-	ret = Connectivity.inspect_nonterminal?(e)
+Tree_node_format = proc do |node, depth, terminal|
+	ret = node.graph_type.inspect_nonterminal?(node.node)
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
-	ret += e.inspect
+	ret += node.graph_type.inspect_node(node.node)
 end # Tree_node_format
 Children_method_name = :to_a
 Example_array = [1, 2, 3]
@@ -327,8 +324,8 @@ end # node
 
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
 module Constants
-Identity_map = proc {|e, depth, terminal| e}
-Trace_map = proc {|e, depth, terminal| [e, depth, terminal]}
+Identity_map = proc {|e, depth, terminal| e.node}
+Trace_map = proc {|e, depth, terminal| [e.node, depth, terminal]}
 Leaf_map = proc {|e, depth, terminal| (terminal.nil? || terminal ? e : nil)}
 end # Constants
 include Constants
@@ -352,48 +349,6 @@ module Constants
 include Graph::Constants
 end # Constants
 include Constants
-# delegate to Array, Enumable and Hash
-# returns
-# Array of children from children_method, recursion continues
-# []  - terminal, children_method returns empty array, recursion stops
-# nil - terminal  - children method does not exist, end recursion for bipartite trees where terminal is a different class.
-# nil   - 
-def children?(children_method_name = :to_a)
-	children_method_name = children_method_name.to_sym
-	if respond_to?(children_method_name) then
-		children = send(children_method_name)
-		raise 'Method named ' + children_method_name.to_s + 'does not return an Array (Enumerable?).' unless children.instance_of?(Array)
-		children
-	else
-		nil # end recursion
-	end # if
-end # children?
-# Apply block to each node (branch & leaf).
-# Nesting structure remains the same.
-# Array#map will only process the top level Array. 
-def map_recursive(children_method_name = :to_a, depth=0, &visit_proc)
-# Handle missing parameters (since any and all can be missing)
-#	puts 'children_method_name.inspect =' + children_method_name.inspect
-#	puts 'depth.inspect =' + depth.inspect
-#	puts 'visit_proc.inspect =' + visit_proc.inspect
-#	puts 'block_given? =' + block_given?.inspect
-	if !block_given? && (children_method_name.instance_of?(Proc) || depth.instance_of?(Proc)) then
-		raise "Block proc argument should be preceded with ampersand."
-	end # if
-	children_method_name = children_method_name.to_sym
-	if nonterminal?(children_method_name) then
-		visit_proc.call(self, depth, true)  # end recursion
-	else
-		children = send(children_method_name)
-		[visit_proc.call(self, depth, false), children.map_pair do |index, sub_tree|
-			if sub_tree.respond_to?(:map_recursive) then
-				sub_tree.map_recursive(children_method_name, depth+1, &visit_proc)
-			else
-				visit_proc.call(sub_tree, depth, nil) # end recursion
-			end # if
-		end ] # map
-	end # if
-end # map_recursive
 # Apply block to each non-leaf or branching node
 # Provides a postfix walk
 # Two passes:
@@ -415,6 +370,7 @@ def map_branches(depth=0, &visit_proc)
 end #map_branches
 module Examples
 include Constants
+Trivial_array = [0]
 Flat_array = [0]
 Flat_hash = {cat: :fish}
 end # Examples
