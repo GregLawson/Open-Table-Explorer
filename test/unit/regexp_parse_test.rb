@@ -10,6 +10,7 @@ require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
 include RegexpParseType::Examples
+include Connectivity::Examples
 include RegexpParse::Examples
 include Regexp::Expression::Base::Constants
 include RegexpToken::Constants
@@ -40,19 +41,19 @@ def test_inspect_recursive
 	assert_equal(Grandson_a_map, RegexpParseType.map_recursive(Grandson_a, depth=2, &Tree_node_format))
 	assert_equal(Son_a_map, RegexpParseType.map_recursive(Son_a, depth=1, &Tree_node_format))
 	assert_equal(Literal_a_map, RegexpParseType.map_recursive(Literal_a, &Tree_node_format))
-	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(Literal_a, &Tree_node_format), RegexpParseType.inspect_recursive(Literal_a, &Tree_node_format))
-	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, Literal_a.inspect_recursive(Literal_a), RegexpParseType.inspect_recursive(Literal_a))
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, RegexpParseType.inspect_recursive(Literal_a, &Tree_node_format), RegexpParseType.inspect_recursive(Literal_a, &Tree_node_format))
+	assert_equal((Literal_a_map.flatten.map{|s| s + "\n"}).join, RegexpParseType.inspect_recursive(Literal_a), RegexpParseType.inspect_recursive(Literal_a))
 
 
 #	assert_equal('ab # ' + Literal_a_map + "\n", Sequence_example.inspect_recursive(&Mx_format))
 #	assert_equal('a # ' + Literal_a_map + "\n", Alternative_example.inspect_recursive(&Mx_format))
 end # inspect_recursive
 def test_Mx_format
-	assert_match(Tree_node_root, Mx_format.call(Literal_a, 0, false))
-	assert_equal(Mx_node_root, Mx_format.call(Literal_a, depth=0, false))
-	assert_equal(Mx_node_options, Mx_format.call(Son_a, depth=1, false))
-	assert_equal(Mx_node_a, Mx_format.call(Grandson_a, depth=2, true))
-	assert_equal([Mx_node_root, Mx_node_options, Mx_node_a].map{|s| s + "\n"}.join, Literal_a.inspect_recursive(:expressions, &Mx_format))
+	assert_match(Tree_node_root, Mx_format.call(RegexpParseType.ref(Literal_a), 0, false))
+	assert_equal(Mx_node_root, Mx_format.call(RegexpParseType.ref(Literal_a), depth=0, false))
+	assert_equal(Mx_node_options, Mx_format.call(RegexpParseType.ref(Son_a), depth=1, false))
+	assert_equal(Mx_node_a, Mx_format.call(RegexpParseType.ref(Grandson_a), depth=2, true))
+	assert_equal([Mx_node_root, Mx_node_options, Mx_node_a].map{|s| s + "\n"}.join, RegexpParseType.inspect_recursive(Literal_a, &Mx_format))
 end # Mx_format
 def test_Tree_node_format
 	node = RegexpParseType.ref(Literal_a)
