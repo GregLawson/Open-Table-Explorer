@@ -87,13 +87,13 @@ def pathnames?
 	end #
 end #pathnames
 def default_test_class_id?
-	if File.exist?(self.assertions_test_pathname?) then
+	if File.exists?(self.assertions_test_pathname?) then
 		4
-	elsif File.exist?(self.assertions_pathname?) then
+	elsif File.exists?(self.assertions_pathname?) then
 		3
-	elsif File.exist?(self.model_pathname?) then
+	elsif File.exists?(self.model_pathname?) then
 		2
-	elsif File.exist?(self.model_test_pathname?) then
+	elsif File.exists?(self.model_test_pathname?) then
 		1
 	else
 		0 # fewest assumptions, no files
