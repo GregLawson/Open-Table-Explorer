@@ -81,7 +81,11 @@ end # inspect_node
 def test_map_recursive
 	depth=0
 	visit_proc = Tree_node_format
-	assert_equal(Tree_node_root, visit_proc.call(Nested_array, depth, false))
+	node = NestedArrayType.ref(Nested_array)
+	assert_not_nil(node)
+	assert_not_nil(node.graph_type, node.inspect)
+	assert_respond_to(node.graph_type, :inspect_node)
+	assert_equal(Tree_node_root, visit_proc.call(NestedArrayType.ref(Nested_array), depth, false))
 	assert_equal(1, Children_nested_array.size)
 	assert_respond_to(Son_nested_array, Children_method_name)
 	assert_instance_of(Array, Grandchildren_nested_array)
@@ -187,7 +191,7 @@ def test_map_recursive_content
 #	assert_equal([Flat_hash, NestedArrayType.values], Flat_hash.map_recursive(Flat_array, &Identity_map))
 end # content
 def test_map_recursive_depth
-	assert_equal([[[0], 0, false], [[0, 1, true]]], NestedArrayType.map_recursive(Flat_array, &Trace_map))
+	assert_equal([[[0], 0, false], [[0, 1, nil]]], NestedArrayType.map_recursive(Flat_array, &Trace_map))
 #	assert_equal([Flat_array], NestedArrayType.map_recursive(Flat_array, &Leaf_map).compact)
 end # test_map_recursive_simple_block
 def test_values
