@@ -471,7 +471,7 @@ def delimiters?
 end # delimiters?
 module Examples
 include Capture::Examples
-Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
+#Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
 Parsed_a_capture = ParsedCapture.new('a\na', /a/.capture(:label))
 end # Examples
 end # ParsedCapture

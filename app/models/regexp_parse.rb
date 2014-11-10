@@ -10,8 +10,9 @@ require_relative 'unbounded_range.rb'
 require_relative 'stream_tree.rb'
 require_relative 'nested_array.rb'
 require_relative 'regexp.rb'
-class RegexpParseType 
-extend Connectivity
+#require_relative 'parse.rb'
+module RegexpParseType
+extend Connectivity::ClassMethods
 module ClassMethods
 def RegexpParseType.children?(node)
 		children_if_exist?(node, :expressions)
@@ -19,37 +20,40 @@ end # children
 def expression_class_symbol?(node)
 	node.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
-def inspect_node(node, &inspect_proc)
-	if !block_given? then # default node inspection
-		inspect_proc = Node_format
-
-	end # if
-	inspect_proc.call(node)
-end # inspect_node
 end #ClassMethods
 extend Connectivity::ClassMethods
 extend ClassMethods
 module Examples
 include Connectivity::Examples
-#Node_format = proc do |e|
-#	"#{expression_class_symbol?(e).to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
-#end # Node_format
+Node_format = proc do |e|
+	"#{RegexpParseType.expression_class_symbol?(e).to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
+end # Node_format
 Mx_format = proc do |e, depth, terminal|
-	ret = ' ' * depth + e.text + ' # '
+	ret = ' ' * depth + e.node.text + ' # '
 	ret + Tree_node_format.call(e, depth, terminal)
 end # Mx_format
 Mx_dump_format = proc do |e, depth, terminal|
-	ret = ' ' * depth + e.text + ' # '
-	ret + e.inspect
+	ret = ' ' * depth + e.node.text + ' # '
+	ret + e.node.inspect
 end # Mx_dump_format
 end # Examples
 include Examples
+module ClassMethods
+def inspect_node(node, &inspect_proc)
+	if !block_given? then # default node inspection
+		inspect_proc = RegexpParseType::Examples::Node_format
+
+	end # if
+	inspect_proc.call(node)
+end # inspect_node
 def inspect_recursive(node, &inspect_proc)
 	if !block_given? then
 		inspect_proc = Tree_node_format
 	end # if
 	super(node, &inspect_proc)
 end # inspect_recursive
+end #ClassMethods
+extend ClassMethods
 end # RegexpParseType
 
 class Regexp
@@ -61,9 +65,9 @@ include Constants
 def raw_capture?(string)
 	RegexpParseType.map_recursive(self) do |e, depth, terminal|
 		sub_regexp = Regexp.new(e.to_s)
-		if e.quantifier then
-			unquantified_regexp = e.to_s[0, -1-e.quantifier.to_s.size]
-			unquantified_regexp = Regexp.new(e.to_s[0..-1-e.quantifier.to_s.size])
+		if e.node.quantifier then
+			unquantified_regexp = e.node.to_s[0, -1-e.node.quantifier.to_s.size]
+			unquantified_regexp = Regexp.new(e.to_s[0..-1-e.node.quantifier.to_s.size])
 			{:parse => e, :raw_capture=> LimitCapture.new(string, unquantified_regexp)}
 		else
 			{:parse => e, :raw_capture=> MatchCapture.new(string, sub_regexp)}

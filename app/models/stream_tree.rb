@@ -52,6 +52,24 @@ module Constants
 Root_path = GraphPath.new
 end # Constants
 include Constants
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	assert_include(Array, self.ancestors)
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+	assert_nil(self[0])
+	self[1..-1].assert_Array_of_Class(Fixnum) # parent id nil index
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
@@ -154,16 +172,11 @@ def inspect_nonterminal?(node)
 end # inspect_nonterminal?
 def inspect_recursive(node = @node, &inspect_proc)
 	if !block_given? then
-		inspect_proc = proc do |e, depth, terminal|
-			ret = case terminal
-			when true then	'terminal'
-			when false then 'nonterminal'
-			when nil then 'nil'
-			else 'unknown'
-			end # case
+		inspect_proc = proc do |node, depth, terminal|
+			ret = node.graph_type.inspect_nonterminal?(node.node)
 			ret += '[' + depth.to_s + ']'
 			ret += ', ' 
-			ret += e.inspect
+			ret += node.graph_type.inspect_node(node.node)
 		end # Tree_node_format
 	end # if
 	ret = map_recursive(node, &inspect_proc)
@@ -174,7 +187,7 @@ def inspect_recursive(node = @node, &inspect_proc)
 	end # if
 	ret + "\n"
 end # inspect_recursive
-end #ClassMethods
+end # ClassMethods
 extend ClassMethods
 require_relative '../../test/assertions.rb'
 module Assertions
@@ -257,7 +270,7 @@ module ClassMethods
 def children?(node)
 	children_if_exist?(node, :to_a)
 end # children
-end #ClassMethods
+end # ClassMethods
 extend Connectivity::ClassMethods
 extend ClassMethods
 module Assertions
@@ -291,7 +304,6 @@ include Connectivity
 end # HashConnectivity
 
 class Node
-include Connectivity
 include Virtus.model
   attribute :node, Object # root
   attribute :graph_type, Connectivity

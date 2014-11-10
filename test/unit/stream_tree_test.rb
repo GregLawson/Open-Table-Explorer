@@ -56,7 +56,7 @@ def test_children?
 end # children?
 def test_nonterminal?
 	assert_respond_to(Nested_array, Children_method_name)
-#	assert_equal(Inspect_node_root, Node_format.call(Nested_array))
+	assert_equal(Inspect_node_root, Node_format.call(Nested_array))
 	assert_equal(1, Children_nested_array.size)
 	assert_equal(true, NestedArrayType.nonterminal?(Nested_array), NestedArrayType.inspect)
 	assert_respond_to(Son_nested_array, Children_method_name)
@@ -78,6 +78,10 @@ end # inspect_node
 def test_map_recursive
 	depth=0
 	visit_proc = Tree_node_format
+	node = NestedArrayType.ref(Nested_array)
+	assert_not_nil(node)
+	assert_not_nil(node.graph_type, node.inspect)
+	assert_respond_to(node.graph_type, :inspect_node)
 	assert_equal(Tree_node_root, visit_proc.call(NestedArrayType.ref(Nested_array), depth, false))
 	assert_equal(1, Children_nested_array.size)
 	assert_respond_to(Son_nested_array, Children_method_name)
