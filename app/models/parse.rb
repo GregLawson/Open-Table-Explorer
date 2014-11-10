@@ -9,9 +9,9 @@
 require_relative '../../app/models/regexp.rb'
 #require_relative '../../app/models/stream_tree.rb'
 require_relative '../../app/models/regexp_parse.rb'
+# encapsulates the difference between parsing from MatchData and from Array#split
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
-# encapsulates the difference between parsing from MatchData and from Array#split
 module ClassMethods
 def default_name(index, prefix=nil, numbered=nil)
 	if prefix.nil? then

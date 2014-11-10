@@ -21,7 +21,7 @@ def expression_class_symbol?(node)
 end # expression_class_symbol?
 def inspect_node(node, &inspect_proc)
 	if !block_given? then # default node inspection
-		inspect_proc = proc {|e| 	"#{expression_class_symbol?(e).to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"}
+		inspect_proc = Node_format
 
 	end # if
 	inspect_proc.call(node)
@@ -43,6 +43,13 @@ Mx_dump_format = proc do |e, depth, terminal|
 	ret + e.inspect
 end # Mx_dump_format
 end # Examples
+include Examples
+def inspect_recursive(node, &inspect_proc)
+	if !block_given? then
+		inspect_proc = Tree_node_format
+	end # if
+	super(node, &inspect_proc)
+end # inspect_recursive
 end # RegexpParseType
 
 class Regexp
@@ -51,12 +58,6 @@ include Tree
 module Constants
 end # Constants
 include Constants
-def inspect_node(&inspect_proc)
-	if !block_given? then
-		inspect_proc = Node_format
-	end # if
-	inspect_proc.call(self)
-end # inspect_node
 def raw_capture?(string)
 	RegexpParseType.map_recursive(self) do |e, depth, terminal|
 		sub_regexp = Regexp.new(e.to_s)
@@ -69,12 +70,6 @@ def raw_capture?(string)
 		end # if
 	end # map_recursive
 end # raw_capture?
-def inspect_recursive(children_method_name = :to_a, &inspect_proc)
-	if !block_given? then
-		inspect_proc = Tree_node_format
-	end # if
-	super(children_method_name, &inspect_proc)
-end # inspect_recursive
 module Examples
 include Constants
 Children_method_name = :expressions
@@ -101,6 +96,7 @@ end # Examples
 include Examples
 end # Expression
 end # Regexp
+
 class RegexpTree < NestedArray
 module ClassMethods
 end #ClassMethods
