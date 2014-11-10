@@ -14,6 +14,8 @@ include MatchCapture::Examples
 include Capture::Examples
 include Regexp::Expression::Base::Examples
 include String::Examples
+#include Parse::ClassMethods # treat class methods like module methods as local to test class
+#include Parse::Assertions::ClassMethods
 include DefaultTests
 def test_default_name
 	index=11
@@ -25,22 +27,34 @@ def test_default_name
 	assert_equal('Var_1', Capture.default_name(1, 'Var_', :numbered))
 end #default_name
 def test_Capture_initialize
+	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
+	repetitions=(Parse_array.captures.size/length_hash_captures).ceil
+	assert_equal(1, Parse_array.length_hash_captures, Parse_array.captures.inspect+Parse_array.regexp.named_captures.inspect)
+	assert_equal(2, Parse_array.repetitions)
 	assert_equal(["\n"], Parse_delimited_array.captures[2..2], Parse_string.captures.inspect)
 	assert_equal("\n", Parse_delimited_array.captures[2])
+	assert_equal([], Parse_string.delimiters)
 	assert_equal([2, 3], (2..Parse_array.captures.size - 2).map {|i| i}, Parse_array.inspect)
 	assert_equal([true, false], (2..Parse_array.captures.size - 2).map {|i| i.even?})
 	assert_equal(["\n", '2'], (2..Parse_array.captures.size - 2).map {|i| Parse_array.captures[i]})
 	assert_equal(["\n"], (2..Parse_array.captures.size - 2).map {|i| (i.even? ? Parse_array.captures[i] : nil)}.compact)
+	assert_equal(["\n"], Parse_array.delimiters, Parse_array.inspect)
 
 	assert_equal([2], (2..Parse_delimited_array.captures.size - 2).map {|i| i}, Parse_delimited_array.inspect)
 	assert_equal([true], (2..Parse_delimited_array.captures.size - 2).map {|i| i.even?})
 	assert_equal(["\n"], (2..Parse_delimited_array.captures.size - 2).map {|i| Parse_delimited_array.captures[i]})
 	assert_equal(["\n"], (2..Parse_delimited_array.captures.size - 2).map {|i| (i.even? ? Parse_delimited_array.captures[i] : nil)}.compact)
+	assert_equal(["\n"], Parse_delimited_array.delimiters, Parse_array.inspect)
 	assert_equal(4, Parse_delimited_array.captures.size, Parse_delimited_array.inspect)
 	assert_equal(false, Parse_delimited_array.captures.size.odd?, Parse_delimited_array.inspect)
-	assert_equal({:branch => '1'}, MatchCapture.new("* 1\n", Branch_regexp).output?) # return matched subexpressions
-	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output?, Parse_array.inspect)
-#	assert_equal(Array_answer, LimitCapture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
+	assert_equal('', Parse_delimited_array.post_match, Parse_delimited_array.inspect)
+
+
+	assert_equal("\n  2", Parse_string.post_match)
+	assert_equal(["\n"], Parse_delimited_array.delimiters, Parse_delimited_array.inspect)
+	assert_equal({:branch => '1'}, Capture.new(Branch_regexp.match("* 1\n"), Branch_regexp).output) # return matched subexpressions
+	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output, Parse_array.inspect)
+#	assert_equal(Array_answer, Capture.new(captures, regexp).output, captures.inspect) # return matched subexpressions
 end #initialize
 def test_equal
 	MatchCapture::Examples::Branch_line_capture.instance_variables.each do |iv_name|
@@ -245,7 +259,7 @@ def test_Capture_assert_post_conditions
 	assert_raises(AssertionFailedError) {Parse_string.assert_post_conditions}
 	assert_raises(AssertionFailedError) {Parse_delimited_array.assert_post_conditions}
 	assert_equal('', Parse_delimited_array.post_match, Parse_delimited_array.inspect)
-	Parse_array.assert_post_conditions
+#	Parse_array.assert_post_conditions
 end # assert_post_conditions
 
 def test_Capture_Examples
