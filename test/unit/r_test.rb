@@ -1,5 +1,5 @@
 require_relative 'test_environment'
-require_relative 'default_test_case.rb'
+require_relative "../../app/models/default_test_case.rb"
 require_relative "../../app/models/r.rb"
 require 'rserve'
 class RSessionTest <TestCase
