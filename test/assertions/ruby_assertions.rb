@@ -1,11 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2011-2013 by Greg Lawson                                      
+#    Copyright (C) 2011-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require 'test/unit'
+require 'pathname'
 require_relative '../../app/models/global.rb'
 require 'set'
 # add introspective for default error_messages
