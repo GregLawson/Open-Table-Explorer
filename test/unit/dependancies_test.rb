@@ -13,7 +13,6 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 #require_relative '../../app/models/related_file.rb'
 require_relative '../../app/models/shell_command.rb'
 class DependanciesTest < TestCase
-require 'pathname'
 def test_script
 	install_execution=ShellCommands.new('sudo apt-get install pmount').assert_post_conditions
 	install_execution=ShellCommands.new('sudo apt-get install active_model').assert_post_conditions
