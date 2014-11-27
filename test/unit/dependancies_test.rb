@@ -18,10 +18,11 @@ def test_script
 	install_execution=ShellCommands.new('sudo apt-get install active_model').assert_post_conditions
 	install_execution=ShellCommands.new('sudo apt-get install activemodel').assert_post_conditions
 	install_execution=ShellCommands.new('sudo apt-get install vrms').assert_post_conditions
+	install_execution=ShellCommands.new('sudo gem install active_support').assert_post_conditions
 	install_execution=ShellCommands.new('sudo gem install grit').assert_post_conditions
 	install_execution=ShellCommands.new('sudo gem install regexp_parser').assert_post_conditions
 	install_execution=ShellCommands.new('sudo gem install virtus').assert_post_conditions
-	install_execution=ShellCommands.new('sudo gem install mysql').assert_post_conditions
+#	install_execution=ShellCommands.new('sudo gem install mysql').assert_post_conditions
 	install_execution=ShellCommands.new('sudo wajig install  ruby-activemodel-3.2').assert_post_conditions
 	install_execution=ShellCommands.new('bundle install').assert_post_conditions
 end # script
