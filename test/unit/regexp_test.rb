@@ -102,14 +102,14 @@ def test_propagate_options
 #ruby-bug    assert_equal([0, Encoding::BINARY], sElf.propagate_options(/pat/n)) # ASCII-8BIT
 #ruby-bug    assert_equal([0, Encoding::ASCII_8BIT], sElf.propagate_options(/pat/n)) # ASCII-8BIT
 #	Tests inspired by examples in http://www.ruby-doc.org/core-2.1.1/Regexp.html#method-i-casefold-3F
-	assert_false(/a/.casefold?)           #=> false
+	assert(!/a/.casefold?)           #=> false
 	assert(/a/i.casefold?)          #=> true
-	assert_false(/(?i:a)/.casefold?)      #=> false
+	assert(!/(?i:a)/.casefold?)      #=> false
 #	Tests inspired by examples in http://www.ruby-doc.org/core-2.1.1/Regexp.html#method-i-eql-3F
-	assert_false(/abc/  == /abc/x)   #=> false
-	assert_false(/abc/  == /abc/i)   #=> false
-	assert_false(/abc/  == /abc/u)   #=> false
-	assert_false(/abc/u == /abc/n)   #=> false
+	assert(/abc/  != /abc/x)   #=> false
+	assert(/abc/  != /abc/i)   #=> false
+	assert(/abc/  != /abc/u)   #=> false
+	assert(/abc/u != /abc/n)   #=> false
 end # propagate_options
 def test_unescaped_string
 	assert_equal(/#{Escape_string}/, Regexp.new(Escape_string))
