@@ -6,16 +6,18 @@
 #
 ###########################################################################
 # @see http://grit.rubyforge.org/
-require 'grit'  # sudo gem install grit
+#require 'grit'  # sudo gem install grit
 # partial API at @see less /usr/share/doc/ruby-grit/API.txt
 # code in @see /usr/lib/ruby/vendor_ruby/grit
+require_relative 'unit.rb'
 require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
 require_relative 'parse.rb'
 require_relative 'branch.rb'
-class Repository <Grit::Repo
+class Repository # <Grit::Repo
 module Constants
+Repository_Unit = Unit.new_from_path?(__FILE__)
 Root_directory=FilePattern.project_root_dir?(__FILE__)
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
@@ -64,7 +66,11 @@ def create_if_missing(path, interactive)
 		create_empty(path, interactive)
 	end #if
 end #create_if_missing
-def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"), interactive)
+def timestamped_repository_name?
+	Repository_Unit.data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+end # timestamped_repository_name?
+def create_test_repository(path=timestamped_repository_name?, 
+	interactive)
 	replace_or_create(path, interactive)
   @interactive = interactive
 	if File.exists?(path) then
@@ -89,7 +95,7 @@ def initialize(path, interactive)
 	@path=path.to_s
   puts '@path='+@path if $VERBOSE
   @interactive = interactive
-	@grit_repo=Grit::Repo.new(@path)
+#	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
 This_code_repository=Repository.new(Root_directory, :interactive)
