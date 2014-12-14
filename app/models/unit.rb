@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2012-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -7,9 +7,6 @@
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
 class Unit
-module Constants
-end #Constants
-include Constants
 module ClassMethods
 def new_from_path?(path)
 	library_name=FilePattern.path2model_name?(path)
@@ -75,7 +72,7 @@ def assertions_test_pathname?
 end #assertions_test_pathname?
 def data_sources_directory?
 	pathname_pattern?(:data_sources_dir)
-#	@project_root_dir+'test/data_sources/'
+	@project_root_dir+'test/data_sources/' + @model_basename.to_s
 end #data_sources_directory
 #  Initially the number of files for the model
 def pathnames?
@@ -86,6 +83,10 @@ def pathnames?
 		@project_root_dir + FilePattern.path?(pattern, @model_basename)
 	end #
 end #pathnames
+module Constants
+Executing_Unit = Unit.new_from_path?($PROGRAM_NAME)
+end #Constants
+include Constants
 def default_test_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
 		4
