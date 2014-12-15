@@ -6,13 +6,31 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-#require_relative 'repository.rb'
+require_relative '../../test/assertions/repository_assertions.rb'
+#assert_global_name(:Repository)
 class Branch
 #include Repository::Constants
 module ClassMethods
 #include Repository::Constants
-def this_code?
-end # this_code?
+def branch_command?(repository, git_command)
+	repository.git_command(git_command).assert_post_conditions.output
+end # branch_command?
+def current_branch_name?(repository)
+	branch_output=git_command('branch --list').assert_post_conditions.output
+	@grit_repo.head.name.to_sym
+end #current_branch_name
+def branches?(repository)
+	branch_output = branch_command?(repository, 'branch --list').assert_post_conditions.output
+	parse = branch_output.parse(Branch_regexp)
+	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
+end #branches?
+def remotes?
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+end #remotes?
+def new_from_git_branch_line(git_branch_line)
+
+end # new_from_git_branch_line
 end #ClassMethods
 extend ClassMethods
 def find_origin
@@ -44,6 +62,18 @@ def to_sym
 	@branch.to_sym
 end # to_s
 module Constants
+#assert_global_name(:Repository)
+#include Repository::Examples
+Branch_name_regexp = /[-a-z0-9A-Z_]+/
+Branch_name_alternative = [Branch_name_regexp.capture(:branch)]
+Pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
+Patterns = [ # Branch_regexp,
+				/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
+				/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch),
+				Pattern]
+Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
+Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
+Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants
 end # Branch
