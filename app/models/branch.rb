@@ -10,14 +10,32 @@ require_relative '../../test/assertions/repository_assertions.rb'
 #assert_global_name(:Repository)
 class Branch
 #include Repository::Constants
+module Constants
+#assert_global_name(:Repository)
+#include Repository::Examples
+Branch_name_regexp = /[-a-z0-9A-Z_]+/
+Branch_name_alternative = [Branch_name_regexp.capture(:branch)]
+Pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
+Patterns = [ # Branch_regexp,
+				/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
+				/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch),
+				Pattern]
+Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
+Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
+Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+end #Constants
+include Constants
 module ClassMethods
 #include Repository::Constants
+include Constants
 def branch_command?(repository, git_command)
-	repository.git_command(git_command).assert_post_conditions.output
+	branch_output = repository.git_command(git_command).assert_post_conditions.output
+	parse = branch_output.parse(Branch_regexp)
 end # branch_command?
 def current_branch_name?(repository)
-	branch_output=git_command('branch --list').assert_post_conditions.output
-	@grit_repo.head.name.to_sym
+	branch_output= repository.git_command('branch --list').assert_post_conditions.output
+	parse = branch_output.parse(Branch_regexp)
+	parse[:branch].to_sym
 end #current_branch_name
 def branches?(repository)
 	branch_output = branch_command?(repository, 'branch --list').assert_post_conditions.output
@@ -61,19 +79,25 @@ end # to_s
 def to_sym
 	@branch.to_sym
 end # to_s
-module Constants
-#assert_global_name(:Repository)
-#include Repository::Examples
-Branch_name_regexp = /[-a-z0-9A-Z_]+/
-Branch_name_alternative = [Branch_name_regexp.capture(:branch)]
-Pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
-Patterns = [ # Branch_regexp,
-				/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
-				/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch),
-				Pattern]
-Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
-Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
-Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
-end #Constants
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
 include Constants
+end # Examples
 end # Branch
