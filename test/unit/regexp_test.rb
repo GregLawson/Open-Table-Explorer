@@ -6,12 +6,11 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+assert_global_name(:AssertionFailedError)
 require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
 include DefaultTests
 extend DefaultTests
-#puts Regexp.methods(false)
-#include Minitest::Assertions
 include Regexp::Examples
 def test_Constants
 end # Constants
@@ -66,6 +65,7 @@ def test_regexp_error
 	assert_equal(nil, Regexp.regexp_error(']'))
 	assert_raises(RuntimeError) {Regexp.regexp_error(/]/)} # String only
 	assert_nothing_raised(RuntimeError) {Regexp.regexp_error(']')} # String only
+	assert_raises(AssertionFailedError) {Regexp.regexp_error(/]/)} # String only
 end #regexp_error
 def test_terminator_regexp
 end #terminator_regexp
