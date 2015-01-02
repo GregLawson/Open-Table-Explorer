@@ -257,6 +257,7 @@ def test_Capture_Examples
 	Limit_capture.assert_pre_conditions
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
+#	Failed_capture.assert_pre_conditions
 	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
 
 	Match_capture.assert_left_match
