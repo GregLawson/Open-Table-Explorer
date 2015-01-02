@@ -7,7 +7,8 @@
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
-#assert_global_name(:Repository)
+assert_global_name(:Repository)
+require_relative '../../app/models/parse.rb'
 class Branch
 #include Repository::Constants
 module Constants
@@ -16,13 +17,14 @@ module Constants
 Branch_name_regexp = /[-a-z0-9A-Z_]+/
 Branch_name_alternative = [Branch_name_regexp.capture(:branch)]
 Pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
-Patterns = [ # Branch_regexp,
-				/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
-				/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch),
-				Pattern]
 Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
 Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
 Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+Branches_regexp = Branch_regexp.group * Regexp::Many
+Patterns = [Pattern, Branches_regexp,
+				/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
+				/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch)
+				]
 end #Constants
 include Constants
 module ClassMethods

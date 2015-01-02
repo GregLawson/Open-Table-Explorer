@@ -12,6 +12,7 @@ require_relative '../../app/models/branch.rb'
 class BranchTest < TestCase
 include DefaultTests
 include Repository::Examples
+include Branch::Constants
 Minimal_repository=Empty_Repo
 def test_branch_command?
 	repository = Empty_Repo
@@ -27,10 +28,10 @@ end #current_branch_name
 def test_branches?
 #?	explain_assert_respond_to(Parse, :parse_split)
 	branch_output = Empty_Repo.git_command('branch --list').assert_post_conditions.output
-	patterns.each do |p|
+	Patterns.each do |p|
 		assert_match(p, branch_output)
-		branches=Parse.parse_into_array(branch_output, p, {ending: :optional})
-		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches, branch_output.inspect)
+		branches=branch_output.parse(p)
+		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches, p.inspect)
 	end # each
 	
 	assert_includes(Empty_Repo.branches?.map{|b| b.branch}, Empty_Repo.current_branch_name?)
@@ -40,4 +41,10 @@ end #branches?
 def test_remotes?
 	assert_empty(Empty_Repo.remotes?)
 end #remotes?
+def test_initialize
+	assert_equal(This_code_repository, Branch.new(This_code_repository).repository)
+
+	branch=This_code_repository.current_branch_name?
+	onto=Branch::Examples::Executing_branch.find_origin
+end # initialize
 end #Repository
