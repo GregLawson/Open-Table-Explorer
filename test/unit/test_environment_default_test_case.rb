@@ -13,4 +13,7 @@ require_relative '../../app/models/unit.rb'
 TE=Unit.new
 DefaultTests=eval(TE.default_tests_module_name?)
 TestCase=eval(TE.test_case_class_name?)
-AssertionFailedError=Test::Unit::AssertionFailedError
+#AssertionFailedError=Test::Unit::AssertionFailedError
+AssertionFailedError = RuntimeError
+#AssertionFailedError = MiniTest::Assertion
+assert_global_name(:AssertionFailedError)

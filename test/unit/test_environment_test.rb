@@ -7,7 +7,7 @@
 ###########################################################################
 #require_relative 'test_environment_default_test_case'
 #require 'test/unit'
-require "minitest/autorun"
+#require "minitest/autorun"
 require 'active_support/all'
 # gem install mintest
 require_relative '../../app/models/default_test_case.rb'
