@@ -249,15 +249,15 @@ end #Examples
 end #Regexp
 class RegexpError
 def assert_pre_conditions
-	assert_instance_of(RegexpError, Regexp.regexp_error('['))
-	assert_instance_of(String, backtrace[0])
-	assert_match(/regexp/, backtrace[0])
-	assert_instance_of(Thread::Backtrace::Location, backtrace_locations[0])
-	assert_equal('initialize', backtrace_locations[0].base_label)
-	assert_equal('initialize', backtrace_locations[0].label)
-	assert_instance_of(Fixnum, backtrace_locations[0].lineno)
-	assert_match(/[a-z.]+/, backtrace_locations[0].path)
-	assert_match(/[a-z.\/]+/, backtrace_locations[0].absolute_path)
-	assert_equal(message, self.message)
+#	assert_instance_of(RegexpError, Regexp.regexp_error('['))
+#	assert_instance_of(String, backtrace[0])
+#	assert_match(/regexp/, backtrace[0])
+#	assert_instance_of(Thread::Backtrace::Location, backtrace_locations[0])
+#	assert_equal('initialize', backtrace_locations[0].base_label)
+#	assert_equal('initialize', backtrace_locations[0].label)
+#	assert_instance_of(Fixnum, backtrace_locations[0].lineno)
+#	assert_match(/[a-z.]+/, backtrace_locations[0].path)
+#	assert_match(/[a-z.\/]+/, backtrace_locations[0].absolute_path)
+#	assert_equal(message, self.message)
 end #assert_pre_conditions
 end # RegexpError

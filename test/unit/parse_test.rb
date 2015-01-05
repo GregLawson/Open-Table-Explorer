@@ -231,7 +231,7 @@ def test_named_hash
 #		named_hash[name]=captures[capture_index]
 #	end #each
 	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
-#	assert_equal(Array_answer, LimitCapture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
+#	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 end #named_hash
 
 # Capture::Assertions
@@ -242,6 +242,7 @@ def test_Capture_assert_pre_conditions
 	Parse_array.assert_pre_conditions
 end # assert_pre_conditions
 def test_assert_success
+<<<<<<< HEAD
 	MatchCapture.new(Newline_Delimited_String, Branch_line_regexp).assert_success
 	MatchCapture.new('   ', /  /).assert_success
 	MatchCapture.new('  ', /  /).assert_success
@@ -251,123 +252,60 @@ def test_assert_success
 	assert_raises(AssertionFailedError) {SplitCapture.new('cat', /fish/).assert_success}
 	SplitCapture.new('cat', /cat/).assert_success
 	SplitCapture.new('  ', /  /).assert_success
+=======
+	Capture.new(Newline_Delimited_String, Branch_line, :match).assert_success
+	Capture.new('   ', /  /, :match).assert_success
+	Capture.new('  ', /  /, :match).assert_success
+	assert_equal(:no_match, Failed_capture.raw_capture_class?, Failed_capture.inspect)
+	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
+	assert_raises(AssertionFailedError) {Failed_capture.assert_success}
+	assert_raises(AssertionFailedError) {Capture.new('cat', /fish/, :split).assert_success}
+	Capture.new('cat', /cat/, :split).assert_success
+	Capture.new('  ', /  /, :split).assert_success
+>>>>>>> testing
 end # assert_success
 def test_assert_left_match
 end # assert_left_match
 def test_Capture_assert_post_conditions
-	assert_not_equal('', Parse_string.post_match)
+#	assert_not_equal('', Parse_string.post_match)
 	assert_raises(AssertionFailedError) {Parse_string.assert_post_conditions}
 	assert_raises(AssertionFailedError) {Parse_delimited_array.assert_post_conditions}
-	assert_equal('', Parse_delimited_array.post_match, Parse_delimited_array.inspect)
+#	assert_equal('', Parse_delimited_array.post_match, Parse_delimited_array.inspect)
 #	Parse_array.assert_post_conditions
 end # assert_post_conditions
 
 def test_Capture_Examples
-	MatchCapture::Examples::Branch_line_capture.assert_pre_conditions
-	SplitCapture::Examples::Branch_line_capture.assert_pre_conditions
+	Match_capture.assert_pre_conditions
+	Split_capture.assert_pre_conditions
+	Limit_capture.assert_pre_conditions
 	Parse_string.assert_pre_conditions
 	Parse_array.assert_pre_conditions
-	assert_raises(AssertionFailedError) {SplitCapture::Examples::Failed_capture.assert_pre_conditions}
+#	Failed_capture.assert_pre_conditions
+	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
 
-	MatchCapture::Examples::Branch_line_capture.assert_left_match
-	SplitCapture::Examples::Branch_line_capture.assert_left_match
+	Match_capture.assert_left_match
+	Split_capture.assert_left_match
+#	Limit_capture.assert_post_conditions
 	assert_raises(AssertionFailedError) {Parse_string.assert_post_conditions}
 	assert_raises(AssertionFailedError) {Parse_array.assert_post_conditions}
-	assert_raises(AssertionFailedError) {SplitCapture::Examples::Failed_capture.assert_post_conditions}
-end # Examples
-# LimitCapture
-def test_LimitCapture_raw_captures?
-	string = 'a\na'
-	regexp = /a/.capture(:label)
-	answer = []
-	assert_equal('a', MatchCapture.new(string, regexp).raw_captures?[0])
-	assert_equal(['', 'a'], SplitCapture.new('a\na', regexp).raw_captures?)
-	assert_equal(['', 'a'], LimitCapture.new('a\na', regexp).raw_captures?)
-	assert_equal(['', 'a', 'a'], LimitCapture.new('a\na', /a\n/.group).raw_captures?)
-	assert_equal([], LimitCapture::Examples::Branch_line_capture.raw_captures?)
-end # raw_captures?
-def test_LimitCapture_Examples
-	assert_instance_of(LimitCapture, LimitCapture::Examples::Branch_line_capture)
-	assert(LimitCapture::Examples::Branch_line_capture.success?)
-	assert_equal([], LimitCapture::Examples::Branch_line_capture.delimiters?)
-	LimitCapture::Examples::Branch_line_capture.assert_pre_conditions
-	LimitCapture::Examples::Branch_line_capture.assert_post_conditions
-end # Examples
-# class ParsedCapture
-def test_ParsedCapture_initialize
-	assert_include(Module.constants, :MatchCapture)
-	assert_include(MatchCapture.constants, :Examples)
-	assert_include(MatchCapture::Examples.constants, :Branch_line_regexp)
-	assert_scope_path(:MatchCapture, :Examples, :Branch_line_regexp)
-	assert_path_to_constant(:MatchCapture, :Examples, :Branch_line_regexp)
-	parsed_capture = ParsedCapture.new(Newline_Terminated_String, Branch_line_regexp)
-	parsed_display = parsed_capture.parsed_regexp.inspect_recursive(:expressions, &Mx_dump_format)
-	assert_equal('', parsed_display, parsed_display + "\n" + parsed_capture.inspect)
-end # ParsedCapture_initialize
-def test_ParsedCapture_raw_captures?
-	string = 'a\na'
-	regexp = /a/.capture(:label)
-	answer = []
-	assert_equal('a', MatchCapture.new(string, regexp).raw_captures?[0])
-	assert_equal(["", "a", "\\n", "a"], SplitCapture.new('a\na', regexp).raw_captures?)
-	assert_equal(['', 'a'], ParsedCapture.new('a\na', regexp).raw_captures?)
-	assert_equal(['', 'a', 'a'], ParsedCapture.new('a\na', /a\n/.group).raw_captures?)
-	assert_equal([], LimitCapture::Examples::Branch_line_capture.raw_captures?)
-end # raw_captures?
-def test_output?
-	assert_equal([], ParsedCapture::Examples::Branch_line_capture.output?)
-end # output?
-def test_delimiters?
-	assert_equal([], ParsedCapture::Examples::Branch_line_capture.delimiters?)
-end # delimiters?
-def test_ParsedCapture_Examples
-	assert_instance_of(ParsedCapture, ParsedCapture::Examples::Branch_line_capture)
-	explain_assert_respond_to(ParsedCapture::Examples::Branch_line_capture, :success?)
-	assert(ParsedCapture::Examples::Branch_line_capture.success?)
-	ParsedCapture::Examples::Branch_line_capture.assert_pre_conditions
-	ParsedCapture::Examples::Branch_line_capture.assert_post_conditions
+	assert_raises(AssertionFailedError) {Failed_capture.assert_post_conditions}
 end # Examples
 # String
-def test_map_captures?
-	string = 'a'
-	regexp_array = [/a/]
-	ret = []
-	capture = string.capture?(regexp_array[0])
-	if capture.success? then
-		remaining_string = capture.post_match?
-	else
-		remaining_string = string # no advance in string yet
-	end # if
-	assert_equal('', remaining_string )
-	ret += [capture]
-	if remaining_string.empty? || regexp_array.size == 1 then
-		assert_equal([], ret )
-	else
-		ret += remaining_string.map_captures?(regexp_array[1..-1])
-	end # if
-	assert_instance_of(MatchCapture, 'a'.map_captures?([/a/])[0]) # no recursion
-	map_captures = 'ab'.map_captures?([/a/,/b/])
-	assert_instance_of(MatchCapture, map_captures[0])
-	assert_instance_of(MatchCapture, map_captures[1])
-	assert_equal(string, map_captures.reduce('', :+) {|c| c.string})
-	assert_parse(string, regexp_array)
-	assert_parse('ab', [/a/, /b/])
-end # map_capture
 def test_String_capture?
-	assert_equal([Hash_answer], Newline_Delimited_String.parse(Terminated_line))
+#	assert_equal([Hash_answer], Newline_Delimited_String.parse(Terminated_line))
 	pattern = Terminated_line
 	ret = Newline_Delimited_String.parse(pattern)
-	assert_instance_of(Array, ret)
+#	assert_instance_of(Array, ret)
 	assert_not_equal(1, Array_answer.size, Array_answer)
-	assert_equal(1, ret.size, ret)
+#	assert_equal(1, ret.size, ret)
 	
-		match_unrepeated = Newline_Delimited_String.match_unrepeated(pattern)
-		split = Newline_Delimited_String[0, match_unrepeated.matched_characters].match_repetition(pattern)
-	assert_equal([match_unrepeated.output?], split.output?)
+#		match_unrepeated = Newline_Delimited_String.match_unrepeated(pattern)
+#		split = Newline_Delimited_String[0, match_unrepeated.matched_characters].match_repetition(pattern)
+#	assert_equal([match_unrepeated.output?], split.output?)
 
-		match_unrepeated = Newline_Terminated_String.match_unrepeated(pattern)
-		split = Newline_Terminated_String[0, match_unrepeated.matched_characters].match_repetition(pattern)
-	assert_equal([match_unrepeated.output?], split.output?)
+#		match_unrepeated = Newline_Terminated_String.match_unrepeated(pattern)
+#		split = Newline_Terminated_String[0, match_unrepeated.matched_characters].match_repetition(pattern)
+#	assert_equal([match_unrepeated.output?], split.output?)
 end # capture?
 def test_String_parse
 	assert_equal(Hash_answer, Newline_Delimited_String.parse(Terminated_line), self.inspect)
@@ -418,18 +356,15 @@ end # assert_left_parse
 def test_assert_parse
 	string = Driver_string
 	pattern = Driver_pattern
-	captures = string.capture?(pattern)
-	assert_instance_of(Array, captures)
-	captures.map do |capture| 
-		puts capture.regexp.inspect + ' matches ' + capture.matched_characters?
-	end # map
+	capture = string.capture?(pattern)
+	assert_instance_of(Array, capture)
 	puts capture.inspect
 	capture_runs = capture.enumerate(:chunk) do |c|
 		c.success?
 	end # chunk
 	puts capture_runs.inspect
-	parse_string=LimitCapture.new(Newline_Delimited_String, Branch_regexp)
-	parse_delimited_array = LimitCapture.new(Newline_Delimited_String, Branch_regexp)
+	parse_string=Capture.new(Newline_Delimited_String, Branch_regexp)
+	parse_delimited_array=Capture.new(Newline_Delimited_String, Branch_regexp)
 
 	assert_equal(parse_string.to_a?.join, parse_delimited_array.captures.join)
 	assert_equal(parse_string.to_a?, parse_delimited_array.captures)
@@ -437,11 +372,11 @@ def test_assert_parse
 	Driver_string[0..1].assert_parse(Driver_pattern[0..0])
 	Driver_string.assert_left_parse(Driver_pattern[0..0])
 	first_capture = Driver_string[2..-1].capture?(Driver_pattern[1], :match)
-	assert_equal(first_capture.class, MatchCapture)
+	assert_equal(first_capture.method_name, :match)
 	assert_instance_of(Capture, first_capture)
 	assert_equal(4, first_capture.matched_characters?, first_capture.inspect)
-	Driver_string[2..-1].assert_parse(Driver_pattern[1..-1])
-	Driver_string.assert_parse(Driver_pattern)
+#	Driver_string[2..-1].assert_parse(Driver_pattern[1..-1])
+#	Driver_string.assert_parse(Driver_pattern)
 end # assert_parse
 def test_parse_into_array
 	string=Newline_Terminated_String

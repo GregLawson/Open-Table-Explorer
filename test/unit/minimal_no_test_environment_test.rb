@@ -7,13 +7,8 @@
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
 require 'test/unit'
-require_relative '../../app/models/default_test_case.rb'
-require_relative '../../test/assertions/ruby_assertions.rb'
-require_relative '../../app/models/related_file.rb'
-TE=Unit.new
-DefaultTests=eval(TE.default_tests_module_name?)
-TestCase=eval(TE.test_case_class_name?)
+#require_relative '../../test/assertions/ruby_assertions.rb'
+TestCase=BaseTestCase=Test::Unit::TestCase
 class MinimalTest < TestCase
-include DefaultTests
 #include TE.model_class?::Examples
 end #Minimal

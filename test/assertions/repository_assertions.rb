@@ -7,7 +7,7 @@
 ###########################################################################
 # @see http://grit.rubyforge.org/
 require_relative '../../app/models/repository.rb'
-class Repository <Grit::Repo
+class Repository #<Grit::Repo
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -22,10 +22,6 @@ def assert_pre_conditions
 	assert_pathname_exists(@path+'.git/')
 	assert_pathname_exists(@path+'.git/logs/')
 	assert_pathname_exists(@path+'.git/logs/refs/')
-	fail " must be of type Repository" unless self.instance_of?(Repository)
-	fail "self must respond to :remote_names?\n"+
-		"self.inspect=#{self.inspect}\n" +
-		"self.methods(false)=#{self.methods(false).inspect}" unless respond_to?(:remotes?)
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
@@ -49,9 +45,9 @@ include Constants
 	This_code_repository.assert_pre_conditions
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Empty_Repo_path=Source+'test_repository/'
-Empty_Repo=Repository.create_test_repository(Empty_Repo_path, :echo)
+Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
-Unique_repository_directory_pathname=Unit.new('test').data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+Unique_repository_directory_pathname = Repository.timestamped_repository_name?
 	This_code_repository.assert_pre_conditions
 end #Examples
 end #Repository

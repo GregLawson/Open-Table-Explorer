@@ -1,30 +1,47 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2011-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require 'virtus'
-#require_relative '../../app/models/no_db.rb'
-class Minimal2
-module ClassMethods
-end # ClassMethods
-extend ClassMethods
+require 'virtus'
+require_relative '../../app/models/no_db.rb'
+require 'fileutils'
+require_relative '../../app/models/parse.rb'
+# see http://semver.org/
+class Version
+include Virtus.model
+  attribute :major, String, :default => '0' # system version
+  attribute :minor, String, :default => '0'
+  attribute :patch, String, :default => '0'
+  attribute :pre_release, String, :default => '0'
 module Constants
+# see http://semver.org/
+Version_digits = /[1-9]?[0-9]{1,3}/
+Version_pattern = [Version_digits.capture(:major), '.'] + 
+	[Version_digits.capture(:minor)] + 
+	[Version_digits.capture(:patch)] +
+	[(/-/ * /[-.a-zA-Z0-9]*/.capture(:pre_release)) * Regexp::Optional] +
+	[(/\+/ * /[-.a-zA-Z0-9]*/.capture(:build)) * Regexp::Optional]
 end # Constants
 include Constants
-# attr_reader
-def initialize
-end # initialize
+module ClassMethods
+include Constants
+def [](string)
+	parse = string.parse(Version_pattern)
+	Version.new(parse)
+end # square_brackets
+end # ClassMethods
+extend ClassMethods
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
-def test_nested_scope_modules?
-	nested_constants = Version.class.constants
-	message = ''
-	assert_include(included_modules, :Assertions, message)
-	assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
+def nested_scope_modules?(context = self)
+	nested_constants = context.class.constants
+	nested_constants.select do |constant|
+		constant.class == Module
+	end # select
 end # nested_scopes
 def assert_nested_scope_submodule(module_symbol, context = self, message='')
 	message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
@@ -49,22 +66,20 @@ def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
-	self
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
-	message+="In assert_pre_conditions, self=#{inspect}"
-	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-	self
 end #assert_post_conditions
 end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
-include Constants
+include Version::Constants
+Sorted_version_names = ['1.9.0', '1.10.0', '1.11.0.']
+First_example_version_name = Sorted_version_names[0]
+#First_example_version = Version[First_example_version_name]
 end # Examples
-end # Minimal2
+end # Version

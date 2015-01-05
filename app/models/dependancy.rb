@@ -1,13 +1,14 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 #require 'virtus'
-require_relative 'shell_command.rb'
-class Iw
+#require_relative '../../app/models/no_db.rb'
+require_relative '../../app/models/shell_command.rb'
+class Dependancy
 module ClassMethods
 end # ClassMethods
 extend ClassMethods
@@ -15,8 +16,17 @@ module Constants
 end # Constants
 include Constants
 # attr_reader
-def initialize
+def initialize(name)
+	@name = name
 end # initialize
+def apt
+	install_execution=ShellCommands.new('sudo apt-get install ' + @name).assert_post_conditions
+end # apt
+def gem
+	require @name
+rescue LoadError
+	install_execution=ShellCommands.new('sudo gem install ' + @name).assert_post_conditions
+end # gem
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
@@ -38,6 +48,4 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 end # Examples
-end # Iw
-puts "$VERBOSE=#{$VERBOSE}"
-puts "ARGV=#{ARGV.inspect}"
+end # Dependancy

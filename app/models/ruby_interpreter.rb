@@ -31,7 +31,7 @@ include Constants
 module ClassMethods
 def ruby_version(executable_suffix = '')
 	ShellCommands.new('ruby --version').output.split(' ')
-	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
+	testRun = RubyInterpreter.new(test_command: 'ruby', options: '--version').run
 	testRun.output.parse(Version_pattern).output
 end # ruby_version
 def shell(command, &proc)

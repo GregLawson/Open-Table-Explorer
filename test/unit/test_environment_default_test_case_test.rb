@@ -5,9 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../unit/test_environment'
+require_relative '../unit/test_environment_default_test_case.rb'
 class TestEnvironmentTest < TestCase
 #include DefaultTests
 def test_ruby_assertions
 end # ruby_assertions
-end #TestEnvironmentTest
+end # TestEnvironment
