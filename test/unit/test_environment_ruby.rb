@@ -7,4 +7,6 @@
 ###########################################################################
 require 'test/unit'
 TestCase=Test::Unit::TestCase
-AssertionFailedError=MiniTest::Assertion
+#AssertionFailedError=Test::Unit::AssertionFailedError
+AssertionFailedError = RuntimeError
+#AssertionFailedError = MiniTest::Assertion
