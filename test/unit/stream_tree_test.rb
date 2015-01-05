@@ -46,7 +46,7 @@ def test_Constants
 	assert_equal(Root_path, GraphPath.new(nil))
 end # Constants
 # Connectivity
-def test_ref (tree)
+def test_ref
 end # ref
 def test_square_brackets (*params)
 end # square_brackets
