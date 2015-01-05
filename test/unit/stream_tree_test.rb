@@ -44,6 +44,7 @@ def test_Constants
 end # Constants
 # Connectivity
 def test_ref
+	assert_instance_of(Node, ref())
 end # ref
 def test_square_brackets (*params)
 end # square_brackets
