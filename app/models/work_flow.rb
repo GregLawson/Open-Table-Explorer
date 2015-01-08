@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'unit.rb'
+require_relative 'related_file.rb'
 require_relative 'repository.rb'
 class WorkFlow
 module Constants
@@ -84,7 +84,7 @@ extend ClassMethods
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file,
-	related_files = Unit.new_from_path?(specific_file),
+	related_files=RelatedFile.new_from_path?(specific_file),
 	repository=Repository.new(FilePattern.repository_dir?))
 
 	@specific_file = specific_file
@@ -333,10 +333,11 @@ def unit_test(executable=@related_files.model_test_pathname?)
 		edit
 	end until !@repository.something_to_commit? 
 end # unit_test
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_pre_conditions
 end # assert_pre_conditions
 def assert_post_conditions
@@ -388,6 +389,7 @@ TestFile = File.expand_path($PROGRAM_NAME)
 TestWorkFlow = WorkFlow.new(TestFile)
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'
 Most_stable_file = 'test/unit/minimal2_test.rb'
+Formerly_existant_file = 'test/unit/related_file.rb'
 include Constants
 end # Examples
 include Examples
