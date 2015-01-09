@@ -106,6 +106,18 @@ def version_comparison(files = nil)
 	end # map
 	ret.join(' ')
 end # version_comparison
+def diff_command?(filename, branch_index)
+	fail filename + ' does not exist.' if !File.exists?(filename)
+	diff_run = @repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- " + filename)
+end # diff_command?
+def reflog?(filename)
+	@repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
+end # reflog?
+def last_change?(filename)
+		reflog?(filename).output.split("/n")[0].split(',')[0]
+end # last_change?
+# What happens to non-existant versions? returns nil Are they different? 
+# What do I want?
 def working_different_from?(filename, branch_index)
 	raise filename+" does not exist." if !File.exists?(filename)
 	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
@@ -194,23 +206,23 @@ def merge_conflict_recovery
 
 			case conflict[:conflict]
 			# DD unmerged, both deleted
-			when 'DD' then fail conflict.inspect
+			when 'DD' then fail Exception.new(conflict.inspect)
 			# AU unmerged, added by us
-			when 'AU' then fail conflict.inspect
+			when 'AU' then fail Exception.new(conflict.inspect)
 			# UD unmerged, deleted by them
-			when 'UD' then fail conflict.inspect
+			when 'UD' then fail Exception.new(conflict.inspect)
 			# UA unmerged, added by them
-			when 'UA' then fail conflict.inspect
+			when 'UA' then fail Exception.new(conflict.inspect)
 			# DU unmerged, deleted by us
-			when 'DU' then fail conflict.inspect
+			when 'DU' then fail Exception.new(conflict.inspect)
 			# AA unmerged, both added
-			when 'AA' then fail conflict.inspect
+			when 'AA' then fail Exception.new(conflict.inspect)
 			# UU unmerged, both modified
 			when 'UU' then
 				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 			else
-				fail conflict.inspect
+				fail Exception.new(conflict.inspect)
 			end # case
 		end # each
 		@repository.confirm_commit
@@ -364,12 +376,12 @@ def assert_pre_conditions
 	assert_respond_to(@repository.grit_repo.status, :changed)
 end # assert_pre_conditions
 def assert_post_conditions
-#	odd_files = Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
-#	assert_empty(odd_files, 'WorkFlow#assert_post_conditions')
+	odd_files = Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
+	assert_empty(odd_files, 'WorkFlow#assert_post_conditions')
 end # assert_post_conditions
-def assert_deserving_branch(branch_expected, executable, message='')
-	deserving_branch=deserving_branch?(executable)
-	recent_test=shell_command("ruby "+executable)
+def assert_deserving_branch(branch_expected, executable, message = '')
+	deserving_branch = deserving_branch?(executable)
+	recent_test = shell_command('ruby ' + executable)
 	message += "\nrecent_test=" + recent_test.inspect
 	message += "\nrecent_test.process_status=" + recent_test.process_status.inspect
 	syntax_test = shell_command('ruby -c ' + executable)

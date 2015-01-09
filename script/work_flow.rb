@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -12,8 +12,12 @@ require 'pp'
 require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 scripting_workflow=WorkFlow.new($0)
+if File.exists?('.git/MERGE_HEAD') then
+	scripting_workflow.repository.merge_conflict_recovery
+else
+end
 # good enough for edited; no syntax error
-scripting_workflow.script_deserves_commit!(:edited)
+#scripting_workflow.script_deserves_commit!(:edited)
 commands = []
 OptionParser.new do |opts|
   opts.banner = "Usage: work_flow.rb --<command> files"
@@ -60,9 +64,16 @@ OptionParser.new do |opts|
   opts.on("-l", "--[no-]loop", "Test, commit, edit, loop.") do |t|
     commands+=[:loop] if t
   end
+  opts.on("-s", "--[no-]split", "split off new class and edit") do |t|
+    commands+=[:split] if t
+  end
   opts.on("-r", "--[no-]related", "Related files") do |t|
     commands+=[:related] if t
   end
+  opts.on("-c", "--[no-]merge-conflict-recovery", "merge_conflict_recovery") do |t|
+    commands+=[:merge_conflict_recovery] if t
+  end
+  
 end.parse!
 
 if commands.empty? then
@@ -70,7 +81,7 @@ if commands.empty? then
 	puts 'No command; assuming test.'
 end #if
 # good enough for testing; no syntax error
-scripting_workflow.script_deserves_commit!(:testing)
+#scripting_workflow.script_deserves_commit!(:testing)
 
 pp commands
 pp ARGV
@@ -101,12 +112,19 @@ commands.each do |c|
 		when :merge_down then 
 			work_flow=WorkFlow.new($0)
 			work_flow.merge_down
+		when :merge_conflict_recovery then 
+			work_flow=WorkFlow.new($0)
+			work_flow.repository.merge_conflict_recovery
+		when :split then
+			work_flow.split(argv[0], argv[1])
 	else argv.each do |f|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
 		when :execute then work_flow.execute(f)
 		when :edit then work_flow.edit
-		when :test then work_flow.test(f)
+		when :test then 
+			deserving_branch = work_flow.test(f)
+#			work_flow.merge_down(deserving_branch)
 		when :loop then work_flow.loop(f)
 		when :upgrade then work_flow.upgrade(f)
 		when :best then work_flow.best(f)
@@ -115,7 +133,7 @@ commands.each do |c|
 		when :testing then work_flow.repository.stage_files(:testing, [f])
 		when :edited then work_flow.repository.stage_files(:edited, [f])
 		when :deserve then 
-			deserving_branch=work_flow.deserving_branch?(f).to_s
+			deserving_branch = work_flow.deserving_branch?(f).to_s
 			$stdout.puts  work_flow.repository.recent_test.inspect
 			$stdout.puts  'deserving branch='+deserving_branch.to_s
 		when :minimal then work_flow.minimal_edit
@@ -123,8 +141,9 @@ commands.each do |c|
 			puts work_flow.related_files.inspect
 			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison? if $VERBOSE
 		end #case
-		scripting_workflow.script_deserves_commit!(:passed)
+#		scripting_workflow.script_deserves_commit!(:passed)
 		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
 end #each
+1 # successfully completed
