@@ -133,7 +133,7 @@ commands.each do |c|
 		when :testing then work_flow.repository.stage_files(:testing, [f])
 		when :edited then work_flow.repository.stage_files(:edited, [f])
 		when :deserve then 
-			deserving_branch=work_flow.deserving_branch?(f).to_s
+			deserving_branch = work_flow.deserving_branch?(f).to_s
 			$stdout.puts  work_flow.repository.recent_test.inspect
 			$stdout.puts  'deserving branch='+deserving_branch.to_s
 		when :minimal then work_flow.minimal_edit
