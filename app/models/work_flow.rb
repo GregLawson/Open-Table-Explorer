@@ -243,6 +243,18 @@ def edit
 	edit=@repository.shell_command(command_string)
 	edit.assert_post_conditions
 end # edit
+def split(executable, new_base_name)
+	related_files = work_flow.related_files
+	new_unit = Unit.new(new_base_name, project_root_dir)
+	related_files.edit_files. map do |f|
+		pattern_name = FilePattern.find_by_file(f)
+		split_tab += ' -t ' + f + new_unit.pattern?(pattern_name)
+		@repository.shell_command('cp ' + f +  new_unit.pattern?(pattern_name))
+	end #map
+	edit = @repository.shell_command('diffuse' + version_comparison + test_files + split_tab)
+	puts edit.command_string
+	edit.assert_post_conditions
+end # split
 def minimal_edit
 	edit = @repository.shell_command('diffuse' + version_comparison + test_files + minimal_comparison?)
 	puts edit.command_string
@@ -256,10 +268,10 @@ end # emacs
 def merge_down(deserving_branch = @repository.current_branch_name?)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
+			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
 			@repository.confirm_commit(:interactive)
-			puts 'merge('+Branch_enhancement[i].to_s+', '+Branch_enhancement[i-1].to_s+')'
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -269,9 +281,9 @@ def script_deserves_commit!(deserving_branch)
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
-def test(executable=@related_files.model_test_pathname?)
+def test(executable = @related_files.model_test_pathname?)
 	merge_conflict_recovery
-	deserving_branch=deserving_branch?(executable)
+	deserving_branch = deserving_branch?(executable)
 	puts deserving_branch if $VERBOSE
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
@@ -287,7 +299,7 @@ def loop(executable = @related_files.model_test_pathname?)
 	merge_conflict_recovery
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
-			deserving_branch=deserving_branch?(executable)
+			deserving_branch = deserving_branch?(executable)
 			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
 			if deserving_branch != :passed then #master corrupted
 				edit
