@@ -194,9 +194,9 @@ def minimal_comparison?
 	end.compact.join # map
 end # minimal_comparison
 def deserving_branch?(executable = @related_files.model_test_pathname?)
-		error_score=@repository.error_score?(executable)
-		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
-		branch_compression=Branch_compression[error_classification]
+		@error_score = @repository.error_score?(executable)
+		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+		branch_compression=Branch_compression[@error_classification]
 		branch_enhancement=Branch_enhancement[branch_compression]
 end # deserving_branch
 def merge_conflict_recovery
