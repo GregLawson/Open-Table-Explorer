@@ -9,10 +9,10 @@ require_relative 'related_file.rb'
 require_relative 'repository.rb'
 class WorkFlow
 module Constants
-Branch_enhancement=[:passed, :testing, :edited]
-Extended_branches={-2 => :'origin/master', -1 => :master}
-First_slot_index=Extended_branches.keys.min
-Last_slot_index=Branch_enhancement.size+10 # how many is too slow?
+Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
+Extended_branches = { -2 => :'origin/master', -1 => :master }
+First_slot_index = Extended_branches.keys.min
+Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
 Deserving_commit_to_branch = { success:             0,
 				single_test_fail:    1,
 			              multiple_tests_fail: 1, # visibility boundary
@@ -27,7 +27,6 @@ Expected_next_commit_branch = { success:             0,
 			}
 end # Constants
 include Constants
-@@cached_unit_versions={}
 module ClassMethods
 include Constants
 def all(pattern_name = :test)
@@ -46,21 +45,21 @@ def branch_symbol?(branch_index)
 	when nil then fail 'branch_index=' + branch_index.inspect
 	when -2 then :'origin/master'
 	when -1 then :master
-	when 0..WorkFlow::Branch_enhancement.size-1 then WorkFlow::Branch_enhancement[branch_index]
+	when 0..WorkFlow::Branch_enhancement.size - 1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
 	else
-		('stash~'+(branch_index-WorkFlow::Branch_enhancement.size).to_s).to_sym
+		('stash~' + (branch_index - WorkFlow::Branch_enhancement.size).to_s).to_sym
 	end # case
 end # branch_symbol?
 def branch_index?(branch_name)
-	branch_index=Branch_enhancement.index(branch_name.to_sym)
+	branch_index = Branch_enhancement.index(branch_name.to_sym)
 	if branch_index.nil? then
-		if branch_name.to_s[0, 5]== 'stash' then
-			stash_depth=branch_name.to_s[6, branch_name.size-1].to_i
-			branch_index=stash_depth+Branch_enhancement.size
+		if branch_name.to_s[0, 5] == 'stash' then
+			stash_depth = branch_name.to_s[6, branch_name.size - 1].to_i
+			branch_index = stash_depth + Branch_enhancement.size
 		end # if
 		Extended_branches.each_pair do |index, branch|
-			branch_index=index if branch==branch_name.to_sym
+			branch_index = index if branch == branch_name.to_sym
 		end # each_pair
 	end # if
 	branch_index

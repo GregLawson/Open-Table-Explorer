@@ -244,7 +244,8 @@ def test_non_interactive_scripts
 	assert_equal('', help_run.errors)
 	value = :testing
 	executable = data_source_directory?('Repository')+'/'+value.to_s+'.rb'
-#	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable).assert_post_conditions
+	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
+	assert_match(/deserving branch=testing/, deserve_run.output, deserve_run.inspect)
 #	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
 #	assert_match(/#{$0}/, related_run.output)
 #	deserve_run=ShellCommands.new('ruby  script/work_flow.rb --deserve '+$0).assert_post_conditions
