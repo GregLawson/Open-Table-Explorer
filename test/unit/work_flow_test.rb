@@ -217,7 +217,7 @@ def test_deserving_branch?
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		error_classifications<<error_classification
-		branch_compression=Branch_compression[error_classification]
+		branch_compression=Deserving_commit_to_branch[error_classification]
 		branch_compressions<<branch_compression
 		branch_enhancement=Branch_enhancement[branch_compression]
 		branch_enhancements<<branch_enhancement
@@ -226,7 +226,7 @@ def test_deserving_branch?
 	assert_equal(3, branch_compressions.uniq.size, branch_compressions.inspect)
 	assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
-#	assert_equal(:passed, Branch_enhancement[Branch_compression[error_classification]])
+#	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
 end #deserving_branch
 def test_merge
 	TestWorkFlow.repository.testing_superset_of_passed.assert_post_conditions

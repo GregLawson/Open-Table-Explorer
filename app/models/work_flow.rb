@@ -13,11 +13,11 @@ Branch_enhancement=[:passed, :testing, :edited]
 Extended_branches={-2 => :'origin/master', -1 => :master}
 First_slot_index=Extended_branches.keys.min
 Last_slot_index=Branch_enhancement.size+10 # how many is too slow?
-Branch_compression={:success	=> 0,
-			:single_test_fail 	=> 1,
-			:multiple_tests_fail	=> 1, # visibility boundary
-			:initialization_fail => 2,
-			:syntax_error        => 2
+Deserving_commit_to_branch = { success:             0,
+				single_test_fail:    1,
+			              multiple_tests_fail: 1, # visibility boundary
+			              initialization_fail: 2,
+			              syntax_error:        2
 			}
 Expected_next_commit_branch = { success:             0,
 							  single_test_fail:    0,
@@ -194,10 +194,15 @@ def minimal_comparison?
 	end.compact.join # map
 end # minimal_comparison
 def deserving_branch?(executable = @related_files.model_test_pathname?)
+	if File.exists?(executable) then
 		@error_score = @repository.error_score?(executable)
 		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
-		branch_compression=Branch_compression[@error_classification]
-		branch_enhancement=Branch_enhancement[branch_compression]
+		@deserving_commit_to_branch = Deserving_commit_to_branch[@error_classification]
+		@expected_next_commit_branch = Expected_next_commit_branch[@error_classification]
+		@branch_enhancement = Branch_enhancement[@deserving_commit_to_branch]
+	else
+		:edited
+	end # if
 end # deserving_branch
 def merge_conflict_recovery
 # see man git status
