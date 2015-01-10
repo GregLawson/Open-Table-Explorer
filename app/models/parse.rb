@@ -76,6 +76,8 @@ require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
+	assert_raises(AssertionFailedError) {fail}
+	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
 end # assert_pre_conditions
 def assert_method(match_capture, limit_capture, argumentless_method_name = :output?, message = '')
 	message += "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
@@ -86,6 +88,8 @@ end # assert_method
 end #ClassMethods
 # Any match at all
 def assert_pre_conditions(message='')
+	assert_raises(AssertionFailedError) {fail}
+	assert_not_nil(@captures, 'no match at all.')
 	if output? == {} then
 
 	elsif output? == [] then
