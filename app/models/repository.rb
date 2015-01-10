@@ -16,7 +16,7 @@ require_relative 'parse.rb'
 require_relative 'branch.rb'
 class Repository <Grit::Repo
 module Constants
-#Temporary='/mnt/working/Recover'
+Repository_Unit = Unit.new_from_path?(__FILE__)
 Root_directory=FilePattern.project_root_dir?(__FILE__)
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
@@ -60,7 +60,11 @@ def create_if_missing(path, interactive)
 		create_empty(path, interactive)
 	end #if
 end #create_if_missing
-def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"), interactive)
+def timestamped_repository_name?
+	Repository_Unit.data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+end # timestamped_repository_name?
+def create_test_repository(path=timestamped_repository_name?, 
+	interactive)
 	replace_or_create(path, interactive)
   @interactive = interactive
 	if File.exists?(path) then

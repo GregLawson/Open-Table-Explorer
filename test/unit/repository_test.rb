@@ -101,10 +101,11 @@ end #current_branch_name
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
-		recent_test=This_code_repository.shell_command("ruby "+executable)
-		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
-		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
-		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+	recent_test=This_code_repository.shell_command("ruby "+executable)
+	assert_equal(1, recent_test.process_status.exitstatus, recent_test.inspect)
+	assert_equal(false, recent_test.success?, recent_test.inspect)
+	syntax_test=This_code_repository.shell_command("ruby -c "+executable)
+	assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(10000, This_code_repository.error_score?(executable))
 #	This_code_repository.assert_deserving_branch(:edited, executable)
 
