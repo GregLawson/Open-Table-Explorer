@@ -27,7 +27,6 @@ Expected_next_commit_branch = { success:             0,
 			}
 end # Constants
 include Constants
-@@cached_unit_versions = {}
 module ClassMethods
 include Constants
 def all(pattern_name = :test)
@@ -106,9 +105,21 @@ def version_comparison(files = nil)
 	end # map
 	ret.join(' ')
 end # version_comparison
-def working_different_from?(filename, branch_index)
+def diff_command?(filename, branch_index)
 	fail filename + ' does not exist.' if !File.exists?(filename)
 	diff_run = @repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- " + filename)
+end # diff_command?
+def reflog?(filename)
+	@repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
+end # reflog?
+def last_change?(filename)
+		reflog?(filename).output.split("/n")[0].split(',')[0]
+end # last_change?
+# What happens to non-existant versions? returns nil Are they different? 
+# What do I want?
+def working_different_from?(filename, branch_index)
+	raise filename+" does not exist." if !File.exists?(filename)
+	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
 	if diff_run.output == '' then
 		false # no difference
 	elsif diff_run.output.split("\n").size == 2 then
@@ -133,9 +144,7 @@ def scan_verions?(filename, range, direction)
 			existing_indices << index
 		when nil then
 		when false then
-			existing_indices << index
-		else
-			fail 'else ' + local_variables.map{|v| eval(v).inspect}.join("\n")
+			existing_indices<<index
 		end # case
 	end # zip
 	case direction
@@ -154,26 +163,15 @@ def bracketing_versions?(filename, current_index)
 end # bracketing_versions?
 def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym)
 	if File.exists?(filename) then
-		current_index = WorkFlow.branch_index?(middle_branch)
-		left_index, right_index = bracketing_versions?(filename, current_index)
-		relative_filename = Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		ret = ' -t '
-		if left_index.nil? then
-			ret += " #{relative_filename} "
-		else
-			ret += "#{WorkFlow.revison_tag?(left_index)} #{relative_filename} "
-		end # if
-		ret += relative_filename
-		if right_index.nil? then
-			ret += " #{relative_filename} "
-		else
-			ret += " #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
-		end # if
-		ret
+		current_index=WorkFlow.branch_index?(middle_branch)
+		left_index,right_index=bracketing_versions?(filename, current_index)
+		relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+
+		" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
 	else
 		''
-	end # if
-end # goldilocks
+	end #if
+end #goldilocks
 def test_files(edit_files = @related_files.edit_files)
 	pairs = @related_files.functional_parallelism(edit_files).map do |p|
 
@@ -186,11 +184,11 @@ def test_files(edit_files = @related_files.edit_files)
 end # test_files
 def minimal_comparison?
 	FilePattern::All.map do |p|
-		min_path = Pathname.new(p.pathname_glob('minimal' + @related_files.default_test_class_id?.to_s)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		path = Pathname.new(p.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		min_path=Pathname.new(p.pathname_glob('minimal'+@related_files.default_test_class_id?.to_s)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		path=Pathname.new(p.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
 		if File.exists?(min_path) && File.exists?(path) then
-			' -t ' + path + ' ' + min_path
+			' -t '+path+' '+min_path
 		end # if
 	end.compact.join # map
 end # minimal_comparison
@@ -212,48 +210,45 @@ def merge_conflict_recovery
 
 			case conflict[:conflict]
 			# DD unmerged, both deleted
-			when 'DD' then fail conflict.inspect
+			when 'DD' then fail Exception.new(conflict.inspect)
 			# AU unmerged, added by us
-			when 'AU' then fail conflict.inspect
+			when 'AU' then fail Exception.new(conflict.inspect)
 			# UD unmerged, deleted by them
-			when 'UD' then fail conflict.inspect
+			when 'UD' then fail Exception.new(conflict.inspect)
 			# UA unmerged, added by them
-			when 'UA' then fail conflict.inspect
+			when 'UA' then fail Exception.new(conflict.inspect)
 			# DU unmerged, deleted by us
-			when 'DU' then fail conflict.inspect
+			when 'DU' then fail Exception.new(conflict.inspect)
 			# AA unmerged, both added
-			when 'AA' then fail conflict.inspect
+			when 'AA' then fail Exception.new(conflict.inspect)
 			# UU unmerged, both modified
 			when 'UU' then
 				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 			else
-				fail conflict.inspect
+				fail Exception.new(conflict.inspect)
 			end # case
 		end # each
 		@repository.confirm_commit
 	else
-		puts 'No merge conflict' if !$VERBOSE.nil?
+		puts 'No merge conflict'
 	end # if
 end # merge_conflict_recovery
-def merge(target_branch, source_branch)
-	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + ')'
+def merge(target_branch, source_branch, interact=:interactive)
+	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
-		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
+		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s)
+		if merge_status.output=="Automatic merge went well; stopped before committing as requested\n" then
 		else
 			if merge_status.success? then
 			else
 				merge_conflict_recovery
 			end # if
 		end # if
-		@repository.confirm_commit
+		@repository.confirm_commit(interact)
 	end # safely_visit_branch
 end # merge
-def edit(context = nil)
-	if context.nil? then
-	else
-	end # if
+def edit
 	@repository.recent_test.puts if !@repository.recent_test.nil?
 	if @related_files.edit_files.empty? then
 		command_string = 'diffuse' + version_comparison([@specific_file]) + test_files
@@ -261,14 +256,13 @@ def edit(context = nil)
 		command_string = 'diffuse' + version_comparison + test_files
 	end # if
 	puts command_string if $VERBOSE
-	edit = @repository.shell_command(command_string)
-	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
+	edit=@repository.shell_command(command_string)
 	edit.assert_post_conditions
 end # edit
 def split(executable, new_base_name)
 	related_files = work_flow.related_files
 	new_unit = Unit.new(new_base_name, project_root_dir)
-	related_files.edited_files. map do |f|
+	related_files.edit_files. map do |f|
 		pattern_name = FilePattern.find_by_file(f)
 		split_tab += ' -t ' + f + new_unit.pattern?(pattern_name)
 		@repository.shell_command('cp ' + f +  new_unit.pattern?(pattern_name))
@@ -291,15 +285,15 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
-			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
+			merge(Branch_enhancement[i], Branch_enhancement[i-1])
 			merge_conflict_recovery
-			@repository.confirm_commit
+			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
 	end # each
 end # merge_down
 def script_deserves_commit!(deserving_branch)
 	if working_different_from?($PROGRAM_NAME, 	WorkFlow.branch_index?(deserving_branch)) then
-		repository.stage_files(deserving_branch, related_files.tested_files($PROGRAM_NAME))
+		repository.stage_files(deserving_branch, related_files.tested_files($0))
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
@@ -323,39 +317,37 @@ def loop(executable = @related_files.model_test_pathname?)
 		begin
 			deserving_branch = deserving_branch?(executable)
 			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
-			if !File.exists?(executable) then
-				done = true
-			elsif deserving_branch != :passed then # master corrupted
-				edit('master branch not passing')
-				done = false
+			if deserving_branch != :passed then #master corrupted
+				edit
+				done=false
 			else
 				done = true
 			end # if
 		end until done
-		@repository.confirm_commit
+		@repository.confirm_commit(:interactive)
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end # safely_visit_branch
 	begin
 		deserving_branch = test(executable)
 		merge_down(deserving_branch)
-		edit('loop')
+		edit
 		if @repository.something_to_commit? then
 			done = false
 		else
-			if @expected_next_commit_branch == @repository.current_branch_name? then
+			if deserving_branch == @repository.current_branch_name? then
 				done = true # branch already checked
 			else
 				done = false # check other branch
-				@repository.confirm_branch_switch(@expected_next_commit_branch)
-				puts 'Switching to deserving branch' + @expected_next_commit_branch.to_s
+				@repository.confirm_branch_switch(deserving_branch)
+				puts "Switching to deserving branch"+deserving_branch.to_s
 			end # if
 		end # if
 	end until done
 end # test
-def unit_test(executable = @related_files.model_test_pathname?)
+def unit_test(executable=@related_files.model_test_pathname?)
 	begin
-		deserving_branch = deserving_branch?(executable)
-		if !@repository.recent_test.nil? && @repository.recent_test.success? then
+		deserving_branch=deserving_branch?(executable)
+		if @repository.recent_test.success? then
 			break
 		end # if
 		@repository.recent_test.puts
@@ -366,13 +358,14 @@ def unit_test(executable = @related_files.model_test_pathname?)
 #		if !@repository.something_to_commit? then
 #			@repository.confirm_branch_switch(deserving_branch)
 #		end #if
-		edit('unit_test')
-	end until !@repository.something_to_commit?
+		edit
+	end until !@repository.something_to_commit? 
 end # unit_test
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_pre_conditions
 end # assert_pre_conditions
 def assert_post_conditions
@@ -424,6 +417,7 @@ TestFile = File.expand_path($PROGRAM_NAME)
 TestWorkFlow = WorkFlow.new(TestFile)
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'
 Most_stable_file = 'test/unit/minimal2_test.rb'
+Formerly_existant_file = 'test/unit/related_file.rb'
 include Constants
 end # Examples
 include Examples
