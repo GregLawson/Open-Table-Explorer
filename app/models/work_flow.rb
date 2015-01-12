@@ -27,7 +27,6 @@ Expected_next_commit_branch = { success:             0,
 			}
 end # Constants
 include Constants
-@@cached_unit_versions = {}
 module ClassMethods
 include Constants
 def all(pattern_name = :test)
@@ -234,23 +233,23 @@ def merge_conflict_recovery
 
 			case conflict[:conflict]
 			# DD unmerged, both deleted
-			when 'DD' then fail conflict.inspect
+			when 'DD' then fail Exception.new(conflict.inspect)
 			# AU unmerged, added by us
-			when 'AU' then fail conflict.inspect
+			when 'AU' then fail Exception.new(conflict.inspect)
 			# UD unmerged, deleted by them
-			when 'UD' then fail conflict.inspect
+			when 'UD' then fail Exception.new(conflict.inspect)
 			# UA unmerged, added by them
-			when 'UA' then fail conflict.inspect
+			when 'UA' then fail Exception.new(conflict.inspect)
 			# DU unmerged, deleted by us
-			when 'DU' then fail conflict.inspect
+			when 'DU' then fail Exception.new(conflict.inspect)
 			# AA unmerged, both added
-			when 'AA' then fail conflict.inspect
+			when 'AA' then fail Exception.new(conflict.inspect)
 			# UU unmerged, both modified
 			when 'UU' then
 				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 			else
-				fail conflict.inspect
+				fail Exception.new(conflict.inspect)
 			end # case
 		end # each
 		@repository.confirm_commit
@@ -269,7 +268,7 @@ def merge(target_branch, source_branch)
 				merge_conflict_recovery
 			end # if
 		end # if
-		@repository.confirm_commit
+		@repository.confirm_commit(interact)
 	end # safely_visit_branch
 end # merge
 def edit(context = nil)
@@ -315,7 +314,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
 			merge_conflict_recovery
-			@repository.confirm_commit
+			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -354,7 +353,7 @@ def loop(executable = @related_files.model_test_pathname?)
 				done = true
 			end # if
 		end until done
-		@repository.confirm_commit
+		@repository.confirm_commit(:interactive)
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end # safely_visit_branch
 	begin
