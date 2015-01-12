@@ -27,7 +27,6 @@ Expected_next_commit_branch = { success:             0,
 			}
 end # Constants
 include Constants
-@@cached_unit_versions = {}
 module ClassMethods
 include Constants
 def all(pattern_name = :test)
@@ -165,23 +164,12 @@ def bracketing_versions?(filename, current_index)
 end # bracketing_versions?
 def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym)
 	if File.exists?(filename) then
-		current_index = WorkFlow.branch_index?(middle_branch)
-		left_index, right_index = bracketing_versions?(filename, current_index)
-		relative_filename = Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		ret = ' -t '
-		if left_index.nil? then
-			ret += " #{relative_filename} "
-		else
-			ret += "#{WorkFlow.revison_tag?(left_index)} #{relative_filename} "
-		end # if
-		ret += relative_filename
-		if right_index.nil? then
-			ret += " #{relative_filename} "
-		else
-			ret += " #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
-		end # if
+		current_index=WorkFlow.branch_index?(middle_branch)
+		left_index,right_index=bracketing_versions?(filename, current_index)
+		relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+
+		" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
 	else
-		ret = ''
 	end # if
 	ret += ' -r ' + last_change?(filename) + ' ' + filename
 end # goldilocks
@@ -258,8 +246,8 @@ def merge_conflict_recovery
 		puts 'No merge conflict' if !$VERBOSE.nil?
 	end # if
 end # merge_conflict_recovery
-def merge(target_branch, source_branch)
-	puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + ')'
+def merge(target_branch, source_branch, interact=:interactive)
+	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
@@ -269,7 +257,7 @@ def merge(target_branch, source_branch)
 				merge_conflict_recovery
 			end # if
 		end # if
-		@repository.confirm_commit
+		@repository.confirm_commit(interact)
 	end # safely_visit_branch
 end # merge
 def edit(context = nil)
@@ -315,7 +303,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
 			merge_conflict_recovery
-			@repository.confirm_commit
+			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -354,7 +342,7 @@ def loop(executable = @related_files.model_test_pathname?)
 				done = true
 			end # if
 		end until done
-		@repository.confirm_commit
+		@repository.confirm_commit(:interactive)
 #		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
 	end # safely_visit_branch
 	begin
