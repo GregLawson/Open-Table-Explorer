@@ -14,8 +14,8 @@ include DefaultTests
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
 def test_all
-	pattern=FilePattern.find_by_name(:test)
-	glob=pattern.pathname_glob
+	pattern = FilePattern.find_by_name(:test)
+	glob = FilePattern.new(pattern).pathname_glob
 	tests=Dir[glob]
 	x=tests[0]
 	y=tests[1]
@@ -101,7 +101,7 @@ end # diff_command?
 def test_reflog
 end # reflog
 def last_change?
-	assert_equal('', WorkFlow.last_cchange?())
+	assert_equal('', WorkFlow.last_change?())
 end # last_change?
 def test_working_different_from?
 	current_branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
@@ -242,8 +242,14 @@ end #assert_pre_conditions
 def test_non_interactive_scripts
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
 	assert_equal('', help_run.errors)
-	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
-	assert_match(/#{$0}/, related_run.output)
+	value = :testing
+	executable = data_source_directory?('Repository')+'/'+value.to_s+'.rb'
+	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
+	error_score=TestWorkFlow.repository.error_score?(executable)
+	assert_equal(1, error_score)
+	assert_match(/deserving branch=testing/, deserve_run.output, deserve_run.inspect)
+#	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
+#	assert_match(/#{$0}/, related_run.output)
 #	deserve_run=ShellCommands.new('ruby  script/work_flow.rb --deserve '+$0).assert_post_conditions
 end #non_interactive_scripts
 end #WorkFlow
