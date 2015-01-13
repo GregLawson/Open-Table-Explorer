@@ -89,7 +89,9 @@ def test_diff_command?
 	filename=Most_stable_file
 	branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
 	assert_not_nil(branch_index)
-	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
+	branch_string = WorkFlow.branch_symbol?(branch_index).to_s
+	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
+	diff_run = TestWorkFlow.repository.git_command(git_command)
 	diff_run.assert_post_conditions
 	assert_instance_of(ShellCommands, diff_run)
 	assert_operator(diff_run.output.size, :==, 0)

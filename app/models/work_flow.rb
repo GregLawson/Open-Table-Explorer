@@ -107,7 +107,9 @@ def version_comparison(files = nil)
 end # version_comparison
 def diff_command?(filename, branch_index)
 	fail filename + ' does not exist.' if !File.exists?(filename)
-	diff_run = @repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- " + filename)
+	branch_string = WorkFlow.branch_symbol?(branch_index).to_s
+	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
+	diff_run = @repository.git_command(git_command)
 end # diff_command?
 def reflog?(filename)
 	@repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
