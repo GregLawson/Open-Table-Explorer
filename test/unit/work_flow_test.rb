@@ -15,7 +15,7 @@ include DefaultTests
 include WorkFlow::Examples
 def test_all
 	pattern=FilePattern.find_by_name(:test)
-	glob=pattern.pathname_glob
+	glob = FilePattern.new(pattern).pathname_glob
 	tests=Dir[glob]
 	x=tests[0]
 	y=tests[1]
