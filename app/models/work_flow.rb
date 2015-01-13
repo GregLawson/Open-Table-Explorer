@@ -432,7 +432,7 @@ extend Assertions::ClassMethods
 include Constants
 module Examples
 TestFile = File.expand_path($PROGRAM_NAME)
-TestWorkFlow = WorkFlow.new(TestFile)
+#TestWorkFlow = WorkFlow.new(TestFile)
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'
 Most_stable_file = 'test/unit/minimal2_test.rb'
 Formerly_existant_file = 'test/unit/related_file.rb'
