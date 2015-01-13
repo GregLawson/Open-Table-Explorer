@@ -15,7 +15,7 @@ include DefaultTests
 include WorkFlow::Examples
 def test_all
 	pattern=FilePattern.find_by_name(:test)
-	glob=pattern.pathname_glob
+	glob = FilePattern.new(pattern).pathname_glob
 	tests=Dir[glob]
 	x=tests[0]
 	y=tests[1]
@@ -219,7 +219,7 @@ def test_deserving_branch?
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		error_classifications<<error_classification
-		branch_compression=Branch_compression[error_classification]
+		branch_compression = Deserving_commit_to_branch[error_classification]
 		branch_compressions<<branch_compression
 		branch_enhancement=Branch_enhancement[branch_compression]
 		branch_enhancements<<branch_enhancement
