@@ -113,7 +113,7 @@ def reflog?(filename)
 	@repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
 end # reflog?
 def last_change?(filename)
-		reflog?(filename).output.split("/n")[0].split(',')[0]
+	reflog?(filename).output.split("/n")[0].split(',')[0]
 end # last_change?
 # What happens to non-existant versions? returns nil Are they different? 
 # What do I want?
