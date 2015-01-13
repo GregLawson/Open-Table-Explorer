@@ -6,7 +6,7 @@
 #
 ###########################################################################
 # @see http://grit.rubyforge.org/
-#require 'grit'  # sudo gem install grit
+require 'grit'  # sudo gem install grit
 # partial API at @see less /usr/share/doc/ruby-grit/API.txt
 # code in @see /usr/lib/ruby/vendor_ruby/grit
 require_relative 'unit.rb'
@@ -95,7 +95,7 @@ def initialize(path, interactive)
 	@path=path.to_s
   puts '@path='+@path if $VERBOSE
   @interactive = interactive
-#	@grit_repo=Grit::Repo.new(@path)
+	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
 This_code_repository=Repository.new(Root_directory, :interactive)
