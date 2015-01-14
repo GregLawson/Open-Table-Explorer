@@ -15,7 +15,7 @@ include DefaultTests
 include WorkFlow::Examples
 def test_all
 	pattern=FilePattern.find_by_name(:test)
-	glob=pattern.pathname_glob
+	glob = FilePattern.new(pattern).pathname_glob
 	tests=Dir[glob]
 	x=tests[0]
 	y=tests[1]
@@ -239,17 +239,20 @@ end #assert_post_conditions
 def test_local_assert_pre_conditions
 		TestWorkFlow.assert_pre_conditions
 end #assert_pre_conditions
-def test_non_interactive_scripts
+def test_help_command
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
 	assert_equal('', help_run.errors)
+end #  help_command
+def test_deserve_command
 	value = :testing
 	executable = data_source_directory?('Repository')+'/'+value.to_s+'.rb'
 	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
 	error_score=TestWorkFlow.repository.error_score?(executable)
-#	assert_equal(1, error_score)
+#	assert_equal(1, error_score, deserve_run.inspect)
 #	assert_match(/deserving branch=testing/, deserve_run.output, deserve_run.inspect)
+end #  deserve_command
+def test_related_command
 #	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
 #	assert_match(/#{$0}/, related_run.output)
-#	deserve_run=ShellCommands.new('ruby  script/work_flow.rb --deserve '+$0).assert_post_conditions
-end #non_interactive_scripts
+end #  related_command
 end #WorkFlow
