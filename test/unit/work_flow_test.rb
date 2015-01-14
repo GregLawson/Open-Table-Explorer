@@ -215,7 +215,7 @@ def test_deserving_branch?
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
 		executable=data_source_directory?('Repository')+'/'+value.to_s+'.rb'
-		error_score=TestWorkFlow.repository.error_score?(executable)
+		error_score = TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		error_classifications<<error_classification
