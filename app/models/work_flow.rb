@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'related_file.rb'
+require_relative 'unit.rb'
 require_relative 'repository.rb'
 class WorkFlow
 module Constants
@@ -83,7 +83,7 @@ extend ClassMethods
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file,
-	related_files=RelatedFile.new_from_path?(specific_file),
+	related_files = Unit.new_from_path?(specific_file),
 	repository=Repository.new(FilePattern.repository_dir?))
 
 	@specific_file = specific_file
@@ -260,7 +260,7 @@ def edit(context = nil)
 		command_string = 'diffuse' + version_comparison + test_files
 	end # if
 	puts command_string if $VERBOSE
-	edit=@repository.shell_command(command_string)
+	edit = @repository.shell_command(command_string)
 	edit.assert_post_conditions
 end # edit
 def split(executable, new_base_name)
@@ -289,7 +289,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
-			merge(Branch_enhancement[i], Branch_enhancement[i-1])
+			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
 			merge_conflict_recovery
 			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
