@@ -20,8 +20,8 @@ end # initialize
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
-def test_nested_scope_modules?
-	nested_constants = Version.class.constants
+def nested_scope_modules?
+	nested_constants = self.class.constants
 	message = ''
 	assert_include(included_modules, :Assertions, message)
 	assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
