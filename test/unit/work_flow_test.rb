@@ -75,7 +75,7 @@ def test_merge_range
 	assert_equal(0..2, WorkFlow.merge_range(:master))
 end #merge_range
 def test_initialize
-	te=RelatedFile.new(TestFile)
+	te=Unit.new(TestFile)
 	assert_not_nil(te)
 	wf=WorkFlow.new(TestFile)
 	assert_not_nil(wf)
