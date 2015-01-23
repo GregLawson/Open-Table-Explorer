@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2012-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -55,8 +55,9 @@ def unit_base_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
 	matched_pattern = find_from_path(path)
+	raise 'matched_pattern is nil for '+path if matched_pattern.nil?
 	basename=File.basename(path)
-	name_length=basename.size-matched_pattern[:suffix].size
+	name_length = basename.size - matched_pattern[:suffix].size
 	basename[0,name_length].to_sym
 end # unit_base_name
 # searches up pathname for .git sub-directory
