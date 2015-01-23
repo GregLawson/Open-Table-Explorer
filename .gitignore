@@ -23,4 +23,4 @@
 /db/SQL/separate.mwb.bak
 .bundle
 db/*.sqlite3
-log/*.log
+

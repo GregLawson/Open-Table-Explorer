@@ -1,0 +1,1037 @@
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+$ echo "Hello World"
+@env={}
+@command="echo \"Hello World\""
+@opts={}
+Hello World
+test/unit/work_flow_test.rb:9:in `require_relative'
+test/unit/work_flow_test.rb:9:in `<main>'
+#<ShellCommands:0x00000002ecff98>
+$ echo "1 2;3 4"
+@env={}
+@command="echo \"1 2;3 4\""
+@opts={}
+1 2;3 4
+test/unit/work_flow_test.rb:9:in `require_relative'
+test/unit/work_flow_test.rb:9:in `<main>'
+#<ShellCommands:0x00000002ece508>
+$ /sbin/ifconfig
+@env={}
+@command="/sbin/ifconfig"
+@opts={}
+eth0      Link encap:Ethernet  HWaddr f8:0f:41:d2:26:c7  
+          inet addr:172.31.41.166  Bcast:172.31.41.255  Mask:255.255.255.0
+          inet6 addr: fe80::fa0f:41ff:fed2:26c7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4959633 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4003710 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4630389960 (4.3 GiB)  TX bytes:1295998501 (1.2 GiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:187020 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:187020 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:60028073 (57.2 MiB)  TX bytes:60028073 (57.2 MiB)
+
+wlan0     Link encap:Ethernet  HWaddr 30:10:b3:40:00:e5  
+          inet addr:192.168.1.221  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fde9:7883:b343:0:bd1b:6a31:f2ae:706e/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:ec4c:6f78:b566:995/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:fdcf:6bcb:a8e9:1130/64 Scope:Global
+          inet6 addr: fde9:7883:b343::20b/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:8cba:5bb5:9c5e:fd4c/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:753f:dada:e085:3ffe/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:f00f:afa2:b656:8c58/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:3210:b3ff:fe40:e5/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:98f8:56fd:eb39:a57c/64 Scope:Global
+          inet6 addr: fe80::3210:b3ff:fe40:e5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:145699 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:165608 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:30035580 (28.6 MiB)  TX bytes:18075222 (17.2 MiB)
+
+test/unit/work_flow_test.rb:9:in `require_relative'
+test/unit/work_flow_test.rb:9:in `<main>'
+#<ShellCommands:0x00000002ed3e40>
+@path=/home/greg/Desktop/src/Open-Table-Explorer/
+@path=/home/greg/Desktop/src/Open-Table-Explorer/
+Run options: 
+
+# Running tests:
+
+$VERBOSE=true
+included_module_names=["WorkFlow::Examples", "WorkFlow::Assertions", "WorkFlow::Constants", "Assertions", "Test::Unit::Assertions", "MiniTest::Assertions", "JSON::Ext::Generator::GeneratorMethods::Object", "PP::ObjectMixin", "Kernel"]
+$ git status --short --branch
+@env={}
+@command="git status --short --branch"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+## master...origin/master [ahead 22]
+ M app/models/file_pattern.rb
+ M app/models/repository.rb
+ M log/unit/1.9/1.9.3p194/normal/work_flow.log
+ M log/unit/1.9/1.9.3p194/quiet/work_flow.log
+ M log/unit/1.9/1.9.3p194/verbose/work_flow.log
+
+#<ShellCommands:0x000000028ca760>
+examples=[#<WorkFlow:0x00000002e242d8 @specific_file="/home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb", @related_files=#<Unit:0x00000002e131b8 @model_class_name=:WorkFlow, @project_root_dir="/home/greg/Desktop/src/Open-Table-Explorer/", @model_basename=:work_flow, @edit_files=["/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/script/work_flow.rb"], @directories=[], @missing_files=["/home/greg/Desktop/src/Open-Table-Explorer/test/integration/work_flow_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/work_flow_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/work_flow_assertions.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/work_flow.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/work_flow.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/work_flow.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/work_flow.log", "/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/work_flow"]>, @repository=## master...origin/master [ahead 22]
+ M app/models/file_pattern.rb
+ M app/models/repository.rb
+ M log/unit/1.9/1.9.3p194/normal/work_flow.log
+ M log/unit/1.9/1.9.3p194/quiet/work_flow.log
+ M log/unit/1.9/1.9.3p194/verbose/work_flow.log
+, @branch_index=-2>]
+.["/home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_array_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal4_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal_no_test_environment_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal4_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/related_file_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_fixnum_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_fixnum_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_type_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb"]
+....$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:171:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e70c50>
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:171:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e748c8>
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:171:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e71f10>
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat testing -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e77550>
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat edited -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e7c000>
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e81640>
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e7e8c8>
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e89070>
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e869d8>
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e8c068>
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e8e0e8>
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e93e30>
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e99560>
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e96d38>
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e9c6e8>
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:172:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002e99df8>
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:173:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002ea46b8>
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:173:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002ea7200>
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:173:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002eab800>
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat testing -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:175:in `test_bracketing_versions?'
+#<ShellCommands:0x00000002eb5a80>
+.....method :assert_post_conditions does  exist for object of type Class
+.method :assert_pre_conditions does  exist for object of type Class
+.$ ruby  script/work_flow.rb --deserve test/data_sources/Repository//testing.rb
+@env={}
+@command="ruby  script/work_flow.rb --deserve test/data_sources/Repository//testing.rb"
+@opts={}
+Shellwords.split(@command_string).inspect=["ruby", "script/work_flow.rb", "--deserve", "test/data_sources/Repository//testing.rb"]
+@errors="/usr/lib/ruby/1.9.1/test/unit.rb:167:in `block in non_options': file not found: test/data_sources/Repository//testing.rb (ArgumentError)\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:146:in `map!'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:146:in `non_options'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:207:in `non_options'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:52:in `process_args'\n\tfrom /usr/lib/ruby/vendor_ruby/minitest/unit.rb:946:in `_run'\n\tfrom /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'\n"
+@process_status=#<Process::Status: pid 13558 exit 1>
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr f8:0f:41:d2:26:c7  
+          inet addr:172.31.41.166  Bcast:172.31.41.255  Mask:255.255.255.0
+          inet6 addr: fe80::fa0f:41ff:fed2:26c7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4959633 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4003710 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4630389960 (4.3 GiB)  TX bytes:1295998501 (1.2 GiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:187020 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:187020 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:60028073 (57.2 MiB)  TX bytes:60028073 (57.2 MiB)
+
+wlan0     Link encap:Ethernet  HWaddr 30:10:b3:40:00:e5  
+          inet addr:192.168.1.221  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fde9:7883:b343:0:bd1b:6a31:f2ae:706e/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:ec4c:6f78:b566:995/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:fdcf:6bcb:a8e9:1130/64 Scope:Global
+          inet6 addr: fde9:7883:b343::20b/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:8cba:5bb5:9c5e:fd4c/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:753f:dada:e085:3ffe/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:f00f:afa2:b656:8c58/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:3210:b3ff:fe40:e5/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:98f8:56fd:eb39:a57c/64 Scope:Global
+          inet6 addr: fe80::3210:b3ff:fe40:e5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:145699 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:165608 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:30035580 (28.6 MiB)  TX bytes:18075222 (17.2 MiB)
+
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+[:deserve]
+["test/data_sources/Repository//testing.rb"]
+nil
+deserving branch=edited
+$ git status --short --branch
+## master...origin/master [ahead 22]
+ M app/models/file_pattern.rb
+ M app/models/repository.rb
+ M log/unit/1.9/1.9.3p194/normal/work_flow.log
+ M log/unit/1.9/1.9.3p194/quiet/work_flow.log
+ M log/unit/1.9/1.9.3p194/verbose/work_flow.log
+## master...origin/master [ahead 22]
+ M app/models/file_pattern.rb
+ M app/models/repository.rb
+ M log/unit/1.9/1.9.3p194/normal/work_flow.log
+ M log/unit/1.9/1.9.3p194/quiet/work_flow.log
+ M log/unit/1.9/1.9.3p194/verbose/work_flow.log
+test/unit/work_flow_test.rb:249:in `new'
+test/unit/work_flow_test.rb:249:in `test_deserve_command'
+#<ShellCommands:0x00000002ecdf68>
+$ ruby test/data_sources/Repository//testing.rb
+@env={}
+@command="ruby test/data_sources/Repository//testing.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Shellwords.split(@command_string).inspect=["ruby", "test/data_sources/Repository//testing.rb"]
+@errors="ruby: No such file or directory -- test/data_sources/Repository//testing.rb (LoadError)\n"
+@process_status=#<Process::Status: pid 13583 exit 1>
+test/unit/work_flow_test.rb:250:in `test_deserve_command'
+#<ShellCommands:0x00000002edb0a0>
+$ ruby -c test/data_sources/Repository//testing.rb
+@env={}
+@command="ruby -c test/data_sources/Repository//testing.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Shellwords.split(@command_string).inspect=["ruby", "-c", "test/data_sources/Repository//testing.rb"]
+@errors="ruby: No such file or directory -- test/data_sources/Repository//testing.rb (LoadError)\n"
+@process_status=#<Process::Status: pid 13587 exit 1>
+test/unit/work_flow_test.rb:250:in `test_deserve_command'
+#<ShellCommands:0x00000002ee01e0>
+.$ ruby test/data_sources/Repository//success.rb
+@env={}
+@command="ruby test/data_sources/Repository//success.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002eef168>
+$ ruby test/data_sources/Repository//single_test_fail.rb
+@env={}
+@command="ruby test/data_sources/Repository//single_test_fail.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+@process_status=#<Process::Status: pid 13595 exit 1>
+Run options: 
+
+# Running tests:
+
+E.
+
+Finished tests in 0.000806s, 2480.0080 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_fail(SingleFailTest):
+RuntimeError: 
+    test/data_sources/Repository//single_test_fail.rb:6:in `test_fail'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+2 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002efa018>
+$ ruby -c test/data_sources/Repository//single_test_fail.rb
+@env={}
+@command="ruby -c test/data_sources/Repository//single_test_fail.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Syntax OK
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002eff7e8>
+$ ruby test/data_sources/Repository//single_test_fail.rb -n test_initialize
+@env={}
+@command="ruby test/data_sources/Repository//single_test_fail.rb -n test_initialize"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Run options: -n test_initialize
+
+# Running tests:
+
+.
+
+Finished tests in 0.000607s, 1648.4024 tests/s, 0.0000 assertions/s.
+
+1 tests, 0 assertions, 0 failures, 0 errors, 0 skips
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002f04540>
+$ ruby test/data_sources/Repository//initialization_fail.rb
+@env={}
+@command="ruby test/data_sources/Repository//initialization_fail.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+@process_status=#<Process::Status: pid 13607 exit 1>
+Run options: 
+
+# Running tests:
+
+E
+
+Finished tests in 0.000770s, 1297.9866 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_initialize(InitializationFailTest):
+RuntimeError: 
+    test/data_sources/Repository//initialization_fail.rb:4:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002f0a508>
+$ ruby -c test/data_sources/Repository//initialization_fail.rb
+@env={}
+@command="ruby -c test/data_sources/Repository//initialization_fail.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Syntax OK
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002f10098>
+$ ruby test/data_sources/Repository//initialization_fail.rb -n test_initialize
+@env={}
+@command="ruby test/data_sources/Repository//initialization_fail.rb -n test_initialize"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+@process_status=#<Process::Status: pid 13615 exit 1>
+Run options: -n test_initialize
+
+# Running tests:
+
+E
+
+Finished tests in 0.000744s, 1343.7374 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_initialize(InitializationFailTest):
+RuntimeError: 
+    test/data_sources/Repository//initialization_fail.rb:4:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002f15e08>
+$ ruby test/data_sources/Repository//syntax_error.rb
+@env={}
+@command="ruby test/data_sources/Repository//syntax_error.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Shellwords.split(@command_string).inspect=["ruby", "test/data_sources/Repository//syntax_error.rb"]
+@errors="test/data_sources/Repository//syntax_error.rb:1: syntax error, unexpected tAMPER\n"
+@process_status=#<Process::Status: pid 13619 exit 1>
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002f1caf0>
+$ ruby -c test/data_sources/Repository//syntax_error.rb
+@env={}
+@command="ruby -c test/data_sources/Repository//syntax_error.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Shellwords.split(@command_string).inspect=["ruby", "-c", "test/data_sources/Repository//syntax_error.rb"]
+@errors="test/data_sources/Repository//syntax_error.rb:1: syntax error, unexpected tAMPER\n"
+@process_status=#<Process::Status: pid 13623 exit 1>
+test/unit/work_flow_test.rb:216:in `block in test_deserving_branch?'
+test/unit/work_flow_test.rb:214:in `each_pair'
+test/unit/work_flow_test.rb:214:in `test_deserving_branch?'
+#<ShellCommands:0x00000002f1a3e0>
+.$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:92:in `test_diff_command?'
+#<ShellCommands:0x00000002f2ab00>
+.$ git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:125:in `block in test_differences?'
+test/unit/work_flow_test.rb:124:in `each'
+test/unit/work_flow_test.rb:124:in `map'
+test/unit/work_flow_test.rb:124:in `test_differences?'
+#<ShellCommands:0x00000002f2e7c8>
+$ git diff --summary --shortstat master -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:125:in `block in test_differences?'
+test/unit/work_flow_test.rb:124:in `each'
+test/unit/work_flow_test.rb:124:in `map'
+test/unit/work_flow_test.rb:124:in `test_differences?'
+#<ShellCommands:0x00000002f342e0>
+$ git diff --summary --shortstat passed -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:125:in `block in test_differences?'
+test/unit/work_flow_test.rb:124:in `each'
+test/unit/work_flow_test.rb:124:in `map'
+test/unit/work_flow_test.rb:124:in `test_differences?'
+#<ShellCommands:0x00000002f32238>
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:129:in `test_differences?'
+#<ShellCommands:0x00000002f36b80>
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:129:in `test_differences?'
+#<ShellCommands:0x00000002f3bf18>
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:129:in `test_differences?'
+#<ShellCommands:0x00000002f40d88>
+..$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f3bb58>
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f38728>
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f34ba0>
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat testing -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f32620>
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat edited -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f2f880>
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f2c4a0>
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f2a060>
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f27860>
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f247a0>
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f224c8>
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f202b8>
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f1d4f0>
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f1a8b8>
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f182c0>
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f15e08>
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:185:in `test_goldilocks'
+#<ShellCommands:0x00000002f13798>
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002f03f28>
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002f01250>
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002efe208>
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat testing -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002efbad0>
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat edited -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ef93c0>
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ef5248>
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002eef118>
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002eeae10>
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ee64a0>
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ee39f8>
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ee0848>
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002edd8f0>
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002eda858>
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ed7c70>
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ed4fe8>
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:191:in `test_goldilocks'
+#<ShellCommands:0x00000002ed2220>
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002eb31b8>
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002eae4b0>
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002ea7e80>
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat testing -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002ea4708>
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat edited -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e9dd68>
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e9b338>
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e98818>
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e95b68>
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e93408>
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e8d800>
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e8aa10>
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e879f0>
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e84c00>
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e7fb38>
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e7b060>
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:193:in `test_goldilocks'
+#<ShellCommands:0x00000002e78810>
+.$ ruby  script/work_flow.rb --help
+@env={}
+@command="ruby  script/work_flow.rb --help"
+@opts={}
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr f8:0f:41:d2:26:c7  
+          inet addr:172.31.41.166  Bcast:172.31.41.255  Mask:255.255.255.0
+          inet6 addr: fe80::fa0f:41ff:fed2:26c7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4959634 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4003712 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4630390178 (4.3 GiB)  TX bytes:1295998711 (1.2 GiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:187020 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:187020 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:60028073 (57.2 MiB)  TX bytes:60028073 (57.2 MiB)
+
+wlan0     Link encap:Ethernet  HWaddr 30:10:b3:40:00:e5  
+          inet addr:192.168.1.221  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fde9:7883:b343:0:bd1b:6a31:f2ae:706e/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:ec4c:6f78:b566:995/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:fdcf:6bcb:a8e9:1130/64 Scope:Global
+          inet6 addr: fde9:7883:b343::20b/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:8cba:5bb5:9c5e:fd4c/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:753f:dada:e085:3ffe/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:f00f:afa2:b656:8c58/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:3210:b3ff:fe40:e5/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:98f8:56fd:eb39:a57c/64 Scope:Global
+          inet6 addr: fe80::3210:b3ff:fe40:e5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:145699 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:165608 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:30035580 (28.6 MiB)  TX bytes:18075222 (17.2 MiB)
+
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+Usage: work_flow.rb --<command> files
+    -e, --[no-]edit                  Edit related files and versions in diffuse
+    -d, --[no-]merge-down            Test downgraded related files in git branches
+    -u, --[no-]upgrade               Test upgraded related files in git branches
+    -t, --[no-]test                  Test, commit. 
+    -b, --[no-]best                  Best. Merge down, no conflicts. 
+    -m, --[no-]emacs                 Emacs unit edit. 
+    -x, --[no-]execute               Unit test and edit. 
+    -p, --[no-]passed                Stage file to passed. 
+    -g, --[no-]testing               Stage file to testing. 
+    -i, --[no-]edited                Stage file to edited. 
+    -v, --[no-]deserve               Stage file to edited. 
+    -a, --[no-]all                   All files tested 
+    -n, --[no-]minimal               edit with minimal comparison. 
+    -l, --[no-]loop                  Test, commit, edit, loop.
+    -s, --[no-]split                 split off new class and edit
+    -r, --[no-]related               Related files
+    -c                               merge_conflict_recovery
+        --[no-]merge-conflict-recovery
+test/unit/work_flow_test.rb:243:in `new'
+test/unit/work_flow_test.rb:243:in `test_help_command'
+#<ShellCommands:0x000000027cfce8>
+.@path=/home/greg/Desktop/src/Open-Table-Explorer/
+...$ git shortlog testing..passed
+@env={}
+@command="git shortlog testing..passed"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Greg Lawson (9):
+      fixup! test_environment
+      fixup! WorkFlow
+      fixup! stream_tree
+      fixup! test_environment
+      merge passed into testing?
+      fixup! work_flow
+      fixup! work_flow
+      fixup! shell_command
+      fixup! parse
+
+GregLawson (4):
+      fixup! stream_tree
+      fixup! stream_tree
+      fixup! parse
+      fixup! parse
+
+test/unit/work_flow_test.rb:232:in `test_merge'
+#<ShellCommands:0x000000021ca9d8>
+$ git shortlog edited..testing
+@env={}
+@command="git shortlog edited..testing"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+Greg Lawson (2):
+      fixup! work_flow
+      fixup! work_flow
+
+test/unit/work_flow_test.rb:233:in `test_merge'
+#<ShellCommands:0x000000022085f8>
+......$ git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:135:in `test_scan_verions?'
+#<ShellCommands:0x0000000286f360>
+$ git diff --summary --shortstat master -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:135:in `test_scan_verions?'
+#<ShellCommands:0x000000025f4180>
+$ git diff --summary --shortstat passed -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:135:in `test_scan_verions?'
+#<ShellCommands:0x00000002778ec0>
+$ git diff --summary --shortstat testing -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat testing -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:135:in `test_scan_verions?'
+#<ShellCommands:0x000000026252f8>
+$ git diff --summary --shortstat edited -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat edited -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:135:in `test_scan_verions?'
+#<ShellCommands:0x00000002750e20>
+$ git diff --summary --shortstat stash -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat stash -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:135:in `test_scan_verions?'
+#<ShellCommands:0x000000028491b0>
+...$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:108:in `test_working_different_from?'
+#<ShellCommands:0x000000027fe048>
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat master -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:109:in `test_working_different_from?'
+#<ShellCommands:0x000000027fbbb8>
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat passed -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:110:in `test_working_different_from?'
+#<ShellCommands:0x000000029687d0>
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat testing -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:111:in `test_working_different_from?'
+#<ShellCommands:0x0000000296e810>
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat edited -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+test/unit/work_flow_test.rb:112:in `test_working_different_from?'
+#<ShellCommands:0x0000000296c588>
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+@env={}
+@command="git diff --summary --shortstat stash -- test/unit/minimal2_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:113:in `test_working_different_from?'
+#<ShellCommands:0x0000000297a728>
+$ git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb
+@env={}
+@command="git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb"
+@opts={:chdir=>"/home/greg/Desktop/src/Open-Table-Explorer/"}
+test/unit/work_flow_test.rb:115:in `test_working_different_from?'
+#<ShellCommands:0x00000002977dc0>
+.
+
+Finished tests in 3.103933s, 10.3095 tests/s, 393.6940 assertions/s.
+
+32 tests, 1222 assertions, 0 failures, 0 errors, 0 skips

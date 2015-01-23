@@ -1,0 +1,447 @@
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr f8:0f:41:d2:26:c7  
+          inet addr:172.31.41.166  Bcast:172.31.41.255  Mask:255.255.255.0
+          inet6 addr: fe80::fa0f:41ff:fed2:26c7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4958259 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4002890 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4628607592 (4.3 GiB)  TX bytes:1295922290 (1.2 GiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:187014 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:187014 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:60026097 (57.2 MiB)  TX bytes:60026097 (57.2 MiB)
+
+wlan0     Link encap:Ethernet  HWaddr 30:10:b3:40:00:e5  
+          inet addr:192.168.1.221  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fde9:7883:b343:0:bd1b:6a31:f2ae:706e/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:ec4c:6f78:b566:995/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:fdcf:6bcb:a8e9:1130/64 Scope:Global
+          inet6 addr: fde9:7883:b343::20b/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:8cba:5bb5:9c5e:fd4c/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:753f:dada:e085:3ffe/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:f00f:afa2:b656:8c58/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:3210:b3ff:fe40:e5/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:98f8:56fd:eb39:a57c/64 Scope:Global
+          inet6 addr: fe80::3210:b3ff:fe40:e5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:145695 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:165597 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:30034946 (28.6 MiB)  TX bytes:18074096 (17.2 MiB)
+
+Run options: 
+
+# Running tests:
+
+$ git status --short --branch
+## master...origin/master [ahead 22]
+ M app/models/file_pattern.rb
+ M app/models/repository.rb
+ M log/unit/1.9/1.9.3p194/normal/work_flow.log
+ M log/unit/1.9/1.9.3p194/quiet/work_flow.log
+.....$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+.......$ ruby  script/work_flow.rb --deserve test/data_sources/Repository//testing.rb
+@errors="/usr/lib/ruby/1.9.1/test/unit.rb:167:in `block in non_options': file not found: test/data_sources/Repository//testing.rb (ArgumentError)\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:146:in `map!'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:146:in `non_options'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:207:in `non_options'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:52:in `process_args'\n\tfrom /usr/lib/ruby/vendor_ruby/minitest/unit.rb:946:in `_run'\n\tfrom /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'\n\tfrom /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'\n"
+@process_status=#<Process::Status: pid 13036 exit 1>
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr f8:0f:41:d2:26:c7  
+          inet addr:172.31.41.166  Bcast:172.31.41.255  Mask:255.255.255.0
+          inet6 addr: fe80::fa0f:41ff:fed2:26c7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4958260 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4002892 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4628607810 (4.3 GiB)  TX bytes:1295922500 (1.2 GiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:187014 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:187014 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:60026097 (57.2 MiB)  TX bytes:60026097 (57.2 MiB)
+
+wlan0     Link encap:Ethernet  HWaddr 30:10:b3:40:00:e5  
+          inet addr:192.168.1.221  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fde9:7883:b343:0:bd1b:6a31:f2ae:706e/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:ec4c:6f78:b566:995/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:fdcf:6bcb:a8e9:1130/64 Scope:Global
+          inet6 addr: fde9:7883:b343::20b/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:8cba:5bb5:9c5e:fd4c/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:753f:dada:e085:3ffe/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:f00f:afa2:b656:8c58/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:3210:b3ff:fe40:e5/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:98f8:56fd:eb39:a57c/64 Scope:Global
+          inet6 addr: fe80::3210:b3ff:fe40:e5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:145695 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:165597 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:30034946 (28.6 MiB)  TX bytes:18074096 (17.2 MiB)
+
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+[:deserve]
+["test/data_sources/Repository//testing.rb"]
+nil
+deserving branch=edited
+$ git status --short --branch
+## master...origin/master [ahead 22]
+ M app/models/file_pattern.rb
+ M app/models/repository.rb
+ M log/unit/1.9/1.9.3p194/normal/work_flow.log
+ M log/unit/1.9/1.9.3p194/quiet/work_flow.log
+## master...origin/master [ahead 22]
+ M app/models/file_pattern.rb
+ M app/models/repository.rb
+ M log/unit/1.9/1.9.3p194/normal/work_flow.log
+ M log/unit/1.9/1.9.3p194/quiet/work_flow.log
+$ ruby test/data_sources/Repository//testing.rb
+@errors="ruby: No such file or directory -- test/data_sources/Repository//testing.rb (LoadError)\n"
+@process_status=#<Process::Status: pid 13062 exit 1>
+$ ruby -c test/data_sources/Repository//testing.rb
+@errors="ruby: No such file or directory -- test/data_sources/Repository//testing.rb (LoadError)\n"
+@process_status=#<Process::Status: pid 13066 exit 1>
+.$ ruby test/data_sources/Repository//success.rb
+$ ruby test/data_sources/Repository//single_test_fail.rb
+@process_status=#<Process::Status: pid 13074 exit 1>
+Run options: 
+
+# Running tests:
+
+E.
+
+Finished tests in 0.000805s, 2485.9667 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_fail(SingleFailTest):
+RuntimeError: 
+    test/data_sources/Repository//single_test_fail.rb:6:in `test_fail'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+2 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+$ ruby -c test/data_sources/Repository//single_test_fail.rb
+Syntax OK
+$ ruby test/data_sources/Repository//single_test_fail.rb -n test_initialize
+Run options: -n test_initialize
+
+# Running tests:
+
+.
+
+Finished tests in 0.000600s, 1666.2334 tests/s, 0.0000 assertions/s.
+
+1 tests, 0 assertions, 0 failures, 0 errors, 0 skips
+$ ruby test/data_sources/Repository//initialization_fail.rb
+@process_status=#<Process::Status: pid 13086 exit 1>
+Run options: 
+
+# Running tests:
+
+E
+
+Finished tests in 0.000779s, 1284.5199 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_initialize(InitializationFailTest):
+RuntimeError: 
+    test/data_sources/Repository//initialization_fail.rb:4:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+$ ruby -c test/data_sources/Repository//initialization_fail.rb
+Syntax OK
+$ ruby test/data_sources/Repository//initialization_fail.rb -n test_initialize
+@process_status=#<Process::Status: pid 13094 exit 1>
+Run options: -n test_initialize
+
+# Running tests:
+
+E
+
+Finished tests in 0.000750s, 1332.5232 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_initialize(InitializationFailTest):
+RuntimeError: 
+    test/data_sources/Repository//initialization_fail.rb:4:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+$ ruby test/data_sources/Repository//syntax_error.rb
+@errors="test/data_sources/Repository//syntax_error.rb:1: syntax error, unexpected tAMPER\n"
+@process_status=#<Process::Status: pid 13098 exit 1>
+$ ruby -c test/data_sources/Repository//syntax_error.rb
+@errors="test/data_sources/Repository//syntax_error.rb:1: syntax error, unexpected tAMPER\n"
+@process_status=#<Process::Status: pid 13102 exit 1>
+.$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+.$ git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat master -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat passed -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+..$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat origin/master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~1 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~2 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~3 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~4 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~5 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~6 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~7 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~8 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~9 -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash~10 -- test/unit/minimal2_test.rb
+.$ ruby  script/work_flow.rb --help
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr f8:0f:41:d2:26:c7  
+          inet addr:172.31.41.166  Bcast:172.31.41.255  Mask:255.255.255.0
+          inet6 addr: fe80::fa0f:41ff:fed2:26c7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4958260 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4002892 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4628607810 (4.3 GiB)  TX bytes:1295922500 (1.2 GiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:187014 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:187014 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:60026097 (57.2 MiB)  TX bytes:60026097 (57.2 MiB)
+
+wlan0     Link encap:Ethernet  HWaddr 30:10:b3:40:00:e5  
+          inet addr:192.168.1.221  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fde9:7883:b343:0:bd1b:6a31:f2ae:706e/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:ec4c:6f78:b566:995/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:fdcf:6bcb:a8e9:1130/64 Scope:Global
+          inet6 addr: fde9:7883:b343::20b/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:8cba:5bb5:9c5e:fd4c/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:753f:dada:e085:3ffe/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:f00f:afa2:b656:8c58/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:3210:b3ff:fe40:e5/64 Scope:Global
+          inet6 addr: fde9:7883:b343:0:98f8:56fd:eb39:a57c/64 Scope:Global
+          inet6 addr: fe80::3210:b3ff:fe40:e5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:145695 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:165597 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:30034946 (28.6 MiB)  TX bytes:18074096 (17.2 MiB)
+
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+Usage: work_flow.rb --<command> files
+    -e, --[no-]edit                  Edit related files and versions in diffuse
+    -d, --[no-]merge-down            Test downgraded related files in git branches
+    -u, --[no-]upgrade               Test upgraded related files in git branches
+    -t, --[no-]test                  Test, commit. 
+    -b, --[no-]best                  Best. Merge down, no conflicts. 
+    -m, --[no-]emacs                 Emacs unit edit. 
+    -x, --[no-]execute               Unit test and edit. 
+    -p, --[no-]passed                Stage file to passed. 
+    -g, --[no-]testing               Stage file to testing. 
+    -i, --[no-]edited                Stage file to edited. 
+    -v, --[no-]deserve               Stage file to edited. 
+    -a, --[no-]all                   All files tested 
+    -n, --[no-]minimal               edit with minimal comparison. 
+    -l, --[no-]loop                  Test, commit, edit, loop.
+    -s, --[no-]split                 split off new class and edit
+    -r, --[no-]related               Related files
+    -c                               merge_conflict_recovery
+        --[no-]merge-conflict-recovery
+....$ git shortlog testing..passed
+Greg Lawson (9):
+      fixup! test_environment
+      fixup! WorkFlow
+      fixup! stream_tree
+      fixup! test_environment
+      merge passed into testing?
+      fixup! work_flow
+      fixup! work_flow
+      fixup! shell_command
+      fixup! parse
+
+GregLawson (4):
+      fixup! stream_tree
+      fixup! stream_tree
+      fixup! parse
+      fixup! parse
+
+$ git shortlog edited..testing
+Greg Lawson (2):
+      fixup! work_flow
+      fixup! work_flow
+
+......$ git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat master -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat passed -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat testing -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat edited -- test/long_test/repository_test.rb
+$ git diff --summary --shortstat stash -- test/long_test/repository_test.rb
+...$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat master -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat passed -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat testing -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat edited -- test/unit/minimal2_test.rb
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 test/unit/minimal2_test.rb
+$ git diff --summary --shortstat stash -- test/unit/minimal2_test.rb
+$ git diff --summary --shortstat origin/master -- test/long_test/repository_test.rb
+.
+
+Finished tests in 3.140700s, 10.1888 tests/s, 389.0853 assertions/s.
+
+32 tests, 1222 assertions, 0 failures, 0 errors, 0 skips
