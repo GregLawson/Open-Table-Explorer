@@ -107,19 +107,20 @@ def version_comparison(files = nil)
 end # version_comparison
 def diff_command?(filename, branch_index)
 	fail filename + ' does not exist.' if !File.exists?(filename)
-	diff_run = @repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- " + filename)
+	branch_string = WorkFlow.branch_symbol?(branch_index).to_s
+	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
+	diff_run = @repository.git_command(git_command)
 end # diff_command?
 def reflog?(filename)
 	@repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
 end # reflog?
 def last_change?(filename)
-		reflog?(filename).output.split("/n")[0].split(',')[0]
+	reflog?(filename).output.split("/n")[0].split(',')[0]
 end # last_change?
 # What happens to non-existant versions? returns nil Are they different? 
 # What do I want?
 def working_different_from?(filename, branch_index)
-	raise filename+" does not exist." if !File.exists?(filename)
-	diff_run=@repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
+	diff_run = diff_command?(filename, branch_index)
 	if diff_run.output == '' then
 		false # no difference
 	elsif diff_run.output.split("\n").size == 2 then
@@ -237,8 +238,8 @@ end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status=@repository.git_command('merge --no-commit '+source_branch.to_s)
-		if merge_status.output=="Automatic merge went well; stopped before committing as requested\n" then
+		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
+		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
 		else
 			if merge_status.success? then
 			else
@@ -248,7 +249,10 @@ def merge(target_branch, source_branch, interact=:interactive)
 		@repository.confirm_commit(interact)
 	end # safely_visit_branch
 end # merge
-def edit
+def edit(context = nil)
+	if context.nil? then
+	else
+	end # if
 	@repository.recent_test.puts if !@repository.recent_test.nil?
 	if @related_files.edit_files.empty? then
 		command_string = 'diffuse' + version_comparison([@specific_file]) + test_files
@@ -256,7 +260,7 @@ def edit
 		command_string = 'diffuse' + version_comparison + test_files
 	end # if
 	puts command_string if $VERBOSE
-	edit=@repository.shell_command(command_string)
+	edit = @repository.shell_command(command_string)
 	edit.assert_post_conditions
 end # edit
 def split(executable, new_base_name)
@@ -285,7 +289,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 	WorkFlow.merge_range(deserving_branch).each do |i|
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
-			merge(Branch_enhancement[i], Branch_enhancement[i-1])
+			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
 			merge_conflict_recovery
 			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
@@ -293,7 +297,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 end # merge_down
 def script_deserves_commit!(deserving_branch)
 	if working_different_from?($PROGRAM_NAME, 	WorkFlow.branch_index?(deserving_branch)) then
-		repository.stage_files(deserving_branch, related_files.tested_files($0))
+		repository.stage_files(deserving_branch, related_files.tested_files($PROGRAM_NAME))
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
@@ -330,7 +334,7 @@ def loop(executable = @related_files.model_test_pathname?)
 	begin
 		deserving_branch = test(executable)
 		merge_down(deserving_branch)
-		edit
+		edit('loop')
 		if @repository.something_to_commit? then
 			done = false
 		else
@@ -344,9 +348,9 @@ def loop(executable = @related_files.model_test_pathname?)
 		end # if
 	end until done
 end # test
-def unit_test(executable=@related_files.model_test_pathname?)
+def unit_test(executable = @related_files.model_test_pathname?)
 	begin
-		deserving_branch=deserving_branch?(executable)
+		deserving_branch = deserving_branch?(executable)
 		if @repository.recent_test.success? then
 			break
 		end # if
@@ -358,8 +362,8 @@ def unit_test(executable=@related_files.model_test_pathname?)
 #		if !@repository.something_to_commit? then
 #			@repository.confirm_branch_switch(deserving_branch)
 #		end #if
-		edit
-	end until !@repository.something_to_commit? 
+		edit('unit_test')
+	end until !@repository.something_to_commit?
 end # unit_test
 require_relative '../../test/assertions.rb'
 module Assertions
