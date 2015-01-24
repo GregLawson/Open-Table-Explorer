@@ -216,6 +216,13 @@ def assert_pre_conditions
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
+	path=File.expand_path($0)
+	assert_not_nil(path)
+	assert_not_empty(path)
+	assert(File.exists?(path))
+#	assert_not_empty(FilePattern.class_variables)
+#	assert_include(FilePattern.class_variables, :@@project_root_dir)
+#	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
 	message = "\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"

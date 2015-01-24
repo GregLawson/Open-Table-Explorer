@@ -33,6 +33,17 @@ def test_Constants
 	assert_match(Absolute_directory_regexp, Library.project_root_dir)
 #	assert_match(Relative_pathname_regexp, )
 end # Constants
+def test_executing_path?
+	squirrely_string = $PROGRAM_NAME
+	class_name = self.class.name.to_s
+	test_name = 'test_executing_path?'
+	extra_at_end = ' ' + class_name + '#' + test_name
+	extra_length = extra_at_end.length
+	assert_equal(37, extra_length)
+#	assert_equal(extra_at_end, squirrely_string[-extra_length..-1], squirrely_string)	
+#	assert_pathname_exists(squirrely_string[0..-(extra_length+2)], squirrely_string)
+#	assert_pathname_exists(FilePattern.executing_path?, FilePattern.executing_path?)
+end # executing_path?
 def test_path2model_name
 	path='test/long_test/rebuild_test.rb'
 #	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
@@ -113,10 +124,13 @@ def test_repository_dir?
 	assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
 end #repository_dir?
 def test_project_root_dir
-	path=File.expand_path($0)
+#	require 'optparse'
+	assert(File.exists?($PROGRAM_NAME), $PROGRAM_NAME + ' does not exist.')
+	assert(File.exists?($0), $0 + ' does not exist.')
+	path=File.expand_path($PROGRAM_NAME)
 	assert_not_nil(path)
 	assert_not_empty(path)
-	assert(File.exists?(path))
+	assert(File.exists?(path), path + ' does not exist.')
 	roots=FilePattern::Patterns.map do |p|
 		path=File.expand_path(p[:example_file])
 		matchData=Regexp.new(p[:prefix]).match(path)
@@ -184,13 +198,10 @@ def test_new_from_path
 	n.assert_pre_conditions
 	assert_equal(:file_pattern, FilePattern.new_from_path(__FILE__).unit_base_name)
 end # new_from_path
-include FilePattern::Assertions
-extend FilePattern::Assertions::ClassMethods
-#def test_class_assert_invariant
-#	FilePattern.assert_invariant
-#end # class_assert_invariant
-def test_path
 def test_initialize
+	n=FilePattern.new(Patterns[0])
+	n.assert_pre_conditions
+	file_pattern=n
 	FilePattern.assert_post_conditions
 	FilePattern.assert_pre_conditions
 	assert_equal(:file_pattern, Library.unit_base_name)
@@ -200,17 +211,16 @@ def test_initialize
 	Executable.assert_pre_conditions
 	Library.assert_pre_conditions
 end #initialize
+include FilePattern::Assertions
+extend FilePattern::Assertions::ClassMethods
+#def test_class_assert_invariant
+#	FilePattern.assert_invariant
+#end # class_assert_invariant
+def test_path
 end #path
 def test_parse_pathname_regexp
 end #parse_pathname_regexp
 def test_pathname_glob
-# :path, :pattern, :project_root_dir, :repository_dir, :unit_base_name
-	assert_not_nil(Library.project_root_dir)
-	assert_equal(:file_pattern, Library.unit_base_name)
-#	assert_equal(FilePattern.find_by_name(:model), Library.pattern)
-	assert_not_nil(Library.pattern[:prefix])
-	assert_not_nil(Library.pattern[:suffix])
-	assert_not_equal([], Dir[Library.pathname_glob('minimal[1-4]')])
 end #pathname_glob
 def test_relative_path
 end #relative_path
