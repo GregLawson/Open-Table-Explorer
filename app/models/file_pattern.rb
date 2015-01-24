@@ -38,6 +38,15 @@ Absolute_directory_regexp=Start_string*Directory_delimiter*Pathname_character_re
 end # Constants
 include Constants
 module ClassMethods
+def executing_path?
+	squirrely_string = $PROGRAM_NAME
+	class_name = self.name.to_s
+	test_name = 'test_executing_path?'
+	extra_at_end = ' ' + class_name + '#' + test_name	
+	extra_length = extra_at_end.length
+	regexp = Relative_pathname_regexp
+	squirrely_string[0..-(extra_length+2)]
+end # executing_path?
 def path2model_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	unit_base_name?(path).to_s.camelize.to_sym
@@ -46,9 +55,13 @@ def unit_base_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
 	matched_pattern = find_from_path(path)
-	basename=File.basename(path)
-	name_length=basename.size-matched_pattern[:suffix].size
-	basename[0,name_length].to_sym
+	if matched_pattern.nil? then
+		nil
+	else
+		basename=File.basename(path)
+		name_length = basename.size - matched_pattern[:suffix].size
+		basename[0,name_length].to_sym
+	end # if
 end # unit_base_name
 # searches up pathname for .git sub-directory
 # returns nil if not in a git repository
