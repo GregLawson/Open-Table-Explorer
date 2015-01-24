@@ -55,7 +55,7 @@ def unit_base_name?(path=$0)
 	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
 	path=File.expand_path(path)
 	matched_pattern = find_from_path(path)
-	raise 'matched_pattern is nil for '+path if matched_pattern.nil?
+	fail Exception.new('matched_pattern is nil for ' + path) if matched_pattern.nil?
 	basename=File.basename(path)
 	name_length = basename.size - matched_pattern[:suffix].size
 	basename[0,name_length].to_sym
