@@ -115,8 +115,23 @@ end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def error_score?(executable=@related_files.model_test_pathname?)
-	@recent_test=shell_command("ruby "+executable)
+def error_score?(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	@unit = Unit.new_from_path?(executable)
+	@log_path = 'log/unit/' + minor_version
+	@log_path += '/' + patch_version
+	@log_path += '/' + logging.to_s
+	@log_path += '/' + 'work_flow' + '.log'
+	case logging 
+	when :quiet then @ruby_test_string = 'ruby -v -W0 '
+	when :normal then @ruby_test_string = 'ruby -v -W1 '
+	when :verbose then @ruby_test_string = 'ruby -v -W2 '
+	else fail Exception.new(logging + ' is not a valid logging type.')
+	end # case
+	@ruby_test_string += executable
+	@recent_test=shell_command(@ruby_test_string)
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		0
