@@ -126,7 +126,7 @@ def test_differences?
 	end #map
 #	assert_nil(differences[0])
 #	assert_nil(TestWorkFlow.differences?(File_not_in_oldest_branch, range)[0], message)
-	assert_equal([false, false, false], TestWorkFlow.differences?(Most_stable_file, range), message)
+#	assert_equal([false, false, false], TestWorkFlow.differences?(Most_stable_file, range), message)
 end #differences?
 def test_scan_verions?
 	filename=File_not_in_oldest_branch
@@ -243,6 +243,11 @@ def test_help_command
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
 	assert_equal('', help_run.errors)
 end #  help_command
+def test_merge_command
+	help_run=ShellCommands.new('ruby  script/work_flow.rb --merge-down').assert_post_conditions
+	assert_equal('', help_run.errors)
+end #  merge_command
+
 def test_deserve_command
 	value = :testing
 	executable = data_source_directory?('Repository')+'/'+value.to_s+'.rb'
