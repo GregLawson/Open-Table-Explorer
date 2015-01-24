@@ -83,7 +83,7 @@ end # Examples
 end # GraphPath
 
 # Connectivity
-module Connectivity
+class Connectivity
 module ClassMethods
 def ref (tree)
 		Node.new(node: tree, graph_type: self)
@@ -172,10 +172,15 @@ end # inspect_nonterminal?
 def inspect_recursive(node = @node, &inspect_proc)
 	if !block_given? then
 		inspect_proc = proc do |node, depth, terminal|
-			ret = node.graph_type.inspect_nonterminal?(node.node)
+			ret = case terminal
+			when true then	'terminal'
+			when false then 'nonterminal'
+			when nil then 'terminal'
+			else 'unknown'
+			end # case
 			ret += '[' + depth.to_s + ']'
 			ret += ', ' 
-			ret += node.graph_type.inspect_node(node.node)
+	ret += node.graph_type.inspect_node(node.node)
 		end # Tree_node_format
 	end # if
 	ret = map_recursive(node, &inspect_proc)
@@ -198,16 +203,10 @@ def assert_pre_conditions(message='')
 	assert_include(self.ancestors, Connectivity)
 #	assert_equal(self.ancestors, [Connectivity])
 #	assert_equal(self.included_modules, [], message)
-	assert_empty(self.methods(false), message)
-	assert_empty(self.methods(false), message)
 	assert_include(Connectivity.ancestors, Connectivity)
-	assert_equal(Connectivity.ancestors, [Connectivity])
-	assert_equal(Connectivity.included_modules, [], message)
-	assert_empty(Connectivity.methods(false), message)
 	assert_empty(Connectivity::ClassMethods.methods(false), message)
 	assert_include(Connectivity::ClassMethods.instance_methods(false), :each_pair)
 	assert_include(Connectivity::ClassMethods.instance_methods(false), :ref)
-	assert_empty(Connectivity.methods(false))
 	assert_empty(Connectivity.instance_methods(false))
 	assert_not_include(Connectivity.methods(false), :each_pair)
 	assert_include(Connectivity.methods, :each_pair)
@@ -230,7 +229,12 @@ Node_format = proc do |e|
 	e.inspect
 end # Node_format
 Tree_node_format = proc do |node, depth, terminal|
-	ret = node.graph_type.inspect_nonterminal?(node.node)
+	ret = case terminal
+	when true then	'terminal'
+	when false then 'nonterminal'
+	when nil then 'terminal'
+	else 'unknown'
+	end # case
 	ret += '[' + depth.to_s + ']'
 	ret += ', ' 
 	ret += node.graph_type.inspect_node(node.node)
@@ -244,27 +248,26 @@ Son_nested_array = [2, [3], 4]
 Grandchildren_nested_array = [[3]]
 Grandson_nested_array = 3
 Tree_node_root = 'nonterminal[0], [1, [2, [3], 4], 5]'
-Grandson_nested_array_map = "leaf typed[2], 3"
+Grandson_nested_array_map = "terminal[2], 3"
 Son_nested_array_map = ["nonterminal[1], [2, [3], 4]",
-   ["leaf typed[2], 2",
-    ["nonterminal[2], [3]", ["leaf typed[3], 3"]],
-    "leaf typed[2], 4"]]
+   ["terminal[2], 2",
+    ["nonterminal[2], [3]", ["terminal[3], 3"]],
+    "terminal[2], 4"]]
 Nested_array_map = ["nonterminal[0], [1, [2, [3], 4], 5]",
-   ["leaf typed[1], 1",
+   ["terminal[1], 1",
     ["nonterminal[1], [2, [3], 4]",
-     ["leaf typed[2], 2",
-      ["nonterminal[2], [3]", ["leaf typed[3], 3"]],
-      "leaf typed[2], 4"]],
-    "leaf typed[1], 5"]]
+     ["terminal[2], 2",
+      ["nonterminal[2], [3]", ["terminal[3], 3"]],
+      "terminal[2], 4"]],
+    "terminal[1], 5"]]
 Example_hash = {name: 'Fred', salary: 10, department: :Engineering}
 Example_tuples = [Example_hash, {name: 'Bob', salary: 11}]
 Example_department = {department: :Engineering, manager: 'Bob'}
 Example_database = {employees: Example_tuples, departments: Example_department}
 end # Examples
 end # Connectivity
-Connectivity.assert_post_conditions
 
-module NestedArrayType
+class NestedArrayType < Connectivity
 module ClassMethods
 def children?(node)
 	children_if_exist?(node, :to_a)
@@ -298,8 +301,7 @@ module Examples
 end # Examples
 include Examples
 end # NestedArrayType
-module HashConnectivity
-include Connectivity
+class HashConnectivity < Connectivity
 end # HashConnectivity
 
 class Node

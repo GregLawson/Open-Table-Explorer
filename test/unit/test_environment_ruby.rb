@@ -8,3 +8,5 @@
 require 'test/unit'
 TestCase=Test::Unit::TestCase
 #AssertionFailedError=Test::Unit::AssertionFailedError
+AssertionFailedError = RuntimeError
+#AssertionFailedError = MiniTest::Assertion
