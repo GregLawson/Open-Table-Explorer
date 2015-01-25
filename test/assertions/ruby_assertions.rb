@@ -396,6 +396,7 @@ def assert_pathname_exists(pathname, message='')
 	assert(File.exists?(File.expand_path(pathname)), message+"File.exists?(File.expand_path(pathname))=#{File.exists?(File.expand_path(pathname)).inspect}")
 end #assert_pathname_exists
 def assert_data_file(pathname, message='')
+	message += 'pathname = ' + "'" + pathname + "'"
 	assert_pathname_exists(pathname, message)
 	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it aa directory?")
 	assert_not_nil(File.size?(pathname), message)
