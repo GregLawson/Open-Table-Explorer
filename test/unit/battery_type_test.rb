@@ -5,9 +5,8 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment.rb'
 class BatteryTypeTest < ActiveSupport::TestCase
-set_class_variables
 def test_initialize
 end #initialize
 def test_all
