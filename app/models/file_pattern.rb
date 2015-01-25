@@ -145,11 +145,10 @@ def path?(pattern, unit_base_name)
 	pattern[:prefix]+unit_base_name.to_s+pattern[:suffix]
 end # path?
 #returns Array of all possible pathnames for a unit_base_name
-def pathnames?(model_basename)
-#	raise "project_root_dir" if FilePattern.class_variable_get(:@@project_root_dir).nil?
-	raise "model_basename" if model_basename.nil?
-	FilePattern::Constants::All.map do |p|
-		p.path?(model_basename)
+def pathnames?(unit_base_name)
+	raise "unit_base_name" if unit_base_name.nil?
+	Constants::Patterns.map do |p|
+		path?(p, unit_base_name)
 	end #
 end #pathnames
 def new_from_path(path)
@@ -270,6 +269,6 @@ DCT_filename='script/dct.rb'
 SELF_Model=__FILE__
 SELF_Test=$0
 #SELF=FilePattern.new_from_path(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
-Data_source_example='test/data_sources/tax_form/2012/examples_and_templates/US_1040/US_1040_example_sysout.txt'
+Data_source_example='test/data_sources/repository/success.rb'
 end #Examples
 end #FilePattern
