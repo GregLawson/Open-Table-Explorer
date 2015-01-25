@@ -3,8 +3,16 @@ Run options:
 
 # Running tests:
 
+<<<<<<< HEAD
 .....................
 
 Finished tests in 0.032223s, 651.7155 tests/s, 6393.0190 assertions/s.
 
 21 tests, 206 assertions, 0 failures, 0 errors, 0 skips
+=======
+...................
+
+Finished tests in 0.025343s, 749.7005 tests/s, 8128.3314 assertions/s.
+
+19 tests, 206 assertions, 0 failures, 0 errors, 0 skips
+>>>>>>> passed
