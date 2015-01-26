@@ -113,8 +113,8 @@ end #current_branch_name
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
-		recent_test=This_code_repository.shell_command("ruby "+executable)
-		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
+	recent_test=This_code_repository.shell_command("ruby "+executable)
+	assert_equal(1, recent_test.process_status.exitstatus, recent_test.inspect)
 		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(10000, This_code_repository.error_score?(executable))
@@ -128,7 +128,7 @@ def test_error_score?
 	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
 #	This_code_repository.assert_deserving_branch(:passed, executable)
 	Error_classification.each_pair do |key, value|
-		executable=data_source_directory?+'/'+value.to_s+'.rb'
+		executable = Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
 	end #each
 end #error_score
