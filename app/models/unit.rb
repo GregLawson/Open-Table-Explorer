@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2013 by Greg Lawson                                      
+#    Copyright (C) 2012-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -32,7 +32,7 @@ def initialize(model_class_name=FilePattern.path2model_name?,
 	else
 		@project_root_dir= project_root_dir  #not nil
 	end #
-	@model_basename=@model_class_name.to_s.underscore.to_sym
+	@model_basename = @model_class_name.to_s.underscore.to_sym
 	raise "@model_basename" if @model_basename.nil?
 	@edit_files, not_files=pathnames?.partition do |p|
 		File.file?(p)
