@@ -83,8 +83,8 @@ end #if
 # good enough for testing; no syntax error
 #scripting_workflow.script_deserves_commit!(:testing)
 
-pp commands
-pp ARGV
+pp commands if $VERBOSE
+pp ARGV if $VERBOSE
 
 case ARGV.size # paths after switch removal?
 when 0 then # scite testing defaults command and file
@@ -138,11 +138,11 @@ commands.each do |c|
 			$stdout.puts  'deserving branch='+deserving_branch.to_s
 		when :minimal then work_flow.minimal_edit
 		when :related then
-			puts work_flow.related_files.inspect
+			puts work_flow.related_files.edit_files.join("\n")
 			puts "diffuse"+ work_flow.version_comparison + work_flow.test_files + work_flow.minimal_comparison? if $VERBOSE
 		end #case
 #		scripting_workflow.script_deserves_commit!(:passed)
-		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
+#		$stdout.puts work_flow.repository.git_command('status --short --branch').inspect
 	end #each
 	end #case
 end #each

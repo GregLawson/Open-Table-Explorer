@@ -219,7 +219,6 @@ def test_deserving_branch?
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_score=TestWorkFlow.repository.error_score?(executable)
 #		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
->>>>>>> passed
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		error_classifications<<error_classification
 		branch_compression = Deserving_commit_to_branch[error_classification]
