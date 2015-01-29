@@ -1,0 +1,1448 @@
+COMMAND     PID   TID        USER   FD      TYPE     DEVICE SIZE/OFF    NODE NAME
+init          1              root  cwd   unknown                             /proc/1/cwd (readlink: Permission denied)
+init          1              root  rtd   unknown                             /proc/1/root (readlink: Permission denied)
+init          1              root  txt   unknown                             /proc/1/exe (readlink: Permission denied)
+init          1              root NOFD                                       /proc/1/fd (opendir: Permission denied)
+kthreadd      2              root  cwd   unknown                             /proc/2/cwd (readlink: Permission denied)
+kthreadd      2              root  rtd   unknown                             /proc/2/root (readlink: Permission denied)
+kthreadd      2              root  txt   unknown                             /proc/2/exe (readlink: Permission denied)
+kthreadd      2              root NOFD                                       /proc/2/fd (opendir: Permission denied)
+ksoftirqd     3              root  cwd   unknown                             /proc/3/cwd (readlink: Permission denied)
+ksoftirqd     3              root  rtd   unknown                             /proc/3/root (readlink: Permission denied)
+ksoftirqd     3              root  txt   unknown                             /proc/3/exe (readlink: Permission denied)
+ksoftirqd     3              root NOFD                                       /proc/3/fd (opendir: Permission denied)
+migration     6              root  cwd   unknown                             /proc/6/cwd (readlink: Permission denied)
+migration     6              root  rtd   unknown                             /proc/6/root (readlink: Permission denied)
+migration     6              root  txt   unknown                             /proc/6/exe (readlink: Permission denied)
+migration     6              root NOFD                                       /proc/6/fd (opendir: Permission denied)
+watchdog/     7              root  cwd   unknown                             /proc/7/cwd (readlink: Permission denied)
+watchdog/     7              root  rtd   unknown                             /proc/7/root (readlink: Permission denied)
+watchdog/     7              root  txt   unknown                             /proc/7/exe (readlink: Permission denied)
+watchdog/     7              root NOFD                                       /proc/7/fd (opendir: Permission denied)
+cpuset       13              root  cwd   unknown                             /proc/13/cwd (readlink: Permission denied)
+cpuset       13              root  rtd   unknown                             /proc/13/root (readlink: Permission denied)
+cpuset       13              root  txt   unknown                             /proc/13/exe (readlink: Permission denied)
+cpuset       13              root NOFD                                       /proc/13/fd (opendir: Permission denied)
+khelper      14              root  cwd   unknown                             /proc/14/cwd (readlink: Permission denied)
+khelper      14              root  rtd   unknown                             /proc/14/root (readlink: Permission denied)
+khelper      14              root  txt   unknown                             /proc/14/exe (readlink: Permission denied)
+khelper      14              root NOFD                                       /proc/14/fd (opendir: Permission denied)
+kdevtmpfs    15              root  cwd   unknown                             /proc/15/cwd (readlink: Permission denied)
+kdevtmpfs    15              root  rtd   unknown                             /proc/15/root (readlink: Permission denied)
+kdevtmpfs    15              root  txt   unknown                             /proc/15/exe (readlink: Permission denied)
+kdevtmpfs    15              root NOFD                                       /proc/15/fd (opendir: Permission denied)
+netns        16              root  cwd   unknown                             /proc/16/cwd (readlink: Permission denied)
+netns        16              root  rtd   unknown                             /proc/16/root (readlink: Permission denied)
+netns        16              root  txt   unknown                             /proc/16/exe (readlink: Permission denied)
+netns        16              root NOFD                                       /proc/16/fd (opendir: Permission denied)
+sync_supe    17              root  cwd   unknown                             /proc/17/cwd (readlink: Permission denied)
+sync_supe    17              root  rtd   unknown                             /proc/17/root (readlink: Permission denied)
+sync_supe    17              root  txt   unknown                             /proc/17/exe (readlink: Permission denied)
+sync_supe    17              root NOFD                                       /proc/17/fd (opendir: Permission denied)
+bdi-defau    18              root  cwd   unknown                             /proc/18/cwd (readlink: Permission denied)
+bdi-defau    18              root  rtd   unknown                             /proc/18/root (readlink: Permission denied)
+bdi-defau    18              root  txt   unknown                             /proc/18/exe (readlink: Permission denied)
+bdi-defau    18              root NOFD                                       /proc/18/fd (opendir: Permission denied)
+kintegrit    19              root  cwd   unknown                             /proc/19/cwd (readlink: Permission denied)
+kintegrit    19              root  rtd   unknown                             /proc/19/root (readlink: Permission denied)
+kintegrit    19              root  txt   unknown                             /proc/19/exe (readlink: Permission denied)
+kintegrit    19              root NOFD                                       /proc/19/fd (opendir: Permission denied)
+kblockd      20              root  cwd   unknown                             /proc/20/cwd (readlink: Permission denied)
+kblockd      20              root  rtd   unknown                             /proc/20/root (readlink: Permission denied)
+kblockd      20              root  txt   unknown                             /proc/20/exe (readlink: Permission denied)
+kblockd      20              root NOFD                                       /proc/20/fd (opendir: Permission denied)
+khungtask    22              root  cwd   unknown                             /proc/22/cwd (readlink: Permission denied)
+khungtask    22              root  rtd   unknown                             /proc/22/root (readlink: Permission denied)
+khungtask    22              root  txt   unknown                             /proc/22/exe (readlink: Permission denied)
+khungtask    22              root NOFD                                       /proc/22/fd (opendir: Permission denied)
+kswapd0      23              root  cwd   unknown                             /proc/23/cwd (readlink: Permission denied)
+kswapd0      23              root  rtd   unknown                             /proc/23/root (readlink: Permission denied)
+kswapd0      23              root  txt   unknown                             /proc/23/exe (readlink: Permission denied)
+kswapd0      23              root NOFD                                       /proc/23/fd (opendir: Permission denied)
+ksmd         24              root  cwd   unknown                             /proc/24/cwd (readlink: Permission denied)
+ksmd         24              root  rtd   unknown                             /proc/24/root (readlink: Permission denied)
+ksmd         24              root  txt   unknown                             /proc/24/exe (readlink: Permission denied)
+ksmd         24              root NOFD                                       /proc/24/fd (opendir: Permission denied)
+khugepage    25              root  cwd   unknown                             /proc/25/cwd (readlink: Permission denied)
+khugepage    25              root  rtd   unknown                             /proc/25/root (readlink: Permission denied)
+khugepage    25              root  txt   unknown                             /proc/25/exe (readlink: Permission denied)
+khugepage    25              root NOFD                                       /proc/25/fd (opendir: Permission denied)
+fsnotify_    26              root  cwd   unknown                             /proc/26/cwd (readlink: Permission denied)
+fsnotify_    26              root  rtd   unknown                             /proc/26/root (readlink: Permission denied)
+fsnotify_    26              root  txt   unknown                             /proc/26/exe (readlink: Permission denied)
+fsnotify_    26              root NOFD                                       /proc/26/fd (opendir: Permission denied)
+crypto       27              root  cwd   unknown                             /proc/27/cwd (readlink: Permission denied)
+crypto       27              root  rtd   unknown                             /proc/27/root (readlink: Permission denied)
+crypto       27              root  txt   unknown                             /proc/27/exe (readlink: Permission denied)
+crypto       27              root NOFD                                       /proc/27/fd (opendir: Permission denied)
+khubd       115              root  cwd   unknown                             /proc/115/cwd (readlink: Permission denied)
+khubd       115              root  rtd   unknown                             /proc/115/root (readlink: Permission denied)
+khubd       115              root  txt   unknown                             /proc/115/exe (readlink: Permission denied)
+khubd       115              root NOFD                                       /proc/115/fd (opendir: Permission denied)
+ata_sff     140              root  cwd   unknown                             /proc/140/cwd (readlink: Permission denied)
+ata_sff     140              root  rtd   unknown                             /proc/140/root (readlink: Permission denied)
+ata_sff     140              root  txt   unknown                             /proc/140/exe (readlink: Permission denied)
+ata_sff     140              root NOFD                                       /proc/140/fd (opendir: Permission denied)
+scsi_eh_0   158              root  cwd   unknown                             /proc/158/cwd (readlink: Permission denied)
+scsi_eh_0   158              root  rtd   unknown                             /proc/158/root (readlink: Permission denied)
+scsi_eh_0   158              root  txt   unknown                             /proc/158/exe (readlink: Permission denied)
+scsi_eh_0   158              root NOFD                                       /proc/158/fd (opendir: Permission denied)
+scsi_eh_1   159              root  cwd   unknown                             /proc/159/cwd (readlink: Permission denied)
+scsi_eh_1   159              root  rtd   unknown                             /proc/159/root (readlink: Permission denied)
+scsi_eh_1   159              root  txt   unknown                             /proc/159/exe (readlink: Permission denied)
+scsi_eh_1   159              root NOFD                                       /proc/159/fd (opendir: Permission denied)
+scsi_eh_2   160              root  cwd   unknown                             /proc/160/cwd (readlink: Permission denied)
+scsi_eh_2   160              root  rtd   unknown                             /proc/160/root (readlink: Permission denied)
+scsi_eh_2   160              root  txt   unknown                             /proc/160/exe (readlink: Permission denied)
+scsi_eh_2   160              root NOFD                                       /proc/160/fd (opendir: Permission denied)
+scsi_eh_3   161              root  cwd   unknown                             /proc/161/cwd (readlink: Permission denied)
+scsi_eh_3   161              root  rtd   unknown                             /proc/161/root (readlink: Permission denied)
+scsi_eh_3   161              root  txt   unknown                             /proc/161/exe (readlink: Permission denied)
+scsi_eh_3   161              root NOFD                                       /proc/161/fd (opendir: Permission denied)
+scsi_eh_4   162              root  cwd   unknown                             /proc/162/cwd (readlink: Permission denied)
+scsi_eh_4   162              root  rtd   unknown                             /proc/162/root (readlink: Permission denied)
+scsi_eh_4   162              root  txt   unknown                             /proc/162/exe (readlink: Permission denied)
+scsi_eh_4   162              root NOFD                                       /proc/162/fd (opendir: Permission denied)
+scsi_eh_5   163              root  cwd   unknown                             /proc/163/cwd (readlink: Permission denied)
+scsi_eh_5   163              root  rtd   unknown                             /proc/163/root (readlink: Permission denied)
+scsi_eh_5   163              root  txt   unknown                             /proc/163/exe (readlink: Permission denied)
+scsi_eh_5   163              root NOFD                                       /proc/163/fd (opendir: Permission denied)
+jbd2/sda5   210              root  cwd   unknown                             /proc/210/cwd (readlink: Permission denied)
+jbd2/sda5   210              root  rtd   unknown                             /proc/210/root (readlink: Permission denied)
+jbd2/sda5   210              root  txt   unknown                             /proc/210/exe (readlink: Permission denied)
+jbd2/sda5   210              root NOFD                                       /proc/210/fd (opendir: Permission denied)
+ext4-dio-   211              root  cwd   unknown                             /proc/211/cwd (readlink: Permission denied)
+ext4-dio-   211              root  rtd   unknown                             /proc/211/root (readlink: Permission denied)
+ext4-dio-   211              root  txt   unknown                             /proc/211/exe (readlink: Permission denied)
+ext4-dio-   211              root NOFD                                       /proc/211/fd (opendir: Permission denied)
+kpsmoused   472              root  cwd   unknown                             /proc/472/cwd (readlink: Permission denied)
+kpsmoused   472              root  rtd   unknown                             /proc/472/root (readlink: Permission denied)
+kpsmoused   472              root  txt   unknown                             /proc/472/exe (readlink: Permission denied)
+kpsmoused   472              root NOFD                                       /proc/472/fd (opendir: Permission denied)
+cfg80211    480              root  cwd   unknown                             /proc/480/cwd (readlink: Permission denied)
+cfg80211    480              root  rtd   unknown                             /proc/480/root (readlink: Permission denied)
+cfg80211    480              root  txt   unknown                             /proc/480/exe (readlink: Permission denied)
+cfg80211    480              root NOFD                                       /proc/480/fd (opendir: Permission denied)
+hd-audio0   566              root  cwd   unknown                             /proc/566/cwd (readlink: Permission denied)
+hd-audio0   566              root  rtd   unknown                             /proc/566/root (readlink: Permission denied)
+hd-audio0   566              root  txt   unknown                             /proc/566/exe (readlink: Permission denied)
+hd-audio0   566              root NOFD                                       /proc/566/fd (opendir: Permission denied)
+flush-8:0   696              root  cwd   unknown                             /proc/696/cwd (readlink: Permission denied)
+flush-8:0   696              root  rtd   unknown                             /proc/696/root (readlink: Permission denied)
+flush-8:0   696              root  txt   unknown                             /proc/696/exe (readlink: Permission denied)
+flush-8:0   696              root NOFD                                       /proc/696/fd (opendir: Permission denied)
+gpsd       1561            nobody  cwd   unknown                             /proc/1561/cwd (readlink: Permission denied)
+gpsd       1561            nobody  rtd   unknown                             /proc/1561/root (readlink: Permission denied)
+gpsd       1561            nobody  txt   unknown                             /proc/1561/exe (readlink: Permission denied)
+gpsd       1561            nobody NOFD                                       /proc/1561/fd (opendir: Permission denied)
+jbd2/sda7  2644              root  cwd   unknown                             /proc/2644/cwd (readlink: Permission denied)
+jbd2/sda7  2644              root  rtd   unknown                             /proc/2644/root (readlink: Permission denied)
+jbd2/sda7  2644              root  txt   unknown                             /proc/2644/exe (readlink: Permission denied)
+jbd2/sda7  2644              root NOFD                                       /proc/2644/fd (opendir: Permission denied)
+ext4-dio-  2645              root  cwd   unknown                             /proc/2645/cwd (readlink: Permission denied)
+ext4-dio-  2645              root  rtd   unknown                             /proc/2645/root (readlink: Permission denied)
+ext4-dio-  2645              root  txt   unknown                             /proc/2645/exe (readlink: Permission denied)
+ext4-dio-  2645              root NOFD                                       /proc/2645/fd (opendir: Permission denied)
+jbd2/sda8  2646              root  cwd   unknown                             /proc/2646/cwd (readlink: Permission denied)
+jbd2/sda8  2646              root  rtd   unknown                             /proc/2646/root (readlink: Permission denied)
+jbd2/sda8  2646              root  txt   unknown                             /proc/2646/exe (readlink: Permission denied)
+jbd2/sda8  2646              root NOFD                                       /proc/2646/fd (opendir: Permission denied)
+ext4-dio-  2647              root  cwd   unknown                             /proc/2647/cwd (readlink: Permission denied)
+ext4-dio-  2647              root  rtd   unknown                             /proc/2647/root (readlink: Permission denied)
+ext4-dio-  2647              root  txt   unknown                             /proc/2647/exe (readlink: Permission denied)
+ext4-dio-  2647              root NOFD                                       /proc/2647/fd (opendir: Permission denied)
+ext4-dio-  2648              root  cwd   unknown                             /proc/2648/cwd (readlink: Permission denied)
+ext4-dio-  2648              root  rtd   unknown                             /proc/2648/root (readlink: Permission denied)
+ext4-dio-  2648              root  txt   unknown                             /proc/2648/exe (readlink: Permission denied)
+ext4-dio-  2648              root NOFD                                       /proc/2648/fd (opendir: Permission denied)
+jbd2/sda6  2649              root  cwd   unknown                             /proc/2649/cwd (readlink: Permission denied)
+jbd2/sda6  2649              root  rtd   unknown                             /proc/2649/root (readlink: Permission denied)
+jbd2/sda6  2649              root  txt   unknown                             /proc/2649/exe (readlink: Permission denied)
+jbd2/sda6  2649              root NOFD                                       /proc/2649/fd (opendir: Permission denied)
+ext4-dio-  2650              root  cwd   unknown                             /proc/2650/cwd (readlink: Permission denied)
+ext4-dio-  2650              root  rtd   unknown                             /proc/2650/root (readlink: Permission denied)
+ext4-dio-  2650              root  txt   unknown                             /proc/2650/exe (readlink: Permission denied)
+ext4-dio-  2650              root NOFD                                       /proc/2650/fd (opendir: Permission denied)
+ext4-dio-  2655              root  cwd   unknown                             /proc/2655/cwd (readlink: Permission denied)
+ext4-dio-  2655              root  rtd   unknown                             /proc/2655/root (readlink: Permission denied)
+ext4-dio-  2655              root  txt   unknown                             /proc/2655/exe (readlink: Permission denied)
+ext4-dio-  2655              root NOFD                                       /proc/2655/fd (opendir: Permission denied)
+kworker/1  2926              root  cwd   unknown                             /proc/2926/cwd (readlink: Permission denied)
+kworker/1  2926              root  rtd   unknown                             /proc/2926/root (readlink: Permission denied)
+kworker/1  2926              root  txt   unknown                             /proc/2926/exe (readlink: Permission denied)
+kworker/1  2926              root NOFD                                       /proc/2926/fd (opendir: Permission denied)
+kworker/0  2950              root  cwd   unknown                             /proc/2950/cwd (readlink: Permission denied)
+kworker/0  2950              root  rtd   unknown                             /proc/2950/root (readlink: Permission denied)
+kworker/0  2950              root  txt   unknown                             /proc/2950/exe (readlink: Permission denied)
+kworker/0  2950              root NOFD                                       /proc/2950/fd (opendir: Permission denied)
+kworker/u  2954              root  cwd   unknown                             /proc/2954/cwd (readlink: Permission denied)
+kworker/u  2954              root  rtd   unknown                             /proc/2954/root (readlink: Permission denied)
+kworker/u  2954              root  txt   unknown                             /proc/2954/exe (readlink: Permission denied)
+kworker/u  2954              root NOFD                                       /proc/2954/fd (opendir: Permission denied)
+kworker/1  2973              root  cwd   unknown                             /proc/2973/cwd (readlink: Permission denied)
+kworker/1  2973              root  rtd   unknown                             /proc/2973/root (readlink: Permission denied)
+kworker/1  2973              root  txt   unknown                             /proc/2973/exe (readlink: Permission denied)
+kworker/1  2973              root NOFD                                       /proc/2973/fd (opendir: Permission denied)
+kworker/0  2980              root  cwd   unknown                             /proc/2980/cwd (readlink: Permission denied)
+kworker/0  2980              root  rtd   unknown                             /proc/2980/root (readlink: Permission denied)
+kworker/0  2980              root  txt   unknown                             /proc/2980/exe (readlink: Permission denied)
+kworker/0  2980              root NOFD                                       /proc/2980/fd (opendir: Permission denied)
+kworker/u  2981              root  cwd   unknown                             /proc/2981/cwd (readlink: Permission denied)
+kworker/u  2981              root  rtd   unknown                             /proc/2981/root (readlink: Permission denied)
+kworker/u  2981              root  txt   unknown                             /proc/2981/exe (readlink: Permission denied)
+kworker/u  2981              root NOFD                                       /proc/2981/fd (opendir: Permission denied)
+kworker/1  3007              root  cwd   unknown                             /proc/3007/cwd (readlink: Permission denied)
+kworker/1  3007              root  rtd   unknown                             /proc/3007/root (readlink: Permission denied)
+kworker/1  3007              root  txt   unknown                             /proc/3007/exe (readlink: Permission denied)
+kworker/1  3007              root NOFD                                       /proc/3007/fd (opendir: Permission denied)
+gdm-simpl  3053              root  cwd   unknown                             /proc/3053/cwd (readlink: Permission denied)
+gdm-simpl  3053              root  rtd   unknown                             /proc/3053/root (readlink: Permission denied)
+gdm-simpl  3053              root  txt   unknown                             /proc/3053/exe (readlink: Permission denied)
+gdm-simpl  3053              root NOFD                                       /proc/3053/fd (opendir: Permission denied)
+gmain      3053  3055        root  cwd   unknown                             /proc/3053/task/3055/cwd (readlink: Permission denied)
+gmain      3053  3055        root  rtd   unknown                             /proc/3053/task/3055/root (readlink: Permission denied)
+gmain      3053  3055        root  txt   unknown                             /proc/3053/task/3055/exe (readlink: Permission denied)
+gmain      3053  3055        root NOFD                                       /proc/3053/task/3055/fd (opendir: Permission denied)
+Xorg       3054              root  cwd   unknown                             /proc/3054/cwd (readlink: Permission denied)
+Xorg       3054              root  rtd   unknown                             /proc/3054/root (readlink: Permission denied)
+Xorg       3054              root  txt   unknown                             /proc/3054/exe (readlink: Permission denied)
+Xorg       3054              root NOFD                                       /proc/3054/fd (opendir: Permission denied)
+dbus-daem  3071        Debian-gdm  cwd   unknown                             /proc/3071/cwd (readlink: Permission denied)
+dbus-daem  3071        Debian-gdm  rtd   unknown                             /proc/3071/root (readlink: Permission denied)
+dbus-daem  3071        Debian-gdm  txt   unknown                             /proc/3071/exe (readlink: Permission denied)
+dbus-daem  3071        Debian-gdm NOFD                                       /proc/3071/fd (opendir: Permission denied)
+gdm-sessi  3072              root  cwd   unknown                             /proc/3072/cwd (readlink: Permission denied)
+gdm-sessi  3072              root  rtd   unknown                             /proc/3072/root (readlink: Permission denied)
+gdm-sessi  3072              root  txt   unknown                             /proc/3072/exe (readlink: Permission denied)
+gdm-sessi  3072              root NOFD                                       /proc/3072/fd (opendir: Permission denied)
+gdbus      3072  3073        root  cwd   unknown                             /proc/3072/task/3073/cwd (readlink: Permission denied)
+gdbus      3072  3073        root  rtd   unknown                             /proc/3072/task/3073/root (readlink: Permission denied)
+gdbus      3072  3073        root  txt   unknown                             /proc/3072/task/3073/exe (readlink: Permission denied)
+gdbus      3072  3073        root NOFD                                       /proc/3072/task/3073/fd (opendir: Permission denied)
+gmain      3072  3083        root  cwd   unknown                             /proc/3072/task/3083/cwd (readlink: Permission denied)
+gmain      3072  3083        root  rtd   unknown                             /proc/3072/task/3083/root (readlink: Permission denied)
+gmain      3072  3083        root  txt   unknown                             /proc/3072/task/3083/exe (readlink: Permission denied)
+gmain      3072  3083        root NOFD                                       /proc/3072/task/3083/fd (opendir: Permission denied)
+gnome-ses  3082        Debian-gdm  cwd   unknown                             /proc/3082/cwd (readlink: Permission denied)
+gnome-ses  3082        Debian-gdm  rtd   unknown                             /proc/3082/root (readlink: Permission denied)
+gnome-ses  3082        Debian-gdm  txt   unknown                             /proc/3082/exe (readlink: Permission denied)
+gnome-ses  3082        Debian-gdm NOFD                                       /proc/3082/fd (opendir: Permission denied)
+dconf      3082  3094  Debian-gdm  cwd   unknown                             /proc/3082/task/3094/cwd (readlink: Permission denied)
+dconf      3082  3094  Debian-gdm  rtd   unknown                             /proc/3082/task/3094/root (readlink: Permission denied)
+dconf      3082  3094  Debian-gdm  txt   unknown                             /proc/3082/task/3094/exe (readlink: Permission denied)
+dconf      3082  3094  Debian-gdm NOFD                                       /proc/3082/task/3094/fd (opendir: Permission denied)
+gdbus      3082  3095  Debian-gdm  cwd   unknown                             /proc/3082/task/3095/cwd (readlink: Permission denied)
+gdbus      3082  3095  Debian-gdm  rtd   unknown                             /proc/3082/task/3095/root (readlink: Permission denied)
+gdbus      3082  3095  Debian-gdm  txt   unknown                             /proc/3082/task/3095/exe (readlink: Permission denied)
+gdbus      3082  3095  Debian-gdm NOFD                                       /proc/3082/task/3095/fd (opendir: Permission denied)
+gmain      3082  3097  Debian-gdm  cwd   unknown                             /proc/3082/task/3097/cwd (readlink: Permission denied)
+gmain      3082  3097  Debian-gdm  rtd   unknown                             /proc/3082/task/3097/root (readlink: Permission denied)
+gmain      3082  3097  Debian-gdm  txt   unknown                             /proc/3082/task/3097/exe (readlink: Permission denied)
+gmain      3082  3097  Debian-gdm NOFD                                       /proc/3082/task/3097/fd (opendir: Permission denied)
+at-spi-bu  3085        Debian-gdm  cwd   unknown                             /proc/3085/cwd (readlink: Permission denied)
+at-spi-bu  3085        Debian-gdm  rtd   unknown                             /proc/3085/root (readlink: Permission denied)
+at-spi-bu  3085        Debian-gdm  txt   unknown                             /proc/3085/exe (readlink: Permission denied)
+at-spi-bu  3085        Debian-gdm NOFD                                       /proc/3085/fd (opendir: Permission denied)
+dconf      3085  3086  Debian-gdm  cwd   unknown                             /proc/3085/task/3086/cwd (readlink: Permission denied)
+dconf      3085  3086  Debian-gdm  rtd   unknown                             /proc/3085/task/3086/root (readlink: Permission denied)
+dconf      3085  3086  Debian-gdm  txt   unknown                             /proc/3085/task/3086/exe (readlink: Permission denied)
+dconf      3085  3086  Debian-gdm NOFD                                       /proc/3085/task/3086/fd (opendir: Permission denied)
+gdbus      3085  3088  Debian-gdm  cwd   unknown                             /proc/3085/task/3088/cwd (readlink: Permission denied)
+gdbus      3085  3088  Debian-gdm  rtd   unknown                             /proc/3085/task/3088/root (readlink: Permission denied)
+gdbus      3085  3088  Debian-gdm  txt   unknown                             /proc/3085/task/3088/exe (readlink: Permission denied)
+gdbus      3085  3088  Debian-gdm NOFD                                       /proc/3085/task/3088/fd (opendir: Permission denied)
+gmain      3085  3090  Debian-gdm  cwd   unknown                             /proc/3085/task/3090/cwd (readlink: Permission denied)
+gmain      3085  3090  Debian-gdm  rtd   unknown                             /proc/3085/task/3090/root (readlink: Permission denied)
+gmain      3085  3090  Debian-gdm  txt   unknown                             /proc/3085/task/3090/exe (readlink: Permission denied)
+gmain      3085  3090  Debian-gdm NOFD                                       /proc/3085/task/3090/fd (opendir: Permission denied)
+dbus-daem  3089        Debian-gdm  cwd   unknown                             /proc/3089/cwd (readlink: Permission denied)
+dbus-daem  3089        Debian-gdm  rtd   unknown                             /proc/3089/root (readlink: Permission denied)
+dbus-daem  3089        Debian-gdm  txt   unknown                             /proc/3089/exe (readlink: Permission denied)
+dbus-daem  3089        Debian-gdm NOFD                                       /proc/3089/fd (opendir: Permission denied)
+at-spi2-r  3092        Debian-gdm  cwd   unknown                             /proc/3092/cwd (readlink: Permission denied)
+at-spi2-r  3092        Debian-gdm  rtd   unknown                             /proc/3092/root (readlink: Permission denied)
+at-spi2-r  3092        Debian-gdm  txt   unknown                             /proc/3092/exe (readlink: Permission denied)
+at-spi2-r  3092        Debian-gdm NOFD                                       /proc/3092/fd (opendir: Permission denied)
+gdbus      3092  3093  Debian-gdm  cwd   unknown                             /proc/3092/task/3093/cwd (readlink: Permission denied)
+gdbus      3092  3093  Debian-gdm  rtd   unknown                             /proc/3092/task/3093/root (readlink: Permission denied)
+gdbus      3092  3093  Debian-gdm  txt   unknown                             /proc/3092/task/3093/exe (readlink: Permission denied)
+gdbus      3092  3093  Debian-gdm NOFD                                       /proc/3092/task/3093/fd (opendir: Permission denied)
+gnome-set  3096        Debian-gdm  cwd   unknown                             /proc/3096/cwd (readlink: Permission denied)
+gnome-set  3096        Debian-gdm  rtd   unknown                             /proc/3096/root (readlink: Permission denied)
+gnome-set  3096        Debian-gdm  txt   unknown                             /proc/3096/exe (readlink: Permission denied)
+gnome-set  3096        Debian-gdm NOFD                                       /proc/3096/fd (opendir: Permission denied)
+dconf      3096  3100  Debian-gdm  cwd   unknown                             /proc/3096/task/3100/cwd (readlink: Permission denied)
+dconf      3096  3100  Debian-gdm  rtd   unknown                             /proc/3096/task/3100/root (readlink: Permission denied)
+dconf      3096  3100  Debian-gdm  txt   unknown                             /proc/3096/task/3100/exe (readlink: Permission denied)
+dconf      3096  3100  Debian-gdm NOFD                                       /proc/3096/task/3100/fd (opendir: Permission denied)
+gdbus      3096  3101  Debian-gdm  cwd   unknown                             /proc/3096/task/3101/cwd (readlink: Permission denied)
+gdbus      3096  3101  Debian-gdm  rtd   unknown                             /proc/3096/task/3101/root (readlink: Permission denied)
+gdbus      3096  3101  Debian-gdm  txt   unknown                             /proc/3096/task/3101/exe (readlink: Permission denied)
+gdbus      3096  3101  Debian-gdm NOFD                                       /proc/3096/task/3101/fd (opendir: Permission denied)
+gvfsd      3103        Debian-gdm  cwd   unknown                             /proc/3103/cwd (readlink: Permission denied)
+gvfsd      3103        Debian-gdm  rtd   unknown                             /proc/3103/root (readlink: Permission denied)
+gvfsd      3103        Debian-gdm  txt   unknown                             /proc/3103/exe (readlink: Permission denied)
+gvfsd      3103        Debian-gdm NOFD                                       /proc/3103/fd (opendir: Permission denied)
+gdbus      3103  3104  Debian-gdm  cwd   unknown                             /proc/3103/task/3104/cwd (readlink: Permission denied)
+gdbus      3103  3104  Debian-gdm  rtd   unknown                             /proc/3103/task/3104/root (readlink: Permission denied)
+gdbus      3103  3104  Debian-gdm  txt   unknown                             /proc/3103/task/3104/exe (readlink: Permission denied)
+gdbus      3103  3104  Debian-gdm NOFD                                       /proc/3103/task/3104/fd (opendir: Permission denied)
+pulseaudi  3109        Debian-gdm  cwd   unknown                             /proc/3109/cwd (readlink: Permission denied)
+pulseaudi  3109        Debian-gdm  rtd   unknown                             /proc/3109/root (readlink: Permission denied)
+pulseaudi  3109        Debian-gdm  txt   unknown                             /proc/3109/exe (readlink: Permission denied)
+pulseaudi  3109        Debian-gdm NOFD                                       /proc/3109/fd (opendir: Permission denied)
+alsa-sink  3109  3110  Debian-gdm  cwd   unknown                             /proc/3109/task/3110/cwd (readlink: Permission denied)
+alsa-sink  3109  3110  Debian-gdm  rtd   unknown                             /proc/3109/task/3110/root (readlink: Permission denied)
+alsa-sink  3109  3110  Debian-gdm  txt   unknown                             /proc/3109/task/3110/exe (readlink: Permission denied)
+alsa-sink  3109  3110  Debian-gdm NOFD                                       /proc/3109/task/3110/fd (opendir: Permission denied)
+alsa-sour  3109  3111  Debian-gdm  cwd   unknown                             /proc/3109/task/3111/cwd (readlink: Permission denied)
+alsa-sour  3109  3111  Debian-gdm  rtd   unknown                             /proc/3109/task/3111/root (readlink: Permission denied)
+alsa-sour  3109  3111  Debian-gdm  txt   unknown                             /proc/3109/task/3111/exe (readlink: Permission denied)
+alsa-sour  3109  3111  Debian-gdm NOFD                                       /proc/3109/task/3111/fd (opendir: Permission denied)
+metacity   3113        Debian-gdm  cwd   unknown                             /proc/3113/cwd (readlink: Permission denied)
+metacity   3113        Debian-gdm  rtd   unknown                             /proc/3113/root (readlink: Permission denied)
+metacity   3113        Debian-gdm  txt   unknown                             /proc/3113/exe (readlink: Permission denied)
+metacity   3113        Debian-gdm NOFD                                       /proc/3113/fd (opendir: Permission denied)
+dconf      3113  3114  Debian-gdm  cwd   unknown                             /proc/3113/task/3114/cwd (readlink: Permission denied)
+dconf      3113  3114  Debian-gdm  rtd   unknown                             /proc/3113/task/3114/root (readlink: Permission denied)
+dconf      3113  3114  Debian-gdm  txt   unknown                             /proc/3113/task/3114/exe (readlink: Permission denied)
+dconf      3113  3114  Debian-gdm NOFD                                       /proc/3113/task/3114/fd (opendir: Permission denied)
+gdbus      3113  3115  Debian-gdm  cwd   unknown                             /proc/3113/task/3115/cwd (readlink: Permission denied)
+gdbus      3113  3115  Debian-gdm  rtd   unknown                             /proc/3113/task/3115/root (readlink: Permission denied)
+gdbus      3113  3115  Debian-gdm  txt   unknown                             /proc/3113/task/3115/exe (readlink: Permission denied)
+gdbus      3113  3115  Debian-gdm NOFD                                       /proc/3113/task/3115/fd (opendir: Permission denied)
+polkit-gn  3116        Debian-gdm  cwd   unknown                             /proc/3116/cwd (readlink: Permission denied)
+polkit-gn  3116        Debian-gdm  rtd   unknown                             /proc/3116/root (readlink: Permission denied)
+polkit-gn  3116        Debian-gdm  txt   unknown                             /proc/3116/exe (readlink: Permission denied)
+polkit-gn  3116        Debian-gdm NOFD                                       /proc/3116/fd (opendir: Permission denied)
+gdbus      3116  3120  Debian-gdm  cwd   unknown                             /proc/3116/task/3120/cwd (readlink: Permission denied)
+gdbus      3116  3120  Debian-gdm  rtd   unknown                             /proc/3116/task/3120/root (readlink: Permission denied)
+gdbus      3116  3120  Debian-gdm  txt   unknown                             /proc/3116/task/3120/exe (readlink: Permission denied)
+gdbus      3116  3120  Debian-gdm NOFD                                       /proc/3116/task/3120/fd (opendir: Permission denied)
+gdm-simpl  3117        Debian-gdm  cwd   unknown                             /proc/3117/cwd (readlink: Permission denied)
+gdm-simpl  3117        Debian-gdm  rtd   unknown                             /proc/3117/root (readlink: Permission denied)
+gdm-simpl  3117        Debian-gdm  txt   unknown                             /proc/3117/exe (readlink: Permission denied)
+gdm-simpl  3117        Debian-gdm NOFD                                       /proc/3117/fd (opendir: Permission denied)
+gdbus      3117  3121  Debian-gdm  cwd   unknown                             /proc/3117/task/3121/cwd (readlink: Permission denied)
+gdbus      3117  3121  Debian-gdm  rtd   unknown                             /proc/3117/task/3121/root (readlink: Permission denied)
+gdbus      3117  3121  Debian-gdm  txt   unknown                             /proc/3117/task/3121/exe (readlink: Permission denied)
+gdbus      3117  3121  Debian-gdm NOFD                                       /proc/3117/task/3121/fd (opendir: Permission denied)
+dconf      3117  3122  Debian-gdm  cwd   unknown                             /proc/3117/task/3122/cwd (readlink: Permission denied)
+dconf      3117  3122  Debian-gdm  rtd   unknown                             /proc/3117/task/3122/root (readlink: Permission denied)
+dconf      3117  3122  Debian-gdm  txt   unknown                             /proc/3117/task/3122/exe (readlink: Permission denied)
+dconf      3117  3122  Debian-gdm NOFD                                       /proc/3117/task/3122/fd (opendir: Permission denied)
+gdm-sessi  3128              root  cwd   unknown                             /proc/3128/cwd (readlink: Permission denied)
+gdm-sessi  3128              root  rtd   unknown                             /proc/3128/root (readlink: Permission denied)
+gdm-sessi  3128              root  txt   unknown                             /proc/3128/exe (readlink: Permission denied)
+gdm-sessi  3128              root NOFD                                       /proc/3128/fd (opendir: Permission denied)
+gdbus      3128  3129        root  cwd   unknown                             /proc/3128/task/3129/cwd (readlink: Permission denied)
+gdbus      3128  3129        root  rtd   unknown                             /proc/3128/task/3129/root (readlink: Permission denied)
+gdbus      3128  3129        root  txt   unknown                             /proc/3128/task/3129/exe (readlink: Permission denied)
+gdbus      3128  3129        root NOFD                                       /proc/3128/task/3129/fd (opendir: Permission denied)
+kworker/u  3143              root  cwd   unknown                             /proc/3143/cwd (readlink: Permission denied)
+kworker/u  3143              root  rtd   unknown                             /proc/3143/root (readlink: Permission denied)
+kworker/u  3143              root  txt   unknown                             /proc/3143/exe (readlink: Permission denied)
+kworker/u  3143              root NOFD                                       /proc/3143/fd (opendir: Permission denied)
+lsof       3144              greg  cwd       DIR        8,7     4096  139287 /home/greg/Desktop/git/Open-Table-Explorer/test/data_sources/gnome_hangs/keyboard_dies2
+lsof       3144              greg  rtd       DIR        8,5     1024       2 /
+lsof       3144              greg  txt       REG        8,9   161852 1054621 /usr/bin/lsof
+lsof       3144              greg  mem       REG        8,9  1607632  620200 /usr/lib/locale/locale-archive
+lsof       3144              greg  mem       REG        8,5  1754600   65186 /lib/i386-linux-gnu/i686/cmov/libc-2.17.so
+lsof       3144              greg  mem       REG        8,5   134376   35332 /lib/i386-linux-gnu/ld-2.17.so
+lsof       3144              greg    0u      CHR        4,1      0t0      18 /dev/tty1
+lsof       3144              greg    1w      REG        8,7        0  133642 /home/greg/Desktop/git/Open-Table-Explorer/test/data_sources/gnome_hangs/keyboard_dies2/test.lsof
+lsof       3144              greg    2u      CHR        4,1      0t0      18 /dev/tty1
+lsof       3144              greg    3r      DIR        0,3        0       1 /proc
+lsof       3144              greg    4r      DIR        0,3        0 5776994 /proc/3144/fd
+lsof       3144              greg    5w     FIFO        0,8      0t0 5776999 pipe
+lsof       3144              greg    6r     FIFO        0,8      0t0 5777000 pipe
+lsof       3145              greg  cwd       DIR        8,7     4096  139287 /home/greg/Desktop/git/Open-Table-Explorer/test/data_sources/gnome_hangs/keyboard_dies2
+lsof       3145              greg  rtd       DIR        8,5     1024       2 /
+lsof       3145              greg  txt       REG        8,9   161852 1054621 /usr/bin/lsof
+lsof       3145              greg  mem       REG        8,9  1607632  620200 /usr/lib/locale/locale-archive
+lsof       3145              greg  mem       REG        8,5  1754600   65186 /lib/i386-linux-gnu/i686/cmov/libc-2.17.so
+lsof       3145              greg  mem       REG        8,5   134376   35332 /lib/i386-linux-gnu/ld-2.17.so
+lsof       3145              greg    4r     FIFO        0,8      0t0 5776999 pipe
+lsof       3145              greg    7w     FIFO        0,8      0t0 5777000 pipe
+ext4-dio-  3596              root  cwd   unknown                             /proc/3596/cwd (readlink: Permission denied)
+ext4-dio-  3596              root  rtd   unknown                             /proc/3596/root (readlink: Permission denied)
+ext4-dio-  3596              root  txt   unknown                             /proc/3596/exe (readlink: Permission denied)
+ext4-dio-  3596              root NOFD                                       /proc/3596/fd (opendir: Permission denied)
+rpcbind    3990              root  cwd   unknown                             /proc/3990/cwd (readlink: Permission denied)
+rpcbind    3990              root  rtd   unknown                             /proc/3990/root (readlink: Permission denied)
+rpcbind    3990              root  txt   unknown                             /proc/3990/exe (readlink: Permission denied)
+rpcbind    3990              root NOFD                                       /proc/3990/fd (opendir: Permission denied)
+rpc.statd  4022             statd  cwd   unknown                             /proc/4022/cwd (readlink: Permission denied)
+rpc.statd  4022             statd  rtd   unknown                             /proc/4022/root (readlink: Permission denied)
+rpc.statd  4022             statd  txt   unknown                             /proc/4022/exe (readlink: Permission denied)
+rpc.statd  4022             statd NOFD                                       /proc/4022/fd (opendir: Permission denied)
+wpa_suppl  4024              root  cwd   unknown                             /proc/4024/cwd (readlink: Permission denied)
+wpa_suppl  4024              root  rtd   unknown                             /proc/4024/root (readlink: Permission denied)
+wpa_suppl  4024              root  txt   unknown                             /proc/4024/exe (readlink: Permission denied)
+wpa_suppl  4024              root NOFD                                       /proc/4024/fd (opendir: Permission denied)
+rpciod     4031              root  cwd   unknown                             /proc/4031/cwd (readlink: Permission denied)
+rpciod     4031              root  rtd   unknown                             /proc/4031/root (readlink: Permission denied)
+rpciod     4031              root  txt   unknown                             /proc/4031/exe (readlink: Permission denied)
+rpciod     4031              root NOFD                                       /proc/4031/fd (opendir: Permission denied)
+nfsiod     4039              root  cwd   unknown                             /proc/4039/cwd (readlink: Permission denied)
+nfsiod     4039              root  rtd   unknown                             /proc/4039/root (readlink: Permission denied)
+nfsiod     4039              root  txt   unknown                             /proc/4039/exe (readlink: Permission denied)
+nfsiod     4039              root NOFD                                       /proc/4039/fd (opendir: Permission denied)
+rpc.idmap  4046              root  cwd   unknown                             /proc/4046/cwd (readlink: Permission denied)
+rpc.idmap  4046              root  rtd   unknown                             /proc/4046/root (readlink: Permission denied)
+rpc.idmap  4046              root  txt   unknown                             /proc/4046/exe (readlink: Permission denied)
+rpc.idmap  4046              root NOFD                                       /proc/4046/fd (opendir: Permission denied)
+rsyslogd   4466              root  cwd   unknown                             /proc/4466/cwd (readlink: Permission denied)
+rsyslogd   4466              root  rtd   unknown                             /proc/4466/root (readlink: Permission denied)
+rsyslogd   4466              root  txt   unknown                             /proc/4466/exe (readlink: Permission denied)
+rsyslogd   4466              root NOFD                                       /proc/4466/fd (opendir: Permission denied)
+rs:main    4466  4492        root  cwd   unknown                             /proc/4466/task/4492/cwd (readlink: Permission denied)
+rs:main    4466  4492        root  rtd   unknown                             /proc/4466/task/4492/root (readlink: Permission denied)
+rs:main    4466  4492        root  txt   unknown                             /proc/4466/task/4492/exe (readlink: Permission denied)
+rs:main    4466  4492        root NOFD                                       /proc/4466/task/4492/fd (opendir: Permission denied)
+rsyslogd   4466  4493        root  cwd   unknown                             /proc/4466/task/4493/cwd (readlink: Permission denied)
+rsyslogd   4466  4493        root  rtd   unknown                             /proc/4466/task/4493/root (readlink: Permission denied)
+rsyslogd   4466  4493        root  txt   unknown                             /proc/4466/task/4493/exe (readlink: Permission denied)
+rsyslogd   4466  4493        root NOFD                                       /proc/4466/task/4493/fd (opendir: Permission denied)
+rsyslogd   4466  4494        root  cwd   unknown                             /proc/4466/task/4494/cwd (readlink: Permission denied)
+rsyslogd   4466  4494        root  rtd   unknown                             /proc/4466/task/4494/root (readlink: Permission denied)
+rsyslogd   4466  4494        root  txt   unknown                             /proc/4466/task/4494/exe (readlink: Permission denied)
+rsyslogd   4466  4494        root NOFD                                       /proc/4466/task/4494/fd (opendir: Permission denied)
+acpi_fake  4514              root  cwd   unknown                             /proc/4514/cwd (readlink: Permission denied)
+acpi_fake  4514              root  rtd   unknown                             /proc/4514/root (readlink: Permission denied)
+acpi_fake  4514              root  txt   unknown                             /proc/4514/exe (readlink: Permission denied)
+acpi_fake  4514              root NOFD                                       /proc/4514/fd (opendir: Permission denied)
+acpid      4622              root  cwd   unknown                             /proc/4622/cwd (readlink: Permission denied)
+acpid      4622              root  rtd   unknown                             /proc/4622/root (readlink: Permission denied)
+acpid      4622              root  txt   unknown                             /proc/4622/exe (readlink: Permission denied)
+acpid      4622              root NOFD                                       /proc/4622/fd (opendir: Permission denied)
+condor_ma  4648            condor  cwd   unknown                             /proc/4648/cwd (readlink: Permission denied)
+condor_ma  4648            condor  rtd   unknown                             /proc/4648/root (readlink: Permission denied)
+condor_ma  4648            condor  txt   unknown                             /proc/4648/exe (readlink: Permission denied)
+condor_ma  4648            condor NOFD                                       /proc/4648/fd (opendir: Permission denied)
+dbus-daem  4649        messagebus  cwd   unknown                             /proc/4649/cwd (readlink: Permission denied)
+dbus-daem  4649        messagebus  rtd   unknown                             /proc/4649/root (readlink: Permission denied)
+dbus-daem  4649        messagebus  txt   unknown                             /proc/4649/exe (readlink: Permission denied)
+dbus-daem  4649        messagebus NOFD                                       /proc/4649/fd (opendir: Permission denied)
+avahi-dae  4783             avahi  cwd   unknown                             /proc/4783/cwd (readlink: Permission denied)
+avahi-dae  4783             avahi  rtd   unknown                             /proc/4783/root (readlink: Permission denied)
+avahi-dae  4783             avahi  txt   unknown                             /proc/4783/exe (readlink: Permission denied)
+avahi-dae  4783             avahi NOFD                                       /proc/4783/fd (opendir: Permission denied)
+avahi-dae  4784             avahi  cwd   unknown                             /proc/4784/cwd (readlink: Permission denied)
+avahi-dae  4784             avahi  rtd   unknown                             /proc/4784/root (readlink: Permission denied)
+avahi-dae  4784             avahi  txt   unknown                             /proc/4784/exe (readlink: Permission denied)
+avahi-dae  4784             avahi NOFD                                       /proc/4784/fd (opendir: Permission denied)
+arpwatch   4827          arpwatch  cwd   unknown                             /proc/4827/cwd (readlink: Permission denied)
+arpwatch   4827          arpwatch  rtd   unknown                             /proc/4827/root (readlink: Permission denied)
+arpwatch   4827          arpwatch  txt   unknown                             /proc/4827/exe (readlink: Permission denied)
+arpwatch   4827          arpwatch NOFD                                       /proc/4827/fd (opendir: Permission denied)
+polkitd    4835              root  cwd   unknown                             /proc/4835/cwd (readlink: Permission denied)
+polkitd    4835              root  rtd   unknown                             /proc/4835/root (readlink: Permission denied)
+polkitd    4835              root  txt   unknown                             /proc/4835/exe (readlink: Permission denied)
+polkitd    4835              root NOFD                                       /proc/4835/fd (opendir: Permission denied)
+gdbus      4835  4928        root  cwd   unknown                             /proc/4835/task/4928/cwd (readlink: Permission denied)
+gdbus      4835  4928        root  rtd   unknown                             /proc/4835/task/4928/root (readlink: Permission denied)
+gdbus      4835  4928        root  txt   unknown                             /proc/4835/task/4928/exe (readlink: Permission denied)
+gdbus      4835  4928        root NOFD                                       /proc/4835/task/4928/fd (opendir: Permission denied)
+gdm3       4853              root  cwd   unknown                             /proc/4853/cwd (readlink: Permission denied)
+gdm3       4853              root  rtd   unknown                             /proc/4853/root (readlink: Permission denied)
+gdm3       4853              root  txt   unknown                             /proc/4853/exe (readlink: Permission denied)
+gdm3       4853              root NOFD                                       /proc/4853/fd (opendir: Permission denied)
+gmain      4853  4981        root  cwd   unknown                             /proc/4853/task/4981/cwd (readlink: Permission denied)
+gmain      4853  4981        root  rtd   unknown                             /proc/4853/task/4981/root (readlink: Permission denied)
+gmain      4853  4981        root  txt   unknown                             /proc/4853/task/4981/exe (readlink: Permission denied)
+gmain      4853  4981        root NOFD                                       /proc/4853/task/4981/fd (opendir: Permission denied)
+krfcommd   4926              root  cwd   unknown                             /proc/4926/cwd (readlink: Permission denied)
+krfcommd   4926              root  rtd   unknown                             /proc/4926/root (readlink: Permission denied)
+krfcommd   4926              root  txt   unknown                             /proc/4926/exe (readlink: Permission denied)
+krfcommd   4926              root NOFD                                       /proc/4926/fd (opendir: Permission denied)
+modem-man  4991              root  cwd   unknown                             /proc/4991/cwd (readlink: Permission denied)
+modem-man  4991              root  rtd   unknown                             /proc/4991/root (readlink: Permission denied)
+modem-man  4991              root  txt   unknown                             /proc/4991/exe (readlink: Permission denied)
+modem-man  4991              root NOFD                                       /proc/4991/fd (opendir: Permission denied)
+gdomap     5042            nobody  cwd   unknown                             /proc/5042/cwd (readlink: Permission denied)
+gdomap     5042            nobody  rtd   unknown                             /proc/5042/root (readlink: Permission denied)
+gdomap     5042            nobody  txt   unknown                             /proc/5042/exe (readlink: Permission denied)
+gdomap     5042            nobody NOFD                                       /proc/5042/fd (opendir: Permission denied)
+postgres   5653          postgres  cwd   unknown                             /proc/5653/cwd (readlink: Permission denied)
+postgres   5653          postgres  rtd   unknown                             /proc/5653/root (readlink: Permission denied)
+postgres   5653          postgres  txt   unknown                             /proc/5653/exe (readlink: Permission denied)
+postgres   5653          postgres NOFD                                       /proc/5653/fd (opendir: Permission denied)
+inetd      5697              root  cwd   unknown                             /proc/5697/cwd (readlink: Permission denied)
+inetd      5697              root  rtd   unknown                             /proc/5697/root (readlink: Permission denied)
+inetd      5697              root  txt   unknown                             /proc/5697/exe (readlink: Permission denied)
+inetd      5697              root NOFD                                       /proc/5697/fd (opendir: Permission denied)
+mysqld_sa  5796              root  cwd   unknown                             /proc/5796/cwd (readlink: Permission denied)
+mysqld_sa  5796              root  rtd   unknown                             /proc/5796/root (readlink: Permission denied)
+mysqld_sa  5796              root  txt   unknown                             /proc/5796/exe (readlink: Permission denied)
+mysqld_sa  5796              root NOFD                                       /proc/5796/fd (opendir: Permission denied)
+console-k  5816              root  cwd   unknown                             /proc/5816/cwd (readlink: Permission denied)
+console-k  5816              root  rtd   unknown                             /proc/5816/root (readlink: Permission denied)
+console-k  5816              root  txt   unknown                             /proc/5816/exe (readlink: Permission denied)
+console-k  5816              root NOFD                                       /proc/5816/fd (opendir: Permission denied)
+console-k  5816  3056        root  cwd   unknown                             /proc/5816/task/3056/cwd (readlink: Permission denied)
+console-k  5816  3056        root  rtd   unknown                             /proc/5816/task/3056/root (readlink: Permission denied)
+console-k  5816  3056        root  txt   unknown                             /proc/5816/task/3056/exe (readlink: Permission denied)
+console-k  5816  3056        root NOFD                                       /proc/5816/task/3056/fd (opendir: Permission denied)
+console-k  5816  3132        root  cwd   unknown                             /proc/5816/task/3132/cwd (readlink: Permission denied)
+console-k  5816  3132        root  rtd   unknown                             /proc/5816/task/3132/root (readlink: Permission denied)
+console-k  5816  3132        root  txt   unknown                             /proc/5816/task/3132/exe (readlink: Permission denied)
+console-k  5816  3132        root NOFD                                       /proc/5816/task/3132/fd (opendir: Permission denied)
+console-k  5816  5819        root  cwd   unknown                             /proc/5816/task/5819/cwd (readlink: Permission denied)
+console-k  5816  5819        root  rtd   unknown                             /proc/5816/task/5819/root (readlink: Permission denied)
+console-k  5816  5819        root  txt   unknown                             /proc/5816/task/5819/exe (readlink: Permission denied)
+console-k  5816  5819        root NOFD                                       /proc/5816/task/5819/fd (opendir: Permission denied)
+console-k  5816  5831        root  cwd   unknown                             /proc/5816/task/5831/cwd (readlink: Permission denied)
+console-k  5816  5831        root  rtd   unknown                             /proc/5816/task/5831/root (readlink: Permission denied)
+console-k  5816  5831        root  txt   unknown                             /proc/5816/task/5831/exe (readlink: Permission denied)
+console-k  5816  5831        root NOFD                                       /proc/5816/task/5831/fd (opendir: Permission denied)
+console-k  5816  5832        root  cwd   unknown                             /proc/5816/task/5832/cwd (readlink: Permission denied)
+console-k  5816  5832        root  rtd   unknown                             /proc/5816/task/5832/root (readlink: Permission denied)
+console-k  5816  5832        root  txt   unknown                             /proc/5816/task/5832/exe (readlink: Permission denied)
+console-k  5816  5832        root NOFD                                       /proc/5816/task/5832/fd (opendir: Permission denied)
+console-k  5816  5833        root  cwd   unknown                             /proc/5816/task/5833/cwd (readlink: Permission denied)
+console-k  5816  5833        root  rtd   unknown                             /proc/5816/task/5833/root (readlink: Permission denied)
+console-k  5816  5833        root  txt   unknown                             /proc/5816/task/5833/exe (readlink: Permission denied)
+console-k  5816  5833        root NOFD                                       /proc/5816/task/5833/fd (opendir: Permission denied)
+console-k  5816  5834        root  cwd   unknown                             /proc/5816/task/5834/cwd (readlink: Permission denied)
+console-k  5816  5834        root  rtd   unknown                             /proc/5816/task/5834/root (readlink: Permission denied)
+console-k  5816  5834        root  txt   unknown                             /proc/5816/task/5834/exe (readlink: Permission denied)
+console-k  5816  5834        root NOFD                                       /proc/5816/task/5834/fd (opendir: Permission denied)
+console-k  5816  5837        root  cwd   unknown                             /proc/5816/task/5837/cwd (readlink: Permission denied)
+console-k  5816  5837        root  rtd   unknown                             /proc/5816/task/5837/root (readlink: Permission denied)
+console-k  5816  5837        root  txt   unknown                             /proc/5816/task/5837/exe (readlink: Permission denied)
+console-k  5816  5837        root NOFD                                       /proc/5816/task/5837/fd (opendir: Permission denied)
+console-k  5816  5838        root  cwd   unknown                             /proc/5816/task/5838/cwd (readlink: Permission denied)
+console-k  5816  5838        root  rtd   unknown                             /proc/5816/task/5838/root (readlink: Permission denied)
+console-k  5816  5838        root  txt   unknown                             /proc/5816/task/5838/exe (readlink: Permission denied)
+console-k  5816  5838        root NOFD                                       /proc/5816/task/5838/fd (opendir: Permission denied)
+console-k  5816  5839        root  cwd   unknown                             /proc/5816/task/5839/cwd (readlink: Permission denied)
+console-k  5816  5839        root  rtd   unknown                             /proc/5816/task/5839/root (readlink: Permission denied)
+console-k  5816  5839        root  txt   unknown                             /proc/5816/task/5839/exe (readlink: Permission denied)
+console-k  5816  5839        root NOFD                                       /proc/5816/task/5839/fd (opendir: Permission denied)
+console-k  5816  5840        root  cwd   unknown                             /proc/5816/task/5840/cwd (readlink: Permission denied)
+console-k  5816  5840        root  rtd   unknown                             /proc/5816/task/5840/root (readlink: Permission denied)
+console-k  5816  5840        root  txt   unknown                             /proc/5816/task/5840/exe (readlink: Permission denied)
+console-k  5816  5840        root NOFD                                       /proc/5816/task/5840/fd (opendir: Permission denied)
+console-k  5816  5841        root  cwd   unknown                             /proc/5816/task/5841/cwd (readlink: Permission denied)
+console-k  5816  5841        root  rtd   unknown                             /proc/5816/task/5841/root (readlink: Permission denied)
+console-k  5816  5841        root  txt   unknown                             /proc/5816/task/5841/exe (readlink: Permission denied)
+console-k  5816  5841        root NOFD                                       /proc/5816/task/5841/fd (opendir: Permission denied)
+console-k  5816  5842        root  cwd   unknown                             /proc/5816/task/5842/cwd (readlink: Permission denied)
+console-k  5816  5842        root  rtd   unknown                             /proc/5816/task/5842/root (readlink: Permission denied)
+console-k  5816  5842        root  txt   unknown                             /proc/5816/task/5842/exe (readlink: Permission denied)
+console-k  5816  5842        root NOFD                                       /proc/5816/task/5842/fd (opendir: Permission denied)
+console-k  5816  5843        root  cwd   unknown                             /proc/5816/task/5843/cwd (readlink: Permission denied)
+console-k  5816  5843        root  rtd   unknown                             /proc/5816/task/5843/root (readlink: Permission denied)
+console-k  5816  5843        root  txt   unknown                             /proc/5816/task/5843/exe (readlink: Permission denied)
+console-k  5816  5843        root NOFD                                       /proc/5816/task/5843/fd (opendir: Permission denied)
+console-k  5816  5844        root  cwd   unknown                             /proc/5816/task/5844/cwd (readlink: Permission denied)
+console-k  5816  5844        root  rtd   unknown                             /proc/5816/task/5844/root (readlink: Permission denied)
+console-k  5816  5844        root  txt   unknown                             /proc/5816/task/5844/exe (readlink: Permission denied)
+console-k  5816  5844        root NOFD                                       /proc/5816/task/5844/fd (opendir: Permission denied)
+console-k  5816  5845        root  cwd   unknown                             /proc/5816/task/5845/cwd (readlink: Permission denied)
+console-k  5816  5845        root  rtd   unknown                             /proc/5816/task/5845/root (readlink: Permission denied)
+console-k  5816  5845        root  txt   unknown                             /proc/5816/task/5845/exe (readlink: Permission denied)
+console-k  5816  5845        root NOFD                                       /proc/5816/task/5845/fd (opendir: Permission denied)
+console-k  5816  5846        root  cwd   unknown                             /proc/5816/task/5846/cwd (readlink: Permission denied)
+console-k  5816  5846        root  rtd   unknown                             /proc/5816/task/5846/root (readlink: Permission denied)
+console-k  5816  5846        root  txt   unknown                             /proc/5816/task/5846/exe (readlink: Permission denied)
+console-k  5816  5846        root NOFD                                       /proc/5816/task/5846/fd (opendir: Permission denied)
+console-k  5816  5847        root  cwd   unknown                             /proc/5816/task/5847/cwd (readlink: Permission denied)
+console-k  5816  5847        root  rtd   unknown                             /proc/5816/task/5847/root (readlink: Permission denied)
+console-k  5816  5847        root  txt   unknown                             /proc/5816/task/5847/exe (readlink: Permission denied)
+console-k  5816  5847        root NOFD                                       /proc/5816/task/5847/fd (opendir: Permission denied)
+console-k  5816  5848        root  cwd   unknown                             /proc/5816/task/5848/cwd (readlink: Permission denied)
+console-k  5816  5848        root  rtd   unknown                             /proc/5816/task/5848/root (readlink: Permission denied)
+console-k  5816  5848        root  txt   unknown                             /proc/5816/task/5848/exe (readlink: Permission denied)
+console-k  5816  5848        root NOFD                                       /proc/5816/task/5848/fd (opendir: Permission denied)
+console-k  5816  5849        root  cwd   unknown                             /proc/5816/task/5849/cwd (readlink: Permission denied)
+console-k  5816  5849        root  rtd   unknown                             /proc/5816/task/5849/root (readlink: Permission denied)
+console-k  5816  5849        root  txt   unknown                             /proc/5816/task/5849/exe (readlink: Permission denied)
+console-k  5816  5849        root NOFD                                       /proc/5816/task/5849/fd (opendir: Permission denied)
+console-k  5816  5850        root  cwd   unknown                             /proc/5816/task/5850/cwd (readlink: Permission denied)
+console-k  5816  5850        root  rtd   unknown                             /proc/5816/task/5850/root (readlink: Permission denied)
+console-k  5816  5850        root  txt   unknown                             /proc/5816/task/5850/exe (readlink: Permission denied)
+console-k  5816  5850        root NOFD                                       /proc/5816/task/5850/fd (opendir: Permission denied)
+console-k  5816  5851        root  cwd   unknown                             /proc/5816/task/5851/cwd (readlink: Permission denied)
+console-k  5816  5851        root  rtd   unknown                             /proc/5816/task/5851/root (readlink: Permission denied)
+console-k  5816  5851        root  txt   unknown                             /proc/5816/task/5851/exe (readlink: Permission denied)
+console-k  5816  5851        root NOFD                                       /proc/5816/task/5851/fd (opendir: Permission denied)
+console-k  5816  5852        root  cwd   unknown                             /proc/5816/task/5852/cwd (readlink: Permission denied)
+console-k  5816  5852        root  rtd   unknown                             /proc/5816/task/5852/root (readlink: Permission denied)
+console-k  5816  5852        root  txt   unknown                             /proc/5816/task/5852/exe (readlink: Permission denied)
+console-k  5816  5852        root NOFD                                       /proc/5816/task/5852/fd (opendir: Permission denied)
+console-k  5816  5853        root  cwd   unknown                             /proc/5816/task/5853/cwd (readlink: Permission denied)
+console-k  5816  5853        root  rtd   unknown                             /proc/5816/task/5853/root (readlink: Permission denied)
+console-k  5816  5853        root  txt   unknown                             /proc/5816/task/5853/exe (readlink: Permission denied)
+console-k  5816  5853        root NOFD                                       /proc/5816/task/5853/fd (opendir: Permission denied)
+console-k  5816  5854        root  cwd   unknown                             /proc/5816/task/5854/cwd (readlink: Permission denied)
+console-k  5816  5854        root  rtd   unknown                             /proc/5816/task/5854/root (readlink: Permission denied)
+console-k  5816  5854        root  txt   unknown                             /proc/5816/task/5854/exe (readlink: Permission denied)
+console-k  5816  5854        root NOFD                                       /proc/5816/task/5854/fd (opendir: Permission denied)
+console-k  5816  5855        root  cwd   unknown                             /proc/5816/task/5855/cwd (readlink: Permission denied)
+console-k  5816  5855        root  rtd   unknown                             /proc/5816/task/5855/root (readlink: Permission denied)
+console-k  5816  5855        root  txt   unknown                             /proc/5816/task/5855/exe (readlink: Permission denied)
+console-k  5816  5855        root NOFD                                       /proc/5816/task/5855/fd (opendir: Permission denied)
+console-k  5816  5856        root  cwd   unknown                             /proc/5816/task/5856/cwd (readlink: Permission denied)
+console-k  5816  5856        root  rtd   unknown                             /proc/5816/task/5856/root (readlink: Permission denied)
+console-k  5816  5856        root  txt   unknown                             /proc/5816/task/5856/exe (readlink: Permission denied)
+console-k  5816  5856        root NOFD                                       /proc/5816/task/5856/fd (opendir: Permission denied)
+console-k  5816  5857        root  cwd   unknown                             /proc/5816/task/5857/cwd (readlink: Permission denied)
+console-k  5816  5857        root  rtd   unknown                             /proc/5816/task/5857/root (readlink: Permission denied)
+console-k  5816  5857        root  txt   unknown                             /proc/5816/task/5857/exe (readlink: Permission denied)
+console-k  5816  5857        root NOFD                                       /proc/5816/task/5857/fd (opendir: Permission denied)
+console-k  5816  5858        root  cwd   unknown                             /proc/5816/task/5858/cwd (readlink: Permission denied)
+console-k  5816  5858        root  rtd   unknown                             /proc/5816/task/5858/root (readlink: Permission denied)
+console-k  5816  5858        root  txt   unknown                             /proc/5816/task/5858/exe (readlink: Permission denied)
+console-k  5816  5858        root NOFD                                       /proc/5816/task/5858/fd (opendir: Permission denied)
+console-k  5816  5859        root  cwd   unknown                             /proc/5816/task/5859/cwd (readlink: Permission denied)
+console-k  5816  5859        root  rtd   unknown                             /proc/5816/task/5859/root (readlink: Permission denied)
+console-k  5816  5859        root  txt   unknown                             /proc/5816/task/5859/exe (readlink: Permission denied)
+console-k  5816  5859        root NOFD                                       /proc/5816/task/5859/fd (opendir: Permission denied)
+console-k  5816  5860        root  cwd   unknown                             /proc/5816/task/5860/cwd (readlink: Permission denied)
+console-k  5816  5860        root  rtd   unknown                             /proc/5816/task/5860/root (readlink: Permission denied)
+console-k  5816  5860        root  txt   unknown                             /proc/5816/task/5860/exe (readlink: Permission denied)
+console-k  5816  5860        root NOFD                                       /proc/5816/task/5860/fd (opendir: Permission denied)
+console-k  5816  5861        root  cwd   unknown                             /proc/5816/task/5861/cwd (readlink: Permission denied)
+console-k  5816  5861        root  rtd   unknown                             /proc/5816/task/5861/root (readlink: Permission denied)
+console-k  5816  5861        root  txt   unknown                             /proc/5816/task/5861/exe (readlink: Permission denied)
+console-k  5816  5861        root NOFD                                       /proc/5816/task/5861/fd (opendir: Permission denied)
+console-k  5816  5862        root  cwd   unknown                             /proc/5816/task/5862/cwd (readlink: Permission denied)
+console-k  5816  5862        root  rtd   unknown                             /proc/5816/task/5862/root (readlink: Permission denied)
+console-k  5816  5862        root  txt   unknown                             /proc/5816/task/5862/exe (readlink: Permission denied)
+console-k  5816  5862        root NOFD                                       /proc/5816/task/5862/fd (opendir: Permission denied)
+console-k  5816  5863        root  cwd   unknown                             /proc/5816/task/5863/cwd (readlink: Permission denied)
+console-k  5816  5863        root  rtd   unknown                             /proc/5816/task/5863/root (readlink: Permission denied)
+console-k  5816  5863        root  txt   unknown                             /proc/5816/task/5863/exe (readlink: Permission denied)
+console-k  5816  5863        root NOFD                                       /proc/5816/task/5863/fd (opendir: Permission denied)
+console-k  5816  5864        root  cwd   unknown                             /proc/5816/task/5864/cwd (readlink: Permission denied)
+console-k  5816  5864        root  rtd   unknown                             /proc/5816/task/5864/root (readlink: Permission denied)
+console-k  5816  5864        root  txt   unknown                             /proc/5816/task/5864/exe (readlink: Permission denied)
+console-k  5816  5864        root NOFD                                       /proc/5816/task/5864/fd (opendir: Permission denied)
+console-k  5816  5865        root  cwd   unknown                             /proc/5816/task/5865/cwd (readlink: Permission denied)
+console-k  5816  5865        root  rtd   unknown                             /proc/5816/task/5865/root (readlink: Permission denied)
+console-k  5816  5865        root  txt   unknown                             /proc/5816/task/5865/exe (readlink: Permission denied)
+console-k  5816  5865        root NOFD                                       /proc/5816/task/5865/fd (opendir: Permission denied)
+console-k  5816  5866        root  cwd   unknown                             /proc/5816/task/5866/cwd (readlink: Permission denied)
+console-k  5816  5866        root  rtd   unknown                             /proc/5816/task/5866/root (readlink: Permission denied)
+console-k  5816  5866        root  txt   unknown                             /proc/5816/task/5866/exe (readlink: Permission denied)
+console-k  5816  5866        root NOFD                                       /proc/5816/task/5866/fd (opendir: Permission denied)
+console-k  5816  5867        root  cwd   unknown                             /proc/5816/task/5867/cwd (readlink: Permission denied)
+console-k  5816  5867        root  rtd   unknown                             /proc/5816/task/5867/root (readlink: Permission denied)
+console-k  5816  5867        root  txt   unknown                             /proc/5816/task/5867/exe (readlink: Permission denied)
+console-k  5816  5867        root NOFD                                       /proc/5816/task/5867/fd (opendir: Permission denied)
+console-k  5816  5868        root  cwd   unknown                             /proc/5816/task/5868/cwd (readlink: Permission denied)
+console-k  5816  5868        root  rtd   unknown                             /proc/5816/task/5868/root (readlink: Permission denied)
+console-k  5816  5868        root  txt   unknown                             /proc/5816/task/5868/exe (readlink: Permission denied)
+console-k  5816  5868        root NOFD                                       /proc/5816/task/5868/fd (opendir: Permission denied)
+console-k  5816  5869        root  cwd   unknown                             /proc/5816/task/5869/cwd (readlink: Permission denied)
+console-k  5816  5869        root  rtd   unknown                             /proc/5816/task/5869/root (readlink: Permission denied)
+console-k  5816  5869        root  txt   unknown                             /proc/5816/task/5869/exe (readlink: Permission denied)
+console-k  5816  5869        root NOFD                                       /proc/5816/task/5869/fd (opendir: Permission denied)
+console-k  5816  5870        root  cwd   unknown                             /proc/5816/task/5870/cwd (readlink: Permission denied)
+console-k  5816  5870        root  rtd   unknown                             /proc/5816/task/5870/root (readlink: Permission denied)
+console-k  5816  5870        root  txt   unknown                             /proc/5816/task/5870/exe (readlink: Permission denied)
+console-k  5816  5870        root NOFD                                       /proc/5816/task/5870/fd (opendir: Permission denied)
+console-k  5816  5871        root  cwd   unknown                             /proc/5816/task/5871/cwd (readlink: Permission denied)
+console-k  5816  5871        root  rtd   unknown                             /proc/5816/task/5871/root (readlink: Permission denied)
+console-k  5816  5871        root  txt   unknown                             /proc/5816/task/5871/exe (readlink: Permission denied)
+console-k  5816  5871        root NOFD                                       /proc/5816/task/5871/fd (opendir: Permission denied)
+console-k  5816  5872        root  cwd   unknown                             /proc/5816/task/5872/cwd (readlink: Permission denied)
+console-k  5816  5872        root  rtd   unknown                             /proc/5816/task/5872/root (readlink: Permission denied)
+console-k  5816  5872        root  txt   unknown                             /proc/5816/task/5872/exe (readlink: Permission denied)
+console-k  5816  5872        root NOFD                                       /proc/5816/task/5872/fd (opendir: Permission denied)
+console-k  5816  5873        root  cwd   unknown                             /proc/5816/task/5873/cwd (readlink: Permission denied)
+console-k  5816  5873        root  rtd   unknown                             /proc/5816/task/5873/root (readlink: Permission denied)
+console-k  5816  5873        root  txt   unknown                             /proc/5816/task/5873/exe (readlink: Permission denied)
+console-k  5816  5873        root NOFD                                       /proc/5816/task/5873/fd (opendir: Permission denied)
+console-k  5816  5874        root  cwd   unknown                             /proc/5816/task/5874/cwd (readlink: Permission denied)
+console-k  5816  5874        root  rtd   unknown                             /proc/5816/task/5874/root (readlink: Permission denied)
+console-k  5816  5874        root  txt   unknown                             /proc/5816/task/5874/exe (readlink: Permission denied)
+console-k  5816  5874        root NOFD                                       /proc/5816/task/5874/fd (opendir: Permission denied)
+console-k  5816  5875        root  cwd   unknown                             /proc/5816/task/5875/cwd (readlink: Permission denied)
+console-k  5816  5875        root  rtd   unknown                             /proc/5816/task/5875/root (readlink: Permission denied)
+console-k  5816  5875        root  txt   unknown                             /proc/5816/task/5875/exe (readlink: Permission denied)
+console-k  5816  5875        root NOFD                                       /proc/5816/task/5875/fd (opendir: Permission denied)
+console-k  5816  5876        root  cwd   unknown                             /proc/5816/task/5876/cwd (readlink: Permission denied)
+console-k  5816  5876        root  rtd   unknown                             /proc/5816/task/5876/root (readlink: Permission denied)
+console-k  5816  5876        root  txt   unknown                             /proc/5816/task/5876/exe (readlink: Permission denied)
+console-k  5816  5876        root NOFD                                       /proc/5816/task/5876/fd (opendir: Permission denied)
+console-k  5816  5877        root  cwd   unknown                             /proc/5816/task/5877/cwd (readlink: Permission denied)
+console-k  5816  5877        root  rtd   unknown                             /proc/5816/task/5877/root (readlink: Permission denied)
+console-k  5816  5877        root  txt   unknown                             /proc/5816/task/5877/exe (readlink: Permission denied)
+console-k  5816  5877        root NOFD                                       /proc/5816/task/5877/fd (opendir: Permission denied)
+console-k  5816  5878        root  cwd   unknown                             /proc/5816/task/5878/cwd (readlink: Permission denied)
+console-k  5816  5878        root  rtd   unknown                             /proc/5816/task/5878/root (readlink: Permission denied)
+console-k  5816  5878        root  txt   unknown                             /proc/5816/task/5878/exe (readlink: Permission denied)
+console-k  5816  5878        root NOFD                                       /proc/5816/task/5878/fd (opendir: Permission denied)
+console-k  5816  5879        root  cwd   unknown                             /proc/5816/task/5879/cwd (readlink: Permission denied)
+console-k  5816  5879        root  rtd   unknown                             /proc/5816/task/5879/root (readlink: Permission denied)
+console-k  5816  5879        root  txt   unknown                             /proc/5816/task/5879/exe (readlink: Permission denied)
+console-k  5816  5879        root NOFD                                       /proc/5816/task/5879/fd (opendir: Permission denied)
+console-k  5816  5880        root  cwd   unknown                             /proc/5816/task/5880/cwd (readlink: Permission denied)
+console-k  5816  5880        root  rtd   unknown                             /proc/5816/task/5880/root (readlink: Permission denied)
+console-k  5816  5880        root  txt   unknown                             /proc/5816/task/5880/exe (readlink: Permission denied)
+console-k  5816  5880        root NOFD                                       /proc/5816/task/5880/fd (opendir: Permission denied)
+console-k  5816  5881        root  cwd   unknown                             /proc/5816/task/5881/cwd (readlink: Permission denied)
+console-k  5816  5881        root  rtd   unknown                             /proc/5816/task/5881/root (readlink: Permission denied)
+console-k  5816  5881        root  txt   unknown                             /proc/5816/task/5881/exe (readlink: Permission denied)
+console-k  5816  5881        root NOFD                                       /proc/5816/task/5881/fd (opendir: Permission denied)
+console-k  5816  5882        root  cwd   unknown                             /proc/5816/task/5882/cwd (readlink: Permission denied)
+console-k  5816  5882        root  rtd   unknown                             /proc/5816/task/5882/root (readlink: Permission denied)
+console-k  5816  5882        root  txt   unknown                             /proc/5816/task/5882/exe (readlink: Permission denied)
+console-k  5816  5882        root NOFD                                       /proc/5816/task/5882/fd (opendir: Permission denied)
+console-k  5816  5883        root  cwd   unknown                             /proc/5816/task/5883/cwd (readlink: Permission denied)
+console-k  5816  5883        root  rtd   unknown                             /proc/5816/task/5883/root (readlink: Permission denied)
+console-k  5816  5883        root  txt   unknown                             /proc/5816/task/5883/exe (readlink: Permission denied)
+console-k  5816  5883        root NOFD                                       /proc/5816/task/5883/fd (opendir: Permission denied)
+console-k  5816  5884        root  cwd   unknown                             /proc/5816/task/5884/cwd (readlink: Permission denied)
+console-k  5816  5884        root  rtd   unknown                             /proc/5816/task/5884/root (readlink: Permission denied)
+console-k  5816  5884        root  txt   unknown                             /proc/5816/task/5884/exe (readlink: Permission denied)
+console-k  5816  5884        root NOFD                                       /proc/5816/task/5884/fd (opendir: Permission denied)
+console-k  5816  5885        root  cwd   unknown                             /proc/5816/task/5885/cwd (readlink: Permission denied)
+console-k  5816  5885        root  rtd   unknown                             /proc/5816/task/5885/root (readlink: Permission denied)
+console-k  5816  5885        root  txt   unknown                             /proc/5816/task/5885/exe (readlink: Permission denied)
+console-k  5816  5885        root NOFD                                       /proc/5816/task/5885/fd (opendir: Permission denied)
+console-k  5816  5886        root  cwd   unknown                             /proc/5816/task/5886/cwd (readlink: Permission denied)
+console-k  5816  5886        root  rtd   unknown                             /proc/5816/task/5886/root (readlink: Permission denied)
+console-k  5816  5886        root  txt   unknown                             /proc/5816/task/5886/exe (readlink: Permission denied)
+console-k  5816  5886        root NOFD                                       /proc/5816/task/5886/fd (opendir: Permission denied)
+console-k  5816  5887        root  cwd   unknown                             /proc/5816/task/5887/cwd (readlink: Permission denied)
+console-k  5816  5887        root  rtd   unknown                             /proc/5816/task/5887/root (readlink: Permission denied)
+console-k  5816  5887        root  txt   unknown                             /proc/5816/task/5887/exe (readlink: Permission denied)
+console-k  5816  5887        root NOFD                                       /proc/5816/task/5887/fd (opendir: Permission denied)
+console-k  5816  5888        root  cwd   unknown                             /proc/5816/task/5888/cwd (readlink: Permission denied)
+console-k  5816  5888        root  rtd   unknown                             /proc/5816/task/5888/root (readlink: Permission denied)
+console-k  5816  5888        root  txt   unknown                             /proc/5816/task/5888/exe (readlink: Permission denied)
+console-k  5816  5888        root NOFD                                       /proc/5816/task/5888/fd (opendir: Permission denied)
+console-k  5816  5889        root  cwd   unknown                             /proc/5816/task/5889/cwd (readlink: Permission denied)
+console-k  5816  5889        root  rtd   unknown                             /proc/5816/task/5889/root (readlink: Permission denied)
+console-k  5816  5889        root  txt   unknown                             /proc/5816/task/5889/exe (readlink: Permission denied)
+console-k  5816  5889        root NOFD                                       /proc/5816/task/5889/fd (opendir: Permission denied)
+gmain      5816  5891        root  cwd   unknown                             /proc/5816/task/5891/cwd (readlink: Permission denied)
+gmain      5816  5891        root  rtd   unknown                             /proc/5816/task/5891/root (readlink: Permission denied)
+gmain      5816  5891        root  txt   unknown                             /proc/5816/task/5891/exe (readlink: Permission denied)
+gmain      5816  5891        root NOFD                                       /proc/5816/task/5891/fd (opendir: Permission denied)
+gdbus      5816  5892        root  cwd   unknown                             /proc/5816/task/5892/cwd (readlink: Permission denied)
+gdbus      5816  5892        root  rtd   unknown                             /proc/5816/task/5892/root (readlink: Permission denied)
+gdbus      5816  5892        root  txt   unknown                             /proc/5816/task/5892/exe (readlink: Permission denied)
+gdbus      5816  5892        root NOFD                                       /proc/5816/task/5892/fd (opendir: Permission denied)
+console-k  5816 26721        root  cwd   unknown                             /proc/5816/task/26721/cwd (readlink: Permission denied)
+console-k  5816 26721        root  rtd   unknown                             /proc/5816/task/26721/root (readlink: Permission denied)
+console-k  5816 26721        root  txt   unknown                             /proc/5816/task/26721/exe (readlink: Permission denied)
+console-k  5816 26721        root NOFD                                       /proc/5816/task/26721/fd (opendir: Permission denied)
+console-k  5816 26758        root  cwd   unknown                             /proc/5816/task/26758/cwd (readlink: Permission denied)
+console-k  5816 26758        root  rtd   unknown                             /proc/5816/task/26758/root (readlink: Permission denied)
+console-k  5816 26758        root  txt   unknown                             /proc/5816/task/26758/exe (readlink: Permission denied)
+console-k  5816 26758        root NOFD                                       /proc/5816/task/26758/fd (opendir: Permission denied)
+timidity   5896          timidity  cwd   unknown                             /proc/5896/cwd (readlink: Permission denied)
+timidity   5896          timidity  rtd   unknown                             /proc/5896/root (readlink: Permission denied)
+timidity   5896          timidity  txt   unknown                             /proc/5896/exe (readlink: Permission denied)
+timidity   5896          timidity NOFD                                       /proc/5896/fd (opendir: Permission denied)
+postgres   6091          postgres  cwd   unknown                             /proc/6091/cwd (readlink: Permission denied)
+postgres   6091          postgres  rtd   unknown                             /proc/6091/root (readlink: Permission denied)
+postgres   6091          postgres  txt   unknown                             /proc/6091/exe (readlink: Permission denied)
+postgres   6091          postgres NOFD                                       /proc/6091/fd (opendir: Permission denied)
+postgres   6092          postgres  cwd   unknown                             /proc/6092/cwd (readlink: Permission denied)
+postgres   6092          postgres  rtd   unknown                             /proc/6092/root (readlink: Permission denied)
+postgres   6092          postgres  txt   unknown                             /proc/6092/exe (readlink: Permission denied)
+postgres   6092          postgres NOFD                                       /proc/6092/fd (opendir: Permission denied)
+postgres   6093          postgres  cwd   unknown                             /proc/6093/cwd (readlink: Permission denied)
+postgres   6093          postgres  rtd   unknown                             /proc/6093/root (readlink: Permission denied)
+postgres   6093          postgres  txt   unknown                             /proc/6093/exe (readlink: Permission denied)
+postgres   6093          postgres NOFD                                       /proc/6093/fd (opendir: Permission denied)
+postgres   6094          postgres  cwd   unknown                             /proc/6094/cwd (readlink: Permission denied)
+postgres   6094          postgres  rtd   unknown                             /proc/6094/root (readlink: Permission denied)
+postgres   6094          postgres  txt   unknown                             /proc/6094/exe (readlink: Permission denied)
+postgres   6094          postgres NOFD                                       /proc/6094/fd (opendir: Permission denied)
+rtkit-dae  6178             rtkit  cwd   unknown                             /proc/6178/cwd (readlink: Permission denied)
+rtkit-dae  6178             rtkit  rtd   unknown                             /proc/6178/root (readlink: Permission denied)
+rtkit-dae  6178             rtkit  txt   unknown                             /proc/6178/exe (readlink: Permission denied)
+rtkit-dae  6178             rtkit NOFD                                       /proc/6178/fd (opendir: Permission denied)
+rtkit-dae  6178  6183       rtkit  cwd   unknown                             /proc/6178/task/6183/cwd (readlink: Permission denied)
+rtkit-dae  6178  6183       rtkit  rtd   unknown                             /proc/6178/task/6183/root (readlink: Permission denied)
+rtkit-dae  6178  6183       rtkit  txt   unknown                             /proc/6178/task/6183/exe (readlink: Permission denied)
+rtkit-dae  6178  6183       rtkit NOFD                                       /proc/6178/task/6183/fd (opendir: Permission denied)
+rtkit-dae  6178  6184       rtkit  cwd   unknown                             /proc/6178/task/6184/cwd (readlink: Permission denied)
+rtkit-dae  6178  6184       rtkit  rtd   unknown                             /proc/6178/task/6184/root (readlink: Permission denied)
+rtkit-dae  6178  6184       rtkit  txt   unknown                             /proc/6178/task/6184/exe (readlink: Permission denied)
+rtkit-dae  6178  6184       rtkit NOFD                                       /proc/6178/task/6184/fd (opendir: Permission denied)
+mysqld     6200             mysql  cwd   unknown                             /proc/6200/cwd (readlink: Permission denied)
+mysqld     6200             mysql  rtd   unknown                             /proc/6200/root (readlink: Permission denied)
+mysqld     6200             mysql  txt   unknown                             /proc/6200/exe (readlink: Permission denied)
+mysqld     6200             mysql NOFD                                       /proc/6200/fd (opendir: Permission denied)
+mysqld     6200  6203       mysql  cwd   unknown                             /proc/6200/task/6203/cwd (readlink: Permission denied)
+mysqld     6200  6203       mysql  rtd   unknown                             /proc/6200/task/6203/root (readlink: Permission denied)
+mysqld     6200  6203       mysql  txt   unknown                             /proc/6200/task/6203/exe (readlink: Permission denied)
+mysqld     6200  6203       mysql NOFD                                       /proc/6200/task/6203/fd (opendir: Permission denied)
+mysqld     6200  6204       mysql  cwd   unknown                             /proc/6200/task/6204/cwd (readlink: Permission denied)
+mysqld     6200  6204       mysql  rtd   unknown                             /proc/6200/task/6204/root (readlink: Permission denied)
+mysqld     6200  6204       mysql  txt   unknown                             /proc/6200/task/6204/exe (readlink: Permission denied)
+mysqld     6200  6204       mysql NOFD                                       /proc/6200/task/6204/fd (opendir: Permission denied)
+mysqld     6200  6205       mysql  cwd   unknown                             /proc/6200/task/6205/cwd (readlink: Permission denied)
+mysqld     6200  6205       mysql  rtd   unknown                             /proc/6200/task/6205/root (readlink: Permission denied)
+mysqld     6200  6205       mysql  txt   unknown                             /proc/6200/task/6205/exe (readlink: Permission denied)
+mysqld     6200  6205       mysql NOFD                                       /proc/6200/task/6205/fd (opendir: Permission denied)
+mysqld     6200  6206       mysql  cwd   unknown                             /proc/6200/task/6206/cwd (readlink: Permission denied)
+mysqld     6200  6206       mysql  rtd   unknown                             /proc/6200/task/6206/root (readlink: Permission denied)
+mysqld     6200  6206       mysql  txt   unknown                             /proc/6200/task/6206/exe (readlink: Permission denied)
+mysqld     6200  6206       mysql NOFD                                       /proc/6200/task/6206/fd (opendir: Permission denied)
+mysqld     6200  6207       mysql  cwd   unknown                             /proc/6200/task/6207/cwd (readlink: Permission denied)
+mysqld     6200  6207       mysql  rtd   unknown                             /proc/6200/task/6207/root (readlink: Permission denied)
+mysqld     6200  6207       mysql  txt   unknown                             /proc/6200/task/6207/exe (readlink: Permission denied)
+mysqld     6200  6207       mysql NOFD                                       /proc/6200/task/6207/fd (opendir: Permission denied)
+mysqld     6200  6208       mysql  cwd   unknown                             /proc/6200/task/6208/cwd (readlink: Permission denied)
+mysqld     6200  6208       mysql  rtd   unknown                             /proc/6200/task/6208/root (readlink: Permission denied)
+mysqld     6200  6208       mysql  txt   unknown                             /proc/6200/task/6208/exe (readlink: Permission denied)
+mysqld     6200  6208       mysql NOFD                                       /proc/6200/task/6208/fd (opendir: Permission denied)
+mysqld     6200  6209       mysql  cwd   unknown                             /proc/6200/task/6209/cwd (readlink: Permission denied)
+mysqld     6200  6209       mysql  rtd   unknown                             /proc/6200/task/6209/root (readlink: Permission denied)
+mysqld     6200  6209       mysql  txt   unknown                             /proc/6200/task/6209/exe (readlink: Permission denied)
+mysqld     6200  6209       mysql NOFD                                       /proc/6200/task/6209/fd (opendir: Permission denied)
+mysqld     6200  6210       mysql  cwd   unknown                             /proc/6200/task/6210/cwd (readlink: Permission denied)
+mysqld     6200  6210       mysql  rtd   unknown                             /proc/6200/task/6210/root (readlink: Permission denied)
+mysqld     6200  6210       mysql  txt   unknown                             /proc/6200/task/6210/exe (readlink: Permission denied)
+mysqld     6200  6210       mysql NOFD                                       /proc/6200/task/6210/fd (opendir: Permission denied)
+mysqld     6200  6211       mysql  cwd   unknown                             /proc/6200/task/6211/cwd (readlink: Permission denied)
+mysqld     6200  6211       mysql  rtd   unknown                             /proc/6200/task/6211/root (readlink: Permission denied)
+mysqld     6200  6211       mysql  txt   unknown                             /proc/6200/task/6211/exe (readlink: Permission denied)
+mysqld     6200  6211       mysql NOFD                                       /proc/6200/task/6211/fd (opendir: Permission denied)
+mysqld     6200  6212       mysql  cwd   unknown                             /proc/6200/task/6212/cwd (readlink: Permission denied)
+mysqld     6200  6212       mysql  rtd   unknown                             /proc/6200/task/6212/root (readlink: Permission denied)
+mysqld     6200  6212       mysql  txt   unknown                             /proc/6200/task/6212/exe (readlink: Permission denied)
+mysqld     6200  6212       mysql NOFD                                       /proc/6200/task/6212/fd (opendir: Permission denied)
+mysqld     6200  6214       mysql  cwd   unknown                             /proc/6200/task/6214/cwd (readlink: Permission denied)
+mysqld     6200  6214       mysql  rtd   unknown                             /proc/6200/task/6214/root (readlink: Permission denied)
+mysqld     6200  6214       mysql  txt   unknown                             /proc/6200/task/6214/exe (readlink: Permission denied)
+mysqld     6200  6214       mysql NOFD                                       /proc/6200/task/6214/fd (opendir: Permission denied)
+mysqld     6200  6215       mysql  cwd   unknown                             /proc/6200/task/6215/cwd (readlink: Permission denied)
+mysqld     6200  6215       mysql  rtd   unknown                             /proc/6200/task/6215/root (readlink: Permission denied)
+mysqld     6200  6215       mysql  txt   unknown                             /proc/6200/task/6215/exe (readlink: Permission denied)
+mysqld     6200  6215       mysql NOFD                                       /proc/6200/task/6215/fd (opendir: Permission denied)
+mysqld     6200  6216       mysql  cwd   unknown                             /proc/6200/task/6216/cwd (readlink: Permission denied)
+mysqld     6200  6216       mysql  rtd   unknown                             /proc/6200/task/6216/root (readlink: Permission denied)
+mysqld     6200  6216       mysql  txt   unknown                             /proc/6200/task/6216/exe (readlink: Permission denied)
+mysqld     6200  6216       mysql NOFD                                       /proc/6200/task/6216/fd (opendir: Permission denied)
+mysqld     6200  6217       mysql  cwd   unknown                             /proc/6200/task/6217/cwd (readlink: Permission denied)
+mysqld     6200  6217       mysql  rtd   unknown                             /proc/6200/task/6217/root (readlink: Permission denied)
+mysqld     6200  6217       mysql  txt   unknown                             /proc/6200/task/6217/exe (readlink: Permission denied)
+mysqld     6200  6217       mysql NOFD                                       /proc/6200/task/6217/fd (opendir: Permission denied)
+mysqld     6200  6230       mysql  cwd   unknown                             /proc/6200/task/6230/cwd (readlink: Permission denied)
+mysqld     6200  6230       mysql  rtd   unknown                             /proc/6200/task/6230/root (readlink: Permission denied)
+mysqld     6200  6230       mysql  txt   unknown                             /proc/6200/task/6230/exe (readlink: Permission denied)
+mysqld     6200  6230       mysql NOFD                                       /proc/6200/task/6230/fd (opendir: Permission denied)
+mysqld     6200 20819       mysql  cwd   unknown                             /proc/6200/task/20819/cwd (readlink: Permission denied)
+mysqld     6200 20819       mysql  rtd   unknown                             /proc/6200/task/20819/root (readlink: Permission denied)
+mysqld     6200 20819       mysql  txt   unknown                             /proc/6200/task/20819/exe (readlink: Permission denied)
+mysqld     6200 20819       mysql NOFD                                       /proc/6200/task/20819/fd (opendir: Permission denied)
+logger     6201              root  cwd   unknown                             /proc/6201/cwd (readlink: Permission denied)
+logger     6201              root  rtd   unknown                             /proc/6201/root (readlink: Permission denied)
+logger     6201              root  txt   unknown                             /proc/6201/exe (readlink: Permission denied)
+logger     6201              root NOFD                                       /proc/6201/fd (opendir: Permission denied)
+login      6516              root  cwd   unknown                             /proc/6516/cwd (readlink: Permission denied)
+login      6516              root  rtd   unknown                             /proc/6516/root (readlink: Permission denied)
+login      6516              root  txt   unknown                             /proc/6516/exe (readlink: Permission denied)
+login      6516              root NOFD                                       /proc/6516/fd (opendir: Permission denied)
+login      6517              root  cwd   unknown                             /proc/6517/cwd (readlink: Permission denied)
+login      6517              root  rtd   unknown                             /proc/6517/root (readlink: Permission denied)
+login      6517              root  txt   unknown                             /proc/6517/exe (readlink: Permission denied)
+login      6517              root NOFD                                       /proc/6517/fd (opendir: Permission denied)
+getty      6518              root  cwd   unknown                             /proc/6518/cwd (readlink: Permission denied)
+getty      6518              root  rtd   unknown                             /proc/6518/root (readlink: Permission denied)
+getty      6518              root  txt   unknown                             /proc/6518/exe (readlink: Permission denied)
+getty      6518              root NOFD                                       /proc/6518/fd (opendir: Permission denied)
+getty      6519              root  cwd   unknown                             /proc/6519/cwd (readlink: Permission denied)
+getty      6519              root  rtd   unknown                             /proc/6519/root (readlink: Permission denied)
+getty      6519              root  txt   unknown                             /proc/6519/exe (readlink: Permission denied)
+getty      6519              root NOFD                                       /proc/6519/fd (opendir: Permission denied)
+getty      6520              root  cwd   unknown                             /proc/6520/cwd (readlink: Permission denied)
+getty      6520              root  rtd   unknown                             /proc/6520/root (readlink: Permission denied)
+getty      6520              root  txt   unknown                             /proc/6520/exe (readlink: Permission denied)
+getty      6520              root NOFD                                       /proc/6520/fd (opendir: Permission denied)
+getty      6521              root  cwd   unknown                             /proc/6521/cwd (readlink: Permission denied)
+getty      6521              root  rtd   unknown                             /proc/6521/root (readlink: Permission denied)
+getty      6521              root  txt   unknown                             /proc/6521/exe (readlink: Permission denied)
+getty      6521              root NOFD                                       /proc/6521/fd (opendir: Permission denied)
+runsvdir   6522              root  cwd   unknown                             /proc/6522/cwd (readlink: Permission denied)
+runsvdir   6522              root  rtd   unknown                             /proc/6522/root (readlink: Permission denied)
+runsvdir   6522              root  txt   unknown                             /proc/6522/exe (readlink: Permission denied)
+runsvdir   6522              root NOFD                                       /proc/6522/fd (opendir: Permission denied)
+runsv      6525              root  cwd   unknown                             /proc/6525/cwd (readlink: Permission denied)
+runsv      6525              root  rtd   unknown                             /proc/6525/root (readlink: Permission denied)
+runsv      6525              root  txt   unknown                             /proc/6525/exe (readlink: Permission denied)
+runsv      6525              root NOFD                                       /proc/6525/fd (opendir: Permission denied)
+svlogd     6526            gitlog  cwd   unknown                             /proc/6526/cwd (readlink: Permission denied)
+svlogd     6526            gitlog  rtd   unknown                             /proc/6526/root (readlink: Permission denied)
+svlogd     6526            gitlog  txt   unknown                             /proc/6526/exe (readlink: Permission denied)
+svlogd     6526            gitlog NOFD                                       /proc/6526/fd (opendir: Permission denied)
+git-daemo  6528         gitdaemon  cwd   unknown                             /proc/6528/cwd (readlink: Permission denied)
+git-daemo  6528         gitdaemon  rtd   unknown                             /proc/6528/root (readlink: Permission denied)
+git-daemo  6528         gitdaemon  txt   unknown                             /proc/6528/exe (readlink: Permission denied)
+git-daemo  6528         gitdaemon NOFD                                       /proc/6528/fd (opendir: Permission denied)
+bash       6558              greg  cwd       DIR        8,7     4096  139287 /home/greg/Desktop/git/Open-Table-Explorer/test/data_sources/gnome_hangs/keyboard_dies2
+bash       6558              greg  rtd       DIR        8,5     1024       2 /
+bash       6558              greg  txt       REG        8,5   941252   33919 /bin/bash
+bash       6558              greg  DEL       REG        8,5            66169 /lib/i386-linux-gnu/i686/cmov/libnss_files-2.13.so
+bash       6558              greg  DEL       REG        8,5            65088 /lib/i386-linux-gnu/i686/cmov/libnss_nis-2.13.so
+bash       6558              greg  DEL       REG        8,5            66159 /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+bash       6558              greg  DEL       REG        8,5            66157 /lib/i386-linux-gnu/i686/cmov/libnss_compat-2.13.so
+bash       6558              greg  DEL       REG        8,9           620607 /usr/lib/locale/locale-archive
+bash       6558              greg  DEL       REG        8,5            66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+bash       6558              greg  DEL       REG        8,5            65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+bash       6558              greg  DEL       REG        8,5            32672 /lib/i386-linux-gnu/libtinfo.so.5.9
+bash       6558              greg  DEL       REG        8,9           604476 /usr/lib/i386-linux-gnu/gconv/gconv-modules.cache
+bash       6558              greg  DEL       REG        8,5            35086 /lib/i386-linux-gnu/ld-2.13.so
+bash       6558              greg    0u      CHR        4,1      0t0      18 /dev/tty1
+bash       6558              greg    1u      CHR        4,1      0t0      18 /dev/tty1
+bash       6558              greg    2u      CHR        4,1      0t0      18 /dev/tty1
+bash       6558              greg  255u      CHR        4,1      0t0      18 /dev/tty1
+exim4      6639       Debian-exim  cwd   unknown                             /proc/6639/cwd (readlink: Permission denied)
+exim4      6639       Debian-exim  rtd   unknown                             /proc/6639/root (readlink: Permission denied)
+exim4      6639       Debian-exim  txt   unknown                             /proc/6639/exe (readlink: Permission denied)
+exim4      6639       Debian-exim NOFD                                       /proc/6639/fd (opendir: Permission denied)
+cupsd      6668              root  cwd   unknown                             /proc/6668/cwd (readlink: Permission denied)
+cupsd      6668              root  rtd   unknown                             /proc/6668/root (readlink: Permission denied)
+cupsd      6668              root  txt   unknown                             /proc/6668/exe (readlink: Permission denied)
+cupsd      6668              root NOFD                                       /proc/6668/fd (opendir: Permission denied)
+bash       6680              greg  cwd       DIR        8,7     4096  787411 /home/greg/Desktop/git/Open-Table-Explorer
+bash       6680              greg  rtd       DIR        8,5     1024       2 /
+bash       6680              greg  txt       REG        8,5   941252   33919 /bin/bash
+bash       6680              greg  DEL       REG        8,5            66169 /lib/i386-linux-gnu/i686/cmov/libnss_files-2.13.so
+bash       6680              greg  DEL       REG        8,5            65088 /lib/i386-linux-gnu/i686/cmov/libnss_nis-2.13.so
+bash       6680              greg  DEL       REG        8,5            66159 /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+bash       6680              greg  DEL       REG        8,5            66157 /lib/i386-linux-gnu/i686/cmov/libnss_compat-2.13.so
+bash       6680              greg  DEL       REG        8,9           620607 /usr/lib/locale/locale-archive
+bash       6680              greg  DEL       REG        8,5            66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+bash       6680              greg  DEL       REG        8,5            65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+bash       6680              greg  DEL       REG        8,5            32672 /lib/i386-linux-gnu/libtinfo.so.5.9
+bash       6680              greg  DEL       REG        8,9           604476 /usr/lib/i386-linux-gnu/gconv/gconv-modules.cache
+bash       6680              greg  DEL       REG        8,5            35086 /lib/i386-linux-gnu/ld-2.13.so
+bash       6680              greg    0u      CHR        4,2      0t0      19 /dev/tty2
+bash       6680              greg    1u      CHR        4,2      0t0      19 /dev/tty2
+bash       6680              greg    2u      CHR        4,2      0t0      19 /dev/tty2
+bash       6680              greg  255u      CHR        4,2      0t0      19 /dev/tty2
+cron       6757              root  cwd   unknown                             /proc/6757/cwd (readlink: Permission denied)
+cron       6757              root  rtd   unknown                             /proc/6757/root (readlink: Permission denied)
+cron       6757              root  txt   unknown                             /proc/6757/exe (readlink: Permission denied)
+cron       6757              root NOFD                                       /proc/6757/fd (opendir: Permission denied)
+atd        6792            daemon  cwd   unknown                             /proc/6792/cwd (readlink: Permission denied)
+atd        6792            daemon  rtd   unknown                             /proc/6792/root (readlink: Permission denied)
+atd        6792            daemon  txt   unknown                             /proc/6792/exe (readlink: Permission denied)
+atd        6792            daemon NOFD                                       /proc/6792/fd (opendir: Permission denied)
+kauditd    6820              root  cwd   unknown                             /proc/6820/cwd (readlink: Permission denied)
+kauditd    6820              root  rtd   unknown                             /proc/6820/root (readlink: Permission denied)
+kauditd    6820              root  txt   unknown                             /proc/6820/exe (readlink: Permission denied)
+kauditd    6820              root NOFD                                       /proc/6820/fd (opendir: Permission denied)
+pulseaudi  6930              greg  cwd       DIR        8,5     1024       2 /
+pulseaudi  6930              greg  rtd       DIR        8,5     1024       2 /
+pulseaudi  6930              greg  txt       REG        8,9    83352 1054204 /usr/bin/pulseaudio (deleted)
+pulseaudi  6930              greg  DEL       REG        8,9           628948 /usr/lib/pulse-2.0/modules/module-dbus-protocol.so
+pulseaudi  6930              greg  DEL       REG        8,9           628552 /usr/lib/pulse-2.0/modules/module-x11-xsmp.so
+pulseaudi  6930              greg  DEL       REG        8,9           628557 /usr/lib/pulse-2.0/modules/module-x11-cork-request.so
+pulseaudi  6930              greg  DEL       REG        8,5            32533 /lib/i386-linux-gnu/libselinux.so.1
+pulseaudi  6930              greg  mem       REG        8,5    13700   33111 /lib/i386-linux-gnu/libsystemd-daemon.so.0.0.1
+pulseaudi  6930              greg  DEL       REG        8,5            32654 /lib/i386-linux-gnu/libsystemd-login.so.0.2.1
+pulseaudi  6930              greg  DEL       REG        8,9           628556 /usr/lib/pulse-2.0/modules/module-x11-publish.so
+pulseaudi  6930              greg  DEL       REG        8,9           628979 /usr/lib/pulse-2.0/modules/module-switch-on-port-available.so
+pulseaudi  6930              greg  DEL       REG        8,9           628654 /usr/lib/pulse-2.0/modules/module-filter-apply.so
+pulseaudi  6930              greg  DEL       REG        8,9           628956 /usr/lib/pulse-2.0/modules/module-filter-heuristics.so
+pulseaudi  6930              greg  DEL       REG        8,9           628648 /usr/lib/pulse-2.0/modules/module-role-cork.so
+pulseaudi  6930              greg  DEL       REG        8,9           628972 /usr/lib/pulse-2.0/modules/module-position-event-sounds.so
+pulseaudi  6930              greg  DEL       REG        8,9           628987 /usr/lib/pulse-2.0/modules/module-systemd-login.so
+pulseaudi  6930              greg  DEL       REG        8,9           628965 /usr/lib/pulse-2.0/modules/module-suspend-on-idle.so
+pulseaudi  6930              greg  DEL       REG        8,9           628953 /usr/lib/pulse-2.0/modules/libalsa-util.so
+pulseaudi  6930              greg  DEL       REG        8,9           580421 /usr/lib/i386-linux-gnu/libasound.so.2.0.0
+pulseaudi  6930              greg  DEL       REG        8,9           628971 /usr/lib/pulse-2.0/modules/module-console-kit.so
+pulseaudi  6930              greg  DEL       REG        8,9           628650 /usr/lib/pulse-2.0/modules/module-intended-roles.so
+pulseaudi  6930              greg  DEL       REG        8,9           628984 /usr/lib/pulse-2.0/modules/module-always-sink.so
+pulseaudi  6930              greg  DEL       REG        8,9           628978 /usr/lib/pulse-2.0/modules/module-rescue-streams.so
+pulseaudi  6930              greg  DEL       REG        8,5            32530 /lib/i386-linux-gnu/libudev.so.0.13.0
+pulseaudi  6930              greg  DEL       REG        8,9           628990 /usr/lib/pulse-2.0/modules/module-default-device-restore.so
+pulseaudi  6930              greg  DEL       REG        8,9           628537 /usr/lib/pulse-2.0/modules/module-native-protocol-unix.so
+pulseaudi  6930              greg  DEL       REG        8,9           628640 /usr/lib/pulse-2.0/modules/module-alsa-card.so
+pulseaudi  6930              greg  DEL       REG        8,9           628642 /usr/lib/pulse-2.0/modules/module-udev-detect.so
+pulseaudi  6930              greg  DEL       REG        8,9           628970 /usr/lib/pulse-2.0/modules/module-stream-restore.so
+pulseaudi  6930              greg  DEL       REG        8,9           628635 /usr/lib/pulse-2.0/modules/libprotocol-native.so
+pulseaudi  6930              greg  mem       REG       0,17 67108904   14122 /run/shm/pulse-shm-2403619595
+pulseaudi  6930              greg  DEL       REG        8,9           620607 /usr/lib/locale/locale-archive
+pulseaudi  6930              greg  DEL       REG        8,5            66152 /lib/i386-linux-gnu/i686/cmov/libresolv-2.13.so
+pulseaudi  6930              greg  DEL       REG        8,5            66159 /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+pulseaudi  6930              greg  DEL       REG        8,5            65225 /lib/i386-linux-gnu/i686/cmov/libcrypt-2.13.so
+pulseaudi  6930              greg  DEL       REG        8,9           580785 /usr/lib/i386-linux-gnu/libogg.so.0.8.0
+pulseaudi  6930              greg  mem       REG        8,9   173788  581251 /usr/lib/i386-linux-gnu/libvorbis.so.0.4.5
+pulseaudi  6930              greg  mem       REG        8,9  1533380  580635 /usr/lib/i386-linux-gnu/libvorbisenc.so.2.0.8
+pulseaudi  6930              greg  DEL       REG        8,9           581408 /usr/lib/i386-linux-gnu/libFLAC.so.8.2.0
+pulseaudi  6930              greg  DEL       REG        8,9           580698 /usr/lib/i386-linux-gnu/libXi.so.6.1.0
+pulseaudi  6930              greg  DEL       REG        8,9           581391 /usr/lib/i386-linux-gnu/libXext.so.6.4.0
+pulseaudi  6930              greg  DEL       REG        8,5            32559 /lib/i386-linux-gnu/libuuid.so.1.3.0
+pulseaudi  6930              greg  mem       REG        8,9    19364  580778 /usr/lib/i386-linux-gnu/libXdmcp.so.6.0.0
+pulseaudi  6930              greg  DEL       REG        8,9           580333 /usr/lib/i386-linux-gnu/libXau.so.6.0.0
+pulseaudi  6930              greg  DEL       REG        8,5            33329 /lib/i386-linux-gnu/libattr.so.1.1.0
+pulseaudi  6930              greg  mem       REG        8,9    34592  580632 /usr/lib/i386-linux-gnu/libjson.so.0.1.0
+pulseaudi  6930              greg  mem       REG        8,9    18668  580640 /usr/lib/i386-linux-gnu/libasyncns.so.0.3.1
+pulseaudi  6930              greg  mem       REG        8,5    35312   33114 /lib/i386-linux-gnu/libwrap.so.0.7.6
+pulseaudi  6930              greg  mem       REG        8,9    71840  580834 /usr/lib/i386-linux-gnu/libtdb.so.1.2.10
+pulseaudi  6930              greg  DEL       REG        8,9           580711 /usr/lib/i386-linux-gnu/liborc-0.4.so.0.16.0
+pulseaudi  6930              greg  mem       REG        8,9   453188  579749 /usr/lib/i386-linux-gnu/libsndfile.so.1.0.25
+pulseaudi  6930              greg  DEL       REG        8,9           587760 /usr/lib/i386-linux-gnu/sse2/libspeexdsp.so.1.5.0
+pulseaudi  6930              greg  mem       REG        8,9  1484112  579743 /usr/lib/i386-linux-gnu/libsamplerate.so.0.1.8
+pulseaudi  6930              greg  DEL       REG        8,9           580699 /usr/lib/i386-linux-gnu/libXtst.so.6.1.0
+pulseaudi  6930              greg  mem       REG        8,9    28320  581298 /usr/lib/i386-linux-gnu/libSM.so.6.0.1
+pulseaudi  6930              greg  mem       REG        8,9    92148  581411 /usr/lib/i386-linux-gnu/libICE.so.6.3.0
+pulseaudi  6930              greg  DEL       REG        8,9           580523 /usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+pulseaudi  6930              greg  DEL       REG        8,9           580648 /usr/lib/i386-linux-gnu/libX11.so.6.3.0
+pulseaudi  6930              greg  DEL       REG        8,9           581101 /usr/lib/i386-linux-gnu/libX11-xcb.so.1.0.0
+pulseaudi  6930              greg  DEL       REG        8,5            66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+pulseaudi  6930              greg  DEL       REG        8,5            65096 /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+pulseaudi  6930              greg  DEL       REG        8,5            66158 /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+pulseaudi  6930              greg  DEL       REG        8,5            65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+pulseaudi  6930              greg  DEL       REG        8,5            66207 /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+pulseaudi  6930              greg  mem       REG        8,5    15668   32526 /lib/i386-linux-gnu/libcap.so.2.22
+pulseaudi  6930              greg  DEL       REG        8,5            32615 /lib/i386-linux-gnu/libdbus-1.so.3.7.2
+pulseaudi  6930              greg  DEL       REG        8,9           581249 /usr/lib/i386-linux-gnu/libltdl.so.7.3.0
+pulseaudi  6930              greg  DEL       REG        8,9           580725 /usr/lib/i386-linux-gnu/libpulse.so.0.14.2
+pulseaudi  6930              greg  DEL       REG        8,9           612121 /usr/lib/i386-linux-gnu/pulseaudio/libpulsecommon-2.0.so
+pulseaudi  6930              greg  DEL       REG        8,9           449517 /usr/lib/libpulsecore-2.0.so
+pulseaudi  6930              greg  DEL       REG        8,9           628967 /usr/lib/pulse-2.0/modules/module-augment-properties.so
+pulseaudi  6930              greg  mem       REG        8,7      696  786472 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-card-database.tdb
+pulseaudi  6930              greg  DEL       REG        8,9           628638 /usr/lib/pulse-2.0/modules/module-card-restore.so
+pulseaudi  6930              greg  mem       REG        8,7    12288  786471 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-stream-volumes.tdb
+pulseaudi  6930              greg  mem       REG        8,7    12288  786470 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-device-volumes.tdb
+pulseaudi  6930              greg  DEL       REG        8,9           628643 /usr/lib/pulse-2.0/modules/module-device-restore.so
+pulseaudi  6930              greg  DEL       REG        8,9           604476 /usr/lib/i386-linux-gnu/gconv/gconv-modules.cache
+pulseaudi  6930              greg  DEL       REG        8,5            35086 /lib/i386-linux-gnu/ld-2.13.so
+pulseaudi  6930              greg    0r      CHR        1,3      0t0       4 /dev/null
+pulseaudi  6930              greg    1w      CHR        1,3      0t0       4 /dev/null
+pulseaudi  6930              greg    2w      CHR        1,3      0t0       4 /dev/null
+pulseaudi  6930              greg    3u     unix 0xf722edc0      0t0   14670 socket
+pulseaudi  6930              greg    5r     FIFO        0,8      0t0   14121 pipe
+pulseaudi  6930              greg    6w     FIFO        0,8      0t0   14121 pipe
+pulseaudi  6930              greg    7r     FIFO        0,8      0t0   14123 pipe
+pulseaudi  6930              greg    8w     FIFO        0,8      0t0   14123 pipe
+pulseaudi  6930              greg   10u      REG        8,7    12288  786470 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-device-volumes.tdb
+pulseaudi  6930              greg   11u      REG        8,7    12288  786471 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-stream-volumes.tdb
+pulseaudi  6930              greg   12u      REG        8,7      696  786472 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-card-database.tdb
+pulseaudi  6930              greg   13r     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   14u  netlink                 0t0   14124 KOBJECT_UEVENT
+pulseaudi  6930              greg   16u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   17u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   18u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   19u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   22u      CHR      116,7      0t0    3783 /dev/snd/controlC0
+pulseaudi  6930              greg   23u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   24u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   25u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   26u     0000        0,9        0    2236 anon_inode
+pulseaudi  6930              greg   27u      CHR      116,7      0t0    3783 /dev/snd/controlC0
+pulseaudi  6930              greg   29u     unix 0xd4107280      0t0   14130 /tmp/pulse-ZphLCozKxwqY/native
+pulseaudi  6930              greg   30u     unix 0xd3888280      0t0   14131 socket
+pulseaudi  6930              greg   31u     unix 0xd41074c0      0t0   14132 /tmp/pulse-ZphLCozKxwqY/dbus-socket
+alsa-sink  6930  6931        greg  cwd       DIR        8,5     1024       2 /
+alsa-sink  6930  6931        greg  rtd       DIR        8,5     1024       2 /
+alsa-sink  6930  6931        greg  txt       REG        8,9    83352 1054204 /usr/bin/pulseaudio (deleted)
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628948 /usr/lib/pulse-2.0/modules/module-dbus-protocol.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628552 /usr/lib/pulse-2.0/modules/module-x11-xsmp.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628557 /usr/lib/pulse-2.0/modules/module-x11-cork-request.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            32533 /lib/i386-linux-gnu/libselinux.so.1
+alsa-sink  6930  6931        greg  mem       REG        8,5    13700   33111 /lib/i386-linux-gnu/libsystemd-daemon.so.0.0.1
+alsa-sink  6930  6931        greg  DEL       REG        8,5            32654 /lib/i386-linux-gnu/libsystemd-login.so.0.2.1
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628556 /usr/lib/pulse-2.0/modules/module-x11-publish.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628979 /usr/lib/pulse-2.0/modules/module-switch-on-port-available.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628654 /usr/lib/pulse-2.0/modules/module-filter-apply.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628956 /usr/lib/pulse-2.0/modules/module-filter-heuristics.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628648 /usr/lib/pulse-2.0/modules/module-role-cork.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628972 /usr/lib/pulse-2.0/modules/module-position-event-sounds.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628987 /usr/lib/pulse-2.0/modules/module-systemd-login.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628965 /usr/lib/pulse-2.0/modules/module-suspend-on-idle.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628953 /usr/lib/pulse-2.0/modules/libalsa-util.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580421 /usr/lib/i386-linux-gnu/libasound.so.2.0.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628971 /usr/lib/pulse-2.0/modules/module-console-kit.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628650 /usr/lib/pulse-2.0/modules/module-intended-roles.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628984 /usr/lib/pulse-2.0/modules/module-always-sink.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628978 /usr/lib/pulse-2.0/modules/module-rescue-streams.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            32530 /lib/i386-linux-gnu/libudev.so.0.13.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628990 /usr/lib/pulse-2.0/modules/module-default-device-restore.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628537 /usr/lib/pulse-2.0/modules/module-native-protocol-unix.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628640 /usr/lib/pulse-2.0/modules/module-alsa-card.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628642 /usr/lib/pulse-2.0/modules/module-udev-detect.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628970 /usr/lib/pulse-2.0/modules/module-stream-restore.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628635 /usr/lib/pulse-2.0/modules/libprotocol-native.so
+alsa-sink  6930  6931        greg  mem       REG       0,17 67108904   14122 /run/shm/pulse-shm-2403619595
+alsa-sink  6930  6931        greg  DEL       REG        8,9           620607 /usr/lib/locale/locale-archive
+alsa-sink  6930  6931        greg  DEL       REG        8,5            66152 /lib/i386-linux-gnu/i686/cmov/libresolv-2.13.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            66159 /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            65225 /lib/i386-linux-gnu/i686/cmov/libcrypt-2.13.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580785 /usr/lib/i386-linux-gnu/libogg.so.0.8.0
+alsa-sink  6930  6931        greg  mem       REG        8,9   173788  581251 /usr/lib/i386-linux-gnu/libvorbis.so.0.4.5
+alsa-sink  6930  6931        greg  mem       REG        8,9  1533380  580635 /usr/lib/i386-linux-gnu/libvorbisenc.so.2.0.8
+alsa-sink  6930  6931        greg  DEL       REG        8,9           581408 /usr/lib/i386-linux-gnu/libFLAC.so.8.2.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580698 /usr/lib/i386-linux-gnu/libXi.so.6.1.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           581391 /usr/lib/i386-linux-gnu/libXext.so.6.4.0
+alsa-sink  6930  6931        greg  DEL       REG        8,5            32559 /lib/i386-linux-gnu/libuuid.so.1.3.0
+alsa-sink  6930  6931        greg  mem       REG        8,9    19364  580778 /usr/lib/i386-linux-gnu/libXdmcp.so.6.0.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580333 /usr/lib/i386-linux-gnu/libXau.so.6.0.0
+alsa-sink  6930  6931        greg  DEL       REG        8,5            33329 /lib/i386-linux-gnu/libattr.so.1.1.0
+alsa-sink  6930  6931        greg  mem       REG        8,9    34592  580632 /usr/lib/i386-linux-gnu/libjson.so.0.1.0
+alsa-sink  6930  6931        greg  mem       REG        8,9    18668  580640 /usr/lib/i386-linux-gnu/libasyncns.so.0.3.1
+alsa-sink  6930  6931        greg  mem       REG        8,5    35312   33114 /lib/i386-linux-gnu/libwrap.so.0.7.6
+alsa-sink  6930  6931        greg  mem       REG        8,9    71840  580834 /usr/lib/i386-linux-gnu/libtdb.so.1.2.10
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580711 /usr/lib/i386-linux-gnu/liborc-0.4.so.0.16.0
+alsa-sink  6930  6931        greg  mem       REG        8,9   453188  579749 /usr/lib/i386-linux-gnu/libsndfile.so.1.0.25
+alsa-sink  6930  6931        greg  DEL       REG        8,9           587760 /usr/lib/i386-linux-gnu/sse2/libspeexdsp.so.1.5.0
+alsa-sink  6930  6931        greg  mem       REG        8,9  1484112  579743 /usr/lib/i386-linux-gnu/libsamplerate.so.0.1.8
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580699 /usr/lib/i386-linux-gnu/libXtst.so.6.1.0
+alsa-sink  6930  6931        greg  mem       REG        8,9    28320  581298 /usr/lib/i386-linux-gnu/libSM.so.6.0.1
+alsa-sink  6930  6931        greg  mem       REG        8,9    92148  581411 /usr/lib/i386-linux-gnu/libICE.so.6.3.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580523 /usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580648 /usr/lib/i386-linux-gnu/libX11.so.6.3.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           581101 /usr/lib/i386-linux-gnu/libX11-xcb.so.1.0.0
+alsa-sink  6930  6931        greg  DEL       REG        8,5            66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            65096 /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            66158 /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+alsa-sink  6930  6931        greg  DEL       REG        8,5            66207 /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+alsa-sink  6930  6931        greg  mem       REG        8,5    15668   32526 /lib/i386-linux-gnu/libcap.so.2.22
+alsa-sink  6930  6931        greg  DEL       REG        8,5            32615 /lib/i386-linux-gnu/libdbus-1.so.3.7.2
+alsa-sink  6930  6931        greg  DEL       REG        8,9           581249 /usr/lib/i386-linux-gnu/libltdl.so.7.3.0
+alsa-sink  6930  6931        greg  DEL       REG        8,9           580725 /usr/lib/i386-linux-gnu/libpulse.so.0.14.2
+alsa-sink  6930  6931        greg  DEL       REG        8,9           612121 /usr/lib/i386-linux-gnu/pulseaudio/libpulsecommon-2.0.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           449517 /usr/lib/libpulsecore-2.0.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628967 /usr/lib/pulse-2.0/modules/module-augment-properties.so
+alsa-sink  6930  6931        greg  mem       REG        8,7      696  786472 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-card-database.tdb
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628638 /usr/lib/pulse-2.0/modules/module-card-restore.so
+alsa-sink  6930  6931        greg  mem       REG        8,7    12288  786471 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-stream-volumes.tdb
+alsa-sink  6930  6931        greg  mem       REG        8,7    12288  786470 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-device-volumes.tdb
+alsa-sink  6930  6931        greg  DEL       REG        8,9           628643 /usr/lib/pulse-2.0/modules/module-device-restore.so
+alsa-sink  6930  6931        greg  DEL       REG        8,9           604476 /usr/lib/i386-linux-gnu/gconv/gconv-modules.cache
+alsa-sink  6930  6931        greg  DEL       REG        8,5            35086 /lib/i386-linux-gnu/ld-2.13.so
+alsa-sink  6930  6931        greg    0r      CHR        1,3      0t0       4 /dev/null
+alsa-sink  6930  6931        greg    1w      CHR        1,3      0t0       4 /dev/null
+alsa-sink  6930  6931        greg    2w      CHR        1,3      0t0       4 /dev/null
+alsa-sink  6930  6931        greg    3u     unix 0xf722edc0      0t0   14670 socket
+alsa-sink  6930  6931        greg    5r     FIFO        0,8      0t0   14121 pipe
+alsa-sink  6930  6931        greg    6w     FIFO        0,8      0t0   14121 pipe
+alsa-sink  6930  6931        greg    7r     FIFO        0,8      0t0   14123 pipe
+alsa-sink  6930  6931        greg    8w     FIFO        0,8      0t0   14123 pipe
+alsa-sink  6930  6931        greg   10u      REG        8,7    12288  786470 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-device-volumes.tdb
+alsa-sink  6930  6931        greg   11u      REG        8,7    12288  786471 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-stream-volumes.tdb
+alsa-sink  6930  6931        greg   12u      REG        8,7      696  786472 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-card-database.tdb
+alsa-sink  6930  6931        greg   13r     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   14u  netlink                 0t0   14124 KOBJECT_UEVENT
+alsa-sink  6930  6931        greg   16u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   17u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   18u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   19u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   22u      CHR      116,7      0t0    3783 /dev/snd/controlC0
+alsa-sink  6930  6931        greg   23u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   24u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   25u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   26u     0000        0,9        0    2236 anon_inode
+alsa-sink  6930  6931        greg   27u      CHR      116,7      0t0    3783 /dev/snd/controlC0
+alsa-sink  6930  6931        greg   29u     unix 0xd4107280      0t0   14130 /tmp/pulse-ZphLCozKxwqY/native
+alsa-sink  6930  6931        greg   30u     unix 0xd3888280      0t0   14131 socket
+alsa-sink  6930  6931        greg   31u     unix 0xd41074c0      0t0   14132 /tmp/pulse-ZphLCozKxwqY/dbus-socket
+alsa-sour  6930  6932        greg  cwd       DIR        8,5     1024       2 /
+alsa-sour  6930  6932        greg  rtd       DIR        8,5     1024       2 /
+alsa-sour  6930  6932        greg  txt       REG        8,9    83352 1054204 /usr/bin/pulseaudio (deleted)
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628948 /usr/lib/pulse-2.0/modules/module-dbus-protocol.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628552 /usr/lib/pulse-2.0/modules/module-x11-xsmp.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628557 /usr/lib/pulse-2.0/modules/module-x11-cork-request.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            32533 /lib/i386-linux-gnu/libselinux.so.1
+alsa-sour  6930  6932        greg  mem       REG        8,5    13700   33111 /lib/i386-linux-gnu/libsystemd-daemon.so.0.0.1
+alsa-sour  6930  6932        greg  DEL       REG        8,5            32654 /lib/i386-linux-gnu/libsystemd-login.so.0.2.1
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628556 /usr/lib/pulse-2.0/modules/module-x11-publish.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628979 /usr/lib/pulse-2.0/modules/module-switch-on-port-available.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628654 /usr/lib/pulse-2.0/modules/module-filter-apply.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628956 /usr/lib/pulse-2.0/modules/module-filter-heuristics.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628648 /usr/lib/pulse-2.0/modules/module-role-cork.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628972 /usr/lib/pulse-2.0/modules/module-position-event-sounds.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628987 /usr/lib/pulse-2.0/modules/module-systemd-login.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628965 /usr/lib/pulse-2.0/modules/module-suspend-on-idle.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628953 /usr/lib/pulse-2.0/modules/libalsa-util.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580421 /usr/lib/i386-linux-gnu/libasound.so.2.0.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628971 /usr/lib/pulse-2.0/modules/module-console-kit.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628650 /usr/lib/pulse-2.0/modules/module-intended-roles.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628984 /usr/lib/pulse-2.0/modules/module-always-sink.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628978 /usr/lib/pulse-2.0/modules/module-rescue-streams.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            32530 /lib/i386-linux-gnu/libudev.so.0.13.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628990 /usr/lib/pulse-2.0/modules/module-default-device-restore.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628537 /usr/lib/pulse-2.0/modules/module-native-protocol-unix.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628640 /usr/lib/pulse-2.0/modules/module-alsa-card.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628642 /usr/lib/pulse-2.0/modules/module-udev-detect.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628970 /usr/lib/pulse-2.0/modules/module-stream-restore.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628635 /usr/lib/pulse-2.0/modules/libprotocol-native.so
+alsa-sour  6930  6932        greg  mem       REG       0,17 67108904   14122 /run/shm/pulse-shm-2403619595
+alsa-sour  6930  6932        greg  DEL       REG        8,9           620607 /usr/lib/locale/locale-archive
+alsa-sour  6930  6932        greg  DEL       REG        8,5            66152 /lib/i386-linux-gnu/i686/cmov/libresolv-2.13.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            66159 /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            65225 /lib/i386-linux-gnu/i686/cmov/libcrypt-2.13.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580785 /usr/lib/i386-linux-gnu/libogg.so.0.8.0
+alsa-sour  6930  6932        greg  mem       REG        8,9   173788  581251 /usr/lib/i386-linux-gnu/libvorbis.so.0.4.5
+alsa-sour  6930  6932        greg  mem       REG        8,9  1533380  580635 /usr/lib/i386-linux-gnu/libvorbisenc.so.2.0.8
+alsa-sour  6930  6932        greg  DEL       REG        8,9           581408 /usr/lib/i386-linux-gnu/libFLAC.so.8.2.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580698 /usr/lib/i386-linux-gnu/libXi.so.6.1.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           581391 /usr/lib/i386-linux-gnu/libXext.so.6.4.0
+alsa-sour  6930  6932        greg  DEL       REG        8,5            32559 /lib/i386-linux-gnu/libuuid.so.1.3.0
+alsa-sour  6930  6932        greg  mem       REG        8,9    19364  580778 /usr/lib/i386-linux-gnu/libXdmcp.so.6.0.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580333 /usr/lib/i386-linux-gnu/libXau.so.6.0.0
+alsa-sour  6930  6932        greg  DEL       REG        8,5            33329 /lib/i386-linux-gnu/libattr.so.1.1.0
+alsa-sour  6930  6932        greg  mem       REG        8,9    34592  580632 /usr/lib/i386-linux-gnu/libjson.so.0.1.0
+alsa-sour  6930  6932        greg  mem       REG        8,9    18668  580640 /usr/lib/i386-linux-gnu/libasyncns.so.0.3.1
+alsa-sour  6930  6932        greg  mem       REG        8,5    35312   33114 /lib/i386-linux-gnu/libwrap.so.0.7.6
+alsa-sour  6930  6932        greg  mem       REG        8,9    71840  580834 /usr/lib/i386-linux-gnu/libtdb.so.1.2.10
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580711 /usr/lib/i386-linux-gnu/liborc-0.4.so.0.16.0
+alsa-sour  6930  6932        greg  mem       REG        8,9   453188  579749 /usr/lib/i386-linux-gnu/libsndfile.so.1.0.25
+alsa-sour  6930  6932        greg  DEL       REG        8,9           587760 /usr/lib/i386-linux-gnu/sse2/libspeexdsp.so.1.5.0
+alsa-sour  6930  6932        greg  mem       REG        8,9  1484112  579743 /usr/lib/i386-linux-gnu/libsamplerate.so.0.1.8
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580699 /usr/lib/i386-linux-gnu/libXtst.so.6.1.0
+alsa-sour  6930  6932        greg  mem       REG        8,9    28320  581298 /usr/lib/i386-linux-gnu/libSM.so.6.0.1
+alsa-sour  6930  6932        greg  mem       REG        8,9    92148  581411 /usr/lib/i386-linux-gnu/libICE.so.6.3.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580523 /usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580648 /usr/lib/i386-linux-gnu/libX11.so.6.3.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           581101 /usr/lib/i386-linux-gnu/libX11-xcb.so.1.0.0
+alsa-sour  6930  6932        greg  DEL       REG        8,5            66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            65096 /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            66158 /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+alsa-sour  6930  6932        greg  DEL       REG        8,5            66207 /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+alsa-sour  6930  6932        greg  mem       REG        8,5    15668   32526 /lib/i386-linux-gnu/libcap.so.2.22
+alsa-sour  6930  6932        greg  DEL       REG        8,5            32615 /lib/i386-linux-gnu/libdbus-1.so.3.7.2
+alsa-sour  6930  6932        greg  DEL       REG        8,9           581249 /usr/lib/i386-linux-gnu/libltdl.so.7.3.0
+alsa-sour  6930  6932        greg  DEL       REG        8,9           580725 /usr/lib/i386-linux-gnu/libpulse.so.0.14.2
+alsa-sour  6930  6932        greg  DEL       REG        8,9           612121 /usr/lib/i386-linux-gnu/pulseaudio/libpulsecommon-2.0.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           449517 /usr/lib/libpulsecore-2.0.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628967 /usr/lib/pulse-2.0/modules/module-augment-properties.so
+alsa-sour  6930  6932        greg  mem       REG        8,7      696  786472 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-card-database.tdb
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628638 /usr/lib/pulse-2.0/modules/module-card-restore.so
+alsa-sour  6930  6932        greg  mem       REG        8,7    12288  786471 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-stream-volumes.tdb
+alsa-sour  6930  6932        greg  mem       REG        8,7    12288  786470 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-device-volumes.tdb
+alsa-sour  6930  6932        greg  DEL       REG        8,9           628643 /usr/lib/pulse-2.0/modules/module-device-restore.so
+alsa-sour  6930  6932        greg  DEL       REG        8,9           604476 /usr/lib/i386-linux-gnu/gconv/gconv-modules.cache
+alsa-sour  6930  6932        greg  DEL       REG        8,5            35086 /lib/i386-linux-gnu/ld-2.13.so
+alsa-sour  6930  6932        greg    0r      CHR        1,3      0t0       4 /dev/null
+alsa-sour  6930  6932        greg    1w      CHR        1,3      0t0       4 /dev/null
+alsa-sour  6930  6932        greg    2w      CHR        1,3      0t0       4 /dev/null
+alsa-sour  6930  6932        greg    3u     unix 0xf722edc0      0t0   14670 socket
+alsa-sour  6930  6932        greg    5r     FIFO        0,8      0t0   14121 pipe
+alsa-sour  6930  6932        greg    6w     FIFO        0,8      0t0   14121 pipe
+alsa-sour  6930  6932        greg    7r     FIFO        0,8      0t0   14123 pipe
+alsa-sour  6930  6932        greg    8w     FIFO        0,8      0t0   14123 pipe
+alsa-sour  6930  6932        greg   10u      REG        8,7    12288  786470 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-device-volumes.tdb
+alsa-sour  6930  6932        greg   11u      REG        8,7    12288  786471 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-stream-volumes.tdb
+alsa-sour  6930  6932        greg   12u      REG        8,7      696  786472 /home/greg/.pulse/c1f5132a20201a21e313d21d00001649-card-database.tdb
+alsa-sour  6930  6932        greg   13r     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   14u  netlink                 0t0   14124 KOBJECT_UEVENT
+alsa-sour  6930  6932        greg   16u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   17u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   18u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   19u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   22u      CHR      116,7      0t0    3783 /dev/snd/controlC0
+alsa-sour  6930  6932        greg   23u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   24u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   25u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   26u     0000        0,9        0    2236 anon_inode
+alsa-sour  6930  6932        greg   27u      CHR      116,7      0t0    3783 /dev/snd/controlC0
+alsa-sour  6930  6932        greg   29u     unix 0xd4107280      0t0   14130 /tmp/pulse-ZphLCozKxwqY/native
+alsa-sour  6930  6932        greg   30u     unix 0xd3888280      0t0   14131 socket
+alsa-sour  6930  6932        greg   31u     unix 0xd41074c0      0t0   14132 /tmp/pulse-ZphLCozKxwqY/dbus-socket
+udisks-da  6943              root  cwd   unknown                             /proc/6943/cwd (readlink: Permission denied)
+udisks-da  6943              root  rtd   unknown                             /proc/6943/root (readlink: Permission denied)
+udisks-da  6943              root  txt   unknown                             /proc/6943/exe (readlink: Permission denied)
+udisks-da  6943              root NOFD                                       /proc/6943/fd (opendir: Permission denied)
+gdbus      6943  6945        root  cwd   unknown                             /proc/6943/task/6945/cwd (readlink: Permission denied)
+gdbus      6943  6945        root  rtd   unknown                             /proc/6943/task/6945/root (readlink: Permission denied)
+gdbus      6943  6945        root  txt   unknown                             /proc/6943/task/6945/exe (readlink: Permission denied)
+gdbus      6943  6945        root NOFD                                       /proc/6943/task/6945/fd (opendir: Permission denied)
+gmain      6943  7118        root  cwd   unknown                             /proc/6943/task/7118/cwd (readlink: Permission denied)
+gmain      6943  7118        root  rtd   unknown                             /proc/6943/task/7118/root (readlink: Permission denied)
+gmain      6943  7118        root  txt   unknown                             /proc/6943/task/7118/exe (readlink: Permission denied)
+gmain      6943  7118        root NOFD                                       /proc/6943/task/7118/fd (opendir: Permission denied)
+udisks-da  6944              root  cwd   unknown                             /proc/6944/cwd (readlink: Permission denied)
+udisks-da  6944              root  rtd   unknown                             /proc/6944/root (readlink: Permission denied)
+udisks-da  6944              root  txt   unknown                             /proc/6944/exe (readlink: Permission denied)
+udisks-da  6944              root NOFD                                       /proc/6944/fd (opendir: Permission denied)
+colord     6955            colord  cwd   unknown                             /proc/6955/cwd (readlink: Permission denied)
+colord     6955            colord  rtd   unknown                             /proc/6955/root (readlink: Permission denied)
+colord     6955            colord  txt   unknown                             /proc/6955/exe (readlink: Permission denied)
+colord     6955            colord NOFD                                       /proc/6955/fd (opendir: Permission denied)
+gdbus      6955  6980      colord  cwd   unknown                             /proc/6955/task/6980/cwd (readlink: Permission denied)
+gdbus      6955  6980      colord  rtd   unknown                             /proc/6955/task/6980/root (readlink: Permission denied)
+gdbus      6955  6980      colord  txt   unknown                             /proc/6955/task/6980/exe (readlink: Permission denied)
+gdbus      6955  6980      colord NOFD                                       /proc/6955/task/6980/fd (opendir: Permission denied)
+gmain      6955  6982      colord  cwd   unknown                             /proc/6955/task/6982/cwd (readlink: Permission denied)
+gmain      6955  6982      colord  rtd   unknown                             /proc/6955/task/6982/root (readlink: Permission denied)
+gmain      6955  6982      colord  txt   unknown                             /proc/6955/task/6982/exe (readlink: Permission denied)
+gmain      6955  6982      colord NOFD                                       /proc/6955/task/6982/fd (opendir: Permission denied)
+udevd      8709              root  cwd   unknown                             /proc/8709/cwd (readlink: Permission denied)
+udevd      8709              root  rtd   unknown                             /proc/8709/root (readlink: Permission denied)
+udevd      8709              root  txt   unknown                             /proc/8709/exe (readlink: Permission denied)
+udevd      8709              root NOFD                                       /proc/8709/fd (opendir: Permission denied)
+ntpd      12266               ntp  cwd   unknown                             /proc/12266/cwd (readlink: Permission denied)
+ntpd      12266               ntp  rtd   unknown                             /proc/12266/root (readlink: Permission denied)
+ntpd      12266               ntp  txt   unknown                             /proc/12266/exe (readlink: Permission denied)
+ntpd      12266               ntp NOFD                                       /proc/12266/fd (opendir: Permission denied)
+upowerd   12503              root  cwd   unknown                             /proc/12503/cwd (readlink: Permission denied)
+upowerd   12503              root  rtd   unknown                             /proc/12503/root (readlink: Permission denied)
+upowerd   12503              root  txt   unknown                             /proc/12503/exe (readlink: Permission denied)
+upowerd   12503              root NOFD                                       /proc/12503/fd (opendir: Permission denied)
+gmain     12503 12504        root  cwd   unknown                             /proc/12503/task/12504/cwd (readlink: Permission denied)
+gmain     12503 12504        root  rtd   unknown                             /proc/12503/task/12504/root (readlink: Permission denied)
+gmain     12503 12504        root  txt   unknown                             /proc/12503/task/12504/exe (readlink: Permission denied)
+gmain     12503 12504        root NOFD                                       /proc/12503/task/12504/fd (opendir: Permission denied)
+gdbus     12503 12505        root  cwd   unknown                             /proc/12503/task/12505/cwd (readlink: Permission denied)
+gdbus     12503 12505        root  rtd   unknown                             /proc/12503/task/12505/root (readlink: Permission denied)
+gdbus     12503 12505        root  txt   unknown                             /proc/12503/task/12505/exe (readlink: Permission denied)
+gdbus     12503 12505        root NOFD                                       /proc/12503/task/12505/fd (opendir: Permission denied)
+accounts- 12716              root  cwd   unknown                             /proc/12716/cwd (readlink: Permission denied)
+accounts- 12716              root  rtd   unknown                             /proc/12716/root (readlink: Permission denied)
+accounts- 12716              root  txt   unknown                             /proc/12716/exe (readlink: Permission denied)
+accounts- 12716              root NOFD                                       /proc/12716/fd (opendir: Permission denied)
+gdbus     12716 12721        root  cwd   unknown                             /proc/12716/task/12721/cwd (readlink: Permission denied)
+gdbus     12716 12721        root  rtd   unknown                             /proc/12716/task/12721/root (readlink: Permission denied)
+gdbus     12716 12721        root  txt   unknown                             /proc/12716/task/12721/exe (readlink: Permission denied)
+gdbus     12716 12721        root NOFD                                       /proc/12716/task/12721/fd (opendir: Permission denied)
+winbindd  12764              root  cwd   unknown                             /proc/12764/cwd (readlink: Permission denied)
+winbindd  12764              root  rtd   unknown                             /proc/12764/root (readlink: Permission denied)
+winbindd  12764              root  txt   unknown                             /proc/12764/exe (readlink: Permission denied)
+winbindd  12764              root NOFD                                       /proc/12764/fd (opendir: Permission denied)
+winbindd  12782              root  cwd   unknown                             /proc/12782/cwd (readlink: Permission denied)
+winbindd  12782              root  rtd   unknown                             /proc/12782/root (readlink: Permission denied)
+winbindd  12782              root  txt   unknown                             /proc/12782/exe (readlink: Permission denied)
+winbindd  12782              root NOFD                                       /proc/12782/fd (opendir: Permission denied)
+NetworkMa 12975              root  cwd   unknown                             /proc/12975/cwd (readlink: Permission denied)
+NetworkMa 12975              root  rtd   unknown                             /proc/12975/root (readlink: Permission denied)
+NetworkMa 12975              root  txt   unknown                             /proc/12975/exe (readlink: Permission denied)
+NetworkMa 12975              root NOFD                                       /proc/12975/fd (opendir: Permission denied)
+NetworkMa 12975 12977        root  cwd   unknown                             /proc/12975/task/12977/cwd (readlink: Permission denied)
+NetworkMa 12975 12977        root  rtd   unknown                             /proc/12975/task/12977/root (readlink: Permission denied)
+NetworkMa 12975 12977        root  txt   unknown                             /proc/12975/task/12977/exe (readlink: Permission denied)
+NetworkMa 12975 12977        root NOFD                                       /proc/12975/task/12977/fd (opendir: Permission denied)
+gdbus     12975 12983        root  cwd   unknown                             /proc/12975/task/12983/cwd (readlink: Permission denied)
+gdbus     12975 12983        root  rtd   unknown                             /proc/12975/task/12983/root (readlink: Permission denied)
+gdbus     12975 12983        root  txt   unknown                             /proc/12975/task/12983/exe (readlink: Permission denied)
+gdbus     12975 12983        root NOFD                                       /proc/12975/task/12983/fd (opendir: Permission denied)
+gmain     12975 13036        root  cwd   unknown                             /proc/12975/task/13036/cwd (readlink: Permission denied)
+gmain     12975 13036        root  rtd   unknown                             /proc/12975/task/13036/root (readlink: Permission denied)
+gmain     12975 13036        root  txt   unknown                             /proc/12975/task/13036/exe (readlink: Permission denied)
+gmain     12975 13036        root NOFD                                       /proc/12975/task/13036/fd (opendir: Permission denied)
+sshd      13191              root  cwd   unknown                             /proc/13191/cwd (readlink: Permission denied)
+sshd      13191              root  rtd   unknown                             /proc/13191/root (readlink: Permission denied)
+sshd      13191              root  txt   unknown                             /proc/13191/exe (readlink: Permission denied)
+sshd      13191              root NOFD                                       /proc/13191/fd (opendir: Permission denied)
+nmbd      13222              root  cwd   unknown                             /proc/13222/cwd (readlink: Permission denied)
+nmbd      13222              root  rtd   unknown                             /proc/13222/root (readlink: Permission denied)
+nmbd      13222              root  txt   unknown                             /proc/13222/exe (readlink: Permission denied)
+nmbd      13222              root NOFD                                       /proc/13222/fd (opendir: Permission denied)
+smbd      13224              root  cwd   unknown                             /proc/13224/cwd (readlink: Permission denied)
+smbd      13224              root  rtd   unknown                             /proc/13224/root (readlink: Permission denied)
+smbd      13224              root  txt   unknown                             /proc/13224/exe (readlink: Permission denied)
+smbd      13224              root NOFD                                       /proc/13224/fd (opendir: Permission denied)
+winbindd  13245              root  cwd   unknown                             /proc/13245/cwd (readlink: Permission denied)
+winbindd  13245              root  rtd   unknown                             /proc/13245/root (readlink: Permission denied)
+winbindd  13245              root  txt   unknown                             /proc/13245/exe (readlink: Permission denied)
+winbindd  13245              root NOFD                                       /proc/13245/fd (opendir: Permission denied)
+winbindd  13246              root  cwd   unknown                             /proc/13246/cwd (readlink: Permission denied)
+winbindd  13246              root  rtd   unknown                             /proc/13246/root (readlink: Permission denied)
+winbindd  13246              root  txt   unknown                             /proc/13246/exe (readlink: Permission denied)
+winbindd  13246              root NOFD                                       /proc/13246/fd (opendir: Permission denied)
+smbd      13251              root  cwd   unknown                             /proc/13251/cwd (readlink: Permission denied)
+smbd      13251              root  rtd   unknown                             /proc/13251/root (readlink: Permission denied)
+smbd      13251              root  txt   unknown                             /proc/13251/exe (readlink: Permission denied)
+smbd      13251              root NOFD                                       /proc/13251/fd (opendir: Permission denied)
+bluetooth 13497              root  cwd   unknown                             /proc/13497/cwd (readlink: Permission denied)
+bluetooth 13497              root  rtd   unknown                             /proc/13497/root (readlink: Permission denied)
+bluetooth 13497              root  txt   unknown                             /proc/13497/exe (readlink: Permission denied)
+bluetooth 13497              root NOFD                                       /proc/13497/fd (opendir: Permission denied)
+udisksd   21691              root  cwd   unknown                             /proc/21691/cwd (readlink: Permission denied)
+udisksd   21691              root  rtd   unknown                             /proc/21691/root (readlink: Permission denied)
+udisksd   21691              root  txt   unknown                             /proc/21691/exe (readlink: Permission denied)
+udisksd   21691              root NOFD                                       /proc/21691/fd (opendir: Permission denied)
+gmain     21691 21692        root  cwd   unknown                             /proc/21691/task/21692/cwd (readlink: Permission denied)
+gmain     21691 21692        root  rtd   unknown                             /proc/21691/task/21692/root (readlink: Permission denied)
+gmain     21691 21692        root  txt   unknown                             /proc/21691/task/21692/exe (readlink: Permission denied)
+gmain     21691 21692        root NOFD                                       /proc/21691/task/21692/fd (opendir: Permission denied)
+gdbus     21691 21694        root  cwd   unknown                             /proc/21691/task/21694/cwd (readlink: Permission denied)
+gdbus     21691 21694        root  rtd   unknown                             /proc/21691/task/21694/root (readlink: Permission denied)
+gdbus     21691 21694        root  txt   unknown                             /proc/21691/task/21694/exe (readlink: Permission denied)
+gdbus     21691 21694        root NOFD                                       /proc/21691/task/21694/fd (opendir: Permission denied)
+probing-t 21691 21695        root  cwd   unknown                             /proc/21691/task/21695/cwd (readlink: Permission denied)
+probing-t 21691 21695        root  rtd   unknown                             /proc/21691/task/21695/root (readlink: Permission denied)
+probing-t 21691 21695        root  txt   unknown                             /proc/21691/task/21695/exe (readlink: Permission denied)
+probing-t 21691 21695        root NOFD                                       /proc/21691/task/21695/fd (opendir: Permission denied)
+cleanup   21691 21696        root  cwd   unknown                             /proc/21691/task/21696/cwd (readlink: Permission denied)
+cleanup   21691 21696        root  rtd   unknown                             /proc/21691/task/21696/root (readlink: Permission denied)
+cleanup   21691 21696        root  txt   unknown                             /proc/21691/task/21696/exe (readlink: Permission denied)
+cleanup   21691 21696        root NOFD                                       /proc/21691/task/21696/fd (opendir: Permission denied)
+scsi_eh_1 27473              root  cwd   unknown                             /proc/27473/cwd (readlink: Permission denied)
+scsi_eh_1 27473              root  rtd   unknown                             /proc/27473/root (readlink: Permission denied)
+scsi_eh_1 27473              root  txt   unknown                             /proc/27473/exe (readlink: Permission denied)
+scsi_eh_1 27473              root NOFD                                       /proc/27473/fd (opendir: Permission denied)
+usb-stora 27474              root  cwd   unknown                             /proc/27474/cwd (readlink: Permission denied)
+usb-stora 27474              root  rtd   unknown                             /proc/27474/root (readlink: Permission denied)
+usb-stora 27474              root  txt   unknown                             /proc/27474/exe (readlink: Permission denied)
+usb-stora 27474              root NOFD                                       /proc/27474/fd (opendir: Permission denied)
+scsi_eh_1 28394              root  cwd   unknown                             /proc/28394/cwd (readlink: Permission denied)
+scsi_eh_1 28394              root  rtd   unknown                             /proc/28394/root (readlink: Permission denied)
+scsi_eh_1 28394              root  txt   unknown                             /proc/28394/exe (readlink: Permission denied)
+scsi_eh_1 28394              root NOFD                                       /proc/28394/fd (opendir: Permission denied)
+usb-stora 28395              root  cwd   unknown                             /proc/28395/cwd (readlink: Permission denied)
+usb-stora 28395              root  rtd   unknown                             /proc/28395/root (readlink: Permission denied)
+usb-stora 28395              root  txt   unknown                             /proc/28395/exe (readlink: Permission denied)
+usb-stora 28395              root NOFD                                       /proc/28395/fd (opendir: Permission denied)
+scsi_eh_1 28436              root  cwd   unknown                             /proc/28436/cwd (readlink: Permission denied)
+scsi_eh_1 28436              root  rtd   unknown                             /proc/28436/root (readlink: Permission denied)
+scsi_eh_1 28436              root  txt   unknown                             /proc/28436/exe (readlink: Permission denied)
+scsi_eh_1 28436              root NOFD                                       /proc/28436/fd (opendir: Permission denied)
+usb-stora 28437              root  cwd   unknown                             /proc/28437/cwd (readlink: Permission denied)
+usb-stora 28437              root  rtd   unknown                             /proc/28437/root (readlink: Permission denied)
+usb-stora 28437              root  txt   unknown                             /proc/28437/exe (readlink: Permission denied)
+usb-stora 28437              root NOFD                                       /proc/28437/fd (opendir: Permission denied)
+kjournald 28474              root  cwd   unknown                             /proc/28474/cwd (readlink: Permission denied)
+kjournald 28474              root  rtd   unknown                             /proc/28474/root (readlink: Permission denied)
+kjournald 28474              root  txt   unknown                             /proc/28474/exe (readlink: Permission denied)
+kjournald 28474              root NOFD                                       /proc/28474/fd (opendir: Permission denied)
+migration 30107              root  cwd   unknown                             /proc/30107/cwd (readlink: Permission denied)
+migration 30107              root  rtd   unknown                             /proc/30107/root (readlink: Permission denied)
+migration 30107              root  txt   unknown                             /proc/30107/exe (readlink: Permission denied)
+migration 30107              root NOFD                                       /proc/30107/fd (opendir: Permission denied)
+ksoftirqd 30109              root  cwd   unknown                             /proc/30109/cwd (readlink: Permission denied)
+ksoftirqd 30109              root  rtd   unknown                             /proc/30109/root (readlink: Permission denied)
+ksoftirqd 30109              root  txt   unknown                             /proc/30109/exe (readlink: Permission denied)
+ksoftirqd 30109              root NOFD                                       /proc/30109/fd (opendir: Permission denied)
+watchdog/ 30110              root  cwd   unknown                             /proc/30110/cwd (readlink: Permission denied)
+watchdog/ 30110              root  rtd   unknown                             /proc/30110/root (readlink: Permission denied)
+watchdog/ 30110              root  txt   unknown                             /proc/30110/exe (readlink: Permission denied)
+watchdog/ 30110              root NOFD                                       /proc/30110/fd (opendir: Permission denied)
+udevd     30167              root  cwd   unknown                             /proc/30167/cwd (readlink: Permission denied)
+udevd     30167              root  rtd   unknown                             /proc/30167/root (readlink: Permission denied)
+udevd     30167              root  txt   unknown                             /proc/30167/exe (readlink: Permission denied)
+udevd     30167              root NOFD                                       /proc/30167/fd (opendir: Permission denied)
+udevd     30168              root  cwd   unknown                             /proc/30168/cwd (readlink: Permission denied)
+udevd     30168              root  rtd   unknown                             /proc/30168/root (readlink: Permission denied)
+udevd     30168              root  txt   unknown                             /proc/30168/exe (readlink: Permission denied)
+udevd     30168              root NOFD                                       /proc/30168/fd (opendir: Permission denied)
+condor_co 30477            condor  cwd   unknown                             /proc/30477/cwd (readlink: Permission denied)
+condor_co 30477            condor  rtd   unknown                             /proc/30477/root (readlink: Permission denied)
+condor_co 30477            condor  txt   unknown                             /proc/30477/exe (readlink: Permission denied)
+condor_co 30477            condor NOFD                                       /proc/30477/fd (opendir: Permission denied)
+condor_st 30480            condor  cwd   unknown                             /proc/30480/cwd (readlink: Permission denied)
+condor_st 30480            condor  rtd   unknown                             /proc/30480/root (readlink: Permission denied)
+condor_st 30480            condor  txt   unknown                             /proc/30480/exe (readlink: Permission denied)
+condor_st 30480            condor NOFD                                       /proc/30480/fd (opendir: Permission denied)
+condor_sc 30481            condor  cwd   unknown                             /proc/30481/cwd (readlink: Permission denied)
+condor_sc 30481            condor  rtd   unknown                             /proc/30481/root (readlink: Permission denied)
+condor_sc 30481            condor  txt   unknown                             /proc/30481/exe (readlink: Permission denied)
+condor_sc 30481            condor NOFD                                       /proc/30481/fd (opendir: Permission denied)
+condor_ne 30482            condor  cwd   unknown                             /proc/30482/cwd (readlink: Permission denied)
+condor_ne 30482            condor  rtd   unknown                             /proc/30482/root (readlink: Permission denied)
+condor_ne 30482            condor  txt   unknown                             /proc/30482/exe (readlink: Permission denied)
+condor_ne 30482            condor NOFD                                       /proc/30482/fd (opendir: Permission denied)
+condor_pr 30483              root  cwd   unknown                             /proc/30483/cwd (readlink: Permission denied)
+condor_pr 30483              root  rtd   unknown                             /proc/30483/root (readlink: Permission denied)
+condor_pr 30483              root  txt   unknown                             /proc/30483/exe (readlink: Permission denied)
+condor_pr 30483              root NOFD                                       /proc/30483/fd (opendir: Permission denied)
+dirmngr   30909           dirmngr  cwd   unknown                             /proc/30909/cwd (readlink: Permission denied)
+dirmngr   30909           dirmngr  rtd   unknown                             /proc/30909/root (readlink: Permission denied)
+dirmngr   30909           dirmngr  txt   unknown                             /proc/30909/exe (readlink: Permission denied)
+dirmngr   30909           dirmngr NOFD                                       /proc/30909/fd (opendir: Permission denied)

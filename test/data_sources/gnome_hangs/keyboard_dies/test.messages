@@ -1,0 +1,15 @@
+Jun 30 07:35:07 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul  1 07:35:03 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul  1 19:07:29 acer kernel: [440088.238711] tracker-miner-f[6991]: segfault at 45534e56 ip b74a24a7 sp bf98cf08 error 4 in libgobject-2.0.so.0.3200.4 (deleted)[b7470000+50000]
+Jul  2 07:35:03 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul  3 07:35:02 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul  4 07:35:02 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul  5 07:35:03 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul  6 07:35:03 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul  6 07:35:42 acer popularity-contest: unable to submit report to http://popcon.debian.org/cgi-bin/popcon.cgi.
+Jul  6 21:38:45 acer pulseaudio[26680]: [pulseaudio] authkey.c: Failed to open cookie file '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul  6 21:38:45 acer pulseaudio[26680]: [pulseaudio] authkey.c: Failed to load authorization key '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul  6 21:38:45 acer pulseaudio[26683]: [pulseaudio] authkey.c: Failed to open cookie file '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul  6 21:38:45 acer pulseaudio[26683]: [pulseaudio] authkey.c: Failed to load authorization key '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul  6 21:38:46 acer rsyslogd-2177: imuxsock begins to drop messages from pid 26656 due to rate-limiting
+Jul  6 21:38:50 acer rsyslogd-2177: imuxsock lost 25 messages from pid 26656 due to rate-limiting
