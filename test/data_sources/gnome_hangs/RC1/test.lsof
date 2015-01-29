@@ -1,0 +1,343 @@
+COMMAND     PID   TID USER   FD      TYPE DEVICE SIZE/OFF    NODE NAME
+init          1       root  cwd       DIR    8,5     1024       2 /
+init          1       root  rtd       DIR    8,5     1024       2 /
+init          1       root  txt       REG    8,5    35216   32724 /sbin/init
+init          1       root  mem       REG    8,5     9844   65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+init          1       root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+init          1       root  mem       REG    8,5   124904   32533 /lib/i386-linux-gnu/libselinux.so.1
+init          1       root  mem       REG    8,5   268512   32602 /lib/i386-linux-gnu/libsepol.so.1
+init          1       root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+init          1       root   10u     FIFO   0,14      0t0     735 /run/initctl
+kthreadd      2       root  cwd       DIR    8,5     1024       2 /
+kthreadd      2       root  rtd       DIR    8,5     1024       2 /
+kthreadd      2       root  txt   unknown                         /proc/2/exe
+ksoftirqd     3       root  cwd       DIR    8,5     1024       2 /
+ksoftirqd     3       root  rtd       DIR    8,5     1024       2 /
+ksoftirqd     3       root  txt   unknown                         /proc/3/exe
+migration     6       root  cwd       DIR    8,5     1024       2 /
+migration     6       root  rtd       DIR    8,5     1024       2 /
+migration     6       root  txt   unknown                         /proc/6/exe
+watchdog/     7       root  cwd       DIR    8,5     1024       2 /
+watchdog/     7       root  rtd       DIR    8,5     1024       2 /
+watchdog/     7       root  txt   unknown                         /proc/7/exe
+migration     8       root  cwd       DIR    8,5     1024       2 /
+migration     8       root  rtd       DIR    8,5     1024       2 /
+migration     8       root  txt   unknown                         /proc/8/exe
+ksoftirqd    10       root  cwd       DIR    8,5     1024       2 /
+ksoftirqd    10       root  rtd       DIR    8,5     1024       2 /
+ksoftirqd    10       root  txt   unknown                         /proc/10/exe
+watchdog/    12       root  cwd       DIR    8,5     1024       2 /
+watchdog/    12       root  rtd       DIR    8,5     1024       2 /
+watchdog/    12       root  txt   unknown                         /proc/12/exe
+cpuset       13       root  cwd       DIR    8,5     1024       2 /
+cpuset       13       root  rtd       DIR    8,5     1024       2 /
+cpuset       13       root  txt   unknown                         /proc/13/exe
+khelper      14       root  cwd       DIR    8,5     1024       2 /
+khelper      14       root  rtd       DIR    8,5     1024       2 /
+khelper      14       root  txt   unknown                         /proc/14/exe
+kdevtmpfs    15       root  cwd       DIR    0,5     3460    1026 /
+kdevtmpfs    15       root  rtd       DIR    0,5     3460    1026 /
+kdevtmpfs    15       root  txt   unknown                         /proc/15/exe
+netns        16       root  cwd       DIR    8,5     1024       2 /
+netns        16       root  rtd       DIR    8,5     1024       2 /
+netns        16       root  txt   unknown                         /proc/16/exe
+sync_supe    17       root  cwd       DIR    8,5     1024       2 /
+sync_supe    17       root  rtd       DIR    8,5     1024       2 /
+sync_supe    17       root  txt   unknown                         /proc/17/exe
+bdi-defau    18       root  cwd       DIR    8,5     1024       2 /
+bdi-defau    18       root  rtd       DIR    8,5     1024       2 /
+bdi-defau    18       root  txt   unknown                         /proc/18/exe
+kintegrit    19       root  cwd       DIR    8,5     1024       2 /
+kintegrit    19       root  rtd       DIR    8,5     1024       2 /
+kintegrit    19       root  txt   unknown                         /proc/19/exe
+kblockd      20       root  cwd       DIR    8,5     1024       2 /
+kblockd      20       root  rtd       DIR    8,5     1024       2 /
+kblockd      20       root  txt   unknown                         /proc/20/exe
+khungtask    22       root  cwd       DIR    8,5     1024       2 /
+khungtask    22       root  rtd       DIR    8,5     1024       2 /
+khungtask    22       root  txt   unknown                         /proc/22/exe
+kswapd0      23       root  cwd       DIR    8,5     1024       2 /
+kswapd0      23       root  rtd       DIR    8,5     1024       2 /
+kswapd0      23       root  txt   unknown                         /proc/23/exe
+ksmd         24       root  cwd       DIR    8,5     1024       2 /
+ksmd         24       root  rtd       DIR    8,5     1024       2 /
+ksmd         24       root  txt   unknown                         /proc/24/exe
+khugepage    25       root  cwd       DIR    8,5     1024       2 /
+khugepage    25       root  rtd       DIR    8,5     1024       2 /
+khugepage    25       root  txt   unknown                         /proc/25/exe
+fsnotify_    26       root  cwd       DIR    8,5     1024       2 /
+fsnotify_    26       root  rtd       DIR    8,5     1024       2 /
+fsnotify_    26       root  txt   unknown                         /proc/26/exe
+crypto       27       root  cwd       DIR    8,5     1024       2 /
+crypto       27       root  rtd       DIR    8,5     1024       2 /
+crypto       27       root  txt   unknown                         /proc/27/exe
+khubd       129       root  cwd       DIR    8,5     1024       2 /
+khubd       129       root  rtd       DIR    8,5     1024       2 /
+khubd       129       root  txt   unknown                         /proc/129/exe
+ata_sff     154       root  cwd       DIR    8,5     1024       2 /
+ata_sff     154       root  rtd       DIR    8,5     1024       2 /
+ata_sff     154       root  txt   unknown                         /proc/154/exe
+scsi_eh_0   157       root  cwd       DIR    8,5     1024       2 /
+scsi_eh_0   157       root  rtd       DIR    8,5     1024       2 /
+scsi_eh_0   157       root  txt   unknown                         /proc/157/exe
+scsi_eh_1   158       root  cwd       DIR    8,5     1024       2 /
+scsi_eh_1   158       root  rtd       DIR    8,5     1024       2 /
+scsi_eh_1   158       root  txt   unknown                         /proc/158/exe
+scsi_eh_2   159       root  cwd       DIR    8,5     1024       2 /
+scsi_eh_2   159       root  rtd       DIR    8,5     1024       2 /
+scsi_eh_2   159       root  txt   unknown                         /proc/159/exe
+scsi_eh_3   160       root  cwd       DIR    8,5     1024       2 /
+scsi_eh_3   160       root  rtd       DIR    8,5     1024       2 /
+scsi_eh_3   160       root  txt   unknown                         /proc/160/exe
+scsi_eh_4   161       root  cwd       DIR    8,5     1024       2 /
+scsi_eh_4   161       root  rtd       DIR    8,5     1024       2 /
+scsi_eh_4   161       root  txt   unknown                         /proc/161/exe
+scsi_eh_5   162       root  cwd       DIR    8,5     1024       2 /
+scsi_eh_5   162       root  rtd       DIR    8,5     1024       2 /
+scsi_eh_5   162       root  txt   unknown                         /proc/162/exe
+jbd2/sda5   208       root  cwd       DIR    8,5     1024       2 /
+jbd2/sda5   208       root  rtd       DIR    8,5     1024       2 /
+jbd2/sda5   208       root  txt   unknown                         /proc/208/exe
+ext4-dio-   209       root  cwd       DIR    8,5     1024       2 /
+ext4-dio-   209       root  rtd       DIR    8,5     1024       2 /
+ext4-dio-   209       root  txt   unknown                         /proc/209/exe
+kpsmoused   454       root  cwd       DIR    8,5     1024       2 /
+kpsmoused   454       root  rtd       DIR    8,5     1024       2 /
+kpsmoused   454       root  txt   unknown                         /proc/454/exe
+cfg80211    485       root  cwd       DIR    8,5     1024       2 /
+cfg80211    485       root  rtd       DIR    8,5     1024       2 /
+cfg80211    485       root  txt   unknown                         /proc/485/exe
+hd-audio0   512       root  cwd       DIR    8,5     1024       2 /
+hd-audio0   512       root  rtd       DIR    8,5     1024       2 /
+hd-audio0   512       root  txt   unknown                         /proc/512/exe
+jbd2/sda7  1337       root  cwd       DIR    8,5     1024       2 /
+jbd2/sda7  1337       root  rtd       DIR    8,5     1024       2 /
+jbd2/sda7  1337       root  txt   unknown                         /proc/1337/exe
+ext4-dio-  1338       root  cwd       DIR    8,5     1024       2 /
+ext4-dio-  1338       root  rtd       DIR    8,5     1024       2 /
+ext4-dio-  1338       root  txt   unknown                         /proc/1338/exe
+jbd2/sda8  1339       root  cwd       DIR    8,5     1024       2 /
+jbd2/sda8  1339       root  rtd       DIR    8,5     1024       2 /
+jbd2/sda8  1339       root  txt   unknown                         /proc/1339/exe
+ext4-dio-  1340       root  cwd       DIR    8,5     1024       2 /
+ext4-dio-  1340       root  rtd       DIR    8,5     1024       2 /
+ext4-dio-  1340       root  txt   unknown                         /proc/1340/exe
+ext4-dio-  1341       root  cwd       DIR    8,5     1024       2 /
+ext4-dio-  1341       root  rtd       DIR    8,5     1024       2 /
+ext4-dio-  1341       root  txt   unknown                         /proc/1341/exe
+jbd2/sda6  1342       root  cwd       DIR    8,5     1024       2 /
+jbd2/sda6  1342       root  rtd       DIR    8,5     1024       2 /
+jbd2/sda6  1342       root  txt   unknown                         /proc/1342/exe
+ext4-dio-  1343       root  cwd       DIR    8,5     1024       2 /
+ext4-dio-  1343       root  rtd       DIR    8,5     1024       2 /
+ext4-dio-  1343       root  txt   unknown                         /proc/1343/exe
+ext4-dio-  1347       root  cwd       DIR    8,5     1024       2 /
+ext4-dio-  1347       root  rtd       DIR    8,5     1024       2 /
+ext4-dio-  1347       root  txt   unknown                         /proc/1347/exe
+ext4-dio-  1348       root  cwd       DIR    8,5     1024       2 /
+ext4-dio-  1348       root  rtd       DIR    8,5     1024       2 /
+ext4-dio-  1348       root  txt   unknown                         /proc/1348/exe
+rpciod     1664       root  cwd       DIR    8,5     1024       2 /
+rpciod     1664       root  rtd       DIR    8,5     1024       2 /
+rpciod     1664       root  txt   unknown                         /proc/1664/exe
+nfsiod     1668       root  cwd       DIR    8,5     1024       2 /
+nfsiod     1668       root  rtd       DIR    8,5     1024       2 /
+nfsiod     1668       root  txt   unknown                         /proc/1668/exe
+krfcommd   2485       root  cwd       DIR    8,5     1024       2 /
+krfcommd   2485       root  rtd       DIR    8,5     1024       2 /
+krfcommd   2485       root  txt   unknown                         /proc/2485/exe
+kauditd    4219       root  cwd       DIR    8,5     1024       2 /
+kauditd    4219       root  rtd       DIR    8,5     1024       2 /
+kauditd    4219       root  txt   unknown                         /proc/4219/exe
+kworker/u 26289       root  cwd       DIR    8,5     1024       2 /
+kworker/u 26289       root  rtd       DIR    8,5     1024       2 /
+kworker/u 26289       root  txt   unknown                         /proc/26289/exe
+kworker/0 26338       root  cwd       DIR    8,5     1024       2 /
+kworker/0 26338       root  rtd       DIR    8,5     1024       2 /
+kworker/0 26338       root  txt   unknown                         /proc/26338/exe
+kworker/u 27883       root  cwd       DIR    8,5     1024       2 /
+kworker/u 27883       root  rtd       DIR    8,5     1024       2 /
+kworker/u 27883       root  txt   unknown                         /proc/27883/exe
+kworker/1 28621       root  cwd       DIR    8,5     1024       2 /
+kworker/1 28621       root  rtd       DIR    8,5     1024       2 /
+kworker/1 28621       root  txt   unknown                         /proc/28621/exe
+init      28660       root  cwd       DIR    8,5     1024       2 /
+init      28660       root  rtd       DIR    8,5     1024       2 /
+init      28660       root  txt       REG    8,5    35216   32724 /sbin/init
+init      28660       root  mem       REG    8,5     9844   65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+init      28660       root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+init      28660       root  mem       REG    8,5   124904   32533 /lib/i386-linux-gnu/libselinux.so.1
+init      28660       root  mem       REG    8,5   268512   32602 /lib/i386-linux-gnu/libsepol.so.1
+init      28660       root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+init      28660       root    0u      CHR    5,1      0t0      12 /dev/console
+init      28660       root    1u      CHR    5,1      0t0      12 /dev/console
+init      28660       root    2u      CHR    5,1      0t0      12 /dev/console
+bash      28661       root  cwd       DIR    8,7     4096  787411 /home/greg/Desktop/git/Open-Table-Explorer
+bash      28661       root  rtd       DIR    8,5     1024       2 /
+bash      28661       root  txt       REG    8,5   941252   33919 /bin/bash
+bash      28661       root  mem       REG    8,5    42628   66169 /lib/i386-linux-gnu/i686/cmov/libnss_files-2.13.so
+bash      28661       root  mem       REG    8,5    38556   65088 /lib/i386-linux-gnu/i686/cmov/libnss_nis-2.13.so
+bash      28661       root  mem       REG    8,5    79728   66159 /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+bash      28661       root  mem       REG    8,5    26456   66157 /lib/i386-linux-gnu/i686/cmov/libnss_compat-2.13.so
+bash      28661       root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+bash      28661       root  mem       REG    8,5     9844   65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+bash      28661       root  mem       REG    8,5   125424   32672 /lib/i386-linux-gnu/libtinfo.so.5.9
+bash      28661       root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+bash      28661       root    0u      CHR    5,1      0t0      12 /dev/console
+bash      28661       root    1u      CHR    5,1      0t0      12 /dev/console
+bash      28661       root    2u      CHR    5,1      0t0      12 /dev/console
+bash      28661       root  255u      CHR    5,1      0t0      12 /dev/console
+kworker/1 28662       root  cwd       DIR    8,5     1024       2 /
+kworker/1 28662       root  rtd       DIR    8,5     1024       2 /
+kworker/1 28662       root  txt   unknown                         /proc/28662/exe
+kworker/0 28663       root  cwd       DIR    8,5     1024       2 /
+kworker/0 28663       root  rtd       DIR    8,5     1024       2 /
+kworker/0 28663       root  txt   unknown                         /proc/28663/exe
+kworker/0 28664       root  cwd       DIR    8,5     1024       2 /
+kworker/0 28664       root  rtd       DIR    8,5     1024       2 /
+kworker/0 28664       root  txt   unknown                         /proc/28664/exe
+flush-8:0 28665       root  cwd       DIR    8,5     1024       2 /
+flush-8:0 28665       root  rtd       DIR    8,5     1024       2 /
+flush-8:0 28665       root  txt   unknown                         /proc/28665/exe
+kworker/1 28666       root  cwd       DIR    8,5     1024       2 /
+kworker/1 28666       root  rtd       DIR    8,5     1024       2 /
+kworker/1 28666       root  txt   unknown                         /proc/28666/exe
+ruby      28667       root  cwd       DIR    8,7     4096  787411 /home/greg/Desktop/git/Open-Table-Explorer
+ruby      28667       root  rtd       DIR    8,5     1024       2 /
+ruby      28667       root  txt       REG    8,9     5600 1055119 /usr/bin/ruby1.9.1
+ruby      28667       root  mem       REG    8,9    95640  623199 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/single_byte.so
+ruby      28667       root  mem       REG    8,9   122588  580565 /usr/lib/i386-linux-gnu/libyaml-0.so.2.0.2
+ruby      28667       root  mem       REG    8,9     9624  623196 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/escape.so
+ruby      28667       root  mem       REG    8,9    30220  623178 /usr/lib/ruby/1.9.1/i486-linux/json/ext/generator.so
+ruby      28667       root  mem       REG    8,9     5592  623189 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_32le.so
+ruby      28667       root  mem       REG    8,9     5592  623182 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_32be.so
+ruby      28667       root  mem       REG    8,9     5592  623186 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_16le.so
+ruby      28667       root  mem       REG    8,9     5592  623215 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_16be.so
+ruby      28667       root  mem       REG    8,9   198932  623235 /usr/lib/ruby/1.9.1/i486-linux/date_core.so
+ruby      28667       root  mem       REG    8,5    95896   32529 /lib/i386-linux-gnu/libz.so.1.2.7
+ruby      28667       root  mem       REG    8,9  1812072  612013 /usr/lib/i386-linux-gnu/i686/cmov/libcrypto.so.1.0.0
+ruby      28667       root  mem       REG    8,9   350656  612052 /usr/lib/i386-linux-gnu/i686/cmov/libssl.so.1.0.0
+ruby      28667       root  mem       REG    8,9    22008  623177 /usr/lib/ruby/1.9.1/i486-linux/json/ext/parser.so
+ruby      28667       root  mem       REG    8,9    26292  623252 /usr/lib/ruby/1.9.1/i486-linux/psych.so
+ruby      28667       root  mem       REG    8,9    67264  623251 /usr/lib/ruby/1.9.1/i486-linux/bigdecimal.so
+ruby      28667       root  mem       REG    8,9   324496  623179 /usr/lib/ruby/1.9.1/i486-linux/openssl.so
+ruby      28667       root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+ruby      28667       root  mem       REG    8,5   148996   66158 /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+ruby      28667       root  mem       REG    8,5    38416   65225 /lib/i386-linux-gnu/i686/cmov/libcrypt-2.13.so
+ruby      28667       root  mem       REG    8,5     9844   65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+ruby      28667       root  mem       REG    8,5    30684   66207 /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+ruby      28667       root  mem       REG    8,5   117009   65096 /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+ruby      28667       root  mem       REG    8,9  2102956  448806 /usr/lib/libruby-1.9.1.so.1.9.1
+ruby      28667       root  mem       REG    8,9    22028  623174 /usr/lib/ruby/1.9.1/i486-linux/strscan.so
+ruby      28667       root  mem       REG    8,9     5480  623239 /usr/lib/ruby/1.9.1/i486-linux/fcntl.so
+ruby      28667       root  mem       REG    8,9    26272  623173 /usr/lib/ruby/1.9.1/i486-linux/stringio.so
+ruby      28667       root  mem       REG    8,9    13812  623256 /usr/lib/ruby/1.9.1/i486-linux/digest.so
+ruby      28667       root  mem       REG    8,9     9572  623203 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/transdb.so
+ruby      28667       root  mem       REG    8,9     9588  623213 /usr/lib/ruby/1.9.1/i486-linux/enc/encdb.so
+ruby      28667       root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+ruby      28667       root    0u      CHR    5,1      0t0      12 /dev/console
+ruby      28667       root    1u      CHR    5,1      0t0      12 /dev/console
+ruby      28667       root    2u      CHR    5,1      0t0      12 /dev/console
+ruby      28667       root    3r     FIFO    0,8      0t0  482651 pipe
+ruby      28667       root    4w     FIFO    0,8      0t0  482651 pipe
+ruby      28667       root    7r     FIFO    0,8      0t0  483478 pipe
+ruby      28667       root    9r     FIFO    0,8      0t0  483479 pipe
+ruby      28667 28683 root  cwd       DIR    8,7     4096  787411 /home/greg/Desktop/git/Open-Table-Explorer
+ruby      28667 28683 root  rtd       DIR    8,5     1024       2 /
+ruby      28667 28683 root  txt       REG    8,9     5600 1055119 /usr/bin/ruby1.9.1
+ruby      28667 28683 root  mem       REG    8,9    95640  623199 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/single_byte.so
+ruby      28667 28683 root  mem       REG    8,9   122588  580565 /usr/lib/i386-linux-gnu/libyaml-0.so.2.0.2
+ruby      28667 28683 root  mem       REG    8,9     9624  623196 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/escape.so
+ruby      28667 28683 root  mem       REG    8,9    30220  623178 /usr/lib/ruby/1.9.1/i486-linux/json/ext/generator.so
+ruby      28667 28683 root  mem       REG    8,9     5592  623189 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_32le.so
+ruby      28667 28683 root  mem       REG    8,9     5592  623182 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_32be.so
+ruby      28667 28683 root  mem       REG    8,9     5592  623186 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_16le.so
+ruby      28667 28683 root  mem       REG    8,9     5592  623215 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_16be.so
+ruby      28667 28683 root  mem       REG    8,9   198932  623235 /usr/lib/ruby/1.9.1/i486-linux/date_core.so
+ruby      28667 28683 root  mem       REG    8,5    95896   32529 /lib/i386-linux-gnu/libz.so.1.2.7
+ruby      28667 28683 root  mem       REG    8,9  1812072  612013 /usr/lib/i386-linux-gnu/i686/cmov/libcrypto.so.1.0.0
+ruby      28667 28683 root  mem       REG    8,9   350656  612052 /usr/lib/i386-linux-gnu/i686/cmov/libssl.so.1.0.0
+ruby      28667 28683 root  mem       REG    8,9    22008  623177 /usr/lib/ruby/1.9.1/i486-linux/json/ext/parser.so
+ruby      28667 28683 root  mem       REG    8,9    26292  623252 /usr/lib/ruby/1.9.1/i486-linux/psych.so
+ruby      28667 28683 root  mem       REG    8,9    67264  623251 /usr/lib/ruby/1.9.1/i486-linux/bigdecimal.so
+ruby      28667 28683 root  mem       REG    8,9   324496  623179 /usr/lib/ruby/1.9.1/i486-linux/openssl.so
+ruby      28667 28683 root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+ruby      28667 28683 root  mem       REG    8,5   148996   66158 /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+ruby      28667 28683 root  mem       REG    8,5    38416   65225 /lib/i386-linux-gnu/i686/cmov/libcrypt-2.13.so
+ruby      28667 28683 root  mem       REG    8,5     9844   65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+ruby      28667 28683 root  mem       REG    8,5    30684   66207 /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+ruby      28667 28683 root  mem       REG    8,5   117009   65096 /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+ruby      28667 28683 root  mem       REG    8,9  2102956  448806 /usr/lib/libruby-1.9.1.so.1.9.1
+ruby      28667 28683 root  mem       REG    8,9    22028  623174 /usr/lib/ruby/1.9.1/i486-linux/strscan.so
+ruby      28667 28683 root  mem       REG    8,9     5480  623239 /usr/lib/ruby/1.9.1/i486-linux/fcntl.so
+ruby      28667 28683 root  mem       REG    8,9    26272  623173 /usr/lib/ruby/1.9.1/i486-linux/stringio.so
+ruby      28667 28683 root  mem       REG    8,9    13812  623256 /usr/lib/ruby/1.9.1/i486-linux/digest.so
+ruby      28667 28683 root  mem       REG    8,9     9572  623203 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/transdb.so
+ruby      28667 28683 root  mem       REG    8,9     9588  623213 /usr/lib/ruby/1.9.1/i486-linux/enc/encdb.so
+ruby      28667 28683 root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+ruby      28667 28683 root    0u      CHR    5,1      0t0      12 /dev/console
+ruby      28667 28683 root    1u      CHR    5,1      0t0      12 /dev/console
+ruby      28667 28683 root    2u      CHR    5,1      0t0      12 /dev/console
+ruby      28667 28683 root    3r     FIFO    0,8      0t0  482651 pipe
+ruby      28667 28683 root    4w     FIFO    0,8      0t0  482651 pipe
+ruby      28667 28683 root    7r     FIFO    0,8      0t0  483478 pipe
+ruby      28667 28683 root    9r     FIFO    0,8      0t0  483479 pipe
+ruby      28667 28684 root  cwd       DIR    8,7     4096  787411 /home/greg/Desktop/git/Open-Table-Explorer
+ruby      28667 28684 root  rtd       DIR    8,5     1024       2 /
+ruby      28667 28684 root  txt       REG    8,9     5600 1055119 /usr/bin/ruby1.9.1
+ruby      28667 28684 root  mem       REG    8,9    95640  623199 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/single_byte.so
+ruby      28667 28684 root  mem       REG    8,9   122588  580565 /usr/lib/i386-linux-gnu/libyaml-0.so.2.0.2
+ruby      28667 28684 root  mem       REG    8,9     9624  623196 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/escape.so
+ruby      28667 28684 root  mem       REG    8,9    30220  623178 /usr/lib/ruby/1.9.1/i486-linux/json/ext/generator.so
+ruby      28667 28684 root  mem       REG    8,9     5592  623189 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_32le.so
+ruby      28667 28684 root  mem       REG    8,9     5592  623182 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_32be.so
+ruby      28667 28684 root  mem       REG    8,9     5592  623186 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_16le.so
+ruby      28667 28684 root  mem       REG    8,9     5592  623215 /usr/lib/ruby/1.9.1/i486-linux/enc/utf_16be.so
+ruby      28667 28684 root  mem       REG    8,9   198932  623235 /usr/lib/ruby/1.9.1/i486-linux/date_core.so
+ruby      28667 28684 root  mem       REG    8,5    95896   32529 /lib/i386-linux-gnu/libz.so.1.2.7
+ruby      28667 28684 root  mem       REG    8,9  1812072  612013 /usr/lib/i386-linux-gnu/i686/cmov/libcrypto.so.1.0.0
+ruby      28667 28684 root  mem       REG    8,9   350656  612052 /usr/lib/i386-linux-gnu/i686/cmov/libssl.so.1.0.0
+ruby      28667 28684 root  mem       REG    8,9    22008  623177 /usr/lib/ruby/1.9.1/i486-linux/json/ext/parser.so
+ruby      28667 28684 root  mem       REG    8,9    26292  623252 /usr/lib/ruby/1.9.1/i486-linux/psych.so
+ruby      28667 28684 root  mem       REG    8,9    67264  623251 /usr/lib/ruby/1.9.1/i486-linux/bigdecimal.so
+ruby      28667 28684 root  mem       REG    8,9   324496  623179 /usr/lib/ruby/1.9.1/i486-linux/openssl.so
+ruby      28667 28684 root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+ruby      28667 28684 root  mem       REG    8,5   148996   66158 /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+ruby      28667 28684 root  mem       REG    8,5    38416   65225 /lib/i386-linux-gnu/i686/cmov/libcrypt-2.13.so
+ruby      28667 28684 root  mem       REG    8,5     9844   65230 /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+ruby      28667 28684 root  mem       REG    8,5    30684   66207 /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+ruby      28667 28684 root  mem       REG    8,5   117009   65096 /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+ruby      28667 28684 root  mem       REG    8,9  2102956  448806 /usr/lib/libruby-1.9.1.so.1.9.1
+ruby      28667 28684 root  mem       REG    8,9    22028  623174 /usr/lib/ruby/1.9.1/i486-linux/strscan.so
+ruby      28667 28684 root  mem       REG    8,9     5480  623239 /usr/lib/ruby/1.9.1/i486-linux/fcntl.so
+ruby      28667 28684 root  mem       REG    8,9    26272  623173 /usr/lib/ruby/1.9.1/i486-linux/stringio.so
+ruby      28667 28684 root  mem       REG    8,9    13812  623256 /usr/lib/ruby/1.9.1/i486-linux/digest.so
+ruby      28667 28684 root  mem       REG    8,9     9572  623203 /usr/lib/ruby/1.9.1/i486-linux/enc/trans/transdb.so
+ruby      28667 28684 root  mem       REG    8,9     9588  623213 /usr/lib/ruby/1.9.1/i486-linux/enc/encdb.so
+ruby      28667 28684 root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+ruby      28667 28684 root    0u      CHR    5,1      0t0      12 /dev/console
+ruby      28667 28684 root    1u      CHR    5,1      0t0      12 /dev/console
+ruby      28667 28684 root    2u      CHR    5,1      0t0      12 /dev/console
+ruby      28667 28684 root    3r     FIFO    0,8      0t0  482651 pipe
+ruby      28667 28684 root    4w     FIFO    0,8      0t0  482651 pipe
+ruby      28667 28684 root    7r     FIFO    0,8      0t0  483478 pipe
+ruby      28667 28684 root    9r     FIFO    0,8      0t0  483479 pipe
+lsof      28682       root  cwd       DIR    8,7     4096  787411 /home/greg/Desktop/git/Open-Table-Explorer
+lsof      28682       root  rtd       DIR    8,5     1024       2 /
+lsof      28682       root  txt       REG    8,9   161852 1054621 /usr/bin/lsof
+lsof      28682       root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+lsof      28682       root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+lsof      28682       root    0r     FIFO    0,8      0t0  483477 pipe
+lsof      28682       root    1w     FIFO    0,8      0t0  483478 pipe
+lsof      28682       root    2w     FIFO    0,8      0t0  483479 pipe
+lsof      28682       root    3r      DIR    0,3        0       1 /proc
+lsof      28682       root    4r      DIR    0,3        0  483482 /proc/28682/fd
+lsof      28682       root    5w     FIFO    0,8      0t0  483487 pipe
+lsof      28682       root    6r     FIFO    0,8      0t0  483488 pipe
+lsof      28685       root  cwd       DIR    8,7     4096  787411 /home/greg/Desktop/git/Open-Table-Explorer
+lsof      28685       root  rtd       DIR    8,5     1024       2 /
+lsof      28685       root  txt       REG    8,9   161852 1054621 /usr/bin/lsof
+lsof      28685       root  mem       REG    8,5  1413288   66168 /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+lsof      28685       root  mem       REG    8,5   117960   35086 /lib/i386-linux-gnu/ld-2.13.so
+lsof      28685       root    4r     FIFO    0,8      0t0  483487 pipe
+lsof      28685       root    7w     FIFO    0,8      0t0  483488 pipe

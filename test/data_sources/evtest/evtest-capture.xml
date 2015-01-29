@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<evtest-capture>
+    <info>
+        <id bus="0x11" vendor="0x1" product="0x1" version="0xab41">AT Translated Set 2 keyboard</id>
+        <event-type type="EV_SYN"/>
+        <event-type type="EV_KEY">
+            <code value="KEY_ESC"/>
+            <code value="KEY_1"/>
+            <code value="KEY_2"/>
+            <code value="KEY_3"/>
+            <code value="KEY_4"/>
+            <code value="KEY_5"/>
+            <code value="KEY_6"/>
+            <code value="KEY_7"/>
+            <code value="KEY_8"/>
+            <code value="KEY_9"/>
+            <code value="KEY_0"/>
+            <code value="KEY_MINUS"/>
+            <code value="KEY_EQUAL"/>
+            <code value="KEY_BACKSPACE"/>
+            <code value="KEY_TAB"/>
+            <code value="KEY_Q"/>
+            <code value="KEY_W"/>
+            <code value="KEY_E"/>
+            <code value="KEY_R"/>
+            <code value="KEY_T"/>
+            <code value="KEY_Y"/>
+            <code value="KEY_U"/>
+            <code value="KEY_I"/>
+            <code value="KEY_O"/>
+            <code value="KEY_P"/>
+            <code value="KEY_LEFTBRACE"/>
+            <code value="KEY_RIGHTBRACE"/>
+            <code value="KEY_ENTER"/>
+            <code value="KEY_LEFTCTRL"/>
+            <code value="KEY_A"/>
+            <code value="KEY_S"/>
+            <code value="KEY_D"/>
+            <code value="KEY_F"/>
+            <code value="KEY_G"/>
+            <code value="KEY_H"/>
+            <code value="KEY_J"/>
+            <code value="KEY_K"/>
+            <code value="KEY_L"/>
+            <code value="KEY_SEMICOLON"/>
+            <code value="KEY_APOSTROPHE"/>
+            <code value="KEY_GRAVE"/>
+            <code value="KEY_LEFTSHIFT"/>
+            <code value="KEY_BACKSLASH"/>
+            <code value="KEY_Z"/>
+            <code value="KEY_X"/>
+            <code value="KEY_C"/>
+            <code value="KEY_V"/>
+            <code value="KEY_B"/>
+            <code value="KEY_N"/>
+            <code value="KEY_M"/>
+            <code value="KEY_COMMA"/>
+            <code value="KEY_DOT"/>
+            <code value="KEY_SLASH"/>
+            <code value="KEY_RIGHTSHIFT"/>
+            <code value="KEY_KPASTERISK"/>
+            <code value="KEY_LEFTALT"/>
+            <code value="KEY_SPACE"/>
+            <code value="KEY_CAPSLOCK"/>
+            <code value="KEY_F1"/>
+            <code value="KEY_F2"/>
+            <code value="KEY_F3"/>
+            <code value="KEY_F4"/>
+            <code value="KEY_F5"/>
+            <code value="KEY_F6"/>
+            <code value="KEY_F7"/>
+            <code value="KEY_F8"/>
+            <code value="KEY_F9"/>
+            <code value="KEY_F10"/>
+            <code value="KEY_NUMLOCK"/>
+            <code value="KEY_SCROLLLOCK"/>
+            <code value="KEY_KP7"/>
+            <code value="KEY_KP8"/>
+            <code value="KEY_KP9"/>
+            <code value="KEY_KPMINUS"/>
+            <code value="KEY_KP4"/>
+            <code value="KEY_KP5"/>
+            <code value="KEY_KP6"/>
+            <code value="KEY_KPPLUS"/>
+            <code value="KEY_KP1"/>
+            <code value="KEY_KP2"/>
+            <code value="KEY_KP3"/>
+            <code value="KEY_KP0"/>
+            <code value="KEY_KPDOT"/>
+            <code value="KEY_ZENKAKUHANKAKU"/>
+            <code value="KEY_102ND"/>
+            <code value="KEY_F11"/>
+            <code value="KEY_F12"/>
+            <code value="KEY_RO"/>
+            <code value="KEY_KATAKANA"/>
+            <code value="KEY_HIRAGANA"/>
+            <code value="KEY_HENKAN"/>
+            <code value="KEY_KATAKANAHIRAGANA"/>
+            <code value="KEY_MUHENKAN"/>
+            <code value="KEY_KPJPCOMMA"/>
+            <code value="KEY_KPENTER"/>
+            <code value="KEY_RIGHTCTRL"/>
+            <code value="KEY_KPSLASH"/>
+            <code value="KEY_SYSRQ"/>
+            <code value="KEY_RIGHTALT"/>
+            <code value="KEY_HOME"/>
+            <code value="KEY_UP"/>
+            <code value="KEY_PAGEUP"/>
+            <code value="KEY_LEFT"/>
+            <code value="KEY_RIGHT"/>
+            <code value="KEY_END"/>
+            <code value="KEY_DOWN"/>
+            <code value="KEY_PAGEDOWN"/>
+            <code value="KEY_INSERT"/>
+            <code value="KEY_DELETE"/>
+            <code value="KEY_MACRO"/>
+            <code value="KEY_MUTE"/>
+            <code value="KEY_VOLUMEDOWN"/>
+            <code value="KEY_VOLUMEUP"/>
+            <code value="KEY_POWER"/>
+            <code value="KEY_KPEQUAL"/>
+            <code value="KEY_PAUSE"/>
+            <code value="KEY_KPCOMMA"/>
+            <code value="KEY_HANGUEL"/>
+            <code value="KEY_HANJA"/>
+            <code value="KEY_YEN"/>
+            <code value="KEY_LEFTMETA"/>
+            <code value="KEY_RIGHTMETA"/>
+            <code value="KEY_COMPOSE"/>
+            <code value="KEY_STOP"/>
+            <code value="KEY_HELP"/>
+            <code value="KEY_CALC"/>
+            <code value="KEY_SETUP"/>
+            <code value="KEY_SLEEP"/>
+            <code value="KEY_WAKEUP"/>
+            <code value="KEY_PROG1"/>
+            <code value="KEY_PROG2"/>
+            <code value="KEY_MAIL"/>
+            <code value="KEY_BOOKMARKS"/>
+            <code value="KEY_COMPUTER"/>
+            <code value="KEY_BACK"/>
+            <code value="KEY_FORWARD"/>
+            <code value="KEY_NEXTSONG"/>
+            <code value="KEY_PLAYPAUSE"/>
+            <code value="KEY_PREVIOUSSONG"/>
+            <code value="KEY_STOPCD"/>
+            <code value="KEY_HOMEPAGE"/>
+            <code value="KEY_REFRESH"/>
+            <code value="KEY_F13"/>
+            <code value="KEY_F14"/>
+            <code value="KEY_F15"/>
+            <code value="KEY_F22"/>
+            <code value="KEY_F23"/>
+            <code value="KEY_SEARCH"/>
+            <code value="KEY_BRIGHTNESSDOWN"/>
+            <code value="KEY_BRIGHTNESSUP"/>
+            <code value="KEY_MEDIA"/>
+            <code value="KEY_SWITCHVIDEOMODE"/>
+            <code value="KEY_BATTERY"/>
+            <code value="KEY_BLUETOOTH"/>
+            <code value="KEY_WLAN"/>
+            <code value="?"/>
+            <code value="?"/>
+            <code value="?"/>
+            <code value="?"/>
+        </event-type>
+        <event-type type="EV_MSC">
+            <code value="MSC_SCAN"/>
+        </event-type>
+        <event-type type="EV_LED">
+            <code value="LED_NUML"/>
+            <code value="LED_CAPSL"/>
+            <code value="LED_SCROLLL"/>
+        </event-type>
+        <event-type type="EV_REP"/>
+    </info>
+    <events>
+        <event sec="1365793749" usec="446406" type="EV_MSC" code="MSC_SCAN" value="2"/>
+        <event sec="1365793749" usec="446411" type="EV_KEY" code="KEY_1" value="1"/>
+        <event sec="1365793749" usec="446413" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793749" usec="568351" type="EV_MSC" code="MSC_SCAN" value="2"/>
+        <event sec="1365793749" usec="568357" type="EV_KEY" code="KEY_1" value="0"/>
+        <event sec="1365793749" usec="568358" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793749" usec="826156" type="EV_MSC" code="MSC_SCAN" value="3"/>
+        <event sec="1365793749" usec="826161" type="EV_KEY" code="KEY_2" value="1"/>
+        <event sec="1365793749" usec="826163" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793749" usec="916010" type="EV_MSC" code="MSC_SCAN" value="3"/>
+        <event sec="1365793749" usec="916015" type="EV_KEY" code="KEY_2" value="0"/>
+        <event sec="1365793749" usec="916016" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793750" usec="180145" type="EV_MSC" code="MSC_SCAN" value="4"/>
+        <event sec="1365793750" usec="180148" type="EV_KEY" code="KEY_3" value="1"/>
+        <event sec="1365793750" usec="180150" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793750" usec="264639" type="EV_MSC" code="MSC_SCAN" value="4"/>
+        <event sec="1365793750" usec="264643" type="EV_KEY" code="KEY_3" value="0"/>
+        <event sec="1365793750" usec="264644" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793750" usec="505188" type="EV_MSC" code="MSC_SCAN" value="5"/>
+        <event sec="1365793750" usec="505192" type="EV_KEY" code="KEY_4" value="1"/>
+        <event sec="1365793750" usec="505194" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793750" usec="592865" type="EV_MSC" code="MSC_SCAN" value="5"/>
+        <event sec="1365793750" usec="592869" type="EV_KEY" code="KEY_4" value="0"/>
+        <event sec="1365793750" usec="592870" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793750" usec="858978" type="EV_MSC" code="MSC_SCAN" value="6"/>
+        <event sec="1365793750" usec="858983" type="EV_KEY" code="KEY_5" value="1"/>
+        <event sec="1365793750" usec="858985" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793750" usec="948997" type="EV_MSC" code="MSC_SCAN" value="6"/>
+        <event sec="1365793750" usec="949001" type="EV_KEY" code="KEY_5" value="0"/>
+        <event sec="1365793750" usec="949003" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793751" usec="181789" type="EV_MSC" code="MSC_SCAN" value="7"/>
+        <event sec="1365793751" usec="181794" type="EV_KEY" code="KEY_6" value="1"/>
+        <event sec="1365793751" usec="181795" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793751" usec="269588" type="EV_MSC" code="MSC_SCAN" value="7"/>
+        <event sec="1365793751" usec="269592" type="EV_KEY" code="KEY_6" value="0"/>
+        <event sec="1365793751" usec="269593" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793751" usec="556307" type="EV_MSC" code="MSC_SCAN" value="8"/>
+        <event sec="1365793751" usec="556312" type="EV_KEY" code="KEY_7" value="1"/>
+        <event sec="1365793751" usec="556314" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793751" usec="643907" type="EV_MSC" code="MSC_SCAN" value="8"/>
+        <event sec="1365793751" usec="643911" type="EV_KEY" code="KEY_7" value="0"/>
+        <event sec="1365793751" usec="643912" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793751" usec="899568" type="EV_MSC" code="MSC_SCAN" value="9"/>
+        <event sec="1365793751" usec="899573" type="EV_KEY" code="KEY_8" value="1"/>
+        <event sec="1365793751" usec="899574" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793751" usec="996826" type="EV_MSC" code="MSC_SCAN" value="9"/>
+        <event sec="1365793751" usec="996830" type="EV_KEY" code="KEY_8" value="0"/>
+        <event sec="1365793751" usec="996831" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793752" usec="256661" type="EV_MSC" code="MSC_SCAN" value="10"/>
+        <event sec="1365793752" usec="256665" type="EV_KEY" code="KEY_9" value="1"/>
+        <event sec="1365793752" usec="256667" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793752" usec="346484" type="EV_MSC" code="MSC_SCAN" value="10"/>
+        <event sec="1365793752" usec="346488" type="EV_KEY" code="KEY_9" value="0"/>
+        <event sec="1365793752" usec="346489" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793752" usec="692758" type="EV_MSC" code="MSC_SCAN" value="11"/>
+        <event sec="1365793752" usec="692762" type="EV_KEY" code="KEY_0" value="1"/>
+        <event sec="1365793752" usec="692764" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793752" usec="794909" type="EV_MSC" code="MSC_SCAN" value="11"/>
+        <event sec="1365793752" usec="794914" type="EV_KEY" code="KEY_0" value="0"/>
+        <event sec="1365793752" usec="794915" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793753" usec="77185" type="EV_MSC" code="MSC_SCAN" value="12"/>
+        <event sec="1365793753" usec="77189" type="EV_KEY" code="KEY_MINUS" value="1"/>
+        <event sec="1365793753" usec="77191" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793753" usec="180935" type="EV_MSC" code="MSC_SCAN" value="12"/>
+        <event sec="1365793753" usec="180939" type="EV_KEY" code="KEY_MINUS" value="0"/>
+        <event sec="1365793753" usec="180940" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793753" usec="497735" type="EV_MSC" code="MSC_SCAN" value="13"/>
+        <event sec="1365793753" usec="497740" type="EV_KEY" code="KEY_EQUAL" value="1"/>
+        <event sec="1365793753" usec="497741" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793753" usec="585381" type="EV_MSC" code="MSC_SCAN" value="13"/>
+        <event sec="1365793753" usec="585385" type="EV_KEY" code="KEY_EQUAL" value="0"/>
+        <event sec="1365793753" usec="585387" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793754" usec="351579" type="EV_MSC" code="MSC_SCAN" value="14"/>
+        <event sec="1365793754" usec="351583" type="EV_KEY" code="KEY_BACKSPACE" value="1"/>
+        <event sec="1365793754" usec="351585" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793754" usec="453165" type="EV_MSC" code="MSC_SCAN" value="14"/>
+        <event sec="1365793754" usec="453170" type="EV_KEY" code="KEY_BACKSPACE" value="0"/>
+        <event sec="1365793754" usec="453171" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793755" usec="259050" type="EV_MSC" code="MSC_SCAN" value="69"/>
+        <event sec="1365793755" usec="259055" type="EV_KEY" code="KEY_NUMLOCK" value="1"/>
+        <event sec="1365793755" usec="259057" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793755" usec="377769" type="EV_MSC" code="MSC_SCAN" value="69"/>
+        <event sec="1365793755" usec="377774" type="EV_KEY" code="KEY_NUMLOCK" value="0"/>
+        <event sec="1365793755" usec="377775" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793755" usec="727111" type="EV_MSC" code="MSC_SCAN" value="181"/>
+        <event sec="1365793755" usec="727116" type="EV_KEY" code="KEY_KPSLASH" value="1"/>
+        <event sec="1365793755" usec="727117" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793755" usec="855332" type="EV_MSC" code="MSC_SCAN" value="181"/>
+        <event sec="1365793755" usec="855337" type="EV_KEY" code="KEY_KPSLASH" value="0"/>
+        <event sec="1365793755" usec="855338" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793756" usec="294117" type="EV_MSC" code="MSC_SCAN" value="55"/>
+        <event sec="1365793756" usec="294121" type="EV_KEY" code="KEY_KPASTERISK" value="1"/>
+        <event sec="1365793756" usec="294123" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793756" usec="409703" type="EV_MSC" code="MSC_SCAN" value="55"/>
+        <event sec="1365793756" usec="409708" type="EV_KEY" code="KEY_KPASTERISK" value="0"/>
+        <event sec="1365793756" usec="409709" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793756" usec="805491" type="EV_MSC" code="MSC_SCAN" value="74"/>
+        <event sec="1365793756" usec="805494" type="EV_KEY" code="KEY_KPMINUS" value="1"/>
+        <event sec="1365793756" usec="805495" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793756" usec="940783" type="EV_MSC" code="MSC_SCAN" value="74"/>
+        <event sec="1365793756" usec="940786" type="EV_KEY" code="KEY_KPMINUS" value="0"/>
+        <event sec="1365793756" usec="940787" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793757" usec="307309" type="EV_MSC" code="MSC_SCAN" value="207"/>
+        <event sec="1365793757" usec="307312" type="EV_KEY" code="KEY_END" value="1"/>
+        <event sec="1365793757" usec="307314" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793757" usec="399046" type="EV_MSC" code="MSC_SCAN" value="207"/>
+        <event sec="1365793757" usec="399049" type="EV_KEY" code="KEY_END" value="0"/>
+        <event sec="1365793757" usec="399050" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793757" usec="689165" type="EV_MSC" code="MSC_SCAN" value="209"/>
+        <event sec="1365793757" usec="689168" type="EV_KEY" code="KEY_PAGEDOWN" value="1"/>
+        <event sec="1365793757" usec="689169" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793757" usec="794886" type="EV_MSC" code="MSC_SCAN" value="209"/>
+        <event sec="1365793757" usec="794890" type="EV_KEY" code="KEY_PAGEDOWN" value="0"/>
+        <event sec="1365793757" usec="794890" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793758" usec="57166" type="EV_MSC" code="MSC_SCAN" value="201"/>
+        <event sec="1365793758" usec="57169" type="EV_KEY" code="KEY_PAGEUP" value="1"/>
+        <event sec="1365793758" usec="57171" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793758" usec="153203" type="EV_MSC" code="MSC_SCAN" value="201"/>
+        <event sec="1365793758" usec="153206" type="EV_KEY" code="KEY_PAGEUP" value="0"/>
+        <event sec="1365793758" usec="153207" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793758" usec="412200" type="EV_MSC" code="MSC_SCAN" value="199"/>
+        <event sec="1365793758" usec="412203" type="EV_KEY" code="KEY_HOME" value="1"/>
+        <event sec="1365793758" usec="412204" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793758" usec="522675" type="EV_MSC" code="MSC_SCAN" value="199"/>
+        <event sec="1365793758" usec="522680" type="EV_KEY" code="KEY_HOME" value="0"/>
+        <event sec="1365793758" usec="522681" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793758" usec="761219" type="EV_MSC" code="MSC_SCAN" value="211"/>
+        <event sec="1365793758" usec="761222" type="EV_KEY" code="KEY_DELETE" value="1"/>
+        <event sec="1365793758" usec="761223" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793758" usec="877337" type="EV_MSC" code="MSC_SCAN" value="211"/>
+        <event sec="1365793758" usec="877340" type="EV_KEY" code="KEY_DELETE" value="0"/>
+        <event sec="1365793758" usec="877341" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793759" usec="111760" type="EV_MSC" code="MSC_SCAN" value="210"/>
+        <event sec="1365793759" usec="111764" type="EV_KEY" code="KEY_INSERT" value="1"/>
+        <event sec="1365793759" usec="111765" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793759" usec="211054" type="EV_MSC" code="MSC_SCAN" value="210"/>
+        <event sec="1365793759" usec="211057" type="EV_KEY" code="KEY_INSERT" value="0"/>
+        <event sec="1365793759" usec="211058" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793759" usec="465408" type="EV_MSC" code="MSC_SCAN" value="197"/>
+        <event sec="1365793759" usec="465411" type="EV_KEY" code="KEY_PAUSE" value="1"/>
+        <event sec="1365793759" usec="465412" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793759" usec="478289" type="EV_MSC" code="MSC_SCAN" value="197"/>
+        <event sec="1365793759" usec="478293" type="EV_KEY" code="KEY_PAUSE" value="0"/>
+        <event sec="1365793759" usec="478294" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793759" usec="820889" type="EV_MSC" code="MSC_SCAN" value="183"/>
+        <event sec="1365793759" usec="820892" type="EV_KEY" code="KEY_SYSRQ" value="1"/>
+        <event sec="1365793759" usec="820894" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793759" usec="936197" type="EV_MSC" code="MSC_SCAN" value="183"/>
+        <event sec="1365793759" usec="936200" type="EV_KEY" code="KEY_SYSRQ" value="0"/>
+        <event sec="1365793759" usec="936201" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793760" usec="184052" type="EV_MSC" code="MSC_SCAN" value="88"/>
+        <event sec="1365793760" usec="184055" type="EV_KEY" code="KEY_F12" value="1"/>
+        <event sec="1365793760" usec="184057" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793760" usec="279216" type="EV_MSC" code="MSC_SCAN" value="88"/>
+        <event sec="1365793760" usec="279220" type="EV_KEY" code="KEY_F12" value="0"/>
+        <event sec="1365793760" usec="279221" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793760" usec="553032" type="EV_MSC" code="MSC_SCAN" value="87"/>
+        <event sec="1365793760" usec="553036" type="EV_KEY" code="KEY_F11" value="1"/>
+        <event sec="1365793760" usec="553037" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793760" usec="631001" type="EV_MSC" code="MSC_SCAN" value="87"/>
+        <event sec="1365793760" usec="631005" type="EV_KEY" code="KEY_F11" value="0"/>
+        <event sec="1365793760" usec="631006" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793760" usec="916567" type="EV_MSC" code="MSC_SCAN" value="68"/>
+        <event sec="1365793760" usec="916570" type="EV_KEY" code="KEY_F10" value="1"/>
+        <event sec="1365793760" usec="916572" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793760" usec="992402" type="EV_MSC" code="MSC_SCAN" value="68"/>
+        <event sec="1365793760" usec="992405" type="EV_KEY" code="KEY_F10" value="0"/>
+        <event sec="1365793760" usec="992406" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793761" usec="274840" type="EV_MSC" code="MSC_SCAN" value="67"/>
+        <event sec="1365793761" usec="274844" type="EV_KEY" code="KEY_F9" value="1"/>
+        <event sec="1365793761" usec="274845" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793761" usec="357093" type="EV_MSC" code="MSC_SCAN" value="67"/>
+        <event sec="1365793761" usec="357097" type="EV_KEY" code="KEY_F9" value="0"/>
+        <event sec="1365793761" usec="357097" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793761" usec="656402" type="EV_MSC" code="MSC_SCAN" value="66"/>
+        <event sec="1365793761" usec="656406" type="EV_KEY" code="KEY_F8" value="1"/>
+        <event sec="1365793761" usec="656407" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793761" usec="748566" type="EV_MSC" code="MSC_SCAN" value="66"/>
+        <event sec="1365793761" usec="748569" type="EV_KEY" code="KEY_F8" value="0"/>
+        <event sec="1365793761" usec="748570" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793762" usec="31794" type="EV_MSC" code="MSC_SCAN" value="65"/>
+        <event sec="1365793762" usec="31798" type="EV_KEY" code="KEY_F7" value="1"/>
+        <event sec="1365793762" usec="31799" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793762" usec="133914" type="EV_MSC" code="MSC_SCAN" value="65"/>
+        <event sec="1365793762" usec="133921" type="EV_KEY" code="KEY_F7" value="0"/>
+        <event sec="1365793762" usec="133922" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793762" usec="450559" type="EV_MSC" code="MSC_SCAN" value="64"/>
+        <event sec="1365793762" usec="450563" type="EV_KEY" code="KEY_F6" value="1"/>
+        <event sec="1365793762" usec="450564" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793762" usec="536080" type="EV_MSC" code="MSC_SCAN" value="64"/>
+        <event sec="1365793762" usec="536083" type="EV_KEY" code="KEY_F6" value="0"/>
+        <event sec="1365793762" usec="536084" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793762" usec="829200" type="EV_MSC" code="MSC_SCAN" value="63"/>
+        <event sec="1365793762" usec="829203" type="EV_KEY" code="KEY_F5" value="1"/>
+        <event sec="1365793762" usec="829204" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793762" usec="900802" type="EV_MSC" code="MSC_SCAN" value="63"/>
+        <event sec="1365793762" usec="900806" type="EV_KEY" code="KEY_F5" value="0"/>
+        <event sec="1365793762" usec="900807" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793763" usec="189624" type="EV_MSC" code="MSC_SCAN" value="62"/>
+        <event sec="1365793763" usec="189627" type="EV_KEY" code="KEY_F4" value="1"/>
+        <event sec="1365793763" usec="189628" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793763" usec="272999" type="EV_MSC" code="MSC_SCAN" value="62"/>
+        <event sec="1365793763" usec="273003" type="EV_KEY" code="KEY_F4" value="0"/>
+        <event sec="1365793763" usec="273003" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793763" usec="571536" type="EV_MSC" code="MSC_SCAN" value="61"/>
+        <event sec="1365793763" usec="571540" type="EV_KEY" code="KEY_F3" value="1"/>
+        <event sec="1365793763" usec="571541" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793763" usec="655944" type="EV_MSC" code="MSC_SCAN" value="61"/>
+        <event sec="1365793763" usec="655948" type="EV_KEY" code="KEY_F3" value="0"/>
+        <event sec="1365793763" usec="655948" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793763" usec="970285" type="EV_MSC" code="MSC_SCAN" value="60"/>
+        <event sec="1365793763" usec="970288" type="EV_KEY" code="KEY_F2" value="1"/>
+        <event sec="1365793763" usec="970290" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793764" usec="56051" type="EV_MSC" code="MSC_SCAN" value="60"/>
+        <event sec="1365793764" usec="56054" type="EV_KEY" code="KEY_F2" value="0"/>
+        <event sec="1365793764" usec="56055" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793764" usec="357721" type="EV_MSC" code="MSC_SCAN" value="59"/>
+        <event sec="1365793764" usec="357724" type="EV_KEY" code="KEY_F1" value="1"/>
+        <event sec="1365793764" usec="357726" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793764" usec="468025" type="EV_MSC" code="MSC_SCAN" value="59"/>
+        <event sec="1365793764" usec="468029" type="EV_KEY" code="KEY_F1" value="0"/>
+        <event sec="1365793764" usec="468030" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793764" usec="734337" type="EV_MSC" code="MSC_SCAN" value="1"/>
+        <event sec="1365793764" usec="734340" type="EV_KEY" code="KEY_ESC" value="1"/>
+        <event sec="1365793764" usec="734341" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793764" usec="817655" type="EV_MSC" code="MSC_SCAN" value="1"/>
+        <event sec="1365793764" usec="817658" type="EV_KEY" code="KEY_ESC" value="0"/>
+        <event sec="1365793764" usec="817659" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793765" usec="559242" type="EV_MSC" code="MSC_SCAN" value="15"/>
+        <event sec="1365793765" usec="559245" type="EV_KEY" code="KEY_TAB" value="1"/>
+        <event sec="1365793765" usec="559247" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793765" usec="668317" type="EV_MSC" code="MSC_SCAN" value="15"/>
+        <event sec="1365793765" usec="668320" type="EV_KEY" code="KEY_TAB" value="0"/>
+        <event sec="1365793765" usec="668321" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793765" usec="920748" type="EV_MSC" code="MSC_SCAN" value="16"/>
+        <event sec="1365793765" usec="920751" type="EV_KEY" code="KEY_Q" value="1"/>
+        <event sec="1365793765" usec="920752" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793766" usec="14794" type="EV_MSC" code="MSC_SCAN" value="16"/>
+        <event sec="1365793766" usec="14798" type="EV_KEY" code="KEY_Q" value="0"/>
+        <event sec="1365793766" usec="14798" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793766" usec="288596" type="EV_MSC" code="MSC_SCAN" value="17"/>
+        <event sec="1365793766" usec="288600" type="EV_KEY" code="KEY_W" value="1"/>
+        <event sec="1365793766" usec="288601" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793766" usec="412292" type="EV_MSC" code="MSC_SCAN" value="17"/>
+        <event sec="1365793766" usec="412295" type="EV_KEY" code="KEY_W" value="0"/>
+        <event sec="1365793766" usec="412296" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793766" usec="649999" type="EV_MSC" code="MSC_SCAN" value="18"/>
+        <event sec="1365793766" usec="650001" type="EV_KEY" code="KEY_E" value="1"/>
+        <event sec="1365793766" usec="650003" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793766" usec="743094" type="EV_MSC" code="MSC_SCAN" value="18"/>
+        <event sec="1365793766" usec="743097" type="EV_KEY" code="KEY_E" value="0"/>
+        <event sec="1365793766" usec="743098" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793767" usec="10168" type="EV_MSC" code="MSC_SCAN" value="19"/>
+        <event sec="1365793767" usec="10171" type="EV_KEY" code="KEY_R" value="1"/>
+        <event sec="1365793767" usec="10172" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793767" usec="99291" type="EV_MSC" code="MSC_SCAN" value="19"/>
+        <event sec="1365793767" usec="99294" type="EV_KEY" code="KEY_R" value="0"/>
+        <event sec="1365793767" usec="99295" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793767" usec="350551" type="EV_MSC" code="MSC_SCAN" value="20"/>
+        <event sec="1365793767" usec="350555" type="EV_KEY" code="KEY_T" value="1"/>
+        <event sec="1365793767" usec="350556" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793767" usec="441447" type="EV_MSC" code="MSC_SCAN" value="20"/>
+        <event sec="1365793767" usec="441450" type="EV_KEY" code="KEY_T" value="0"/>
+        <event sec="1365793767" usec="441451" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793767" usec="714750" type="EV_MSC" code="MSC_SCAN" value="21"/>
+        <event sec="1365793767" usec="714753" type="EV_KEY" code="KEY_Y" value="1"/>
+        <event sec="1365793767" usec="714754" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793767" usec="798512" type="EV_MSC" code="MSC_SCAN" value="21"/>
+        <event sec="1365793767" usec="798515" type="EV_KEY" code="KEY_Y" value="0"/>
+        <event sec="1365793767" usec="798516" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793768" usec="62733" type="EV_MSC" code="MSC_SCAN" value="22"/>
+        <event sec="1365793768" usec="62737" type="EV_KEY" code="KEY_U" value="1"/>
+        <event sec="1365793768" usec="62738" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793768" usec="166392" type="EV_MSC" code="MSC_SCAN" value="22"/>
+        <event sec="1365793768" usec="166395" type="EV_KEY" code="KEY_U" value="0"/>
+        <event sec="1365793768" usec="166396" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793768" usec="457482" type="EV_MSC" code="MSC_SCAN" value="23"/>
+        <event sec="1365793768" usec="457486" type="EV_KEY" code="KEY_I" value="1"/>
+        <event sec="1365793768" usec="457487" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793768" usec="541916" type="EV_MSC" code="MSC_SCAN" value="23"/>
+        <event sec="1365793768" usec="541921" type="EV_KEY" code="KEY_I" value="0"/>
+        <event sec="1365793768" usec="541921" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793768" usec="839149" type="EV_MSC" code="MSC_SCAN" value="24"/>
+        <event sec="1365793768" usec="839152" type="EV_KEY" code="KEY_O" value="1"/>
+        <event sec="1365793768" usec="839153" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793768" usec="912047" type="EV_MSC" code="MSC_SCAN" value="24"/>
+        <event sec="1365793768" usec="912051" type="EV_KEY" code="KEY_O" value="0"/>
+        <event sec="1365793768" usec="912051" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793769" usec="219113" type="EV_MSC" code="MSC_SCAN" value="25"/>
+        <event sec="1365793769" usec="219116" type="EV_KEY" code="KEY_P" value="1"/>
+        <event sec="1365793769" usec="219118" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793769" usec="293862" type="EV_MSC" code="MSC_SCAN" value="25"/>
+        <event sec="1365793769" usec="293866" type="EV_KEY" code="KEY_P" value="0"/>
+        <event sec="1365793769" usec="293867" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793769" usec="610520" type="EV_MSC" code="MSC_SCAN" value="26"/>
+        <event sec="1365793769" usec="610523" type="EV_KEY" code="KEY_LEFTBRACE" value="1"/>
+        <event sec="1365793769" usec="610525" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793769" usec="708796" type="EV_MSC" code="MSC_SCAN" value="26"/>
+        <event sec="1365793769" usec="708800" type="EV_KEY" code="KEY_LEFTBRACE" value="0"/>
+        <event sec="1365793769" usec="708800" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793770" usec="16633" type="EV_MSC" code="MSC_SCAN" value="27"/>
+        <event sec="1365793770" usec="16636" type="EV_KEY" code="KEY_RIGHTBRACE" value="1"/>
+        <event sec="1365793770" usec="16638" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793770" usec="94039" type="EV_MSC" code="MSC_SCAN" value="27"/>
+        <event sec="1365793770" usec="94042" type="EV_KEY" code="KEY_RIGHTBRACE" value="0"/>
+        <event sec="1365793770" usec="94043" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793770" usec="467538" type="EV_MSC" code="MSC_SCAN" value="43"/>
+        <event sec="1365793770" usec="467541" type="EV_KEY" code="KEY_BACKSLASH" value="1"/>
+        <event sec="1365793770" usec="467543" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793770" usec="563778" type="EV_MSC" code="MSC_SCAN" value="43"/>
+        <event sec="1365793770" usec="563781" type="EV_KEY" code="KEY_BACKSLASH" value="0"/>
+        <event sec="1365793770" usec="563782" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793770" usec="947826" type="EV_MSC" code="MSC_SCAN" value="71"/>
+        <event sec="1365793770" usec="947829" type="EV_KEY" code="KEY_KP7" value="1"/>
+        <event sec="1365793770" usec="947830" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793771" usec="54149" type="EV_MSC" code="MSC_SCAN" value="71"/>
+        <event sec="1365793771" usec="54153" type="EV_KEY" code="KEY_KP7" value="0"/>
+        <event sec="1365793771" usec="54153" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793771" usec="356851" type="EV_MSC" code="MSC_SCAN" value="72"/>
+        <event sec="1365793771" usec="356854" type="EV_KEY" code="KEY_KP8" value="1"/>
+        <event sec="1365793771" usec="356855" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793771" usec="478832" type="EV_MSC" code="MSC_SCAN" value="72"/>
+        <event sec="1365793771" usec="478836" type="EV_KEY" code="KEY_KP8" value="0"/>
+        <event sec="1365793771" usec="478837" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793771" usec="831983" type="EV_MSC" code="MSC_SCAN" value="73"/>
+        <event sec="1365793771" usec="831986" type="EV_KEY" code="KEY_KP9" value="1"/>
+        <event sec="1365793771" usec="831987" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793772" usec="6559" type="EV_MSC" code="MSC_SCAN" value="73"/>
+        <event sec="1365793772" usec="6562" type="EV_KEY" code="KEY_KP9" value="0"/>
+        <event sec="1365793772" usec="6563" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793772" usec="317737" type="EV_MSC" code="MSC_SCAN" value="78"/>
+        <event sec="1365793772" usec="317741" type="EV_KEY" code="KEY_KPPLUS" value="1"/>
+        <event sec="1365793772" usec="317742" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793772" usec="507627" type="EV_MSC" code="MSC_SCAN" value="78"/>
+        <event sec="1365793772" usec="507631" type="EV_KEY" code="KEY_KPPLUS" value="0"/>
+        <event sec="1365793772" usec="507632" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793772" usec="944094" type="EV_MSC" code="MSC_SCAN" value="77"/>
+        <event sec="1365793772" usec="944098" type="EV_KEY" code="KEY_KP6" value="1"/>
+        <event sec="1365793772" usec="944099" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793773" usec="128545" type="EV_MSC" code="MSC_SCAN" value="77"/>
+        <event sec="1365793773" usec="128549" type="EV_KEY" code="KEY_KP6" value="0"/>
+        <event sec="1365793773" usec="128550" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793773" usec="344495" type="EV_MSC" code="MSC_SCAN" value="76"/>
+        <event sec="1365793773" usec="344498" type="EV_KEY" code="KEY_KP5" value="1"/>
+        <event sec="1365793773" usec="344499" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793773" usec="457848" type="EV_MSC" code="MSC_SCAN" value="76"/>
+        <event sec="1365793773" usec="457852" type="EV_KEY" code="KEY_KP5" value="0"/>
+        <event sec="1365793773" usec="457853" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793773" usec="667623" type="EV_MSC" code="MSC_SCAN" value="75"/>
+        <event sec="1365793773" usec="667626" type="EV_KEY" code="KEY_KP4" value="1"/>
+        <event sec="1365793773" usec="667627" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793773" usec="796856" type="EV_MSC" code="MSC_SCAN" value="75"/>
+        <event sec="1365793773" usec="796859" type="EV_KEY" code="KEY_KP4" value="0"/>
+        <event sec="1365793773" usec="796860" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793774" usec="43592" type="EV_MSC" code="MSC_SCAN" value="28"/>
+        <event sec="1365793774" usec="43596" type="EV_KEY" code="KEY_ENTER" value="1"/>
+        <event sec="1365793774" usec="43597" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793774" usec="137048" type="EV_MSC" code="MSC_SCAN" value="28"/>
+        <event sec="1365793774" usec="137052" type="EV_KEY" code="KEY_ENTER" value="0"/>
+        <event sec="1365793774" usec="137053" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793774" usec="702409" type="EV_MSC" code="MSC_SCAN" value="40"/>
+        <event sec="1365793774" usec="702412" type="EV_KEY" code="KEY_APOSTROPHE" value="1"/>
+        <event sec="1365793774" usec="702413" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793774" usec="804497" type="EV_MSC" code="MSC_SCAN" value="40"/>
+        <event sec="1365793774" usec="804501" type="EV_KEY" code="KEY_APOSTROPHE" value="0"/>
+        <event sec="1365793774" usec="804502" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793774" usec="997776" type="EV_MSC" code="MSC_SCAN" value="39"/>
+        <event sec="1365793774" usec="997779" type="EV_KEY" code="KEY_SEMICOLON" value="1"/>
+        <event sec="1365793774" usec="997780" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793775" usec="99575" type="EV_MSC" code="MSC_SCAN" value="39"/>
+        <event sec="1365793775" usec="99579" type="EV_KEY" code="KEY_SEMICOLON" value="0"/>
+        <event sec="1365793775" usec="99579" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793775" usec="312051" type="EV_MSC" code="MSC_SCAN" value="38"/>
+        <event sec="1365793775" usec="312054" type="EV_KEY" code="KEY_L" value="1"/>
+        <event sec="1365793775" usec="312055" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793775" usec="414947" type="EV_MSC" code="MSC_SCAN" value="38"/>
+        <event sec="1365793775" usec="414954" type="EV_KEY" code="KEY_L" value="0"/>
+        <event sec="1365793775" usec="414955" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793775" usec="664108" type="EV_MSC" code="MSC_SCAN" value="37"/>
+        <event sec="1365793775" usec="664111" type="EV_KEY" code="KEY_K" value="1"/>
+        <event sec="1365793775" usec="664112" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793775" usec="749646" type="EV_MSC" code="MSC_SCAN" value="37"/>
+        <event sec="1365793775" usec="749649" type="EV_KEY" code="KEY_K" value="0"/>
+        <event sec="1365793775" usec="749650" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793776" usec="9604" type="EV_MSC" code="MSC_SCAN" value="36"/>
+        <event sec="1365793776" usec="9607" type="EV_KEY" code="KEY_J" value="1"/>
+        <event sec="1365793776" usec="9608" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793776" usec="120840" type="EV_MSC" code="MSC_SCAN" value="36"/>
+        <event sec="1365793776" usec="120845" type="EV_KEY" code="KEY_J" value="0"/>
+        <event sec="1365793776" usec="120845" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793776" usec="366477" type="EV_MSC" code="MSC_SCAN" value="35"/>
+        <event sec="1365793776" usec="366481" type="EV_KEY" code="KEY_H" value="1"/>
+        <event sec="1365793776" usec="366482" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793776" usec="450102" type="EV_MSC" code="MSC_SCAN" value="35"/>
+        <event sec="1365793776" usec="450105" type="EV_KEY" code="KEY_H" value="0"/>
+        <event sec="1365793776" usec="450106" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793776" usec="723949" type="EV_MSC" code="MSC_SCAN" value="34"/>
+        <event sec="1365793776" usec="723954" type="EV_KEY" code="KEY_G" value="1"/>
+        <event sec="1365793776" usec="723955" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793776" usec="811581" type="EV_MSC" code="MSC_SCAN" value="34"/>
+        <event sec="1365793776" usec="811584" type="EV_KEY" code="KEY_G" value="0"/>
+        <event sec="1365793776" usec="811585" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793777" usec="69274" type="EV_MSC" code="MSC_SCAN" value="33"/>
+        <event sec="1365793777" usec="69278" type="EV_KEY" code="KEY_F" value="1"/>
+        <event sec="1365793777" usec="69279" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793777" usec="180467" type="EV_MSC" code="MSC_SCAN" value="33"/>
+        <event sec="1365793777" usec="180471" type="EV_KEY" code="KEY_F" value="0"/>
+        <event sec="1365793777" usec="180472" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793777" usec="428578" type="EV_MSC" code="MSC_SCAN" value="32"/>
+        <event sec="1365793777" usec="428581" type="EV_KEY" code="KEY_D" value="1"/>
+        <event sec="1365793777" usec="428582" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793777" usec="541940" type="EV_MSC" code="MSC_SCAN" value="32"/>
+        <event sec="1365793777" usec="541944" type="EV_KEY" code="KEY_D" value="0"/>
+        <event sec="1365793777" usec="541945" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793777" usec="778257" type="EV_MSC" code="MSC_SCAN" value="31"/>
+        <event sec="1365793777" usec="778260" type="EV_KEY" code="KEY_S" value="1"/>
+        <event sec="1365793777" usec="778261" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793777" usec="867042" type="EV_MSC" code="MSC_SCAN" value="31"/>
+        <event sec="1365793777" usec="867046" type="EV_KEY" code="KEY_S" value="0"/>
+        <event sec="1365793777" usec="867046" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793778" usec="131154" type="EV_MSC" code="MSC_SCAN" value="30"/>
+        <event sec="1365793778" usec="131158" type="EV_KEY" code="KEY_A" value="1"/>
+        <event sec="1365793778" usec="131159" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793778" usec="229465" type="EV_MSC" code="MSC_SCAN" value="30"/>
+        <event sec="1365793778" usec="229469" type="EV_KEY" code="KEY_A" value="0"/>
+        <event sec="1365793778" usec="229470" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793778" usec="492310" type="EV_MSC" code="MSC_SCAN" value="58"/>
+        <event sec="1365793778" usec="492313" type="EV_KEY" code="KEY_CAPSLOCK" value="1"/>
+        <event sec="1365793778" usec="492314" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793778" usec="581446" type="EV_MSC" code="MSC_SCAN" value="58"/>
+        <event sec="1365793778" usec="581449" type="EV_KEY" code="KEY_CAPSLOCK" value="0"/>
+        <event sec="1365793778" usec="581450" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793779" usec="236003" type="EV_MSC" code="MSC_SCAN" value="42"/>
+        <event sec="1365793779" usec="236007" type="EV_KEY" code="KEY_LEFTSHIFT" value="1"/>
+        <event sec="1365793779" usec="236008" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793779" usec="325747" type="EV_MSC" code="MSC_SCAN" value="42"/>
+        <event sec="1365793779" usec="325751" type="EV_KEY" code="KEY_LEFTSHIFT" value="0"/>
+        <event sec="1365793779" usec="325751" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793779" usec="673456" type="EV_MSC" code="MSC_SCAN" value="44"/>
+        <event sec="1365793779" usec="673459" type="EV_KEY" code="KEY_Z" value="1"/>
+        <event sec="1365793779" usec="673461" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793779" usec="776170" type="EV_MSC" code="MSC_SCAN" value="44"/>
+        <event sec="1365793779" usec="776176" type="EV_KEY" code="KEY_Z" value="0"/>
+        <event sec="1365793779" usec="776177" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793780" usec="117495" type="EV_MSC" code="MSC_SCAN" value="45"/>
+        <event sec="1365793780" usec="117498" type="EV_KEY" code="KEY_X" value="1"/>
+        <event sec="1365793780" usec="117499" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793780" usec="209485" type="EV_MSC" code="MSC_SCAN" value="45"/>
+        <event sec="1365793780" usec="209489" type="EV_KEY" code="KEY_X" value="0"/>
+        <event sec="1365793780" usec="209489" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793780" usec="496168" type="EV_MSC" code="MSC_SCAN" value="46"/>
+        <event sec="1365793780" usec="496171" type="EV_KEY" code="KEY_C" value="1"/>
+        <event sec="1365793780" usec="496172" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793780" usec="588074" type="EV_MSC" code="MSC_SCAN" value="46"/>
+        <event sec="1365793780" usec="588078" type="EV_KEY" code="KEY_C" value="0"/>
+        <event sec="1365793780" usec="588079" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793780" usec="881235" type="EV_MSC" code="MSC_SCAN" value="47"/>
+        <event sec="1365793780" usec="881238" type="EV_KEY" code="KEY_V" value="1"/>
+        <event sec="1365793780" usec="881240" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793780" usec="965701" type="EV_MSC" code="MSC_SCAN" value="47"/>
+        <event sec="1365793780" usec="965705" type="EV_KEY" code="KEY_V" value="0"/>
+        <event sec="1365793780" usec="965705" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793781" usec="301735" type="EV_MSC" code="MSC_SCAN" value="48"/>
+        <event sec="1365793781" usec="301738" type="EV_KEY" code="KEY_B" value="1"/>
+        <event sec="1365793781" usec="301739" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793781" usec="389393" type="EV_MSC" code="MSC_SCAN" value="48"/>
+        <event sec="1365793781" usec="389396" type="EV_KEY" code="KEY_B" value="0"/>
+        <event sec="1365793781" usec="389397" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793781" usec="708016" type="EV_MSC" code="MSC_SCAN" value="49"/>
+        <event sec="1365793781" usec="708019" type="EV_KEY" code="KEY_N" value="1"/>
+        <event sec="1365793781" usec="708020" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793781" usec="806770" type="EV_MSC" code="MSC_SCAN" value="49"/>
+        <event sec="1365793781" usec="806773" type="EV_KEY" code="KEY_N" value="0"/>
+        <event sec="1365793781" usec="806774" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793782" usec="91329" type="EV_MSC" code="MSC_SCAN" value="50"/>
+        <event sec="1365793782" usec="91332" type="EV_KEY" code="KEY_M" value="1"/>
+        <event sec="1365793782" usec="91333" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793782" usec="196208" type="EV_MSC" code="MSC_SCAN" value="50"/>
+        <event sec="1365793782" usec="196212" type="EV_KEY" code="KEY_M" value="0"/>
+        <event sec="1365793782" usec="196212" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793782" usec="476429" type="EV_MSC" code="MSC_SCAN" value="51"/>
+        <event sec="1365793782" usec="476432" type="EV_KEY" code="KEY_COMMA" value="1"/>
+        <event sec="1365793782" usec="476433" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793782" usec="561926" type="EV_MSC" code="MSC_SCAN" value="51"/>
+        <event sec="1365793782" usec="561930" type="EV_KEY" code="KEY_COMMA" value="0"/>
+        <event sec="1365793782" usec="561930" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793782" usec="917177" type="EV_MSC" code="MSC_SCAN" value="52"/>
+        <event sec="1365793782" usec="917180" type="EV_KEY" code="KEY_DOT" value="1"/>
+        <event sec="1365793782" usec="917181" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793783" usec="18290" type="EV_MSC" code="MSC_SCAN" value="52"/>
+        <event sec="1365793783" usec="18294" type="EV_KEY" code="KEY_DOT" value="0"/>
+        <event sec="1365793783" usec="18295" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793783" usec="340725" type="EV_MSC" code="MSC_SCAN" value="53"/>
+        <event sec="1365793783" usec="340728" type="EV_KEY" code="KEY_SLASH" value="1"/>
+        <event sec="1365793783" usec="340729" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793783" usec="440109" type="EV_MSC" code="MSC_SCAN" value="53"/>
+        <event sec="1365793783" usec="440112" type="EV_KEY" code="KEY_SLASH" value="0"/>
+        <event sec="1365793783" usec="440113" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793783" usec="806145" type="EV_MSC" code="MSC_SCAN" value="54"/>
+        <event sec="1365793783" usec="806149" type="EV_KEY" code="KEY_RIGHTSHIFT" value="1"/>
+        <event sec="1365793783" usec="806150" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793783" usec="888453" type="EV_MSC" code="MSC_SCAN" value="54"/>
+        <event sec="1365793783" usec="888456" type="EV_KEY" code="KEY_RIGHTSHIFT" value="0"/>
+        <event sec="1365793783" usec="888457" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793784" usec="444240" type="EV_MSC" code="MSC_SCAN" value="79"/>
+        <event sec="1365793784" usec="444243" type="EV_KEY" code="KEY_KP1" value="1"/>
+        <event sec="1365793784" usec="444244" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793784" usec="552231" type="EV_MSC" code="MSC_SCAN" value="79"/>
+        <event sec="1365793784" usec="552235" type="EV_KEY" code="KEY_KP1" value="0"/>
+        <event sec="1365793784" usec="552235" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793784" usec="883799" type="EV_MSC" code="MSC_SCAN" value="80"/>
+        <event sec="1365793784" usec="883802" type="EV_KEY" code="KEY_KP2" value="1"/>
+        <event sec="1365793784" usec="883803" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793784" usec="993142" type="EV_MSC" code="MSC_SCAN" value="80"/>
+        <event sec="1365793784" usec="993148" type="EV_KEY" code="KEY_KP2" value="0"/>
+        <event sec="1365793784" usec="993148" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793785" usec="326933" type="EV_MSC" code="MSC_SCAN" value="81"/>
+        <event sec="1365793785" usec="326937" type="EV_KEY" code="KEY_KP3" value="1"/>
+        <event sec="1365793785" usec="326938" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793785" usec="436085" type="EV_MSC" code="MSC_SCAN" value="81"/>
+        <event sec="1365793785" usec="436091" type="EV_KEY" code="KEY_KP3" value="0"/>
+        <event sec="1365793785" usec="436091" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793785" usec="785520" type="EV_MSC" code="MSC_SCAN" value="156"/>
+        <event sec="1365793785" usec="785523" type="EV_KEY" code="KEY_KPENTER" value="1"/>
+        <event sec="1365793785" usec="785524" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793785" usec="922125" type="EV_MSC" code="MSC_SCAN" value="156"/>
+        <event sec="1365793785" usec="922130" type="EV_KEY" code="KEY_KPENTER" value="0"/>
+        <event sec="1365793785" usec="922130" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793786" usec="356597" type="EV_MSC" code="MSC_SCAN" value="83"/>
+        <event sec="1365793786" usec="356601" type="EV_KEY" code="KEY_KPDOT" value="1"/>
+        <event sec="1365793786" usec="356602" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793786" usec="522542" type="EV_MSC" code="MSC_SCAN" value="83"/>
+        <event sec="1365793786" usec="522545" type="EV_KEY" code="KEY_KPDOT" value="0"/>
+        <event sec="1365793786" usec="522546" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793786" usec="828499" type="EV_MSC" code="MSC_SCAN" value="82"/>
+        <event sec="1365793786" usec="828502" type="EV_KEY" code="KEY_KP0" value="1"/>
+        <event sec="1365793786" usec="828503" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793786" usec="952577" type="EV_MSC" code="MSC_SCAN" value="82"/>
+        <event sec="1365793786" usec="952580" type="EV_KEY" code="KEY_KP0" value="0"/>
+        <event sec="1365793786" usec="952581" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793787" usec="300900" type="EV_MSC" code="MSC_SCAN" value="205"/>
+        <event sec="1365793787" usec="300904" type="EV_KEY" code="KEY_RIGHT" value="1"/>
+        <event sec="1365793787" usec="300905" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793787" usec="419850" type="EV_MSC" code="MSC_SCAN" value="205"/>
+        <event sec="1365793787" usec="419853" type="EV_KEY" code="KEY_RIGHT" value="0"/>
+        <event sec="1365793787" usec="419854" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793787" usec="689464" type="EV_MSC" code="MSC_SCAN" value="208"/>
+        <event sec="1365793787" usec="689467" type="EV_KEY" code="KEY_DOWN" value="1"/>
+        <event sec="1365793787" usec="689468" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793787" usec="833391" type="EV_MSC" code="MSC_SCAN" value="208"/>
+        <event sec="1365793787" usec="833394" type="EV_KEY" code="KEY_DOWN" value="0"/>
+        <event sec="1365793787" usec="833395" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793788" usec="63197" type="EV_MSC" code="MSC_SCAN" value="200"/>
+        <event sec="1365793788" usec="63199" type="EV_KEY" code="KEY_UP" value="1"/>
+        <event sec="1365793788" usec="63200" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793788" usec="199287" type="EV_MSC" code="MSC_SCAN" value="200"/>
+        <event sec="1365793788" usec="199290" type="EV_KEY" code="KEY_UP" value="0"/>
+        <event sec="1365793788" usec="199291" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793788" usec="463662" type="EV_MSC" code="MSC_SCAN" value="203"/>
+        <event sec="1365793788" usec="463665" type="EV_KEY" code="KEY_LEFT" value="1"/>
+        <event sec="1365793788" usec="463666" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793788" usec="603125" type="EV_MSC" code="MSC_SCAN" value="203"/>
+        <event sec="1365793788" usec="603128" type="EV_KEY" code="KEY_LEFT" value="0"/>
+        <event sec="1365793788" usec="603129" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793788" usec="900181" type="EV_MSC" code="MSC_SCAN" value="157"/>
+        <event sec="1365793788" usec="900185" type="EV_KEY" code="KEY_RIGHTCTRL" value="1"/>
+        <event sec="1365793788" usec="900186" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793789" usec="42425" type="EV_MSC" code="MSC_SCAN" value="157"/>
+        <event sec="1365793789" usec="42429" type="EV_KEY" code="KEY_RIGHTCTRL" value="0"/>
+        <event sec="1365793789" usec="42429" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793789" usec="273396" type="EV_MSC" code="MSC_SCAN" value="221"/>
+        <event sec="1365793789" usec="273399" type="EV_KEY" code="KEY_COMPOSE" value="1"/>
+        <event sec="1365793789" usec="273400" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793789" usec="380139" type="EV_MSC" code="MSC_SCAN" value="221"/>
+        <event sec="1365793789" usec="380142" type="EV_KEY" code="KEY_COMPOSE" value="0"/>
+        <event sec="1365793789" usec="380143" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793789" usec="634683" type="EV_MSC" code="MSC_SCAN" value="184"/>
+        <event sec="1365793789" usec="634688" type="EV_KEY" code="KEY_RIGHTALT" value="1"/>
+        <event sec="1365793789" usec="634689" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793789" usec="770856" type="EV_MSC" code="MSC_SCAN" value="184"/>
+        <event sec="1365793789" usec="770860" type="EV_KEY" code="KEY_RIGHTALT" value="0"/>
+        <event sec="1365793789" usec="770861" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793790" usec="91457" type="EV_MSC" code="MSC_SCAN" value="57"/>
+        <event sec="1365793790" usec="91460" type="EV_KEY" code="KEY_SPACE" value="1"/>
+        <event sec="1365793790" usec="91461" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793790" usec="196737" type="EV_MSC" code="MSC_SCAN" value="57"/>
+        <event sec="1365793790" usec="196741" type="EV_KEY" code="KEY_SPACE" value="0"/>
+        <event sec="1365793790" usec="196741" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793790" usec="646443" type="EV_MSC" code="MSC_SCAN" value="56"/>
+        <event sec="1365793790" usec="646446" type="EV_KEY" code="KEY_LEFTALT" value="1"/>
+        <event sec="1365793790" usec="646448" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793790" usec="781149" type="EV_MSC" code="MSC_SCAN" value="56"/>
+        <event sec="1365793790" usec="781153" type="EV_KEY" code="KEY_LEFTALT" value="0"/>
+        <event sec="1365793790" usec="781153" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793791" usec="117446" type="EV_MSC" code="MSC_SCAN" value="219"/>
+        <event sec="1365793791" usec="117450" type="EV_KEY" code="KEY_LEFTMETA" value="1"/>
+        <event sec="1365793791" usec="117451" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793791" usec="234209" type="EV_MSC" code="MSC_SCAN" value="219"/>
+        <event sec="1365793791" usec="234214" type="EV_KEY" code="KEY_LEFTMETA" value="0"/>
+        <event sec="1365793791" usec="234215" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793792" usec="104240" type="EV_MSC" code="MSC_SCAN" value="29"/>
+        <event sec="1365793792" usec="104244" type="EV_KEY" code="KEY_LEFTCTRL" value="1"/>
+        <event sec="1365793792" usec="104245" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793792" usec="206885" type="EV_MSC" code="MSC_SCAN" value="29"/>
+        <event sec="1365793792" usec="206890" type="EV_KEY" code="KEY_LEFTCTRL" value="0"/>
+        <event sec="1365793792" usec="206891" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793799" usec="712327" type="EV_MSC" code="MSC_SCAN" value="223"/>
+        <event sec="1365793799" usec="712332" type="EV_KEY" code="KEY_SLEEP" value="1"/>
+        <event sec="1365793799" usec="712334" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793799" usec="868469" type="EV_MSC" code="MSC_SCAN" value="223"/>
+        <event sec="1365793799" usec="868472" type="EV_KEY" code="KEY_SLEEP" value="0"/>
+        <event sec="1365793799" usec="868472" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793803" usec="196317" type="EV_MSC" code="MSC_SCAN" value="223"/>
+        <event sec="1365793803" usec="196323" type="EV_KEY" code="KEY_SLEEP" value="1"/>
+        <event sec="1365793803" usec="196324" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793803" usec="298514" type="EV_MSC" code="MSC_SCAN" value="223"/>
+        <event sec="1365793803" usec="298517" type="EV_KEY" code="KEY_SLEEP" value="0"/>
+        <event sec="1365793803" usec="298519" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793808" usec="64706" type="EV_SYN" code="EV_SYN" value="1"/>
+        <event sec="1365793819" usec="103593" type="EV_SYN" code="EV_SYN" value="1"/>
+        <event sec="1365793833" usec="271732" type="EV_MSC" code="MSC_SCAN" value="54"/>
+        <event sec="1365793833" usec="271736" type="EV_KEY" code="KEY_RIGHTSHIFT" value="1"/>
+        <event sec="1365793833" usec="271738" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793833" usec="365743" type="EV_MSC" code="MSC_SCAN" value="54"/>
+        <event sec="1365793833" usec="365749" type="EV_KEY" code="KEY_RIGHTSHIFT" value="0"/>
+        <event sec="1365793833" usec="365750" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793853" usec="192511" type="EV_MSC" code="MSC_SCAN" value="6"/>
+        <event sec="1365793853" usec="192515" type="EV_KEY" code="KEY_5" value="1"/>
+        <event sec="1365793853" usec="192517" type="EV_SYN" code="EV_SYN" value="0"/>
+        <event sec="1365793853" usec="325165" type="EV_MSC" code="MSC_SCAN" value="6"/>
+        <event sec="1365793853" usec="325169" type="EV_KEY" code="KEY_5" value="0"/>
+        <event sec="1365793853" usec="325170" type="EV_SYN" code="EV_SYN" value="0"/>
+    </events>
+</evtest-capture>

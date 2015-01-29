@@ -1,0 +1,8 @@
+Jul 14 10:59:29 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul 15 07:35:12 acer rsyslogd: [origin software="rsyslogd" swVersion="5.8.11" x-pid="4466" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Jul 15 09:17:27 acer pulseaudio[3106]: [pulseaudio] authkey.c: Failed to open cookie file '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul 15 09:17:27 acer pulseaudio[3106]: [pulseaudio] authkey.c: Failed to load authorization key '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul 15 09:17:28 acer pulseaudio[3109]: [pulseaudio] authkey.c: Failed to open cookie file '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul 15 09:17:28 acer pulseaudio[3109]: [pulseaudio] authkey.c: Failed to load authorization key '/var/lib/gdm3/.config/pulse/cookie': No such file or directory
+Jul 15 09:17:28 acer rsyslogd-2177: imuxsock begins to drop messages from pid 3082 due to rate-limiting
+Jul 15 09:17:33 acer rsyslogd-2177: imuxsock lost 25 messages from pid 3082 due to rate-limiting
