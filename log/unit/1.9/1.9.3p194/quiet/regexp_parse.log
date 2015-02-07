@@ -1,1 +1,3 @@
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+test/unit/regexp_parse_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb (LoadError)
+	from test/unit/regexp_parse_test.rb:9:in `<main>'
