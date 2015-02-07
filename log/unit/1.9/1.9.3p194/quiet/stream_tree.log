@@ -1,2 +1,10 @@
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-ruby: No such file or directory -- test/unit/stream_tree_test.rb (LoadError)
+Run options: 
+
+# Running tests:
+
+...............................
+
+Finished tests in 0.016664s, 1860.3150 tests/s, 7441.2598 assertions/s.
+
+31 tests, 124 assertions, 0 failures, 0 errors, 0 skips
