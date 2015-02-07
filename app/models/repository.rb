@@ -123,7 +123,7 @@ def error_score?(executable=@related_files.model_test_pathname?,
 	@log_path = 'log/unit/' + minor_version
 	@log_path += '/' + patch_version
 	@log_path += '/' + logging.to_s
-	@log_path += '/' + 'work_flow' + '.log'
+	@log_path += '/' + @unit.model_basename + '.log'
 	case logging 
 	when :quiet then @ruby_test_string = 'ruby -v -W0 '
 	when :normal then @ruby_test_string = 'ruby -v -W1 '
@@ -131,6 +131,7 @@ def error_score?(executable=@related_files.model_test_pathname?,
 	else fail Exception.new(logging + ' is not a valid logging type.')
 	end # case
 	@ruby_test_string += executable
+	@ruby_test_string += ' >&' + @log_path
 	@recent_test=shell_command(@ruby_test_string)
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
