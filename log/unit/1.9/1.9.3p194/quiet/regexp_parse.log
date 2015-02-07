@@ -1,1 +1,11 @@
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:88:in `extend': wrong argument type Class (expected Module) (TypeError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:88:in `<module:ClassMethods>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:87:in `<class:Connectivity>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:86:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:10:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:10:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:8:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:8:in `<top (required)>'
+	from test/unit/regexp_parse_test.rb:9:in `require_relative'
+	from test/unit/regexp_parse_test.rb:9:in `<main>'
