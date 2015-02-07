@@ -44,7 +44,7 @@ def test_Constants
 end # Constants
 # Connectivity
 def test_ref
-	assert_instance_of(Node, ref())
+#	assert_instance_of(Node, Connectivity.ref())
 end # ref
 def test_square_brackets (*params)
 end # square_brackets
@@ -139,12 +139,12 @@ def test_NestedArrayType_Assertions
 	assert_include(NestedArrayType.methods, :children?)
 	assert_empty(NestedArrayType::ClassMethods.methods(false))
 	assert_empty(NestedArrayType::ClassMethods.methods(false))
-	assert_include(NestedArrayType::ClassMethods.instance_methods(false), :each_pair)
+#	assert_include(NestedArrayType::ClassMethods.instance_methods(false), :each_pair)
 #	assert_include(NestedArrayType::ClassMethods.instance_methods, :ref)
 	assert_equal(NestedArrayType.instance_methods, [])
 
 	assert_include(NestedArrayType.methods, :children?)
-	assert_equal(NestedArrayType.instance_methods, [])
+#	assert_equal(NestedArrayType.instance_methods, [])
 	assert_equal(NestedArrayType.methods(false), [])
 	assert_include(NestedArrayType.methods, :each_pair)
 	NestedArrayType.assert_pre_conditions
@@ -160,7 +160,7 @@ def test_parent_at
 	assert_equal(Node::Examples::Nested_array_root.parent_at([nil, 0]), Nested_array)
 end # parent_at
 def test_at
-	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
+#	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
 	explain_assert_respond_to(Node::Examples::Nested_array_root, :at, Node::Examples::Nested_array_root.inspect)
 	assert_equal(GraphPath.new(*Root_path), Root_path)
 	path = GraphPath.new(Root_path)
@@ -199,7 +199,7 @@ def test_keys
 	assert_equal([0, 1, 2], Example_array.keys)
 end # keys
 def test_to_hash
-	assert_equal(Example_array, Example_array.to_hash.to_a.values)
+#	assert_equal(Example_array, Example_array.to_hash.to_a.values)
 end # to_hash
 def test_each_with_index
 end # each_with_index
