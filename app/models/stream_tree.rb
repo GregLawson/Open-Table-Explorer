@@ -86,7 +86,7 @@ end # GraphPath
 class Connectivity
 module ClassMethods
 def ref (tree)
-#		Node.new(node: tree, graph_type: self)
+		Node.new(node: tree, graph_type: self)
 end # ref
 def [] (*params)
 		

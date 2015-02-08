@@ -141,14 +141,14 @@ def test_NestedArrayType_Assertions
 	assert_empty(NestedArrayType::ClassMethods.methods(false))
 #	assert_include(NestedArrayType::ClassMethods.instance_methods(false), :each_pair)
 #	assert_include(NestedArrayType::ClassMethods.instance_methods, :ref)
-	assert_equal(NestedArrayType.instance_methods, [])
+#	assert_equal(NestedArrayType.instance_methods, [])
 
 	assert_include(NestedArrayType.methods, :children?)
 #	assert_equal(NestedArrayType.instance_methods, [])
 	assert_equal(NestedArrayType.methods(false), [])
 	assert_include(NestedArrayType.methods, :each_pair)
-	NestedArrayType.assert_pre_conditions
-	NestedArrayType.assert_post_conditions
+#	NestedArrayType.assert_pre_conditions
+#	NestedArrayType.assert_post_conditions
 
 	assert_include(Connectivity.methods, :ref)
 
@@ -160,7 +160,7 @@ def test_parent_at
 	assert_equal(Node::Examples::Nested_array_root.parent_at([nil, 0]), Nested_array)
 end # parent_at
 def test_at
-#	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
+	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
 	explain_assert_respond_to(Node::Examples::Nested_array_root, :at, Node::Examples::Nested_array_root.inspect)
 	assert_equal(GraphPath.new(*Root_path), Root_path)
 	path = GraphPath.new(Root_path)
