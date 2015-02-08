@@ -8,7 +8,7 @@
 require_relative '../unit/test_environment'
 require_relative '../../test/assertions/repository_assertions.rb'
 class RepositoryTest < TestCase
-include DefaultTests
+#include DefaultTests
 include Repository::Examples
 Minimal_repository=Empty_Repo
 def test_Constants
@@ -110,6 +110,12 @@ def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
+def test_ruby_test_string
+	ruby_test_string = This_code_repository.ruby_test_string
+	assert_equal('', This_code_repository.log_path)
+	assert_equal('', This_code_repository.ruby_test_string)
+	assert_equal('', This_code_repository.unit)
+end # ruby_test_string
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text

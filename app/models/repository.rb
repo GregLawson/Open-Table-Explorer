@@ -9,6 +9,7 @@
 require 'grit'  # sudo gem install grit
 # partial API at @see less /usr/share/doc/ruby-grit/API.txt
 # code in @see /usr/lib/ruby/vendor_ruby/grit
+require_relative 'unit.rb'
 require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
@@ -115,7 +116,7 @@ end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def error_score?(executable=@related_files.model_test_pathname?,
+def ruby_test_string(executable=@related_files.model_test_pathname?,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
@@ -123,7 +124,7 @@ def error_score?(executable=@related_files.model_test_pathname?,
 	@log_path = 'log/unit/' + minor_version
 	@log_path += '/' + patch_version
 	@log_path += '/' + logging.to_s
-	@log_path += '/' + @unit.model_basename + '.log'
+	@log_path += '/' + @unit.model_basename.to_s + '.log'
 	case logging 
 	when :quiet then @ruby_test_string = 'ruby -v -W0 '
 	when :normal then @ruby_test_string = 'ruby -v -W1 '
@@ -132,6 +133,15 @@ def error_score?(executable=@related_files.model_test_pathname?,
 	end # case
 	@ruby_test_string += executable
 	@ruby_test_string += ' >&' + @log_path
+end # ruby_test_string
+def error_score?(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	@ruby_test_string = ruby_test_string(executable,
+		logging,
+		minor_version,
+		patch_version)
 	@recent_test=shell_command(@ruby_test_string)
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
