@@ -9,6 +9,7 @@
 require 'grit'  # sudo gem install grit
 # partial API at @see less /usr/share/doc/ruby-grit/API.txt
 # code in @see /usr/lib/ruby/vendor_ruby/grit
+require_relative 'unit.rb'
 require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
@@ -115,15 +116,24 @@ end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def error_score?(executable=@related_files.model_test_pathname?,
+def log_path?(executable=@related_files.model_test_pathname?,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
 	@unit = Unit.new_from_path?(executable)
-	@log_path = 'log/unit/' + minor_version
-	@log_path += '/' + patch_version
-	@log_path += '/' + logging.to_s
-	@log_path += '/' + 'work_flow' + '.log'
+	if @unit.nil? then
+		@log_path = '' # empty file string
+	else
+		@log_path = 'log/unit/' + minor_version
+		@log_path += '/' + patch_version
+		@log_path += '/' + logging.to_s
+		@log_path += '/' + @unit.model_basename.to_s + '.log'
+		end # if
+end # log_path?
+def ruby_test_string(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
 	case logging 
 	when :quiet then @ruby_test_string = 'ruby -v -W0 '
 	when :normal then @ruby_test_string = 'ruby -v -W1 '
@@ -131,6 +141,20 @@ def error_score?(executable=@related_files.model_test_pathname?,
 	else fail Exception.new(logging + ' is not a valid logging type.')
 	end # case
 	@ruby_test_string += executable
+	log_path += log_path?(executable,
+	  logging, minor_version, patch_version)
+	  if !log_path.empty? then
+	  	@ruby_test_string += ' >&' + log_path
+	end # if
+end # ruby_test_string
+def error_score?(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	@ruby_test_string = ruby_test_string(executable,
+		logging,
+		minor_version,
+		patch_version)
 	@recent_test=shell_command(@ruby_test_string)
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
