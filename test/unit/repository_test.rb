@@ -8,7 +8,7 @@
 require_relative '../unit/test_environment'
 require_relative '../../test/assertions/repository_assertions.rb'
 class RepositoryTest < TestCase
-include DefaultTests
+#include DefaultTests
 include Repository::Examples
 Minimal_repository=Empty_Repo
 def test_Constants
@@ -17,8 +17,20 @@ def test_Constants
 	assert_pathname_exists(Source)
 	assert_equal(FilePattern.project_root_dir?(__FILE__), FilePattern.project_root_dir?($0))
 	assert_equal(FilePattern.project_root_dir?, Root_directory)
+#	message="SELF_code_Repo=#{SELF_code_Repo.inspect}"
+#	message+="\nThis_code_repository=#{This_code_repository.inspect}"
+#	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
+	this_code_repository=Repository.new(Root_directory)
+	sELF_code_Repo=Repository.new(Root_directory)
+	assert_equal(Root_directory, this_code_repository.path, message)
+#	SELF_code_Repo.assert_pre_conditions
+	this_code_repository.assert_pre_conditions
 	This_code_repository.assert_pre_conditions
 	assert_equal(Root_directory, This_code_repository.path, message)
+
+#	assert_equal(SELF_code_Repo.path, Root_directory, message)
+#	assert_equal(SELF_code_Repo.path, This_code_repository.path, message)
+#	assert_equal(SELF_code_Repo, This_code_repository, message)
 end #Constants
 def test_Repository_git_command
 	git_execution=Repository.git_command('branch', Empty_Repo_path)
@@ -32,23 +44,23 @@ def test_create_empty
 	assert_equal(Unique_repository_directory_pathname+"\n", switch_dir.output)
 #	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
 	ShellCommands.new([['cd', Unique_repository_directory_pathname], '&&', ['git', 'init']])
-	new_repository=Repository.new(Unique_repository_directory_pathname, :echo)
+	new_repository=Repository.new(Unique_repository_directory_pathname)
 	IO.write(Unique_repository_directory_pathname+'/README', README_start_text+"1\n") # two consecutive slashes = one slash
 	new_repository.git_command('add README')
 	new_repository.git_command('commit -m "test_create_empty initial commit of README"')
 	Repository.delete_existing(Unique_repository_directory_pathname)
-	Repository.create_empty(Unique_repository_directory_pathname, :echo)
+	Repository.create_empty(Unique_repository_directory_pathname)
 	Repository.delete_existing(Unique_repository_directory_pathname)
 end #create_empty
 def test_delete_existing
-	Repository.create_if_missing(Unique_repository_directory_pathname, :echo)
+	Repository.create_if_missing(Unique_repository_directory_pathname)
 	Repository.delete_existing(Unique_repository_directory_pathname)
 	assert(!File.exists?(Unique_repository_directory_pathname))
 end #delete_existing
 def test_replace_or_create
 end #replace_or_create
 def test_create_if_missing
-	Repository.create_if_missing(Unique_repository_directory_pathname, :echo)
+	Repository.create_if_missing(Unique_repository_directory_pathname)
 	FileUtils.remove_entry_secure(Unique_repository_directory_pathname) #, force = false)
 end #create_if_missing
 def test_initialize
@@ -98,14 +110,23 @@ def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
+def test_log_path?
+	executable = $PROGRAM_NAME
+	assert_equal('log/unit/1.9/1.9.3p194/quiet/work_flow.log', This_code_repository.log_path?(executable))
+	assert_equal('log/unit/1.9/1.9.3p194/quiet/work_flow.log', This_code_repository.log_path?)
+end # log_path?
+def test_ruby_test_string
+	executable = $PROGRAM_NAME
+	ruby_test_string = This_code_repository.ruby_test_string(executable)
+	assert_matchl(executable, ruby_test_string)
+end # ruby_test_string
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
 	recent_test=This_code_repository.shell_command("ruby "+executable)
 	assert_equal(1, recent_test.process_status.exitstatus, recent_test.inspect)
-	assert_equal(false, recent_test.success?, recent_test.inspect)
-	syntax_test=This_code_repository.shell_command("ruby -c "+executable)
-	assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
+		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(10000, This_code_repository.error_score?(executable))
 #	This_code_repository.assert_deserving_branch(:edited, executable)
 
@@ -117,7 +138,7 @@ def test_error_score?
 	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
 #	This_code_repository.assert_deserving_branch(:passed, executable)
 	Error_classification.each_pair do |key, value|
-		executable=data_source_directory?+'/'+value.to_s+'.rb'
+		executable = Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
 	end #each
 end #error_score
@@ -140,10 +161,10 @@ def test_safely_visit_branch
 
 	if push_branch!=target_branch then
 		Minimal_repository.confirm_branch_switch(target_branch)
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
 		Minimal_repository.confirm_branch_switch(push_branch)
 	else
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'])
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
 	end #if
 	if push then
 		Minimal_repository.git_command('stash apply --quiet').assert_post_conditions
@@ -167,10 +188,10 @@ def test_validate_commit
 	Minimal_repository.force_change
 	assert(Minimal_repository.something_to_commit?)
 	Minimal_repository.assert_something_to_commit
-#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'])
+#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
 	Minimal_repository.git_command('stash')
 	Minimal_repository.git_command('checkout passed')
-	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'])
+	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
 end #validate_commit
 def test_testing_superset_of_passed
 #?	assert_equal('', This_code_repository.testing_superset_of_passed.assert_post_conditions.output)
@@ -216,41 +237,15 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
-def test_git_parse
-	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote)) * "\n"
-	command = 'branch --list --remote'
-	output=This_code_repository.git_command(command).assert_post_conditions.output
-	parse = output.parse(pattern)
-	assert_instance_of(Hash, parse, self.inspect)
-	assert_include(parse, {remote: :master}, output.inspect)
-	git_parse(command, pattern)[:remote]
-end # git_parse
 def test_branches?
-	assert_equal(:master, Empty_Repo.current_branch_name?)
+	assert_equal(:master, Minimal_repository.current_branch_name?)
 #?	explain_assert_respond_to(Parse, :parse_split)
-	branch_output=Empty_Repo.git_command('branch --list').assert_post_conditions.output
-	branch_name_pattern = /[a-z0-9A-Z_-]+/
-	branch_name_alternative = branch_name_pattern.capture(:branch) * ' -> ' * branch_name_pattern.capture(:referenced)
-	pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
-	patterns = [Branch_regexp,
-					/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
-					/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch),
-					pattern]
-	patterns.each do |p|
-		assert_match(p, branch_output)
-		branches=Parse.parse_into_array(branch_output, p, {ending: :optional})
-		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches, branch_output.inspect)
-	end # each
-	
-	assert_includes(Empty_Repo.branches?.map{|b| b.branch}, Empty_Repo.current_branch_name?)
-	assert_equal([:master, :passed], Empty_Repo.branches?.map{|b| b.branch})
-	assert_includes(This_code_repository.branch_names?.map{|b| b.branch}, This_code_repository.current_branch_name?)
+	assert_includes(This_code_repository.branches?, This_code_repository.current_branch_name?.to_s)
+	assert_includes(Minimal_repository.branches?, Minimal_repository.current_branch_name?.to_s)
 end #branches?
 def test_remotes?
-	assert_includes(This_code_repository.remotes?, "origin/"+Empty_Repo.current_branch_name?.to_s)
-	assert_empty(Empty_Repo.remotes?)
-	assert_not_empty(This_code_repository.remotes_names?)
-end #remotes?
+	assert_includes(This_code_repository.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
+end #branches?
 def test_rebase!
 	Minimal_repository.rebase!
 end #rebase!
