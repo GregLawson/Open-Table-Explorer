@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/regexp_parse.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
-include RegexpParse::Examples
+#include RegexpParse::Examples
 include RegexpToken::Constants
 include RegexpParse::Assertions
 include NestedArray::Examples
