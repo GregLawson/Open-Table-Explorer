@@ -16,7 +16,7 @@ include Regexp::Expression::Base::Examples
 include String::Examples
 #include Parse::ClassMethods # treat class methods like module methods as local to test class
 #include Parse::Assertions::ClassMethods
-include DefaultTests
+#include DefaultTests
 def test_default_name
 	index=11
 	prefix='Col_'
