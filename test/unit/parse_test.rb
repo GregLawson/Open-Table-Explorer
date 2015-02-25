@@ -13,7 +13,7 @@ include MatchCapture::Examples
 #include LimitCapture::Examples
 include Capture::Examples
 include String::Examples
-include DefaultTests
+#include DefaultTests
 include Parse::ClassMethods # treat class methods like module methods as local to test class
 include Parse::Examples
 include Parse::Assertions::ClassMethods
