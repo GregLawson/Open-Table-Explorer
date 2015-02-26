@@ -6,7 +6,7 @@ Run options:
 EFFEE.F.EmatchData=#<MatchData "* 1" branch:"1">
 E.E.EEEEE.E.FEFEE.EE.EEE
 
-Finished tests in 0.014415s, 2289.3317 tests/s, 3607.4318 assertions/s.
+Finished tests in 0.014542s, 2269.2223 tests/s, 3575.7443 assertions/s.
 
   1) Error:
 test_Capture_Examples(ParseTest):
@@ -15,7 +15,7 @@ NameError: uninitialized constant ParseTest::Match_capture
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -41,7 +41,7 @@ NameError: uninitialized constant ParseTest::Match_capture
 test_Capture_assert_post_conditions(ParseTest) [test/unit/parse_test.rb:273]:
 [RuntimeError] exception expected, not
 Class: <MiniTest::Assertion>
-Message: <"Only a left match.\n self=#<MatchCapture:0x00000001c73b38 @string=\"* 1\\n  2\", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=#<MatchData \"* 1\" branch:\"1\">, @_assertions=6>\n\n instance_variables=[:@string, :@regexp, :@length_hash_captures, :@raw_captures, :@_assertions]\n\"\\n  2\" is not empty.">
+Message: <"Only a left match.\n self=#<MatchCapture:0x00000002654e68 @string=\"* 1\\n  2\", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=#<MatchData \"* 1\" branch:\"1\">, @_assertions=6>\n\n instance_variables=[:@string, :@regexp, :@length_hash_captures, :@raw_captures, :@_assertions]\n\"\\n  2\" is not empty.">
 ---Backtrace---
 /usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert'
 /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'
@@ -54,7 +54,7 @@ test/unit/parse_test.rb:273:in `test_Capture_assert_post_conditions'
 /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
 /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
 /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-/usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+/usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
 /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
 /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
 /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -89,7 +89,7 @@ NameError: uninitialized constant ParseTest::Parse_array
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -113,12 +113,12 @@ NameError: uninitialized constant ParseTest::Parse_array
 
   5) Error:
 test_Examples(ParseTest):
-NoMethodError: undefined method `assert_parse_string' for #<ParseTest:0x00000001dbc288>
+NoMethodError: undefined method `assert_parse_string' for #<ParseTest:0x000000026dabf8>
     test/unit/parse_test.rb:436:in `test_Examples'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -142,18 +142,18 @@ NoMethodError: undefined method `assert_parse_string' for #<ParseTest:0x00000001
 
   6) Failure:
 test_String_parse(ParseTest) [test/unit/parse_test.rb:313]:
-#<ParseTest:0x00000001db9830 @__name__="test_String_parse", @__io__=nil, @passed=nil, @_assertions=0, @options={:ruby=>"/usr/bin/ruby1.9.1"}>.
+#<ParseTest:0x000000026d8178 @__name__="test_String_parse", @__io__=nil, @passed=nil, @_assertions=0, @options={:ruby=>"/usr/bin/ruby1.9.1"}>.
 <{:line=>"* 1", :terminator=>"\n"}> expected but was
 <[{:line=>"* 1", :terminator=>"\n"}]>.
 
   7) Error:
 test_add_parse_message(ParseTest):
-NoMethodError: undefined method `add_parse_message' for #<ParseTest:0x00000001dc7e58>
+NoMethodError: undefined method `add_parse_message' for #<ParseTest:0x000000026e6750>
     test/unit/parse_test.rb:393:in `test_add_parse_message'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -187,7 +187,7 @@ NameError: undefined method `match' for class `MatchData'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -218,7 +218,7 @@ NoMethodError: undefined method `[]' for /  /:Regexp
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -253,7 +253,7 @@ ArgumentError: wrong number of arguments (1 for 0)
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -285,7 +285,7 @@ ArgumentError: wrong number of arguments (1 for 0)
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -309,12 +309,12 @@ ArgumentError: wrong number of arguments (1 for 0)
 
  12) Error:
 test_assert_parse_sequence(ParseTest):
-NoMethodError: undefined method `parse_string' for #<ParseTest:0x00000001bf5a80>
+NoMethodError: undefined method `parse_string' for #<ParseTest:0x0000000222e910>
     test/unit/parse_test.rb:401:in `test_assert_parse_sequence'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -338,12 +338,12 @@ NoMethodError: undefined method `parse_string' for #<ParseTest:0x00000001bf5a80>
 
  13) Error:
 test_assert_parse_string(ParseTest):
-NoMethodError: undefined method `assert_parse_string' for #<ParseTest:0x00000001bf4770>
+NoMethodError: undefined method `assert_parse_string' for #<ParseTest:0x0000000222d600>
     test/unit/parse_test.rb:431:in `test_assert_parse_string'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -367,12 +367,12 @@ NoMethodError: undefined method `assert_parse_string' for #<ParseTest:0x00000001
 
  14) Error:
 test_assert_success(ParseTest):
-NoMethodError: undefined method `raw_capture_class?' for #<SplitCapture:0x00000001c72918>
+NoMethodError: undefined method `raw_capture_class?' for #<SplitCapture:0x00000002653bf8>
     test/unit/parse_test.rb:250:in `test_assert_success'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -401,7 +401,7 @@ NameError: uninitialized constant ParseTest::Parse_array
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -435,7 +435,7 @@ NoMethodError: undefined method `size' for nil:NilClass
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -459,18 +459,18 @@ NoMethodError: undefined method `size' for nil:NilClass
 
  18) Failure:
 test_output?(ParseTest) [test/unit/parse_test.rb:130]:
-#<SplitCapture:0x00000001c71d10 @string="* 1\n  2", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)\n/, @length_hash_captures=1, @raw_captures=["", "1", "  2"]>.
+#<SplitCapture:0x00000002653040 @string="* 1\n  2", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)\n/, @length_hash_captures=1, @raw_captures=["", "1", "  2"]>.
 <{:branch=>"1"}> expected but was
 <[{:branch=>"1"}]>.
 
  19) Error:
 test_parse(ParseTest):
-NoMethodError: undefined method `parse_string' for #<ParseTest:0x00000001dd45e0>
+NoMethodError: undefined method `parse_string' for #<ParseTest:0x000000026faea8>
     test/unit/parse_test.rb:415:in `test_parse'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -494,12 +494,12 @@ NoMethodError: undefined method `parse_string' for #<ParseTest:0x00000001dd45e0>
 
  20) Error:
 test_parse_into_array(ParseTest):
-NoMethodError: undefined method `parse_into_array' for #<ParseTest:0x00000001dda210>
+NoMethodError: undefined method `parse_into_array' for #<ParseTest:0x000000026f8ab8>
     test/unit/parse_test.rb:387:in `test_parse_into_array'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -528,7 +528,7 @@ NameError: uninitialized constant ParseTest::Parse_delimited_array
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -558,7 +558,7 @@ NoMethodError: undefined method `pre_match' for nil:NilClass
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -587,7 +587,7 @@ NameError: uninitialized constant ParseTest::Parse_array
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -618,7 +618,7 @@ ArgumentError: wrong number of arguments (1 for 0)
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -650,7 +650,7 @@ ArgumentError: wrong number of arguments (1 for 0)
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__475450761571048466__setup__4310475773243080191__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2968198576802359224__setup__997828143773575075__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
