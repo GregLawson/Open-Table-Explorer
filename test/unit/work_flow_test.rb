@@ -9,7 +9,7 @@ require_relative '../unit/test_environment'
 require_relative '../../app/models/work_flow.rb'
 
 class WorkFlowTest < TestCase
-include DefaultTests
+#include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
@@ -212,7 +212,7 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable = data_source_directory?('repository')+'/'+value.to_s+'.rb'
+		executable = Repository::Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 		error_score=TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
@@ -250,7 +250,7 @@ end #  merge_command
 
 def test_deserve_command
 	value = :testing
-	executable = data_source_directory?('repository')+'/'+value.to_s+'.rb'
+	executable = Repository::Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
 	error_score=TestWorkFlow.repository.error_score?(executable)
 #	assert_equal(1, error_score, deserve_run.inspect)
