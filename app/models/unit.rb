@@ -7,9 +7,6 @@
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
 class Unit
-module Constants
-end #Constants
-include Constants
 module ClassMethods
 def new_from_path?(path)
 	library_name=FilePattern.path2model_name?(path)
@@ -86,6 +83,10 @@ def pathnames?
 		@project_root_dir + FilePattern.path?(pattern, @model_basename)
 	end #
 end #pathnames
+module Constants
+Executing_Unit = Unit.new_from_path?($PROGRAM_NAME)
+end #Constants
+include Constants
 def default_test_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
 		4
@@ -133,7 +134,8 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
@@ -196,7 +198,8 @@ UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
 SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
-require_relative '../../test/assertions.rb';module Assertions
+require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
