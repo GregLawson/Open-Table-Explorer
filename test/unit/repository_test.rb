@@ -119,6 +119,11 @@ def test_ruby_test_string
 	executable = $PROGRAM_NAME
 	ruby_test_string = This_code_repository.ruby_test_string(executable)
 	assert_matchl(executable, ruby_test_string)
+	assert_not_nil(This_code_repository.related_files)
+	ruby_test_string = This_code_repository.ruby_test_string
+	assert_equal('', This_code_repository.log_path)
+	assert_equal('', This_code_repository.ruby_test_string)
+	assert_equal('', This_code_repository.unit)
 end # ruby_test_string
 def test_error_score?
 #	executable=This_code_repository.related_files.model_test_pathname?

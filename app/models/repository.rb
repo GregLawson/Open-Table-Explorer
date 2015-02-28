@@ -6,7 +6,7 @@
 #
 ###########################################################################
 # @see http://grit.rubyforge.org/
-#require 'grit'  # sudo gem install grit
+require 'grit'  # sudo gem install grit
 # partial API at @see less /usr/share/doc/ruby-grit/API.txt
 # code in @see /usr/lib/ruby/vendor_ruby/grit
 require_relative 'unit.rb'
@@ -15,7 +15,7 @@ require_relative 'shell_command.rb'
 require_relative 'global.rb'
 require_relative 'parse.rb'
 require_relative 'branch.rb'
-class Repository # <Grit::Repo
+class Repository <Grit::Repo
 module Constants
 Repository_Unit = Unit.new_from_path?(__FILE__)
 Root_directory=FilePattern.project_root_dir?(__FILE__)
@@ -25,12 +25,6 @@ Error_classification={0 => :success,
 				1     => :single_test_fail,
 				100 => :initialization_fail,
 				10000 => :syntax_error}
-Branch_name_regexp = /[-a-z0-9A-Z_]+/
-Branch_name_alternative = [Branch_name_regexp.capture(:branch), 
-									' -> ', Branch_name_regexp.capture(:referenced), Regexp::Optional]
-Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
-Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
-Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
 end #Constants
 include Constants
 module ClassMethods
@@ -67,12 +61,12 @@ def create_if_missing(path, interactive)
 	end #if
 end #create_if_missing
 def timestamped_repository_name?
-	Repository_Unit.data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	Repository_Unit.data_sources_directory? + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 end # timestamped_repository_name?
 def create_test_repository(path=timestamped_repository_name?, 
 	interactive)
 	replace_or_create(path, interactive)
-  @interactive = interactive
+	@interactive = interactive
 	if File.exists?(path) then
 		new_repository=Repository.new(path, @interactive)
 		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
@@ -95,7 +89,7 @@ def initialize(path, interactive)
 	@path=path.to_s
   puts '@path='+@path if $VERBOSE
   @interactive = interactive
-#	@grit_repo=Grit::Repo.new(@path)
+	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
 This_code_repository=Repository.new(Root_directory, :interactive)
@@ -149,8 +143,33 @@ end # state?
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def error_score?(executable=@related_files.model_test_pathname?)
-	@recent_test=shell_command("ruby "+executable)
+def ruby_test_string(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	@unit = Unit.new_from_path?(executable)
+	@log_path = 'log/unit/' + minor_version
+	@log_path += '/' + patch_version
+	@log_path += '/' + logging.to_s
+	@log_path += '/' + @unit.model_basename.to_s + '.log'
+	case logging 
+	when :quiet then @ruby_test_string = 'ruby -v -W0 '
+	when :normal then @ruby_test_string = 'ruby -v -W1 '
+	when :verbose then @ruby_test_string = 'ruby -v -W2 '
+	else fail Exception.new(logging + ' is not a valid logging type.')
+	end # case
+	@ruby_test_string += executable
+	@ruby_test_string += ' >&' + @log_path
+end # ruby_test_string
+def error_score?(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	@ruby_test_string = ruby_test_string(executable,
+		logging,
+		minor_version,
+		patch_version)
+	@recent_test=shell_command(@ruby_test_string)
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		0
@@ -231,7 +250,7 @@ def unit_names?(files)
 		FilePattern.path2model_name?(f).to_s
 	end #map
 end #unit_names?
-def confirm_commit
+def confirm_commit(interact=:interactive)
 	if something_to_commit? then
 		case @interactive
 		when :interactive then
@@ -266,6 +285,7 @@ def validate_commit(changes_branch, files)
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 		confirm_commit
+#		git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
 def something_to_commit?

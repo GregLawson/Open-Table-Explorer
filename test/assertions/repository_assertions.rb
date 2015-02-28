@@ -7,7 +7,7 @@
 ###########################################################################
 # @see http://grit.rubyforge.org/
 require_relative '../../app/models/repository.rb'
-class Repository #<Grit::Repo
+class Repository <Grit::Repo
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
