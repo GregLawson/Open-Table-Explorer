@@ -76,7 +76,7 @@ def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files
 def initialize(path)
 	if path[-1,1]!='/' then
 		path=path+'/'

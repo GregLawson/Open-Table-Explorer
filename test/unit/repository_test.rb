@@ -111,6 +111,7 @@ def test_current_branch_name?
 
 end #current_branch_name
 def test_ruby_test_string
+	assert_not_nil(This_code_repository.related_files)
 	ruby_test_string = This_code_repository.ruby_test_string
 	assert_equal('', This_code_repository.log_path)
 	assert_equal('', This_code_repository.ruby_test_string)

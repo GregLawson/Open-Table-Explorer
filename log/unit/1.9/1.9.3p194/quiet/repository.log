@@ -4,47 +4,27 @@ Run options:
 # Running tests:
 
 ............F.....master has no remote branch in origin.
-....Econfirm_commit(:echo something_to_commit?=true
+....Fconfirm_commit(:echo something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 5260 exit 1>
+@process_status=#<Process::Status: pid 11687 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 5274 exit 128>
+@process_status=#<Process::Status: pid 11701 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ...confirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 2.458750s, 11.7946 tests/s, 26.4362 assertions/s.
+Finished tests in 2.255971s, 12.8548 tests/s, 29.2557 assertions/s.
 
   1) Failure:
-test_error_score?(RepositoryTest) [test/unit/repository_test.rb:126]:
+test_error_score?(RepositoryTest) [test/unit/repository_test.rb:127]:
 <10000> expected but was
 <2>.
 
-  2) Error:
-test_ruby_test_string(RepositoryTest):
-NoMethodError: undefined method `model_test_pathname?' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:119:in `ruby_test_string'
-    test/unit/repository_test.rb:114:in `test_ruby_test_string'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+  2) Failure:
+test_ruby_test_string(RepositoryTest) [test/unit/repository_test.rb:114]:
+<nil> expected to not be nil.
 
-29 tests, 65 assertions, 1 failures, 1 errors, 0 skips
+29 tests, 66 assertions, 2 failures, 0 errors, 0 skips
