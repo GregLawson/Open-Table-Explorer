@@ -7,7 +7,7 @@
 ###########################################################################
 # @see http://grit.rubyforge.org/
 require_relative '../../app/models/repository.rb'
-class Repository #<Grit::Repo
+class Repository <Grit::Repo
 module Assertions
 include Test::Unit::Assertions
 module ClassMethods
@@ -44,6 +44,8 @@ module Examples
 include Constants
 	This_code_repository.assert_pre_conditions
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
+#Repo= Grit::Repo.new(Root_directory)
+SELF_code_Repo=Repository.new(Root_directory)
 Empty_Repo_path=Source+'test_repository/'
 Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
