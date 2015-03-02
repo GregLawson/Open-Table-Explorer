@@ -23,7 +23,7 @@ module ClassMethods
 def nested_scope_modules?
 	nested_constants = self.class.constants
 	message = ''
-	assert_include(included_modules, :Assertions, message)
+	assert_include(included_modules.map{|m| m.name}, :Assertions, message)
 	assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
 end # nested_scopes
 def assert_nested_scope_submodule(module_symbol, context = self, message='')
@@ -43,9 +43,9 @@ def asset_nested_and_included(module_symbol, context = self, message='')
 	assert_included_submodule(module_symbol)
 end # asset_nested_and_included
 def assert_pre_conditions(message='')
-	asset_nested_and_included(:ClassMethods, self)
-	asset_nested_and_included(:Constants, self)
-	asset_nested_and_included(:Assertions, self)
+#	asset_nested_and_included(:ClassMethods, self)
+#	asset_nested_and_included(:Constants, self)
+#	asset_nested_and_included(:Assertions, self)
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
