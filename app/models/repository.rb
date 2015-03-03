@@ -14,6 +14,7 @@ require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
 require_relative 'parse.rb'
+require_relative 'branch.rb'
 class Repository <Grit::Repo
 module Constants
 Repository_Unit = Unit.new_from_path?(__FILE__)
@@ -61,8 +62,10 @@ end #create_if_missing
 def timestamped_repository_name?
 	Repository_Unit.data_sources_directory? + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 end # timestamped_repository_name?
-def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"))
+def create_test_repository(path=timestamped_repository_name?, 
+	interactive)
 	replace_or_create(path)
+	@interactive = interactive
 	if File.exists?(path) then
 		new_repository=Repository.new(path)
 		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
@@ -78,12 +81,12 @@ end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files
 def initialize(path)
-	if path[-1,1]!='/' then
-		path=path+'/'
+	if path.to_s[-1,1]!='/' then
+		path=path.to_s+'/'
 	end #if
 	@url=path
-	@path=path
-  puts '@path='+@path if $VERBOSE
+	@path=path.to_s
+	puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
@@ -107,12 +110,34 @@ end #corruption
 def corruption_gc
 	git_command("gc")
 end #corruption
+def abort_rebase_and_merge!
+	if File.exists?('.git/rebase-merge/git-rebase-todo') then
+		git_command("rebase --abort")
+	end
+#	git_command("stash save").assert_post_conditions
+	if File.exists?('.git/MERGE_HEAD') then
+		git_command("merge --abort")
+	end # if
+end # abort_rebase_and_merge!
 def standardize_position!
-	git_command("rebase --abort")
-	git_command("merge --abort")
-	git_command("stash save").assert_post_conditions
+	 abort_rebase_and_merge!
 	git_command("checkout master")
 end #standardize_position!
+def state?
+	state=[]
+	if File.exists?('.git/rebase-merge/git-rebase-todo') then
+		state << :rebase
+	end
+	if File.exists?('.git/MERGE_HEAD') then
+		state << :merge
+	end # if
+	if something_to_commit? then
+		state << :dirty
+	else
+		state << :clean
+	end # if
+	return state
+end # state?
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
@@ -220,7 +245,7 @@ def safely_visit_branch(target_branch, &block)
 			puts git_command('status').output
 			puts git_command('stash show').output
 		else
-			apply_run.assert_post_conditions
+			apply_run.assert_post_conditions('unexpected stash apply fail')
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
@@ -322,6 +347,6 @@ def rebase!
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
 end #rebase!
-end #Repository
+end # Repository
 
 
