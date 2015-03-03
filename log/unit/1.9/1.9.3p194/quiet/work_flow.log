@@ -1,10 +1,12 @@
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: 
-
-# Running tests:
-
-..............................
-
-Finished tests in 3.632766s, 8.2582 tests/s, 1796.7024 assertions/s.
-
-30 tests, 6527 assertions, 0 failures, 0 errors, 0 skips
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:44:in `<module:Examples>': uninitialized constant Repository::Examples::Constants (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:43:in `<class:Repository>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:10:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:17:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:17:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:9:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:9:in `<top (required)>'
+	from test/unit/work_flow_test.rb:9:in `require_relative'
+	from test/unit/work_flow_test.rb:9:in `<main>'
