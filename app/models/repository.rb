@@ -32,12 +32,12 @@ include Constants
 def git_command(git_command, repository_dir)
 	ShellCommands.new('git '+ShellCommands.assemble_command_string(git_command), :chdir=>repository_dir)
 end #git_command
-def create_empty(path, interactive)
+def create_empty(path, interactive = :interactive)
 	Dir.mkdir(path)
 	@interactive = interactive
 	if File.exists?(path) then
 		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
-		new_repository=Repository.new(path, @interactive)
+		new_repository = Repository.new(path, @interactive)
 	else
 		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
 	end #if
@@ -53,7 +53,7 @@ def replace_or_create(path, interactive)
 	end #if
 	create_empty(path, interactive)
 end #replace_or_create
-def create_if_missing(path, interactive)
+def create_if_missing(path, interactive = :interactive)
 	if File.exists?(path) then
 		Repository.new(path, interactive)
 	else
@@ -80,19 +80,19 @@ def create_test_repository(path=timestamped_repository_name?,
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :interactive
-def initialize(path, interactive)
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files, :interactive
+def initialize(path, interactive = :interactive)
 	if path.to_s[-1,1]!='/' then
 		path=path.to_s+'/'
 	end #if
 	@url=path
 	@path=path.to_s
-  puts '@path='+@path if $VERBOSE
-  @interactive = interactive
+	puts '@path='+@path if $VERBOSE
+	@interactive = interactive
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
-This_code_repository=Repository.new(Root_directory, :interactive)
+This_code_repository = Repository.new(Root_directory, :interactive)
 end #Constants
 def shell_command(command, working_directory=@path)
 	ShellCommands.new(command, :chdir=>working_directory)
@@ -143,15 +143,28 @@ end # state?
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def ruby_test_string(executable=@related_files.model_test_pathname?,
+def log_path?(executable=@related_files.model_test_pathname?,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
 	@unit = Unit.new_from_path?(executable)
-	@log_path = 'log/unit/' + minor_version
-	@log_path += '/' + patch_version
-	@log_path += '/' + logging.to_s
-	@log_path += '/' + @unit.model_basename.to_s + '.log'
+	if @unit.nil? then
+		@log_path = '' # empty file string
+	else
+		@log_path = 'log/unit/' + minor_version
+		@log_path += '/' + patch_version
+		@log_path += '/' + logging.to_s
+		@log_path += '/' + @unit.model_basename.to_s + '.log'
+		end # if
+end # log_path?
+def write_error_file(recent_test, log_path)
+		contents = recent_test.output + recent_test.errors
+	  	IO.write(log_path, contents)
+end # write_error_file
+def ruby_test_string(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
 	case logging 
 	when :quiet then @ruby_test_string = 'ruby -v -W0 '
 	when :normal then @ruby_test_string = 'ruby -v -W1 '
@@ -159,7 +172,6 @@ def ruby_test_string(executable=@related_files.model_test_pathname?,
 	else fail Exception.new(logging + ' is not a valid logging type.')
 	end # case
 	@ruby_test_string += executable
-	@ruby_test_string += ' >&' + @log_path
 end # ruby_test_string
 def error_score?(executable=@related_files.model_test_pathname?,
 		logging = :quiet,
@@ -170,6 +182,11 @@ def error_score?(executable=@related_files.model_test_pathname?,
 		minor_version,
 		patch_version)
 	@recent_test=shell_command(@ruby_test_string)
+	log_path = log_path?(executable,
+	  logging, minor_version, patch_version)
+	if !log_path.empty? then
+	end # if
+	write_error_file(@recent_test, log_path)
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		0
@@ -252,7 +269,7 @@ def unit_names?(files)
 end #unit_names?
 def confirm_commit(interact=:interactive)
 	if something_to_commit? then
-		case @interactive
+		case interact
 		when :interactive then
 			cola_run = git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
@@ -267,12 +284,12 @@ def confirm_commit(interact=:interactive)
 			git_command('add . ').assert_post_conditions
 			git_command('commit ').assert_post_conditions
 		else
-			raise 'Unimplemented option='+interact
+			raise 'Unimplemented option=' + interact.to_s
 		end #case
 	end #if
-	puts 'confirm_commit '+@interactive.inspect+"), something_to_commit?="+something_to_commit?.inspect
+	puts 'confirm_commit('+interact.inspect+" something_to_commit?="+something_to_commit?.inspect
 end #confirm_commit
-def validate_commit(changes_branch, files)
+def validate_commit(changes_branch, files, interact=:interactive)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
 		puts p.inspect  if $VERBOSE
@@ -284,7 +301,7 @@ def validate_commit(changes_branch, files)
 			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
 		end #if
 		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
-		confirm_commit
+		confirm_commit(interact)
 #		git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit

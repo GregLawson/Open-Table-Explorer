@@ -1,0 +1,205 @@
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+..E....EE.E.F....F.EF.F.confirm_commit(:echo something_to_commit?=true
+..$ git rebase --abort
+@errors="No rebase in progress?\n"
+$ git merge --abort
+@errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
+$ git checkout master
+@errors="Already on 'master'\n"
+...confirm_commit(:echo something_to_commit?=true
+.
+
+Finished tests in 2.342066s, 12.8092 tests/s, 26.4724 assertions/s.
+
+  1) Error:
+test_branches?(RepositoryTest):
+NameError: uninitialized constant Repository::Parse
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:357:in `branches?'
+    test/unit/repository_test.rb:246:in `test_branches?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3592825662202455535__setup__3566288061587027104__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  2) Error:
+test_create_empty(RepositoryTest):
+ArgumentError: wrong number of arguments (1 for 2)
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:35:in `create_empty'
+    test/unit/repository_test.rb:52:in `test_create_empty'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3592825662202455535__setup__3566288061587027104__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  3) Error:
+test_create_if_missing(RepositoryTest):
+ArgumentError: wrong number of arguments (1 for 2)
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:56:in `create_if_missing'
+    test/unit/repository_test.rb:63:in `test_create_if_missing'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3592825662202455535__setup__3566288061587027104__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  4) Error:
+test_delete_existing(RepositoryTest):
+ArgumentError: wrong number of arguments (1 for 2)
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:56:in `create_if_missing'
+    test/unit/repository_test.rb:56:in `test_delete_existing'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3592825662202455535__setup__3566288061587027104__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  5) Failure:
+test_error_score?(RepositoryTest) [test/unit/repository_test.rb:130]:
+#<Process::Status: pid 20454 exit 1>
+$ ruby -v -W0 /etc/mtab
+@errors="/etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('\nrootfs / rootfs rw 0 0\n                  ^\n"
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+
+  6) Failure:
+test_log_path?(RepositoryTest) [test/unit/repository_test.rb:115]:
+<"log/unit/1.9/1.9.3p194/quiet/work_flow.log"> expected but was
+<"log/unit/1.9/1.9.3p194/quiet/repository.log">.
+
+  7) Error:
+test_rebase!(RepositoryTest):
+NoMethodError: undefined method `[]' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321:in `raw_captures?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:169:in `initialize'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:260:in `initialize'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:522:in `new'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:522:in `capture?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:532:in `block in parse'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:484:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:484:in `call'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:484:in `enumerate'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:475:in `enumerate_single'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:486:in `enumerate'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:531:in `parse'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:353:in `git_parse'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:362:in `remotes?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:365:in `rebase!'
+    test/unit/repository_test.rb:253:in `test_rebase!'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3592825662202455535__setup__3566288061587027104__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  8) Failure:
+test_remotes?(RepositoryTest) [test/unit/repository_test.rb:250]:
+Expected ["origin/HEAD"] to include "  origin/master".
+
+  9) Failure:
+test_revert_changes(RepositoryTest) [test/unit/repository_test.rb:224]:
+Modified_path=/home/greg/Desktop/src/test_repository//README.
+<"Minimal repository.\n"> expected but was
+<"Minimal repository.2015-03-03 09:03:02.261\n">.
+
+30 tests, 62 assertions, 4 failures, 5 errors, 0 skips
