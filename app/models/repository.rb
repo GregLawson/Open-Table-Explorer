@@ -116,15 +116,28 @@ end #standardize_position!
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def ruby_test_string(executable=@related_files.model_test_pathname?,
+def log_path?(executable=@related_files.model_test_pathname?,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
 	@unit = Unit.new_from_path?(executable)
-	@log_path = 'log/unit/' + minor_version
-	@log_path += '/' + patch_version
-	@log_path += '/' + logging.to_s
-	@log_path += '/' + @unit.model_basename.to_s + '.log'
+	if @unit.nil? then
+		@log_path = '' # empty file string
+	else
+		@log_path = 'log/unit/' + minor_version
+		@log_path += '/' + patch_version
+		@log_path += '/' + logging.to_s
+		@log_path += '/' + @unit.model_basename.to_s + '.log'
+		end # if
+end # log_path?
+def write_error_file(recent_test, log_path)
+		contents = recent_test.output + recent_test.errors
+	  	IO.write(log_path, contents)
+end # write_error_file
+def ruby_test_string(executable=@related_files.model_test_pathname?,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
 	case logging 
 	when :quiet then @ruby_test_string = 'ruby -v -W0 '
 	when :normal then @ruby_test_string = 'ruby -v -W1 '
@@ -132,7 +145,6 @@ def ruby_test_string(executable=@related_files.model_test_pathname?,
 	else fail Exception.new(logging + ' is not a valid logging type.')
 	end # case
 	@ruby_test_string += executable
-	@ruby_test_string += ' >&' + @log_path
 end # ruby_test_string
 def error_score?(executable=@related_files.model_test_pathname?,
 		logging = :quiet,
@@ -143,6 +155,11 @@ def error_score?(executable=@related_files.model_test_pathname?,
 		minor_version,
 		patch_version)
 	@recent_test=shell_command(@ruby_test_string)
+	log_path = log_path?(executable,
+	  logging, minor_version, patch_version)
+	if !log_path.empty? then
+	end # if
+	write_error_file(@recent_test, log_path)
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		0
