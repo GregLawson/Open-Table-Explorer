@@ -352,22 +352,6 @@ def git_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
 	output.parse(pattern)
 end # git_parse
-def branches?
-	branch_output=git_command('branch --list').assert_post_conditions.output
-	parse=Parse.parse_into_array(branch_output, Branch_regexp, {ending: :optional})
-	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
-end #branches?
-def remotes?
-	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
-end #remotes?
-def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase!
 end # Repository
 
 
