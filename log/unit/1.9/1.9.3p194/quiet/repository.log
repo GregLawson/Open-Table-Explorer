@@ -3,19 +3,18 @@ Run options:
 
 # Running tests:
 
-...................master has no remote branch in origin.
-.....confirm_commit(:echo something_to_commit?=true
+.....................confirm_commit(:echo something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 16593 exit 1>
+@process_status=#<Process::Status: pid 29338 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 16607 exit 128>
+@process_status=#<Process::Status: pid 29352 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ...confirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 4.188772s, 7.1620 tests/s, 17.9050 assertions/s.
+Finished tests in 4.277347s, 6.3123 tests/s, 15.8977 assertions/s.
 
-30 tests, 75 assertions, 0 failures, 0 errors, 0 skips
+27 tests, 68 assertions, 0 failures, 0 errors, 0 skips

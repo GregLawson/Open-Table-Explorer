@@ -66,7 +66,7 @@ end # timestamped_repository_name?
 def create_test_repository(path=timestamped_repository_name?, 
 	interactive)
 	replace_or_create(path, interactive)
-  @interactive = interactive
+	@interactive = interactive
 	if File.exists?(path) then
 		new_repository=Repository.new(path, @interactive)
 		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
@@ -347,20 +347,11 @@ def merge_conflict_files?
 	end #if
 	ret
 end #merge_conflict_files?
-def branches?
-	branch_output=git_command('branch --list').assert_post_conditions.output
-#?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
-end #branches?
-def remotes?
-	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
-end #branches?
-def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase!
+
+def git_parse(command, pattern)
+	output=git_command(command).assert_post_conditions.output
+	output.parse(pattern)
+end # git_parse
 end # Repository
 
 
