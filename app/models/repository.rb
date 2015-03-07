@@ -14,6 +14,7 @@ require_relative 'file_pattern.rb'
 require_relative 'shell_command.rb'
 require_relative 'global.rb'
 require_relative 'parse.rb'
+require_relative 'branch.rb'
 class Repository <Grit::Repo
 module Constants
 Repository_Unit = Unit.new_from_path?(__FILE__)
