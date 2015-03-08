@@ -1,0 +1,2 @@
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+ruby: No such file or directory -- /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/testing.rb (LoadError)
