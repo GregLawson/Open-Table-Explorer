@@ -121,7 +121,6 @@ def test_ruby_test_string
 	assert_match(executable, ruby_test_string)
 end # ruby_test_string
 def test_error_score?
-#	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
 	ruby_test_string = This_code_repository.ruby_test_string(executable)
 	recent_test = This_code_repository.shell_command(ruby_test_string)
@@ -240,16 +239,4 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
-def test_branches?
-	assert_equal(:master, Minimal_repository.current_branch_name?)
-#?	explain_assert_respond_to(Parse, :parse_split)
-	assert_includes(This_code_repository.branches?, This_code_repository.current_branch_name?.to_s)
-	assert_includes(Minimal_repository.branches?, Minimal_repository.current_branch_name?.to_s)
-end #branches?
-def test_remotes?
-	assert_includes(This_code_repository.remotes?, "  origin/"+Minimal_repository.current_branch_name?.to_s)
-end #branches?
-def test_rebase!
-	Minimal_repository.rebase!
-end #rebase!
 end #Repository

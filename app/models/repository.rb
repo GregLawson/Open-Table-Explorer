@@ -77,14 +77,15 @@ def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch
 def initialize(path)
 	if path[-1,1]!='/' then
 		path=path+'/'
 	end #if
 	@url=path
-	@path=path
-  puts '@path='+@path if $VERBOSE
+	@path=path.to_s
+	puts '@path='+@path if $VERBOSE
+#	@interactive = interactive
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
@@ -108,16 +109,38 @@ end #corruption
 def corruption_gc
 	git_command("gc")
 end #corruption
+def abort_rebase_and_merge!
+	if File.exists?('.git/rebase-merge/git-rebase-todo') then
+		git_command("rebase --abort")
+	end
+#	git_command("stash save").assert_post_conditions
+	if File.exists?('.git/MERGE_HEAD') then
+		git_command("merge --abort")
+	end # if
+end # abort_rebase_and_merge!
 def standardize_position!
-	git_command("rebase --abort")
-	git_command("merge --abort")
-	git_command("stash save").assert_post_conditions
+	 abort_rebase_and_merge!
 	git_command("checkout master")
 end #standardize_position!
+def state?
+	state=[]
+	if File.exists?('.git/rebase-merge/git-rebase-todo') then
+		state << :rebase
+	end
+	if File.exists?('.git/MERGE_HEAD') then
+		state << :merge
+	end # if
+	if something_to_commit? then
+		state << :dirty
+	else
+		state << :clean
+	end # if
+	return state
+end # state?
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def log_path?(executable=@related_files.model_test_pathname?,
+def log_path?(executable,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
@@ -135,7 +158,7 @@ def write_error_file(recent_test, log_path)
 		contents = recent_test.output + recent_test.errors
 	  	IO.write(log_path, contents)
 end # write_error_file
-def ruby_test_string(executable=@related_files.model_test_pathname?,
+def ruby_test_string(executable,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
@@ -147,7 +170,7 @@ def ruby_test_string(executable=@related_files.model_test_pathname?,
 	end # case
 	@ruby_test_string += executable
 end # ruby_test_string
-def error_score?(executable=@related_files.model_test_pathname?,
+def error_score?(executable,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
@@ -243,10 +266,20 @@ def confirm_commit(interact=:interactive)
 	if something_to_commit? then
 		case interact
 		when :interactive then
-			git_command('cola').assert_post_conditions
+			cola_run = git_command('cola')
+			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
+			cola_run.assert_post_conditions
+			if !something_to_commit? then
+#				git_command('cola rebase '+current_branch_name?.to_s)
+			end # if
 		when :echo then
+		when :staged then
+			git_command('commit ').assert_post_conditions			
+		when :all then
+			git_command('add . ').assert_post_conditions
+			git_command('commit ').assert_post_conditions
 		else
-			raise 'Unimplemented option='+interact
+			raise 'Unimplemented option=' + interact.to_s
 		end #case
 	end #if
 	puts 'confirm_commit('+interact.inspect+" something_to_commit?="+something_to_commit?.inspect
@@ -309,20 +342,11 @@ def merge_conflict_files?
 	end #if
 	ret
 end #merge_conflict_files?
-def branches?
-	branch_output=git_command('branch --list').assert_post_conditions.output
-#?	Parse.parse_into_array(branch_output, /[* ]/*/[a-z0-9A-Z_-]+/.capture*/\n/, ending=:optional)
-end #branches?
-def remotes?
-	git_command('branch --list --remote').assert_post_conditions.output.split("\n")
-end #branches?
-def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase!
-end #Repository
+
+def git_parse(command, pattern)
+	output=git_command(command).assert_post_conditions.output
+	output.parse(pattern)
+end # git_parse
+end # Repository
 
 
