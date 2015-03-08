@@ -9,12 +9,12 @@ require_relative '../unit/test_environment'
 require_relative '../../app/models/work_flow.rb'
 
 class WorkFlowTest < TestCase
-#include DefaultTests
+include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
 def test_all
-	pattern=FilePattern.find_by_name(:test)
+	pattern = FilePattern.find_by_name(:test)
 	glob = FilePattern.new(pattern).pathname_glob
 	tests=Dir[glob]
 	x=tests[0]
