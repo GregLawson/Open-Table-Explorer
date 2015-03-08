@@ -5,4 +5,4 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment_ruby'
+require_relative 'test_environment_default_test_case'
