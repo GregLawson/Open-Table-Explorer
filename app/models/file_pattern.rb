@@ -269,6 +269,6 @@ DCT_filename='script/dct.rb'
 SELF_Model=__FILE__
 SELF_Test=$0
 #SELF=FilePattern.new_from_path(FilePattern.path2model_name?(SELF_Model), FilePattern.project_root_dir?(SELF_Model))
-Data_source_example='test/data_sources/repository/success.rb'
+Data_source_example='test/data_sources/tax_form/2012/examples_and_templates/US_1040/US_1040_example_sysout.txt'
 end #Examples
 end #FilePattern

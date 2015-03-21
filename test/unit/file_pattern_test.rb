@@ -151,6 +151,25 @@ def test_find_by_name
 		assert_equal(p, FilePattern.find_by_name(p[:name]), p.inspect)
 	end #each
 end #find_by_name
+def test_match_path
+	path='test/unit/_assertions_test.rb'
+	p=FilePattern.find_from_path(path)
+	successes=Patterns.map do |p|
+		prefix=File.dirname(p[:example_file])
+		expected_prefix=p[:prefix][0..-2] # drops trailing /
+		match_length=expected_prefix.size
+		message='p='+p.inspect
+		message+="\nexpected_prefix="+expected_prefix
+		message+="\nprefix="+prefix
+		assert_operator(match_length, :<=, prefix.size, message)
+		assert_not_nil(prefix[-match_length,match_length], message)
+		assert_match(p[:prefix], p[:example_file], message)
+		matchData=Regexp.new(p[:prefix]).match(p[:example_file])
+		assert_not_nil(matchData, message)
+#		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
+#		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
+	end #map
+end # match_path
 def test_find_from_path
 	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
 	assert_equal(:test, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
@@ -170,11 +189,27 @@ def test_pathnames
 	assert_equal(Patterns.size, FilePattern.pathnames?('test').size)
 	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
+def test_new_from_path
+	n=FilePattern.new_from_path($0)
+	n.assert_pre_conditions
+#	assert_equal(Executable, n)
+	file_pattern=n
+	assert(!file_pattern.pattern.keys.empty?, "file_pattern=#{file_pattern.inspect}")
+	n.assert_pre_conditions
+	assert_equal(:file_pattern, FilePattern.new_from_path(__FILE__).unit_base_name)
+end # new_from_path
 def test_initialize
 	n=FilePattern.new(Patterns[0])
 	n.assert_pre_conditions
 	file_pattern=n
 	FilePattern.assert_post_conditions
+	FilePattern.assert_pre_conditions
+	assert_equal(:file_pattern, Library.unit_base_name)
+	assert_equal(:file_pattern, Executable.unit_base_name)
+	Executable.assert_post_conditions
+	Library.assert_post_conditions
+	Executable.assert_pre_conditions
+	Library.assert_pre_conditions
 end #initialize
 include FilePattern::Assertions
 extend FilePattern::Assertions::ClassMethods
@@ -205,6 +240,6 @@ def test_assert_pattern_array
 	FilePattern.assert_pattern_array(FilePattern::Patterns)
 end #assert_pattern_array
 def test_Examples
-#	assert_data_file(Data_source_example)
+	assert_data_file(Data_source_example)
 end #Examples
 end #FilePattern

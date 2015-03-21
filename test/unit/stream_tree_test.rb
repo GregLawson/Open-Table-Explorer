@@ -160,7 +160,7 @@ def test_parent_at
 	assert_equal(Node::Examples::Nested_array_root.parent_at([nil, 0]), Nested_array)
 end # parent_at
 def test_at
-#	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
+	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
 	explain_assert_respond_to(Node::Examples::Nested_array_root, :at, Node::Examples::Nested_array_root.inspect)
 	assert_equal(GraphPath.new(*Root_path), Root_path)
 	path = GraphPath.new(Root_path)
