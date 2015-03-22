@@ -14,7 +14,7 @@ include DefaultTests
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
 def test_all
-	pattern=FilePattern.find_by_name(:test)
+	pattern = FilePattern.find_by_name(:test)
 	glob = FilePattern.new(pattern).pathname_glob
 	tests=Dir[glob]
 	x=tests[0]
@@ -101,7 +101,7 @@ end # diff_command?
 def test_reflog
 end # reflog
 def last_change?
-	assert_equal('', WorkFlow.last_cchange?())
+	assert_equal('', WorkFlow.last_change?())
 end # last_change?
 def test_working_different_from?
 	current_branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
@@ -212,12 +212,14 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable = data_source_directory?('repository')+'/'+value.to_s+'.rb'
-		error_score=TestWorkFlow.repository.error_score?(executable)
+		executable=data_source_directory?('Repository')+'/'+value.to_s+'.rb'
+		error_score = TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
+		error_score=TestWorkFlow.repository.error_score?(executable)
+#		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		error_classifications<<error_classification
-		branch_compression=Deserving_commit_to_branch[error_classification]
+		branch_compression = Deserving_commit_to_branch[error_classification]
 		branch_compressions<<branch_compression
 		branch_enhancement=Branch_enhancement[branch_compression]
 		branch_enhancements<<branch_enhancement
