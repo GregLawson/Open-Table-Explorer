@@ -1,10 +1,16 @@
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:18:in `<module:Constants>': uninitialized constant Repository::Constants::Unit (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:17:in `<class:Repository>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:16:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:9:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `<top (required)>'
-	from test/unit/branch_test.rb:11:in `require_relative'
-	from test/unit/branch_test.rb:11:in `<main>'
+Run options: 
+
+# Running tests:
+
+......F........
+
+Finished tests in 0.089040s, 168.4641 tests/s, 471.6995 assertions/s.
+
+  1) Failure:
+test_branches?(BranchTest) [test/unit/branch_test.rb:36]:
+#<Capture:0x000000016c0178 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @method_name=:limit, @length_hash_captures=1, @raw_captures=["* master"], @captures=["* master"]>.
+<[{:branch=>"master"}, {:branch=>"passed"}]> expected but was
+<{}>.
+
+15 tests, 42 assertions, 1 failures, 0 errors, 0 skips

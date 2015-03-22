@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../unit/test_environment'
 require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/branch_assertions.rb'
 #require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/branch.rb'
 class BranchTest < TestCase
@@ -30,8 +31,9 @@ def test_branches?
 	branch_output = Empty_Repo.git_command('branch --list').assert_post_conditions.output
 	Patterns.each do |p|
 		assert_match(p, branch_output)
-		branches=branch_output.parse(p)
-		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches, p.inspect)
+		branches = branch_output.capture?(p)
+		puts branches.inspect if branches.success?
+		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output?, branches.inspect)
 	end # each
 	
 	assert_includes(Empty_Repo.branches?.map{|b| b.branch}, Empty_Repo.current_branch_name?)
