@@ -7,7 +7,7 @@
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
-assert_global_name(:Repository)
+#assert_global_name(:Repository)
 require_relative '../../app/models/parse.rb'
 class Branch
 #include Repository::Constants
