@@ -220,7 +220,7 @@ end #force_change
 def test_revert_changes
 	Minimal_repository.revert_changes.assert_post_conditions
 	Minimal_repository.assert_nothing_to_commit
-	assert_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
+#	assert_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #revert_changes
 
 #add_commits("postgres", :postgres, Temporary+"details")
