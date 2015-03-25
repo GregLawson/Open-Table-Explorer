@@ -8,14 +8,14 @@
 #require_relative '../../app/models/generic_table.rb'
 require_relative '../../app/models/no_db.rb'
 require_relative '../../test/assertions/default_assertions.rb'
-class Chemistry < ActiveRecord::Base
+class Chemistry #< ActiveRecord::Base
 def import
 	update(BatteryType.chemistries)
 end #import
 end #Chemistry
-class FormFactor < ActiveRecord::Base
+class FormFactor #< ActiveRecord::Base
 end #FormFactor
-class Brand < ActiveRecord::Base
+class Brand #< ActiveRecord::Base
 end #Brand
 class BatteryType
 include NoDB
@@ -55,12 +55,24 @@ def self.logical_primary_key
 end #logical_primary_key
 def self.column_remap
 end #column_remap
-module Assertions
-end #Assertions
-module Examples
-end #Examples
-include Examples
+require_relative '../../test/assertions.rb';module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
 include Assertions
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
+module Examples
+#include Constants
+end #Examples
 end #BatteryType

@@ -29,13 +29,13 @@ def initialize(model_class_name=FilePattern.path2model_name?,
 	else
 		@project_root_dir= project_root_dir  #not nil
 	end #
-	@model_basename = @model_class_name.to_s.underscore.to_sym
+	@model_basename=@model_class_name.to_s.underscore.to_sym
 	raise "@model_basename" if @model_basename.nil?
 	@edit_files, not_files=pathnames?.partition do |p|
 		File.file?(p)
 	end #partition
 	@directories, @missing_files=not_files.partition do |p|
-		File.exists?(p)
+		File.exist?(p)
 	end #partition
 end #initialize
 # Equality of defining content

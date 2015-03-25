@@ -1,0 +1,6 @@
+.more-photos-box ul{margin:0;}
+.more-photos-box li{list-style: none; padding-left: 2px;}
+#photo-gallery-thumbs-photos li {width: 104px;height: 70px;overflow: hidden;float: left;list-style: none;margin:3px 3px 0 0;padding:0;}
+#photo-gallery-thumbs-photos img {min-height: 70px;}
+#photo-gallery-thumbs-photos {margin: 0;padding:0;}
+#show-photo-gallery {width: 100%;text-align: center;background-color: #000;}

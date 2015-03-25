@@ -5,11 +5,11 @@
 # Copyright: See COPYING pathname that comes with this distribution
 #
 ###########################################################################
-require 'test/test_helper'
+require_relative 'test_environment.rb'
 # executed in alphabetical order. Longer names sort later.
 # place in order from low to high level and easy pass to harder, so that first fail is likely the cause.
 # move passing tests toward end
-class BatteryTest < ActiveSupport::TestCase
+class BatteryTest < TestCase
 @@test_name=self.name
 @@model_name=@@test_name.sub(/Test$/, '').sub(/Controller$/, '')
 @@table_name=@@model_name.tableize

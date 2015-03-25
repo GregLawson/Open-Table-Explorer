@@ -32,11 +32,12 @@ include Constants
 def git_command(git_command, repository_dir)
 	ShellCommands.new('git '+ShellCommands.assemble_command_string(git_command), :chdir=>repository_dir)
 end #git_command
-def create_empty(path)
+def create_empty(path, interactive = :interactive)
 	Dir.mkdir(path)
+	@interactive = interactive
 	if File.exists?(path) then
 		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
-		new_repository=Repository.new(path)
+		new_repository = Repository.new(path, @interactive)
 	else
 		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
 	end #if
@@ -46,26 +47,28 @@ def delete_existing(path)
 # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
 	FileUtils.remove_entry_secure(path) #, force = false)
 end #delete_existing
-def replace_or_create(path)
+def replace_or_create(path, interactive)
 	if File.exists?(path) then
 		delete_existing(path)
 	end #if
-	create_empty(path)
+	create_empty(path, interactive)
 end #replace_or_create
-def create_if_missing(path)
+def create_if_missing(path, interactive = :interactive)
 	if File.exists?(path) then
-		Repository.new(path)
+		Repository.new(path, interactive)
 	else
-		create_empty(path)
+		create_empty(path, interactive)
 	end #if
 end #create_if_missing
 def timestamped_repository_name?
 	Repository_Unit.data_sources_directory? + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 end # timestamped_repository_name?
-def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"))
-	replace_or_create(path)
+def create_test_repository(path=timestamped_repository_name?, 
+	interactive)
+	replace_or_create(path, interactive)
+	@interactive = interactive
 	if File.exists?(path) then
-		new_repository=Repository.new(path)
+		new_repository=Repository.new(path, @interactive)
 		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 		new_repository.git_command('add README')
 		new_repository.git_command('commit -m "create_empty initial commit of README"')
@@ -77,19 +80,19 @@ def create_test_repository(path=data_sources_directory?+Time.now.strftime("%Y-%m
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch
-def initialize(path)
-	if path[-1,1]!='/' then
-		path=path+'/'
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files, :interactive
+def initialize(path, interactive = :interactive)
+	if path.to_s[-1,1]!='/' then
+		path=path.to_s+'/'
 	end #if
 	@url=path
 	@path=path.to_s
 	puts '@path='+@path if $VERBOSE
-#	@interactive = interactive
+	@interactive = interactive
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
-This_code_repository=Repository.new(Root_directory)
+This_code_repository = Repository.new(Root_directory, :interactive)
 end #Constants
 def shell_command(command, working_directory=@path)
 	ShellCommands.new(command, :chdir=>working_directory)
@@ -226,6 +229,7 @@ def safely_visit_branch(target_branch, &block)
 		git_command('stash save --include-untracked')
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
+			confirm_commit
 		end #each
 		changes_branch=:stash
 	end #if
@@ -244,10 +248,11 @@ def safely_visit_branch(target_branch, &block)
 			puts git_command('status').output
 			puts git_command('stash show').output
 		else
-			apply_run.assert_post_conditions
+			apply_run.assert_post_conditions('unexpected stash apply fail')
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
+			confirm_commit
 		end #each
 	end #if
 	ret

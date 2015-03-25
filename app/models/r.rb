@@ -35,9 +35,9 @@ end #Constants
 include Constants
 require_relative '../../test/assertions/default_assertions.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
-include Test::Unit::Assertions
+
 extend Test::Unit::Assertions
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 def assert_invariant
 	assert_equal(3, eval('1+2'))
 

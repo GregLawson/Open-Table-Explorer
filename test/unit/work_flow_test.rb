@@ -89,19 +89,21 @@ def test_diff_command?
 	filename=Most_stable_file
 	branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
 	assert_not_nil(branch_index)
-	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat #{WorkFlow.branch_symbol?(branch_index).to_s} -- "+filename)
+	branch_string = WorkFlow.branch_symbol?(branch_index).to_s
+	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
+	diff_run = TestWorkFlow.repository.git_command(git_command)
 	diff_run.assert_post_conditions
 	assert_instance_of(ShellCommands, diff_run)
 	assert_operator(diff_run.output.size, :==, 0)
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', diff_run.output, message)
 	message="diff_run=#{diff_run.inspect}"
-#	assert_equal('', TestWorkFlow.diff_command?(Most_stable_file, branch_index).output)
+	assert_equal('', TestWorkFlow.diff_command?(Most_stable_file, branch_index).output)
 end # diff_command?
 def test_reflog
 end # reflog
 def last_change?
-	assert_equal('', WorkFlow.last_cchange?())
+	assert_equal('', WorkFlow.last_change?())
 end # last_change?
 def test_working_different_from?
 	current_branch_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
@@ -113,20 +115,20 @@ def test_working_different_from?
 	assert(!TestWorkFlow.working_different_from?(Most_stable_file, current_branch_index + 4))
 	filename=File_not_in_oldest_branch
 	diff_run=TestWorkFlow.repository.git_command("diff --summary --shortstat origin/master -- "+filename)
-#	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
-#	assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
-#	assert_nil(TestWorkFlow.working_different_from?(File_not_in_oldest_branch,-2))
+	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
+	assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
+	assert_nil(TestWorkFlow.working_different_from?(File_not_in_oldest_branch,-2))
 end #working_different_from?
 def test_differences?
 	range=-2..0
 	filename=File_not_in_oldest_branch
-#	assert_nil(TestWorkFlow.working_different_from?(File_not_in_oldest_branch,-2))
+	assert_nil(TestWorkFlow.working_different_from?(File_not_in_oldest_branch,-2))
 	differences=range.map do |branch_index|
 		TestWorkFlow.working_different_from?(filename, branch_index)
 	end #map
-#	assert_nil(differences[0])
-#	assert_nil(TestWorkFlow.differences?(File_not_in_oldest_branch, range)[0], message)
-#	assert_equal([false, false, false], TestWorkFlow.differences?(Most_stable_file, range), message)
+	assert_nil(differences[0])
+	assert_nil(TestWorkFlow.differences?(File_not_in_oldest_branch, range)[0], message)
+	assert_equal([false, false, false], TestWorkFlow.differences?(Most_stable_file, range), message)
 end #differences?
 def test_scan_verions?
 	filename=File_not_in_oldest_branch
@@ -162,8 +164,8 @@ def test_scan_verions?
 	message+="\nscan_verions="+scan_verions.inspect
 	assert_equal(existing_indices[0], scan_verions, message)
 	filename=Most_stable_file
-#	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last), message)
-#	assert_equal(Last_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..Last_slot_index, :first), message)
+	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last), message)
+	assert_equal(Last_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..Last_slot_index, :first), message)
 end #scan_verions?
 def test_bracketing_versions?
 	filename=Most_stable_file
@@ -173,9 +175,9 @@ def test_bracketing_versions?
 	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..current_index, :last))
 	assert_equal(First_slot_index, left_index)
 	assert(!TestWorkFlow.working_different_from?(filename, 1))
-#	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
-#	assert_equal(Last_slot_index, right_index)
-#	assert_equal([First_slot_index, Last_slot_index], TestWorkFlow.bracketing_versions?(filename, 0))
+	assert_equal(false, TestWorkFlow.working_different_from?(filename, 1))
+	assert_equal(Last_slot_index, right_index)
+	assert_equal([First_slot_index, Last_slot_index], TestWorkFlow.bracketing_versions?(filename, 0))
 end #bracketing_versions?
 def test_goldilocks
 	assert_not_nil(WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym))
@@ -204,20 +206,22 @@ def test_test_files
 # 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestWorkFlow.test_files([TestWorkFlow.edit_files]))
 end #test_files
 def test_minimal_comparison
-#	assert_equal(' -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2', TestWorkFlow.minimal_comparison?)
-#	assert_equal(' -t app/models/regexp_parse.rb app/models/minimal4.rb -t test/unit/regexp_parse_test.rb test/unit/minimal4_test.rb -t script/regexp_parse.rb script/minimal4.rb -t test/integration/regexp_parse_test.rb test/integration/minimal4_test.rb -t test/long_test/regexp_parse_test.rb test/long_test/minimal4_test.rb -t test/assertions/regexp_parse_assertions.rb test/assertions/minimal4_assertions.rb -t test/unit/regexp_parse_assertions_test.rb test/unit/minimal4_assertions_test.rb -t log/library/regexp_parse.log log/library/minimal4.log -t log/assertions/regexp_parse.log log/assertions/minimal4.log -t log/integration/regexp_parse.log log/integration/minimal4.log -t log/long/regexp_parse.log log/long/minimal4.log -t test/data_sources/regexp_parse test/data_sources/minimal4', WorkFlow.new('test/unit/regexp_parse_test.rb').minimal_comparison?)
+	assert_equal(' -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2', TestWorkFlow.minimal_comparison?)
+	assert_equal(' -t app/models/regexp_parse.rb app/models/minimal4.rb -t test/unit/regexp_parse_test.rb test/unit/minimal4_test.rb -t script/regexp_parse.rb script/minimal4.rb -t test/integration/regexp_parse_test.rb test/integration/minimal4_test.rb -t test/long_test/regexp_parse_test.rb test/long_test/minimal4_test.rb -t test/assertions/regexp_parse_assertions.rb test/assertions/minimal4_assertions.rb -t test/unit/regexp_parse_assertions_test.rb test/unit/minimal4_assertions_test.rb -t log/library/regexp_parse.log log/library/minimal4.log -t log/assertions/regexp_parse.log log/assertions/minimal4.log -t log/integration/regexp_parse.log log/integration/minimal4.log -t log/long/regexp_parse.log log/long/minimal4.log -t test/data_sources/regexp_parse test/data_sources/minimal4', WorkFlow.new('test/unit/regexp_parse_test.rb').minimal_comparison?)
 end #minimal_comparison
 def test_deserving_branch?
 	error_classifications=[]
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable = Repository::Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
-		error_score=TestWorkFlow.repository.error_score?(executable)
+		executable=data_source_directory?('Repository')+'/'+value.to_s+'.rb'
+		error_score = TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
+		error_score=TestWorkFlow.repository.error_score?(executable)
+#		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		error_classifications<<error_classification
-		branch_compression=Deserving_commit_to_branch[error_classification]
+		branch_compression = Deserving_commit_to_branch[error_classification]
 		branch_compressions<<branch_compression
 		branch_enhancement=Branch_enhancement[branch_compression]
 		branch_enhancements<<branch_enhancement
@@ -231,7 +235,7 @@ end #deserving_branch
 def test_merge
 	TestWorkFlow.repository.testing_superset_of_passed.assert_post_conditions
 	TestWorkFlow.repository.edited_superset_of_testing.assert_post_conditions
-#	TestWorkFlow.merge(:edited, :testing) # not too long or too dangerous
+	TestWorkFlow.merge(:edited, :testing) # not too long or too dangerous
 end #merge
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions

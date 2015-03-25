@@ -6,21 +6,111 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+assert_global_name(:AssertionFailedError)
 require_relative '../../app/models/regexp.rb'
 class RegexpTest < TestCase
-#puts Regexp.methods(false)
-include Test::Unit::Assertions
+include DefaultTests
+extend DefaultTests
 include Regexp::Examples
+def test_Constants
+end # Constants
+def test_square_brackets
+	assert_equal(/a/, Regexp[/a/])
+	assert_equal(/a/, Regexp['a'])
+	assert_equal(/ab/, ['a', /b/].reduce(//, :*))
+	assert_equal(/ab/, Regexp['a', /b/])
+	assert_equal(/ab/, Regexp[['a', /b/]])
+	assert_equal(/ab/, Regexp['a', [/b/]])
+end # []
+def test_to_regexp_escaped_string
+	assert_equal('ab', Regexp.to_regexp_escaped_string(/ab/))
+	assert_equal('ab', Regexp.to_regexp_escaped_string('ab'))
+	assert_equal('{5}', Regexp.to_regexp_escaped_string(5))
+	assert_equal('', Regexp.to_regexp_escaped_string(1..1))
+	assert_equal('{5}', Regexp.to_regexp_escaped_string(5..5))
+	assert_equal('*', Regexp.to_regexp_escaped_string(Any))
+	assert_equal('+', Regexp.to_regexp_escaped_string(Many))
+	assert_equal('{5,}', Regexp.to_regexp_escaped_string(5..Float::INFINITY))
+	assert_equal('?', Regexp.to_regexp_escaped_string(Optional))
+	assert_equal('{1,5}', Regexp.to_regexp_escaped_string(1..5))
+	assert_equal('{,5}', Regexp.to_regexp_escaped_string(0..5))
+	assert_equal('{2,5}', Regexp.to_regexp_escaped_string(2..5))
+end # to_regexp_escaped_string
 def test_promote
+	assert_equal(/ab/, Regexp.promote(/ab/))
+	assert_equal(/ab/, Regexp.promote('ab'))
+	assert_raises(RegexpError) {Regexp.promote(5)}
+	assert_raises(RegexpError) {Regexp.promote(2..5)}
 end #promote
 def test_regexp_rescued
+	assert_equal(/]/, Regexp.regexp_rescued(']'))
+	assert_raises(RuntimeError) {assert_equal(/]/, Regexp.regexp_rescued(/]/))} # String only
+	assert_equal(nil, Regexp.regexp_rescued('['))
+	assert_equal(/}/, Regexp.regexp_rescued('}'))
+	assert_equal(/{/, Regexp.regexp_rescued('{'))
+	assert_equal(nil, Regexp.regexp_rescued(')'))
+	assert_equal(nil, Regexp.regexp_rescued('('))
 end #regexp_rescued
 def test_regexp_error
+	assert_equal(nil, Regexp.regexp_error(']'))
+
+	assert_instance_of(RegexpError, Regexp_exception)
+	assert_equal('premature end of char-class: /[/', Regexp.regexp_error('[').message)
+#	assert_instance_of(Thread::Backtrace::Location, Regexp.regexp_error('[').backtrace_locations[0])
+	assert_instance_of(String, Regexp.regexp_error('[').backtrace[0])
+	assert_equal(nil, Regexp.regexp_error('}'))
+	assert_equal(nil, Regexp.regexp_error('{'))
+	assert_instance_of(RegexpError, Regexp.regexp_error(')'))
+	assert_instance_of(RegexpError, Regexp.regexp_error('('))
+	assert_equal(nil, Regexp.regexp_error(']'))
+	assert_raises(RuntimeError) {Regexp.regexp_error(/]/)} # String only
+	assert_nothing_raised(RuntimeError) {Regexp.regexp_error(']')} # String only
+	assert_raises(AssertionFailedError) {Regexp.regexp_error(/]/)} # String only
 end #regexp_error
 def test_terminator_regexp
 end #terminator_regexp
 def test_delimiter_regexp
 end #delimiter_regexp
+def test_canonical_repetition_tree
+	assert_equal(["{", 0, ',', "}"], Regexp.canonical_repetition_tree(Any))
+	assert_equal(["{", 2, "}"], Regexp.canonical_repetition_tree(2,2))
+	assert_equal(["{", 1, ",", 2, "}"], Regexp.canonical_repetition_tree(1,2))
+end #canonical_repetition_tree
+def test_concise_repetition_node
+	assert_equal("*", Regexp.concise_repetition_node(0,  Float::INFINITY))
+	assert_equal("+", Regexp.concise_repetition_node(1, Float::INFINITY))
+	assert_equal("?", Regexp.concise_repetition_node(0, 1))
+	assert_equal('', Regexp.concise_repetition_node(1, 1))
+	assert_equal("{1,2}", Regexp.concise_repetition_node(1,2))
+	assert_equal("{1,2}", Regexp.concise_repetition_node(1,2))
+	assert_equal("{2}", Regexp.concise_repetition_node(2, 2))
+end #concise_repetition_node
+def test_coerce_escaped_string
+  assert_equal('{3}', /a/.coerce_escaped_string(3)[1])
+end # coerce_escaped_string
+def test_propagate_options
+	sElf = /a/
+	other = 3
+	assert_equal([0, Encoding::US_ASCII], sElf.propagate_options(/a/))
+    assert_equal([0, Encoding::UTF_8], sElf.propagate_options(/pat/u)) # UTF-8
+    assert_equal([0, Encoding::EUC_JP], sElf.propagate_options(/pat/e)) # EUC-JP
+    assert_equal([0, Encoding::Windows_31J], sElf.propagate_options(/pat/s)) # Windows-31J
+	assert(defined? Regexp)
+#	assert(defined? Regexp::CASE_FOLD)
+	assert_equal([0, Encoding::US_ASCII], sElf.propagate_options(/a/x))
+#ruby-bug    assert_equal(Encoding::ASCII_8BIT, /pat/n.encoding) # ASCII-8BIT
+#ruby-bug    assert_equal([0, Encoding::BINARY], sElf.propagate_options(/pat/n)) # ASCII-8BIT
+#ruby-bug    assert_equal([0, Encoding::ASCII_8BIT], sElf.propagate_options(/pat/n)) # ASCII-8BIT
+#	Tests inspired by examples in http://www.ruby-doc.org/core-2.1.1/Regexp.html#method-i-casefold-3F
+	assert(!/a/.casefold?)           #=> false
+	assert(/a/i.casefold?)          #=> true
+	assert(!/(?i:a)/.casefold?)      #=> false
+#	Tests inspired by examples in http://www.ruby-doc.org/core-2.1.1/Regexp.html#method-i-eql-3F
+	assert(/abc/  != /abc/x)   #=> false
+	assert(/abc/  != /abc/i)   #=> false
+	assert(/abc/  != /abc/u)   #=> false
+	assert(/abc/u != /abc/n)   #=> false
+end # propagate_options
 def test_unescaped_string
 	assert_equal(/#{Escape_string}/, Regexp.new(Escape_string))
 	assert_equal(Escape_string, Regexp.new(Escape_string).source)
@@ -36,7 +126,7 @@ end #unescape
 def test_propagate_options
 	assert(defined? Regexp)
 #	assert(defined? Regexp::CASE_FOLD)
-	assert_equal([0, Encoding.find('US-ASCII')], /a/x.propagate_options)
+#	assert_equal([0, Encoding.find('US-ASCII')], /a/x.propagate_options)
 end #propagate_options
 def test_sequence
   assert_equal('(?-mix:a)', /a/.to_s)
@@ -47,12 +137,27 @@ def test_sequence
   assert_equal(/a/, Regexp.new(/a/.source))
   assert_equal('a', Regexp.promote(/a/).source)
   assert_equal('a', Regexp.promote(/a/).source)
-  assert_equal(/a{3}/, /a/*"{3}")
+  assert_equal('a', /a/.coerce_escaped_string(3)[0])
+  sELF = /a/
+  other = 3
+	coerced_arguments = sELF.coerce_escaped_string(other)
+  assert_equal('{3}', sELF.coerce_escaped_string(3)[1])
+	options = sELF.propagate_options(other)
+  assert_equal(/a{3}/, Regexp.new('a' + '{3}'))
+		escaped_string = coerced_arguments[0] + coerced_arguments[1]
+		   Regexp.to_regexp_escaped_string(coerced_arguments[1])
+  assert_equal('{3}', coerced_arguments[1])
+  assert_equal('a{3}', escaped_string)
+		encoded_string = escaped_string.force_encoding(options[1])
+  assert_equal('a{3}', encoded_string)
+		Regexp.new(encoded_string, options[0])
+  assert_equal(/a{3}/, /a/ * 3)
+  assert_equal(/a{1,3}/, /a/ * (1..3))
+  assert_equal(/a\n/, /a/ * "\n")
+  assert_match(/a/ * "\n", "a\n")
 end #sequence
 def test_alterative
-	assert_equal(/a/, Regexp.new(/a/.source))
-	assert_equal(/a^/, Regexp.new(/a^/.source))
-	assert_equal(/a\n/, Regexp.new(/a\n/.source))
+  assert_equal(/a|b/, /a/ | /b/)
 end #alterative
 def test_capture
 	regexp=/\d/
@@ -93,4 +198,22 @@ def test_group
 	message="matchData.inspect=#{matchData.inspect}"
 	assert_equal('2', matchData[0], message)
 end #group
+def test_assert_pre_conditions
+
+	assert_instance_of(RegexpError, Regexp_exception)
+	assert_instance_of(String, Regexp_exception.backtrace[0])
+	assert_match(/regexp/, Regexp_exception.backtrace[0])
+#	assert_includes([:Thread::Backtrace::Location], Regexp_exception.backtrace_locations[0].class.name)
+#	assert_equal('initialize', Regexp_exception.backtrace_locations[0].base_label)
+#	assert_equal('initialize', Regexp_exception.backtrace_locations[0].label)
+#	assert_instance_of(Fixnum, Regexp_exception.backtrace_locations[0].lineno)
+#	assert_match(/[a-z.]+/, Regexp_exception.backtrace_locations[0].path)
+#	assert_match(/[a-z.\/]+/, Regexp_exception.backtrace_locations[0].absolute_path)
+	assert_equal('premature end of char-class: /[/', Regexp_exception.message)
+	Regexp.new('}').assert_pre_conditions
+	Regexp.new('{').assert_pre_conditions
+	Regexp.regexp_error(')').assert_pre_conditions
+	Regexp.regexp_error('(').assert_pre_conditions
+	Regexp.new(']').assert_pre_conditions
+end # assert_pre_conditions
 end #Regexp

@@ -13,7 +13,7 @@ extend ClassMethods
 require_relative '../../test/assertions/default_assertions.rb'
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 module ClassMethods
 def assert_post_conditions
 end #assert_post_conditions

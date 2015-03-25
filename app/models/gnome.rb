@@ -8,7 +8,7 @@
 require_relative '../../app/models/shell_command.rb'
 class Gnome
 module Constants
-Data_Sources_Dir=TE.data_sources_directory?+'gnome_hangs/'
+Data_Sources_Dir=TE.data_sources_directory?+'/'+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+'/'
 end #Constants
 include Constants
 module ClassMethods
@@ -24,10 +24,10 @@ def ps
 	ps=ShellCommands.new('ps -ef')
 	IO.binwrite(Data_Sources_Dir+'test.ps', ps.output)
 end #lsof
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_post_conditions
 end #assert_post_conditions
 end #ClassMethods

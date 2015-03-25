@@ -80,7 +80,7 @@ def adc_read(control_byte=Default_control_byte, burst_length=1, analog_output_en
 end #adc_read
 #require_relative '../../test/assertions/default_assertions.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
-module Assertions
+require_relative '../../test/assertions.rb';module Assertions
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
 include Constants

@@ -8,7 +8,7 @@
 require_relative '../../app/models/no_db.rb'
 require_relative '../../test/assertions/regexp_parse_assertions.rb'
 require_relative '../../app/models/regexp_match.rb'
-module GenericFiles
+module GenericFile
 include NoDB
 extend NoDB::ClassMethods
 module ClassMethods
@@ -39,10 +39,10 @@ module Constants
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
@@ -68,9 +68,9 @@ end #Examples
 end #GenericFiles
 
 module GenericJsons
-include GenericFiles
+include GenericFile
 module ClassMethods
-include GenericFiles::ClassMethods
+include GenericFile::ClassMethods
 #return Array of Hash
 def coarse_filter
 	raw_acquisitions.map do |r|
@@ -87,10 +87,10 @@ end #ClassMethods
 extend ClassMethods
 module Constants
 end #Constants
-module Assertions
-include Test::Unit::Assertions
+require_relative '../../test/assertions.rb';module Assertions
+
 module ClassMethods
-include Test::Unit::Assertions
+
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions

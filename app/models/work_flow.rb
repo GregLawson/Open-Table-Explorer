@@ -166,15 +166,26 @@ def bracketing_versions?(filename, current_index)
 end # bracketing_versions?
 def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym)
 	if File.exists?(filename) then
-		current_index=WorkFlow.branch_index?(middle_branch)
-		left_index,right_index=bracketing_versions?(filename, current_index)
-		relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-
-		" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
+		current_index = WorkFlow.branch_index?(middle_branch)
+		left_index, right_index = bracketing_versions?(filename, current_index)
+		relative_filename = Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		ret = ' -t '
+		if left_index.nil? then
+			ret += " #{relative_filename} "
+		else
+			ret += "#{WorkFlow.revison_tag?(left_index)} #{relative_filename} "
+		end # if
+		ret += relative_filename
+		if right_index.nil? then
+			ret += " #{relative_filename} "
+		else
+			ret += " #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
+		end # if
 	else
-		''
-	end #if
-end #goldilocks
+		ret = ''
+	end # if
+	ret += ' -r ' + last_change?(filename) + ' ' + filename
+end # goldilocks
 def test_files(edit_files = @related_files.edit_files)
 	pairs = @related_files.functional_parallelism(edit_files).map do |p|
 
@@ -186,12 +197,23 @@ def test_files(edit_files = @related_files.edit_files)
 	pairs.join(' ')
 end # test_files
 def minimal_comparison?
-	FilePattern::All.map do |p|
-		min_path=Pathname.new(p.pathname_glob('minimal'+@related_files.default_test_class_id?.to_s)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		path=Pathname.new(p.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
-		if File.exists?(min_path) && File.exists?(path) then
-			' -t '+path+' '+min_path
+	if @related_files.edit_files == [] then
+		unit_pattern = FilePattern.new_from_path(_FILE_)
+	else
+		unit_pattern = FilePattern.new_from_path(@related_files.edit_files[0])
+	end # if
+	unit_name = unit_pattern.unit_base_name
+	FilePattern::Constants::Patterns.map do |p|
+		pattern = FilePattern.new(p)
+		pwd = Pathname.new(Dir.pwd)
+		default_test_class_id = @related_files.default_test_class_id?.to_s
+		min_path = Pathname.new(pattern.path?('minimal' + default_test_class_id))
+		unit_path = Pathname.new(pattern.path?(unit_name))
+#		path = Pathname.new(start_file_pattern.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+#		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
+		if File.exists?(min_path)  then
+			' -t ' + unit_path.relative_path_from(pwd).to_s + ' ' + 
+				min_path.relative_path_from(pwd).to_s
 		end # if
 	end.compact.join # map
 end # minimal_comparison
@@ -234,7 +256,7 @@ def merge_conflict_recovery
 		end # each
 		@repository.confirm_commit
 	else
-		puts 'No merge conflict'
+		puts 'No merge conflict' if !$VERBOSE.nil?
 	end # if
 end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
@@ -323,9 +345,11 @@ def loop(executable = @related_files.model_test_pathname?)
 		begin
 			deserving_branch = deserving_branch?(executable)
 			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
-			if deserving_branch != :passed then #master corrupted
-				edit
-				done=false
+			if !File.exists?(executable) then
+				done = true
+			elsif deserving_branch != :passed then # master corrupted
+				edit('master branch not passing')
+				done = false
 			else
 				done = true
 			end # if
@@ -340,12 +364,12 @@ def loop(executable = @related_files.model_test_pathname?)
 		if @repository.something_to_commit? then
 			done = false
 		else
-			if deserving_branch == @repository.current_branch_name? then
+			if @expected_next_commit_branch == @repository.current_branch_name? then
 				done = true # branch already checked
 			else
 				done = false # check other branch
-				@repository.confirm_branch_switch(deserving_branch)
-				puts "Switching to deserving branch"+deserving_branch.to_s
+				@repository.confirm_branch_switch(@expected_next_commit_branch)
+				puts 'Switching to deserving branch' + @expected_next_commit_branch.to_s
 			end # if
 		end # if
 	end until done
@@ -353,7 +377,7 @@ end # test
 def unit_test(executable = @related_files.model_test_pathname?)
 	begin
 		deserving_branch = deserving_branch?(executable)
-		if @repository.recent_test.success? then
+		if !@repository.recent_test.nil? && @repository.recent_test.success? then
 			break
 		end # if
 		@repository.recent_test.puts

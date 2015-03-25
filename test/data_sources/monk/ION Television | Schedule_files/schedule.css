@@ -1,0 +1,465 @@
+/* from live stylesheet */
+
+/*
+body {
+    font-family: 'FuturaStd-Book','Futura Std Book',Futura,'Century Gothic',AppleGothic,Helvetica,Arial,sans-serif !important;
+    font-size: 12px;
+    margin: 0;
+    position: relative;
+	color:black; 
+}
+
+html {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #000000;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;f
+}*/
+/* - */
+
+/* remove here 
+#rand-holder {
+	width: 995px; background-color: white; margin: 0px auto; border: 1px solid darkgrey;
+}
+ */
+
+#sched-top {
+	width: 650px; float: left;	
+}
+
+#sched-feature {
+	width: inherit;	
+}
+
+#sched-feature .img-holder {
+	float: left; margin-left: 30px; margin-top: 30px;	
+}
+
+#sched-feature .desc-holder {
+	float: left; margin-left: 30px; width: 300px; margin-top: 30px;	
+}
+
+#sched-feature .desc-holder .show-title {
+	font-size: 24px; font-weight: bold;	text-transform: uppercase;
+}
+
+#sched-feature .desc-holder .epi-info {
+	font-size: 15px; text-transform: uppercase;
+	line-height: 15px;
+	width:100%;
+	/*border:1px solid red;*/
+	height:15px;
+	display:block;
+}
+
+/*
+#sched-bottom {
+	width: 312px; background-color: #F3722E; float: left; padding-left: 33px; padding-top: 30px; padding-bottom: 30px;	
+}
+
+#sched-bottom .cal-header {
+	color: white; font-weight: bold; text-transform:uppercase; font-size: 12px;	
+}
+*/
+.black-bar2 {
+	background-color: black; height: 60px; width: inherit;	
+}
+
+.black-bar2 #sched_time_notif {
+	padding: 33px 0 0 10px;	color: white; float: left; text-transform: uppercase;
+	display:block;
+	position:relative;
+}
+
+.black-bar2 .sched-day-box {
+	margin: 18px 0 0 0; float: left; border-style: solid; border-width: 1px; border-color: #cccccc; border-bottom: hidden;background-color: #6699cc; width: 71px; height: 41px; line-height: 51px; text-align: center; color: white; font-weight: bold; text-transform: uppercase; font-size: 18px;
+}
+.black-bar2 .sched-day-box:hover,.black-bar2 .sched-day-box.on{
+	background-color: #3582BD;
+	color:#fff;
+	cursor:pointer;
+}
+
+#week_nav .selected{
+	background-color: #569FE1;
+	color:#fff;
+	cursor:pointer;
+}
+
+#week_nav{
+float:right;	
+}
+
+.black-bar2 .on {
+	background-color: #0E61A7;	
+}
+
+.black-bar2 .bord-right-hid {
+	border-right: hidden;	
+}
+
+.black-bar2 h2 {
+ 	font-size: 24px; margin: 0; padding: 27px 0 0 20px; text-transform: uppercase; color: white; float: left;
+}
+
+.sched_cols {
+	height: 28px; width: 100%;
+}
+
+.sched_cols div {
+	line-height: 28px;	
+}
+
+.sched_cols .col1,.programs_header .col1 {
+	float: left; margin-left: 20px; width: 126px; font-weight: bold; text-transform: uppercase;
+}
+
+.sched_cols .col2 ,.programs_header .col2{
+	float: left; width: 270px; text-transform: uppercase;
+}
+
+.sched_cols .col3,.programs_header .col3 {
+	float: left;
+}
+
+.sched_cols:hover{
+	background-color:#F6E3CE!important;
+	cursor:pointer;
+}
+
+.sched_cols.highlight{
+	background-color:#F5CC9E!important;
+	cursor:pointer;
+}
+
+
+.bg_white {
+	background-color: white;
+}
+
+.bg_gray {
+	background-color: #cccccc;
+}
+
+.programs_header {
+	height: 28px; width: 100%;
+	background-color: #0E61A7; color: white; text-transform: uppercase; font-weight: bold; border-top: 1px solid #cccccc;
+}
+.programs_header .col1,.programs_header .col2,.programs_header  .col3{
+padding-top:5px;
+}
+
+
+#navcal .cal_header div {
+	background-color: #cccccc;	
+}
+
+#navcal .cal_blk_header {
+	background-color: black; color: #ffffff; font-size: 13px; text-align: center; text-transform: uppercase; width: 287px; font-weight: bold; line-height: 30px;
+}
+
+/* straight from the other stylesheet */
+#navcal .day {
+	background-color: #FFFFFF;
+	cursor:pointer;
+}
+#navcal .day:hover,#navcal .day.selected  {
+	background-color: #569FE1 !important;
+	color:#fff!important;
+}
+
+#navcal .day.today{
+background-color:#E0F8F7;
+color:#000;
+}
+#navcal .day.on{
+	background:#F6E3CE;
+}
+.episode_details{
+	display:none;
+}
+
+#navcal .day, #navcal .cal_header div{
+ /*    border-left: thin solid #000000;
+	border-top: thin solid #000000;
+    color: #000000;
+    float: left;
+    font-size: 12px;
+    height: 16px;
+    padding: 1px 2px;
+    position: relative;
+    width: 36px;
+*/
+}
+
+
+#navcal .day.disabled{
+background:#E6E6E6!important;
+color:darkgrey!important;
+cursor:default!important;
+}
+
+.sched-day-box.disabled{
+background:#E6E6E6!important;
+color:darkgrey!important;
+cursor:default!important;
+}
+
+#navcal .clearboth {
+    border: medium none;
+    height: 0;
+    left: -9999px;
+    position: absolute;
+    top: 0;
+    width: 0;
+}
+.oneweek {
+    background-color: #FFFFFF;
+    clear: left;
+}
+#navcal .oneweek div {
+    height: 29px;
+}
+.cal_header {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+#navcal .month {
+    bottom: 0;
+    color: #F3722E;
+    display: block;
+   /*  position: absolute; */
+}
+#navcal .day.hover {
+    background-color: #F3722E;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+#program_popup_outer{
+display:none;
+}
+
+#program_popup{
+width:252px;
+height:auto;
+background:#000000;
+display:block;
+padding:10px;
+}
+
+#program_popup .top{
+	/*width:248px;*/
+	float:left;
+	height:160px;
+	background-color: #000000;
+	/*margin:0px 6px 0px 10px;*/
+}
+
+#program_popup .bottom{
+	background-color: #000000;
+}
+
+#program_popup .bottom em.data{
+    display: block;
+    font-size: 14px;
+    font-style: normal;
+    line-height: 20px;
+	color: white;
+}
+
+#program_popup .bottom{
+	width:248px;
+	float:left;
+	/*height:280px;*/
+	margin:10px 0px 0px 0px;
+}
+/*
+#program_popup .bottom h1{
+white-space:nowrap;
+font-size:22px;
+font-weight:900;
+margin-bottom:3px!important;
+line-height:22px;
+text-transform:uppercase;
+}
+*/
+#program_popup .bottom h1 {
+    font-size: 24px;
+    line-height: 24px;
+    margin: 0;
+    padding-left: 0;	
+	display: block;
+    margin: 0 0 7px;
+	color: white;
+}
+
+/*
+#program_popup .bottom h2{
+font-size:15px;
+font-weight:bold;
+line-height:15px;
+text-transform:uppercase;
+}
+*/
+
+#program_popup .bottom h2 {
+font-size: 24px;
+line-height: 24px;
+font-weight: normal;
+margin: 0 0 7px;	
+color: white;
+}
+
+#program_popup .bottom h2 sup{
+height:10px;
+
+}
+
+#program_popup .bottom h2,#program_popup .bottom p{
+margin:0px;	padding:0px;
+}
+
+#program_popup .bottom p{
+margin-top:10px;
+/*text-align:justify;*/
+color: white;
+}
+
+#program_popup .bottom .row{
+   line-height: 1;
+    margin-bottom: 15px;
+    margin-top: -10px;
+    vertical-align: top;	
+}
+
+#program_popup .bottom .row strong{
+    background: url("../../images/separator1.gif") no-repeat scroll 100% 3px transparent;
+    display: inline-block;
+    font-size: 22px;
+    padding: 0 4px 0 0;
+    vertical-align: top;	
+	color: white;
+}
+
+#program_popup .bottom .row span{
+    display: inline-block;
+    font-size: 15px;
+    padding: 1px 0 0 3px;
+    vertical-align: top;	
+	color: white;
+}
+
+#program_popup .bottom .row b {
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: top;
+	font-weight: normal;
+	padding-left: 3px;
+	color: white;
+}
+
+#programs .loader{
+	height:50px;
+	width:100%;
+	background:url(../../images/schedule/schedule_loader.gif) center center no-repeat;
+}
+.empty_list{
+text-align:center;
+height:50px;
+line-height:50px;
+color:darkgrey;
+}
+
+.video_link{
+border:none;outline:none;
+margin:0px;padding:0px;
+}
+
+.video_link img{
+	margin-top:-10px;
+	cursor:pointer;
+}
+
+#program_popup .video_link{
+display:none;//will be displayed if video is found on limelight
+opacity:1!important;
+}
+
+a.video_link{
+opacity:1!important;	
+}
+
+#current_day_holder{
+display:block;
+float: left;
+}
+
+#current_day{
+white-space:nowrap;
+font-size:20px!important;
+}
+
+a.show_link{
+padding-top:0px;
+text-transform:upppercase;
+font-weight:bold;
+text-decoration:none;
+color:black!important;
+background: url("../../images/box_arrow_white.png") no-repeat scroll right center transparent;
+padding-right:8px;
+}
+
+
+
+a.show_link:hover{
+text-decoration:underline;
+cursor:pointer;
+}
+
+.hidden_col{
+display:none!important;	
+}
+
+.play_now_container{
+	clear: left;
+margin-top:1px;	
+margin-left:-5px;
+width: inheirit;
+}
+.sch-tunein {
+float:left;
+}
+
+.episode_title{
+float:left;
+width:200px;
+height:20px;
+white-space:nowrap;
+overflow:hidden;
+margin-right:10px;
+}
+.program_synopsis{
+float:left;	
+width:360px;
+
+height:20px;
+white-space:nowrap;
+}
+.popup_showlink{
+cursor:pointer;	
+}
+.new_episode{
+background:#f6e3ce!important;
+}
+div.img-holder.custom{
+display: block !important;
+height: 151px !important;
+width: 248px !important;
+background-repeat:no-repeat;
+}
+/* - */
+.col1{
+white-space:nowrap;
+}
