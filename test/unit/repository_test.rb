@@ -112,7 +112,7 @@ def test_current_branch_name?
 end #current_branch_name
 def test_log_path?
 	executable = $PROGRAM_NAME
-	assert_equal('log/unit/1.9/1.9.3p194/quiet/work_flow.log', This_code_repository.log_path?(executable))
+	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', This_code_repository.log_path?(executable))
 	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', This_code_repository.log_path?)
 end # log_path?
 def test_ruby_test_string
