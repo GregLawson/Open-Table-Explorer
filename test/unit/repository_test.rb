@@ -239,4 +239,7 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
+def test_rebase!
+#	Minimal_repository.rebase!
+end #rebase!
 end #Repository
