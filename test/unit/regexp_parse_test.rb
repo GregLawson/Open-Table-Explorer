@@ -156,16 +156,6 @@ def test_Base_inspect
 #	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
 end # inspect
 RegexpParse.assert_pre_conditions #verify class
-def test_Constants_RegexpToken
-	assert_instance_of(Hash, To_s)
-	assert_equal(256, To_s.values.size)
-	key_types=To_s.keys.map {|k| k.class}.uniq
-	assert_equal([Symbol], key_types)
-	value_types=To_s.values.map {|k| k.class}.uniq
-	assert_equal([String], value_types)
-	value_sizes=To_s.values.map {|k| k.size}.uniq
-	assert_equal([1], value_sizes)
-end #Constants_RegexpToken
 def test_initialize
 	regexp_string=['.', '*']
 	assert_kind_of(Array, regexp_string)
