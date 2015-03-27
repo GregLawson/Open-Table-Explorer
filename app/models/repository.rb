@@ -161,7 +161,7 @@ end # state?
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def log_path?(executable=@related_files.model_test_pathname?,
+def log_path?(executable,
 		logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
@@ -370,6 +370,21 @@ def git_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
 	output.parse(pattern)
 end # git_parse
-end # Repository
+def rebase!
+	if remotes?.include?(current_branch_name?) then
+		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+	else
+		puts current_branch_name?.to_s+' has no remote branch in origin.'
+	end #if
+end #rebase!
+end #Repository
+assert_include(Module.constants, :ShellCommands)
+assert_include(Module.constants, :FilePattern)
+assert_include(Module.constants, :Unit)
+assert_include(Module.constants, :Capture)
+#assert_include(Module.constants, :Branch)
+assert_include(Module.constants, :Repository)
+assert_include(Repository.constants, :Constants)
+assert_include(Repository.constants, :ClassMethods)
 
 
