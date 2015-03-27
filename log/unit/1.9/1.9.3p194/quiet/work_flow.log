@@ -1,12 +1,899 @@
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:44:in `<module:Examples>': uninitialized constant Repository::Examples::Constants (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:43:in `<class:Repository>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:10:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:17:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:17:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:9:in `<top (required)>'
-	from test/unit/work_flow_test.rb:9:in `require_relative'
-	from test/unit/work_flow_test.rb:9:in `<main>'
+Run options: 
+
+# Running tests:
+
+.....F.........E..$ ruby  script/work_flow.rb --help
+@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:317: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:318: warning: already initialized constant Syntax_failed_capture\n"
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ $?=1
+@errors="sh: 1: 0=1: not found\n"
+@process_status=#<Process::Status: pid 5740 exit 127>
+$ ls happyHappyFailFail.junk
+@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
+@process_status=#<Process::Status: pid 5743 exit 2>
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+Usage: work_flow.rb --<command> files
+    -e, --[no-]edit                  Edit related files and versions in diffuse
+    -d, --[no-]merge-down            Test downgraded related files in git branches
+    -u, --[no-]upgrade               Test upgraded related files in git branches
+    -t, --[no-]test                  Test, commit. 
+    -b, --[no-]best                  Best. Merge down, no conflicts. 
+    -m, --[no-]emacs                 Emacs unit edit. 
+    -x, --[no-]execute               Unit test and edit. 
+    -p, --[no-]passed                Stage file to passed. 
+    -g, --[no-]testing               Stage file to testing. 
+    -i, --[no-]edited                Stage file to edited. 
+    -v, --[no-]deserve               Stage file to edited. 
+    -a, --[no-]all                   All files tested 
+    -n, --[no-]minimal               edit with minimal comparison. 
+    -l, --[no-]loop                  Test, commit, edit, loop.
+    -s, --[no-]split                 split off new class and edit
+    -r, --[no-]related               Related files
+    -c                               merge_conflict_recovery
+        --[no-]merge-conflict-recovery
+F...merge(:edited, :testing, :interactive)
+confirm_commit(:interactive something_to_commit?=false
+.$ ruby  script/work_flow.rb --merge-down
+@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:317: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:318: warning: already initialized constant Syntax_failed_capture\n/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': self=$ diffuse -t -r master app/models/regexp_parse.rb app/models/regexp_parse.rb -r testing app/models/regexp_parse.rb -r stash@{4} /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb  -t -r master test/unit/regexp_parse_test.rb test/unit/regexp_parse_test.rb -r edited test/unit/regexp_parse_test.rb -r stash@{3} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb  -t -r origin/master test/assertions/regexp_parse_assertions.rb test/assertions/regexp_parse_assertions.rb -r stash~10 test/assertions/regexp_parse_assertions.rb -r lost_commits@{0} /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb  -t -r origin/master test/unit/regexp_parse_assertions_test.rb test/unit/regexp_parse_assertions_test.rb -r stash~5 test/unit/regexp_parse_assertions_test.rb -r stash@{30} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb -t app/models/regexp_parse.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_assertions_test.rb (MiniTest::Assertion)\n@errors=\"\\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\\n\\tUsing the fallback 'C' locale.\\n\"\nexpected errors to be empty\\n\n\"\\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\\n\\tUsing the fallback 'C' locale.\\n\" is not empty.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:241:in `assert_empty'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:284:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:288:in `edit'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:251:in `block in merge_conflict_recovery'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:234:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:234:in `merge_conflict_recovery'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:270:in `block in merge'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:264:in `merge'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block (2 levels) in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:258:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:258:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:314:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:313:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:313:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n"
+@process_status=#<Process::Status: pid 5908 exit 1>
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ $?=1
+@errors="sh: 1: 0=1: not found\n"
+@process_status=#<Process::Status: pid 5928 exit 127>
+$ ls happyHappyFailFail.junk
+@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
+@process_status=#<Process::Status: pid 5931 exit 2>
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+work_flow --<command> <file>
+$ git stash save --include-untracked
+Saved working directory and index state WIP on master: f208c15 fixup! regexp_parse
+HEAD is now at f208c15 fixup! regexp_parse
+$ git status --porcelain --untracked-files=no|grep "UU "
+@process_status=#<Process::Status: pid 6010 exit 1>
+$ git checkout passed
+@errors="Switched to branch 'passed'\n"
+Your branch is ahead of 'origin/passed' by 3 commits.
+merge(passed), edited)
+merge(:passed, :edited, :interactive)
+$ git merge --no-commit edited
+@process_status=#<Process::Status: pid 6022 exit 1>
+Auto-merging test/unit/repository_test.rb
+CONFLICT (content): Merge conflict in test/unit/repository_test.rb
+Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+CONFLICT (add/add): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/repository.log
+CONFLICT (add/add): Merge conflict in log/unit/1.9/1.9.3p194/quiet/repository.log
+Auto-merging app/models/repository.rb
+CONFLICT (content): Merge conflict in app/models/repository.rb
+Auto-merging app/models/regexp_parse.rb
+CONFLICT (content): Merge conflict in app/models/regexp_parse.rb
+Auto-merging app/models/branch.rb
+Automatic merge failed; fix conflicts and then commit the result.
+$ git status --porcelain --untracked-files=no|grep "UU "
+UU app/models/regexp_parse.rb
+UU app/models/repository.rb
+UU log/unit/1.9/1.9.3p194/quiet/work_flow.log
+UU test/unit/repository_test.rb
+ruby script/workflow.rb --test app/models/regexp_parse.rb
+$ rm app/models/regexp_parse.rb.BASE.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6030 exit 1>
+$ rm app/models/regexp_parse.rb.BACKUP.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6034 exit 1>
+$ rm app/models/regexp_parse.rb.LOCAL.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6038 exit 1>
+$ rm app/models/regexp_parse.rb.REMOTE.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6042 exit 1>
+$ rm app/models/regexp_parse.rb.orig
+@errors="rm: cannot remove `app/models/regexp_parse.rb.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6046 exit 1>
+ruby script/workflow.rb --test app/models/repository.rb
+$ rm app/models/repository.rb.BASE.*
+@errors="rm: cannot remove `app/models/repository.rb.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6049 exit 1>
+$ rm app/models/repository.rb.BACKUP.*
+@errors="rm: cannot remove `app/models/repository.rb.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6054 exit 1>
+$ rm app/models/repository.rb.LOCAL.*
+@errors="rm: cannot remove `app/models/repository.rb.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6066 exit 1>
+$ rm app/models/repository.rb.REMOTE.*
+@errors="rm: cannot remove `app/models/repository.rb.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6070 exit 1>
+$ rm app/models/repository.rb.orig
+@errors="rm: cannot remove `app/models/repository.rb.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6074 exit 1>
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.BASE.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6077 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.BACKUP.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6081 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.LOCAL.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6085 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.REMOTE.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6089 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.orig
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6093 exit 1>
+ruby script/workflow.rb --test test/unit/repository_test.rb
+$ rm test/unit/repository_test.rb.BASE.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6096 exit 1>
+$ rm test/unit/repository_test.rb.BACKUP.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6100 exit 1>
+$ rm test/unit/repository_test.rb.LOCAL.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6104 exit 1>
+$ rm test/unit/repository_test.rb.REMOTE.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6108 exit 1>
+$ rm test/unit/repository_test.rb.orig
+@errors="rm: cannot remove `test/unit/repository_test.rb.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6112 exit 1>
+$ git merge --abort
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 467 deletions(-)
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 6 insertions(+), 30 deletions(-)
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+stash@{4},refs/stash@{4},5a01908
+stash@{5},refs/stash@{5},d7f8f56
+edited@{2},refs/heads/edited@{2},763229f
+stash@{7},refs/stash@{7},33fba02
+passed@{0},refs/heads/passed@{0},af65e2e
+stash@{8},refs/stash@{8},8cda139
+stash@{18},refs/stash@{18},5f8e1f1
+stash@{26},refs/stash@{26},5b9b319
+stash@{28},refs/stash@{28},81086dc
+stash@{29},refs/stash@{29},a9bf70c
+stash@{30},refs/stash@{30},8f5f145
+stash@{32},refs/stash@{32},9b1de67
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+stash@{61},refs/stash@{61},921c2ee
+stash@{62},refs/stash@{62},f284683
+work_flow@{28},refs/heads/work_flow@{28},0a05271
+work_flow@{29},refs/heads/work_flow@{29},7021610
+work_flow@{30},refs/heads/work_flow@{30},7cd364c
+work_flow@{31},refs/heads/work_flow@{31},488860e
+work_flow@{32},refs/heads/work_flow@{32},a211cef
+work_flow@{33},refs/heads/work_flow@{33},1db4ffc
+work_flow@{34},refs/heads/work_flow@{34},396cc62
+work_flow@{36},refs/heads/work_flow@{36},159f42e
+work_flow@{37},refs/heads/work_flow@{37},bc24949
+work_flow@{40},refs/heads/work_flow@{40},1246e3f
+work_flow@{42},refs/heads/work_flow@{42},be7be62
+unit@{12},refs/heads/unit@{12},143eec7
+stash@{65},refs/stash@{65},9123a67
+master@{34},refs/heads/master@{34},e994dc0
+regexp@{74},refs/heads/regexp@{74},b722b0a
+stash@{68},refs/stash@{68},bdacfe4
+stash@{95},refs/stash@{95},3efb61e
+stash@{98},refs/stash@{98},2df045f
+stash@{103},refs/stash@{103},7192464
+stash@{125},refs/stash@{125},6b8482f
+stash@{134},refs/stash@{134},5ec6d7a
+stash@{136},refs/stash@{136},b6744ec
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 367 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 367 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 367 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 632 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 632 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 145 insertions(+), 3 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 145 insertions(+), 3 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 145 insertions(+), 3 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+stash@{3},refs/stash@{3},56a26ac
+master@{0},refs/heads/master@{0},f208c15
+stash@{4},refs/stash@{4},5a01908
+stash@{5},refs/stash@{5},d7f8f56
+edited@{2},refs/heads/edited@{2},763229f
+stash@{7},refs/stash@{7},33fba02
+stash@{8},refs/stash@{8},8cda139
+stash@{18},refs/stash@{18},5f8e1f1
+stash@{26},refs/stash@{26},5b9b319
+stash@{28},refs/stash@{28},81086dc
+stash@{29},refs/stash@{29},a9bf70c
+stash@{30},refs/stash@{30},8f5f145
+master@{4},refs/heads/master@{4},711d484
+master@{7},refs/heads/master@{7},5ec87b7
+stash@{32},refs/stash@{32},9b1de67
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+stash@{61},refs/stash@{61},921c2ee
+stash@{62},refs/stash@{62},f284683
+work_flow@{28},refs/heads/work_flow@{28},0a05271
+work_flow@{34},refs/heads/work_flow@{34},396cc62
+work_flow@{35},refs/heads/work_flow@{35},020f811
+work_flow@{38},refs/heads/work_flow@{38},e1e9738
+work_flow@{39},refs/heads/work_flow@{39},91cb4a8
+work_flow@{41},refs/heads/work_flow@{41},8fe5b75
+work_flow@{42},refs/heads/work_flow@{42},be7be62
+master@{22},refs/heads/master@{22},57ad5e3
+unit@{12},refs/heads/unit@{12},143eec7
+master@{34},refs/heads/master@{34},e994dc0
+regexp@{74},refs/heads/regexp@{74},b722b0a
+stash@{95},refs/stash@{95},3efb61e
+stash@{98},refs/stash@{98},2df045f
+stash@{103},refs/stash@{103},7192464
+stash@{125},refs/stash@{125},6b8482f
+edited@{31},refs/heads/edited@{31},91df61f
+stash@{134},refs/stash@{134},5ec6d7a
+stash@{136},refs/stash@{136},b6744ec
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+stash@{63},refs/stash@{63},c2c64a7
+master@{25},refs/heads/master@{25},e3d6bba
+unit@{12},refs/heads/unit@{12},143eec7
+stash@{65},refs/stash@{65},9123a67
+master@{34},refs/heads/master@{34},e994dc0
+regexp@{70},refs/heads/regexp@{70},faa9ff1
+master@{37},refs/heads/master@{37},0e7f147
+master@{38},refs/heads/master@{38},7cc6bb9
+master@{39},refs/heads/master@{39},9901a24
+master@{40},refs/heads/master@{40},d443c07
+master@{41},refs/heads/master@{41},4aab3e2
+master@{42},refs/heads/master@{42},a4a860f
+master@{46},refs/heads/master@{46},8ccdbba
+master@{52},refs/heads/master@{52},142f6fc
+master@{54},refs/heads/master@{54},a06458e
+master@{56},refs/heads/master@{56},d7fcd75
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+stash@{30},refs/stash@{30},8f5f145
+master@{4},refs/heads/master@{4},711d484
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+unit@{12},refs/heads/unit@{12},143eec7
+regexp@{74},refs/heads/regexp@{74},b722b0a
+stash@{95},refs/stash@{95},3efb61e
+stash@{98},refs/stash@{98},2df045f
+stash@{103},refs/stash@{103},7192464
+stash@{125},refs/stash@{125},6b8482f
+edited@{31},refs/heads/edited@{31},91df61f
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ diffuse -t -r master app/models/regexp_parse.rb app/models/regexp_parse.rb -r testing app/models/regexp_parse.rb -r stash@{4} /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb  -t -r master test/unit/regexp_parse_test.rb test/unit/regexp_parse_test.rb -r edited test/unit/regexp_parse_test.rb -r stash@{3} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb  -t -r origin/master test/assertions/regexp_parse_assertions.rb test/assertions/regexp_parse_assertions.rb -r stash~10 test/assertions/regexp_parse_assertions.rb -r lost_commits@{0} /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb  -t -r origin/master test/unit/regexp_parse_assertions_test.rb test/unit/regexp_parse_assertions_test.rb -r stash~5 test/unit/regexp_parse_assertions_test.rb -r stash@{30} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb -t app/models/regexp_parse.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_assertions_test.rb
+@errors="\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\n\tUsing the fallback 'C' locale.\n"
+$ diffuse -t -r master app/models/regexp_parse.rb app/models/regexp_parse.rb -r testing app/models/regexp_parse.rb -r stash@{4} /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb  -t -r master test/unit/regexp_parse_test.rb test/unit/regexp_parse_test.rb -r edited test/unit/regexp_parse_test.rb -r stash@{3} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb  -t -r origin/master test/assertions/regexp_parse_assertions.rb test/assertions/regexp_parse_assertions.rb -r stash~10 test/assertions/regexp_parse_assertions.rb -r lost_commits@{0} /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb  -t -r origin/master test/unit/regexp_parse_assertions_test.rb test/unit/regexp_parse_assertions_test.rb -r stash~5 test/unit/regexp_parse_assertions_test.rb -r stash@{30} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb -t app/models/regexp_parse.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_assertions_test.rb
+@errors="\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\n\tUsing the fallback 'C' locale.\n"
+F.F...E..E
+
+Finished tests in 88713.382899s, 0.0004 tests/s, 0.0495 assertions/s.
+
+  1) Failure:
+test_bracketing_versions?(WorkFlowTest) [test/unit/work_flow_test.rb:179]:
+<13> expected but was
+<8>.
+
+  2) Error:
+test_differences?(WorkFlowTest):
+RuntimeError: test/long_test/repository_test.rb does not exist.
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:109:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:123:in `working_different_from?'
+    test/unit/work_flow_test.rb:125:in `test_differences?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__996434189525343933__setup__3360141946399891994__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  3) Failure:
+test_help_command(WorkFlowTest) [test/unit/work_flow_test.rb:247]:
+self=$ ruby  script/work_flow.rb --help
+@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:317: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:318: warning: already initialized constant Syntax_failed_capture\n"
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ $?=1
+@errors="sh: 1: 0=1: not found\n"
+@process_status=#<Process::Status: pid 5740 exit 127>
+$ ls happyHappyFailFail.junk
+@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
+@process_status=#<Process::Status: pid 5743 exit 2>
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+Usage: work_flow.rb --<command> files
+    -e, --[no-]edit                  Edit related files and versions in diffuse
+    -d, --[no-]merge-down            Test downgraded related files in git branches
+    -u, --[no-]upgrade               Test upgraded related files in git branches
+    -t, --[no-]test                  Test, commit. 
+    -b, --[no-]best                  Best. Merge down, no conflicts. 
+    -m, --[no-]emacs                 Emacs unit edit. 
+    -x, --[no-]execute               Unit test and edit. 
+    -p, --[no-]passed                Stage file to passed. 
+    -g, --[no-]testing               Stage file to testing. 
+    -i, --[no-]edited                Stage file to edited. 
+    -v, --[no-]deserve               Stage file to edited. 
+    -a, --[no-]all                   All files tested 
+    -n, --[no-]minimal               edit with minimal comparison. 
+    -l, --[no-]loop                  Test, commit, edit, loop.
+    -s, --[no-]split                 split off new class and edit
+    -r, --[no-]related               Related files
+    -c                               merge_conflict_recovery
+        --[no-]merge-conflict-recovery
+expected errors to be empty\n
+"/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:317: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:318: warning: already initialized constant Syntax_failed_capture\n" is not empty.
+
+  4) Failure:
+test_merge_command(WorkFlowTest) [test/unit/work_flow_test.rb:251]:
+self=$ ruby  script/work_flow.rb --merge-down
+@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:317: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:318: warning: already initialized constant Syntax_failed_capture\n/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': self=$ diffuse -t -r master app/models/regexp_parse.rb app/models/regexp_parse.rb -r testing app/models/regexp_parse.rb -r stash@{4} /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb  -t -r master test/unit/regexp_parse_test.rb test/unit/regexp_parse_test.rb -r edited test/unit/regexp_parse_test.rb -r stash@{3} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb  -t -r origin/master test/assertions/regexp_parse_assertions.rb test/assertions/regexp_parse_assertions.rb -r stash~10 test/assertions/regexp_parse_assertions.rb -r lost_commits@{0} /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb  -t -r origin/master test/unit/regexp_parse_assertions_test.rb test/unit/regexp_parse_assertions_test.rb -r stash~5 test/unit/regexp_parse_assertions_test.rb -r stash@{30} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb -t app/models/regexp_parse.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_assertions_test.rb (MiniTest::Assertion)\n@errors=\"\\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\\n\\tUsing the fallback 'C' locale.\\n\"\nexpected errors to be empty\\n\n\"\\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\\n\\tUsing the fallback 'C' locale.\\n\" is not empty.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:241:in `assert_empty'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:284:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:288:in `edit'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:251:in `block in merge_conflict_recovery'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:234:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:234:in `merge_conflict_recovery'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:270:in `block in merge'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:264:in `merge'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block (2 levels) in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:258:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:258:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:314:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:313:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:313:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n"
+@process_status=#<Process::Status: pid 5908 exit 1>
+$ echo "Hello World"
+Hello World
+$ echo "1 2;3 4"
+1 2;3 4
+$ $?=1
+@errors="sh: 1: 0=1: not found\n"
+@process_status=#<Process::Status: pid 5928 exit 127>
+$ ls happyHappyFailFail.junk
+@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
+@process_status=#<Process::Status: pid 5931 exit 2>
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+$ file -b script/work_flow.rb
+Ruby script, ASCII text executable
+$ file -b --mime script/work_flow.rb
+text/x-ruby; charset=us-ascii
+work_flow --<command> <file>
+$ git stash save --include-untracked
+Saved working directory and index state WIP on master: f208c15 fixup! regexp_parse
+HEAD is now at f208c15 fixup! regexp_parse
+$ git status --porcelain --untracked-files=no|grep "UU "
+@process_status=#<Process::Status: pid 6010 exit 1>
+$ git checkout passed
+@errors="Switched to branch 'passed'\n"
+Your branch is ahead of 'origin/passed' by 3 commits.
+merge(passed), edited)
+merge(:passed, :edited, :interactive)
+$ git merge --no-commit edited
+@process_status=#<Process::Status: pid 6022 exit 1>
+Auto-merging test/unit/repository_test.rb
+CONFLICT (content): Merge conflict in test/unit/repository_test.rb
+Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+CONFLICT (add/add): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/repository.log
+CONFLICT (add/add): Merge conflict in log/unit/1.9/1.9.3p194/quiet/repository.log
+Auto-merging app/models/repository.rb
+CONFLICT (content): Merge conflict in app/models/repository.rb
+Auto-merging app/models/regexp_parse.rb
+CONFLICT (content): Merge conflict in app/models/regexp_parse.rb
+Auto-merging app/models/branch.rb
+Automatic merge failed; fix conflicts and then commit the result.
+$ git status --porcelain --untracked-files=no|grep "UU "
+UU app/models/regexp_parse.rb
+UU app/models/repository.rb
+UU log/unit/1.9/1.9.3p194/quiet/work_flow.log
+UU test/unit/repository_test.rb
+ruby script/workflow.rb --test app/models/regexp_parse.rb
+$ rm app/models/regexp_parse.rb.BASE.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6030 exit 1>
+$ rm app/models/regexp_parse.rb.BACKUP.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6034 exit 1>
+$ rm app/models/regexp_parse.rb.LOCAL.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6038 exit 1>
+$ rm app/models/regexp_parse.rb.REMOTE.*
+@errors="rm: cannot remove `app/models/regexp_parse.rb.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6042 exit 1>
+$ rm app/models/regexp_parse.rb.orig
+@errors="rm: cannot remove `app/models/regexp_parse.rb.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6046 exit 1>
+ruby script/workflow.rb --test app/models/repository.rb
+$ rm app/models/repository.rb.BASE.*
+@errors="rm: cannot remove `app/models/repository.rb.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6049 exit 1>
+$ rm app/models/repository.rb.BACKUP.*
+@errors="rm: cannot remove `app/models/repository.rb.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6054 exit 1>
+$ rm app/models/repository.rb.LOCAL.*
+@errors="rm: cannot remove `app/models/repository.rb.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6066 exit 1>
+$ rm app/models/repository.rb.REMOTE.*
+@errors="rm: cannot remove `app/models/repository.rb.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6070 exit 1>
+$ rm app/models/repository.rb.orig
+@errors="rm: cannot remove `app/models/repository.rb.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6074 exit 1>
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.BASE.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6077 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.BACKUP.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6081 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.LOCAL.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6085 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.REMOTE.*
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6089 exit 1>
+$ rm log/unit/1.9/1.9.3p194/quiet/work_flow.log.orig
+@errors="rm: cannot remove `log/unit/1.9/1.9.3p194/quiet/work_flow.log.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6093 exit 1>
+ruby script/workflow.rb --test test/unit/repository_test.rb
+$ rm test/unit/repository_test.rb.BASE.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.BASE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6096 exit 1>
+$ rm test/unit/repository_test.rb.BACKUP.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.BACKUP.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6100 exit 1>
+$ rm test/unit/repository_test.rb.LOCAL.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.LOCAL.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6104 exit 1>
+$ rm test/unit/repository_test.rb.REMOTE.*
+@errors="rm: cannot remove `test/unit/repository_test.rb.REMOTE.*': No such file or directory\n"
+@process_status=#<Process::Status: pid 6108 exit 1>
+$ rm test/unit/repository_test.rb.orig
+@errors="rm: cannot remove `test/unit/repository_test.rb.orig': No such file or directory\n"
+@process_status=#<Process::Status: pid 6112 exit 1>
+$ git merge --abort
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 467 deletions(-)
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 6 insertions(+), 30 deletions(-)
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+ 1 file changed, 29 insertions(+)
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
+stash@{4},refs/stash@{4},5a01908
+stash@{5},refs/stash@{5},d7f8f56
+edited@{2},refs/heads/edited@{2},763229f
+stash@{7},refs/stash@{7},33fba02
+passed@{0},refs/heads/passed@{0},af65e2e
+stash@{8},refs/stash@{8},8cda139
+stash@{18},refs/stash@{18},5f8e1f1
+stash@{26},refs/stash@{26},5b9b319
+stash@{28},refs/stash@{28},81086dc
+stash@{29},refs/stash@{29},a9bf70c
+stash@{30},refs/stash@{30},8f5f145
+stash@{32},refs/stash@{32},9b1de67
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+stash@{61},refs/stash@{61},921c2ee
+stash@{62},refs/stash@{62},f284683
+work_flow@{28},refs/heads/work_flow@{28},0a05271
+work_flow@{29},refs/heads/work_flow@{29},7021610
+work_flow@{30},refs/heads/work_flow@{30},7cd364c
+work_flow@{31},refs/heads/work_flow@{31},488860e
+work_flow@{32},refs/heads/work_flow@{32},a211cef
+work_flow@{33},refs/heads/work_flow@{33},1db4ffc
+work_flow@{34},refs/heads/work_flow@{34},396cc62
+work_flow@{36},refs/heads/work_flow@{36},159f42e
+work_flow@{37},refs/heads/work_flow@{37},bc24949
+work_flow@{40},refs/heads/work_flow@{40},1246e3f
+work_flow@{42},refs/heads/work_flow@{42},be7be62
+unit@{12},refs/heads/unit@{12},143eec7
+stash@{65},refs/stash@{65},9123a67
+master@{34},refs/heads/master@{34},e994dc0
+regexp@{74},refs/heads/regexp@{74},b722b0a
+stash@{68},refs/stash@{68},bdacfe4
+stash@{95},refs/stash@{95},3efb61e
+stash@{98},refs/stash@{98},2df045f
+stash@{103},refs/stash@{103},7192464
+stash@{125},refs/stash@{125},6b8482f
+stash@{134},refs/stash@{134},5ec6d7a
+stash@{136},refs/stash@{136},b6744ec
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 367 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 367 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 367 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 357 insertions(+), 1 deletion(-)
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 632 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 632 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 145 insertions(+), 3 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 145 insertions(+), 3 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ 1 file changed, 145 insertions(+), 3 deletions(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_test.rb
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+stash@{3},refs/stash@{3},56a26ac
+master@{0},refs/heads/master@{0},f208c15
+stash@{4},refs/stash@{4},5a01908
+stash@{5},refs/stash@{5},d7f8f56
+edited@{2},refs/heads/edited@{2},763229f
+stash@{7},refs/stash@{7},33fba02
+stash@{8},refs/stash@{8},8cda139
+stash@{18},refs/stash@{18},5f8e1f1
+stash@{26},refs/stash@{26},5b9b319
+stash@{28},refs/stash@{28},81086dc
+stash@{29},refs/stash@{29},a9bf70c
+stash@{30},refs/stash@{30},8f5f145
+master@{4},refs/heads/master@{4},711d484
+master@{7},refs/heads/master@{7},5ec87b7
+stash@{32},refs/stash@{32},9b1de67
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+stash@{61},refs/stash@{61},921c2ee
+stash@{62},refs/stash@{62},f284683
+work_flow@{28},refs/heads/work_flow@{28},0a05271
+work_flow@{34},refs/heads/work_flow@{34},396cc62
+work_flow@{35},refs/heads/work_flow@{35},020f811
+work_flow@{38},refs/heads/work_flow@{38},e1e9738
+work_flow@{39},refs/heads/work_flow@{39},91cb4a8
+work_flow@{41},refs/heads/work_flow@{41},8fe5b75
+work_flow@{42},refs/heads/work_flow@{42},be7be62
+master@{22},refs/heads/master@{22},57ad5e3
+unit@{12},refs/heads/unit@{12},143eec7
+master@{34},refs/heads/master@{34},e994dc0
+regexp@{74},refs/heads/regexp@{74},b722b0a
+stash@{95},refs/stash@{95},3efb61e
+stash@{98},refs/stash@{98},2df045f
+stash@{103},refs/stash@{103},7192464
+stash@{125},refs/stash@{125},6b8482f
+edited@{31},refs/heads/edited@{31},91df61f
+stash@{134},refs/stash@{134},5ec6d7a
+stash@{136},refs/stash@{136},b6744ec
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+stash@{63},refs/stash@{63},c2c64a7
+master@{25},refs/heads/master@{25},e3d6bba
+unit@{12},refs/heads/unit@{12},143eec7
+stash@{65},refs/stash@{65},9123a67
+master@{34},refs/heads/master@{34},e994dc0
+regexp@{70},refs/heads/regexp@{70},faa9ff1
+master@{37},refs/heads/master@{37},0e7f147
+master@{38},refs/heads/master@{38},7cc6bb9
+master@{39},refs/heads/master@{39},9901a24
+master@{40},refs/heads/master@{40},d443c07
+master@{41},refs/heads/master@{41},4aab3e2
+master@{42},refs/heads/master@{42},a4a860f
+master@{46},refs/heads/master@{46},8ccdbba
+master@{52},refs/heads/master@{52},142f6fc
+master@{54},refs/heads/master@{54},a06458e
+master@{56},refs/heads/master@{56},d7fcd75
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ git diff --summary --shortstat origin/master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat master -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat passed -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat testing -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat edited -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~1 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~2 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~3 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~4 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~5 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~6 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~7 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~8 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~9 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git diff --summary --shortstat stash~10 -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+ 1 file changed, 1 deletion(-)
+ mode change 100644 => 100755 test/unit/regexp_parse_assertions_test.rb
+$ git reflog  --all --pretty=format:%gd,%gD,%h -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb
+stash@{30},refs/stash@{30},8f5f145
+master@{4},refs/heads/master@{4},711d484
+lost_commits@{0},refs/heads/lost_commits@{0},fa12e11
+unit@{12},refs/heads/unit@{12},143eec7
+regexp@{74},refs/heads/regexp@{74},b722b0a
+stash@{95},refs/stash@{95},3efb61e
+stash@{98},refs/stash@{98},2df045f
+stash@{103},refs/stash@{103},7192464
+stash@{125},refs/stash@{125},6b8482f
+edited@{31},refs/heads/edited@{31},91df61f
+stash@{137},refs/stash@{137},869f951
+edited@{33},refs/heads/edited@{33},b4a43b4
+master@{147},refs/heads/master@{147},8281515
+$ diffuse -t -r master app/models/regexp_parse.rb app/models/regexp_parse.rb -r testing app/models/regexp_parse.rb -r stash@{4} /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb  -t -r master test/unit/regexp_parse_test.rb test/unit/regexp_parse_test.rb -r edited test/unit/regexp_parse_test.rb -r stash@{3} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb  -t -r origin/master test/assertions/regexp_parse_assertions.rb test/assertions/regexp_parse_assertions.rb -r stash~10 test/assertions/regexp_parse_assertions.rb -r lost_commits@{0} /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb  -t -r origin/master test/unit/regexp_parse_assertions_test.rb test/unit/regexp_parse_assertions_test.rb -r stash~5 test/unit/regexp_parse_assertions_test.rb -r stash@{30} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb -t app/models/regexp_parse.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_assertions_test.rb
+@errors="\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\n\tUsing the fallback 'C' locale.\n"
+$ diffuse -t -r master app/models/regexp_parse.rb app/models/regexp_parse.rb -r testing app/models/regexp_parse.rb -r stash@{4} /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb  -t -r master test/unit/regexp_parse_test.rb test/unit/regexp_parse_test.rb -r edited test/unit/regexp_parse_test.rb -r stash@{3} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb  -t -r origin/master test/assertions/regexp_parse_assertions.rb test/assertions/regexp_parse_assertions.rb -r stash~10 test/assertions/regexp_parse_assertions.rb -r lost_commits@{0} /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb  -t -r origin/master test/unit/regexp_parse_assertions_test.rb test/unit/regexp_parse_assertions_test.rb -r stash~5 test/unit/regexp_parse_assertions_test.rb -r stash@{30} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb -t app/models/regexp_parse.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_assertions_test.rb
+@errors="\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\n\tUsing the fallback 'C' locale.\n"
+expected errors to be empty\n
+"/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:317: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:318: warning: already initialized constant Syntax_failed_capture\n/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': self=$ diffuse -t -r master app/models/regexp_parse.rb app/models/regexp_parse.rb -r testing app/models/regexp_parse.rb -r stash@{4} /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb  -t -r master test/unit/regexp_parse_test.rb test/unit/regexp_parse_test.rb -r edited test/unit/regexp_parse_test.rb -r stash@{3} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb  -t -r origin/master test/assertions/regexp_parse_assertions.rb test/assertions/regexp_parse_assertions.rb -r stash~10 test/assertions/regexp_parse_assertions.rb -r lost_commits@{0} /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb  -t -r origin/master test/unit/regexp_parse_assertions_test.rb test/unit/regexp_parse_assertions_test.rb -r stash~5 test/unit/regexp_parse_assertions_test.rb -r stash@{30} /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_assertions_test.rb -t app/models/regexp_parse.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_test.rb  -t test/assertions/regexp_parse_assertions.rb test/unit/regexp_parse_assertions_test.rb (MiniTest::Assertion)\n@errors=\"\\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\\n\\tUsing the fallback 'C' locale.\\n\"\nexpected errors to be empty\\n\n\"\\n(process:6401): Gtk-WARNING **: Locale not supported by C library.\\n\\tUsing the fallback 'C' locale.\\n\" is not empty.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:241:in `assert_empty'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:284:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:288:in `edit'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:251:in `block in merge_conflict_recovery'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:234:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:234:in `merge_conflict_recovery'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:270:in `block in merge'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:264:in `merge'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block (2 levels) in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:258:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:258:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:314:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:313:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:313:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n" is not empty.
+
+  5) Failure:
+test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:209]:
+<" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
+<" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
+
+  6) Error:
+test_scan_verions?(WorkFlowTest):
+RuntimeError: test/long_test/repository_test.rb does not exist.
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:109:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:123:in `working_different_from?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:134:in `block in differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:133:in `each'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:133:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:133:in `differences?'
+    test/unit/work_flow_test.rb:137:in `test_scan_verions?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__996434189525343933__setup__3360141946399891994__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  7) Error:
+test_working_different_from?(WorkFlowTest):
+RuntimeError: branch_index=nil
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:45:in `branch_symbol?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:110:in `diff_command?'
+    test/unit/work_flow_test.rb:110:in `test_working_different_from?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__996434189525343933__setup__3360141946399891994__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+33 tests, 4390 assertions, 4 failures, 3 errors, 0 skips

@@ -84,7 +84,7 @@ extend ClassMethods
 attr_reader :related_files, :edit_files, :repository
 def initialize(specific_file,
 	related_files = Unit.new_from_path?(specific_file),
-	repository=Repository.new(FilePattern.repository_dir?))
+	repository = Repository.new(FilePattern.repository_dir?, :interactive))
 
 	@specific_file = specific_file
 	@related_files = related_files
@@ -145,7 +145,9 @@ def scan_verions?(filename, range, direction)
 			existing_indices << index
 		when nil then
 		when false then
-			existing_indices<<index
+			existing_indices << index
+		else
+			fail 'else ' + local_variables.map{|v| eval(v).inspect}.join("\n")
 		end # case
 	end # zip
 	case direction
