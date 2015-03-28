@@ -97,32 +97,3 @@ end # Examples
 include Examples
 end # Expression
 end # Regexp
-def to_pathname_glob
-	map {|node| node.to_pathname_glob}
-end #to_pathname_glob
-def to_pathname_glob
-	if any? {|node| node.size>1} then
-		'*'
-	else
-		'['+join(',')+']'
-	end #if
-end #to_pathname_glob
-
-# parse tree internal format is nested Arrays.
-# Postfix operators and brackets end embeddded arrays
-class RegexpParse
-include Regexp::Constants
-module Constants
-include Regexp::Constants
-Any_binary_string="#{Any_binary_char_string}*"
-Any_binary_char=RegexpParse.new(Any_binary_char_string)
-Any_binary_char_parse=RegexpParse.new(Any_binary_char_string)
-Any_binary_string_parse=RegexpParse.new(Any_binary_string)
-Dot_star_array=['.', '*']
-Dot_star_string=Dot_star_array.join
-Dot_star_parse=RegexpParse.new(Dot_star_string)
-Empty_language_array=['\A', '\z'] # beginning to end of string with nothing in between
-Empty_language_string=Empty_language_array.join
-Empty_language_parse=RegexpParse.new(Empty_language_string)
-end #Constants
-end #RegexpParse
