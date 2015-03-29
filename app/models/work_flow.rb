@@ -286,7 +286,8 @@ def edit(context = nil)
 	puts command_string if $VERBOSE
 	edit = @repository.shell_command(command_string)
 	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
-	edit.assert_post_conditions
+	status =edit
+#	status.assert_post_conditions
 end # edit
 def split(executable, new_base_name)
 	related_files = work_flow.related_files

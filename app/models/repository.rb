@@ -176,8 +176,10 @@ def log_path?(executable,
 		end # if
 end # log_path?
 def write_error_file(recent_test, log_path)
-		contents = recent_test.output + recent_test.errors
-	  	IO.write(log_path, contents)
+	contents = current_branch_name?.to_s + "\n"
+	contents += recent_test.output
+	contents += recent_test.errors
+	IO.write(log_path, contents)
 end # write_error_file
 def ruby_test_string(executable,
 		logging = :quiet,
@@ -377,7 +379,7 @@ def rebase!
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
 end #rebase!
-end #Repository
+end # Repository
 assert_include(Module.constants, :ShellCommands)
 assert_include(Module.constants, :FilePattern)
 assert_include(Module.constants, :Unit)
@@ -386,5 +388,3 @@ assert_include(Module.constants, :Capture)
 assert_include(Module.constants, :Repository)
 assert_include(Repository.constants, :Constants)
 assert_include(Repository.constants, :ClassMethods)
-
-
