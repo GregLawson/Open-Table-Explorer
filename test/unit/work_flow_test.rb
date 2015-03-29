@@ -214,7 +214,7 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable=data_source_directory?('Repository')+'/'+value.to_s+'.rb'
+		executable=data_source_directory?('repository')+'/'+value.to_s+'.rb'
 		error_score = TestWorkFlow.repository.error_score?(executable)
 		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
 		error_score=TestWorkFlow.repository.error_score?(executable)
@@ -230,7 +230,7 @@ def test_deserving_branch?
 	assert_equal(3, branch_compressions.uniq.size, branch_compressions.inspect)
 	assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
-#	assert_equal(:passed, Branch_enhancement[Branch_compression[error_classification]])
+#	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
 end #deserving_branch
 def test_merge
 	TestWorkFlow.repository.testing_superset_of_passed.assert_post_conditions
@@ -247,9 +247,14 @@ def test_help_command
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
 	assert_equal('', help_run.errors)
 end #  help_command
+def test_merge_command
+	help_run=ShellCommands.new('ruby  script/work_flow.rb --merge-down').assert_post_conditions
+	assert_equal('', help_run.errors)
+end #  merge_command
+
 def test_deserve_command
 	value = :testing
-	executable = data_source_directory?('Repository')+'/'+value.to_s+'.rb'
+	executable = Repository::Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
 	error_score=TestWorkFlow.repository.error_score?(executable)
 #	assert_equal(1, error_score, deserve_run.inspect)
