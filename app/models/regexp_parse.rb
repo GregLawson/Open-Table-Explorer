@@ -97,21 +97,3 @@ end # Examples
 include Examples
 end # Expression
 end # Regexp
-def to_pathname_glob
-	ret=RegexpParse.new(parse_tree.map_branches{|b| (b[0]=='('?RegexpParse.new(b[1..-2]):RegexpParse.new(b))})
-	ret=ret.postfix_operator_walk{|p| '*'}
-	if ret.instance_of?(RegexpParse) then
-		ret=ret.parse_tree.flatten.join
-	elsif ret.kind_of?(Array) then
-		ret=ret.flatten.join
-	end #if
-	return ret
-end #to_pathname_glob
-def pathnames
-	Dir[to_pathname_glob].select do |pathname|
-		to_regexp.match(pathname)
-	end #select
-end #pathnames
-def grep(pattern, delimiter="\n")
-	pathnames.files_grep(pattern, delimiter="\n")
-end #grep
