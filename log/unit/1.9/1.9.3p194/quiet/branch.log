@@ -1,10 +1,10 @@
+master
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:18:in `<module:Constants>': uninitialized constant Repository::Constants::Unit (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:17:in `<class:Repository>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:16:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:9:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:9:in `<top (required)>'
-	from test/unit/branch_test.rb:11:in `require_relative'
-	from test/unit/branch_test.rb:11:in `<main>'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:57:in `find_origin': undefined method `remotes?' for ## master (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:72:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/branch_assertions.rb:41:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/branch_assertions.rb:41:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/branch_assertions.rb:39:in `<class:Branch>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/branch_assertions.rb:11:in `<top (required)>'
+	from test/unit/branch_test.rb:10:in `require_relative'
+	from test/unit/branch_test.rb:10:in `<main>'
