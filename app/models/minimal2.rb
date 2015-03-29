@@ -23,7 +23,7 @@ module ClassMethods
 def nested_scope_modules?
 	nested_constants = self.class.constants
 	message = ''
-	assert_include(included_modules, :Assertions, message)
+	assert_include(included_modules.map{|m| m.name}, :Assertions, message)
 	assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
 end # nested_scopes
 def assert_nested_scope_submodule(module_symbol, context = self, message='')
