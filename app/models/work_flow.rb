@@ -263,7 +263,9 @@ def edit(context = nil)
 	end # if
 	puts command_string if $VERBOSE
 	edit = @repository.shell_command(command_string)
-	edit.assert_post_conditions
+	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
+	status =edit
+#	status.assert_post_conditions
 end # edit
 def split(executable, new_base_name)
 	related_files = work_flow.related_files
@@ -323,9 +325,11 @@ def loop(executable = @related_files.model_test_pathname?)
 		begin
 			deserving_branch = deserving_branch?(executable)
 			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
-			if deserving_branch != :passed then #master corrupted
-				edit
-				done=false
+			if !File.exists?(executable) then
+				done = true
+			elsif deserving_branch != :passed then # master corrupted
+				edit('master branch not passing')
+				done = false
 			else
 				done = true
 			end # if
@@ -340,12 +344,12 @@ def loop(executable = @related_files.model_test_pathname?)
 		if @repository.something_to_commit? then
 			done = false
 		else
-			if deserving_branch == @repository.current_branch_name? then
+			if @expected_next_commit_branch == @repository.current_branch_name? then
 				done = true # branch already checked
 			else
 				done = false # check other branch
-				@repository.confirm_branch_switch(deserving_branch)
-				puts "Switching to deserving branch"+deserving_branch.to_s
+				@repository.confirm_branch_switch(@expected_next_commit_branch)
+				puts 'Switching to deserving branch' + @expected_next_commit_branch.to_s
 			end # if
 		end # if
 	end until done
@@ -353,7 +357,7 @@ end # test
 def unit_test(executable = @related_files.model_test_pathname?)
 	begin
 		deserving_branch = deserving_branch?(executable)
-		if @repository.recent_test.success? then
+		if !@repository.recent_test.nil? && @repository.recent_test.success? then
 			break
 		end # if
 		@repository.recent_test.puts
