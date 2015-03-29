@@ -44,9 +44,9 @@ def branches?(repository)
 	parse = branch_output.parse(Branch_regexp)
 	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
 end #branches?
-def remotes?
+def remotes?(repository)
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+	repository.git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
 end #remotes?
 def new_from_git_branch_line(git_branch_line)
 
@@ -54,7 +54,7 @@ end # new_from_git_branch_line
 end #ClassMethods
 extend ClassMethods
 def find_origin
-	if @repository.remotes?.include?(@repository.current_branch_name?) then
+	if Branch.remotes?(@repository).include?(@repository.current_branch_name?) then
 		'origin/'+@branch.to_s
 	else
 		nil
@@ -82,12 +82,6 @@ def to_sym
 	@branch.to_sym
 end # to_s
 def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase!
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods

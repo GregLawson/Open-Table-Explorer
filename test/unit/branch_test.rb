@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../unit/test_environment'
 require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/branch_assertions.rb'
 #require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/branch.rb'
 class BranchTest < TestCase
@@ -23,11 +24,6 @@ end # branch_command?
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 	branch_output= Empty_Repo.git_command('branch --list').assert_post_conditions.output
-	parse = branch_output.parse(Branch_regexp)
-	assert_instance_of(Array, parse)
-	assert_instance_of(Hash, parse[0])
-	assert_equal([], parse.map{|e| e.keys})
-	parse[:branch].to_sym
 	assert_equal(:master, Branch.current_branch_name?(Empty_Repo))
 end #current_branch_name
 def test_branches?
@@ -35,8 +31,9 @@ def test_branches?
 	branch_output = Empty_Repo.git_command('branch --list').assert_post_conditions.output
 	Patterns.each do |p|
 		assert_match(p, branch_output)
-		branches=branch_output.parse(p)
-		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches, branch_output.inspect)
+		branches = branch_output.capture?(p)
+		puts branches.inspect if branches.success?
+		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output?, branches.inspect)
 	end # each
 	
 	assert_includes(Empty_Repo.branches?.map{|b| b.branch}, Empty_Repo.current_branch_name?)
@@ -52,7 +49,4 @@ def test_initialize
 	branch=This_code_repository.current_branch_name?
 	onto=Branch::Examples::Executing_branch.find_origin
 end # initialize
-def test_rebase!
-	Minimal_repository.rebase!
-end #rebase!
-end # Branch
+end #Repository
