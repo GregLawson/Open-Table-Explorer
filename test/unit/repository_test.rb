@@ -121,7 +121,6 @@ def test_ruby_test_string
 	assert_match(executable, ruby_test_string)
 end # ruby_test_string
 def test_error_score?
-#	executable=This_code_repository.related_files.model_test_pathname?
 	executable='/etc/mtab' #force syntax error with non-ruby text
 	ruby_test_string = This_code_repository.ruby_test_string(executable)
 	recent_test = This_code_repository.shell_command(ruby_test_string)
@@ -240,4 +239,7 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
+def test_rebase!
+#	Minimal_repository.rebase!
+end #rebase!
 end #Repository

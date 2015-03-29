@@ -292,7 +292,7 @@ def confirm_commit(interact=:interactive)
 		when :interactive then
 			cola_run = git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
-			cola_run.assert_post_conditions
+			cola_run
 			if !something_to_commit? then
 #				git_command('cola rebase '+current_branch_name?.to_s)
 			end # if
@@ -386,3 +386,4 @@ assert_include(Module.constants, :Capture)
 assert_include(Module.constants, :Repository)
 assert_include(Repository.constants, :Constants)
 assert_include(Repository.constants, :ClassMethods)
+
