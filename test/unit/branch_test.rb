@@ -31,8 +31,9 @@ def test_branches?
 	branch_output = Empty_Repo.git_command('branch --list').assert_post_conditions.output
 	Patterns.each do |p|
 		assert_match(p, branch_output)
-		branches=branch_output.parse(p)
-		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches, p.inspect)
+		branches = branch_output.capture?(p)
+		puts branches.inspect if branches.success?
+		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output?, branches.inspect)
 	end # each
 	
 	assert_includes(Branch.branches?(Empty_Repo).map{|b| b.branch}, Empty_Repo.current_branch_name?)

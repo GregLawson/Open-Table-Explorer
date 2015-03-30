@@ -30,9 +30,9 @@ include Constants
 module ClassMethods
 #include Repository::Constants
 include Constants
-def branch_command?(repository, git_command)
-	branch_output = repository.git_command(git_command).assert_post_conditions.output
-	parse = branch_output.parse(Branch_regexp)
+def branch_capture?(repository, branch_command = '--list')
+	branch_output = repository.git_command('branch ' + branch_command).assert_post_conditions.output
+	branch_output.capture?(Branch_regexp)
 end # branch_command?
 def current_branch_name?(repository)
 	branch_capture = branch_capture?(repository, '--list')
