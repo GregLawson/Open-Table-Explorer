@@ -4,16 +4,22 @@ Run options:
 
 # Running tests:
 
-E.
+E
 
-Finished tests in 0.000878s, 2276.9889 tests/s, 0.0000 assertions/s.
+Finished tests in 0.003533s, 283.0346 tests/s, 0.0000 assertions/s.
 
   1) Error:
-test_fail(SingleFailTest):
+test_minimal(Minimal2Test):
 RuntimeError: 
-    test/data_sources/repository//single_test_fail.rb:6:in `test_fail'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/testing.rb:11:in `test_minimal'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3152940622987541523__setup__1915996151575724397__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
@@ -31,4 +37,4 @@ RuntimeError:
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-2 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
