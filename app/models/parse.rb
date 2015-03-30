@@ -314,8 +314,6 @@ module Examples
 include Capture::Examples
 Split_capture = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
 Parse_array = SplitCapture.new(Newline_Terminated_String, Branch_regexp)
-	Failed_capture = SplitCapture.new('cat', /fish/)
-	Syntax_failed_capture = SplitCapture.new('cat', 'f)i]s}h')
 Branch_line_capture = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
 Branch_regexp_capture = SplitCapture.new(Newline_Delimited_String, Branch_regexp)
 Failed_capture = SplitCapture.new('cat', /fish/)
