@@ -1,4 +1,3 @@
-master
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -6,6 +5,6 @@ Run options:
 
 .....................
 
-Finished tests in 0.029874s, 702.9494 tests/s, 6929.0725 assertions/s.
+Finished tests in 0.029841s, 703.7276 tests/s, 6936.7437 assertions/s.
 
 21 tests, 207 assertions, 0 failures, 0 errors, 0 skips
