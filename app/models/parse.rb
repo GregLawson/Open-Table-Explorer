@@ -314,8 +314,6 @@ module Examples
 include Capture::Examples
 Split_capture = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
 Parse_array = SplitCapture.new(Newline_Terminated_String, Branch_regexp)
-	Failed_capture = SplitCapture.new('cat', /fish/)
-	Syntax_failed_capture = SplitCapture.new('cat', 'f)i]s}h')
 Branch_line_capture = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
 Branch_regexp_capture = SplitCapture.new(Newline_Delimited_String, Branch_regexp)
 Failed_capture = SplitCapture.new('cat', /fish/)
@@ -499,7 +497,7 @@ def assert_left_parse(pattern, message='')
 		pos = 0
 		pattern.map do |p|
 			ret = self[pos..-1].assert_left_parse(p) # recurse
-			pos += ret.matched_characters?
+			pos += ret.number_matched_characters?
 			ret
 		end # map
 	else
