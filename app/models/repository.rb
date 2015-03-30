@@ -176,8 +176,10 @@ def log_path?(executable,
 		end # if
 end # log_path?
 def write_error_file(recent_test, log_path)
-		contents = recent_test.output + recent_test.errors
-	  	IO.write(log_path, contents)
+	contents = current_branch_name?.to_s + "\n"
+	contents += recent_test.output
+	contents += recent_test.errors
+	IO.write(log_path, contents)
 end # write_error_file
 def ruby_test_string(executable,
 		logging = :quiet,
@@ -283,7 +285,7 @@ def stage_files(branch, files)
 end #stage_files
 def unit_names?(files)
 	files.map do |f|
-		FilePattern.path2model_name?(f).to_s
+		FilePattern.unit_base_name?(f).to_s
 	end #map
 end #unit_names?
 def confirm_commit(interact=:interactive)
@@ -315,7 +317,7 @@ def validate_commit(changes_branch, files, interact=:interactive)
 		git_command(['checkout', changes_branch.to_s, p])
 	end #each
 	if something_to_commit? then
-		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')
+		commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
 		if !@recent_test.nil? then
 			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
 		end #if

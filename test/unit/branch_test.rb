@@ -49,4 +49,4 @@ def test_initialize
 	branch=This_code_repository.current_branch_name?
 	onto=Branch::Examples::Executing_branch.find_origin
 end # initialize
-end #Repository
+end # Branch
