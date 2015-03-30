@@ -275,7 +275,11 @@ def success?
 	end # if
 end # success?
 def repetitions?
-	(raw_captures.size/(@length_hash_captures+1)).ceil
+	if @raw_captures.nil? then
+		0
+	else
+		(@raw_captures.size/(@length_hash_captures+1)).ceil
+	end # if
 end # repetitions?
 # Tranform split and MatchData captures into single form
 def to_a?
@@ -327,8 +331,12 @@ def raw_captures?
 	fail Exception.new('@string is not String but '+@string.class.name) if !@string.instance_of?(String)
 	method = @string.method(:match)
 	match = method.call(@regexp)
-	string =  match[0] # regexp matched string
-	@string.method(:split).call(@regexp) # after string shortened
+	if match.nil? then
+		match
+	else
+		string =  match[0] # regexp matched string
+		@string.method(:split).call(@regexp) # after string shortened
+	end # if
 end # raw_captures?
 module Examples
 include Capture::Examples
