@@ -230,7 +230,7 @@ end #error_score
 def confirm_branch_switch(branch)
 	checkout_branch=git_command("checkout #{branch}")
 	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
-		checkout_branch.assert_post_conditions
+		checkout_branch #.assert_post_conditions
 	end #if
 	checkout_branch # for command chaining
 end #confirm_branch_switch
@@ -294,7 +294,7 @@ def confirm_commit(interact=:interactive)
 		when :interactive then
 			cola_run = git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
-			cola_run
+			cola_run #.assert_post_conditions
 			if !something_to_commit? then
 #				git_command('cola rebase '+current_branch_name?.to_s)
 			end # if

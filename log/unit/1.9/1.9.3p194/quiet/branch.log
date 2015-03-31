@@ -1,0 +1,15 @@
+master
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+......#<LimitCapture:0x00000002c1aaf0 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
+#<LimitCapture:0x00000002c21328 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+))+/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+#<LimitCapture:0x00000002c31368 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+#<LimitCapture:0x00000002c3c150 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+.........
+
+Finished tests in 0.067152s, 223.3737 tests/s, 1414.7004 assertions/s.
+
+15 tests, 95 assertions, 0 failures, 0 errors, 0 skips
