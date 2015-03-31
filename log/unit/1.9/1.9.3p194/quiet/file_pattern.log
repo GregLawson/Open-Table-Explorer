@@ -4,46 +4,8 @@ Run options:
 
 # Running tests:
 
-.........F.......E...
+.....................
 
-Finished tests in 0.020793s, 1009.9393 tests/s, 8079.5143 assertions/s.
+Finished tests in 0.029772s, 705.3537 tests/s, 6952.7725 assertions/s.
 
-  1) Failure:
-test_match_path(FilePatternTest) [test/unit/file_pattern_test.rb:166]:
-p={:suffix=>".log", :name=>:library_log, :prefix=>"log/unit/", :example_file=>"log/library/repository.log"}
-expected_prefix=log/unit
-prefix=log/library.
-Expected /log\/unit\// to match "log/library/repository.log".
-
-  2) Error:
-test_project_root_dir(FilePatternTest):
-NoMethodError: undefined method `pre_match' for nil:NilClass
-    test/unit/file_pattern_test.rb:137:in `block in test_project_root_dir'
-    test/unit/file_pattern_test.rb:134:in `map'
-    test/unit/file_pattern_test.rb:134:in `test_project_root_dir'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__169242650585991770__setup__2982826247305224683__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
-
-21 tests, 168 assertions, 1 failures, 1 errors, 0 skips
+21 tests, 207 assertions, 0 failures, 0 errors, 0 skips
