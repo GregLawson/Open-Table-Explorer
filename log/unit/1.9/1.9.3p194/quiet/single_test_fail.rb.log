@@ -6,7 +6,7 @@ Run options:
 
 E.
 
-Finished tests in 0.000803s, 2491.3922 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000864s, 2315.0077 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):

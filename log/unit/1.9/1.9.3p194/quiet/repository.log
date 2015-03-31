@@ -7,16 +7,16 @@ Run options:
 ......................confirm_commit(:echo something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 28903 exit 1>
+@process_status=#<Process::Status: pid 31217 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 28917 exit 128>
+@process_status=#<Process::Status: pid 31231 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ..Fconfirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 3.757447s, 7.4519 tests/s, 18.0974 assertions/s.
+Finished tests in 3.515696s, 7.9643 tests/s, 19.3418 assertions/s.
 
   1) Failure:
 test_unit_names?(RepositoryTest) [test/unit/repository_test.rb:186]:
