@@ -10,7 +10,7 @@ require_relative 'repository.rb'
 class WorkFlow
 module Constants
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
-Extended_branches = { -2 => :'origin/master', -1 => :master }
+Extended_branches = { -3 => :'origin/master', -2 => :work_flow, -1 => :master }
 First_slot_index = Extended_branches.keys.min
 Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
 Deserving_commit_to_branch = { success:             0,
@@ -43,7 +43,8 @@ end # all
 def branch_symbol?(branch_index)
 	case branch_index
 	when nil then fail 'branch_index=' + branch_index.inspect
-	when -2 then :'origin/master'
+	when -2 then :work_flow
+	when -3 then :'origin/master'
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size - 1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
@@ -98,7 +99,7 @@ def initialize(specific_file,
 end # initialize
 def version_comparison(files = nil)
 	if files.nil? then
-		files = @related_files.edit_files
+		files = [@repository.log_path?(@related_files.model_test_pathname?)].concat(@related_files.edit_files)
 	end # if
 	ret = files.map do |f|
 		goldilocks(f)
@@ -166,15 +167,26 @@ def bracketing_versions?(filename, current_index)
 end # bracketing_versions?
 def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym)
 	if File.exists?(filename) then
-		current_index=WorkFlow.branch_index?(middle_branch)
-		left_index,right_index=bracketing_versions?(filename, current_index)
-		relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-
-		" -t #{WorkFlow.revison_tag?(left_index)} #{relative_filename} #{relative_filename} #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
+		current_index = WorkFlow.branch_index?(middle_branch)
+		left_index, right_index = bracketing_versions?(filename, current_index)
+		relative_filename = Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+		ret = ' -t '
+		if left_index.nil? then
+			ret += " #{relative_filename} "
+		else
+			ret += "#{WorkFlow.revison_tag?(left_index)} #{relative_filename} "
+		end # if
+		ret += relative_filename
+		if right_index.nil? then
+			ret += " #{relative_filename} "
+		else
+			ret += " #{WorkFlow.revison_tag?(right_index)} #{relative_filename}"
+		end # if
 	else
-		''
-	end #if
-end #goldilocks
+		ret = ''
+	end # if
+	ret += ' -r ' + last_change?(filename) + ' ' + filename
+end # goldilocks
 def test_files(edit_files = @related_files.edit_files)
 	pairs = @related_files.functional_parallelism(edit_files).map do |p|
 
@@ -186,12 +198,23 @@ def test_files(edit_files = @related_files.edit_files)
 	pairs.join(' ')
 end # test_files
 def minimal_comparison?
-	FilePattern::All.map do |p|
-		min_path=Pathname.new(p.pathname_glob('minimal'+@related_files.default_test_class_id?.to_s)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		path=Pathname.new(p.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
-		if File.exists?(min_path) && File.exists?(path) then
-			' -t '+path+' '+min_path
+	if @related_files.edit_files == [] then
+		unit_pattern = FilePattern.new_from_path(_FILE_)
+	else
+		unit_pattern = FilePattern.new_from_path(@related_files.edit_files[0])
+	end # if
+	unit_name = unit_pattern.unit_base_name
+	FilePattern::Constants::Patterns.map do |p|
+		pattern = FilePattern.new(p)
+		pwd = Pathname.new(Dir.pwd)
+		default_test_class_id = @related_files.default_test_class_id?.to_s
+		min_path = Pathname.new(pattern.path?('minimal' + default_test_class_id))
+		unit_path = Pathname.new(pattern.path?(unit_name))
+#		path = Pathname.new(start_file_pattern.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
+#		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
+		if File.exists?(min_path)  then
+			' -t ' + unit_path.relative_path_from(pwd).to_s + ' ' + 
+				min_path.relative_path_from(pwd).to_s
 		end # if
 	end.compact.join # map
 end # minimal_comparison
@@ -206,46 +229,61 @@ def deserving_branch?(executable = @related_files.model_test_pathname?)
 		:edited
 	end # if
 end # deserving_branch
-def merge_conflict_recovery
+def merge_conflict_recovery(from_branch)
 # see man git status
-	if File.exists?('.git/MERGE_HEAD') then
-		@repository.merge_conflict_files?.each do |conflict|
-
-			case conflict[:conflict]
-			# DD unmerged, both deleted
-			when 'DD' then fail Exception.new(conflict.inspect)
-			# AU unmerged, added by us
-			when 'AU' then fail Exception.new(conflict.inspect)
-			# UD unmerged, deleted by them
-			when 'UD' then fail Exception.new(conflict.inspect)
-			# UA unmerged, added by them
-			when 'UA' then fail Exception.new(conflict.inspect)
-			# DU unmerged, deleted by us
-			when 'DU' then fail Exception.new(conflict.inspect)
-			# AA unmerged, both added
-			when 'AA' then fail Exception.new(conflict.inspect)
-			# UU unmerged, both modified
-			when 'UU' then
-				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
-				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
+	unmerged_files = @repository.merge_conflict_files?
+	if !unmerged_files.empty? then
+		puts 'merge --abort'
+		merge_abort = @repository.git_command('merge --abort')
+		if merge_abort.success? then
+			puts 'merge --X ours ' + from_branch.to_s
+			remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
+		end # if
+		unmerged_files.each do |conflict|
+			if conflict[:file][-4..-1] == '.log' then
+				@repository.git_command('checkout HEAD ' + conflict[:file])
+				puts 'checkout HEAD ' + conflict[:file]
 			else
-				fail Exception.new(conflict.inspect)
-			end # case
+				puts 'not checkout HEAD ' + conflict[:file]
+				case conflict[:conflict]
+				# DD unmerged, both deleted
+				when 'DD' then fail Exception.new(conflict.inspect)
+				# AU unmerged, added by us
+				when 'AU' then fail Exception.new(conflict.inspect)
+				# UD unmerged, deleted by them
+				when 'UD' then fail Exception.new(conflict.inspect)
+				# UA unmerged, added by them
+				when 'UA' then fail Exception.new(conflict.inspect)
+				# DU unmerged, deleted by us
+				when 'DU' then fail Exception.new(conflict.inspect)
+				# AA unmerged, both added
+				when 'AA' then fail Exception.new(conflict.inspect)
+				# UU unmerged, both modified
+				when 'UU', ' M', 'M ', 'MM', 'A ' then
+					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+				else
+					fail Exception.new(conflict.inspect)
+				end # case
+			end # if
 		end # each
 		@repository.confirm_commit
-	else
-		puts 'No merge conflict'
 	end # if
 end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
+		merge_status = @repository.git_command('merge ' + source_branch.to_s)
+		puts 'merge_status= ' + merge_status.inspect
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
+			puts 'merge OK'
 		else
 			if merge_status.success? then
+				puts 'not merge_conflict_recovery' + merge_status.inspect
 			else
-				merge_conflict_recovery
+				puts 'merge_conflict_recovery' + merge_status.inspect
+				merge_conflict_recovery(source_branch)
 			end # if
 		end # if
 		@repository.confirm_commit(interact)
@@ -294,7 +332,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
-			merge_conflict_recovery
+			merge_conflict_recovery(Branch_enhancement[i - 1])
 			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
 	end # each
@@ -306,7 +344,7 @@ def script_deserves_commit!(deserving_branch)
 	end # if
 end # script_deserves_commit!
 def test(executable = @related_files.model_test_pathname?)
-	merge_conflict_recovery
+	merge_conflict_recovery(:MERGE_HEAD)
 	deserving_branch = deserving_branch?(executable)
 	puts deserving_branch if $VERBOSE
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
@@ -320,7 +358,7 @@ def test(executable = @related_files.model_test_pathname?)
 	deserving_branch
 end # test
 def loop(executable = @related_files.model_test_pathname?)
-	merge_conflict_recovery
+	merge_conflict_recovery(:MERGE_HEAD)
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
 			deserving_branch = deserving_branch?(executable)
