@@ -1,20 +1,32 @@
+master
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-......................confirm_commit(:echo something_to_commit?=true
+...........F..........confirm_commit(:echo something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 14784 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 14798 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
-...confirm_commit(:echo something_to_commit?=true
+..Fconfirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 3.615140s, 7.7452 tests/s, 18.8098 assertions/s.
+Finished tests in 2.366441s, 11.8321 tests/s, 24.9320 assertions/s.
 
-28 tests, 68 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+test_error_score?(RepositoryTest) [test/unit/repository_test.rb:129]:
+#<Process::Status: pid 31436 exit 1>
+$ ruby -v -W0 /etc/mtab
+@errors="/etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('\nrootfs / rootfs rw 0 0\n                  ^\n"
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+
+  2) Failure:
+test_unit_names?(RepositoryTest) [test/unit/repository_test.rb:186]:
+<["Repository"]> expected but was
+<["repository"]>.
+
+28 tests, 59 assertions, 2 failures, 0 errors, 0 skips

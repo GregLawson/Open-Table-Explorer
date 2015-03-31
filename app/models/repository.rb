@@ -230,7 +230,7 @@ end #error_score
 def confirm_branch_switch(branch)
 	checkout_branch=git_command("checkout #{branch}")
 	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
-		checkout_branch.assert_post_conditions
+		checkout_branch #.assert_post_conditions
 	end #if
 	checkout_branch # for command chaining
 end #confirm_branch_switch
@@ -269,7 +269,7 @@ def safely_visit_branch(target_branch, &block)
 			puts git_command('status').output
 			puts git_command('stash show').output
 		else
-			apply_run.assert_post_conditions('unexpected stash apply fail')
+			apply_run #.assert_post_conditions('unexpected stash apply fail')
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])

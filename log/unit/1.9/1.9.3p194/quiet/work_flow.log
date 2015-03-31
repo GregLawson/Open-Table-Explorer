@@ -4,127 +4,11 @@ Run options:
 
 # Running tests:
 
-.............F.E..$ ruby  script/work_flow.rb --help
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n"
-$ echo "Hello World"
-Hello World
-$ echo "1 2;3 4"
-1 2;3 4
-$ $?=1
-@errors="sh: 1: 0=1: not found\n"
-$ ls happyHappyFailFail.junk
-@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-Usage: work_flow.rb --<command> files
-    -e, --[no-]edit                  Edit related files and versions in diffuse
-    -d, --[no-]merge-down            Test downgraded related files in git branches
-    -u, --[no-]upgrade               Test upgraded related files in git branches
-    -t, --[no-]test                  Test, commit. 
-    -b, --[no-]best                  Best. Merge down, no conflicts. 
-    -m, --[no-]emacs                 Emacs unit edit. 
-    -x, --[no-]execute               Unit test and edit. 
-    -p, --[no-]passed                Stage file to passed. 
-    -g, --[no-]testing               Stage file to testing. 
-    -i, --[no-]edited                Stage file to edited. 
-    -v, --[no-]deserve               Stage file to edited. 
-    -a, --[no-]all                   All files tested 
-    -n, --[no-]minimal               edit with minimal comparison. 
-    -l, --[no-]loop                  Test, commit, edit, loop.
-    -s, --[no-]split                 split off new class and edit
-    -r, --[no-]related               Related files
-    -c                               merge_conflict_recovery
-        --[no-]merge-conflict-recovery
-F...merge(:edited, :testing, :interactive)
+.............F.E......merge(:edited, :testing, :interactive)
 confirm_commit(:interactive something_to_commit?=false
-.$ ruby  script/work_flow.rb --merge-down
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n"
-$ echo "Hello World"
-Hello World
-$ echo "1 2;3 4"
-1 2;3 4
-$ $?=1
-@errors="sh: 1: 0=1: not found\n"
-$ ls happyHappyFailFail.junk
-@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-work_flow --<command> <file>
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 021a2d9 fixup! file_pattern
-HEAD is now at 021a2d9 fixup! file_pattern
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout passed
-@errors="Switched to branch 'passed'\n"
-merge(passed), edited)
-merge(:passed, :edited, :interactive)
-$ git merge --no-commit edited
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="Switched to branch 'master'\n"
-$ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 021a2d9 fixup! file_pattern
-HEAD is now at 021a2d9 fixup! file_pattern
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout testing
-@errors="Switched to branch 'testing'\n"
-merge(testing), passed)
-merge(:testing, :passed, :interactive)
-$ git merge --no-commit passed
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="Switched to branch 'master'\n"
-$ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 021a2d9 fixup! file_pattern
-HEAD is now at 021a2d9 fixup! file_pattern
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout edited
-@errors="Switched to branch 'edited'\n"
-merge(edited), testing)
-merge(:edited, :testing, :interactive)
-$ git merge --no-commit testing
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="Switched to branch 'master'\n"
-$ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-Run options: 
+...F...E..F
 
-# Running tests:
-
-
-
-Finished tests in 0.001026s, 0.0000 tests/s, 0.0000 assertions/s.
-
-0 tests, 0 assertions, 0 failures, 0 errors, 0 skips
-F.F...E..F
-
-Finished tests in 11.543713s, 2.8587 tests/s, 441.3658 assertions/s.
+Finished tests in 10.511522s, 3.1394 tests/s, 367.4064 assertions/s.
 
   1) Failure:
 test_deserving_branch?(WorkFlowTest) [test/unit/work_flow_test.rb:219]:
@@ -135,7 +19,7 @@ Run options:
 
 E.
 
-Finished tests in 0.000878s, 2276.9889 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000815s, 2455.4942 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):
@@ -174,7 +58,7 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3592086355435897080__setup__354813351420091138__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3436433446209746591__setup__333989204274070151__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -197,137 +81,11 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   3) Failure:
-test_help_command(WorkFlowTest) [test/unit/work_flow_test.rb:247]:
-self=$ ruby  script/work_flow.rb --help
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n"
-$ echo "Hello World"
-Hello World
-$ echo "1 2;3 4"
-1 2;3 4
-$ $?=1
-@errors="sh: 1: 0=1: not found\n"
-$ ls happyHappyFailFail.junk
-@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-Usage: work_flow.rb --<command> files
-    -e, --[no-]edit                  Edit related files and versions in diffuse
-    -d, --[no-]merge-down            Test downgraded related files in git branches
-    -u, --[no-]upgrade               Test upgraded related files in git branches
-    -t, --[no-]test                  Test, commit. 
-    -b, --[no-]best                  Best. Merge down, no conflicts. 
-    -m, --[no-]emacs                 Emacs unit edit. 
-    -x, --[no-]execute               Unit test and edit. 
-    -p, --[no-]passed                Stage file to passed. 
-    -g, --[no-]testing               Stage file to testing. 
-    -i, --[no-]edited                Stage file to edited. 
-    -v, --[no-]deserve               Stage file to edited. 
-    -a, --[no-]all                   All files tested 
-    -n, --[no-]minimal               edit with minimal comparison. 
-    -l, --[no-]loop                  Test, commit, edit, loop.
-    -s, --[no-]split                 split off new class and edit
-    -r, --[no-]related               Related files
-    -c                               merge_conflict_recovery
-        --[no-]merge-conflict-recovery
-expected errors to be empty\n
-"/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n" is not empty.
-
-  4) Failure:
-test_merge_command(WorkFlowTest) [test/unit/work_flow_test.rb:251]:
-self=$ ruby  script/work_flow.rb --merge-down
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n"
-$ echo "Hello World"
-Hello World
-$ echo "1 2;3 4"
-1 2;3 4
-$ $?=1
-@errors="sh: 1: 0=1: not found\n"
-$ ls happyHappyFailFail.junk
-@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-work_flow --<command> <file>
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 021a2d9 fixup! file_pattern
-HEAD is now at 021a2d9 fixup! file_pattern
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout passed
-@errors="Switched to branch 'passed'\n"
-merge(passed), edited)
-merge(:passed, :edited, :interactive)
-$ git merge --no-commit edited
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="Switched to branch 'master'\n"
-$ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 021a2d9 fixup! file_pattern
-HEAD is now at 021a2d9 fixup! file_pattern
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout testing
-@errors="Switched to branch 'testing'\n"
-merge(testing), passed)
-merge(:testing, :passed, :interactive)
-$ git merge --no-commit passed
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="Switched to branch 'master'\n"
-$ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 021a2d9 fixup! file_pattern
-HEAD is now at 021a2d9 fixup! file_pattern
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout edited
-@errors="Switched to branch 'edited'\n"
-merge(edited), testing)
-merge(:edited, :testing, :interactive)
-$ git merge --no-commit testing
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="Switched to branch 'master'\n"
-$ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-Run options: 
-
-# Running tests:
-
-
-
-Finished tests in 0.001026s, 0.0000 tests/s, 0.0000 assertions/s.
-
-0 tests, 0 assertions, 0 failures, 0 errors, 0 skips
-expected errors to be empty\n
-"/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n" is not empty.
-
-  5) Failure:
 test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:209]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
-  6) Error:
+  4) Error:
 test_scan_verions?(WorkFlowTest):
 RuntimeError: test/long_test/repository_test.rb does not exist.
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:109:in `diff_command?'
@@ -340,7 +98,7 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3592086355435897080__setup__354813351420091138__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3436433446209746591__setup__333989204274070151__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -362,9 +120,9 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-  7) Failure:
+  5) Failure:
 test_working_different_from?(WorkFlowTest) [test/unit/work_flow_test.rb:118]:
 <[]> expected to be != to
 <[]>.
 
-33 tests, 5095 assertions, 5 failures, 2 errors, 0 skips
+33 tests, 3862 assertions, 3 failures, 2 errors, 0 skips
