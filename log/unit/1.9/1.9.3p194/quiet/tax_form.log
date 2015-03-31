@@ -1,11 +1,13 @@
 master
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert':  (MiniTest::Assertion)
-Pathname(/media/central-greg/Non-media/Git_repositories).exist?=false
-parent directory /media/central-greg does exists containing ["SD_card_Backups", "scans", "Linux_PC_backups", "Drive_backups", "fstab", "USB_Flash_Drive_Backups", "Books", "Working_HDs", "Finance"]
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': default_open_tax_solver_glob=/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2011_* (MiniTest::Assertion)
+Array instance, is empty with value [].
 	from /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:485:in `assert_pathname_exists'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:155:in `assert_pre_conditions'
+	from /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:236:in `assert_not_empty'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:161:in `block in assert_pre_conditions'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:158:in `each'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:158:in `assert_pre_conditions'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:246:in `<class:TaxForm>'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:31:in `<module:Finance>'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:17:in `<module:OpenTableExplorer>'

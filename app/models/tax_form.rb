@@ -17,7 +17,7 @@ extend Test::Unit::Assertions
 module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
-Downloaded_src_dir='/media/central-greg/Non-media/Git_repositories/'
+Downloaded_src_dir = FilePattern.repository_dir?($0) + '/../'
 Possible_tax_years=[2011, 2012, 2013].sort
 Default_tax_year=Possible_tax_years[-1]
 
