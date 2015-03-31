@@ -1,50 +1,13 @@
-testing
+passed
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-.............F.E..$ ruby  script/work_flow.rb --help
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n"
-$ echo "Hello World"
-Hello World
-$ echo "1 2;3 4"
-1 2;3 4
-$ $?=1
-@errors="sh: 1: 0=1: not found\n"
-$ ls happyHappyFailFail.junk
-@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-Usage: work_flow.rb --<command> files
-    -e, --[no-]edit                  Edit related files and versions in diffuse
-    -d, --[no-]merge-down            Test downgraded related files in git branches
-    -u, --[no-]upgrade               Test upgraded related files in git branches
-    -t, --[no-]test                  Test, commit. 
-    -b, --[no-]best                  Best. Merge down, no conflicts. 
-    -m, --[no-]emacs                 Emacs unit edit. 
-    -x, --[no-]execute               Unit test and edit. 
-    -p, --[no-]passed                Stage file to passed. 
-    -g, --[no-]testing               Stage file to testing. 
-    -i, --[no-]edited                Stage file to edited. 
-    -v, --[no-]deserve               Stage file to edited. 
-    -a, --[no-]all                   All files tested 
-    -n, --[no-]minimal               edit with minimal comparison. 
-    -l, --[no-]loop                  Test, commit, edit, loop.
-    -s, --[no-]split                 split off new class and edit
-    -r, --[no-]related               Related files
-    -c                               merge_conflict_recovery
-        --[no-]merge-conflict-recovery
-F...merge(:edited, :testing, :interactive)
+.............F.E......merge(:edited, :testing, :interactive)
 confirm_commit(:interactive something_to_commit?=false
 .$ ruby  script/work_flow.rb --merge-down
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': self=$ git checkout master (MiniTest::Assertion)\n@errors=\"fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\\n\\nIf no other git process is currently running, this probably means a\\ngit process crashed in this repository earlier. Make sure no other git\\nprocess is running and remove the file manually to continue.\\n\"\nexpected errors to be empty\\n\n\"fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\\n\\nIf no other git process is currently running, this probably means a\\ngit process crashed in this repository earlier. Make sure no other git\\nprocess is running and remove the file manually to continue.\\n\" is not empty.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:241:in `assert_empty'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:284:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:233:in `confirm_branch_switch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n"
+@errors="/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': unexpected stash apply failself=$ git stash apply --quiet (MiniTest::Assertion)\n.\n<0> expected but was\n<1>.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:187:in `assert_equal'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:285:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:272:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n"
 $ echo "Hello World"
 Hello World
 $ echo "1 2;3 4"
@@ -63,11 +26,13 @@ $ file -b --mime script/work_flow.rb
 text/x-ruby; charset=us-ascii
 work_flow --<command> <file>
 $ git stash save --include-untracked
-Saved working directory and index state WIP on master: 6c366ee fixup! repository
-HEAD is now at 6c366ee fixup! repository
+@errors="Ignoring path test/data_sources/repository2015-03-31 07:42:37.001/\nIgnoring path test/data_sources/repository2015-03-31 07:43:13.982/\nIgnoring path test/data_sources/repository2015-03-31 07:45:32.841/\n"
+Saved working directory and index state WIP on master: 8c3693c fixup! repository
+HEAD is now at 8c3693c fixup! repository
 $ git status --porcelain --untracked-files=no|grep "UU "
 $ git checkout passed
 @errors="Switched to branch 'passed'\n"
+Your branch is ahead of 'origin/passed' by 17 commits.
 merge(passed), edited)
 merge(:passed, :edited, :interactive)
 $ git merge --no-commit edited
@@ -76,30 +41,11 @@ confirm_commit(:interactive something_to_commit?=false
 No merge conflict
 confirm_commit(:interactive something_to_commit?=false
 $ git checkout master
-@errors="Switched to branch 'master'\n"
-Your branch is ahead of 'origin/master' by 1 commit.
+@errors="fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\n\nIf no other git process is currently running, this probably means a\ngit process crashed in this repository earlier. Make sure no other git\nprocess is running and remove the file manually to continue.\n"
 $ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 6c366ee fixup! repository
-HEAD is now at 6c366ee fixup! repository
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout testing
-@errors="Switched to branch 'testing'\n"
-merge(testing), passed)
-merge(:testing, :passed, :interactive)
-$ git merge --no-commit passed
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\n\nIf no other git process is currently running, this probably means a\ngit process crashed in this repository earlier. Make sure no other git\nprocess is running and remove the file manually to continue.\n"
-$ git checkout master
-@errors="fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\n\nIf no other git process is currently running, this probably means a\ngit process crashed in this repository earlier. Make sure no other git\nprocess is running and remove the file manually to continue.\n"
 F.F.......
 
-Finished tests in 9.191571s, 3.5902 tests/s, 554.8562 assertions/s.
+Finished tests in 7.881729s, 4.1869 tests/s, 699.9734 assertions/s.
 
   1) Failure:
 test_deserving_branch?(WorkFlowTest) [test/unit/work_flow_test.rb:219]:
@@ -110,7 +56,7 @@ Run options:
 
 E.
 
-Finished tests in 0.000834s, 2399.3934 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000822s, 2432.9480 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):
@@ -149,7 +95,7 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__692582907943818610__setup__381261895365051580__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__824161180899716831__setup__3121040037703865708__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -172,51 +118,9 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   3) Failure:
-test_help_command(WorkFlowTest) [test/unit/work_flow_test.rb:247]:
-self=$ ruby  script/work_flow.rb --help
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n"
-$ echo "Hello World"
-Hello World
-$ echo "1 2;3 4"
-1 2;3 4
-$ $?=1
-@errors="sh: 1: 0=1: not found\n"
-$ ls happyHappyFailFail.junk
-@errors="ls: cannot access happyHappyFailFail.junk: No such file or directory\n"
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-$ file -b script/work_flow.rb
-Ruby script, ASCII text executable
-$ file -b --mime script/work_flow.rb
-text/x-ruby; charset=us-ascii
-Usage: work_flow.rb --<command> files
-    -e, --[no-]edit                  Edit related files and versions in diffuse
-    -d, --[no-]merge-down            Test downgraded related files in git branches
-    -u, --[no-]upgrade               Test upgraded related files in git branches
-    -t, --[no-]test                  Test, commit. 
-    -b, --[no-]best                  Best. Merge down, no conflicts. 
-    -m, --[no-]emacs                 Emacs unit edit. 
-    -x, --[no-]execute               Unit test and edit. 
-    -p, --[no-]passed                Stage file to passed. 
-    -g, --[no-]testing               Stage file to testing. 
-    -i, --[no-]edited                Stage file to edited. 
-    -v, --[no-]deserve               Stage file to edited. 
-    -a, --[no-]all                   All files tested 
-    -n, --[no-]minimal               edit with minimal comparison. 
-    -l, --[no-]loop                  Test, commit, edit, loop.
-    -s, --[no-]split                 split off new class and edit
-    -r, --[no-]related               Related files
-    -c                               merge_conflict_recovery
-        --[no-]merge-conflict-recovery
-expected errors to be empty\n
-"/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n" is not empty.
-
-  4) Failure:
 test_merge_command(WorkFlowTest) [test/unit/work_flow_test.rb:251]:
 self=$ ruby  script/work_flow.rb --merge-down
-@errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': self=$ git checkout master (MiniTest::Assertion)\n@errors=\"fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\\n\\nIf no other git process is currently running, this probably means a\\ngit process crashed in this repository earlier. Make sure no other git\\nprocess is running and remove the file manually to continue.\\n\"\nexpected errors to be empty\\n\n\"fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\\n\\nIf no other git process is currently running, this probably means a\\ngit process crashed in this repository earlier. Make sure no other git\\nprocess is running and remove the file manually to continue.\\n\" is not empty.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:241:in `assert_empty'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:284:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:233:in `confirm_branch_switch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n"
+@errors="/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': unexpected stash apply failself=$ git stash apply --quiet (MiniTest::Assertion)\n.\n<0> expected but was\n<1>.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:187:in `assert_equal'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:285:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:272:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n"
 $ echo "Hello World"
 Hello World
 $ echo "1 2;3 4"
@@ -235,11 +139,13 @@ $ file -b --mime script/work_flow.rb
 text/x-ruby; charset=us-ascii
 work_flow --<command> <file>
 $ git stash save --include-untracked
-Saved working directory and index state WIP on master: 6c366ee fixup! repository
-HEAD is now at 6c366ee fixup! repository
+@errors="Ignoring path test/data_sources/repository2015-03-31 07:42:37.001/\nIgnoring path test/data_sources/repository2015-03-31 07:43:13.982/\nIgnoring path test/data_sources/repository2015-03-31 07:45:32.841/\n"
+Saved working directory and index state WIP on master: 8c3693c fixup! repository
+HEAD is now at 8c3693c fixup! repository
 $ git status --porcelain --untracked-files=no|grep "UU "
 $ git checkout passed
 @errors="Switched to branch 'passed'\n"
+Your branch is ahead of 'origin/passed' by 17 commits.
 merge(passed), edited)
 merge(:passed, :edited, :interactive)
 $ git merge --no-commit edited
@@ -248,33 +154,14 @@ confirm_commit(:interactive something_to_commit?=false
 No merge conflict
 confirm_commit(:interactive something_to_commit?=false
 $ git checkout master
-@errors="Switched to branch 'master'\n"
-Your branch is ahead of 'origin/master' by 1 commit.
+@errors="fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\n\nIf no other git process is currently running, this probably means a\ngit process crashed in this repository earlier. Make sure no other git\nprocess is running and remove the file manually to continue.\n"
 $ git stash apply --quiet
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git stash save --include-untracked
-Saved working directory and index state WIP on master: 6c366ee fixup! repository
-HEAD is now at 6c366ee fixup! repository
-$ git status --porcelain --untracked-files=no|grep "UU "
-$ git checkout testing
-@errors="Switched to branch 'testing'\n"
-merge(testing), passed)
-merge(:testing, :passed, :interactive)
-$ git merge --no-commit passed
-Already up-to-date.
-confirm_commit(:interactive something_to_commit?=false
-No merge conflict
-confirm_commit(:interactive something_to_commit?=false
-$ git checkout master
-@errors="fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\n\nIf no other git process is currently running, this probably means a\ngit process crashed in this repository earlier. Make sure no other git\nprocess is running and remove the file manually to continue.\n"
-$ git checkout master
-@errors="fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\n\nIf no other git process is currently running, this probably means a\ngit process crashed in this repository earlier. Make sure no other git\nprocess is running and remove the file manually to continue.\n"
 expected errors to be empty\n
-"/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:321: warning: already initialized constant Failed_capture\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:322: warning: already initialized constant Syntax_failed_capture\n/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': self=$ git checkout master (MiniTest::Assertion)\n@errors=\"fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\\n\\nIf no other git process is currently running, this probably means a\\ngit process crashed in this repository earlier. Make sure no other git\\nprocess is running and remove the file manually to continue.\\n\"\nexpected errors to be empty\\n\n\"fatal: Unable to create '/home/greg/Desktop/src/Open-Table-Explorer/.git/index.lock': File exists.\\n\\nIf no other git process is currently running, this probably means a\\ngit process crashed in this repository earlier. Make sure no other git\\nprocess is running and remove the file manually to continue.\\n\" is not empty.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:241:in `assert_empty'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:284:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:233:in `confirm_branch_switch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:261:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n" is not empty.
+"/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': unexpected stash apply failself=$ git stash apply --quiet (MiniTest::Assertion)\n.\n<0> expected but was\n<1>.\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'\n\tfrom /usr/lib/ruby/1.9.1/test/unit/assertions.rb:187:in `assert_equal'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:285:in `assert_post_conditions'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:272:in `safely_visit_branch'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:316:in `block in merge_down'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `each'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:315:in `merge_down'\n\tfrom script/work_flow.rb:114:in `block in <main>'\n\tfrom script/work_flow.rb:97:in `each'\n\tfrom script/work_flow.rb:97:in `<main>'\n" is not empty.
 
-  5) Failure:
+  4) Failure:
 test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:209]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
-33 tests, 5100 assertions, 4 failures, 1 errors, 0 skips
+33 tests, 5517 assertions, 3 failures, 1 errors, 0 skips
