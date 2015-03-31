@@ -65,7 +65,9 @@ def branch_index?(branch_name)
 	branch_index
 end # branch_index?
 def revison_tag?(branch_index)
-	'-r ' + branch_symbol?(branch_index).to_s
+	branch_name = branch_symbol?(branch_index).to_s
+	fail Exception.new('branch_name=' + branch_name.inspect) if branch_name.size < 1
+	'-r ' + branch_name
 end # revison_tag?
 def merge_range(deserving_branch)
 	deserving_index = WorkFlow.branch_index?(deserving_branch)
