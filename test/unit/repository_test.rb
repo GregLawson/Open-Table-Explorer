@@ -183,7 +183,7 @@ def test_safely_visit_branch
 	end #
 end #safely_visit_branch
 def test_unit_names?
-	assert_equal(['Repository'], Minimal_repository.unit_names?([$0]))	
+	assert_equal(['repository'], Minimal_repository.unit_names?([$0]))	
 end #unit_names?
 def test_validate_commit
 	Minimal_repository.assert_nothing_to_commit
