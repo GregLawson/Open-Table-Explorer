@@ -276,4 +276,4 @@ def test_grep
 	delimiter="\n"
 end #grep
 RegexpParse.assert_pre_conditions
-end # RegexpParerTest
+end # RegexpParseType

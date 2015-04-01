@@ -1,7 +1,5 @@
 master
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:134:in `<module:Examples>': uninitialized constant RegexpParse::Examples::Constants (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:133:in `<class:RegexpParse>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:13:in `<top (required)>'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:13:in `<top (required)>': RegexpParseType is not a class (TypeError)
 	from test/unit/regexp_parse_test.rb:9:in `require_relative'
 	from test/unit/regexp_parse_test.rb:9:in `<main>'
