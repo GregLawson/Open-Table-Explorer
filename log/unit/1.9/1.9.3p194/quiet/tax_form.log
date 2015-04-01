@@ -1,16 +1,309 @@
 master
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': In assert_pre_conditions, self=#<OpenTableExplorer::Finance::TaxForm:0x00000002b7e0b0 @taxpayer="example", @form="1040", @jurisdiction=:US, @tax_year=2014, @open_tax_solver_distribution_directories=["/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms", "/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02"], @open_tax_solver_distribution_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/", @form_filename="US_1040", @open_tax_solver_data_base_directory="test/data_sources/tax_form/2014/", @open_tax_solver_data_directory="test/data_sources/tax_form/2014/examples_and_templates/US_1040/", @taxpayer_basename="US_1040_example", @taxpayer_basename_with_year="US_1040_2014_example", @open_tax_solver_binary="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014", @open_tax_solver_input="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt", @open_tax_solver_output="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt", @open_tax_solver_sysout="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt", @output_pdf="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf"> (MiniTest::Assertion)
-Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040).exist?=false
-parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form does exists containing ["2012", "US_1040", "examples_and_templates", "2013"]
-	from /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:485:in `assert_pathname_exists'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:490:in `assert_directory_exists'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:172:in `assert_pre_conditions'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:260:in `<module:Examples>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:248:in `<class:TaxForm>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:32:in `<module:Finance>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:17:in `<module:OpenTableExplorer>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:14:in `<top (required)>'
-	from test/unit/tax_form_test.rb:9:in `require_relative'
-	from test/unit/tax_form_test.rb:9:in `<main>'
+Run options: 
+
+# Running tests:
+
+.F.rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>
+$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf
+@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>"
+@process_status=nil
+rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>
+$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf
+@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>"
+@process_status=nil
+$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_out.txt > test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_OTS.json
+@errors="sh: 1: nodejs: not found\n"
+F...rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>
+F.........rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf>
+$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf
+@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf>"
+@process_status=nil
+$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_otff.pdf>
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt: Directory nonexistent\n"
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt: Directory nonexistent
+'
+FF.$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/apply_values.js /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/definition/Federal/f1040.json /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/transform/Federal/f1040.json test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_OTS.json > /tmp/output.fdf
+@errors="sh: 1: nodejs: not found\n"
+F$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt > test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_OTS.json
+@errors="sh: 1: nodejs: not found\n"
+Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf>
+$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+F$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_example.txt >/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_example_sysout.txt
+peculiar_status=false
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Wed Apr  1 06:29:56 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+'
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent\n"
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent
+'
+Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_otff.pdf>
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt: Directory nonexistent\n"
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt: Directory nonexistent
+'
+Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_otff.pdf>
+$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_otff.pdf
+@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_otff.pdf>"
+@process_status=nil
+$ pdftoppm -jpeg  US_1040_greg_otff.pdf US_1040_2014_greg
+@errors="Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n"
+F
+
+Finished tests in 0.330333s, 81.7356 tests/s, 369.3239 assertions/s.
+
+  1) Failure:
+test_Examples(TaxFormTest) [test/unit/tax_form_test.rb:222]:
+constant name=US1040_user
+
+Pathname(/home/greg/Desktop/src/OpenTaxSolver2014_12.02/examples_and_templates/US_1040/US_1040_greg.txt).exist?=false
+parent directory /home/greg/Desktop/src/OpenTaxSolver2014_12.02/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_template.txt", "US_1040_example_out.txt", "US_1040_greg_sysout.txt", "US_1040_example.txt", "US_1040_greg_OTS.json", "US_1040_example_sysout.txt"]
+
+  2) Failure:
+test_assert_build(TaxFormTest) [test/unit/tax_form_test.rb:208]:
+self=$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_out.txt > test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_OTS.json
+@errors="sh: 1: nodejs: not found\n"
+expected errors to be empty\n
+"sh: 1: nodejs: not found\n" is not empty.
+
+  3) Failure:
+test_assert_open_tax_solver(TaxFormTest) [test/unit/tax_form_test.rb:187]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2012_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540 does exists containing ["CA_540_2012_example_OTS.json", "CA_540_2014_example.txt", "README_CA_540.txt", "CA_540_2014_template.txt"]
+
+  4) Failure:
+test_example(TaxFormTest) [test/unit/tax_form_test.rb:56]:
+self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+expected errors to be empty\n
+"Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty.
+
+  5) Failure:
+test_example1(TaxFormTest) [test/unit/tax_form_test.rb:70]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example1_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example1_OTS.json", "US_1040_example.txt"]
+
+  6) Failure:
+test_initialize(TaxFormTest) [test/unit/tax_form_test.rb:48]:
+Expected /CA_540_2012$/ to match "/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_CA_540_2014".
+
+  7) Failure:
+test_run_json_to_fdf(TaxFormTest) [test/unit/tax_form_test.rb:137]:
+self=$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/apply_values.js /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/definition/Federal/f1040.json /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/transform/Federal/f1040.json test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_OTS.json > /tmp/output.fdf
+@errors="sh: 1: nodejs: not found\n"
+expected errors to be empty\n
+"sh: 1: nodejs: not found\n" is not empty.
+
+  8) Failure:
+test_run_ots_to_json(TaxFormTest) [test/unit/tax_form_test.rb:109]:
+self=$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt > test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_OTS.json
+@errors="sh: 1: nodejs: not found\n"
+expected errors to be empty\n
+"sh: 1: nodejs: not found\n" is not empty.
+
+  9) Failure:
+test_run_pdf_to_jpeg(TaxFormTest) [test/unit/tax_form_test.rb:157]:
+self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+expected errors to be empty\n
+"Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty.
+
+ 10) Failure:
+test_run_tax_solver(TaxFormTest) [test/unit/tax_form_test.rb:97]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example1_OTS.json", "US_1040_example.txt"]
+
+ 11) Failure:
+test_template(TaxFormTest) [test/unit/tax_form_test.rb:73]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example1_OTS.json", "US_1040_example.txt"]
+
+ 12) Failure:
+test_user(TaxFormTest) [test/unit/tax_form_test.rb:66]:
+self=$ pdftoppm -jpeg  US_1040_greg_otff.pdf US_1040_2014_greg
+@errors="Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n"
+expected errors to be empty\n
+"Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n" is not empty.
+
+27 tests, 122 assertions, 12 failures, 0 errors, 0 skips
