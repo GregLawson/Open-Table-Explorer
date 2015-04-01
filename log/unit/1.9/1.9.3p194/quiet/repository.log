@@ -7,13 +7,10 @@ Run options:
 ...........F..........confirm_commit(:echo something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
+@process_status=#<Process::Status: pid 7644 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-$ git checkout master
-@errors="Already on 'master'\n"
-..Fconfirm_commit(:echo something_to_commit?=true
-.
-
+@process_status=#<Process::Status: pid 7658 exit 128>
 Finished tests in 2.366441s, 11.8321 tests/s, 24.9320 assertions/s.
 
   1) Failure:
