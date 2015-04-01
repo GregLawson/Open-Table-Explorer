@@ -1,4 +1,4 @@
-passed
+testing
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -7,20 +7,15 @@ Run options:
 ......................confirm_commit(:echo something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 31217 exit 1>
+@process_status=#<Process::Status: pid 26460 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 31231 exit 128>
+@process_status=#<Process::Status: pid 26474 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
-..Fconfirm_commit(:echo something_to_commit?=true
+...confirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 3.515696s, 7.9643 tests/s, 19.3418 assertions/s.
+Finished tests in 3.811541s, 7.3461 tests/s, 17.8406 assertions/s.
 
-  1) Failure:
-test_unit_names?(RepositoryTest) [test/unit/repository_test.rb:186]:
-<["Repository"]> expected but was
-<["repository"]>.
-
-28 tests, 68 assertions, 1 failures, 0 errors, 0 skips
+28 tests, 68 assertions, 0 failures, 0 errors, 0 skips
