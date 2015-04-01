@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/tax_form.rb'
-require_relative '../assertions/regexp_parse_assertions.rb'
+#require_relative '../assertions/regexp_parse_assertions.rb'
 class TaxFormTest < TestCase
 def model_class?
 	OpenTableExplorer::Finance::TaxForm
