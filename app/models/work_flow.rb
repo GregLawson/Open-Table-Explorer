@@ -10,7 +10,7 @@ require_relative 'repository.rb'
 class WorkFlow
 module Constants
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
-Extended_branches = { -2 => :'origin/master', -1 => :master }
+Extended_branches = { -3 => :'origin/master', -2 => :work_flow, -1 => :master }
 First_slot_index = Extended_branches.keys.min
 Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
 Deserving_commit_to_branch = { success:             0,
