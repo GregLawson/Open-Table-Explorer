@@ -18,8 +18,9 @@ module Finance
 module Constants
 Data_source_directory='test/data_sources/tax_form/'
 Downloaded_src_dir = FilePattern.repository_dir?($0) + '/../'
-Possible_tax_years=[2011, 2012, 2013].sort
-Default_tax_year=Possible_tax_years[-1]
+#Possible_tax_years=[2011, 2012, 2013, 2014].sort
+Possible_tax_years=[2014].sort
+Default_tax_year = Possible_tax_years[-1]
 
 Open_Tax_Filler_Directory=Downloaded_src_dir+'OpenTaxFormFiller'
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
@@ -167,16 +168,16 @@ end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-	assert_directory_exists(@open_tax_solver_distribution_directory, message+caller_lines)
+	assert_directory_exists(@open_tax_solver_distribution_directory, message)
 	assert_directory_exists(@open_tax_solver_data_directory, message)
 	assert_pathname_exists(@open_tax_solver_binary, message)
 	assert_data_file(@open_tax_solver_input, message)
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
-	assert_directory_exists(@open_tax_solver_distribution_directory, message+caller_lines)
-	assert_directory_exists(@open_tax_solver_data_directory, message+caller_lines)
-	assert_data_file(@open_tax_solver_output, message+caller_lines)
+	assert_directory_exists(@open_tax_solver_distribution_directory, message)
+	assert_directory_exists(@open_tax_solver_data_directory, message)
+	assert_data_file(@open_tax_solver_output, message)
 	self
 end #assert_post_conditions
 # Assertions custom instance methods

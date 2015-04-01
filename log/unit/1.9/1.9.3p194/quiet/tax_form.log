@@ -1,15 +1,15 @@
 master
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': default_open_tax_solver_glob=/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2011_* (MiniTest::Assertion)
-Array instance, is empty with value [].
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:180:in `assert': In assert_pre_conditions, self=#<OpenTableExplorer::Finance::TaxForm:0x00000002b7e0b0 @taxpayer="example", @form="1040", @jurisdiction=:US, @tax_year=2014, @open_tax_solver_distribution_directories=["/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms", "/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02"], @open_tax_solver_distribution_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/", @form_filename="US_1040", @open_tax_solver_data_base_directory="test/data_sources/tax_form/2014/", @open_tax_solver_data_directory="test/data_sources/tax_form/2014/examples_and_templates/US_1040/", @taxpayer_basename="US_1040_example", @taxpayer_basename_with_year="US_1040_2014_example", @open_tax_solver_binary="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014", @open_tax_solver_input="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt", @open_tax_solver_output="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt", @open_tax_solver_sysout="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt", @output_pdf="test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf"> (MiniTest::Assertion)
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form does exists containing ["2012", "US_1040", "examples_and_templates", "2013"]
 	from /usr/lib/ruby/1.9.1/test/unit/assertions.rb:38:in `assert'
-	from /usr/lib/ruby/1.9.1/test/unit/assertions.rb:52:in `assert_block'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:236:in `assert_not_empty'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:161:in `block in assert_pre_conditions'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:158:in `each'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:158:in `assert_pre_conditions'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:246:in `<class:TaxForm>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:31:in `<module:Finance>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:485:in `assert_pathname_exists'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:490:in `assert_directory_exists'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:172:in `assert_pre_conditions'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:260:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:248:in `<class:TaxForm>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:32:in `<module:Finance>'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:17:in `<module:OpenTableExplorer>'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:14:in `<top (required)>'
 	from test/unit/tax_form_test.rb:9:in `require_relative'
