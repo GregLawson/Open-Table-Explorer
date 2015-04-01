@@ -181,6 +181,14 @@ def write_error_file(recent_test, log_path)
 	contents += recent_test.errors
 	IO.write(log_path, contents)
 end # write_error_file
+def write_commit_message(recent_test,files)
+	commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
+	if !recent_test.nil? then
+		commit_message += "\n"   + recent_test.output
+		commit_message += recent_test.errors
+	end #if
+	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+end # write_commit_message
 def ruby_test_string(executable,
 		logging = :quiet,
 		minor_version = '1.9',
@@ -208,6 +216,7 @@ def error_score?(executable,
 	if !log_path.empty? then
 	end # if
 	write_error_file(@recent_test, log_path)
+	write_commit_message(@recent_test, [executable])
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		0
@@ -317,11 +326,6 @@ def validate_commit(changes_branch, files, interact=:interactive)
 		git_command(['checkout', changes_branch.to_s, p])
 	end #each
 	if something_to_commit? then
-		commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
-		if !@recent_test.nil? then
-			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
-		end #if
-		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 		confirm_commit(interact)
 #		git_command('rebase --autosquash --interactive')
 	end #if
