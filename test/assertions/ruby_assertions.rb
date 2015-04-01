@@ -494,7 +494,7 @@ end #assert_directory_exists
 def assert_data_file(pathname, message='')
 	message += 'pathname = ' + "'" + pathname + "'"
 	assert_pathname_exists(pathname, message)
-	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it aa directory?")
+	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it a directory?")
 	assert_not_nil(File.size?(pathname), message)
 	assert_not_equal(0, File.size?(pathname), message)
 	pathname # allow chaining
