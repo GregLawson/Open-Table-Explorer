@@ -230,42 +230,41 @@ def deserving_branch?(executable = @related_files.model_test_pathname?)
 end # deserving_branch
 def merge_conflict_recovery
 # see man git status
-	if File.exists?('.git/MERGE_HEAD') then
-		@repository.merge_conflict_files?.each do |conflict|
+	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
+	@repository.merge_conflict_files?.each do |conflict|
 
-			case conflict[:conflict]
-			# DD unmerged, both deleted
-			when 'DD' then fail Exception.new(conflict.inspect)
-			# AU unmerged, added by us
-			when 'AU' then fail Exception.new(conflict.inspect)
-			# UD unmerged, deleted by them
-			when 'UD' then fail Exception.new(conflict.inspect)
-			# UA unmerged, added by them
-			when 'UA' then fail Exception.new(conflict.inspect)
-			# DU unmerged, deleted by us
-			when 'DU' then fail Exception.new(conflict.inspect)
-			# AA unmerged, both added
-			when 'AA' then fail Exception.new(conflict.inspect)
-			# UU unmerged, both modified
-			when 'UU' then
-				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
-				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-			else
-				fail Exception.new(conflict.inspect)
-			end # case
-		end # each
-		@repository.confirm_commit
-	else
-		puts 'No merge conflict' if !$VERBOSE.nil?
-	end # if
+		case conflict[:conflict]
+		# DD unmerged, both deleted
+		when 'DD' then fail Exception.new(conflict.inspect)
+		# AU unmerged, added by us
+		when 'AU' then fail Exception.new(conflict.inspect)
+		# UD unmerged, deleted by them
+		when 'UD' then fail Exception.new(conflict.inspect)
+		# UA unmerged, added by them
+		when 'UA' then fail Exception.new(conflict.inspect)
+		# DU unmerged, deleted by us
+		when 'DU' then fail Exception.new(conflict.inspect)
+		# AA unmerged, both added
+		when 'AA' then fail Exception.new(conflict.inspect)
+		# UU unmerged, both modified
+		when 'UU' then
+			WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+			@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+		else
+			fail Exception.new(conflict.inspect)
+		end # case
+	end # each
+	@repository.confirm_commit
 end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
 		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
+		puts 'merge_status= ' + merge_status.inspect
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
 		else
 			if merge_status.success? then
+				puts 'not merge_conflict_recovery' + merge_status.inspect
 			else
 				merge_conflict_recovery
 			end # if
