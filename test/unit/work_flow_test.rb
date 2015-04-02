@@ -46,7 +46,8 @@ def test_branch_symbol?
 	assert_equal(:stash, WorkFlow.branch_symbol?(3))
 	assert_equal(:'stash~1', WorkFlow.branch_symbol?(4))
 	assert_equal(:'stash~2', WorkFlow.branch_symbol?(5))
-	assert_equal(:'origin/master', WorkFlow.branch_symbol?(-2))
+	assert_equal(:work_flow, WorkFlow.branch_symbol?(-2))
+	assert_equal(:'origin/master', WorkFlow.branch_symbol?(-3))
 end #branch_symbol?
 def test_branch_index?
 	assert_equal(0, WorkFlow.branch_index?(:passed))
@@ -57,6 +58,7 @@ def test_branch_index?
 	assert_equal(5, WorkFlow.branch_index?(:'stash~2'))
 	assert_equal(-1, WorkFlow.branch_index?(:master))
 	assert_equal(-2, WorkFlow.branch_index?(:'origin/master'))
+	assert_equal(-nil, WorkFlow.branch_index?('/home/greg'))
 end #branch_index?
 def test_revison_tag?
 	assert_equal('-r master', WorkFlow.revison_tag?(-1))
