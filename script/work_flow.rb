@@ -114,7 +114,7 @@ commands.each do |c|
 			work_flow.merge_down
 		when :merge_conflict_recovery then 
 			work_flow=WorkFlow.new($0)
-			work_flow.repository.merge_conflict_recovery
+			work_flow.merge_conflict_recovery
 		when :split then
 			work_flow.split(argv[0], argv[1])
 	else argv.each do |f|

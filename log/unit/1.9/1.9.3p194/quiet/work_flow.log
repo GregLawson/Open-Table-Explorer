@@ -1,13 +1,7 @@
 edited
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-test/unit/work_flow_test.rb:9:in `require_relative': /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:236: syntax error, unexpected ']', expecting keyword_then or ';' or '\n' (SyntaxError)
-		if conflict[:file]][-4..-1] == '.log' then
-		                   ^
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:236: syntax error, unexpected ']', expecting keyword_end
-		if conflict[:file]][-4..-1] == '.log' then
-		                           ^
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:236: syntax error, unexpected keyword_then, expecting keyword_end
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:237: syntax error, unexpected ']', expecting ')'
-			git_command('rm ' + conflict[:file]])
-			                                    ^
-	from test/unit/work_flow_test.rb:9:in `<main>'
+Run options: 
+
+# Running tests:
+
+......F..................merge(:edited, :testing, :interactive)
