@@ -57,6 +57,7 @@ def test_branch_index?
 	assert_equal(5, WorkFlow.branch_index?(:'stash~2'))
 	assert_equal(-1, WorkFlow.branch_index?(:master))
 	assert_equal(-2, WorkFlow.branch_index?(:'origin/master'))
+	assert_equal(-nil, WorkFlow.branch_index?('/home/greg'))
 end #branch_index?
 def test_revison_tag?
 	assert_equal('-r master', WorkFlow.revison_tag?(-1))
@@ -164,7 +165,7 @@ def test_scan_verions?
 	message+="\nscan_verions="+scan_verions.inspect
 	assert_equal(existing_indices[0], scan_verions, message)
 	filename=Most_stable_file
-	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last), message)
+#	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last), message)
 	assert_equal(Last_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..Last_slot_index, :first), message)
 end #scan_verions?
 def test_bracketing_versions?
@@ -232,11 +233,39 @@ def test_deserving_branch?
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
 #	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
 end #deserving_branch
+def test_merge_conflict_recovery
+end # merge_conflict_recovery
 def test_merge
 	TestWorkFlow.repository.testing_superset_of_passed.assert_post_conditions
 	TestWorkFlow.repository.edited_superset_of_testing.assert_post_conditions
 	TestWorkFlow.merge(:edited, :testing) # not too long or too dangerous
 end #merge
+def test_edit
+#(context = nil)
+end # edit
+def test_split
+#(executable, new_base_name)
+end # split
+def test_minimal_edit
+end # minimal_edit
+def test_emacs
+#(executable = @related_files.model_test_pathname?)
+end # emacs
+def test_merge_down
+#(deserving_branch = @repository.current_branch_name?)
+end # merge_down
+def test_script_deserves_commit!
+#(deserving_branch)
+end # script_deserves_commit!
+def test_test
+#(executable = @related_files.model_test_pathname?)
+end # test
+def test_loop
+#(executable = @related_files.model_test_pathname?)
+end # test
+def test_unit_test
+#	executable = @related_files.model_test_pathname?
+end # unit_test
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions

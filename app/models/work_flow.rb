@@ -234,7 +234,7 @@ def merge_conflict_recovery
 	@repository.merge_conflict_files?.each do |conflict|
 		# ' M' modified, don't merge log files
 		if conflict[:file][-4..-1] == '.log' then
-			git_command('rm ' + conflict[:file]])
+			git_command('rm ' + conflict[:file])
 		end # if
 		case conflict[:conflict]
 		# DD unmerged, both deleted
