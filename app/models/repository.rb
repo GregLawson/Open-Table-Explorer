@@ -355,20 +355,18 @@ end #revert_changes
 def merge_conflict_files?
 	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
 	ret=[]
-	if File.exists?('.git/MERGE_HEAD') then
-		unmerged_files.split("\n").map do |line|
-			file=line[3..-1]
-			ret << {:conflict => line[0..1], :file => file}
-			puts 'ruby script/workflow.rb --test '+file
-			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
-			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
-			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
-			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
-			rm_orig=shell_command('rm '+file.to_s+'.orig')
-		end #map
-		if !unmerged_files.empty? then
-			merge_abort=git_command('merge --abort')
-		end #if
+	unmerged_files.split("\n").map do |line|
+		file=line[3..-1]
+		ret << {:conflict => line[0..1], :file => file}
+		puts 'ruby script/workflow.rb --test '+file
+		rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
+		rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
+		rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
+		rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
+		rm_orig=shell_command('rm '+file.to_s+'.orig')
+	end #map
+	if !unmerged_files.empty? then
+		merge_abort=git_command('merge --abort')
 	end #if
 	ret
 end #merge_conflict_files?
