@@ -237,7 +237,7 @@ def merge_conflict_recovery(from_branch)
 		merge_abort = @repository.git_command('merge --abort')
 		unmerged_files.each do |conflict|
 			if conflict[:file][-4..-1] == '.log' then
-				git_command('checkout HEAD ' + conflict[:file])
+				@repository.git_command('checkout HEAD ' + conflict[:file])
 				puts 'checkout HEAD ' + conflict[:file]
 			else
 				puts 'not checkout HEAD ' + conflict[:file]
