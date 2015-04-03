@@ -13,7 +13,7 @@ require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 scripting_workflow=WorkFlow.new($0)
 if File.exists?('.git/MERGE_HEAD') then
-	scripting_workflow.repository.merge_conflict_recovery
+	scripting_workflow.merge_conflict_recovery
 else
 end
 # good enough for edited; no syntax error
@@ -114,7 +114,7 @@ commands.each do |c|
 			work_flow.merge_down
 		when :merge_conflict_recovery then 
 			work_flow=WorkFlow.new($0)
-			work_flow.repository.merge_conflict_recovery
+			work_flow.merge_conflict_recovery
 		when :split then
 			work_flow.split(argv[0], argv[1])
 	else argv.each do |f|
