@@ -235,7 +235,10 @@ def merge_conflict_recovery
 	@repository.merge_conflict_files?.each do |conflict|
 		# ' M' modified, don't merge log files
 		if conflict[:file][-4..-1] == '.log' then
-			git_command('rm ' + conflict[:file])
+			git_command('checkout HEAD ' + conflict[:file])
+			puts 'checkout HEAD ' + conflict[:file]
+		else
+			puts 'not checkout HEAD ' + conflict[:file]
 		end # if
 		case conflict[:conflict]
 		# DD unmerged, both deleted
@@ -251,10 +254,9 @@ def merge_conflict_recovery
 		# AA unmerged, both added
 		when 'AA' then fail Exception.new(conflict.inspect)
 		# UU unmerged, both modified
-		when 'UU' then
+		when 'UU', ' M', 'M ', 'MM' then
 			WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 			@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-		when ' M' then
 		else
 			fail Exception.new(conflict.inspect)
 		end # case
