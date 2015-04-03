@@ -43,7 +43,8 @@ end # all
 def branch_symbol?(branch_index)
 	case branch_index
 	when nil then fail 'branch_index=' + branch_index.inspect
-	when -2 then :'origin/master'
+	when -2 then :work_flow
+	when -3 then :'origin/master'
 	when -1 then :master
 	when 0..WorkFlow::Branch_enhancement.size - 1 then WorkFlow::Branch_enhancement[branch_index]
 	when WorkFlow::Branch_enhancement.size then :stash
@@ -247,7 +248,7 @@ def merge_conflict_recovery
 		# AA unmerged, both added
 		when 'AA' then fail Exception.new(conflict.inspect)
 		# UU unmerged, both modified
-		when 'UU' then
+		when 'UU', ' M', 'M ', 'MM' then
 			WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 			@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 		else
