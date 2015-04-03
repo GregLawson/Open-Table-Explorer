@@ -239,6 +239,12 @@ def merge_conflict_recovery(from_branch)
 			remerge = git_command('merge --X ours ' + from_branch)
 		end # if
 		unmerged_files.each do |conflict|
+		if conflict[:file][-4..-1] == '.log' then
+			git_command('checkout HEAD ' + conflict[:file])
+			puts 'checkout HEAD ' + conflict[:file]
+		else
+			puts 'not checkout HEAD ' + conflict[:file]
+		end # if
 			case conflict[:conflict]
 			# DD unmerged, both deleted
 			when 'DD' then fail Exception.new(conflict.inspect)
@@ -253,22 +259,13 @@ def merge_conflict_recovery(from_branch)
 			# AA unmerged, both added
 			when 'AA' then fail Exception.new(conflict.inspect)
 			# UU unmerged, both modified
-			when 'UU' then
+			when 'UU', ' M', 'M ', 'MM' then
 				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-			# 'M ' modified, don't merge log files
-			when 'M ' then
-				if conflict[:file][-4..-1] == '.log' then
-					git_command('rm ' + conflict[:file])
-				end # if
-			when 'MM' then
-				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
-				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-			else
-				fail Exception.new(conflict.inspect)
-			end # case
-		end # each
-	end # if
+		else
+			fail Exception.new(conflict.inspect)
+		end # case
+	end # each
 	@repository.confirm_commit
 end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
