@@ -234,10 +234,7 @@ def merge_conflict_recovery(from_branch)
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
 	unmerged_files = @repository.merge_conflict_files?
 	if !unmerged_files.empty? then
-		merge_abort = git_command('merge --abort')
-.		if merge_abort.success? then
-			remerge = git_command('merge --X ours ' + from_branch)
-		end # if
+		merge_abort = @repository.git_command('merge --abort')
 		unmerged_files.each do |conflict|
 			if conflict[:file][-4..-1] == '.log' then
 				git_command('checkout HEAD ' + conflict[:file])
@@ -272,14 +269,14 @@ end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
+		merge_status = @repository.git_command('merge ' + source_branch.to_s)
 		puts 'merge_status= ' + merge_status.inspect
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
 		else
 			if merge_status.success? then
 				puts 'not merge_conflict_recovery' + merge_status.inspect
 			else
-				merge_conflict_recovery
+				merge_conflict_recovery(source_branch)
 			end # if
 		end # if
 		@repository.confirm_commit(interact)
@@ -328,7 +325,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
-			merge_conflict_recovery
+			merge_conflict_recovery(Branch_enhancement[i - 1])
 			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
 	end # each
@@ -340,7 +337,7 @@ def script_deserves_commit!(deserving_branch)
 	end # if
 end # script_deserves_commit!
 def test(executable = @related_files.model_test_pathname?)
-	merge_conflict_recovery
+	merge_conflict_recovery(:MERGE_HEAD)
 	deserving_branch = deserving_branch?(executable)
 	puts deserving_branch if $VERBOSE
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
@@ -354,7 +351,7 @@ def test(executable = @related_files.model_test_pathname?)
 	deserving_branch
 end # test
 def loop(executable = @related_files.model_test_pathname?)
-	merge_conflict_recovery
+	merge_conflict_recovery(:MERGE_HEAD)
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
 			deserving_branch = deserving_branch?(executable)
