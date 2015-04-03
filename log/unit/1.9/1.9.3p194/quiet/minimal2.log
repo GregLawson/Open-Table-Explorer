@@ -1,4 +1,4 @@
-passed
+testing
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -6,6 +6,6 @@ Run options:
 
 ........
 
-Finished tests in 0.007173s, 1115.3137 tests/s, 3345.9410 assertions/s.
+Finished tests in 0.009121s, 877.0877 tests/s, 2631.2630 assertions/s.
 
 8 tests, 24 assertions, 0 failures, 0 errors, 0 skips

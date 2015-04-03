@@ -228,36 +228,46 @@ def deserving_branch?(executable = @related_files.model_test_pathname?)
 		:edited
 	end # if
 end # deserving_branch
-def merge_conflict_recovery
+def merge_conflict_recovery(from_branch)
 # see man git status
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
-	@repository.merge_conflict_files?.each do |conflict|
-		# ' M' modified, don't merge log files
-		if conflict[:file][-4..-1] == '.log' then
-			git_command('rm ' + conflict[:file])
+	unmerged_files = @repository.merge_conflict_files?
+	if !unmerged_files.empty? then
+		merge_abort = git_command('merge --abort')
+.		if merge_abort.success? then
+			remerge = git_command('merge --X ours ' + from_branch)
 		end # if
-		case conflict[:conflict]
-		# DD unmerged, both deleted
-		when 'DD' then fail Exception.new(conflict.inspect)
-		# AU unmerged, added by us
-		when 'AU' then fail Exception.new(conflict.inspect)
-		# UD unmerged, deleted by them
-		when 'UD' then fail Exception.new(conflict.inspect)
-		# UA unmerged, added by them
-		when 'UA' then fail Exception.new(conflict.inspect)
-		# DU unmerged, deleted by us
-		when 'DU' then fail Exception.new(conflict.inspect)
-		# AA unmerged, both added
-		when 'AA' then fail Exception.new(conflict.inspect)
-		# UU unmerged, both modified
-		when 'UU' then
-			WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
-			@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-		when ' M' then
-		else
-			fail Exception.new(conflict.inspect)
-		end # case
-	end # each
+		unmerged_files.each do |conflict|
+			case conflict[:conflict]
+			# DD unmerged, both deleted
+			when 'DD' then fail Exception.new(conflict.inspect)
+			# AU unmerged, added by us
+			when 'AU' then fail Exception.new(conflict.inspect)
+			# UD unmerged, deleted by them
+			when 'UD' then fail Exception.new(conflict.inspect)
+			# UA unmerged, added by them
+			when 'UA' then fail Exception.new(conflict.inspect)
+			# DU unmerged, deleted by us
+			when 'DU' then fail Exception.new(conflict.inspect)
+			# AA unmerged, both added
+			when 'AA' then fail Exception.new(conflict.inspect)
+			# UU unmerged, both modified
+			when 'UU' then
+				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+			# 'M ' modified, don't merge log files
+			when 'M ' then
+				if conflict[:file][-4..-1] == '.log' then
+					git_command('rm ' + conflict[:file])
+				end # if
+			when 'MM' then
+				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+			else
+				fail Exception.new(conflict.inspect)
+			end # case
+		end # each
+	end # if
 	@repository.confirm_commit
 end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
