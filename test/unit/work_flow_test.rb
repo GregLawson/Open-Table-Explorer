@@ -166,7 +166,7 @@ def test_scan_verions?
 	message+="\nscan_verions="+scan_verions.inspect
 	assert_equal(existing_indices[0], scan_verions, message)
 	filename=Most_stable_file
-#	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last), message)
+	assert_equal(First_slot_index, TestWorkFlow.scan_verions?(filename, range, :last), message)
 	assert_equal(Last_slot_index, TestWorkFlow.scan_verions?(filename, First_slot_index..Last_slot_index, :first), message)
 end #scan_verions?
 def test_bracketing_versions?
