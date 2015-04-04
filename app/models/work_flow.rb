@@ -258,12 +258,12 @@ def merge_conflict_recovery(from_branch)
 			# UU unmerged, both modified
 			when 'UU', ' M', 'M ', 'MM' then
 				WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
-				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 			else
 				fail Exception.new(conflict.inspect)
 			end # case
 		end # each
-#		@repository.confirm_commit
+		@repository.confirm_commit
 	end # if
 end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
@@ -272,6 +272,7 @@ def merge(target_branch, source_branch, interact=:interactive)
 		merge_status = @repository.git_command('merge ' + source_branch.to_s)
 		puts 'merge_status= ' + merge_status.inspect
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
+			puts 'merge OK'
 		else
 			if merge_status.success? then
 				puts 'not merge_conflict_recovery' + merge_status.inspect
