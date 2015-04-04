@@ -1,22 +1,16 @@
-passed
+testing
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-......FF.................merge(:edited, :testing, :interactive)
-merge_status= $ git merge --no-commit testing
-@process_status=#<Process::Status: pid 31004 exit 1>
-Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
-Automatic merge failed; fix conflicts and then commit the result.
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
-@repository.merge_conflict_files?= [{:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/work_flow.log"}]
+......F..................merge(:edited, :testing, :interactive)
+merge_status= Already up-to-date.
+not merge_conflict_recoveryAlready up-to-date.
 confirm_commit(:interactive something_to_commit?=false
-confirm_commit(:interactive something_to_commit?=false
-.....F............
+.....F...FF.......
 
-Finished tests in 12.100147s, 3.5537 tests/s, 399.5819 assertions/s.
+Finished tests in 9.711302s, 4.4278 tests/s, 540.8132 assertions/s.
 
   1) Failure:
 test_branch_index?(WorkFlowTest) [test/unit/work_flow_test.rb:60]:
@@ -24,13 +18,25 @@ test_branch_index?(WorkFlowTest) [test/unit/work_flow_test.rb:60]:
 <-3>.
 
   2) Failure:
-test_branch_symbol?(WorkFlowTest) [test/unit/work_flow_test.rb:49]:
-<:work_flow> expected but was
-<:"origin/master">.
-
-  3) Failure:
 test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:211]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
-43 tests, 4835 assertions, 3 failures, 0 errors, 0 skips
+  3) Failure:
+test_revison_tag?(WorkFlowTest) [test/unit/work_flow_test.rb:71]:
+<"-r origin/master"> expected but was
+<"-r work_flow">.
+
+  4) Failure:
+test_scan_verions?(WorkFlowTest) [test/unit/work_flow_test.rb:169]:
+filename="test/long_test/repository_test.rb"
+range=-2..3
+direction=:last
+differences=[nil, nil, false, false, false, false]
+different_indices=[]
+existing_indices=[0, 1, 2, 3]
+scan_verions=0.
+<-3> expected but was
+<-2>.
+
+43 tests, 5252 assertions, 4 failures, 0 errors, 0 skips
