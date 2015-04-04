@@ -5,35 +5,37 @@ Run options:
 # Running tests:
 
 .F.rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>
-$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf
-@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>"
-@process_status=nil
-rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>
-$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf
-@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>"
-@process_status=nil
-$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_out.txt > test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_OTS.json
-@errors="sh: 1: nodejs: not found\n"
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_CA_540_2014 test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example.txt >test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 26101 exit 2>
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_sysout.txt: Directory nonexistent
+'
 F...rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/CA/f540.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_otff.pdf>
 F.........rescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf>
-$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf
-@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf>"
-@process_status=nil
-$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
-@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 26153 exit 2>
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent
+'
 Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_otff.pdf>
 $ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt
 @errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 26176 exit 2>
 peculiar_status=false
 message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt: Directory nonexistent
 '
 FF.$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/apply_values.js /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/definition/Federal/f1040.json /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/transform/Federal/f1040.json test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_OTS.json > /tmp/output.fdf
-@errors="sh: 1: nodejs: not found\n"
+@errors="\nfs.js:436\n  return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);\n                 ^\nError: ENOENT, no such file or directory '/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/definition/Federal/f1040.json'\n    at Object.fs.openSync (fs.js:436:18)\n    at Object.fs.readFileSync (fs.js:290:15)\n    at Object.<anonymous> (/home/greg/Desktop/src/OpenTaxFormFiller/script/apply_values.js:12:32)\n    at Module._compile (module.js:456:26)\n    at Object.Module._extensions..js (module.js:474:10)\n    at Module.load (module.js:356:32)\n    at Function.Module._load (module.js:312:12)\n    at Function.Module.runMain (module.js:497:10)\n    at startup (node.js:119:16)\n    at node.js:906:3\n"
+@process_status=#<Process::Status: pid 26207 exit 8>
 F$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt > test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_OTS.json
-@errors="sh: 1: nodejs: not found\n"
+@errors="\n/home/greg/Desktop/src/OpenTaxFormFiller/script/json_ots.js:11\n\t\tthrow err;\n\t\t      ^\nError: ENOENT, open 'test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt'\n"
+@process_status=#<Process::Status: pid 26212 exit 8>
 Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_otff.pdf>
 $ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
 @errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 26240 exit 1>
 F$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_example.txt >/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_example_sysout.txt
 peculiar_status=false
 message='US 1040 2014 - v12.01
@@ -77,7 +79,7 @@ Your Alternative Minimum Tax =     0.00
 Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_example_out.txt
 
 
-Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Wed Apr  1 06:29:56 2015
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Sat Apr  4 15:04:25 2015
 
 Status = Married/Joint (2)
  (Under65 = 2)
@@ -210,38 +212,44 @@ L76a = 534.59
 '
 $ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt
 @errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 26247 exit 2>
 peculiar_status=false
 message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent
 '
 Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_otff.pdf>
 $ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt
 @errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 26250 exit 2>
 peculiar_status=false
 message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt: Directory nonexistent
 '
 Frescue exception #<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_otff.pdf>
-$ pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_otff.pdf
-@errors="#<Errno::ENOENT: No such file or directory - pdftk /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/PDF/Federal/f1040.pdf fill_form /tmp/output.fdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_otff.pdf>"
-@process_status=nil
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg.txt >/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_sysout.txt
+@process_status=#<Process::Status: pid 26276 exit 1>
+peculiar_status=true
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.02/examples_and_templates/US_1040//US_1040_greg_out.txt
+Error: unrecognized status '??'. Exiting.
+'
 $ pdftoppm -jpeg  US_1040_greg_otff.pdf US_1040_2014_greg
 @errors="Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 26325 exit 1>
 F
 
-Finished tests in 0.330333s, 81.7356 tests/s, 369.3239 assertions/s.
+Finished tests in 2.225323s, 12.1331 tests/s, 64.7097 assertions/s.
 
   1) Failure:
 test_Examples(TaxFormTest) [test/unit/tax_form_test.rb:222]:
-constant name=US1040_user
+constant name=CA540_user
 
-Pathname(/home/greg/Desktop/src/OpenTaxSolver2014_12.02/examples_and_templates/US_1040/US_1040_greg.txt).exist?=false
-parent directory /home/greg/Desktop/src/OpenTaxSolver2014_12.02/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_template.txt", "US_1040_example_out.txt", "US_1040_greg_sysout.txt", "US_1040_example.txt", "US_1040_greg_OTS.json", "US_1040_example_sysout.txt"]
+Pathname(/home/greg/Desktop/src/OpenTaxSolver2014_12.02/examples_and_templates/CA_540/CA_540_greg.txt).exist?=false
+parent directory /home/greg/Desktop/src/OpenTaxSolver2014_12.02/examples_and_templates/CA_540 does exists containing ["CA_540_2014_example.txt", "README_CA_540.txt", "CA_540_2014_template.txt"]
 
   2) Failure:
-test_assert_build(TaxFormTest) [test/unit/tax_form_test.rb:208]:
-self=$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_out.txt > test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2012_example_OTS.json
-@errors="sh: 1: nodejs: not found\n"
-expected errors to be empty\n
-"sh: 1: nodejs: not found\n" is not empty.
+test_assert_build(TaxFormTest) [test/unit/tax_form_test.rb:207]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2012_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540 does exists containing ["CA_540_2012_example_OTS.json", "CA_540_2014_example.txt", "README_CA_540.txt", "CA_540_2014_template.txt"]
 
   3) Failure:
 test_assert_open_tax_solver(TaxFormTest) [test/unit/tax_form_test.rb:187]:
@@ -251,10 +259,9 @@ parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/ta
 
   4) Failure:
 test_example(TaxFormTest) [test/unit/tax_form_test.rb:56]:
-self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
-@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
-expected errors to be empty\n
-"Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty.
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example1_OTS.json", "US_1040_example.txt"]
 
   5) Failure:
 test_example1(TaxFormTest) [test/unit/tax_form_test.rb:70]:
@@ -269,21 +276,24 @@ Expected /CA_540_2012$/ to match "/home/greg/Desktop/src/Open-Table-Explorer//..
   7) Failure:
 test_run_json_to_fdf(TaxFormTest) [test/unit/tax_form_test.rb:137]:
 self=$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/apply_values.js /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/definition/Federal/f1040.json /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/transform/Federal/f1040.json test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_OTS.json > /tmp/output.fdf
-@errors="sh: 1: nodejs: not found\n"
+@errors="\nfs.js:436\n  return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);\n                 ^\nError: ENOENT, no such file or directory '/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/definition/Federal/f1040.json'\n    at Object.fs.openSync (fs.js:436:18)\n    at Object.fs.readFileSync (fs.js:290:15)\n    at Object.<anonymous> (/home/greg/Desktop/src/OpenTaxFormFiller/script/apply_values.js:12:32)\n    at Module._compile (module.js:456:26)\n    at Object.Module._extensions..js (module.js:474:10)\n    at Module.load (module.js:356:32)\n    at Function.Module._load (module.js:312:12)\n    at Function.Module.runMain (module.js:497:10)\n    at startup (node.js:119:16)\n    at node.js:906:3\n"
+@process_status=#<Process::Status: pid 26207 exit 8>
 expected errors to be empty\n
-"sh: 1: nodejs: not found\n" is not empty.
+"\nfs.js:436\n  return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);\n                 ^\nError: ENOENT, no such file or directory '/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/2014/definition/Federal/f1040.json'\n    at Object.fs.openSync (fs.js:436:18)\n    at Object.fs.readFileSync (fs.js:290:15)\n    at Object.<anonymous> (/home/greg/Desktop/src/OpenTaxFormFiller/script/apply_values.js:12:32)\n    at Module._compile (module.js:456:26)\n    at Object.Module._extensions..js (module.js:474:10)\n    at Module.load (module.js:356:32)\n    at Function.Module._load (module.js:312:12)\n    at Function.Module.runMain (module.js:497:10)\n    at startup (node.js:119:16)\n    at node.js:906:3\n" is not empty.
 
   8) Failure:
 test_run_ots_to_json(TaxFormTest) [test/unit/tax_form_test.rb:109]:
 self=$ nodejs /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxFormFiller/script/json_ots.js test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt > test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_OTS.json
-@errors="sh: 1: nodejs: not found\n"
+@errors="\n/home/greg/Desktop/src/OpenTaxFormFiller/script/json_ots.js:11\n\t\tthrow err;\n\t\t      ^\nError: ENOENT, open 'test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt'\n"
+@process_status=#<Process::Status: pid 26212 exit 8>
 expected errors to be empty\n
-"sh: 1: nodejs: not found\n" is not empty.
+"\n/home/greg/Desktop/src/OpenTaxFormFiller/script/json_ots.js:11\n\t\tthrow err;\n\t\t      ^\nError: ENOENT, open 'test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt'\n" is not empty.
 
   9) Failure:
 test_run_pdf_to_jpeg(TaxFormTest) [test/unit/tax_form_test.rb:157]:
 self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
 @errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 26240 exit 1>
 expected errors to be empty\n
 "Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty.
 
@@ -303,7 +313,8 @@ parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/ta
 test_user(TaxFormTest) [test/unit/tax_form_test.rb:66]:
 self=$ pdftoppm -jpeg  US_1040_greg_otff.pdf US_1040_2014_greg
 @errors="Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 26325 exit 1>
 expected errors to be empty\n
 "Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n" is not empty.
 
-27 tests, 122 assertions, 12 failures, 0 errors, 0 skips
+27 tests, 144 assertions, 12 failures, 0 errors, 0 skips
