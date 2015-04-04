@@ -1,0 +1,36 @@
+edited
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+.rescue exception #<Errno::ENOENT: No such file or directory - cd /tmp>
+.rescue exception #<Errno::ENOENT: No such file or directory - cd /home/greg/Desktop/src/Open-Table-Explorer/test/unit>
+.rescue exception #<Errno::ENOENT: No such file or directory - cd /home/greg/Desktop/src/Open-Table-Explorer/test/unit>
+.rescue exception #<Errno::ENOENT: No such file or directory - cd /home/greg/Desktop/src/Open-Table-Explorer/test/unit>
+...................F$ ssh greg@172.31.42.104 echo "cat"
+@errors="ssh: connect to host 172.31.42.104 port 22: No route to host\r\n"
+F.F...$ echo "1 2;3 4"
+1 2;3 4
+......
+
+Finished tests in 3.139162s, 11.4680 tests/s, 34.7226 assertions/s.
+
+  1) Failure:
+test_clear_error_message(ShellCommandsTest) [test/unit/shell_command_test.rb:165]:
+<0> expected but was
+<127>.
+
+  2) Failure:
+test_command_on_remote(ShellCommandsTest) [test/unit/shell_command_test.rb:45]:
+self=$ ssh greg@172.31.42.104 echo "cat"
+@errors="ssh: connect to host 172.31.42.104 port 22: No route to host\r\n"
+expected errors to be empty\n
+"ssh: connect to host 172.31.42.104 port 22: No route to host\r\n" is not empty.
+
+  3) Failure:
+test_force_success(ShellCommandsTest) [test/unit/shell_command_test.rb:175]:
+<0> expected but was
+<2>.
+
+36 tests, 109 assertions, 3 failures, 0 errors, 0 skips
