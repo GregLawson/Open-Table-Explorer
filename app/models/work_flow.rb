@@ -277,6 +277,7 @@ def merge(target_branch, source_branch, interact=:interactive)
 			if merge_status.success? then
 				puts 'not merge_conflict_recovery' + merge_status.inspect
 			else
+				puts 'merge_conflict_recovery' + merge_status.inspect
 				merge_conflict_recovery(source_branch)
 			end # if
 		end # if
