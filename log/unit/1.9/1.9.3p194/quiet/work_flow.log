@@ -23,14 +23,14 @@ confirm_commit(:interactive something_to_commit?=true
 ruby script/workflow.rb --test app/models/work_flow.rb
 ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/minimal2.log
 ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
+ruby script/workflow.rb --test test/unit/repository_test.rb
+confirm_commit(:interactive something_to_commit?=true
 confirm_commit(:interactive something_to_commit?=false
 confirm_commit(:interactive something_to_commit?=false
 confirm_commit(:interactive something_to_commit?=false
-.$ ruby  script/work_flow.rb --merge-down
-@errors="script/work_flow.rb:12:in `require_relative': /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:238: syntax error, unexpected keyword_then, expecting keyword_end (SyntaxError)\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:470: syntax error, unexpected keyword_end, expecting $end\nend # WorkFlow\n   ^\n\tfrom script/work_flow.rb:12:in `<main>'\n"
-F...F...F........
+.....F...FF.......
 
-Finished tests in 78.879339s, 0.5451 tests/s, 71.2861 assertions/s.
+Finished tests in 541.684675s, 0.0794 tests/s, 10.4064 assertions/s.
 
   1) Failure:
 test_branch_index?(WorkFlowTest) [test/unit/work_flow_test.rb:60]:
@@ -46,7 +46,7 @@ Run options:
 
 E.
 
-Finished tests in 0.000811s, 2466.7939 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000812s, 2462.5690 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):
@@ -77,20 +77,25 @@ RuntimeError:
 <0>.
 
   3) Failure:
-test_merge_command(WorkFlowTest) [test/unit/work_flow_test.rb:281]:
-self=$ ruby  script/work_flow.rb --merge-down
-@errors="script/work_flow.rb:12:in `require_relative': /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:238: syntax error, unexpected keyword_then, expecting keyword_end (SyntaxError)\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:470: syntax error, unexpected keyword_end, expecting $end\nend # WorkFlow\n   ^\n\tfrom script/work_flow.rb:12:in `<main>'\n"
-expected errors to be empty\n
-"script/work_flow.rb:12:in `require_relative': /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:238: syntax error, unexpected keyword_then, expecting keyword_end (SyntaxError)\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:470: syntax error, unexpected keyword_end, expecting $end\nend # WorkFlow\n   ^\n\tfrom script/work_flow.rb:12:in `<main>'\n" is not empty.
-
-  4) Failure:
 test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:211]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
-  5) Failure:
+  4) Failure:
 test_revison_tag?(WorkFlowTest) [test/unit/work_flow_test.rb:71]:
 <"-r origin/master"> expected but was
 <"-r work_flow">.
 
-43 tests, 5623 assertions, 5 failures, 0 errors, 0 skips
+  5) Failure:
+test_scan_verions?(WorkFlowTest) [test/unit/work_flow_test.rb:169]:
+filename="test/long_test/repository_test.rb"
+range=-2..3
+direction=:last
+differences=[nil, nil, false, false, false, false]
+different_indices=[]
+existing_indices=[0, 1, 2, 3]
+scan_verions=0.
+<-3> expected but was
+<-2>.
+
+43 tests, 5637 assertions, 5 failures, 0 errors, 0 skips

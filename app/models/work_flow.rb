@@ -234,9 +234,11 @@ def merge_conflict_recovery(from_branch)
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
 	unmerged_files = @repository.merge_conflict_files?
 	if !unmerged_files.empty? then
+		puts 'merge --abort'
 		merge_abort = @repository.git_command('merge --abort')
 		if merge_abort.success? then
-			remerge = git_command('merge --X ours ' + from_branch)
+			puts 'merge --X ours ' + from_branch
+			remerge = @repository.git_command('merge --X ours ' + from_branch)
 		end # if
 		unmerged_files.each do |conflict|
 			if conflict[:file][-4..-1] == '.log' then
