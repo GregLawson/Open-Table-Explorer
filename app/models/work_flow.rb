@@ -235,7 +235,7 @@ def merge_conflict_recovery(from_branch)
 	unmerged_files = @repository.merge_conflict_files?
 	if !unmerged_files.empty? then
 		merge_abort = @repository.git_command('merge --abort')
-.		if merge_abort.success? then
+		if merge_abort.success? then
 			remerge = git_command('merge --X ours ' + from_branch)
 		end # if
 		unmerged_files.each do |conflict|

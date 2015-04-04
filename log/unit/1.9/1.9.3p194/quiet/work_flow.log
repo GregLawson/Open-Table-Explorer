@@ -4,17 +4,41 @@ Run options:
 
 # Running tests:
 
-......F..................merge(:edited, :testing, :interactive)
+......F......F...........merge(:edited, :testing, :interactive)
+merge_status= Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/minimal2.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/minimal2.log
+Auto-merging app/models/work_flow.rb
+CONFLICT (content): Merge conflict in app/models/work_flow.rb
+Automatic merge failed; fix conflicts and then commit the result.
+not merge_conflict_recoveryAuto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/minimal2.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/minimal2.log
+Auto-merging app/models/work_flow.rb
+CONFLICT (content): Merge conflict in app/models/work_flow.rb
+Automatic merge failed; fix conflicts and then commit the result.
+confirm_commit(:interactive something_to_commit?=true
+ruby script/workflow.rb --test app/models/work_flow.rb
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/minimal2.log
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
+confirm_commit(:interactive something_to_commit?=false
+confirm_commit(:interactive something_to_commit?=false
+confirm_commit(:interactive something_to_commit?=false
+.$ ruby  script/work_flow.rb --merge-down
+@errors="script/work_flow.rb:12:in `require_relative': /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:238: syntax error, unexpected keyword_then, expecting keyword_end (SyntaxError)\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:470: syntax error, unexpected keyword_end, expecting $end\nend # WorkFlow\n   ^\n\tfrom script/work_flow.rb:12:in `<main>'\n"
+F...F...F........
 
-Finished tests in 3997.303125s, 0.0083 tests/s, 1.1105 assertions/s.
+Finished tests in 78.879339s, 0.5451 tests/s, 71.2861 assertions/s.
 
   1) Failure:
-test_branch_symbol?(WorkFlowTest) [test/unit/work_flow_test.rb:49]:
-<:"origin/master"> expected but was
-<:work_flow>.
+test_branch_index?(WorkFlowTest) [test/unit/work_flow_test.rb:60]:
+<-2> expected but was
+<-3>.
 
   2) Failure:
-test_deserving_branch?(WorkFlowTest) [test/unit/work_flow_test.rb:220]:
+test_deserving_branch?(WorkFlowTest) [test/unit/work_flow_test.rb:221]:
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -22,7 +46,7 @@ Run options:
 
 E.
 
-Finished tests in 0.000840s, 2380.6123 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000811s, 2466.7939 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):
@@ -52,58 +76,21 @@ RuntimeError:
 <1> expected but was
 <0>.
 
-  3) Error:
-test_differences?(WorkFlowTest):
-RuntimeError: test/long_test/repository_test.rb does not exist.
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:110:in `diff_command?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:124:in `working_different_from?'
-    test/unit/work_flow_test.rb:126:in `test_differences?'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2874943335341856726__setup__2500002581562138146__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+  3) Failure:
+test_merge_command(WorkFlowTest) [test/unit/work_flow_test.rb:281]:
+self=$ ruby  script/work_flow.rb --merge-down
+@errors="script/work_flow.rb:12:in `require_relative': /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:238: syntax error, unexpected keyword_then, expecting keyword_end (SyntaxError)\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:470: syntax error, unexpected keyword_end, expecting $end\nend # WorkFlow\n   ^\n\tfrom script/work_flow.rb:12:in `<main>'\n"
+expected errors to be empty\n
+"script/work_flow.rb:12:in `require_relative': /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:238: syntax error, unexpected keyword_then, expecting keyword_end (SyntaxError)\n/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:470: syntax error, unexpected keyword_end, expecting $end\nend # WorkFlow\n   ^\n\tfrom script/work_flow.rb:12:in `<main>'\n" is not empty.
 
   4) Failure:
-test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:210]:
+test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:211]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
   5) Failure:
-test_revison_tag?(WorkFlowTest) [test/unit/work_flow_test.rb:70]:
+test_revison_tag?(WorkFlowTest) [test/unit/work_flow_test.rb:71]:
 <"-r origin/master"> expected but was
 <"-r work_flow">.
 
-  6) Failure:
-test_scan_verions?(WorkFlowTest) [test/unit/work_flow_test.rb:168]:
-filename="test/long_test/repository_test.rb"
-range=-2..3
-direction=:last
-differences=[nil, nil, false, false, false, false]
-different_indices=[]
-existing_indices=[0, 1, 2, 3]
-scan_verions=0.
-<-3> expected but was
-<-2>.
-
-33 tests, 4439 assertions, 5 failures, 1 errors, 0 skips
->>>>>>> testing
+43 tests, 5623 assertions, 5 failures, 0 errors, 0 skips
