@@ -229,51 +229,61 @@ def deserving_branch?(executable = @related_files.model_test_pathname?)
 		:edited
 	end # if
 end # deserving_branch
-def merge_conflict_recovery
+def merge_conflict_recovery(from_branch)
 # see man git status
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
-	@repository.merge_conflict_files?.each do |conflict|
-		# ' M' modified, don't merge log files
-		if conflict[:file][-4..-1] == '.log' then
-			git_command('checkout HEAD ' + conflict[:file])
-			puts 'checkout HEAD ' + conflict[:file]
-		else
-			puts 'not checkout HEAD ' + conflict[:file]
+	unmerged_files = @repository.merge_conflict_files?
+	if !unmerged_files.empty? then
+		puts 'merge --abort'
+		merge_abort = @repository.git_command('merge --abort')
+		if merge_abort.success? then
+			puts 'merge --X ours ' + from_branch
+			remerge = @repository.git_command('merge --X ours ' + from_branch)
 		end # if
-		case conflict[:conflict]
-		# DD unmerged, both deleted
-		when 'DD' then fail Exception.new(conflict.inspect)
-		# AU unmerged, added by us
-		when 'AU' then fail Exception.new(conflict.inspect)
-		# UD unmerged, deleted by them
-		when 'UD' then fail Exception.new(conflict.inspect)
-		# UA unmerged, added by them
-		when 'UA' then fail Exception.new(conflict.inspect)
-		# DU unmerged, deleted by us
-		when 'DU' then fail Exception.new(conflict.inspect)
-		# AA unmerged, both added
-		when 'AA' then fail Exception.new(conflict.inspect)
-		# UU unmerged, both modified
-		when 'UU', ' M', 'M ', 'MM' then
-			WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
-			@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-		else
-			fail Exception.new(conflict.inspect)
-		end # case
-	end # each
-	@repository.confirm_commit
+		unmerged_files.each do |conflict|
+			if conflict[:file][-4..-1] == '.log' then
+				@repository.git_command('checkout HEAD ' + conflict[:file])
+				puts 'checkout HEAD ' + conflict[:file]
+			else
+				puts 'not checkout HEAD ' + conflict[:file]
+				case conflict[:conflict]
+				# DD unmerged, both deleted
+				when 'DD' then fail Exception.new(conflict.inspect)
+				# AU unmerged, added by us
+				when 'AU' then fail Exception.new(conflict.inspect)
+				# UD unmerged, deleted by them
+				when 'UD' then fail Exception.new(conflict.inspect)
+				# UA unmerged, added by them
+				when 'UA' then fail Exception.new(conflict.inspect)
+				# DU unmerged, deleted by us
+				when 'DU' then fail Exception.new(conflict.inspect)
+				# AA unmerged, both added
+				when 'AA' then fail Exception.new(conflict.inspect)
+				# UU unmerged, both modified
+				when 'UU', ' M', 'M ', 'MM' then
+					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+				else
+					fail Exception.new(conflict.inspect)
+				end # case
+			end # if
+		end # each
+		@repository.confirm_commit
+	end # if
 end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
+		merge_status = @repository.git_command('merge ' + source_branch.to_s)
 		puts 'merge_status= ' + merge_status.inspect
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
+			puts 'merge OK'
 		else
 			if merge_status.success? then
 				puts 'not merge_conflict_recovery' + merge_status.inspect
 			else
-				merge_conflict_recovery
+				puts 'merge_conflict_recovery' + merge_status.inspect
+				merge_conflict_recovery(source_branch)
 			end # if
 		end # if
 		@repository.confirm_commit(interact)
@@ -322,7 +332,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 		@repository.safely_visit_branch(Branch_enhancement[i]) do |changes_branch|
 			puts 'merge(' + Branch_enhancement[i].to_s + '), ' + Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(Branch_enhancement[i], Branch_enhancement[i - 1])
-			merge_conflict_recovery
+			merge_conflict_recovery(Branch_enhancement[i - 1])
 			@repository.confirm_commit(:interactive)
 		end # safely_visit_branch
 	end # each
@@ -334,7 +344,7 @@ def script_deserves_commit!(deserving_branch)
 	end # if
 end # script_deserves_commit!
 def test(executable = @related_files.model_test_pathname?)
-	merge_conflict_recovery
+	merge_conflict_recovery(:MERGE_HEAD)
 	deserving_branch = deserving_branch?(executable)
 	puts deserving_branch if $VERBOSE
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
@@ -348,7 +358,7 @@ def test(executable = @related_files.model_test_pathname?)
 	deserving_branch
 end # test
 def loop(executable = @related_files.model_test_pathname?)
-	merge_conflict_recovery
+	merge_conflict_recovery(:MERGE_HEAD)
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
 			deserving_branch = deserving_branch?(executable)
