@@ -4,33 +4,71 @@ Run options:
 
 # Running tests:
 
-......FF.................merge(:edited, :testing, :interactive)
-merge_status= $ git merge --no-commit testing
-@process_status=#<Process::Status: pid 31004 exit 1>
+......E..................merge(:edited, :testing, :interactive)
+merge_status= $ git merge testing
+@process_status=#<Process::Status: pid 12039 exit 1>
 Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
 CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
 Automatic merge failed; fix conflicts and then commit the result.
+merge_conflict_recovery$ git merge testing
+@process_status=#<Process::Status: pid 12039 exit 1>
+Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
+Automatic merge failed; fix conflicts and then commit the result.
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/testing.rb.log
 ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
-@repository.merge_conflict_files?= [{:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/work_flow.log"}]
-confirm_commit(:interactive something_to_commit?=false
+@repository.merge_conflict_files?= [{:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/testing.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/work_flow.log"}]
 confirm_commit(:interactive something_to_commit?=false
 .....F............
 
-Finished tests in 12.100147s, 3.5537 tests/s, 399.5819 assertions/s.
+Finished tests in 11.984356s, 3.5880 tests/s, 357.0488 assertions/s.
 
-  1) Failure:
-test_branch_index?(WorkFlowTest) [test/unit/work_flow_test.rb:60]:
-<-2> expected but was
-<-3>.
+  1) Error:
+test_branch_index?(WorkFlowTest):
+NoMethodError: undefined method `-@' for nil:NilClass
+    test/unit/work_flow_test.rb:62:in `test_branch_index?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2142522934278982108__setup__3942249675174129295__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   2) Failure:
-test_branch_symbol?(WorkFlowTest) [test/unit/work_flow_test.rb:49]:
-<:work_flow> expected but was
-<:"origin/master">.
-
-  3) Failure:
-test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:211]:
+test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:213]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
-43 tests, 4835 assertions, 3 failures, 0 errors, 0 skips
+43 tests, 4279 assertions, 1 failures, 1 errors, 0 skips

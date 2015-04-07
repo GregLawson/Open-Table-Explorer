@@ -57,7 +57,8 @@ def test_branch_index?
 	assert_equal(4, WorkFlow.branch_index?(:'stash~1'))
 	assert_equal(5, WorkFlow.branch_index?(:'stash~2'))
 	assert_equal(-1, WorkFlow.branch_index?(:master))
-	assert_equal(-2, WorkFlow.branch_index?(:'origin/master'))
+	assert_equal(-2, WorkFlow.branch_index?(:'work_flow'))
+	assert_equal(-3, WorkFlow.branch_index?(:'origin/master'))
 	assert_equal(-nil, WorkFlow.branch_index?('/home/greg'))
 end #branch_index?
 def test_revison_tag?
@@ -68,7 +69,8 @@ def test_revison_tag?
 	assert_equal('-r stash', WorkFlow.revison_tag?(3))
 	assert_equal('-r stash~1', WorkFlow.revison_tag?(4))
 	assert_equal('-r stash~2', WorkFlow.revison_tag?(5))
-	assert_equal('-r origin/master', WorkFlow.revison_tag?(-2))
+	assert_equal('-r work_flow', WorkFlow.revison_tag?(-2))
+	assert_equal('-r origin/master', WorkFlow.revison_tag?(-3))
 end #revison_tag?
 def test_merge_range
 	assert_equal(1..2, WorkFlow.merge_range(:passed))
