@@ -4,74 +4,47 @@ Run options:
 
 # Running tests:
 
-......F......F.E......merge(:edited, :testing, :interactive)
-merge_status= Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
+......E........E.........merge(:edited, :testing, :interactive)
+merge_status= $ git merge testing
+@process_status=#<Process::Status: pid 31830 exit 1>
+Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
 CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
-Auto-merging app/models/work_flow.rb
+Auto-merging log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
 Automatic merge failed; fix conflicts and then commit the result.
-not merge_conflict_recoveryAuto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
+merge_conflict_recovery$ git merge testing
+@process_status=#<Process::Status: pid 31830 exit 1>
+Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
 CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
-Auto-merging app/models/work_flow.rb
+Auto-merging log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+Auto-merging log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
+CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
 Automatic merge failed; fix conflicts and then commit the result.
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/testing.rb.log
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
+@repository.merge_conflict_files?= [{:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/testing.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/work_flow.log"}]
 confirm_commit(:interactive something_to_commit?=false
-...F...E..F
+.....F....E......F
 
-Finished tests in 8865.871155s, 0.0037 tests/s, 0.4987 assertions/s.
-
-  1) Failure:
-test_branch_index?(WorkFlowTest) [test/unit/work_flow_test.rb:59]:
-<-2> expected but was
-<-3>.
-
-  2) Failure:
-test_deserving_branch?(WorkFlowTest) [test/unit/work_flow_test.rb:219]:
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: 
-
-# Running tests:
-
-E.
-
-Finished tests in 0.001449s, 1380.2051 tests/s, 0.0000 assertions/s.
+Finished tests in 14.381553s, 2.9899 tests/s, 333.2741 assertions/s.
 
   1) Error:
-test_fail(SingleFailTest):
-RuntimeError: 
-    test/data_sources/repository//single_test_fail.rb:6:in `test_fail'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
-
-2 tests, 0 assertions, 0 failures, 1 errors, 0 skips
-.
-<1> expected but was
-<0>.
-
-  3) Error:
-test_differences?(WorkFlowTest):
-RuntimeError: test/long_test/repository_test.rb does not exist.
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:109:in `diff_command?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:123:in `working_different_from?'
-    test/unit/work_flow_test.rb:125:in `test_differences?'
+test_branch_index?(WorkFlowTest):
+NoMethodError: undefined method `-@' for nil:NilClass
+    test/unit/work_flow_test.rb:62:in `test_branch_index?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__75906803529092026__setup__1724465922888274048__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4100242501997824096__setup__4553832263301296072__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -93,25 +66,56 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-  4) Failure:
-test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:209]:
+  2) Error:
+test_differences?(WorkFlowTest):
+RuntimeError: test/long_test/repository_test.rb does not exist.
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:110:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:124:in `working_different_from?'
+    test/unit/work_flow_test.rb:129:in `test_differences?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4100242501997824096__setup__4553832263301296072__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  3) Failure:
+test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:213]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
-  5) Error:
+  4) Error:
 test_scan_verions?(WorkFlowTest):
 RuntimeError: test/long_test/repository_test.rb does not exist.
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:109:in `diff_command?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:123:in `working_different_from?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:134:in `block in differences?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:133:in `each'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:133:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:133:in `differences?'
-    test/unit/work_flow_test.rb:137:in `test_scan_verions?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:110:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:124:in `working_different_from?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:135:in `block in differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:134:in `each'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:134:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:134:in `differences?'
+    test/unit/work_flow_test.rb:141:in `test_scan_verions?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__75906803529092026__setup__1724465922888274048__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4100242501997824096__setup__4553832263301296072__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -133,9 +137,9 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-  6) Failure:
-test_working_different_from?(WorkFlowTest) [test/unit/work_flow_test.rb:118]:
+  5) Failure:
+test_working_different_from?(WorkFlowTest) [test/unit/work_flow_test.rb:122]:
 <[]> expected to be != to
 <[]>.
 
-33 tests, 4421 assertions, 4 failures, 2 errors, 0 skips
+43 tests, 4793 assertions, 2 failures, 3 errors, 0 skips
