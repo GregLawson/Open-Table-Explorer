@@ -73,9 +73,9 @@ def initialize(repository, branch=repository.current_branch_name?, remote_branch
 	@repository=repository
 	@branch=branch
 	if remote_branch.nil? then
-		@remote_branch=remote_branch
-	else
 		@remote_branch=find_origin
+	else
+		@remote_branch=remote_branch
 	end # if
 end # initialize
 # Allows Branch objects to be used in most contexts where a branch name Symbol is expected
