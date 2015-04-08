@@ -40,6 +40,6 @@ module Examples
 include Constants
 Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
 #Executing_branch=Branch.new(Repository::Examples::This_code_repository)
-Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
+#Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
 end #Examples
 end # Branch
