@@ -1,15 +1,14 @@
-passed
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-......#<LimitCapture:0x000000019f9588 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
-#<LimitCapture:0x00000001a023b8 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+))+/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
-#<LimitCapture:0x00000001a00338 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
-#<LimitCapture:0x00000001a07bb0 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+......#<LimitCapture:0x00000001f66d90 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
+#<LimitCapture:0x00000001f76290 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+))+/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+#<LimitCapture:0x00000001f72ff0 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+#<LimitCapture:0x00000001f84160 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
 .........
 
-Finished tests in 0.103722s, 144.6173 tests/s, 915.9096 assertions/s.
+Finished tests in 0.249891s, 60.0262 tests/s, 380.1659 assertions/s.
 
 15 tests, 95 assertions, 0 failures, 0 errors, 0 skips
