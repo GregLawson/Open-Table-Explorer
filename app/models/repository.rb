@@ -177,6 +177,7 @@ def log_path?(executable,
 end # log_path?
 def write_error_file(recent_test, log_path)
 	contents = current_branch_name?.to_s + "\n"
+	contents += Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n"
 	contents += recent_test.output
 	contents += recent_test.errors
 	IO.write(log_path, contents)
