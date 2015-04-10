@@ -237,8 +237,8 @@ def merge_conflict_recovery(from_branch)
 		puts 'merge --abort'
 		merge_abort = @repository.git_command('merge --abort')
 		if merge_abort.success? then
-			puts 'merge --X ours ' + from_branch
-			remerge = @repository.git_command('merge --X ours ' + from_branch)
+			puts 'merge --X ours ' + from_branch.to_s
+			remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
 		end # if
 		unmerged_files.each do |conflict|
 			if conflict[:file][-4..-1] == '.log' then
@@ -260,7 +260,7 @@ def merge_conflict_recovery(from_branch)
 				# AA unmerged, both added
 				when 'AA' then fail Exception.new(conflict.inspect)
 				# UU unmerged, both modified
-				when 'UU', ' M', 'M ', 'MM' then
+				when 'UU', ' M', 'M ', 'MM', 'A ' then
 					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
