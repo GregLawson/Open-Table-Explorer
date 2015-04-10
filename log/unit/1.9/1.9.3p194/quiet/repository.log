@@ -1,5 +1,5 @@
 master
-2015-04-10 12:47:16.666
+2015-04-10 12:51:34.492
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -15,11 +15,11 @@ $ git checkout master
 ...confirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 2.449723s, 11.4299 tests/s, 24.0844 assertions/s.
+Finished tests in 2.317984s, 12.0795 tests/s, 25.4532 assertions/s.
 
   1) Failure:
 test_error_score?(RepositoryTest) [test/unit/repository_test.rb:129]:
-#<Process::Status: pid 1999 exit 1>
+#<Process::Status: pid 6531 exit 1>
 $ ruby -v -W0 /etc/mtab
 @errors="/etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('\nrootfs / rootfs rw 0 0\n                  ^\n"
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]

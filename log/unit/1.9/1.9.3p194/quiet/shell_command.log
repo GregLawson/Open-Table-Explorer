@@ -14,7 +14,7 @@ F.F...$ echo "1 2;3 4"
 1 2;3 4
 ......
 
-Finished tests in 3.147974s, 11.4359 tests/s, 34.6254 assertions/s.
+Finished tests in 3.135746s, 11.4805 tests/s, 34.7605 assertions/s.
 
   1) Failure:
 test_clear_error_message(ShellCommandsTest) [test/unit/shell_command_test.rb:165]:
