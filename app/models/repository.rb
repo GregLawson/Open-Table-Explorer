@@ -177,6 +177,7 @@ def log_path?(executable,
 end # log_path?
 def write_error_file(recent_test, log_path)
 	contents = current_branch_name?.to_s + "\n"
+	contents += Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n"
 	contents += recent_test.output
 	contents += recent_test.errors
 	IO.write(log_path, contents)
@@ -185,7 +186,8 @@ def write_commit_message(recent_test,files)
 	commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
 	if !recent_test.nil? then
 		commit_message += "\n" + current_branch_name?.to_s + "\n"
-		commit_message += "\n"   + recent_test.output
+		commit_message += "\n" + recent_test.command_string
+		commit_message += "\n" + recent_test.output
 		commit_message += recent_test.errors
 	end #if
 	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
@@ -354,20 +356,19 @@ def revert_changes
 	git_command('reset --hard')
 end #revert_changes
 def merge_conflict_files?
-	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
+	unmerged_files=git_command('status --porcelain --untracked-files=no').output
 	ret=[]
-	unmerged_files.split("\n").map do |line|
-		file=line[3..-1]
-		ret << {:conflict => line[0..1], :file => file}
-		puts 'ruby script/workflow.rb --test '+file
-		rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
-		rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
-		rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
-		rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
-		rm_orig=shell_command('rm '+file.to_s+'.orig')
-	end #map
 	if !unmerged_files.empty? then
-		merge_abort=git_command('merge --abort')
+		unmerged_files.split("\n").map do |line|
+			file=line[3..-1]
+			ret << {:conflict => line[0..1], :file => file}
+			puts 'ruby script/workflow.rb --test '+file
+			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
+			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
+			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
+			rm_orig=shell_command('rm '+file.to_s+'.orig')
+		end #map
 	end #if
 	ret
 end #merge_conflict_files?
