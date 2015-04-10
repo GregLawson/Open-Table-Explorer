@@ -1,21 +1,30 @@
 master
+2015-04-10 12:47:16.666
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-......................confirm_commit(:echo something_to_commit?=true
+...........F..........confirm_commit(:echo something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 15172 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 15186 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ...confirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 3.820503s, 7.3289 tests/s, 18.0605 assertions/s.
+Finished tests in 2.449723s, 11.4299 tests/s, 24.0844 assertions/s.
 
-28 tests, 69 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+test_error_score?(RepositoryTest) [test/unit/repository_test.rb:129]:
+#<Process::Status: pid 1999 exit 1>
+$ ruby -v -W0 /etc/mtab
+@errors="/etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('\nrootfs / rootfs rw 0 0\n                  ^\n"
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+.
+<false> expected but was
+<1>.
+
+28 tests, 59 assertions, 1 failures, 0 errors, 0 skips
