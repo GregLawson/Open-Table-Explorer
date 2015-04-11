@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -30,36 +30,40 @@ include Constants
 module ClassMethods
 #include Repository::Constants
 include Constants
-def branch_command?(repository, git_command)
-	branch_output = repository.git_command(git_command).assert_post_conditions.output
-	parse = branch_output.parse(Branch_regexp)
+def branch_capture?(repository, branch_command = '--list')
+	branch_output = repository.git_command('branch ' + branch_command).assert_post_conditions.output
+	branch_output.capture?(Branch_regexp)
 end # branch_command?
 def current_branch_name?(repository)
-	branch_output= repository.git_command('branch --list').assert_post_conditions.output
-	parse = branch_output.parse(Branch_regexp)
-	parse[:branch].to_sym
+	branch_capture = branch_capture?(repository, '--list')
+	if branch_capture.success? then
+		branch_capture.output?.map {|c| c[:branch].to_sym}
+	else
+		fail Exception.new('git branch parse failed = ' + branch_capture.inspect)
+	end # if
 end #current_branch_name
 def branches?(repository)
-	branch_output = branch_command?(repository, 'branch --list').assert_post_conditions.output
-	parse = branch_output.parse(Branch_regexp)
-	parse.map {|e| Branch.new(self, e[:branch].to_sym)}
+	branch_capture = branch_capture?(repository, '--list')
+	if branch_capture.success? then
+		branch_capture.output?.map do |c| 
+			Branch.new(repository, c[:branch].to_sym)
+		end # map
+	else
+		fail Exception.new('git branch parse failed = ' + branch_capture.inspect)
+	end # if
 end #branches?
-def remotes?
+def remotes?(repository)
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+	repository.git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
 end #remotes?
+def branch_names?(repository)
+	branches?(repository).map {|b| b.branch}
+end # 
 def new_from_git_branch_line(git_branch_line)
 
 end # new_from_git_branch_line
 end #ClassMethods
 extend ClassMethods
-def find_origin
-	if @repository.remotes?.include?(@repository.current_branch_name?) then
-		'origin/'+@branch.to_s
-	else
-		nil
-	end #if
-end # find_origin
 attr_reader :repository, :branch, :remote_branch
 def initialize(repository, branch=repository.current_branch_name?, remote_branch=nil)
 	fail "Branch.new first argument must be of type Repository" unless repository.instance_of?(Repository)
@@ -81,6 +85,20 @@ end # to_s
 def to_sym
 	@branch.to_sym
 end # to_s
+def find_origin
+	if Branch.remotes?(@repository).include?(@repository.current_branch_name?) then
+		'origin/'+@branch.to_s
+	else
+		nil
+	end #if
+end # find_origin
+def rebase!
+	if remotes?.include?(current_branch_name?) then
+		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+	else
+		puts current_branch_name?.to_s+' has no remote branch in origin.'
+	end #if
+end #rebase!
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
