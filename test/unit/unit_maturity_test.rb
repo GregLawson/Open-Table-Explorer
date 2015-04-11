@@ -75,8 +75,8 @@ def test_reflog
 	assert_operator(reflog.size, :>,1, reflog)
 #	assert_equal('', reflog[0], lines)
 end # reflog
-def last_change?
-	assert_equal('', UnitMaturity.last_change?())
+def test_last_change?
+	assert_include(Branch_enhancement, TestUnitMaturity.last_change?($0))
 end # last_change?
 def test_working_different_from?
 	current_branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
