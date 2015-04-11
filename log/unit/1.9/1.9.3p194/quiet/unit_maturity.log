@@ -1,5 +1,5 @@
 master
-2015-04-11 06:27:07.510
+2015-04-11 06:36:37.980
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -7,7 +7,7 @@ Run options:
 
 .....E......EF..EF
 
-Finished tests in 0.892517s, 20.1677 tests/s, 101.9588 assertions/s.
+Finished tests in 0.875012s, 20.5711 tests/s, 103.9986 assertions/s.
 
   1) Error:
 test_branch_index?(UnitMaturityTest):
@@ -16,7 +16,7 @@ NoMethodError: undefined method `-@' for nil:NilClass
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3712142289738464946__setup__3176122981476957218__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4371936165743713014__setup__865157830513278831__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -47,7 +47,7 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3712142289738464946__setup__3176122981476957218__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4371936165743713014__setup__865157830513278831__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -71,7 +71,7 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
 
   3) Failure:
 test_last_change?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:79]:
-Expected [:passed, :testing, :edited] to include "master@{0}".
+Expected [:passed, :testing, :edited] to include "master@{5}".
 
   4) Error:
 test_scan_verions?(UnitMaturityTest):
@@ -86,7 +86,7 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3712142289738464946__setup__3176122981476957218__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4371936165743713014__setup__865157830513278831__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
