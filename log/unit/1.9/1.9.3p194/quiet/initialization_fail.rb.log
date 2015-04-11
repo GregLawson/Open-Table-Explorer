@@ -1,5 +1,5 @@
 master
-2015-04-10 13:10:15.595
+2015-04-11 06:17:40.236
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -7,7 +7,7 @@ Run options:
 
 E
 
-Finished tests in 0.000767s, 1304.3864 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000775s, 1290.1295 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_initialize(InitializationFailTest):
