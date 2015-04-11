@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2014 by Greg Lawson                                      
+#    Copyright (C) 2011-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -492,7 +492,9 @@ def assert_directory_exists(pathname, message='')
 	pathname # allow chaining
 end #assert_directory_exists
 def assert_data_file(pathname, message='')
-	pathname = assert_pathname_exists(pathname, message)
+	message += 'pathname = ' + "'" + pathname + "'"
+	assert_pathname_exists(pathname, message)
+	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it a directory?")
 	assert_not_nil(File.size?(pathname), message)
 	assert_not_equal(0, File.size?(pathname), message)
 	pathname # allow chaining
