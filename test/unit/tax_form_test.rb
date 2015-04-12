@@ -26,16 +26,47 @@ def test_Constants
 #	assert_pathname_exists(Open_tax_solver_binary)
 #	assert_pathname_exists(OTS_template_filename)
 end #Constants
+def test_open_tax_solver_distribution_directories
+	assert_not_empty(Dir[Downloaded_src_dir+"OpenTaxSolver#{Default_tax_year}*-*"])
+	assert_not_empty(OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directories(Default_tax_year))
+	assert_not_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
+end # open_tax_solver_distribution_directories
+def test_TaxForm_open_tax_solver_distribution_directory
+	assert_pathname_exists(OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directory(Default_tax_year))
+end # open_tax_solver_distribution_directory
+def test_TaxForm_open_tax_solver_data_base_directory
+		ret = OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directory(Default_tax_year)
+	assert_pathname_exists(ret)
+		ret = Data_source_directory
+		ret += Default_tax_year.to_s
+		ret += '/'
+	assert_pathname_exists(ret)
+	assert_equal(Data_source_directory + Default_tax_year.to_s, US1040_template.open_tax_solver_data_base_directory)
+	assert_pathname_exists(US1040_template.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, CA540_template.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, US1040_example.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, US1040_example1.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, CA540_example.open_tax_solver_data_base_directory)
+	assert_equal(US1040_user.open_tax_solver_data_base_directory)
+	assert_equal(CA540_user.open_tax_solver_data_base_directory)
+end # open_tax_solver_data_base_directory
+def test_open_tax_solver_distribution_directory
+end # open_tax_solver_distribution_directory
+def test_open_tax_solver_data_directory
+	assert_pathname_exists(US1040_template.open_tax_solver_data_directory)
+end # open_tax_solver_data_directory
+def test_open_tax_solver_data_base_directory
+end # open_tax_solver_data_base_directory
 def test_initialize
 	form='1040'
 	jurisdiction=:US
 #	sysout=`#{Command}`
 #	puts "test_run_tax_solver sysout=#{sysout}"
-	form=OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction)
-	assert_pathname_exists(form.open_tax_solver_data_base_directory)
-	assert_pathname_exists(form.open_tax_solver_data_directory)
-#	assert_pathname_exists(form.ots_template_filename)
-#	assert_pathname_exists(form.output_pdf)
+	tax_form = OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction)
+	assert_pathname_exists(OpenTableExplorer::Finance::TaxForm.open_tax_solver_data_base_directory(@tax_year)+"examples_and_templates/#{@form_filename}/")
+	assert_pathname_exists(tax_form.open_tax_solver_data_directory)
+#	assert_pathname_exists(tax_form.ots_template_filename)
+#	assert_pathname_exists(tax_form.output_pdf)
 	assert_equal(:US, US1040_template.jurisdiction)
 	assert_equal('1040', US1040_template.form)
 	assert_equal('US_1040', US1040_template.form_filename)
@@ -102,19 +133,19 @@ def test_run_tax_solver
 	CA540_example.run_open_tax_solver.assert_open_tax_solver
 	US1040_example1.run_open_tax_solver.assert_open_tax_solver
 end #run_open_tax_solver
-def test_run_ots_to_json
-	assert_pathname_exists(Open_Tax_Filler_Directory)
-	open_tax_form_filler_ots_js="#{Open_Tax_Filler_Directory}/script/json_ots.js"
-	assert_pathname_exists(open_tax_form_filler_ots_js)
-	US1040_template.run_ots_to_json.ots_to_json_run.assert_post_conditions
-	US1040_example.run_ots_to_json.ots_to_json_run.assert_post_conditions
-	CA540_template.run_ots_to_json.ots_to_json_run.assert_post_conditions
-	CA540_example.run_ots_to_json.ots_to_json_run.assert_post_conditions
-	OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US).run_ots_to_json
-	US1040_user.run_ots_to_json.ots_to_json_run.assert_post_conditions
-	CA540_user.run_ots_to_json.ots_to_json_run.assert_post_conditions
-end #run_ots_to_json
-def test_run_json_to_fdf
+#def test_run_ots_to_json
+#	assert_pathname_exists(Open_Tax_Filler_Directory)
+#	open_tax_form_filler_ots_js="#{Open_Tax_Filler_Directory}/script/json_ots.js"
+#	assert_pathname_exists(open_tax_form_filler_ots_js)
+#	US1040_template.run_ots_to_json.ots_to_json_run.assert_post_conditions
+#	US1040_example.run_ots_to_json.ots_to_json_run.assert_post_conditions
+#	CA540_template.run_ots_to_json.ots_to_json_run.assert_post_conditions
+#	CA540_example.run_ots_to_json.ots_to_json_run.assert_post_conditions
+#	OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US).run_ots_to_json
+#	US1040_user.run_ots_to_json.ots_to_json_run.assert_post_conditions
+#	CA540_user.run_ots_to_json.ots_to_json_run.assert_post_conditions
+#end #run_ots_to_json
+#def test_run_json_to_fdf
 #
 #2. In the main directory, run
 #./script/fillin_values FORM_NAME INPUT.json OUTPUT_FILE
@@ -134,12 +165,12 @@ def test_run_json_to_fdf
 
 #pdftk ${YEAR_DIR}/PDF/${FORM}.pdf fill_form ${FDF} output $3
 #	US1040_template.run_json_to_fdf.assert_json_to_fdf
-	US1040_example.run_json_to_fdf.assert_json_to_fdf
+#	US1040_example.run_json_to_fdf.assert_json_to_fdf
 #	CA540_template.run_json_to_fdf.assert_json_to_fdf
 #	CA540_example.run_json_to_fdf.assert_json_to_fdf
 #	US1040_user.run_json_to_fdf.assert_json_to_fdf
 #	CA540_user.run_json_to_fdf.assert_json_to_fdf
-end #run_json_to_fdf
+#end #run_json_to_fdf
 def test_run_fdf_to_pdf
 #	US1040_template.run_fdf_to_pdf.assert_fdf_to_pdf
 #	US1040_example.run_fdf_to_pdf.assert_fdf_to_pdf
