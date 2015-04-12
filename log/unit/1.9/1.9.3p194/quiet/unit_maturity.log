@@ -1,53 +1,34 @@
 master
-2015-04-11 06:36:37.980
+2015-04-12 09:59:21.969
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-.....E......EF..EF
+.....FF.....EF.FEF
 
-Finished tests in 0.875012s, 20.5711 tests/s, 103.9986 assertions/s.
+Finished tests in 0.860901s, 20.9083 tests/s, 102.2185 assertions/s.
 
-  1) Error:
-test_branch_index?(UnitMaturityTest):
-NoMethodError: undefined method `-@' for nil:NilClass
-    test/unit/unit_maturity_test.rb:39:in `test_branch_index?'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4371936165743713014__setup__865157830513278831__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+  1) Failure:
+test_branch_index?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:37]:
+<-2> expected but was
+<-3>.
 
-  2) Error:
+  2) Failure:
+test_branch_symbol?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:26]:
+<:work_flow> expected but was
+<:tax_form>.
+
+  3) Error:
 test_differences?(UnitMaturityTest):
 RuntimeError: test/long_test/repository_test.rb does not exist.
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:77:in `diff_command?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:101:in `working_different_from?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:81:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:105:in `working_different_from?'
     test/unit/unit_maturity_test.rb:98:in `test_differences?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4371936165743713014__setup__865157830513278831__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2030384315693339920__setup__442107697686898627__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -69,24 +50,29 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-  3) Failure:
+  4) Failure:
 test_last_change?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:79]:
-Expected [:passed, :testing, :edited] to include "master@{5}".
+Expected [:passed, :testing, :edited] to include "tax_form@{5}".
 
-  4) Error:
+  5) Failure:
+test_revison_tag?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:49]:
+<"-r work_flow"> expected but was
+<"-r tax_form">.
+
+  6) Error:
 test_scan_verions?(UnitMaturityTest):
 RuntimeError: test/long_test/repository_test.rb does not exist.
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:77:in `diff_command?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:101:in `working_different_from?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:112:in `block in differences?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:111:in `each'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:111:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:111:in `differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:81:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:105:in `working_different_from?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:116:in `block in differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:115:in `each'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:115:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:115:in `differences?'
     test/unit/unit_maturity_test.rb:110:in `test_scan_verions?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4371936165743713014__setup__865157830513278831__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2030384315693339920__setup__442107697686898627__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -108,9 +94,9 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-  5) Failure:
+  7) Failure:
 test_working_different_from?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:91]:
 <[]> expected to be != to
 <[]>.
 
-18 tests, 91 assertions, 2 failures, 3 errors, 0 skips
+18 tests, 88 assertions, 5 failures, 2 errors, 0 skips

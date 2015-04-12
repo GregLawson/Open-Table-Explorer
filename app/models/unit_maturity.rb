@@ -14,7 +14,10 @@ module Constants
 #assert_global_name(:Repository)
 #include Repository::Examples
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
-Extended_branches = { -3 => :'origin/master', -2 => :work_flow, -1 => :master }
+Extended_branches = { -4 => :'origin/master',
+	-3 => :work_flow,
+	-2 => :tax_form,
+	-1 => :master }
 First_slot_index = Extended_branches.keys.min
 Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
 Deserving_commit_to_branch = { success:             0,
@@ -37,8 +40,9 @@ include Constants
 def branch_symbol?(branch_index)
 	case branch_index
 	when nil then fail 'branch_index=' + branch_index.inspect
-	when -2 then :work_flow
-	when -3 then :'origin/master'
+	when -4 then :'origin/master'
+	when -3 then :work_flow
+	when -2 then :tax_form
 	when -1 then :master
 	when 0..UnitMaturity::Branch_enhancement.size - 1 then UnitMaturity::Branch_enhancement[branch_index]
 	when UnitMaturity::Branch_enhancement.size then :stash
