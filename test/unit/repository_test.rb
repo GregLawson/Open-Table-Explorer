@@ -126,6 +126,7 @@ def test_error_score?
 	recent_test = This_code_repository.shell_command(ruby_test_string)
 	error_message = recent_test.process_status.inspect+"\n"+recent_test.inspect
 	assert_equal(1, recent_test.process_status.exitstatus, error_message)
+	assert_equal(false, recent_test.success?, error_message)
 	assert(!recent_test.success?, error_message)
 		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
 		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
@@ -183,7 +184,7 @@ def test_safely_visit_branch
 	end #
 end #safely_visit_branch
 def test_unit_names?
-	assert_equal(['Repository'], Minimal_repository.unit_names?([$0]))	
+	assert_equal(['repository'], Minimal_repository.unit_names?([$0]))	
 end #unit_names?
 def test_validate_commit
 	Minimal_repository.assert_nothing_to_commit

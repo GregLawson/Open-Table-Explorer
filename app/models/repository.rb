@@ -177,10 +177,21 @@ def log_path?(executable,
 end # log_path?
 def write_error_file(recent_test, log_path)
 	contents = current_branch_name?.to_s + "\n"
+	contents += Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n"
 	contents += recent_test.output
 	contents += recent_test.errors
 	IO.write(log_path, contents)
 end # write_error_file
+def write_commit_message(recent_test,files)
+	commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
+	if !recent_test.nil? then
+		commit_message += "\n" + current_branch_name?.to_s + "\n"
+		commit_message += "\n" + recent_test.command_string
+		commit_message += "\n" + recent_test.output
+		commit_message += recent_test.errors
+	end #if
+	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+end # write_commit_message
 def ruby_test_string(executable,
 		logging = :quiet,
 		minor_version = '1.9',
@@ -208,6 +219,7 @@ def error_score?(executable,
 	if !log_path.empty? then
 	end # if
 	write_error_file(@recent_test, log_path)
+	write_commit_message(@recent_test, [executable])
 #	@recent_test.puts if $VERBOSE
 	if @recent_test.success? then
 		0
@@ -230,7 +242,7 @@ end #error_score
 def confirm_branch_switch(branch)
 	checkout_branch=git_command("checkout #{branch}")
 	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
-		checkout_branch.assert_post_conditions
+		checkout_branch #.assert_post_conditions
 	end #if
 	checkout_branch # for command chaining
 end #confirm_branch_switch
@@ -269,7 +281,7 @@ def safely_visit_branch(target_branch, &block)
 			puts git_command('status').output
 			puts git_command('stash show').output
 		else
-			apply_run.assert_post_conditions('unexpected stash apply fail')
+			apply_run #.assert_post_conditions('unexpected stash apply fail')
 		end #if
 		merge_conflict_files?.each do |conflict|
 			shell_command('diffuse -m '+conflict[:file])
@@ -285,7 +297,7 @@ def stage_files(branch, files)
 end #stage_files
 def unit_names?(files)
 	files.map do |f|
-		FilePattern.path2model_name?(f).to_s
+		FilePattern.unit_base_name?(f).to_s
 	end #map
 end #unit_names?
 def confirm_commit(interact=:interactive)
@@ -294,7 +306,7 @@ def confirm_commit(interact=:interactive)
 		when :interactive then
 			cola_run = git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
-			cola_run.assert_post_conditions
+			cola_run #.assert_post_conditions
 			if !something_to_commit? then
 #				git_command('cola rebase '+current_branch_name?.to_s)
 			end # if
@@ -317,11 +329,6 @@ def validate_commit(changes_branch, files, interact=:interactive)
 		git_command(['checkout', changes_branch.to_s, p])
 	end #each
 	if something_to_commit? then
-		commit_message= 'fixup! '+unit_names?(files).uniq.join(',')
-		if !@recent_test.nil? then
-			commit_message+= "\n"+@recent_test.errors if !@recent_test.errors.empty?
-		end #if
-		IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 		confirm_commit(interact)
 #		git_command('rebase --autosquash --interactive')
 	end #if
@@ -349,9 +356,9 @@ def revert_changes
 	git_command('reset --hard')
 end #revert_changes
 def merge_conflict_files?
-	unmerged_files=git_command('status --porcelain --untracked-files=no|grep "UU "').output
+	unmerged_files=git_command('status --porcelain --untracked-files=no').output
 	ret=[]
-	if File.exists?('.git/MERGE_HEAD') then
+	if !unmerged_files.empty? then
 		unmerged_files.split("\n").map do |line|
 			file=line[3..-1]
 			ret << {:conflict => line[0..1], :file => file}
@@ -362,9 +369,6 @@ def merge_conflict_files?
 			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
 			rm_orig=shell_command('rm '+file.to_s+'.orig')
 		end #map
-		if !unmerged_files.empty? then
-			merge_abort=git_command('merge --abort')
-		end #if
 	end #if
 	ret
 end #merge_conflict_files?
@@ -379,7 +383,7 @@ def rebase!
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
 end #rebase!
-end #Repository
+end # Repository
 assert_include(Module.constants, :ShellCommands)
 assert_include(Module.constants, :FilePattern)
 assert_include(Module.constants, :Unit)
