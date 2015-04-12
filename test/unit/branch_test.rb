@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2015 by Greg Lawson                                      
+#    Copyright (C) 2014-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -14,7 +14,7 @@ class BranchTest < TestCase
 include DefaultTests
 include Repository::Examples
 include Branch::Constants
-Minimal_repository=Empty_Repo
+include Branch::Examples
 def test_branch_command?
 	repository = Empty_Repo
 	git_command = 'branch --list'
@@ -22,7 +22,7 @@ def test_branch_command?
 	parse = branch_output.parse(Branch_regexp)
 end # branch_command?
 def test_current_branch_name?
-#	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
+#	assert_include(UnitMaturity::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 	branch_output= Empty_Repo.git_command('branch --list').assert_post_conditions.output
 	assert_equal([:master, :passed], Branch.current_branch_name?(Empty_Repo))
 end #current_branch_name
@@ -42,11 +42,11 @@ def test_branches?
 end #branches?
 def test_remotes?
 	assert_empty(Branch.remotes?(Empty_Repo))
-end #remotes?
+end # remotes?
 def test_initialize
 	assert_equal(This_code_repository, Branch.new(This_code_repository).repository)
 
 	branch=This_code_repository.current_branch_name?
 	onto=Branch::Examples::Executing_branch.find_origin
 end # initialize
-end #Repository
+end # Branch
