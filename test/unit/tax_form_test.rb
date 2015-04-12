@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -26,16 +26,47 @@ def test_Constants
 #	assert_pathname_exists(Open_tax_solver_binary)
 #	assert_pathname_exists(OTS_template_filename)
 end #Constants
+def test_open_tax_solver_distribution_directories
+	assert_not_empty(Dir[Downloaded_src_dir+"OpenTaxSolver#{Default_tax_year}*-*"])
+	assert_not_empty(OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directories(Default_tax_year))
+	assert_not_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
+end # open_tax_solver_distribution_directories
+def test_TaxForm_open_tax_solver_distribution_directory
+	assert_pathname_exists(OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directory(Default_tax_year))
+end # open_tax_solver_distribution_directory
+def test_TaxForm_open_tax_solver_data_base_directory
+		ret = OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directory(Default_tax_year)
+	assert_pathname_exists(ret)
+		ret = Data_source_directory
+		ret += Default_tax_year.to_s
+		ret += '/'
+	assert_pathname_exists(ret)
+	assert_equal(Data_source_directory + Default_tax_year.to_s, US1040_template.open_tax_solver_data_base_directory)
+	assert_pathname_exists(US1040_template.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, CA540_template.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, US1040_example.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, US1040_example1.open_tax_solver_data_base_directory)
+	assert_equal(Data_source_directory, CA540_example.open_tax_solver_data_base_directory)
+	assert_equal(US1040_user.open_tax_solver_data_base_directory)
+	assert_equal(CA540_user.open_tax_solver_data_base_directory)
+end # open_tax_solver_data_base_directory
+def test_open_tax_solver_distribution_directory
+end # open_tax_solver_distribution_directory
+def test_open_tax_solver_data_directory
+	assert_pathname_exists(US1040_template.open_tax_solver_data_directory)
+end # open_tax_solver_data_directory
+def test_open_tax_solver_data_base_directory
+end # open_tax_solver_data_base_directory
 def test_initialize
 	form='1040'
 	jurisdiction=:US
 #	sysout=`#{Command}`
 #	puts "test_run_tax_solver sysout=#{sysout}"
-	form=OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction)
-	assert_pathname_exists(form.open_tax_solver_data_base_directory)
-	assert_pathname_exists(form.open_tax_solver_data_directory)
-#	assert_pathname_exists(form.ots_template_filename)
-#	assert_pathname_exists(form.output_pdf)
+	tax_form = OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction)
+	assert_pathname_exists(OpenTableExplorer::Finance::TaxForm.open_tax_solver_data_base_directory(@tax_year)+"examples_and_templates/#{@form_filename}/")
+	assert_pathname_exists(tax_form.open_tax_solver_data_directory)
+#	assert_pathname_exists(tax_form.ots_template_filename)
+#	assert_pathname_exists(tax_form.output_pdf)
 	assert_equal(:US, US1040_template.jurisdiction)
 	assert_equal('1040', US1040_template.form)
 	assert_equal('US_1040', US1040_template.form_filename)
