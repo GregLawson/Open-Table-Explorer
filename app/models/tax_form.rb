@@ -52,7 +52,7 @@ def initialize(taxpayer='example', form='1040',
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
 	@tax_year=tax_year
-	@open_tax_solver_distribution_directories=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}_*"].select do |f|
+	@open_tax_solver_distribution_directories=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}-*"].select do |f|
 		File.directory?(f)
 	end.sort
 	@open_tax_solver_distribution_directory=@open_tax_solver_distribution_directories.last+'/'

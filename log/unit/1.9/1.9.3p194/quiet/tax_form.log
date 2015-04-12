@@ -1,0 +1,12 @@
+tax_form
+2015-04-12 09:32:07.718
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:58:in `initialize': undefined method `+' for nil:NilClass (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:251:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:251:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:248:in `<class:TaxForm>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:32:in `<module:Finance>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:17:in `<module:OpenTableExplorer>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:14:in `<top (required)>'
+	from test/unit/tax_form_test.rb:9:in `require_relative'
+	from test/unit/tax_form_test.rb:9:in `<main>'
