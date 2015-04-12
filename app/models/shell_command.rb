@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -7,7 +7,50 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
-require 'test/unit'
+require_relative 'shell_command.rb'
+module Shell
+class Ssh
+module ClassMethods
+def agent_processes
+end # agent_processes
+end # ClassMethods
+extend ClassMethods
+module Constants
+end # Constants
+include Constants
+attr_reader :user
+
+def initialize(user)
+	@user = user
+end # initialize
+def [](command_on_remote)
+	command_string = 'ssh ' + @user + ' ' + command_on_remote
+	ShellCommands.new(command_string)
+	
+end # []
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+end #assert_post_conditions
+end #ClassMethods
+def assert_pre_conditions(message='')
+end #assert_pre_conditions
+def assert_post_conditions(message='')
+end #assert_post_conditions
+end # Assertions
+include Assertions
+extend Assertions::ClassMethods
+#self.assert_pre_conditions
+module Examples
+Central = Ssh.new('greg@172.31.42.104')
+end # Examples
+end # Ssh
+end # Shell
 class ShellCommands
 module ClassMethods
 include Shellwords
@@ -37,6 +80,8 @@ def assemble_array_command(command)
 			assemble_array_command(e)
 		elsif e.instance_of?(Hash) then
 			assemble_hash_command(e)
+		elsif e.instance_of?(Pathname) then
+			e.to_s
 		elsif /[ \/.]/.match(e) then # pathnames
 			Shellwords.escape(e)
 		elsif /[$;&|<>]/.match(e) then #shell special characters
@@ -58,7 +103,7 @@ end #assemble_command_string
 end #ClassMethods
 extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
-# execute same command again (also called by new.
+# execute same command again (also called by new).
 def execute
 #	info "@command="+@command.inspect
 #	info "@command_string="+@command_string.inspect
@@ -83,16 +128,19 @@ rescue StandardError => exception
 end #execute
 # prefer command as array since each element is shell escaped.
 # Most common need for shell excape is spaces in pathnames (a common GUI style)
+attr_reader :argument_array, :env, :command, :opts, :command_string
 def initialize(*command)
-	parse_argument_array(command)
-	execute # do it first time, to repeat call execute
-	if $VERBOSE.nil? then
-	elsif $VERBOSE then
-		$stdout.puts trace # -W2
-	else 
-		$stdout.puts inspect(:echo_command) # -W1
-	end #if
-
+	if command.size >= 1 then # empty command is primarily for testing
+		parse_argument_array(command)
+		execute # do it first time, to repeat call execute
+		@accumulated_tolerance_bits = 0x00 # all errors reported (not tolerated)
+		if $VERBOSE.nil? then
+		elsif $VERBOSE then
+			$stdout.puts trace # -W2
+		else 
+			$stdout.puts inspect(:echo_command) # -W1
+		end #if
+	end # if
 end #initialize
 # Allow Process.spawn options and environment to be passed.
 def parse_argument_array(argument_array)
@@ -155,9 +203,41 @@ def success?
 	if @process_status.nil? then
 		false
 	else
-		@process_status.success?
+		@process_status.exitstatus == 0 # & ~@accumulated_tolerance_bits # explicit toleration
 	end #if
 end #success
+def clear_error_message!(tolerated_status)
+	@errors = ''
+	@accumulated_tolerance_bits = @accumulated_tolerance_bits | tolerated_status # accumulated_tolerance_bits
+	self # for command chaining
+end # clear_error_message!
+def force_success(tolerated_status)
+	warn(@errors) if $VERBOSE
+	modified_self = self.clone
+	modified_self.clear_error_message!(tolerated_status)
+	modified_self # for command chaining
+end # force_success
+def tolerate_status(tolerated_status = 1)
+	if @process_status.exitstatus == tolerated_status then
+		force_success(tolerated_status)
+	else
+		self # for command chaining
+	end # if
+end # tolerate_status
+def tolerate_error_pattern(tolerated_error_pattern = /^warning/)
+	if tolerated_error_pattern.match(@errors) then
+		force_success(0xFF) # tolerate all error codes
+	else
+		self # for command chaining
+	end # if
+end # tolerate_error_pattern
+def tolerate_status_and_error_pattern(tolerated_status = 1, tolerated_error_pattern = /^warning/)
+	if @process_status.exitstatus == tolerated_status && tolerated_error_pattern.match(@errors) then
+		force_success(tolerated_status)
+	else
+		self # for command chaining
+	end # if
+end # tolerate_status_and_error_message
 def inspect(echo_command=@errors!='' || !success?)
 	ret=''
 	if echo_command then
@@ -166,9 +246,11 @@ def inspect(echo_command=@errors!='' || !success?)
 		ret+="@command=#{@command.inspect}\n" if $VERBOSE
 		ret+="@opts=#{@opts.inspect}\n" if $VERBOSE
 	end #if
-	if @errors!='' then
-		ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n" if $VERBOSE
+	if !@errors.empty? then
 		ret+="@errors=#{@errors.inspect}\n"
+		if $VERBOSE && !@command_string.empty?
+			ret+="Shellwords.split(@command_string).inspect=#{Shellwords.split(@command_string).inspect}\n"
+		end #if
 	end #if
 	if !success? then
 		ret+="@process_status=#{@process_status.inspect}\n"
@@ -189,17 +271,17 @@ def trace
 	$stdout.puts shorter_callers.join("\n")
 	self # return for command chaining
 end #trace
+require_relative '../../test/assertions.rb'
 module Assertions
-include Test::Unit::Assertions
-extend Test::Unit::Assertions
+
 def assert_pre_conditions(message='')
 	self # return for command chaining
 end #assert_pre_conditions
 def assert_post_conditions(message='')
-	message+="self=#{inspect}"
+	message+="self=#{self.inspect(true)}"
 	puts unless success?&& @errors.empty?
 	assert_empty(@errors, message+'expected errors to be empty\n')
-	assert_equal(0, @process_status.exitstatus, message)
+	assert_equal(0, @process_status.exitstatus & ~@accumulated_tolerance_bits, message)
 	assert_not_nil(@errors, "expect @errors to not be nil.")
 	assert_not_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
@@ -220,10 +302,8 @@ Guaranteed_existing_basename=File.basename($0)
 Redirect_command=['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command']
 Redirect_command_string='ls '+ Shellwords.escape(Guaranteed_existing_basename)+' > '+Shellwords.escape('blank in filename.shell_command')
 Relative_command=['ls', Guaranteed_existing_basename]
+Bad_status = ShellCommands.new('$?=1')
+Error_message_run = ShellCommands.new('ls happyHappyFailFail.junk')
 end #Examples
 include Examples
 end #ShellCommands
-class NetworkInterface
-IFCONFIG=ShellCommands.new('/sbin/ifconfig')
-#puts IFCONFIG.inspect
-end #NetworkInterface
