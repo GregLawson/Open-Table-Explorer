@@ -6,7 +6,8 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative '../../test/assertions/repository_assertions.rb'
+#require_relative '../../test/assertions/repository_assertions.rb'
+require_relative '../../app/models/repository.rb'
 #assert_global_name(:Repository)
 require_relative '../../app/models/parse.rb'
 class Branch
@@ -52,16 +53,16 @@ def branches?(repository)
 		fail Exception.new('git branch parse failed = ' + branch_capture.inspect)
 	end # if
 end #branches?
-def remotes?(repository)
-	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	repository.git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
-end #remotes?
 def branch_names?(repository)
 	branches?(repository).map {|b| b.branch}
 end # 
 def new_from_git_branch_line(git_branch_line)
 
 end # new_from_git_branch_line
+def remotes?(repository)
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	repository.git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+end # remotes?
 end #ClassMethods
 extend ClassMethods
 attr_reader :repository, :branch, :remote_branch
