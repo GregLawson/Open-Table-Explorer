@@ -196,6 +196,7 @@ end #run_pdf_to_jpeg
 # Assertions custom instance methods
 def test_assert_open_tax_solver
 	CA540_example.build
+	assert_not_nil(CA540_example.open_tax_solver_run.process_status, open_tax_solver_run.inspect)
 	peculiar_status=CA540_example.open_tax_solver_run.process_status.exitstatus
 	if File.exists?(CA540_example.open_tax_solver_sysout) then
 		message=IO.binread(CA540_example.open_tax_solver_sysout)

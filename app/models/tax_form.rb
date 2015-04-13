@@ -203,6 +203,7 @@ end #assert_post_conditions
 # Assertions custom instance methods
 def assert_open_tax_solver
 #	@open_tax_solver_run.assert_post_conditions
+	assert_not_nil(@open_tax_solver_run.process_status, open_tax_solver_run.inspect)
 	peculiar_status = @open_tax_solver_run.process_status.exitstatus == 1
 	if File.exists?(@open_tax_solver_sysout) then
 		message=IO.binread(@open_tax_solver_sysout)
