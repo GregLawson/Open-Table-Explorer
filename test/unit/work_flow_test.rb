@@ -168,4 +168,4 @@ def test_related_command
 #	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
 #	assert_match(/#{$0}/, related_run.output)
 end #  related_command
-end #WorkFlow
+end # WorkFlow
