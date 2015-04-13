@@ -14,7 +14,7 @@ F.....$ echo "1 2;3 4"
 1 2;3 4
 ......
 
-Finished tests in 3.140228s, 11.4641 tests/s, 35.9846 assertions/s.
+Finished tests in 3.140340s, 11.4637 tests/s, 35.9834 assertions/s.
 
   1) Failure:
 test_command_on_remote(ShellCommandsTest) [test/unit/shell_command_test.rb:45]:
