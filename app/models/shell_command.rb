@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -105,8 +105,8 @@ extend ClassMethods
 attr_reader :command_string, :output, :errors, :process_status
 # execute same command again (also called by new).
 def execute
-#	info "@command="+@command.inspect
-#	info "@command_string="+@command_string.inspect
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
 	Open3.popen3(@env, @command_string, @opts) {|stdin, stdout, stderr, wait_thr|
 		stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
 		@output=stdout.read
