@@ -186,6 +186,7 @@ def write_commit_message(recent_test,files)
 	commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
 	if !recent_test.nil? then
 		commit_message += "\n" + current_branch_name?.to_s + "\n"
+		commit_message += "\n" + recent_test.command_string
 		commit_message += "\n" + recent_test.output
 		commit_message += recent_test.errors
 	end #if
