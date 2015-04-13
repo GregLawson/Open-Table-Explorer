@@ -8,7 +8,7 @@
 # need  sudo apt-get install poppler-utils
 # need nodejs
 # need sudo apt-get install pdftk
-require_relative '../../app/models/no_db.rb'
+#require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/repository.rb'
 module OpenTableExplorer
@@ -23,54 +23,74 @@ Possible_tax_years=[2014].sort
 Default_tax_year = Possible_tax_years[-1]
 
 Open_Tax_Filler_Directory=Downloaded_src_dir+'OpenTaxFormFiller'
+OpenTaxSolver_directories_glob = Downloaded_src_dir + "OpenTaxSolver#{Default_tax_year}*-*"
+OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
 #Open_tax_solver_input="#{Open_tax_solver_data_directory}/US_1040_example.txt"
 #Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_example_sysout.txt"
 
 #OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #Constants
+include Constants
 class TaxForm
 include Constants
 include OpenTableExplorer
 module ClassMethods
+include Constants
+def open_tax_solver_distribution_directories(tax_year)
+	OpenTaxSolver_directories.select do |f|
+		File.directory?(f)
+	end.sort
+end # open_tax_solver_distribution_directories
+def open_tax_solver_distribution_directory(tax_year)
+	TaxForm.open_tax_solver_distribution_directories(tax_year).last+'/'
+end # open_tax_solver_distribution_directory
+def open_tax_solver_data_base_directory(tax_year, open_tax_solver_data_directory = nil)
+	if open_tax_solver_data_directory.nil? then
+		ret = open_tax_solver_distribution_directory(tax_year)
+	else
+		ret = open_tax_solver_data_directory
+		ret += tax_year.to_s
+		ret += '/'
+	end #if
+	ret
+end # open_tax_solver_data_base_directory
 end #ClassMethods
 extend ClassMethods
 attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename, 
+:open_tax_solver_data_directory,
 :taxpayer_basename_with_year, :open_tax_solver_binary, 
-:open_tax_solver_distribution_directory, :open_tax_solver_data_base_directory,
 :open_tax_solver_run, :open_tax_solver_sysout,
 :open_tax_solver_to_filler_run, 
-:open_tax_solver_input, :open_tax_solver_data_directory, :open_tax_solver_output,
+:open_tax_solver_input, :open_tax_solver_output,
 :ots_template_filename, :ots_json, :ots_to_json_run,
 :output_pdf
+def open_tax_solver_distribution_directory
+	TaxForm.open_tax_solver_distribution_directory(@tax_year)+"examples_and_templates/#{@form_filename}/"
+end # open_tax_solver_distribution_directory
+#def open_tax_solver_data_directory
+#	TaxForm.open_tax_solver_data_base_directory(@tax_year, @open_tax_solver_data_directory)+"examples_and_templates/#{@form_filename}/"
+#end # open_tax_solver_data_directory
+def open_tax_solver_data_base_directory
+	TaxForm.open_tax_solver_data_base_directory(@tax_year, @open_tax_solver_data_directory)
+end # open_tax_solver_data_base_directory
 def initialize(taxpayer='example', form='1040',
 			jurisdiction=:US,
 			tax_year=Finance::Constants::Default_tax_year,
-			open_tax_solver_data_directory=nil
+			open_tax_solver_data_directory = nil
  )
 	@taxpayer=taxpayer.to_s
 	@form=form
 	@jurisdiction=jurisdiction # :US, or :CA
 	@tax_year=tax_year
-	@open_tax_solver_distribution_directories=Dir[Downloaded_src_dir+"OpenTaxSolver#{@tax_year}_*"].select do |f|
-		File.directory?(f)
-	end.sort
-	@open_tax_solver_distribution_directory=@open_tax_solver_distribution_directories.last+'/'
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
-	if open_tax_solver_data_directory.nil? then
-		@open_tax_solver_data_base_directory=@open_tax_solver_distribution_directory
-	else
-		@open_tax_solver_data_base_directory = open_tax_solver_data_directory
-		@open_tax_solver_data_base_directory += @tax_year.to_s
-		@open_tax_solver_data_base_directory += '/'
-	end #if
-	@open_tax_solver_data_directory=@open_tax_solver_data_base_directory+"examples_and_templates/#{@form_filename}/"
+	@open_tax_solver_data_directory = TaxForm.open_tax_solver_data_base_directory(@tax_year, open_tax_solver_data_directory)+"examples_and_templates/#{@form_filename}/"
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_data_directory+'/'+@taxpayer_basename_with_year+'.txt') then
 		@taxpayer_basename=@taxpayer_basename_with_year
 	end #if
-	@open_tax_solver_binary="#{@open_tax_solver_distribution_directory}/bin/taxsolve_#{@form_filename}_#{@tax_year}"
+	@open_tax_solver_binary="#{open_tax_solver_distribution_directory}/bin/taxsolve_#{@form_filename}_#{@tax_year}"
 	@open_tax_solver_input="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}.txt"
 	@open_tax_solver_output="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_out.txt"
 	@open_tax_solver_sysout="#{@open_tax_solver_data_directory}/#{@taxpayer_basename}_sysout.txt"
@@ -79,8 +99,8 @@ def initialize(taxpayer='example', form='1040',
 end #initialize
 def build
 	run_open_tax_solver
-	run_ots_to_json
-	run_json_to_fdf
+#	run_ots_to_json
+#	run_json_to_fdf
 	run_fdf_to_pdf
 	run_pdf_to_jpeg
 	self
@@ -183,7 +203,7 @@ end #assert_post_conditions
 # Assertions custom instance methods
 def assert_open_tax_solver
 #	@open_tax_solver_run.assert_post_conditions
-	peculiar_status=@open_tax_solver_run.process_status.exitstatus==1
+	peculiar_status = @open_tax_solver_run.process_status.exitstatus == 1
 	if File.exists?(@open_tax_solver_sysout) then
 		message=IO.binread(@open_tax_solver_sysout)
 	else
@@ -248,16 +268,18 @@ OpenTableExplorer::Finance::TaxForm.assert_pre_conditions # verify Constants can
 module Examples
 include Constants
 Example_Taxpayer=ENV['USER'].to_sym
-US1040_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US)
+assert_not_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
+#assert_not_empty(TaxForm.open_tax_solver_distribution_directory)
+US1040_user = OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US)
 CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA)
 US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US, Default_tax_year, Data_source_directory)
 CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA, Default_tax_year, Data_source_directory)
 US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US, Default_tax_year, Data_source_directory)
 US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US, Default_tax_year, Data_source_directory)
-CA540_example=OpenTableExplorer::Finance::TaxForm.new(:"2012_example", '540', :CA, Default_tax_year, Data_source_directory)
+CA540_example=OpenTableExplorer::Finance::TaxForm.new(:example, '540', :CA, Default_tax_year, Data_source_directory)
 Expect_to_pass=[US1040_user, CA540_user, US1040_example, US1040_example1, CA540_example]
 Expect_to_fail=[US1040_template, CA540_template]
-US1040_example.assert_pre_conditions
+#US1040_example.assert_pre_conditions
 end #Examples
 OpenTableExplorer::Finance::TaxForm.assert_post_conditions # verify Constants were created correctly
 end #TaxForm
