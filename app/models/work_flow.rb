@@ -84,7 +84,7 @@ def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym
 	else
 		ret = ''
 	end # if
-#	ret += ' -r ' + @unit_maturity.last_change?(filename) + ' ' + filename
+	ret += ' -r ' + @unit_maturity.last_change?(filename) + ' ' + filename
 end # goldilocks
 def test_files(edit_files = @related_files.edit_files)
 	pairs = @related_files.functional_parallelism(edit_files).map do |p|
