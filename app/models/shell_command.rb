@@ -203,7 +203,7 @@ def success?
 	if @process_status.nil? then
 		false
 	else
-		@process_status.exitstatus == 0 # & ~@accumulated_tolerance_bits # explicit toleration
+		@process_status.exitstatus & ~@accumulated_tolerance_bits # explicit toleration
 	end #if
 end #success
 def clear_error_message!(tolerated_status)
