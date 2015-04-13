@@ -1,0 +1,146 @@
+tax_form
+2015-04-12 23:21:08.936
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+.....E.....FEF..EE
+
+Finished tests in 0.738436s, 24.3758 tests/s, 74.4817 assertions/s.
+
+  1) Error:
+test_branch_index?(UnitMaturityTest):
+NoMethodError: undefined method `-@' for nil:NilClass
+    test/unit/unit_maturity_test.rb:39:in `test_branch_index?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3483690444208492740__setup__2679408876292161506__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  2) Failure:
+test_diff_command?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:55]:
+<nil> expected to not be nil.
+
+  3) Error:
+test_differences?(UnitMaturityTest):
+RuntimeError: test/long_test/repository_test.rb does not exist.
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:77:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:101:in `working_different_from?'
+    test/unit/unit_maturity_test.rb:98:in `test_differences?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3483690444208492740__setup__2679408876292161506__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  4) Failure:
+test_last_change?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:79]:
+Expected [:passed, :testing, :edited] to include "master@{2}".
+
+  5) Error:
+test_scan_verions?(UnitMaturityTest):
+RuntimeError: test/long_test/repository_test.rb does not exist.
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:77:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:101:in `working_different_from?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:112:in `block in differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:111:in `each'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:111:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:111:in `differences?'
+    test/unit/unit_maturity_test.rb:110:in `test_scan_verions?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3483690444208492740__setup__2679408876292161506__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  6) Error:
+test_working_different_from?(UnitMaturityTest):
+RuntimeError: branch_index=nil
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:39:in `branch_symbol?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:78:in `diff_command?'
+    test/unit/unit_maturity_test.rb:83:in `test_working_different_from?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3483690444208492740__setup__2679408876292161506__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+18 tests, 55 assertions, 2 failures, 4 errors, 0 skips

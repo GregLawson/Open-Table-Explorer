@@ -14,7 +14,10 @@ module Constants
 #assert_global_name(:Repository)
 #include Repository::Examples
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
-Extended_branches = { -3 => :'origin/master', -2 => :work_flow, -1 => :master }
+Extended_branches = { -4 => :'origin/master',
+	-3 => :work_flow,
+	-2 => :tax_form,
+	-1 => :master }
 First_slot_index = Extended_branches.keys.min
 Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
 Deserving_commit_to_branch = { success:             0,
@@ -37,8 +40,9 @@ include Constants
 def branch_symbol?(branch_index)
 	case branch_index
 	when nil then fail 'branch_index=' + branch_index.inspect
-	when -2 then :work_flow
-	when -3 then :'origin/master'
+	when -4 then :'origin/master'
+	when -3 then :work_flow
+	when -2 then :tax_form
 	when -1 then :master
 	when 0..UnitMaturity::Branch_enhancement.size - 1 then UnitMaturity::Branch_enhancement[branch_index]
 	when UnitMaturity::Branch_enhancement.size then :stash
@@ -62,6 +66,26 @@ end # branch_index?
 def revison_tag?(branch_index)
 	'-r ' + branch_symbol?(branch_index).to_s
 end # revison_tag?
+def merge_range(deserving_branch)
+	deserving_index = UnitMaturity.branch_index?(deserving_branch)
+	if deserving_index.nil? then
+		fail deserving_branch.inspect + ' not found in ' + UnitMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
+	else
+		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
+	end # if
+end # merge_range
+def deserving_branch?(executable,
+	repository)
+	if File.exists?(executable) then
+		@error_score = repository.error_score?(executable)
+		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[@error_classification]
+		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[@error_classification]
+		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
+	else
+		:edited
+	end # if
+end # deserving_branch
 end #ClassMethods
 extend ClassMethods
 attr_reader :repository, :unit
