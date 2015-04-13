@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014 by Greg Lawson                                      
+#    Copyright (C) 2014-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -22,7 +22,7 @@ def test_branch_command?
 	parse = branch_output.parse(Branch_regexp)
 end # branch_command?
 def test_current_branch_name?
-#	assert_include(Branch::Branch_enhancement, Branch.current_branch_name?, Repo.head.inspect)
+#	assert_include(UnitMaturity::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 	branch_output= Empty_Repo.git_command('branch --list').assert_post_conditions.output
 	assert_equal([:master, :passed], Branch.current_branch_name?(Empty_Repo))
 end #current_branch_name
