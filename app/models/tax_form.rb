@@ -243,10 +243,10 @@ def assert_build
 #	@pdf_to_jpeg_run.assert_pdf_to_jpeg
 	if !@open_tax_solver_run.success? then
 		assert_open_tax_solver
-	elsif !@ots_to_json_run.success? then
-		@json_to_fdf_run.assert_post_conditions
-	elsif !@json_to_fdf_run.success? then
-		assert_json_to_fdf
+#	elsif !@ots_to_json_run.success? then
+#		@json_to_fdf_run.assert_post_conditions
+#	elsif !@json_to_fdf_run.success? then
+#		assert_json_to_fdf
 	elsif !@fdf_to_pdf_run.success? then
 				@fdf_to_pdf_run.puts
 	else
