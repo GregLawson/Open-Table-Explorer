@@ -64,10 +64,11 @@ attr_reader :form, :jurisdiction, :tax_year, :form_filename, :taxpayer_basename,
 def open_tax_solver_distribution_directory
 	TaxForm.open_tax_solver_distribution_directory(@tax_year)
 end # open_tax_solver_distribution_directory
-def initialize(taxpayer='example', form='1040',
-			jurisdiction=:US,
-			tax_year=Finance::Constants::Default_tax_year,
-			open_tax_solver_all_form_directory = nil
+def initialize(taxpayer, #='example',
+			form, # ='1040',
+			jurisdiction, # =:US,
+			tax_year, #=Finance::Constants::Default_tax_year,
+			open_tax_solver_all_form_directory
  )
 	@taxpayer = taxpayer.to_s
 	@form=form

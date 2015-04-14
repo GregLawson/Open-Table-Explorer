@@ -43,31 +43,32 @@ def test_TaxForm_ots_user_all_forms_directories
 	assert_pathname_exists(OpenTableExplorer::Finance::TaxForm.ots_user_all_forms_directories(@tax_year)+"/#{@form_filename}/")
 end # ots_user_all_forms_directories
 def test_open_tax_solver_distribution_directory
-	assert_pathname_exists(US1040_template.open_tax_solver_distribution_directory(Default_tax_year))
+	assert_pathname_exists(US1040_template.open_tax_solver_distribution_directory)
 end # open_tax_solver_distribution_directory
 def test_initialize
 	form='1040'
 	jurisdiction=:US
 #	sysout=`#{Command}`
 #	puts "test_run_tax_solver sysout=#{sysout}"
-	assert_equal(:US, US1040_template.jurisdiction)
 	assert_equal('1040', US1040_template.form)
-	assert_equal('US_1040', US1040_template.form_filename)
-	assert_equal(:US, US1040_example.jurisdiction)
 	assert_equal('1040', US1040_example.form)
-	assert_equal('US_1040', US1040_example.form_filename)
-	assert_equal(:US, US1040_user.jurisdiction)
 	assert_equal('1040', US1040_user.form)
+	assert_equal(:US, US1040_template.jurisdiction)
+	assert_equal(:US, US1040_example.jurisdiction)
+	assert_equal(:US, US1040_user.jurisdiction)
+	assert_equal('US_1040', US1040_template.form_filename)
+	assert_equal('US_1040', US1040_example.form_filename)
 	assert_equal('US_1040', US1040_user.form_filename)
+	assert_not_nil(US1040_example.open_tax_solver_all_form_directory)
+	tax_form = OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction, Default_tax_year, OpenTableExplorer::Finance::TaxForm.ots_user_all_forms_directories(@tax_year))
+	assert_pathname_exists(tax_form.open_tax_solver_form_directory)
+	assert_pathname_exists(US1040_template.open_tax_solver_form_directory)
+	assert_pathname_exists(CA540_template.open_tax_solver_form_directory+'/'+CA540_template.taxpayer_basename_with_year+'.txt')
 	assert_match(/CA_540_#{Default_tax_year}$/, CA540_example.open_tax_solver_binary)
 	assert_equal('US_1040_example', US1040_example.taxpayer_basename)
 	assert_equal('US_1040_example1', US1040_example1.taxpayer_basename)
 	assert_equal("CA_540_#{Default_tax_year}_example", CA540_example.taxpayer_basename)
-	assert_pathname_exists(CA540_template.open_tax_solver_form_directory+'/'+CA540_template.taxpayer_basename_with_year+'.txt')
-	tax_form = OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction)
-	assert_pathname_exists(tax_form.open_tax_solver_form_directory)
-	assert_equal('CA_540_#{Default_tax_year}_template', CA540_template.taxpayer_basename)
-	assert_pathname_exists(US1040_template.open_tax_solver_form_directory)
+	assert_equal("CA_540_#{Default_tax_year}_template", CA540_template.taxpayer_basename)
 end #initialize
 def test_example
 	US1040_example.build.assert_build.assert_pdf_to_jpeg
@@ -107,10 +108,9 @@ end #commit_minor_change!
 def test_run_tax_solver
 	form='1040'
 	jurisdiction=:US
-	form=OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction)
-	
-	form.run_open_tax_solver
-	form.assert_open_tax_solver
+	tax_form = OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction, Default_tax_year, OpenTableExplorer::Finance::TaxForm.ots_user_all_forms_directories(@tax_year))
+	tax_form.run_open_tax_solver
+	tax_form.assert_open_tax_solver
 	US1040_example.run_open_tax_solver.assert_open_tax_solver
 	US1040_user.run_open_tax_solver.assert_open_tax_solver
 	CA540_user.run_open_tax_solver.assert_open_tax_solver
