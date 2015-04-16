@@ -25,14 +25,6 @@ def all(pattern_name = :test)
 		WorkFlow.new(test).unit_test
 	end # each
 end # all
-def merge_range(deserving_branch)
-	deserving_index = UnitMaturity.branch_index?(deserving_branch)
-	if deserving_index.nil? then
-		fail deserving_branch.inspect + ' not found in ' + UnitMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
-	else
-		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
-	end # if
-end # merge_range
 end # ClassMethods
 extend ClassMethods
 # Define related (unit) versions
