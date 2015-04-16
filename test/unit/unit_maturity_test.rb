@@ -51,6 +51,12 @@ def test_revison_tag?
 	assert_equal('-r work_flow', UnitMaturity.revison_tag?(-2))
 	assert_equal('-r origin/master', UnitMaturity.revison_tag?(-3))
 end #revison_tag?
+def test_merge_range
+	assert_equal(1..2, UnitMaturity.merge_range(:passed))
+	assert_equal(2..2, UnitMaturity.merge_range(:testing))
+	assert_equal(3..2, UnitMaturity.merge_range(:edited))
+	assert_equal(0..2, UnitMaturity.merge_range(:master))
+end #merge_range
 def test_diff_command?
 	filename=Most_stable_file
 	branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
