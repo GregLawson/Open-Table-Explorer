@@ -1,0 +1,31 @@
+testing
+2015-04-17 09:21:50.682
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+.....FF......F.F..
+
+Finished tests in 1.278175s, 14.0826 tests/s, 75.1071 assertions/s.
+
+  1) Failure:
+test_branch_index?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:38]:
+<-2> expected but was
+<-3>.
+
+  2) Failure:
+test_branch_symbol?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:26]:
+<:work_flow> expected but was
+<:tax_form>.
+
+  3) Failure:
+test_last_change?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:81]:
+Expected [:passed, :testing, :edited] to include "testing@{2}".
+
+  4) Failure:
+test_revison_tag?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:51]:
+<"-r work_flow"> expected but was
+<"-r tax_form">.
+
+18 tests, 96 assertions, 4 failures, 0 errors, 0 skips

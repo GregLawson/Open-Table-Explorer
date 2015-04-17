@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -66,6 +66,14 @@ end # branch_index?
 def revison_tag?(branch_index)
 	'-r ' + branch_symbol?(branch_index).to_s
 end # revison_tag?
+def merge_range(deserving_branch)
+	deserving_index = UnitMaturity.branch_index?(deserving_branch)
+	if deserving_index.nil? then
+		fail deserving_branch.inspect + ' not found in ' + UnitMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
+	else
+		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
+	end # if
+end # merge_range
 end #ClassMethods
 extend ClassMethods
 attr_reader :repository, :unit

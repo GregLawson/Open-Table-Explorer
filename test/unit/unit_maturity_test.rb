@@ -24,7 +24,8 @@ def test_branch_symbol?
 	assert_equal(:'stash~1', UnitMaturity.branch_symbol?(4))
 	assert_equal(:'stash~2', UnitMaturity.branch_symbol?(5))
 	assert_equal(:work_flow, UnitMaturity.branch_symbol?(-2))
-	assert_equal(:'origin/master', UnitMaturity.branch_symbol?(-3))
+	assert_equal(:tax_form, UnitMaturity.branch_symbol?(-3))
+	assert_equal(:'origin/master', UnitMaturity.branch_symbol?(-4))
 end # branch_symbol?
 def test_branch_index?
 	assert_equal(0, UnitMaturity.branch_index?(:passed))
@@ -34,8 +35,9 @@ def test_branch_index?
 	assert_equal(4, UnitMaturity.branch_index?(:'stash~1'))
 	assert_equal(5, UnitMaturity.branch_index?(:'stash~2'))
 	assert_equal(-1, UnitMaturity.branch_index?(:master))
-	assert_equal(-2, UnitMaturity.branch_index?(:'work_flow'))
-	assert_equal(-3, UnitMaturity.branch_index?(:'origin/master'))
+	assert_equal(-3, UnitMaturity.branch_index?(:'work_flow'))
+	assert_equal(-2, UnitMaturity.branch_index?(:'tax_form'))
+	assert_equal(-4, UnitMaturity.branch_index?(:'origin/master'))
 	assert_equal(-nil, UnitMaturity.branch_index?('/home/greg'))
 end # branch_index?
 def test_revison_tag?
@@ -75,8 +77,8 @@ def test_reflog
 	assert_operator(reflog.size, :>,1, reflog)
 #	assert_equal('', reflog[0], lines)
 end # reflog
-def last_change?
-	assert_equal('', UnitMaturity.last_change?())
+def test_last_change?
+	assert_include(Branch_enhancement, TestUnitMaturity.last_change?($0))
 end # last_change?
 def test_working_different_from?
 	current_branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
