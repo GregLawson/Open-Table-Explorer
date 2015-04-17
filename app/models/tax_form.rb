@@ -110,8 +110,9 @@ def commit_minor_change!(files, commit_message)
 end #commit_minor_change!
 def run_open_tax_solver
 
-	command="#{@open_tax_solver_binary} #{@open_tax_solver_input} >#{@open_tax_solver_sysout}"
-	@open_tax_solver_run = ShellCommands.new(command, :chdir => open_tax_solver_distribution_directory)
+	command="#{@open_tax_solver_binary} #{@open_tax_solver_input}"
+	@open_tax_solver_run = ShellCommands.new(command, :chdir => @open_tax_solver_all_form_directory)
+	IO.binwrite(@open_tax_solver_sysout, @open_tax_solver_run.output)
 	self
 end #run_open_tax_solver
 def run_ots_to_json
