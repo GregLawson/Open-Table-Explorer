@@ -23,8 +23,8 @@ def test_branch_symbol?
 	assert_equal(:stash, UnitMaturity.branch_symbol?(3))
 	assert_equal(:'stash~1', UnitMaturity.branch_symbol?(4))
 	assert_equal(:'stash~2', UnitMaturity.branch_symbol?(5))
-	assert_equal(:work_flow, UnitMaturity.branch_symbol?(-2))
-	assert_equal(:tax_form, UnitMaturity.branch_symbol?(-3))
+	assert_equal(:work_flow, UnitMaturity.branch_symbol?(-3))
+	assert_equal(:tax_form, UnitMaturity.branch_symbol?(-2))
 	assert_equal(:'origin/master', UnitMaturity.branch_symbol?(-4))
 end # branch_symbol?
 def test_branch_index?
@@ -48,8 +48,8 @@ def test_revison_tag?
 	assert_equal('-r stash', UnitMaturity.revison_tag?(3))
 	assert_equal('-r stash~1', UnitMaturity.revison_tag?(4))
 	assert_equal('-r stash~2', UnitMaturity.revison_tag?(5))
-	assert_equal('-r work_flow', UnitMaturity.revison_tag?(-2))
-	assert_equal('-r origin/master', UnitMaturity.revison_tag?(-3))
+	assert_equal('-r work_flow', UnitMaturity.revison_tag?(-3))
+	assert_equal('-r origin/master', UnitMaturity.revison_tag?(-4))
 end #revison_tag?
 def test_diff_command?
 	filename=Most_stable_file

@@ -32,6 +32,20 @@ Expected_next_commit_branch = { success:             0,
 			              initialization_fail: 1,
 			              syntax_error:        2
 			}
+# define branch maturity partial order
+# use for merge-down and maturity promotion
+More_mature = {
+	:master => :'origin/master',
+	:passed => :master 
+	:testing => :passed,
+	:edited => :testing
+}
+Subset_branch = {
+	:master => :tax_form,
+	:master => :work_flow,
+	:work_flow => :unit,
+	:unit => :regexp
+}
 end #Constants
 include Constants
 module ClassMethods
@@ -91,22 +105,6 @@ def diff_command?(filename, branch_index)
 	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
 	diff_run = @repository.git_command(git_command)
 end # diff_command?
-def reflog?(filename)
-	reflog_run = @repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
-	reflog_run.assert_post_conditions
-	lines = reflog_run.output.split("\n")
-	lines.map do |line|
-		refs = line.split(',')
-		if refs[0] == '' then
-			refs[2] # hash
-		else
-			refs[0] # unambiguous ref
-		end # if
-	end # map
-end # reflog?
-def last_change?(filename)
-	reflog?(filename)[0]
-end # last_change?
 # What happens to non-existant versions? returns nil Are they different? 
 # What do I want?
 def working_different_from?(filename, branch_index)
