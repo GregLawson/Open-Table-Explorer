@@ -4,16 +4,22 @@ Run options:
 
 # Running tests:
 
-E
+.....E......F...F
 
-Finished tests in 0.000776s, 1288.3941 tests/s, 0.0000 assertions/s.
+Finished tests in 0.994701s, 17.0906 tests/s, 94.5007 assertions/s.
 
   1) Error:
-test_initialize(InitializationFailTest):
-RuntimeError: 
-    test/data_sources/repository//initialization_fail.rb:4:in `test_initialize'
+test_branch_index?(UnitMaturityTest):
+NoMethodError: undefined method `-@' for nil:NilClass
+    test/unit/unit_maturity_test.rb:39:in `test_branch_index?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3838279191873724186__setup__2128336938511302810__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
@@ -31,4 +37,12 @@ RuntimeError:
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+  2) Failure:
+test_differences?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:98]:
+Expected false to be nil.
+
+  3) Failure:
+test_working_different_from?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:93]:
+Expected false to be nil.
+
+17 tests, 94 assertions, 2 failures, 1 errors, 0 skips

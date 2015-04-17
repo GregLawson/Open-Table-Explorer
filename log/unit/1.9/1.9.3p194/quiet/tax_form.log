@@ -1,0 +1,144 @@
+testing
+2015-04-14 11:26:32.400
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+.F....$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_CA_540_2014 test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example.txt >test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 11117 exit 2>
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_sysout.txt: Directory nonexistent
+'
+F...F.........$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 11144 exit 2>
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt: Directory nonexistent
+'
+F$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 11154 exit 2>
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example1_sysout.txt: Directory nonexistent
+'
+F....$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 11171 exit 1>
+FE$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt >test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt
+@errors="sh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt: Directory nonexistent\n"
+@process_status=#<Process::Status: pid 11174 exit 2>
+peculiar_status=false
+message='file=test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt does not existsh: 1: cannot create test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_sysout.txt: Directory nonexistent
+'
+FE
+
+Finished tests in 0.679783s, 44.1317 tests/s, 238.3112 assertions/s.
+
+  1) Failure:
+test_Examples(TaxFormTest) [test/unit/tax_form_test.rb:243]:
+constant name=US1040_user
+In assert_pre_conditions, self=#<OpenTableExplorer::Finance::TaxForm:0x00000003071f90 @taxpayer="greg", @form="1040", @jurisdiction=:US, @tax_year=2014, @open_tax_solver_all_form_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/", @form_filename="US_1040", @open_tax_solver_form_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040/", @taxpayer_basename="US_1040_greg", @taxpayer_basename_with_year="US_1040_2014_greg", @open_tax_solver_binary="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014", @open_tax_solver_input="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg.txt", @open_tax_solver_output="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt", @open_tax_solver_sysout="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_sysout.txt", @output_pdf="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_otff.pdf">.
+<nil> expected to not be nil.
+
+  2) Failure:
+test_assert_build(TaxFormTest) [test/unit/tax_form_test.rb:227]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540 does exists containing ["CA_540_2012_example_OTS.json", "CA_540_2014_example.txt", "README_CA_540.txt", "CA_540_2014_template.txt"]
+
+  3) Failure:
+test_assert_open_tax_solver(TaxFormTest) [test/unit/tax_form_test.rb:207]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540 does exists containing ["CA_540_2012_example_OTS.json", "CA_540_2014_example.txt", "README_CA_540.txt", "CA_540_2014_template.txt"]
+
+  4) Failure:
+test_example(TaxFormTest) [test/unit/tax_form_test.rb:74]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_sysout.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example_out.txt", "US_1040_example1_OTS.json", "US_1040_example_f1040.xfdf", "US_1040_example.txt", "US_1040_example_f1040sd.xfdf"]
+
+  5) Failure:
+test_example1(TaxFormTest) [test/unit/tax_form_test.rb:88]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example1_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example_out.txt", "US_1040_example1_OTS.json", "US_1040_example_f1040.xfdf", "US_1040_example.txt", "US_1040_example_f1040sd.xfdf"]
+
+  6) Failure:
+test_run_pdf_to_jpeg(TaxFormTest) [test/unit/tax_form_test.rb:175]:
+self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 11171 exit 1>
+expected errors to be empty\n
+"Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty.
+
+  7) Error:
+test_run_tax_solver(TaxFormTest):
+ArgumentError: wrong number of arguments (3 for 5)
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:67:in `initialize'
+    test/unit/tax_form_test.rb:111:in `new'
+    test/unit/tax_form_test.rb:111:in `test_run_tax_solver'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__694899878748768186__setup__2884930548151619808__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  8) Failure:
+test_template(TaxFormTest) [test/unit/tax_form_test.rb:91]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example_out.txt", "US_1040_example1_OTS.json", "US_1040_example_f1040.xfdf", "US_1040_example.txt", "US_1040_example_f1040sd.xfdf"]
+
+  9) Error:
+test_user(TaxFormTest):
+NoMethodError: undefined method `success?' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:246:in `assert_build'
+    test/unit/tax_form_test.rb:84:in `test_user'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__694899878748768186__setup__2884930548151619808__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+30 tests, 162 assertions, 7 failures, 2 errors, 0 skips

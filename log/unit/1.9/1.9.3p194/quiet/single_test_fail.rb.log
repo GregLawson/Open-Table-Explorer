@@ -1,4 +1,4 @@
-passed
+edited
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -6,7 +6,7 @@ Run options:
 
 E.
 
-Finished tests in 0.000847s, 2362.6252 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000811s, 2464.8968 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):
