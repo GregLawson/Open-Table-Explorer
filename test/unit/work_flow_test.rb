@@ -38,12 +38,6 @@ def test_all
 	end #sort
 	puts tests.inspect if $VERBOSE
 end #all
-def test_merge_range
-	assert_equal(1..2, WorkFlow.merge_range(:passed))
-	assert_equal(2..2, WorkFlow.merge_range(:testing))
-	assert_equal(3..2, WorkFlow.merge_range(:edited))
-	assert_equal(0..2, WorkFlow.merge_range(:master))
-end #merge_range
 def test_initialize
 	te=Unit.new(TestFile)
 	assert_not_nil(te)
