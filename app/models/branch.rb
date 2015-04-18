@@ -33,8 +33,8 @@ def reflog?(filename, repository)
 		end # if
 	end # map
 end # reflog?
-def last_change?(filename)
-	reflog?(filename)[0]
+def last_change?(filename, repository)
+	reflog?(filename, repository)[0][:ref]
 end # last_change?
 end #ClassMethods
 extend ClassMethods
