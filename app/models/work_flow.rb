@@ -149,9 +149,8 @@ def merge_conflict_recovery(from_branch)
 				# DU unmerged, deleted by us
 				when 'DU' then fail Exception.new(conflict.inspect)
 				# AA unmerged, both added
-				when 'AA' then fail Exception.new(conflict.inspect)
 				# UU unmerged, both modified
-				when 'UU', ' M', 'M ', 'MM', 'A ' then
+				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
 					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
