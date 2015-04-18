@@ -11,7 +11,7 @@
 #require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/repository.rb'
-require_relative '../../app/models/regexp_parse.rb'
+require_relative '../../app/models/parse.rb'
 module OpenTableExplorer
 
 extend Test::Unit::Assertions
@@ -77,7 +77,7 @@ def initialize(taxpayer, #='example',
 	@tax_year=tax_year
 	@open_tax_solver_all_form_directory = open_tax_solver_all_form_directory.to_s
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
-	@open_tax_solver_form_directory = @open_tax_solver_all_form_directory.to_s + @form_filename + '/'
+	@open_tax_solver_form_directory = @open_tax_solver_all_form_directory + @form_filename + '/'
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
 	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_form_directory + '/' + @taxpayer_basename_with_year+'.txt') then
