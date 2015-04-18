@@ -1,13 +1,13 @@
 testing
-2015-04-17 10:06:00.877
+2015-04-18 09:17:11.256
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-.....E.......F....
+.....E..........
 
-Finished tests in 1.313479s, 13.7041 tests/s, 76.8951 assertions/s.
+Finished tests in 0.996206s, 16.0609 tests/s, 101.3846 assertions/s.
 
   1) Error:
 test_branch_index?(UnitMaturityTest):
@@ -16,7 +16,7 @@ NoMethodError: undefined method `-@' for nil:NilClass
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__868332998064856982__setup__1461327215099150494__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2414432927482401074__setup__2195658929662330466__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -38,8 +38,4 @@ NoMethodError: undefined method `-@' for nil:NilClass
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-  2) Failure:
-test_last_change?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:81]:
-Expected [:passed, :testing, :edited] to include "testing@{3}".
-
-18 tests, 101 assertions, 1 failures, 1 errors, 0 skips
+16 tests, 101 assertions, 0 failures, 1 errors, 0 skips
