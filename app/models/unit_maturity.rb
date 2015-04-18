@@ -36,7 +36,7 @@ Expected_next_commit_branch = { success:             0,
 # use for merge-down and maturity promotion
 More_mature = {
 	:master => :'origin/master',
-	:passed => :master 
+	:passed => :master,
 	:testing => :passed,
 	:edited => :testing
 }

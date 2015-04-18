@@ -14,22 +14,22 @@ end # Reference
 class BranchReference
 module Constants
 Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
-Unambiguous_ref_pattern = /[a-z]+@/ * Unambiguous_ref_age_pattern
+Unambiguous_ref_pattern = /[a-z]+@\{/ * Unambiguous_ref_age_pattern * /}/
 end #Constants
 module ClassMethods
 def previous_changes(filename)
 	reflog?(filename)
 end # previous_changes
 def reflog?(filename, repository)
-	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
+	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
 	reflog_run.assert_post_conditions
 	lines = reflog_run.output.split("\n")
 	lines.map do |line|
 		refs = line.split(',')
 		if refs[0] == '' then
-			refs[2] # hash
+			{:ref => refs[2], :time => refs[3]} # hash
 		else
-			refs[0] # unambiguous ref
+			{:ref => refs[0], :time => refs[3]} # unambiguous ref
 		end # if
 	end # map
 end # reflog?

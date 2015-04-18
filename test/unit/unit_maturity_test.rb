@@ -66,20 +66,6 @@ def test_diff_command?
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, branch_index).output)
 end # diff_command?
-def test_reflog
-#	reflog?(filename).output.split("/n")[0].split(',')[0]
-	filename = $0
-	reflog = TestUnitMaturity.reflog?(filename)
-#	reflog.assert_post_conditions
-#	assert_not_empty(reflog.output)
-#	lines = reflog.output.split("\n")
-	assert_instance_of(Array, reflog)
-	assert_operator(reflog.size, :>,1, reflog)
-#	assert_equal('', reflog[0], lines)
-end # reflog
-def test_last_change?
-	assert_include(Branch_enhancement, TestUnitMaturity.last_change?($0))
-end # last_change?
 def test_working_different_from?
 	current_branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, current_branch_index).output)
