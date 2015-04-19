@@ -1,58 +1,32 @@
 edited
+2015-04-19 13:31:23.471
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-......E..................merge(:edited, :testing, :interactive)
-merge_status= $ git merge testing
-@process_status=#<Process::Status: pid 28660 exit 1>
-Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
-Auto-merging log/unit/1.9/1.9.3p194/quiet/testing.rb.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/testing.rb.log
-Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
-Auto-merging log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
-Automatic merge failed; fix conflicts and then commit the result.
-merge_conflict_recovery$ git merge testing
-@process_status=#<Process::Status: pid 28660 exit 1>
-Auto-merging log/unit/1.9/1.9.3p194/quiet/work_flow.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/work_flow.log
-Auto-merging log/unit/1.9/1.9.3p194/quiet/testing.rb.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/testing.rb.log
-Auto-merging log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
-Auto-merging log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
-CONFLICT (content): Merge conflict in log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
-Automatic merge failed; fix conflicts and then commit the result.
-ruby script/workflow.rb --test app/models/work_flow.rb
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
+..........E...E.....merge(:edited, :testing, :interactive)
+merge_status= Already up-to-date.
+not merge_conflict_recoveryAlready up-to-date.
+confirm_commit(:interactive something_to_commit?=false
+ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/success.rb.log
 ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/testing.rb.log
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
-ruby script/workflow.rb --test test/unit/work_flow_test.rb
-@repository.merge_conflict_files?= [{:conflict=>"M ", :file=>"app/models/work_flow.rb"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/testing.rb.log"}, {:conflict=>"UU", :file=>"log/unit/1.9/1.9.3p194/quiet/work_flow.log"}, {:conflict=>"M ", :file=>"test/unit/work_flow_test.rb"}]
-ruby script/workflow.rb --test app/models/work_flow.rb
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/initialization_fail.rb.log
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/single_test_fail.rb.log
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/testing.rb.log
-ruby script/workflow.rb --test log/unit/1.9/1.9.3p194/quiet/work_flow.log
-ruby script/workflow.rb --test test/unit/work_flow_test.rb
-merge --abort
-E....F....F.......
+confirm_commit(:interactive something_to_commit?=false
+confirm_commit(:interactive something_to_commit?=false
+....F........
 
-Finished tests in 9.100308s, 4.7251 tests/s, 471.6324 assertions/s.
+Finished tests in 94.335069s, 0.3498 tests/s, 50.7446 assertions/s.
 
   1) Error:
-test_branch_index?(WorkFlowTest):
-NoMethodError: undefined method `-@' for nil:NilClass
-    test/unit/work_flow_test.rb:62:in `test_branch_index?'
+test_deserving_branch?(WorkFlowTest):
+NameError: uninitialized constant WorkFlowTest::Deserving_commit_to_branch
+    test/unit/work_flow_test.rb:94:in `block in test_deserving_branch?'
+    test/unit/work_flow_test.rb:86:in `each_pair'
+    test/unit/work_flow_test.rb:86:in `test_deserving_branch?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3938869409244099818__setup__4484492018381267898__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3734037701999269380__setup__4238809523208606212__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -75,19 +49,13 @@ NoMethodError: undefined method `-@' for nil:NilClass
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   2) Error:
-test_merge(WorkFlowTest):
-TypeError: can't convert Symbol into String
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:240:in `+'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:240:in `merge_conflict_recovery'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:286:in `block in merge'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:273:in `call'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:273:in `safely_visit_branch'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:276:in `merge'
-    test/unit/work_flow_test.rb:244:in `test_merge'
+test_goldilocks(WorkFlowTest):
+NoMethodError: undefined method `branch_index?' for WorkFlow:Class
+    test/unit/work_flow_test.rb:53:in `test_goldilocks'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3938869409244099818__setup__4484492018381267898__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3734037701999269380__setup__4238809523208606212__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -110,20 +78,8 @@ TypeError: can't convert Symbol into String
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   3) Failure:
-test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:213]:
+test_minimal_comparison(WorkFlowTest) [test/unit/work_flow_test.rb:79]:
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2"> expected but was
 <" -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb">.
 
-  4) Failure:
-test_scan_verions?(WorkFlowTest) [test/unit/work_flow_test.rb:171]:
-filename="test/long_test/repository_test.rb"
-range=-2..3
-direction=:last
-differences=[nil, nil, false, false, false, false]
-different_indices=[]
-existing_indices=[0, 1, 2, 3]
-scan_verions=0.
-<-3> expected but was
-<-2>.
-
-43 tests, 4292 assertions, 2 failures, 2 errors, 0 skips
+33 tests, 4787 assertions, 1 failures, 2 errors, 0 skips

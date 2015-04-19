@@ -1,4 +1,5 @@
 edited
+2015-04-19 13:29:51.401
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -6,7 +7,7 @@ Run options:
 
 E
 
-Finished tests in 0.003521s, 284.0398 tests/s, 0.0000 assertions/s.
+Finished tests in 0.003546s, 282.0336 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_minimal(Minimal2Test):
@@ -15,7 +16,7 @@ RuntimeError:
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__1533742347913893112__setup__2335853578598423928__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__149487951158067119__setup__557589065820685027__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
