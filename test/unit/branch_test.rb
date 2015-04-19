@@ -15,6 +15,20 @@ include DefaultTests
 include Repository::Examples
 include Branch::Constants
 include Branch::Examples
+def test_reflog?
+#	reflog?(filename).output.split("/n")[0].split(',')[0]
+	filename = $0
+	reflog = TestUnitMaturity.reflog?(filename)
+#	reflog.assert_post_conditions
+#	assert_not_empty(reflog.output)
+#	lines = reflog.output.split("\n")
+	assert_instance_of(Array, reflog)
+	assert_operator(reflog.size, :>,1, reflog)
+#	assert_equal('', reflog[0], lines)
+end # reflog?
+def last_change?
+	assert_equal('', UnitMaturity.last_change?())
+end # last_change?
 def test_branch_command?
 	repository = Empty_Repo
 	git_command = 'branch --list'

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xfdf xmlns="http://ns.adobe.com/xfdf/">
+	<fields>
+		<field name="Dollar Amount 82a">
+			<value>5342</value>
+		</field>
+		<field name="Dollar Amount 82b">
+			<value>5218</value>
+		</field>
+		<field name="Dollar Amount 83">
+			<value>124</value>
+		</field>
+		<field name="Dollar Amount 84">
+			<value>0</value>
+		</field>
+		<field name="Dollar Amount 85">
+			<value>124</value>
+		</field>
+		<field name="Dollar Amount 86">
+			<value>124</value>
+		</field>
+		<field name="Dollar Amount 87">
+			<value>7984</value>
+		</field>
+	</fields>
+</xfdf>

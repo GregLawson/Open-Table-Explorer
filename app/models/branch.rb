@@ -10,6 +10,41 @@
 require_relative '../../app/models/repository.rb'
 #assert_global_name(:Repository)
 require_relative '../../app/models/parse.rb'
+class Reference
+end # Reference
+class BranchReference
+module Constants
+Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
+Unambiguous_ref_pattern = /[a-z]+@\{/ * Unambiguous_ref_age_pattern * /}/
+end #Constants
+module ClassMethods
+def previous_changes(filename)
+	reflog?(filename)
+end # previous_changes
+def reflog?(filename, repository)
+	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
+	reflog_run.assert_post_conditions
+	lines = reflog_run.output.split("\n")
+	lines.map do |line|
+		refs = line.split(',')
+		if refs[0] == '' then
+			{:ref => refs[2], :time => refs[3]} # hash
+		else
+			{:ref => refs[0], :time => refs[3]} # unambiguous ref
+		end # if
+	end # map
+end # reflog?
+def last_change?(filename, repository)
+	reflog?(filename, repository)[0][:ref]
+end # last_change?
+end #ClassMethods
+extend ClassMethods
+def initialize(branch, age = 0)
+	@branch = branch
+	@age = age
+end # initialize
+
+end # BranchReference
 class Branch
 #include Repository::Constants
 module Constants

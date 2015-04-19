@@ -1,3 +1,43 @@
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
+
 
 Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Tue Apr 14 20:37:38 2015
 

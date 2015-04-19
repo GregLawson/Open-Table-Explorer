@@ -23,8 +23,9 @@ def test_branch_symbol?
 	assert_equal(:stash, UnitMaturity.branch_symbol?(3))
 	assert_equal(:'stash~1', UnitMaturity.branch_symbol?(4))
 	assert_equal(:'stash~2', UnitMaturity.branch_symbol?(5))
-	assert_equal(:work_flow, UnitMaturity.branch_symbol?(-2))
-	assert_equal(:'origin/master', UnitMaturity.branch_symbol?(-3))
+	assert_equal(:work_flow, UnitMaturity.branch_symbol?(-3))
+	assert_equal(:tax_form, UnitMaturity.branch_symbol?(-2))
+	assert_equal(:'origin/master', UnitMaturity.branch_symbol?(-4))
 end # branch_symbol?
 def test_branch_index?
 	assert_equal(0, UnitMaturity.branch_index?(:passed))
@@ -34,8 +35,9 @@ def test_branch_index?
 	assert_equal(4, UnitMaturity.branch_index?(:'stash~1'))
 	assert_equal(5, UnitMaturity.branch_index?(:'stash~2'))
 	assert_equal(-1, UnitMaturity.branch_index?(:master))
-	assert_equal(-2, UnitMaturity.branch_index?(:'work_flow'))
-	assert_equal(-3, UnitMaturity.branch_index?(:'origin/master'))
+	assert_equal(-3, UnitMaturity.branch_index?(:'work_flow'))
+	assert_equal(-2, UnitMaturity.branch_index?(:'tax_form'))
+	assert_equal(-4, UnitMaturity.branch_index?(:'origin/master'))
 	assert_equal(-nil, UnitMaturity.branch_index?('/home/greg'))
 end # branch_index?
 def test_revison_tag?
@@ -46,8 +48,8 @@ def test_revison_tag?
 	assert_equal('-r stash', UnitMaturity.revison_tag?(3))
 	assert_equal('-r stash~1', UnitMaturity.revison_tag?(4))
 	assert_equal('-r stash~2', UnitMaturity.revison_tag?(5))
-	assert_equal('-r work_flow', UnitMaturity.revison_tag?(-2))
-	assert_equal('-r origin/master', UnitMaturity.revison_tag?(-3))
+	assert_equal('-r work_flow', UnitMaturity.revison_tag?(-3))
+	assert_equal('-r origin/master', UnitMaturity.revison_tag?(-4))
 end #revison_tag?
 def test_diff_command?
 	filename=Most_stable_file
@@ -64,20 +66,6 @@ def test_diff_command?
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, branch_index).output)
 end # diff_command?
-def test_reflog
-#	reflog?(filename).output.split("/n")[0].split(',')[0]
-	filename = $0
-	reflog = TestUnitMaturity.reflog?(filename)
-#	reflog.assert_post_conditions
-#	assert_not_empty(reflog.output)
-#	lines = reflog.output.split("\n")
-	assert_instance_of(Array, reflog)
-	assert_operator(reflog.size, :>,1, reflog)
-#	assert_equal('', reflog[0], lines)
-end # reflog
-def last_change?
-	assert_equal('', UnitMaturity.last_change?())
-end # last_change?
 def test_working_different_from?
 	current_branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, current_branch_index).output)
