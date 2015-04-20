@@ -74,6 +74,18 @@ def merge_range(deserving_branch)
 		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
 	end # if
 end # merge_range
+def deserving_branch?(executable,
+	repository)
+	if File.exists?(executable) then
+		@error_score = repository.error_score?(executable)
+		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[@error_classification]
+		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[@error_classification]
+		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
+	else
+		:edited
+	end # if
+end # deserving_branch
 end #ClassMethods
 extend ClassMethods
 attr_reader :repository, :unit
