@@ -11,6 +11,7 @@
 #require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/repository.rb'
+require_relative '../../app/models/parse.rb'
 module OpenTableExplorer
 
 extend Test::Unit::Assertions
@@ -277,14 +278,14 @@ include Constants
 Example_Taxpayer=ENV['USER'].to_sym
 assert_not_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 #assert_not_empty(TaxForm.open_tax_solver_distribution_directory)
-US1040_user = OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US, Default_tax_year, TaxForm.ots_user_all_forms_directories)
-CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA, Default_tax_year, TaxForm.ots_user_all_forms_directories)
-US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US, Default_tax_year, TaxForm.ots_example_all_forms_directories)
-CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA, Default_tax_year, TaxForm.ots_example_all_forms_directories)
-US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US, Default_tax_year, TaxForm.ots_example_all_forms_directories)
+US1040_user = OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US, Default_tax_year, TaxForm.ots_user_all_forms_directory)
+CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA, Default_tax_year, TaxForm.ots_user_all_forms_directory)
+US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US, Default_tax_year, TaxForm.ots_example_all_forms_directory)
+CA540_template=OpenTableExplorer::Finance::TaxForm.new(:template, '540', :CA, Default_tax_year, TaxForm.ots_example_all_forms_directory)
+US1040_example=OpenTableExplorer::Finance::TaxForm.new(:example, '1040', :US, Default_tax_year, TaxForm.ots_example_all_forms_directory)
 #US1040_example1=OpenTableExplorer::Finance::TaxForm.new(:example1, '1040', :US, Default_tax_year, TaxForm.ots_example_all_forms_directory)
-CA540_example=OpenTableExplorer::Finance::TaxForm.new(:example, '540', :CA, Default_tax_year, TaxForm.ots_example_all_forms_directories)
-Expect_to_pass=[US1040_user, CA540_user, US1040_example, US1040_example1, CA540_example]
+CA540_example=OpenTableExplorer::Finance::TaxForm.new(:example, '540', :CA, Default_tax_year, TaxForm.ots_example_all_forms_directory)
+Expect_to_pass=[US1040_user, CA540_user, US1040_example, CA540_example]
 Expect_to_fail=[US1040_template, CA540_template]
 #US1040_example.assert_pre_conditions
 end #Examples
