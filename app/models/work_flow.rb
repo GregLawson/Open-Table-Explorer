@@ -76,7 +76,7 @@ def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym
 	else
 		ret = ''
 	end # if
-	ret += ' -r ' + BranchReference.last_change?(filename, @repository) + ' ' + filename
+	ret += ' -r ' + @unit_maturity.last_change?(filename) + ' ' + filename
 end # goldilocks
 def test_files(edit_files = @related_files.edit_files)
 	pairs = @related_files.functional_parallelism(edit_files).map do |p|
@@ -109,17 +109,6 @@ def minimal_comparison?
 		end # if
 	end.compact.join # map
 end # minimal_comparison
-def deserving_branch?(executable = @related_files.model_test_pathname?)
-	if File.exists?(executable) then
-		@error_score = @repository.error_score?(executable)
-		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
-		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[@error_classification]
-		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[@error_classification]
-		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
-	else
-		:edited
-	end # if
-end # deserving_branch
 def merge_conflict_recovery(from_branch)
 # see man git status
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
@@ -149,8 +138,9 @@ def merge_conflict_recovery(from_branch)
 				# DU unmerged, deleted by us
 				when 'DU' then fail Exception.new(conflict.inspect)
 				# AA unmerged, both added
+				when 'AA' then fail Exception.new(conflict.inspect)
 				# UU unmerged, both modified
-				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
+				when 'UU', ' M', 'M ', 'MM', 'A ' then
 					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
@@ -235,7 +225,7 @@ def script_deserves_commit!(deserving_branch)
 end # script_deserves_commit!
 def test(executable = @related_files.model_test_pathname?)
 	merge_conflict_recovery(:MERGE_HEAD)
-	deserving_branch = deserving_branch?(executable)
+	deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
 	puts deserving_branch if $VERBOSE
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
@@ -251,7 +241,7 @@ def loop(executable = @related_files.model_test_pathname?)
 	merge_conflict_recovery(:MERGE_HEAD)
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
-			deserving_branch = deserving_branch?(executable)
+			deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
 			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
 			if !File.exists?(executable) then
 				done = true
@@ -284,7 +274,7 @@ def loop(executable = @related_files.model_test_pathname?)
 end # test
 def unit_test(executable = @related_files.model_test_pathname?)
 	begin
-		deserving_branch = deserving_branch?(executable)
+		deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
 		if !@repository.recent_test.nil? && @repository.recent_test.success? then
 			break
 		end # if
@@ -322,7 +312,7 @@ def assert_post_conditions
 	assert_empty(odd_files, 'WorkFlow#assert_post_conditions')
 end # assert_post_conditions
 def assert_deserving_branch(branch_expected, executable, message = '')
-	deserving_branch = deserving_branch?(executable)
+	deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
 	recent_test = shell_command('ruby ' + executable)
 	message += "\nrecent_test=" + recent_test.inspect
 	message += "\nrecent_test.process_status=" + recent_test.process_status.inspect
