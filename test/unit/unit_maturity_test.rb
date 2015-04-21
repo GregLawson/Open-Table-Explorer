@@ -38,13 +38,6 @@ def test_branch_index?
 	assert_equal(-3, UnitMaturity.branch_index?(:'work_flow'))
 	assert_equal(-2, UnitMaturity.branch_index?(:'tax_form'))
 	assert_equal(-4, UnitMaturity.branch_index?(:'origin/master'))
-#	branch_index = Branch_enhancement.index(branch_name.to_sym)
-#	assert_equal(nil, branch_index)
-#	assert_not_equal(branch_name.to_s[0, 5], 'stash')
-	Extended_branches.each_pair do |index, branch|
-#		branch_index = index if branch == branch_name.to_sym
-	end # each_pair
-#	assert_equal(nil, branch_index)
 	assert_equal(nil, UnitMaturity.branch_index?('/home/greg'))
 end # branch_index?
 def test_revison_tag?
