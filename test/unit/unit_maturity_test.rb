@@ -38,7 +38,14 @@ def test_branch_index?
 	assert_equal(-3, UnitMaturity.branch_index?(:'work_flow'))
 	assert_equal(-2, UnitMaturity.branch_index?(:'tax_form'))
 	assert_equal(-4, UnitMaturity.branch_index?(:'origin/master'))
-	assert_equal(-nil, UnitMaturity.branch_index?('/home/greg'))
+#	branch_index = Branch_enhancement.index(branch_name.to_sym)
+#	assert_equal(nil, branch_index)
+#	assert_not_equal(branch_name.to_s[0, 5], 'stash')
+	Extended_branches.each_pair do |index, branch|
+#		branch_index = index if branch == branch_name.to_sym
+	end # each_pair
+#	assert_equal(nil, branch_index)
+	assert_equal(nil, UnitMaturity.branch_index?('/home/greg'))
 end # branch_index?
 def test_revison_tag?
 	assert_equal('-r master', UnitMaturity.revison_tag?(-1))
@@ -48,8 +55,8 @@ def test_revison_tag?
 	assert_equal('-r stash', UnitMaturity.revison_tag?(3))
 	assert_equal('-r stash~1', UnitMaturity.revison_tag?(4))
 	assert_equal('-r stash~2', UnitMaturity.revison_tag?(5))
-	assert_equal('-r work_flow', UnitMaturity.revison_tag?(-2))
-	assert_equal('-r origin/master', UnitMaturity.revison_tag?(-3))
+	assert_equal('-r work_flow', UnitMaturity.revison_tag?(-3))
+	assert_equal('-r origin/master', UnitMaturity.revison_tag?(-4))
 end #revison_tag?
 def test_merge_range
 	assert_equal(1..2, UnitMaturity.merge_range(:passed))
@@ -63,10 +70,10 @@ def test_deserving_branch?
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
 		executable=data_source_directory?('repository')+'/'+value.to_s+'.rb'
-		error_score = TestWorkFlow.repository.error_score?(executable)
-		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
-		error_score=TestWorkFlow.repository.error_score?(executable)
-#		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
+		error_score = TestUnitMaturity.repository.error_score?(executable)
+		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
+		error_score=TestUnitMaturity.repository.error_score?(executable)
+#		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
 		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
 		error_classifications<<error_classification
 		branch_compression = Deserving_commit_to_branch[error_classification]
@@ -95,20 +102,6 @@ def test_diff_command?
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, branch_index).output)
 end # diff_command?
-def test_reflog
-#	reflog?(filename).output.split("/n")[0].split(',')[0]
-	filename = $0
-	reflog = TestUnitMaturity.reflog?(filename)
-#	reflog.assert_post_conditions
-#	assert_not_empty(reflog.output)
-#	lines = reflog.output.split("\n")
-	assert_instance_of(Array, reflog)
-	assert_operator(reflog.size, :>,1, reflog)
-#	assert_equal('', reflog[0], lines)
-end # reflog
-def test_last_change?
-	assert_include(Branch_enhancement, TestUnitMaturity.last_change?($0))
-end # last_change?
 def test_working_different_from?
 	current_branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, current_branch_index).output)

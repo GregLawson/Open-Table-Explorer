@@ -103,22 +103,6 @@ def diff_command?(filename, branch_index)
 	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
 	diff_run = @repository.git_command(git_command)
 end # diff_command?
-def reflog?(filename)
-	reflog_run = @repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h -- " + filename)
-	reflog_run.assert_post_conditions
-	lines = reflog_run.output.split("\n")
-	lines.map do |line|
-		refs = line.split(',')
-		if refs[0] == '' then
-			refs[2] # hash
-		else
-			refs[0] # unambiguous ref
-		end # if
-	end # map
-end # reflog?
-def last_change?(filename)
-	reflog?(filename)[0]
-end # last_change?
 # What happens to non-existant versions? returns nil Are they different? 
 # What do I want?
 def working_different_from?(filename, branch_index)
@@ -173,6 +157,35 @@ def rebase!
 		puts current_branch_name?.to_s+' has no remote branch in origin.'
 	end #if
 end #rebase!
+require_relative '../../test/assertions.rb'
+module Assertions
+module ClassMethods
+end #ClassMethods
+def assert_deserving_branch(branch_expected, executable, message = '')
+	deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
+	recent_test = shell_command('ruby ' + executable)
+	message += "\nrecent_test=" + recent_test.inspect
+	message += "\nrecent_test.process_status=" + recent_test.process_status.inspect
+	syntax_test = shell_command('ruby -c ' + executable)
+	message += "\nsyntax_test=" + syntax_test.inspect
+	message += "\nsyntax_test.process_status=" + syntax_test.process_status.inspect
+	message += "\nbranch_expected=#{branch_expected.inspect}"
+	message += "\ndeserving_branch=#{deserving_branch.inspect}"
+	case deserving_branch
+	when :edited then
+		assert_equal(1, recent_test.process_status.exitstatus, message)
+		assert_not_equal("Syntax OK\n", syntax_test.output, message)
+		assert_equal(1, syntax_test.process_status.exitstatus, message)
+	when :testing then
+		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	when :passed then
+		assert_equal(0, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	end # case
+	assert_equal(deserving_branch, branch_expected, message)
+end # deserving_branch
+end # Assertions
 module Examples
 include Constants
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'
