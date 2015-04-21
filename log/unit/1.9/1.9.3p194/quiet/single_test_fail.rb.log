@@ -1,5 +1,5 @@
 master
-2015-04-11 06:17:40.044
+2015-04-21 10:52:29.383
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -7,12 +7,12 @@ Run options:
 
 E.
 
-Finished tests in 0.000817s, 2447.7407 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000835s, 2395.1178 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):
 RuntimeError: 
-    /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/single_test_fail.rb:6:in `test_fail'
+    test/data_sources/repository//single_test_fail.rb:6:in `test_fail'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'

@@ -1,5 +1,5 @@
 master
-2015-04-11 06:17:40.236
+2015-04-21 10:52:29.761
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -7,12 +7,12 @@ Run options:
 
 E
 
-Finished tests in 0.000775s, 1290.1295 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000799s, 1251.9092 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_initialize(InitializationFailTest):
 RuntimeError: 
-    /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/initialization_fail.rb:4:in `test_initialize'
+    test/data_sources/repository//initialization_fail.rb:4:in `test_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
