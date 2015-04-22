@@ -38,12 +38,6 @@ def test_all
 	end #sort
 	puts tests.inspect if $VERBOSE
 end #all
-def test_merge_range
-	assert_equal(1..2, WorkFlow.merge_range(:passed))
-	assert_equal(2..2, WorkFlow.merge_range(:testing))
-	assert_equal(3..2, WorkFlow.merge_range(:edited))
-	assert_equal(0..2, WorkFlow.merge_range(:master))
-end #merge_range
 def test_initialize
 	te=Unit.new(TestFile)
 	assert_not_nil(te)
@@ -85,29 +79,6 @@ def test_minimal_comparison
 	assert_equal(' -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2', TestWorkFlow.minimal_comparison?)
 	assert_equal(' -t app/models/regexp_parse.rb app/models/minimal4.rb -t test/unit/regexp_parse_test.rb test/unit/minimal4_test.rb -t script/regexp_parse.rb script/minimal4.rb -t test/integration/regexp_parse_test.rb test/integration/minimal4_test.rb -t test/long_test/regexp_parse_test.rb test/long_test/minimal4_test.rb -t test/assertions/regexp_parse_assertions.rb test/assertions/minimal4_assertions.rb -t test/unit/regexp_parse_assertions_test.rb test/unit/minimal4_assertions_test.rb -t log/library/regexp_parse.log log/library/minimal4.log -t log/assertions/regexp_parse.log log/assertions/minimal4.log -t log/integration/regexp_parse.log log/integration/minimal4.log -t log/long/regexp_parse.log log/long/minimal4.log -t test/data_sources/regexp_parse test/data_sources/minimal4', WorkFlow.new('test/unit/regexp_parse_test.rb').minimal_comparison?)
 end #minimal_comparison
-def test_deserving_branch?
-	error_classifications=[]
-	branch_compressions=[]
-	branch_enhancements=[]
-	Repository::Error_classification.each_pair do |key, value|
-		executable=data_source_directory?('repository')+'/'+value.to_s+'.rb'
-		error_score = TestWorkFlow.repository.error_score?(executable)
-		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
-		error_score=TestWorkFlow.repository.error_score?(executable)
-#		assert_equal(key, error_score, TestWorkFlow.repository.recent_test.inspect)
-		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
-		error_classifications<<error_classification
-		branch_compression = Deserving_commit_to_branch[error_classification]
-		branch_compressions<<branch_compression
-		branch_enhancement=Branch_enhancement[branch_compression]
-		branch_enhancements<<branch_enhancement
-	end #each
-	assert_equal(4, error_classifications.uniq.size, error_classifications.inspect)
-	assert_equal(3, branch_compressions.uniq.size, branch_compressions.inspect)
-	assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
-#	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
-#	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
-end #deserving_branch
 def test_merge_conflict_recovery
 end # merge_conflict_recovery
 def test_merge
