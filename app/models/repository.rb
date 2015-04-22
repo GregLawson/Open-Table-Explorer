@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -176,10 +176,11 @@ def log_path?(executable,
 		end # if
 end # log_path?
 def write_error_file(recent_test, log_path)
-	contents = current_branch_name?.to_s + "\n"
-	contents += Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n"
-	contents += recent_test.output
-	contents += recent_test.errors
+	contents = current_branch_name?.to_s
+	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	contents += "\n" + recent_test.command_string
+	contents += "\n" + recent_test.output
+	contents += "\n" + recent_test.errors
 	IO.write(log_path, contents)
 end # write_error_file
 def write_commit_message(recent_test,files)
