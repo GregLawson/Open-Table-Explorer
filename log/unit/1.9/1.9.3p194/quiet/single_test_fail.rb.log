@@ -1,13 +1,14 @@
 master
-2015-04-21 10:52:29.383
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+2015-04-21 17:37:08.560
+
+ruby -v -W0 test/data_sources/repository//single_test_fail.rbruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
 E.
 
-Finished tests in 0.000835s, 2395.1178 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000815s, 2454.0811 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):

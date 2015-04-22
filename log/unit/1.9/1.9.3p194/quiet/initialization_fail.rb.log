@@ -1,13 +1,14 @@
 master
-2015-04-21 10:52:29.761
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+2015-04-21 17:37:08.933
+
+ruby -v -W0 test/data_sources/repository//initialization_fail.rbruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
 E
 
-Finished tests in 0.000799s, 1251.9092 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000771s, 1296.2099 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_initialize(InitializationFailTest):

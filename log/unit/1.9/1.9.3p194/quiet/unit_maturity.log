@@ -1,5 +1,5 @@
 master
-2015-04-21 10:52:30.232
+2015-04-21 18:01:16.536
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -15,18 +15,18 @@ Expected [UnitMaturity::Constants,
  Kernel] to include UnitMaturity::Assertions.>
 .............E..EF
 
-Finished tests in 1.719464s, 10.4684 tests/s, 58.7393 assertions/s.
+Finished tests in 1.511021s, 11.9125 tests/s, 66.8422 assertions/s.
 
   1) Error:
 test_differences?(UnitMaturityTest):
 RuntimeError: test/long_test/repository_test.rb does not exist.
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:101:in `diff_command?'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:109:in `working_different_from?'
-    test/unit/unit_maturity_test.rb:122:in `test_differences?'
+    test/unit/unit_maturity_test.rb:115:in `test_differences?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__1921262065001342381__setup__2467291647332782235__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4149186275915509214__setup__4501259403460152341__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -57,11 +57,11 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:119:in `each'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:119:in `map'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:119:in `differences?'
-    test/unit/unit_maturity_test.rb:134:in `test_scan_verions?'
+    test/unit/unit_maturity_test.rb:127:in `test_scan_verions?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__1921262065001342381__setup__2467291647332782235__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4149186275915509214__setup__4501259403460152341__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -84,7 +84,7 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   3) Failure:
-test_working_different_from?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:115]:
+test_working_different_from?(UnitMaturityTest) [test/unit/unit_maturity_test.rb:108]:
 <[]> expected to be != to
 <[]>.
 
