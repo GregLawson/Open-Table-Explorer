@@ -1,269 +1,464 @@
 tax_form
-2015-04-13 07:53:07.240
+2015-04-22 09:27:05.597
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-.FF..rescue exception #<Errno::ENOENT: No such file or directory - chdir>
-E...rescue exception #<Errno::ENOENT: No such file or directory - chdir>
-E.........rescue exception #<Errno::ENOENT: No such file or directory - chdir>
-Erescue exception #<Errno::ENOENT: No such file or directory - chdir>
-EF..E..rescue exception #<Errno::ENOENT: No such file or directory - chdir>
-$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+.F....$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_CA_540_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt
+@process_status=#<Process::Status: pid 18470 exit 1>
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt' could not be opened.
+peculiar_status=true
+message='ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt' could not be opened.
+'
+F...$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_CA_540_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt
+@process_status=#<Process::Status: pid 18476 exit 1>
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt' could not be opened.
+F.........$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt
+@process_status=#<Process::Status: pid 18489 exit 1>
+US 1040 2014 - v12.01
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt' could not be opened.
+peculiar_status=true
+message='US 1040 2014 - v12.01
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt' could not be opened.
+'
+F.F...$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
 @errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
-@process_status=#<Process::Status: pid 15832 exit 1>
-Frescue exception #<Errno::ENOENT: No such file or directory - chdir>
-Erescue exception #<Errno::ENOENT: No such file or directory - chdir>
-Erescue exception #<Errno::ENOENT: No such file or directory - chdir>
-E
+@process_status=#<Process::Status: pid 18498 exit 1>
+F$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example.txt
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
 
-Finished tests in 0.730036s, 42.4637 tests/s, 120.5420 assertions/s.
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Wed Apr 22 09:27:05 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+peculiar_status=false
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Wed Apr 22 09:27:05 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+'
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt
+@process_status=#<Process::Status: pid 18509 exit 1>
+US 1040 2014 - v12.01
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt' could not be opened.
+peculiar_status=true
+message='US 1040 2014 - v12.01
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt' could not be opened.
+'
+F$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt
+@process_status=#<Process::Status: pid 18512 exit 1>
+US 1040 2014 - v12.01
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt' could not be opened.
+peculiar_status=true
+message='US 1040 2014 - v12.01
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt' could not be opened.
+'
+FE
+
+Finished tests in 0.319277s, 93.9622 tests/s, 457.2825 assertions/s.
 
   1) Failure:
-test_Examples(TaxFormTest) [test/unit/tax_form_test.rb:251]:
+test_Examples(TaxFormTest) [test/unit/tax_form_test.rb:255]:
 constant name=US1040_user
-
-Pathname(/home/greg/Desktop/src/OpenTaxSolver2014_12.01-forms/examples_and_templates/US_1040/2014).exist?=false
-parent directory /home/greg/Desktop/src/OpenTaxSolver2014_12.01-forms/examples_and_templates/US_1040 does exists containing ["US_1040_greg_f1040sd.xfdf", "README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_greg_out.txt", "US_1040_example_out.txt", "US_1040_greg_sysout.txt", "US_1040_example1_OTS.json", "US_1040_example_f1040.xfdf", "US_1040_example.txt", "US_1040_greg.txt", "US_1040_greg_f1040.xfdf", "US_1040_greg_OTS.json", "US_1040_example_f1040sd.xfdf"]
+In assert_pre_conditions, self=#<OpenTableExplorer::Finance::TaxForm:0x00000001f52138 @taxpayer="greg", @form="1040", @jurisdiction=:US, @tax_year=2014, @open_tax_solver_all_form_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/", @form_filename="US_1040", @open_tax_solver_form_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040/", @taxpayer_basename="US_1040_greg", @taxpayer_basename_with_year="US_1040_2014_greg", @open_tax_solver_binary="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014", @open_tax_solver_input="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg.txt", @open_tax_solver_output="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt", @open_tax_solver_sysout="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_sysout.txt", @output_xfdf_glob="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg*.xfdf", @output_pdf="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_otff.pdf">.
+<nil> expected to not be nil.
 
   2) Failure:
-test_TaxForm_open_tax_solver_data_base_directory(TaxFormTest) [test/unit/tax_form_test.rb:44]:
-<"test/data_sources/tax_form/2014"> expected but was
-<"test/data_sources/tax_form/2014/examples_and_templates/US_1040/2014/">.
+test_assert_build(TaxFormTest) [test/unit/tax_form_test.rb:239]:
 
-  3) Error:
-test_assert_build(TaxFormTest):
-NoMethodError: undefined method `exitstatus' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:209:in `assert_open_tax_solver'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:255:in `assert_build'
-    test/unit/tax_form_test.rb:238:in `test_assert_build'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540 does exists containing ["CA_540_example_sysout.txt", "CA_540_2012_example_OTS.json"]
 
-  4) Error:
-test_assert_open_tax_solver(TaxFormTest):
-NoMethodError: undefined method `exitstatus' for nil:NilClass
-    test/unit/tax_form_test.rb:199:in `test_assert_open_tax_solver'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+  3) Failure:
+test_assert_open_tax_solver(TaxFormTest) [test/unit/tax_form_test.rb:217]:
+else peculiar_status ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt' could not be opened.
 
-  5) Error:
-test_example(TaxFormTest):
-NoMethodError: undefined method `exitstatus' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:209:in `assert_open_tax_solver'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:255:in `assert_build'
-    test/unit/tax_form_test.rb:87:in `test_example'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+fed input not found
+US1040_example.open_tax_solver_output=/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
+self=$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_CA_540_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt
+@process_status=#<Process::Status: pid 18476 exit 1>
+ERROR: Parameter file '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_example.txt' could not be opened.
+.
+<0> expected but was
+<1>.
 
-  6) Error:
-test_example1(TaxFormTest):
-NoMethodError: undefined method `exitstatus' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:209:in `assert_open_tax_solver'
-    test/unit/tax_form_test.rb:101:in `test_example1'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+  4) Failure:
+test_example(TaxFormTest) [test/unit/tax_form_test.rb:83]:
 
-  7) Failure:
-test_initialize(TaxFormTest) [test/unit/tax_form_test.rb:79]:
-Expected /CA_540_2012$/ to match "/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms/examples_and_templates/CA_540//bin/taxsolve_CA_540_2014".
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["US_1040_example_OTS.json", "US_1040_template_OTS.json", "US_1040_example1_OTS.json", "US_1040_example_sysout.txt"]
 
-  8) Error:
-test_open_tax_solver_distribution_directories(TaxFormTest):
-NameError: uninitialized constant TaxFormTest::OpenTaxSolver_directories
-    test/unit/tax_form_test.rb:32:in `test_open_tax_solver_distribution_directories'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+  5) Failure:
+test_initialize(TaxFormTest) [test/unit/tax_form_test.rb:74]:
 
-  9) Failure:
-test_run_pdf_to_jpeg(TaxFormTest) [test/unit/tax_form_test.rb:188]:
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_template.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540 does exists containing ["CA_540_example_sysout.txt", "CA_540_2012_example_OTS.json"]
+
+  6) Failure:
+test_run_pdf_to_jpeg(TaxFormTest) [test/unit/tax_form_test.rb:187]:
 self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
 @errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
-@process_status=#<Process::Status: pid 15832 exit 1>
+@process_status=#<Process::Status: pid 18498 exit 1>
 expected errors to be empty\n
 "Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty.
 
- 10) Error:
-test_run_tax_solver(TaxFormTest):
-NoMethodError: undefined method `exitstatus' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:209:in `assert_open_tax_solver'
-    test/unit/tax_form_test.rb:127:in `test_run_tax_solver'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+  7) Failure:
+test_run_tax_solver(TaxFormTest) [test/unit/tax_form_test.rb:127]:
 
- 11) Error:
-test_template(TaxFormTest):
-NoMethodError: undefined method `exitstatus' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:209:in `assert_open_tax_solver'
-    test/unit/tax_form_test.rb:104:in `test_template'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["US_1040_example_OTS.json", "US_1040_template_OTS.json", "US_1040_example1_OTS.json", "US_1040_example_sysout.txt"]
 
- 12) Error:
+  8) Failure:
+test_template(TaxFormTest) [test/unit/tax_form_test.rb:100]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["US_1040_example_OTS.json", "US_1040_template_OTS.json", "US_1040_example1_OTS.json", "US_1040_example_sysout.txt", "US_1040_template_sysout.txt"]
+
+  9) Error:
 test_user(TaxFormTest):
-NoMethodError: undefined method `exitstatus' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:209:in `assert_open_tax_solver'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:255:in `assert_build'
-    test/unit/tax_form_test.rb:97:in `test_user'
+NoMethodError: undefined method `/' for /(?<jurisdiction>US)/:Regexp
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:146:in `block in run_fdf_to_pdf'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:144:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:144:in `run_fdf_to_pdf'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:98:in `build'
+    test/unit/tax_form_test.rb:93:in `test_user'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2229002829909704179__setup__128070412995955293__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2738726096644810688__setup__712680150826116758__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -285,4 +480,4 @@ NoMethodError: undefined method `exitstatus' for nil:NilClass
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-31 tests, 88 assertions, 4 failures, 8 errors, 0 skips
+30 tests, 146 assertions, 8 failures, 1 errors, 0 skips
