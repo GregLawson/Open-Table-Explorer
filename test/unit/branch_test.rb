@@ -18,7 +18,7 @@ include Branch::Examples
 def test_reflog?
 #	reflog?(filename).output.split("/n")[0].split(',')[0]
 	filename = $0
-	reflog = TestUnitMaturity.reflog?(filename)
+	reflog = BranchReference.reflog?(filename, TestUnitMaturity.repository)
 #	reflog.assert_post_conditions
 #	assert_not_empty(reflog.output)
 #	lines = reflog.output.split("\n")
