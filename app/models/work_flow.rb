@@ -32,12 +32,13 @@ extend ClassMethods
 # Use as current, lower/upper bound, branch history
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
-attr_reader :related_files, :edit_files, :repository, :unit_maturity
+attr_reader :related_files, :edit_files, :repository, :unit_maturity, :editor
 def initialize(specific_file,
 	related_files = Unit.new_from_path?(specific_file),
 	repository = Repository.new(FilePattern.repository_dir?, :interactive))
 
 	@specific_file = specific_file
+	@editor = Editor.new(specific_file, related_files, repository)
 	@unit_maturity = UnitMaturity.new(repository, related_files)
 	@related_files = related_files
 	@repository = repository
@@ -80,7 +81,7 @@ def merge_conflict_recovery(from_branch)
 				when 'AA' then fail Exception.new(conflict.inspect)
 				# UU unmerged, both modified
 				when 'UU', ' M', 'M ', 'MM', 'A ' then
-					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+					WorkFlow.new(conflict[:file]).editor.edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
 					fail Exception.new(conflict.inspect)
@@ -147,7 +148,7 @@ def loop(executable = @related_files.model_test_pathname?)
 			if !File.exists?(executable) then
 				done = true
 			elsif deserving_branch != :passed then # master corrupted
-				edit('master branch not passing')
+				editor.edit('master branch not passing')
 				done = false
 			else
 				done = true
@@ -187,7 +188,7 @@ def unit_test(executable = @related_files.model_test_pathname?)
 #		if !@repository.something_to_commit? then
 #			@repository.confirm_branch_switch(deserving_branch)
 #		end #if
-		edit('unit_test')
+		editor.edit('unit_test')
 	end until !@repository.something_to_commit?
 end # unit_test
 require_relative '../../test/assertions.rb'

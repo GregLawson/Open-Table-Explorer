@@ -121,7 +121,7 @@ commands.each do |c|
 		work_flow=WorkFlow.new(f)
 		case c.to_sym
 		when :execute then work_flow.execute(f)
-		when :edit then work_flow.edit
+		when :edit then work_flow.editor.edit
 		when :test then 
 			deserving_branch = work_flow.test(f)
 #			work_flow.merge_down(deserving_branch)
