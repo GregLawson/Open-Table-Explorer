@@ -1,0 +1,82 @@
+master
+2015-04-23 11:07:05.266
+ruby -v -W0 test/unit/version_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+FE.E.
+
+Finished tests in 0.008434s, 592.8479 tests/s, 2134.2523 assertions/s.
+
+  1) Failure:
+test_Version_Examples(VersionTest) [test/unit/version_test.rb:53]:
+<{:major=>"1", :minor=>"9", :patch=>"0"}> expected but was
+<[[{:major=>"1"}, {:major=>"9"}, {:major=>"0"}],
+ [{}, {}, {}],
+ [{:minor=>"1"}, {:minor=>"9"}, {:minor=>"0"}],
+ [{:patch=>"1"}, {:patch=>"9"}, {:patch=>"0"}],
+ [],
+ []]>.
+
+  2) Error:
+test_initialize(VersionTest):
+NameError: uninitialized constant VersionTest::First_example_version
+    test/unit/version_test.rb:47:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4580243571840729534__setup__3818648466251504796__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  3) Error:
+test_square_brackets(VersionTest):
+NoMethodError: undefined method `First_example_version' for "1":String
+    test/unit/version_test.rb:19:in `test_square_brackets'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4580243571840729534__setup__3818648466251504796__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+5 tests, 18 assertions, 1 failures, 2 errors, 0 skips
+
