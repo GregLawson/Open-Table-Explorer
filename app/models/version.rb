@@ -24,6 +24,7 @@ Version_pattern = [Version_digits.capture(:major), '.'] +
 	[Version_digits.capture(:patch)] +
 	[(/-/ * /[-.a-zA-Z0-9]*/.capture(:pre_release)) * Regexp::Optional] +
 	[(/\+/ * /[-.a-zA-Z0-9]*/.capture(:build)) * Regexp::Optional]
+Version_regexp = Regexp.new(Version_pattern.join)
 end # Constants
 include Constants
 module ClassMethods

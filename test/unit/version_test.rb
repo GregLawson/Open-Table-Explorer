@@ -15,8 +15,22 @@ include Version::Examples
 include Version::Constants
 def test_virtus_initialize
 end # virtus_initialize
+def test_Constants
+	string = First_example_version_name
+	Version_pattern.each_with_index do |p, i|
+		parse = string.match(p)
+		assert_match(p, string)
+	end # each_index
+	assert_not_nil(parse)
+	assert_instance_of(MatchData, parse)
+end # Constants
 def test_square_brackets
-	assert_equal('1'. First_example_version.major)
+	string = First_example_version_name
+	parse = string.parse(Version_pattern)
+	assert_instance_of(Hash, parse)
+	first_example_version = Version[First_example_version_name]
+	assert_equal('1', first_example_version.major)
+	assert_equal('1', First_example_version.major)
 end # square_brackets
 def test_ruby_version
 	executable_suffix = ''
@@ -43,12 +57,14 @@ def test_initialize
 	ruby_interpreter['major']='string_hash'
 	assert_equal('string_hash', ruby_interpreter.major)
 	assert_equal('string_hash', ruby_interpreter[:major])
-	
+	assert_equal('1.9.0', First_example_version_name)
 	First_example_version.assert_logical_primary_key_defined
 end #initialize
 def test_Version_Examples
 	assert_match(/[1-9]?[0-9]{1,3}/, '1.9.0')
 	assert_match(Version_digits, First_example_version_name)
+	parsed_version_string = First_example_version_name.parse(Version_regexp)
+	assert_equal({:major=>"1", :minor=>"9", :patch=>"0"}, parsed_version_string)
 	parsed_version_string = First_example_version_name.parse(Version_pattern)
 	assert_equal({:major=>"1", :minor=>"9", :patch=>"0"}, parsed_version_string)
 end # Examples
