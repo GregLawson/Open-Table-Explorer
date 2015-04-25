@@ -1,5 +1,5 @@
 master
-2015-04-23 11:01:38.605
+2015-04-24 13:08:10.441
 ruby -v -W0 test/unit/ruby_interpreter_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
@@ -8,16 +8,11 @@ Run options:
 
 FEE..
 
-Finished tests in 0.011791s, 424.0575 tests/s, 1017.7380 assertions/s.
+Finished tests in 0.011728s, 426.3258 tests/s, 1023.1820 assertions/s.
 
   1) Failure:
 test_Constants(RubyInterpreterTest) [test/unit/ruby_interpreter_test.rb:20]:
-Expected [/ruby /,
- [/(?<major>[0-9]{1,4})/,
-  ".",
-  /(?<minor>[0-9]{1,4})/,
-  /(?<patch>[0-9]{1,4})/,
-  /(?<pre_release>[-.a-zA-Z0-9]*)/]] to match "ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]\n".
+Expected [/ruby /, Version] to match "ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]\n".
 
   2) Error:
 test_initialize(RubyInterpreterTest):
@@ -26,7 +21,7 @@ NameError: uninitialized constant RubyInterpreterTest::Singular_ruby_interpreter
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2037832958012077606__setup__4067091685949046289__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4477139292566954388__setup__375273266602510419__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -50,12 +45,12 @@ NameError: uninitialized constant RubyInterpreterTest::Singular_ruby_interpreter
 
   3) Error:
 test_ruby_version(RubyInterpreterTest):
-NoMethodError: undefined method `run' for #<RubyInterpreter:0x00000001836b38>
+NoMethodError: undefined method `run' for #<RubyInterpreter:0x0000000263d240>
     test/unit/ruby_interpreter_test.rb:29:in `test_ruby_version'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__2037832958012077606__setup__4067091685949046289__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__4477139292566954388__setup__375273266602510419__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
