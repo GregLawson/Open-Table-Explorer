@@ -8,18 +8,14 @@
 require_relative '../../app/models/no_db.rb'
 require 'virtus'
 require 'fileutils'
-require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/version.rb'
 class RubyInterpreter # < ActiveRecord::Base
 include Virtus.model
   attribute :processor_version, String, :default => nil # system version
   attribute :options, String, :default => '-W0'
 module Constants
+include Version::Constants
 # see http://semver.org/
-Version_digits = /[0-9]{1,4}/
-Version = [Version_digits.capture(:major), '.'] + 
-	[Version_digits.capture(:minor)] + 
-	[Version_digits.capture(:patch)] +
-	[/[-.a-zA-Z0-9]*/.capture(:pre_release)]
 Ruby_pattern = [/ruby /, Version]
 Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
 Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
