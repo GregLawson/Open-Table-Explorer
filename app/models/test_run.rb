@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2014 by Greg Lawson                                      
+#    Copyright (C) 2011-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,7 +9,7 @@ require_relative '../../app/models/no_db.rb'
 require 'virtus'
 require 'fileutils'
 require_relative '../../app/models/repository.rb'
-require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
 class TestRun # < ActiveRecord::Base
 include Virtus.model
@@ -22,12 +22,6 @@ include Virtus.model
   attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
 module Constants
-# see http://semver.org/
-Version_digits = /[0-9]{1,4}/
-Version = [Version_digits.capture(:major), '.'] + 
-	[Version_digits.capture(:minor)] + 
-	[Version_digits.capture(:patch)] +
-	[/[-.a-zA-Z0-9]*/.capture(:pre_release)]
 Ruby_pattern = [/ruby /, Version]
 Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
 Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
