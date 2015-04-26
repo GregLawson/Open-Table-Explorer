@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014 by Greg Lawson                                      
+#    Copyright (C) 2014-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -38,7 +38,7 @@ def test_branch_index?
 	assert_equal(-3, UnitMaturity.branch_index?(:'work_flow'))
 	assert_equal(-2, UnitMaturity.branch_index?(:'tax_form'))
 	assert_equal(-4, UnitMaturity.branch_index?(:'origin/master'))
-	assert_equal(-nil, UnitMaturity.branch_index?('/home/greg'))
+	assert_equal(nil, UnitMaturity.branch_index?('/home/greg'))
 end # branch_index?
 def test_revison_tag?
 	assert_equal('-r master', UnitMaturity.revison_tag?(-1))
@@ -57,6 +57,29 @@ def test_merge_range
 	assert_equal(3..2, UnitMaturity.merge_range(:edited))
 	assert_equal(0..2, UnitMaturity.merge_range(:master))
 end #merge_range
+def test_deserving_branch?
+	error_classifications=[]
+	branch_compressions=[]
+	branch_enhancements=[]
+	Repository::Error_classification.each_pair do |key, value|
+		executable=data_source_directory?('repository')+'/'+value.to_s+'.rb'
+		error_score = TestUnitMaturity.repository.error_score?(executable)
+		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
+		error_score=TestUnitMaturity.repository.error_score?(executable)
+#		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
+		error_classification=Repository::Error_classification.fetch(error_score, :multiple_tests_fail)
+		error_classifications<<error_classification
+		branch_compression = Deserving_commit_to_branch[error_classification]
+		branch_compressions<<branch_compression
+		branch_enhancement=Branch_enhancement[branch_compression]
+		branch_enhancements<<branch_enhancement
+	end #each
+	assert_equal(4, error_classifications.uniq.size, error_classifications.inspect)
+	assert_equal(3, branch_compressions.uniq.size, branch_compressions.inspect)
+	assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
+#	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+#	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
+end #deserving_branch
 def test_diff_command?
 	filename=Most_stable_file
 	branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
