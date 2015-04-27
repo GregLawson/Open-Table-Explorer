@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2014 by Greg Lawson                                      
+#    Copyright (C) 2011-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -14,7 +14,7 @@ require_relative '../../app/models/bug.rb'
 class TestRun # < ActiveRecord::Base
 include Virtus.model
   attribute :test_type, Symbol, :default => :unit
-  attribute :singular_table, String, :default => TE.model_name?.to_s.underscore
+  attribute :singular_table, String
   attribute :plural_table, String, :default => nil
   attribute :test, String, :default => nil # all tests in file
   attribute :test_command, String, :default => 'ruby'
@@ -22,7 +22,8 @@ include Virtus.model
   attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
 module Constants
-Ruby_pattern = [/ruby /, Version]
+include Version::Constants
+Ruby_pattern = [/ruby /, Version_pattern]
 Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
 Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
 Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
@@ -36,21 +37,73 @@ def ruby_version(executable_suffix = '')
 	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
 	testRun.output.parse(Version_pattern).output
 end # ruby_version
-def error_score?(executable)
-	file_pattern = FilePattern.find_from_path(executable)
-	test_type = file_pattern[:name][0..-6]
-	@@recent_test = TestRun.new(test_type: test_type).run
-	unit = Unit.new_from_File(executable)
-
-	if @@recent_test.success? then
+def log_path?(executable,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	@unit = Unit.new_from_path?(executable)
+	if @unit.nil? then
+		@log_path = '' # empty file string
+	else
+		@log_path = 'log/unit/' + minor_version
+		@log_path += '/' + patch_version
+		@log_path += '/' + logging.to_s
+		@log_path += '/' + @unit.model_basename.to_s + '.log'
+		end # if
+end # log_path?
+def write_error_file(recent_test, log_path)
+	contents = current_branch_name?.to_s
+	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	contents += "\n" + recent_test.command_string
+	contents += "\n" + recent_test.output
+	contents += "\n" + recent_test.errors
+	IO.write(log_path, contents)
+end # write_error_file
+def write_commit_message(recent_test,files)
+	commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
+	if !recent_test.nil? then
+		commit_message += "\n" + current_branch_name?.to_s + "\n"
+		commit_message += "\n" + recent_test.command_string
+		commit_message += "\n" + recent_test.output
+		commit_message += recent_test.errors
+	end #if
+	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+end # write_commit_message
+def ruby_test_string(executable,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	case logging 
+	when :quiet then @ruby_test_string = 'ruby -v -W0 '
+	when :normal then @ruby_test_string = 'ruby -v -W1 '
+	when :verbose then @ruby_test_string = 'ruby -v -W2 '
+	else fail Exception.new(logging + ' is not a valid logging type.')
+	end # case
+	@ruby_test_string += executable
+end # ruby_test_string
+def error_score?(executable,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	fail Exception.new('Executable file '+ executable + ' does not exist.') if !File.exists?(executable)
+	@ruby_test_string = ruby_test_string(executable,
+		logging,
+		minor_version,
+		patch_version)
+	@recent_test=shell_command(@ruby_test_string)
+	log_path = log_path?(executable,
+	  logging, minor_version, patch_version)
+	if !log_path.empty? then
+	end # if
+	write_error_file(@recent_test, log_path)
+	write_commit_message(@recent_test, [executable])
+#	@recent_test.puts if $VERBOSE
+	if @recent_test.success? then
 		0
-	elsif @@recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test = TestRun.new(test_type: test_type,
-			options: '-c').run
-
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test=shell_command("ruby -c "+executable)
 		if syntax_test.output=="Syntax OK\n" then
-			initialize_test = TestRun.new(test_type: test_type,
-			options: '-n test_initialize').run
+			initialize_test=shell_command("ruby "+executable+' -n test_initialize')
 			if initialize_test.success? then
 				1
 			else # initialization  failure or test_initialize failure
