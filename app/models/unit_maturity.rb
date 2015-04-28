@@ -8,6 +8,7 @@
 #require_relative '../../app/models/no_db.rb'
 #assert_global_name(:Repository)
 require_relative '../../app/models/branch.rb'
+require_relative '../../app/models/test_run.rb'
 class UnitMaturity
 #include Repository::Constants
 module Constants
@@ -32,6 +33,20 @@ Expected_next_commit_branch = { success:             0,
 			              initialization_fail: 1,
 			              syntax_error:        2
 			}
+# define branch maturity partial order
+# use for merge-down and maturity promotion
+More_mature = {
+	:master => :'origin/master',
+	:passed => :master,
+	:testing => :passed,
+	:edited => :testing
+}
+Subset_branch = {
+	:master => :tax_form,
+	:master => :work_flow,
+	:work_flow => :unit,
+	:unit => :regexp
+}
 end #Constants
 include Constants
 module ClassMethods
