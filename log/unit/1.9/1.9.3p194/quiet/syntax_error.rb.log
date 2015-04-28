@@ -1,6 +1,6 @@
 master
-2015-04-21 18:01:16.355
-ruby -v -W0 test/data_sources/repository//syntax_error.rb
+2015-04-27 13:00:34.504
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/syntax_error.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-test/data_sources/repository//syntax_error.rb:1: syntax error, unexpected tAMPER
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/syntax_error.rb:1: syntax error, unexpected tAMPER

@@ -1,19 +1,19 @@
 master
-2015-04-21 17:37:08.560
-
-ruby -v -W0 test/data_sources/repository//single_test_fail.rbruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+2015-04-27 13:00:34.184
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/single_test_fail.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
 E.
 
-Finished tests in 0.000815s, 2454.0811 tests/s, 0.0000 assertions/s.
+Finished tests in 0.000834s, 2398.9445 tests/s, 0.0000 assertions/s.
 
   1) Error:
 test_fail(SingleFailTest):
 RuntimeError: 
-    test/data_sources/repository//single_test_fail.rb:6:in `test_fail'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/single_test_fail.rb:6:in `test_fail'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
@@ -34,3 +34,4 @@ RuntimeError:
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
 2 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+

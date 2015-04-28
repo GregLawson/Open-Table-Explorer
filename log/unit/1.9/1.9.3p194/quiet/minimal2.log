@@ -1,5 +1,6 @@
 master
-2015-04-11 06:17:39.912
+2015-04-27 13:00:34.065
+ruby -v -W0 test/unit/minimal2_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -7,6 +8,7 @@ Run options:
 
 ........
 
-Finished tests in 0.007172s, 1115.4910 tests/s, 3346.4729 assertions/s.
+Finished tests in 0.007389s, 1082.7500 tests/s, 3248.2499 assertions/s.
 
 8 tests, 24 assertions, 0 failures, 0 errors, 0 skips
+

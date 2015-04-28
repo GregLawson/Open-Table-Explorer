@@ -1,5 +1,6 @@
 master
-2015-04-10 13:15:00.503
+2015-04-27 13:03:45.709
+ruby -v -W0 test/unit/repository_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -11,18 +12,21 @@ confirm_commit(:interactive something_to_commit?=true
 ruby script/workflow.rb --test README
 confirm_commit(:interactive something_to_commit?=true
 ruby script/workflow.rb --test README
-confirm_commit(:interactive something_to_commit?=false
+confirm_commit(:interactive something_to_commit?=true
+ruby script/workflow.rb --test README
+confirm_commit(:interactive something_to_commit?=true
 ..$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 26990 exit 1>
+@process_status=#<Process::Status: pid 30807 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 27004 exit 128>
+@process_status=#<Process::Status: pid 30821 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ...confirm_commit(:echo something_to_commit?=true
 .
 
-Finished tests in 286.751070s, 0.0976 tests/s, 0.2406 assertions/s.
+Finished tests in 193.191574s, 0.1449 tests/s, 0.3572 assertions/s.
 
 28 tests, 69 assertions, 0 failures, 0 errors, 0 skips
+
