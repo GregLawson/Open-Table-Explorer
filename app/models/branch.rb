@@ -6,7 +6,8 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative '../../test/assertions/repository_assertions.rb'
+#require_relative '../../test/assertions/repository_assertions.rb'
+require_relative '../../app/models/repository.rb'
 #assert_global_name(:Repository)
 require_relative '../../app/models/parse.rb'
 class Reference
