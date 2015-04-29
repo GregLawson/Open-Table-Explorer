@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-15 by Greg Lawson
+#    Copyright (C) 2013-2015 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -78,10 +78,9 @@ def merge_conflict_recovery(from_branch)
 				# DU unmerged, deleted by us
 				when 'DU' then fail Exception.new(conflict.inspect)
 				# AA unmerged, both added
-				when 'AA' then fail Exception.new(conflict.inspect)
 				# UU unmerged, both modified
-				when 'UU', ' M', 'M ', 'MM', 'A ' then
-					WorkFlow.new(conflict[:file]).editor.edit('merge_conflict_recovery')
+				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
+					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
 					fail Exception.new(conflict.inspect)
@@ -160,7 +159,7 @@ def loop(executable = @related_files.model_test_pathname?)
 	begin
 		deserving_branch = test(executable)
 		merge_down(deserving_branch)
-		edit('loop')
+		editor.edit('loop')
 		if @repository.something_to_commit? then
 			done = false
 		else
