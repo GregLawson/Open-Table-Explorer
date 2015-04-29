@@ -80,7 +80,7 @@ def merge_conflict_recovery(from_branch)
 				# AA unmerged, both added
 				# UU unmerged, both modified
 				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
-					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+					WorkFlow.new(conflict[:file]).editor.edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
 					fail Exception.new(conflict.inspect)
