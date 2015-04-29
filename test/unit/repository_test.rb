@@ -110,41 +110,6 @@ def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
-def test_log_path?
-	executable = $PROGRAM_NAME
-	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', This_code_repository.log_path?(executable))
-#	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', This_code_repository.log_path?)
-end # log_path?
-def test_ruby_test_string
-	executable = $PROGRAM_NAME
-	ruby_test_string = This_code_repository.ruby_test_string(executable)
-	assert_match(executable, ruby_test_string)
-end # ruby_test_string
-def test_error_score?
-	executable='/etc/mtab' #force syntax error with non-ruby text
-	ruby_test_string = This_code_repository.ruby_test_string(executable)
-	recent_test = This_code_repository.shell_command(ruby_test_string)
-	error_message = recent_test.process_status.inspect+"\n"+recent_test.inspect
-	assert_equal(1, recent_test.process_status.exitstatus, error_message)
-	assert_equal(false, recent_test.success?, error_message)
-	assert(!recent_test.success?, error_message)
-		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
-		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(10000, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
-#	This_code_repository.assert_deserving_branch(:edited, executable)
-
-	executable='test/unit/minimal2_test.rb'
-		recent_test=This_code_repository.shell_command("ruby "+executable)
-		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
-		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
-#	This_code_repository.assert_deserving_branch(:passed, executable)
-	Error_classification.each_pair do |key, value|
-		executable = Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
-		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
-	end #each
-end #error_score
 def test_confirm_branch_switch
 	assert_equal(:master, Minimal_repository.current_branch_name?)
 	Minimal_repository.confirm_branch_switch(:passed)
