@@ -247,6 +247,41 @@ def confirm_branch_switch(branch)
 	end #if
 	checkout_branch # for command chaining
 end #confirm_branch_switch
+# does not return to original branch unlike #safely_visit_branch
+# does not need a block, since it doesn't switch back
+# moves all working directory files to new branch
+def switch_branch(target_branch)
+	save_and_checkout(target_branch)
+end # switch_branch
+def save_and_checkout(target_branch)
+	push_branch = current_branch_name?
+	changes_branch = push_branch # 
+	push=something_to_commit? # remember
+	if push then
+#		status=@grit_repo.status
+#		puts "status.added=#{status.added.inspect}"
+#		puts "status.changed=#{status.changed.inspect}"
+#		puts "status.deleted=#{status.deleted.inspect}"
+#		puts "something_to_commit?=#{something_to_commit?.inspect}"
+		git_command('stash save --include-untracked')
+		merge_conflict_files?.each do |conflict|
+			shell_command('diffuse -m '+conflict[:file])
+			confirm_commit
+		end #each
+		changes_branch=:stash
+	end #if
+
+	if push_branch!=target_branch then
+		confirm_branch_switch(target_branch)
+	end #if
+	push # if switched?
+end # save_and_checkout
+def merge_cleanup(editor)
+	merge_conflict_files?.each do |conflict|
+		shell_command('diffuse -m '+conflict[:file])
+		confirm_commit
+	end #each
+end # merge_cleanup
 # This is safe in the sense that a stash saves all files
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
