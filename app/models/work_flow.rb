@@ -49,68 +49,6 @@ def initialize(specific_file,
 		@branch_index = index
 	end # if
 end # initialize
-def version_comparison(files = nil)
-	if files.nil? then
-		files = [@repository.log_path?(@related_files.model_test_pathname?)].concat(@related_files.edit_files)
-	end # if
-	ret = files.map do |f|
-		goldilocks(f)
-	end # map
-	ret.join(' ')
-end # version_comparison
-def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym)
-	if File.exists?(filename) then
-		current_index = UnitMaturity.branch_index?(middle_branch)
-		left_index, right_index = @unit_maturity.bracketing_versions?(filename, current_index)
-		relative_filename = Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-		ret = ' -t '
-		if left_index.nil? then
-			ret += " #{relative_filename} "
-		else
-			ret += "#{UnitMaturity.revison_tag?(left_index)} #{relative_filename} "
-		end # if
-		ret += relative_filename
-		if right_index.nil? then
-			ret += " #{relative_filename} "
-		else
-			ret += " #{UnitMaturity.revison_tag?(right_index)} #{relative_filename}"
-		end # if
-	else
-		ret = ''
-	end # if
-	ret += ' -r ' + @unit_maturity.last_change?(filename) + ' ' + filename
-end # goldilocks
-def test_files(edit_files = @related_files.edit_files)
-	pairs = @related_files.functional_parallelism(edit_files).map do |p|
-
-		' -t ' + p.map do |f|
-			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
-
-		end.join(' ') # map
-	end # map
-	pairs.join(' ')
-end # test_files
-def minimal_comparison?
-	if @related_files.edit_files == [] then
-		unit_pattern = FilePattern.new_from_path(_FILE_)
-	else
-		unit_pattern = FilePattern.new_from_path(@related_files.edit_files[0])
-	end # if
-	unit_name = unit_pattern.unit_base_name
-	FilePattern::Constants::Patterns.map do |p|
-		pattern = FilePattern.new(p)
-		pwd = Pathname.new(Dir.pwd)
-		default_test_class_id = @related_files.default_test_class_id?.to_s
-		min_path = Pathname.new(pattern.path?('minimal' + default_test_class_id))
-		unit_path = Pathname.new(pattern.path?(unit_name))
-#		path = Pathname.new(start_file_pattern.pathname_glob(@related_files.model_basename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-#		puts "File.exists?('#{min_path}')==#{File.exists?(min_path)}, File.exists?('#{path}')==#{File.exists?(path)}" if $VERBOSE
-		if File.exists?(min_path)  then
-			' -t ' + unit_path.relative_path_from(pwd).to_s + ' ' + 
-				min_path.relative_path_from(pwd).to_s
-		end # if
-	end.compact.join # map
-end # minimal_comparison
 def merge_conflict_recovery(from_branch)
 # see man git status
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
@@ -142,7 +80,7 @@ def merge_conflict_recovery(from_branch)
 				# AA unmerged, both added
 				# UU unmerged, both modified
 				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
-					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
+					WorkFlow.new(conflict[:file]).editor.edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
 					fail Exception.new(conflict.inspect)
@@ -221,7 +159,7 @@ def loop(executable = @related_files.model_test_pathname?)
 	begin
 		deserving_branch = test(executable)
 		merge_down(deserving_branch)
-		edit('loop')
+		editor.edit('loop')
 		if @repository.something_to_commit? then
 			done = false
 		else
