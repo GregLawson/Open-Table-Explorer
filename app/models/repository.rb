@@ -172,9 +172,9 @@ end #confirm_branch_switch
 # does not need a block, since it doesn't switch back
 # moves all working directory files to new branch
 def switch_branch(target_branch)
-	save_and_checkout(target_branch)
+	push = stash_and_checkout(target_branch)
 end # switch_branch
-def save_and_checkout(target_branch)
+def stash_and_checkout(target_branch)
 	push_branch = current_branch_name?
 	changes_branch = push_branch # 
 	push=something_to_commit? # remember
@@ -196,7 +196,7 @@ def save_and_checkout(target_branch)
 		confirm_branch_switch(target_branch)
 	end #if
 	push # if switched?
-end # save_and_checkout
+end # stash_and_checkout
 def merge_cleanup(editor)
 	merge_conflict_files?.each do |conflict|
 		shell_command('diffuse -m '+conflict[:file])
