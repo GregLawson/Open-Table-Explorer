@@ -46,25 +46,6 @@ def test_initialize
 	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
 end #initialize
-def test_version_comparison
-	assert_equal('', TestWorkFlow.version_comparison([]))
-end #version_comparison
-def test_goldilocks
-	assert_not_nil(WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym))
-#	assert_include(WorkFlow::Branch_enhancement, TestWorkFlow.repository.current_branch_name?.to_sym)
-	current_index=WorkFlow.branch_index?(TestWorkFlow.repository.current_branch_name?.to_sym)
-	filename=Most_stable_file
-	left_index,right_index=TestWorkFlow.bracketing_versions?(filename, current_index)
-	assert_operator(current_index, :<, right_index)
-	message="left_index=#{left_index}, right_index=#{right_index}"
-	assert_operator(left_index, :<=, current_index, message)
-	assert_operator(left_index, :<, right_index, message)
-	assert_data_file(filename)
-	assert_match(/ -t /, TestWorkFlow.goldilocks(filename))
-	relative_filename=Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
-	assert_match(/#{filename}/, TestWorkFlow.goldilocks(filename))
-	assert_data_file(relative_filename)
-end #goldilocks
 include WorkFlow::Examples
 def test_merge_conflict_recovery
 end # merge_conflict_recovery
@@ -107,7 +88,7 @@ def test_deserve_command
 	value = :testing
 	executable = Repository::Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
-	error_score=TestWorkFlow.repository.error_score?(executable)
+	error_score = TestRun.error_score?(executable)
 #	assert_equal(1, error_score, deserve_run.inspect)
 #	assert_match(/deserving branch=testing/, deserve_run.output, deserve_run.inspect)
 end #  deserve_command

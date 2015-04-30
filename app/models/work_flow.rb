@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-15 by Greg Lawson
+#    Copyright (C) 2013-2015 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -8,6 +8,7 @@
 require_relative 'unit.rb'
 #require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
+require_relative 'editor.rb'
 class WorkFlow
 module Constants
 end # Constants
@@ -25,26 +26,19 @@ def all(pattern_name = :test)
 		WorkFlow.new(test).unit_test
 	end # each
 end # all
-def merge_range(deserving_branch)
-	deserving_index = UnitMaturity.branch_index?(deserving_branch)
-	if deserving_index.nil? then
-		fail deserving_branch.inspect + ' not found in ' + UnitMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
-	else
-		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
-	end # if
-end # merge_range
 end # ClassMethods
 extend ClassMethods
 # Define related (unit) versions
 # Use as current, lower/upper bound, branch history
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
-attr_reader :related_files, :edit_files, :repository, :unit_maturity
+attr_reader :related_files, :edit_files, :repository, :unit_maturity, :editor
 def initialize(specific_file,
 	related_files = Unit.new_from_path?(specific_file),
 	repository = Repository.new(FilePattern.repository_dir?, :interactive))
 
 	@specific_file = specific_file
+	@editor = Editor.new(specific_file, related_files, repository)
 	@unit_maturity = UnitMaturity.new(repository, related_files)
 	@related_files = related_files
 	@repository = repository
@@ -55,17 +49,6 @@ def initialize(specific_file,
 		@branch_index = index
 	end # if
 end # initialize
-def deserving_branch?(executable = @related_files.model_test_pathname?)
-	if File.exists?(executable) then
-		@error_score = @repository.error_score?(executable)
-		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
-		@deserving_commit_to_branch = Deserving_commit_to_branch[@error_classification]
-		@expected_next_commit_branch = Expected_next_commit_branch[@error_classification]
-		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
-	else
-		:edited
-	end # if
-end # deserving_branch
 def merge_conflict_recovery(from_branch)
 # see man git status
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
@@ -95,9 +78,8 @@ def merge_conflict_recovery(from_branch)
 				# DU unmerged, deleted by us
 				when 'DU' then fail Exception.new(conflict.inspect)
 				# AA unmerged, both added
-				when 'AA' then fail Exception.new(conflict.inspect)
 				# UU unmerged, both modified
-				when 'UU', ' M', 'M ', 'MM', 'A ' then
+				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
 					WorkFlow.new(conflict[:file]).edit('merge_conflict_recovery')
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
@@ -144,7 +126,7 @@ def script_deserves_commit!(deserving_branch)
 end # script_deserves_commit!
 def test(executable = @related_files.model_test_pathname?)
 	merge_conflict_recovery(:MERGE_HEAD)
-	deserving_branch = deserving_branch?(executable)
+	deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
 	puts deserving_branch if $VERBOSE
 	@repository.safely_visit_branch(deserving_branch) do |changes_branch|
 		@repository.validate_commit(changes_branch, @related_files.tested_files(executable))
@@ -160,12 +142,12 @@ def loop(executable = @related_files.model_test_pathname?)
 	merge_conflict_recovery(:MERGE_HEAD)
 	@repository.safely_visit_branch(:master) do |changes_branch|
 		begin
-			deserving_branch = deserving_branch?(executable)
+			deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
 			puts "deserving_branch=#{deserving_branch} != :passed=#{deserving_branch != :passed}"
 			if !File.exists?(executable) then
 				done = true
 			elsif deserving_branch != :passed then # master corrupted
-				edit('master branch not passing')
+				editor.edit('master branch not passing')
 				done = false
 			else
 				done = true
@@ -177,7 +159,7 @@ def loop(executable = @related_files.model_test_pathname?)
 	begin
 		deserving_branch = test(executable)
 		merge_down(deserving_branch)
-		edit('loop')
+		editor.edit('loop')
 		if @repository.something_to_commit? then
 			done = false
 		else
@@ -190,10 +172,10 @@ def loop(executable = @related_files.model_test_pathname?)
 			end # if
 		end # if
 	end until done
-end # test
+end # loop
 def unit_test(executable = @related_files.model_test_pathname?)
 	begin
-		deserving_branch = deserving_branch?(executable)
+		deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
 		if !@repository.recent_test.nil? && @repository.recent_test.success? then
 			break
 		end # if
@@ -205,7 +187,7 @@ def unit_test(executable = @related_files.model_test_pathname?)
 #		if !@repository.something_to_commit? then
 #			@repository.confirm_branch_switch(deserving_branch)
 #		end #if
-		edit('unit_test')
+		editor.edit('unit_test')
 	end until !@repository.something_to_commit?
 end # unit_test
 require_relative '../../test/assertions.rb'
@@ -230,30 +212,6 @@ def assert_post_conditions
 	odd_files = Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
 	assert_empty(odd_files, 'WorkFlow#assert_post_conditions')
 end # assert_post_conditions
-def assert_deserving_branch(branch_expected, executable, message = '')
-	deserving_branch = deserving_branch?(executable)
-	recent_test = shell_command('ruby ' + executable)
-	message += "\nrecent_test=" + recent_test.inspect
-	message += "\nrecent_test.process_status=" + recent_test.process_status.inspect
-	syntax_test = shell_command('ruby -c ' + executable)
-	message += "\nsyntax_test=" + syntax_test.inspect
-	message += "\nsyntax_test.process_status=" + syntax_test.process_status.inspect
-	message += "\nbranch_expected=#{branch_expected.inspect}"
-	message += "\ndeserving_branch=#{deserving_branch.inspect}"
-	case deserving_branch
-	when :edited then
-		assert_equal(1, recent_test.process_status.exitstatus, message)
-		assert_not_equal("Syntax OK\n", syntax_test.output, message)
-		assert_equal(1, syntax_test.process_status.exitstatus, message)
-	when :testing then
-		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
-		assert_equal("Syntax OK\n", syntax_test.output, message)
-	when :passed then
-		assert_equal(0, recent_test.process_status.exitstatus, message)
-		assert_equal("Syntax OK\n", syntax_test.output, message)
-	end # case
-	assert_equal(deserving_branch, branch_expected, message)
-end # deserving_branch
 end # Assertions
 include Assertions
 extend Assertions::ClassMethods
