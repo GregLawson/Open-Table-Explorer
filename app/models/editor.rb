@@ -38,7 +38,7 @@ def initialize(specific_file,
 end # initialize
 def version_comparison(files = nil)
 	if files.nil? then
-		files = [@repository.log_path?(@related_files.model_test_pathname?)].concat(@related_files.edit_files)
+		files = [TestRun.log_path?(@related_files.model_test_pathname?)].concat(@related_files.edit_files)
 	end # if
 	ret = files.map do |f|
 		goldilocks(f)
