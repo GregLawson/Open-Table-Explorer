@@ -88,7 +88,7 @@ def test_deserve_command
 	value = :testing
 	executable = Repository::Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
-	error_score=TestWorkFlow.repository.error_score?(executable)
+	error_score = TestRun.error_score?(executable)
 #	assert_equal(1, error_score, deserve_run.inspect)
 #	assert_match(/deserving branch=testing/, deserve_run.output, deserve_run.inspect)
 end #  deserve_command
