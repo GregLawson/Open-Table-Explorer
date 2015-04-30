@@ -11,6 +11,7 @@ require 'fileutils'
 require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
+require_relative '../../app/models/shell_commands.rb'
 class TestRun # < ActiveRecord::Base
 include Virtus.model
   attribute :test_type, Symbol, :default => :unit
