@@ -105,6 +105,9 @@ def test_standardize_position
 	Minimal_repository.git_command("checkout master").puts
 	Minimal_repository.standardize_position!
 end #standardize_position
+def test_state?
+	assert_includes([:clean, :dirty], state?)
+end # state?
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)

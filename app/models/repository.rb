@@ -172,11 +172,32 @@ end #confirm_branch_switch
 # does not need a block, since it doesn't switch back
 # moves all working directory files to new branch
 def switch_branch(target_branch)
-	save_and_checkout(target_branch)
+	push = stash_and_checkout(target_branch)
 end # switch_branch
-def save_and_checkout(target_branch)
-	push_branch = current_branch_name?
-	changes_branch = push_branch # 
+def merge(target_branch, source_branch, interact=:interactive)
+	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
+	@repository.safely_visit_branch(target_branch) do |changes_branch|
+		merge_status = @repository.git_command('merge ' + source_branch.to_s)
+		puts 'merge_status= ' + merge_status.inspect
+		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
+			puts 'merge OK'
+		else
+			if merge_status.success? then
+				puts 'not merge_conflict_recovery' + merge_status.inspect
+			else
+				puts 'merge_conflict_recovery' + merge_status.inspect
+				merge_conflict_recovery(source_branch)
+			end # if
+		end # if
+		@repository.confirm_commit(interact)
+	end # safely_visit_branch
+end # merge
+def merge_interactive(source_branch)
+		merge_status = git_command('merge --no-commit ' + source_branch.to_s)
+end # merge_interactive
+def stash_and_checkout(target_branch)
+	stash_branch = current_branch_name?
+	changes_branch = stash_branch # 
 	push=something_to_commit? # remember
 	if push then
 #		status=@grit_repo.status
@@ -192,11 +213,11 @@ def save_and_checkout(target_branch)
 		changes_branch=:stash
 	end #if
 
-	if push_branch!=target_branch then
+	if stash_branch!=target_branch then
 		confirm_branch_switch(target_branch)
 	end #if
 	push # if switched?
-end # save_and_checkout
+end # stash_and_checkout
 def merge_cleanup(editor)
 	merge_conflict_files?.each do |conflict|
 		shell_command('diffuse -m '+conflict[:file])
@@ -207,8 +228,8 @@ end # merge_cleanup
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
-	push_branch=current_branch_name?
-	changes_branch=push_branch # 
+	stash_branch = current_branch_name?
+	changes_branch = stash_branch # 
 	push=something_to_commit? # remember
 	if push then
 #		status=@grit_repo.status
@@ -224,10 +245,10 @@ def safely_visit_branch(target_branch, &block)
 		changes_branch=:stash
 	end #if
 
-	if push_branch!=target_branch then
+	if stash_branch != target_branch then
 		confirm_branch_switch(target_branch)
 		ret=block.call(changes_branch)
-		confirm_branch_switch(push_branch)
+		confirm_branch_switch(stash_branch)
 	else
 		ret=block.call(changes_branch)
 	end #if
