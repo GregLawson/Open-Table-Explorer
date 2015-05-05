@@ -22,6 +22,7 @@ include Virtus.model
   attribute :processor_version, String, :default => nil # system version
   attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
+  attribute :repository, Repository, :default => Repository::This_code_repository
 module Constants
 include Version::Constants
 Ruby_pattern = [/ruby /, Version_pattern]
@@ -33,11 +34,6 @@ include Constants
 #include Generic_Table
 #has_many :bugs
 module ClassMethods
-def ruby_version(executable_suffix = '')
-	ShellCommands.new('ruby --version').output.split(' ')
-	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
-	testRun.output.parse(Version_pattern).output
-end # ruby_version
 def log_path?(executable,
 		logging = :quiet,
 		minor_version = '1.9',
@@ -91,7 +87,7 @@ def error_score?(executable,
 		logging,
 		minor_version,
 		patch_version)
-	@recent_test=shell_command(@ruby_test_string)
+	@recent_test = @repository.shell_command(@ruby_test_string)
 	log_path = log_path?(executable,
 	  logging, minor_version, patch_version)
 	if !log_path.empty? then
