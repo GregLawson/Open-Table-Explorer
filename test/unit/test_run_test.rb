@@ -14,6 +14,7 @@ class TestRunTest < TestCase
 include TestRun::Examples
 include Repository::Constants
 def test_virtus_initialize
+	assert_equal(Repository::This_code_repository.path, Odd_plural_testRun.repository.path)
 	assert_equal(:unit, Odd_plural_testRun.test_type)
 	assert_equal('code_base', Odd_plural_testRun.singular_table)
 	assert_equal('code_bases', Odd_plural_testRun.plural_table)

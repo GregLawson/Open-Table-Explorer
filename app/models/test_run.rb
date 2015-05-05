@@ -29,6 +29,10 @@ Ruby_pattern = [/ruby /, Version_pattern]
 Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
 Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
 Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
+Error_classification={0 => :success,
+				1     => :single_test_fail,
+				100 => :initialization_fail,
+				10000 => :syntax_error}
 end # Constants
 include Constants
 #include Generic_Table
@@ -113,6 +117,18 @@ def error_score?(executable,
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
 end # error_score
+def deserving_branch?(executable,
+	repository)
+	if File.exists?(executable) then
+		@error_score = Terror_score?(executable)
+		@error_classification = Error_classification.fetch(@error_score, :multiple_tests_fail)
+		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[@error_classification]
+		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[@error_classification]
+		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
+	else
+		:edited
+	end # if
+end # deserving_branch
 def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
@@ -225,8 +241,8 @@ def log_passed?(log_file)
 end # log_passed?
 def summarize
 	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/empty_tests.tmp)
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
 	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
 end # summarize
 def parse_summary(summary)
@@ -390,7 +406,7 @@ Unit_testRun = TestRun.new(:test_type => :unit)
 Plural_testRun = TestRun.new({:test_type => :unit, :plural_table => 'test_runs'})
 Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
 Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
-Odd_plural_testRun=TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
+Odd_plural_testRun = TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
 Ruby_version = ShellCommands.new('ruby --version').output
 end # Examples
 end # TestRun
