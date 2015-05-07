@@ -29,6 +29,10 @@ Ruby_pattern = [/ruby /, Version_pattern]
 Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
 Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
 Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
+Error_classification={0 => :success,
+				1     => :single_test_fail,
+				100 => :initialization_fail,
+				10000 => :syntax_error}
 end # Constants
 include Constants
 #include Generic_Table
@@ -95,7 +99,7 @@ def error_score?(executable,
 	write_error_file(@recent_test, log_path)
 	write_commit_message(@recent_test, [executable])
 #	@recent_test.puts if $VERBOSE
-	if @recent_test.success? then
+	@error_score = if @recent_test.success? then
 		0
 	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
 		syntax_test=shell_command("ruby -c "+executable)
@@ -112,6 +116,7 @@ def error_score?(executable,
 	else
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
+	@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
 end # error_score
 def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
