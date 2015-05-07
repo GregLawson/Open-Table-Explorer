@@ -9,7 +9,7 @@
 #assert_global_name(:Repository)
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_run.rb'
-class UnitMaturity
+class ExecutableMaturity
 #include Repository::Constants
 module Constants
 #assert_global_name(:Repository)
@@ -50,8 +50,33 @@ Subset_branch = {
 end #Constants
 include Constants
 module ClassMethods
+extend ClassMethods
+attr_reader :repository, :executable
+def initialize(repository, executable)
+	fail "UnitMaturity.new first argument must be of type Repository" unless repository.instance_of?(Repository)
+#	fail "@repository must respond to :remotes?\n"+
+#		"repository.inspect=#{repository.inspect}\n" +
+#		"repository.methods(false)=#{repository.methods(false).inspect}" unless repository.respond_to?(:remotes?)
+	@repository = repository
+	@executable = executable
+end # initialize
+def deserving_branch?
+	if File.exists?(@executable) then
+		@error_score = TestRun.new(@executable, @repository).error_score?
+		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[@error_classification]
+		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[@error_classification]
+		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
+	else
+		:edited
+	end # if
+end # deserving_branch
+end # ClassMethods
+end # ExecutableMaturity
+class UnitMaturity
+module ClassMethods
 #include Repository::Constants
-include Constants
+#include Constants
 def branch_symbol?(branch_index)
 	case branch_index
 	when nil then fail 'branch_index=' + branch_index.inspect
@@ -89,18 +114,6 @@ def merge_range(deserving_branch)
 		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
 	end # if
 end # merge_range
-def deserving_branch?(executable,
-	repository)
-	if File.exists?(executable) then
-		@error_score = TestRun.error_score?(executable)
-		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
-		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[@error_classification]
-		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[@error_classification]
-		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
-	else
-		:edited
-	end # if
-end # deserving_branch
 end #ClassMethods
 extend ClassMethods
 attr_reader :repository, :unit
@@ -112,6 +125,18 @@ def initialize(repository, unit)
 	@repository=repository
 	@unit = unit
 end # initialize
+def deserving_branch?(executable,
+	repository)
+	if File.exists?(executable) then
+		@error_score = TestRun.new().error_score?(executable)
+		@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[@error_classification]
+		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[@error_classification]
+		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
+	else
+		:edited
+	end # if
+end # deserving_branch
 def diff_command?(filename, branch_index)
 	fail filename + ' does not exist.' if !File.exists?(filename)
 	branch_string = UnitMaturity.branch_symbol?(branch_index).to_s
@@ -202,7 +227,7 @@ def assert_deserving_branch(branch_expected, executable, message = '')
 end # deserving_branch
 end # Assertions
 module Examples
-include Constants
+#include Constants
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'
 Most_stable_file = 'test/unit/minimal2_test.rb'
 Formerly_existant_file = 'test/unit/related_file.rb'
