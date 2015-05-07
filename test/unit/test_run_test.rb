@@ -12,6 +12,7 @@ require_relative '../../app/models/test_run.rb'
 # executed in alphabetical order. Longer names sort later.
 class TestRunTest < TestCase
 include TestRun::Examples
+include TestExecutable::Examples
 include Repository::Constants
 def test_virtus_initialize
 	assert_equal(:unit, Odd_plural_testRun.test_type)
@@ -19,24 +20,30 @@ def test_virtus_initialize
 	assert_equal('code_bases', Odd_plural_testRun.plural_table)
 	assert_equal(nil, Odd_plural_testRun.test)
 end # virtus_initialize
-def test_Constants
-	assert_match(Ruby_pattern, Ruby_version)
-	assert_match(Parenthetical_date_pattern, Ruby_version)
-	assert_match(Bracketed_os, Ruby_version)
-	assert_match(Ruby_pattern * Parenthetical_date_pattern, Ruby_version)
-	assert_match(Parenthetical_date_pattern * Bracketed_os, Ruby_version)
-	assert_match(Version_pattern, Ruby_version)
-end # Constants
-def test_ruby_version
-	executable_suffix = ''
-	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
-	parse = testRun.output.parse(Version_pattern).output
-	assert_instance_of(Hash, parse)
-	assert_operator(parse[:major], :>=, '1')
-	assert_operator(parse[:minor], :>=, '1')
-	assert_operator(parse[:patch], :>=, '1')
-	assert_instance_of(String, parse[:pre_release])
-end # ruby_version
+def test_TestRun_initialize
+	testRun=TestExecutable.new
+#	TestRun.column_names.each do |n|
+#		assert_instance_of(String,n)
+#	end #each
+	# prove equivalence of attribute access
+	assert_respond_to(testRun, 'singular_table')
+	testRun.singular_table='method'
+	assert_equal('method', testRun.singular_table)
+	assert_equal('method', testRun.attributes[:singular_table])
+	assert_nil(testRun.attributes['singular_table'])
+	
+	testRun[:singular_table]='sym_hash'
+	assert_equal('sym_hash', testRun.singular_table)
+	assert_equal('sym_hash', testRun[:singular_table])
+	
+	testRun['singular_table']='string_hash'
+	assert_equal('string_hash', testRun.singular_table)
+	assert_equal('string_hash', testRun[:singular_table])
+	
+#	Singular_testRun.assert_logical_primary_key_defined
+#	Stream_pattern_testRun.assert_logical_primary_key_defined()
+#	Unit_testRun.assert_logical_primary_key_defined()
+end #initialize
 def test_log_path?
 	executable = $PROGRAM_NAME
 	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', This_code_repository.log_path?(executable))
@@ -47,9 +54,25 @@ def test_ruby_test_string
 	ruby_test_string = This_code_repository.ruby_test_string(executable)
 	assert_match(executable, ruby_test_string)
 end # ruby_test_string
+def test_TestExecutable_initialize
+end #initialize
+def test_log_file
+	test_virtus_initialize
+	assert_equal(:unit, Odd_plural_testRun.test_type)
+	assert_equal('code_base', Odd_plural_testRun.singular_table)
+	assert_equal(:code_base, Odd_plural_testRun.unit?.model_class_name, Odd_plural_testRun.inspect)
+	assert_equal(:code_base, Odd_plural_testRun.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_testRun.inspect)
+
+	assert_equal(:code_base, Odd_plural_testRun.unit?.model_basename, Odd_plural_testRun.inspect)
+	assert_equal(File.expand_path('log/library/code_base.log'), Odd_plural_testRun.log_file, Odd_plural_testRun.inspect)
+end #log_file
+def test_test_file?
+	assert_equal('test/unit/code_base_test.rb',Odd_plural_testRun.test_file?)
+end #test_file?
 def test_error_score?
 	executable='/etc/mtab' #force syntax error with non-ruby text
-	ruby_test_string = This_code_repository.ruby_test_string(executable)
+	test_executable = TestExecutable.new(executable: executable)
+	ruby_test_string = TestExecutable.ruby_test_string(executable)
 	recent_test = This_code_repository.shell_command(ruby_test_string)
 	error_message = recent_test.process_status.inspect+"\n"+recent_test.inspect
 	assert_equal(1, recent_test.process_status.exitstatus, error_message)
@@ -143,6 +166,10 @@ def test_parse_log_file
 	assert_not_nil(header)
 	assert_not_nil(summary)
 end #parse_log_file
+def test_log_passed?(log_file)
+end # log_passed?
+def test_summarize
+end # summarize
 def test_parse_summary
 end #parse_summary
 def test_parse_header
@@ -162,43 +189,6 @@ def test_parse_header
 	assert_not_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 end #parse_header
-def test_initialize
-	testRun=TestRun.new
-#	TestRun.column_names.each do |n|
-#		assert_instance_of(String,n)
-#	end #each
-	# prove equivalence of attribute access
-	assert_respond_to(testRun, 'singular_table')
-	testRun.singular_table='method'
-	assert_equal('method', testRun.singular_table)
-	assert_equal('method', testRun.attributes[:singular_table])
-	assert_nil(testRun.attributes['singular_table'])
-	
-	testRun[:singular_table]='sym_hash'
-	assert_equal('sym_hash', testRun.singular_table)
-	assert_equal('sym_hash', testRun[:singular_table])
-	
-	testRun['singular_table']='string_hash'
-	assert_equal('string_hash', testRun.singular_table)
-	assert_equal('string_hash', testRun[:singular_table])
-	
-	Singular_testRun.assert_logical_primary_key_defined
-	Stream_pattern_testRun.assert_logical_primary_key_defined()
-	Unit_testRun.assert_logical_primary_key_defined()
-end #initialize
-def test_test_file?
-	assert_equal('test/unit/code_base_test.rb',Odd_plural_testRun.test_file?)
-end #test_file?
-def test_log_file
-	test_virtus_initialize
-	assert_equal(:unit, Odd_plural_testRun.test_type)
-	assert_equal('code_base', Odd_plural_testRun.singular_table)
-	assert_equal(:code_base, Odd_plural_testRun.unit?.model_class_name, Odd_plural_testRun.inspect)
-	assert_equal(:code_base, Odd_plural_testRun.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_testRun.inspect)
-
-	assert_equal(:code_base, Odd_plural_testRun.unit?.model_basename, Odd_plural_testRun.inspect)
-	assert_equal(File.expand_path('log/library/code_base.log'), Odd_plural_testRun.log_file, Odd_plural_testRun.inspect)
-end #log_file
 def test_run
 	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)
 	ruby_pattern = /ruby / * /2.1.2p95/

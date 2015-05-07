@@ -12,7 +12,7 @@ require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
 require_relative '../../app/models/shell_command.rb'
-class TestRun # < ActiveRecord::Base
+class TestExecutable
 include Virtus.model
   attribute :test_type, Symbol, :default => :unit
   attribute :singular_table, String
@@ -23,20 +23,6 @@ include Virtus.model
   attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
   attribute :repository, Repository, :default => Repository::This_code_repository
-module Constants
-include Version::Constants
-Ruby_pattern = [/ruby /, Version_pattern]
-Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
-Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
-Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
-Error_classification={0 => :success,
-				1     => :single_test_fail,
-				100 => :initialization_fail,
-				10000 => :syntax_error}
-end # Constants
-include Constants
-#include Generic_Table
-#has_many :bugs
 module ClassMethods
 def log_path?(executable,
 		logging = :quiet,
@@ -52,6 +38,67 @@ def log_path?(executable,
 		@log_path += '/' + @unit.model_basename.to_s + '.log'
 		end # if
 end # log_path?
+def ruby_test_string(executable,
+		logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	case logging 
+	when :quiet then @ruby_test_string = 'ruby -v -W0 '
+	when :normal then @ruby_test_string = 'ruby -v -W1 '
+	when :verbose then @ruby_test_string = 'ruby -v -W2 '
+	else fail Exception.new(logging + ' is not a valid logging type.')
+	end # case
+	@ruby_test_string += executable
+end # ruby_test_string
+end # ClassMethods
+extend ClassMethods
+def unit?
+	Unit.new(@singular_table)
+end # unit?
+# log_file => String
+# Filename of log file from test run
+def log_file?
+	case @test_type
+	when :unit
+		unit?.pathname_pattern?(:library_log, @test)
+	when :controller
+		unit?.pathname_pattern?(:controller_log, @test)
+	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
+	end #case
+end #log_file?
+def test_file?
+	case @test_type
+	when :unit
+		return "test/unit/#{@singular_table}_test.rb"
+	when :controller
+		return "test/functional/#{@plural_table}_controller_test.rb"
+	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
+	end #case
+end #test_file?
+module Examples
+#include Constants
+Unit_testRun = TestExecutable.new(:test_type => :unit)
+Plural_testRun = TestExecutable.new({:test_type => :unit, :plural_table => 'test_runs'})
+Singular_testRun = TestExecutable.new(:test_type => :unit,  :singular_table => 'test_run')
+Stream_pattern_testRun = TestExecutable.new(:test_type => :unit,  :singular_table => 'stream_pattern')
+Odd_plural_testRun = TestExecutable.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
+end # Examples
+end # TestExecutable
+
+class TestRun # < ActiveRecord::Base
+include Virtus.model
+  attribute :executable, TestExecutable
+module Constants
+#include Version::Constants
+Error_classification={0 => :success,
+				1     => :single_test_fail,
+				100 => :initialization_fail,
+				10000 => :syntax_error}
+end # Constants
+include Constants
+#include Generic_Table
+#has_many :bugs
+module ClassMethods
 def write_error_file(recent_test, log_path)
 	contents = current_branch_name?.to_s
 	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
@@ -70,18 +117,6 @@ def write_commit_message(recent_test,files)
 	end #if
 	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 end # write_commit_message
-def ruby_test_string(executable,
-		logging = :quiet,
-		minor_version = '1.9',
-		patch_version = '1.9.3p194')
-	case logging 
-	when :quiet then @ruby_test_string = 'ruby -v -W0 '
-	when :normal then @ruby_test_string = 'ruby -v -W1 '
-	when :verbose then @ruby_test_string = 'ruby -v -W2 '
-	else fail Exception.new(logging + ' is not a valid logging type.')
-	end # case
-	@ruby_test_string += executable
-end # ruby_test_string
 def error_score?(executable,
 		logging = :quiet,
 		minor_version = '1.9',
@@ -296,29 +331,6 @@ def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil
 #	puts "End of initialize: self=#{self.inspect}"
 #	puts "End of initialize: testType=#{testType.inspect}"
 end #initialize
-def unit?
-	Unit.new(@singular_table)
-end # unit?
-def test_file?
-	case @test_type
-	when :unit
-		return "test/unit/#{@singular_table}_test.rb"
-	when :controller
-		return "test/functional/#{@plural_table}_controller_test.rb"
-	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
-	end #case
-end #test_file?
-# log_file => String
-# Filename of log file from test run
-def log_file?
-	case @test_type
-	when :unit
-		unit?.pathname_pattern?(:library_log, @test)
-	when :controller
-		unit?.pathname_pattern?(:controller_log, @test)
-	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
-	end #case
-end #log_file?
 # Unconditionally run the test
 def run
 #  attribute :test_type, Symbol, :default => :unit
@@ -391,11 +403,5 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 Default_testRun = TestRun.new
-Unit_testRun = TestRun.new(:test_type => :unit)
-Plural_testRun = TestRun.new({:test_type => :unit, :plural_table => 'test_runs'})
-Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
-Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
-Odd_plural_testRun = TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
-Ruby_version = ShellCommands.new('ruby --version').output
 end # Examples
 end # TestRun

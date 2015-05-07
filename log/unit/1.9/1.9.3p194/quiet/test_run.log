@@ -1,33 +1,62 @@
 edited
-2015-05-07 13:15:22.732
+2015-05-08 05:56:29.974
 ruby -v -W0 test/unit/test_run_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-FEEFEEEE.EEEF...
+..FEEEEEE.EE-StandardError Error: #<NoMethodError: undefined method `log_file?' for #<TestRun:0x00000001cb7360 @executable=nil>>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:346:in `run'
+test/unit/test_run_test.rb:193:in `test_run'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+/usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+/usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+/usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
+/usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+/usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+/usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+/usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+/usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+/usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+/usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+/usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+/usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+/usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+/usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+/usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+E....
 
-Finished tests in 0.783401s, 20.4238 tests/s, 37.0181 assertions/s.
+Finished tests in 0.483814s, 35.1374 tests/s, 57.8734 assertions/s.
 
   1) Failure:
-test_Constants(TestRunTest) [test/unit/test_run_test.rb:23]:
-Expected [/ruby /,
- [/(?<major>[1-9]?[0-9]{1,3})/,
-  ".",
-  /(?<minor>[1-9]?[0-9]{1,3})/,
-  /(?<patch>[1-9]?[0-9]{1,3})/,
-  /-(?<pre_release>[-.a-zA-Z0-9]*)?/,
-  /\+(?<build>[-.a-zA-Z0-9]*)?/]] to match "ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]\n".
+test_error_score?(TestRunTest) [test/unit/test_run_test.rb:79]:
+#<Process::Status: pid 26982 exit 1>
+$ ruby -v -W0 /etc/mtab
+@errors="/etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('\nrootfs / rootfs rw 0 0\n                  ^\n"
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+.
+<false> expected but was
+<1>.
 
   2) Error:
-test_error_score?(TestRunTest):
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000001c6b5c8>
-    test/unit/test_run_test.rb:52:in `test_error_score?'
+test_file_bug_reports(TestRunTest):
+Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Explorer/log/library/code_base.log
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:243:in `read'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:243:in `parse_log_file'
+    test/unit/test_run_test.rb:123:in `test_file_bug_reports'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -50,15 +79,13 @@ NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000001c6
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   3) Error:
-test_file_bug_reports(TestRunTest):
-Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Explorer/log/library/code_base.log
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:208:in `read'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:208:in `parse_log_file'
-    test/unit/test_run_test.rb:100:in `test_file_bug_reports'
+test_log_file(TestRunTest):
+NoMethodError: undefined method `log_file' for #<TestExecutable:0x00000001a2bda8>
+    test/unit/test_run_test.rb:67:in `test_log_file'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -80,19 +107,43 @@ Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Exp
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
-  4) Failure:
-test_initialize(TestRunTest) [test/unit/test_run_test.rb:187]:
-self="#<TestRun:0x00000001d9b6a0 @test_type=:unit, @singular_table=nil, @plural_table=nil, @test=nil, @test_command=\"ruby\", @processor_version=nil, @options=\"-W0\", @timestamp=2015-05-07 13:15:21 -0700, @repository=## edited...origin/edited [ahead 253]\n?? test/data_sources/repository2015-05-07 11:28:09.427/\n?? test/data_sources/repository2015-05-07 11:35:03.735/\n?? test/data_sources/repository2015-05-07 11:35:06.218/\n>".
-<nil> expected to not be nil.
-
-  5) Error:
-test_log_file(TestRunTest):
-NoMethodError: undefined method `log_file' for #<TestRun:0x00000001dcad38>
-    test/unit/test_run_test.rb:200:in `test_log_file'
+  4) Error:
+test_log_passed?(TestRunTest):
+ArgumentError: wrong number of arguments (0 for 1)
+    test/unit/test_run_test.rb:169:in `test_log_passed?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
+    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
+    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
+    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
+    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
+    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
+
+  5) Error:
+test_log_path?(TestRunTest):
+NoMethodError: undefined method `log_path?' for #<Repository:0x000000018e2848>
+    test/unit/test_run_test.rb:49:in `test_log_path?'
+    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
+    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
+    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -115,13 +166,15 @@ NoMethodError: undefined method `log_file' for #<TestRun:0x00000001dcad38>
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   6) Error:
-test_log_path?(TestRunTest):
-NoMethodError: undefined method `log_path?' for #<Repository:0x00000001c6b5c8>
-    test/unit/test_run_test.rb:42:in `test_log_path?'
+test_parse_header(TestRunTest):
+Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Explorer/log/library/code_base.log
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:243:in `read'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:243:in `parse_log_file'
+    test/unit/test_run_test.rb:176:in `test_parse_header'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -144,15 +197,13 @@ NoMethodError: undefined method `log_path?' for #<Repository:0x00000001c6b5c8>
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   7) Error:
-test_parse_header(TestRunTest):
-Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Explorer/log/library/code_base.log
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:208:in `read'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:208:in `parse_log_file'
-    test/unit/test_run_test.rb:149:in `test_parse_header'
+test_parse_log_file(TestRunTest):
+NoMethodError: undefined method `log_file?' for #<TestRun:0x00000001a4e268 @executable=nil>
+    test/unit/test_run_test.rb:142:in `test_parse_log_file'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -175,14 +226,13 @@ Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Exp
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   8) Error:
-test_parse_log_file(TestRunTest):
-Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Explorer/log/library/.log
-    test/unit/test_run_test.rb:120:in `read'
-    test/unit/test_run_test.rb:120:in `test_parse_log_file'
+test_ruby_run_and_log(TestRunTest):
+NoMethodError: undefined method `error_score?' for #<Repository:0x000000018e2848>
+    test/unit/test_run_test.rb:105:in `test_ruby_run_and_log'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -205,13 +255,13 @@ Errno::ENOENT: No such file or directory - /home/greg/Desktop/src/Open-Table-Exp
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
   9) Error:
-test_ruby_run_and_log(TestRunTest):
-NoMethodError: undefined method `error_score?' for #<Repository:0x00000001c6b5c8>
-    test/unit/test_run_test.rb:82:in `test_ruby_run_and_log'
+test_ruby_test_string(TestRunTest):
+NoMethodError: undefined method `ruby_test_string' for #<Repository:0x000000018e2848>
+    test/unit/test_run_test.rb:54:in `test_ruby_test_string'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -234,13 +284,13 @@ NoMethodError: undefined method `error_score?' for #<Repository:0x00000001c6b5c8
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
  10) Error:
-test_ruby_test_string(TestRunTest):
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000001c6b5c8>
-    test/unit/test_run_test.rb:47:in `test_ruby_test_string'
+test_run(TestRunTest):
+NoMethodError: undefined method `output' for nil:NilClass
+    test/unit/test_run_test.rb:193:in `test_run'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__808538449635099562__setup__3542967761146234187__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
@@ -262,52 +312,5 @@ NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000001c6
     /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
     /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
 
- 11) Error:
-test_ruby_version(TestRunTest):
-NoMethodError: undefined method `[]' for nil:NilClass
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:297:in `pre_match?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:303:in `number_matched_characters?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:415:in `block in capture?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:410:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:410:in `capture?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:411:in `block in capture?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:410:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:410:in `capture?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:428:in `block in parse'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:484:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:484:in `call'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:484:in `enumerate'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:427:in `parse'
-    test/unit/test_run_test.rb:33:in `test_ruby_version'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
-    /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__3189639060094875856__setup__4560265802272245986__callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
-    /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:35:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:823:in `block in _run_suite'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:815:in `_run_suite'
-    /usr/lib/ruby/1.9.1/test/unit.rb:565:in `block in _run_suites'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `each'
-    /usr/lib/ruby/1.9.1/test/unit.rb:563:in `_run_suites'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:775:in `_run_anything'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:964:in `run_tests'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:951:in `block in _run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:950:in `_run'
-    /usr/lib/ruby/vendor_ruby/minitest/unit.rb:939:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:21:in `run'
-    /usr/lib/ruby/1.9.1/test/unit.rb:326:in `block (2 levels) in autorun'
-    /usr/lib/ruby/1.9.1/test/unit.rb:27:in `run_once'
-    /usr/lib/ruby/1.9.1/test/unit.rb:325:in `block in autorun'
-
- 12) Failure:
-test_run(TestRunTest) [test/unit/test_run_test.rb:203]:
-<"test/unit/test_run_test.rb\n"> expected but was
-<"test/unit/_test.rb\n">.
-
-16 tests, 29 assertions, 3 failures, 9 errors, 0 skips
+17 tests, 28 assertions, 1 failures, 9 errors, 0 skips
 
