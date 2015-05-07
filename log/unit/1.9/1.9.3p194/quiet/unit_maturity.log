@@ -1,5 +1,5 @@
 edited
-2015-05-07 11:35:05.054
+2015-05-07 13:56:44.903
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
@@ -15,18 +15,22 @@ Expected [UnitMaturity::Constants,
  Kernel] to include UnitMaturity::Assertions.>
 ...........E......
 
-Finished tests in 1.116916s, 16.1158 tests/s, 94.9042 assertions/s.
+Finished tests in 0.919981s, 19.5656 tests/s, 115.2197 assertions/s.
 
   1) Error:
 test_deserving_branch?(UnitMaturityTest):
-NoMethodError: undefined method `error_score?' for #<Repository:0x00000001c08bf8>
+NoMethodError: Expected "test/data_sources/repository//success.rb" to respond to #to_hash
+    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:197:in `coerce'
+    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:170:in `set'
+    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/instance_methods.rb:17:in `initialize'
+    test/unit/unit_maturity_test.rb:66:in `new'
     test/unit/unit_maturity_test.rb:66:in `block in test_deserving_branch?'
     test/unit/unit_maturity_test.rb:64:in `each_pair'
     test/unit/unit_maturity_test.rb:64:in `test_deserving_branch?'
     /usr/lib/ruby/vendor_ruby/minitest/unit.rb:1058:in `run'
     /usr/lib/ruby/1.9.1/test/unit/testcase.rb:17:in `run'
     /usr/lib/ruby/vendor_ruby/active_support/testing/setup_and_teardown.rb:36:in `block in run'
-    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__1558188372855686530__setup__1634773581014588098__callbacks'
+    /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:403:in `_run__739366899029920553__setup__136091549240644106__callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:405:in `__run_callback'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:385:in `_run_setup_callbacks'
     /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'

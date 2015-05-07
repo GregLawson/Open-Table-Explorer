@@ -92,7 +92,7 @@ end # merge_range
 def deserving_branch?(executable,
 	repository)
 	if File.exists?(executable) then
-		test_run = TestRun.new(executable).error_score?(executable)
+		@working_test_run = TestRun.new(executable).error_score?(executable)
 		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[test_run.error_classification]
 		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[test_run.error_classification]
 		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]

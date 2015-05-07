@@ -62,8 +62,9 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable=data_source_directory?('repository')+'/'+value.to_s+'.rb'
-		error_score = TestUnitMaturity.repository.error_score?(executable)
+		executable = data_source_directory?('repository')+'/'+value.to_s+'.rb'
+		test_run = TestRun.new(executable)
+		error_score = test_run.error_score?(executable)
 		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
 		error_score=TestUnitMaturity.repository.error_score?(executable)
 #		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
