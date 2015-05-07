@@ -11,6 +11,7 @@ require 'fileutils'
 require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
+require_relative '../../app/models/shell_command.rb'
 class TestRun # < ActiveRecord::Base
 include Virtus.model
   attribute :test_type, Symbol, :default => :unit
@@ -21,6 +22,7 @@ include Virtus.model
   attribute :processor_version, String, :default => nil # system version
   attribute :options, String, :default => '-W0'
   attribute :timestamp, Time, :default => Time.now
+  attribute :repository, Repository, :default => Repository::This_code_repository
 module Constants
 include Version::Constants
 Ruby_pattern = [/ruby /, Version_pattern]
@@ -32,11 +34,6 @@ include Constants
 #include Generic_Table
 #has_many :bugs
 module ClassMethods
-def ruby_version(executable_suffix = '')
-	ShellCommands.new('ruby --version').output.split(' ')
-	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
-	testRun.output.parse(Version_pattern).output
-end # ruby_version
 def log_path?(executable,
 		logging = :quiet,
 		minor_version = '1.9',
@@ -90,7 +87,7 @@ def error_score?(executable,
 		logging,
 		minor_version,
 		patch_version)
-	@recent_test=shell_command(@ruby_test_string)
+	@recent_test = @repository.shell_command(@ruby_test_string)
 	log_path = log_path?(executable,
 	  logging, minor_version, patch_version)
 	if !log_path.empty? then
@@ -115,7 +112,7 @@ def error_score?(executable,
 	else
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
-end #error_score
+end # error_score
 def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
@@ -228,8 +225,8 @@ def log_passed?(log_file)
 end # log_passed?
 def summarize
 	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/empty_tests.tmp)
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
 	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
 end # summarize
 def parse_summary(summary)
@@ -393,7 +390,7 @@ Unit_testRun = TestRun.new(:test_type => :unit)
 Plural_testRun = TestRun.new({:test_type => :unit, :plural_table => 'test_runs'})
 Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
 Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
-Odd_plural_testRun=TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
+Odd_plural_testRun = TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
 Ruby_version = ShellCommands.new('ruby --version').output
 end # Examples
 end # TestRun
