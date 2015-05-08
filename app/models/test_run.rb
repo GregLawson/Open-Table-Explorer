@@ -117,42 +117,6 @@ def write_commit_message(recent_test,files)
 	end #if
 	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
 end # write_commit_message
-def error_score?(executable,
-		logging = :quiet,
-		minor_version = '1.9',
-		patch_version = '1.9.3p194')
-	fail Exception.new('Executable file '+ executable + ' does not exist.') if !File.exists?(executable)
-	@ruby_test_string = ruby_test_string(executable,
-		logging,
-		minor_version,
-		patch_version)
-	@recent_test = @repository.shell_command(@ruby_test_string)
-	log_path = log_path?(executable,
-	  logging, minor_version, patch_version)
-	if !log_path.empty? then
-	end # if
-	write_error_file(@recent_test, log_path)
-	write_commit_message(@recent_test, [executable])
-#	@recent_test.puts if $VERBOSE
-	@error_score = if @recent_test.success? then
-		0
-	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test=shell_command("ruby -c "+executable)
-		if syntax_test.output=="Syntax OK\n" then
-			initialize_test=shell_command("ruby "+executable+' -n test_initialize')
-			if initialize_test.success? then
-				1
-			else # initialization  failure or test_initialize failure
-				100 # may prevent other tests from running
-			end #if
-		else
-			10000 # syntax error can hide many sins
-		end #if
-	else
-		@recent_test.process_status.exitstatus # num_errors>1
-	end #if
-	@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
-end # error_score
 def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
@@ -286,6 +250,42 @@ end #parse_header
 end # ClassMethods
 extend ClassMethods
 # attr_reader
+def error_score?(logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	executable = @executable.executable
+	fail Exception.new('Executable file '+ executable + ' does not exist.') if !File.exists?(executable)
+	@ruby_test_string = TestExecutable.ruby_test_string(executable,
+		logging,
+		minor_version,
+		patch_version)
+	@recent_test=shell_command(@ruby_test_string)
+	log_path = log_path?(executable,
+	  logging, minor_version, patch_version)
+	if !log_path.empty? then
+	end # if
+	write_error_file(@recent_test, log_path)
+	write_commit_message(@recent_test, [executable])
+#	@recent_test.puts if $VERBOSE
+	@error_score = if @recent_test.success? then
+		0
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test=shell_command("ruby -c "+executable)
+		if syntax_test.output=="Syntax OK\n" then
+			initialize_test=shell_command("ruby "+executable+' -n test_initialize')
+			if initialize_test.success? then
+				1
+			else # initialization  failure or test_initialize failure
+				100 # may prevent other tests from running
+			end #if
+		else
+			10000 # syntax error can hide many sins
+		end #if
+	else
+		@recent_test.process_status.exitstatus # num_errors>1
+	end #if
+	@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+end # error_score
 def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
 	if testType.instance_of?(Hash) then
 		super(testType) # actually hash of attributes
