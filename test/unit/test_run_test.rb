@@ -21,24 +21,24 @@ def test_virtus_initialize
 	assert_equal(nil, Odd_plural_testRun.test)
 end # virtus_initialize
 def test_TestRun_initialize
-	testRun=TestExecutable.new
+	test_executable =TestExecutable.new
 #	TestRun.column_names.each do |n|
 #		assert_instance_of(String,n)
 #	end #each
 	# prove equivalence of attribute access
-	assert_respond_to(testRun, 'singular_table')
-	testRun.singular_table='method'
-	assert_equal('method', testRun.singular_table)
-	assert_equal('method', testRun.attributes[:singular_table])
-	assert_nil(testRun.attributes['singular_table'])
+	assert_respond_to(test_executable, 'singular_table')
+	test_executable .singular_table='method'
+	assert_equal('method', test_executable.singular_table)
+	assert_equal('method', test_executable.attributes[:singular_table])
+	assert_nil(test_executable.attributes['singular_table'])
 	
-	testRun[:singular_table]='sym_hash'
-	assert_equal('sym_hash', testRun.singular_table)
-	assert_equal('sym_hash', testRun[:singular_table])
+	test_executable[:singular_table]='sym_hash'
+	assert_equal('sym_hash', test_executable.singular_table)
+	assert_equal('sym_hash', test_executable[:singular_table])
 	
-	testRun['singular_table']='string_hash'
-	assert_equal('string_hash', testRun.singular_table)
-	assert_equal('string_hash', testRun[:singular_table])
+	test_executable['singular_table']='string_hash'
+	assert_equal('string_hash', test_executable.singular_table)
+	assert_equal('string_hash', test_executable[:singular_table])
 	
 #	Singular_testRun.assert_logical_primary_key_defined
 #	Stream_pattern_testRun.assert_logical_primary_key_defined()
