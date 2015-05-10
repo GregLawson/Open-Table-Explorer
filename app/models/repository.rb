@@ -39,10 +39,6 @@ Repository_Unit = Unit.new_from_path?(__FILE__)
 Root_directory=FilePattern.project_root_dir?(__FILE__)
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
-Error_classification={0 => :success,
-				1     => :single_test_fail,
-				100 => :initialization_fail,
-				10000 => :syntax_error}
 end #Constants
 include Constants
 module ClassMethods
