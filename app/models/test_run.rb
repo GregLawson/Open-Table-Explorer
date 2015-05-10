@@ -12,34 +12,45 @@ require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
 require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/branch.rb'
 class TestExecutable
 include Virtus.model
-  attribute :test_type, Symbol, :default => :unit
-  attribute :singular_table, String
-  attribute :plural_table, String, :default => nil
-  attribute :test, String, :default => nil # all tests in file
-  attribute :test_command, String, :default => 'ruby'
-  attribute :processor_version, String, :default => nil # system version
-  attribute :options, String, :default => '-W0'
-  attribute :timestamp, Time, :default => Time.now
-  attribute :repository, Repository, :default => Repository::This_code_repository
+	attribute :test_type, Symbol, :default => :unit
+	attribute :singular_table, String
+	attribute :plural_table, String, :default => nil
+	attribute :test, String, :default => nil # all tests in file
+	attribute :test_command, String, :default => 'ruby'
+	attribute :processor_version, String, :default => nil # system version
+	attribute :options, String, :default => '-W0'
+	attribute :timestamp, Time, :default => Time.now
+	attribute :repository, Repository, :default => Repository::This_code_repository
+	attribute :executable_file, String
+	attribute :unit, Unit
 module ClassMethods
-def log_path?(executable,
-		logging = :quiet,
+def new_from_pathname(executable_file,
+		repository = Repository::This_code_repository)
+	unit = Unit.new_from_path?(executable_file)
+	new_executable = TestExecutable.new(executable_file: executable_file, 
+								unit: unit, repository: repository)
+end # new_from_pathname
+end # ClassMethods
+extend ClassMethods
+def log_path?(logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
-	@unit = Unit.new_from_path?(executable)
+	@unit = Unit.new_from_path?(executable_file)
 	if @unit.nil? then
 		@log_path = '' # empty file string
 	else
-		@log_path = 'log/unit/' + minor_version
+		@log_path = 'log/'
+		@log_path = @test_type.to_s 
+		@log_path = '/' + minor_version
 		@log_path += '/' + patch_version
 		@log_path += '/' + logging.to_s
 		@log_path += '/' + @unit.model_basename.to_s + '.log'
 		end # if
 end # log_path?
-def ruby_test_string(executable,
-		logging = :quiet,
+def ruby_test_string(logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
 	case logging 
@@ -48,24 +59,31 @@ def ruby_test_string(executable,
 	when :verbose then @ruby_test_string = 'ruby -v -W2 '
 	else fail Exception.new(logging + ' is not a valid logging type.')
 	end # case
-	@ruby_test_string += executable
+	@ruby_test_string += executable_file
 end # ruby_test_string
-end # ClassMethods
-extend ClassMethods
+def write_error_file(recent_test, log_path)
+	contents = @repository.current_branch_name?.to_s
+	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	contents += "\n" + recent_test.command_string
+	contents += "\n" + recent_test.output
+	contents += "\n" + recent_test.errors
+	IO.write(log_path, contents)
+end # write_error_file
+def write_commit_message(recent_test,files)
+	commit_message= 'fixup! ' + @repository.unit_names?(files).uniq.join(', ')
+	if !recent_test.nil? then
+		commit_message += "\n" + @repository.current_branch_name?.to_s + "\n"
+		commit_message += "\n" + recent_test.command_string
+		commit_message += "\n" + recent_test.output
+		commit_message += recent_test.errors
+	end #if
+	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+end # write_commit_message
 def unit?
 	Unit.new(@singular_table)
 end # unit?
 # log_file => String
 # Filename of log file from test run
-def log_file?
-	case @test_type
-	when :unit
-		unit?.pathname_pattern?(:library_log, @test)
-	when :controller
-		unit?.pathname_pattern?(:controller_log, @test)
-	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
-	end #case
-end #log_file?
 def test_file?
 	case @test_type
 	when :unit
@@ -77,17 +95,20 @@ def test_file?
 end #test_file?
 module Examples
 #include Constants
-Unit_testRun = TestExecutable.new(:test_type => :unit)
-Plural_testRun = TestExecutable.new({:test_type => :unit, :plural_table => 'test_runs'})
-Singular_testRun = TestExecutable.new(:test_type => :unit,  :singular_table => 'test_run')
-Stream_pattern_testRun = TestExecutable.new(:test_type => :unit,  :singular_table => 'stream_pattern')
-Odd_plural_testRun = TestExecutable.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
+Default_executable = TestExecutable.new_from_pathname($PROGRAM_NAME)
+Unit_executable = TestExecutable.new(:test_type => :unit)
+Plural_executable = TestExecutable.new({:test_type => :unit, :plural_table => 'test_runs'})
+Singular_executable = TestExecutable.new(:test_type => :unit,  :singular_table => 'test_run')
+Stream_pattern_executable = TestExecutable.new(:test_type => :unit,  :singular_table => 'stream_pattern')
+Odd_plural_executable = TestExecutable.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
 end # Examples
 end # TestExecutable
 
 class TestRun # < ActiveRecord::Base
 include Virtus.model
   attribute :executable, TestExecutable
+  attribute :logging, Symbol
+  attribute :ruby_interpreter, RubyInterpreter
 module Constants
 #include Version::Constants
 Error_classification={0 => :success,
@@ -99,24 +120,6 @@ include Constants
 #include Generic_Table
 #has_many :bugs
 module ClassMethods
-def write_error_file(recent_test, log_path)
-	contents = current_branch_name?.to_s
-	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
-	contents += "\n" + recent_test.command_string
-	contents += "\n" + recent_test.output
-	contents += "\n" + recent_test.errors
-	IO.write(log_path, contents)
-end # write_error_file
-def write_commit_message(recent_test,files)
-	commit_message= 'fixup! ' + unit_names?(files).uniq.join(', ')
-	if !recent_test.nil? then
-		commit_message += "\n" + current_branch_name?.to_s + "\n"
-		commit_message += "\n" + recent_test.command_string
-		commit_message += "\n" + recent_test.output
-		commit_message += recent_test.errors
-	end #if
-	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
-end # write_commit_message
 def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
@@ -174,7 +177,7 @@ def ruby(args, &proc)
 	shell("ruby #{args}",&proc)
 end #ruby
 def file_bug_reports(ruby_source,log_file,test=nil)
-	table,test_type=CodeBase.test_type_from_source(ruby_source)
+	table,test_type= CodeBase.test_type_from_source(ruby_source)
 	header,errors,summary=parse_log_file(log_file)
 	if summary.nil? then
 		puts "summary is nil. probable rake failure."
@@ -253,26 +256,24 @@ extend ClassMethods
 def error_score?(logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
-	executable = @executable.executable
-	fail Exception.new('Executable file '+ executable + ' does not exist.') if !File.exists?(executable)
-	@ruby_test_string = TestExecutable.ruby_test_string(executable,
-		logging,
+	executable_file = @executable.executable_file
+	fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !File.exists?(executable_file)
+	@ruby_test_string = @executable.ruby_test_string(logging,
 		minor_version,
 		patch_version)
-	@recent_test=shell_command(@ruby_test_string)
-	log_path = log_path?(executable,
-	  logging, minor_version, patch_version)
+	@recent_test = @executable.repository.shell_command(@ruby_test_string)
+	log_path = @executable.log_path?(logging, minor_version, patch_version)
 	if !log_path.empty? then
 	end # if
-	write_error_file(@recent_test, log_path)
-	write_commit_message(@recent_test, [executable])
+	@executable.write_error_file(@recent_test, log_path)
+	@executable.write_commit_message(@recent_test, [executable_file])
 #	@recent_test.puts if $VERBOSE
 	@error_score = if @recent_test.success? then
 		0
 	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test=shell_command("ruby -c "+executable)
+		syntax_test = @executable.repository.shell_command("ruby -c "+executable_file)
 		if syntax_test.output=="Syntax OK\n" then
-			initialize_test=shell_command("ruby "+executable+' -n test_initialize')
+			initialize_test = @executable.repository.shell_command("ruby "+executable_file+' -n test_initialize')
 			if initialize_test.success? then
 				1
 			else # initialization  failure or test_initialize failure
@@ -284,7 +285,8 @@ def error_score?(logging = :quiet,
 	else
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
-	@error_classification = Repository::Error_classification.fetch(@error_score, :multiple_tests_fail)
+	@error_classification = Error_classification.fetch(@error_score, :multiple_tests_fail)
+	@error_score
 end # error_score
 def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
 	if testType.instance_of?(Hash) then
@@ -342,8 +344,8 @@ def run
 #  attribute :options, String, :default => nil
 #  attribute :timestamp, Time, :default => Time.now
 
-#	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
-	FileUtils.mkdir_p(File.dirname(log_file?))
+#	TestRun.ruby_run_and_log(test_file?,log_path?,@test)
+	FileUtils.mkdir_p(File.dirname(log_path?))
 	command = [test_command]
 	if !options.nil? then
 		command += [options]
@@ -364,11 +366,11 @@ rescue SyntaxError => exception_raised
 end #run
 # Run a shell
 def ruby_run_and_log
-	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
+	TestRun.ruby_run_and_log(test_file?,log_path?,@test)
 end #ruby_run_and_log
 
 def file_bug_reports
-	TestRun.file_bug_reports(test_file?,log_file?,@test)
+	TestRun.file_bug_reports(test_file?,log_path?,@test)
 end #file_bug_reports
 require_relative '../../test/assertions.rb'
 module Assertions
@@ -402,6 +404,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Default_testRun = TestRun.new
+Default_testRun = TestRun.new(executable: TestExecutable::Examples::Default_executable)
 end # Examples
 end # TestRun
