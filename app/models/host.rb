@@ -19,15 +19,16 @@ include Virtus.model
   attribute :name, String, :default => nil
   attribute :last_detection, Time, :default => Time.now
   attribute :nmap_execution_time, Time, :default => nil
+module Constants
+Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
+end # Constants
 #has_many :ports
 #has_many :routers
 module ClassMethods
-end # ClassMethods
-extend ClassMethods
-module Constants
-end # Constants
-include Constants
-def self.logical_primary_key
+def nmap(ip_range)
+	ShellCommand.new('nmap ' + ip_range)
+end # nmap
+def logical_primary_key
 	return [:name]
 end #logical_primary_key
 def Column_Definitions
@@ -42,6 +43,11 @@ def Column_Definitions
 	['nmap_execution_time','real']
 	]
 end
+end # ClassMethods
+extend ClassMethods
+module Constants
+end # Constants
+include Constants
 def recordDetection(ip,timestamp=Time.new)
 	host=find_or_initialize_by_ip(ip)
 	host.last_detection=timestamp
@@ -114,8 +120,6 @@ def scanNmapSummary(s)
 	return [up,nmap_execution_time]
 end
 # attr_reader
-def initialize
-end # initialize
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
