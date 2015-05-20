@@ -10,13 +10,77 @@
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 class Samba
-module ClassMethods
-end # ClassMethods
-extend ClassMethods
 module Constants
 Default_server = '192.168.0.12'
+Comment_regexp = /^#/ * (/./ * Regexp::Any).capture(:comment) * /$/
+File_system_image_regexp = /^[-\/=a-zA-Z0-9]+/
+Pathname_regexp = /[-\/a-zA-Z0-9]+/
+Fs_type_regexp = /[a-z0-9,]{4,}/
+Options_regexp = /[-_.0-9a-zA-Z,=\/]+/
+Whitespace_delimiter = /\s+/
+Whitespace_padding = /\s*/
+Mount_table_regexp = Comment_regexp | 
+	File_system_image_regexp.capture(:filesystem_image) *
+	Whitespace_delimiter * Pathname_regexp.capture(:mount_point) *
+	Whitespace_delimiter * Fs_type_regexp.capture(:file_system_type) *
+	Whitespace_delimiter * Options_regexp.capture(:options)
+Smb_tree_workgroup_regexp = /^[-A-Z0-9]+/.capture(:name)
+Smb_tree_regexp = Whitespace_padding.capture(:indent) * /-[A-Z0-9]+/.capture(:name) * Whitespace_delimiter * /[a-zA-z0-9 ]+/.capture(:dewcription)
+
+Smb_domains = ShellCommands.new('smbtree --no-pass -D')
+Smb_servers = ShellCommands.new('smbtree --no-pass -S')
+Smb_tree = ShellCommands.new('smbtree --no-pass')
 end # Constants
 include Constants
+module ClassMethods
+include Constants
+def workgroups
+	Smb_domains.output.parse(Smb_tree_workgroup_regexp)[:name]
+end # workgroups
+def servers(workgroup)
+	Smb_servers.output?.parse(Smb_tree_regexp)
+end # servers
+def tree(workgroup, server)
+	Smb_tree.output?.parse(Smb_tree_regexp)
+end # tree
+def parse_options(options_string)
+	option_strings = options_string.split(',')
+	options_hash = {} # start accumulating
+	option_strings.each do |option_string|
+		assignment = option_string.split('=')
+		
+		options_hash[assignment[0].to_sym] = assignment[1]
+	end # each
+	options_hash
+end # parse_options
+def new_from_table(line)
+	capture = line.capture?(Mount_table_regexp)
+	if capture.output?[:comment] then
+		nil
+	else
+		options_hash = Samba.parse_options(capture.output?[:options])	
+		host = options_hash[:ip]
+		Samba.new(host, capture.output?[:filesystem_image],
+			capture.output?[:mount_point],
+			options_hash
+		)
+
+	end #if 
+end # new_from_table
+def fstab
+	fstab = IO.read('/etc/fstab')
+	lines = fstab.split("\n").map do |line|
+		Samba.new_from_table(line)
+	end # each
+end # fstab
+def mtab
+	mstab = IO.read('/etc/mtab')
+	lines = mtab.split("\n").map do |line|
+		Samba.new_from_table(line)
+	end # each
+end # mtab
+end # ClassMethods
+extend ClassMethods
 attr_reader :host, :share_name, :mount_point, :options
 def initialize(host, share_name, mount_point, options)
 	@host = host
@@ -130,6 +194,11 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-
+Comment_line = '# /etc/fstab: static file system information.'
+Test_line = '//Seagate-414103/Public	/media/central	cifs				auto,rw,ip=172.31.42.182,credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl	0	0'
+Options_string = 'auto,rw,ip=172.31.42.182,credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl'
+Default_workgroup = 'WORKGROUP'
+Default_server =  `hostname`
+Default_share = 'IPC$'
 end # Examples
 end # Samba
