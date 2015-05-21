@@ -345,7 +345,7 @@ def run
 #  attribute :timestamp, Time, :default => Time.now
 
 #	TestRun.ruby_run_and_log(test_file?,log_path?,@test)
-	weFileUtils.mkdir_p(File.dirname(log_path?))
+	FileUtils.mkdir_p(File.dirname(log_path?))
 	command = [test_command]
 	if !options.nil? then
 		command += [options]
