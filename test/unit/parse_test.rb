@@ -313,7 +313,7 @@ def test_capture
 	assert_equal({branch: '1'}, Match_capture.string.capture?(Match_capture.regexp, MatchCapture).output?, Match_capture.inspect)
 	assert_equal([{branch: '1'}], Match_capture.string.capture?(Match_capture.regexp, SplitCapture).output?, Match_capture.inspect)
 	assert_equal([{branch: '1'}], Match_capture.string.capture?(Match_capture.regexp, LimitCapture).output?, Match_capture.inspect)
-	assert_equal([{branch: '1'}], Match_capture.string.capture?(Match_capture.regexp).output?, Match_capture.inspect)
+	assert_equal({branch: '1'}, Match_capture.string.capture?(Match_capture.regexp).output?, Match_capture.inspect)
 end # capture?
 def test_assert_parse_once
 	pattern = Branch_line_regexp
