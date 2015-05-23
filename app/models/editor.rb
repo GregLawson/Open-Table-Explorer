@@ -21,14 +21,15 @@ extend ClassMethods
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository, :unit_maturity
-def initialize(specific_file,
-	related_files = Unit.new_from_path?(specific_file),
-	repository = Repository.new(FilePattern.repository_dir?, :interactive))
-
-	@specific_file = specific_file
-	@unit_maturity = UnitMaturity.new(repository, related_files)
-	@related_files = related_files
-	@repository = repository
+def initialize(executable)
+#specific_file,
+#	related_files = Unit.new_from_path?(specific_file),
+#	repository = Repository.new(FilePattern.repository_dir?, :interactive))
+	@executable = executable
+	@specific_file = executable.executable_file
+	@unit_maturity = UnitMaturity.new(executable.repository, executable.unit)
+	@related_files = executable.unit
+	@repository = executable.repository
 	index = UnitMaturity::Branch_enhancement.index(repository.current_branch_name?)
 	if index.nil? then
 		@branch_index = UnitMaturity::First_slot_index
@@ -65,7 +66,7 @@ def goldilocks(filename, middle_branch = @repository.current_branch_name?.to_sym
 	else
 		ret = ''
 	end # if
-#	ret += ' -r ' + BranchReference.last_change?(filename, repository) + ' ' + filename
+	ret += ' -r ' + BranchReference.last_change?(filename, repository) + ' ' + filename
 end # goldilocks
 def test_files(edit_files = @related_files.edit_files)
 	pairs = @related_files.functional_parallelism(edit_files).map do |p|
@@ -164,8 +165,9 @@ extend Assertions::ClassMethods
 # TestEditor.assert_pre_conditions
 include Constants
 module Examples
-TestFile = File.expand_path($PROGRAM_NAME)
-TestEditor = Editor.new(TestFile)
+TestExecutable = TestExecutable.new(executable_file: File.expand_path($PROGRAM_NAME))
+#TestFile = File.expand_path($PROGRAM_NAME)
+TestEditor = Editor.new(TestExecutable)
 include Constants
 end # Examples
 include Examples
