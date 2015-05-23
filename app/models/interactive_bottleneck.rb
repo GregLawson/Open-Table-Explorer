@@ -9,7 +9,7 @@ require_relative 'unit.rb'
 #require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
 require_relative 'editor.rb'
-class WorkFlow
+class InteractiveBottleneck
 module Constants
 end # Constants
 include Constants
@@ -25,10 +25,10 @@ attr_reader :related_files, :edit_files, :repository, :unit_maturity, :editor
 def initialize(test_executable, editor)
 	@test_executable = test_executable
 	@editor = editor
-	@unit_maturity = UnitMaturity.new(repository, related_files)
+	@unit_maturity = UnitMaturity.new(@test_executable.repository, related_files)
 	@related_files = related_files
-	@repository = repository
-	index = UnitMaturity::Branch_enhancement.index(repository.current_branch_name?)
+	@repository = @test_executable.repository
+	index = UnitMaturity::Branch_enhancement.index(@repository.current_branch_name?)
 	if index.nil? then
 		@branch_index = UnitMaturity::First_slot_index
 	else
@@ -79,7 +79,7 @@ end # merge_conflict_recovery
 def merge(target_branch, source_branch, interact=:interactive)
 	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
 	@repository.safely_visit_branch(target_branch) do |changes_branch|
-		merge_status = @repository.git_command('merge ' + source_branch.to_s)
+		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 		puts 'merge_status= ' + merge_status.inspect
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
 			puts 'merge OK'
@@ -118,7 +118,7 @@ module ClassMethods
 def assert_pre_conditions
 end # assert_pre_conditions
 def assert_post_conditions
-#	assert_pathname_exists(TestFile, "assert_post_conditions")
+#	assert_pathname_exists(TestExecutable, "assert_post_conditions")
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions
@@ -138,9 +138,9 @@ extend Assertions::ClassMethods
 # TestWorkFlow.assert_pre_conditions
 include Constants
 module Examples
-TestFile = File.expand_path($PROGRAM_NAME)
-TestWorkFlow = WorkFlow.new(TestFile)
+TestExecutable = TestExecutable.new(executable_file: File.expand_path($PROGRAM_NAME))
+TestInteractiveBottleneck = InteractiveBottleneck.new(TestExecutable, Editor::Examples::TestEditor)
 include Constants
 end # Examples
 include Examples
-end # WorkFlow
+end # InteractiveBottleneck
