@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -11,7 +11,13 @@ require 'pp'
 require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 require_relative '../app/models/unit.rb'
-scripting_workflow=WorkFlow.new($0)
+scripting_executable = TestExecutable.new_from_pathname($0)
+scripting_editor = Editor.new(scripting_executable)
+scripting_workflow = InteractiveBottleneck.new(scripting_executable, scripting_editor)
+if File.exists?('.git/MERGE_HEAD') then
+	scripting_workflow.merge_conflict_recovery(:MERGE_HEAD)
+else
+end
 # good enough for edited; no syntax error
 scripting_workflow.script_deserves_commit!(:edited)
 unit_files = Unit.new_from_path?($0)
@@ -24,8 +30,8 @@ script.parse_options
 # good enough for testing; no syntax error
 scripting_workflow.script_deserves_commit!(:testing)
 
-pp commands
-pp ARGV
+pp commands if $VERBOSE
+pp ARGV if $VERBOSE
 
 	case ARGV.size # paths after switch removal?
 	when 0 then # scite testing defaults command and file
