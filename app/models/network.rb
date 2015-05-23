@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -35,6 +35,11 @@ IFCONFIG_cappture = IFCONFIG.output.capture?(Ifconfig_pattern)
 end #Constants
 include Constants
 module ClassMethods
+def all
+	data_source_yaml('network').values.map do |r| #map
+		BatteryType.new(r).standardize_keys?	
+	end #map
+end #all
 def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
 	#puts ifconfig
@@ -103,9 +108,12 @@ end #ClassMethods
 extend ClassMethods
 include Constants
 # attr_reader
-def initialize
-	super('Networks')
+def initialize(ip_range) # can this be a Range?
+	@ip_range = ip_range
 end #initialize
+def nmap
+	@nmap=ShellCommands.new('nmap -sP ' + @ip_range)
+end # nmap
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
