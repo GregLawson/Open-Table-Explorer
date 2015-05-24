@@ -8,27 +8,19 @@
 ###########################################################################
 # @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
 require 'pp'
-require_relative '../app/models/work_flow.rb'
+#require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
 require_relative '../app/models/unit.rb'
+require_relative '../app/models/test_executable.rb'
 scripting_executable = TestExecutable.new_from_pathname($0)
-scripting_editor = Editor.new(scripting_executable)
-scripting_workflow = InteractiveBottleneck.new(scripting_executable, scripting_editor)
-if File.exists?('.git/MERGE_HEAD') then
-	scripting_workflow.merge_conflict_recovery(:MERGE_HEAD)
-else
-end
-# good enough for edited; no syntax error
-scripting_workflow.script_deserves_commit!(:edited)
 unit_files = Unit.new_from_path?($0)
 require_relative "../app/models/#{unit_files.model_basename}"
 commands = []
 script = CommandLineScript.new($0)
-script.add_option('Inspect.', :inspect)
-script.add_option('Test.', :test)
+script.add_option(:inspect, 'Inspect.')
+script.add_option(:test, 'Test.')
 script.parse_options
 # good enough for testing; no syntax error
-scripting_workflow.script_deserves_commit!(:testing)
 
 pp commands if $VERBOSE
 pp ARGV if $VERBOSE
@@ -59,7 +51,6 @@ pp ARGV if $VERBOSE
 					puts "#{c.to_sym} is not a method in #{unit_files.inspect}"
 				end # if
 			end #case
-			scripting_workflow.script_deserves_commit!(:passed)
 		end #each
 		end #case
 	end #each
