@@ -13,6 +13,8 @@ require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/branch.rb'
+require_relative '../../app/models/test_executable.rb'
+class TestRun # < ActiveRecord::Base
 include Virtus.model
   attribute :executable, TestExecutable
   attribute :logging, Symbol
