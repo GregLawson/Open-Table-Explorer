@@ -8,6 +8,7 @@
 require_relative 'unit.rb'
 #require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
+require_relative '../../app/models/test_executable.rb'
 class Editor
 module Constants
 end # Constants
