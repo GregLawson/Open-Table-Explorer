@@ -13,8 +13,7 @@ require_relative '../app/models/command_line.rb'
 require_relative '../app/models/unit.rb'
 require_relative '../app/models/test_executable.rb'
 scripting_executable = TestExecutable.new_from_pathname($0)
-unit_files = Unit.new_from_path?($0)
-require_relative "../app/models/#{unit_files.model_basename}"
+require_relative "../app/models/#{scripting_executable.unit.model_basename}"
 commands = []
 script = CommandLineScript.new($0)
 script.add_option(:inspect, 'Inspect.')
@@ -39,16 +38,15 @@ pp ARGV if $VERBOSE
 		when :all then
 		
 		else argv.each do |f|
-			puts "#{unit_files.inspect}"
-			unit=CommandLine.new(f)
+			puts "#{scripting_executable.unit.inspect}"
 			case c.to_sym
-			when :inspect then puts unit.inspect
-			when :test then unit.test
+			when :inspect then puts scripting_executable.unit.inspect
+			when :test then scripting_executable.unit.test
 			else
-				if unit.respond_to?(c.to_sym) then
-					unit.send(c.to_sym, *argv)
+				if scripting_executable.unit.respond_to?(c.to_sym) then
+					scripting_executable.unit.send(c.to_sym, *argv)
 				else
-					puts "#{c.to_sym} is not a method in #{unit_files.inspect}"
+					puts "#{c.to_sym} is not a method in #{scripting_executable.unit.inspect}"
 				end # if
 			end #case
 		end #each

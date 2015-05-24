@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -11,7 +11,11 @@ require 'pp'
 require 'mime/types' # new ruby detailed library
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/command.rb'
+require_relative '../../app/models/unit.rb'
 class CommandLineScript < Command
+def initialize(file)
+	@file = file
+end # initialize
 def add_option(name, description=name, long_option=name, short_option=name[0])
 	option = CommandLineOption.new(name, description, long_option, short_option)
 	@options = (@options.nil? ? [] : @options)+[option]
@@ -41,7 +45,7 @@ def run(&non_default_actions)
 		ret = non_default_actions.call
 		if ret.nil? then
 		else argv.each do |f|
-			unit=CommandLine.new(f)
+			unit= self.class.new(f)
 			if unit.respond_to?(c.to_sym) then
 				unit.send(c.to_sym, *argv)
 			else
