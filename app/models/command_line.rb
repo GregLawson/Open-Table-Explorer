@@ -8,12 +8,12 @@
 require 'trollop'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/command.rb'
-require_relative '../../app/models/unit.rb'
+require_relative '../../app/models/test_executable.rb'
 class CommandLine < Command
 module Constants
 SUB_COMMANDS = %w(inspect test)
 Command_line_opts = Trollop::options do
-	banner "magic file deleting and copying utility"
+	banner 'Usage: ' + Command.to_s + ' subcommand  path_patterns' 
    opt :inspect, "Inspect file object"                    # flag --monkey, default false
    opt :test, "Test unit."       # string --name <s>, default nil
   stop_on SUB_COMMANDS
@@ -23,32 +23,41 @@ if ARGV.size > 0 then
 else
 	Sub_command = :help # default subcommand
 end # if
+Command = Unit::Executing_Unit.model_basename
 Command_line_test_opts = Trollop::options do
+	banner 'Usage: ' + Command.to_s + ' subcommand  path_patterns' 
     opt :inspect, "Inspect file object"                    # flag --monkey, default false
     opt :test, "Test unit."       # 
     opt :help, "Commands" # 
     opt :individual_test, "Run only one individual test",  :short => "-n" # 
   end
 end # Constants
+include Constants
 attr_accessor :executable, :options
 def initialize(executable, options = Command_line_opts)
 	@executable = executable
 	@options = options
 end # initialize
 def run(&non_default_actions)
-		@options.each do |f|
+	if ARGV.size < 2 then
+	else
+		ARGV[1..-1].each do |f|
 			executable_object = self.class.new(TestExecutable.new_from_pathname(f))
-			unit= self.class.new(f)
-			if unit.respond_to?(c.to_sym) then
-				unit.send(c.to_sym, *argv)
-			else
-				if executable_object.respond_to?(sub_command.to_sym) then
-					executable_object.send(sub_command.to_sym, *argv)
+			if executable_object.respond_to?(Sub_command) then
+				method = executable_object.method(Sub_command)
+				case method.arity
+				when 0 then
+					method.call
+				when 1 then
+					method.call(f)
 				else
-					puts "#{sub_command.to_sym} is not a method in #{self.class.inspect}"
-				end # if
+					fail Exception.new('arity =' + method.arity)
+				end # case
+			else
+				puts "#{Sub_command} is not a method in #{self.class.inspect}"
 			end # if
 		end # each
+	end # if
 #		scripting_workflow.script_deserves_commit!(:passed)
 end #run
 def test
@@ -58,9 +67,30 @@ require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods
+def assert_pre_conditions
+#	CommandLine.assert_ARGV	# don't know why ARGV getsn screwed up in tests
+end #assert_pre_conditions
 
 def assert_post_conditions
 end #assert_post_conditions
+def assert_command_run(args)
+	test_run = ShellCommands.new('ruby -W0 script/command_line.rb ' + args)
+	test_run.assert_pre_conditions
+	last_line = test_run.output.split("\n")[-1]
+	assert_not_equal('', test_run.output, test_run.inspect)
+	assert_not_match(/0 tests, 0 assertions, 0 failures, 0 errors, 0 skips/, last_line)
+	test_run
+end # assert_command_run
+def assert_ARGV
+	message = "in assert_ARGV\nARGV = " + ARGV.inspect
+	message += "\nCommandLine::Sub_command = '" + CommandLine::Sub_command.inspect
+	if ARGV.size >= 1 then
+		assert_equal(ARGV[0].to_sym, CommandLine::Sub_command, message)
+		assert_includes(CommandLine::SUB_COMMANDS, CommandLine::Sub_command.to_s, message)
+		assert_operator(ARGV.size, :>=, 1, message)
+		assert_operator(ARGV.size, :<=, 2, message)
+		end # if
+end # ARGV
 end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
@@ -68,6 +98,7 @@ def assert_post_conditions
 end #assert_post_conditions
 end #Assertions
 include Assertions
+extend Assertions::ClassMethods
 #TestWorkFlow.assert_pre_conditions
 module Constants
 end #Constants
