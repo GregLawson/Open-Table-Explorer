@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2014 by Greg Lawson                                      
+#    Copyright (C) 2011-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -22,8 +22,9 @@ Version_digits = /[1-9]?[0-9]{1,3}/
 Version_pattern = [Version_digits.capture(:major), '.'] + 
 	[Version_digits.capture(:minor)] + 
 	[Version_digits.capture(:patch)] +
-	[(/-/ * /[-.a-zA-Z0-9]*/.capture(:pre_release)) * Regexp::Optional] +
+	[(/[-p]/ * /[-.a-zA-Z0-9]*/.capture(:pre_release)) * Regexp::Optional] +
 	[(/\+/ * /[-.a-zA-Z0-9]*/.capture(:build)) * Regexp::Optional]
+Version_regexp = Regexp.new(Version_pattern.join)
 end # Constants
 include Constants
 module ClassMethods

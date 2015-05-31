@@ -27,13 +27,15 @@ end #initialize
 def test_run
 	CommandLine.assert_pre_conditions
 	assert_not_nil(ARGV)
-	SELF.run do
-end # do run
+	assert_raises(RuntimeError) do
+		SELF.run do
+		end # do run
+	end # assert_raises
 end # run
 def test_no_arg_command
 	no_arg_run = CommandLine.assert_command_run('')
 
-	assert_match(/Usage/, no_arg_run.output)
+	assert_match(/Expect a subcommand and a file argument/, no_arg_run.errors)
 end # no_arg_command
 def test_help_command
 	help_run = CommandLine.assert_command_run('--help')
@@ -49,6 +51,7 @@ def test_readme_example
 	CommandLine.assert_pre_conditions
 	assert_instance_of(Hash, Readme_opts)
 	help_run = ShellCommands.new('ruby -W0 script/command_line.rb --help ')
+	assert_equal([], ARGV)
 
 	assert_equal(false, Readme_opts[:monkey])   #=> 192.168.0.1
 	assert_equal(nil, Readme_opts[:name])

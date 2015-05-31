@@ -126,166 +126,14 @@ end #corruption
 def corruption_gc
 	git_command("gc")
 end #corruption
-def abort_rebase_and_merge!
-	if File.exists?('.git/rebase-merge/git-rebase-todo') then
-		git_command("rebase --abort")
-	end
-#	git_command("stash save").assert_post_conditions
-	if File.exists?('.git/MERGE_HEAD') then
-		git_command("merge --abort")
-	end # if
-end # abort_rebase_and_merge!
-def standardize_position!
-	 abort_rebase_and_merge!
-	git_command("checkout master")
-end #standardize_position!
-def state?
-	state=[]
-	if File.exists?('.git/rebase-merge/git-rebase-todo') then
-		state << :rebase
-	end
-	if File.exists?('.git/MERGE_HEAD') then
-		state << :merge
-	end # if
-	if something_to_commit? then
-		state << :dirty
-	else
-		state << :clean
-	end # if
-	return state
-end # state?
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def confirm_branch_switch(branch)
-	checkout_branch=git_command("checkout #{branch}")
-	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
-		checkout_branch #.assert_post_conditions
-	end #if
-	checkout_branch # for command chaining
-end #confirm_branch_switch
-# does not return to original branch unlike #safely_visit_branch
-# does not need a block, since it doesn't switch back
-# moves all working directory files to new branch
-def switch_branch(target_branch)
-	push = stash_and_checkout(target_branch)
-end # switch_branch
-def stash_and_checkout(target_branch)
-	push_branch = current_branch_name?
-	changes_branch = push_branch # 
-	push=something_to_commit? # remember
-	if push then
-#		status=@grit_repo.status
-#		puts "status.added=#{status.added.inspect}"
-#		puts "status.changed=#{status.changed.inspect}"
-#		puts "status.deleted=#{status.deleted.inspect}"
-#		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save --include-untracked')
-		merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
-		changes_branch=:stash
-	end #if
-
-	if push_branch!=target_branch then
-		confirm_branch_switch(target_branch)
-	end #if
-	push # if switched?
-end # stash_and_checkout
-def merge_cleanup(editor)
-	merge_conflict_files?.each do |conflict|
-		shell_command('diffuse -m '+conflict[:file])
-		confirm_commit
-	end #each
-end # merge_cleanup
-# This is safe in the sense that a stash saves all files
-# and a stash apply restores all tracked files
-# safe is meant to mean no files or changes are lost or buried.
-def safely_visit_branch(target_branch, &block)
-	push_branch=current_branch_name?
-	changes_branch=push_branch # 
-	push=something_to_commit? # remember
-	if push then
-#		status=@grit_repo.status
-#		puts "status.added=#{status.added.inspect}"
-#		puts "status.changed=#{status.changed.inspect}"
-#		puts "status.deleted=#{status.deleted.inspect}"
-#		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save --include-untracked')
-		merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
-		changes_branch=:stash
-	end #if
-
-	if push_branch!=target_branch then
-		confirm_branch_switch(target_branch)
-		ret=block.call(changes_branch)
-		confirm_branch_switch(push_branch)
-	else
-		ret=block.call(changes_branch)
-	end #if
-	if push then
-		apply_run=git_command('stash apply --quiet')
-		if apply_run.errors.match(/Could not restore untracked files from stash/) then
-			puts apply_run.errors
-			puts git_command('status').output
-			puts git_command('stash show').output
-		else
-			apply_run #.assert_post_conditions('unexpected stash apply fail')
-		end #if
-		merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
-	end #if
-	ret
-end #safely_visit_branch
-def stage_files(branch, files)
-	safely_visit_branch(branch) do |changes_branch|
-		validate_commit(changes_branch, files)
-	end #safely_visit_branch
-end #stage_files
 def unit_names?(files)
 	files.map do |f|
 		FilePattern.unit_base_name?(f).to_s
 	end #map
 end #unit_names?
-def confirm_commit(interact=:interactive)
-	if something_to_commit? then
-		case interact
-		when :interactive then
-			cola_run = git_command('cola')
-			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
-			cola_run #.assert_post_conditions
-			if !something_to_commit? then
-#				git_command('cola rebase '+current_branch_name?.to_s)
-			end # if
-		when :echo then
-		when :staged then
-			git_command('commit ').assert_post_conditions			
-		when :all then
-			git_command('add . ').assert_post_conditions
-			git_command('commit ').assert_post_conditions
-		else
-			raise 'Unimplemented option=' + interact.to_s
-		end #case
-	end #if
-	puts 'confirm_commit('+interact.inspect+" something_to_commit?="+something_to_commit?.inspect
-end #confirm_commit
-def validate_commit(changes_branch, files, interact=:interactive)
-	puts files.inspect if $VERBOSE
-	files.each do |p|
-		puts p.inspect  if $VERBOSE
-		git_command(['checkout', changes_branch.to_s, p])
-	end #each
-	if something_to_commit? then
-		confirm_commit(interact)
-#		git_command('rebase --autosquash --interactive')
-	end #if
-end #validate_commit
 def something_to_commit?
 	status=@grit_repo.status
 	ret=status.added!={}||status.changed!={}||status.deleted!={}
@@ -329,13 +177,6 @@ def git_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
 	output.parse(pattern)
 end # git_parse
-def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase!
 end # Repository
 assert_include(Module.constants, :ShellCommands)
 assert_include(Module.constants, :FilePattern)

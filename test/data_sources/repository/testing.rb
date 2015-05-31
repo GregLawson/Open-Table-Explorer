@@ -7,6 +7,8 @@
 ###########################################################################
 require_relative '../../unit/test_environment'
 class Minimal2Test < TestCase
+def test_initialize
+end # initialize
 def test_minimal
 	fail
 end # minimal

@@ -6,69 +6,96 @@
 #
 ###########################################################################
 require_relative '../unit/test_environment'
-require_relative '../../app/models/work_flow.rb'
+require_relative '../../app/models/interactive_bottleneck.rb'
 
-class WorkFlowTest < TestCase
+class InteractiveBottleneckTest < TestCase
 include DefaultTests
-#include WorkFlow
-#extend WorkFlow::ClassMethods
-include WorkFlow::Examples
-def test_all
-	pattern = FilePattern.find_by_name(:test)
-	glob = FilePattern.new(pattern).pathname_glob
-	tests=Dir[glob]
-	x=tests[0]
-	y=tests[1]
-	message="File.mtime(#{x})="+File.mtime(x).inspect+", File.mtime(#{y})="+File.mtime(y).to_s
-		assert_pathname_exists(x)
-		assert_pathname_exists(y)
-		assert_instance_of(Time, File.mtime(x))
-		assert_instance_of(Time, File.mtime(y))
-		assert_respond_to(File.mtime(x), :>)
-#rare_fail		assert_operator(File.mtime(x), :!=, File.mtime(y),"x="+x+"\ny="+y)
-#rare_fail		assert(File.mtime(x) != File.mtime(y))	
-#rare_fail		assert_not_equal(0, File.mtime(x) <=> File.mtime(y), message)	
-	tests=Dir[glob].sort do |x,y|
-		assert_pathname_exists(x)
-		assert_pathname_exists(y)
-		assert_instance_of(Time, File.mtime(x))
-		assert_instance_of(Time, File.mtime(y))
-		assert_respond_to(File.mtime(x), :>)
-		File.mtime(x) <=> File.mtime(y)
-	end #sort
-	puts tests.inspect if $VERBOSE
-end #all
+#include InteractiveBottleneck
+#extend InteractiveBottleneck::ClassMethods
+include InteractiveBottleneck::Examples
 def test_initialize
-	te=Unit.new(TestFile)
+	te=Unit.new(TestExecutable)
 	assert_not_nil(te)
-	wf=WorkFlow.new(TestFile)
+	wf=InteractiveBottleneck.new(TestExecutableFile)
 	assert_not_nil(wf)
-	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
-	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
+	assert_not_empty(TestInteractiveBottleneck.related_files.edit_files, "TestInteractiveBottleneck.related_files.edit_files=#{TestInteractiveBottleneck.related_files.edit_files}")
+	assert_include(TestInteractiveBottleneck.related_files.edit_files, TestExecutable, "TestInteractiveBottleneck.related_files=#{TestInteractiveBottleneck.related_files.inspect}")
 end #initialize
-include WorkFlow::Examples
+include InteractiveBottleneck::Examples
+def test_standardize_position
+	Minimal_repository.git_command("rebase --abort").puts
+	Minimal_repository.git_command("merge --abort").puts
+	Minimal_repository.git_command("stash save").assert_post_conditions
+	Minimal_repository.git_command("checkout master").puts
+	Minimal_repository.standardize_position!
+end #standardize_position
+def test_state?
+	assert_includes([:clean, :dirty], state?)
+end # state?
 def test_merge_conflict_recovery
 end # merge_conflict_recovery
+def test_confirm_branch_switch
+	assert_equal(:master, Minimal_repository.current_branch_name?)
+	Minimal_repository.confirm_branch_switch(:passed)
+	assert_equal(:passed, Minimal_repository.current_branch_name?)
+	Minimal_repository.confirm_branch_switch(:master)
+	assert_equal(:master, Minimal_repository.current_branch_name?)
+end #confirm_branch_switch
+def test_safely_visit_branch
+	Minimal_repository.force_change
+	push_branch=Minimal_repository.current_branch_name?
+	target_branch=:passed
+	push=Minimal_repository.something_to_commit? # remember
+	if push then
+		Minimal_repository.git_command('stash save').assert_post_conditions
+		changes_branch=:stash
+	end #if
+
+	if push_branch!=target_branch then
+		Minimal_repository.confirm_branch_switch(target_branch)
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
+		Minimal_repository.confirm_branch_switch(push_branch)
+	else
+		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
+	end #if
+	if push then
+		Minimal_repository.git_command('stash apply --quiet').assert_post_conditions
+	end #if
+	assert_equal(push_branch, Minimal_repository.safely_visit_branch(push_branch){push_branch})
+	assert_equal(push_branch, Minimal_repository.safely_visit_branch(push_branch){Minimal_repository.current_branch_name?})
+	target_branch=:master
+	checkout_target=Minimal_repository.git_command("checkout #{target_branch}")
+#		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
+	target_branch=:passed
+	assert_equal(target_branch, Minimal_repository.safely_visit_branch(target_branch){Minimal_repository.current_branch_name?})
+	Minimal_repository.safely_visit_branch(target_branch) do
+		Minimal_repository.current_branch_name?
+	end #
+end #safely_visit_branch
 def test_merge
-	TestWorkFlow.repository.testing_superset_of_passed.assert_post_conditions
-	TestWorkFlow.repository.edited_superset_of_testing.assert_post_conditions
-	TestWorkFlow.merge(:edited, :testing) # not too long or too dangerous
+	TestInteractiveBottleneck.repository.testing_superset_of_passed.assert_post_conditions
+	TestInteractiveBottleneck.repository.edited_superset_of_testing.assert_post_conditions
+	TestInteractiveBottleneck.merge(:edited, :testing) # not too long or too dangerous
 end #merge
 def test_merge_down
 #(deserving_branch = @repository.current_branch_name?)
 end # merge_down
+def test_validate_commit
+	Minimal_repository.assert_nothing_to_commit
+	Minimal_repository.force_change
+	assert(Minimal_repository.something_to_commit?)
+	Minimal_repository.assert_something_to_commit
+#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
+	Minimal_repository.git_command('stash')
+	Minimal_repository.git_command('checkout passed')
+	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
+end #validate_commit
 def test_script_deserves_commit!
 #(deserving_branch)
 end # script_deserves_commit!
-def test_test
-#(executable = @related_files.model_test_pathname?)
-end # test
-def test_loop
-#(executable = @related_files.model_test_pathname?)
-end # test
-def test_unit_test
-#	executable = @related_files.model_test_pathname?
-end # unit_test
+def test_rebase!
+#	Minimal_repository.rebase!
+end #rebase!
 def test_local_assert_post_conditions
 		TestWorkFlow.assert_post_conditions
 end #assert_post_conditions
@@ -83,17 +110,10 @@ def test_merge_command
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --merge-down').assert_post_conditions
 	assert_equal('', help_run.errors)
 end #  merge_command
+		TestInteractiveBottleneck.assert_post_conditions
+end #assert_post_conditions
+def test_local_assert_pre_conditions
+		TestInteractiveBottleneck.assert_pre_conditions
+end #assert_pre_conditions
 
-def test_deserve_command
-	value = :testing
-	executable = Repository::Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
-	deserve_run = ShellCommands.new('ruby  script/work_flow.rb --deserve ' + executable)
-	error_score = TestRun.error_score?(executable)
-#	assert_equal(1, error_score, deserve_run.inspect)
-#	assert_match(/deserving branch=testing/, deserve_run.output, deserve_run.inspect)
-end #  deserve_command
-def test_related_command
-#	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
-#	assert_match(/#{$0}/, related_run.output)
-end #  related_command
-end # WorkFlow
+end # InteractiveBottleneck

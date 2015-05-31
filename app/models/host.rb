@@ -19,18 +19,19 @@ include Virtus.model
   attribute :name, String, :default => nil
   attribute :last_detection, Time, :default => Time.now
   attribute :nmap_execution_time, Time, :default => nil
+module Constants
+Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
+end # Constants
 #has_many :ports
 #has_many :routers
 module ClassMethods
-end # ClassMethods
-extend ClassMethods
-module Constants
-end # Constants
-include Constants
-def self.logical_primary_key
+def nmap(ip_range)
+	ShellCommand.new('nmap ' + ip_range)
+end # nmap
+def logical_primary_key
 	return [:name]
 end #logical_primary_key
-def self.Column_Definitions
+def Column_Definitions
 	return [['ip','inet'],
 	['nmap','text'],
 	['otherPorts','integer'], 
@@ -42,12 +43,17 @@ def self.Column_Definitions
 	['nmap_execution_time','real']
 	]
 end
-def Host.recordDetection(ip,timestamp=Time.new)
-	host=Host.find_or_initialize_by_ip(ip)
+end # ClassMethods
+extend ClassMethods
+module Constants
+end # Constants
+include Constants
+def recordDetection(ip,timestamp=Time.new)
+	host=find_or_initialize_by_ip(ip)
 	host.last_detection=timestamp
 	host.save
 end
-def Host.nmapScan(candidateIP)
+def nmapScan(candidateIP)
 	host=find_or_initialize_by_ip(candidateIP)
 	cmd= "nmap  #{candidateIP}"
 	puts cmd if $VERBOSE
@@ -86,7 +92,7 @@ def Host.nmapScan(candidateIP)
 			#@ports.sqlValues=@ports.hash2values(@data)
 			@ports.save
 		elsif s.scan(/Nmap done:/)
-			up,nmap_execution_time=Host.scanNmapSummary(s)
+			up,nmap_execution_time=scanNmapSummary(s)
 			if up>'0'
 				puts "after if up=#{up}" if $VERBOSE
 				host.update_attribute('last_detection', Time.new)
@@ -104,7 +110,7 @@ def Host.nmapScan(candidateIP)
 	#dumpHash
 	#dumpAcquisitions
 end
-def Host.scanNmapSummary(s)
+def scanNmapSummary(s)
 	puts "s.rest=#{s.rest}" if $VERBOSE
 	plural=  s.rest(/.*IP address/,/e?s? /)
 	up=s.rest(/\(/,/[0-9.]+/)
@@ -114,8 +120,6 @@ def Host.scanNmapSummary(s)
 	return [up,nmap_execution_time]
 end
 # attr_reader
-def initialize
-end # initialize
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods

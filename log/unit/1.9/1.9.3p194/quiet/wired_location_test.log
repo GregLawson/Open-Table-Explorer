@@ -1,0 +1,38 @@
+Loaded suite test/unit/wired_location_test
+Started
+FFFF
+Finished in 16.088382 seconds.
+
+  1) Failure:
+test_aaa_test_new_assertions(WiredLocationTest)
+    [/test/test_helper.rb:173:in `assert_has_instance_methods'
+     /test/test_helper.rb:214:in `define_association_names'
+     test/unit/wired_location_test.rb:12:in `setup']:
+In define_association_names of test_helper.rb, .
+"Class WiredLocation" has no public instance methods.
+
+  2) Failure:
+test_general_associations(WiredLocationTest)
+    [/test/test_helper.rb:173:in `assert_has_instance_methods'
+     /test/test_helper.rb:214:in `define_association_names'
+     test/unit/wired_location_test.rb:12:in `setup']:
+In define_association_names of test_helper.rb, .
+"Class WiredLocation" has no public instance methods.
+
+  3) Failure:
+test_id_equal(WiredLocationTest)
+    [/test/test_helper.rb:173:in `assert_has_instance_methods'
+     /test/test_helper.rb:214:in `define_association_names'
+     test/unit/wired_location_test.rb:12:in `setup']:
+In define_association_names of test_helper.rb, .
+"Class WiredLocation" has no public instance methods.
+
+  4) Failure:
+test_specific,_stable_and_working(WiredLocationTest)
+    [/test/test_helper.rb:173:in `assert_has_instance_methods'
+     /test/test_helper.rb:214:in `define_association_names'
+     test/unit/wired_location_test.rb:12:in `setup']:
+In define_association_names of test_helper.rb, .
+"Class WiredLocation" has no public instance methods.
+
+4 tests, 12700 assertions, 4 failures, 0 errors

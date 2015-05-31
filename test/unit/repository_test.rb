@@ -98,69 +98,14 @@ def test_corruption_gc
 end #corruption
 #exists Minimal_repository.git_command("branch details").assert_post_conditions
 #exists Minimal_repository.git_command("branch summary").assert_post_conditions
-def test_standardize_position
-	Minimal_repository.git_command("rebase --abort").puts
-	Minimal_repository.git_command("merge --abort").puts
-	Minimal_repository.git_command("stash save").assert_post_conditions
-	Minimal_repository.git_command("checkout master").puts
-	Minimal_repository.standardize_position!
-end #standardize_position
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
-def test_confirm_branch_switch
-	assert_equal(:master, Minimal_repository.current_branch_name?)
-	Minimal_repository.confirm_branch_switch(:passed)
-	assert_equal(:passed, Minimal_repository.current_branch_name?)
-	Minimal_repository.confirm_branch_switch(:master)
-	assert_equal(:master, Minimal_repository.current_branch_name?)
-end #confirm_branch_switch
-def test_safely_visit_branch
-	Minimal_repository.force_change
-	push_branch=Minimal_repository.current_branch_name?
-	target_branch=:passed
-	push=Minimal_repository.something_to_commit? # remember
-	if push then
-		Minimal_repository.git_command('stash save').assert_post_conditions
-		changes_branch=:stash
-	end #if
-
-	if push_branch!=target_branch then
-		Minimal_repository.confirm_branch_switch(target_branch)
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
-		Minimal_repository.confirm_branch_switch(push_branch)
-	else
-		ret=Minimal_repository.validate_commit(changes_branch, [Minimal_repository.path+'README'], :echo)
-	end #if
-	if push then
-		Minimal_repository.git_command('stash apply --quiet').assert_post_conditions
-	end #if
-	assert_equal(push_branch, Minimal_repository.safely_visit_branch(push_branch){push_branch})
-	assert_equal(push_branch, Minimal_repository.safely_visit_branch(push_branch){Minimal_repository.current_branch_name?})
-	target_branch=:master
-	checkout_target=Minimal_repository.git_command("checkout #{target_branch}")
-#		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
-	target_branch=:passed
-	assert_equal(target_branch, Minimal_repository.safely_visit_branch(target_branch){Minimal_repository.current_branch_name?})
-	Minimal_repository.safely_visit_branch(target_branch) do
-		Minimal_repository.current_branch_name?
-	end #
-end #safely_visit_branch
 def test_unit_names?
 	assert_equal(['repository'], Minimal_repository.unit_names?([$0]))	
 end #unit_names?
-def test_validate_commit
-	Minimal_repository.assert_nothing_to_commit
-	Minimal_repository.force_change
-	assert(Minimal_repository.something_to_commit?)
-	Minimal_repository.assert_something_to_commit
-#	Minimal_repository.validate_commit(:master, [Minimal_repository.path+'README'], :echo)
-	Minimal_repository.git_command('stash')
-	Minimal_repository.git_command('checkout passed')
-	Minimal_repository.validate_commit(:stash, [Minimal_repository.path+'README'], :echo)
-end #validate_commit
 def test_testing_superset_of_passed
 #?	assert_equal('', This_code_repository.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed
@@ -205,7 +150,4 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
-def test_rebase!
-#	Minimal_repository.rebase!
-end #rebase!
 end #Repository
