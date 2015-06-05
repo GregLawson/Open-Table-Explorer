@@ -5,6 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# merge in rgl library and begin porting to it
+#require 'rgl/adjacency'
+#require 'rgl/dot'
+# begin old graph code
 require 'virtus'
 # An attempt at a universal data type?
 # Or is it duck typing modules without inheritance?

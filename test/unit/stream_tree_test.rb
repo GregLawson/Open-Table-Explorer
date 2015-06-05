@@ -13,6 +13,65 @@ class StreamTreeTest < TestCase
 include GraphPath::Examples
 include Tree::Examples
 include Connectivity::Examples
+require 'rgl/adjacency'
+require 'rgl/dot'
+def test_rgl_readme
+	dg=RGL::DirectedAdjacencyGraph[1,2 ,2,3 ,2,4, 4,5, 6,4, 1,6]
+	# Use DOT to visualize this graph:
+	dg.write_to_graphic_file('jpg')
+	assert_equal(true, dg.directed?)	
+	assert_equal([5, 6, 1, 2, 3, 4], dg.vertices)
+	assert_equal(true, dg.has_vertex?(4))
+	assert_equal(false, dg.has_vertex?(Object))
+	assert_equal("(1-2)(1-6)(2-3)(2-4)(4-5)(6-4)", dg.edges.sort.to_s)
+	assert_equal("(1=2)(1=6)(2=3)(2=4)(5=4)(6=4)", dg.to_undirected.edges.sort.to_s)
+
+	# Add inverse edge (4-2) to directed graph:
+	dg.add_edge 4,2
+	# (4-2) == (2-4) in the undirected graph:
+
+	assert_equal("(1=2)(1=6)(2=3)(2=4)(5=4)(6=4)", dg.to_undirected.edges.sort.to_s)
+
+	#(4-2) != (2-4) in directed graphs:
+
+	assert_equal("(1-2)(1-6)(2-3)(2-4)(4-2)(4-5)(6-4)", dg.edges.sort.to_s)
+
+	assert_equal(true, dg.remove_edge(4,2))
+
+	# Topological sort is implemented as an iterator:
+
+	require 'rgl/topsort'
+		assert_equal([1, 2, 3, 6, 4, 5], dg.topsort_iterator.to_a)
+
+	# A more elaborated example showing implicit graphs:
+
+	require 'rgl/implicit'
+	def module_graph
+	  RGL::ImplicitGraph.new { |g|
+		 g.vertex_iterator { |b|
+			ObjectSpace.each_object(Module, &b)
+		 }
+		 g.adjacent_iterator { |x, b|
+			x.ancestors.each { |y|
+			  b.call(y) unless x == y || y == Kernel || y == Object
+			}
+		 }
+		 g.directed = true
+	  }
+	end
+	#This function creates a directed graph, with vertices being all loaded modules:
+
+	g = module_graph
+	# We only want to see the ancestors of {RGL::AdjacencyGraph}:
+
+	require 'rgl/traversal'
+	tree = g.bfs_search_tree_from(RGL::AdjacencyGraph)
+	# Now we want to visualize this component of g with DOT. We therefore create a subgraph of the original graph, using a filtered graph:
+
+	g = g.vertices_filtered_by {|v| tree.has_vertex? v}
+	g.write_to_graphic_file('jpg')
+		
+end # rgl_readme
 def test_GraphPath_initialize
 	assert_equal(GraphPath.new(nil), Root_path)
 	assert_equal(GraphPath.new(nil), [])
