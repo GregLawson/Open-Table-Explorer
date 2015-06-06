@@ -39,19 +39,23 @@ def initialize(executable, options = Command_line_opts)
 	@options = options
 end # initialize
 def run(&non_default_actions)
+	puts "enterring run ARGV = " + ARGV.inspect
 	if ARGV.size < 2 then
 		fail RuntimeError.new("Expect a subcommand and a file argument.")
 	else
 		ARGV[1..-1].each do |file_argument|
-			executable_object = self.class.new(TestExecutable.new_from_pathname(file_argument))
+			executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_pathname(file_argument))
 			if executable_object.respond_to?(Sub_command) then
+				puts 'Sub_command = ' + Sub_command.to_s + 'arity = ' + method.arity
 				method = executable_object.method(Sub_command)
 				case method.arity
 				when -1 then
 					executable_object.inspect
 				when 0 then
+					puts 'Calling method.call(file_argument) ' + "\nmethod = " + method.inspect
 					method.call
 				when 1 then
+					puts 'Calling method.call(file_argument) ' + "\nmethod = " + method.inspect + "\n file_argument =" + file_argument
 					method.call(file_argument)
 				else
 					message = 'In CommandLine#run, '
@@ -65,6 +69,7 @@ def run(&non_default_actions)
 			end # if
 		end # each
 	end # if
+	puts "Exiting run"
 #		scripting_workflow.script_deserves_commit!(:passed)
 end #run
 def test
