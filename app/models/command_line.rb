@@ -46,8 +46,9 @@ def run(&non_default_actions)
 		ARGV[1..-1].each do |file_argument|
 			executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_pathname(file_argument))
 			if executable_object.respond_to?(Sub_command) then
-				puts 'Sub_command = ' + Sub_command.to_s + 'arity = ' + method.arity
+				puts 'Sub_command = ' + Sub_command.to_s 
 				method = executable_object.method(Sub_command)
+				puts 'arity = ' + method.arity.to_s
 				case method.arity
 				when -1 then
 					executable_object.inspect
