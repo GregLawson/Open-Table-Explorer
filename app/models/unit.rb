@@ -9,7 +9,7 @@ require_relative '../../app/models/file_pattern.rb'
 class Unit
 module ClassMethods
 def new_from_path?(path)
-	library_name=FilePattern.path2model_name?(path)
+	library_name = FilePattern.path2model_name?(path)
 	Unit.new(library_name, FilePattern.project_root_dir?(path))
 end #new_from_path?
 end #ClassMethods
