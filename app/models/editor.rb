@@ -21,16 +21,16 @@ extend ClassMethods
 # Use as current, lower/upper bound, branch history
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
-attr_reader :repository, :unit_maturity
+attr_reader :executable, :unit_maturity
 def initialize(executable)
 #specific_file,
 #	related_files = Unit.new_from_path?(specific_file),
 #	repository = Repository.new(FilePattern.repository_dir?, :interactive))
 	@executable = executable
-	@specific_file = executable.executable_file
-	@unit_maturity = UnitMaturity.new(executable.repository, executable.unit)
-	@repository = executable.repository
-	index = UnitMaturity::Branch_enhancement.index(repository.current_branch_name?)
+	@specific_file = @executable.executable_file
+	@unit_maturity = UnitMaturity.new(@executable.repository, executable.unit)
+	@repository = @executable.repository
+	index = UnitMaturity::Branch_enhancement.index(@executable.repository.current_branch_name?)
 	if index.nil? then
 		@branch_index = UnitMaturity::First_slot_index
 	else
@@ -164,7 +164,7 @@ extend Assertions::ClassMethods
 # TestEditor.assert_pre_conditions
 include Constants
 module Examples
-TestExecutable = TestExecutable.new(executable_file: File.expand_path($PROGRAM_NAME))
+TestExecutable = TestExecutable.new_from_pathname(File.expand_path($PROGRAM_NAME))
 #TestFile = File.expand_path($PROGRAM_NAME)
 TestEditor = Editor.new(TestExecutable)
 include Constants

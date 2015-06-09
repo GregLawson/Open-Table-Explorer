@@ -14,10 +14,10 @@ include DefaultTests
 #extend Editor::ClassMethods
 include Editor::Examples
 include UnitMaturity::Examples
-def test_initialize
-	te=Unit.new(TestFile)
+def test_initializes
+	te=Unit.new(TestEditor.executable.executable_file)
 	assert_not_nil(te)
-	wf=Editor.new(TestFile)
+	wf=Editor.new(TestEditor.executable)
 	assert_not_nil(wf)
 	assert_not_empty(TestEditor.executable.unit.edit_files, "TestEditor.executable.unit.edit_files=#{TestEditor.executable.unit.edit_files}")
 	assert_include(TestEditor.executable.unit.edit_files, TestFile, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
