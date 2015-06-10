@@ -12,7 +12,6 @@ require_relative '../../app/models/test_executable.rb'
 # executed in alphabetical order. Longer names sort later.
 class TestTestExecutable < TestCase
 include TestExecutable::Examples
-include TestRun::Examples
 include Repository::Constants
 def test_virtus_initialize
 	assert_equal(:unit, Odd_plural_executable.test_type)
@@ -20,9 +19,9 @@ def test_virtus_initialize
 	assert_equal('code_bases', Odd_plural_executable.plural_table)
 	assert_equal(nil, Odd_plural_executable.test)
 end # virtus_initialize
-def test_TestRun_initialize
+def test_TestExecutable_initialize
 	testRun=TestExecutable.new
-#	TestRun.column_names.each do |n|
+#	TestExecutable.column_names.each do |n|
 #		assert_instance_of(String,n)
 #	end #each
 	# prove equivalence of attribute access
