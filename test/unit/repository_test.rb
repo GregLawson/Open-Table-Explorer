@@ -103,9 +103,6 @@ def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
-def test_unit_names?
-	assert_equal(['repository'], Minimal_repository.unit_names?([$0]))	
-end #unit_names?
 def test_testing_superset_of_passed
 #?	assert_equal('', This_code_repository.testing_superset_of_passed.assert_post_conditions.output)
 end #testing_superset_of_passed

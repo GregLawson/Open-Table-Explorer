@@ -129,11 +129,6 @@ end #corruption
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def unit_names?(files)
-	files.map do |f|
-		FilePattern.unit_base_name?(f).to_s
-	end #map
-end #unit_names?
 def something_to_commit?
 	status=@grit_repo.status
 	ret=status.added!={}||status.changed!={}||status.deleted!={}
