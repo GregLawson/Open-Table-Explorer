@@ -16,7 +16,7 @@ def default_message
 	message += "\n instance_variables=#{instance_variables.inspect}"
 end #default_message
 def caller_lines(ignore_lines=19)
-	"\n#{caller_locations[0..-ignore_lines].join("\n")}\n"
+	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
 end # Object
 class Module
