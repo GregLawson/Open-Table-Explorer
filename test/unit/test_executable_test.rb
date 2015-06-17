@@ -14,13 +14,19 @@ class TestTestExecutable < TestCase
 include TestExecutable::Examples
 include Repository::Constants
 def test_virtus_initialize
-	assert_equal(:unit, Odd_plural_executable.test_type)
 	assert_equal('code_base', Odd_plural_executable.singular_table)
 	assert_equal('code_bases', Odd_plural_executable.plural_table)
 	assert_equal(nil, Odd_plural_executable.test)
+	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name, Odd_plural_executable.inspect)
+	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_executable.inspect)
+
+	assert_equal(:code_base, Odd_plural_executable.unit?.model_basename, Odd_plural_executable.inspect)
+	assert_equal(:unit, Odd_plural_executable.test_type)
+	assert_equal(:unit, Default_executable.test_type)
 end # virtus_initialize
 def test_TestExecutable_initialize
-	testRun=TestExecutable.new
+	testRun = TestExecutable.new
+	assert_equal(:unit, testRun.test_type, testRun.inspect)
 #	TestExecutable.column_names.each do |n|
 #		assert_instance_of(String,n)
 #	end #each
@@ -42,37 +48,41 @@ def test_TestExecutable_initialize
 #	Singular_executable.assert_logical_primary_key_defined
 #	Stream_pattern_executable.assert_logical_primary_key_defined()
 #	Unit_executable.assert_logical_primary_key_defined()
+	assert_equal(:unit, testRun.test_type, testRun.inspect)
 end #initialize
-def test_new_from_pathname
-	unit = Unit.new_from_path?(executable_file_file)
-	new_executable_file = TestExecutable.new(executable_file: executable_file, unit: unit)
-end # new_from_pathname
+def test_new_from_path
+	executable_file = $0
+	unit = Unit.new_from_path?(executable_file)
+	repository = Repository::This_code_repository
+	new_executable = TestExecutable.new(executable_file: executable_file, 
+								unit: unit, repository: repository)
+	new_from_path_executable = TestExecutable.new_from_path($0)
+	assert_instance_of(TestExecutable, new_executable)
+	assert_equal(:unit, Unit_executable.test_type)
+	assert_equal(:unit, new_executable.test_type)
+	assert_equal(:unit, new_from_path_executable.test_type)
+	assert_equal(:unit, Default_executable.test_type)
+end # new_from_path
 def test_log_path?
-	executable_file = $PROGRAM_NAME
-	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', This_code_repository.log_path?(executable_file))
-#	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', This_code_repository.log_path?)
+	unit = Unit.new_from_path?($0)
+	assert_not_nil(unit)
+	assert_equal('log/unit/1.9/1.9.3p194/quiet/test_executable.log', Default_executable.log_path?)
 end # log_path?
 def test_ruby_test_string
 	executable_file = $PROGRAM_NAME
-	ruby_test_string = This_code_repository.ruby_test_string(executable_file)
+	ruby_test_string = Default_executable.ruby_test_string
 	assert_match(executable_file, ruby_test_string)
 end # ruby_test_string
-def test_TestExecutable_initialize
-end #initialize
-def test_log_file
-	test_virtus_initialize
-	assert_equal(:unit, Odd_plural_executable.test_type)
-	assert_equal('code_base', Odd_plural_executable.singular_table)
-	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name, Odd_plural_executable.inspect)
-	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_executable.inspect)
-
-	assert_equal(:code_base, Odd_plural_executable.unit?.model_basename, Odd_plural_executable.inspect)
-	assert_equal(File.expand_path('log/library/code_base.log'), Odd_plural_executable.log_file, Odd_plural_executable.inspect)
-end #log_file
+def test_write_commit_message
+end # write_commit_message
 def test_test_file?
 	assert_equal('test/unit/code_base_test.rb',Odd_plural_executable.test_file?)
 end #test_file?
-def test_unit_names?
-	assert_equal(['repository'], Minimal_repository.unit_names?([$0]))	
-end #unit_names?
+def test_Examples
+	assert_equal(:unit, Unit_executable.test_type)
+	assert_equal(:unit, Plural_executable.test_type)
+	assert_equal(:unit, Singular_executable.test_type)
+	assert_equal(:unit, Odd_plural_executable.test_type)
+	assert_equal(:unit, Default_executable.test_type)
+end # Examples
 end # TestExecutable
