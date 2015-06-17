@@ -10,7 +10,12 @@ require_relative '../../test/assertions/repository_assertions.rb'
 class RepositoryTest < TestCase
 #include DefaultTests
 include Repository::Examples
-Minimal_repository=Empty_Repo
+def setup
+	@temp_repo = Repository.create_test_repository(Empty_Repo_path)
+end # setup
+def teardown
+	ShellCommands.new('rm -rf ' + @temp_repo.path)
+end # teardown
 def test_Constants
 #	assert_pathname_exists(Temporary)
 	assert_pathname_exists(Root_directory)
@@ -65,39 +70,39 @@ def test_create_if_missing
 end #create_if_missing
 def test_initialize
 	assert_pathname_exists(This_code_repository.path)
-	assert_pathname_exists(Empty_Repo.path)
+	assert_pathname_exists(@temp_repo.path)
 	This_code_repository.assert_pre_conditions
 end #initialize
 def test_shell_command
 	assert_equal(This_code_repository.path, This_code_repository.shell_command('pwd').output.chomp+'/')
-	assert_equal(Empty_Repo.path, Empty_Repo.shell_command('pwd').output.chomp+'/')
+	assert_equal(@temp_repo.path, @temp_repo.shell_command('pwd').output.chomp+'/')
 end #shell_command
 def test_git_command
 	assert_match(/branch/,This_code_repository.git_command('status').output)
-	assert_match(/branch/,Empty_Repo.git_command('status').output)
+	assert_match(/branch/,@temp_repo.git_command('status').output)
 end #git_command
 def test_inspect
-	clean_run=Minimal_repository.git_command('status --short --branch').assert_post_conditions
+	clean_run=@temp_repo.git_command('status --short --branch').assert_post_conditions
 	assert_equal("## master\n", clean_run.output)
-	assert_equal("## master\n", Minimal_repository.inspect)
-	Minimal_repository.force_change
-	assert_not_equal("## master\n", Minimal_repository.inspect)
-	assert_equal("## master\n M README\n", Minimal_repository.inspect)
+	assert_equal("## master\n", @temp_repo.inspect)
+	@temp_repo.force_change
+	assert_not_equal("## master\n", @temp_repo.inspect)
+	assert_equal("## master\n M README\n", @temp_repo.inspect)
 end #inspect
 def test_corruption_fsck
-	Minimal_repository.git_command("fsck").assert_post_conditions
-	Minimal_repository.corruption_fsck.assert_post_conditions
+	@temp_repo.git_command("fsck").assert_post_conditions
+	@temp_repo.corruption_fsck.assert_post_conditions
 end #corruption
 def test_corruption_rebase
-#	Minimal_repository.git_command("rebase").assert_post_conditions
-#	Minimal_repository.corruption_rebase.assert_post_conditions
+#	@temp_repo.git_command("rebase").assert_post_conditions
+#	@temp_repo.corruption_rebase.assert_post_conditions
 end #corruption
 def test_corruption_gc
-	Minimal_repository.git_command("gc").assert_post_conditions
-	Minimal_repository.corruption_gc.assert_post_conditions
+	@temp_repo.git_command("gc").assert_post_conditions
+	@temp_repo.corruption_gc.assert_post_conditions
 end #corruption
-#exists Minimal_repository.git_command("branch details").assert_post_conditions
-#exists Minimal_repository.git_command("branch summary").assert_post_conditions
+#exists @temp_repo.git_command("branch details").assert_post_conditions
+#exists @temp_repo.git_command("branch summary").assert_post_conditions
 def test_current_branch_name?
 #	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
 #	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
@@ -110,24 +115,24 @@ def test_edited_superset_of_testing
 #?	assert_equal('', This_code_repository.edited_superset_of_testing.assert_post_conditions.output)
 end #edited_superset_of_testing
 def test_force_change
-	Minimal_repository.assert_nothing_to_commit
+	@temp_repo.assert_nothing_to_commit
 	IO.write(Modified_path, README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n") # timestamp make file unique
 	assert_not_equal(README_start_text, IO.read(Modified_path))
-	Minimal_repository.revert_changes
-	Minimal_repository.force_change
-	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
-	Minimal_repository.assert_something_to_commit
-	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
-	Minimal_repository.git_command('add README')
-	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
-	assert(Minimal_repository.something_to_commit?)
-#	Minimal_repository.git_command('commit -m "timestamped commit of README"')
-	Minimal_repository.revert_changes.assert_post_conditions
-	Minimal_repository.assert_nothing_to_commit
+	@temp_repo.revert_changes
+	@temp_repo.force_change
+	assert_not_equal({}, @temp_repo.grit_repo.status.changed)
+	@temp_repo.assert_something_to_commit
+	assert_not_equal({}, @temp_repo.grit_repo.status.changed)
+	@temp_repo.git_command('add README')
+	assert_not_equal({}, @temp_repo.grit_repo.status.changed)
+	assert(@temp_repo.something_to_commit?)
+#	@temp_repo.git_command('commit -m "timestamped commit of README"')
+	@temp_repo.revert_changes.assert_post_conditions
+	@temp_repo.assert_nothing_to_commit
 end #force_change
 def test_revert_changes
-	Minimal_repository.revert_changes.assert_post_conditions
-	Minimal_repository.assert_nothing_to_commit
+	@temp_repo.revert_changes.assert_post_conditions
+	@temp_repo.assert_nothing_to_commit
 #	assert_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #revert_changes
 
@@ -147,4 +152,15 @@ end #revert_changes
 #ShellCommands.new("rsync -a #{Temporary}recover /media/greg/B91D-59BB/recover").assert_post_conditions
 def test_merge_conflict_files?
 end #merge_conflict_files?
+def test_git_parse
+	command = 'branch --list --remote'
+	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
+	output = This_code_repository.git_command(command).assert_post_conditions.output
+	capture = output.capture?(pattern)
+	assert_instance_of(Hash, capture.output?, capture.inspect)
+	remotes_output = This_code_repository.git_parse(command, pattern)
+	assert_instance_of(Hash, remotes_output, capture.inspect)
+
+	assert_instance_of(String, remotes_output.fetch(:remote), capture.inspect)
+end # git_parse
 end #Repository

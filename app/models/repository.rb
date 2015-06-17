@@ -171,6 +171,7 @@ end #merge_conflict_files?
 def git_parse(command, pattern)
 	output=git_command(command).assert_post_conditions.output
 	output.parse(pattern)
+
 end # git_parse
 end # Repository
 assert_include(Module.constants, :ShellCommands)
