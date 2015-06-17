@@ -12,14 +12,29 @@ require_relative '../../app/models/parse.rb'
 class Reference
 end # Reference
 class BranchReference
+  include Virtus.value_object
+
+  values do
+ 	attribute :branch, Symbol
+	attribute :age, Fixnum
+end # values
 module Constants
 Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
-Unambiguous_ref_pattern = /[a-z]+@\{/ * Unambiguous_ref_age_pattern * /}/
+Unambiguous_ref_pattern = /[a-z]+/.capture(:branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
 end #Constants
+include Constants
 module ClassMethods
 def previous_changes(filename)
 	reflog?(filename)
 end # previous_changes
+def new_from_ref(ref_string)
+	capture = ref_string.capture?(BranchReference::Unambiguous_ref_pattern)
+	if capture.success? then
+		new(capture.output?[:branch].to_sym,capture.output?[:age].to_i)
+	else
+		new(capture.output?[:branch])
+	end # if
+end # new_from_ref
 def reflog?(filename, repository)
 	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
 	reflog_run.assert_post_conditions
@@ -27,14 +42,19 @@ def reflog?(filename, repository)
 	lines.map do |line|
 		refs = line.split(',')
 		if refs[0] == '' then
-			{:ref => refs[2], :time => refs[3]} # hash
+			{:ref => new_from_ref(refs[2]), :time => refs[3]} # hash
 		else
-			{:ref => refs[0], :time => refs[3]} # unambiguous ref
+			{:ref => new_from_ref(refs[0]), :time => refs[3]} # unambiguous ref
 		end # if
 	end # map
 end # reflog?
 def last_change?(filename, repository)
-	reflog?(filename, repository)[0][:ref]
+	reflog = reflog?(filename, repository)
+	if reflog.empty? then
+		nil
+	else
+		reflog[0][:ref]
+	end # if
 end # last_change?
 end #ClassMethods
 extend ClassMethods
@@ -89,7 +109,9 @@ def branches?(repository)
 end #branches?
 def remotes?(repository)
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	repository.git_parse('branch --list --remote', pattern).map{|h| h[:remote]}
+	repository.git_parse('branch --list --remote', pattern).map do |h|
+		h.fetch(:remote)
+	end # map
 end #remotes?
 def branch_names?(repository)
 	branches?(repository).map {|b| b.branch}
@@ -108,7 +130,7 @@ def initialize(repository, branch=repository.current_branch_name?, remote_branch
 	@repository=repository
 	@branch=branch
 	if remote_branch.nil? then
-		@remote_branch=find_origin
+#		@remote_branch=find_origin
 	else
 		@remote_branch=remote_branch
 	end # if

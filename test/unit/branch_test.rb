@@ -15,10 +15,13 @@ include DefaultTests
 include Repository::Examples
 include Branch::Constants
 include Branch::Examples
+def test_new_from_ref
+	assert_equal(BranchReference.new(:master, 123), BranchReference.new_from_ref('master@{123}'))
+end # new_from_ref
 def test_reflog?
 #	reflog?(filename).output.split("/n")[0].split(',')[0]
 	filename = $0
-	reflog = TestUnitMaturity.reflog?(filename)
+	reflog = BranchReference.reflog?(filename)
 #	reflog.assert_post_conditions
 #	assert_not_empty(reflog.output)
 #	lines = reflog.output.split("\n")
@@ -26,8 +29,16 @@ def test_reflog?
 	assert_operator(reflog.size, :>,1, reflog)
 #	assert_equal('', reflog[0], lines)
 end # reflog?
-def last_change?
-	assert_equal('', UnitMaturity.last_change?())
+def test_last_change?
+	filename = $0
+	repository = Empty_Repo
+	reflog = BranchReference.reflog?(filename, repository)
+	assert_equal(nil, BranchReference.last_change?(filename, repository))
+	last_change = BranchReference.last_change?(filename, This_code_repository)
+	assert_match(BranchReference::Unambiguous_ref_pattern, last_change)
+	capture = last_change.capture?(BranchReference::Unambiguous_ref_pattern)
+	assert_equal({}, capture)
+	assert_includes([], BranchReference.last_change?(filename, This_code_repository))
 end # last_change?
 def test_branch_command?
 	repository = Empty_Repo
