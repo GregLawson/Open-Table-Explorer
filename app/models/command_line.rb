@@ -44,14 +44,14 @@ def run(&non_default_actions)
 		fail RuntimeError.new("Expect a subcommand and a file argument.")
 	else
 		ARGV[1..-1].each do |file_argument|
-			executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_pathname(file_argument))
+			executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_path(file_argument))
 			if executable_object.respond_to?(Sub_command) then
 				puts 'Sub_command = ' + Sub_command.to_s 
 				method = executable_object.method(Sub_command)
 				puts 'arity = ' + method.arity.to_s
 				case method.arity
 				when -1 then
-					executable_object.inspect
+					method.call(file_argument)
 				when 0 then
 					puts 'Calling method.call(file_argument) ' + "\nmethod = " + method.inspect
 					method.call
