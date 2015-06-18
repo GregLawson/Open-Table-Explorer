@@ -20,7 +20,11 @@ class BranchReference
 end # values
 module Constants
 Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
-Unambiguous_ref_pattern = /[a-z]+/.capture(:branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
+Ambiguous_ref_pattern = /[a-z_]+/.capture(:ambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
+Unambiguous_ref_pattern = /[a-z_\/]+/.capture(:unambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
+Delimiter = ','
+SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
+Reflog_line_regexp = Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter
 end #Constants
 include Constants
 module ClassMethods
@@ -35,6 +39,13 @@ def new_from_ref(ref_string)
 		new(capture.output?[:branch])
 	end # if
 end # new_from_ref
+def to_s
+	if @age.nil? then
+		@branch.to_s
+	else
+		@branch.to_s + @age.to_s
+	end # if
+end # to_s
 def reflog?(filename, repository)
 	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
 	reflog_run.assert_post_conditions
@@ -59,8 +70,8 @@ end # last_change?
 end #ClassMethods
 extend ClassMethods
 def initialize(branch, age = 0)
-	@branch = branch
-	@age = age
+	@branch = branch.to_sym
+	@age = age.to_i
 end # initialize
 
 end # BranchReference
@@ -109,9 +120,7 @@ def branches?(repository)
 end #branches?
 def remotes?(repository)
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:remote))
-	repository.git_parse('branch --list --remote', pattern).map do |h|
-		h.fetch(:remote)
-	end # map
+	repository.git_parse('branch --list --remote', pattern)
 end #remotes?
 def branch_names?(repository)
 	branches?(repository).map {|b| b.branch}
