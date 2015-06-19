@@ -7,7 +7,6 @@
 #
 ###########################################################################
 # @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
-require 'pp'
 require_relative '../app/models/command_line.rb'
 require_relative '../app/models/test_executable.rb'
 scripting_executable = TestExecutable.new_from_pathname($0)

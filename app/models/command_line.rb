@@ -43,12 +43,12 @@ def run(&non_default_actions)
 		fail RuntimeError.new("Expect a subcommand and a file argument.")
 	else
 		ARGV[1..-1].each do |file_argument|
-			executable_object = self.class.new(TestExecutable.new_from_pathname(file_argument))
+			executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_path(file_argument))
 			if executable_object.respond_to?(Sub_command) then
 				method = executable_object.method(Sub_command)
 				case method.arity
 				when -1 then
-					executable_object.inspect
+					method.call(file_argument)
 				when 0 then
 					method.call
 				when 1 then
@@ -65,8 +65,12 @@ def run(&non_default_actions)
 			end # if
 		end # each
 	end # if
+	cleanup_ARGV
 #		scripting_workflow.script_deserves_commit!(:passed)
 end #run
+def cleanup_ARGV
+	ARGV[0].delete
+end # cleanup_ARGV
 def test
 	puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
 end # test
