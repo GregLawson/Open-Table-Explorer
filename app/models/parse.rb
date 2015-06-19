@@ -404,7 +404,7 @@ end # map_capture?
 # complicated by fact regular expressions simulate repetitions with recursive alternatives
 # capture? returns a tree of Capture objects while parse returns only the output Hash
 # capture_class default should be best parse capture; currently LimitCapture
-def capture?(pattern, capture_class = LimitCapture)
+def capture?(pattern, capture_class = MatchCapture)
 	if pattern.instance_of?(Array) then
 		pos = 0
 		pattern.map do |p|
