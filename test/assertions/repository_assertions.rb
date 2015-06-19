@@ -62,7 +62,6 @@ include Repository::Constants
 	This_code_repository.assert_pre_conditions
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Empty_Repo_path=Source+'test_repository/'
-Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
 Unique_repository_directory_pathname = Repository.timestamped_repository_name?
 	This_code_repository.assert_pre_conditions
