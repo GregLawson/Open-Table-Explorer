@@ -176,12 +176,7 @@ end # inspect_nonterminal?
 def inspect_recursive(node = @node, &inspect_proc)
 	if !block_given? then
 		inspect_proc = proc do |node, depth, terminal|
-			ret = case terminal
-			when true then	'terminal'
-			when false then 'nonterminal'
-			when nil then 'terminal'
-			else 'unknown'
-			end # case
+			ret = inspect_nonterminal?(node)
 			ret += '[' + depth.to_s + ']'
 			ret += ', ' 
 	ret += node.graph_type.inspect_node(node.node)
