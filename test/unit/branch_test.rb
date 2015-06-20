@@ -39,14 +39,15 @@ def test_reflog?
 		assert_match(BranchReference::Reflog_line_regexp, line)
 		capture = line.capture?(BranchReference::Reflog_line_regexp)
 		assert(capture.success?, capture.inspect)
+		assert_instance_of(Hash, capture.output?, capture.inspect)
 		assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex], capture.output?.keys)
 	end # map
 	reflog = BranchReference.reflog?(filename, This_code_repository)
 #	reflog.assert_post_conditions
 #	assert_not_empty(reflog.output)
-#	lines = reflog.output.split("\n")
-	assert_instance_of(Array, reflog)
-	assert_operator(reflog.size, :>,1, reflog)
+##	lines = reflog.output.split("\n")
+#	assert_instance_of(Array, reflog)
+#	assert_operator(reflog.size, :>,1, reflog)
 #	assert_equal('', reflog[0], lines)
 end # reflog?
 def test_last_change?
@@ -72,7 +73,7 @@ def test_branches?
 	branch_output = @temp_repo.git_command('branch --list').assert_post_conditions.output
 	Patterns.each do |p|
 		assert_match(p, branch_output)
-		branches = branch_output.capture?(p)
+		branches = branch_output.capture?(p, LimitCapture)
 		puts branches.inspect if branches.success?
 		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output?, branches.inspect)
 	end # each
