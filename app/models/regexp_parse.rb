@@ -8,6 +8,7 @@
 require 'regexp_parser'
 require_relative 'stream_tree.rb'
 require_relative 'regexp.rb'
+require_relative 'parse.rb'
 module RegexpParseType
 extend Connectivity::ClassMethods
 module ClassMethods
@@ -27,7 +28,7 @@ Node_format = proc do |e|
 end # Node_format
 Mx_format = proc do |e, depth, terminal|
 	ret = ' ' * depth + e.node.text + ' # '
-	ret + Tree_node_format.call(e, depth, terminal)
+	ret + Connectivity::Examples::Tree_node_format.call(e, depth, terminal)
 end # Mx_format
 Mx_dump_format = proc do |e, depth, terminal|
 	ret = ' ' * depth + e.node.text + ' # '
@@ -45,7 +46,7 @@ def inspect_node(node, &inspect_proc)
 end # inspect_node
 def inspect_recursive(node, &inspect_proc)
 	if !block_given? then
-		inspect_proc = Tree_node_format
+		inspect_proc = Connectivity::Examples::Tree_node_format
 	end # if
 	super(node, &inspect_proc)
 end # inspect_recursive
@@ -84,7 +85,7 @@ Inspect_node_root = "Root(:expression, :root, '')"
 Node_options = "Group::Options(:group, :options, '(?-mix:')"
 Tree_node_root = "nonterminal[0], " + Inspect_node_root
 Tree_node_options = "nonterminal[1], " + Node_options
-Tree_node_a = "leaf typed[2], " + Node_a
+Tree_node_a = "terminal[2], " + Node_a
 Grandson_a_map =	Tree_node_a
 Son_a_map =	[Tree_node_options, [Grandson_a_map]]
 Literal_a_map = [Tree_node_root, [Son_a_map]]

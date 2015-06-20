@@ -14,7 +14,7 @@ def setup
 	@temp_repo = Repository.create_test_repository(Empty_Repo_path)
 end # setup
 def teardown
-	ShellCommands.new('rm -rf ' + @temp_repo.path)
+	Repository.delete_existing(@temp_repo.path)
 end # teardown
 def test_Constants
 #	assert_pathname_exists(Temporary)

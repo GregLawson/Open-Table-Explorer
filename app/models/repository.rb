@@ -75,7 +75,7 @@ def create_if_missing(path, interactive = :interactive)
 	end #if
 end #create_if_missing
 def timestamped_repository_name?
-	Repository_Unit.data_sources_directory? + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	Repository_Unit.data_sources_directory? + Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")
 end # timestamped_repository_name?
 def create_test_repository(path=timestamped_repository_name?, 
 	interactive)

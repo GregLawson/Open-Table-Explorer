@@ -24,6 +24,7 @@ Ambiguous_ref_pattern = /[a-z_]+/.capture(:ambiguous_branch) * /@\{/ * Unambiguo
 Unambiguous_ref_pattern = /[a-z_\/]+/.capture(:unambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
 Delimiter = ','
 SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
+#Timestamp_regexp = /([0-9]{1,4}/|[ADFJMNOS][a-z]+ )[0-9][0-9][, /][0-9]{2,4}( [0-9]+:[0-9.]+( ?[PApa][Mm])?)?/
 Reflog_line_regexp = Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter
 end #Constants
 include Constants
@@ -34,9 +35,9 @@ end # previous_changes
 def new_from_ref(ref_string)
 	capture = ref_string.capture?(BranchReference::Unambiguous_ref_pattern)
 	if capture.success? then
-		new(capture.output?[:branch].to_sym,capture.output?[:age].to_i)
+		new(capture.output?[:ambiguous_branch].to_sym,capture.output?[:age].to_i)
 	else
-		new(capture.output?[:branch])
+		new(capture.output?[:ambiguous_branch])
 	end # if
 end # new_from_ref
 def to_s
@@ -98,7 +99,7 @@ module ClassMethods
 include Constants
 def branch_capture?(repository, branch_command = '--list')
 	branch_output = repository.git_command('branch ' + branch_command).assert_post_conditions.output
-	branch_output.capture?(Branch_regexp)
+	branch_output.capture?(Branch_regexp, LimitCapture)
 end # branch_command?
 def current_branch_name?(repository)
 	branch_capture = branch_capture?(repository, '--list')
