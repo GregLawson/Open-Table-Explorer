@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -14,6 +14,7 @@ class BranchTest < TestCase
 include DefaultTests
 include Repository::Examples
 include Branch::Constants
+include BranchReference::Examples
 include Branch::Examples
 def setup
 	@temp_repo = Repository.create_test_repository(@temp_repo_path)
@@ -21,26 +22,53 @@ end # setup
 def teardown
 	ShellCommands.new('rm -rf ' + @temp_repo.path)
 end # teardown
+include BranchReference::Constants
+def test_BranchReference_Constants
+	BranchReference.assert_reflog_line(Reflog_line)
+	BranchReference.assert_reflog_line(Last_change_line)
+	BranchReference.assert_capture(Reflog_line)
+	BranchReference.assert_capture(Last_change_line)
+	BranchReference.assert_capture(First_change_line)
+	Reflog_lines.each do |reflog_line|
+		BranchReference.assert_capture(reflog_line)
+	end # each
+end #Constants
 def test_new_from_ref
-	assert_equal(BranchReference.new(:master, 123), BranchReference.new_from_ref('master@{123}'))
-	filename = $0
-	last_change = BranchReference.last_change?(filename, This_code_repository)
-	assert_equal('', last_change)
-	capture = last_change.capture?(BranchReference::Unambiguous_ref_pattern)
-	assert_equal({}, capture)
+	BranchReference.assert_capture(Reflog_line)
+	BranchReference.assert_capture(Last_change_line)
+	reflog_line = No_reflog_line
+	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
+	br = BranchReference.new_from_ref(reflog_line)
+	refs = reflog_line.split(',')
+	assert_equal(refs[0], '', capture.inspect)
+	assert_equal(refs[2].to_sym, br.branch, br.inspect)
+	assert_equal(Time.rfc2822(refs[4]), br.timestamp, br.inspect) #
+	reflog_line = Last_change_line
+	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
+	br = BranchReference.new_from_ref(reflog_line)
+	refs = reflog_line.split(',')
+	assert_not_equal(refs[0], '', capture.inspect)
+#			BranchReference.new_from_ref(refs[0]), :time => refs[3]} # unambiguous ref
+	assert_equal(refs[0], br.branch, br.inspect)
+	assert_equal(refs[3], br.timestamp, br.inspect)
+	branch = :master
+	age = 123	
+	br = BranchReference.new(branch: branch, age: age)
+	new_from_ref = BranchReference.new_from_ref(Reflog_line)
+	assert_equal('123', new_from_ref.age, Reflog_capture.output?.inspect)
+	assert_equal('123', new_from_ref[:age], Reflog_capture.inspect)
+	assert_equal(br, BranchReference.new_from_ref(Reflog_line))
 end # new_from_ref
 def test_reflog?
 #	reflog?(filename).output.split("/n")[0].split(',')[0]
 	filename = $0
 	reflog_run = This_code_repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
-	reflog_run.assert_post_conditions
-	lines = reflog_run.output.split("\n")
-	lines.map do |line|
-		assert_match(BranchReference::Reflog_line_regexp, line)
-		capture = line.capture?(BranchReference::Reflog_line_regexp)
-		assert(capture.success?, capture.inspect)
-		assert_instance_of(Hash, capture.output?, capture.inspect)
-		assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex], capture.output?.keys)
+	Reflog_run_executable.assert_post_conditions
+	lines = Reflog_run_executable.output.split("\n")
+	Reflog_lines.map do |reflog_line|
+		BranchReference.assert_reflog_line(reflog_line)
+#		new(capture.output?[:ambiguous_branch].to_sym,capture.output?[:age].to_i)
+
 	end # map
 	reflog = BranchReference.reflog?(filename, This_code_repository)
 #	reflog.assert_post_conditions
@@ -55,14 +83,28 @@ def test_last_change?
 	repository = @temp_repo
 	reflog = BranchReference.reflog?(filename, repository)
 	assert_equal(nil, BranchReference.last_change?(filename, repository))
-	assert_includes([], BranchReference.last_change?(filename, This_code_repository))
+	assert_includes([], BranchReference.last_change?(filename, This_code_repository).branch)
 end # last_change?
-def test_branch_command?
+def test_assert_reflog_line
+	BranchReference.assert_reflog_line(Reflog_line)
+	BranchReference.assert_reflog_line(Last_change_line)
+	BranchReference.assert_reflog_line(First_change_line)
+	BranchReference.assert_reflog_line(No_reflog_line)
+end # reflog_line
+def test_assert_capture
+	BranchReference.assert_capture(Reflog_line)
+	BranchReference.assert_capture(Last_change_line)
+	BranchReference.assert_capture(First_change_line)
+	BranchReference.assert_capture(No_reflog_line)
+end # assert_capture
+def test_Branch_Constants
+end #Constants
+def test_branch_capture
 	repository = @temp_repo
 	git_command = 'branch --list'
 	branch_output = repository.git_command(git_command).assert_post_conditions.output
 	parse = branch_output.parse(Branch_regexp)
-end # branch_command?
+end # branch_capture?
 def test_current_branch_name?
 #	assert_include(UnitMaturity::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 	branch_output= @temp_repo.git_command('branch --list').assert_post_conditions.output
@@ -86,6 +128,10 @@ def test_remotes?
 	assert_empty(Branch.remotes?(@temp_repo))
 	assert_not_empty(Branch.remotes?(This_code_repository))
 end # remotes?
+def test_merged?
+	assert_equal({:merged=>"passed"}, Branch.merged?(@temp_repo))
+	assert_not_empty(Branch.merged?(This_code_repository))
+end # merged?
 def test_initialize
 	assert_equal(This_code_repository, Branch.new(This_code_repository).repository)
 
