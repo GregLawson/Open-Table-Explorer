@@ -265,13 +265,6 @@ def script_deserves_commit!(deserving_branch)
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
-def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase!
 require_relative '../../test/assertions.rb'
 module Assertions
 
