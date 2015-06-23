@@ -164,13 +164,6 @@ def bracketing_versions?(filename, current_index)
 	right_index = scan_verions?(filename, current_index + 1..Last_slot_index, :first)
 	[left_index, right_index]
 end # bracketing_versions?
-def rebase!
-	if remotes?.include?(current_branch_name?) then
-		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
-	else
-		puts current_branch_name?.to_s+' has no remote branch in origin.'
-	end #if
-end #rebase!
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods

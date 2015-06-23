@@ -85,6 +85,11 @@ def test_last_change?
 	assert_equal(nil, BranchReference.last_change?(filename, repository))
 	assert_includes([], BranchReference.last_change?(filename, This_code_repository).branch)
 end # last_change?
+def test_to_s
+	assert_equal(:master, BranchReference.new_from_ref(Reflog_line).branch, Reflog_line)
+	assert_equal('master@{123}', BranchReference.new_from_ref(Reflog_line).to_s)
+	assert_equal('master@{123}', Reflog_reference.to_s)
+end # to_s
 def test_assert_reflog_line
 	BranchReference.assert_reflog_line(Reflog_line)
 	BranchReference.assert_reflog_line(Last_change_line)
