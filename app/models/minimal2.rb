@@ -43,9 +43,11 @@ def asset_nested_and_included(module_symbol, context = self, message='')
 	assert_included_submodule(module_symbol)
 end # asset_nested_and_included
 def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
 #	asset_nested_and_included(:ClassMethods, self)
 #	asset_nested_and_included(:Constants, self)
 #	asset_nested_and_included(:Assertions, self)
+	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
