@@ -32,13 +32,25 @@ def initialize(string, regexp)
 	@regexp = Regexp.promote(regexp)
 	@length_hash_captures = @regexp.named_captures.values.flatten.size
 #     named_captures for captures.size > names.size
-end #initialize
+end # initialize
+
+# Unlike MatchData, Capture#[0] is first capture not the entire matched string (which is accessed via Capture#matched_characters?)
+# both named and positional indices should work
 def [](capture_index, hash_offset = 0)
-	if self.raw_captures.instance_of?(MatchData) then
-		@raw_captures[capture_index]
+	index = if self.raw_captures.instance_of?(MatchData) then
+		if capture_index.instance_of?(Fixnum) then
+			capture_index+1
+		else
+			capture_index
+		end # if
 	else
-		@raw_captures[hash_offset + capture_index * @regexp.names.size]
+		if capture_index.instance_of?(Fixnum) then
+			hash_offset + capture_index * @regexp.names.size
+		else
+			hash_offset + capture_index * @regexp.names.size
+		end # if
 	end # if
+	@raw_captures[index]
 end # []
 def named_hash(hash_offset=0)
 	named_hash={}
@@ -423,6 +435,18 @@ def capture?(pattern, capture_class = MatchCapture)
 		capture = capture_class.new(self, pattern)
 	end # if
 end # capture?
+def capture_in(pattern, capture_class = MatchCapture)
+	capture?(pattern, capture_class)
+end # capture_in
+def capture_exact(pattern, capture_class = MatchCapture)
+	capture?(Start_string * pattern * End_string, capture_class)
+end # capture_in
+def capture_start(pattern, capture_class = MatchCapture)
+	capture?(Start_string * pattern, capture_class)
+end # capture_in
+def capture_end(pattern, capture_class = MatchCapture)
+	capture?(pattern * End_string, capture_class)
+end # capture_in
 def parse(regexp)
 	regexp.enumerate(:map) do |reg|
 		capture?(reg).enumerate(:map) {|c| c.output?}

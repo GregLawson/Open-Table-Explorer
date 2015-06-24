@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -22,7 +22,7 @@ def test_default_name
 	assert_equal('name', Capture.default_name(0, 'name'))
 	assert_equal('name3', Capture.default_name(3, 'name'))
 	assert_equal('Var_1', Capture.default_name(1, 'Var_', :numbered))
-end #default_name
+end # default_name
 def test_initialize
 	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
 	iterations=(Parse_array.raw_captures.size/length_hash_captures).ceil
@@ -35,7 +35,7 @@ def test_initialize
 		end #map
 	end #if
 #	assert_equal(Array_answer, Parse_array.output, Parse_array.inspect)
-end #initialize
+end # initialize
 def test_index
 	capture = Match_capture
 	message = 'capture = ' + capture.inspect
@@ -104,6 +104,17 @@ def test_named_hash
 #	end #each
 	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
+	regexp = /5/.capture(:a) * /6/.capture(:a)
+	capture = '56'.capture?(regexp)
+	message = "capture = " + capture.inspect
+	message = "capture.regexp.named_captures = " + capture.regexp.named_captures.inspect
+	assert_equal([1,2], capture.regexp.named_captures['a'], message)
+	assert_equal('6', capture[:a], message)
+	assert_equal('6', capture[1], message)
+	assert_equal('5', capture[0], message)
+	output = capture.output?
+	message += "\noutput = " + output.inspect
+	assert_equal('5', output[:a],message)
 end # named_hash
 def test_MatchCapture_named_hash
 	message = Match_capture.inspect
@@ -292,6 +303,8 @@ end # delimiters?
 def test_LimitCapture_raw_captures?
 	assert_instance_of(Array, LimitCapture.new("* 1\n", Branch_regexp).raw_captures?) 
 end # raw_captures?
+def test_ParsedCapture_initialize
+end # ParsedCapture_initialize
 def test_raw_captures?
 end #raw_captures?
 def test_success?
