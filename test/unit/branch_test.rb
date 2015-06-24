@@ -26,23 +26,19 @@ include BranchReference::Constants
 def test_BranchReference_Constants
 	BranchReference.assert_reflog_line(Reflog_line)
 	BranchReference.assert_reflog_line(Last_change_line)
-	BranchReference.assert_capture(Reflog_line)
-	BranchReference.assert_capture(Last_change_line)
-	BranchReference.assert_capture(First_change_line)
+	BranchReference.assert_reflog_line(First_change_line)
 	Reflog_lines.each do |reflog_line|
-		BranchReference.assert_capture(reflog_line)
+		BranchReference.assert_reflog_line(reflog_line)
 	end # each
 end #Constants
 def test_new_from_ref
-	BranchReference.assert_capture(Reflog_line)
-	BranchReference.assert_capture(Last_change_line)
-	reflog_line = No_reflog_line
+	reflog_line = No_ref_line
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
 	br = BranchReference.new_from_ref(reflog_line)
 	refs = reflog_line.split(',')
 	assert_equal(refs[0], '', capture.inspect)
 	assert_equal(refs[2].to_sym, br.branch, br.inspect)
-	assert_equal(Time.rfc2822(refs[4]), br.timestamp, br.inspect) #
+	assert_operator(Time.rfc2822(refs[4]), :==, br.timestamp, br.inspect) #
 	reflog_line = Last_change_line
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
 	br = BranchReference.new_from_ref(reflog_line)
@@ -58,6 +54,17 @@ def test_new_from_ref
 	assert_equal('123', new_from_ref.age, Reflog_capture.output?.inspect)
 	assert_equal('123', new_from_ref[:age], Reflog_capture.inspect)
 	assert_equal(br, BranchReference.new_from_ref(Reflog_line))
+	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, Reflog_reference.age, message)
+	assert_match(Regexp::Start_string * '123' * Regexp::End_string, Reflog_reference.age, message)
+	BranchReference.assert_output(Reflog_line)
+	BranchReference.assert_output(Last_change_line)
+	BranchReference.assert_output(First_change_line)
+	BranchReference.new_from_ref(No_ref_line).assert_pre_conditions
+#	assert_equal(nil, capture.output?[:ambiguous_branch].nil?)
+	BranchReference.new_from_ref(First_change_line).assert_pre_conditions
+	BranchReference.new_from_ref(Last_change_line).assert_pre_conditions
+	Reflog_reference.assert_pre_conditions
+
 end # new_from_ref
 def test_reflog?
 #	reflog?(filename).output.split("/n")[0].split(',')[0]
@@ -83,10 +90,13 @@ def test_last_change?
 	repository = @temp_repo
 	reflog = BranchReference.reflog?(filename, repository)
 	assert_equal(nil, BranchReference.last_change?(filename, repository))
-	assert_includes([], BranchReference.last_change?(filename, This_code_repository).branch)
+	assert_includes(Branch.branch_names?(This_code_repository), BranchReference.last_change?(filename, This_code_repository).branch)
 end # last_change?
 def test_to_s
+#	BranchReference.assert_output(Reflog_line)
 	assert_equal(:master, BranchReference.new_from_ref(Reflog_line).branch, Reflog_line)
+	message = Reflog_reference.inspect
+	assert_equal('123', Reflog_reference.age, message)
 	assert_equal('master@{123}', BranchReference.new_from_ref(Reflog_line).to_s)
 	assert_equal('master@{123}', Reflog_reference.to_s)
 end # to_s
@@ -94,14 +104,14 @@ def test_assert_reflog_line
 	BranchReference.assert_reflog_line(Reflog_line)
 	BranchReference.assert_reflog_line(Last_change_line)
 	BranchReference.assert_reflog_line(First_change_line)
-	BranchReference.assert_reflog_line(No_reflog_line)
+	BranchReference.assert_reflog_line(No_ref_line)
 end # reflog_line
-def test_assert_capture
-	BranchReference.assert_capture(Reflog_line)
-	BranchReference.assert_capture(Last_change_line)
-	BranchReference.assert_capture(First_change_line)
-	BranchReference.assert_capture(No_reflog_line)
-end # assert_capture
+def test_assert_output
+	BranchReference.assert_output(No_ref_line)
+	BranchReference.assert_output(First_change_line)
+	BranchReference.assert_output(Reflog_line)
+	BranchReference.assert_output(Last_change_line)
+end # assert_output
 def test_Branch_Constants
 end #Constants
 def test_branch_capture
