@@ -5,12 +5,23 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require 'virtus'
+require 'virtus'
 #require_relative '../../app/models/no_db.rb'
 class Minimal2
+  include Virtus.value_object
+  values do
+# 	attribute :branch, Symbol
+#	attribute :age, Fixnum, :default => 789
+#	attribute :timestamp, Time, :default => Time.now
+end # values
+module Constants
+end #Constants
+include Constants
 module ClassMethods
 end # ClassMethods
 extend ClassMethods
+#def initialize
+#end # initialize
 module Constants
 end # Constants
 include Constants
