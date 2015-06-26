@@ -64,6 +64,7 @@ def test_Capture_initialize
 	assert_equal(false, Parse_delimited_array.raw_captures.size.odd?, Parse_delimited_array.inspect)
 end #initialize
 def test_named_hash
+	hash_offset=0
 	string="* 1\n"
 	regexp =Branch_regexp
 	message = 'regexp.inspect = ' + regexp.inspect
@@ -75,25 +76,24 @@ def test_named_hash
 	named_hash={}
 	regexp.names.each do |n| # return named subexpressions
 		assert_instance_of(String, n, message)
-		named_hash[n.to_sym]=captures[n]
+		column = GenericColumn.new(regexp_index: 0, regexp_name: :branch)
+		named_hash = column.to_hash('1')
+		assert_equal({column => '1'}, named_hash) # return matched subexpressions
 	end # each
-	assert_equal({:branch => '1'}, named_hash) # return matched subexpressions
 	splitData=string.split(regexp)
-	captures=splitData #[1..-1]
+	captures = splitData #[1..-1]
 	named_hash={}
 	assert_equal({'branch' => [1]}, regexp.named_captures)
 	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
+		column = GenericColumn.new(regexp_index: 0, regexp_name: named_capture)
 		assert_instance_of(String, named_capture, message)
-		name = Capture.default_name(0, named_capture).to_sym
-		assert_equal(:branch, name)
-		named_hash[name]=captures[indices[0]]
+				named_hash = named_hash.merge(column.to_hash(parse_string[indices[0], hash_offset]))
 		assert_equal({:branch => '1'}, named_hash)
 		assert_equal(1, indices[0])
 		assert_equal([1], [indices[0]])
-		if indices.size>1 then
+		if indices.size > 1 then
 			indices[1..-1].each_index do |capture_index,i|
-				name=default_name(i, named_capture).to_sym
-				named_hash[name]=captures[capture_index]
+				named_hash = named_hash.merge(column.to_hash(self[indices[0], hash_offset]))
 				assert_equal(named_hash[name], captures[capture_index])
 			end #each_index
 		end #if
@@ -115,6 +115,7 @@ def test_named_hash
 	output = capture.output?
 	message += "\noutput = " + output.inspect
 	assert_equal('5', output[:a],message)
+	assert_equal('6', capture[:a1], message)
 end # named_hash
 def test_MatchCapture_named_hash
 	message = Match_capture.inspect

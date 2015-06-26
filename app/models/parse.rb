@@ -9,19 +9,11 @@
 require_relative '../../app/models/regexp.rb'
 #require_relative '../../app/models/stream_tree.rb'
 require_relative '../../app/models/regexp_parse.rb'
+require_relative '../../app/models/generic_column.rb'
 # encapsulates the difference between parsing from MatchData and from Array#split
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
 module ClassMethods
-def default_name(index, prefix=nil, numbered=nil)
-	if prefix.nil? then
-		'Col_'+index.to_s
-	elsif numbered.nil? && index==0 then
-		prefix
-	else
-		prefix+index.to_s
-	end #if
-end # default_name
 end # ClassMethods
 extend ClassMethods
 attr_reader :string, :regexp # arguments
@@ -55,12 +47,11 @@ end # []
 def named_hash(hash_offset=0)
 	named_hash={}
 	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
-		name=Capture.default_name(0, named_capture).to_sym
-		named_hash[name]= self[indices[0], hash_offset]
-		if indices.size>1 then
+		column = GenericColumn.new(regexp_index: 0, regexp_name: named_capture)
+		named_hash = column.to_hash(self[indices[0], hash_offset])
+		if indices.size > 1 then
 			indices[1..-1].each_index do |capture_index,i|
-				name=Capture.default_name(i, named_capture).to_sym
-				named_hash[name]= self[capture_index]
+				named_hash = named_hash.merge(column.to_hash(self[indices[0], hash_offset]))
 			end #each_index
 		end #if
 	end # each_pair
