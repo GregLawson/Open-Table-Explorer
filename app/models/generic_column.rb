@@ -6,15 +6,34 @@
 #
 ###########################################################################
 require 'virtus'
+class GenericVariable
+	include Virtus.value_object
+	values do
+		attribute :name, Symbol, :default => 'Col'
+		attribute :ruby_type, Class, :default => String
+		attribute :all_numbered, Symbol, :default => nil
+	end # values
+module Constants
+Col = GenericVariable.new
+end # module
+include Constants
+def header
+	name[0..0].upcase + name[1..-1].sub('_', ' ')
+end # header
+module Examples
+include Constants
+Name = GenericVariable.new(name: 'name')
+Var = GenericVariable.new(name: 'Var', all_numbered: true)
+end # Examples
+end # GenericVariable
+
 class GenericColumn #< ActiveRecord::Base
 #include Generic_Table
-  include Virtus.value_object
-  values do
- 	attribute :regexp_name, Symbol, :default => 'Col'
-	attribute :regexp_index, Fixnum, :default => 0
-	attribute :ruby_type, Class, :default => String
-	attribute :all_numbered, Symbol, :default => nil
-end # values
+	include Virtus.value_object
+	values do
+		attribute :variable, GenericVariable, :default => GenericVariable::Col
+		attribute :regexp_index, Fixnum, :default => 0
+	end # values
 module Constants
 end #Constants
 include Constants
@@ -27,12 +46,12 @@ def logical_primary_key
 	return [:model_class, :column_name]
 end #logical_primary_key
 def name
-	name_string = if @regexp_name.nil? then
+	name_string = if @variable.name.nil? then
 		'Col_' + @regexp_index.to_s
 	elsif @all_numbered.nil? && @regexp_index==0 then
-		@regexp_name
+		@variable.name
 	else
-		@regexp_name.to_s + '_' + @regexp_index.to_s
+		@variable.name.to_s + '_' + @regexp_index.to_s
 	end #if
 	name_string.to_sym
 end # name
@@ -77,9 +96,10 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+include GenericVariable::Examples
 Col_1 = GenericColumn.new(regexp_index: 1)
-Name = GenericColumn.new(regexp_index: 0, regexp_name: 'name')
-Name3 = GenericColumn.new(regexp_index: 3, regexp_name: 'name')
-Var_1 = GenericColumn.new(regexp_index: 1, regexp_name: 'Var', all_numbered: true)
+Name_0 = GenericColumn.new(regexp_index: 0, variable: Name)
+Name3 = GenericColumn.new(regexp_index: 3, variable: Name)
+Var_1 = GenericColumn.new(regexp_index: 1, variable: Var, all_numbered: true)
 end # Examples
 end # GenericColumn
