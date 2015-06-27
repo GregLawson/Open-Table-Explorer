@@ -226,6 +226,13 @@ end #assert_post_conditions
 def assert_pre_conditions
 end #assert_pre_conditions
 end #ClassMethods
+def assert_named_captures
+	assert_operator(names.size, :>=, 1, named_captures.inspect)
+	assert_operator(named_captures.size, :>=, 1, named_captures.inspect)
+	assert_equal(names, named_captures.keys)
+	all_indices = named_captures.values.flatten.sort
+	assert_equal((1..all_indices.size).to_a, all_indices)
+end # assert_named_captures
 def assert_pre_conditions
 # by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
 #	assert_equal(self, Regexp.promote(self))
