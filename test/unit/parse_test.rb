@@ -13,16 +13,8 @@ include SplitCapture::Examples
 include LimitCapture::Examples
 include Capture::Examples
 include String::Examples
+include GenericColumn::Examples
 #include DefaultTests
-def test_default_name
-	index=11
-	prefix='Col_'
-	prefix+index.to_s
-	assert_equal('Col_1', Capture.default_name(1))
-	assert_equal('name', Capture.default_name(0, 'name'))
-	assert_equal('name3', Capture.default_name(3, 'name'))
-	assert_equal('Var_1', Capture.default_name(1, 'Var_', :numbered))
-end # default_name
 def test_initialize
 	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
 	iterations=(Parse_array.raw_captures.size/length_hash_captures).ceil
@@ -43,10 +35,11 @@ def test_index
 	message += "\n named_captures = " + capture.regexp.named_captures.inspect
 	assert_equal('1', Match_capture.raw_captures[1], message)
 	assert_equal(['', "* 1\n", '  2'], Match_capture.to_a?, message)
-	assert_equal('1', capture[1], message)
-	assert_equal("* 1\n", capture[0], message)
+	assert_equal("* 1\n", capture.matched_characters?, message)
 	assert_equal(nil, capture[2], message)
-	assert_equal({branch: '1'}, capture.named_hash(0), message)
+	assert_equal('1', capture[0], message)
+	message += "\ncapture.output? = " + capture.output?.inspect
+	assert_equal({GenericColumn.new(name: :branch) => '1'}, capture.named_hash(0), message)
 end # []
 def test_Capture_initialize
 	assert_equal(["\n"], Parse_delimited_array.raw_captures[2..2], Parse_string.to_a?.inspect)
@@ -88,7 +81,6 @@ def test_named_hash
 		column = GenericColumn.new(regexp_index: 0, regexp_name: named_capture)
 		assert_instance_of(String, named_capture, message)
 				named_hash = named_hash.merge(column.to_hash(parse_string[indices[0], hash_offset]))
-		assert_equal({:branch => '1'}, named_hash)
 		assert_equal(1, indices[0])
 		assert_equal([1], [indices[0]])
 		if indices.size > 1 then
@@ -102,7 +94,6 @@ def test_named_hash
 #		name=default_name(capture_index).to_sym
 #		named_hash[name]=captures[capture_index]
 #	end #each
-	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 	regexp = /5/.capture(:a) * /6/.capture(:a)
 	capture = '56'.capture?(regexp)

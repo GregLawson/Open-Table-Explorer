@@ -29,6 +29,7 @@ end # initialize
 # Unlike MatchData, Capture#[0] is first capture not the entire matched string (which is accessed via Capture#matched_characters?)
 # both named and positional indices should work
 def [](capture_index, hash_offset = 0)
+	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
 	index = if self.raw_captures.instance_of?(MatchData) then
 		if capture_index.instance_of?(Fixnum) then
 			capture_index+1
@@ -51,7 +52,7 @@ def named_hash(hash_offset=0)
 		named_hash = column.to_hash(self[indices[0], hash_offset])
 		if indices.size > 1 then
 			indices[1..-1].each_index do |capture_index,i|
-				named_hash = named_hash.merge(column.to_hash(self[indices[0], hash_offset]))
+				named_hash = named_hash.merge(column.to_hash(self[capture_index, hash_offset]))
 			end #each_index
 		end #if
 	end # each_pair
