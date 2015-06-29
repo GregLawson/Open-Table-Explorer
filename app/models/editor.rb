@@ -105,7 +105,7 @@ def edit
 	else
 		command_string = 'diffuse' + version_comparison + test_files
 	end # if
-	puts command_string if $VERBOSE
+	puts command_string if !$VERBOSE.nil?
 	edit = @executable.repository.shell_command(command_string)
 	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
 	status =edit
