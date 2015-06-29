@@ -64,9 +64,9 @@ def test_Tree_node_format
 	assert_equal(Tree_node_root, Tree_node_format.call(node, depth=0, false))
 	assert_equal(Tree_node_options, Tree_node_format.call(RegexpParseType.ref(Son_a), depth=1, false))
 	assert_equal(Tree_node_a, Tree_node_format.call(RegexpParseType.ref(Grandson_a), depth=2, true))
-	assert_equal('nonterminal[1], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=1, true))
-	assert_equal('nonterminal[2], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=2, nil))
-	assert_equal('nonterminal[3], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=3, 1)) # unknown
+	assert_equal('terminal[1], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=1, true))
+	assert_equal('terminal[2], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=2, nil))
+	assert_equal('unknown[3], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=3, 1)) # unknown
 end # Tree_node_format
 def test_raw_capture?
 	assert_equal(Literal_a_map, RegexpParseType.map_recursive(Literal_a, &Tree_node_format))
