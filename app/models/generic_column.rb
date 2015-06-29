@@ -17,6 +17,9 @@ module Constants
 Col = GenericVariable.new
 end # module
 include Constants
+def ==(other)
+	self.name == other.name || self.ruby_type.name == other.ruby_type.name # all_numbered is cosmetic?
+end # ==
 def header
 	name[0..0].upcase + name[1..-1].sub('_', ' ')
 end # header
@@ -38,6 +41,18 @@ module Constants
 end #Constants
 include Constants
 module ClassMethods
+# promote index to type GenericColumn
+# uses defaults for unspecified fields (can this be smarter, more brain power needed here)
+def promote(index)
+case index.class.name
+when 'GenericColumn' then index
+when 'GenericVariable' then GenericColumn.new(variable: index)
+when 'Symbol', 'String' then GenericColumn.new(variable: GenericVariable.new(name: index))
+when 'Fixnum' then GenericColumn.new(name: index) # needs named_captures from Regexp
+else
+	fail 'index = ' + index.inspect
+end # case
+end # promote
 end # ClassMethods
 extend ClassMethods
 #def initialize

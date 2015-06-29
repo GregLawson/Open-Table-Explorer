@@ -15,11 +15,22 @@ def test_GenericVariable_name
 	assert_equal(:name, Name.name)
 	assert_equal(:Var, Var.name)
 end # name
+def test_equal
+	assert_equal(Name_0, GenericColumn.promote(:name))
+end # ==
 def test_GenericVariable_header
 	assert_equal('Col', Col.header)
 	assert_equal('Name', Name.header)
 	assert_equal('Var', Var.header)
 end # header
+def test_promote 
+	assert_equal(Name_0, GenericColumn.promote(Name_0))
+	assert_equal(Name_0, GenericColumn.promote(Name))
+	assert_equal(Name_0.variable.ruby_type.name, GenericColumn.promote(:name).variable.ruby_type.name)
+
+#suprise	assert_equal(Name_0.variable.ruby_type, GenericColumn.promote(:name).variable.ruby_type)
+	assert_equal(Name_0, GenericColumn.promote(:name))
+end # promote
 def test_GenericColumn_name
 	assert_equal(:name, Name_0.name)
 	assert_equal(:name_3, Name3.name)
