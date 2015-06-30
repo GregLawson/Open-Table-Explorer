@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -40,6 +40,7 @@ def [](capture_index, hash_offset = 0)
 		@raw_captures[hash_offset + capture_index * @regexp.names.size]
 	end # if
 end # []
+# returns hash of all column names and values captured
 def named_hash(hash_offset=0)
 	named_hash={}
 	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
