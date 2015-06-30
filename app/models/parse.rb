@@ -9,6 +9,7 @@
 require_relative '../../app/models/regexp.rb'
 #require_relative '../../app/models/stream_tree.rb'
 require_relative '../../app/models/regexp_parse.rb'
+require_relative '../../app/models/generic_column.rb'
 # encapsulates the difference between parsing from MatchData and from Array#split
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
@@ -32,24 +33,30 @@ def initialize(string, regexp)
 	@regexp = Regexp.promote(regexp)
 	@length_hash_captures = @regexp.named_captures.values.flatten.size
 #     named_captures for captures.size > names.size
-end #initialize
+end # initialize
+
+# Unlike MatchData, Capture#[0] is first capture not the entire matched string (which is accessed via Capture#matched_characters?)
+# both named and positional indices should work
 def [](capture_index, hash_offset = 0)
-	if self.raw_captures.instance_of?(MatchData) then
-		@raw_captures[capture_index]
+	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
+	index = if self.raw_captures.instance_of?(MatchData) then
+			capture_index
 	else
-		@raw_captures[hash_offset + capture_index * @regexp.names.size]
+			hash_offset + capture_index * @regexp.names.size
 	end # if
+	@raw_captures[index]
 end # []
 # returns hash of all column names and values captured
 def named_hash(hash_offset=0)
 	named_hash={}
 	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
-		name=Capture.default_name(0, named_capture).to_sym
-		named_hash[name]= self[indices[0], hash_offset]
-		if indices.size>1 then
+		variable = GenericVariable.new(name: named_capture)
+		column = GenericColumn.new(regexp_index: 0, variable: variable)
+		named_hash = column.to_hash(self[indices[0], hash_offset])
+		if indices.size > 1 then
 			indices[1..-1].each_index do |capture_index,i|
-				name=Capture.default_name(i, named_capture).to_sym
-				named_hash[name]= self[capture_index]
+				column = GenericColumn.new(regexp_index: 0, variable: variable)
+				named_hash = named_hash.merge(column.to_hash(self[capture_index, hash_offset]))
 			end #each_index
 		end #if
 	end # each_pair
@@ -156,6 +163,9 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 #Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line_regexp = Branch_regexp * "\n"
+Branch_variable = GenericVariable .new(name: 'branch')
+Branch_column = GenericColumn.new(regexp_index: 0, variable: Branch_variable)
+Branch_answer = {Branch_column => '1'}
 LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
@@ -424,6 +434,18 @@ def capture?(pattern, capture_class = MatchCapture)
 		capture = capture_class.new(self, pattern)
 	end # if
 end # capture?
+def capture_in(pattern, capture_class = MatchCapture)
+	capture?(pattern, capture_class)
+end # capture_in
+def capture_exact(pattern, capture_class = MatchCapture)
+	capture?(Start_string * pattern * End_string, capture_class)
+end # capture_in
+def capture_start(pattern, capture_class = MatchCapture)
+	capture?(Start_string * pattern, capture_class)
+end # capture_in
+def capture_end(pattern, capture_class = MatchCapture)
+	capture?(pattern * End_string, capture_class)
+end # capture_in
 def parse(regexp)
 	regexp.enumerate(:map) do |reg|
 		capture?(reg).enumerate(:map) {|c| c.output?}
