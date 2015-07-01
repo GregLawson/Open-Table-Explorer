@@ -40,22 +40,34 @@ def test_index
 	assert_equal(nil, capture[2], message)
 	assert_equal('1', capture[1], message)
 	message += "\ncapture.output? = " + capture.output?.inspect
+	assert_equal(Branch_answer, capture.named_hash(0), message)
 end # []
-def test_Capture_initialize
-	assert_equal(["\n"], Parse_delimited_array.raw_captures[2..2], Parse_string.to_a?.inspect)
-	assert_equal("\n", Parse_delimited_array.raw_captures[2])
-	assert_equal([2, 3], (2..Parse_array.raw_captures.size - 2).map {|i| i}, Parse_array.inspect)
-	assert_equal([true, false], (2..Parse_array.raw_captures.size - 2).map {|i| i.even?})
-	assert_equal(["\n", '2'], (2..Parse_array.raw_captures.size - 2).map {|i| Parse_array.raw_captures[i]})
-	assert_equal(["\n"], (2..Parse_array.raw_captures.size - 2).map {|i| (i.even? ? Parse_array.raw_captures[i] : nil)}.compact)
-
-	assert_equal([2], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| i}, Parse_delimited_array.inspect)
-	assert_equal([true], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| i.even?})
-	assert_equal(["\n"], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| Parse_delimited_array.raw_captures[i]})
-	assert_equal(["\n"], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| (i.even? ? Parse_delimited_array.raw_captures[i] : nil)}.compact)
-	assert_equal(4, Parse_delimited_array.raw_captures.size, Parse_delimited_array.inspect)
-	assert_equal(false, Parse_delimited_array.raw_captures.size.odd?, Parse_delimited_array.inspect)
-end #initialize
+def test_named_hash_variable
+	variable = Branch_variable
+	hash_offset=0
+	capture_name = variable.name
+	message = 'Match_capture = ' + Match_capture.inspect
+	indices = Match_capture.regexp.named_captures[capture_name.to_s]
+	assert_kind_of(Capture, Match_capture, message)
+	assert_instance_of(Regexp, Match_capture.regexp, message)
+	assert_instance_of(Hash, Match_capture.regexp.named_captures, message)
+	named_captures = Match_capture.regexp.named_captures
+	message += "\nnamed_captures = " + named_captures.inspect
+	assert_instance_of(Hash, Match_capture.regexp.named_captures, message)
+	assert_instance_of(Array, indices, message)
+	assert_equal(Branch_answer, Match_capture.named_hash_variable(variable, hash_offset))
+end # named_hash_variable
+def test_named_hash_column
+	hash_offset=0
+	string="* 1\n"
+	regexp =Branch_regexp
+	message = 'regexp.inspect = ' + regexp.inspect
+	matchData=string.match(regexp)
+	captures=matchData #[1..-1]
+	parse_string = MatchCapture.new("* 1\n", Branch_regexp)
+#	column = GenericColumn.new(regexp_index: 0, variable: variable)
+	assert_equal(Branch_answer, Match_capture.named_hash_column(Branch_column, hash_offset))
+end # named_hash_column
 def test_named_hash
 	hash_offset=0
 	string="* 1\n"
@@ -71,7 +83,6 @@ def test_named_hash
 		assert_instance_of(String, n, message)
 		column = GenericColumn.new(regexp_index: 0, regexp_name: :branch)
 		named_hash[n.to_sym]=captures[n]
-		named_hash[n.to_sym]=captures[n]
 	end # each
 	assert_equal({:branch => '1'}, named_hash) # return matched subexpressions
 	splitData=string.split(regexp)
@@ -80,13 +91,11 @@ def test_named_hash
 	assert_equal({'branch' => [1]}, regexp.named_captures)
 	regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
 		assert_instance_of(String, named_capture, message)
-		name = Capture.default_name(0, named_capture).to_sym
-		assert_equal(:branch, name)
-		named_hash[name]=captures[indices[0]]
-		assert_equal({:branch => '1'}, named_hash)
+#				named_hash = named_hash.merge(column.to_hash(parse_string[indices[0], hash_offset]))
+#		assert_equal(Branch_answer, named_hash)
 		assert_equal(1, indices[0])
 		assert_equal([1], [indices[0]])
-		if indices.size>1 then
+		if indices.size > 1 then
 			indices[1..-1].each_index do |capture_index,i|
 				name=default_name(i, named_capture).to_sym
 				named_hash[name]=captures[capture_index]
@@ -98,7 +107,8 @@ def test_named_hash
 #		name=default_name(capture_index).to_sym
 #		named_hash[name]=captures[capture_index]
 #	end #each
-	assert_equal({:branch => '1'}, named_hash, regexp.inspect+"\n"+captures.inspect)
+	message +=regexp.inspect+"\n"+captures.inspect
+	assert_equal(Branch_answer, Match_capture.named_hash, message)
 #	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 	regexp = /5/.capture(:a) * /6/.capture(:a)
 	capture = '56'.capture?(regexp)
@@ -251,6 +261,21 @@ def test_Capture_Examples
 #	assert_raises(AssertionFailedError) {Parse_array.assert_post_conditions}
 #	assert_raises(AssertionFailedError) {Failed_capture.assert_post_conditions}
 end # Examples
+def test_raw_captures
+	assert_equal(["\n"], Parse_delimited_array.raw_captures[2..2], Parse_string.to_a?.inspect)
+	assert_equal("\n", Parse_delimited_array.raw_captures[2])
+	assert_equal([2, 3], (2..Parse_array.raw_captures.size - 2).map {|i| i}, Parse_array.inspect)
+	assert_equal([true, false], (2..Parse_array.raw_captures.size - 2).map {|i| i.even?})
+	assert_equal(["\n", '2'], (2..Parse_array.raw_captures.size - 2).map {|i| Parse_array.raw_captures[i]})
+	assert_equal(["\n"], (2..Parse_array.raw_captures.size - 2).map {|i| (i.even? ? Parse_array.raw_captures[i] : nil)}.compact)
+
+	assert_equal([2], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| i}, Parse_delimited_array.inspect)
+	assert_equal([true], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| i.even?})
+	assert_equal(["\n"], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| Parse_delimited_array.raw_captures[i]})
+	assert_equal(["\n"], (2..Parse_delimited_array.raw_captures.size - 2).map {|i| (i.even? ? Parse_delimited_array.raw_captures[i] : nil)}.compact)
+	assert_equal(4, Parse_delimited_array.raw_captures.size, Parse_delimited_array.inspect)
+	assert_equal(false, Parse_delimited_array.raw_captures.size.odd?, Parse_delimited_array.inspect)
+end # raw_capture
 def test_MatchCapture_output?
 	assert(Match_capture.success?)
 	assert_instance_of(MatchData, Match_capture.raw_captures)

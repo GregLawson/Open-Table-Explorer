@@ -14,15 +14,6 @@ require_relative '../../app/models/generic_column.rb'
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
 module ClassMethods
-def default_name(index, prefix=nil, numbered=nil)
-	if prefix.nil? then
-		'Col_'+index.to_s
-	elsif numbered.nil? && index==0 then
-		prefix
-	else
-		prefix+index.to_s
-	end #if
-end # default_name
 end # ClassMethods
 extend ClassMethods
 attr_reader :string, :regexp # arguments
@@ -46,19 +37,27 @@ def [](capture_index, hash_offset = 0)
 	end # if
 	@raw_captures[index]
 end # []
+def named_hash_variable(variable, hash_offset=0)
+	named_capture = variable.name
+	indices = @regexp.named_captures[named_capture.to_s]
+	named_hash={}
+	indices.each_index do |capture_index,i|
+		column = GenericColumn.new(regexp_index: 0, variable: variable)
+		named_hash = named_hash.merge(named_hash_column(column))
+	end #each_index
+	named_hash
+end # named_hash_variable
+def named_hash_column(column, hash_offset=0)
+	indices = @regexp.named_captures[column.variable.name.to_s]
+	column.to_hash(self[indices[column.regexp_index], hash_offset])
+end # named_hash_column
 # returns hash of all column names and values captured
 def named_hash(hash_offset=0)
 	named_hash={}
 	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
 		variable = GenericVariable.new(name: named_capture)
-		column = GenericColumn.new(regexp_index: 0, variable: variable)
-		named_hash = column.to_hash(self[indices[0], hash_offset])
-		if indices.size > 1 then
-			indices[1..-1].each_index do |capture_index,i|
-				column = GenericColumn.new(regexp_index: 0, variable: variable)
-				named_hash = named_hash.merge(column.to_hash(self[capture_index, hash_offset]))
-			end #each_index
-		end #if
+		
+		named_hash = named_hash.merge(named_hash_variable(variable, hash_offset))
 	end # each_pair
 	# with the current ruby Regexp implementation, the following is impossible
 	# If there is a named capture in match or split, all unnamed captures are ignored
@@ -257,6 +256,7 @@ def delimiters?
 end # delimiters?
 module Examples
 include Capture::Examples
+Branch_capture = MatchCapture.new(Newline_Delimited_String, Branch_regexp)
 Parse_string = MatchCapture.new(Newline_Delimited_String, Branch_regexp)
 Branch_line_capture  = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
 Match_capture = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
