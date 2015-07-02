@@ -28,15 +28,6 @@ end # initialize
 
 # Unlike MatchData, Capture#[0] is first capture not the entire matched string (which is accessed via Capture#matched_characters?)
 # both named and positional indices should work
-def [](capture_index, hash_offset = 0)
-	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
-	index = if self.raw_captures.instance_of?(MatchData) then
-			capture_index
-	else
-			hash_offset + capture_index * @regexp.names.size
-	end # if
-	@raw_captures[index]
-end # []
 def named_hash_variable(variable, hash_offset=0)
 	named_capture = variable.name
 	indices = @regexp.named_captures[named_capture.to_s]
@@ -190,6 +181,11 @@ attr_reader :raw_captures
 def initialize(string, regexp)
 	super(string, regexp)
 end #initialize
+def [](capture_index, hash_offset = 0)
+	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
+	index = capture_index
+	@raw_captures[index]
+end # []
 def raw_captures?
 	@string.match(@regexp)
 end # raw_captures?
@@ -270,6 +266,12 @@ attr_reader :raw_captures
 def initialize(string, regexp)
 	super(string, regexp)
 end #initialize
+def [](capture_index, hash_offset = 0)
+	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
+	index = hash_offset + capture_index * @regexp.names.size
+	@raw_captures[index]
+end # []
+
 def raw_captures?
 	@string.split(@regexp)
 end # raw_captures?
