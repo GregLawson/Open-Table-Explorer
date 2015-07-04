@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -14,6 +14,19 @@ require_relative '../../app/models/generic_column.rb'
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
 module ClassMethods
+def symbolize_keys(hash)
+	ret = {}
+	hash.each_pair do |key, value|
+		if value.instance_of?(Hash) then
+			value = symbolize_keys(value) # value is a recursive hash
+		end # if		
+		if !key.instance_of?(Symbol) then
+			key = key.name
+		end # if
+		ret = ret.merge({key => value})
+	end # each
+	ret
+end # symbolize_keys
 end # ClassMethods
 extend ClassMethods
 attr_reader :string, :regexp # arguments
@@ -28,33 +41,27 @@ end # initialize
 
 # Unlike MatchData, Capture#[0] is first capture not the entire matched string (which is accessed via Capture#matched_characters?)
 # both named and positional indices should work
-def [](capture_index, hash_offset = 0)
-	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
-	index = if self.raw_captures.instance_of?(MatchData) then
-		if capture_index.instance_of?(Fixnum) then
-			capture_index+1
-		else
-			capture_index
-		end # if
-	else
-		if capture_index.instance_of?(Fixnum) then
-			hash_offset + capture_index * @regexp.names.size
-		else
-			hash_offset + capture_index * @regexp.names.size
-		end # if
-	end # if
-	@raw_captures[index]
-end # []
+def named_hash_variable(variable, hash_offset=0)
+	named_capture = variable.name
+	indices = @regexp.named_captures[named_capture.to_s]
+	named_hash={}
+	indices.each_index do |capture_index,i|
+		column = GenericColumn.new(regexp_index: 0, variable: variable)
+		named_hash = named_hash.merge(named_hash_column(column))
+	end #each_index
+	named_hash
+end # named_hash_variable
+def named_hash_column(column, hash_offset=0)
+	indices = @regexp.named_captures[column.variable.name.to_s]
+	column.to_hash(self[indices[column.regexp_index], hash_offset])
+end # named_hash_column
+# returns hash of all column names and values captured
 def named_hash(hash_offset=0)
 	named_hash={}
 	@regexp.named_captures.each_pair do |named_capture, indices| # return named subexpressions
-		column = GenericColumn.new(regexp_index: 0, regexp_name: named_capture)
-		named_hash = column.to_hash(self[indices[0], hash_offset])
-		if indices.size > 1 then
-			indices[1..-1].each_index do |capture_index,i|
-				named_hash = named_hash.merge(column.to_hash(self[capture_index, hash_offset]))
-			end #each_index
-		end #if
+		variable = GenericVariable.new(name: named_capture)
+		
+		named_hash = named_hash.merge(named_hash_variable(variable, hash_offset))
 	end # each_pair
 	# with the current ruby Regexp implementation, the following is impossible
 	# If there is a named capture in match or split, all unnamed captures are ignored
@@ -159,6 +166,9 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 #Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line_regexp = Branch_regexp * "\n"
+Branch_variable = GenericVariable .new(name: 'branch')
+Branch_column = GenericColumn.new(regexp_index: 0, variable: Branch_variable)
+Branch_answer = {Branch_column => '1'}
 LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
@@ -184,6 +194,11 @@ attr_reader :raw_captures
 def initialize(string, regexp)
 	super(string, regexp)
 end #initialize
+def [](capture_index, hash_offset = 0)
+	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
+	index = capture_index
+	@raw_captures[index]
+end # []
 def raw_captures?
 	@string.match(@regexp)
 end # raw_captures?
@@ -250,6 +265,7 @@ def delimiters?
 end # delimiters?
 module Examples
 include Capture::Examples
+Branch_capture = MatchCapture.new(Newline_Delimited_String, Branch_regexp)
 Parse_string = MatchCapture.new(Newline_Delimited_String, Branch_regexp)
 Branch_line_capture  = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
 Match_capture = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
@@ -263,6 +279,12 @@ attr_reader :raw_captures
 def initialize(string, regexp)
 	super(string, regexp)
 end #initialize
+def [](capture_index, hash_offset = 0)
+	capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
+	index = hash_offset + capture_index * @regexp.names.size
+	@raw_captures[index]
+end # []
+
 def raw_captures?
 	@string.split(@regexp)
 end # raw_captures?

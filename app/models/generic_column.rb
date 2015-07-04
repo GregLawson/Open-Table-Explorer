@@ -10,7 +10,7 @@ class GenericVariable
 	include Virtus.value_object
 	values do
 		attribute :name, Symbol, :default => 'Col'
-		attribute :ruby_type, Class, :default => String
+		attribute :ruby_type, Symbol, :default => 'String' # allows hashes to be equal
 		attribute :all_numbered, Symbol, :default => nil
 	end # values
 module Constants
@@ -57,6 +57,9 @@ end # ClassMethods
 extend ClassMethods
 #def initialize
 #end # initialize
+def ==(other)
+	self.variable == other.variable || self.ruby_type.regexp_index == other.ruby_type.regexp_index
+end # ==
 def logical_primary_key
 	return [:model_class, :column_name]
 end #logical_primary_key

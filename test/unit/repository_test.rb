@@ -13,6 +13,8 @@ include Repository::Examples
 def setup
 	@temp_repo = Repository.create_test_repository(Empty_Repo_path)
 end # setup
+def test_recursive_delete
+end # recursive_delete
 def teardown
 	Repository.delete_existing(@temp_repo.path)
 end # teardown
