@@ -33,14 +33,16 @@ def test_BranchReference_Constants
 end #Constants
 def test_new_from_ref
 	reflog_line = No_ref_line
+#	Test capture
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
-	br = BranchReference.new_from_ref(reflog_line)
 	refs = reflog_line.split(',')
 	assert_equal(refs[0], '', capture.inspect)
-	assert_equal(refs[2].to_sym, br.branch, br.inspect)
-	assert_operator(Time.rfc2822(refs[4]), :==, br.timestamp, br.inspect) #
 	reflog_line = Last_change_line
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
+#	Test method
+	br = BranchReference.new_from_ref(reflog_line)
+	assert_equal(refs[2].to_sym, br.branch, br.inspect)
+	assert_operator(Time.rfc2822(refs[4]), :==, br.timestamp, br.inspect) #
 	br = BranchReference.new_from_ref(reflog_line)
 	refs = reflog_line.split(',')
 	assert_not_equal(refs[0], '', capture.inspect)

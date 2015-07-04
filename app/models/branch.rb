@@ -157,7 +157,7 @@ Reflog_line = 'master@{123},refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:
 Reflog_capture = Reflog_line.capture?(BranchReference::Reflog_line_regexp)
 Reflog_run_executable = Repository::This_code_repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + $0)
 Reflog_lines = Reflog_run_executable.output.split("\n")
-Reflog_reference = BranchReference.new_from_ref(Reflog_line)
+#Reflog_reference = BranchReference.new_from_ref(Reflog_line)
 Last_change_line = Reflog_lines[0]
 First_change_line = Reflog_lines[-1]
 No_ref_line = ',,911dea1,Sun, 21 Jun 2015 13:51:50 -0700'
