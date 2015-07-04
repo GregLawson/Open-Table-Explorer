@@ -14,18 +14,28 @@ require_relative '../../app/models/generic_column.rb'
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class Capture
 module ClassMethods
-def symbolize_keys(hash)
-	ret = {}
-	hash.each_pair do |key, value|
-		if value.instance_of?(Hash) then
-			value = symbolize_keys(value) # value is a recursive hash
-		end # if		
-		if !key.instance_of?(Symbol) then
-			key = key.name
-		end # if
-		ret = ret.merge({key => value})
-	end # each
-	ret
+def symbolize_keys(tree)
+	if tree.instance_of?(Array) then
+		tree.map do |element|
+			symbolize_keys(element)
+		end # map
+	elsif tree.instance_of?(Hash) then
+		symbolize_keys = {}
+		tree.each_pair do |key, value|
+			if value.instance_of?(Hash) then
+				value = symbolize_keys(value) # value is a recursive hash
+			elsif value.instance_of?(Hash) then
+				value = value.map do |element|
+					symbolize_keys(element) # value is a recursive Array
+				end # map
+			end # if		
+			if !key.instance_of?(Symbol) then
+				key = key.name
+			end # if
+			symbolize_keys = symbolize_keys.merge({key => value})
+		end # each
+		symbolize_keys
+	end # if
 end # symbolize_keys
 end # ClassMethods
 extend ClassMethods
@@ -70,7 +80,10 @@ def named_hash(hash_offset=0)
 #		named_hash[name]= to_a?[capture_index]
 #	end #each
 	named_hash
-end #named_hash
+end # named_hash
+def output?
+	Capture.symbolize_keys(column_output)
+end # output?
 def ==(other)
 	instance_variables.all? do |iv_name|
 		if !([:@raw_captures].include?(iv_name)) then
@@ -168,7 +181,8 @@ Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line_regexp = Branch_regexp * "\n"
 Branch_variable = GenericVariable .new(name: 'branch')
 Branch_column = GenericColumn.new(regexp_index: 0, variable: Branch_variable)
-Branch_answer = {Branch_column => '1'}
+Branch_column_answer = {Branch_column => '1'}
+Branch_answer = {:branch => '1'}
 LINE=/[^\n]*/.capture(:line)
 Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
@@ -249,7 +263,7 @@ end # matched_characters?
 def number_matched_characters?
 	matched_characters?.length
 end # number_matched_characters?
-def output?
+def column_output
 	if !success? then
 		{}
 	elsif raw_captures.instance_of?(MatchData) then
@@ -328,11 +342,11 @@ end # matched_characters?
 def number_matched_characters?
 	@string.length - pre_match?.length - post_match?.length
 end # number_matched_characters?
-def output?
+def column_output
 	(0..repetitions?-1).map do |i|
 		named_hash(i*(@length_hash_captures+1))
 	end #map
-end # output?
+end # column_output
 def delimiters?
 	(2..@raw_captures.size - 2).map {|i| (i.even? ? @raw_captures[i] : nil)}.compact
 end # delimiters?
@@ -394,7 +408,7 @@ end # pre_match?
 def matched_characters?
 	@raw_captures.reduce('', :+) {|c| c[:raw_capture].matched_characters?}
 end # matched_characters?
-def output?
+def column_output
 	@raw_captures.reduce({}, :merge) {|c| c[:raw_capture].output?}
 end # output?
 def delimiters?
