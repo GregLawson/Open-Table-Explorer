@@ -194,9 +194,10 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+Recent_central_ip = '172.31.42.182'
 Comment_line = '# /etc/fstab: static file system information.'
 Test_line = '//Seagate-414103/Public	/media/central	cifs				auto,rw,ip=172.31.42.182,credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl	0	0'
-Options_string = 'auto,rw,ip=172.31.42.182,credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl'
+Options_string = 'auto,rw,ip=' + Recent_central_ip = ',credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl'
 Default_workgroup = 'WORKGROUP'
 Default_server =  `hostname`
 Default_share = 'IPC$'
