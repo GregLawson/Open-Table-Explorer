@@ -15,7 +15,7 @@ def test_Constants
 end # Constants
 def test_nmap
 	ip_range = '192.168.0.1-254'
-	nmap_run = ShellCommand.new('nmap ' + ip_range).assert_post_conditions
+	nmap_run = ShellCommands.new('nmap ' + ip_range).assert_post_conditions
 	nmap_hash = nmap_run.output.parse(Start_line)
 end # nmap
 def test_nmapScan

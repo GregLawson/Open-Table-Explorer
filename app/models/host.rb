@@ -8,6 +8,8 @@
 require_relative '../../app/models/no_db.rb'
 require 'virtus'
 #require_relative '../../app/models/generic_table.rb'
+require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/parse.rb'
 class Host # < ActiveRecord::Base
 include Virtus.model
   attribute :ip, String, :default => nil
@@ -43,16 +45,19 @@ def Column_Definitions
 	['nmap_execution_time','real']
 	]
 end
-end # ClassMethods
-extend ClassMethods
-module Constants
-end # Constants
-include Constants
 def recordDetection(ip,timestamp=Time.new)
 	host=find_or_initialize_by_ip(ip)
 	host.last_detection=timestamp
 	host.save
 end
+end # ClassMethods
+extend ClassMethods
+module Constants
+end # Constants
+include Constants
+def save
+	to_json
+end # save
 def nmapScan(candidateIP)
 	host=find_or_initialize_by_ip(candidateIP)
 	cmd= "nmap  #{candidateIP}"
