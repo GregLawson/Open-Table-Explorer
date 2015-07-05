@@ -98,7 +98,7 @@ def test_to_s
 #	BranchReference.assert_output(Reflog_line)
 	assert_equal(:master, BranchReference.new_from_ref(Reflog_line).branch, Reflog_line)
 	message = Reflog_reference.inspect
-	assert_equal('123', Reflog_reference.age, message)
+	assert_equal(123, Reflog_reference.age, message)
 	assert_equal('master@{123}', BranchReference.new_from_ref(Reflog_line).to_s)
 	assert_equal('master@{123}', Reflog_reference.to_s)
 end # to_s
