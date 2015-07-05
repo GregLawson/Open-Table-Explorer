@@ -10,6 +10,7 @@ require 'virtus'
 #require_relative '../../app/models/generic_table.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
+require 'multi_xml'
 class Host # < ActiveRecord::Base
 include Virtus.model
   attribute :ip, String, :default => nil
@@ -21,15 +22,36 @@ include Virtus.model
   attribute :name, String, :default => nil
   attribute :last_detection, Time, :default => Time.now
   attribute :nmap_execution_time, Time, :default => nil
-module Constants
+module Constants # first of two
 Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
+Nmap_xml_pathname = Unit.new_from_path?($0).data_sources_directory? + '/nmap.xml'
 end # Constants
+include Constants
 #has_many :ports
 #has_many :routers
 module ClassMethods
-def nmap(ip_range)
-	ShellCommand.new('nmap ' + ip_range)
+include Constants
+def nmap(ip_range, options = '-oX ' + Nmap_xml_pathname)
+	ShellCommands.new(nmap_command_string(ip_range, options))
 end # nmap
+def nmap_command_string(ip_range, options = '-oX ' + Nmap_xml_pathname)
+	'nmap ' + options + ' ' + ip_range
+end # nmap_command_string
+def nmap_xml_command_string(ip_range, xml_pathname = Nmap_xml_pathname)
+	nmap_command_string(ip_range, '-oX ' + Nmap_xml_pathname)
+end # nmap_xml_command_string
+def nmap_xml(ip_range, xml_pathname = Nmap_xml_pathname, parser = :nokogiri)
+	nmap(ip_range, options = '-oX ' + xml_pathname)
+	parse_xml_file(filename = xml_pathname, parser = :nokogiri)
+end # nmap_xml
+def parse_xml(string = '<tag>This is the contents</tag>', parser)
+	MultiXml.parser = parser
+	MultiXml.parser = eval('MultiXml::Parsers::' + parser[0..0].upcase + parser[1..-1])  # Same as above
+	MultiXml.parse(string)
+end # parse_xml_file
+def parse_xml_file(filename = Nmap_xml_pathname, parser = :nokogiri)
+	parse_xml(IO.read(filename), parser)
+end # parse_xml_file
 def logical_primary_key
 	return [:name]
 end #logical_primary_key
@@ -44,15 +66,23 @@ def Column_Definitions
 	['last_detection','timestamp with time zone'], 
 	['nmap_execution_time','real']
 	]
-end
+end # Column_Definitions
 def recordDetection(ip,timestamp=Time.new)
 	host=find_or_initialize_by_ip(ip)
 	host.last_detection=timestamp
 	host.save
 end
+def smbs
+	
+end # smbs
 end # ClassMethods
 extend ClassMethods
 module Constants
+Eth0_ip = '192.168.5.100'
+My_host_nmap_parsed_xml = Host.nmap_xml(Eth0_ip)
+My_host_nmap_simplified_xml = My_host_nmap_parsed_xml["nmaprun"]
+Eth0_network = '192.168.5.1-254'
+#Eth0_network_nmap_xml = Host.nmap_xml(Eth0_network)
 end # Constants
 include Constants
 def save
@@ -114,7 +144,7 @@ def nmapScan(candidateIP)
 	#sqlValues=hash2values(@data)
 	#dumpHash
 	#dumpAcquisitions
-end
+end # nmapScan
 def scanNmapSummary(s)
 	puts "s.rest=#{s.rest}" if $VERBOSE
 	plural=  s.rest(/.*IP address/,/e?s? /)
