@@ -10,16 +10,12 @@ require 'virtus'
 #require_relative '../../app/models/generic_table.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/host.rb'
 require 'multi_xml'
 class Nmap # < ActiveRecord::Base
 include Virtus.model
-  attribute :ip, String, :default => nil
-  attribute :nmap, String, :default => ''
-  attribute :otherPorts, Fixnum, :default => nil
-  attribute :otherState, String, :default => nil
-  attribute :mac, String, :default => nil # 
-  attribute :nicVendor, String, :default => nil
-  attribute :name, String, :default => nil
+  attribute :ip_range, String, :default => nil
+  attribute :xml, Hash, :default => ''
   attribute :last_detection, Time, :default => Time.now
   attribute :nmap_execution_time, Time, :default => nil
 module Constants # first of two
@@ -40,7 +36,7 @@ def nmap_xml_command_string(ip_range, xml_pathname = Nmap_xml_pathname)
 end # nmap_xml_command_string
 def nmap_xml(ip_range, xml_pathname = Nmap_xml_pathname, parser = :nokogiri)
 	nmap(ip_range, options = '-oX ' + xml_pathname)
-	parse_xml_file(filename = xml_pathname, parser = :nokogiri)
+	Nmap.new(ip_range: ip_range, xml: parse_xml_file(xml_pathname, parser))
 end # nmap_xml
 def parse_xml(string = '<tag>This is the contents</tag>', parser)
 	MultiXml.parser = parser
@@ -77,15 +73,27 @@ end # ClassMethods
 extend ClassMethods
 module Constants
 Eth0_ip = '192.168.5.100'
-My_host_nmap_parsed_xml = Nmap.nmap_xml(Eth0_ip)
-My_host_nmap_simplified_xml = My_host_nmap_parsed_xml["nmaprun"]
+My_host_nmap = Nmap.nmap_xml(Eth0_ip)
+#My_host_nmap_simplified_xml = My_host_nmap.xml["nmaprun"]
 Eth0_network = '192.168.5.1-254'
-Eth0_network_nmap_xml = Nmap.nmap_xml(Eth0_network)
-Failed_nmap_xml = Nmap.nmap_xml('192.168.5.1-2')
+Eth0_network_nmap = Nmap.nmap_xml(Eth0_network)
+Failed_nmap = Nmap.nmap_xml('192.168.5.1-2')
 end # Constants
 include Constants
+# returns Array in all cases
 def hosts?
-	
+	host_xml = xml["nmaprun"]["host"]
+	if 	host_xml.nil? then
+		[]
+	else
+		if host_xml.instance_of?(Array) then
+			host_xml.map do |host_xml|
+				Host.new(host_xml: host_xml)
+			end # map
+		else
+			[Host.new(host_xml: host_xml)]
+		end # if
+	end # if
 end # hosts?
 def save
 	to_json
@@ -189,6 +197,9 @@ def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
 end #assert_post_conditions
 end #ClassMethods
+def assert_xml(parsed_xml)
+	Nmap.assert_xml(@nmap)
+end # assert_xml
 def assert_pre_conditions(message='')
 end #assert_pre_conditions
 def assert_post_conditions(message='')

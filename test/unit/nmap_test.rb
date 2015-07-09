@@ -49,60 +49,65 @@ def test_parse_xml
 end # parse_xml_file
 def test_parse_xml_file
 #	filename = 
-	assert_instance_of(Hash, My_host_nmap_parsed_xml)
-	assert_equal(["nmaprun"], My_host_nmap_parsed_xml.keys)
-	assert_equal("1.04", My_host_nmap_simplified_xml["xmloutputversion"])
-	assert_equal("6.00", My_host_nmap_simplified_xml["version"])
-	assert_equal(Nmap.nmap_command_string(Eth0_ip), My_host_nmap_simplified_xml["args"])
+	assert_instance_of(Nmap, My_host_nmap)
+	assert_equal(["nmaprun"], My_host_nmap.xml.keys)
+	assert_equal("1.04", My_host_nmap.xml["nmaprun"]["xmloutputversion"])
+	assert_equal("6.00", My_host_nmap.xml["nmaprun"]["version"])
+	assert_equal(Nmap.nmap_command_string(Eth0_ip), My_host_nmap.xml["nmaprun"]["args"])
 end # parse_xml_file
 def test_recordDetection
 	ip = '192.168.0.'
 	timestamp=Time.new
 end
 def test_smbs
-	Nmap.assert_xml(My_host_nmap_parsed_xml)
-	Nmap.assert_xml(Eth0_network_nmap_xml)
+	Nmap.assert_xml(My_host_nmap.xml)
+	Nmap.assert_xml(Eth0_network_nmap.xml)
 end # smbs
+def test_hosts?
+	assert_equal([], Failed_nmap.hosts?)
+	assert_operator(1, :==, My_host_nmap.hosts?.size)
+	assert_operator(1, :<, Eth0_network_nmap.hosts?.size)
+end # hosts?
 def test_save
-	assert_equal("\"6.00\"", My_host_nmap_simplified_xml["version"].to_json)
-#	assert_equal('\"' + Nmap.nmap_command_string(Eth0_ip) + '\"', My_host_nmap_simplified_xml["args"].to_json)
-	assert_equal("\"1.04\"", My_host_nmap_simplified_xml["xmloutputversion"].to_json)
-#	assert_equal('', My_host_nmap_parsed_xml.to_json)
+	assert_equal("\"6.00\"", My_host_nmap.xml["nmaprun"]["version"].to_json)
+#	assert_equal('\"' + Nmap.nmap_command_string(Eth0_ip) + '\"', My_host_nmap.xml["nmaprun"]["args"].to_json)
+	assert_equal("\"1.04\"", My_host_nmap.xml["nmaprun"]["xmloutputversion"].to_json)
+#	assert_equal('', My_host_nmap.to_json)
 end # save
 def test_nmapScan
 	candidateIP = Eth0_network
 end # nmapScan
 def test_assert_xml
 	assert_equal(["scaninfo",  "verbose",  "debugging",  "host",  "runstats",  "scanner",  "args",
-		"start",  "startstr",  "version",  "xmloutputversion"], My_host_nmap_parsed_xml["nmaprun"].keys)
-	assert_equal(["type", "protocol", "numservices", "services"], My_host_nmap_simplified_xml["scaninfo"].keys)
+		"start",  "startstr",  "version",  "xmloutputversion"], My_host_nmap.xml["nmaprun"].keys)
+	assert_equal(["type", "protocol", "numservices", "services"], My_host_nmap.xml["nmaprun"]["scaninfo"].keys)
 	assert_equal(["scaninfo",  "verbose",  "debugging",  "host",  "runstats",  "scanner",  "args",
-		"start",  "startstr",  "version",  "xmloutputversion"], My_host_nmap_parsed_xml["nmaprun"].keys)
+		"start",  "startstr",  "version",  "xmloutputversion"], My_host_nmap.xml["nmaprun"].keys)
 	assert_equal(["scaninfo",  "verbose",  "debugging",  "runstats",  "scanner",  "args",
-		"start",  "startstr",  "version",  "xmloutputversion"], Failed_nmap_xml["nmaprun"].keys, Failed_nmap_xml.inspect)
-	Eth0_network_nmap_xml["nmaprun"]["host"].enumerate(:each) do |host|
+		"start",  "startstr",  "version",  "xmloutputversion"], Failed_nmap.xml["nmaprun"].keys, Failed_nmap.inspect)
+	Eth0_network_nmap.xml["nmaprun"]["host"].enumerate(:each) do |host|
 		message = "host = " + host.inspect
 		assert_equal(["status", "address", "hostnames", "ports", "times", "starttime", "endtime"], host.keys, message.inspect)
 	end # enumerate
-	assert_equal(["addr", "addrtype"], My_host_nmap_simplified_xml["host"]["address"].keys)
-	assert_equal(["extraports", "port"], My_host_nmap_simplified_xml["host"]["ports"].keys)
-	assert_equal([0, 1, 2, 3, 4], My_host_nmap_simplified_xml["host"]["ports"]["port"].keys)
-	My_host_nmap_simplified_xml["host"]["ports"]["port"].each_with_index do |port, index|
+	assert_equal(["addr", "addrtype"], My_host_nmap.xml["nmaprun"]["host"]["address"].keys)
+	assert_equal(["extraports", "port"], My_host_nmap.xml["nmaprun"]["host"]["ports"].keys)
+	assert_equal([0, 1, 2, 3, 4], My_host_nmap.xml["nmaprun"]["host"]["ports"]["port"].keys)
+	My_host_nmap.xml["nmaprun"]["host"]["ports"]["port"].each_with_index do |port, index|
 		assert_instance_of(Fixnum, index)
 		assert_instance_of(Hash, port)
 		assert_equal(["state", "service", "protocol", "portid"], port.keys)
 		assert_equal(["name", "method", "conf"], port["service"].keys)
 #		assert_includes(["ssh", "rpcbind",  "netbios-ssn", "microsoft-ds", "samba-swat"], port["service"]["name"])
 	end # each
-	Nmap.assert_xml(My_host_nmap_parsed_xml)
-	address = My_host_nmap_parsed_xml["nmaprun"]["host"]["address"]["addr"]
+	Nmap.assert_xml(My_host_nmap.xml)
+	address = My_host_nmap.xml["nmaprun"]["host"]["address"]["addr"]
 	assert_equal(Eth0_ip, address)
-	addresses = Eth0_network_nmap_xml["nmaprun"]["host"]
+	addresses = Eth0_network_nmap.hosts?
 	message = addresses.inspect
-	message += "\n" + Eth0_network_nmap_xml["nmaprun"].inspect
+	message += "\n" + Eth0_network_nmap.hosts?.inspect
 	assert_includes(addresses, Eth0_ip)
 	assert_operator(addresses.size, :==, 1, message)
-	Nmap.assert_xml(My_host_nmap_parsed_xml)
-	Nmap.assert_xml(Eth0_network_nmap_xml)
+	Nmap.assert_xml(My_host_nmap.xml)
+	Nmap.assert_xml(Eth0_network_nmap.xml)
 end # xml
 end # Nmap
