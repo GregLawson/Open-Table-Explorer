@@ -33,22 +33,29 @@ def test_BranchReference_Constants
 end #Constants
 def test_new_from_ref
 	reflog_line = No_ref_line
-#	Test capture
+#	Test capture with reflog line having no refs
+	message = 'reflog_line = ' + reflog_line.inspect
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
+	message += "\ncapture = " + capture.inspect
 	refs = reflog_line.split(',')
-	assert_equal(refs[0], '', capture.inspect)
+	message += "\nrefs = " + refs.inspect
+	assert_equal(refs[0], '', message)
+#	Test method
+	br = BranchReference.new_from_ref(reflog_line)
+	assert_equal(refs[2].to_sym, br.branch, br.inspect)
+	# Now test one with refs
 	reflog_line = Last_change_line
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
 #	Test method
 	br = BranchReference.new_from_ref(reflog_line)
-	assert_equal(refs[2].to_sym, br.branch, br.inspect)
-	assert_operator(Time.rfc2822(refs[4]), :==, br.timestamp, br.inspect) #
 	br = BranchReference.new_from_ref(reflog_line)
 	refs = reflog_line.split(',')
 	assert_not_equal(refs[0], '', capture.inspect)
 #			BranchReference.new_from_ref(refs[0]), :time => refs[3]} # unambiguous ref
-	assert_equal(refs[0], br.branch, br.inspect)
-	assert_equal(refs[3], br.timestamp, br.inspect)
+	assert_equal(refs[0], br.to_s, br.inspect)
+	assert_equal(refs[3] + ',' + refs[4], br.timestamp, br.inspect)
+	assert_equal(refs[3] + ',' + refs[4], br.timestamp, br.inspect)
+	assert_operator(Time.rfc2822(refs[4]), :==, br.timestamp, br.inspect) #
 	branch = :master
 	age = 123	
 	br = BranchReference.new(branch: branch, age: age)

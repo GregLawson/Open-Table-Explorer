@@ -29,13 +29,20 @@ Unambiguous_ref_pattern = /[a-z_\/]+/.capture(:unambiguous_branch) * /@\{/ * Una
 Delimiter = ','
 SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
 Week_day_regexp = /[MTWFS][a-z]{2}/
+Day_regexp = /[0-9]{1,2}/
+Month_regexp = /[ADFJMNOS][a-z]+/
 Year_regexp = /[0-9]{2,4}/
 Hour_regexp = /[0-9][0-9]/
 Minute_regexp = /[0-9][0-9]/
 Second_regexp = /[0-9][0-9]/
 AMPM_regexp = / ?([PApa][Mm])?/
+Date_regexp = Day_regexp * ' ' * Month_regexp * ' ' * Year_regexp
+Timezone_number_regexp = /[-+][0-1][0-9][03]0/
+Time_regexp = Hour_regexp * ':' * Minute_regexp * ':' * Second_regexp * ' ' * Timezone_number_regexp
+Timestamp_regexp = (Week_day_regexp * Delimiter * ' ' * Date_regexp * ' ' * Time_regexp).capture(:timestamp)
 #Timestamp_regexp = /([0-9]{1,4}/|[ADFJMNOS][a-z]+ )[0-9][0-9][, /][0-9]{2,4}( [0-9]+:[0-9.]+( ?[PApa][Mm])?)?/
-Reflog_line_regexp = Regexp::Start_string * Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter
+Reflog_line_regexp = Regexp::Start_string * Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * 
+	Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter * Timestamp_regexp
 end #Constants
 include Constants
 module ClassMethods
@@ -52,11 +59,12 @@ def new_from_ref(reflog_line)
 	end # if
 end # new_from_ref
 def reflog?(filename, repository)
-	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
+	reflog_run = repository.git_command("reflog  --all --summary --pretty=format:%gd,%gD,%h,%aD -- " + filename)
 	reflog_run.assert_post_conditions
 	lines = reflog_run.output.split("\n")
+	lines = lines[0..-2] if lines[-1..-1] == ''
 	lines.map do |reflog_line|
-		BranchReference.new_from_ref(reflog_line)
+		BranchReference.new_from_ref(reflog_line) if reflog_line != ''
 		
 	end # map
 end # reflog?
@@ -86,6 +94,7 @@ module Assertions
 module ClassMethods
 include BranchReference::Constants
 def assert_reflog_line(reflog_line, message = '')
+	assert_pre_conditions('in assert_reflog_line, assert_pre_conditions')
 	message = 'In assert_reflog_line, matchData = ' + reflog_line.match(BranchReference::Reflog_line_regexp).inspect
 #	assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
 #	assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
@@ -108,8 +117,8 @@ def assert_output(reflog_line, message = '')
 	message = capture.inspect
 	assert(capture.success?, message)
 	assert_instance_of(Hash, capture.output?, message)
-	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex], capture.output?.keys, message)
-	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex], capture.regexp.names.map{|n| n.to_sym}, 'capture.regexp.names')
+	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.output?.keys, message)
+	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.regexp.names.map{|n| n.to_sym}, 'capture.regexp.names')
 	assert_equal(capture.length_hash_captures, capture.regexp.named_captures.values.flatten.size, message)
 	capture.regexp.named_captures.each_pair do |capture_name, index_array|
 		assert_instance_of(String, capture_name, message)
@@ -132,6 +141,7 @@ def assert_pre_conditions(message='')
 	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
+	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], BranchReference::Reflog_line_regexp.names.map{|n| n.to_sym}, 'capture.regexp.names')
 	self
 end #assert_post_conditions
 end #ClassMethods
