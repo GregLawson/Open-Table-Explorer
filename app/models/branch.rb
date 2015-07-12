@@ -59,7 +59,8 @@ def new_from_ref(reflog_line)
 	end # if
 end # new_from_ref
 def reflog?(filename, repository)
-	reflog_run = repository.git_command("reflog  --all --summary --pretty=format:%gd,%gD,%h,%aD -- " + filename)
+	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
+#	reflog_run = repository.git_command("reflog  --all --summary --pretty=format:%gd,%gD,%h,%aD -- " + filename)
 	reflog_run.assert_post_conditions
 	lines = reflog_run.output.split("\n")
 	lines = lines[0..-2] if lines[-1..-1] == ''
