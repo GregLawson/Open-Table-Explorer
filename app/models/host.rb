@@ -9,7 +9,14 @@ require_relative '../../app/models/no_db.rb'
 require 'virtus'
 class Host # < ActiveRecord::Base
 include Virtus.model
-  attribute :nmap, Nmap, :default => ''
+  attribute :host_xml, Hash, :default => ''
+
+  attribute :ip, String, :default => nil
+  attribute :addrtype, String, :default => lambda { |host, attribute| host.host_xml["address"]["addr"]}
+  attribute :otherPorts, Fixnum, :default => nil
+  attribute :otherState, String, :default => nil
+  attribute :mac, String, :default => nil # 
+  attribute :nicVendor, String, :default => nil
   attribute :name, String, :default => nil
 module Constants
 end # Constants
@@ -18,6 +25,9 @@ include Constants
 #has_many :routers
 module ClassMethods
 include Constants
+def new_from_xml(host_parsed_xml)
+	Host.new(host_xml: host_parsed_xml, ip:  host_parsed_xml["address"]["addr"], otherPorts: host_parsed_xml["ports"]["extraports"]["count"])
+end # new_from_xml
 def logical_primary_key
 	return [:name]
 end #logical_primary_key
