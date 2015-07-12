@@ -22,7 +22,7 @@ extend ClassMethods
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
 attr_reader :related_files, :edit_files, :repository, :unit_maturity, :editor
-def initialize(test_executable, editor)
+def initialize(test_executable, editor = Editor.new(test_executable))
 	@test_executable = test_executable
 	@editor = editor
 	@unit_maturity = UnitMaturity.new(@test_executable.repository, related_files)

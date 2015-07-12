@@ -38,6 +38,15 @@ def initialize(executable, options = Command_line_opts)
 	@executable = executable
 	@options = options
 end # initialize
+def candidate_commands
+	script_class = Unit::Executing_Unit.model_class?
+	file_argument = ARGV[1]
+	executable_object = script_class.new(TestExecutable.new_from_path(file_argument))
+	script_class.instance_methods(false).map do |candidate_command|
+		method = executable_object.method(candidate_command)
+		{candidate_command: candidate_command, arity: method.arity}
+	end # map
+end # candidate_commands
 def run(&non_default_actions)
 	if ARGV.size < 2 then
 		fail RuntimeError.new("Expect a subcommand and a file argument.")
@@ -61,7 +70,13 @@ def run(&non_default_actions)
 					fail Exception.new(message)
 				end # case
 			else
-				puts "#{Sub_command} is not a method in #{self.class.inspect}"
+				message = "#{Sub_command} is not an instance method of #{executable_object.class.inspect}"
+				message = candidate_commands.map do |candidate_command|
+					candidate_command[:candidate_command].to_s + ' ' + candidate_command[:arity].to_s
+				end.join("\n") # map
+#				message += "\n candidate_commands = " + candidate_commands.inspect
+#				message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+				puts message
 			end # if
 		end # each
 	end # if
@@ -69,7 +84,7 @@ def run(&non_default_actions)
 #		scripting_workflow.script_deserves_commit!(:passed)
 end #run
 def cleanup_ARGV
-	ARGV[0].delete
+	ARGV.delete_at(0)
 end # cleanup_ARGV
 def test
 	puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
