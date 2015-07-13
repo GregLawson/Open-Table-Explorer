@@ -9,7 +9,7 @@
 # @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
 require_relative '../app/models/command_line.rb'
 require_relative '../app/models/test_executable.rb'
-scripting_executable = TestExecutable.new_from_pathname($0)
+scripting_executable = TestExecutable.new_from_path($0)
 require_relative "../app/models/#{scripting_executable.unit.model_basename}"
 script_class = Unit::Executing_Unit.model_class?
 script = CommandLine.new($0)

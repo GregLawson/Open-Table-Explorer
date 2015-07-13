@@ -11,15 +11,35 @@ require_relative '../../app/models/command.rb'
 require_relative '../../app/models/test_executable.rb'
 class CommandLine < Command
 module Constants
-SUB_COMMANDS = %w(inspect test)
+SUB_COMMANDS = %w(help inspect test)
 Command_line_opts = Trollop::options do
 	banner 'Usage: ' + Command.to_s + ' subcommand  path_patterns' 
    opt :inspect, "Inspect file object"                    # flag --monkey, default false
    opt :test, "Test unit."       # string --name <s>, default nil
   stop_on SUB_COMMANDS
   end
+Arguments = ARGV[1..-1]
+Number_of_arguments = if Arguments.nil? then
+		0
+	else
+		Arguments.size # don't include Sub_command
+	end # if
 if ARGV.size > 0 then
 	Sub_command = ARGV[0].to_sym # get the subcommand
+	Argument_types = Arguments.map do |argument|
+		if SUB_COMMANDS.include?(argument)
+			CommandLine
+		elsif Branch.branch_names?.include?(argument) then 
+			Branch
+		elsif !Dir[argument].empty? then
+			Dir
+		elsif File.exists?(argument) then
+			File
+		else 
+			Unit
+		end # if
+	end # map
+
 else
 	Sub_command = :help # default subcommand
 end # if
@@ -47,38 +67,50 @@ def candidate_commands
 		{candidate_command: candidate_command, arity: method.arity}
 	end # map
 end # candidate_commands
-def run(&non_default_actions)
-	if ARGV.size < 2 then
-		fail RuntimeError.new("Expect a subcommand and a file argument.")
-	else
-		ARGV[1..-1].each do |file_argument|
-			executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_path(file_argument))
-			if executable_object.respond_to?(Sub_command) then
-				method = executable_object.method(Sub_command)
-				case method.arity
-				when -1 then
-					method.call(file_argument)
-				when 0 then
-					method.call
-				when 1 then
-					method.call(file_argument)
+def dispatch_one_argument(argument)
+	argument = file_argument
+				executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_path(file_argument))
+				if executable_object.respond_to?(Sub_command) then
+					method = executable_object.method(Sub_command)
+					case method.arity
+					when -1 then
+						method.call(file_argument)
+					when 0 then
+						method.call
+					when 1 then
+						method.call(file_argument)
+					else
+						message = 'In CommandLine#run, '
+						message += "\nfile_argument =  " + file_argument
+						message += "\nSub_command =  " + Sub_command.to_s
+						message += "\narity =  " + method.arity.to_s
+						fail Exception.new(message)
+					end # case
 				else
-					message = 'In CommandLine#run, '
-					message += "\nfile_argument =  " + file_argument
-					message += "\nSub_command =  " + Sub_command.to_s
-					message += "\narity =  " + method.arity.to_s
-					fail Exception.new(message)
-				end # case
-			else
-				message = "#{Sub_command} is not an instance method of #{executable_object.class.inspect}"
-				message = candidate_commands.map do |candidate_command|
-					candidate_command[:candidate_command].to_s + ' ' + candidate_command[:arity].to_s
-				end.join("\n") # map
-#				message += "\n candidate_commands = " + candidate_commands.inspect
-#				message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-				puts message
-			end # if
-		end # each
+					message = "#{Sub_command} is not an instance method of #{executable_object.class.inspect}"
+					message = candidate_commands.map do |candidate_command|
+						candidate_command[:candidate_command].to_s + ' ' + candidate_command[:arity].to_s
+					end.join("\n") # map
+	#				message += "\n candidate_commands = " + candidate_commands.inspect
+	#				message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+					puts message
+				end # if
+end # dispatch_one_argument
+def run(&non_default_actions)
+	done = if block_given? then
+		non_default_actions.call
+	end # if
+	if done then
+		if Number_of_arguments == 0 then
+			puts Command_line_test_opts.inspect
+		elsif Number_of_arguments == 1 then
+			fail RuntimeError.new("Expect a subcommand and a file argument.")
+		elsif Number_of_arguments >= 2 then
+			Arguments.each do |argument|
+				dispatch_one_argument(argument)
+			end # each
+		else
+		end # if
 	end # if
 	cleanup_ARGV
 #		scripting_workflow.script_deserves_commit!(:passed)
@@ -110,12 +142,22 @@ end # assert_command_run
 def assert_ARGV
 	message = "in assert_ARGV\nARGV = " + ARGV.inspect
 	message += "\nCommandLine::Sub_command = '" + CommandLine::Sub_command.inspect
+	message += "\nCommandLine::Arguments = '" + CommandLine::Arguments.inspect
+	message += "\nCommandLine::Number_of_arguments = '" + CommandLine::Number_of_arguments.to_s
+	case CommandLine::Number_of_arguments
+	when 0 then 
+		assert_equal(:help, CommandLine::Sub_command, message)
+	when 1 then
+		message += "\nCommandLine::Argument_types = '" + CommandLine::Argument_types.inspect
+		assert_includes(CommandLine::Argument_types, Argument_types[0])
+	else
+	end # case
 	if ARGV.size >= 1 then
 		assert_equal(ARGV[0].to_sym, CommandLine::Sub_command, message)
 		assert_includes(CommandLine::SUB_COMMANDS, CommandLine::Sub_command.to_s, message)
 		assert_operator(ARGV.size, :>=, 1, message)
 		assert_operator(ARGV.size, :<=, 2, message)
-		end # if
+	end # if
 end # ARGV
 end #ClassMethods
 def assert_pre_conditions

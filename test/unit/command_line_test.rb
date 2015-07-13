@@ -11,15 +11,25 @@ CommandLine.assert_ARGV
 CommandLine.assert_pre_conditions
 class CommandLineTest < TestCase
 include CommandLine::Examples
+def teardown
+	cleanup_ARGV
+end # teardown
 
 def test_Constants
 	CommandLine.assert_pre_conditions
 	assert_equal({:inspect=>false, :test=>false, :help=>false, :individual_test=>false}, Command_line_test_opts)
-global_opts = Trollop::options do
-  banner "magic file deleting and copying utility"
-  opt :dry_run, "Don't actually do anything", :short => "-n"
-  stop_on SUB_COMMANDS
-end
+	global_opts = Trollop::options do
+	  banner "magic file deleting and copying utility"
+	  opt :dry_run, "Don't actually do anything", :short => "-n"
+	  stop_on SUB_COMMANDS
+	end
+	if Number_of_arguments > 0 then
+		Arguments.each_with_index do |argument, i|
+			puts argument.to_s + ' type of ' + Argument_types[i]
+		end # each
+	else
+		puts "No arguments"
+	end # if
 end # Constants
 
 def test_initialize
@@ -27,7 +37,7 @@ end #initialize
 def test_run
 	CommandLine.assert_pre_conditions
 	assert_not_nil(ARGV)
-	assert_raises(RuntimeError) do
+	assert_nothing_raised do
 		SELF.run do
 		end # do run
 	end # assert_raises
@@ -35,7 +45,8 @@ end # run
 def test_no_arg_command
 	no_arg_run = CommandLine.assert_command_run('')
 
-	assert_match(/Expect a subcommand and a file argument/, no_arg_run.errors)
+	assert_equal('', no_arg_run.errors)
+	assert_equal('', no_arg_run.output)
 end # no_arg_command
 def test_help_command
 	help_run = CommandLine.assert_command_run('--help')
