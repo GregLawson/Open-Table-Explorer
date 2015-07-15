@@ -7,21 +7,33 @@
 ###########################################################################
 class Disk
 module Constants
+Uuid_glob = '/dev/disk/by-uuid/*'
+Kernel_glob = '/boot/vmlinuz*'
+Name_pattern = '[-_0-9a-zA-Z\/]+'
+Filename_pattern = Name_pattern + '(.' + Name_pattern + ')?'
 end #Constants
 include Constants
 module ClassMethods
+include Constants
 def disks
-	uuid_glob = '/dev/disk/by-uuid/*'
-	disks = Dir[uuid_glob]
+	disks = Dir[Constants::Uuid_glob]
 	disks.map do |link_name|
 		{uuid: link_name[18..-1], partition_name:  File.readlink(link_name)[6..-1]}
 		
 	end # map
 end # disks
-
+def kernels
+	kernel_files = Dir[Kernel_glob]
+end # kernels
+def grubs
+	grep = `grep "uuid" /boot/grub/*`
+	grub_kernel_pattern = /\/boot\/grub\/#{Filename_pattern}/
+	grep.lines.map do |line|
+		line.match(grub_kernel_pattern)
+	end # map
+end # grubs
 def ls
-	filename_pattern = /[-_0-9a-zA-Z\/]+/
-	ls_run = `ls -l #{uuid_glob}`
+	ls_run = `ls -l #{Uuid_glob}`
 	ls_octet_pattern = /rwx/
 	ls_permission_pattern = [/1|l/,
 					ls_octet_pattern.capture(:system),

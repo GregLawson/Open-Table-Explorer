@@ -14,4 +14,6 @@ require_relative "../app/models/disk.rb"
 #script_class = Unit::Executing_Unit.model_class?
 #script = CommandLine.new($0)
 puts Disk.disks
+puts Disk.kernels
+puts Disk.grubs.inspect
 1 # successfully completed
