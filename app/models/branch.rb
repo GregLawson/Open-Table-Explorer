@@ -207,7 +207,7 @@ def current_branch_name?(repository)
 		fail Exception.new('git branch parse failed = ' + branch_capture.inspect)
 	end # if
 end # current_branch_name
-def branches?(repository)
+def branches?(repository = Repository::This_code_repository)
 	branch_capture = branch_capture?(repository, '--list')
 	if branch_capture.success? then
 		branch_capture.output?.map do |c| 
@@ -225,7 +225,7 @@ def merged?(repository)
 	pattern=/  /*(/[a-z0-9\/A-Z]+/.capture(:merged))
 	repository.git_parse('branch --list --merged', pattern)
 end #merged?
-def branch_names?(repository)
+def branch_names?(repository = Repository::This_code_repository)
 	branches?(repository).map {|b| b.branch}
 end # 
 def new_from_git_branch_line(git_branch_line)
