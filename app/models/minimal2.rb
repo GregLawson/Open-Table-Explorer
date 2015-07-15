@@ -18,6 +18,7 @@ module Constants
 end #Constants
 include Constants
 module ClassMethods
+include Constants
 end # ClassMethods
 extend ClassMethods
 #def initialize

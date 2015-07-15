@@ -10,6 +10,10 @@ module Constants
 end #Constants
 include Constants
 module ClassMethods
+include Constants
 end #ClassMethods
 extend ClassMethods
+# attr_reader
+def initialize
+end # initialize
 end #Minimal
