@@ -20,6 +20,7 @@ pp ARGV if $VERBOSE
 pp script.options if $VERBOSE
 
 script.run do
+	
 	case CommandLine::Constants::Sub_command
 	when :all then 
 #			InteractiveBottleneck.all(:model)
@@ -42,7 +43,7 @@ script.run do
 		interactive_bottleneck.merge_conflict_recovery(:MERGE_HEAD)
 	when :split then
 		interactive_bottleneck.split(argv[0], argv[1])
-	else ARGV[1..-1].each do |f|
+	else CommandLine::Constants::Arguments.each do |f|
 		if File.exists?(f) then
 			executable = TestExecutable.new(executable_file: f)
 			editor = Editor.new(executable)
