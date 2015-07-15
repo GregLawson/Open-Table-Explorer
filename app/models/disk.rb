@@ -5,12 +5,13 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/regexp.rb'
 class Disk
 module Constants
 Uuid_glob = '/dev/disk/by-uuid/*'
 Kernel_glob = '/boot/vmlinuz*'
-Name_pattern = '[-_0-9a-zA-Z\/]+'
-Filename_pattern = Name_pattern + '(.' + Name_pattern + ')?'
+Name_pattern = /[-_0-9a-zA-Z\/]+/
+Filename_pattern = (Name_pattern * (/\./ * Name_pattern) * Regexp::Many).capture(:filename)
 end #Constants
 include Constants
 module ClassMethods
@@ -27,7 +28,7 @@ def kernels
 end # kernels
 def grubs
 	grep = `grep "uuid" /boot/grub/*`
-	grub_kernel_pattern = /\/boot\/grub\/#{Filename_pattern}/
+	grub_kernel_pattern = /\/boot\/grub\/#{Filename_pattern}:/
 	grep.lines.map do |line|
 		line.match(grub_kernel_pattern)
 	end # map
