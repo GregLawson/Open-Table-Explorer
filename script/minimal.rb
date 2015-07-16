@@ -16,7 +16,6 @@ script_class = Unit::Executing_Unit.model_class?
 pp ARGV if $VERBOSE
 script = CommandLine.new($0)
 pp ARGV if $VERBOSE
-pp script.options if $VERBOSE
 
 script.run do
 end # do run
