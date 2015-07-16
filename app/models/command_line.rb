@@ -7,13 +7,13 @@
 ###########################################################################
 require 'trollop'
 require_relative '../../app/models/shell_command.rb'
-#require_relative '../../app/models/command.rb'
+require_relative '../../app/models/command.rb'
 require_relative '../../app/models/test_executable.rb'
-class CommandLine # < Command
+class CommandLine  < Command
 module Constants
 SUB_COMMANDS = %w(help inspect test)
 Command_line_opts = Trollop::options do
-	banner 'Usage: ' + Command.to_s + ' subcommand  path_patterns' 
+	banner 'Usage: ' + ' subcommand  path_patterns' 
    opt :inspect, "Inspect file object"                    # flag --monkey, default false
    opt :test, "Test unit."       # string --name <s>, default nil
   stop_on SUB_COMMANDS
