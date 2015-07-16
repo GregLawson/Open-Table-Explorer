@@ -102,7 +102,7 @@ end # +
 #     named_captures for captures.size > names.size
 
 # Capture::Assertions
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
@@ -483,7 +483,7 @@ end # parse
 module Constants
 end #Constants
 include Constants
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')

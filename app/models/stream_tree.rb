@@ -56,7 +56,6 @@ module Constants
 Root_path = GraphPath.new
 end # Constants
 include Constants
-require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
@@ -192,7 +191,6 @@ def inspect_recursive(node = @node, &inspect_proc)
 end # inspect_recursive
 end # ClassMethods
 extend ClassMethods
-require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 # assertions before module has been completely defined
@@ -222,7 +220,7 @@ end #assert_post_conditions
 end #ClassMethods
 end # Assertions
 extend Assertions::ClassMethods
-self.assert_pre_conditions
+#self.assert_pre_conditions
 module Examples
 Node_format = proc do |e|
 	e.inspect

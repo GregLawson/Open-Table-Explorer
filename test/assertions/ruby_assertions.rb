@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit'
 require 'pathname'
 require_relative '../../app/models/global.rb'
 require 'set'

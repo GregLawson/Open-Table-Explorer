@@ -201,7 +201,6 @@ Library = FilePattern.new_from_path(__FILE__)
 Executable = FilePattern.new_from_path($0)
 end #Constants
 include Constants
-require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods

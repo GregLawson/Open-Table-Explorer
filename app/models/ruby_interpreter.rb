@@ -46,20 +46,6 @@ end #ruby
 end # ClassMethods
 extend ClassMethods
 # attr_reader
-require_relative '../../test/assertions.rb'
-module Assertions
-module ClassMethods
-def assert_pre_conditions(message='')
-	message+="In assert_pre_conditions, self=#{inspect}"
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-end #assert_post_conditions
-end #ClassMethods
-def assert_pre_conditions(message='')
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-end #assert_post_conditions
 def assert_logical_primary_key_defined(message=nil)
 	message=build_message(message, "self=?", self.inspect)	
 	assert_not_nil(self, message)
@@ -72,10 +58,6 @@ def assert_logical_primary_key_defined(message=nil)
 	assert_not_nil(self['test_type'], message)
 	assert_not_nil(self.singular_table, message)
 end #assert_logical_primary_key_defined
-end # Assertions
-include Assertions
-extend Assertions::ClassMethods
-#self.assert_pre_conditions
 module Examples
 include Constants
 Ruby_version = ShellCommands.new('ruby --version').output
