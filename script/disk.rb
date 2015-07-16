@@ -15,5 +15,7 @@ require_relative "../app/models/disk.rb"
 #script = CommandLine.new($0)
 puts Disk.disks
 puts Disk.kernels
-puts Disk.grubs.inspect
+Disk.grubs.each do |grub|
+	puts grub.inspect
+end # each
 1 # successfully completed

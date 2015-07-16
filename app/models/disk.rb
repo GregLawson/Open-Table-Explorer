@@ -6,12 +6,16 @@
 #
 ###########################################################################
 require_relative '../../app/models/regexp.rb'
+require_relative '../../app/models/parse.rb'
 class Disk
 module Constants
 Uuid_glob = '/dev/disk/by-uuid/*'
 Kernel_glob = '/boot/vmlinuz*'
 Name_pattern = /[-_0-9a-zA-Z\/]+/
-Filename_pattern = (Name_pattern * (/\./ * Name_pattern) * Regexp::Many).capture(:filename)
+Filename_pattern = (Name_pattern * (/\./ * Name_pattern).group * Regexp::Many).capture(:filename)
+Msdos_hint_regexp = / --hint-bios=hd0,msdos15 --hint-efi=hd0,msdos15 --hint-baremetal=ahci0,msdos15 --hint='hd0,msdos15'/
+Uuid_regexp = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/
+Grub_grep_regexp = Filename_pattern * /:\s*/ * ' search --no-floppy --fs-uuid --set=root ' * Uuid_regexp.capture(:uuid)
 end #Constants
 include Constants
 module ClassMethods
@@ -28,9 +32,8 @@ def kernels
 end # kernels
 def grubs
 	grep = `grep "uuid" /boot/grub/*`
-	grub_kernel_pattern = /\/boot\/grub\/#{Filename_pattern}:/
 	grep.lines.map do |line|
-		line.match(grub_kernel_pattern)
+		line.capture?(Grub_grep_regexp)
 	end # map
 end # grubs
 def ls
