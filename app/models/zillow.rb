@@ -16,7 +16,7 @@ include Constants
 # attr_reader
 def initialize
 end #initialize
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods
