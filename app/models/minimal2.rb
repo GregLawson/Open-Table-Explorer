@@ -14,7 +14,7 @@ class Minimal2
 #	attribute :age, Fixnum, :default => 789
 #	attribute :timestamp, Time, :default => Time.now
 end # values
-module Constants
+module Constants # constant parameters of the type
 end #Constants
 include Constants
 module ClassMethods
@@ -23,7 +23,7 @@ end # ClassMethods
 extend ClassMethods
 #def initialize
 #end # initialize
-module Constants
+module Constants # constant objects of the type
 end # Constants
 include Constants
 # attr_reader
