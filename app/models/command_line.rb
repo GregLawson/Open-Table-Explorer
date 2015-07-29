@@ -52,7 +52,7 @@ def candidate_commands
 	script_class.instance_methods(false).map do |candidate_command|
 		method = executable_object.method(candidate_command)
 		{candidate_command: candidate_command, arity: method.arity}
-	end # map
+	end.sort {|x,y| x[:arity] <=>  y[:arity] && x[:candidate_command] <=>  y[:candidate_command]} # map
 end # candidate_commands
 
 end # ClassMethods
