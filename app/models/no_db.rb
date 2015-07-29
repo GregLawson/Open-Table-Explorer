@@ -42,10 +42,13 @@ def dump
 		record.insert_sql
 	end #map
 end #dump
-def data_source_yaml(yaml_table_name=table_name)
+def data_source_yaml_path(yaml_table_name=table_name)
   unit = Unit.new(self.name)
   unit_data_source_directory = unit.data_sources_directory?
-  data_source_file =  unit_data_source_directory + "/#{yaml_table_name}.yml"
+  unit_data_source_directory + "/#{yaml_table_name}.yml"
+end # data_source_yaml_path
+def data_source_yaml(yaml_table_name=table_name)
+  data_source_file =  data_source_yaml_path(yaml_table_name)
 	yaml = YAML::load( File.open(data_source_file) )
 end #data_source_yaml
 def get_field_names

@@ -17,6 +17,7 @@ pp ARGV if $VERBOSE
 script = CommandLine.new($0)
 pp ARGV if $VERBOSE
 
-script.run do
+run = script.run do
 end # do run
+puts "run returns "+ run.inspect
 1 # successfully completed

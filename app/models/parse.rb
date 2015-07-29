@@ -126,16 +126,16 @@ def assert_pre_conditions(message='')
 	assert(success?)
 end # assert_pre_conditions
 def assert_success
-	if raw_captures.nil? then 
+	if @raw_captures.nil? then 
 		assert(false, self.inspect)
-	elsif raw_captures.instance_of?(MatchData) then
+	elsif @raw_captures.instance_of?(MatchData) then
 		true
 	else # :split
 		if @length_hash_captures == 0 then # no captures
 			match_capture = MatchCapture.new(string, regexp)
 			match_capture.assert_success
 		else # captures
-			if raw_captures.size < 2 then # split failed
+			if @raw_captures.size < 2 then # split failed
 				assert(false, self.inspect)
 			else # split succeeded
 				true
@@ -240,7 +240,7 @@ def to_a?
 		[post_match?]
 end # to_a?
 def post_match?
-	raw_captures.post_match
+	@raw_captures.post_match
 	
 
 end # post_match?
@@ -248,7 +248,7 @@ def pre_match?
 	if !success? then
 		''
 	else
-		raw_captures.pre_match
+		@raw_captures.pre_match
 
 	end #if
 
@@ -266,9 +266,9 @@ end # number_matched_characters?
 def column_output
 	if !success? then
 		{}
-	elsif raw_captures.instance_of?(MatchData) then
-		if raw_captures.names==[] then
-			raw_captures[1..-1] # return unnamed subexpressions
+	elsif @raw_captures.instance_of?(MatchData) then
+		if @raw_captures.names==[] then
+			@raw_captures[1..-1] # return unnamed subexpressions
 		else
 			named_hash(0)
 		end # if
@@ -307,7 +307,7 @@ def success?
 		match_capture = MatchCapture.new(string, regexp)
 		match_capture.success?
 	else # captures
-		if raw_captures.size < 2 then # split failed
+		if @raw_captures.size < 2 then # split failed
 			false
 		else # split succeeded
 			true
@@ -323,18 +323,18 @@ def repetitions?
 end # repetitions?
 # Tranform split and MatchData captures into single form
 def to_a?
-	raw_captures
+	@raw_captures
 end # to_a?
 def post_match?
-	if raw_captures.size.odd? then
-		raw_captures[-1]
+	if @raw_captures.size.odd? then
+		@raw_captures[-1]
 	else
 		''
 	end # if
 
 end # post_match?
 def pre_match?
-	raw_captures[0]
+	@raw_captures[0]
 end # pre_match?
 def matched_characters?
 	@string[0,number_matched_characters?]
@@ -384,16 +384,16 @@ end # Examples
 end # LimitCapture
 
 # class ParsedCapture
-class ParsedCapture < RawCapture
+class ParsedCapture < MatchCapture
 attr_reader :string, :regexp # arguments
 attr_reader :parsed_regexp, :length_hash_captures
 attr_reader :raw_captures
 def initialize(string, regexp)
 	super(string, regexp)
-#	@parsed_regexp = Regexp::Parser.parse( regexp.to_s, 'ruby/1.8')
+	@parsed_regexp = Regexp::Parser.parse( regexp.to_s, 'ruby/1.8')
 end # ParsedCapture_initialize
 def raw_captures?
-#	Regexp::Parser.parse(@regexp.to_s, 'ruby/1.8').raw_capture?(@string)
+	Regexp::Parser.parse(@regexp.to_s, 'ruby/1.8').raw_capture?(@string)
 end #raw_captures?
 def success?
 	@raw_captures[0][:raw_capture].success?

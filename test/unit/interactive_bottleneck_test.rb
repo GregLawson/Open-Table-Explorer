@@ -14,7 +14,7 @@ include DefaultTests
 #extend InteractiveBottleneck::ClassMethods
 include InteractiveBottleneck::Examples
 def test_initialize
-	te=Unit.new(TestExecutable)
+	te=Unit.new(TestExecutable.executable_file)
 	assert_not_nil(te)
 	wf=InteractiveBottleneck.new(TestExecutableFile)
 	assert_not_nil(wf)
@@ -97,10 +97,10 @@ def test_rebase!
 #	Minimal_repository.rebase!
 end #rebase!
 def test_local_assert_post_conditions
-		TestWorkFlow.assert_post_conditions
+		TestInteractiveBottleneck.assert_post_conditions
 end #assert_post_conditions
 def test_local_assert_pre_conditions
-		TestWorkFlow.assert_pre_conditions
+		TestInteractiveBottleneck.assert_pre_conditions
 end #assert_pre_conditions
 def test_help_command
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions

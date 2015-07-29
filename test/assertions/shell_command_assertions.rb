@@ -31,8 +31,6 @@ end # Shell
 class ShellCommands
 require_relative '../../test/assertions.rb'
 module Assertions
-
-extend Test::Unit::Assertions
 def assert_pre_conditions(message='')
 	self # return for command chaining
 end #assert_pre_conditions

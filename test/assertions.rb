@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require 'test/unit'
+require 'test/unit/assertions'
 require_relative 'assertions/ruby_assertions.rb'
 module Assertions
 #include Minitest::Assertions

@@ -20,7 +20,7 @@ def test_initializes
 	wf=Editor.new(TestEditor.executable)
 	assert_not_nil(wf)
 	assert_not_empty(TestEditor.executable.unit.edit_files, "TestEditor.executable.unit.edit_files=#{TestEditor.executable.unit.edit_files}")
-	assert_include(TestEditor.executable.unit.edit_files, TestFile, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
+	assert_include(TestEditor.executable.unit.edit_files, TestEditor.executable.file, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))

@@ -47,6 +47,7 @@ def initialize(executable, editor)
 	else
 		@branch_index = index
 	end # if
+#	@test_executable = TestExecutable.new(executable_file: executable_file)
 end # initialize
 def test(executable = @related_files.model_test_pathname?)
 	merge_conflict_recovery(:MERGE_HEAD)
@@ -122,7 +123,6 @@ module ClassMethods
 def assert_pre_conditions
 end # assert_pre_conditions
 def assert_post_conditions
-#	assert_pathname_exists(TestFile, "assert_post_conditions")
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions

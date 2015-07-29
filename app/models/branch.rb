@@ -6,6 +6,7 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
+require_relative '../../test/assertions/shell_command_assertions.rb'
 require_relative '../../app/models/parse.rb'
 class Reference
 end # Reference
@@ -194,8 +195,13 @@ module ClassMethods
 #include Repository::Constants
 include Constants
 def branch_capture?(repository, branch_command = '--list')
-	branch_output = repository.git_command('branch ' + branch_command).assert_post_conditions.output
-	branch_output.capture?(Branch_regexp, LimitCapture)
+	branch_run = repository.git_command('branch ' + branch_command)
+	if branch_run.success? then
+		branch_output = branch_run.output
+		branch_output.capture?(Branch_regexp, LimitCapture)
+	else
+		fail Exception.new('branch_run failed' + branch_run.inspect)
+	end # if
 end # branch_capture?
 def current_branch_name?(repository)
 	branch_capture = branch_capture?(repository, '--list')

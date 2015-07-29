@@ -47,19 +47,6 @@ def test_initialize
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
 end #initialize
 include WorkFlow::Examples
-def test_merge_conflict_recovery
-end # merge_conflict_recovery
-def test_merge
-	TestWorkFlow.repository.testing_superset_of_passed.assert_post_conditions
-	TestWorkFlow.repository.edited_superset_of_testing.assert_post_conditions
-	TestWorkFlow.merge(:edited, :testing) # not too long or too dangerous
-end #merge
-def test_merge_down
-#(deserving_branch = @repository.current_branch_name?)
-end # merge_down
-def test_script_deserves_commit!
-#(deserving_branch)
-end # script_deserves_commit!
 def test_test
 #(executable = @related_files.model_test_pathname?)
 end # test

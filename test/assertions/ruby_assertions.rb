@@ -18,6 +18,7 @@ def caller_lines(ignore_lines=19)
 	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
 end # Object
+
 class Module
 def default_message
 	message = "\nModule.nesting=#{Module.nesting.inspect}"
@@ -25,8 +26,10 @@ def default_message
 	name_list_method = :included_modules
 end #default_message
 end # Module
+
 class Method
 end # Method
+
 module Kernel
 # Default message if message is empty
 def add_default_message(message='')
@@ -68,6 +71,7 @@ def default_message
 	return message
 end # default_message
 end # Kernel
+
 module Test
 module Unit
 module Assertions

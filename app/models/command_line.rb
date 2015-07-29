@@ -37,49 +37,6 @@ else
 	Sub_command = :help # default subcommand
 end # if
 Command = Unit::Executing_Unit.model_basename
-end #Constants
-include Constants
-module ClassMethods
-include Constants
-def candidate_commands
-	script_class = Unit::Executing_Unit.model_class?
-	if Number_of_arguments == 0 then
-		file_argument = $0 # script file
-	else
-		file_argument = ARGV[1]
-	end # if
-	executable_object = script_class.new(TestExecutable.new_from_path(file_argument))
-	script_class.instance_methods(false).map do |candidate_command|
-		method = executable_object.method(candidate_command)
-		{candidate_command: candidate_command, arity: method.arity}
-	end.sort {|x,y| x[:arity] <=>  y[:arity] && x[:candidate_command] <=>  y[:candidate_command]} # map
-end # candidate_commands
-
-end # ClassMethods
-extend ClassMethods
-module Constants # constant objects of the type
-SUB_COMMANDS = %w(help inspect test)
-Command_line_parser = Trollop::Parser.new do
-	banner 'Usage: ' + ' subcommand  path_patterns' 
-	banner ' subcommands:  ' + SUB_COMMANDS.join(', ')
-	banner ' candidate_commands:  '
-   opt :inspect, "Inspect file object"                    # flag --monkey, default false
-   opt :test, "Test unit."       # string --name <s>, default nil
-  stop_on SUB_COMMANDS
-  end
-  p = Command_line_parser
-Command_line_opts = Trollop::with_standard_exception_handling p do
-  o = p.parse ARGV
-  raise Trollop::HelpNeeded if ARGV.empty? # show help screen
-  o
-end
-Command_line_test_opts = Trollop::options do
-	banner 'Usage: ' + Command.to_s + ' subcommand  path_patterns' 
-    opt :inspect, "Inspect file object"                    # flag --monkey, default false
-    opt :test, "Test unit."       # 
-    opt :help, "Commands" # 
-    opt :individual_test, "Run only one individual test",  :short => "-n" # 
-  end
 end # Constants
 include Constants
 attr_accessor :executable, :options
@@ -145,4 +102,47 @@ end # cleanup_ARGV
 def test
 	puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
 end # test
+module ClassMethods
+include Constants
+def candidate_commands
+	script_class = Unit::Executing_Unit.model_class?
+	if Number_of_arguments == 0 then
+		file_argument = $0 # script file
+	else
+		file_argument = ARGV[1]
+	end # if
+	executable_object = script_class.new(TestExecutable.new_from_path(file_argument))
+	script_class.instance_methods(false).map do |candidate_command_name|
+		method = executable_object.method(candidate_command_name)
+		{candidate_command: candidate_command_name, arity: method.arity}
+	end.sort {|x,y| x[:arity] <=>  y[:arity] && x[:candidate_command] <=>  y[:candidate_command]} # map
+end # candidate_commands
+
+end # ClassMethods
+extend ClassMethods
+module Constants # constant objects of the type
+SUB_COMMANDS = %w(help inspect test)
+Command_line_parser = Trollop::Parser.new do
+	banner 'Usage: ' + ' subcommand  path_patterns' 
+	banner ' subcommands:  ' + SUB_COMMANDS.join(', ')
+	banner ' candidate_commands:  ' + CommandLine.candidate_commands.inspect
+   opt :inspect, "Inspect file object"                    # flag --monkey, default false
+   opt :test, "Test unit."       # string --name <s>, default nil
+  stop_on SUB_COMMANDS
+  end
+  p = Command_line_parser
+Command_line_opts = Trollop::with_standard_exception_handling p do
+  o = p.parse ARGV
+  raise Trollop::HelpNeeded if ARGV.empty? # show help screen
+  o
+end
+Command_line_test_opts = Trollop::options do
+	banner 'Usage: ' + Command.to_s + ' subcommand  path_patterns' 
+    opt :inspect, "Inspect file object"                    # flag --monkey, default false
+    opt :test, "Test unit."       # 
+    opt :help, "Commands" # 
+    opt :individual_test, "Run only one individual test",  :short => "-n" # 
+  end
+end # Constants
+include Constants
 end # CommandLine
