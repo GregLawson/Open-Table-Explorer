@@ -17,6 +17,8 @@ Number_of_arguments = if Arguments.nil? then
 	else
 		Arguments.size # don't include Sub_command
 	end # if
+SUB_COMMANDS = %w(help inspect test)
+Nonscriptable_methods = [:run, :executable, :executable=]
 if ARGV.size > 0 then
 	Sub_command = ARGV[0].to_sym # get the subcommand
 	Argument_types = Arguments.map do |argument|
@@ -32,46 +34,45 @@ if ARGV.size > 0 then
 			Unit
 		end # if
 	end # map
-
-else
+elsif ARGV[0].nil?
 	Sub_command = :help # default subcommand
+else
+	Sub_command = ARGV[0].to_sym # get the subcommand
 end # if
 Command = Unit::Executing_Unit.model_basename
 end # Constants
 include Constants
 attr_accessor :executable, :options
-def initialize(executable, options = Command_line_opts)
+def initialize(executable) # , options = Command_line_opts)
 	@executable = executable
-	@options = options
+#	@options = options
 end # initialize
 def dispatch_one_argument(argument)
-	argument = file_argument
-				executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_path(file_argument))
-				if executable_object.respond_to?(Sub_command) then
-					method = executable_object.method(Sub_command)
-					case method.arity
-					when -1 then
-						method.call(file_argument)
-					when 0 then
-						method.call
-					when 1 then
-						method.call(file_argument)
-					else
-						message = 'In CommandLine#run, '
-						message += "\nfile_argument =  " + file_argument
-						message += "\nSub_command =  " + Sub_command.to_s
-						message += "\narity =  " + method.arity.to_s
-						fail Exception.new(message)
-					end # case
-				else
-					message = "#{Sub_command} is not an instance method of #{executable_object.class.inspect}"
-					message = candidate_commands.map do |candidate_command|
-						candidate_command[:candidate_command].to_s + ' ' + candidate_command[:arity].to_s
-					end.join("\n") # map
-	#				message += "\n candidate_commands = " + candidate_commands.inspect
-	#				message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-					puts message
-				end # if
+	executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_path(argument))
+	ret = if executable_object.respond_to?(Sub_command) then
+		method = executable_object.method(Sub_command)
+		case method.arity
+		when -1 then
+			method.call(argument)
+		when 0 then
+			method.call
+		when 1 then
+			method.call(argument)
+		else
+			message = 'In CommandLine#run, '
+			message += "\nargument =  " + argument
+			message += "\nSub_command =  " + Sub_command.to_s
+			message += "\narity =  " + method.arity.to_s
+			fail Exception.new(message)
+		end # case
+	else
+		message = "#{Sub_command} is not an instance method of #{executable_object.class.inspect}"
+		message = CommandLine.candidate_commands_strings.join("\n")
+#		message += "\n candidate_commands = " + candidate_commands.inspect
+#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+		puts message
+	end # if
+	ret
 end # dispatch_one_argument
 def run(&non_default_actions)
 	done = if block_given? then
@@ -82,10 +83,11 @@ def run(&non_default_actions)
 	if !done then
 		if Number_of_arguments == 0 then
 			puts 'Number_of_arguments == 0 '
-			puts 'Trollop Command_line_test_opts = ' + Command_line_test_opts.inspect
+			puts 'Trollop Command_line_opts = ' + Command_line_opts.inspect
 			CommandLine.candidate_commands
 		elsif Number_of_arguments == 1 then
-			fail RuntimeError.new("Expect a subcommand and a file argument.")
+			dispatch_one_argument(Arguments[0])
+			CommandLine.candidate_commands
 		elsif Number_of_arguments >= 2 then # enough arguments to loop over
 			Arguments.each do |argument|
 				dispatch_one_argument(argument)
@@ -113,20 +115,41 @@ def candidate_commands
 	end # if
 	executable_object = script_class.new(TestExecutable.new_from_path(file_argument))
 	script_class.instance_methods(false).map do |candidate_command_name|
-		method = executable_object.method(candidate_command_name)
-		{candidate_command: candidate_command_name, arity: method.arity}
-	end.sort {|x,y| x[:arity] <=>  y[:arity] && x[:candidate_command] <=>  y[:candidate_command]} # map
+		if Nonscriptable_methods.include?(candidate_command_name) then
+			nil
+		else
+			method = executable_object.method(candidate_command_name)
+			if Number_of_arguments == method.arity ||(Number_of_arguments == -1) then
+				{candidate_command: candidate_command_name, arity: method.arity}
+			else
+				nil
+			end # if
+		end # if
+	end.compact.sort {|x,y| x[:arity] <=>  y[:arity] && x[:candidate_command] <=>  y[:candidate_command]} # map
 end # candidate_commands
-
+def candidate_commands_strings
+	candidate_commands.map do |c|
+		c[:candidate_command].to_s + ' ' + case c[:arity]
+		when -1 then 'args...'
+		when 0 then ''
+		when 1 then 'arg'
+		when 2 then 'arg arg'
+		end # case
+	end # map
+end # candidate_commands_strings
 end # ClassMethods
 extend ClassMethods
 module Constants # constant objects of the type
-SUB_COMMANDS = %w(help inspect test)
 Command_line_parser = Trollop::Parser.new do
-	banner 'Usage: ' + ' subcommand  path_patterns' 
+	banner 'Usage: ' + ' subcommand  options args'
 	banner ' subcommands:  ' + SUB_COMMANDS.join(', ')
-	banner ' candidate_commands:  ' + CommandLine.candidate_commands.inspect
-   opt :inspect, "Inspect file object"                    # flag --monkey, default false
+	banner ' candidate_commands with ' + Number_of_arguments.to_s + ' or variable number of arguments:  '
+	CommandLine.candidate_commands_strings.each do |candidate_commands_string|
+		banner '   '  + candidate_commands_string
+   end # each
+	banner 'args may be paths, units, branches, etc.'
+	banner 'options:'
+	opt :inspect, 'Inspect ' + Command.to_s + ' object' 
    opt :test, "Test unit."       # string --name <s>, default nil
   stop_on SUB_COMMANDS
   end
@@ -137,7 +160,7 @@ Command_line_opts = Trollop::with_standard_exception_handling p do
   o
 end
 Command_line_test_opts = Trollop::options do
-	banner 'Usage: ' + Command.to_s + ' subcommand  path_patterns' 
+	banner 'Usage: ' + Command.to_s + ' subcommand options  args' 
     opt :inspect, "Inspect file object"                    # flag --monkey, default false
     opt :test, "Test unit."       # 
     opt :help, "Commands" # 

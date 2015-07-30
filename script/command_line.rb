@@ -20,5 +20,5 @@ if !CommandLine::Arguments.nil? then
 end # if
 run = script.run do
 end # do run
-puts "run returns "+ run.inspect
+puts "run returns "+ run.inspect if CommandLine::Command_line_opts[:inspect]
 1 # successfully completed
