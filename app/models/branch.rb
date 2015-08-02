@@ -6,8 +6,9 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative '../../test/assertions/shell_command_assertions.rb'
+require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/repository.rb'
 class Reference
 end # Reference
 class BranchReference
@@ -60,7 +61,7 @@ end # new_from_ref
 def reflog?(filename, repository)
 	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
 #	reflog_run = repository.git_command("reflog  --all --summary --pretty=format:%gd,%gD,%h,%aD -- " + filename)
-	reflog_run.assert_post_conditions
+#	reflog_run.assert_post_conditions
 	lines = reflog_run.output.split("\n")
 	lines = lines[0..-2] if lines[-1..-1] == ''
 	lines.map do |reflog_line|
