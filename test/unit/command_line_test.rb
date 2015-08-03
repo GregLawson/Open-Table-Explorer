@@ -42,6 +42,10 @@ def test_run
 		end # do run
 	end # assert_raises
 end # run
+# ruby -W0 script/command_line.rb
+# ruby -W0 script/command_line.rb --help
+# ruby -W0 script/command_line.rb help
+# ruby -W0 script/command_line.rb help test/unit/command_line_test.rb
 def test_no_arg_command
 	no_arg_run = CommandLine.assert_command_run('')
 

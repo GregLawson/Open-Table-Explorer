@@ -40,15 +40,23 @@ else
 	Sub_command = ARGV[0].to_sym # get the subcommand
 end # if
 Command = Unit::Executing_Unit.model_basename
+puts 'ARGV = ' + ARGV.inspect if $VERBOSE
+puts 'Sub_command = ' + CommandLine::Sub_command.inspect if $VERBOSE
+if !Arguments.nil? then
+	puts 'Arguments = ' + CommandLine::Constants::Arguments.inspect if $VERBOSE
+	puts 'Argument_types = ' + CommandLine::Constants::Argument_types.inspect if $VERBOSE
+end # if
 end # Constants
 include Constants
 attr_accessor :executable, :options
-def initialize(executable) # , options = Command_line_opts)
+def initialize(executable, unit= CommandLine, trollop = nil, argv = ARGV) # , options = command_line_opts)
 	@executable = executable
-#	@options = options
+	@unit = unit
+	@trollop = trollop
+	@argv = argv
 end # initialize
 def dispatch_one_argument(argument)
-	executable_object = Unit::Executing_Unit.model_class?.new(TestExecutable.new_from_path(argument))
+	executable_object = @unit.new(TestExecutable.new_from_path(argument))
 	ret = if executable_object.respond_to?(Sub_command) then
 		method = executable_object.method(Sub_command)
 		case method.arity
@@ -67,7 +75,7 @@ def dispatch_one_argument(argument)
 		end # case
 	else
 		message = "#{Sub_command} is not an instance method of #{executable_object.class.inspect}"
-		message = CommandLine.candidate_commands_strings.join("\n")
+		message = candidate_commands_strings.join("\n")
 #		message += "\n candidate_commands = " + candidate_commands.inspect
 #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
 		puts message
@@ -83,11 +91,11 @@ def run(&non_default_actions)
 	if !done then
 		if Number_of_arguments == 0 then
 			puts 'Number_of_arguments == 0 '
-			puts 'Trollop Command_line_opts = ' + Command_line_opts.inspect
-			CommandLine.candidate_commands
+			puts 'Trollop command_line_opts = ' + command_line_opts.inspect
+			candidate_commands
 		elsif Number_of_arguments == 1 then
 			dispatch_one_argument(Arguments[0])
-			CommandLine.candidate_commands
+			candidate_commands
 		elsif Number_of_arguments >= 2 then # enough arguments to loop over
 			Arguments.each do |argument|
 				dispatch_one_argument(argument)
@@ -106,6 +114,8 @@ def test
 end # test
 module ClassMethods
 include Constants
+end # ClassMethods
+extend ClassMethods
 def candidate_commands
 	script_class = Unit::Executing_Unit.model_class?
 	if Number_of_arguments == 0 then
@@ -113,7 +123,7 @@ def candidate_commands
 	else
 		file_argument = ARGV[1]
 	end # if
-	executable_object = script_class.new(TestExecutable.new_from_path(file_argument))
+	executable_object = @unit.new(TestExecutable.new_from_path(file_argument))
 	script_class.instance_methods(false).map do |candidate_command_name|
 		if Nonscriptable_methods.include?(candidate_command_name) then
 			nil
@@ -137,28 +147,31 @@ def candidate_commands_strings
 		end # case
 	end # map
 end # candidate_commands_strings
-end # ClassMethods
-extend ClassMethods
-module Constants # constant objects of the type
-Command_line_parser = Trollop::Parser.new do
-	banner 'Usage: ' + ' subcommand  options args'
-	banner ' subcommands:  ' + SUB_COMMANDS.join(', ')
-	banner ' candidate_commands with ' + Number_of_arguments.to_s + ' or variable number of arguments:  '
-	CommandLine.candidate_commands_strings.each do |candidate_commands_string|
-		banner '   '  + candidate_commands_string
-   end # each
-	banner 'args may be paths, units, branches, etc.'
-	banner 'options:'
-	opt :inspect, 'Inspect ' + Command.to_s + ' object' 
-   opt :test, "Test unit."       # string --name <s>, default nil
-  stop_on SUB_COMMANDS
-  end
-  p = Command_line_parser
-Command_line_opts = Trollop::with_standard_exception_handling p do
+def command_line_parser
+	command_line = self
+	Trollop::Parser.new do
+		banner 'Usage: ' + ' subcommand  options args'
+		banner ' subcommands:  ' + SUB_COMMANDS.join(', ')
+		banner ' candidate_commands with ' + Number_of_arguments.to_s + ' or variable number of arguments:  '
+		command_line.candidate_commands_strings.each do |candidate_commands_string|
+			banner '   '  + candidate_commands_string
+		end # each
+		banner 'args may be paths, units, branches, etc.'
+		banner 'options:'
+		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
+		opt :test, "Test unit."       # string --name <s>, default nil
+	  stop_on SUB_COMMANDS
+	  end
+end # command_line_parser
+def command_line_opts
+  p = command_line_parser
+	Trollop::with_standard_exception_handling p do
   o = p.parse ARGV
   raise Trollop::HelpNeeded if ARGV.empty? # show help screen
   o
 end
+end # command_line_opts
+module Constants # constant objects of the type
 Command_line_test_opts = Trollop::options do
 	banner 'Usage: ' + Command.to_s + ' subcommand options  args' 
     opt :inspect, "Inspect file object"                    # flag --monkey, default false
