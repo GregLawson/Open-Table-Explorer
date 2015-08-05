@@ -1,12 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative '../unit/test_environment'
-require_relative '../unit/test_environment_default_test_case.rb'
+require_relative '../../app/models/test_environment_default_test_case.rb'
+TestCase = MiniTest::Unit::TestCase
 class TestEnvironmentTest < TestCase
 #include DefaultTests
 def test_ruby_assertions
@@ -33,4 +33,4 @@ rescue Exception => exception
 	assert_include(exception.class.ancestors, Exception)
 	assert_instance_of(AssertionFailedError, exception)
 end # AssertionFailedError
-end #TestEnvironmentTest
+end # TestEnvironmentTest

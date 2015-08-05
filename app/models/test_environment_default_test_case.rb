@@ -5,7 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/test_environment_minitest.rb'
+# gem install mintest
+require "minitest/autorun"
+require 'active_support/all'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/unit.rb'

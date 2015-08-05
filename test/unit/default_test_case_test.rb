@@ -6,7 +6,6 @@
 #
 ###########################################################################
 #require_relative 'test_environment'
-require 'test/unit'
 require_relative '../../app/models/default_test_case.rb'
 class EmptyTest
 end #EmptyTest
@@ -61,4 +60,4 @@ def test_assert_class_invariant
 	assert_include(Module.constants, :ClassExists)
 end #test_assert_class_invariant
 include DefaultTests1
-end #DefaultTestCaseTest
+end # DefaultTestCaseTest
