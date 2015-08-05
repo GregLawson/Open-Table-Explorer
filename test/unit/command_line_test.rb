@@ -6,8 +6,9 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/command_line.rb'
-CommandLine.assert_ARGV
+require_relative '../../test/assertions.rb'
+require_relative '../assertions/command_line_assertions.rb'
+#CommandLine.assert_ARGV
 CommandLine.assert_pre_conditions
 class CommandLineTest < TestCase
 include CommandLine::Examples

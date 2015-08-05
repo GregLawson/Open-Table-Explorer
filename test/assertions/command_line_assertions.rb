@@ -11,7 +11,7 @@ module Assertions
 
 module ClassMethods
 def assert_pre_conditions
-	CommandLine.assert_ARGV	# don't know why ARGV getsn screwed up in tests
+#	CommandLine.assert_ARGV	# don't know why ARGV getsn screwed up in tests
 end #assert_pre_conditions
 
 def assert_post_conditions
