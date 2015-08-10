@@ -6,7 +6,6 @@
 #
 ###########################################################################
 require 'active_support/all'
-BaseTestCase=ActiveSupport::TestCase
 module ExampleCall
 def examples_submodule?
   model_class?::Examples

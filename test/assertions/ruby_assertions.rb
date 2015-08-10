@@ -72,9 +72,7 @@ def default_message
 end # default_message
 end # Kernel
 
-module Test
-module Unit
-module Assertions
+module RubyAssertions
 # returns to ruby 1.8 behavior
 =begin
 def build_message(head, template=nil, *arguments)
@@ -251,7 +249,7 @@ def assert_flat_set(set)
 end #assert_flat_set
 def assert_set_promotable(enumeration)
 end #assert_set_promotable
-def assert_subset(subset_enumeration, superset_enumeration, message=nil)
+def assert_subset(subset_enumeration, superset_enumeration,  message = '')
 	if subset_enumeration.instance_of?(Set) then
 		subset=subset_enumeration
 	else
@@ -269,7 +267,7 @@ def assert_subset(subset_enumeration, superset_enumeration, message=nil)
 	subset_surplus=subset-superset
 	assert_empty(subset_surplus, "subset_surplus=#{subset_surplus}, superset=#{superset}, subset=#{subset}")
 end #assert_subset
-def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
+def assert_equal_sets(expected_enumeration,actual_enumeration, message = '')
 	if expected_enumeration.instance_of?(Set) then
 		expected_set=expected_enumeration
 	else
@@ -307,20 +305,19 @@ def assert_overlap(enum1,enum2)
 	assert_not_empty(enum2, "Assume second set to not be empty.")
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
-#def assert_include(element,list,message=nil)
-#	raise "Second argument of assert_include must be an Array or Set" if !(list.instance_of?(Array) || list.instance_of?(Set))
-#	if message.nil? then
-#		message=build_message(message, "? is not in list ?", element,list.inspect)
-#	end #if 
-#	assert(list.include?(element),message)
-#end #assert_include
+def assert_includes(list, element,  message = '')
+	raise "Second argument of assert_include must be an Array or Set" if !(list.instance_of?(Array) || list.instance_of?(Set))
+	message = message + element.inspect
+	message += " is not in list " + list.inspect
+	assert(list.include?(element),message)
+end #assert_include
 def assert_dir_include(filename,glob)
 	assert_include(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
-#def assert_not_include(list, element, message=nil)
-#	message=build_message(message, "? is in list ?", element,list)   
-#	assert_block(message){!list.include?(element)}
-#end #assert_not_include
+def assert_not_includes(list, element,  message = '')
+	message=build_message(message, "? is in list ?", element,list)   
+	assert_block(message){!list.include?(element)}
+end #assert_not_include
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
@@ -374,7 +371,7 @@ def assert_attribute_of(obj, symbol, type)
 	assert_block("obj[:#{symbol}]=#{obj[symbol].inspect} must be of type #{type}, but is of type #{obj[symbol].class} obj=#{obj.inspect}") {obj[symbol].instance_of?(type)}
 end #assert_attribute_of
 
-def assert_has_instance_methods(model_class,message=nil)
+def assert_has_instance_methods(model_class, message = '')
 	message=build_message(message, "? has no public instance methods.", model_class.canonicalName)   
 	assert_block(message){!model_class.instance_methods(false).empty?}
 end #assert_has_instance_methods
@@ -502,8 +499,6 @@ def assert_data_file(pathname, message='')
 	assert_not_equal(0, File.size?(pathname), message)
 	pathname # allow chaining
 end #assert_data_file
-end #Assertions
-end #Unit
-end #Test
+end # RubyAssertions
 #include Test::Unit::Assertions
 #Test::Unit::Assertions.assert_pre_conditions

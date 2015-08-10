@@ -6,15 +6,8 @@
 #
 ###########################################################################
 # gem install mintest
-require "minitest/autorun"
-require 'active_support/all'
+require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../../app/models/default_test_case.rb'
-require_relative '../../test/assertions/ruby_assertions.rb'
-require_relative '../../app/models/unit.rb'
 TE=Unit.new
 DefaultTests=eval(TE.default_tests_module_name?)
 TestCase=eval(TE.test_case_class_name?)
-#AssertionFailedError=Test::Unit::AssertionFailedError
-AssertionFailedError = RuntimeError
-#AssertionFailedError = MiniTest::Assertion
-#assert_global_name(:AssertionFailedError)
