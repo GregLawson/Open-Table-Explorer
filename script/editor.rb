@@ -14,7 +14,7 @@ scripting_executable = TestExecutable.new_from_path($0)
 require_relative "../app/models/#{scripting_executable.unit.model_basename}"
 script_class = Unit::Executing_Unit.model_class?
 
-script = CommandLine.new($0)
+script = CommandLine.new($0, script_class)
 pp ARGV if $VERBOSE
 pp script.options if $VERBOSE
 
