@@ -5,7 +5,6 @@
 #
 ###########################################################################
 require_relative '../../app/models/test_environment_default_test_case.rb'
-TestCase = MiniTest::Unit::TestCase
 class TestEnvironmentTest < TestCase
 #include DefaultTests
 def test_ruby_assertions
