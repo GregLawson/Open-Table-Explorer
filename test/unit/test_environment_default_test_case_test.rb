@@ -16,7 +16,15 @@ def regexp_error(regexp_string)
 rescue RegexpError => exception
 	return exception
 end #regexp_error
-
+def assert_requires(required_path)
+	required_unit = Unit.new_from_path?(required_path)
+end # requires
+def test_requires_minitest
+	assert_requires('../../app/models/test_environment_minitest.rb')
+end # requires_minitest
+def test_requires_default_test_case
+	assert_requires('../../app/models/default_test_case.rb')
+end # requires_default_test_case
 def test_RegexpError
 	regexp_string = ')'
 	Regexp.new(regexp_string) # test

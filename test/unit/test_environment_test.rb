@@ -5,12 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/test_environment_minitest.rb'
-require_relative '../../test/assertions/ruby_assertions.rb'
-require_relative '../../app/models/default_test_case.rb'
-TE=Unit.new
-TestCase=eval(TE.test_case_class_name?)
-TestCase = MiniTest::Unit::TestCase
+require_relative 'test_environment'
 class MinitestTest < TestCase
 def test_RegexpError
 	regexp_string = ')'

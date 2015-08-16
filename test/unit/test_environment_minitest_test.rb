@@ -6,10 +6,6 @@
 #
 ###########################################################################
 require_relative '../../app/models/test_environment_minitest.rb'
-TE=Unit.new
-DefaultTests=eval(TE.default_tests_module_name?)
-TestCase=eval(TE.test_case_class_name?)
-TestCase = MiniTest::Unit::TestCase
 class MinitestTest < TestCase
 def test_RegexpError
 	regexp_string = ')'
