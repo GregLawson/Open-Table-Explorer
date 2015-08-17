@@ -1,22 +1,20 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment'
-require 'test/unit'
-require_relative '../../app/models/default_test_case.rb'
+require_relative '../../app/models/test_environment_default_test_case.rb'
 class EmptyTest
 end #EmptyTest
-class EmptyDefaultTest < DefaultTestCase1
+class EmptyDefaultTest < BaseTestCase # DefaultTestCase1
 end #EmptyDefaultTest
 class EmptyIncludedTest
 include DefaultTests1
 end #EmptyIncludedTest
-require_relative '../../test/assertions.rb'
-class MinimalTest < DefaultTestCase0
+#require_relative '../../test/assertions.rb'
+class MinimalTest < BaseTestCase # DefaultTestCase0
 end #MinimalTest
 class ClassExists
 def self.assert_invariant
@@ -25,7 +23,7 @@ def self.assert_invariant
 end # class_assert_invariant
 end #ClassExists
 
-class ClassExistsTest < DefaultTestCase1
+class ClassExistsTest < BaseTestCase # DefaultTestCase1
 
 def test_examples_submodule
 end # example_submodule
@@ -36,7 +34,7 @@ end # example_submodule
 
 
 def test_each_example
-  included_module_names=model_class?.included_modules.map{|m| m.name}
+  included_module_names = model_class?.included_modules.map{|m| m.name}
 end #each_example
 def test_existing_call
 end #existing_call
@@ -61,4 +59,4 @@ def test_assert_class_invariant
 	assert_include(Module.constants, :ClassExists)
 end #test_assert_class_invariant
 include DefaultTests1
-end #DefaultTestCaseTest
+end # DefaultTestCaseTest

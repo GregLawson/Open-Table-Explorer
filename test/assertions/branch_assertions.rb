@@ -38,7 +38,7 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
+#Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
 Executing_branch=Branch.new(Repository::Examples::This_code_repository)
 Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
 end #Examples

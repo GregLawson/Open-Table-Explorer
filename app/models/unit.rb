@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2014 by Greg Lawson                                      
+#    Copyright (C) 2012-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,9 +9,14 @@ require_relative '../../app/models/file_pattern.rb'
 class Unit
 module ClassMethods
 def new_from_path?(path)
-	library_name=FilePattern.path2model_name?(path)
+	library_name = FilePattern.path2model_name?(path)
 	Unit.new(library_name, FilePattern.project_root_dir?(path))
 end #new_from_path?
+def unit_names?(files)
+	files.map do |f|
+		FilePattern.unit_base_name?(f).to_s
+	end #map
+end #unit_names?
 end #ClassMethods
 extend ClassMethods
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
@@ -134,7 +139,6 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
-require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods
@@ -198,7 +202,6 @@ UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
 SELF=Unit.new #defaults to this unit
 end #Examples
 include Examples
-require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods

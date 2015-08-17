@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -10,31 +10,42 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/host.rb'
 class Network # < ActiveRecord::Base
+include NoDB
+extend NoDB::ClassMethods
 #include Generic_Table
 module Constants
-IFCONFIG=ShellCommands.new('/sbin/ifconfig')
 #Hosts = Host.new
-Quad_Pattern = /[0-2]?[0-9]?[09]/
+Quad_Pattern = /[0-2]?[0-9]?[0-9]/
 Private_A = /10\./.capture(:network) * (Quad_Pattern * Quad_Pattern * Quad_Pattern).capture(:host)
 B_Quad2 = /16/ | /17/ | /18/ | /19/ | /20/ | /21/ | /22/ | /23/ | /24/ | /25/ | /26/ | /27/ | /28/ | /29/ | /30/ | /31/
 Private_B = (/172\./ * B_Quad2).capture(:network) * (Quad_Pattern * Quad_Pattern).capture(:host)
-Private_C = /192\.168\./.capture(:network) * (Quad_Pattern * Quad_Pattern).capture(:host)
+Private_C = /192\.168\./.capture(:network) * (Quad_Pattern * /\./ * Quad_Pattern).capture(:host)
 Zero_Config_Pattern = /169\.254./.capture(:network)
 Private_Network_Pattern = Private_A | Private_B | Private_C | Zero_Config_Pattern
 
-Context_Pattern = [/\s*inet addr:/,/[0-9]*\.[0-9]*\./]
-Network_Pattern =/[0-9]+\./
-Node_Pattern = /[0-9]+/
-IP_Pattern = [Context_Pattern, Network_Pattern, Node_Pattern]
+
+IP_Pattern = (Quad_Pattern * /\./).group * 3 * Quad_Pattern
 Netmask_Pattern = /.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/
 MyContext = /\s*inet addr:/,/[0-9]*\.[0-9]*\./.capture(:myContext)
 MyNetwork = /[0-9]+/.capture(:myNode)
 MyNetmask = /.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/
+IFCONFIG=ShellCommands.new('/sbin/ifconfig')
 Ifconfig_pattern = []
 IFCONFIG_cappture = IFCONFIG.output.capture?(Ifconfig_pattern)
 end #Constants
 include Constants
 module ClassMethods
+def ifconfig
+	lines = IFCONFIG.output.parse(Capture::Examples::LINE)
+end # ifconfig
+def all
+	@@all = ['192.168.0.1-254'].map do |nmapScan| #map
+		Network.new(nmapScan)	
+	end #map
+end #all
+def find_or_initialize_by_nmap_addresses(nmapScan)
+	Network.new(nmapScan)
+end # find_or_initialize_by_nmap_addresses
 def whereAmI
 	ifconfig=`/sbin/ifconfig|grep "inet addr" `
 	#puts ifconfig
@@ -59,7 +70,7 @@ def whereAmI
 	network.update_attribute('nmap_addresses',@nmapScan)
 	network.dumpAcquisitions if $DEBUG
 	network.save
-end #whereAmI
+end # whereAmI
 def acquire
 	whereAmI
 # now do incremental ping and nmapScan
@@ -102,10 +113,19 @@ end
 end #ClassMethods
 extend ClassMethods
 include Constants
-# attr_reader
-def initialize
-	super('Networks')
+attr_reader :ip_range
+def initialize(ip_range) # can this be a Range?
+	@ip_range = ip_range
 end #initialize
+def ==(other)
+	self.ip_range == other.ip_range
+end # equals
+def nmap(options = '-sP')
+	@nmap=ShellCommands.new('nmap ' + options + ' ' + @ip_range)
+end # nmap
+def update_attribute(name, value)
+	instance_variable_set(name, value)
+end # update_attribute
 require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods

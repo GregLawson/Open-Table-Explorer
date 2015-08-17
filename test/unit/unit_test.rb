@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -17,6 +17,9 @@ TestCase=eval(TE.test_case_class_name?)
 class UnitTest <  DefaultTestCase2
 include DefaultTests2 
 #include DefaultTests0    #less error messages
+def test_unit_names?
+	assert_equal(['unit'], Unit.unit_names?([$0]))	
+end #unit_names?
 def test_equals
 	assert(Unit.new==Unit.new)
 end #==

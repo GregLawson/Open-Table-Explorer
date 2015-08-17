@@ -1,0 +1,48 @@
+testing
+2015-06-06 10:57:10.128
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+...F.F..FF.Froot=(?m-ix:a?(b)*[c]+)
+> Regexp::Expression::Root
+  > Regexp::Expression::Group::Options
+    > Regexp::Expression::Literal
+    > Regexp::Expression::Group::Capture
+      > Regexp::Expression::Literal
+    > Regexp::Expression::CharacterSet
+.
+
+Finished tests in 0.019985s, 650.4805 tests/s, 2501.8482 assertions/s.
+
+  1) Failure:
+test_Mx_format(RegexpParseTest) [test/unit/regexp_parse_test.rb:56]:
+<"  a # leaf typed[2], Literal(:literal, :literal, 'a')"> expected but was
+<"  a # terminal[2], Literal(:literal, :literal, 'a')">.
+
+  2) Failure:
+test_Tree_node_format(RegexpParseTest) [test/unit/regexp_parse_test.rb:66]:
+<"leaf typed[2], Literal(:literal, :literal, 'a')"> expected but was
+<"terminal[2], Literal(:literal, :literal, 'a')">.
+
+  3) Failure:
+test_inspect_recursive(RegexpParseTest) [test/unit/regexp_parse_test.rb:42]:
+<"leaf typed[2], Literal(:literal, :literal, 'a')"> expected but was
+<"terminal[2], Literal(:literal, :literal, 'a')">.
+
+  4) Failure:
+test_map_recursive(RegexpParseTest) [test/unit/regexp_parse_test.rb:115]:
+<"leaf typed[2], Literal(:literal, :literal, 'a')"> expected but was
+<"terminal[2], Literal(:literal, :literal, 'a')">.
+
+  5) Failure:
+test_raw_capture?(RegexpParseTest) [test/unit/regexp_parse_test.rb:72]:
+<["nonterminal[0], Root(:expression, :root, '')",
+ [["nonterminal[1], Group::Options(:group, :options, '(?-mix:')",
+   ["leaf typed[2], Literal(:literal, :literal, 'a')"]]]]> expected but was
+<["nonterminal[0], Root(:expression, :root, '')",
+ [["nonterminal[1], Group::Options(:group, :options, '(?-mix:')",
+   ["terminal[2], Literal(:literal, :literal, 'a')"]]]]>.
+
+13 tests, 50 assertions, 5 failures, 0 errors, 0 skips

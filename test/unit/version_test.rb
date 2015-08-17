@@ -49,7 +49,7 @@ end #initialize
 def test_Version_Examples
 	assert_match(/[1-9]?[0-9]{1,3}/, '1.9.0')
 	assert_match(Version_digits, First_example_version_name)
-	parsed_version_string = First_example_version_name.parse(Version_pattern)
+	parsed_version_string = First_example_version_name.parse(Version_regexp)
 	assert_equal({:major=>"1", :minor=>"9", :patch=>"0"}, parsed_version_string)
 end # Examples
 end # Version

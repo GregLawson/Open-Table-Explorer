@@ -1,12 +1,11 @@
 ###########################################################################
-#    Copyright (C) 2012-2014 by Greg Lawson
+#    Copyright (C) 2012-2015 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit'
-require 'active_support/all'
+require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/unit.rb'
@@ -16,4 +15,4 @@ TestCase=eval(TE.test_case_class_name?)
 #AssertionFailedError=Test::Unit::AssertionFailedError
 AssertionFailedError = RuntimeError
 #AssertionFailedError = MiniTest::Assertion
-assert_global_name(:AssertionFailedError)
+#assert_global_name(:AssertionFailedError)

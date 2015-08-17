@@ -211,4 +211,11 @@ def test_assert_pre_conditions
 	Regexp.regexp_error('(').assert_pre_conditions
 	Regexp.new(']').assert_pre_conditions
 end # assert_pre_conditions
+def test_assert_named_captures
+	/a/.capture(:a).assert_named_captures
+	(/a/.capture(:a) * /b/.capture).assert_named_captures
+	regexp = /b/.capture
+	message = regexp.inspect
+	assert_raises(MiniTest::Assertion) {regexp.assert_named_captures}
+end # assert_named_captures
 end #Regexp

@@ -56,7 +56,8 @@ def log
   log_file = logs[0]
 
 end # log
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 

@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2014 by Greg Lawson                                      
+#    Copyright (C) 2011-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,66 +9,27 @@ require_relative '../../app/models/no_db.rb'
 require 'virtus'
 require 'fileutils'
 require_relative '../../app/models/repository.rb'
-require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
+require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/branch.rb'
+require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
 include Virtus.model
-  attribute :test_type, Symbol, :default => :unit
-  attribute :singular_table, String, :default => TE.model_name?.to_s.underscore
-  attribute :plural_table, String, :default => nil
-  attribute :test, String, :default => nil # all tests in file
-  attribute :test_command, String, :default => 'ruby'
-  attribute :processor_version, String, :default => nil # system version
-  attribute :options, String, :default => '-W0'
-  attribute :timestamp, Time, :default => Time.now
+  attribute :executable, TestExecutable
+  attribute :logging, Symbol
+  attribute :ruby_interpreter, RubyInterpreter
 module Constants
-# see http://semver.org/
-Version_digits = /[0-9]{1,4}/
-Version = [Version_digits.capture(:major), '.'] + 
-	[Version_digits.capture(:minor)] + 
-	[Version_digits.capture(:patch)] +
-	[/[-.a-zA-Z0-9]*/.capture(:pre_release)]
-Ruby_pattern = [/ruby /, Version]
-Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
-Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
-Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
+#include Version::Constants
+Error_classification={0 => :success,
+				1     => :single_test_fail,
+				100 => :initialization_fail,
+				10000 => :syntax_error}
 end # Constants
 include Constants
 #include Generic_Table
 #has_many :bugs
 module ClassMethods
-def ruby_version(executable_suffix = '')
-	ShellCommands.new('ruby --version').output.split(' ')
-	testRun = TestRun.new(test_command: 'ruby', options: '--version').run
-	testRun.output.parse(Version_pattern).output
-end # ruby_version
-def error_score?(executable)
-	file_pattern = FilePattern.find_from_path(executable)
-	test_type = file_pattern[:name][0..-6]
-	@@recent_test = TestRun.new(test_type: test_type).run
-	unit = Unit.new_from_File(executable)
-
-	if @@recent_test.success? then
-		0
-	elsif @@recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test = TestRun.new(test_type: test_type,
-			options: '-c').run
-
-		if syntax_test.output=="Syntax OK\n" then
-			initialize_test = TestRun.new(test_type: test_type,
-			options: '-n test_initialize').run
-			if initialize_test.success? then
-				1
-			else # initialization  failure or test_initialize failure
-				100 # may prevent other tests from running
-			end #if
-		else
-			10000 # syntax error can hide many sins
-		end #if
-	else
-		@recent_test.process_status.exitstatus # num_errors>1
-	end #if
-end # error_score
 def ruby_run_and_log(ruby_source,log_file,test=nil, options = nil)
 	file_pattern = FilePattern.find_from_path(ruby_source)
 	unit = Unit.new_from_File(ruby_source)
@@ -126,7 +87,7 @@ def ruby(args, &proc)
 	shell("ruby #{args}",&proc)
 end #ruby
 def file_bug_reports(ruby_source,log_file,test=nil)
-	table,test_type=CodeBase.test_type_from_source(ruby_source)
+	table,test_type= CodeBase.test_type_from_source(ruby_source)
 	header,errors,summary=parse_log_file(log_file)
 	if summary.nil? then
 		puts "summary is nil. probable rake failure."
@@ -181,8 +142,8 @@ def log_passed?(log_file)
 end # log_passed?
 def summarize
 	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/empty_tests.tmp)
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
-	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
 	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
 end # summarize
 def parse_summary(summary)
@@ -202,6 +163,41 @@ end #parse_header
 end # ClassMethods
 extend ClassMethods
 # attr_reader
+def error_score?(logging = :quiet,
+		minor_version = '1.9',
+		patch_version = '1.9.3p194')
+	executable_file = @executable.executable_file
+	fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !File.exists?(executable_file)
+	@ruby_test_string = @executable.ruby_test_string(logging,
+		minor_version,
+		patch_version)
+	@recent_test = @executable.repository.shell_command(@ruby_test_string)
+	log_path = @executable.log_path?(logging, minor_version, patch_version)
+	if !log_path.empty? then
+	end # if
+	@executable.write_error_file(@recent_test, log_path)
+	@executable.write_commit_message(@recent_test, [executable_file])
+#	@recent_test.puts if $VERBOSE
+	@error_score = if @recent_test.success? then
+		0
+	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
+		syntax_test = @executable.repository.shell_command("ruby -c "+executable_file)
+		if syntax_test.output=="Syntax OK\n" then
+			initialize_test = @executable.repository.shell_command("ruby "+executable_file+' -n test_initialize')
+			if initialize_test.success? then
+				1
+			else # initialization  failure or test_initialize failure
+				100 # may prevent other tests from running
+			end #if
+		else
+			10000 # syntax error can hide many sins
+		end #if
+	else
+		@recent_test.process_status.exitstatus # num_errors>1
+	end #if
+	@error_classification = Error_classification.fetch(@error_score, :multiple_tests_fail)
+	@error_score
+end # error_score
 def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)
 	if testType.instance_of?(Hash) then
 		super(testType) # actually hash of attributes
@@ -247,29 +243,6 @@ def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil
 #	puts "End of initialize: self=#{self.inspect}"
 #	puts "End of initialize: testType=#{testType.inspect}"
 end #initialize
-def unit?
-	Unit.new(@singular_table)
-end # unit?
-def test_file?
-	case @test_type
-	when :unit
-		return "test/unit/#{@singular_table}_test.rb"
-	when :controller
-		return "test/functional/#{@plural_table}_controller_test.rb"
-	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
-	end #case
-end #test_file?
-# log_file => String
-# Filename of log file from test run
-def log_file?
-	case @test_type
-	when :unit
-		unit?.pathname_pattern?(:library_log, @test)
-	when :controller
-		unit?.pathname_pattern?(:controller_log, @test)
-	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
-	end #case
-end #log_file?
 # Unconditionally run the test
 def run
 #  attribute :test_type, Symbol, :default => :unit
@@ -281,8 +254,8 @@ def run
 #  attribute :options, String, :default => nil
 #  attribute :timestamp, Time, :default => Time.now
 
-#	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
-	FileUtils.mkdir_p(File.dirname(log_file?))
+#	TestRun.ruby_run_and_log(test_file?,log_path?,@test)
+	FileUtils.mkdir_p(File.dirname(log_path?))
 	command = [test_command]
 	if !options.nil? then
 		command += [options]
@@ -303,11 +276,11 @@ rescue SyntaxError => exception_raised
 end #run
 # Run a shell
 def ruby_run_and_log
-	TestRun.ruby_run_and_log(test_file?,log_file?,@test)
+	TestRun.ruby_run_and_log(test_file?,log_path?,@test)
 end #ruby_run_and_log
 
 def file_bug_reports
-	TestRun.file_bug_reports(test_file?,log_file?,@test)
+	TestRun.file_bug_reports(test_file?,log_path?,@test)
 end #file_bug_reports
 require_relative '../../test/assertions.rb'
 module Assertions
@@ -341,12 +314,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Default_testRun = TestRun.new
-Unit_testRun = TestRun.new(:test_type => :unit)
-Plural_testRun = TestRun.new({:test_type => :unit, :plural_table => 'test_runs'})
-Singular_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'test_run')
-Stream_pattern_testRun = TestRun.new(:test_type => :unit,  :singular_table => 'stream_pattern')
-Odd_plural_testRun=TestRun.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
-Ruby_version = ShellCommands.new('ruby --version').output
+Default_testRun = TestRun.new(executable: TestExecutable::Examples::Default_executable)
 end # Examples
 end # TestRun

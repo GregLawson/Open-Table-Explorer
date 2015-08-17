@@ -10,7 +10,7 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../test/assertions/unbounded_range_assertions.rb'
 # parse tree internal format is nested Arrays.
 # Postfix operators and brackets end embeddded arrays
-class RegexpParse
+module RegexpParseType
 #require_relative '../assertions/default_assertions.rb'
 require 'test/unit'
 module Assertions
@@ -131,7 +131,9 @@ extend Assertions::ClassMethods
 include DefaultAssertions
 extend DefaultAssertions::ClassMethods
 module Examples #  Namespace
-include Constants
+assert_equal(RegexpParse::Examples, self)
+assert_include(RegexpParse.constants, :Constants)
+include RegexpParse::Constants
 #Asymmetrical_Tree_Parse=RegexpParse.new(NestedArray::Examples::Asymmetrical_Tree_Array)
 Quantified_operator_array=["{", "3", ",", "4", "}"]
 Quantified_operator_string=Quantified_operator_array.join
@@ -239,4 +241,4 @@ end #ClassMethods
 end #Examples
 include Examples
 extend Examples::ClassMethods
-end #RegexpParse
+end # RegexpParseType

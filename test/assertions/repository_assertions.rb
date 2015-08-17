@@ -6,7 +6,22 @@
 #
 ###########################################################################
 # @see http://grit.rubyforge.org/
+#assert_include(Module.constants, :ShellCommands)
+#assert_include(Module.constants, :FilePattern)
+#assert_include(Module.constants, :Unit)
+#assert_include(Module.constants, :Capture)
+#assert_include(Module.constants, :Branch)
+#assert_include(Module.constants, :Repository)
+#assert_include(Repository.constants, :Constants)
 require_relative '../../app/models/repository.rb'
+assert_include(Module.constants, :ShellCommands)
+assert_include(Module.constants, :FilePattern)
+assert_include(Module.constants, :Unit)
+assert_include(Module.constants, :Capture)
+#assert_include(Module.constants, :Branch)
+assert_include(Module.constants, :Repository)
+#assert_include(Repository.constants, :Constants)
+assert_include(Repository.constants, :Constants)
 class Repository #<Grit::Repo
 module Assertions
 include Test::Unit::Assertions
@@ -41,15 +56,16 @@ include Assertions
 extend Assertions::ClassMethods
 Repository.assert_pre_conditions
 module Examples
-include Constants
+assert_equal(Repository::Examples, self)
+assert_include(Repository.constants, :Constants)
+include Repository::Constants
 	This_code_repository.assert_pre_conditions
 Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
 Empty_Repo_path=Source+'test_repository/'
-Empty_Repo=Repository.create_test_repository(Empty_Repo_path)
 Modified_path=Empty_Repo_path+'/README'
 Unique_repository_directory_pathname = Repository.timestamped_repository_name?
 	This_code_repository.assert_pre_conditions
 end #Examples
 end #Repository
-
+assert_include(Repository.constants, :Constants)
 
