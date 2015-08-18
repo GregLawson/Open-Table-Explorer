@@ -8,7 +8,7 @@
 require_relative '../../app/models/test_environment_default_test_case.rb'
 class EmptyTest
 end #EmptyTest
-class EmptyDefaultTest < BaseTestCase # DefaultTestCase1
+class EmptyDefaultTest < DefaultTestCase1
 end #EmptyDefaultTest
 class EmptyIncludedTest
 include DefaultTests1
@@ -23,7 +23,7 @@ def self.assert_invariant
 end # class_assert_invariant
 end #ClassExists
 
-class ClassExistsTest < BaseTestCase # DefaultTestCase1
+class ClassExistsTest < DefaultTestCase1
 
 def test_examples_submodule
 end # example_submodule
@@ -56,7 +56,7 @@ def test_case_assert_invariant
 	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
 end #assert_invariant
 def test_assert_class_invariant
-	assert_include(Module.constants, :ClassExists)
+	assert_includes(Module.constants, :ClassExists)
 end #test_assert_class_invariant
 include DefaultTests1
 end # DefaultTestCaseTest

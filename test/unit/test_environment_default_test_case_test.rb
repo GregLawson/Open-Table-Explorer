@@ -5,7 +5,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/test_environment_default_test_case.rb'
-class TestEnvironmentTest < TestCase
+class TestEnvironmentDefaultTestCaseTest < TestCase
 #include DefaultTests
 def test_ruby_assertions
 end # ruby_assertions

@@ -39,7 +39,7 @@ elsif ARGV[0].nil?
 else
 	Sub_command = ARGV[0].to_sym # get the subcommand
 end # if
-Command = Unit::Executing_Unit.model_basename
+Command = Unit::Executable.model_basename
 puts 'ARGV = ' + ARGV.inspect if $VERBOSE
 puts 'Sub_command = ' + CommandLine::Sub_command.inspect if $VERBOSE
 if !Arguments.nil? then
@@ -117,7 +117,7 @@ include Constants
 end # ClassMethods
 extend ClassMethods
 def candidate_commands
-	script_class = Unit::Executing_Unit.model_class?
+	script_class = Unit::Executable.model_class?
 	if Number_of_arguments == 0 then
 		file_argument = $0 # script file
 	else

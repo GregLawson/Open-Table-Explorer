@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/test_environment_minitest.rb'
-class MinitestTest < TestCase
+class TestEnvironmentMinitestTest < TestCase
 def test_RegexpError
 	regexp_string = ')'
 	Regexp.new(regexp_string) # test

@@ -89,7 +89,7 @@ def pathnames?
 	end #
 end #pathnames
 module Constants
-Executing_Unit = Unit.new_from_path?($PROGRAM_NAME)
+Executable = Unit.new_from_path?($PROGRAM_NAME)
 end #Constants
 include Constants
 def default_test_class_id?
@@ -139,6 +139,12 @@ end #model_class
 def model_name?
 	@model_class_name
 end #model_name?
+def test_class_name
+	@model_class_name.to_s + 'Test'
+end # test_class
+def test_class
+	eval(test_class_name)
+end # test_class
 module Assertions
 
 module ClassMethods

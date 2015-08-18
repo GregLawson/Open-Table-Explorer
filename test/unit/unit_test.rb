@@ -1,20 +1,17 @@
 ###########################################################################
 #    Copyright (C) 2013-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment' # avoid recursive requires
-require 'test/unit'
+require_relative 'test_environment' # avoid recursive requires
 require_relative '../../app/models/default_test_case.rb'
-require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/unit.rb'
-require_relative '../../app/models/unbounded_fixnum.rb'
 TE=Unit.new
 DefaultTests=eval(TE.default_tests_module_name?)
-TestCase=eval(TE.test_case_class_name?)
-class UnitTest <  DefaultTestCase2
+#TestCase=eval(TE.test_case_class_name?)
+class UnitTest <  TestCase
 include DefaultTests2 
 #include DefaultTests0    #less error messages
 def test_unit_names?
@@ -90,7 +87,7 @@ def test_pathnames
 	assert_equal(UnboundedFixnumUnit.pathnames?, pathnames)
 	SELF.assert_pre_conditions
 	SELF.assert_post_conditions
-	assert_include(SELF.pathnames?, File.expand_path($0), SELF)
+	assert_includes(SELF.pathnames?, File.expand_path($0), SELF)
 end #pathnames
 def test_default_test_class_id
 	assert_path_to_constant(:DefaultTestCase0)
