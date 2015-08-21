@@ -167,12 +167,6 @@ def test_parse_header
 	refute_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 end #parse_header
-def test_TestRun_initialize
-	assert_equal(TestExecutable::Examples::Default_executable, Default_testRun.executable)
-	assert_equal(TestExecutable::Examples::Default_executable.executable_file, Default_testRun.executable.executable_file)
-	assert_equal($PROGRAM_NAME, Default_testRun.executable.executable_file)
-	assert_equal(TestExecutable::Examples::Default_executable.unit, Default_testRun.executable.unit)
-end # test_TestRun_initialize
 def test_error_score?
 	executable_file = '/etc/mtab' #force syntax error with non-ruby text
 	test_executable = TestExecutable.new(executable_file: executable_file)
@@ -201,10 +195,16 @@ def test_error_score?
 #	This_code_repository.assert_deserving_branch(:passed, executable_file)
 	Error_classification.each_pair do |key, value|
 		executable_file = Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
-		message = 'executable_file = ' = executable_file
+		message = 'executable_file = ' + executable_file
 		assert_equal(key, TestRun.new(executable: TestExecutable.new(executable_file: executable_file)).error_score?, message)
 	end #each
 end # error_score
+def test_TestRun_initialize
+	assert_equal(TestExecutable::Examples::Default_executable, Default_testRun.executable)
+	assert_equal(TestExecutable::Examples::Default_executable.executable_file, Default_testRun.executable.executable_file)
+	assert_equal($PROGRAM_NAME, Default_testRun.executable.executable_file)
+	assert_equal(TestExecutable::Examples::Default_executable.unit, Default_testRun.executable.unit)
+end # test_TestRun_initialize
 def test_run
 	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)
 	ruby_pattern = /ruby / * /2.1.2p95/
