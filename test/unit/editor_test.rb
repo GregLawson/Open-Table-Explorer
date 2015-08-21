@@ -9,7 +9,7 @@ require_relative '../unit/test_environment'
 require_relative '../../app/models/work_flow.rb'
 
 class EditorTest < TestCase
-include DefaultTests
+#include DefaultTests
 #include Editor
 #extend Editor::ClassMethods
 include Editor::Examples

@@ -12,7 +12,7 @@ require_relative '../app/models/command_line.rb'
 #require_relative '../app/models/unit.rb'
 scripting_executable = TestExecutable.new_from_path($0)
 require_relative "../app/models/#{scripting_executable.unit.model_basename}"
-script_class = Unit::Executing_Unit.model_class?
+script_class = Unit::Executable.model_class?
 
 script = CommandLine.new($0, script_class)
 pp ARGV if $VERBOSE
