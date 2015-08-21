@@ -5,4 +5,4 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/test_environment_default_test_case.rb'
+require_relative '../../app/models/test_environment_minitest.rb'
