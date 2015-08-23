@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/command_line.rb'
+require_relative '../assertions/shell_command_assertions.rb'
 class CommandLine < Command
 module Assertions
 
@@ -58,7 +59,7 @@ end #Constants
 include Constants
 module Examples
 include Constants
-SELF=CommandLine.new($0)
+No_args = CommandLine.new($0, CommandLine, [])
 Readme_opts = Trollop::options do
     opt :monkey, "Use monkey mode"                    # flag --monkey, default false
     opt :name, "Monkey name", :type => :string        # string --name <s>, default nil

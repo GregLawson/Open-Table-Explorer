@@ -1,0 +1,15 @@
+testing
+2015-08-28 12:37:09.754
+ruby -v -W0 test/unit/command_line_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 32087
+
+# Running:
+
+...........No arguments
+............
+
+Finished in 7.127214s, 3.2271 runs/s, 3.6480 assertions/s.
+
+23 runs, 26 assertions, 0 failures, 0 errors, 0 skips
+

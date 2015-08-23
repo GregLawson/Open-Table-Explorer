@@ -6,42 +6,77 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../test/assertions.rb'
 require_relative '../assertions/command_line_assertions.rb'
-#CommandLine.assert_ARGV
-CommandLine.assert_pre_conditions
 class CommandLineTest < TestCase
 include CommandLine::Examples
-def teardown
-	cleanup_ARGV
-end # teardown
+Test_unit = Unit.new(:TestRun)
+require Test_unit.model_pathname?
+Test_unit_commandline = CommandLine.new(Test_unit.model_test_pathname?, Test_unit.model_class?, ['error_score?', $0])
+
 
 def test_Constants
 	CommandLine.assert_pre_conditions
 	assert_equal({:inspect=>false, :test=>false, :help=>false, :individual_test=>false}, Command_line_test_opts)
-	global_opts = Trollop::options do
-	  banner "magic file deleting and copying utility"
-	  opt :dry_run, "Don't actually do anything", :short => "-n"
-	  stop_on SUB_COMMANDS
-	end
-	if Number_of_arguments > 0 then
-		Arguments.each_with_index do |argument, i|
-			puts argument.to_s + ' type of ' + Argument_types[i]
+	if Script_command_line.number_of_arguments > 0 then
+		Script_command_line.arguments.each_with_index do |argument, i|
+			puts argument.to_s + ' type of ' + Script_command_line.argument_types[i]
 		end # each
 	else
 		puts "No arguments"
 	end # if
+	assert_equal(Command, :command_line)
+	assert_equal(Script_class, CommandLine)
+	assert_equal(Script_command_line.unit_class, Script_class)
 end # Constants
 
 def test_initialize
+	refute_nil(No_args.unit_class)
+	refute_nil(Script_command_line.unit_class)
 end #initialize
+def test_to_s
+end # to_s
+def test_arguments
+end # arguments
+def test_number_of_arguments
+end # number_of_arguments
+def test_sub_command
+end # sub_command
+def test_argument_types
+end # argument_types
+def test_dispatch_one_argument
+	executable_object = Test_unit_commandline.executable_object($0)
+	assert_respond_to(executable_object, Test_unit_commandline.sub_command)
+	method = executable_object.method(Test_unit_commandline.sub_command)
+	assert_equal(-1, method.arity)
+#	refute_nil(Test_unit_commandline.dispatch_one_argument($0))
+end # dispatch_one_argument
+def test_executable_object
+	assert_includes(Test_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
+	test_run_object = TestRun.new(executable: TestExecutable.new(executable_file: $0))
+	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object($0).methods)
+#	assert_equal(test_run_object, Test_unit_commandline.executable_object($0))
+#	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object($0).executable)
+	refute_nil(test_run_object.executable)
+	assert_equal($0, test_run_object.executable.executable_file)
+	assert_equal($0, Test_unit_commandline.executable_object($0).executable.executable_file)
+end # executable_object
+def test_candidate_commands
+	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
+	assert_equal(-2, Script_command_line.method(:initialize).arity)
+#	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
+#	assert_equal(-2, Script_command_line.unit_class.method(:initialize).arity)
+end # candidate_commands
+def test_candidate_commands_strings
+end # candidate_commands_strings
+def test_command_line_parser
+end # command_line_parser
+def test_command_line_opts
+end # command_line_opts
 def test_run
 	CommandLine.assert_pre_conditions
-	assert_not_nil(ARGV)
-	assert_nothing_raised do
-		SELF.run do
-		end # do run
-	end # assert_raises
+	refute_nil(ARGV)
+#		SELF.run do
+#		end # do run
 end # run
 # ruby -W0 script/command_line.rb
 # ruby -W0 script/command_line.rb --help
@@ -51,7 +86,7 @@ def test_no_arg_command
 	no_arg_run = CommandLine.assert_command_run('')
 
 	assert_equal('', no_arg_run.errors)
-	assert_equal('', no_arg_run.output)
+	refute_equal('', no_arg_run.output)
 end # no_arg_command
 def test_help_command
 	help_run = CommandLine.assert_command_run('--help')
@@ -64,6 +99,7 @@ def test_inspect_command
 	CommandLine.assert_command_run('inspect ' + $0)
 end # inspect_command
 def test_readme_example
+#	 ruby -W0 test/unit/command_line_test.rb -n test_executable_object
 	CommandLine.assert_pre_conditions
 	assert_instance_of(Hash, Readme_opts)
 	help_run = ShellCommands.new('ruby -W0 script/command_line.rb --help ')
