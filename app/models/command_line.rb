@@ -103,7 +103,7 @@ def executable_object(file_argument = nil)
 	if @unit_class.included_modules.include?(Virtus::InstanceMethods) then
 		@unit_class.new(executable: TestExecutable.new(executable_file: file_argument))
 	else
-		@unit_class.new(executable: TestExecutable.new_from_path(file_argument))
+		@unit_class.new(TestExecutable.new_from_path(file_argument))
 	end # if
 end # executable_object
 def candidate_commands

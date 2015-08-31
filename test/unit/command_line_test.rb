@@ -12,6 +12,8 @@ include CommandLine::Examples
 Test_unit = Unit.new(:TestRun)
 require Test_unit.model_pathname?
 Test_unit_commandline = CommandLine.new(Test_unit.model_test_pathname?, Test_unit.model_class?, ['error_score?', $0])
+Not_virtus_unit = Unit.new(:CommandLine)
+Not_virtus_unit_commandline = CommandLine.new(Not_virtus_unit.model_test_pathname?, Not_virtus_unit.model_class?, ['help', $0])
 
 
 def test_Constants
@@ -57,6 +59,17 @@ def test_executable_object
 #	assert_equal(test_run_object, Test_unit_commandline.executable_object($0))
 #	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object($0).executable)
 	refute_nil(test_run_object.executable)
+	assert_equal($0, test_run_object.executable.executable_file)
+	assert_equal($0, Test_unit_commandline.executable_object($0).executable.executable_file)
+
+	refute_includes(CommandLine.included_modules, Virtus::InstanceMethods)
+	refute_includes(Not_virtus_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
+	test_run_object = CommandLine.new(TestExecutable.new_from_path($0))
+#	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object($0).methods)
+#	assert_equal(test_run_object, Test_unit_commandline.executable_object($0))
+#	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object($0).executable)
+	refute_nil(test_run_object.executable)
+	assert_instance_of(TestExecutable, test_run_object.executable)
 	assert_equal($0, test_run_object.executable.executable_file)
 	assert_equal($0, Test_unit_commandline.executable_object($0).executable.executable_file)
 end # executable_object
