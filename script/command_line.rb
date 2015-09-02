@@ -12,7 +12,8 @@ require_relative '../app/models/command_line.rb'
 run = CommandLine::Script_command_line.run do
 	sub_command = CommandLine::Script_command_line.sub_command
 	if sub_command == :help then
-		puts Unit.all.inspect
+		puts 'sub_command == :help'
+		true # done
 	else
 		unit = Unit.new(sub_command)
 		require unit.model_pathname?

@@ -134,8 +134,10 @@ end # candidate_commands_strings
 def command_line_parser
 	command_line = self
 	Trollop::Parser.new do
-		banner 'Usage: ' + ' subcommand  options args'
-		banner ' subcommands:  ' + SUB_COMMANDS.join(', ')
+		banner 'Usage: ' + ' unit_basename subcommand  options args'
+		banner 'Possible unit names:'
+		banner Unit.all_basenames.join(' ,')
+		banner ' subcommands or units:  ' + SUB_COMMANDS.join(', ')
 		banner ' candidate_commands with ' + command_line.number_of_arguments.to_s + ' or variable number of arguments:  '
 		command_line.candidate_commands_strings.each do |candidate_commands_string|
 			banner '   '  + candidate_commands_string
