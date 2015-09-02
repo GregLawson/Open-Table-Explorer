@@ -7,6 +7,7 @@
 ###########################################################################
 require 'open3'
 require 'shellwords.rb'
+require_relative 'log.rb'
 module Shell
 class Ssh
 module ClassMethods
