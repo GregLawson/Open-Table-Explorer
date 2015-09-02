@@ -111,11 +111,12 @@ Simple_acquisition='L 0 {e}'
 Short_acquisition='L  {e}'
 
 end #Examples
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
-extend Test::Unit::Assertions
+extend AssertionsModule
 def assert_pre_conditions
 		assert_instance_of(OpenTaxSolver, self)
 		assert_instance_of(Hash, self.attributes)
@@ -133,7 +134,7 @@ module ClassMethods
 include OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
 
-extend Test::Unit::Assertions
+extend AssertionsModule
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
@@ -238,7 +239,7 @@ def assert_full_match(acquisition)
 end #assert_match
 end #ClassMethods
 end #Assertions
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 include Assertions
 extend Assertions::ClassMethods
 end #OpenTaxSolver

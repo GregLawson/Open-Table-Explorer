@@ -39,7 +39,8 @@ module Constants
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
@@ -87,7 +88,8 @@ end #ClassMethods
 extend ClassMethods
 module Constants
 end #Constants
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 

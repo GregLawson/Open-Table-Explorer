@@ -14,7 +14,7 @@ require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/parse.rb'
 module OpenTableExplorer
 
-extend Test::Unit::Assertions
+extend AssertionsModule
 module Finance
 module Constants
 OTS_example_directories = Pathname.new('test/data_sources/tax_form/').expand_path.to_s

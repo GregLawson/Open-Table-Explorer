@@ -36,7 +36,8 @@ end #untested_methods
 def tested_nonmethods
 	@method_test_names-@method_names
 end #untested_methods
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 

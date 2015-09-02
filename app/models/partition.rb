@@ -19,7 +19,7 @@ include Constants
 def initialize
 	partition_output=ShellCommands.new('cat /proc/partitions')
 end #initialize
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

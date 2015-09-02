@@ -37,7 +37,7 @@ def next
 			@next = nil
 		end # map
 end # next
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

@@ -361,7 +361,8 @@ First_stream_method=StreamMethod.first
 end #Examples
 include Examples
 require_relative '../../test/assertions/default_assertions.rb'
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 include DefaultAssertions
 module ClassMethods
 include DefaultAssertions::ClassMethods

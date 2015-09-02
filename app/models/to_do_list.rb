@@ -96,9 +96,9 @@ def command_line_rebase_string?
 	end # if
 end # command_line_rebase_string?
 module Assertions
-include Test::Unit::Assertions
+include AssertionsModule
 module ClassMethods
-include Test::Unit::Assertions
+include AssertionsModule
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions

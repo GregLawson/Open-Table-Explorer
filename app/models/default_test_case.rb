@@ -73,9 +73,9 @@ def assert_optional_method(object, symbol)
 end #
 end #ExampleCall
 module DefaultTests0
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 
-#extend Test::Unit::Assertions
+#extend AssertionsModule
 def related_files?
 	Unit.new(model_name?)
 end #related_files
@@ -103,10 +103,10 @@ def assert_environment
   message= "self=#{self.inspect}"
   puts message
   message+= "\nself.included_modules=#{self.included_modules.inspect}"
-  assert_include(self.included_modules, Test::Unit::Assertions, message)
+  assert_include(self.included_modules, AssertionsModule, message)
   assert_include(self.included_modules, DefaultTests0, message)
   assert_respond_to(TE, :model_class?, message)
-  assert_include(TE.model_class?.included_modules, Test::Unit::Assertions, message)
+  assert_include(TE.model_class?.included_modules, AssertionsModule, message)
   assert_include(TE.model_class?.included_modules, Regexp::Assertions, message)
 #?  assert_include(TE.model_class?.included_modules, Regexp::Assertions::ClassMethods, message)
   assert_include(TE.model_class?.included_modules, Regexp::Examples, message)
@@ -116,7 +116,7 @@ def test_aaa_environment
   return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
   info "included_module_names=#{included_module_names.inspect}"
-  assert_include(self.class.included_modules, Test::Unit::Assertions)
+  assert_include(self.class.included_modules, AssertionsModule)
 #	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
 	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
@@ -138,10 +138,10 @@ def test_aaa_environment
 	assert_not_nil(TE.model_name?, message)
 	assert_not_nil(model_class?, message)
 	warn{assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")}
-	warn{assert_include(model_class?.included_modules, Test::Unit::Assertions)}
-#	assert_equal('Test::Unit::Assertions', self.class.name)
+	warn{assert_include(model_class?.included_modules, AssertionsModule)}
+#	assert_equal('AssertionsModule', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
-#	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
+#	assert_equal([Module, Object, AssertionsModule, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of related_files ."
     constant_names=model_class?::Examples.constants
     info "constant_names=#{constant_names}" if $VERBOSE
@@ -186,10 +186,10 @@ module DefaultTests3
 include DefaultTests2
 def test_assertion_inclusion
 	assert_include(model_class?.included_modules, model_class?::Assertions)
-	assert_include(model_class?.ancestors, Test::Unit::Assertions)
+	assert_include(model_class?.ancestors, AssertionsModule)
 end #test_assertion_inclusion
 def test_related_files
-	assert_include(self.class.included_modules, Test::Unit::Assertions)
+	assert_include(self.class.included_modules, AssertionsModule)
 #	assert_include(self.class.included_modules, DefaultAssertionTests)
 	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in ?")
 	assert_not_include(self.methods(false), :explain_assert_respond_to)
@@ -204,10 +204,10 @@ def test_related_files
 #	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
 #	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
 	assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
-	assert_include(model_class?.included_modules, Test::Unit::Assertions)
-#	assert_equal('Test::Unit::Assertions', self.class.name)
+	assert_include(model_class?.included_modules, AssertionsModule)
+#	assert_equal('AssertionsModule', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
-#	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
+#	assert_equal([Module, Object, AssertionsModule, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of default test."
 end #test_test_case
 end #DefaultTests3
@@ -263,9 +263,9 @@ class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 end #DefaultTestCase3
 
 class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 
-extend Test::Unit::Assertions
+extend AssertionsModule
 #assert_include(methods, :model_class?)
 #assert_include(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"

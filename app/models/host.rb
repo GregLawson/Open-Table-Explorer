@@ -45,7 +45,7 @@ def save
 	to_json
 end # save
 # attr_reader
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

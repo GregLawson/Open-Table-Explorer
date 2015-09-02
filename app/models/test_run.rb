@@ -282,7 +282,7 @@ end #ruby_run_and_log
 def file_bug_reports
 	TestRun.file_bug_reports(test_file?,log_path?,@test)
 end #file_bug_reports
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

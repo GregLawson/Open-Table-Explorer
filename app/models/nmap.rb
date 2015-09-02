@@ -165,7 +165,7 @@ def scanNmapSummary(s)
 	return [up,nmap_execution_time]
 end
 # attr_reader
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_xml(parsed_xml)

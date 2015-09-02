@@ -151,12 +151,13 @@ def add_commits(from_repository, last_commit_to_add, branch, history_options='--
 	@source_repository.git_command("checkout  #{branch}").assert_post_conditions
 	@source_repository.git_command("merge #{history_options} "+" -m "+name.to_s+commit.to_s).assert_post_conditions
 end #add_commits
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
 def assert_pre_conditions
-	assert_include(Test::Unit::Assertions.instance_methods, :quieter)
+	assert_include(AssertionsModule.instance_methods, :quieter)
 	quieter do
 	end # quieter
 end #assert_post_conditions
