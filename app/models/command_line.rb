@@ -201,13 +201,7 @@ Script_command_line = CommandLine.new($0, Script_class, ARGV)
 # = Script_class.new(TestExecutable.new_from_path($0))
 
 
-Command_line_test_opts = Trollop::options do
-	banner 'Usage: ' + Command.to_s + ' subcommand options  args' 
-    opt :inspect, "Inspect file object"                    # flag --monkey, default false
-    opt :test, "Test unit."       # 
-    opt :help, "Commands" # 
-    opt :individual_test, "Run only one individual test",  :short => "-n" # 
-  end
+
 end # Constants
 include Constants
 end # CommandLine
