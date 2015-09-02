@@ -116,12 +116,12 @@ end # assert_method
 end #ClassMethods
 # Any match at all
 def assert_pre_conditions(message='')
-	assert_not_nil(to_a?, 'no match at all.')
+	refute_nil(to_a?, 'no match at all.')
 	if output? == {} then
 
 #		assert_equal({}. to_a?, 'MatchData but no captures.')
 	elsif output? == [] then
-		assert_not_empty(to_a?, 'split but no captures.')
+		refute_empty(to_a?, 'split but no captures.')
 	end # if
 	assert(success?)
 end # assert_pre_conditions
@@ -149,7 +149,7 @@ def assert_left_match(message = '')
 	assert(success?, message)
 	message += "\nregexp = " + regexp.inspect
 	message += "\nstring... = " + string[0..50].inspect
-	assert_not_match(regexp, pre_match?)
+	refute_match(regexp, pre_match?)
 	assert_empty(pre_match?, message + "\nA left match requires pre_match? = #{pre_match?.inspect} to be empty.")
 	assert_empty(delimiters?.join("\n")[0..100], message + "\nDelimiters were found in a split match = "+delimiters?.inspect)
 	assert_success
@@ -488,8 +488,8 @@ module Assertions
 module ClassMethods
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')
 	match1=parse_string(string, pattern1)
-	assert_not_nil(match1)
-	assert_not_nil(answer[0, match1.size])
+	refute_nil(match1)
+	refute_nil(answer[0, match1.size])
 	assert_equal(answer[0, match1.size], match1, add_parse_message(string, pattern1, message))
 	match2=parse_string(string, pattern2)
 	assert_empty(match2-answer, add_parse_message(string, pattern2, message))

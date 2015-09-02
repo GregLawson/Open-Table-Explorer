@@ -90,7 +90,7 @@ def test_case_pre_conditions
 end #test_case_pre_conditions
 def test_class_assert_invariant
 #	assert_include(Module.constants, model_name?)
-#	assert_not_nil(model_class?, "Define a class named #{TE.model_name?} or redefine model_name? to return correct class name.")
+#	refute_nil(model_class?, "Define a class named #{TE.model_name?} or redefine model_name? to return correct class name.")
 	model_class?.assert_invariant
 #	fail "got to end of default test."
 end # class_assert_invariant
@@ -118,8 +118,8 @@ def test_aaa_environment
   info "included_module_names=#{included_module_names.inspect}"
   assert_include(self.class.included_modules, AssertionsModule)
 #	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
-	assert_not_include(self.methods(false), :explain_assert_respond_to)
-	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
+	refute_include(self.methods(false), :explain_assert_respond_to)
+	refute_include(self.class.methods(false), :explain_assert_respond_to)
 #startup allowed	assert_equal([], self.class.methods(false))
 #	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
 #	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
@@ -134,9 +134,9 @@ def test_aaa_environment
 	message+="\nmodel_name?=#{TE.model_name?}"
 	message+="\nmodel_class?=#{model_class?}"
 	message+="\nor require '#{TE.model_pathname?}'"
-	assert_not_nil(self.class.name, message)
-	assert_not_nil(TE.model_name?, message)
-	assert_not_nil(model_class?, message)
+	refute_nil(self.class.name, message)
+	refute_nil(TE.model_name?, message)
+	refute_nil(model_class?, message)
 	warn{assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")}
 	warn{assert_include(model_class?.included_modules, AssertionsModule)}
 #	assert_equal('AssertionsModule', self.class.name)
@@ -192,8 +192,8 @@ def test_related_files
 	assert_include(self.class.included_modules, AssertionsModule)
 #	assert_include(self.class.included_modules, DefaultAssertionTests)
 	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in ?")
-	assert_not_include(self.methods(false), :explain_assert_respond_to)
-	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
+	refute_include(self.methods(false), :explain_assert_respond_to)
+	refute_include(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
 #	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
 #	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"

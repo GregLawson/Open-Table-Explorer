@@ -60,10 +60,10 @@ end #ClassMethods
 def assert_invariant
 	assert_instance_of(StreamMethodArgument, self)
 	assert(!self.class.sequential_id?, "self.class=#{self.class}, should not be a sequential_id.")
-	assert_not_empty(name, inspect)
-	assert_not_empty(self[:name], inspect)
-	assert_not_empty(self['name'], inspect)
-	assert_not_empty(direction, inspect)
+	refute_empty(name, inspect)
+	refute_empty(self[:name], inspect)
+	refute_empty(self['name'], inspect)
+	refute_empty(direction, inspect)
 	assert_empty(self[:catfish], inspect)
 	assert_include(['Input', 'Output'], direction)
 end #assert_invariant
@@ -73,7 +73,7 @@ def assert_pre_conditions
 end #assert_pre_conditions
 # conditions after all ActiveRecord reading and initialization 
 def assert_post_conditions
-	assert_not_nil(stream_method, inspect)
+	refute_nil(stream_method, inspect)
 	assert_constant_path_respond_to(:Generic_Table, :stream_method)
 	assert_constant_instance_respond_to(:Generic_Table, :association_state)
 

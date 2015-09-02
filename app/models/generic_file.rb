@@ -98,7 +98,7 @@ end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_json_string(acquisition)
-	assert_not_nil(acquisition)
+	refute_nil(acquisition)
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
 	assert_instance_of(Hash, json)

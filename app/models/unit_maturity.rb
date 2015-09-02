@@ -181,7 +181,7 @@ def assert_deserving_branch(branch_expected, executable, message = '')
 	case deserving_branch
 	when :edited then
 		assert_equal(1, recent_test.process_status.exitstatus, message)
-		assert_not_equal("Syntax OK\n", syntax_test.output, message)
+		refute_equal("Syntax OK\n", syntax_test.output, message)
 		assert_equal(1, syntax_test.process_status.exitstatus, message)
 	when :testing then
 		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)

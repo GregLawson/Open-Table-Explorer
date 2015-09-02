@@ -48,15 +48,15 @@ extend ClassMethods
 # attr_reader
 def assert_logical_primary_key_defined(message=nil)
 	message=build_message(message, "self=?", self.inspect)	
-	assert_not_nil(self, message)
+	refute_nil(self, message)
 	assert_instance_of(RubyInterpreter,self, message)
 
 #	puts "self=#{self.inspect}"
-	assert_not_nil(self.attributes, message)
-	assert_not_nil(self[:test_type], message)
-	assert_not_nil(self.test_type, message)
-	assert_not_nil(self['test_type'], message)
-	assert_not_nil(self.singular_table, message)
+	refute_nil(self.attributes, message)
+	refute_nil(self[:test_type], message)
+	refute_nil(self.test_type, message)
+	refute_nil(self['test_type'], message)
+	refute_nil(self.singular_table, message)
 end #assert_logical_primary_key_defined
 module Examples
 include Constants

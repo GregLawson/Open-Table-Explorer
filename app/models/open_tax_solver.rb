@@ -167,11 +167,11 @@ def assert_full_match(acquisition)
 	assert_match(Symbol_regexp, acquisition, caller_lines)
 	assert_match(Type_regexp, acquisition, caller_lines)
 	assert_match(Description_regexp, acquisition, caller_lines)
-	assert_not_empty(acquisition, caller_lines)
-	assert_not_empty(caller_lines, caller_lines)
-	assert_not_empty(Full_regexp_array, caller_lines)
-	assert_not_empty(Full_regexp_array.join, caller_lines)
-	assert_not_nil(Regexp.new(Full_regexp_array.join), caller_lines)
+	refute_empty(acquisition, caller_lines)
+	refute_empty(caller_lines, caller_lines)
+	refute_empty(Full_regexp_array, caller_lines)
+	refute_empty(Full_regexp_array.join, caller_lines)
+	refute_nil(Regexp.new(Full_regexp_array.join), caller_lines)
 	assert_instance_of(Regexp, Regexp.new(Full_regexp_array.join), caller_lines)
 	matchData=Regexp.new(Full_regexp_array.join).match(acquisition, caller_lines)
 	matchData=Full_regexp_array.join.match(acquisition, caller_lines)
@@ -202,7 +202,7 @@ def assert_full_match(acquisition)
 					assert_match(/#{capture_kind[i]}/,matchData[match_index], message)
 				end #if
 			else # data
-				assert_not_nil(matchData[match_index], message)
+				refute_nil(matchData[match_index], message)
 			end #if
 		end #Array.new
 		indices=Array.new((matchData.size-2)/2){|i| 2*(i+1)}

@@ -46,8 +46,8 @@ end #assert_invariant
 module ClassMethods
 
 def assert_invariant
-	assert_not_nil(RSession.new.eval('1+2'))
-	assert_not_equal("  PID TTY          TIME CMD\n", `ps -C Rserve`, "Enter R CMD Rserve to start R server.")
+	refute_nil(RSession.new.eval('1+2'))
+	refute_equal("  PID TTY          TIME CMD\n", `ps -C Rserve`, "Enter R CMD Rserve to start R server.")
 end #assert_class_post_conditions
 end #ClassMethods
 end #Assertions

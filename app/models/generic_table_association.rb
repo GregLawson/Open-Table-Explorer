@@ -399,15 +399,15 @@ end #assert_foreign_keys_not_nil
 # display possible foreign key values when nil foreign keys values are found
 def assert_foreign_key_not_nil(obj, association_name, association_class=obj.association_class(association_name))
 	assert_association(obj.class, association_name)
-	assert_not_nil(association_class)
-	assert_not_nil(association_class)
+	refute_nil(association_class)
+	refute_nil(association_class)
 	possible_foreign_key_values=association_class.all.map do |fkacr|
 		fkacr.logical_primary_key_recursive_value.join(',')
 	end.uniq #map
 	message="Foreign key association #{association_name} is nil.\nShould be of type #{association_class.name}\n"
 	message+=possible_foreign_key_values.join("\n")
 	message+="\nEdit file #{obj.class.name.tableize}.yml so that foreign key #{association_name}_id has one of the above values."
-	assert_not_nil(obj.name_to_association(association_name), message)
+	refute_nil(obj.name_to_association(association_name), message)
 end #assert_foreign_key_not_nil
 def assert_foreign_key_association_names(class_reference,association_reference)
 	assert_include(class_reference.foreign_key_association_names, association_reference.to_s)
@@ -431,7 +431,7 @@ end #associated_foreign_key_name
 def assert_associated_foreign_key(obj,assName)
 	assert_instance_of(Symbol,assName,"associated_foreign_key assName=#{assName.inspect}")
 	assert_association(obj,assName)
-	assert_not_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
+	refute_nil(associated_foreign_key_name(obj,assName),"associated_foreign_key_name: obj=#{obj},assName=#{assName})")
 	assert obj.method(associated_foreign_key_name(obj,assName).to_sym)
 end #associated_foreign_key_records
 def assert_association_methods
@@ -445,15 +445,15 @@ def assert_association(class_reference,association_reference, message=nil)
 		klass=class_reference.class
 	end #if
 	association_reference=association_reference.to_sym
-	assert_not_equal('_id',association_reference.to_s[-3..-1],build_message(message, "association_reference=#{association_reference} should not end in '_id' as it will be confused wth a foreign key."))
-	assert_not_equal('_ids',association_reference.to_s[-4..-1],build_message(message, "association_reference=#{association_reference} causes confusion with automatic _ids and _ids= generated for to_many assoiations."))
+	refute_equal('_id',association_reference.to_s[-3..-1],build_message(message, "association_reference=#{association_reference} should not end in '_id' as it will be confused wth a foreign key."))
+	refute_equal('_ids',association_reference.to_s[-4..-1],build_message(message, "association_reference=#{association_reference} causes confusion with automatic _ids and _ids= generated for to_many assoiations."))
 	if ActiveRecord::Base.instance_methods_from_class(true).include?(association_reference.to_s) then
 		raise "Don't create associations that have the same name (#{association_reference.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord::Base.instance_methods_from_class.inspect})."
 	end #if
 	assert_instance_of(Symbol,association_reference,build_message(message, "assert_association"))
 	if klass.module_included?(Generic_Table) then
 		association_type=klass.association_arity(association_reference)
-		assert_not_nil(association_type, message)
+		refute_nil(association_type, message)
 		assert_include([:to_one,:to_many,:not_an_association], association_type, build_message(message, "In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}"))
 	end #if
 	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)

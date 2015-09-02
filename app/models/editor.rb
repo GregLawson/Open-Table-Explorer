@@ -144,8 +144,8 @@ def assert_post_conditions
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions
-	assert_not_nil(@executable.unit)
-	assert_not_empty(@executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @executable.unit.edit_files=#{@executable.unit.edit_files.inspect}")
+	refute_nil(@executable.unit)
+	refute_empty(@executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @executable.unit.edit_files=#{@executable.unit.edit_files.inspect}")
 	assert_kind_of(Grit::Repo, @executable.repository.grit_repo)
 	assert_respond_to(@executable.repository.grit_repo, :status)
 	assert_respond_to(@executable.repository.grit_repo.status, :changed)

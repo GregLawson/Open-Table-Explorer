@@ -31,11 +31,11 @@ end #def
 
 end
 def assert_model_counters
-	assert_not_nil(@frozen)
-	assert_not_nil(@thawLength)
-	assert_not_nil(@freezeLength)
-	assert_not_nil(@previousThaw)
-	assert_not_nil(@previousFreeze)
+	refute_nil(@frozen)
+	refute_nil(@thawLength)
+	refute_nil(@freezeLength)
+	refute_nil(@previousThaw)
+	refute_nil(@previousFreeze)
 end #def
 def sleepRange
 	ret="#{intervalString(self[:min_seconds])}   "
@@ -110,7 +110,7 @@ def acquisitionNotUpdated
 	self[:longest_no_update]=[noUpdateInterval,self[:longest_no_update]].max		
 		self[:interval]=@@b*self[:shortest_update]+@@a*self[:longest_no_update]
 		assert_operator(self[:interval],:<,365*24*3600)
-		assert_not_nil(@freezeLength)
+		refute_nil(@freezeLength)
 		assert_operator(self[:shortest_update],:>,0.0)
 		@@log.debug(sleepRange)
 end #def
@@ -119,7 +119,7 @@ def updateSleepInterval(acquisitionsUpdated=acquisitionsUpdated?)
 	checkFreeze(acquisitionsUpdated)
 	assert_model_counters
 	if acquisitionsUpdated then # might be too long; decrease interval, too_long, and too_short
-		assert_not_nil(@thawLength)
+		refute_nil(@thawLength)
 		assert_operator(@thawLength,:>,0)
 		if firstUpdateAfterInterruption? then
 			self[:longest_no_update]=[self[:interval],self[:longest_no_update]].max
@@ -136,7 +136,7 @@ def updateSleepInterval(acquisitionsUpdated=acquisitionsUpdated?)
 	else 
 		self[:interval]=@@b*self[:shortest_update]+@@a*self[:longest_no_update]
 		assert_operator(self[:interval],:<,365*24*3600)
-		assert_not_nil(@freezeLength)
+		refute_nil(@freezeLength)
 		self[:longest_no_update]=@@a*self[:longest_no_update]+@@b*self[:max_seconds]*@freezeLength
 		assert_operator(self[:shortest_update],:>,0.0)
 		@@log.debug(sleepRange)

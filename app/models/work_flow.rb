@@ -126,8 +126,8 @@ def assert_post_conditions
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions
-	assert_not_nil(@related_files)
-	assert_not_empty(@related_files.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @related_files.edit_files=#{@related_files.edit_files.inspect}")
+	refute_nil(@related_files)
+	refute_empty(@related_files.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @related_files.edit_files=#{@related_files.edit_files.inspect}")
 	assert_kind_of(Grit::Repo, @repository.grit_repo)
 	assert_respond_to(@repository.grit_repo, :status)
 	assert_respond_to(@repository.grit_repo.status, :changed)

@@ -126,7 +126,7 @@ def assert_output(reflog_line, message = '')
 		assert_instance_of(Array, index_array, message)
 		assert_operator(1, :<=, index_array.size, capture_name)
 		if index_array.size > 1 then
-			assert_not_equal(capture.string, capture.output?[capture_name.to_sym])
+			refute_equal(capture.string, capture.output?[capture_name.to_sym])
 		end # if
 	end # each_pair
 	message += "\noutput? = " + reflog_line.capture?(BranchReference::Reflog_line_regexp).output?.inspect

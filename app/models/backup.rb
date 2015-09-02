@@ -41,9 +41,9 @@ end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-	assert_not_nil(@source_dir, message)
-	assert_not_nil(@backup_dir, message)
-	assert_not_nil(@options, message)
+	refute_nil(@source_dir, message)
+	refute_nil(@backup_dir, message)
+	refute_nil(@options, message)
 	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')

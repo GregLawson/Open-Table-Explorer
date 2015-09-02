@@ -80,7 +80,7 @@ include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 	Url.all.map do |u|
 		stream_methods= StreamMethod.find_all_by_name(u.scheme)
-		assert_not_nil(stream_methods)
+		refute_nil(stream_methods)
 		assert_instance_of(Array, stream_methods)
 	end #map
 #	fail "end of class assert_pre_conditions "
@@ -89,7 +89,7 @@ end #ClassMethods
 def assert_pre_conditions
 	assert_instance_of(Url, self)
 	stream_methods= StreamMethod.find_all_by_name(scheme)
-	assert_not_nil(stream_methods)
+	refute_nil(stream_methods)
 	assert_instance_of(Array, stream_methods)
 	assert_single_element_array(stream_methods)
 #	fail "end of instance assert_pre_conditions"
