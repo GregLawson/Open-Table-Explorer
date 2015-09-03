@@ -14,12 +14,6 @@ DefaultTests=eval(TE.default_tests_module_name?)
 class UnitTest <  TestCase
 include DefaultTests2 
 #include DefaultTests0    #less error messages
-def test_unit_names?
-	assert_equal(['unit'], Unit.unit_names?([$0]))	
-end #unit_names?
-def test_equals
-	assert(Unit.new==Unit.new)
-end #==
 include Unit::Assertions
 extend Unit::Assertions::ClassMethods
 def test_class_assert_pre_conditions
@@ -32,6 +26,15 @@ end #Unit
 class UnitTest < TestCase
 include DefaultTests
 include Unit::Examples
+def test_unit_names?
+	assert_equal(['unit'], Unit.unit_names?([$0]))	
+end #unit_names?
+def test_patterned_files
+	assert_includes(Unit.patterned_files, $0)
+end # patterned_files
+def test_all
+	assert_includes(Unit.all, Unit::Executable)
+end # all
 def test_initialize
 	assert_respond_to(UnboundedFixnumUnit, :model_basename)
 	assert_equal(:unbounded_fixnum, UnboundedFixnumUnit.model_basename)	
@@ -41,12 +44,15 @@ def test_initialize
 	project_root_dir=FilePattern.project_root_dir?
 	assert_equal(:Unit, SELF.model_class_name)
 	assert_equal(:unit, SELF.model_basename)
-	assert_not_empty(SELF.project_root_dir)
+	refute_empty(SELF.project_root_dir)
 	SELF.assert_pre_conditions
 	te=Unit.new(SELF.model_name?)
 	assert_equal(:Unit, te.model_class_name)
 	assert_equal(:Unit, SELF.model_class_name)
 end #initialize
+def test_equals
+	assert(Unit.new==Unit.new)
+end #==
 def test_model_pathname
 	assert(File.exists?(UnboundedFixnumUnit.model_pathname?), UnboundedFixnumUnit.model_pathname?)
 	assert_data_file(UnboundedFixnumUnit.model_pathname?)
@@ -60,22 +66,22 @@ def test_assertions_pathname
 	assert_data_file(UnboundedFixnumUnit.assertions_pathname?)
 end #assertions_pathname?
 def test_assertions_test_pathname
-	assert_not_nil("UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumUnit.inspect)
-	assert_not_nil(UnboundedFixnumUnit.assertions_test_pathname?)
-	assert_not_equal('', "../../test/unit/"+"UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumUnit.inspect)
+	refute_nil("UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumUnit.inspect)
+	refute_nil(UnboundedFixnumUnit.assertions_test_pathname?)
+	refute_equal('', "../../test/unit/"+"UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumUnit.inspect)
 	assert(File.exists?(UnboundedFixnumUnit.assertions_test_pathname?), UnboundedFixnumUnit.inspect)
 	assert_data_file(UnboundedFixnumUnit.assertions_test_pathname?)
 end #assertions_test_pathname?
 def test_data_sources_directory
 	message='TE.data_sources_directory?='+TE.data_sources_directory?+"\n"
 	message+='Dir[TE.data_sources_directory?]='+Dir[TE.data_sources_directory?].inspect+"\n"
-	assert_not_empty(TE.data_sources_directory?, message)
+	refute_empty(TE.data_sources_directory?, message)
 	assert_empty(Dir[TE.data_sources_directory?], message)
 	related_file=Unit.new_from_path?('test/unit/tax_form_test.rb')
 	message='related_file='+related_file.inspect+"\n"
 	message+='related_file.data_sources_directory?='+related_file.data_sources_directory?+"\n"
 	message+='Dir[related_file.data_sources_directory?]='+Dir[related_file.data_sources_directory?].inspect+"\n"
-	assert_not_empty(Dir[related_file.data_sources_directory?], message)
+	refute_empty(Dir[related_file.data_sources_directory?], message)
 end #data_sources_directory
 def test_pathnames
 	assert_instance_of(Array, UnboundedFixnumUnit.pathnames?)

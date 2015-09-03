@@ -1,6 +1,6 @@
 ###########################################################################
 #    Copyright (C) 2012-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -17,11 +17,25 @@ def unit_names?(files)
 		FilePattern.unit_base_name?(f).to_s
 	end #map
 end #unit_names?
+def patterned_files
+	FilePattern.pathnames?('*').map do |globs|
+		Dir[globs]
+	end.flatten # map
+end # patterned_files
+def all
+	patterned_files.map do |path|
+		unit = new_from_path?(path)
+	end.uniq # map
+end # all
+def all_basenames
+	Unit.all.map {|u| u.model_basename}.uniq.sort
+end # 
 end #ClassMethods
 extend ClassMethods
+
 attr_reader :model_basename,  :model_class_name, :project_root_dir, :edit_files, :missing_files
-def initialize(model_class_name=FilePattern.path2model_name?, 
-	project_root_dir=FilePattern.project_root_dir?)
+def initialize(model_class_name = FilePattern.path2model_name?, 
+	project_root_dir = FilePattern.project_root_dir?)
 	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
 	if model_class_name.nil? then
 		warn message if model_class_name.nil?
@@ -86,12 +100,22 @@ def pathnames?
 	raise "@model_basename" if @model_basename.nil?
 	FilePattern::Patterns.map do |pattern|
 		@project_root_dir + FilePattern.path?(pattern, @model_basename)
-	end #
+	end # map
 end #pathnames
 module Constants
 Executable = Unit.new_from_path?($PROGRAM_NAME)
 end #Constants
 include Constants
+def patterned_files
+	patterned_files = FilePattern.pathnames?('*').map do |globs|
+		Dir[globs]
+	end.flatten # map
+end # patterned_files
+def all
+	patterned_files.map do |path|
+		unit = Unit.new_from_path(path)
+	end.uniq # map
+end # all
 def default_test_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
 		4
@@ -145,6 +169,13 @@ end # test_class
 def test_class
 	eval(test_class_name)
 end # test_class
+def create_test_class
+	anonomous_test_class = Class.new(TestCase) do
+		extend(RubyAssertions)
+		include(RubyAssertions)
+	end # NewTestClass
+	Object.const_set(test_class_name, anonomous_test_class)
+end # create_test_class
 module Assertions
 
 module ClassMethods
@@ -182,14 +213,14 @@ end #assert_invariant
 # conditions true while class is being defined
 # assertions true after class (and nested module Examples) is defined
 def assert_pre_conditions
-	assert_not_empty(@model_class_name, "test_class_name")
-	assert_not_empty(@model_basename, "model_basename")
+	refute_empty(@model_class_name, "test_class_name")
+	refute_empty(@model_basename, "model_basename")
 #	fail "end ofassert_pre_conditions "
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions(message='')
 	message+="\ndefault FilePattern.project_root_dir?=#{FilePattern.project_root_dir?.inspect}"
-	assert_not_empty(@project_root_dir, message)
+	refute_empty(@project_root_dir, message)
 end #assert_post_conditions
 def assert_tested_files(executable, file_patterns)
 	tested_file_patterns=tested_files(executable).map do |f|
