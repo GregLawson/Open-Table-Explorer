@@ -26,7 +26,7 @@ def test_id_equal
 end #def
 def test_aaa_test_assertions # aaa to output first
 #	puts "fixtures(@table_name)=#{fixtures(@table_name)}"
-	assert_not_nil(fixtures('transfers')[5])
+	refute_nil(fixtures('transfers')[5])
 end
 class Transfer < ActiveRecord::Base
 belongs_to :account
@@ -152,8 +152,8 @@ def test_associated_to_s
 			puts ar_from_fixture.association_state(expected_association_symbol)
 			ass=ar_from_fixture.send(expected_association_symbol)
 			puts ar_from_fixture.association_state(expected_association_symbol)
-			#~ assert_not_nil(ass,ar_from_fixture.association_state(expected_association_symbol))
-			#~ assert_not_nil(ass.send(method_of_association))
+			#~ refute_nil(ass,ar_from_fixture.association_state(expected_association_symbol))
+			#~ refute_nil(ass.send(method_of_association))
 			
 			puts ar_from_fixture.associated_to_s(expected_association_symbol,method_of_association)
 			puts Account.all.map {|r| r.id}.uniq.sort.inspect

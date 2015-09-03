@@ -143,7 +143,7 @@ def assert_call_result(obj,methodName,*arguments)
 end #assert_call_result
 def assert_call(obj,methodName,*arguments)
 	result=assert_call_result(obj,methodName,*arguments)
-	assert_not_nil(result)
+	refute_nil(result)
 	message="\n#{obj.canonicalName}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
 	if result.instance_of?(Array) then
 		assert_operator(result.size,:>,0,message)
@@ -190,7 +190,7 @@ def explain_assert_block(message="assert_block failed.") # :yields:
   end
 end #explain_assert_block
 def explain_assert_respond_to(obj,methodName,message='')
-	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
+	refute_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
 	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
 	message1=message+"Object #{obj.canonicalName} of class='#{obj.class}' does not respond to method :#{methodName}"
@@ -230,12 +230,12 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end
 	end
 end #explain_assert_respond_to
-def assert_not_empty(object,message='')
-#	puts "in assert_not_empty: message=#{message.inspect}"
+def refute_empty(object,message='')
+#	puts "in refute_empty: message=#{message.inspect}"
 	message+="\n#{object.canonicalName}, is empty with value #{object.inspect}."
-	assert_not_nil(object,message)
+	refute_nil(object,message)
 	assert_block(message){!object.empty?}
-end #assert_not_empty
+end #refute_empty
 def assert_empty(object,message='')
 	message = newline_if_not_empty(message) + object.inspect + " is not empty."
 	if !object.nil?  then # nil is empty
@@ -301,8 +301,8 @@ def assert_equal_sets(expected_enumeration,actual_enumeration, message = '')
 	end #if
 end #assert_equal_sets
 def assert_overlap(enum1,enum2)
-	assert_not_empty(enum1, "Assume first set to not be empty.")
-	assert_not_empty(enum2, "Assume second set to not be empty.")
+	refute_empty(enum1, "Assume first set to not be empty.")
+	refute_empty(enum2, "Assume second set to not be empty.")
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
 def assert_includes(list, element,  message = '')
@@ -314,10 +314,10 @@ end #assert_include
 def assert_dir_include(filename,glob)
 	assert_include(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
-def assert_not_includes(list, element,  message = '')
+def refute_includes(list, element,  message = '')
 	message=build_message(message, "? is in list ?", element,list)   
 	assert_block(message){!list.include?(element)}
-end #assert_not_include
+end #refute_include
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
@@ -389,7 +389,7 @@ def assert_global_name(name)
 end #global_name
 def assert_scope_path(*names)
 	return [] if names.size==0
-	assert_not_empty(names, "Expect non-empty scope path.")
+	refute_empty(names, "Expect non-empty scope path.")
 	if !global_name?(names[0]) then
 		names=[self.class.name.to_sym]+names
 #		puts "after adding self, names=#{names.inspect}"
@@ -411,7 +411,7 @@ def assert_scope_path(*names)
 	#		message += trace('names')
 			begin
 				object=eval(path)
-				assert_not_nil(object, message)
+				refute_nil(object, message)
 				assert_kind_of(Module, object, message)
 				assert_include(object.constants, names[i], names[i].to_s + ' is not a constant in module ' + path)
 			end #begin
@@ -430,7 +430,7 @@ def assert_path_to_constant(*names)
 	rescue
 		fail message
 	end #begin
-	assert_not_nil(object)
+	refute_nil(object)
 end #assert_path_to_constant
 def assert_constant_path_respond_to(*names)
 	if names.size<2 then 
@@ -478,8 +478,8 @@ def missing_file_message(pathname)
 	end # if
 end # missing_file_message
 def assert_pathname_exists(pathname, message='')
-	assert_not_nil(pathname, message)
-	assert_not_empty(pathname.to_s, message+"Assume pathname to not be empty.")
+	refute_nil(pathname, message)
+	refute_empty(pathname.to_s, message+"Assume pathname to not be empty.")
 	pathname = Pathname.new(pathname).expand_path
 	message += "\nPathname(#{pathname}).exist?=" + pathname.exist?.to_s + "\n" + missing_file_message(pathname)
 	assert(pathname.exist?, message)
@@ -495,8 +495,8 @@ def assert_data_file(pathname, message='')
 	message += 'pathname = ' + "'" + pathname + "'"
 	assert_pathname_exists(pathname, message)
 	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it a directory?")
-	assert_not_nil(File.size?(pathname), message)
-	assert_not_equal(0, File.size?(pathname), message)
+	refute_nil(File.size?(pathname), message)
+	refute_equal(0, File.size?(pathname), message)
 	pathname # allow chaining
 end #assert_data_file
 end # RubyAssertions

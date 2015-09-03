@@ -21,7 +21,7 @@ end #ClassMethods
 # Instance methods
 def assert_invariant
 	if @fixnum.nil? then
-		assert_not_nil(@infinity_sign)
+		refute_nil(@infinity_sign)
 		assert_instance_of(Fixnum, @infinity_sign)
 		assert(@infinity_sign==-1 || @infinity_sign==+1)
 	else

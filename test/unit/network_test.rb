@@ -151,9 +151,9 @@ def test_whereAmI
 	ip = ifconfig.parse(IP_Pattern)
 	netmask = ifconfig.parse(Netmask_Pattern)
 #	acquire=StreamPattern.find_by_name('Acquisition')
-#	assert_not_nil(acquire, "StreamPattern=#{StreamPattern.all.map{|p| p.name}.inspect}")
+#	refute_nil(acquire, "StreamPattern=#{StreamPattern.all.map{|p| p.name}.inspect}")
 #	ifconfig=StreamMethod.find_by_name('Shell')
-#	assert_not_nil(ifconfig, "StreamMethod=#{StreamMethod.all.inspect}")
+#	refute_nil(ifconfig, "StreamMethod=#{StreamMethod.all.inspect}")
 #	explain_assert_respond_to(ifconfig, :compile_code)
 #	explain_assert_respond_to(ifconfig, :fire)
 	Network.whereAmI
@@ -179,14 +179,14 @@ def test_nmap
 		sp_regexp = ip_regexp * host_regexp
 		assert_match(sp_regexp, nmap.output)
 		parse = nmap.output.parse(sp_regexp)
-		assert_not_nil(parse)
-		assert_not_nil(parse[:ip])
-		assert_not_nil(parse[:latency])
+		refute_nil(parse)
+		refute_nil(parse[:ip])
+		refute_nil(parse[:latency])
 		assert_operator(parse[:latency].to_f, :>, 0.0)
 	end # map
 end # nmap
 def test_update_attribute
 #	assert_equal
-	assert_not_empty()
+	refute_empty()
 end # update_attribute
 end #Network

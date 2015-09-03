@@ -12,8 +12,8 @@ include DefaultTests
 include TE.model_class?::Examples
 def test_logs
   logs = Dir['/var/log/X*']
-  assert_not_empty(logs)
-  assert_not_empty(Logs)
+  refute_empty(logs)
+  refute_empty(Logs)
   
 end # logs
 def test_log
@@ -24,7 +24,7 @@ def test_log
   assert_instance_of(String, Source_explanation[log.parse(Source_alternatives)[:source]], Test_lines.inspect)
 #  assert_equal([{message: ''}], Parse.parse(Test_lines, Message_regexp), Test_lines.inspect)
 #  assert_operator(2, :<=, Parse.parse(Test_lines, Log_pattern).size, Test_lines.inspect)
-  assert_not_empty(log)
+  refute_empty(log)
   assert_equal({sequence: '1'}, '/var/log/Xorg.1.log'.parse(Prefix * Sequence))
   assert_equal({sequence: '1'}, '/var/log/Xorg.1.log'.parse(Prefix * Sequence * /.log/))
   assert_equal({sequence: '1', old: nil}, '/var/log/Xorg.1.log'.parse(Prefix * Sequence * /.log/ * Suffix.group * Optional))

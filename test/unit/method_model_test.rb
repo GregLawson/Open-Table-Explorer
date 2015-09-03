@@ -6,7 +6,7 @@ def assert_method_model_initialized(m,owner,scope)
 	theMethod=MethodModel.method_query(m, owner)
 	mr=MethodModel.new(theMethod)
 	assert_instance_of(MethodModel,mr)
-	assert_not_nil(mr)
+	refute_nil(mr)
 	assert_equal(MethodModel, mr.class)
 	assert_instance_of(MethodModel,mr)
 
@@ -15,7 +15,7 @@ def assert_method_model_initialized(m,owner,scope)
 	assert_equal(mr[:instance_variable_defined], false)
 	assert_nil(mr[:private])
 	assert_equal(mr[:singleton], false)
-	assert_not_nil(mr[:owner],"owner is nil for mr=#{mr.inspect}")
+	refute_nil(mr[:owner],"owner is nil for mr=#{mr.inspect}")
 end #
 def test_method_query
 	owner=ActiveRecord::ConnectionAdapters::ColumnDefinition
@@ -28,13 +28,13 @@ def test_method_query
 		rescue StandardError => exc
 			puts "exc=#{exc}, object=#{object.inspect}"
 		end #begin
-		assert_not_nil(theMethod)
+		refute_nil(theMethod)
 		assert_instance_of(Method, theMethod)
 	end #each_object
 	assert_operator(objects, :>, 0)
 	method=MethodModel.method_query(m, owner)
 #	assert_equal(, )
-	assert_not_nil(method)
+	refute_nil(method)
 	assert_instance_of(Method, method)
 end #method_query
 def test_initialize
@@ -79,7 +79,7 @@ def test_constantized
 	assert_include( "Class",MethodModel.constantized.map { |c| c.objectKind}.uniq)
 	puts "pretty print"
 	#~ pp MethodModel.all
-	#~ assert_not_nil(new('object_id',Object,:methods))
+	#~ refute_nil(new('object_id',Object,:methods))
 end #constantized
 def test_all_methods
 	assert_kind_of(Enumerable::Enumerator,ObjectSpace.each_object(Module))
@@ -94,7 +94,7 @@ def test_classes
 	MethodModel.classes.each do |m|
 		assert_instance_of(Class,m)
 	end #each
-	assert_not_equal('',MethodModel.classes[0])
+	refute_equal('',MethodModel.classes[0])
 	assert_equal(MethodModel.classes.size,MethodModel.classes.uniq.size)
 #	puts MethodModel.classes.inspect
 	assert_empty(MethodModel.classes.map { |c| c.name}.sort-MethodModel.classes.map { |c| c.name}.sort.uniq)
@@ -131,17 +131,17 @@ def test_modules
 #hope		assert_instance_of(Module,m)
 	end #each
 	MethodModel.modules.any? {|m| m.instance_of?(Module)}
-	assert_not_equal('',MethodModel.modules[0])
+	refute_equal('',MethodModel.modules[0])
 	assert_equal(MethodModel.modules.size,MethodModel.modules.uniq.size)
 	assert_include(Generic_Table,MethodModel.modules)
-	assert_not_include(ActiveRecord::Base,MethodModel.modules)
+	refute_include(ActiveRecord::Base,MethodModel.modules)
 
 end #modules
 def test_classes_and_modules
 	assert_operator(MethodModel.classes.size, :>, MethodModel.modules.size)
 	assert_empty((MethodModel.modules-MethodModel.classes)&MethodModel.classes)
-	assert_not_empty(MethodModel.classes_and_modules)
-	assert_not_empty(MethodModel.classes_and_modules.find_all{|i| i.to_s=='ActiveRecord::ConnectionAdapters::ColumnDefinition'})
+	refute_empty(MethodModel.classes_and_modules)
+	refute_empty(MethodModel.classes_and_modules.find_all{|i| i.to_s=='ActiveRecord::ConnectionAdapters::ColumnDefinition'})
 #	assert_equal([],MethodModel.classes_and_modules.find_all{|i| i.to_s=='ActiveRecord::ConnectionAdapters::ColumnDefinition'})
 
 end #classes_and_modules
@@ -196,14 +196,14 @@ def test_all
 	assert(!all_records.any? {|mr| mr[:parameters]})
 	puts all_records.map { |m| m.keys}.uniq.inspect
 #why?	assert_equal(Set.new([4,6,10]),Set.new(all_records.map { |m| m.keys.size}.uniq))
-	assert_not_empty(Set.new(all_records.map { |m| m.keys}.uniq))
+	refute_empty(Set.new(all_records.map { |m| m.keys}.uniq))
 end #all
 def test_first
 	all_records=MethodModel.all
 	assert_instance_of(MethodModel,all_records[0])
 	assert_equal(all_records.first,all_records[0])
-	assert_not_nil(MethodModel.first)
-	assert_not_nil(all_records[0])
+	refute_nil(MethodModel.first)
+	refute_nil(all_records[0])
 	assert_equal(MethodModel.first,all_records[0])
 	assert_instance_of(MethodModel,MethodModel.first)
 	assert_instance_of(String,MethodModel.first[:owner].name)
@@ -220,7 +220,7 @@ def test_find_by_name
 		assert_equal(mr[:instance_variable_defined], false)
 #?		assert_equal(mr[:private], false)
 #?		assert_equal(mr[:singleton], false)
-#?		assert_not_nil(mr[:owner])
+#?		refute_nil(mr[:owner])
 		puts "#{mr[:owner]}:#{mr[:owner].object_id}"
 	end #each
 	to_sql_owners=to_sqls.map {|t|t[:owner]}
@@ -228,7 +228,7 @@ def test_find_by_name
 end #find_by_name
 def test_owners_of
 	method_name=:to_sql
-	assert_not_empty(MethodModel.owners_of(method_name), "find_by_name(:#{method_name})=#{MethodModel.find_by_name(method_name)}")
+	refute_empty(MethodModel.owners_of(method_name), "find_by_name(:#{method_name})=#{MethodModel.find_by_name(method_name)}")
 end #owners_of
 def test_ExclusionValidator
 	ObjectSpace.each_object(Class) do |c| 
@@ -300,9 +300,9 @@ def test_attribute_ddl
  {:scope=>:class, :owner=>Arel::Nodes::Node},
  {:scope=>:class, :owner=>Arel::TreeManager}],MethodModel.owners_of(:to_sql))
 	table_sql= @@default_connection.to_sql
-	assert_not_empty(table_sql)
+	refute_empty(table_sql)
 	attribute_sql=table_sql.grep(attribute_name)
-	assert_not_empty(attribute_sql)
+	refute_empty(attribute_sql)
 end #attribute_ddl
 def test_logical_attributes
 	assert_equal(Set[{:name=>"float"},

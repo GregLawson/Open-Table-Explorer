@@ -11,9 +11,9 @@ require_relative '../assertions/regexp_tree_assertions.rb'
 class RegexpTreeTest < DefaultTestCase3
 include DefaultTests3
 def test_initialize
-	assert_not_nil(RegexpTree.new)
+	refute_nil(RegexpTree.new)
 	assert_nothing_raised{RegexpTree.new} # 0 arguments
-	assert_not_nil(model_class?)
+	refute_nil(model_class?)
 end #initialize
 def test_probability_space_size
 	assert_equal(256, RegexpTree::Any.probability_space_size)

@@ -96,7 +96,7 @@ def test_CLASS_constants
 
 end #Constants
 def test_initialize
-	assert_not_nil(OpenTaxSolver.new)
+	refute_nil(OpenTaxSolver.new)
 end #initialize
 def test_parse
 	acquisition="L            ??       { e}\n"
@@ -129,7 +129,7 @@ def test_raw_acquisitions
 	assert_equal(1, OpenTaxSolver.raw_acquisitions.size)
 end #raw_acquisitions
 def test_coarse_filter
-	assert_not_empty(OpenTaxSolver.coarse_filter.compact, OpenTaxSolver.coarse_filter.inspect)
+	refute_empty(OpenTaxSolver.coarse_filter.compact, OpenTaxSolver.coarse_filter.inspect)
 	assert_operator(80, :<=, OpenTaxSolver.coarse_filter.size, OpenTaxSolver.coarse_filter.inspect)
 end #coarse_filter
 def test_coarse_rejections
@@ -168,7 +168,7 @@ def test_all
 	end #each
 	assert_instance_of(Array, OpenTaxSolver.dump)
 	assert_instance_of(String, OpenTaxSolver.dump[0])
-	assert_not_equal('"', OpenTaxSolver.dump[0][0], OpenTaxSolver.dump[0][0..20])
+	refute_equal('"', OpenTaxSolver.dump[0][0], OpenTaxSolver.dump[0][0..20])
 	assert_equal("\n", OpenTaxSolver.dump[0][-1], OpenTaxSolver.dump[0][0..20])
 end #all
 def test_fine_rejections

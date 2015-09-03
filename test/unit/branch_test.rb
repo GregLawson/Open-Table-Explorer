@@ -50,7 +50,7 @@ def test_new_from_ref
 	br = BranchReference.new_from_ref(reflog_line)
 	br = BranchReference.new_from_ref(reflog_line)
 	refs = reflog_line.split(',')
-	assert_not_equal(refs[0], '', capture.inspect)
+	refute_equal(refs[0], '', capture.inspect)
 #			BranchReference.new_from_ref(refs[0]), :time => refs[3]} # unambiguous ref
 	assert_equal(refs[0], br.to_s, br.inspect)
 	assert_equal(refs[3] + ',' + refs[4], br.timestamp, br.inspect)
@@ -88,7 +88,7 @@ def test_reflog?
 	end # map
 	reflog = BranchReference.reflog?(filename, This_code_repository)
 #	reflog.assert_post_conditions
-#	assert_not_empty(reflog.output)
+#	refute_empty(reflog.output)
 ##	lines = reflog.output.split("\n")
 #	assert_instance_of(Array, reflog)
 #	assert_operator(reflog.size, :>,1, reflog)
@@ -150,11 +150,11 @@ def test_branches?
 end #branches?
 def test_remotes?
 	assert_empty(Branch.remotes?(@temp_repo))
-	assert_not_empty(Branch.remotes?(This_code_repository))
+	refute_empty(Branch.remotes?(This_code_repository))
 end # remotes?
 def test_merged?
 	assert_equal({:merged=>"passed"}, Branch.merged?(@temp_repo))
-	assert_not_empty(Branch.merged?(This_code_repository))
+	refute_empty(Branch.merged?(This_code_repository))
 end # merged?
 def test_initialize
 	assert_equal(This_code_repository, Branch.new(This_code_repository).repository)

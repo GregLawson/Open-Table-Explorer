@@ -33,7 +33,7 @@ def test_stream_method
 	scheme_name=scheme_name[0..0].upcase+scheme_name[1..-1]
 	assert_equal('Shell', scheme_name)
 	stream_method= StreamMethod.find_all_by_name(scheme_name)
-	assert_not_nil(stream_method)
+	refute_nil(stream_method)
 	assert_instance_of(Array, stream_method)
 	stream_method.all? do |s|
 		assert_instance_of(StreamMethod, s)

@@ -20,11 +20,11 @@ def test_assert_nothing_to_commit
 end #assert_nothing_to_commit
 def test_assert_something_to_commit
 	Minimal_repository.force_change
-	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
+	refute_equal({}, Minimal_repository.grit_repo.status.changed)
 	Minimal_repository.assert_something_to_commit
-	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
+	refute_equal({}, Minimal_repository.grit_repo.status.changed)
 	Minimal_repository.git_command('add README')
-	assert_not_equal({}, Minimal_repository.grit_repo.status.changed)
+	refute_equal({}, Minimal_repository.grit_repo.status.changed)
 	assert(Minimal_repository.something_to_commit?)
 #	Minimal_repository.git_command('commit -m "initial commit of README"')
 	Minimal_repository.assert_something_to_commit

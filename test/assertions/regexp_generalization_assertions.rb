@@ -23,10 +23,10 @@ def assert_mergeable(string1, string2)
 end #assert_mergeable
 def assert_regexp_match(regexp_match=self)
 	assert_respond_to(regexp_match,:matchedTreeArray)
-	assert_not_nil(regexp_match.matchedTreeArray)
+	refute_nil(regexp_match.matchedTreeArray)
 	assert_operator(regexp_match.matchedTreeArray.size,:>,0)
 	assert_respond_to(regexp_match,:matchedTreeArray)
-	assert_not_nil(regexp_match.matchSubTree)
+	refute_nil(regexp_match.matchSubTree)
 	assert_operator(regexp_match.matchSubTree.size,:>,0)
 end #def
 end #ClassMethods

@@ -39,8 +39,8 @@ def assert_post_conditions(message='')
 	puts unless success?&& @errors.empty?
 	assert_empty(@errors, message+'expected errors to be empty\n')
 	assert_equal(0, @process_status.exitstatus & ~@accumulated_tolerance_bits, message)
-	assert_not_nil(@errors, "expect @errors to not be nil.")
-	assert_not_nil(@process_status)
+	refute_nil(@errors, "expect @errors to not be nil.")
+	refute_nil(@process_status)
 	assert_instance_of(Process::Status, @process_status)
 
 	self # return for command chaining

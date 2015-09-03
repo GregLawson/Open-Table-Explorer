@@ -57,9 +57,9 @@ end #ClassMethods
 def assert_invariant
 	message="assert_invariant: regexp_string=#{@regexp_string},rest=#{rest},parse_tree.inspect=#{@parse_tree.inspect}."
 	assert_equal(NestedArray, @parse_tree.class)
-	assert_not_nil(regexp_string, message)
-	assert_not_nil(parse_tree, message)
-	assert_not_nil(tokenIndex, message)
+	refute_nil(regexp_string, message)
+	refute_nil(parse_tree, message)
+	refute_nil(tokenIndex, message)
 	assert_instance_of(String, rest)
 	assert_instance_of(String, @regexp_string)
 	assert_instance_of(NestedArray, @parse_tree)
@@ -97,18 +97,18 @@ def regexpParserTest(parser)
 	parser.restartParse!
 	parser.assert_pre_conditions
 #	Test after a little parsing.
-	assert_not_nil(parser.nextToken!)
+	refute_nil(parser.nextToken!)
 	assert(parser.rest!=parser.regexp_string)
 	
 	parser.restartParse!
-	assert_not_nil(parser.parseOneTerm!)
+	refute_nil(parser.parseOneTerm!)
 	
 	parser.restartParse!
 	assert(parser.parseOneTerm!.size>0)
 
 #	Now test after full parse.
 	parser.restartParse!
-	assert_not_nil(parser.regexpTree!)
+	refute_nil(parser.regexpTree!)
 	
 	parser.restartParse!
 	parser.assert_invariant	
@@ -123,7 +123,7 @@ def assert_repetition_range(range)
 end #assert_repetition_range
 def assert_postfix_expression
 	post_op=postfix_expression?
-	assert_not_nil(post_op,"self=#{self.inspect}")
+	refute_nil(post_op,"self=#{self.inspect}")
 end #postfix_expression
 end #Assertions
 include Assertions

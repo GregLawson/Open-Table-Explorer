@@ -256,7 +256,7 @@ end # assert_success
 def test_assert_left_match
 end # assert_left_match
 def test_Capture_assert_post_conditions
-#	assert_not_equal('', Parse_string.post_match)
+#	refute_equal('', Parse_string.post_match)
 #	assert_raises(AssertionFailedError) {Parse_string.assert_post_conditions}
 #	assert_raises(AssertionFailedError) {Parse_delimited_array.assert_post_conditions}
 #	assert_equal('', Parse_delimited_array.post_match, Parse_delimited_array.inspect)

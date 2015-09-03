@@ -137,12 +137,12 @@ def assert_match_regexp_array(acquisition, combination_indices=Array.new(full_re
 	regexp=Regexp.new(regexp_string)
 	assert_match(/#{regexp_string}/, acquisition)
 	matchData=regexp.match(acquisition)
-	assert_not_nil(matchData)
+	refute_nil(matchData)
 	match_regexp_array(combination_indices, acquisition)
 end #match_regexp_array
 def assert_parsed
 	parsed=parse
-	assert_not_empty(parsed)
+	refute_empty(parsed)
 	parsed.each do |hash|
 		assert_equal([:field_number, :form_type, :page, :path, :field_designator], hash.keys)
 	end #each
@@ -157,9 +157,9 @@ def assert_pre_conditions
 	assert_include(included_modules, NoDB, "")
 #	assert_equal(MiniTest::Assertion, self)
 	full_regexp_array.each do |regexp_string|
-		assert_not_nil(RegexpParse.regexp_rescued(regexp_string), regexp_string)
+		refute_nil(RegexpParse.regexp_rescued(regexp_string), regexp_string)
 	end #each
-	assert_not_empty(raw_acquisitions)
+	refute_empty(raw_acquisitions)
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"

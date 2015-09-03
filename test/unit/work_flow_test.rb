@@ -27,7 +27,7 @@ def test_all
 		assert_respond_to(File.mtime(x), :>)
 #rare_fail		assert_operator(File.mtime(x), :!=, File.mtime(y),"x="+x+"\ny="+y)
 #rare_fail		assert(File.mtime(x) != File.mtime(y))	
-#rare_fail		assert_not_equal(0, File.mtime(x) <=> File.mtime(y), message)	
+#rare_fail		refute_equal(0, File.mtime(x) <=> File.mtime(y), message)	
 	tests=Dir[glob].sort do |x,y|
 		assert_pathname_exists(x)
 		assert_pathname_exists(y)
@@ -40,10 +40,10 @@ def test_all
 end #all
 def test_initialize
 	te=Unit.new(TestFile)
-	assert_not_nil(te)
+	refute_nil(te)
 	wf=WorkFlow.new(TestFile)
-	assert_not_nil(wf)
-	assert_not_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
+	refute_nil(wf)
+	refute_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
 	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
 end #initialize
 include WorkFlow::Examples

@@ -15,7 +15,7 @@ require 'rails/test_help'
 # To support automatic testing example should distinguish specializations by
 def assert_specialization_does_not_match
 	specializations=generic_type.one_level_specializations
-	assert_not_nil(specializations)
+	refute_nil(specializations)
 	if !specializations.empty? then
 		suggestions=RegexpTree.string_of_matching_chars(Regexp.new(generic_type[:data_regexp]))-specializations.map{|s| RegexpTree.string_of_matching_chars(Regexp.new(s[:data_regexp]))}.flatten.sort.uniq
 		assert(specializations.any? do |s|
@@ -30,12 +30,12 @@ end #assert_specialization_does_not_match
 # 3) example  strings should not equal specialization examples
 def assert_no_example_duplicates
 	specializations=generic_type.one_level_specializations
-	assert_not_nil(specializations)
+	refute_nil(specializations)
 	if !specializations.empty? then
 		suggestions=RegexpTree.string_of_matching_chars(Regexp.new(generic_type[:data_regexp]))-specializations.map{|s| RegexpTree.string_of_matching_chars(Regexp.new(s[:data_regexp]))}.flatten.sort.uniq
 		specializations.each do |s|
 			s.example_types.each do |e|
-				assert_not_equal(e[:example_string], self[:example_string], "example_string=#{self[:example_string].inspect} of import_class=#{generic_type[:import_class]},should not match at least one of specializations=#{specializations.inspect}, sugestions=#{suggestions}") #any
+				refute_equal(e[:example_string], self[:example_string], "example_string=#{self[:example_string].inspect} of import_class=#{generic_type[:import_class]},should not match at least one of specializations=#{specializations.inspect}, sugestions=#{suggestions}") #any
 			end #each
 		end #each
 	end #if
@@ -51,19 +51,19 @@ def assert_generic_type(association=nil, message=nil)
 		raise "Unexpected value for association=#{association}"
 	end #case
 	generic_type=which_generic_type(association)
-	assert_not_nil(generic_type, message)
+	refute_nil(generic_type, message)
 	if generic_type.is_a?(Array) then
 		generic_type.each do |gt|
-			assert_not_empty(gt[:data_regexp], "gt=#{gt}")
+			refute_empty(gt[:data_regexp], "gt=#{gt}")
 		end #each
 	else
-		assert_not_empty(generic_type[:data_regexp], message)
+		refute_empty(generic_type[:data_regexp], message)
 	end #if
 end #generic_type
 def assert_example_type_valid(association=nil, message=nil)
 	message=ActiveSupport::TestCase::build_message(message, "example_type=?, association=?", self, association.inspect) 
-#	assert_not_nil(example_type)
-	assert_not_empty(self[:example_string], message)
+#	refute_nil(example_type)
+	refute_empty(self[:example_string], message)
 	assert_generic_type(association, message)
 	assert(valid?(association), message)
 end #example_type_valid

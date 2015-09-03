@@ -88,7 +88,7 @@ def test_inspect
 	assert_equal("## master\n", clean_run.output)
 	assert_equal("## master\n", @temp_repo.inspect)
 	@temp_repo.force_change
-	assert_not_equal("## master\n", @temp_repo.inspect)
+	refute_equal("## master\n", @temp_repo.inspect)
 	assert_equal("## master\n M README\n", @temp_repo.inspect)
 end #inspect
 def test_corruption_fsck
@@ -119,14 +119,14 @@ end #edited_superset_of_testing
 def test_force_change
 	@temp_repo.assert_nothing_to_commit
 	IO.write(Modified_path, README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n") # timestamp make file unique
-	assert_not_equal(README_start_text, IO.read(Modified_path))
+	refute_equal(README_start_text, IO.read(Modified_path))
 	@temp_repo.revert_changes
 	@temp_repo.force_change
-	assert_not_equal({}, @temp_repo.grit_repo.status.changed)
+	refute_equal({}, @temp_repo.grit_repo.status.changed)
 	@temp_repo.assert_something_to_commit
-	assert_not_equal({}, @temp_repo.grit_repo.status.changed)
+	refute_equal({}, @temp_repo.grit_repo.status.changed)
 	@temp_repo.git_command('add README')
-	assert_not_equal({}, @temp_repo.grit_repo.status.changed)
+	refute_equal({}, @temp_repo.grit_repo.status.changed)
 	assert(@temp_repo.something_to_commit?)
 #	@temp_repo.git_command('commit -m "timestamped commit of README"')
 	@temp_repo.revert_changes.assert_post_conditions

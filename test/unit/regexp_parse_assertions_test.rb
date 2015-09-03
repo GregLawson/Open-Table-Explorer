@@ -15,13 +15,13 @@ extend RegexpParse::Examples::ClassMethods
 def test_class_assert_invariant
 	regexp_string='K.*C'
 	test_tree=RegexpParse.new(regexp_string)
-	assert_not_nil(test_tree.parse_tree)
-	assert_not_nil(RegexpParse.new(''))
+	refute_nil(test_tree.parse_tree)
+	refute_nil(RegexpParse.new(''))
 	assert_equal('', RegexpParse.new(test_tree.rest).to_s)
 	assert_equal(["K", [".", "*"], "C"], test_tree.parse_tree)
-	assert_not_nil(RegexpParse.new(["K", [".", "*"], "C"].to_s))
-	assert_not_nil(RegexpParse.new(test_tree.parse_tree.to_s))
-	assert_not_nil(test_tree.rest.to_s+test_tree.parse_tree.to_s)
+	refute_nil(RegexpParse.new(["K", [".", "*"], "C"].to_s))
+	refute_nil(RegexpParse.new(test_tree.parse_tree.to_s))
+	refute_nil(test_tree.rest.to_s+test_tree.parse_tree.to_s)
 	assert_equal(test_tree.regexp_string, test_tree.rest.to_s+test_tree.parse_tree.to_s)
 	assert_equal(test_tree.regexp_string, test_tree.rest+test_tree.parse_tree.to_s)
 	test_tree.assert_invariant
@@ -44,7 +44,7 @@ def test_value_of
 	suffix=:_string
 	assert_nil(RegexpParse.full_name?(:Parenthesized))
 	full_name=RegexpParse.full_name?(name, suffix)
-	assert_not_nil(RegexpParse::Examples.const_get(name.to_sym))
+	refute_nil(RegexpParse::Examples.const_get(name.to_sym))
 	assert_nil(RegexpParse::Examples.const_get(full_name.to_sym))
 	assert_equal(RegexpParse::Examples::Parenthesized_string, RegexpParse.value_of?(name, suffix))
 end #value_of
@@ -93,7 +93,7 @@ end #array_of
 def test_name_of
 	constant='Parenthesized_parse'
 	match=/([A-Z][a-z_]*)_(array|string|parse)/.match(constant)
-	assert_not_nil(match)
+	refute_nil(match)
 	assert_equal(3, match.size, "match=#{match.inspect}")
 end #name_of
 def test_constants_by_class
@@ -101,20 +101,20 @@ def test_constants_by_class
 	rps=RegexpParse::Examples.constants.select do |c|
 		RegexpParse.value_of?(c).instance_of?(klass)
 	end #select
-	assert_not_empty(rps)
+	refute_empty(rps)
 	assert_equal(rps, RegexpParse.example_constant_names_by_class(klass))
 end #example_constant_names_by_class
 def test_names
 	constants=RegexpParse::Examples.constants
-	assert_not_empty(constants)
+	refute_empty(constants)
 	assert_instance_of(Symbol, constants[0])
 	constants.map do |name|
 		constant=RegexpParse::Examples.const_get(name)
-		assert_not_nil(name, "name=#{name.inspect}, constants=#{constants.inspect}")
+		refute_nil(name, "name=#{name.inspect}, constants=#{constants.inspect}")
 		assert_instance_of(Symbol, name)
 		match=RegexpParse.name_of?(name)
 		if !match.nil? && (constant.class==String || constant.class==Array || constant.class==RegexpParse) then
-			assert_not_nil(match, "name.class=#{name.class.inspect}, name=#{name.inspect}, constants=#{constants.inspect}")
+			refute_nil(match, "name.class=#{name.class.inspect}, name=#{name.inspect}, constants=#{constants.inspect}")
 			match[1]
 		else
 			nil
@@ -124,7 +124,7 @@ def test_names
 
 end #names
 def test_strings
-	assert_not_nil(RegexpParse::Examples.constants)
+	refute_nil(RegexpParse::Examples.constants)
 	assert_include(RegexpParse::Examples.constants, :Dot_star_string)
 
 #	assert_include(RegexpParse::Examples.methods(false), :strings)
@@ -150,12 +150,12 @@ def test_parses
 			assert_instance_of(Symbol, c)
 		else
 			assert(Symbol=== c.class, "Unexpected RegexpParse::Examples constant=#{c.inspect} of type #{c.class}")
-			assert_not_equal(Symbol, c.class)
+			refute_equal(Symbol, c.class)
 			fail "Unexpected RegexpParse::Examples constant=#{c.inspect} of type #{c.class}"
 		end #case
 		c.instance_of?(RegexpParse)
 	end #select
-#message	assert_not_empty(ret, "num_RegexpParse=#{num_RegexpParse}")
+#message	refute_empty(ret, "num_RegexpParse=#{num_RegexpParse}")
 	assert_subset(RegexpParse::Examples.constants.select {|c| /.*_parse/.match(c)}, RegexpParse.parses, "num_RegexpParse=#{num_RegexpParse}")
 
 end #parses

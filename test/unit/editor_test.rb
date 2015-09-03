@@ -16,17 +16,17 @@ include Editor::Examples
 include UnitMaturity::Examples
 def test_initializes
 	te=Unit.new(TestEditor.executable.executable_file)
-	assert_not_nil(te)
+	refute_nil(te)
 	wf=Editor.new(TestEditor.executable)
-	assert_not_nil(wf)
-	assert_not_empty(TestEditor.executable.unit.edit_files, "TestEditor.executable.unit.edit_files=#{TestEditor.executable.unit.edit_files}")
+	refute_nil(wf)
+	refute_empty(TestEditor.executable.unit.edit_files, "TestEditor.executable.unit.edit_files=#{TestEditor.executable.unit.edit_files}")
 	assert_include(TestEditor.executable.unit.edit_files, TestEditor.executable.file, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
 end #version_comparison
 def test_goldilocks
-	assert_not_nil(UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym))
+	refute_nil(UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym))
 #	assert_include(Editor::Branch_enhancement, TestEditor.repository.current_branch_name?.to_sym)
 	current_index=UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym)
 	filename= Most_stable_file

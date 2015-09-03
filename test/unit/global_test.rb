@@ -52,7 +52,7 @@ def test_instance_respond_to
 	assert(TestClass.instance_respond_to?(:instance_respond_to?), "TestClass.instance_methods_from_class=#{TestClass.instance_methods_from_class}")
 end #instance_respond_to
 def test_similar_methods
-#?	assert_not_empty(TestTable.similar_methods(:assert_fixture_name))
+#?	refute_empty(TestTable.similar_methods(:assert_fixture_name))
 end #similar_methods
 def test_matching_instance_methods
 	testClass=TestClass

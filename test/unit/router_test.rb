@@ -18,6 +18,6 @@ def test_dhclient
 		matchData=/DHCPACK from ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/.match(dhclient.errors)
 	end #if
 	ip=matchData[1]
-	assert_not_nil(ip)
+	refute_nil(ip)
 end #dhclient
 end #RouterTest

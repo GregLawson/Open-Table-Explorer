@@ -63,7 +63,7 @@ def test_eval_method
 	assert_include(acq.methods(true), :interface_code_rows)
 	assert_include(acq.singleton_methods(true), :interface_code_rows)
 	explain_assert_respond_to(acq,:interface_code_rows)
-	assert_not_nil(acq.interface_code_rows)
+	refute_nil(acq.interface_code_rows)
 end #eval_method
 def test_compile_code
 # test one case
@@ -71,7 +71,7 @@ def test_compile_code
 	assert_instance_of(StreamMethod,acq)
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
-	assert_not_nil(acq)
+	refute_nil(acq)
 	acq.assert_pre_conditions
 # test all cases
 	StreamMethod.all.each do |sm|
@@ -83,7 +83,7 @@ def test_compile_code
 		#~ else
 			#~ puts "sm.self[:errorz]=self[:errorz]=#{sm.self[:errorz]=self[:errorz].inspect} for sm=#{sm.interface_code.inspect}"
 		#~ end #if
-		assert_not_nil(sm)
+		refute_nil(sm)
 		assert(!sm.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{sm.canonicalName}.")
 		assert_empty(sm.syntax_errors?)
 		sm.assert_pre_conditions
@@ -177,8 +177,8 @@ def fire_check(interface_code, interface_code_errors, acquisition_errors)
 	firing=stream_method.fire!
 	assert_equal(interface_code_errors, firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
 	assert_equal(acquisition_errors, firing.errors[:acquisition])
-	assert_not_empty(firing.errors)
-	assert_not_empty(firing.errors.inspect)
+	refute_empty(firing.errors)
+	refute_empty(firing.errors.inspect)
 	assert_instance_of(ActiveModel::Errors, firing.errors)
 	assert_instance_of(Array, firing.errors.full_messages)
 	assert_instance_of(StreamMethod, firing)

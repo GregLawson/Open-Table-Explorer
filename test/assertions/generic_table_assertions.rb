@@ -55,7 +55,7 @@ def assert_association_many_to_one(ar_from_fixture,assName)
 	assert_association_to_one(ar_from_fixture,assName)
 end #association_many_to_one
 def assert_model_grep(model_reference,grep_pattern)
-	assert_not_equal("", model_reference.model_grep(grep_pattern), "grep_pattern=#{grep_pattern}")
+	refute_equal("", model_reference.model_grep(grep_pattern), "grep_pattern=#{grep_pattern}")
 end #model_grep
 def assert_has_many_association(class_reference, association_name)
 	assert(class_reference.association_grep('has_many',association_name))
@@ -105,14 +105,14 @@ end #assert_general_associations
 def assert_foreign_key_points_to_me(ar_from_fixture,assName)
 	assert_association(ar_from_fixture.class,assName)
 	associated_records=ar_from_fixture.associated_foreign_key_records(assName)
-	assert_not_empty(associated_records,"assert_foreign_key_points_to_me ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName} Check if id is specified in #{assName.to_sym}.yml file.")
+	refute_empty(associated_records,"assert_foreign_key_points_to_me ar_from_fixture.inspect=#{ar_from_fixture.inspect},assName=#{assName} Check if id is specified in #{assName.to_sym}.yml file.")
 end #foreign_key_points_to_me
 def assert_active_record_method(method_name)
 	assert(ActiveRecord::Base.is_active_record_method?(method_name))
 end #assert_active_record_method
-def assert_not_active_record_method(method_name)
+def refute_active_record_method(method_name)
 	assert(!ActiveRecord::Base.is_active_record_method?(method_name))
-end #assert_not_active_record_method
+end #refute_active_record_method
 def assert_table_exists(table_name)
 	message="#{'table_name'.titleize} #{table_name} does not exist as a database table."
 	assert_block(message){Generic_Table.table_exists?(table_name)}
@@ -138,7 +138,7 @@ def assert_matching_association(table_reference,association_name)
 	assert_association(table_class,association_name)
 
 	association_class=table_class.association_class(association_name)
-	assert_not_nil(association_class)
+	refute_nil(association_class)
 	table_symbol=association_class.association_method_symbol(table_reference)
 	assert(association_class.is_association?(table_symbol) ,"#{association_class.inspect}.is_association?(#{table_symbol})")
 

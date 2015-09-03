@@ -25,7 +25,7 @@ def test_stage_file
 
 	Minimal_repository.stage_files(:passed, [Minimal_repository.path+'README'])
 	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
-	assert_not_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
+	refute_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #stage_files
 def test_something_to_commit?
 	assert_respond_to(Minimal_repository.grit_repo, :status)

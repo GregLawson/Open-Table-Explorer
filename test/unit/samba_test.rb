@@ -105,12 +105,12 @@ def test_new_from_table
 		capture = line.capture?(Mount_table_regexp)
 		assert_kind_of(Capture, capture)
 		assert_instance_of(MatchCapture, capture)
-		assert_not_nil(capture.raw_captures, capture.inspect)
+		refute_nil(capture.raw_captures, capture.inspect)
 		if capture.output?[:comment] then
 			nil
 		else
 			assert_equal(nil, capture.output?[:comment], capture.inspect)
-			assert_not_nil(capture.output?[:options], capture.inspect)
+			refute_nil(capture.output?[:options], capture.inspect)
 			options_hash = Samba.parse_options(capture.output?[:options])	
 			host = options_hash[:ip]
 			Samba.new(host, capture.output?[:filesystem_image],

@@ -72,11 +72,11 @@ def test_explain_assert_respond_to
 #	assert_respond_to(Acquisition,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
 
 end #explain_assert_respond_to
-def test_assert_not_empty
-	assert_not_empty('a')
-	assert_not_empty(['a'])
-	assert_not_empty(Set[nil])
-end #assert_not_empty
+def test_refute_empty
+	refute_empty('a')
+	refute_empty(['a'])
+	refute_empty(Set[nil])
+end #refute_empty
 def test_assert_empty
 	assert_empty([])
 	assert_empty('')
@@ -139,18 +139,18 @@ def test_assert_include
 end #assert_include
 def test_assert_dir_include
 	assert_dir_include('app','*')
-	assert_not_empty(Dir['app/models/[a-zA-Z0-9_]*.rb'])
+	refute_empty(Dir['app/models/[a-zA-Z0-9_]*.rb'])
 	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*.rb')
 	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*[.]rb')
 end #assert_dir_include
-def test_assert_not_include
+def test_refute_include
 	element=1
 	list=[1,2,3]
 	assert(list.include?(element))
 	assert_include(list, element)
-	assert_not_include(list, 4)
-	assert_raise(AssertionFailedError){assert_not_include(list, element)}
-end #assert_not_include
+	refute_include(list, 4)
+	assert_raise(AssertionFailedError){refute_include(list, element)}
+end #refute_include
 def test_assert_public_instance_method
 	obj=StreamPattern.new
 	methodName=:stream_pattern_arguments
@@ -180,9 +180,9 @@ def test_assert_no_duplicates
 	assert_operator(array.uniq.size, :>, 1, "All input array elements are identical")
 	assert_operator(array.size/array.uniq.size, :<, 1.2, "Array has too many duplicates. First ten elements are #{array[0..9]}"+caller_lines)
 	if array[0].instance_of?(Hash) and columns_to_ignore!=[] then
-		assert_not_empty(array)
+		refute_empty(array)
 		array=array.map {|hash| columns_to_ignore.each{|col| hash.delete(col)}}
-		assert_not_empty(array)
+		refute_empty(array)
 		assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
 	end #if
 	assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")

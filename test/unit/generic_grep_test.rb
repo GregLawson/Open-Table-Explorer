@@ -16,7 +16,7 @@ include GenericTableAssertions
 @@table_name='stream_patterns'
 	fixtures :table_specs
 assert_equal([GenericTableTest], Module.nesting)
-assert_not_include(GenericGrep, self.included_modules)
+refute_include(GenericGrep, self.included_modules)
 assert_equal('constant', defined? GenericGrep)
 ASSOCIATION_MACRO_PATTERN=GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN
 def test_to_pathname_glob
@@ -117,7 +117,7 @@ def test_grep_all_associations_command
 	assert_equal("grep \"#{ASSOCIATION_MACRO_PATTERN}\" app/models/*.rb", TestRun.grep_all_associations_command)
 end #grep_all_associations_command
 def test_all_associations
-	assert_not_empty(ActiveRecord::Base.all_associations)
+	refute_empty(ActiveRecord::Base.all_associations)
 end #all_associations
 def test_association_macro_type
 	assert_match(Regexp.new(ASSOCIATION_MACRO_PATTERN),"has_many :stream_pattern_arguments\nhas_many :stream_methods\n")
@@ -199,7 +199,7 @@ def test_association_type
 	warn_association_type(StreamMethod, :stream_pattern)
 	types=[] # nothing found yet
 	mvc_names=CodeBase.rails_MVC_classes.map { |klass| klass.name }
-	assert_not_nil(mvc_names)
+	refute_nil(mvc_names)
 	mvc_names.each do |table|
 		klass=Generic_Table.class_of_name(table)
 		klass.association_names.each do |association_name|

@@ -33,9 +33,9 @@ def assert_anchoring
 	message=""
 	assert_include(anchoring.start_base, [0,1])
 	assert_include(anchoring.end_base, [-1,-2])
-	assert_not_empty(self[0..-1])
-	assert_not_empty(self[anchoring.start_base..anchoring.end_base])
-	assert_not_empty(anchoring[:base_regexp], message)
+	refute_empty(self[0..-1])
+	refute_empty(self[anchoring.start_base..anchoring.end_base])
+	refute_empty(anchoring[:base_regexp], message)
 	assert_equal([anchoring[:start_anchor], anchoring[:base_regexp], anchoring[:end_anchor]].compact.to_s, self.to_s, message)
 end #anchor
 def assert_specialized_repetitions(other)
@@ -50,11 +50,11 @@ def assert_specialized_repetitions(other)
 	assert_equal(my_repeated_pattern, other_repeated_pattern)
 	my_repetition_length=self.repetition_length
 	other_repetition_length=other.repetition_length
-	assert_not_nil(my_repetition_length)
-	assert_not_nil(other_repetition_length)
-	assert_not_nil(my_repetition_length[:min])
-	assert_not_nil(other_repetition_length[:min])
-	assert_not_equal(my_repetition_length, other_repetition_length)
+	refute_nil(my_repetition_length)
+	refute_nil(other_repetition_length)
+	refute_nil(my_repetition_length[:min])
+	refute_nil(other_repetition_length[:min])
+	refute_equal(my_repetition_length, other_repetition_length)
 	assert_operator(my_repetition_length[:min], :<=, other_repetition_length[:max])
 	if !my_repetition_length[:max].nil? then
 		if other_repetition_length[:max].nil?
@@ -72,10 +72,10 @@ def assert_specialized_character_class(specialized)
 	assert_kind_of(RegexpTree, specialized)
 	message="In self=#{self.inspect}assert_specialized_by(specialized=#{specialized.inspect})"
 	my_cc=self.character_class?
-	assert_not_nil(my_cc)
+	refute_nil(my_cc)
 	my_chars=my_cc[1..-2]
 	specialized_cc=specialized.character_class?
-	assert_not_nil(specialized_cc)
+	refute_nil(specialized_cc)
 	specialized_chars=specialized_cc[1..-2]
 	intersection=my_chars & specialized_chars
 	assert_equal(intersection, specialized_chars)
@@ -90,7 +90,7 @@ def assert_sequence_specialized_by(other)
 	self.each_with_index do |node, i|
 		if i-1 <= other.length then
 			comparison=node <=> other[i]
-			assert_not_nil(comparison, "comparison of #{node.inspect} to #{other[i]} should not be nil.")
+			refute_nil(comparison, "comparison of #{node.inspect} to #{other[i]} should not be nil.")
 			assert_operator(comparison, :>=, 0)
 		end #if
 	end #each

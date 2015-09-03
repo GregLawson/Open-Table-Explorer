@@ -89,14 +89,14 @@ def assert_eval_method
 	assert_include('interface_code_rows',acq.methods(true))
 	assert_include('interface_code_rows',acq.singleton_methods(true))
 	explain_assert_respond_to(acq,:interface_code_rows)
-	assert_not_nil(acq.interface_code_rows)
+	refute_nil(acq.interface_code_rows)
 end #eval_method
 def assert_compile_code
 	acq=HTTP_method.clone
 	assert_instance_of(StreamMethod,acq)
 #	puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
 	acq.compile_code!
-	assert_not_nil(acq)
+	refute_nil(acq)
 	@my_fixtures.each_value do |acq|
 		assert_instance_of(StreamMethod,acq)
 #		puts "acq.matching_methods(/code/).inspect=#{acq.matching_methods(/code/).inspect}"
@@ -106,7 +106,7 @@ def assert_compile_code
 		#~ else
 			#~ puts "acq.self[:errorz]=self[:errorz]=#{acq.self[:errorz]=self[:errorz].inspect} for acq=#{acq.interface_code.inspect}"
 		#~ end #if
-		assert_not_nil(acq)
+		refute_nil(acq)
 		assert(!acq.respond_to?(:syntax_check_temp_method),"syntax_check_temp_method is a method of #{canonicalName}.")
 	end #each_value
 end #compile_code
@@ -133,7 +133,7 @@ def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
 		assert_include(field, errors.keys, message)
 		assert_instance_of(Array, errors.values[0], message)
 		assert_instance_of(String, errors.values[0][0], message)
-		assert_not_nil(syntax_errors?, message)
+		refute_nil(syntax_errors?, message)
 		assert_instance_of(Array, errors[field], message)
 		assert_equal(1, errors[field].size, message)
 		assert_operator(1, :<=, errors.size, message)
@@ -142,7 +142,7 @@ def assert_active_model_error(field=nil, expected_error_message_regexp=nil)
 		end #each
 	end #if
 	expected_errors=ActiveSupport::OrderedHash[[:interface_code, ["SyntaxError: #<SyntaxError: (eval):4:in `eval_method': compile error\n(eval):3: syntax error, unexpected tPOW, expecting kEND>"]], nil]
-	assert_not_nil(expected_errors)
+	refute_nil(expected_errors)
 end #assert_no_syntax_error
 def assert_input_stream_names
 	acq=HTTP_method.clone
@@ -175,8 +175,8 @@ def assert_field_firing_error(field=nil, expected_error_message_regexp=nil)
 	firing=self.fire!
 	assert_equal(interface_code_errors, firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
 	assert_equal(acquisition_errors, firing.errors[:acquisition])
-	assert_not_empty(firing.errors)
-	assert_not_empty(firing.errors.inspect)
+	refute_empty(firing.errors)
+	refute_empty(firing.errors.inspect)
 	assert_instance_of(ActiveModel::Errors, firing.errors)
 	assert_instance_of(Array, firing.errors.full_messages)
 	assert_instance_of(StreamMethod, firing)

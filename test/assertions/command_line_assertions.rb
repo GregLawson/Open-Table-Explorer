@@ -21,8 +21,8 @@ def assert_command_run(args)
 	test_run = ShellCommands.new('ruby -W0 script/command_line.rb ' + args)
 	test_run.assert_pre_conditions
 	last_line = test_run.output.split("\n")[-1]
-#	assert_not_equal('', test_run.output, test_run.inspect)
-#	assert_not_match(/0 tests, 0 assertions, 0 failures, 0 errors, 0 skips/, last_line)
+#	refute_equal('', test_run.output, test_run.inspect)
+#	refute_match(/0 tests, 0 assertions, 0 failures, 0 errors, 0 skips/, last_line)
 	test_run
 end # assert_command_run
 def assert_ARGV

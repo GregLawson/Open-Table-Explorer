@@ -96,7 +96,7 @@ def test_matchSubTree
 	explain_assert_respond_to(RegexpMatch,:explain_assert_match)
 	RegexpMatch.methods.grep(/explain_assert_match/)
 	RegexpMatch.explain_assert_match(KCETeditor.matchSubTree, KCETeditor.dataToParse)
-	assert_not_nil(RegexpMatch.match_data?(RegexpTree.new(KCETeditor.matchSubTree), KCETeditor.dataToParse))
+	refute_nil(RegexpMatch.match_data?(RegexpTree.new(KCETeditor.matchSubTree), KCETeditor.dataToParse))
 	expectedParse=["K",
 	"C",
 	"E",
@@ -115,10 +115,10 @@ def test_matchSubTree
 	"I",
 	"E"]
 # debug made not to pass for now.
-	assert_not_equal(expectedParse,KCETeditor.matchSubTree)
+	refute_equal(expectedParse,KCETeditor.matchSubTree)
 	
-	assert_not_nil(Alternative.matchSubTree)
-	assert_not_empty(Alternative.matchSubTree)
+	refute_nil(Alternative.matchSubTree)
+	refute_empty(Alternative.matchSubTree)
 	RegexpMatch.assert_mergeable('a', 'b')
 	RegexpMatch.assert_mergeable(%{<Url:0xb5f22960>}, %{<Url:0xb5ce4e3c>})
 	string=%{\#<NoMethodError:\ undefined\ method\ `uri'\ for\ \#<Url:0xb5f22960>}
@@ -141,22 +141,22 @@ def test_mergeMatches
 
 	assert_instance_of(Array, [matches[0]])
 	matchesForRecursion=matches[1..-1]
-	assert_not_empty(matchesForRecursion)
+	refute_empty(matchesForRecursion)
 	assert_equal(1..1, matchesForRecursion[0])
-	assert_not_empty(candidateParseTree[matchesForRecursion[0]])
+	refute_empty(candidateParseTree[matchesForRecursion[0]])
 	workingParseTree=candidateParseTree.mergeMatches(matchesForRecursion)
-	assert_not_nil(workingParseTree)
+	refute_nil(workingParseTree)
 	assert_instance_of(RegexpMatch, workingParseTree)
 	assert_instance_of(Array, [matches[0]]+workingParseTree)
 
 
 	mergedParseTree=candidateParseTree.mergeMatches(matches)
-	assert_not_nil(mergedParseTree)
+	refute_nil(mergedParseTree)
 	assert_equal(['K', ['.','*'], 'C'],mergedParseTree)
 	assert_match(RegexpTree.new(mergedParseTree).to_regexp,string_to_parse)
 end #mergeMatches
 def test_matchedTreeArray
-	assert_not_empty(Alternative.matchedTreeArray)
+	refute_empty(Alternative.matchedTreeArray)
 	assert_equal(['K', [".", "*"],'C'],Insertion.matchedTreeArray)
 	assert_equal(['K', 'C'],Deletion.matchedTreeArray)
 end #matchedTreeArray
@@ -181,18 +181,18 @@ def test_generalize
 		message="most_specialized=#{most_specialized.inspect}"
 		message+=", most_specialized.most_specialized?(c)=#{most_specialized.most_specialized?(c)}"
 		message+=", c=#{c}"
- 		assert_not_nil(most_specialized, message)
-		assert_not_nil(most_specialized.most_specialized?(c), message)
+ 		refute_nil(most_specialized, message)
+		refute_nil(most_specialized.most_specialized?(c), message)
 		assert_instance_of(Array, most_specialized.most_specialized?(c), message)
-		assert_not_empty(most_specialized.most_specialized?(c), message)
-		assert_not_nil(most_specialized.most_specialized?(c)[-1], message)
+		refute_empty(most_specialized.most_specialized?(c), message)
+		refute_nil(most_specialized.most_specialized?(c)[-1], message)
 	most_specialized=most_specialized.most_specialized?(c)[-1]
-		assert_not_nil(most_specialized.most_specialized?(c)[-1], message)
-		assert_not_nil(most_specialized, message)
+		refute_nil(most_specialized.most_specialized?(c)[-1], message)
+		refute_nil(most_specialized, message)
 		message="most_specialized=#{most_specialized.inspect}"
 		message+=", most_specialized.most_specialized?(c)=#{most_specialized.most_specialized?(c)}"
 		message+=", c=#{c}"
-		assert_not_nil(most_specialized, message)
+		refute_nil(most_specialized, message)
 	
 	most_specialized=[GenericType.find_by_name('ascii')]
 		assert_instance_of(Array, most_specialized)
@@ -203,10 +203,10 @@ def test_generalize
 			assert_kind_of(Array, m.most_specialized?(c))
 			message+=", m.most_specialized?(c)=#{m.most_specialized?(c)}"
 			message+=", c=#{c}"
-			assert_not_nil(m, message)
+			refute_nil(m, message)
 			most_specialized=m.most_specialized?(c)
 			assert_kind_of(Array, most_specialized)
-			assert_not_nil(most_specialized, message)
+			refute_nil(most_specialized, message)
 		end #each
 	end #each_char
 	assert_equal(minimax.to_s, Addresses.generalize.to_s)

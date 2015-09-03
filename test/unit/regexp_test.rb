@@ -164,7 +164,7 @@ def test_capture
 	assert_equal('2', regexp.capture.match(str)[1])
 	matchData=regexp.capture(:digit).match(str)
 	message="matchData.inspect=#{matchData.inspect}"
-#	assert_not_nil(matchData, message)
+#	refute_nil(matchData, message)
 	assert_match(/([a-z])/, str, message)
 	matchData=/\$(?<dollars>\d+)\.(?<cents>\d+)/.match("$3.67")
 	message="matchData.inspect=#{matchData.inspect}"

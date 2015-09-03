@@ -15,10 +15,10 @@ include DefaultTests
 include InteractiveBottleneck::Examples
 def test_initialize
 	te=Unit.new(TestExecutable.executable_file)
-	assert_not_nil(te)
+	refute_nil(te)
 	wf=InteractiveBottleneck.new(TestExecutableFile)
-	assert_not_nil(wf)
-	assert_not_empty(TestInteractiveBottleneck.related_files.edit_files, "TestInteractiveBottleneck.related_files.edit_files=#{TestInteractiveBottleneck.related_files.edit_files}")
+	refute_nil(wf)
+	refute_empty(TestInteractiveBottleneck.related_files.edit_files, "TestInteractiveBottleneck.related_files.edit_files=#{TestInteractiveBottleneck.related_files.edit_files}")
 	assert_include(TestInteractiveBottleneck.related_files.edit_files, TestExecutable, "TestInteractiveBottleneck.related_files=#{TestInteractiveBottleneck.related_files.inspect}")
 end #initialize
 include InteractiveBottleneck::Examples

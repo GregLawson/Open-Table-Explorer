@@ -24,7 +24,7 @@ def test_raw_acquisitions  #acquisition=next
 	assert_equal(9, OpenTaxFormFiller::Definitions.raw_acquisitions.size, raw_acquisitions.inspect)
 end #raw_acquisitions
 def test_coarse_filter
-	assert_not_empty(OpenTaxFormFiller::Definitions.coarse_filter.compact, OpenTaxFormFiller::Definitions.coarse_filter.inspect)
+	refute_empty(OpenTaxFormFiller::Definitions.coarse_filter.compact, OpenTaxFormFiller::Definitions.coarse_filter.inspect)
 	assert_operator(867, :==, OpenTaxFormFiller::Definitions.coarse_filter.size, OpenTaxFormFiller::Definitions.coarse_filter.inspect)
 	assert_equal([:form, :year, :line, :type], OpenTaxFormFiller::Definitions.coarse_filter[0].keys, OpenTaxFormFiller::Definitions.coarse_filter.inspect)
 	types=OpenTaxFormFiller::Definitions.coarse_filter.map do |otff|

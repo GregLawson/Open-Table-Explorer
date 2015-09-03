@@ -139,15 +139,15 @@ def test_map_recursive
 	depth=0
 	visit_proc = Tree_node_format
 	node = NestedArrayType.ref(Nested_array)
-	assert_not_nil(node)
-	assert_not_nil(node.graph_type, node.inspect)
+	refute_nil(node)
+	refute_nil(node.graph_type, node.inspect)
 	assert_respond_to(node.graph_type, :inspect_node)
 	assert_equal(Tree_node_root, visit_proc.call(NestedArrayType.ref(Nested_array), depth, false))
 	assert_equal(1, Children_nested_array.size)
 	assert_respond_to(Son_nested_array, Children_method_name)
 	assert_instance_of(Array, Grandchildren_nested_array)
 	assert_equal(1, Grandchildren_nested_array.size)
-	assert_not_respond_to(Grandson_nested_array, Children_method_name)
+	refute_respond_to(Grandson_nested_array, Children_method_name)
 	assert_equal('3', NestedArrayType.inspect_node(Grandson_nested_array))
 
 	assert_equal('[2, [3], 4]', NestedArrayType.inspect_node(Son_nested_array), Son_nested_array.inspect)
@@ -270,7 +270,7 @@ end # map_pair
 def test_enumerate_single
 	atom=/5/
 	single=atom.enumerate_single(:map){|e| e}
-	assert_not_nil(single)
+	refute_nil(single)
 	assert_equal(5, 5.enumerate_single(:map){|e| e})
 	assert_equal(5, 5.enumerate_single(:select){|e| e==5})
 	assert_equal(nil, 5.enumerate_single(:select){|e| e==6})
@@ -280,7 +280,7 @@ end #enumerate_single
 def test_enumerate
 	atom=[/5/]
 	single=atom.enumerate(:map){|e| e}
-	assert_not_nil(single)
+	refute_nil(single)
 	assert_equal([5], [5].enumerate(:map){|e| e})
 	assert_equal([5], [5].enumerate(:select){|e| e==5})
 	assert_equal([], [5].enumerate(:select){|e| e==6})

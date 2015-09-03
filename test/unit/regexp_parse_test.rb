@@ -107,7 +107,7 @@ def test_map_recursive
 	assert_respond_to(Son_a, Children_method_name)
 	assert_instance_of(Array, Grandchildren_a)
 	assert_equal(1, Grandchildren_a.size)
-	assert_not_respond_to(Grandson_a, Children_method_name)
+	refute_respond_to(Grandson_a, Children_method_name)
 	assert_equal(Node_a, RegexpParseType.inspect_node(Grandson_a))
 
 	assert_equal(Node_options, RegexpParseType.inspect_node(Son_a), Son_a.inspect)
@@ -173,9 +173,9 @@ def test_initialize
 	regexp_string='K.*C'
 	test_tree=RegexpParse.new(regexp_string)
 	assert_equal(regexp_string,test_tree.to_s)
-	assert_not_nil(test_tree.regexp_string)
-	assert_not_nil(RegexpParse.new(test_tree.rest).to_s)
-#	assert_not_nil(RegexpParse.new(nil))
+	refute_nil(test_tree.regexp_string)
+	refute_nil(RegexpParse.new(test_tree.rest).to_s)
+#	refute_nil(RegexpParse.new(nil))
 	assert_instance_of(NestedArray, RegexpParse.new(['.', '*']).parse_tree)
 	assert_instance_of(NestedArray, RegexpParse.new(CONSTANT_PARSE_TREE).parse_tree)
 	assert_instance_of(NestedArray, RegexpParse.new(/.*/).parse_tree)

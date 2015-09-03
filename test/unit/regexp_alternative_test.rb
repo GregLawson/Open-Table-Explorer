@@ -34,7 +34,7 @@ def test_probability_of_alternatives
 	assert_equal(2.0/3, branch.probability_of_alternatives)
 end #probability_of_alternatives
 def test_initialize
-	assert_not_nil(@@CONSTANT_PARSE_TREE.regexp_string)
+	refute_nil(@@CONSTANT_PARSE_TREE.regexp_string)
 	assert_equal(['K'],@@CONSTANT_PARSE_TREE.to_a)
 	assert_equal('K', @@CONSTANT_PARSE_TREE.regexp_string)
 
@@ -42,9 +42,9 @@ def test_initialize
 	assert_equal([['1', '2'], '3'], Asymmetrical_Tree.to_a)
 	assert_equal(Asymmetrical_Tree_Array.flatten, Asymmetrical_Tree.to_a.flatten)
 	assert_equal(Sequence, Asymmetrical_Tree_Array.flatten)
-	assert_not_nil(RegexpAlternative.new(['.']))
-	assert_not_nil(RegexpAlternative.new('.'))
-	assert_not_nil(RegexpAlternative.new(/./))
+	refute_nil(RegexpAlternative.new(['.']))
+	refute_nil(RegexpAlternative.new('.'))
+	refute_nil(RegexpAlternative.new(/./))
 end #initialize
 def test_compare_character_class
 	assert_equal(Asymmetrical_Tree, Asymmetrical_Tree)
@@ -52,7 +52,7 @@ def test_compare_character_class
 	my_cc=RegexpAlternative.new('[ab]').character_class?
 	other_cc=RegexpAlternative.new('[a]').character_class?
 	intersection=my_cc & other_cc
-	assert_not_equal(my_cc, intersection)
+	refute_equal(my_cc, intersection)
 	assert_equal(other_cc, intersection)
 	assert_equal(1, my_cc.compare_character_class?(other_cc))
 	my_cc.assert_specialized_by(other_cc)
@@ -62,7 +62,7 @@ def test_compare_character_class
 	assert_equal(95, my_cc.to_s.length)
 	other_cc=RegexpAlternative.new('[[:xdigit:]]').character_class?
 	intersection=my_cc & other_cc
-	assert_not_equal(my_cc, intersection)
+	refute_equal(my_cc, intersection)
 	assert_equal(other_cc, intersection)
 	assert_equal(1, RegexpAlternative.new('[[:print:]]').compare_character_class?(RegexpAlternative.new('[[:xdigit:]]')))
 end #compare_character_class
@@ -98,7 +98,7 @@ def test_alternatives
 	assert_kind_of(Array, branch)
 	
 	cc_comparison=branch.character_class?
-	assert_not_nil(cc_comparison)
+	refute_nil(cc_comparison)
 	assert_equal(['0','1','2'], cc_comparison)
 	assert_equal(['0', '1', '2'], cc_comparison)
 	# Unroll recursion
@@ -121,7 +121,7 @@ def test_alternatives
 	assert_equal('b', lhs)
 	assert_equal(['c'], branch2[1..-1])
 	rhs=branch.alternatives?(branch2[1..-1])
-	assert_not_nil(rhs)
+	refute_nil(rhs)
 	assert_equal(['c'], rhs)
 	assert_equal(['b', 'c'], ([lhs] + rhs).sort)
 	
@@ -129,7 +129,7 @@ def test_alternatives
 	assert_equal('a', lhs)
 	assert_equal([["b", "|"], 'c'], branch[1..-1])
 	rhs=branch.alternatives?(branch[1..-1])
-	assert_not_nil(rhs)
+	refute_nil(rhs)
 	assert_equal(['b', 'c'], rhs)
 	assert_equal(['a', 'b', 'c'], ([lhs] + rhs).sort)
 	#test known cases of method (post conditions)

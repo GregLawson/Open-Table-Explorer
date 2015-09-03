@@ -30,7 +30,7 @@ def test_CLASS_constants
 end #Constants
 include DefaultTests2
 def test_initialize
-	assert_not_nil(OpenTaxFormFiller::Definitions.new)
+	refute_nil(OpenTaxFormFiller::Definitions.new)
 end #initialize
 def model_class?
 	assert_equal(OpenTaxFormFiller::Definitions, )
@@ -40,7 +40,7 @@ def test_parse
 	assert_instance_of(Hash, hash)
 	acquisition=JSON[hash]
 	puts acquisition.inspect
-	assert_not_nil(acquisition)
+	refute_nil(acquisition)
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
 	assert_instance_of(Hash, json)
@@ -77,7 +77,7 @@ def test_raw_acquisitions
 	assert_equal([:form, :year, :line, :type], raw_acquisitions[0].keys, raw_acquisitions.inspect)
 end #raw_acquisitions
 def test_coarse_filter
-	assert_not_empty(OpenTaxFormFiller.coarse_filter.compact, OpenTaxFormFiller.coarse_filter.inspect)
+	refute_empty(OpenTaxFormFiller.coarse_filter.compact, OpenTaxFormFiller.coarse_filter.inspect)
 	assert_operator(84, :==, OpenTaxFormFiller.coarse_filter.size, OpenTaxFormFiller.coarse_filter.inspect)
 end #coarse_filter
 def test_coarse_rejections
@@ -98,7 +98,7 @@ def test_all
 			nil
 		end #if
 	end.compact #select
-	assert_not_empty(ret.compact, ret.inspect)
+	refute_empty(ret.compact, ret.inspect)
 	assert_operator(84, :==, OpenTaxFormFiller.all.size, OpenTaxFormFiller.fine_rejections.inspect)
 	OpenTaxFormFiller.all(Default_tax_year).each do |ots|
 		assert_instance_of(OpenTaxFormFiller, ots)
@@ -117,7 +117,7 @@ def test_all
 	end #each
 	assert_instance_of(Array, OpenTaxFormFiller.dump)
 	assert_instance_of(String, OpenTaxFormFiller.dump[0])
-	assert_not_equal('"', OpenTaxFormFiller.dump[0][0], OpenTaxFormFiller.dump[0][0..20])
+	refute_equal('"', OpenTaxFormFiller.dump[0][0], OpenTaxFormFiller.dump[0][0..20])
 	assert_equal("\n", OpenTaxFormFiller.dump[0][-1], OpenTaxFormFiller.dump[0][0..20])
 	IO.binwrite(OTF_SQL_dump_filename, OpenTaxFormFiller.dump.join(''))
 end #all
@@ -147,7 +147,7 @@ def test_parse
 	assert_instance_of(Hash, hash)
 	acquisition=JSON[hash]
 #	puts acquisition.inspect
-	assert_not_nil(acquisition)
+	refute_nil(acquisition)
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
 	assert_instance_of(Hash, json)
@@ -184,7 +184,7 @@ def test_parse
 	array_of_hashes=[]
 	model_class?.raw_acquisitions.each_with_index do |acquisition|
 		begin
-		assert_not_nil(acquisition)
+		refute_nil(acquisition)
 		assert(!(acquisition.nil?), "acquisition should not be nil at start of parse")
 		assert(!(acquisition.size==0), "acquisition should not have a size of zero at start of parse")
 		assert(!(acquisition.empty?), "acquisition should not be empty at start of parse")
@@ -258,7 +258,7 @@ def test_match_regexp_array
 	regexp=Regexp.new(regexp_string)
 	assert_match(/#{regexp_string}/, acquisition)
 	matchData=regexp.match(acquisition)
-	assert_not_nil(matchData)
+	refute_nil(matchData)
 	acquisition=matchData.post_match
 	assert(matchData=model_class?.match_regexp_array(combination_indices, acquisition))
 	acquisition=matchData.post_match

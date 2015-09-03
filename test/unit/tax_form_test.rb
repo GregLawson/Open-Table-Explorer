@@ -17,13 +17,13 @@ include OpenTableExplorer::Finance::Constants
 extend OpenTableExplorer::Finance::Constants
 include OpenTableExplorer::Finance::TaxForm::Examples
 def test_Constants
-	assert_not_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
+	refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
 
 end #Constants
 def test_open_tax_solver_distribution_directories
-	assert_not_empty(Dir[Downloaded_src_dir+"OpenTaxSolver#{Default_tax_year}*-*"])
-	assert_not_empty(OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directories(Default_tax_year))
+	refute_empty(Dir[Downloaded_src_dir+"OpenTaxSolver#{Default_tax_year}*-*"])
+	refute_empty(OpenTableExplorer::Finance::TaxForm.open_tax_solver_distribution_directories(Default_tax_year))
 	assert_pathname_exists(OTS_example_directories, 'mkdir test/data_sources/tax_form')
 end # open_tax_solver_distribution_directories
 def test_TaxForm_open_tax_solver_distribution_directory
@@ -67,7 +67,7 @@ def test_initialize
 	assert_equal('US_1040', US1040_example.form_filename)
 	assert_equal('US_1040', US1040_user.form_filename)
 	assert_pathname_exists(US1040_example.open_tax_solver_all_form_directory)
-	assert_not_nil(US1040_example.open_tax_solver_all_form_directory)
+	refute_nil(US1040_example.open_tax_solver_all_form_directory)
 	tax_form = OpenTableExplorer::Finance::TaxForm.new(:example, form, jurisdiction, Default_tax_year, OpenTableExplorer::Finance::TaxForm.ots_user_all_forms_directory(@tax_year))
 	assert_pathname_exists(tax_form.open_tax_solver_form_directory)
 	assert_pathname_exists(US1040_template.open_tax_solver_form_directory)
@@ -77,7 +77,7 @@ def test_initialize
 #	assert_equal('US_1040_example1', US1040_example1.taxpayer_basename)
 	assert_equal("CA_540_#{Default_tax_year}_example", CA540_example.taxpayer_basename)
 	assert_equal("CA_540_#{Default_tax_year}_template", CA540_template.taxpayer_basename)
-	assert_not_empty(Dir[CA540_example.output_xfdf_glob])
+	refute_empty(Dir[CA540_example.output_xfdf_glob])
 end #initialize
 def test_example
 	US1040_example.build.assert_build.assert_pdf_to_jpeg
@@ -197,8 +197,8 @@ end #run_pdf_to_jpeg
 # Assertions custom instance methods
 def test_assert_open_tax_solver
 	CA540_example.build
-	assert_not_nil(CA540_example.open_tax_solver_run, CA540_example.inspect)
-	assert_not_nil(CA540_example.open_tax_solver_run.process_status, CA540_example.inspect)
+	refute_nil(CA540_example.open_tax_solver_run, CA540_example.inspect)
+	refute_nil(CA540_example.open_tax_solver_run.process_status, CA540_example.inspect)
 	peculiar_status=CA540_example.open_tax_solver_run.process_status.exitstatus
 	if File.exists?(CA540_example.open_tax_solver_sysout) then
 		message=IO.binread(CA540_example.open_tax_solver_sysout)
@@ -247,10 +247,10 @@ def test_Examples
 		if value.instance_of?(OpenTableExplorer::Finance::TaxForm) then
 			message="value=#{value.inspect}\n"
 			assert_instance_of(OpenTableExplorer::Finance::TaxForm, value, message)
-			assert_not_empty("../OpenTaxSolver#{Default_tax_year}_*")
-			assert_not_empty(Dir["../OpenTaxSolver#{Default_tax_year}_*"], Dir["../OpenTaxSolver*"].inspect)
-			assert_not_nil(Dir["../OpenTaxSolver#{Default_tax_year}_*"].sort[-1])
-			assert_not_nil(value.open_tax_solver_all_form_directory, 'constant name='+e.to_s+"\n"+message)
+			refute_empty("../OpenTaxSolver#{Default_tax_year}_*")
+			refute_empty(Dir["../OpenTaxSolver#{Default_tax_year}_*"], Dir["../OpenTaxSolver*"].inspect)
+			refute_nil(Dir["../OpenTaxSolver#{Default_tax_year}_*"].sort[-1])
+			refute_nil(value.open_tax_solver_all_form_directory, 'constant name='+e.to_s+"\n"+message)
 			assert_pathname_exists(value.open_tax_solver_all_form_directory, 'constant name='+e.to_s+"\n"+"")
 			assert_pathname_exists(value.open_tax_solver_form_directory, 'constant name='+e.to_s+"\n")
 			assert_pathname_exists(value.open_tax_solver_input, 'constant name='+e.to_s+"\n")

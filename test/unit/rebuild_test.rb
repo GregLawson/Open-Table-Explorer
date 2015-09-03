@@ -40,15 +40,15 @@ def test_named_repository_directories
 	repository_directories= directories_of_repositories.map do |directory|
 		assert_pathname_exists(directory)
 		files=Dir[directory + repository_glob]
-		assert_not_empty(files, 'Looking for directory + Repository_glob=' + directory + Repository_glob)
+		refute_empty(files, 'Looking for directory + Repository_glob=' + directory + Repository_glob)
 		repositories=files.map do |path|
 			assert_pathname_exists(path)
 			Repository.git_path_to_repository(path)
 		end # map
-		assert_not_empty(files)
+		refute_empty(files)
 		repositories
 	end.flatten # map
-	assert_not_empty(repository_directories)
+	refute_empty(repository_directories)
 	executing_repo = Repository::This_code_repository
 	message = 'executing_repo='+executing_repo.inspect
 	assert_include(repository_directories, executing_repo, message)
