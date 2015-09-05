@@ -10,4 +10,7 @@ require_relative '../../app/models/assertions.rb'
 class AssertionsTest < TestCase
 #include DefaultTests
 #include Unit::Executable.model_class?::Examples
+def test_preconditions
+
+end # test_preconditions
 end # Assertions
