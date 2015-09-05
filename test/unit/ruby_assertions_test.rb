@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2013 by Greg Lawson                                      
+#    Copyright (C) 2011-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -276,5 +276,21 @@ def test_assert_data_file
 	bad_pathname='../../test/unit/TestIntrospection::TestEnvironment_assertions_test.rb'
 	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
 end #assert_data_file
-end #RubyAssertionsTest
+def test_nested_scope_modules?
+	assert(RubyAssertions.instance_methods.include?(:nested_scope_modules?))
+end # nested_scopes
+def test_assert_nested_scope_submodule
+	module_symbol = :RubyAssertions
+	context = RubyAssertions
+	message='test'
+	message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
+	message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
+	message += " but not in #{context.nested_scope_modules?.inspect}"
+	assert_include(constants, :Contants, message)
+end # assert_included_submodule
+def test_assert_included_submodule
+end # assert_included_submodule
+def test_asset_nested_and_included
+end # asset_nested_and_included
+end # RubyAssertions
 
