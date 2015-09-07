@@ -27,7 +27,7 @@ module Constants # constant objects of the type
 end # Constants
 include Constants
 # attr_reader
-#require_relative '../../test/assertions.rb'
+require_relative 'assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
