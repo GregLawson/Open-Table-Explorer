@@ -7,15 +7,15 @@
 ###########################################################################
 require_relative 'test_environment' # avoid recursive requires
 require_relative '../../app/models/default_test_case.rb'
-require_relative '../../app/models/unit.rb'
+require_relative '../../test/assertions/unit_assertions.rb'
 TE=Unit.new
 DefaultTests=eval(TE.default_tests_module_name?)
 #TestCase=eval(TE.test_case_class_name?)
 class UnitTest <  TestCase
 include DefaultTests2 
 #include DefaultTests0    #less error messages
-include Unit::Assertions
-extend Unit::Assertions::ClassMethods
+#include Unit::Assertions
+#extend Unit::Assertions::ClassMethods
 def test_class_assert_pre_conditions
 #	Unit.assert_pre_conditions
 end #class_assert_pre_conditions
