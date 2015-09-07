@@ -136,6 +136,24 @@ def test_model_name
 	assert_equal(:Unit, SELF.model_class_name)
 	assert_equal(:Unit, SELF.model_name?)
 end #model_name?
+def test_test_class_name
+end # test_class
+def test_test_class
+end # test_class
+def test_create_test_class
+end # create_test_class
+def test_Unit_assert_pre_conditions
+	Unit.assert_pre_conditions
+end #class_assert_pre_conditions
+def test_Unit_assert_post_conditions
+	Unit.assert_post_conditions
+end #class_assert_post_conditions
+def test_assert_pre_conditions
+end #class_assert_pre_conditions
+def test_assert_post_conditions
+end #assert_post_conditions
+def test_assert_tested_files
+end #assert_tested_files
 def test_assert_default_test_class_id
 #	Unit.assert_constant_path_respond_to(:TestIntrospection, :Unit, :KernelMethods, :assert_default_test_class_id)
 #	assert_respond_to(UnitTest, :assert_default_test_class_id)

@@ -107,15 +107,10 @@ Executable = Unit.new_from_path?($PROGRAM_NAME)
 end #Constants
 include Constants
 def patterned_files
-	patterned_files = FilePattern.pathnames?('*').map do |globs|
+	patterned_files = FilePattern.pathnames?(@model_basename).map do |globs|
 		Dir[globs]
 	end.flatten # map
 end # patterned_files
-def all
-	patterned_files.map do |path|
-		unit = Unit.new_from_path(path)
-	end.uniq # map
-end # all
 def default_test_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
 		4
@@ -176,6 +171,7 @@ def create_test_class
 	end # NewTestClass
 	Object.const_set(test_class_name, anonomous_test_class)
 end # create_test_class
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods
@@ -188,6 +184,7 @@ extend Assertions::ClassMethods
 module Constants
 end #Constants
 include Constants
+
 module ClassMethods
 extend ClassMethods
 # conditions that are always true (at least atomically)
@@ -196,6 +193,7 @@ def assert_invariant
 end # class_assert_invariant
 # conditions true while class is being defined
 def assert_pre_conditions
+	assert_include(included_modules, :MiniTest)
 	assert_respond_to(Unit, :new_from_path?)
 	assert_module_included(self, FilePattern::Assertions)
 end #class_assert_pre_conditions
@@ -204,6 +202,7 @@ def assert_post_conditions
 	assert_equal(TE, FilePattern::Examples::SELF)
 end #class_assert_post_conditions
 end #ClassMethods
+
 module KernelMethods
 end #KernelMethods
 # conditions that are always true (at least atomically)
