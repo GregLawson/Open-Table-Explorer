@@ -6,10 +6,10 @@
 #
 ###########################################################################
 require_relative 'test_environment_minitest.rb'
-puts 'self.class.constants = ' + self.class.constants.inspect
+#puts 'self.class.constants = ' + self.class.constants.inspect
 fail 'in assertions.rb AssertionsModule not found in ' + self.class.constants.inspect unless self.class.constants.include?(:AssertionsModule)
-puts Module.constants.inspect
-puts "\nself.class.constants = " + self.class.constants.inspect
+#puts Module.constants.inspect
+#puts "\nself.class.constants = " + self.class.constants.inspect
 require_relative '../../test/assertions/ruby_assertions.rb'
 #fail 'in assertions.rb AssertionsModule not found in ' + self.class.constants.inspect unless self.class.constants.include?(:AssertionsModule)
 module Assertions
