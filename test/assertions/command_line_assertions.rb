@@ -47,6 +47,8 @@ def assert_ARGV
 end # ARGV
 end #ClassMethods
 def assert_pre_conditions
+	assert_equal(@executable, @unit_class)
+
 end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
@@ -54,9 +56,6 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 #TestWorkFlow.assert_pre_conditions
-module Constants
-end #Constants
-include Constants
 module Examples
 include Constants
 No_args = CommandLine.new($0, CommandLine, [])

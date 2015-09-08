@@ -23,11 +23,11 @@ def initialize(executable, unit_class = CommandLine, argv = ARGV)
 	@argv = argv
 end # initialize
 def to_s
-	ret = '@argv = ' + @argv.inspect if $VERBOSE
-	ret += "\n sub_command = " + sub_command.inspect if $VERBOSE
+	ret = '@argv = ' + @argv.inspect
+	ret += "\n sub_command = " + sub_command.inspect
 	if number_of_arguments != 0 then
-		ret += "\n arguments = " + arguments.inspect if $VERBOSE
-		ret += "\n argument_types = " + argument_types.inspect if $VERBOSE
+		ret += "\n arguments = " + arguments.inspect
+		ret += "\n argument_types = " + argument_types.inspect
 	end # if
 	ret
 end # to_s
@@ -64,33 +64,23 @@ def argument_types
 		end # if
 	end # map
 end # argument_types
-def dispatch_one_argument(argument)
-	executable_object = executable_object(argument)
-	ret = if executable_object.respond_to?(sub_command) then
-		method = executable_object.method(sub_command)
-		case method.arity
-		when -1 then
-			method.call
-		when 0 then
-			method.call
-		when 1 then
-			method.call(argument)
-		else
-			message = 'In CommandLine#run, '
-			message += "\nargument =  " + argument
-			message += "\nsub_command =  " + sub_command.to_s
-			message += "\narity =  " + method.arity.to_s
-			fail Exception.new(message)
-		end # case
+def find_example?
+	if Unit::Executable.model_class?.constants.include?(:Examples) then
+		nil
 	else
-		message = "#{sub_command} is not an instance method of #{executable_object.class.inspect}"
-		message = candidate_commands_strings.join("\n")
-#		message += "\n candidate_commands = " + candidate_commands.inspect
-#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-		puts message
+		Unit::Executable.model_class?::Examples.constants.find do |example_name|
+			example_fully_qualified_name = Unit::Executable.model_class_name? + '::Example::' + example_name.to_s
+			example_value = eval(example_fully_qualified_name)
+			example_class = example_value.class
+			
+			if example_class == Unit::Executable.model_class? then
+				example_value
+			else
+				nil
+			end # if
+		end # find
 	end # if
-	ret
-end # dispatch_one_argument
+end # find_example
 def executable_object(file_argument = nil)
 	script_class = Unit::Executable.model_class?
 	if file_argument.nil? then # default
@@ -106,6 +96,63 @@ def executable_object(file_argument = nil)
 		@unit_class.new(TestExecutable.new_from_path(file_argument))
 	end # if
 end # executable_object
+def executable_method(method_name)
+	executable_object = executable_object(arguments[0])
+	ret = if executable_object.respond_to?(method_name) then
+		method = executable_object.method(method_name)
+	else
+		message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
+		message = candidate_commands_strings.join("\n")
+#		message += "\n candidate_commands = " + candidate_commands.inspect
+#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+		fail Exception.new(message)
+	end # if
+end # executable_method
+def arity(method_name)
+	executable_method = executable_method(method_name)
+	ret = if executable_method.nil? then
+		message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
+		message = candidate_commands_strings.join("\n")
+#		message += "\n candidate_commands = " + candidate_commands.inspect
+#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+		fail Exception.new(message)
+	else
+		executable_method.arity
+	end # if
+end # arity
+def default_arguments?(method_name)
+	if arity(method_name) < 0 then
+		true
+	else
+		false
+	end # if
+
+
+end # default_arguments
+def required_arguments(method_name)
+
+	method_arity = arity(method_name)
+	if default_arguments?(method_name) then
+		-(method_arity+1)
+	else
+		method_arity
+	end # if
+end # required_arguments
+def dispatch_one_argument(argument)
+	
+		case required_arguments(sub_command)
+		when 0 then
+			method.call
+		when 1 then
+			method.call(argument)
+		else
+			message = "\nIn CommandLine#dispatch_one_argument, "
+			message += "\nargument =  " + argument
+			message += "\nsub_command =  " + sub_command.to_s
+			message += "\narity =  " + required_arguments(sub_command).to_s
+			fail Exception.new(message)
+		end # case
+end # dispatch_one_argument
 def candidate_commands
 	script_class = Unit::Executable.model_class?
 	script_class.instance_methods(false).map do |candidate_command_name|

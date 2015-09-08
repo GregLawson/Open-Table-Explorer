@@ -18,7 +18,9 @@ Not_virtus_unit_commandline = CommandLine.new(Not_virtus_unit.model_test_pathnam
 
 def test_Constants
 	CommandLine.assert_pre_conditions
-	assert_equal({:inspect=>false, :test=>false, :help=>false, :individual_test=>false}, Command_line_test_opts)
+	Test_unit_commandline.assert_pre_conditions
+	Not_virtus_unit_commandline.assert_pre_conditions
+	assert_equal({:inspect=>false, :test=>false, :help=>false, :individual_test=>false}, Script_command_line)
 	if Script_command_line.number_of_arguments > 0 then
 		Script_command_line.arguments.each_with_index do |argument, i|
 			puts argument.to_s + ' type of ' + Script_command_line.argument_types[i]
@@ -36,22 +38,25 @@ def test_initialize
 	refute_nil(Script_command_line.unit_class)
 end #initialize
 def test_to_s
+	refute_equal('', Test_unit_commandline.to_s)
+	assert_match('', Test_unit_commandline.to_s)
 end # to_s
 def test_arguments
 end # arguments
 def test_number_of_arguments
+	assert_equal(1, Test_unit_commandline.number_of_arguments)
 end # number_of_arguments
 def test_sub_command
+	assert_equal(:error_score?, Test_unit_commandline.sub_command)
 end # sub_command
 def test_argument_types
+	Test_unit_commandline.arguments.map do |argument|
+		refute_empty(Dir[argument])
+	end # map
+	assert_equal([Method], Test_unit_commandline.argument_types)
 end # argument_types
-def test_dispatch_one_argument
-	executable_object = Test_unit_commandline.executable_object($0)
-	assert_respond_to(executable_object, Test_unit_commandline.sub_command)
-	method = executable_object.method(Test_unit_commandline.sub_command)
-	assert_equal(-1, method.arity)
-#	refute_nil(Test_unit_commandline.dispatch_one_argument($0))
-end # dispatch_one_argument
+def test_find_example?
+end # find_example
 def test_executable_object
 	assert_includes(Test_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
 	test_run_object = TestRun.new(executable: TestExecutable.new(executable_file: $0))
@@ -73,6 +78,29 @@ def test_executable_object
 	assert_equal($0, test_run_object.executable.executable_file)
 	assert_equal($0, Test_unit_commandline.executable_object($0).executable.executable_file)
 end # executable_object
+def test_executable_method
+end # executable_method
+def test_arity
+	assert_equal(1, Script_command_line.arity(:argument_types), Script_command_line.to_s)
+	assert_equal(1, Script_command_line.arity(:executable_object), Script_command_line.to_s)
+	assert_equal(1, Script_command_line.arity(:executable_method), Script_command_line.to_s)
+	assert_equal(1, Script_command_line.arity(:arity), Script_command_line.to_s)
+	assert_equal(-1, Test_unit_commandline.arity(:error_score?), Test_unit_commandline.to_s)
+end # arity
+def test_default_arguments?
+end # default_arguments
+def test_required_arguments
+	executable_object = Test_unit_commandline.executable_object($0)
+	assert_equal(:error_score?, Test_unit_commandline.sub_command)
+	assert_respond_to(executable_object, Test_unit_commandline.sub_command)
+	method = executable_object.method(Test_unit_commandline.sub_command)
+	assert_equal(-1, method.arity)
+	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
+end # required_arguments
+def test_dispatch_one_argument
+	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
+	refute_nil(Test_unit_commandline.dispatch_one_argument($0))
+end # dispatch_one_argument
 def test_candidate_commands
 	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
 	assert_equal(-2, Script_command_line.method(:initialize).arity)
