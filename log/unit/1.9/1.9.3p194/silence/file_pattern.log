@@ -1,0 +1,11 @@
+passed
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
+
+# Running tests:
+
+.....................
+
+Finished tests in 0.029771s, 705.3807 tests/s, 6919.4491 assertions/s.
+
+21 tests, 206 assertions, 0 failures, 0 errors, 0 skips

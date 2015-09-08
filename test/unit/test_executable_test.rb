@@ -66,7 +66,7 @@ end # new_from_path
 def test_log_path?
 	unit = Unit.new_from_path?($0)
 	refute_nil(unit)
-	assert_equal('log/unit/1.9/1.9.3p194/quiet/test_executable.log', Default_executable.log_path?)
+	assert_equal('log/unit/1.9/1.9.3p194/silence/test_executable.log', Default_executable.log_path?)
 end # log_path?
 def test_ruby_test_string
 	executable_file = $PROGRAM_NAME
