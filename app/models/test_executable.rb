@@ -57,7 +57,7 @@ def ruby_test_string(logging = :quiet,
 	when :silence then @ruby_test_string = 'ruby -v -W0 '
 	when :medium then @ruby_test_string = 'ruby -v -W1 '
 	when :verbose then @ruby_test_string = 'ruby -v -W2 '
-	else fail Exception.new(logging + ' is not a valid logging type.')
+	else fail Exception.new(logging.to_s + ' is not a valid logging type.')
 	end # case
 	@ruby_test_string += executable_file
 end # ruby_test_string

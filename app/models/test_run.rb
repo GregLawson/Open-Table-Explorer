@@ -163,7 +163,7 @@ end #parse_header
 end # ClassMethods
 extend ClassMethods
 # attr_reader
-def error_score?(logging = :quiet,
+def error_score?(logging = :silence,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
 	executable_file = @executable.executable_file
