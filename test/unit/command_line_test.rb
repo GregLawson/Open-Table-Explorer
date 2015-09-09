@@ -14,7 +14,9 @@ require Test_unit.model_pathname?
 Test_unit_commandline = CommandLine.new(Test_unit.model_test_pathname?, Test_unit.model_class?, ['error_score?', $0])
 Not_virtus_unit = Unit.new(:CommandLine)
 Not_virtus_unit_commandline = CommandLine.new(Not_virtus_unit.model_test_pathname?, Not_virtus_unit.model_class?, ['help', $0])
-
+def test_ruby_assertions
+	refute_empty([1])
+end # ruby_assertions
 
 def test_Constants
 	CommandLine.assert_pre_conditions
@@ -55,6 +57,19 @@ def test_argument_types
 	end # map
 	assert_equal([Method], Test_unit_commandline.argument_types)
 end # argument_types
+def test_find_examples
+	constants = Unit::Executable.model_class?.constants
+	assert(constants.include?(:Examples))
+	example_constants = Unit::Executable.model_class?::Examples.constants
+			Unit::Executable.model_class?::Examples.constants.map do |example_name|
+			example_fully_qualified_name = Unit::Executable.model_class_name.to_s + '::Examples::' + example_name.to_s
+			example_value = eval(example_fully_qualified_name)
+			example_class = example_value.class
+			end # find
+	assert_equal([], Script_command_line.find_examples, Script_command_line.to_s)
+	assert_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.to_s)
+#			assert_equal(example_class, Unit::Executable.model_class?)
+end # find_examples
 def test_find_example?
 end # find_example
 def test_executable_object
@@ -99,6 +114,9 @@ def test_required_arguments
 end # required_arguments
 def test_dispatch_one_argument
 	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
+
+	fail Exception.new('possible infinite loop here')
+
 	refute_nil(Test_unit_commandline.dispatch_one_argument($0))
 end # dispatch_one_argument
 def test_candidate_commands

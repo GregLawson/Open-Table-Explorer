@@ -64,12 +64,12 @@ def argument_types
 		end # if
 	end # map
 end # argument_types
-def find_example?
+def find_examples
 	if Unit::Executable.model_class?.constants.include?(:Examples) then
-		nil
+		[]
 	else
-		Unit::Executable.model_class?::Examples.constants.find do |example_name|
-			example_fully_qualified_name = Unit::Executable.model_class_name? + '::Example::' + example_name.to_s
+		Unit::Executable.model_class?::Examples.constants.map do |example_name|
+			example_fully_qualified_name = Unit::Executable.model_class_name.to_s + '::Examples::' + example_name.to_s
 			example_value = eval(example_fully_qualified_name)
 			example_class = example_value.class
 			
@@ -78,8 +78,11 @@ def find_example?
 			else
 				nil
 			end # if
-		end # find
+		end.compact # map
 	end # if
+end # find_examples
+def find_example?
+	find_examples.first
 end # find_example
 def executable_object(file_argument = nil)
 	script_class = Unit::Executable.model_class?
@@ -139,7 +142,7 @@ def required_arguments(method_name)
 	end # if
 end # required_arguments
 def dispatch_one_argument(argument)
-	
+	method = executable_method(sub_command)
 		case required_arguments(sub_command)
 		when 0 then
 			method.call
