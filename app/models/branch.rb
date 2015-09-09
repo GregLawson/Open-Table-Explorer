@@ -20,8 +20,8 @@ class BranchReference
 	attribute :timestamp, Time, :default => Time.now
 end # values
 module Constants
-Branch_name_regexp = /[a-zA-Z0-9_]+/ # conventional syntax
-#Branch_name_regexp = /[-a-z0-9A-Z_]+/ # extended syntax
+Branch_name_regexp = /[a-zA-Z0-9_\/]+/ # conventional syntax
+#Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
 
 Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
 Ambiguous_ref_pattern = Branch_name_regexp.capture(:ambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
