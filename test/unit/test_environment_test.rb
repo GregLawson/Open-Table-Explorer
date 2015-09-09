@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
+require_relative '../assertions/command_line_assertions.rb'
 class MinitestTest < TestCase
 def test_RegexpError
 	regexp_string = ')'
@@ -21,4 +22,7 @@ rescue Exception => exception
 	assert_includes(exception.class.ancestors, Exception)
 	assert_instance_of(AssertionFailedError, exception)
 end # AssertionFailedError
+def test_ruby_assertions
+	refute_empty([1])
+end # ruby_assertions
 end # MinitestTest

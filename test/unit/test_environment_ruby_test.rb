@@ -32,4 +32,7 @@ rescue Exception => exception
 	assert_includes(exception.class.ancestors, Exception)
 	assert_instance_of(AssertionFailedError, exception)
 end # AssertionFailedError
+def test_ruby_assertions
+	refute_empty([1])
+end # ruby_assertions
 end # MinitestTest
