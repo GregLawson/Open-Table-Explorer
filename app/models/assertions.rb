@@ -14,12 +14,12 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 #fail 'in assertions.rb AssertionsModule not found in ' + self.class.constants.inspect unless self.class.constants.include?(:AssertionsModule)
 module Assertions
 include AssertionsModule
-#extend AssertionsModule
+extend AssertionsModule
 #include Test::Unit::Assertions
 module ClassMethods
 #include Minitest::Assertions
 #include Test::Unit::Assertions
-#include AssertionsModule
+include AssertionsModule
 def assert_pre_conditions(message='')
 	message+="In #{self.class}::assert_pre_conditions, self=#{inspect}"
 	assert_respond_to(self, :refute_nil)
