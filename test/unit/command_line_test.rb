@@ -5,7 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
+#require_relative 'test_environment'
+require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../assertions/command_line_assertions.rb'
 class CommandLineTest < TestCase
 include CommandLine::Examples
@@ -56,47 +57,72 @@ def test_argument_types
 	Test_unit_commandline.arguments.map do |argument|
 		refute_empty(Dir[argument])
 	end # map
-	assert_equal([Method], Test_unit_commandline.argument_types)
+#	assert_equal([Method], Test_unit_commandline.argument_types)
 end # argument_types
 def test_find_examples
+	assert(Unit::Executable.model_class?.constants.include?(:Examples), Unit::Executable.model_class?.constants.inspect)
 	constants = Unit::Executable.model_class?.constants
 	assert(constants.include?(:Examples))
 	example_constants = Unit::Executable.model_class?::Examples.constants
-			Unit::Executable.model_class?::Examples.constants.map do |example_name|
+	example_classes = Unit::Executable.model_class?::Examples.constants.map do |example_name|
 			example_fully_qualified_name = Unit::Executable.model_class_name.to_s + '::Examples::' + example_name.to_s
 			example_value = eval(example_fully_qualified_name)
 			example_class = example_value.class
-			end # find
+			Example.new(unit: Unit::Executable, example_constant_name: example_name)
+
+			end # map
+	assert_equal(example_classes, Example.find_all_in_class(CommandLine))
+	refute_equal([], Example.find_all_in_class(TestRun))
+	assert_equal([], Example.find_by_class(CommandLine, CommandLine))
 	assert_equal([], Script_command_line.find_examples, Script_command_line.to_s)
 	assert_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.to_s)
 #			assert_equal(example_class, Unit::Executable.model_class?)
+	refute_equal([], Test_unit_commandline.find_examples)
+	refute_equal([], Not_virtus_unit_commandline.find_examples)
+	refute_equal([], Script_command_line.find_examples)
 end # find_examples
 def test_find_example?
-end # find_example
+	refute_equal([], Test_unit_commandline.find_examples)
+	refute_equal([], Not_virtus_unit_commandline.find_examples)
+	refute_equal([], Script_command_line.find_examples)
+	refute_nil(Test_unit_commandline.find_example?)
+	refute_nil(Not_virtus_unit_commandline.find_example?)
+	refute_nil(Script_command_line.find_example?)
+	assert_equal(Test_unit_commandline, Test_unit_commandline.find_example?)
+	assert_equal(Not_virtus_unit_commandline, Not_virtus_unit_commandline.find_example?)
+	assert_equal(Script_command_line, Script_command_line.find_example?)
+end # find_example?
 def test_executable_object
 	assert_includes(Test_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
 	test_run_object = TestRun.new(executable: TestExecutable.new(executable_file: $0))
-	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object($0).methods)
-#	assert_equal(test_run_object, Test_unit_commandline.executable_object($0))
-#	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object($0).executable)
+	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object.methods)
+#	assert_equal(test_run_object, Test_unit_commandline.executable_object)
+#	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object.executable)
 	refute_nil(test_run_object.executable)
 	assert_equal($0, test_run_object.executable.executable_file)
-	assert_equal($0, Test_unit_commandline.executable_object($0).executable.executable_file)
+	assert_equal($0, Test_unit_commandline.executable_object.executable.executable_file)
 
 	refute_includes(CommandLine.included_modules, Virtus::InstanceMethods)
 	refute_includes(Not_virtus_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
 	test_run_object = CommandLine.new(TestExecutable.new_from_path($0))
-#	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object($0).methods)
-#	assert_equal(test_run_object, Test_unit_commandline.executable_object($0))
-#	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object($0).executable)
+#	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object.methods)
+#	assert_equal(test_run_object, Test_unit_commandline.executable_object)
+#	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object.executable)
 	refute_nil(test_run_object.executable)
 	assert_instance_of(TestExecutable, test_run_object.executable)
 	assert_equal($0, test_run_object.executable.executable_file)
-	assert_equal($0, Test_unit_commandline.executable_object($0).executable.executable_file)
+	assert_equal($0, Test_unit_commandline.executable_object.executable.executable_file)
 end # executable_object
 def test_executable_method
+	refute_nil(Script_command_line.executable_object)
+	assert(Script_command_line.executable_object.respond_to?(:argument_types))
+
+	refute_nil(Script_command_line.executable_method(:argument_types))
+	refute_nil(Script_command_line.executable_method(:argument_types))
+	refute_nil(Script_command_line.executable_method(:argument_types))
 end # executable_method
 def test_arity
+	refute_nil(Script_command_line.executable_method(:argument_types))
 	assert_equal(1, Script_command_line.arity(:argument_types), Script_command_line.to_s)
 	assert_equal(1, Script_command_line.arity(:executable_object), Script_command_line.to_s)
 	assert_equal(1, Script_command_line.arity(:executable_method), Script_command_line.to_s)
@@ -106,7 +132,7 @@ end # arity
 def test_default_arguments?
 end # default_arguments
 def test_required_arguments
-	executable_object = Test_unit_commandline.executable_object($0)
+	executable_object = Test_unit_commandline.executable_object
 	assert_equal(:error_score?, Test_unit_commandline.sub_command)
 	assert_respond_to(executable_object, Test_unit_commandline.sub_command)
 	method = executable_object.method(Test_unit_commandline.sub_command)
@@ -138,6 +164,15 @@ def test_run
 #		SELF.run do
 #		end # do run
 end # run
+def test_argument_type
+	assert_equal(Dir, CommandLine.argument_type('/*'))
+	assert_equal(File, CommandLine.argument_type('/'))
+	assert(Branch.branch_names?.include?(:master), Branch.branch_names?.inspect) 
+	assert(Branch.branch_names?.include?(:master)) 
+	assert_equal(Branch, CommandLine.argument_type('master'))
+	assert_equal(Unit, CommandLine.argument_type('command_line'))
+	assert_equal(Method, CommandLine.argument_type('error_score?'))
+end # argument_type
 # ruby -W0 script/command_line.rb
 # ruby -W0 script/command_line.rb --help
 # ruby -W0 script/command_line.rb help

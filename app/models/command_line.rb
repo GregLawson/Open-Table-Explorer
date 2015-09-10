@@ -51,61 +51,51 @@ def sub_command
 end # sub_command
 def argument_types
 	arguments.map do |argument|
-		if SUB_COMMANDS.include?(argument)
-			CommandLine
-		elsif Branch.branch_names?.include?(argument) then 
-			Branch
-		elsif !Dir[argument].empty? then
-			Dir
-		elsif File.exists?(argument) then
-			File
-		else 
-			Unit
-		end # if
+		CommandLine.argument_type(argument)
 	end # map
 end # argument_types
 def find_examples
-	if Unit::Executable.model_class?.constants.include?(:Examples) then
-		[]
-	else
-		Unit::Executable.model_class?::Examples.constants.map do |example_name|
-			example_fully_qualified_name = Unit::Executable.model_class_name.to_s + '::Examples::' + example_name.to_s
-			example_value = eval(example_fully_qualified_name)
-			example_class = example_value.class
-			
-			if example_class == Unit::Executable.model_class? then
-				example_value
-			else
-				nil
-			end # if
-		end.compact # map
-	end # if
+	Example.find_by_class(@unit_class, @unit_class)
 end # find_examples
 def find_example?
-	find_examples.first
-end # find_example
-def executable_object(file_argument = nil)
-	script_class = Unit::Executable.model_class?
-	if file_argument.nil? then # default
-		if number_of_arguments == 0 then
-			file_argument = $0 # script file
-		else
-			file_argument = @argv[1]
-		end # if
-	end # if file_argument.nil? default
+	examples = Example.find_by_class(@unit_class, @unit_class)
+	if examples.empty? then
+		nil
+	else
+		examples.first
+	end # if
+end # find_example?
+def make_executable_object(file_argument)
 	if @unit_class.included_modules.include?(Virtus::InstanceMethods) then
 		@unit_class.new(executable: TestExecutable.new(executable_file: file_argument))
 	else
 		@unit_class.new(TestExecutable.new_from_path(file_argument))
 	end # if
+end # 
+def executable_object(file_argument = nil)
+	example = find_example?
+	if file_argument.nil? then
+		if example.nil? then # default
+			if number_of_arguments == 0 then
+				make_executable_object($0) # script file
+			else
+				make_executable_object(@argv[1])
+			end # if
+		else
+			example
+		end # if
+	else
+		make_executable_object(file_argument)
+	end # if
+	
 end # executable_object
 def executable_method(method_name)
-	executable_object = executable_object(arguments[0])
+	executable_object = executable_object
 	ret = if executable_object.respond_to?(method_name) then
 		method = executable_object.method(method_name)
 	else
-		message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
-		message = candidate_commands_strings.join("\n")
+		message = "#{method_name} is not an instance method of #{executable_object.class.inspect}\n"
+		message += candidate_commands_strings.join("\n")
 #		message += "\n candidate_commands = " + candidate_commands.inspect
 #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
 		fail Exception.new(message)
@@ -157,8 +147,7 @@ def dispatch_one_argument(argument)
 		end # case
 end # dispatch_one_argument
 def candidate_commands
-	script_class = Unit::Executable.model_class?
-	script_class.instance_methods(false).map do |candidate_command_name|
+	self.class.instance_methods(false).map do |candidate_command_name|
 		if Nonscriptable_methods.include?(candidate_command_name) then
 			nil
 		else
@@ -242,6 +231,19 @@ def test
 end # test
 module ClassMethods
 include Constants
+def argument_type(argument)
+	if SUB_COMMANDS.include?(argument)
+		CommandLine
+	elsif Branch.branch_names?.include?(argument) then 
+		Branch
+	elsif File.exists?(argument) then
+		File
+	elsif !Dir[argument].empty? then
+		Dir
+	else 
+		Unit
+	end # if
+end # argument_type
 end # ClassMethods
 extend ClassMethods
 module Constants # constant objects of the type
