@@ -35,7 +35,7 @@ require_relative 'parse.rb'
 #refute_include(Module.constants, :Repository)
 class Repository #<Grit::Repo
 module Constants
-Repository_Unit = Unit.new_from_path?(__FILE__)
+Repository_Unit = Unit.new_from_path(__FILE__)
 Root_directory=FilePattern.project_root_dir?(__FILE__)
 Source=File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'

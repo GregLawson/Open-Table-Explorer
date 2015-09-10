@@ -8,10 +8,10 @@
 require_relative '../../app/models/file_pattern.rb'
 class Unit
 module ClassMethods
-def new_from_path?(path)
+def new_from_path(path)
 	library_name = FilePattern.path2model_name?(path)
 	Unit.new(library_name, FilePattern.project_root_dir?(path))
-end #new_from_path?
+end #new_from_path
 def unit_names?(files)
 	files.map do |f|
 		FilePattern.unit_base_name?(f).to_s
@@ -24,7 +24,7 @@ def patterned_files
 end # patterned_files
 def all
 	patterned_files.map do |path|
-		unit = new_from_path?(path)
+		unit = new_from_path(path)
 	end.uniq # map
 end # all
 def all_basenames
@@ -103,7 +103,7 @@ def pathnames?
 	end # map
 end #pathnames
 module Constants
-Executable = Unit.new_from_path?($PROGRAM_NAME)
+Executable = Unit.new_from_path($PROGRAM_NAME)
 end #Constants
 include Constants
 def patterned_files

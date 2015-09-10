@@ -20,7 +20,7 @@ include Virtus.model
   attribute :nmap_execution_time, Time, :default => nil
 module Constants # first of two
 Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
-Nmap_xml_pathname = Unit.new_from_path?($0).data_sources_directory? + '/nmap.xml'
+Nmap_xml_pathname = Unit.new_from_path($0).data_sources_directory? + '/nmap.xml'
 end # Constants
 include Constants
 module ClassMethods

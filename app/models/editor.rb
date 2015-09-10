@@ -24,7 +24,7 @@ extend ClassMethods
 attr_reader :executable, :unit_maturity
 def initialize(executable)
 #specific_file,
-#	related_files = Unit.new_from_path?(specific_file),
+#	related_files = Unit.new_from_path(specific_file),
 #	repository = Repository.new(FilePattern.repository_dir?, :interactive))
 	@executable = executable
 	@specific_file = @executable.executable_file

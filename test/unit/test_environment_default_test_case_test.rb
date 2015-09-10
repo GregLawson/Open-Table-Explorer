@@ -17,7 +17,7 @@ rescue RegexpError => exception
 	return exception
 end #regexp_error
 def assert_requires(required_path)
-	required_unit = Unit.new_from_path?(required_path)
+	required_unit = Unit.new_from_path(required_path)
 end # requires
 def test_requires_minitest
 	assert_requires('../../app/models/test_environment_minitest.rb')

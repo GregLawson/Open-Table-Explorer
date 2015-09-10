@@ -45,7 +45,7 @@ def test_TestExecutable_initialize
 #	Unit_executable.assert_logical_primary_key_defined()
 end #initialize
 def test_new_from_pathname
-	unit = Unit.new_from_path?(executable_file_file)
+	unit = Unit.new_from_path(executable_file_file)
 	new_executable_file = TestExecutable.new(executable_file: executable_file, unit: unit)
 end # new_from_pathname
 def test_log_path?
@@ -180,7 +180,7 @@ def test_error_score?
 		refute_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 #	test_run = TestRun.new(:executable => executable)
 	test_run = TestRun.new(executable: TestExecutable.new(executable_file: executable_file))
-#	assert_equal(nil, Unit.new_from_path?(executable_file))
+#	assert_equal(nil, Unit.new_from_path(executable_file))
 #	assert_equal(nil, test_run.executable.unit, test_run.inspect)
 	assert_equal(10000, test_run.error_score?, recent_test.inspect)
 #	This_code_repository.assert_deserving_branch(:edited, executable_file)

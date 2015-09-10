@@ -29,7 +29,7 @@ include Virtus.model
 module ClassMethods
 def new_from_path(executable_file,
 		repository = Repository::This_code_repository)
-	unit = Unit.new_from_path?(executable_file)
+	unit = Unit.new_from_path(executable_file)
 	new_executable = TestExecutable.new(executable_file: executable_file, 
 								unit: unit, repository: repository)
 end # new_from_path
@@ -38,7 +38,7 @@ extend ClassMethods
 def log_path?(logging = :quiet,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
-	@unit = Unit.new_from_path?(executable_file)
+	@unit = Unit.new_from_path(executable_file)
 	if @unit.nil? then
 		@log_path = '' # empty file string
 	else

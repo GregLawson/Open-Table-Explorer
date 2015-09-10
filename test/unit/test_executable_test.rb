@@ -52,7 +52,7 @@ def test_TestExecutable_initialize
 end #initialize
 def test_new_from_path
 	executable_file = $0
-	unit = Unit.new_from_path?(executable_file)
+	unit = Unit.new_from_path(executable_file)
 	repository = Repository::This_code_repository
 	new_executable = TestExecutable.new(executable_file: executable_file, 
 								unit: unit, repository: repository)
@@ -64,7 +64,7 @@ def test_new_from_path
 	assert_equal(:unit, Default_executable.test_type)
 end # new_from_path
 def test_log_path?
-	unit = Unit.new_from_path?($0)
+	unit = Unit.new_from_path($0)
 	refute_nil(unit)
 	assert_equal('log/unit/1.9/1.9.3p194/silence/test_executable.log', Default_executable.log_path?)
 end # log_path?
