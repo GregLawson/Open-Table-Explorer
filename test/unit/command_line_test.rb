@@ -15,6 +15,7 @@ Test_unit_commandline = CommandLine.new(Test_unit.model_test_pathname?, Test_uni
 Not_virtus_unit = Unit.new(:CommandLine)
 Not_virtus_unit_commandline = CommandLine.new(Not_virtus_unit.model_test_pathname?, Not_virtus_unit.model_class?, ['help', $0])
 def test_ruby_assertions
+	assert(self.class.included_modules.include?(AssertionsModule))
 	refute_empty([1])
 end # ruby_assertions
 

@@ -47,7 +47,7 @@ def assert_ARGV
 end # ARGV
 end #ClassMethods
 def assert_pre_conditions
-	assert_equal(@executable, @unit_class)
+	assert_equal(Unit.new_from_path(@executable).model_class?, @unit_class)
 
 end #assert_pre_conditions
 def assert_post_conditions
