@@ -6,8 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../assertions/command_line_assertions.rb'
-class MinitestTest < TestCase
+class TestEnvironmentTest < TestCase
 def test_RegexpError
 	regexp_string = ')'
 	Regexp.new(regexp_string) # test
