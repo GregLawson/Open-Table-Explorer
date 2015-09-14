@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
+require 'virtus'
 class Unit
 module ClassMethods
 def new_from_path(path)
@@ -29,7 +30,7 @@ def all
 end # all
 def all_basenames
 	Unit.all.map {|u| u.model_basename}.uniq.sort
-end # 
+end # all_basenames
 end #ClassMethods
 extend ClassMethods
 
@@ -172,3 +173,29 @@ def create_test_class
 	Object.const_set(test_class_name, anonomous_test_class)
 end # create_test_class
 end # Unit
+class Example
+module ClassMethods
+def find_all_in_class(containing_class)
+	if containing_class.constants.include?(:Examples) then # if there is no module Examples in unit
+		[]
+	else
+		containing_class::Examples.constants.map do |example_name|
+			example = Example.new(containing_class: containing_class, example_constant_name: example_name)
+		end # map
+	end # if
+end # find_all_in_class
+def find_by_class(containing_class, value_class)
+	find_all_in_class(containing_class).select {|example| example.class == value_class}
+end # find_by_class
+end # ClassMethods
+extend ClassMethods
+include Virtus.model
+	attribute :containing_class, Class
+	attribute :example_constant_name, String
+def fully_qualified_name
+	@containing_class.name.to_s + '::Examples::' + @example_constant_name.to_s
+end # fully_qualified_name
+def value
+	eval(fully_qualified_name)
+end # value
+end # Example

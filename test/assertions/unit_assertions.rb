@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/unit.rb'
 class Unit
-#require_relative '../../app/models/assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods

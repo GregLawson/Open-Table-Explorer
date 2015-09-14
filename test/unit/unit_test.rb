@@ -26,6 +26,8 @@ end #Unit
 class UnitTest < TestCase
 include DefaultTests
 include Unit::Examples
+def test_new_from_path
+end #new_from_path
 def test_unit_names?
 	assert_equal(['unit'], Unit.unit_names?([$0]))	
 end #unit_names?
@@ -35,6 +37,8 @@ end # patterned_files
 def test_all
 	assert_includes(Unit.all, Unit::Executable)
 end # all
+def test_all_basenames
+end # all_basenames
 def test_initialize
 	assert_respond_to(UnboundedFixnumUnit, :model_basename)
 	assert_equal(:unbounded_fixnum, UnboundedFixnumUnit.model_basename)	
@@ -168,4 +172,12 @@ def test_Examples
 	UnboundedFixnumUnit.assert_pre_conditions
 	UnboundedFixnumUnit.assert_post_conditions
 end #Examples
+def test_find_all_in_class
+end # find_all_in_class
+def test_find_by_class
+end # find_by_class
+def test_fully_qualified_name
+end # fully_qualified_name
+def test_value
+end # value
 end # UnitTest
