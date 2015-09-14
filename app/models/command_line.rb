@@ -90,7 +90,7 @@ def executable_object(file_argument = nil)
 	
 end # executable_object
 def executable_method(method_name)
-	executable_object = executable_object
+#	executable_object = executable_object
 	ret = if executable_object.respond_to?(method_name) then
 		method = executable_object.method(method_name)
 	else
@@ -147,7 +147,7 @@ def dispatch_one_argument(argument)
 		end # case
 end # dispatch_one_argument
 def candidate_commands
-	self.class.instance_methods(false).map do |candidate_command_name|
+	executable_object.methods(false).map do |candidate_command_name|
 		if Nonscriptable_methods.include?(candidate_command_name) then
 			nil
 		else
