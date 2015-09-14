@@ -8,8 +8,8 @@
 require_relative 'test_environment'
 require_relative '../../app/models/xrandr.rb'
 class XrandrTest < TestCase
-include DefaultTests
-include TE.model_class?::Examples
+#include DefaultTests
+#include TE.model_class?::Examples
 def test_initialize
 end # initialize
 def test_display
