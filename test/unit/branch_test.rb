@@ -6,13 +6,13 @@
 #
 ###########################################################################
 require_relative '../unit/test_environment'
-require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../../test/assertions/branch_assertions.rb'
 #require_relative '../../test/assertions/repository_assertions.rb'
-require_relative '../../app/models/branch.rb'
+#require_relative '../../app/models/branch.rb'
 class BranchTest < TestCase
-include DefaultTests
-include Repository::Examples
+#include DefaultTests
+#include Repository::Examples
 include Branch::Constants
 include BranchReference::Examples
 include Branch::Examples
@@ -156,6 +156,9 @@ def test_merged?
 	assert_equal({:merged=>"passed"}, Branch.merged?(@temp_repo))
 	refute_empty(Branch.merged?(This_code_repository))
 end # merged?
+def test_branch_names?
+	assert(Branch.branch_names?.include?(:master), Branch.branch_names?.inspect) 
+end # branch_names?
 def test_initialize
 	assert_equal(This_code_repository, Branch.new(This_code_repository).repository)
 

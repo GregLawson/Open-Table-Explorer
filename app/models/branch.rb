@@ -184,7 +184,7 @@ Branch_name_alternative = [Branch_name_regexp.capture(:branch)]
 Pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
 Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
 Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative]
-Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch)
+Branch_regexp = /[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch) * /\n/
 Branches_regexp = Branch_regexp.group * Regexp::Many
 Patterns = [Pattern, Branches_regexp,
 				/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
@@ -199,7 +199,7 @@ def branch_capture?(repository, branch_command = '--list')
 	branch_run = repository.git_command('branch ' + branch_command)
 	if branch_run.success? then
 		branch_output = branch_run.output
-		branch_output.capture?(Branch_regexp, LimitCapture)
+		branch_output.capture?(Branch_regexp, SplitCapture)
 	else
 		fail Exception.new('branch_run failed' + branch_run.inspect)
 	end # if
@@ -231,8 +231,8 @@ def merged?(repository)
 	repository.git_parse('branch --list --merged', pattern)
 end #merged?
 def branch_names?(repository = Repository::This_code_repository)
-	branches?(repository).map {|b| b.branch}
-end # 
+	branches?(repository).map {|b| b.branch}.uniq
+end # branch_names?
 def new_from_git_branch_line(git_branch_line)
 
 end # new_from_git_branch_line
