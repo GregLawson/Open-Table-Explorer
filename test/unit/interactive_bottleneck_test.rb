@@ -9,7 +9,7 @@ require_relative '../unit/test_environment'
 require_relative '../../app/models/interactive_bottleneck.rb'
 
 class InteractiveBottleneckTest < TestCase
-include DefaultTests
+#include DefaultTests
 #include InteractiveBottleneck
 #extend InteractiveBottleneck::ClassMethods
 include InteractiveBottleneck::Examples
@@ -106,14 +106,5 @@ def test_help_command
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
 	assert_equal('', help_run.errors)
 end #  help_command
-def test_merge_command
-	help_run=ShellCommands.new('ruby  script/work_flow.rb --merge-down').assert_post_conditions
-	assert_equal('', help_run.errors)
-end #  merge_command
-		TestInteractiveBottleneck.assert_post_conditions
-end #assert_post_conditions
-def test_local_assert_pre_conditions
-		TestInteractiveBottleneck.assert_pre_conditions
-end #assert_pre_conditions
 
-end # InteractiveBottleneck
+end # InteractiveBottleneck - test

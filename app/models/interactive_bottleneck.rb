@@ -265,7 +265,7 @@ def script_deserves_commit!(deserving_branch)
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
-#require_relative '../../test/assertions.rb'
+require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods
