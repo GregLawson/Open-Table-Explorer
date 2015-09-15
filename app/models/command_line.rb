@@ -22,6 +22,9 @@ def initialize(executable, unit_class = CommandLine, argv = ARGV)
 	@unit_class = unit_class
 	@argv = argv
 end # initialize
+def ==(other)
+	@executable == other.executable && @unit_class == other.unit_class && @argv == other.argv
+end # ==
 def to_s
 	ret = '@argv = ' + @argv.inspect
 	ret += "\n sub_command = " + sub_command.inspect
@@ -82,7 +85,7 @@ def executable_object(file_argument = nil)
 				make_executable_object(@argv[1])
 			end # if
 		else
-			example
+			example.value
 		end # if
 	else
 		make_executable_object(file_argument)

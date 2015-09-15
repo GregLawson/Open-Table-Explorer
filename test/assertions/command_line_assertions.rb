@@ -8,11 +8,17 @@
 require_relative '../../app/models/command_line.rb'
 require_relative '../assertions/shell_command_assertions.rb'
 class CommandLine < Command
+require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods
 def assert_pre_conditions
 #	CommandLine.assert_ARGV	# don't know why ARGV getsn screwed up in tests
+	message = 'In instance assert_pre_conditions, '
+	message += "\n AssertionsModule.instance_methods = " + AssertionsModule.instance_methods(false).inspect
+	exception = Exception.new(message)
+	raise exception if !AssertionsModule.instance_methods(false).include?(:assert_equal)
+
 end #assert_pre_conditions
 
 def assert_post_conditions
@@ -47,6 +53,10 @@ def assert_ARGV
 end # ARGV
 end #ClassMethods
 def assert_pre_conditions
+	message = 'In instance assert_pre_conditions, '
+	message += "\n AssertionsModule.instance_methods = " + AssertionsModule.instance_methods(false).inspect
+	exception = Exception.new(message)
+	raise exception if !AssertionsModule.instance_methods(false).include?(:assert_equal)
 	assert_equal(Unit.new_from_path(@executable).model_class?, @unit_class)
 
 end #assert_pre_conditions
@@ -56,6 +66,7 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 #TestWorkFlow.assert_pre_conditions
+RubyAssertions.assert_nested_scope_submodule(:Assertions, CommandLine)
 module Examples
 include Constants
 No_args = CommandLine.new($0, CommandLine, [])

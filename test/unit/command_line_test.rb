@@ -68,14 +68,16 @@ def test_find_examples
 			example_fully_qualified_name = Unit::Executable.model_class_name.to_s + '::Examples::' + example_name.to_s
 			example_value = eval(example_fully_qualified_name)
 			example_class = example_value.class
-			Example.new(unit: Unit::Executable, example_constant_name: example_name)
+			Example.new(containing_class: CommandLine, example_constant_name: example_name)
 
 			end # map
 	assert_equal(example_classes, Example.find_all_in_class(CommandLine))
 	refute_equal([], Example.find_all_in_class(TestRun))
-	assert_equal([], Example.find_by_class(CommandLine, CommandLine))
-	assert_equal([], Script_command_line.find_examples, Script_command_line.to_s)
-	assert_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.to_s)
+	Example.find_all_in_class(TestRun).each do |example|
+	end # each
+	refute_equal([], Example.find_by_class(CommandLine, CommandLine))
+	refute_equal([], Script_command_line.find_examples, Script_command_line.to_s)
+	refute_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.to_s)
 #			assert_equal(example_class, Unit::Executable.model_class?)
 	refute_equal([], Test_unit_commandline.find_examples)
 	refute_equal([], Not_virtus_unit_commandline.find_examples)
@@ -88,9 +90,9 @@ def test_find_example?
 	refute_nil(Test_unit_commandline.find_example?)
 	refute_nil(Not_virtus_unit_commandline.find_example?)
 	refute_nil(Script_command_line.find_example?)
-	assert_equal(Test_unit_commandline, Test_unit_commandline.find_example?)
-	assert_equal(Not_virtus_unit_commandline, Not_virtus_unit_commandline.find_example?)
-	assert_equal(Script_command_line, Script_command_line.find_example?)
+	assert_equal(TestRun::Examples::Default_testRun, Test_unit_commandline.find_example?.value)
+	assert_equal(CommandLine::Examples::Script_command_line, Not_virtus_unit_commandline.find_example?.value)
+	assert_equal(CommandLine::Examples::Script_command_line, Script_command_line.find_example?.value)
 end # find_example?
 def test_executable_object
 	assert_includes(Test_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
@@ -123,13 +125,17 @@ def test_executable_method
 end # executable_method
 def test_arity
 	refute_nil(Script_command_line.executable_method(:argument_types))
-	assert_equal(1, Script_command_line.arity(:argument_types), Script_command_line.to_s)
-	assert_equal(1, Script_command_line.arity(:executable_object), Script_command_line.to_s)
+	assert_equal(0, Script_command_line.arity(:argument_types), Script_command_line.to_s)
+	assert_equal(-1, Script_command_line.arity(:executable_object), Script_command_line.to_s)
 	assert_equal(1, Script_command_line.arity(:executable_method), Script_command_line.to_s)
 	assert_equal(1, Script_command_line.arity(:arity), Script_command_line.to_s)
 	assert_equal(-1, Test_unit_commandline.arity(:error_score?), Test_unit_commandline.to_s)
 end # arity
 def test_default_arguments?
+	assert_equal(false, Script_command_line.default_arguments?(:argument_types), Script_command_line.to_s)
+	assert_equal(true, Script_command_line.default_arguments?(:executable_object), Script_command_line.to_s)
+	assert_equal(false, Script_command_line.default_arguments?(:executable_method), Script_command_line.to_s)
+	assert_equal(false, Script_command_line.default_arguments?(:arity), Script_command_line.to_s)
 end # default_arguments
 def test_required_arguments
 	executable_object = Test_unit_commandline.executable_object
