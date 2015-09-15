@@ -20,7 +20,7 @@ def setup
 	@temp_repo = Repository.create_test_repository(@temp_repo_path)
 end # setup
 def teardown
-	ShellCommands.new('rm -rf ' + @temp_repo.path)
+	Repository.delete_existing(@temp_repo.path)
 end # teardown
 include BranchReference::Constants
 def test_BranchReference_Constants
