@@ -10,26 +10,31 @@ require_relative "../../test/assertions/repository_assertions.rb"
 class RepositoryTest < TestCase
 include DefaultTests
 include Repository::Examples
-Minimal_repository = Repository.create_test_repository(Empty_Repo_path)
+def setup
+	@temp_repo = Repository.create_test_repository(Empty_Repo_path)
+end # setup
+def teardown
+	Repository.delete_existing(@temp_repo.path)
+end # teardown
 def test_assert_pre_conditions
-#	assert_includes(Minimal_repository.methods, :unit_names?)
-#	assert_includes(Minimal_repository.methods(false), :unit_names?)
+#	assert_includes(@temp_repo.methods, :unit_names?)
+#	assert_includes(@temp_repo.methods(false), :unit_names?)
 end #assert_pre_conditions
 def test_assert_nothing_to_commit
-	Minimal_repository.assert_nothing_to_commit
+	@temp_repo.assert_nothing_to_commit
 end #assert_nothing_to_commit
 def test_assert_something_to_commit
-	Minimal_repository.force_change
-	refute_equal({}, Minimal_repository.grit_repo.status.changed)
-	Minimal_repository.assert_something_to_commit
-	refute_equal({}, Minimal_repository.grit_repo.status.changed)
-	Minimal_repository.git_command('add README')
-	refute_equal({}, Minimal_repository.grit_repo.status.changed)
-	assert(Minimal_repository.something_to_commit?)
-#	Minimal_repository.git_command('commit -m "initial commit of README"')
-	Minimal_repository.assert_something_to_commit
-	Minimal_repository.revert_changes
-	Minimal_repository.assert_nothing_to_commit
+	@temp_repo.force_change
+	refute_equal({}, @temp_repo.grit_repo.status.changed)
+	@temp_repo.assert_something_to_commit
+	refute_equal({}, @temp_repo.grit_repo.status.changed)
+	@temp_repo.git_command('add README')
+	refute_equal({}, @temp_repo.grit_repo.status.changed)
+	assert(@temp_repo.something_to_commit?)
+#	@temp_repo.git_command('commit -m "initial commit of README"')
+	@temp_repo.assert_something_to_commit
+	@temp_repo.revert_changes
+	@temp_repo.assert_nothing_to_commit
 end #assert_something_to_commit
 
 #add_commits("postgres", :postgres, Temporary+"details")
