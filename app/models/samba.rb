@@ -141,20 +141,20 @@ module ClassMethods
 def nested_scope_modules?
 	nested_constants = self.class.constants
 	message = ''
-	assert_include(included_modules.map{|m| m.name}, :Assertions, message)
+	assert_includes(included_modules.map{|m| m.name}, :Assertions, message)
 	assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
 end # nested_scopes
 def assert_nested_scope_submodule(module_symbol, context = self, message='')
 	message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
 	message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
 	message += " but not in #{context.nested_scope_modules?.inspect}"
-	assert_include(constants, :Contants, message)
+	assert_includes(constants, :Contants, message)
 end # assert_included_submodule
 def assert_included_submodule(module_symbol, context = self, message='')
 	message+="\nIn assert_included_submodule for class #{self.name}, "
 	message += "make sure module Constants is nested in #{self.class.name.downcase} #{self.name}"
 	message += " but not in #{self.nested_scope_modules?.inspect}"
-	assert_include(included_modules, :Contants, message)
+	assert_includes(included_modules, :Contants, message)
 end # assert_included_submodule
 def asset_nested_and_included(module_symbol, context = self, message='')
 	assert_nested_scope_submodule(module_symbol)

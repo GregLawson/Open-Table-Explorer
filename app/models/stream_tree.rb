@@ -59,7 +59,7 @@ include Constants
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
-	assert_include(Array, self.ancestors)
+	assert_includes(Array, self.ancestors)
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions
 def assert_post_conditions(message='')
@@ -197,18 +197,18 @@ module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_equal(self, Connectivity, message)
-	assert_include(self.ancestors, Connectivity)
+	assert_includes(self.ancestors, Connectivity)
 #	assert_equal(self.ancestors, [Connectivity])
 #	assert_equal(self.included_modules, [], message)
-	assert_include(Connectivity.ancestors, Connectivity)
+	assert_includes(Connectivity.ancestors, Connectivity)
 	assert_empty(Connectivity::ClassMethods.methods(false), message)
-	assert_include(Connectivity::ClassMethods.instance_methods(false), :each_pair)
-	assert_include(Connectivity::ClassMethods.instance_methods(false), :ref)
+	assert_includes(Connectivity::ClassMethods.instance_methods(false), :each_pair)
+	assert_includes(Connectivity::ClassMethods.instance_methods(false), :ref)
 	assert_empty(Connectivity.instance_methods(false))
-	refute_include(Connectivity.methods(false), :each_pair)
-	assert_include(Connectivity.methods, :each_pair)
-	assert_include(Connectivity.methods, :ref)
-	assert_include(Connectivity.methods, :map_recursive)
+	refute_includes(Connectivity.methods(false), :each_pair)
+	assert_includes(Connectivity.methods, :each_pair)
+	assert_includes(Connectivity.methods, :ref)
+	assert_includes(Connectivity.methods, :map_recursive)
 	assert_respond_to(Connectivity, :inspect_node)
 	assert_respond_to(Connectivity, :map_recursive)
 	assert_equal('1', Connectivity.inspect_node(1))
@@ -277,7 +277,7 @@ module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_equal(self, NestedArrayType, message)
-	assert_include(self.ancestors, NestedArrayType)
+	assert_includes(self.ancestors, NestedArrayType)
 	assert_equal(self.ancestors, [NestedArrayType, NestedArrayType::Examples])
 	assert_equal(self.included_modules, [NestedArrayType::Examples], message)
 	assert_empty(self.methods(false), message)

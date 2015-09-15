@@ -44,8 +44,8 @@ def test_set_inspect
 #	assert_match(/#<Set: \{\/1\/, \/3\/\}>; /<Regexp #[0-9-]+\{[0-9]+\},(?-mix:1),\/1\/>, <Regexp #[0-9-]+\{4408\},(?-mix:3),\/3\/>/,set.set_inspect)
 end #set_inspect
 def test_instance_methods_from_class
-	assert_include('full_associated_models',['full_associated_models'])
-	assert_include('full_associated_models',TestTable.instance_methods_from_class)
+	assert_includes('full_associated_models',['full_associated_models'])
+	assert_includes('full_associated_models',TestTable.instance_methods_from_class)
 end #instance_methods_from_class
 def test_instance_respond_to
 	assert(TestClass.respond_to?(:instance_respond_to?))
@@ -127,14 +127,14 @@ end #module
 def test_noninherited_modules
 	assert(Generic_Table.module?)
 	assert(!AcquisitionStreamSpec.module?)
-	assert_include('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
+	assert_includes('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
 	assert_equal([Generic_Table],Account.noninherited_modules)
 	assert_equal([Generic_Table],AcquisitionStreamSpec.noninherited_modules)
 	assert(AcquisitionStreamSpec.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
 	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
 	testClass=Acquisition
 	assert_equal([Generic_Table],testClass.ancestors-[testClass]-testClass.superclass.ancestors)
-	assert_include(Generic_Table,AcquisitionInterface.ancestors-[AcquisitionInterface])
+	assert_includes(Generic_Table,AcquisitionInterface.ancestors-[AcquisitionInterface])
 	assert_equal([Generic_Table],AcquisitionInterface.ancestors-[AcquisitionInterface,RubyInterface]-AcquisitionInterface.superclass.superclass.ancestors)
 	assert_equal([],AcquisitionInterface.noninherited_modules) # stI at work
 end #noninherited_modules
@@ -152,7 +152,7 @@ def test_Acquisition_Stream_Spec_modules
 	assert(!AcquisitionStreamSpec.module?)
 	assert_equal([Generic_Table],AcquisitionStreamSpec.noninherited_modules)
 	assert(AcquisitionStreamSpec.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
-	assert_include('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
+	assert_includes('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
 	assert(AcquisitionStreamSpec.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionStreamSpec,:Generic_Table)
 end #test
@@ -160,7 +160,7 @@ def test_Acquisition_Interface_modules
 	assert(Generic_Table.module?)
 	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
 	assert_equal([],AcquisitionInterface.noninherited_modules) # because of STI Generic_Table is not directly included
-	assert_include('Generic_Table',AcquisitionInterface.ancestors.map{|a| a.name})
+	assert_includes('Generic_Table',AcquisitionInterface.ancestors.map{|a| a.name})
 	assert(AcquisitionInterface.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test

@@ -57,7 +57,7 @@ def test_initialize
 #			puts "before #{match_data.rest}"
 		end #if
 		refute_nil(@error_type)
-		assert_include(@error_type,['Error','Failure'])
+		assert_includes(@error_type,['Error','Failure'])
 	puts "@error='#{@error}'"
 	bug=Bug.new(test_type,singular_table,error)
 	refute_nil(bug)

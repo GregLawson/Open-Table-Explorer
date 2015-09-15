@@ -10,7 +10,7 @@ require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
 def test_caller_lines
 	ignore_lines=19
-	assert_include(self.methods, :caller_lines)
+	assert_includes(self.methods, :caller_lines)
 	assert_equal("\ntest/unit/ruby_assertions_test.rb:13:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
 end #caller_lines
 def test_add_default_message
@@ -130,26 +130,26 @@ end #assert_overlap
 def test_assert_include
 	element=:b
 	list=[:a,:b,:c]
-	assert_include(list, element, "#{element.inspect} is not in list #{list.inspect}")
-	assert_include('table_specs',fixture_names)
-	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
+	assert_includes(list, element, "#{element.inspect} is not in list #{list.inspect}")
+	assert_includes('table_specs',fixture_names)
+	assert_includes('acquisition_stream_specs',TableSpec.instance_methods(false))
 	set=Set.new(list)
 	assert(set.include?(element))
-	assert_include(element,set)
+	assert_includes(element,set)
 end #assert_include
 def test_assert_dir_include
-	assert_dir_include('app','*')
+	assert_dir_includes('app','*')
 	refute_empty(Dir['app/models/[a-zA-Z0-9_]*.rb'])
-	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*.rb')
-	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*[.]rb')
+	assert_dir_includes('app/models/global.rb','app/models/[a-zA-Z0-9_]*.rb')
+	assert_dir_includes('app/models/global.rb','app/models/[a-zA-Z0-9_]*[.]rb')
 end #assert_dir_include
 def test_refute_include
 	element=1
 	list=[1,2,3]
 	assert(list.include?(element))
-	assert_include(list, element)
-	refute_include(list, 4)
-	assert_raise(AssertionFailedError){refute_include(list, element)}
+	assert_includes(list, element)
+	refute_includes(list, 4)
+	assert_raise(AssertionFailedError){refute_includes(list, element)}
 end #refute_include
 def test_assert_public_instance_method
 	obj=StreamPattern.new
@@ -286,7 +286,7 @@ def test_assert_nested_scope_submodule
 	message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
 	message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
 	message += " but not in #{context.nested_scope_modules?.inspect}"
-	assert_include(constants, :Contants, message)
+	assert_includes(constants, :Contants, message)
 end # assert_included_submodule
 def test_assert_included_submodule
 end # assert_included_submodule

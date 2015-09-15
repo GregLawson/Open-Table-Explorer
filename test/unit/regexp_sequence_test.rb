@@ -82,7 +82,7 @@ def test_sequence_intersect
 	refute_empty(rhs.alternatives?)
 	assert_instance_of(String, rhs[0])
 	assert_nil(lhs.alternatives?)
-#	assert_include(rhs[0], lhs.alternatives?)
+#	assert_includes(rhs[0], lhs.alternatives?)
 	assert_equal(rhs, lhs.sequence_intersect(A))
 	assert_equal(B, Ab.sequence_intersect(B))
 end #sequence_intersect

@@ -20,9 +20,9 @@ module ClassMethods
 include Test::Unit::Assertions
 def assert_invariant
 	assert_equal(RegexpParse, self)
-	assert_include(instance_methods(false), :parseOneTerm!)
-	assert_include(instance_methods(true), :assert_post_conditions)
-	assert_include(instance_methods(true), :assert_repetition_range)
+	assert_includes(instance_methods(false), :parseOneTerm!)
+	assert_includes(instance_methods(true), :assert_post_conditions)
+	assert_includes(instance_methods(true), :assert_repetition_range)
 #	moduleName='RegexpParse::Examples'
 	moduleName='RegexpParse'
 	klass=RegexpParse
@@ -132,7 +132,7 @@ include DefaultAssertions
 extend DefaultAssertions::ClassMethods
 module Examples #  Namespace
 assert_equal(RegexpParse::Examples, self)
-assert_include(RegexpParse.constants, :Constants)
+assert_includes(RegexpParse.constants, :Constants)
 include RegexpParse::Constants
 #Asymmetrical_Tree_Parse=RegexpParse.new(NestedArray::Examples::Asymmetrical_Tree_Array)
 Quantified_operator_array=["{", "3", ",", "4", "}"]

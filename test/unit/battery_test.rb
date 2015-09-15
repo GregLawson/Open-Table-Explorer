@@ -19,7 +19,7 @@ end #initialize
 def test_all
 end #all
 def test_Battery
-	assert_include('href', Url.column_names)
+	assert_includes('href', Url.column_names)
 	refute_nil(Url.where("href='EEG2'"))
 	refute_nil(Url.where("href='EEG2'").first)
 	file=Url.where("href='EEG2'").first.url

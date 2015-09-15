@@ -162,7 +162,7 @@ def new_from_path(path)
 						FilePattern.repository_dir?(path))
 end # new_from_path
 #FilePattern.assert_pre_conditions
-#assert_include(FilePattern.included_modules, :Assertions)
+#assert_includes(FilePattern.included_modules, :Assertions)
 #assert_pre_conditions
 end #ClassMethods
 extend ClassMethods
@@ -221,7 +221,7 @@ def assert_post_conditions
 	refute_empty(path)
 	assert(File.exists?(path))
 #	refute_empty(FilePattern.class_variables)
-#	assert_include(FilePattern.class_variables, :@@project_root_dir)
+#	assert_includes(FilePattern.class_variables, :@@project_root_dir)
 #	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
@@ -248,7 +248,7 @@ def assert_pre_conditions(message='')
 	assert_instance_of(Hash, @pattern, message)
 	assert(!@pattern.keys.empty?, message)
 	refute_empty(@pattern.values, message)
-#	assert_include(@pattern.keys, :suffix, inspect)
+#	assert_includes(@pattern.keys, :suffix, inspect)
 #	assert_equal(@path[-@pattern[:suffix].size, @pattern[:suffix].size], @pattern[:suffix])
 #	fail message+"end of assert_pre_conditions "
 end #assert_pre_conditions

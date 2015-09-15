@@ -7,19 +7,20 @@
 ###########################################################################
 require_relative '../unit/test_environment'
 require_relative '../../app/models/interactive_bottleneck.rb'
-
+require_relative '../assertions/repository_assertions.rb'
 class InteractiveBottleneckTest < TestCase
 #include DefaultTests
 #include InteractiveBottleneck
 #extend InteractiveBottleneck::ClassMethods
 include InteractiveBottleneck::Examples
+Minimal_repository = Repository.create_test_repository(Empty_Repo_path)
 def test_initialize
 	te=Unit.new(TestExecutable.executable_file)
 	refute_nil(te)
 	wf=InteractiveBottleneck.new(TestExecutableFile)
 	refute_nil(wf)
 	refute_empty(TestInteractiveBottleneck.related_files.edit_files, "TestInteractiveBottleneck.related_files.edit_files=#{TestInteractiveBottleneck.related_files.edit_files}")
-	assert_include(TestInteractiveBottleneck.related_files.edit_files, TestExecutable, "TestInteractiveBottleneck.related_files=#{TestInteractiveBottleneck.related_files.inspect}")
+	assert_includes(TestInteractiveBottleneck.related_files.edit_files, TestExecutable, "TestInteractiveBottleneck.related_files=#{TestInteractiveBottleneck.related_files.inspect}")
 end #initialize
 include InteractiveBottleneck::Examples
 def test_standardize_position
@@ -106,5 +107,15 @@ def test_help_command
 	help_run=ShellCommands.new('ruby  script/work_flow.rb --help').assert_post_conditions
 	assert_equal('', help_run.errors)
 end #  help_command
+def test_merge_command
+	help_run=ShellCommands.new('ruby  script/work_flow.rb --merge-down').assert_post_conditions
+	assert_equal('', help_run.errors)
+end #  merge_command
+def test_local_assert_post_conditions
+		TestInteractiveBottleneck.assert_post_conditions
+end #assert_post_conditions
+def test_local_assert_pre_conditions
+		TestInteractiveBottleneck.assert_pre_conditions
+end #assert_pre_conditions
 
 end # InteractiveBottleneck - test

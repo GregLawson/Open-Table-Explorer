@@ -65,7 +65,7 @@ def assert_invariant
 	refute_empty(self['name'], inspect)
 	refute_empty(direction, inspect)
 	assert_empty(self[:catfish], inspect)
-	assert_include(['Input', 'Output'], direction)
+	assert_includes(['Input', 'Output'], direction)
 end #assert_invariant
 # true after creating an object from scratch
 def assert_pre_conditions
@@ -83,7 +83,7 @@ def assert_post_conditions
 	assert_constant_path_respond_to(:GenericTableAssociation, :ClassMethods, :association_state)
 	assert_constant_instance_respond_to(:StreamMethodArgument, :First_stream_argument, :association_state)
 	assert_instance_of(StreamMethodArgument, StreamMethodArgument::First_stream_argument)
-	assert_include(StreamMethodArgument::First_stream_argument.public_methods, :association_state, StreamMethodArgument::First_stream_argument.public_methods)
+	assert_includes(StreamMethodArgument::First_stream_argument.public_methods, :association_state, StreamMethodArgument::First_stream_argument.public_methods)
 	assert_respond_to(StreamMethodArgument::First_stream_argument, :association_state, StreamMethodArgument::First_stream_argument.methods)
 	assert_equal('', StreamMethodArgument::First_stream_argument.association_state(:stream_method))
 end #assert_post_conditions

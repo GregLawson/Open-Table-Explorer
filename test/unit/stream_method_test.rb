@@ -58,10 +58,10 @@ def test_eval_method
 	assert_operator(cols,:>,0)
 	acq.compile_code!
 	explain_assert_respond_to(acq,:interface_code_method)
-	assert_include(acq.methods(true), :interface_code_method)
+	assert_includes(acq.methods(true), :interface_code_method)
 #	acq.eval_method(:interface_code,'')
-	assert_include(acq.methods(true), :interface_code_rows)
-	assert_include(acq.singleton_methods(true), :interface_code_rows)
+	assert_includes(acq.methods(true), :interface_code_rows)
+	assert_includes(acq.singleton_methods(true), :interface_code_rows)
 	explain_assert_respond_to(acq,:interface_code_rows)
 	refute_nil(acq.interface_code_rows)
 end #eval_method

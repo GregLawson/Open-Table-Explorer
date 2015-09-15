@@ -49,7 +49,7 @@ def test_global_class_names
 	constants=Module.constants
 	assert_instance_of(Array, constants)
 	constants.select {|n| eval(n.to_s).instance_of?(Class)}
-	assert_include(global_class_names, self.class.name.to_sym)
+	assert_includes(global_class_names, self.class.name.to_sym)
 end #global_classes
 def test_case_assert_invariant
 	caller_message=" callers=#{caller.join("\n")}"

@@ -22,7 +22,7 @@ def assert_invariant
 	explain_assert_respond_to(self, :insert_sql)
 	assert_respond_to(self, :insert_sql)
 	assert_equal([:form, :year, :line, :type], self.keys, self.inspect)
-	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
+	assert_includes(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
 #include Constants
@@ -32,7 +32,7 @@ extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 #	assert_scope_path(:DefaultAssertions, :ClassMethods)
-	assert_include(included_modules, NoDB, "")
+	assert_includes(included_modules, NoDB, "")
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
@@ -66,7 +66,7 @@ def assert_invariant
 	explain_assert_respond_to(self, :insert_sql)
 	assert_respond_to(self, :insert_sql)
 	assert_equal([:form, :year, :line, :type], self.keys, self.inspect)
-	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
+	assert_includes(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
 include Test::Unit::Assertions
@@ -74,7 +74,7 @@ extend Test::Unit::Assertions
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 #	assert_scope_path(:DefaultAssertions, :ClassMethods)
-	assert_include(included_modules, NoDB, "")
+	assert_includes(included_modules, NoDB, "")
 end #assert_pre_conditions
 def assert_post_conditions
 #	assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) #, "In assert_post_conditions calling assert_constant_instance_respond_to"
@@ -107,7 +107,7 @@ def assert_invariant
 	explain_assert_respond_to(self, :insert_sql)
 	assert_respond_to(self, :insert_sql)
 	assert_equal([:form, :year, :line, :type], self.keys, self.inspect)
-	assert_include(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
+	assert_includes(["Amount", "Choice", "Text", "Number", "Integer", "Percent"], self[:type])
 end #assert_invariant
 module ClassMethods
 #include Test::Unit::Assertions
@@ -154,7 +154,7 @@ end #assert_parsed
 # 2) class requirements to be documented
 def assert_pre_conditions
 #	assert_scope_path(:DefaultAssertions, :ClassMethods)
-	assert_include(included_modules, NoDB, "")
+	assert_includes(included_modules, NoDB, "")
 #	assert_equal(MiniTest::Assertion, self)
 	full_regexp_array.each do |regexp_string|
 		refute_nil(RegexpParse.regexp_rescued(regexp_string), regexp_string)

@@ -130,7 +130,7 @@ def test_branch_capture
 	parse = branch_output.parse(Branch_regexp)
 end # branch_capture?
 def test_current_branch_name?
-#	assert_include(UnitMaturity::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
+#	assert_includes(UnitMaturity::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 	branch_output= @temp_repo.git_command('branch --list').assert_post_conditions.output
 	assert_equal([:master, :passed], Branch.current_branch_name?(@temp_repo))
 end #current_branch_name

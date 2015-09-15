@@ -20,14 +20,14 @@ def test_initializes
 	wf=Editor.new(TestEditor.executable)
 	refute_nil(wf)
 	refute_empty(TestEditor.executable.unit.edit_files, "TestEditor.executable.unit.edit_files=#{TestEditor.executable.unit.edit_files}")
-	assert_include(TestEditor.executable.unit.edit_files, TestEditor.executable.file, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
+	assert_includes(TestEditor.executable.unit.edit_files, TestEditor.executable.file, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
 end #version_comparison
 def test_goldilocks
 	refute_nil(UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym))
-#	assert_include(Editor::Branch_enhancement, TestEditor.repository.current_branch_name?.to_sym)
+#	assert_includes(Editor::Branch_enhancement, TestEditor.repository.current_branch_name?.to_sym)
 	current_index=UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym)
 	filename= Most_stable_file
 	left_index,right_index= TestEditor.unit_maturity.bracketing_versions?(filename, current_index)

@@ -51,9 +51,9 @@ def test_named_repository_directories
 	refute_empty(repository_directories)
 	executing_repo = Repository::This_code_repository
 	message = 'executing_repo='+executing_repo.inspect
-	assert_include(repository_directories, executing_repo, message)
+	assert_includes(repository_directories, executing_repo, message)
 	repository_directories = Rebuild.named_repository_directories(Directories_of_repositories, Repository_glob)
-	assert_include(repository_directories, executing_repo)
+	assert_includes(repository_directories, executing_repo)
 end # named_repository_directories
 #
 #

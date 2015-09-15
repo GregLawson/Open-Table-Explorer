@@ -19,10 +19,10 @@ def assert_pre_conditions
 	assert_equal(Object, superclass)
 end #assert_pre_conditions
 def def assert_post_conditions
-	assert_include(instance_methods, :[])
-	assert_include(instance_methods, :+)
-	assert_include(instance_methods, :|)
-	assert_include(instance_methods, :*)
+	assert_includes(instance_methods, :[])
+	assert_includes(instance_methods, :+)
+	assert_includes(instance_methods, :|)
+	assert_includes(instance_methods, :*)
 end #assert_post_conditions
 end #ClassMethods
 def assert_anchoring
@@ -31,8 +31,8 @@ def assert_anchoring
 #	explain_assert_respond_to(Test::Unit::Assertions, :default_message)
 #	message=anchoring.default_message
 	message=""
-	assert_include(anchoring.start_base, [0,1])
-	assert_include(anchoring.end_base, [-1,-2])
+	assert_includes(anchoring.start_base, [0,1])
+	assert_includes(anchoring.end_base, [-1,-2])
 	refute_empty(self[0..-1])
 	refute_empty(self[anchoring.start_base..anchoring.end_base])
 	refute_empty(anchoring[:base_regexp], message)

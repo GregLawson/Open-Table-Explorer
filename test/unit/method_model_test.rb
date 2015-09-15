@@ -11,7 +11,7 @@ def assert_method_model_initialized(m,owner,scope)
 	assert_instance_of(MethodModel,mr)
 
 	assert_equal(mr[:name], m.to_s)
-	assert_include(mr[:scope], [Class, Module])
+	assert_includes(mr[:scope], [Class, Module])
 	assert_equal(mr[:instance_variable_defined], false)
 	assert_nil(mr[:private])
 	assert_equal(mr[:singleton], false)
@@ -64,7 +64,7 @@ def test_initialize
 end #new
 def test_constantized
 	assert_equal(['String'],Module.constants.map { |c| c.objectKind}.uniq)
-	assert_include('String',MethodModel.constantized.map { |c| c.objectKind}.uniq)
+	assert_includes('String',MethodModel.constantized.map { |c| c.objectKind}.uniq)
 	assert_operator(1000,:>,Module.constants.size)
 	assert_operator(MethodModel.constantized.size,:<,MethodModel.classes_and_modules.size)
 	assert_operator(100,:<,MethodModel.constantized.size)
@@ -76,7 +76,7 @@ def test_constantized
 	end #map
 	assert_operator(method_list.size,:<,1000)
 	assert_operator(100,:<,method_list.size)
-	assert_include( "Class",MethodModel.constantized.map { |c| c.objectKind}.uniq)
+	assert_includes( "Class",MethodModel.constantized.map { |c| c.objectKind}.uniq)
 	puts "pretty print"
 	#~ pp MethodModel.all
 	#~ refute_nil(new('object_id',Object,:methods))
@@ -113,8 +113,8 @@ def test_classes
 			duplicates+=1
 		end # if
 	end #each
-	assert_include(String,MethodModel.classes)
-	assert_include(ActiveRecord::Base,MethodModel.classes)
+	assert_includes(String,MethodModel.classes)
+	assert_includes(ActiveRecord::Base,MethodModel.classes)
 	
 end #classes
 def test_modules
@@ -133,8 +133,8 @@ def test_modules
 	MethodModel.modules.any? {|m| m.instance_of?(Module)}
 	refute_equal('',MethodModel.modules[0])
 	assert_equal(MethodModel.modules.size,MethodModel.modules.uniq.size)
-	assert_include(Generic_Table,MethodModel.modules)
-	refute_include(ActiveRecord::Base,MethodModel.modules)
+	assert_includes(Generic_Table,MethodModel.modules)
+	refute_includes(ActiveRecord::Base,MethodModel.modules)
 
 end #modules
 def test_classes_and_modules
@@ -176,7 +176,7 @@ def test_all
 	assert_operator(69,:<=,all_records.size)
 	all_records.each do |mr| 
 		assert_instance_of(MethodModel, mr)
-		assert_include(mr[:scope], [Class, Module,:instance,:class, :singleton])
+		assert_includes(mr[:scope], [Class, Module,:instance,:class, :singleton])
 	end #each
 	assert(all_records.all? {|mr| mr[:name]})
 	assert(all_records.all? {|mr| mr[:scope]})
@@ -247,14 +247,14 @@ end #test
 test '' do
 	assert(Generic_Table.module?)
 	assert(!AcquisitionStreamSpec.module?)
-	assert_include('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
+	assert_includes('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
 	assert_equal([Generic_Table],Account.noninherited_modules)
 	assert_equal([Generic_Table],AcquisitionStreamSpec.noninherited_modules)
 	assert(AcquisitionStreamSpec.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
 	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
 	testClass=Acquisition
 	assert_equal([Generic_Table],testClass.ancestors-[testClass]-testClass.superclass.ancestors)
-	assert_include(Generic_Table,AcquisitionInterface.ancestors-[AcquisitionInterface])
+	assert_includes(Generic_Table,AcquisitionInterface.ancestors-[AcquisitionInterface])
 	assert_equal([Generic_Table],AcquisitionInterface.ancestors-[AcquisitionInterface,RubyInterface]-AcquisitionInterface.superclass.superclass.ancestors)
 	assert_equal([],AcquisitionInterface.noninherited_modules) # stI at work
 end #test
@@ -269,7 +269,7 @@ def test_Acquisition_Stream_Spec_modules
 	assert(!AcquisitionStreamSpec.module?)
 	assert_equal([Generic_Table],AcquisitionStreamSpec.noninherited_modules)
 	assert(AcquisitionStreamSpec.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
-	assert_include('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
+	assert_includes('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
 	assert(AcquisitionStreamSpec.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionStreamSpec,:Generic_Table)
 end #test
@@ -277,7 +277,7 @@ def test_Acquisition_Interface_modules
 	assert(Generic_Table.module?)
 	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
 	assert_equal([],AcquisitionInterface.noninherited_modules) # because of STI Generic_Table is not directly included
-	assert_include('Generic_Table',AcquisitionInterface.ancestors.map{|a| a.name})
+	assert_includes('Generic_Table',AcquisitionInterface.ancestors.map{|a| a.name})
 	assert(AcquisitionInterface.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
 	assert_module_included(AcquisitionInterface,:Generic_Table)
 end #test

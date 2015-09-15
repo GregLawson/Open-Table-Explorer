@@ -39,7 +39,7 @@ def test_assert_operator
 end #assert_operator
 def test_assert_unbounded_range_equal
 	assert_respond_to(self, :assert_include)
-	assert_include(UnboundedRange::Assertions.instance_methods(false), :assert_unbounded_range_equal)
+	assert_includes(UnboundedRange::Assertions.instance_methods(false), :assert_unbounded_range_equal)
 	UnboundedRange::Any_range.assert_unbounded_range_equal(UnboundedRange::Any_range)
 	UnboundedRange::Any_range.assert_unbounded_range_equal(UnboundedRange.new(0, UnboundedFixnum::Inf))
 	UnboundedRange.new(0, UnboundedFixnum::Inf).assert_unbounded_range_equal(UnboundedRange.new(0, UnboundedFixnum::Inf))

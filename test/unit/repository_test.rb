@@ -106,8 +106,8 @@ end #corruption
 #exists @temp_repo.git_command("branch details").assert_post_conditions
 #exists @temp_repo.git_command("branch summary").assert_post_conditions
 def test_current_branch_name?
-#	assert_include(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
-#	assert_include(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
+#	assert_includes(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
+#	assert_includes(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
 def test_testing_superset_of_passed

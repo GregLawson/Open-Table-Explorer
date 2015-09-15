@@ -75,7 +75,7 @@ def test_plus
 end #plus
 def test_intersect
 	assert_respond_to(self, :assert_include)
-	assert_include(UnboundedRange.instance_methods(false), :&)
+	assert_includes(UnboundedRange.instance_methods(false), :&)
 	assert_equal(UnboundedRange::Many_range, UnboundedRange::Any_range.&(UnboundedRange::Many_range))
 	assert_equal(UnboundedRange::Many_range, UnboundedRange::Any_range & UnboundedRange::Many_range)
 end #intersect

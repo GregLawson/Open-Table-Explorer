@@ -37,8 +37,8 @@ def test_generalizations
 	assert_instance_of(GenericType, GenericType.find_by_import_class('digit'))
 	assert_equal(["Text_Column", "VARCHAR_Column", "ascii", "print", "graph", "word", "alnum", "xdigit"], GenericType.find_by_import_class('digit').generalizations.map{|g| g.name})
 	assert(GenericType.all.any? {|g| !g.generalizations.empty?})
-	assert_include("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
-	assert_include("Text_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
+	assert_includes("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
+	assert_includes("Text_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
 	GenericType.all.each do |t|
 		assert_instance_of(GenericType, t)
 		assert_instance_of(Array, t.generalizations)
@@ -70,8 +70,8 @@ def test_one_level_specializations
 			assert_instance_of(GenericType, t.one_level_specializations[0])
 		end #if
 	end #each
-	assert_include('Integer_Column', GenericType.find_by_import_class("VARCHAR_Column").one_level_specializations.map{|a| a.name})
-	refute_include('Integer_Column', GenericType.find_by_import_class("Text_Column").one_level_specializations.map{|a| a.name})
+	assert_includes('Integer_Column', GenericType.find_by_import_class("VARCHAR_Column").one_level_specializations.map{|a| a.name})
+	refute_includes('Integer_Column', GenericType.find_by_import_class("Text_Column").one_level_specializations.map{|a| a.name})
 	assert_equal(["cntrl", "print", "space"], GenericType.find_by_import_class('ascii').one_level_specializations.map{|g| g.name})
 end #one_level_specializations
 def test_specializations
@@ -104,7 +104,7 @@ def test_expand
 		if macro_name then
 			refute_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.name}.inspect}")
 			all_macro_names= GenericType.all.map{|t| t.name}
-			assert_include(macro_name, all_macro_names)
+			assert_includes(macro_name, all_macro_names)
 			macro_generic_type=GenericType.find_by_name(macro_name)
 			refute_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{all_macro_names.inspect}")
 			macro_call=macro_generic_type[:data_regexp]

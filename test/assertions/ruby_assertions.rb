@@ -311,8 +311,8 @@ def assert_includes(list, element,  message = '')
 	message += " is not in list " + list.inspect
 	assert(list.include?(element),message)
 end #assert_include
-def assert_dir_include(filename,glob)
-	assert_include(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
+def assert_dir_includes(filename,glob)
+	assert_includes(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
 def refute_includes(list, element,  message = '')
 	message=build_message(message, "? is in list ?", element,list)   
@@ -385,7 +385,7 @@ def global_name?(name)
 	Module.constants.include?(name)
 end #global_name
 def assert_global_name(name)
-	assert_include(Module.constants, name)
+	assert_includes(Module.constants, name)
 end #global_name
 def assert_scope_path(*names)
 	return [] if names.size==0
@@ -396,7 +396,7 @@ def assert_scope_path(*names)
 	end #if
 	names.each_index do |i|
 		if i == 0 then
-			assert_include(Module.constants, names[i], 'Global constants should be in Module.constants')
+			assert_includes(Module.constants, names[i], 'Global constants should be in Module.constants')
 		else
 			testRange=0..(i-1)
 		#	puts "testRange=#{testRange.inspect}"
@@ -413,7 +413,7 @@ def assert_scope_path(*names)
 				object=eval(path)
 				refute_nil(object, message)
 				assert_kind_of(Module, object, message)
-				assert_include(object.constants, names[i], names[i].to_s + ' is not a constant in module ' + path)
+				assert_includes(object.constants, names[i], names[i].to_s + ' is not a constant in module ' + path)
 			end #begin
 		end # if
 	end# each_index
@@ -502,20 +502,20 @@ end #assert_data_file
 def nested_scope_modules?
 	nested_constants = self.class.constants
 	message = ''
-	assert_include(included_modules.map{|m| m.name}, :Assertions, message)
+	assert_includes(included_modules.map{|m| m.name}, :Assertions, message)
 	assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
 end # nested_scopes
 def assert_nested_scope_submodule(module_symbol, context = self, message='')
 	message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
 	message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
 	message += " but not in #{context.nested_scope_modules?.inspect}"
-	assert_include(constants, :Contants, message)
+	assert_includes(constants, :Contants, message)
 end # assert_included_submodule
 def assert_included_submodule(module_symbol, context = self, message='')
 	message+="\nIn assert_included_submodule for class #{self.name}, "
 	message += "make sure module Constants is nested in #{self.class.name.downcase} #{self.name}"
 	message += " but not in #{self.nested_scope_modules?.inspect}"
-	assert_include(included_modules, :Contants, message)
+	assert_includes(included_modules, :Contants, message)
 end # assert_included_submodule
 def asset_nested_and_included(module_symbol, context = self, message='')
 	assert_nested_scope_submodule(module_symbol)

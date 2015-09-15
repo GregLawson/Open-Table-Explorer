@@ -57,8 +57,8 @@ def test_unit_base_name
 	basename=File.basename(path)
 	assert_equal('file_pattern_test.rb', basename)
 	expected_match=1
-	assert_include(FilePattern.included_modules, FilePattern::Assertions)
-	assert_include(FilePattern.methods, :assert_pre_conditions)
+	assert_includes(FilePattern.included_modules, FilePattern::Assertions)
+	assert_includes(FilePattern.methods, :assert_pre_conditions)
 	assert_respond_to(FilePattern, :assert_pre_conditions)
 	FilePattern.assert_pre_conditions
 #	FilePattern.assert_naming_convention_match(Patterns[expected_match], path)

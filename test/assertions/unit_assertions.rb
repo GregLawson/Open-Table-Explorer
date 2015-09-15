@@ -29,7 +29,7 @@ def assert_invariant
 end # class_assert_invariant
 # conditions true while class is being defined
 def assert_pre_conditions
-	assert_include(included_modules, :MiniTest)
+	assert_includes(included_modules, :MiniTest)
 	assert_respond_to(Unit, :new_from_path)
 	assert_module_included(self, FilePattern::Assertions)
 end #class_assert_pre_conditions

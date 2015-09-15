@@ -44,8 +44,8 @@ def test_parse
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
 	assert_instance_of(Hash, json)
-	assert_include(json.keys, 'year')
-	assert_include(json.keys, 'fields')
+	assert_includes(json.keys, 'year')
+	assert_includes(json.keys, 'fields')
 	Definitions::assert_json_string(acquisition)
 	parsed=Definitions.parse
 	assert_equal({:form=>"1040sa", :year=>2012, :line=>"L1", :type=>"Amount"},parsed[0], parsed[0].inspect)
@@ -106,8 +106,8 @@ def test_all
 		assert_respond_to(ots.attributes, :values)
 		assert_scope_path(:DefaultAssertions, :ClassMethods)
 		assert_constant_instance_respond_to(:NoDB, :insert_sql)
-		assert_include(ots.class.included_modules, NoDB)
-#		assert_include(NoDB.methods, :insert_sql)
+		assert_includes(ots.class.included_modules, NoDB)
+#		assert_includes(NoDB.methods, :insert_sql)
 		assert_includes(OpenTaxFormFiller.methods, :insert_sql)
 		explain_assert_respond_to(OpenTaxFormFiller, :insert_sql)
 		assert_respond_to(OpenTaxFormFiller, :insert_sql)
@@ -151,8 +151,8 @@ def test_parse
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
 	assert_instance_of(Hash, json)
-	assert_include(json.keys, 'year')
-	assert_include(json.keys, 'fields')
+	assert_includes(json.keys, 'year')
+	assert_includes(json.keys, 'fields')
 	model_class?.assert_json_string(acquisition)
 	parsed=model_class?.parse
 	assert_equal('1040',parsed[0][:form])

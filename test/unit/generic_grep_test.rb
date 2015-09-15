@@ -16,7 +16,7 @@ include GenericTableAssertions
 @@table_name='stream_patterns'
 	fixtures :table_specs
 assert_equal([GenericTableTest], Module.nesting)
-refute_include(GenericGrep, self.included_modules)
+refute_includes(GenericGrep, self.included_modules)
 assert_equal('constant', defined? GenericGrep)
 ASSOCIATION_MACRO_PATTERN=GenericGrep::ClassMethods::ASSOCIATION_MACRO_PATTERN
 def test_to_pathname_glob
@@ -30,7 +30,7 @@ def test_to_pathname_glob
 	assert_equal('test/*[.]r*', RegexpTree.new('test/[a-zA-Z0-9_]*[.]r[a-z]*').to_pathname_glob)
 end #to_pathname_glob
 def test_pathnames
-	assert_include('app/models', RegexpTree.new('app/.*').pathnames)
+	assert_includes('app/models', RegexpTree.new('app/.*').pathnames)
 end #pathnames
 def test_single_grep
 	pattern='(\w+)\.all'

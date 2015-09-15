@@ -103,7 +103,7 @@ def test_parse_argument_array
 	argument_array=[{'G' => 'e'}, 'git rebase']
 	command=ShellCommands.new
 	command.parse_argument_array(argument_array)
-	assert_include(command.methods(true), :env)
+	assert_includes(command.methods(true), :env)
 	assert_equal(argument_array[0], command.env)
 	assert_equal(argument_array[1], command.command)
 	assert_equal({}, command.opts)

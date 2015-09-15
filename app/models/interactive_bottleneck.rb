@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'unit.rb'
-#require_relative 'repository.rb'
+require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
 require_relative 'editor.rb'
 class InteractiveBottleneck

@@ -10,10 +10,10 @@ require_relative "../../test/assertions/repository_assertions.rb"
 class RepositoryTest < TestCase
 include DefaultTests
 include Repository::Examples
-Minimal_repository=Empty_Repo
+Minimal_repository = Repository.create_test_repository(Empty_Repo_path)
 def test_assert_pre_conditions
-#	assert_include(Minimal_repository.methods, :unit_names?)
-#	assert_include(Minimal_repository.methods(false), :unit_names?)
+#	assert_includes(Minimal_repository.methods, :unit_names?)
+#	assert_includes(Minimal_repository.methods(false), :unit_names?)
 end #assert_pre_conditions
 def test_assert_nothing_to_commit
 	Minimal_repository.assert_nothing_to_commit

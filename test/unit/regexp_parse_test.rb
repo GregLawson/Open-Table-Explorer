@@ -96,8 +96,8 @@ def test_nonterminal?
 	assert_equal(nil, RegexpParseType.nonterminal?(Grandson_a), Grandson_a.inspect)
 end # nonterminal?
 def test_map_recursive
-	assert_include(Connectivity::Examples.constants, :Tree_node_format)
-	assert_include(RegexpParseTest.constants, :Tree_node_format)
+	assert_includes(Connectivity::Examples.constants, :Tree_node_format)
+	assert_includes(RegexpParseTest.constants, :Tree_node_format)
 	depth=0
 	visit_proc = Tree_node_format
 	assert_respond_to(Literal_a, Children_method_name)
@@ -141,7 +141,7 @@ def test_readme
 	end # walk
 	assert_equal('Regexp::Expression::Root', root.class.name)
 	assert_instance_of(Regexp::Parser::Root, root)
-	assert_include(root.methods, :expressions)
+	assert_includes(root.methods, :expressions)
 	puts 'root=' + root.inspect
 	walk(root)
 	# output
@@ -203,14 +203,14 @@ end #regexp_error
 def test_equal_operator
 	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
-	assert_include(lhs.methods, :==)
+	assert_includes(lhs.methods, :==)
 
 	assert_equal(rhs, lhs)
 end #equal_operator
 def test_equal
 	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
-	assert_include(lhs.methods, :eql?)
+	assert_includes(lhs.methods, :eql?)
 
 	assert(lhs.eql?(rhs))
 	assert_equal(rhs, lhs)

@@ -410,7 +410,7 @@ def assert_foreign_key_not_nil(obj, association_name, association_class=obj.asso
 	refute_nil(obj.name_to_association(association_name), message)
 end #assert_foreign_key_not_nil
 def assert_foreign_key_association_names(class_reference,association_reference)
-	assert_include(class_reference.foreign_key_association_names, association_reference.to_s)
+	assert_includes(class_reference.foreign_key_association_names, association_reference.to_s)
 end #foreign_key_association_names
 def assert_associated_foreign_key_name(class_reference,assName)
 	if !class_reference.kind_of?(Class) then
@@ -454,7 +454,7 @@ def assert_association(class_reference,association_reference, message=nil)
 	if klass.module_included?(Generic_Table) then
 		association_type=klass.association_arity(association_reference)
 		refute_nil(association_type, message)
-		assert_include([:to_one,:to_many,:not_an_association], association_type, build_message(message, "In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}"))
+		assert_includes([:to_one,:to_many,:not_an_association], association_type, build_message(message, "In assert_association class_reference=#{class_reference.inspect},association_reference=#{association_reference.inspect}"))
 	end #if
 	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
 	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")

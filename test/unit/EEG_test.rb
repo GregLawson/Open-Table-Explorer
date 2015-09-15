@@ -13,7 +13,7 @@ class EegTest < TestCase
 def test_initialize
 end #initialize
 def test_all
-	assert_include('href', Url.column_names)
+	assert_includes('href', Url.column_names)
 	refute_empty(Url.where("href='EEG2'"),"Url.all=#{Url.all.inspect}")
 	refute_nil(Url.where("href='EEG2'").first)
 	refute_empty(Url.where("href='EEG2'").first.url)

@@ -44,7 +44,7 @@ def test_initialize
 	wf=WorkFlow.new(TestFile)
 	refute_nil(wf)
 	refute_empty(TestWorkFlow.related_files.edit_files, "TestWorkFlow.related_files.edit_files=#{TestWorkFlow.related_files.edit_files}")
-	assert_include(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
+	assert_includes(TestWorkFlow.related_files.edit_files, TestFile, "TestWorkFlow.related_files=#{TestWorkFlow.related_files.inspect}")
 end #initialize
 include WorkFlow::Examples
 def test_test

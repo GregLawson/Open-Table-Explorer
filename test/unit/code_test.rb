@@ -48,8 +48,8 @@ def test_regexp
 		refute_nil(spec.pathname_glob)
 		refute_nil(Dir[spec.pathname_glob])
 #		refute_empty(Dir[spec.pathname_glob],"Dir[#{spec.pathname_glob}]=#{Dir[spec.pathname_glob]}")
-		assert_dir_include(spec[:example_pathname],spec.pathname_glob)
-		assert_include(spec[:example_pathname],Dir[spec.pathname_glob])
+		assert_dir_includes(spec[:example_pathname],spec.pathname_glob)
+		assert_includes(spec[:example_pathname],Dir[spec.pathname_glob])
 	end #map
 end #regexp
 def test_pathnames
@@ -134,13 +134,13 @@ def test_models
 			assert_instance_of(Regexp, spec.regexp)
 			model=f[spec.regexp,1]
 			if model.nil? then
-				assert_include(spec[:name], [:shared_partials,:testing], "model should not (regexp=#{spec.regexp}) be embedded in pathname (#{f}).")
+				assert_includes(spec[:name], [:shared_partials,:testing], "model should not (regexp=#{spec.regexp}) be embedded in pathname (#{f}).")
 			else
 				assert_instance_of(String,f[spec.regexp,1])
 				refute_nil(model,"pathname=#{f} does not match regexp=#{spec.regexp}")
 				refute_empty(model)
 				refute_empty(f[spec.regexp,1])
-				assert_include('stream_pattern',spec.models)
+				assert_includes('stream_pattern',spec.models)
 			end #if
 		end #map
 		models=pathnames.map {|f| f[spec.regexp,1] }
@@ -180,7 +180,7 @@ def test_git_status
 #	CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }
 #	assert_nothing_raised{CodeBase.gitStatus{|status,pathname| CodeBase.why_not_stage(pathname,MatchedPathName.new(pathname).model_name.singular_model_name) }}
 	assert_equal('global',MatchedPathName.new('test/unit/global_test.rb').model_name.singular_model_name)
-	assert_include('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
+	assert_includes('app/views/acquisition_stream_specs/index.html.erb',CodeBase.controller_sources('acquisition_stream_spec'))
 end #git_status
 def test_git_add_successful
 end #git_add_successful
@@ -193,10 +193,10 @@ def test_why_not_stage
 #	assert_nothing_raised{CodeBase.why_not_stage_helper('app/views/acquisition_stream_specs/_index_partial.html.erb',target,sources,test_type)}
 end #why_not_stage_helper
 def test_rails_MVC_classes
-	assert_include(StreamMethod,CodeBase.rails_MVC_classes)
-	refute_include(Generic_Table,CodeBase.rails_MVC_classes)
-	refute_include(CodeBase,CodeBase.rails_MVC_classes)
-	refute_include(MethodModel,CodeBase.rails_MVC_classes)
+	assert_includes(StreamMethod,CodeBase.rails_MVC_classes)
+	refute_includes(Generic_Table,CodeBase.rails_MVC_classes)
+	refute_includes(CodeBase,CodeBase.rails_MVC_classes)
+	refute_includes(MethodModel,CodeBase.rails_MVC_classes)
 end #rails_MVC_classes
 def test_example_pathnames_exist
 	CodeBase.all.each do |spec|

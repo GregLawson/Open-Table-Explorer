@@ -120,20 +120,20 @@ def test_names
 			nil
 		end #if
 	end.compact.uniq #map
-	assert_include(RegexpParse.names, 'Sequence')
+	assert_includes(RegexpParse.names, 'Sequence')
 
 end #names
 def test_strings
 	refute_nil(RegexpParse::Examples.constants)
-	assert_include(RegexpParse::Examples.constants, :Dot_star_string)
+	assert_includes(RegexpParse::Examples.constants, :Dot_star_string)
 
-#	assert_include(RegexpParse::Examples.methods(false), :strings)
+#	assert_includes(RegexpParse::Examples.methods(false), :strings)
 
-	assert_include(RegexpParse.strings, :Dot_star_string)
+	assert_includes(RegexpParse.strings, :Dot_star_string)
 
 end #strings
 def test_arrays
-	assert_include(RegexpParse.arrays, :Dot_star_array)
+	assert_includes(RegexpParse.arrays, :Dot_star_array)
 
 end #arrays
 def test_parses

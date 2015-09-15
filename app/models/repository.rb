@@ -5,34 +5,34 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#assert_include(Module.constants, :ShellCommands)
-#refute_include(Module.constants, :FilePattern)
-#refute_include(Module.constants, :Unit)
-#assert_include(Module.constants, :Capture)
-#assert_include(Module.constants, :Branch)
+#assert_includes(Module.constants, :ShellCommands)
+#refute_includes(Module.constants, :FilePattern)
+#refute_includes(Module.constants, :Unit)
+#assert_includes(Module.constants, :Capture)
+#assert_includes(Module.constants, :Branch)
 # @see http://grit.rubyforge.org/
 require 'grit'  # sudo gem install grit
 # partial API at @see less /usr/share/doc/ruby-grit/API.txt
 # code in @see /usr/lib/ruby/vendor_ruby/grit
-#assert_include(Module.constants, :ShellCommands)
-#assert_include(Module.constants, :FilePattern)
-#assert_include(Module.constants, :Unit)
-#assert_include(Module.constants, :Capture)
-#assert_include(Module.constants, :Branch)
-#refute_include(Module.constants, :Unit)
+#assert_includes(Module.constants, :ShellCommands)
+#assert_includes(Module.constants, :FilePattern)
+#assert_includes(Module.constants, :Unit)
+#assert_includes(Module.constants, :Capture)
+#assert_includes(Module.constants, :Branch)
+#refute_includes(Module.constants, :Unit)
 require_relative 'unit.rb'
-#assert_include(Module.constants, :Unit)
-#assert_include(Module.constants, :FilePattern)
+#assert_includes(Module.constants, :Unit)
+#assert_includes(Module.constants, :FilePattern)
 require_relative 'shell_command.rb'
-#assert_include(Module.constants, :ShellCommands)
+#assert_includes(Module.constants, :ShellCommands)
 #require_relative 'global.rb'
-#refute_include(Module.constants, :Capture)
+#refute_includes(Module.constants, :Capture)
 require_relative 'parse.rb'
-#assert_include(Module.constants, :Capture)
-#refute_include(Module.constants, :Branch)
+#assert_includes(Module.constants, :Capture)
+#refute_includes(Module.constants, :Branch)
 #require_relative 'branch.rb'
-#assert_include(Module.constants, :Branch)
-#refute_include(Module.constants, :Repository)
+#assert_includes(Module.constants, :Branch)
+#refute_includes(Module.constants, :Repository)
 class Repository #<Grit::Repo
 module Constants
 Repository_Unit = Unit.new_from_path(__FILE__)
@@ -174,12 +174,12 @@ def git_parse(command, pattern)
 
 end # git_parse
 end # Repository
-#assert_include(Module.constants, :ShellCommands)
-#assert_include(Module.constants, :FilePattern)
-#assert_include(Module.constants, :Unit)
-#assert_include(Module.constants, :Capture)
-#assert_include(Module.constants, :Branch)
-#assert_include(Module.constants, :Repository)
-#assert_include(Repository.constants, :Constants)
-#assert_include(Repository.constants, :ClassMethods)
+#assert_includes(Module.constants, :ShellCommands)
+#assert_includes(Module.constants, :FilePattern)
+#assert_includes(Module.constants, :Unit)
+#assert_includes(Module.constants, :Capture)
+#assert_includes(Module.constants, :Branch)
+#assert_includes(Module.constants, :Repository)
+#assert_includes(Repository.constants, :Constants)
+#assert_includes(Repository.constants, :ClassMethods)
 

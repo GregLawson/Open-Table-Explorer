@@ -14,7 +14,7 @@ include Test::Unit::Assertions
 module ClassMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
-	assert_include(UnboundedFixnum.ancestors, Numeric)
+	assert_includes(UnboundedFixnum.ancestors, Numeric)
 end # class_assert_invariant
 include Test::Unit::Assertions
 end #ClassMethods

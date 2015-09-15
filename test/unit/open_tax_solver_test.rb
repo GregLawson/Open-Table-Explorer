@@ -115,7 +115,7 @@ def test_parse
 	assert_equal(matchData[2], matchData[3] || matchData[5] || matchData[7] , matchData.inspect)
 	assert_equal('0', md=Full_regexp_array.join.match('L 0 {e}')[6], md.inspect)
 	type=matchData[10] || matchData[4] || matchData[6] || matchData[8]
-	assert_include(['??', ';', '0'],type, matchData.inspect)
+	assert_includes(['??', ';', '0'],type, matchData.inspect)
 
 	OpenTaxSolver.assert_full_match(acquisition)
 	ios=OpenTaxSolver.parse(acquisition, Full_regexp_array.join)
@@ -157,8 +157,8 @@ def test_all
 		assert_respond_to(ots.attributes, :values)
 		assert_scope_path(:DefaultAssertions, :ClassMethods)
 		assert_constant_instance_respond_to(:NoDB, :insert_sql)
-		assert_include(ots.class.included_modules, NoDB)
-#		assert_include(NoDB.methods, :insert_sql)
+		assert_includes(ots.class.included_modules, NoDB)
+#		assert_includes(NoDB.methods, :insert_sql)
 		assert_includes(OpenTaxSolver.methods, :insert_sql)
 		explain_assert_respond_to(OpenTaxSolver, :insert_sql)
 		assert_respond_to(OpenTaxSolver, :insert_sql)

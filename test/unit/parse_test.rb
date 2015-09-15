@@ -224,8 +224,8 @@ def test_delimiters?
 	assert_equal([], (2..Split_capture.raw_captures.size - 2).map {|i| (i.even? ? raw_captures[i] : nil)}.compact, message)
 	assert_equal([], Split_capture.delimiters?, message)
 	assert_equal([], Limit_capture.delimiters?, message)
-	assert_include(Capture::Assertions::ClassMethods.instance_methods, :assert_method, message)
-	assert_include(Capture.methods, :assert_method, message)
+	assert_includes(Capture::Assertions::ClassMethods.instance_methods, :assert_method, message)
+	assert_includes(Capture.methods, :assert_method, message)
 #	Capture::Assertions::ClassMethods.assert_method(Match_capture, Limit_capture, :delimiters?, message)
 	Capture.assert_method(Match_capture, Limit_capture, :delimiters?, message)
 end # delimiters?

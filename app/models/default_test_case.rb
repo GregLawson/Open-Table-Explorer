@@ -89,7 +89,7 @@ def test_case_pre_conditions
 	assert_operator(1, :<=, names_of_tests?.size, "#{names_of_tests?.sort}")
 end #test_case_pre_conditions
 def test_class_assert_invariant
-#	assert_include(Module.constants, model_name?)
+#	assert_includes(Module.constants, model_name?)
 #	refute_nil(model_class?, "Define a class named #{TE.model_name?} or redefine model_name? to return correct class name.")
 	model_class?.assert_invariant
 #	fail "got to end of default test."
@@ -103,23 +103,23 @@ def assert_environment
   message= "self=#{self.inspect}"
   puts message
   message+= "\nself.included_modules=#{self.included_modules.inspect}"
-  assert_include(self.included_modules, AssertionsModule, message)
-  assert_include(self.included_modules, DefaultTests0, message)
+  assert_includes(self.included_modules, AssertionsModule, message)
+  assert_includes(self.included_modules, DefaultTests0, message)
   assert_respond_to(TE, :model_class?, message)
-  assert_include(TE.model_class?.included_modules, AssertionsModule, message)
-  assert_include(TE.model_class?.included_modules, Regexp::Assertions, message)
-#?  assert_include(TE.model_class?.included_modules, Regexp::Assertions::ClassMethods, message)
-  assert_include(TE.model_class?.included_modules, Regexp::Examples, message)
+  assert_includes(TE.model_class?.included_modules, AssertionsModule, message)
+  assert_includes(TE.model_class?.included_modules, Regexp::Assertions, message)
+#?  assert_includes(TE.model_class?.included_modules, Regexp::Assertions::ClassMethods, message)
+  assert_includes(TE.model_class?.included_modules, Regexp::Examples, message)
 end #assert_environment
 def test_aaa_environment
   info "$VERBOSE=#{$VERBOSE.inspect}"
   return if model_class?.nil?
   included_module_names=model_class?.included_modules.map{|m| m.name}
   info "included_module_names=#{included_module_names.inspect}"
-  assert_include(self.class.included_modules, AssertionsModule)
-#	assert_include(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
-	refute_include(self.methods(false), :explain_assert_respond_to)
-	refute_include(self.class.methods(false), :explain_assert_respond_to)
+  assert_includes(self.class.included_modules, AssertionsModule)
+#	assert_includes(TE.model_class?.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in #{TE.assertions_pathname?}")
+	refute_includes(self.methods(false), :explain_assert_respond_to)
+	refute_includes(self.class.methods(false), :explain_assert_respond_to)
 #startup allowed	assert_equal([], self.class.methods(false))
 #	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
 #	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
@@ -137,8 +137,8 @@ def test_aaa_environment
 	refute_nil(self.class.name, message)
 	refute_nil(TE.model_name?, message)
 	refute_nil(model_class?, message)
-	warn{assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")}
-	warn{assert_include(model_class?.included_modules, AssertionsModule)}
+	warn{assert_includes(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")}
+	warn{assert_includes(model_class?.included_modules, AssertionsModule)}
 #	assert_equal('AssertionsModule', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, AssertionsModule, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
@@ -185,15 +185,15 @@ end #DefaultTests2
 module DefaultTests3
 include DefaultTests2
 def test_assertion_inclusion
-	assert_include(model_class?.included_modules, model_class?::Assertions)
-	assert_include(model_class?.ancestors, AssertionsModule)
+	assert_includes(model_class?.included_modules, model_class?::Assertions)
+	assert_includes(model_class?.ancestors, AssertionsModule)
 end #test_assertion_inclusion
 def test_related_files
-	assert_include(self.class.included_modules, AssertionsModule)
-#	assert_include(self.class.included_modules, DefaultAssertionTests)
-	assert_include(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in ?")
-	refute_include(self.methods(false), :explain_assert_respond_to)
-	refute_include(self.class.methods(false), :explain_assert_respond_to)
+	assert_includes(self.class.included_modules, AssertionsModule)
+#	assert_includes(self.class.included_modules, DefaultAssertionTests)
+	assert_includes(self.methods(true), :explain_assert_respond_to, "Need to require ../../test/assertions/ruby_assertions.rb in ?")
+	refute_includes(self.methods(false), :explain_assert_respond_to)
+	refute_includes(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
 #	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
 #	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
@@ -203,8 +203,8 @@ def test_related_files
 #	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
 #	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
 #	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
-	assert_include(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
-	assert_include(model_class?.included_modules, AssertionsModule)
+	assert_includes(model_class?.included_modules, model_class?::Assertions, "Need to include #{model_class?::Assertions}")
+	assert_includes(model_class?.included_modules, AssertionsModule)
 #	assert_equal('AssertionsModule', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, AssertionsModule, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
@@ -266,7 +266,7 @@ class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion
 #require_relative '../../test/assertions.rb'
 
 extend AssertionsModule
-#assert_include(methods, :model_class?)
-#assert_include(self.class.methods, :model_class?)
+#assert_includes(methods, :model_class?)
+#assert_includes(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 end #DefaultTestCase4

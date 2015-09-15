@@ -54,7 +54,7 @@ def test_RegexpRepetition_compare
 	assert_operator(RegexpRepetition::TestCases::Dot_star, :>, RegexpRepetition::TestCases::Many)
 end #compare
 def test_intersect
-	assert_include('&', RegexpRepetition.instance_methods(false))
+	assert_includes('&', RegexpRepetition.instance_methods(false))
 	lhs=RegexpRepetition::TestCases::Any
 	rhs=RegexpRepetition::TestCases::Many
 	rhs=RegexpRepetition.promote(rhs)

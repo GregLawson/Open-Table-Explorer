@@ -53,8 +53,8 @@ def assert_pre_conditions
 		assert_instance_of(Hash, self.attributes)
 		assert_respond_to(self.attributes, :values)
 		assert_constant_instance_respond_to(:NoDB, :insert_sql)
-		assert_include(self.class.included_modules, NoDB)
-#		assert_include(NoDB.methods, :insert_sql)
+		assert_includes(self.class.included_modules, NoDB)
+#		assert_includes(NoDB.methods, :insert_sql)
 		assert_instance_of(Array, attributes.values)
 end #assert_pre_conditions
 def assert_post_conditions

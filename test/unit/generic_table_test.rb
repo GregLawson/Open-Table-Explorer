@@ -241,7 +241,7 @@ def test_Generic_Table
 	
 	assert(Generic_Table.rails_MVC_class?(:stream_pattern))
 	assert(Generic_Table.rails_MVC_class?(:stream_pattern))
-	assert_include('StreamMethod',CodeBase.rails_MVC_classes.map {|c| c.name})
+	assert_includes('StreamMethod',CodeBase.rails_MVC_classes.map {|c| c.name})
 	assert(CodeBase.rails_MVC_classes.map {|c| c.name}.include?('StreamMethod'))
 	assert(Generic_Table.rails_MVC_class?('StreamMethod'))
 end #test
@@ -252,7 +252,7 @@ def test_attributes
 	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, Example.attributes)
 end #attributes
 def test_column_symbols
-	assert_include('sample', BatteryMeasurement.methods(true)) # checks immediate class and included modules
+	assert_includes('sample', BatteryMeasurement.methods(true)) # checks immediate class and included modules
 	sample=BatteryMeasurement.sample
 	column_symbols=sample.flatten.map do |r|
 		assert_instance_of(Hash, r)

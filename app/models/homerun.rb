@@ -33,7 +33,7 @@ end #ClassMethods
 def assert_pre_conditions
 end #assert_pre_conditions
 def assert_post_conditions
-	assert_include(self.instance_variables, :@id, "self=#{self.inspect}")
+	assert_includes(self.instance_variables, :@id, "self=#{self.inspect}")
 	refute_nil(@id)
 end #assert_post_conditions
 end #Assertions

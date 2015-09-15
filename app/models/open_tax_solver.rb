@@ -123,8 +123,8 @@ def assert_pre_conditions
 		assert_respond_to(self.attributes, :values)
 		assert_scope_path(:DefaultAssertions, :ClassMethods)
 		assert_constant_instance_respond_to(:NoDB, :insert_sql)
-		assert_include(self.class.included_modules, NoDB)
-#		assert_include(NoDB.methods, :insert_sql)
+		assert_includes(self.class.included_modules, NoDB)
+#		assert_includes(NoDB.methods, :insert_sql)
 		assert_includes(self.methods, :insert_sql)
 		explain_assert_respond_to(self, :insert_sql)
 		assert_respond_to(self, :insert_sql)
@@ -138,7 +138,7 @@ extend AssertionsModule
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
-	assert_include(included_modules, NoDB, "")
+	assert_includes(included_modules, NoDB, "")
 	Dir[input_file_names].each do |f|
 		assert(File.exists?(f), Dir["#{Open_tax_solver_data_directory}/*"].inspect)
 	end #each

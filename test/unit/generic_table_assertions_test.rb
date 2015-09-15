@@ -75,11 +75,11 @@ end  #assert_matching_association
 def test_handle_polymorphic
 	association_type=StreamMethodArgument.association_arity(:parameter)
 	refute_nil(association_type)
-#	assert_include(association_type,[:to_one,:to_many])
+#	assert_includes(association_type,[:to_one,:to_many])
 #	assert_association(StreamMethodArgument,:parameter)
 #	assert_belongs_to_association(StreamMethodArgument,:parameter)
 #	assert(StreamMethodArgument.belongs_to_association?(:parameter))
-#	assert_include('parameter',StreamMethodArgument.foreign_key_association_names)
+#	assert_includes('parameter',StreamMethodArgument.foreign_key_association_names)
 #	assert_equal(:to_one_belongs_to,StreamMethodArgument.association_type(:parameter))
 end #test
 def setup
@@ -90,7 +90,7 @@ def testMethod
 end #def
 def test_various_assertions
 	refute_empty([1])
-	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
+	assert_includes('acquisition_stream_specs',TableSpec.instance_methods(false))
 	ar_from_fixture=table_specs(:ifconfig)
 	refute_nil ar_from_fixture.class.similar_methods(:acquisition_stream_spec)
 end #test
@@ -100,7 +100,7 @@ def test_unknown
 		klass=class_reference
 	association_reference=association_reference.to_sym
 	refute_empty(ActiveRecord::Base.instance_methods_from_class)
-	refute_include(association_reference.to_s,ActiveRecord::Base.instance_methods_from_class)
+	refute_includes(association_reference.to_s,ActiveRecord::Base.instance_methods_from_class)
 	if (ActiveRecord::Base.instance_methods_from_class(true).include?(association_reference.to_s)) then
 		raise "# Don’t create associations that have the same name (#{association_reference.to_s})as instance methods of ActiveRecord::Base (#{ActiveRecord::Base.instance_methods_from_class.inspect})."
 	end #if
@@ -108,7 +108,7 @@ def test_unknown
 	if klass.module_included?(Generic_Table) then
 		association_type=klass.association_arity(association_reference)
 		refute_nil(association_type)
-		assert_include(association_type,[:to_one,:to_many])
+		assert_includes(association_type,[:to_one,:to_many])
 	end #if
 	#~ explain_assert_respond_to(klass.new,(association_reference.to_s+'=').to_sym)
 	#~ assert_public_instance_method(klass.new,association_reference,"association_type=#{association_type}, ")

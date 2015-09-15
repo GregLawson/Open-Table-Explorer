@@ -67,7 +67,7 @@ def assert_belongs_to_association(model_class,association_name)
 	assert_association(model_class, correct_plurality)
 	assert_association(model_class,association_name, "plurality should be #{correct_plurality}")
 	assert_association_to_one(model_class,association_name)
-	assert_include(association_name.to_s,model_class.foreign_key_association_names)
+	assert_includes(association_name.to_s,model_class.foreign_key_association_names)
 end #belongs_to_association
 def assert_defaulted_primary_logical_key(class_reference)
 	message="#{class_reference.name} uses "
