@@ -177,21 +177,24 @@ class Example
 module ClassMethods
 def find_all_in_class(containing_class)
 	if containing_class.constants.include?(:Examples) then # if there is no module Examples in unit
-		[]
-	else
 		containing_class::Examples.constants.map do |example_name|
 			example = Example.new(containing_class: containing_class, example_constant_name: example_name)
 		end # map
+	else
+		[]
 	end # if
 end # find_all_in_class
 def find_by_class(containing_class, value_class)
-	find_all_in_class(containing_class).select {|example| example.class == value_class}
+	find_all_in_class(containing_class).select {|example| example.value.class == value_class}
 end # find_by_class
 end # ClassMethods
 extend ClassMethods
 include Virtus.model
 	attribute :containing_class, Class
 	attribute :example_constant_name, String
+def ==(other)
+	@containing_class == other.containing_class && @example_constant_name == other.example_constant_name
+end # ==
 def fully_qualified_name
 	@containing_class.name.to_s + '::Examples::' + @example_constant_name.to_s
 end # fully_qualified_name
