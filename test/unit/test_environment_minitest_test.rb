@@ -7,6 +7,20 @@
 ###########################################################################
 require_relative '../../app/models/test_environment_minitest.rb'
 class TestEnvironmentMinitestTest < TestCase
+include RubyAssertions
+def test_AssertionsModule
+	message = 'AssertionsModule defined'
+	assert_equal(MiniTest::Assertions, AssertionsModule, message)
+	#puts "\nin test_environment_minitest.rb, Module.constants = " + Module.constants.inspect
+	message = 'In instance assert_pre_conditions, '
+	message += "\n AssertionsModule.methods = " + AssertionsModule.methods(false).inspect
+	exception = Exception.new(message)
+	raise exception if !AssertionsModule.instance_methods(false).include?(:assert_equal)
+end # AssertionsModule
+def test_constant_scope
+	fail 'in test_environment_minitest.rb AssertionsModule not found in ' + Module.constants.inspect unless Module.constants.include?(:AssertionsModule)
+	assert_global_name(:AssertionsModule)
+end # constant_scope
 def test_RegexpError
 	regexp_string = ')'
 	Regexp.new(regexp_string) # test

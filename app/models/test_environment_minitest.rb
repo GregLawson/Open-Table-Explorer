@@ -13,8 +13,6 @@ require_relative '../../app/models/unit.rb'
 BaseTestCase = MiniTest::Unit::TestCase 
 TestCase = BaseTestCase # allows subclassing BaseTestCase, sets default value
 AssertionsModule = MiniTest::Assertions
-#puts "\nin test_environment_minitest.rb, Module.constants = " + Module.constants.inspect
-fail 'in test_environment_minitest.rb AssertionsModule not found in ' + self.class.constants.inspect unless self.class.constants.include?(:AssertionsModule)
 AssertionFailedError = RuntimeError
 #AssertionFailedError=Test::Unit::AssertionFailedError
 #AssertionFailedError = MiniTest::Assertion
