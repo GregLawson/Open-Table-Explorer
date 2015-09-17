@@ -6,13 +6,13 @@
 #
 ###########################################################################
 # gem install mintest
-require "minitest/autorun"
+require "minitest/unit"
 require 'active_support/all'
+AssertionsModule = MiniTest::Assertions
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/unit.rb'
 BaseTestCase = MiniTest::Unit::TestCase 
 TestCase = BaseTestCase # allows subclassing BaseTestCase, sets default value
-AssertionsModule = MiniTest::Assertions
 AssertionFailedError = RuntimeError
 #AssertionFailedError=Test::Unit::AssertionFailedError
 #AssertionFailedError = MiniTest::Assertion

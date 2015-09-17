@@ -169,6 +169,7 @@ def test_run
 	refute_nil(ARGV)
 #		SELF.run do
 #		end # do run
+	Test_unit_commandline.run
 end # run
 def test_argument_type
 	assert_equal(Dir, CommandLine.argument_type('/*'))

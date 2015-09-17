@@ -18,7 +18,7 @@ def assert_pre_conditions
 	message += "\n AssertionsModule.instance_methods = " + AssertionsModule.instance_methods(false).inspect
 	exception = Exception.new(message)
 	raise exception if !AssertionsModule.instance_methods(false).include?(:assert_equal)
-
+	assert_nested_scope_submodule(:Assertions, CommandLine)
 end #assert_pre_conditions
 
 def assert_post_conditions
@@ -66,7 +66,7 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 #TestWorkFlow.assert_pre_conditions
-RubyAssertions.assert_nested_scope_submodule(:Assertions, CommandLine)
+extend RubyAssertions
 module Examples
 include Constants
 No_args = CommandLine.new($0, CommandLine, [])

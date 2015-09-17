@@ -1,15 +1,42 @@
 testing
-2015-08-28 12:37:09.754
-ruby -v -W0 test/unit/command_line_test.rb
+2015-09-17 14:08:47.081
+ruby -v -W0 script/command_line.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 32087
-
-# Running:
-
-...........No arguments
-............
-
-Finished in 7.127214s, 3.2271 runs/s, 3.6480 assertions/s.
-
-23 runs, 26 assertions, 0 failures, 0 errors, 0 skips
+Usage:  unit_basename subcommand  options args
+Possible unit names:
+account ,acquisition ,adc_loopback ,arp ,assertions ,avr ,backup ,battery
+,battery_measurement ,battery_type ,blue_tooth ,branch ,bug ,cisco_cable_modem
+,code ,column_group ,command ,command_line ,common_table ,debugging ,default
+,default_assertions ,default_test_case ,dependancies ,dependancy ,dhcp
+,discrete_dimension ,disk ,dpc2100_modem ,dpkg ,edison ,editor ,eeg ,error_type
+,evtest ,example_type ,file_pattern ,flora ,frequency ,generic_column
+,generic_file ,generic_grep ,generic_row ,generic_table
+,generic_table_assertions ,generic_table_association ,generic_table_examples
+,generic_table_html ,generic_type ,global ,gnome ,gnome_hangs ,hal ,homerun
+,host ,huelserie ,huelshow ,interactive_bottleneck ,iwup ,kernel_module ,log
+,match_data ,method_model ,minimal ,minimal2 ,minimal3 ,minimal4
+,minimal4_assertions ,minimal_no_assertions ,minimal_no_test_environment ,monk
+,nested_array ,nested_loop ,network ,nmap ,no_db ,ofx ,open_tax_form_filler
+,open_tax_solver ,parse ,parse_tree ,partition ,pathname ,pcf8591 ,port
+,production ,production_ftp ,r ,r_rsruby ,rebase ,rebuild ,regexp
+,regexp_alternative ,regexp_generalization ,regexp_match
+,regexp_match_assertions ,regexp_parse ,regexp_parse_assertions
+,regexp_repetition ,regexp_sequence ,regexp_tree ,release ,repository
+,repository_assertions ,router ,ruby ,ruby_assertions ,ruby_interpreter ,samba
+,sdr ,shell_command ,specification ,ssbc ,station ,stream ,stream_link
+,stream_method ,stream_method_argument ,stream_method_call ,stream_parameter
+,stream_pattern ,stream_pattern_argument ,stream_tree ,string ,tax_form ,taxes
+,tedprimary ,test_environment ,test_environment_default_test_case
+,test_environment_minitest ,test_environment_rails ,test_environment_ruby
+,test_executable ,test_method ,test_run ,to_do_list ,transfer ,udev
+,unbounded_fixnum ,unbounded_fixnum_assertions ,unbounded_range
+,unbounded_range_assertions ,unit ,unit_maturity ,url ,usb ,usc ,version ,visa
+,weather ,work_flow ,x ,xrandr ,yl40_loopback ,yl40_onboard ,zillow
+ subcommands or units:  inspect, test
+ candidate_commands with 0 or variable number of arguments:  
+args may be paths, units, branches, etc.
+options:
+  -i, --inspect    Inspect command_line object
+  -t, --test       Test unit.
+  -h, --help       Show this message
 
