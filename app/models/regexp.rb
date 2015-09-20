@@ -218,34 +218,6 @@ end #back_reference
 def group
 	/(?:#{self.source})/
 end #group
-require_relative '../../test/assertions.rb'
-module Assertions
-module ClassMethods
-def assert_post_conditions
-end #assert_post_conditions
-def assert_pre_conditions
-end #assert_pre_conditions
-end #ClassMethods
-def assert_pre_conditions
-# by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
-	assert_equal(self, Regexp.promote(self))
-	assert_equal(self, /#{self.unescaped_string}/)
-#	assert_equal(self, Regexp.promote(self).unescaped_string)
-end #assert_pre_conditions
-def assert_post_conditions
-end #assert_post_conditions
-def assert_no_exception(message)
-end # assert_no_exception
-end #Assertions
-include Assertions
-extend Assertions::ClassMethods
-module Examples
-include Constants
-Ip_number_pattern=/\d{1,3}/
-Escape_string='\d'
-Back_reference=((/[aeiou]/.capture(:vowel)*/./).back_reference(:vowel)*/./).back_reference(:vowel)
-Regexp_exception = Regexp.regexp_error('[')
-end #Examples
 end #Regexp
 class RegexpError
 def assert_pre_conditions

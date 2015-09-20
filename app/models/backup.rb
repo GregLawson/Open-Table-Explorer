@@ -27,7 +27,7 @@ def merge_back
 	command_string = 'rsync ' + @options + ' ' + @backup_dir + '* ' + @source_dir
 #	ShellCommands.new(command_string)
 end # merge_back
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
@@ -41,9 +41,9 @@ end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-	assert_not_nil(@source_dir, message)
-	assert_not_nil(@backup_dir, message)
-	assert_not_nil(@options, message)
+	refute_nil(@source_dir, message)
+	refute_nil(@backup_dir, message)
+	refute_nil(@options, message)
 	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
@@ -66,7 +66,8 @@ module Constants
 end #Constants
 include Constants
 # attr_reader
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"

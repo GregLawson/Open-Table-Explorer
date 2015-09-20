@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'test/unit'
 require 'pathname'
 require_relative '../../app/models/global.rb'
 require 'set'
@@ -16,9 +15,10 @@ def default_message
 	message += "\n instance_variables=#{instance_variables.inspect}"
 end #default_message
 def caller_lines(ignore_lines=19)
-	"\n#{caller_locations[0..-ignore_lines].join("\n")}\n"
+	"\n#{caller[0..-ignore_lines].join("\n")}\n"
 end #caller_lines
 end # Object
+
 class Module
 def default_message
 	message = "\nModule.nesting=#{Module.nesting.inspect}"
@@ -26,8 +26,10 @@ def default_message
 	name_list_method = :included_modules
 end #default_message
 end # Module
+
 class Method
 end # Method
+
 module Kernel
 # Default message if message is empty
 def add_default_message(message='')
@@ -69,9 +71,10 @@ def default_message
 	return message
 end # default_message
 end # Kernel
-module Test
-module Unit
-module Assertions
+
+module RubyAssertions
+include AssertionsModule
+extend AssertionsModule
 # returns to ruby 1.8 behavior
 =begin
 def build_message(head, template=nil, *arguments)
@@ -142,7 +145,7 @@ def assert_call_result(obj,methodName,*arguments)
 end #assert_call_result
 def assert_call(obj,methodName,*arguments)
 	result=assert_call_result(obj,methodName,*arguments)
-	assert_not_nil(result)
+	refute_nil(result)
 	message="\n#{obj.canonicalName}.#{methodName}(#{arguments.collect {|arg|arg.inspect}.join(',')}) returned no data. result.inspect=#{result.inspect}; obj.inspect=#{obj.inspect}"
 	if result.instance_of?(Array) then
 		assert_operator(result.size,:>,0,message)
@@ -189,7 +192,7 @@ def explain_assert_block(message="assert_block failed.") # :yields:
   end
 end #explain_assert_block
 def explain_assert_respond_to(obj,methodName,message='')
-	assert_not_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
+	refute_nil(obj,"explain_assert_respond_to can\'t do much with a nil object.")
 	assert_respond_to(methodName,:to_s,"methodName must be of a type that supports a to_s method.")
 	assert(methodName.to_s.length>0,"methodName=\"#{methodName}\" must not be a empty string")
 	message1=message+"Object #{obj.canonicalName} of class='#{obj.class}' does not respond to method :#{methodName}"
@@ -229,12 +232,12 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end
 	end
 end #explain_assert_respond_to
-def assert_not_empty(object,message='')
-#	puts "in assert_not_empty: message=#{message.inspect}"
+def refute_empty(object,message='')
+#	puts "in refute_empty: message=#{message.inspect}"
 	message+="\n#{object.canonicalName}, is empty with value #{object.inspect}."
-	assert_not_nil(object,message)
+	refute_nil(object,message)
 	assert_block(message){!object.empty?}
-end #assert_not_empty
+end #refute_empty
 def assert_empty(object,message='')
 	message = newline_if_not_empty(message) + object.inspect + " is not empty."
 	if !object.nil?  then # nil is empty
@@ -248,7 +251,7 @@ def assert_flat_set(set)
 end #assert_flat_set
 def assert_set_promotable(enumeration)
 end #assert_set_promotable
-def assert_subset(subset_enumeration, superset_enumeration, message=nil)
+def assert_subset(subset_enumeration, superset_enumeration,  message = '')
 	if subset_enumeration.instance_of?(Set) then
 		subset=subset_enumeration
 	else
@@ -266,7 +269,7 @@ def assert_subset(subset_enumeration, superset_enumeration, message=nil)
 	subset_surplus=subset-superset
 	assert_empty(subset_surplus, "subset_surplus=#{subset_surplus}, superset=#{superset}, subset=#{subset}")
 end #assert_subset
-def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
+def assert_equal_sets(expected_enumeration,actual_enumeration, message = '')
 	if expected_enumeration.instance_of?(Set) then
 		expected_set=expected_enumeration
 	else
@@ -300,24 +303,23 @@ def assert_equal_sets(expected_enumeration,actual_enumeration,message=nil)
 	end #if
 end #assert_equal_sets
 def assert_overlap(enum1,enum2)
-	assert_not_empty(enum1, "Assume first set to not be empty.")
-	assert_not_empty(enum2, "Assume second set to not be empty.")
+	refute_empty(enum1, "Assume first set to not be empty.")
+	refute_empty(enum2, "Assume second set to not be empty.")
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
-#def assert_include(element,list,message=nil)
-#	raise "Second argument of assert_include must be an Array or Set" if !(list.instance_of?(Array) || list.instance_of?(Set))
-#	if message.nil? then
-#		message=build_message(message, "? is not in list ?", element,list.inspect)
-#	end #if 
-#	assert(list.include?(element),message)
-#end #assert_include
-def assert_dir_include(filename,glob)
-	assert_include(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
+def assert_includes(list, element,  message = '')
+	raise "Second argument of assert_include must be an Array or Set" if !(list.instance_of?(Array) || list.instance_of?(Set))
+	message = message + element.inspect
+	message += " is not in list " + list.inspect
+	assert(list.include?(element),message)
+end #assert_include
+def assert_dir_includes(filename,glob)
+	assert_includes(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
-#def assert_not_include(list, element, message=nil)
-#	message=build_message(message, "? is in list ?", element,list)   
-#	assert_block(message){!list.include?(element)}
-#end #assert_not_include
+def refute_includes(list, element,  message = '')
+	message=build_message(message, "? is in list ?", element,list)   
+	assert_block(message){!list.include?(element)}
+end #refute_include
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
@@ -371,7 +373,7 @@ def assert_attribute_of(obj, symbol, type)
 	assert_block("obj[:#{symbol}]=#{obj[symbol].inspect} must be of type #{type}, but is of type #{obj[symbol].class} obj=#{obj.inspect}") {obj[symbol].instance_of?(type)}
 end #assert_attribute_of
 
-def assert_has_instance_methods(model_class,message=nil)
+def assert_has_instance_methods(model_class, message = '')
 	message=build_message(message, "? has no public instance methods.", model_class.canonicalName)   
 	assert_block(message){!model_class.instance_methods(false).empty?}
 end #assert_has_instance_methods
@@ -385,18 +387,18 @@ def global_name?(name)
 	Module.constants.include?(name)
 end #global_name
 def assert_global_name(name)
-	assert_include(Module.constants, name)
+	assert_includes(Module.constants, name)
 end #global_name
 def assert_scope_path(*names)
 	return [] if names.size==0
-	assert_not_empty(names, "Expect non-empty scope path.")
+	refute_empty(names, "Expect non-empty scope path.")
 	if !global_name?(names[0]) then
 		names=[self.class.name.to_sym]+names
 #		puts "after adding self, names=#{names.inspect}"
 	end #if
 	names.each_index do |i|
 		if i == 0 then
-			assert_include(Module.constants, names[i], 'Global constants should be in Module.constants')
+			assert_includes(Module.constants, names[i], 'Global constants should be in Module.constants')
 		else
 			testRange=0..(i-1)
 		#	puts "testRange=#{testRange.inspect}"
@@ -411,9 +413,9 @@ def assert_scope_path(*names)
 	#		message += trace('names')
 			begin
 				object=eval(path)
-				assert_not_nil(object, message)
+				refute_nil(object, message)
 				assert_kind_of(Module, object, message)
-				assert_include(object.constants, names[i], names[i].to_s + ' is not a constant in module ' + path)
+				assert_includes(object.constants, names[i], names[i].to_s + ' is not a constant in module ' + path)
 			end #begin
 		end # if
 	end# each_index
@@ -430,7 +432,7 @@ def assert_path_to_constant(*names)
 	rescue
 		fail message
 	end #begin
-	assert_not_nil(object)
+	refute_nil(object)
 end #assert_path_to_constant
 def assert_constant_path_respond_to(*names)
 	if names.size<2 then 
@@ -478,8 +480,8 @@ def missing_file_message(pathname)
 	end # if
 end # missing_file_message
 def assert_pathname_exists(pathname, message='')
-	assert_not_nil(pathname, message)
-	assert_not_empty(pathname.to_s, message+"Assume pathname to not be empty.")
+	refute_nil(pathname, message)
+	refute_empty(pathname.to_s, message+"Assume pathname to not be empty.")
 	pathname = Pathname.new(pathname).expand_path
 	message += "\nPathname(#{pathname}).exist?=" + pathname.exist?.to_s + "\n" + missing_file_message(pathname)
 	assert(pathname.exist?, message)
@@ -495,12 +497,32 @@ def assert_data_file(pathname, message='')
 	message += 'pathname = ' + "'" + pathname + "'"
 	assert_pathname_exists(pathname, message)
 	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it a directory?")
-	assert_not_nil(File.size?(pathname), message)
-	assert_not_equal(0, File.size?(pathname), message)
+	refute_nil(File.size?(pathname), message)
+	refute_equal(0, File.size?(pathname), message)
 	pathname # allow chaining
 end #assert_data_file
-end #Assertions
-end #Unit
-end #Test
+def nested_scope_modules?
+	nested_constants = self.class.constants
+	message = ''
+	assert_includes(included_modules.map{|m| m.name}, :Assertions, message)
+	assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
+end # nested_scopes
+def assert_nested_scope_submodule(module_symbol, context = self, message='')
+	message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
+	message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
+	message += " but not in #{context.nested_scope_modules?.inspect}"
+	assert_includes(constants, :Contants, message)
+end # assert_included_submodule
+def assert_included_submodule(module_symbol, context = self, message='')
+	message+="\nIn assert_included_submodule for class #{self.name}, "
+	message += "make sure module Constants is nested in #{self.class.name.downcase} #{self.name}"
+	message += " but not in #{self.nested_scope_modules?.inspect}"
+	assert_includes(included_modules, :Contants, message)
+end # assert_included_submodule
+def asset_nested_and_included(module_symbol, context = self, message='')
+	assert_nested_scope_submodule(module_symbol)
+	assert_included_submodule(module_symbol)
+end # asset_nested_and_included
+end # RubyAssertions
 #include Test::Unit::Assertions
 #Test::Unit::Assertions.assert_pre_conditions

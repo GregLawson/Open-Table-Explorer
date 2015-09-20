@@ -30,15 +30,15 @@ end #logical_primary_key
 def test_find_by_name
 	macro_name='lower'
 	macro_generic_type=GenericType.find_by_name(macro_name)
-	assert_not_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{GenericType.all.map{|t| t.name}.inspect}")
+	refute_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{GenericType.all.map{|t| t.name}.inspect}")
 	assert_equal(macro_name, macro_generic_type.name, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{GenericType.all.map{|t| t.name}.inspect}")
 end #find_by_name
 def test_generalizations
 	assert_instance_of(GenericType, GenericType.find_by_import_class('digit'))
 	assert_equal(["Text_Column", "VARCHAR_Column", "ascii", "print", "graph", "word", "alnum", "xdigit"], GenericType.find_by_import_class('digit').generalizations.map{|g| g.name})
 	assert(GenericType.all.any? {|g| !g.generalizations.empty?})
-	assert_include("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
-	assert_include("Text_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
+	assert_includes("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
+	assert_includes("Text_Column", GenericType.find_by_import_class('Integer_Column').generalizations.map{|a| a.name})
 	GenericType.all.each do |t|
 		assert_instance_of(GenericType, t)
 		assert_instance_of(Array, t.generalizations)
@@ -58,7 +58,7 @@ def test_unspecialized
 	assert_empty(digit.specialize)
 	assert(digit.unspecialized?)
 	most_general=GenericType.find_by_import_class('Text_Column')
-	assert_not_empty(most_general.specialize)
+	refute_empty(most_general.specialize)
 	assert(!most_general.unspecialized?)
 end #unspecialized
 def test_one_level_specializations
@@ -70,8 +70,8 @@ def test_one_level_specializations
 			assert_instance_of(GenericType, t.one_level_specializations[0])
 		end #if
 	end #each
-	assert_include('Integer_Column', GenericType.find_by_import_class("VARCHAR_Column").one_level_specializations.map{|a| a.name})
-	assert_not_include('Integer_Column', GenericType.find_by_import_class("Text_Column").one_level_specializations.map{|a| a.name})
+	assert_includes('Integer_Column', GenericType.find_by_import_class("VARCHAR_Column").one_level_specializations.map{|a| a.name})
+	refute_includes('Integer_Column', GenericType.find_by_import_class("Text_Column").one_level_specializations.map{|a| a.name})
 	assert_equal(["cntrl", "print", "space"], GenericType.find_by_import_class('ascii').one_level_specializations.map{|g| g.name})
 end #one_level_specializations
 def test_specializations
@@ -98,18 +98,18 @@ def test_expand
 	assert_regexp(regexp)
 	parse=RegexpTree.new(regexp)
 	macro_name=RegexpTree.macro_call?(parse)
-	assert_not_equal(macro_name, Macaddr.name)
+	refute_equal(macro_name, Macaddr.name)
 	expansion=parse.map_branches do |branch|
 		macro_name=branch.macro_call?()
 		if macro_name then
-			assert_not_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.name}.inspect}")
+			refute_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.name}.inspect}")
 			all_macro_names= GenericType.all.map{|t| t.name}
-			assert_include(macro_name, all_macro_names)
+			assert_includes(macro_name, all_macro_names)
 			macro_generic_type=GenericType.find_by_name(macro_name)
-			assert_not_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{all_macro_names.inspect}")
+			refute_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{all_macro_names.inspect}")
 			macro_call=macro_generic_type[:data_regexp]
-			assert_not_nil(macro_call, "")
-			assert_not_equal(macro_call, regexp)
+			refute_nil(macro_call, "")
+			refute_equal(macro_call, regexp)
 			assert_equal(macro_name, macro_generic_type.name)
 			assert_equal(branch, macro_generic_type.expand, "macro_name=#{macro_name},\n")
 			macro_generic_type.expand
@@ -125,28 +125,28 @@ def test_match
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Text.match_exact?(string_to_match))
+	refute_nil(Text.match_exact?(string_to_match))
 end #match
 def test_match_Start
 	regexp=Regexp.new(Text.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Text.match_start?(string_to_match))
+	refute_nil(Text.match_start?(string_to_match))
 end #match_start
 def test_match_end
 	regexp=Regexp.new(Text.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Text.match_end?(string_to_match))
+	refute_nil(Text.match_end?(string_to_match))
 end #match_end
 def test_match_any
 	regexp=Regexp.new(Text.expand.join)
 	assert_regexp(regexp)
 	string_to_match='123'
 	assert_match(regexp, string_to_match)
-	assert_not_nil(Text.match_any?(string_to_match))
+	refute_nil(Text.match_any?(string_to_match))
 end #match_any
 def test_specializations_that_match
 
@@ -219,7 +219,7 @@ def test_most_specialized
 	Lower.assert_most_specialized([:digit], '9')
 	assert_equal([Digit], Lower.most_specialized?('9'))
 	assert_equal([Lower, Xdigit], Text.most_specialized?('c'), Text.most_specialized?('c').map{|m|m.name}.inspect) # ambiguous
-	assert_not_empty(Digit.most_specialized?('c'))
+	refute_empty(Digit.most_specialized?('c'))
 	assert_equal([Xdigit], Digit.most_specialized?('c'))
 	Digit.assert_most_specialized([:xdigit], 'c')
 end #most_specialized
@@ -246,7 +246,7 @@ end #common_matches
 def test_generalize
 	assert_equal("VARCHAR_Column", GenericType.find_by_import_class('Integer_Column').generalize.name)
 	GenericType.all.each do |t|
-		assert_not_equal(t[:generalize_id], 0, "t=#{t.inspect}")
+		refute_equal(t[:generalize_id], 0, "t=#{t.inspect}")
 	end #each
 	
 	assert(GenericType.all.any? {|t| !t.generalize.nil?})

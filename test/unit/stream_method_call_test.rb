@@ -14,9 +14,9 @@ def test_stream_links
 	assert_equal_sets(["stream_method","stream_links"], StreamMethodCall.association_names)
 	assert_equal('', StreamLink.all)
 	assert_equal('', streamCall)
-	assert_not_empty(streamCall.stream_links)
+	refute_empty(streamCall.stream_links)
 	StreamMethodCall.find(:all).each do |smc|
-		assert_not_empty(smc.stream_links)
+		refute_empty(smc.stream_links)
 	end #each
 end #stream_links
 def test_inputs

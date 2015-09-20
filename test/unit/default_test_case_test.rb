@@ -1,13 +1,11 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment'
-require 'test/unit'
-require_relative '../../app/models/default_test_case.rb'
+require_relative '../../app/models/test_environment_default_test_case.rb'
 class EmptyTest
 end #EmptyTest
 class EmptyDefaultTest < DefaultTestCase1
@@ -15,8 +13,8 @@ end #EmptyDefaultTest
 class EmptyIncludedTest
 include DefaultTests1
 end #EmptyIncludedTest
-require_relative '../../test/assertions.rb'
-class MinimalTest < DefaultTestCase0
+#require_relative '../../test/assertions.rb'
+class MinimalTest < BaseTestCase # DefaultTestCase0
 end #MinimalTest
 class ClassExists
 def self.assert_invariant
@@ -36,7 +34,7 @@ end # example_submodule
 
 
 def test_each_example
-  included_module_names=model_class?.included_modules.map{|m| m.name}
+  included_module_names = model_class?.included_modules.map{|m| m.name}
 end #each_example
 def test_existing_call
 end #existing_call
@@ -51,14 +49,14 @@ def test_global_class_names
 	constants=Module.constants
 	assert_instance_of(Array, constants)
 	constants.select {|n| eval(n.to_s).instance_of?(Class)}
-	assert_include(global_class_names, self.class.name.to_sym)
+	assert_includes(global_class_names, self.class.name.to_sym)
 end #global_classes
 def test_case_assert_invariant
 	caller_message=" callers=#{caller.join("\n")}"
 	assert_equal('Test', self.class.name[-4..-1], "Naming convention is to end test class names with 'Test' not #{self.class.name}"+caller_message)
 end #assert_invariant
 def test_assert_class_invariant
-	assert_include(Module.constants, :ClassExists)
+	assert_includes(Module.constants, :ClassExists)
 end #test_assert_class_invariant
 include DefaultTests1
-end #DefaultTestCaseTest
+end # DefaultTestCaseTest

@@ -111,19 +111,20 @@ Simple_acquisition='L 0 {e}'
 Short_acquisition='L  {e}'
 
 end #Examples
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
-extend Test::Unit::Assertions
+extend AssertionsModule
 def assert_pre_conditions
 		assert_instance_of(OpenTaxSolver, self)
 		assert_instance_of(Hash, self.attributes)
 		assert_respond_to(self.attributes, :values)
 		assert_scope_path(:DefaultAssertions, :ClassMethods)
 		assert_constant_instance_respond_to(:NoDB, :insert_sql)
-		assert_include(self.class.included_modules, NoDB)
-#		assert_include(NoDB.methods, :insert_sql)
+		assert_includes(self.class.included_modules, NoDB)
+#		assert_includes(NoDB.methods, :insert_sql)
 		assert_includes(self.methods, :insert_sql)
 		explain_assert_respond_to(self, :insert_sql)
 		assert_respond_to(self, :insert_sql)
@@ -133,11 +134,11 @@ module ClassMethods
 include OpenTaxSolver::Constants
 include OpenTaxSolver::Examples
 
-extend Test::Unit::Assertions
+extend AssertionsModule
 include DefaultAssertions::ClassMethods
 def assert_pre_conditions
 	assert_scope_path(:DefaultAssertions, :ClassMethods)
-	assert_include(included_modules, NoDB, "")
+	assert_includes(included_modules, NoDB, "")
 	Dir[input_file_names].each do |f|
 		assert(File.exists?(f), Dir["#{Open_tax_solver_data_directory}/*"].inspect)
 	end #each
@@ -166,11 +167,11 @@ def assert_full_match(acquisition)
 	assert_match(Symbol_regexp, acquisition, caller_lines)
 	assert_match(Type_regexp, acquisition, caller_lines)
 	assert_match(Description_regexp, acquisition, caller_lines)
-	assert_not_empty(acquisition, caller_lines)
-	assert_not_empty(caller_lines, caller_lines)
-	assert_not_empty(Full_regexp_array, caller_lines)
-	assert_not_empty(Full_regexp_array.join, caller_lines)
-	assert_not_nil(Regexp.new(Full_regexp_array.join), caller_lines)
+	refute_empty(acquisition, caller_lines)
+	refute_empty(caller_lines, caller_lines)
+	refute_empty(Full_regexp_array, caller_lines)
+	refute_empty(Full_regexp_array.join, caller_lines)
+	refute_nil(Regexp.new(Full_regexp_array.join), caller_lines)
 	assert_instance_of(Regexp, Regexp.new(Full_regexp_array.join), caller_lines)
 	matchData=Regexp.new(Full_regexp_array.join).match(acquisition, caller_lines)
 	matchData=Full_regexp_array.join.match(acquisition, caller_lines)
@@ -201,7 +202,7 @@ def assert_full_match(acquisition)
 					assert_match(/#{capture_kind[i]}/,matchData[match_index], message)
 				end #if
 			else # data
-				assert_not_nil(matchData[match_index], message)
+				refute_nil(matchData[match_index], message)
 			end #if
 		end #Array.new
 		indices=Array.new((matchData.size-2)/2){|i| 2*(i+1)}
@@ -238,7 +239,7 @@ def assert_full_match(acquisition)
 end #assert_match
 end #ClassMethods
 end #Assertions
-require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions/default_assertions.rb'
 include Assertions
 extend Assertions::ClassMethods
 end #OpenTaxSolver

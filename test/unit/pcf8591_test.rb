@@ -13,7 +13,7 @@ include DefaultTests2
 include PCF8591::Examples
 include PCF8591::Constants
 def test_initialize
-	assert_not_nil(PCF8591.new)
+	refute_nil(PCF8591.new)
 end #initialize
 def test_command_string
 	assert_equal('', [].join(' '))

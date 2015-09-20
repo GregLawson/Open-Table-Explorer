@@ -18,14 +18,14 @@ end #def assert_invariant
 
 def RegexpMatch.explain_assert_match(regexp, string, message=nil)
 	message="regexp=#{regexp}, string='#{string}'"
-	assert_not_nil(regexp, message)
+	refute_nil(regexp, message)
 	regexp=RegexpTree.canonical_regexp(regexp)
-	assert_not_nil(string, message)
+	refute_nil(string, message)
 	match_data=regexp.match(string)
 	if match_data.nil? then
 		regexp_tree=RegexpMatch.new(regexp, string)
 		new_regexp_tree=regexp_tree.matchSubTree
-		assert_not_empty(new_regexp_tree)
+		refute_empty(new_regexp_tree)
 		regexp=RegexpMatch.canonical_regexp(new_regexp_tree)
 		assert_match(regexp, string, message)
 		message=build_message(message, "regexp.source=? did not match ? but new_regexp_tree=? should match", regexp.source, string, new_regexp_tree.to_s)
@@ -37,7 +37,7 @@ def RegexpMatch.assert_match_array(regexp, string, message=nil)
 end #assert_match_array
 def assert_regexp_match(regexp_match=self)
 	assert_respond_to(regexp_match,:consecutiveMatches)
-	assert_not_nil(regexp_match.consecutiveMatches(+1,0,0))
+	refute_nil(regexp_match.consecutiveMatches(+1,0,0))
 	assert(regexp_match.consecutiveMatches(+1,0,0).size>0)
 end #assert_regexp_match
 end #ClassMethods
@@ -55,7 +55,7 @@ end #def assert_invariant
 def assert_match_branch(branch=self, data_to_match=@dataToParse, message=nil)
 	branch_match=match_branch(branch, data_to_match)
 	message=build_message(message, "branch_match=?", branch_match)
-	assert_not_nil(branch_match.dataToParse, message)
+	refute_nil(branch_match.dataToParse, message)
 end #match_branch
 def assert_consecutiveMatches(matches)
 	assert_instance_of(Array, matches)

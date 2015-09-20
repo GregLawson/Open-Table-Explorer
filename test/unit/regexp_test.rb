@@ -164,7 +164,7 @@ def test_capture
 	assert_equal('2', regexp.capture.match(str)[1])
 	matchData=regexp.capture(:digit).match(str)
 	message="matchData.inspect=#{matchData.inspect}"
-#	assert_not_nil(matchData, message)
+#	refute_nil(matchData, message)
 	assert_match(/([a-z])/, str, message)
 	matchData=/\$(?<dollars>\d+)\.(?<cents>\d+)/.match("$3.67")
 	message="matchData.inspect=#{matchData.inspect}"
@@ -211,4 +211,11 @@ def test_assert_pre_conditions
 	Regexp.regexp_error('(').assert_pre_conditions
 	Regexp.new(']').assert_pre_conditions
 end # assert_pre_conditions
+def test_assert_named_captures
+	/a/.capture(:a).assert_named_captures
+	(/a/.capture(:a) * /b/.capture).assert_named_captures
+	regexp = /b/.capture
+	message = regexp.inspect
+	assert_raises(MiniTest::Assertion) {regexp.assert_named_captures}
+end # assert_named_captures
 end #Regexp

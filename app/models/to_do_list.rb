@@ -66,6 +66,13 @@ def rebase!(sequence_editor=rebase_editor?)
 	end # if
 	self
 end # rebase!
+def rebase_branch!
+	if remotes?.include?(current_branch_name?) then
+		git_command('rebase --interactive origin/'+current_branch_name?).assert_post_conditions.output.split("\n")
+	else
+		puts current_branch_name?.to_s+' has no remote branch in origin.'
+	end #if
+end #rebase!
 def puts
 		puts @run.inspect
 		puts @branch.repository.state?.inspect
@@ -89,9 +96,9 @@ def command_line_rebase_string?
 	end # if
 end # command_line_rebase_string?
 module Assertions
-include Test::Unit::Assertions
+include AssertionsModule
 module ClassMethods
-include Test::Unit::Assertions
+include AssertionsModule
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions

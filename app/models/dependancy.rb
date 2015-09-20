@@ -27,7 +27,7 @@ def gem
 rescue LoadError
 	install_execution=ShellCommands.new('sudo gem install ' + @name).assert_post_conditions
 end # gem
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

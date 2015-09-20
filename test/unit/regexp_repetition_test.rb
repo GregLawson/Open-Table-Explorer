@@ -19,14 +19,14 @@ def test_RegexpRepetition_initialize
 	assert_instance_of(UnboundedRange, RegexpRepetition::TestCases::Any.repetition_length)
 	assert_equal(UnboundedRange::Once, One_a.repetition_length)
 	assert_equal(One_a.repetition_length, 1..1)
- 	assert_not_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
+ 	refute_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
 end #initialize
 def test_RegexpRepetition_compare
 	assert(nil == nil)
 	lhs=RegexpRepetition::TestCases::Dot_star
 	rhs=RegexpRepetition::TestCases::Many
- 	assert_not_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
- 	assert_not_nil(lhs.repeated_pattern)
+ 	refute_nil(RegexpRepetition.new('.', 1, nil).repeated_pattern)
+ 	refute_nil(lhs.repeated_pattern)
  	assert_instance_of(RegexpRepetition, lhs)
 	assert_instance_of(RegexpRepetition, rhs)
  	assert_kind_of(RegexpTree, lhs.repeated_pattern)
@@ -54,7 +54,7 @@ def test_RegexpRepetition_compare
 	assert_operator(RegexpRepetition::TestCases::Dot_star, :>, RegexpRepetition::TestCases::Many)
 end #compare
 def test_intersect
-	assert_include('&', RegexpRepetition.instance_methods(false))
+	assert_includes('&', RegexpRepetition.instance_methods(false))
 	lhs=RegexpRepetition::TestCases::Any
 	rhs=RegexpRepetition::TestCases::Many
 	rhs=RegexpRepetition.promote(rhs)
@@ -85,7 +85,7 @@ def test_concise_repetition_node
 end #concise_repetition_node
 def test_probability_range
 	assert_equal(1.0, RegexpRepetition::TestCases::Any.probability_of_repetition(1))
-	assert_not_nil(RegexpRepetition::TestCases::Any.probability_of_repetition(1))
+	refute_nil(RegexpRepetition::TestCases::Any.probability_of_repetition(1))
 	assert_equal(1.0..1.0, Many.probability_range)
 	assert_equal(0..1.0, RegexpRepetition::TestCases::Dot_star.probability_range)
 	assert_equal(1.0/95..1.0/95, Asymmetrical_Tree.probability_range)
@@ -98,7 +98,7 @@ end #probability_range
 def test_probability_of_repetition
 	rhs=RegexpRepetition::TestCases::Any
 	alternative_list=rhs.repeated_pattern.alternatives? # kludge for now
-	assert_not_nil(alternative_list)
+	refute_nil(alternative_list)
 	alternatives=alternative_list.size
 	assert_equal(256, alternatives)
 	character_probability=alternatives/rhs.probability_space_size

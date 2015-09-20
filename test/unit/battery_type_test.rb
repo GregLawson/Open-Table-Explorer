@@ -15,7 +15,7 @@ def test_standardize_keys
 end #standardize_keys!
 def test_all
 	records=model_class?.all
-	assert_not_empty(records)
+	refute_empty(records)
 	assert_instance_of(Array, records)
 	assert_kind_of(BatteryType, records.first)
 	BatteryType.all.each do |r|
@@ -26,8 +26,8 @@ def test_chemistries
 	BatteryType.all.map do |r| 
 		assert_kind_of(BatteryType, r)
 		assert_instance_of(BatteryType, r)
-		assert_not_nil(r)
-		assert_not_nil(r[:Chemistry], r)
+		refute_nil(r)
+		refute_nil(r[:Chemistry], r)
 	end #map
 	assert_equal(["NiMH", "NiCd", "NiMH low self-discharge"], BatteryType.chemistries)
 end #chemistries

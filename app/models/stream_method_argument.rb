@@ -32,8 +32,9 @@ module Examples
 First_stream_argument=StreamMethodArgument.first
 end #Examples
 include Examples
-require_relative '../../test/assertions/default_assertions.rb'
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions/default_assertions.rb'
+#require_relative '../../test/assertions.rb'
+module Assertions
 include DefaultAssertions
 module ClassMethods
 include DefaultAssertions::ClassMethods
@@ -59,12 +60,12 @@ end #ClassMethods
 def assert_invariant
 	assert_instance_of(StreamMethodArgument, self)
 	assert(!self.class.sequential_id?, "self.class=#{self.class}, should not be a sequential_id.")
-	assert_not_empty(name, inspect)
-	assert_not_empty(self[:name], inspect)
-	assert_not_empty(self['name'], inspect)
-	assert_not_empty(direction, inspect)
+	refute_empty(name, inspect)
+	refute_empty(self[:name], inspect)
+	refute_empty(self['name'], inspect)
+	refute_empty(direction, inspect)
 	assert_empty(self[:catfish], inspect)
-	assert_include(['Input', 'Output'], direction)
+	assert_includes(['Input', 'Output'], direction)
 end #assert_invariant
 # true after creating an object from scratch
 def assert_pre_conditions
@@ -72,7 +73,7 @@ def assert_pre_conditions
 end #assert_pre_conditions
 # conditions after all ActiveRecord reading and initialization 
 def assert_post_conditions
-	assert_not_nil(stream_method, inspect)
+	refute_nil(stream_method, inspect)
 	assert_constant_path_respond_to(:Generic_Table, :stream_method)
 	assert_constant_instance_respond_to(:Generic_Table, :association_state)
 
@@ -82,7 +83,7 @@ def assert_post_conditions
 	assert_constant_path_respond_to(:GenericTableAssociation, :ClassMethods, :association_state)
 	assert_constant_instance_respond_to(:StreamMethodArgument, :First_stream_argument, :association_state)
 	assert_instance_of(StreamMethodArgument, StreamMethodArgument::First_stream_argument)
-	assert_include(StreamMethodArgument::First_stream_argument.public_methods, :association_state, StreamMethodArgument::First_stream_argument.public_methods)
+	assert_includes(StreamMethodArgument::First_stream_argument.public_methods, :association_state, StreamMethodArgument::First_stream_argument.public_methods)
 	assert_respond_to(StreamMethodArgument::First_stream_argument, :association_state, StreamMethodArgument::First_stream_argument.methods)
 	assert_equal('', StreamMethodArgument::First_stream_argument.association_state(:stream_method))
 end #assert_post_conditions

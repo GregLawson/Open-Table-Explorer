@@ -35,7 +35,7 @@ def test_ruby_version
 	assert_instance_of(String, parse[:pre_release])
 end # ruby_version
 def test_shell
-	assert_not_empty(RubyInterpreter.shell('pwd'){|run| run.inspect})
+	refute_empty(RubyInterpreter.shell('pwd'){|run| run.inspect})
 end #shell
 def test_initialize
 	ruby_interpreter=RubyInterpreter.new

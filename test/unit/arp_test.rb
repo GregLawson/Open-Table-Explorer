@@ -17,7 +17,7 @@ def test_inialize
 		matchData=/DHCPACK from ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/.match(arp.errors)
 	end #if
 	ip=matchData[1]
-	assert_not_nil(ip)
+	refute_nil(ip)
 end #initialize
 def test_MAC(ip)
 end #MACs

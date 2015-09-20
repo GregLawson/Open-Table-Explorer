@@ -9,25 +9,25 @@ require_relative '../unit/test_environment'
 require_relative '../../app/models/work_flow.rb'
 
 class EditorTest < TestCase
-include DefaultTests
+#include DefaultTests
 #include Editor
 #extend Editor::ClassMethods
 include Editor::Examples
 include UnitMaturity::Examples
-def test_initialize
-	te=Unit.new(TestFile)
-	assert_not_nil(te)
-	wf=Editor.new(TestFile)
-	assert_not_nil(wf)
-	assert_not_empty(TestEditor.related_files.edit_files, "TestEditor.related_files.edit_files=#{TestEditor.related_files.edit_files}")
-	assert_include(TestEditor.related_files.edit_files, TestFile, "TestEditor.related_files=#{TestEditor.related_files.inspect}")
+def test_initializes
+	te=Unit.new(TestEditor.executable.executable_file)
+	refute_nil(te)
+	wf=Editor.new(TestEditor.executable)
+	refute_nil(wf)
+	refute_empty(TestEditor.executable.unit.edit_files, "TestEditor.executable.unit.edit_files=#{TestEditor.executable.unit.edit_files}")
+	assert_includes(TestEditor.executable.unit.edit_files, TestEditor.executable.file, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
 end #version_comparison
 def test_goldilocks
-	assert_not_nil(UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym))
-#	assert_include(Editor::Branch_enhancement, TestEditor.repository.current_branch_name?.to_sym)
+	refute_nil(UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym))
+#	assert_includes(Editor::Branch_enhancement, TestEditor.repository.current_branch_name?.to_sym)
 	current_index=UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym)
 	filename= Most_stable_file
 	left_index,right_index= TestEditor.unit_maturity.bracketing_versions?(filename, current_index)
@@ -60,7 +60,7 @@ end # split
 def test_minimal_edit
 end # minimal_edit
 def test_emacs
-#(executable = @related_files.model_test_pathname?)
+#(executable = @executable.unit.model_test_pathname?)
 end # emacs
 def test_local_assert_post_conditions
 		TestEditor.assert_post_conditions

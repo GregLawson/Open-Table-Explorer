@@ -82,7 +82,7 @@ def test_map_matches
 		data_to_match=matched_data.post_match
 		return branch_match # successful match
 	end #if
-	assert_not_nil(Addresses.map_matches)
+	refute_nil(Addresses.map_matches)
 	assert_instance_of(RegexpMatch, Addresses.map_matches)
 	assert_instance_of(RegexpMatch, Addresses.map_matches[0])
 	assert_equal("<Url:0xb5ce4e3c>", Addresses.map_matches, "Addresses.map_matches=#{Addresses.map_matches.inspect}")
@@ -113,29 +113,29 @@ def test_map_consecutiveMatches
 	matches=Addresses.consecutiveMatches(+1,0,0)
 	assert_instance_of(Array, matches)
 	data_to_match=Addresses.dataToParse
-	assert_not_empty(data_to_match)
+	refute_empty(data_to_match)
 	startPos=0
 	branch_match=Addresses.match_branch(Addresses[matches[1]], data_to_match[startPos, -1])
 #	assert_equal({/0/ => nil}, branch_match, "Addresses[startPos..15]=#{Addresses[startPos..15]}, data_to_match[startPos, -1]=#{data_to_match[startPos, -1]}")
-	assert_not_empty(data_to_match)
+	refute_empty(data_to_match)
 	matched_regexp=matches.map do |m|
 		message="m=#{m}, Addresses[m]=#{Addresses[m]}, data_to_match=#{data_to_match}"
-		assert_not_empty(data_to_match, message)
+		refute_empty(data_to_match, message)
 		Addresses.assert_match_branch(Addresses[m], data_to_match)
 		branch_match=Addresses.match_branch(Addresses[m], data_to_match)
-		assert_not_nil(branch_match)
+		refute_nil(branch_match)
 		matched_data=branch_match[:matched_data]
 		if matched_data.nil? || matched_data.size==0 then
 		else
-			assert_not_nil(matched_data, "Addresses[m]=#{Addresses[m]}, data_to_match=#{data_to_match}")
-			assert_not_empty(data_to_match, message)
+			refute_nil(matched_data, "Addresses[m]=#{Addresses[m]}, data_to_match=#{data_to_match}")
+			refute_empty(data_to_match, message)
 			data_to_match=data_to_match[matched_data.size..-1]
 			message2= message+", matched_data=#{matched_data}"
 			message2+=", data_to_match[#{matched_data.size}"
 #			message2+=", -1]=#{data_to_match[matched_data.size, -1]}"
-			assert_not_empty(data_to_match, message2)
+			refute_empty(data_to_match, message2)
 		end #if
-		assert_not_equal(data_to_match, Addresses.dataToParse)
+		refute_equal(data_to_match, Addresses.dataToParse)
 		branch_match
 	end #map
 	assert_equal(matched_regexp, Addresses.map_consecutiveMatches(matches))
@@ -188,11 +188,11 @@ def test_consecutiveMatch
 	Addresses.assert_consecutiveMatch(match1)
 	assert_equal(0..8, match1)
 	match2=Addresses.consecutiveMatch(+1,9)
-	assert_not_nil(match2)
+	refute_nil(match2)
 #	assert_equal(14..14, match2)
 	assert_equal(14..14, Addresses.consecutiveMatch(+1,9, 15))
 	assert_equal(14..14, Addresses.consecutiveMatch(+1,9))
-	assert_not_nil(match1)
+	refute_nil(match1)
 	Addresses.assert_consecutiveMatch(match2, match1)
 	match3=Addresses.consecutiveMatch(+1,15)
 	Addresses.assert_consecutiveMatch(match3, match2)

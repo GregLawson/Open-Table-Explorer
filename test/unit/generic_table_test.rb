@@ -101,15 +101,15 @@ def test_one_pass_statistics
 		    min_key=row.logical_primary_key_value_recursive
 		    max_key=row.logical_primary_key_value_recursive
 	    end #if
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(min_key)
-	    assert_not_nil(max_key)
+	    refute_nil(min)
+	    refute_nil(max)
+	    refute_nil(min_key)
+	    refute_nil(max_key)
 	else
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(max_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
-	    assert_not_nil(min_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
+	    refute_nil(min)
+	    refute_nil(max)
+	    refute_nil(max_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
+	    refute_nil(min_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
 	    if x<min then
 	    	min=x
 		if has_id then
@@ -126,18 +126,18 @@ def test_one_pass_statistics
 			max_key=row.logical_primary_key_value_recursive
 		end #if
 	    end #if  # value for not nil
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(min_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
-	    assert_not_nil(max_key)
+	    refute_nil(min)
+	    refute_nil(max)
+	    refute_nil(min_key, "n=#{n}, has_id=#{has_id}, local_variables=#{local_variables.inspect}")
+	    refute_nil(max_key)
 	end #if
-	    assert_not_nil(min)
-	    assert_not_nil(max)
-	    assert_not_nil(min_key)
-	    assert_not_nil(max_key)
+	    refute_nil(min)
+	    refute_nil(max)
+	    refute_nil(min_key)
+	    refute_nil(max_key)
     end #each
 	bug_statistics=Bug.one_pass_statistics(:id)
-    	assert_not_nil(bug_statistics)
+    	refute_nil(bug_statistics)
 	assert_equal(1, bug_statistics[:min])
 end #one_pass_statistics
 def test_is_active_record_method
@@ -241,7 +241,7 @@ def test_Generic_Table
 	
 	assert(Generic_Table.rails_MVC_class?(:stream_pattern))
 	assert(Generic_Table.rails_MVC_class?(:stream_pattern))
-	assert_include('StreamMethod',CodeBase.rails_MVC_classes.map {|c| c.name})
+	assert_includes('StreamMethod',CodeBase.rails_MVC_classes.map {|c| c.name})
 	assert(CodeBase.rails_MVC_classes.map {|c| c.name}.include?('StreamMethod'))
 	assert(Generic_Table.rails_MVC_class?('StreamMethod'))
 end #test
@@ -252,7 +252,7 @@ def test_attributes
 	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, Example.attributes)
 end #attributes
 def test_column_symbols
-	assert_include('sample', BatteryMeasurement.methods(true)) # checks immediate class and included modules
+	assert_includes('sample', BatteryMeasurement.methods(true)) # checks immediate class and included modules
 	sample=BatteryMeasurement.sample
 	column_symbols=sample.flatten.map do |r|
 		assert_instance_of(Hash, r)
@@ -280,8 +280,8 @@ def test_insert_sql
 	assert_equal("INSERT INTO battery_types(Size,Chemistry,Brand,Rated_capacity_mAh) VALUES();\n", BatteryType.insert_sql({}))
 end #insert_sql
 def test_dump
-	assert_not_nil(BatteryType.dump)
-	assert_not_empty(BatteryType.dump)
+	refute_nil(BatteryType.dump)
+	refute_empty(BatteryType.dump)
 	puts BatteryType.dump
 end #dump
 def test_data_source_yaml_values
@@ -294,9 +294,9 @@ def test_get_field_names
 	assert_equal([:input, :output], TestData.get_field_names)
 end #field_names
 def test_initialize
-	assert_not_nil(Example)
+	refute_nil(Example)
 	assert_instance_of(TestData, Example)
-	assert_not_nil(TestData.new.attributes)
+	refute_nil(TestData.new.attributes)
 
 	values=[1, 2, 3]
 #?	default_names=NoDB::ClassMethods.default_names(3)
@@ -321,7 +321,7 @@ def test_initialize
 	assert(names.all?{|n| n.instance_of?(String)|n.instance_of?(Symbol)})
 	assert_equal(name_value_hash, TestData.new(values, names).attributes)
 	assert_equal(name_value_hash, TestData.new(values, names).attributes)
-	assert_not_empty(TestData.new([1]).attributes)
+	refute_empty(TestData.new([1]).attributes)
 end #NoDB initialize
 def test_at
 	attribute_name=:input

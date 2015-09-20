@@ -19,11 +19,11 @@ end #initialize
 def test_all
 end #all
 def test_Battery
-	assert_include('href', Url.column_names)
-	assert_not_nil(Url.where("href='EEG2'"))
-	assert_not_nil(Url.where("href='EEG2'").first)
+	assert_includes('href', Url.column_names)
+	refute_nil(Url.where("href='EEG2'"))
+	refute_nil(Url.where("href='EEG2'").first)
 	file=Url.where("href='EEG2'").first.url
-	assert_not_empty(file)
+	refute_empty(file)
 	assert_equal('File',StreamMethod.find_by_name('File').name)
 	streamCall=StreamMethodCall.first
 	assert()

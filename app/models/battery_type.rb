@@ -55,7 +55,8 @@ def self.logical_primary_key
 end #logical_primary_key
 def self.column_remap
 end #column_remap
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"

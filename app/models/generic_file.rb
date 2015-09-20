@@ -39,7 +39,8 @@ module Constants
 Symbol_pattern='^ ?([-A-Za-z0-9?]+)'
 Symbol_regexp=/#{Symbol_pattern}/
 end #Constants
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
@@ -52,8 +53,8 @@ def assert_pre_conditions
 		assert_instance_of(Hash, self.attributes)
 		assert_respond_to(self.attributes, :values)
 		assert_constant_instance_respond_to(:NoDB, :insert_sql)
-		assert_include(self.class.included_modules, NoDB)
-#		assert_include(NoDB.methods, :insert_sql)
+		assert_includes(self.class.included_modules, NoDB)
+#		assert_includes(NoDB.methods, :insert_sql)
 		assert_instance_of(Array, attributes.values)
 end #assert_pre_conditions
 def assert_post_conditions
@@ -87,7 +88,8 @@ end #ClassMethods
 extend ClassMethods
 module Constants
 end #Constants
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 
@@ -96,7 +98,7 @@ end #assert_pre_conditions
 def assert_post_conditions
 end #assert_post_conditions
 def assert_json_string(acquisition)
-	assert_not_nil(acquisition)
+	refute_nil(acquisition)
 	assert_instance_of(String, acquisition)
 	json=JSON[acquisition]
 	assert_instance_of(Hash, json)

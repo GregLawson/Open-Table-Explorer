@@ -46,7 +46,7 @@ def mode
 		'not exist'
 	end # if
 end # mode
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 #include Minitest::Assertions
 module ClassMethods

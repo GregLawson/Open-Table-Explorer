@@ -96,8 +96,8 @@ def test_nonterminal?
 	assert_equal(nil, RegexpParseType.nonterminal?(Grandson_a), Grandson_a.inspect)
 end # nonterminal?
 def test_map_recursive
-	assert_include(Connectivity::Examples.constants, :Tree_node_format)
-	assert_include(RegexpParseTest.constants, :Tree_node_format)
+	assert_includes(Connectivity::Examples.constants, :Tree_node_format)
+	assert_includes(RegexpParseTest.constants, :Tree_node_format)
 	depth=0
 	visit_proc = Tree_node_format
 	assert_respond_to(Literal_a, Children_method_name)
@@ -107,7 +107,7 @@ def test_map_recursive
 	assert_respond_to(Son_a, Children_method_name)
 	assert_instance_of(Array, Grandchildren_a)
 	assert_equal(1, Grandchildren_a.size)
-	assert_not_respond_to(Grandson_a, Children_method_name)
+	refute_respond_to(Grandson_a, Children_method_name)
 	assert_equal(Node_a, RegexpParseType.inspect_node(Grandson_a))
 
 	assert_equal(Node_options, RegexpParseType.inspect_node(Son_a), Son_a.inspect)
@@ -141,7 +141,7 @@ def test_readme
 	end # walk
 	assert_equal('Regexp::Expression::Root', root.class.name)
 	assert_instance_of(Regexp::Parser::Root, root)
-	assert_include(root.methods, :expressions)
+	assert_includes(root.methods, :expressions)
 	puts 'root=' + root.inspect
 	walk(root)
 	# output
@@ -156,4 +156,125 @@ def test_Base_inspect
 #	assert_equal([], RegexpParseType.map_recursive(root, &Tree_node_format))
 #	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
 end # inspect
+#RegexpParse.assert_pre_conditions #verify class
+def test_initialize
+	regexp_string=['.', '*']
+	assert_kind_of(Array, regexp_string)
+	assert_instance_of(Array, regexp_string)
+	regexp_parse=RegexpParse.new(regexp_string)
+	assert_equal(['.', '*'], regexp_string.to_a, "regexp_string=#{regexp_string.inspect}, regexp_string.to_a=#{regexp_string.to_a.inspect}")
+	assert_equal('.*', regexp_string.join, "regexp_string=#{regexp_string.inspect}, regexp_string.join=#{regexp_string.join.inspect}")
+	assert_equal('.*', regexp_parse.regexp_string, "regexp_parse=#{regexp_parse.inspect}")
+	assert_equal('.*', regexp_parse.regexp_string.to_s)
+	assert_equal(['.', '*'], regexp_parse.parse_tree)
+	regexp_parse.assert_invariant
+	assert_equal('@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1', regexp_parse.inspect, "regexp_parse=#{regexp_parse.inspect}")
+	assert_equal('@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1', RegexpParse.new(['.', '*']).inspect, "RegexpParse.new(['.', '*'])=#{RegexpParse.new(['.', '*']).inspect}")
+	regexp_string='K.*C'
+	test_tree=RegexpParse.new(regexp_string)
+	assert_equal(regexp_string,test_tree.to_s)
+	refute_nil(test_tree.regexp_string)
+	refute_nil(RegexpParse.new(test_tree.rest).to_s)
+#	refute_nil(RegexpParse.new(nil))
+	assert_instance_of(NestedArray, RegexpParse.new(['.', '*']).parse_tree)
+	assert_instance_of(NestedArray, RegexpParse.new(CONSTANT_PARSE_TREE).parse_tree)
+	assert_instance_of(NestedArray, RegexpParse.new(/.*/).parse_tree)
+	assert_instance_of(NestedArray, RegexpParse.new('.*').parse_tree)
+	assert_instance_of(RegexpParse, Parenthesized_parse)
+	Parenthesized_parse.assert_post_conditions
+	CONSTANT_PARSE_TREE.assert_post_conditions
+	KC_parse.assert_post_conditions
+	Rows_parse.assert_post_conditions
+	RowsEdtor2.assert_post_conditions
+	KCET_parse.assert_post_conditions
+	assert_equal(2, RegexpParse.new('.*').parse_tree.size)
+	assert_equal(['.','*'], RegexpParse.new('.*').parse_tree)
+#	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_recursive(&NestedArray::Examples::Echo_proc))
+#	assert_equal(Nested_Test_Array, NestedArray.new(Nested_Test_Array).map_branches(&NestedArray::Examples::Echo_proc))
+end #initialize
+def test_inspect
+	inspect_string='@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1'
+	assert_equal(inspect_string, RegexpParse.new('.*').inspect)
+	assert_equal(inspect_string, Dot_star_parse.inspect)
+end #inspect
+def test_regexp_error
+	assert_nothing_raised{RegexpParse.regexp_error('(')}
+end #regexp_error
+def test_equal_operator
+	rhs=Dot_star_parse
+	lhs=RegexpParse.new('.*')
+	assert_includes(lhs.methods, :==)
+
+	assert_equal(rhs, lhs)
+end #equal_operator
+def test_equal
+	rhs=Dot_star_parse
+	lhs=RegexpParse.new('.*')
+	assert_includes(lhs.methods, :eql?)
+
+	assert(lhs.eql?(rhs))
+	assert_equal(rhs, lhs)
+end #equal
+def test_compare
+	rhs=Dot_star_parse
+	lhs=RegexpParse.new('.*')
+	compare=rhs <=> lhs
+	assert_equal(0, compare)
+	assert_equal([".", "*"], [".", "*"])
+	assert(lhs.eql?(rhs))
+	assert_equal(rhs, lhs)
+end #compare
+def test_RegexpParse_promotable
+	assert(RegexpParse.promotable?(/.*/))
+	assert(RegexpParse.promotable?('.*'))
+	assert(RegexpParse.promotable?(['.', '*']))
+end #RegexpParse.promotable
+def test_RegexpParse_promote
+	assert_equal(Dot_star_parse, RegexpParse.promote(Dot_star_parse))
+	assert_equal(Dot_star_parse, RegexpParse.promote('.*'))
+	assert_equal('@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1', RegexpParse.new(['.', '*']).inspect, "RegexpParse.new(['.', '*'])=#{RegexpParse.new(['.', '*']).inspect}")
+	assert_equal('@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1', RegexpParse.promote(['.', '*']).inspect, "RegexpParse.promote(['.', '*'])=#{RegexpParse.promote(['.', '*']).inspect}")
+	assert_equal(Dot_star_parse, RegexpParse.promote(['.', '*']), "Dot_star_parse=#{Dot_star_parse.inspect}, RegexpParse.promote(['.', '*'])=#{RegexpParse.promote(['.', '*']).inspect}")
+	assert_equal(Dot_star_parse, RegexpParse.promote(/.*/))
+end #RegexpParse.promote
+def test_to_a
+	CONSTANT_PARSE_TREE.assert_post_conditions
+	assert_equal(['K'], CONSTANT_PARSE_TREE.parse_tree, "KC_parse=#{KC_parse.inspect}")
+	assert_equal(['K'], CONSTANT_PARSE_TREE.to_a, "KC_parse=#{KC_parse.inspect}")
+	Dot_star_parse.assert_invariant
+	Dot_star_parse.assert_post_conditions
+	message="Dot_star_parse=#{Dot_star_parse.inspect}"
+	message+=" Dot_star_parse.parse_tree=#{Dot_star_parse.parse_tree.inspect}"
+	message+=" Dot_star_parse.parse_tree.join=#{Dot_star_parse.parse_tree.join.inspect}"
+	assert_equal(Dot_star_parse.regexp_string, Dot_star_parse.parse_tree.join, message)
+	assert_equal(Dot_star_parse.regexp_string, Dot_star_parse.parse_tree.to_a.join, "")
+end #to_a
+def test_RegexpParse_to_s
+	assert_equal('.*', Dot_star_parse.to_s)
+end #to_s
+def test_to_regexp
+	regexp=/abc/
+	assert_equal(RegexpParse.new(regexp).to_regexp, regexp)
+end #to_regexp
+def test_to_pathname_glob
+	assert_equal('ab', RegexpParse.new(/ab/).to_pathname_glob)
+	assert_equal('[ab]', RegexpParse.new(/[ab]/).to_pathname_glob)
+	assert_equal('ab', RegexpParse.new(/(ab)/).to_pathname_glob)
+#	open_tax_filler_directory="../OpenTaxFormFiller/(?<tax_year>[0-9]{4}}"
+	open_tax_filler_directory="../OpenTaxFormFiller/([0-9]{4})"
+#	assert_equal('ab', RegexpTree.new(open_tax_filler_directory).to_pathname_glob)
+	file_regexp="#{open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+#	regexp=RegexpTree.new(file_regexp)
+#	assert_equal('*', regexp.to_pathname_glob)
+end #to_pathname_glob
+def test_pathnames
+	open_tax_filler_directory="../OpenTaxFormFiller/(?<tax_year>[0-9]{4}}"
+	file_regexp="#{open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+	regexp=RegexpParse.new(file_regexp)
+#	regexp.pathnames.compact.map{|matchData| matchData[1]}
+end #pathnames
+def test_grep
+	delimiter="\n"
+end #grep
+#RegexpParse.assert_pre_conditions
 end # RegexpParseType

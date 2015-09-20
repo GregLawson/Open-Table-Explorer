@@ -45,7 +45,7 @@ def test_TestExecutable_initialize
 #	Unit_executable.assert_logical_primary_key_defined()
 end #initialize
 def test_new_from_pathname
-	unit = Unit.new_from_path?(executable_file_file)
+	unit = Unit.new_from_path(executable_file_file)
 	new_executable_file = TestExecutable.new(executable_file: executable_file, unit: unit)
 end # new_from_pathname
 def test_log_path?
@@ -79,7 +79,7 @@ def test_ruby_run_and_log
 		recent_test=This_code_repository.shell_command("ruby "+executable)
 		assert_equal(recent_test.process_status.exitstatus, 1, recent_test.inspect)
 		syntax_test=This_code_repository.shell_command("ruby -c "+executable)
-		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+		refute_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(10000, This_code_repository.error_score?(executable))
 #	This_code_repository.assert_deserving_branch(:edited, executable)
 	executable='test/unit/minimal2_test.rb'
@@ -95,7 +95,7 @@ def test_ruby_run_and_log
 	end #each
 end # ruby_run_and_log
 def test_shell
-	assert_not_empty(TestRun.shell('pwd'){|run| run.inspect})
+	refute_empty(TestRun.shell('pwd'){|run| run.inspect})
 end #shell
 def test_file_bug_reports
 	header,errors,summary=TestRun.parse_log_file(Odd_plural_executable.log_path?)
@@ -110,10 +110,10 @@ def test_file_bug_reports
 	assert_equal('seconds.',headerArray[-1].split(' ')[3])
 	sysout,run_time=TestRun.parse_header(header)
 	assert_instance_of(Array, sysout)
-	assert_not_nil(run_time)
+	refute_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 	sysout,run_time=TestRun.parse_header(header)
-	assert_not_nil(run_time)
+	refute_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 end #file_bug_reports
 def test_parse_log_file
@@ -135,14 +135,14 @@ def test_parse_log_file
 	assert_equal('seconds.',headerArray[-1].split(' ')[3])
 	sysout,run_time=TestRun.parse_header(header)
 	assert_instance_of(Array, sysout)
-	assert_not_nil(run_time)
+	refute_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 	sysout,run_time=TestRun.parse_header(header)
-	assert_not_nil(run_time)
+	refute_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 	header,errors,summary=TestRun.parse_log_file(testRun.log_path?)
-	assert_not_nil(header)
-	assert_not_nil(summary)
+	refute_nil(header)
+	refute_nil(summary)
 end #parse_log_file
 def test_log_passed?(log_file)
 end # log_passed?
@@ -164,15 +164,9 @@ def test_parse_header
 	assert_equal('seconds.',headerArray[-1].split(' ')[3])
 	sysout,run_time=TestRun.parse_header(header)
 	assert_instance_of(Array, sysout)
-	assert_not_nil(run_time)
+	refute_nil(run_time)
 	assert_operator(run_time, :>=, 0)
 end #parse_header
-def test_TestRun_initialize
-	assert_equal(TestExecutable::Examples::Default_executable, Default_testRun.executable)
-	assert_equal(TestExecutable::Examples::Default_executable.executable_file, Default_testRun.executable.executable_file)
-	assert_equal($PROGRAM_NAME, Default_testRun.executable.executable_file)
-	assert_equal(TestExecutable::Examples::Default_executable.unit, Default_testRun.executable.unit)
-end # test_TestRun_initialize
 def test_error_score?
 	executable_file = '/etc/mtab' #force syntax error with non-ruby text
 	test_executable = TestExecutable.new(executable_file: executable_file)
@@ -183,11 +177,11 @@ def test_error_score?
 	assert_equal(false, recent_test.success?, error_message)
 	assert(!recent_test.success?, error_message)
 		syntax_test=This_code_repository.shell_command("ruby -c "+executable_file)
-		assert_not_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
+		refute_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 #	test_run = TestRun.new(:executable => executable)
 	test_run = TestRun.new(executable: TestExecutable.new(executable_file: executable_file))
-	assert_equal(nil, Unit.new_from_path?(executable_file))
-	assert_equal(nil, test_run.executable.unit, test_run.inspect)
+#	assert_equal(nil, Unit.new_from_path(executable_file))
+#	assert_equal(nil, test_run.executable.unit, test_run.inspect)
 	assert_equal(10000, test_run.error_score?, recent_test.inspect)
 #	This_code_repository.assert_deserving_branch(:edited, executable_file)
 
@@ -201,9 +195,16 @@ def test_error_score?
 #	This_code_repository.assert_deserving_branch(:passed, executable_file)
 	Error_classification.each_pair do |key, value|
 		executable_file = Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
-		assert_equal(key, TestRun.new(executable: TestExecutable.new(executable_file: executable_file)).error_score?, This_code_repository.recent_test.inspect)
+		message = 'executable_file = ' + executable_file
+		assert_equal(key, TestRun.new(executable: TestExecutable.new(executable_file: executable_file)).error_score?, message)
 	end #each
 end # error_score
+def test_TestRun_initialize
+	assert_equal(TestExecutable::Examples::Default_executable, Default_testRun.executable)
+	assert_equal(TestExecutable::Examples::Default_executable.executable_file, Default_testRun.executable.executable_file)
+	assert_equal($PROGRAM_NAME, Default_testRun.executable.executable_file)
+	assert_equal(TestExecutable::Examples::Default_executable.unit, Default_testRun.executable.unit)
+end # test_TestRun_initialize
 def test_run
 	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)
 	ruby_pattern = /ruby / * /2.1.2p95/

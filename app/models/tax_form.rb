@@ -14,7 +14,7 @@ require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/parse.rb'
 module OpenTableExplorer
 
-extend Test::Unit::Assertions
+extend AssertionsModule
 module Finance
 module Constants
 OTS_example_directories = Pathname.new('test/data_sources/tax_form/').expand_path.to_s
@@ -174,15 +174,15 @@ module ClassMethods
 
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-	assert_not_nil(ENV['USER'], "ENV['USER']\n"+message) # defined inXfce & Gnome
-	warn {assert_not_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } #not defined in Xfce.
+	refute_nil(ENV['USER'], "ENV['USER']\n"+message) # defined inXfce & Gnome
+	warn {refute_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } #not defined in Xfce.
 	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Downloaded_src_dir)
 	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
 	assert_directory_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
 	OpenTableExplorer::Finance::Constants::Possible_tax_years. each do |tax_year|
 		default_open_tax_solver_glob = OpenTableExplorer::Finance::Constants::Downloaded_src_dir+"OpenTaxSolver#{tax_year}_*"
 		default_open_tax_solver_directories=Dir[default_open_tax_solver_glob]
-		assert_not_empty(default_open_tax_solver_directories, 'default_open_tax_solver_glob='+ default_open_tax_solver_glob)
+		refute_empty(default_open_tax_solver_directories, 'default_open_tax_solver_glob='+ default_open_tax_solver_glob)
 		assert_pathname_exists(default_open_tax_solver_directories.sort[-1], default_open_tax_solver_directories.inspect)
 	end # each
 end #assert_pre_conditions
@@ -206,7 +206,7 @@ end #assert_post_conditions
 # Assertions custom instance methods
 def assert_open_tax_solver
 #	@open_tax_solver_run.assert_post_conditions
-	assert_not_nil(@open_tax_solver_run.process_status, open_tax_solver_run.inspect)
+	refute_nil(@open_tax_solver_run.process_status, open_tax_solver_run.inspect)
 	peculiar_status = @open_tax_solver_run.process_status.exitstatus == 1
 	if File.exists?(@open_tax_solver_sysout) then
 		message=IO.binread(@open_tax_solver_sysout)
@@ -276,8 +276,8 @@ OpenTableExplorer::Finance::TaxForm.assert_pre_conditions # verify Constants can
 module Examples
 include Constants
 Example_Taxpayer=ENV['USER'].to_sym
-assert_not_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
-#assert_not_empty(TaxForm.open_tax_solver_distribution_directory)
+refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
+#refute_empty(TaxForm.open_tax_solver_distribution_directory)
 US1040_user = OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '1040', :US, Default_tax_year, TaxForm.ots_user_all_forms_directory)
 CA540_user=OpenTableExplorer::Finance::TaxForm.new(Example_Taxpayer, '540', :CA, Default_tax_year, TaxForm.ots_user_all_forms_directory)
 US1040_template=OpenTableExplorer::Finance::TaxForm.new(:template, '1040', :US, Default_tax_year, TaxForm.ots_example_all_forms_directory)

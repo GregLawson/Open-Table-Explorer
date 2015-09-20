@@ -83,7 +83,8 @@ def merge_single_element_arrays?
 	end #map_branches
 
 end #merge_single_element_arrays
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 

@@ -6,16 +6,28 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-# @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
+require_relative '../app/models/unit.rb' # before command_line
+require_relative "../app/models/#{Unit::Executable.model_basename}"
 require_relative '../app/models/command_line.rb'
-require_relative '../app/models/test_executable.rb'
-scripting_executable = TestExecutable.new_from_pathname($0)
-require_relative "../app/models/#{scripting_executable.unit.model_basename}"
-script_class = Unit::Executing_Unit.model_class?
-script = CommandLine.new($0)
-pp script.commands if $VERBOSE
-pp ARGV if $VERBOSE
-
-script.run do
+run = CommandLine::Script_command_line.run do
+	if CommandLine::Script_command_line.command_line_opts[:help] then
+			puts 'command_line_opts[:help]'
+			true # done
+	else
+		sub_command = CommandLine::Script_command_line.sub_command
+			unit = Unit.new(sub_command.to_s.camelize.to_sym)
+			required_library_file = unit.model_pathname?
+			if File.exist?(required_library_file) then
+				require required_library_file
+			elsif !Unit.all.include?(unit) then
+				fail unit.inspect + " is not a unit :" +Unit.all_basenames.join(' ,')
+			else
+				fail "required_library_file #{required_library_file} does not exist."
+			end # if 
+			puts 'sub_command = ' + sub_command.inspect + unit.inspect if $VERBOSE
+			unit_commandline = CommandLine.new($0, unit.model_class?, ARGV[1..-1])
+			unit_commandline.run do
+			end # run
+		end # if help
 end # do run
 1 # successfully completed
