@@ -6,6 +6,7 @@
 #
 ###########################################################################
 # gem install mintest
+#require "minitest/autorun"
 require "minitest/unit"
 require 'active_support/all'
 AssertionsModule = MiniTest::Assertions
@@ -17,3 +18,17 @@ AssertionFailedError = RuntimeError
 #AssertionFailedError=Test::Unit::AssertionFailedError
 #AssertionFailedError = MiniTest::Assertion
 #assert_global_name(:AssertionFailedError)
+
+include AssertionsModule
+include RubyAssertions
+extend AssertionsModule
+extend RubyAssertions
+def assert_method(method_name, scope = self)
+	assert_respond_to(scope, method_name, '')
+	assert_kind_of(Module, scope)
+	methods = scope.instance_methods(false)
+	assert(methods.include?(method_name), methods)
+end # method
+def assert_included_modules(module_name, scope = self)
+	assert(scope.included_modules.include?(module_name))
+end # assert_included_modules

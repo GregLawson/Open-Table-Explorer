@@ -15,12 +15,15 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 module Assertions
 include AssertionsModule
 extend AssertionsModule
-#include Test::Unit::Assertions
+include RubyAssertions
+extend RubyAssertions
 module ClassMethods
 #include Minitest::Assertions
 #include Test::Unit::Assertions
 include AssertionsModule
 extend AssertionsModule
+include RubyAssertions
+extend RubyAssertions
 def assert_pre_conditions(message='')
 	message+="In #{self.class}::assert_pre_conditions, self=#{inspect}"
 	assert_respond_to(self, :refute_nil)
