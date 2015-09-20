@@ -74,7 +74,7 @@ def make_executable_object(file_argument)
 	else
 		@unit_class.new(TestExecutable.new_from_path(file_argument))
 	end # if
-end # 
+end # make_executable_object
 def executable_object(file_argument = nil)
 	example = find_example?
 	if file_argument.nil? then
@@ -92,8 +92,8 @@ def executable_object(file_argument = nil)
 	end # if
 	
 end # executable_object
-def executable_method(method_name)
-#	executable_object = executable_object
+def executable_method(method_name, argument = nil)
+	executable_object = executable_object(argument)
 	ret = if executable_object.respond_to?(method_name) then
 		method = executable_object.method(method_name)
 	else
@@ -135,7 +135,7 @@ def required_arguments(method_name)
 	end # if
 end # required_arguments
 def dispatch_one_argument(argument)
-	method = executable_method(sub_command)
+	method = executable_method(sub_command, argument)
 		case required_arguments(sub_command)
 		when 0 then
 			method.call
