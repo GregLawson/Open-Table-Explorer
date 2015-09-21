@@ -21,8 +21,8 @@ extend FilePattern::Assertions::ClassMethods
 def test_Constants
 	Executable.assert_pre_conditions
 	Library.assert_pre_conditions
-	assert_not_nil(Library, Library.inspect)
-	assert_not_nil(Library.project_root_dir, Library.inspect)
+	refute_nil(Library, Library.inspect)
+	refute_nil(Library.project_root_dir, Library.inspect)
 	assert_match(Basename_character_regexp, Library.project_root_dir)
 	assert_match(Directory_delimiter, Library.project_root_dir)
 	assert_match(Basename_character_regexp, Library.project_root_dir)
@@ -57,8 +57,8 @@ def test_unit_base_name
 	basename=File.basename(path)
 	assert_equal('file_pattern_test.rb', basename)
 	expected_match=1
-	assert_include(FilePattern.included_modules, FilePattern::Assertions)
-	assert_include(FilePattern.methods, :assert_pre_conditions)
+	assert_includes(FilePattern.included_modules, FilePattern::Assertions)
+	assert_includes(FilePattern.methods, :assert_pre_conditions)
 	assert_respond_to(FilePattern, :assert_pre_conditions)
 	FilePattern.assert_pre_conditions
 #	FilePattern.assert_naming_convention_match(Patterns[expected_match], path)
@@ -69,8 +69,8 @@ def test_unit_base_name
 			name_length=basename.size-s[:suffix].size
 			basename[0,name_length].classify.to_sym
 	end #map
-	assert_not_empty(matches)
-	assert_not_empty(matches.compact)
+	refute_empty(matches)
+	refute_empty(matches.compact)
 	assert_equal(:FilePattern, matches.compact.last)
 	
 	path=File.expand_path(DCT_filename)
@@ -108,7 +108,7 @@ def test_repository_dir?
 			done=true
 		else
 			assert_operator(dirname.size, :>, File.dirname(dirname).size)
-			assert_not_equal(dirname, File.dirname(dirname))
+			refute_equal(dirname, File.dirname(dirname))
 			dirname=File.dirname(dirname)
 			done=false
 		end #if
@@ -128,8 +128,8 @@ def test_project_root_dir
 	assert(File.exists?($PROGRAM_NAME), $PROGRAM_NAME + ' does not exist.')
 	assert(File.exists?($0), $0 + ' does not exist.')
 	path=File.expand_path($PROGRAM_NAME)
-	assert_not_nil(path)
-	assert_not_empty(path)
+	refute_nil(path)
+	refute_empty(path)
 	assert(File.exists?(path), path + ' does not exist.')
 	roots=FilePattern::Patterns.map do |p|
 		path=File.expand_path(p[:example_file])
@@ -140,7 +140,7 @@ def test_project_root_dir
 		test_root
 	end #map
 	assert_equal(roots.uniq.size, 1, roots.inspect)
-	assert_not_empty(FilePattern.project_root_dir?(path))
+	refute_empty(FilePattern.project_root_dir?(path))
 	assert_pathname_exists(FilePattern.project_root_dir?(path))
 	path='.gitignore'
 	path=File.expand_path(path)
@@ -162,10 +162,10 @@ def test_match_path
 		message+="\nexpected_prefix="+expected_prefix
 		message+="\nprefix="+prefix
 		assert_operator(match_length, :<=, prefix.size, message)
-		assert_not_nil(prefix[-match_length,match_length], message)
+		refute_nil(prefix[-match_length,match_length], message)
 		assert_match(p[:prefix], p[:example_file], message)
 		matchData=Regexp.new(p[:prefix]).match(p[:example_file])
-		assert_not_nil(matchData, message)
+		refute_nil(matchData, message)
 #		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
 #		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
 	end #map
@@ -179,7 +179,7 @@ def test_find_from_path
 	
 	path="test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt"
 	pattern=FilePattern.find_from_path(path)
-	assert_not_nil(pattern, path)
+	refute_nil(pattern, path)
 	assert_equal(:data_sources_dir, pattern[:name])
 end #find_from_path
 def test_path?

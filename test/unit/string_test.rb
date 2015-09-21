@@ -14,13 +14,13 @@ class StringTest < TestCase
 def test_to_exact_regexp
 #	RegexpTree::Binary_bytes.each do |c|
 	RegexpTree::Ascii_characters.each do |c|
-		assert_not_nil(RegexpTree.regexp_rescued(Regexp.escape(c)), "Invalid regexp for character='#{c.to_exact_regexp}'.")
+		refute_nil(RegexpTree.regexp_rescued(Regexp.escape(c)), "Invalid regexp for character='#{c.to_exact_regexp}'.")
 		assert_equal(Regexp.escape(c), RegexpTree.regexp_rescued(Regexp.escape(c)).source)	
 		assert_equal(c.to_exact_regexp, RegexpTree.regexp_rescued(Regexp.escape(c)))
 	end #each
 end #to_exact_regexp
 def test_String_to_a
 	assert_equal(['a', 'b', 'c'],'abc'.to_a)
-	assert_not_equal(['b', 'b', 'c'],'abc'.to_a)
+	refute_equal(['b', 'b', 'c'],'abc'.to_a)
 end #to_a
 end #test class

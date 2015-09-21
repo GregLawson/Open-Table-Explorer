@@ -123,11 +123,6 @@ def test_unescaped_string
 	ip_pattern=Regexp.new(Array.new(4, Ip_number_pattern.unescaped_string).join('.'))
 	assert_match(ip_pattern, '123.2.3.4')
 end #unescape
-def test_propagate_options
-	assert(defined? Regexp)
-#	assert(defined? Regexp::CASE_FOLD)
-#	assert_equal([0, Encoding.find('US-ASCII')], /a/x.propagate_options)
-end #propagate_options
 def test_sequence
   assert_equal('(?-mix:a)', /a/.to_s)
   assert_equal('/a/', /a/.inspect)
@@ -169,7 +164,7 @@ def test_capture
 	assert_equal('2', regexp.capture.match(str)[1])
 	matchData=regexp.capture(:digit).match(str)
 	message="matchData.inspect=#{matchData.inspect}"
-#	assert_not_nil(matchData, message)
+#	refute_nil(matchData, message)
 	assert_match(/([a-z])/, str, message)
 	matchData=/\$(?<dollars>\d+)\.(?<cents>\d+)/.match("$3.67")
 	message="matchData.inspect=#{matchData.inspect}"
@@ -216,4 +211,11 @@ def test_assert_pre_conditions
 	Regexp.regexp_error('(').assert_pre_conditions
 	Regexp.new(']').assert_pre_conditions
 end # assert_pre_conditions
+def test_assert_named_captures
+	/a/.capture(:a).assert_named_captures
+	(/a/.capture(:a) * /b/.capture).assert_named_captures
+	regexp = /b/.capture
+	message = regexp.inspect
+	assert_raises(MiniTest::Assertion) {regexp.assert_named_captures}
+end # assert_named_captures
 end #Regexp

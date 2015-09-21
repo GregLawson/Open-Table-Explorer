@@ -19,14 +19,14 @@ def test_column_order
 	assert_equal([:name, :created_at, :updated_at], StreamPattern.column_order)	
 end #column_order
 def test_header_html
-		assert_not_empty(StreamPattern.column_names)
+		refute_empty(StreamPattern.column_names)
 		assert_equal('<tr><th>Name</th><th>Created at</th><th>Updated at</th></tr>', StreamPattern.header_html)
 	ActiveRecord::Base.association_refs do |class_reference, association_reference|
 	end #each
 end #header_html
 def test_table_html
 	explain_assert_respond_to(StreamPattern, :table_html)
-	assert_not_nil(StreamPattern.table_html)
+	refute_nil(StreamPattern.table_html)
 	assert_match(%r{<table>.*</table>}, StreamPattern.table_html)
 	
 end #table_html

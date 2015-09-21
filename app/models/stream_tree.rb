@@ -1,10 +1,14 @@
 ###########################################################################
-#    Copyright (C) 2014 by Greg Lawson                                      
+#    Copyright (C) 2014-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# merge in rgl library and begin porting to it
+#require 'rgl/adjacency'
+#require 'rgl/dot'
+# begin old graph code
 require 'virtus'
 # An attempt at a universal data type?
 # Or is it duck typing modules without inheritance?
@@ -52,11 +56,10 @@ module Constants
 Root_path = GraphPath.new
 end # Constants
 include Constants
-require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
-	assert_include(Array, self.ancestors)
+	assert_includes(Array, self.ancestors)
 	message+="In assert_pre_conditions, self=#{inspect}"
 end #assert_pre_conditions
 def assert_post_conditions(message='')
@@ -172,12 +175,7 @@ end # inspect_nonterminal?
 def inspect_recursive(node = @node, &inspect_proc)
 	if !block_given? then
 		inspect_proc = proc do |node, depth, terminal|
-			ret = case terminal
-			when true then	'terminal'
-			when false then 'nonterminal'
-			when nil then 'terminal'
-			else 'unknown'
-			end # case
+			ret = inspect_nonterminal?(node)
 			ret += '[' + depth.to_s + ']'
 			ret += ', ' 
 	ret += node.graph_type.inspect_node(node.node)
@@ -193,25 +191,24 @@ def inspect_recursive(node = @node, &inspect_proc)
 end # inspect_recursive
 end # ClassMethods
 extend ClassMethods
-require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 # assertions before module has been completely defined
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_equal(self, Connectivity, message)
-	assert_include(self.ancestors, Connectivity)
+	assert_includes(self.ancestors, Connectivity)
 #	assert_equal(self.ancestors, [Connectivity])
 #	assert_equal(self.included_modules, [], message)
-	assert_include(Connectivity.ancestors, Connectivity)
+	assert_includes(Connectivity.ancestors, Connectivity)
 	assert_empty(Connectivity::ClassMethods.methods(false), message)
-	assert_include(Connectivity::ClassMethods.instance_methods(false), :each_pair)
-	assert_include(Connectivity::ClassMethods.instance_methods(false), :ref)
+	assert_includes(Connectivity::ClassMethods.instance_methods(false), :each_pair)
+	assert_includes(Connectivity::ClassMethods.instance_methods(false), :ref)
 	assert_empty(Connectivity.instance_methods(false))
-	assert_not_include(Connectivity.methods(false), :each_pair)
-	assert_include(Connectivity.methods, :each_pair)
-	assert_include(Connectivity.methods, :ref)
-	assert_include(Connectivity.methods, :map_recursive)
+	refute_includes(Connectivity.methods(false), :each_pair)
+	assert_includes(Connectivity.methods, :each_pair)
+	assert_includes(Connectivity.methods, :ref)
+	assert_includes(Connectivity.methods, :map_recursive)
 	assert_respond_to(Connectivity, :inspect_node)
 	assert_respond_to(Connectivity, :map_recursive)
 	assert_equal('1', Connectivity.inspect_node(1))
@@ -223,7 +220,7 @@ end #assert_post_conditions
 end #ClassMethods
 end # Assertions
 extend Assertions::ClassMethods
-self.assert_pre_conditions
+#self.assert_pre_conditions
 module Examples
 Node_format = proc do |e|
 	e.inspect
@@ -280,7 +277,7 @@ module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	assert_equal(self, NestedArrayType, message)
-	assert_include(self.ancestors, NestedArrayType)
+	assert_includes(self.ancestors, NestedArrayType)
 	assert_equal(self.ancestors, [NestedArrayType, NestedArrayType::Examples])
 	assert_equal(self.included_modules, [NestedArrayType::Examples], message)
 	assert_empty(self.methods(false), message)

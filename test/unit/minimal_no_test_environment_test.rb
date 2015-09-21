@@ -1,14 +1,30 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment' # avoid recursive requires
-require 'test/unit'
-#require_relative '../../test/assertions/ruby_assertions.rb'
-TestCase=BaseTestCase=Test::Unit::TestCase
+# gem install mintest
+require "minitest/autorun"
+require 'active_support/all'
+require_relative '../../test/assertions/ruby_assertions.rb'
+TestCase = MiniTest::Unit::TestCase
+AssertionFailedError = RuntimeError
 class MinimalTest < TestCase
 #include TE.model_class?::Examples
-end #Minimal
+def test_RegexpError
+	regexp_string = ')'
+	Regexp.new(regexp_string) # test
+rescue RegexpError => exception
+	assert_instance_of(RegexpError, exception)
+#	assert_includes(exception.class.ancestors, Exception)
+end # AssertionFailedError
+def test_AssertionFailedError
+	fail # test
+rescue Exception => exception
+	assert_kind_of(Exception, exception)
+#	assert_includes(exception.class.ancestors, Exception)
+	assert_instance_of(AssertionFailedError, exception)
+end # AssertionFailedError
+end # Minimal

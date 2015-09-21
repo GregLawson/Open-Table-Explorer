@@ -11,8 +11,11 @@ require_relative '../../app/models/host.rb'
 class HostTest < TestCase
 #include DefaultTests
 include TE.model_class?::Examples
-def test_nmapScan
-#	candidateIP = 
-#	assert_test_id_equal
-end # nmapScan
+def test_Constants
+
+end # Constants
+def test_recordDetection
+	ip = '192.168.0.'
+	timestamp=Time.new
+end
 end #Host

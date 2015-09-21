@@ -11,7 +11,7 @@ def test_initialize
 end #initialize
 def test_all
 	records=model_class?.all
-	assert_not_empty(records)
+	refute_empty(records)
 	assert_instance_of(Array, records)
 	assert_kind_of(Hash, records.first)
 	BatteryMeasurement.all.each do |r|

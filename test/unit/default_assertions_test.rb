@@ -27,18 +27,18 @@ def names_of_tests?
 		m.match(/^test(_class)?_assert_(invariant|pre_conditions|post_conditions)/) 
 	end #map
 end #names_of_tests?
-#assert_include(methods, :model_class?)
-#assert_include(self.class.methods, :model_class?)
+#assert_includes(methods, :model_class?)
+#assert_includes(self.class.methods, :model_class?)
 #include "#{DefaultAssertionTests.model_class?}::Examples"
 def test_test_environment
 	assert_equal(self.class.name[-4..-1], 'Test')
 	assert_equal(6, names_of_tests?.size, "#{names_of_tests?.sort}")
 	assert_equal([DefaultAssertionTests], Module.nesting)
-	assert_include(self.class.included_modules, Test::Unit::Assertions)
-	assert_include(self.class.included_modules, DefaultAssertionTests)
-	assert_include(self.methods(true), :explain_assert_respond_to)
-	assert_not_include(self.methods(false), :explain_assert_respond_to)
-	assert_not_include(self.class.methods(false), :explain_assert_respond_to)
+	assert_includes(self.class.included_modules, Test::Unit::Assertions)
+	assert_includes(self.class.included_modules, DefaultAssertionTests)
+	assert_includes(self.methods(true), :explain_assert_respond_to)
+	refute_includes(self.methods(false), :explain_assert_respond_to)
+	refute_includes(self.class.methods(false), :explain_assert_respond_to)
 	assert_equal([], self.class.methods(false))
 #	puts "model_class?::Examples.inspect=#{model_class?::Examples.inspect}"
 #	puts "model_class?::Examples.constants.inspect=#{model_class?::Examples.constants.inspect}"
@@ -48,23 +48,23 @@ def test_test_environment
 #	puts "model_class?::Assertions.constants.inspect=#{model_class?::Assertions.constants.inspect}"
 #	puts "model_class?::Assertions.instance_methods.inspect=#{model_class?::Assertions.instance_methods.inspect}"
 #	puts "model_class?::Assertions.methods.inspect=#{model_class?::Assertions.methods.inspect}"
-	assert_include(model_class?.included_modules, model_class?::Assertions)
-	assert_include(model_class?.included_modules, Test::Unit::Assertions)
+	assert_includes(model_class?.included_modules, model_class?::Assertions)
+	assert_includes(model_class?.included_modules, Test::Unit::Assertions)
 #	assert_equal('Test::Unit::Assertions', self.class.name)
 #	assert_equal([MiniTest::Assertions], self.class.included_modules)
 #	assert_equal([Module, Object, Test::Unit::Assertions, MiniTest::Assertions, PP::ObjectMixin, Kernel, BasicObject], self.class.ancestors)
 #	fail "got to end of default test."
 end #test_test_case
 def test_assertion_inclusion
-	assert_include(model_class?.included_modules, model_class?::Assertions)
-	assert_include(model_class?.ancestors, Test::Unit::Assertions)
-	assert_include(model_class?.ancestors, model_class?::Examples, "module #{model_class?}::Examples  should exist in class #{model_class?}.\nPlace 'include Examples' within class #{model_class?} scope in assertions file.")
-	assert_include(model_class?.ancestors, DefaultAssertions, "module DefaultAssertions  should exist in class #{model_class?}.\nPlace 'include DefaultAssertions' within class #{model_class?} scope in assertions file.")
-	assert_include(model_class?.included_modules, model_class?::Examples, "module Examples  should be included in class #{model_class?}")
-	assert_include(model_class?.methods, :example_constant_names_by_class, "module DefaultAssertions::ClassMethods (including :example_constant_names_by_class) should exist in class #{model_class?}.\nPlace 'extend DefaultAssertions::ClassMethods' within class #{model_class?} scope in assertions file.")
+	assert_includes(model_class?.included_modules, model_class?::Assertions)
+	assert_includes(model_class?.ancestors, Test::Unit::Assertions)
+	assert_includes(model_class?.ancestors, model_class?::Examples, "module #{model_class?}::Examples  should exist in class #{model_class?}.\nPlace 'include Examples' within class #{model_class?} scope in assertions file.")
+	assert_includes(model_class?.ancestors, DefaultAssertions, "module DefaultAssertions  should exist in class #{model_class?}.\nPlace 'include DefaultAssertions' within class #{model_class?} scope in assertions file.")
+	assert_includes(model_class?.included_modules, model_class?::Examples, "module Examples  should be included in class #{model_class?}")
+	assert_includes(model_class?.methods, :example_constant_names_by_class, "module DefaultAssertions::ClassMethods (including :example_constant_names_by_class) should exist in class #{model_class?}.\nPlace 'extend DefaultAssertions::ClassMethods' within class #{model_class?} scope in assertions file.")
 	assert_respond_to(model_class?, :example_constant_names_by_class, "model_class?=#{model_class?}")
 #	assert_respond_to(model_class?, :example_constant_names_by_class)
-#	assert_include(model_class?.methods, :example_constant_names_by_class, "model_class?=#{model_class?}")
+#	assert_includes(model_class?.methods, :example_constant_names_by_class, "model_class?=#{model_class?}")
 end #test_assertion_inclusion
 def test_class_assert_invariant
 	#puts "self.class.methods(true)=#{self.class.methods(true)}"

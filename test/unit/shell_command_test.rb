@@ -39,7 +39,7 @@ def self.startup
 	assert_equal(1, ps.size, ps)
 end # self.startup
 def test_Ssh_initialize
-	assert_not_empty(Central.user)	
+	refute_empty(Central.user)	
 end # initialize
 def test_command_on_remote
 	remote_run = Central['echo "cat"'].assert_post_conditions
@@ -77,7 +77,7 @@ def test_initialize
 	assert_equal(0, EXAMPLE.process_status.exitstatus)
 	assert_equal("Hello World\n", Hello_world.output)
 	Hello_world.assert_post_conditions
-	assert_not_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
+	refute_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	shell_execution1=ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']])
 	shell_execution1=ShellCommands.new([['cd', '/tmp'], '&&', ['echo', '$SECONDS']])
 	shell_execution1=ShellCommands.new('cd /tmp;pwd')
@@ -91,7 +91,7 @@ def test_initialize
 	shell_execution.assert_post_conditions
 	assert_equal(Guaranteed_existing_basename+"\n", shell_execution.output, shell_execution.inspect)
 	assert_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
-	assert_not_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
+	refute_equal("", ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
 	switch_dir=ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
 	assert_equal(Guaranteed_existing_directory+"\n", switch_dir.output)
 
@@ -103,7 +103,7 @@ def test_parse_argument_array
 	argument_array=[{'G' => 'e'}, 'git rebase']
 	command=ShellCommands.new
 	command.parse_argument_array(argument_array)
-	assert_include(command.methods(true), :env)
+	assert_includes(command.methods(true), :env)
 	assert_equal(argument_array[0], command.env)
 	assert_equal(argument_array[1], command.command)
 	assert_equal({}, command.opts)

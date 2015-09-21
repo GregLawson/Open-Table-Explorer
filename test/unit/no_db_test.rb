@@ -36,7 +36,7 @@ def test_attributes
 	assert_instance_of(ActiveSupport::HashWithIndifferentAccess, Example.attributes)
 end #attributes
 def test_column_symbols
-	assert_include('sample', BatteryMeasurement.methods(true)) # checks immediate class and included modules
+	assert_includes('sample', BatteryMeasurement.methods(true)) # checks immediate class and included modules
 	sample=BatteryMeasurement.sample
 	column_symbols=sample.flatten.map do |r|
 		assert_instance_of(Hash, r)
@@ -64,8 +64,8 @@ def test_insert_sql
 	assert_equal("INSERT INTO battery_types(Size,Chemistry,Brand,Rated_capacity_mAh) VALUES();\n", BatteryType.insert_sql({}))
 end #insert_sql
 def test_dump
-	assert_not_nil(BatteryType.dump)
-	assert_not_empty(BatteryType.dump)
+	refute_nil(BatteryType.dump)
+	refute_empty(BatteryType.dump)
 	puts BatteryType.dump
 end #dump
 def test_data_source_yaml_values
@@ -78,9 +78,9 @@ def test_get_field_names
 	assert_equal([:input, :output], TestData.get_field_names)
 end #field_names
 def test_initialize
-	assert_not_nil(Example)
+	refute_nil(Example)
 	assert_instance_of(TestData, Example)
-	assert_not_nil(TestData.new.attributes)
+	refute_nil(TestData.new.attributes)
 
 	values=[1, 2, 3]
 #?	default_names=NoDB::ClassMethods.default_names(3)
@@ -105,7 +105,7 @@ def test_initialize
 	assert(names.all?{|n| n.instance_of?(String)|n.instance_of?(Symbol)})
 	assert_equal(name_value_hash, TestData.new(values, names).attributes)
 	assert_equal(name_value_hash, TestData.new(values, names).attributes)
-	assert_not_empty(TestData.new([1]).attributes)
+	refute_empty(TestData.new([1]).attributes)
 end #NoDB initialize
 def test_at
 	attribute_name=:input

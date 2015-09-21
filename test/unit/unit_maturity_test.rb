@@ -62,8 +62,9 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable=data_source_directory?('repository')+'/'+value.to_s+'.rb'
-		error_score = TestUnitMaturity.repository.error_score?(executable)
+		executable = data_source_directory?('repository')+'/'+value.to_s+'.rb'
+		test_run = TestRun.new(executable)
+		error_score = test_run.error_score?(executable)
 		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
 		error_score=TestUnitMaturity.repository.error_score?(executable)
 #		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
@@ -83,7 +84,7 @@ end #deserving_branch
 def test_diff_command?
 	filename=Most_stable_file
 	branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
-	assert_not_nil(branch_index)
+	refute_nil(branch_index)
 	branch_string = UnitMaturity.branch_symbol?(branch_index).to_s
 	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
 	diff_run = This_code_repository.git_command(git_command)
@@ -105,7 +106,7 @@ def test_working_different_from?
 	assert(!TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index + 4))
 	filename=File_not_in_oldest_branch
 	diff_run=This_code_repository.git_command("diff --summary --shortstat origin/master -- "+filename)
-	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
+	refute_equal([], diff_run.output.split("\n"), diff_run.inspect)
 	assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
 	assert_nil(TestUnitMaturity.working_different_from?(File_not_in_oldest_branch,-2))
 end #working_different_from?

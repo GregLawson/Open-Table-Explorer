@@ -219,7 +219,8 @@ def consecutiveMatch(increment=+1, start_limit=0, end_limit=self.size-1)
 		return lastMatch
 	end #if
 end #consecutiveMatch
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 def assert_pre_conditions
 	assert_instance_of(Class, self)
 end #assert_pre_conditions

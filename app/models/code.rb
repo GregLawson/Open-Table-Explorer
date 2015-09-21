@@ -266,7 +266,7 @@ def assert_no_attributes(obj)
 	assert_equal(0, obj.size)
 end #assert_no_attributes
 def assert_has_attributes(obj)
-	assert_not_equal(0, obj.size)
+	refute_equal(0, obj.size)
 end #assert_has_attributes
 # Returns all matched files.
 # Candidates for new test run (including shared files)

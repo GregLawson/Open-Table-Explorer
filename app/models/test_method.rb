@@ -25,7 +25,7 @@ def initialize(test_executable)
 	grep_lines=parse(grep_test.output, LINES)
 	@test_executable=test_executable
 	@method_test_names=parse(grep_lines, Parse_grep)
-	library_file=Unit.new_from_path?(test_executable).pathname_pattern?(:model)
+	library_file = Unit.new_from_path(test_executable).pathname_pattern?(:model)
 	grep_library=ShellCommands.new('grep "def " '+library_file)
 	grep_library_lines=parse(grep_library.output, LINES)
 	@method_names=parse(grep_library_lines, Parse_library_grep)
@@ -36,7 +36,8 @@ end #untested_methods
 def tested_nonmethods
 	@method_test_names-@method_names
 end #untested_methods
-require_relative '../../test/assertions.rb';module Assertions
+#require_relative '../../test/assertions.rb'
+module Assertions
 
 module ClassMethods
 

@@ -12,14 +12,14 @@ class NestedArrayTest  < TestCase
 include DefaultTests
 include TE.model_class?::Examples
 def test_initialize
-	assert_not_nil(NestedArray.new(['K']))
+	refute_nil(NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']).to_a)
 end #initialize
 def test_index
 	assert_instance_of(NestedArray,NestedArray::Examples::Asymmetrical_Tree_Array)
 	assert_respond_to(NestedArray::Examples::Asymmetrical_Tree_Array, :[])
-	assert_not_nil(NestedArray::Examples::Asymmetrical_Tree_Array[0])
+	refute_nil(NestedArray::Examples::Asymmetrical_Tree_Array[0])
 	assert_instance_of(NestedArray, NestedArray::Examples::Asymmetrical_Tree_Array[0])
 end #[]index
 def test_to_s

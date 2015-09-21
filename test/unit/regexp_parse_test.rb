@@ -1,21 +1,22 @@
 ###########################################################################
-#    Copyright (C) 2010-2014 by Greg Lawson                                      
+#    Copyright (C) 2010-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../assertions/regexp_parse_assertions.rb'
+require_relative '../../app/models/regexp_parse.rb'
+#require_relative '../assertions/regexp_parse_assertions.rb'
 class RegexpParseTest < TestCase
 #include DefaultTests
 include RegexpParseType::Examples
 include Connectivity::Examples
-include RegexpParse::Examples
+#include RegexpParse::Examples
 include Regexp::Expression::Base::Constants
-include RegexpToken::Constants
-include RegexpParse::Assertions
-include NestedArray::Examples
+#include RegexpToken::Constants
+#include RegexpParse::Assertions
+#include NestedArray::Examples
 include Graph::Constants
 include Regexp::Expression::Base::Examples
 def test_expression_class_symbol?
@@ -63,9 +64,9 @@ def test_Tree_node_format
 	assert_equal(Tree_node_root, Tree_node_format.call(node, depth=0, false))
 	assert_equal(Tree_node_options, Tree_node_format.call(RegexpParseType.ref(Son_a), depth=1, false))
 	assert_equal(Tree_node_a, Tree_node_format.call(RegexpParseType.ref(Grandson_a), depth=2, true))
-	assert_equal('nonterminal[1], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=1, true))
-	assert_equal('nonterminal[2], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=2, nil))
-	assert_equal('nonterminal[3], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=3, 1)) # unknown
+	assert_equal('terminal[1], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=1, true))
+	assert_equal('terminal[2], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=2, nil))
+	assert_equal('unknown[3], ' + Inspect_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth=3, 1)) # unknown
 end # Tree_node_format
 def test_raw_capture?
 	assert_equal(Literal_a_map, RegexpParseType.map_recursive(Literal_a, &Tree_node_format))
@@ -95,8 +96,8 @@ def test_nonterminal?
 	assert_equal(nil, RegexpParseType.nonterminal?(Grandson_a), Grandson_a.inspect)
 end # nonterminal?
 def test_map_recursive
-	assert_include(Connectivity::Examples.constants, :Tree_node_format)
-	assert_include(RegexpParseTest.constants, :Tree_node_format)
+	assert_includes(Connectivity::Examples.constants, :Tree_node_format)
+	assert_includes(RegexpParseTest.constants, :Tree_node_format)
 	depth=0
 	visit_proc = Tree_node_format
 	assert_respond_to(Literal_a, Children_method_name)
@@ -106,7 +107,7 @@ def test_map_recursive
 	assert_respond_to(Son_a, Children_method_name)
 	assert_instance_of(Array, Grandchildren_a)
 	assert_equal(1, Grandchildren_a.size)
-	assert_not_respond_to(Grandson_a, Children_method_name)
+	refute_respond_to(Grandson_a, Children_method_name)
 	assert_equal(Node_a, RegexpParseType.inspect_node(Grandson_a))
 
 	assert_equal(Node_options, RegexpParseType.inspect_node(Son_a), Son_a.inspect)
@@ -140,7 +141,7 @@ def test_readme
 	end # walk
 	assert_equal('Regexp::Expression::Root', root.class.name)
 	assert_instance_of(Regexp::Parser::Root, root)
-	assert_include(root.methods, :expressions)
+	assert_includes(root.methods, :expressions)
 	puts 'root=' + root.inspect
 	walk(root)
 	# output
@@ -155,7 +156,7 @@ def test_Base_inspect
 #	assert_equal([], RegexpParseType.map_recursive(root, &Tree_node_format))
 #	assert_equal([], root.map_recursive(:expressions){|terminal, e, depth| "#{e.class}(:#{e.type}, :#{e.token}, '#{e.text}')" })
 end # inspect
-RegexpParse.assert_pre_conditions #verify class
+#RegexpParse.assert_pre_conditions #verify class
 def test_initialize
 	regexp_string=['.', '*']
 	assert_kind_of(Array, regexp_string)
@@ -172,9 +173,9 @@ def test_initialize
 	regexp_string='K.*C'
 	test_tree=RegexpParse.new(regexp_string)
 	assert_equal(regexp_string,test_tree.to_s)
-	assert_not_nil(test_tree.regexp_string)
-	assert_not_nil(RegexpParse.new(test_tree.rest).to_s)
-#	assert_not_nil(RegexpParse.new(nil))
+	refute_nil(test_tree.regexp_string)
+	refute_nil(RegexpParse.new(test_tree.rest).to_s)
+#	refute_nil(RegexpParse.new(nil))
 	assert_instance_of(NestedArray, RegexpParse.new(['.', '*']).parse_tree)
 	assert_instance_of(NestedArray, RegexpParse.new(CONSTANT_PARSE_TREE).parse_tree)
 	assert_instance_of(NestedArray, RegexpParse.new(/.*/).parse_tree)
@@ -202,14 +203,14 @@ end #regexp_error
 def test_equal_operator
 	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
-	assert_include(lhs.methods, :==)
+	assert_includes(lhs.methods, :==)
 
 	assert_equal(rhs, lhs)
 end #equal_operator
 def test_equal
 	rhs=Dot_star_parse
 	lhs=RegexpParse.new('.*')
-	assert_include(lhs.methods, :eql?)
+	assert_includes(lhs.methods, :eql?)
 
 	assert(lhs.eql?(rhs))
 	assert_equal(rhs, lhs)
@@ -275,5 +276,5 @@ end #pathnames
 def test_grep
 	delimiter="\n"
 end #grep
-RegexpParse.assert_pre_conditions
+#RegexpParse.assert_pre_conditions
 end # RegexpParseType

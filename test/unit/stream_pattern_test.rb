@@ -33,7 +33,7 @@ end #all
 def test_aaa_test_new_assertions_ # aaa to output first
 	@stream_pattern=StreamPattern.find_by_name('Acquisition')
 	assert_equal('Acquisition',@stream_pattern.name)
-	assert_not_nil(@stream_pattern.id)
+	refute_nil(@stream_pattern.id)
 	@association=StreamPatternArgument.find_all_by_stream_pattern_id(@stream_pattern.id )
 	assert_equal(2,@association.size)
 

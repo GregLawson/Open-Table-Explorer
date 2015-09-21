@@ -9,10 +9,10 @@ require_relative 'test_environment'
 require_relative '../../test/assertions/unbounded_fixnum_assertions.rb'
 class UnboundedFixnumTest < TestCase
 def test_UnboundedFixnum_initialize
-	assert_not_nil(UnboundedFixnum)
+	refute_nil(UnboundedFixnum)
 	assert_instance_of(Class, UnboundedFixnum)
-	assert_not_nil(UnboundedFixnum::Inf)
-	assert_not_nil(UnboundedFixnum::Neg_inf)
+	refute_nil(UnboundedFixnum::Inf)
+	refute_nil(UnboundedFixnum::Neg_inf)
 	assert_equal(3, UnboundedFixnum.new(3).to_i)
 	assert_equal(3, UnboundedFixnum.new(UnboundedFixnum.new(3)).to_i)
 end #UnboundedFixnum_initialize

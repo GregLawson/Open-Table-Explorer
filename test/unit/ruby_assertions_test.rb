@@ -10,7 +10,7 @@ require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
 def test_caller_lines
 	ignore_lines=19
-	assert_include(self.methods, :caller_lines)
+	assert_includes(self.methods, :caller_lines)
 	assert_equal("\ntest/unit/ruby_assertions_test.rb:13:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
 end #caller_lines
 def test_add_default_message
@@ -72,11 +72,11 @@ def test_explain_assert_respond_to
 #	assert_respond_to(Acquisition,:sequential_id?,"Acquisition.rb probably does not include include Generic_Table statement.")
 
 end #explain_assert_respond_to
-def test_assert_not_empty
-	assert_not_empty('a')
-	assert_not_empty(['a'])
-	assert_not_empty(Set[nil])
-end #assert_not_empty
+def test_refute_empty
+	refute_empty('a')
+	refute_empty(['a'])
+	refute_empty(Set[nil])
+end #refute_empty
 def test_assert_empty
 	assert_empty([])
 	assert_empty('')
@@ -130,27 +130,27 @@ end #assert_overlap
 def test_assert_include
 	element=:b
 	list=[:a,:b,:c]
-	assert_include(list, element, "#{element.inspect} is not in list #{list.inspect}")
-	assert_include('table_specs',fixture_names)
-	assert_include('acquisition_stream_specs',TableSpec.instance_methods(false))
+	assert_includes(list, element, "#{element.inspect} is not in list #{list.inspect}")
+	assert_includes('table_specs',fixture_names)
+	assert_includes('acquisition_stream_specs',TableSpec.instance_methods(false))
 	set=Set.new(list)
 	assert(set.include?(element))
-	assert_include(element,set)
+	assert_includes(element,set)
 end #assert_include
 def test_assert_dir_include
-	assert_dir_include('app','*')
-	assert_not_empty(Dir['app/models/[a-zA-Z0-9_]*.rb'])
-	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*.rb')
-	assert_dir_include('app/models/global.rb','app/models/[a-zA-Z0-9_]*[.]rb')
+	assert_dir_includes('app','*')
+	refute_empty(Dir['app/models/[a-zA-Z0-9_]*.rb'])
+	assert_dir_includes('app/models/global.rb','app/models/[a-zA-Z0-9_]*.rb')
+	assert_dir_includes('app/models/global.rb','app/models/[a-zA-Z0-9_]*[.]rb')
 end #assert_dir_include
-def test_assert_not_include
+def test_refute_include
 	element=1
 	list=[1,2,3]
 	assert(list.include?(element))
-	assert_include(list, element)
-	assert_not_include(list, 4)
-	assert_raise(AssertionFailedError){assert_not_include(list, element)}
-end #assert_not_include
+	assert_includes(list, element)
+	refute_includes(list, 4)
+	assert_raise(AssertionFailedError){refute_includes(list, element)}
+end #refute_include
 def test_assert_public_instance_method
 	obj=StreamPattern.new
 	methodName=:stream_pattern_arguments
@@ -180,9 +180,9 @@ def test_assert_no_duplicates
 	assert_operator(array.uniq.size, :>, 1, "All input array elements are identical")
 	assert_operator(array.size/array.uniq.size, :<, 1.2, "Array has too many duplicates. First ten elements are #{array[0..9]}"+caller_lines)
 	if array[0].instance_of?(Hash) and columns_to_ignore!=[] then
-		assert_not_empty(array)
+		refute_empty(array)
 		array=array.map {|hash| columns_to_ignore.each{|col| hash.delete(col)}}
-		assert_not_empty(array)
+		refute_empty(array)
 		assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
 	end #if
 	assert_operator(array.uniq.size, :>, 1, "All ignored array elements are identical=#{array.uniq.inspect}")
@@ -276,5 +276,21 @@ def test_assert_data_file
 	bad_pathname='../../test/unit/TestIntrospection::TestEnvironment_assertions_test.rb'
 	assert_raise(AssertionFailedError){assert_pathname_exists(bad_pathname)}
 end #assert_data_file
-end #RubyAssertionsTest
+def test_nested_scope_modules?
+	assert(RubyAssertions.instance_methods.include?(:nested_scope_modules?))
+end # nested_scopes
+def test_assert_nested_scope_submodule
+	module_symbol = :RubyAssertions
+	context = RubyAssertions
+	message='test'
+	message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
+	message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
+	message += " but not in #{context.nested_scope_modules?.inspect}"
+	assert_includes(constants, :Contants, message)
+end # assert_included_submodule
+def test_assert_included_submodule
+end # assert_included_submodule
+def test_asset_nested_and_included
+end # asset_nested_and_included
+end # RubyAssertions
 

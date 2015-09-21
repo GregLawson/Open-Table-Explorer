@@ -1,0 +1,1016 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: RegexpGeneralization
+  
+    &mdash; Documentation by YARD 0.8.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (R)</a> &raquo;
+    
+    
+    <span class="title">RegexpGeneralization</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: RegexpGeneralization
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="RegexpMatch.html" title="RegexpMatch (class)">RegexpMatch</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="RegexpMatch.html" title="RegexpMatch (class)">RegexpMatch</a></span></li>
+          
+            <li class="next">RegexpGeneralization</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/regexp_generalization.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Copyright (C) 2010-2012 by Greg Lawson</p>
+
+<pre class="code ruby"><code class="ruby">&lt;GregLawson123@gmail.com&gt;</code></pre>
+
+<p>Copyright: See COPYING file that comes with this distribution</p>
+
+<p>Class methods For a fixed string compute parse tree or sub trees that match</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dataToParse-instance_method" title="#dataToParse (instance method)">- (Object) <strong>dataToParse</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>file context.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#matched_data-instance_method" title="#matched_data (instance method)">- (Object) <strong>matched_data</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>file context.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="RegexpMatch.html" title="RegexpMatch (class)">RegexpMatch</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="RegexpMatch.html#errors-instance_method" title="RegexpMatch#errors (method)">#errors</a></span>, <span class='object_link'><a href="RegexpMatch.html#regexp_tree-instance_method" title="RegexpMatch#regexp_tree (method)">#regexp_tree</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generalize-instance_method" title="#generalize (instance method)">- (Object) <strong>generalize</strong>(branch = self, data_to_match = @dataToParse) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Generalize RegexpTree branch so that it matches dataToMatch with as fewer
+generalizations as possible.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generalize_characters-instance_method" title="#generalize_characters (instance method)">- (Object) <strong>generalize_characters</strong>(branch = self, data_to_match = @dataToParse) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>matchedTreeArray.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generalize_repetition-instance_method" title="#generalize_repetition (instance method)">- (Object) <strong>generalize_repetition</strong>(branch = self, data_to_match = @dataToParse) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>generalize_sequence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generalize_sequence-instance_method" title="#generalize_sequence (instance method)">- (Object) <strong>generalize_sequence</strong>(branch = self, data_to_match = @dataToParse) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#map_prefix-instance_method" title="#map_prefix (instance method)">- (Object) <strong>map_prefix</strong>(&amp;visit_proc) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Apply block to each non-leaf or branching node Provides a prefix walk One
+pass:   Recursively visit branches, then descendants Desirable when result
+tree is constructed top-down Branching node block can ignore (or
+summarize)subtrees.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#matchedTreeArray-instance_method" title="#matchedTreeArray (instance method)">- (Object) <strong>matchedTreeArray</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>accounts for arrays (subtrees) in parse tree returns RegexpMatch that
+should match calls consecutiveMatches to find matches calls mergeMatches to
+reduce multiple matches to one regexp string.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#matchSubTree-instance_method" title="#matchSubTree (instance method)">- (Object) <strong>matchSubTree</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Normal new-  regexp is a RegexpTree and  dataToParse is a String that may
+or may not match Partial match regexp is an Array of RegexpMatches that
+partially match dataToParse and  dataToParse is the String union of that
+may or may not match better explanation needed here, see tests.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mergeMatches-instance_method" title="#mergeMatches (instance method)">- (Object) <strong>mergeMatches</strong>(matches) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Combines match alternatives? returns a RegexpMatch parse tree that should
+match matches - array of Range matches.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="RegexpMatch.html" title="RegexpMatch (class)">RegexpMatch</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="RegexpMatch.html#%3D%3D-instance_method" title="RegexpMatch#== (method)">#==</a></span>, <span class='object_link'><a href="RegexpMatch.html#consecutiveMatch-instance_method" title="RegexpMatch#consecutiveMatch (method)">#consecutiveMatch</a></span>, <span class='object_link'><a href="RegexpMatch.html#consecutiveMatches-instance_method" title="RegexpMatch#consecutiveMatches (method)">#consecutiveMatches</a></span>, <span class='object_link'><a href="RegexpMatch.html#force-instance_method" title="RegexpMatch#force (method)">#force</a></span>, <span class='object_link'><a href="RegexpMatch.html#initialize-instance_method" title="RegexpMatch#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="RegexpMatch.html#inspect-instance_method" title="RegexpMatch#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="RegexpMatch.html#map_consecutiveMatches-instance_method" title="RegexpMatch#map_consecutiveMatches (method)">#map_consecutiveMatches</a></span>, <span class='object_link'><a href="RegexpMatch.html#map_matches-instance_method" title="RegexpMatch#map_matches (method)">#map_matches</a></span>, <span class='object_link'><a href="RegexpMatch.html#match_branch-instance_method" title="RegexpMatch#match_branch (method)">#match_branch</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="RegexpMatch/ClassMethods.html" title="RegexpMatch::ClassMethods (module)">RegexpMatch::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="RegexpMatch/ClassMethods.html#match_data%3F-instance_method" title="RegexpMatch::ClassMethods#match_data? (method)">#match_data?</a></span>, <span class='object_link'><a href="RegexpMatch/ClassMethods.html#promote-instance_method" title="RegexpMatch::ClassMethods#promote (method)">#promote</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="RegexpMatch.html#initialize-instance_method" title="RegexpMatch#initialize (method)">RegexpMatch</a></span></p>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="dataToParse-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>dataToParse</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>file context</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_dataToParse'>dataToParse</span>
+  <span class='ivar'>@dataToParse</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="matched_data-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>matched_data</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>file context</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_matched_data'>matched_data</span>
+  <span class='ivar'>@matched_data</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="generalize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>generalize</strong>(branch = self, data_to_match = @dataToParse) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Generalize RegexpTree branch so that it matches dataToMatch with as fewer
+generalizations as possible.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generalize'>generalize</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='op'>=</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='op'>=</span><span class='ivar'>@dataToParse</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_branch'>branch</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='id identifier rubyid_branches'>branches</span><span class='op'>=</span><span class='id identifier rubyid_branch'>branch</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='op'>|</span> <span class='comment'># look at each character
+</span>			<span class='id identifier rubyid_map_matches'>map_matches</span><span class='lparen'>(</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='rparen'>)</span>
+			<span class='comment'># should shorten data_to_match!
+</span>		<span class='kw'>end</span> <span class='comment'>#map
+</span>		<span class='kw'>return</span> 	<span class='const'>RegexpMatch</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_branches'>branches</span><span class='comma'>,</span> <span class='id identifier rubyid_concise_repetion_node'>concise_repetion_node</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='period'>.</span><span class='id identifier rubyid_repetition_length'>repetition_length</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='rparen'>)</span>
+	<span class='kw'>else</span> <span class='comment'># not Array, probably single character Strings
+</span>		<span class='id identifier rubyid_most_specialized'>most_specialized</span><span class='op'>=</span><span class='lbracket'>[</span><span class='const'>GenericType</span><span class='period'>.</span><span class='id identifier rubyid_find_by_name'>find_by_name</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ascii</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbracket'>]</span>
+			<span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='period'>.</span><span class='id identifier rubyid_each_char'>each_char</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
+				<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_most_specialized'>most_specialized</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span>
+					<span class='id identifier rubyid_most_specialized'>most_specialized</span><span class='op'>=</span><span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_most_specialized?'>most_specialized?</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='rparen'>)</span>
+				<span class='kw'>end</span> <span class='comment'>#
+</span>			<span class='kw'>end</span> <span class='comment'>#each_char
+</span>		<span class='kw'>return</span> 	<span class='const'>RegexpMatch</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>[[:print:]]</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_concise_repetion_node'>concise_repetion_node</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='period'>.</span><span class='id identifier rubyid_repetition_length'>repetition_length</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='rparen'>)</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generalize_characters-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>generalize_characters</strong>(branch = self, data_to_match = @dataToParse) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>matchedTreeArray</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 73</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generalize_characters'>generalize_characters</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='op'>=</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='op'>=</span><span class='ivar'>@dataToParse</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generalize_repetition-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>generalize_repetition</strong>(branch = self, data_to_match = @dataToParse) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>generalize_sequence</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generalize_repetition'>generalize_repetition</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='op'>=</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='op'>=</span><span class='ivar'>@dataToParse</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generalize_sequence-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>generalize_sequence</strong>(branch = self, data_to_match = @dataToParse) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 75</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generalize_sequence'>generalize_sequence</span><span class='lparen'>(</span><span class='id identifier rubyid_branch'>branch</span><span class='op'>=</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='op'>=</span><span class='ivar'>@dataToParse</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_match_map'>match_map</span><span class='op'>=</span><span class='id identifier rubyid_branch'>branch</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='op'>|</span> <span class='comment'># look at each character
+</span>		<span class='id identifier rubyid_map_matches'>map_matches</span><span class='lparen'>(</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='comma'>,</span> <span class='id identifier rubyid_data_to_match'>data_to_match</span><span class='rparen'>)</span>
+		<span class='comment'># should shorten data_to_match!
+</span>	<span class='kw'>end</span> <span class='comment'>#map
+</span>	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_match_map'>match_map</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='op'>|</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_subtree'>subtree</span><span class='lbracket'>[</span><span class='symbol'>:matched_data</span><span class='rbracket'>]</span> <span class='kw'>then</span>
+			<span class='id identifier rubyid_sub_tree'>sub_tree</span>
+		<span class='kw'>else</span>
+			<span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='lbracket'>[</span><span class='symbol'>:regexp</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_most_specialized'>most_specialized</span><span class='lparen'>(</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>	
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#map
+</span>	<span class='kw'>return</span> <span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="map_prefix-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>map_prefix</strong>(&amp;visit_proc) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Apply block to each non-leaf or branching node Provides a prefix walk One
+pass:</p>
+
+<pre class="code ruby"><code class="ruby">Recursively visit branches, then descendants</code></pre>
+
+<p>Desirable when result tree is constructed top-down Branching node block can
+ignore (or summarize)subtrees. Descendants have the block applied after
+they are reassembled into a tree.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 117</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_map_prefix'>map_prefix</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_visit_proc'>visit_proc</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_ret'>ret</span><span class='op'>=</span><span class='id identifier rubyid_visit_proc'>visit_proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='comment'># end recursion
+</span>	<span class='kw'>if</span> <span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='kw'>nil</span>
+	<span class='kw'>else</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='op'>|</span> 
+				<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_sub_tree'>sub_tree</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map_prefix'>map_prefix</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_visit_proc'>visit_proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+				<span class='kw'>end</span> <span class='comment'>#map
+</span>		<span class='kw'>else</span>
+			<span class='id identifier rubyid_visit_proc'>visit_proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='comment'># end recursion
+</span>		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#map
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="matchedTreeArray-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>matchedTreeArray</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>accounts for arrays (subtrees) in parse tree returns RegexpMatch that
+should match calls consecutiveMatches to find matches calls mergeMatches to
+reduce multiple matches to one regexp string</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_matchedTreeArray'>matchedTreeArray</span>
+	<span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='const'>PostfixOperators</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_matches'>matches</span><span class='op'>=</span> <span class='id identifier rubyid_consecutiveMatches'>consecutiveMatches</span><span class='lparen'>(</span><span class='int'>+1</span><span class='comma'>,</span><span class='int'>0</span><span class='comma'>,</span><span class='int'>0</span><span class='rparen'>)</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>==</span><span class='int'>1</span> <span class='kw'>then</span>
+			<span class='kw'>return</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+		<span class='kw'>else</span>
+			<span class='kw'>return</span> <span class='id identifier rubyid_mergeMatches'>mergeMatches</span><span class='lparen'>(</span><span class='id identifier rubyid_matches'>matches</span><span class='rparen'>)</span>
+		<span class='kw'>end</span> <span class='comment'>#if
+</span>	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="matchSubTree-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>matchSubTree</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Normal new-  regexp is a RegexpTree and  dataToParse is a String that may
+or may not match Partial match regexp is an Array of RegexpMatches that
+partially match dataToParse and  dataToParse is the String union of that
+may or may not match better explanation needed here, see tests. Top level
+incremental match of regexp tree to data self - array of parsed tree to
+test for match calls match_data?, matchedTreeArray depending</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_matchSubTree'>matchSubTree</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+	<span class='kw'>elsif</span> <span class='const'>RegexpMatch</span><span class='period'>.</span><span class='id identifier rubyid_match_data?'>match_data?</span><span class='lparen'>(</span><span class='id identifier rubyid_to_regexp'>to_regexp</span><span class='comma'>,</span> <span class='ivar'>@dataToParse</span><span class='rparen'>)</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='kw'>self</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='kw'>then</span> 
+		<span class='id identifier rubyid_matchedTreeArray'>matchedTreeArray</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How did I get here?</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>return</span> <span class='kw'>nil</span>
+	<span class='kw'>end</span> <span class='comment'>#if
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="mergeMatches-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>mergeMatches</strong>(matches) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Combines match alternatives? returns a RegexpMatch parse tree that should
+match matches - array of Range matches</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/regexp_generalization.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_mergeMatches'>mergeMatches</span><span class='lparen'>(</span><span class='id identifier rubyid_matches'>matches</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>==</span><span class='int'>0</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='const'>RegexpMatch</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_dataToParse'>dataToParse</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>==</span><span class='int'>1</span> <span class='kw'>then</span>
+		<span class='kw'>return</span> <span class='const'>RegexpMatch</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_dataToParse'>dataToParse</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_end'>end</span><span class='op'>&gt;=</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span> <span class='kw'>then</span> <span class='comment'>#overlap
+</span>		<span class='id identifier rubyid_prefix'>prefix</span><span class='op'>=</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='op'>..</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='op'>-</span><span class='int'>1</span>
+		<span class='id identifier rubyid_suffix'>suffix</span><span class='op'>=</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_end'>end</span><span class='op'>+</span><span class='int'>1</span><span class='op'>..</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_end'>end</span>
+		<span class='id identifier rubyid_overlap'>overlap</span><span class='op'>=</span> <span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='op'>..</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_end'>end</span>
+		<span class='kw'>return</span> <span class='const'>RegexpMatch</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>RegexpTree</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_overlap'>overlap</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>|</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_suffix'>suffix</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_mergeMatches'>mergeMatches</span><span class='lparen'>(</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_dataToParse'>dataToParse</span><span class='rparen'>)</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='op'>==</span><span class='int'>2</span> <span class='kw'>then</span> <span class='comment'># no overlap w/2 matches
+</span>		<span class='kw'>return</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='op'>+</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='op'>+</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+	<span class='kw'>else</span> <span class='comment'># no overlap w/ 3 or more matches
+</span>		<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>matches=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+		 <span class='kw'>return</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='op'>+</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='op'>+</span><span class='id identifier rubyid_mergeMatches'>mergeMatches</span><span class='lparen'>(</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='comment'># recursive for &gt;2 matches
+</span>	<span class='kw'>end</span> <span class='comment'>#end	
+</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Nov 26 15:47:58 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

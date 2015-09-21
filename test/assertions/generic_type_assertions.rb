@@ -41,16 +41,16 @@ def assert_most_specialized(names, string)
 	message="most_specialized=#{most_specialized.inspect}"
 	message+="\n most_specialized.most_specialized?(string)=#{most_specialized.most_specialized?(string).inspect}"
 	message+="\n string=#{string}"
-	assert_not_nil(most_specialized, message)
-	assert_not_nil(most_specialized.most_specialized?(string), message)
+	refute_nil(most_specialized, message)
+	refute_nil(most_specialized.most_specialized?(string), message)
 	assert_kind_of(Array, most_specialized.most_specialized?(string), message)
-	assert_not_nil(most_specialized.most_specialized?(string), message)
+	refute_nil(most_specialized.most_specialized?(string), message)
 	most_specialized=most_specialized.most_specialized?(string)
 	assert_equal(names, most_specialized.map{|m| m.name.to_sym}, message)
 end #most_specialized
 def assert_common_matches(names, search_string)
 	common_matches=common_matches?(search_string)
-	assert_not_nil(common_matches, "search_string=#{search_string}, name=#{name}")
+	refute_nil(common_matches, "search_string=#{search_string}, name=#{name}")
 	common_names=common_matches.map_recursive{|m|m.name.to_sym}
 	assert_equal(names.flatten.compact, common_names.flatten.compact)
 	assert_equal(names, common_names)

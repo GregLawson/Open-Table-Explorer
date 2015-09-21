@@ -31,7 +31,7 @@ def test_parse
 	array_of_hashes=[]
 	model_class?.raw_acquisitions.each_with_index do |acquisition|
 		begin
-		assert_not_nil(acquisition)
+		refute_nil(acquisition)
 		assert(!(acquisition.nil?), "acquisition should not be nil at start of parse")
 		assert(!(acquisition.size==0), "acquisition should not have a size of zero at start of parse")
 		assert(!(acquisition.empty?), "acquisition should not be empty at start of parse")
@@ -105,7 +105,7 @@ def test_match_regexp_array
 	regexp=Regexp.new(regexp_string)
 	assert_match(/#{regexp_string}/, acquisition)
 	matchData=regexp.match(acquisition)
-	assert_not_nil(matchData)
+	refute_nil(matchData)
 	acquisition=matchData.post_match
 	assert(matchData=model_class?.match_regexp_array(combination_indices, acquisition))
 	acquisition=matchData.post_match

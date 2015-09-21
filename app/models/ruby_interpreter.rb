@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2015 by Greg Lawson                                      
+#    Copyright (C) 2011-2014 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -15,6 +15,7 @@ include Virtus.model
   attribute :options, String, :default => '-W0'
 module Constants
 include Version::Constants
+# see http://semver.org/
 Ruby_pattern = [/ruby /, Version]
 Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
 Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
@@ -45,36 +46,18 @@ end #ruby
 end # ClassMethods
 extend ClassMethods
 # attr_reader
-require_relative '../../test/assertions.rb'
-module Assertions
-module ClassMethods
-def assert_pre_conditions(message='')
-	message+="In assert_pre_conditions, self=#{inspect}"
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-end #assert_post_conditions
-end #ClassMethods
-def assert_pre_conditions(message='')
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-end #assert_post_conditions
 def assert_logical_primary_key_defined(message=nil)
 	message=build_message(message, "self=?", self.inspect)	
-	assert_not_nil(self, message)
+	refute_nil(self, message)
 	assert_instance_of(RubyInterpreter,self, message)
 
 #	puts "self=#{self.inspect}"
-	assert_not_nil(self.attributes, message)
-	assert_not_nil(self[:test_type], message)
-	assert_not_nil(self.test_type, message)
-	assert_not_nil(self['test_type'], message)
-	assert_not_nil(self.singular_table, message)
+	refute_nil(self.attributes, message)
+	refute_nil(self[:test_type], message)
+	refute_nil(self.test_type, message)
+	refute_nil(self['test_type'], message)
+	refute_nil(self.singular_table, message)
 end #assert_logical_primary_key_defined
-end # Assertions
-include Assertions
-extend Assertions::ClassMethods
-#self.assert_pre_conditions
 module Examples
 include Constants
 Ruby_version = ShellCommands.new('ruby --version').output

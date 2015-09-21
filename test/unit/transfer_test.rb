@@ -26,7 +26,7 @@ def test_id_equal
 end #def
 def test_aaa_test_assertions # aaa to output first
 #	puts "fixtures(@table_name)=#{fixtures(@table_name)}"
-	assert_not_nil(fixtures('transfers')[5])
+	refute_nil(fixtures('transfers')[5])
 end
 class Transfer < ActiveRecord::Base
 belongs_to :account
@@ -56,7 +56,7 @@ def assert_relation(relation)
 	assert_kind_of(ActiveRecord::Relation,relation)
 	assert_instance_of(ActiveRecord::Relation,relation)
 	puts "relation.matching_methods(/to_.*/)=#{relation.matching_methods(/to_.*/).inspect}"
-	assert_include('to_sql',relation.instance_methods(true))	
+	assert_includes('to_sql',relation.instance_methods(true))	
 #	explain_assert_respond_to(relation,:to_sql)	
 	testCall(relation,:to_sql)
 	explain_assert_respond_to(relation,:each)	
@@ -142,18 +142,18 @@ def test_associated_to_s
 		expected_association_class=expected_association_symbol.to_s.camelize.constantize
 		method_of_association=:name
 		@my_fixtures.each_value do |ar_from_fixture|
-			assert_include(expected_association_symbol.to_s,ar_from_fixture.class.foreign_key_association_names)
+			assert_includes(expected_association_symbol.to_s,ar_from_fixture.class.foreign_key_association_names)
 			assert_association_to_one(ar_from_fixture,expected_association_symbol)
 #			ar_from_fixture=acquisition_stream_specs('http://www.weather.gov/xml/current_obs/KHHR.xml'.to_sym)
-			assert_include(ActiveRecord::Base,ar_from_fixture.class.ancestors)
-			assert_include(method_of_association.to_s,Account.methods)
-			assert_include(method_of_association.to_s,ar_from_fixture.account.class.methods)
+			assert_includes(ActiveRecord::Base,ar_from_fixture.class.ancestors)
+			assert_includes(method_of_association.to_s,Account.methods)
+			assert_includes(method_of_association.to_s,ar_from_fixture.account.class.methods)
 			
 			puts ar_from_fixture.association_state(expected_association_symbol)
 			ass=ar_from_fixture.send(expected_association_symbol)
 			puts ar_from_fixture.association_state(expected_association_symbol)
-			#~ assert_not_nil(ass,ar_from_fixture.association_state(expected_association_symbol))
-			#~ assert_not_nil(ass.send(method_of_association))
+			#~ refute_nil(ass,ar_from_fixture.association_state(expected_association_symbol))
+			#~ refute_nil(ass.send(method_of_association))
 			
 			puts ar_from_fixture.associated_to_s(expected_association_symbol,method_of_association)
 			puts Account.all.map {|r| r.id}.uniq.sort.inspect

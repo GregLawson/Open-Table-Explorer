@@ -40,26 +40,26 @@ end #compare_anchor
 def test_probability_of_sequence
 	branch=No_anchor
 	assert_equal(0, 1/95)
-	assert_not_equal(0, 1.0/95)
+	refute_equal(0, 1.0/95)
 	
 	assert_equal(1.0/95, No_anchor.probability_of_sequence)
 	assert_equal((1.0/95)**3, Asymmetrical_Tree.probability_of_sequence)
-	assert_not_equal((1.0/95), Asymmetrical_Tree.probability_of_sequence)
+	refute_equal((1.0/95), Asymmetrical_Tree.probability_of_sequence)
 	assert_equal(1.0/95, Start_anchor.probability_of_sequence)
 	assert_equal(1.0/95, End_anchor.probability_of_sequence)
 	assert_equal(1.0/95, Both_anchor.probability_of_sequence)
 end #probability_of_sequence
 def test_initialize
-	assert_not_nil(@@CONSTANT_PARSE_TREE.regexp_string)
+	refute_nil(@@CONSTANT_PARSE_TREE.regexp_string)
 	assert_equal(['K'],@@CONSTANT_PARSE_TREE.to_a)
 	assert_equal('K', @@CONSTANT_PARSE_TREE.regexp_string)
 
 	assert_equal(['K'], RegexpSequence.new('K').to_a)
 	assert_equal([['1', '2'], '3'], Asymmetrical_Tree.to_a)
 	assert_equal(Sequence, Asymmetrical_Tree_Array.flatten)
-	assert_not_nil(RegexpSequence.new(['.']))
-	assert_not_nil(RegexpSequence.new('.'))
-	assert_not_nil(RegexpSequence.new(/./))
+	refute_nil(RegexpSequence.new(['.']))
+	refute_nil(RegexpSequence.new('.'))
+	refute_nil(RegexpSequence.new(/./))
 end #initialize
 def test_compare_anchors
 	assert_operator(Anchoring.new(No_anchor), :>, Anchoring.new(Start_anchor))
@@ -78,11 +78,11 @@ def test_sequence_intersect
 	rhs=A
 	assert_nil(lhs.alternatives?)
 	assert_empty(lhs.alternatives?)
-	assert_not_nil(rhs.alternatives?)
-	assert_not_empty(rhs.alternatives?)
+	refute_nil(rhs.alternatives?)
+	refute_empty(rhs.alternatives?)
 	assert_instance_of(String, rhs[0])
 	assert_nil(lhs.alternatives?)
-#	assert_include(rhs[0], lhs.alternatives?)
+#	assert_includes(rhs[0], lhs.alternatives?)
 	assert_equal(rhs, lhs.sequence_intersect(A))
 	assert_equal(B, Ab.sequence_intersect(B))
 end #sequence_intersect

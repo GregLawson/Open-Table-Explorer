@@ -13,12 +13,12 @@ class EegTest < TestCase
 def test_initialize
 end #initialize
 def test_all
-	assert_include('href', Url.column_names)
-	assert_not_empty(Url.where("href='EEG2'"),"Url.all=#{Url.all.inspect}")
-	assert_not_nil(Url.where("href='EEG2'").first)
-	assert_not_empty(Url.where("href='EEG2'").first.url)
+	assert_includes('href', Url.column_names)
+	refute_empty(Url.where("href='EEG2'"),"Url.all=#{Url.all.inspect}")
+	refute_nil(Url.where("href='EEG2'").first)
+	refute_empty(Url.where("href='EEG2'").first.url)
 	uri=Url.where("href='EEG2'").first
-	assert_not_nil(uri)
+	refute_nil(uri)
 	file_method=StreamMethod.find_by_name('File')
 	assert_equal('File',file_method.name)
 	file_method[:uri]=uri
@@ -32,35 +32,35 @@ def test_all
 	
 	assert_equal([], firing.errors[:interface_code],"interface_code=#{firing[:interface_code]}")
 	assert_equal([], firing.errors[:acquisition])
-	assert_not_empty(firing.errors)
-	assert_not_empty(firing.errors.inspect)
+	refute_empty(firing.errors)
+	refute_empty(firing.errors.inspect)
 	assert_instance_of(ActiveModel::Errors, firing.errors)
 	assert_instance_of(Array, firing.errors.full_messages)
 	assert_instance_of(StreamMethod, firing)
 	assert_kind_of(StreamMethod, firing)
 	assert_equal(firing, file_method)
-	assert_not_empty(file_method[:acquisition])
+	refute_empty(file_method[:acquisition])
 	assert_instance_of(String, file_method[:acquisition])
 	delimited_method=StreamMethod.find_by_name('Delimited')
-	assert_not_nil(delimited_method)
+	refute_nil(delimited_method)
 	delimited_method[:unparsed]=file_method[:acquisition]
 	selection=GenericType.find_by_name('tab')
-	assert_not_nil(selection)
+	refute_nil(selection)
 	delimited_method[:selection]=selection
 	delimited_method.compile_code!
 	assert_equal([], delimited_method.errors[:interface_code],"interface_code=#{delimited_method[:interface_code]}")
 	delimited_method.fire!
 	assert_equal([], delimited_method.errors[:interface_code],"interface_code=#{delimited_method[:interface_code]}")
 	assert_equal([], delimited_method.errors[:acquisition])
-	assert_not_empty(delimited_method.errors)
-	assert_not_empty(delimited_method.errors.inspect)
+	refute_empty(delimited_method.errors)
+	refute_empty(delimited_method.errors.inspect)
 	assert_instance_of(ActiveModel::Errors, delimited_method.errors)
 	assert_instance_of(Array, delimited_method.errors.full_messages)
 	assert_instance_of(StreamMethod, delimited_method)
 	assert_kind_of(StreamMethod, delimited_method)
 	all=EEG.all
 	assert_instance_of(String, all)
-	assert_not_empty(all)
+	refute_empty(all)
 end #all
 def test_associations
 	assert_equal("695672806",StreamPattern.find_by_name('Acquisition').id.inspect)
