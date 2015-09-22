@@ -6,7 +6,8 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative '../../test/assertions/repository_assertions.rb'
+require_relative '../../app/models/assertions.rb'
+#require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/branch.rb'
 class Branch
 module ClassMethods

@@ -20,6 +20,7 @@ Patterns=[
 	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :prefix => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb'}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :prefix => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb'},
+#	{:suffix =>'.log', :name => :library_log, :prefix => 'log/unit/', :example_file => 'log/unit/repository.log'},
 	{:suffix =>'.log', :name => :library_log, :prefix => 'log/library/', :example_file => 'log/library/repository.log'},
 	{:suffix =>'.log', :name => :assertions_log, :prefix => 'log/assertions/', :example_file => 'log/assertions/repository.log'},
 	{:suffix =>'.log', :name => :integration_log, :prefix => 'log/integration/', :example_file => 'log/integration/repository.log'},
@@ -161,7 +162,7 @@ def new_from_path(path)
 						FilePattern.repository_dir?(path))
 end # new_from_path
 #FilePattern.assert_pre_conditions
-#assert_include(FilePattern.included_modules, :Assertions)
+#assert_includes(FilePattern.included_modules, :Assertions)
 #assert_pre_conditions
 end #ClassMethods
 extend ClassMethods
@@ -200,7 +201,6 @@ Library = FilePattern.new_from_path(__FILE__)
 Executable = FilePattern.new_from_path($0)
 end #Constants
 include Constants
-require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods
@@ -217,11 +217,11 @@ end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
 	path=File.expand_path($0)
-	assert_not_nil(path)
-	assert_not_empty(path)
+	refute_nil(path)
+	refute_empty(path)
 	assert(File.exists?(path))
-#	assert_not_empty(FilePattern.class_variables)
-#	assert_include(FilePattern.class_variables, :@@project_root_dir)
+#	refute_empty(FilePattern.class_variables)
+#	assert_includes(FilePattern.class_variables, :@@project_root_dir)
 #	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
 end #class_assert_post_conditions
 def assert_pattern_array(array, array_message='')
@@ -231,7 +231,7 @@ def assert_pattern_array(array, array_message='')
 		p[:example_file].match(p[:suffix])
 	end #map
 	assert(successes.all?, successes.inspect+"\n"+array.inspect)
-	assert_not_empty(array, array_message)
+	refute_empty(array, array_message)
 end #assert_pattern_array
 end #ClassMethods
 # conditions that are always true (at least atomically)
@@ -240,21 +240,21 @@ def assert_invariant
 end #assert_invariant
 # assertions true after instance is initialized
 def assert_pre_conditions(message='')
-#	assert_not_nil(@path, 'Path is nil'+ self.inspect)
-#	assert_not_empty(@path)
+#	refute_nil(@path, 'Path is nil'+ self.inspect)
+#	refute_empty(@path)
 	message+="\n @pattern=#{@pattern.inspect}\n @pattern=#{@pattern.inspect}"
-	assert_not_equal('{}',@pattern.inspect, message)
-	assert_not_nil(@pattern, message)
+	refute_equal('{}',@pattern.inspect, message)
+	refute_nil(@pattern, message)
 	assert_instance_of(Hash, @pattern, message)
 	assert(!@pattern.keys.empty?, message)
-	assert_not_empty(@pattern.values, message)
-#	assert_include(@pattern.keys, :suffix, inspect)
+	refute_empty(@pattern.values, message)
+#	assert_includes(@pattern.keys, :suffix, inspect)
 #	assert_equal(@path[-@pattern[:suffix].size, @pattern[:suffix].size], @pattern[:suffix])
 #	fail message+"end of assert_pre_conditions "
 end #assert_pre_conditions
 # assertions true after any instance operations
 def assert_post_conditions(message = 'self = '+self.inspect)
-	assert_not_empty(@project_root_dir, message)
+	refute_empty(@project_root_dir, message)
 	assert_pathname_exists(@project_root_dir)
 #	assert(File.exists?(@path))
 #	find_all_from_path = FilePattern.find_all_from_path(@path)

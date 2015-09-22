@@ -38,7 +38,7 @@ def test_branch_index?
 	assert_equal(-3, UnitMaturity.branch_index?(:'work_flow'))
 	assert_equal(-2, UnitMaturity.branch_index?(:'tax_form'))
 	assert_equal(-4, UnitMaturity.branch_index?(:'origin/master'))
-	assert_equal(-nil, UnitMaturity.branch_index?('/home/greg'))
+	assert_equal(nil, UnitMaturity.branch_index?('/home/greg'))
 end # branch_index?
 def test_revison_tag?
 	assert_equal('-r master', UnitMaturity.revison_tag?(-1))
@@ -62,8 +62,9 @@ def test_deserving_branch?
 	branch_compressions=[]
 	branch_enhancements=[]
 	Repository::Error_classification.each_pair do |key, value|
-		executable=data_source_directory?('repository')+'/'+value.to_s+'.rb'
-		error_score = TestUnitMaturity.repository.error_score?(executable)
+		executable = data_source_directory?('repository')+'/'+value.to_s+'.rb'
+		test_run = TestRun.new(executable)
+		error_score = test_run.error_score?(executable)
 		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
 		error_score=TestUnitMaturity.repository.error_score?(executable)
 #		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)
@@ -83,7 +84,7 @@ end #deserving_branch
 def test_diff_command?
 	filename=Most_stable_file
 	branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
-	assert_not_nil(branch_index)
+	refute_nil(branch_index)
 	branch_string = UnitMaturity.branch_symbol?(branch_index).to_s
 	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
 	diff_run = This_code_repository.git_command(git_command)
@@ -95,20 +96,6 @@ def test_diff_command?
 	message="diff_run=#{diff_run.inspect}"
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, branch_index).output)
 end # diff_command?
-def test_reflog
-#	reflog?(filename).output.split("/n")[0].split(',')[0]
-	filename = $0
-	reflog = TestUnitMaturity.reflog?(filename)
-#	reflog.assert_post_conditions
-#	assert_not_empty(reflog.output)
-#	lines = reflog.output.split("\n")
-	assert_instance_of(Array, reflog)
-	assert_operator(reflog.size, :>,1, reflog)
-#	assert_equal('', reflog[0], lines)
-end # reflog
-def test_last_change?
-	assert_include(Branch_enhancement, TestUnitMaturity.last_change?($0))
-end # last_change?
 def test_working_different_from?
 	current_branch_index=UnitMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, current_branch_index).output)
@@ -119,7 +106,7 @@ def test_working_different_from?
 	assert(!TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index + 4))
 	filename=File_not_in_oldest_branch
 	diff_run=This_code_repository.git_command("diff --summary --shortstat origin/master -- "+filename)
-	assert_not_equal([], diff_run.output.split("\n"), diff_run.inspect)
+	refute_equal([], diff_run.output.split("\n"), diff_run.inspect)
 	assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
 	assert_nil(TestUnitMaturity.working_different_from?(File_not_in_oldest_branch,-2))
 end #working_different_from?

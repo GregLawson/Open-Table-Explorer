@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014 by Greg Lawson                                      
+#    Copyright (C) 2014-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -13,6 +13,65 @@ class StreamTreeTest < TestCase
 include GraphPath::Examples
 include Tree::Examples
 include Connectivity::Examples
+require 'rgl/adjacency'
+require 'rgl/dot'
+def test_rgl_readme
+	dg=RGL::DirectedAdjacencyGraph[1,2 ,2,3 ,2,4, 4,5, 6,4, 1,6]
+	# Use DOT to visualize this graph:
+	dg.write_to_graphic_file('jpg')
+	assert_equal(true, dg.directed?)	
+	assert_equal([5, 6, 1, 2, 3, 4], dg.vertices)
+	assert_equal(true, dg.has_vertex?(4))
+	assert_equal(false, dg.has_vertex?(Object))
+	assert_equal("(1-2)(1-6)(2-3)(2-4)(4-5)(6-4)", dg.edges.sort.to_s)
+	assert_equal("(1=2)(1=6)(2=3)(2=4)(5=4)(6=4)", dg.to_undirected.edges.sort.to_s)
+
+	# Add inverse edge (4-2) to directed graph:
+	dg.add_edge 4,2
+	# (4-2) == (2-4) in the undirected graph:
+
+	assert_equal("(1=2)(1=6)(2=3)(2=4)(5=4)(6=4)", dg.to_undirected.edges.sort.to_s)
+
+	#(4-2) != (2-4) in directed graphs:
+
+	assert_equal("(1-2)(1-6)(2-3)(2-4)(4-2)(4-5)(6-4)", dg.edges.sort.to_s)
+
+	assert_equal(true, dg.remove_edge(4,2))
+
+	# Topological sort is implemented as an iterator:
+
+	require 'rgl/topsort'
+		assert_equal([1, 2, 3, 6, 4, 5], dg.topsort_iterator.to_a)
+
+	# A more elaborated example showing implicit graphs:
+
+	require 'rgl/implicit'
+	def module_graph
+	  RGL::ImplicitGraph.new { |g|
+		 g.vertex_iterator { |b|
+			ObjectSpace.each_object(Module, &b)
+		 }
+		 g.adjacent_iterator { |x, b|
+			x.ancestors.each { |y|
+			  b.call(y) unless x == y || y == Kernel || y == Object
+			}
+		 }
+		 g.directed = true
+	  }
+	end
+	#This function creates a directed graph, with vertices being all loaded modules:
+
+	g = module_graph
+	# We only want to see the ancestors of {RGL::AdjacencyGraph}:
+
+	require 'rgl/traversal'
+	tree = g.bfs_search_tree_from(RGL::AdjacencyGraph)
+	# Now we want to visualize this component of g with DOT. We therefore create a subgraph of the original graph, using a filtered graph:
+
+	g = g.vertices_filtered_by {|v| tree.has_vertex? v}
+	g.write_to_graphic_file('jpg')
+		
+end # rgl_readme
 def test_GraphPath_initialize
 	assert_equal(GraphPath.new(nil), Root_path)
 	assert_equal(GraphPath.new(nil), [])
@@ -44,7 +103,7 @@ def test_Constants
 end # Constants
 # Connectivity
 def test_ref
-#	assert_instance_of(Node, Connectivity.ref())
+	assert_instance_of(Node, ref())
 end # ref
 def test_square_brackets (*params)
 end # square_brackets
@@ -80,15 +139,15 @@ def test_map_recursive
 	depth=0
 	visit_proc = Tree_node_format
 	node = NestedArrayType.ref(Nested_array)
-	assert_not_nil(node)
-	assert_not_nil(node.graph_type, node.inspect)
+	refute_nil(node)
+	refute_nil(node.graph_type, node.inspect)
 	assert_respond_to(node.graph_type, :inspect_node)
 	assert_equal(Tree_node_root, visit_proc.call(NestedArrayType.ref(Nested_array), depth, false))
 	assert_equal(1, Children_nested_array.size)
 	assert_respond_to(Son_nested_array, Children_method_name)
 	assert_instance_of(Array, Grandchildren_nested_array)
 	assert_equal(1, Grandchildren_nested_array.size)
-	assert_not_respond_to(Grandson_nested_array, Children_method_name)
+	refute_respond_to(Grandson_nested_array, Children_method_name)
 	assert_equal('3', NestedArrayType.inspect_node(Grandson_nested_array))
 
 	assert_equal('[2, [3], 4]', NestedArrayType.inspect_node(Son_nested_array), Son_nested_array.inspect)
@@ -128,31 +187,31 @@ end # each_pair
 def test_map_pair_Array
 	tree = Flat_array
 	idenity_map  = Array::Constants::Identity_map_pair
-	assert_include(NestedArrayType.methods, :each_pair)
-	assert_include(NestedArrayType.methods, :map_pair)
+	assert_includes(NestedArrayType.methods, :each_pair)
+	assert_includes(NestedArrayType.methods, :map_pair)
 	assert_equal(tree, NestedArrayType.map_pair(tree, &idenity_map))
 end # map_pair
 def test_NestedArrayType_Assertions
-	assert_include(NestedArrayType.methods, :each_pair)
-	assert_include(NestedArrayType.methods, :each_pair)
-	assert_include(NestedArrayType.methods, :map_pair)
-	assert_include(NestedArrayType.methods, :children?)
+	assert_includes(NestedArrayType.methods, :each_pair)
+	assert_includes(NestedArrayType.methods, :each_pair)
+	assert_includes(NestedArrayType.methods, :map_pair)
+	assert_includes(NestedArrayType.methods, :children?)
 	assert_empty(NestedArrayType::ClassMethods.methods(false))
 	assert_empty(NestedArrayType::ClassMethods.methods(false))
-#	assert_include(NestedArrayType::ClassMethods.instance_methods(false), :each_pair)
-#	assert_include(NestedArrayType::ClassMethods.instance_methods, :ref)
-#	assert_equal(NestedArrayType.instance_methods, [])
+	assert_includes(NestedArrayType::ClassMethods.instance_methods(false), :each_pair)
+#	assert_includes(NestedArrayType::ClassMethods.instance_methods, :ref)
+	assert_equal(NestedArrayType.instance_methods, [])
 
-	assert_include(NestedArrayType.methods, :children?)
-#	assert_equal(NestedArrayType.instance_methods, [])
+	assert_includes(NestedArrayType.methods, :children?)
+	assert_equal(NestedArrayType.instance_methods, [])
 	assert_equal(NestedArrayType.methods(false), [])
-	assert_include(NestedArrayType.methods, :each_pair)
-#	NestedArrayType.assert_pre_conditions
-#	NestedArrayType.assert_post_conditions
+	assert_includes(NestedArrayType.methods, :each_pair)
+	NestedArrayType.assert_pre_conditions
+	NestedArrayType.assert_post_conditions
 
-	assert_include(Connectivity.methods, :ref)
+	assert_includes(Connectivity.methods, :ref)
 
-	assert_include(NestedArrayType.methods, :ref)
+	assert_includes(NestedArrayType.methods, :ref)
 end # Assertions
 def test_parent_at
 	assert_equal(Node::Examples::Nested_array_root.parent_at(nil, 0), Nested_array)
@@ -160,7 +219,7 @@ def test_parent_at
 	assert_equal(Node::Examples::Nested_array_root.parent_at([nil, 0]), Nested_array)
 end # parent_at
 def test_at
-	assert_include(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
+	assert_includes(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
 	explain_assert_respond_to(Node::Examples::Nested_array_root, :at, Node::Examples::Nested_array_root.inspect)
 	assert_equal(GraphPath.new(*Root_path), Root_path)
 	path = GraphPath.new(Root_path)
@@ -175,7 +234,7 @@ def test_at
 #	assert_equal(Grandson_nested_array, Node::Examples::Nested_array_root.at(First_grandson), First_grandson.inspect)
 end # at
 def test_Node_Examples
-	assert_include(NestedArrayType.methods, :ref)
+	assert_includes(NestedArrayType.methods, :ref)
 	NestedArrayType.ref(Connectivity::Examples::Nested_array)
 end # test_node_Examples
 def test_Node_format
@@ -199,7 +258,7 @@ def test_keys
 	assert_equal([0, 1, 2], Example_array.keys)
 end # keys
 def test_to_hash
-#	assert_equal(Example_array, Example_array.to_hash.to_a.values)
+	assert_equal(Example_array, Example_array.to_hash.to_a.values)
 end # to_hash
 def test_each_with_index
 end # each_with_index
@@ -211,7 +270,7 @@ end # map_pair
 def test_enumerate_single
 	atom=/5/
 	single=atom.enumerate_single(:map){|e| e}
-	assert_not_nil(single)
+	refute_nil(single)
 	assert_equal(5, 5.enumerate_single(:map){|e| e})
 	assert_equal(5, 5.enumerate_single(:select){|e| e==5})
 	assert_equal(nil, 5.enumerate_single(:select){|e| e==6})
@@ -221,7 +280,7 @@ end #enumerate_single
 def test_enumerate
 	atom=[/5/]
 	single=atom.enumerate(:map){|e| e}
-	assert_not_nil(single)
+	refute_nil(single)
 	assert_equal([5], [5].enumerate(:map){|e| e})
 	assert_equal([5], [5].enumerate(:select){|e| e==5})
 	assert_equal([], [5].enumerate(:select){|e| e==6})

@@ -11,7 +11,9 @@ require 'ostruct'
 require 'pp'
 require_relative '../app/models/work_flow.rb'
 require_relative '../app/models/command_line.rb'
-scripting_workflow=WorkFlow.new($0)
+scripting_executable = TestExecutable.new_from_pathname($0)
+scripting_editor = Editor.new(scripting_executable)
+scripting_workflow = WorkFlow.new(scripting_executable, scripting_editor)
 if File.exists?('.git/MERGE_HEAD') then
 	scripting_workflow.merge_conflict_recovery(:MERGE_HEAD)
 else
@@ -24,12 +26,6 @@ OptionParser.new do |opts|
 
   opts.on("-e", "--[no-]edit", "Edit related files and versions in diffuse") do |e|
     commands+=[:edit] if e
-  end
-  opts.on("-d", "--[no-]merge-down", "Test downgraded related files in git branches") do |d|
-    commands+=[:merge_down] if d
-  end
-  opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
-    commands+=[:upgrade] if u
   end
   opts.on("-t", "--[no-]test", "Test, commit. ") do |t|
     commands+=[:test] if t
@@ -118,7 +114,9 @@ commands.each do |c|
 		when :split then
 			work_flow.split(argv[0], argv[1])
 	else argv.each do |f|
-		work_flow=WorkFlow.new(f)
+		executable = TestExecutable.new(executable_file: f)
+		editor = Editor.new(executable)
+		work_flow=WorkFlow.new(executable, editor)
 		case c.to_sym
 		when :execute then work_flow.execute(f)
 		when :edit then work_flow.editor.edit

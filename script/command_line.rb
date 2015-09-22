@@ -1,57 +1,33 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2015 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-# @see http://ruby-doc.org/stdlib-2.0.0/libdoc/optparse/rdoc/OptionParser.html#method-i-make_switch
-require 'pp'
+require_relative '../app/models/unit.rb' # before command_line
+require_relative "../app/models/#{Unit::Executable.model_basename}"
 require_relative '../app/models/command_line.rb'
-pp ARGV if $VERBOSE
-commands = []
-OptionParser.new do |opts|
-  opts.banner = "Usage: work_flow.rb --<command> files"
-
-  opts.on("-e", "--[no-]edit", "Edit related files and versions in diffuse") do |e|
-    commands+=[:edit] if e
-  end
-  opts.on("-d", "--[no-]downgrade", "Test downgraded related files in git branches") do |d|
-    commands+=[:downgrade] if d
-  end
-  opts.on("-u", "--[no-]upgrade", "Test upgraded related files in git branches") do |u|
-    commands+=[:upgrade] if u
-  end
-  opts.on("-t", "--[no-]test", "Test. No commit. ") do |t|
-    commands+=[:test] if t
-  end
-end.parse!
-
-pp commands
-pp ARGV
-
-
-case ARGV.size
-when 0 then # scite testing defaults command and file
-	puts "work_flow --<command> <file>"
-	this_file=File.expand_path(__FILE__)
-	argv=[this_file] # incestuous default test case for scite
-	commands=[:test]
-else
-	argv=ARGV
-end #case
-argv.each do |f|
-	work_flow=WorkFlow.new(f)
-	commands.each do |c|
-		case c.to_sym
-		when :execute then work_flow.execute
-		when :edit then work_flow.edit
-		when :test then work_flow.test
-		when :upgrade then work_flow.upgrade
-		when :downgrade then work_flow.downgrade
-		when :merge_down then work_flow.merge_down
-		end #case
-	end #each
-end #each
-WorkFlow::Git_status.execute.puts
+run = CommandLine::Script_command_line.run do
+	if CommandLine::Script_command_line.command_line_opts[:help] then
+			puts 'command_line_opts[:help]'
+			true # done
+	else
+		sub_command = CommandLine::Script_command_line.sub_command
+			unit = Unit.new(sub_command.to_s.camelize.to_sym)
+			required_library_file = unit.model_pathname?
+			if File.exist?(required_library_file) then
+				require required_library_file
+			elsif !Unit.all.include?(unit) then
+				fail unit.inspect + " is not a unit :" +Unit.all_basenames.join(' ,')
+			else
+				fail "required_library_file #{required_library_file} does not exist."
+			end # if 
+			puts 'sub_command = ' + sub_command.inspect + unit.inspect if $VERBOSE
+			unit_commandline = CommandLine.new($0, unit.model_class?, ARGV[1..-1])
+			unit_commandline.run do
+			end # run
+		end # if help
+end # do run
+1 # successfully completed
