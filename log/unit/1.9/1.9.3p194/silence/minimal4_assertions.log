@@ -1,0 +1,10 @@
+testing
+2015-09-22 06:32:00.879
+ruby -v -W0 test/unit/minimal4_assertions_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal4_assertions.rb:13:in `<module:Assertions>': uninitialized constant Minimal4::Assertions::Test (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal4_assertions.rb:12:in `<class:Minimal4>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal4_assertions.rb:11:in `<top (required)>'
+	from test/unit/minimal4_assertions_test.rb:9:in `require_relative'
+	from test/unit/minimal4_assertions_test.rb:9:in `<main>'

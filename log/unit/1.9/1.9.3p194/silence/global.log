@@ -1,23 +1,22 @@
 testing
-2015-09-22 06:31:06.673
-ruby -v -W0 test/unit/branch_test.rb
+2015-09-22 06:31:39.485
+ruby -v -W0 test/unit/global_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 16824
+Run options: --seed 44415
 
 # Running:
 
-EF.EEE.EEEF.EEEE...
+...E.EEFEE.F.self is Class NewTestClass::TestClass subclass of Object
+obj is Symbol :cat
+Can't figure out relation between :cat and NewTestClass::TestClass
+...EF..E.EEF.
 
-Finished in 0.965687s, 19.6751 runs/s, 11.3909 assertions/s.
+Finished in 0.020407s, 1274.0541 runs/s, 2009.0854 assertions/s.
 
   1) Error:
-NewTestClass#test_assert_reflog_line:
-NoMethodError: undefined method `assertions' for BranchReference:Class
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    test/unit/branch_test.rb:113:in `test_assert_reflog_line'
+NewTestClass#test_module:
+NameError: uninitialized constant NewTestClass::StreamPattern
+    test/unit/global_test.rb:124:in `test_module'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -41,19 +40,39 @@ NoMethodError: undefined method `assertions' for BranchReference:Class
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  2) Failure:
-NewTestClass#test_branch_names? [test/unit/branch_test.rb:160]:
-[:edited]
+  2) Error:
+NewTestClass#test_instance_methods_from_class:
+TypeError: can't convert Array into String
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:196:in `include?'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:196:in `assert_includes'
+    test/unit/global_test.rb:47:in `test_instance_methods_from_class'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
   3) Error:
-NewTestClass#test_merged?:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:231:in `merged?'
-    test/unit/branch_test.rb:156:in `test_merged?'
+NewTestClass#test_objectClass:
+NameError: uninitialized constant NewTestClass::Generic_Table
+    test/unit/global_test.rb:93:in `test_objectClass'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -77,37 +96,20 @@ NoMethodError: undefined method `assert_post_conditions' for * master
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  4) Error:
-NewTestClass#test_initialize:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:163:in `test_initialize'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+  4) Failure:
+NewTestClass#test_noninherited_public_instance_methods [test/unit/global_test.rb:106]:
+--- expected
++++ actual
+@@ -1 +1 @@
+-#<Set: {"publicInstanceMethod", "protectedInstanceMethod"}>
++#<Set: {:publicInstanceMethod, :protectedInstanceMethod}>
+
 
 
   5) Error:
-NewTestClass#test_reflog?:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:81:in `test_reflog?'
+NewTestClass#test_matching_methods_in_context:
+NameError: uninitialized constant NewTestClass::Acquisition
+    test/unit/global_test.rb:145:in `test_matching_methods_in_context'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -132,11 +134,9 @@ NameError: uninitialized constant NewTestClass::This_code_repository
 
 
   6) Error:
-NewTestClass#test_current_branch_name?:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    test/unit/branch_test.rb:134:in `test_current_branch_name?'
+NewTestClass#test_noninherited_modules:
+NameError: uninitialized constant NewTestClass::Generic_Table
+    test/unit/global_test.rb:128:in `test_noninherited_modules'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -160,43 +160,16 @@ NoMethodError: undefined method `assert_post_conditions' for * master
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  7) Error:
-NewTestClass#test_BranchReference_Constants:
-NoMethodError: undefined method `assertions' for BranchReference:Class
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    test/unit/branch_test.rb:27:in `test_BranchReference_Constants'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+  7) Failure:
+NewTestClass#test_data_source_directory? [test/unit/global_test.rb:75]:
+Expected: "test/data_source/Class"
+  Actual: "test/data_source/Class/"
 
 
   8) Error:
-NewTestClass#test_branch_capture:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    test/unit/branch_test.rb:129:in `test_branch_capture'
+NewTestClass#test_Acquisition_Interface_modules:
+NameError: uninitialized constant NewTestClass::Generic_Table
+    test/unit/global_test.rb:160:in `test_Acquisition_Interface_modules'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -221,20 +194,14 @@ NoMethodError: undefined method `assert_post_conditions' for * master
 
 
   9) Failure:
-NewTestClass#test_new_from_ref [test/unit/branch_test.rb:56]:
-#<BranchReference branch=:tax_form age=1 timestamp=2015-09-22 06:17:51 -0700>.
---- expected
-+++ actual
-@@ -1 +1 @@
--"Tue, 22 Sep 2015 06:17:51 -0700"
-+2015-09-22 06:17:51 -0700
-
+NewTestClass#test_set_inspect [test/unit/global_test.rb:38]:
+Expected /\{4408\},\(\?-mix:3\),\/3\/>/ to match "#<Set: {/1/, /3/}>; <Regexp #16046920{2791660481786789887},(?-mix:1),/1/>, <Regexp #16046140{-4163093304468232358},(?-mix:3),/3/>".
 
 
  10) Error:
-NewTestClass#test_last_change?:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:102:in `test_last_change?'
+NewTestClass#test_object_identities:
+NameError: uninitialized constant NewTestClass::StreamPattern
+    test/unit/global_test.rb:78:in `test_object_identities'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -259,14 +226,9 @@ NameError: uninitialized constant NewTestClass::This_code_repository
 
 
  11) Error:
-NewTestClass#test_assert_output:
-NoMethodError: undefined method `assertions' for BranchReference:Class
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:115:in `assert_output'
-    test/unit/branch_test.rb:119:in `test_assert_output'
+NewTestClass#test_module_included:
+NameError: uninitialized constant NewTestClass::StreamPattern
+    test/unit/global_test.rb:142:in `test_module_included'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -291,11 +253,9 @@ NoMethodError: undefined method `assertions' for BranchReference:Class
 
 
  12) Error:
-NewTestClass#test_remotes?:
-NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:227:in `remotes?'
-    test/unit/branch_test.rb:152:in `test_remotes?'
+NewTestClass#test_Acquisition_Stream_Spec_modules:
+NameError: uninitialized constant NewTestClass::Generic_Table
+    test/unit/global_test.rb:151:in `test_Acquisition_Stream_Spec_modules'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -319,33 +279,9 @@ NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
- 13) Error:
-NewTestClass#test_branches?:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    test/unit/branch_test.rb:139:in `test_branches?'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+ 13) Failure:
+NewTestClass#test_instance_respond_to [test/unit/global_test.rb:52]:
+TestClass.instance_methods_from_class=[:publicInstanceMethod, :protectedInstanceMethod]
 
-19 runs, 11 assertions, 2 failures, 11 errors, 0 skips
+26 runs, 41 assertions, 4 failures, 9 errors, 0 skips
 

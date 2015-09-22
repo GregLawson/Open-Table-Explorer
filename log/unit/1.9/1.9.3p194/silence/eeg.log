@@ -1,21 +1,19 @@
 testing
-2015-09-22 06:35:55.153
-ruby -v -W0 test/unit/parse_test.rb
+2015-09-22 06:30:55.941
+ruby -v -W0 test/unit/EEG_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 48962
+Run options: --seed 36830
 
 # Running:
 
-.........E.........................E.........
+....EE..
 
-Finished in 0.058935s, 763.5580 runs/s, 1442.2763 assertions/s.
+Finished in 0.004419s, 1810.3058 runs/s, 0.0000 assertions/s.
 
   1) Error:
-CaptureTest#test_assert_success:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000025eb0f8>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:145:in `assert_success'
-    test/unit/parse_test.rb:246:in `test_assert_success'
+EegTest#test_associations:
+NameError: uninitialized constant EegTest::StreamPattern
+    test/unit/EEG_test.rb:66:in `test_associations'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -40,13 +38,9 @@ NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000025eb0f8
 
 
   2) Error:
-CaptureTest#test_Capture_Examples:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000001faca48>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:119:in `assert_pre_conditions'
-    test/unit/parse_test.rb:271:in `test_Capture_Examples'
+EegTest#test_all:
+NameError: uninitialized constant EegTest::Url
+    test/unit/EEG_test.rb:16:in `test_all'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -69,5 +63,5 @@ NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000001faca48
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-45 runs, 85 assertions, 0 failures, 2 errors, 0 skips
+8 runs, 0 assertions, 0 failures, 2 errors, 0 skips
 

@@ -1,21 +1,21 @@
 testing
-2015-09-22 06:35:55.153
-ruby -v -W0 test/unit/parse_test.rb
+2015-09-22 06:31:42.104
+ruby -v -W0 test/unit/homerun_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 48962
+rescue exception #<Errno::ENOENT: No such file or directory - hdhomerun_config discover>
+Run options: --seed 24079
 
 # Running:
 
-.........E.........................E.........
+....Erescue exception #<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>
+F.E
 
-Finished in 0.058935s, 763.5580 runs/s, 1442.2763 assertions/s.
+Finished in 0.007957s, 1005.4531 runs/s, 251.3633 assertions/s.
 
   1) Error:
-CaptureTest#test_assert_success:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000025eb0f8>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:145:in `assert_success'
-    test/unit/parse_test.rb:246:in `test_assert_success'
+HomeRunTest#test_Constants:
+NoMethodError: undefined method `size' for nil:NilClass
+    test/unit/homerun_test.rb:21:in `test_Constants'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -39,14 +39,22 @@ NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000025eb0f8
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  2) Error:
-CaptureTest#test_Capture_Examples:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000001faca48>
+  2) Failure:
+HomeRunTest#test_scan [test/unit/homerun_test.rb:17]:
+scan=$ hdhomerun_config 10311E80 scan
+@errors="#<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>"
+@process_status=nil
+.
+Expected /^unable to connect to device\n|^$/ to match "#<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>".
+
+
+  3) Error:
+HomeRunTest#test_initialize:
+NoMethodError: undefined method `assertions' for #<HomeRun:0x000000028fd390 @id="10311E80">
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:119:in `assert_pre_conditions'
-    test/unit/parse_test.rb:271:in `test_Capture_Examples'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:314:in `assert_includes'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:36:in `assert_post_conditions'
+    test/unit/homerun_test.rb:13:in `test_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -69,5 +77,5 @@ NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000001faca48
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-45 runs, 85 assertions, 0 failures, 2 errors, 0 skips
+8 runs, 2 assertions, 1 failures, 2 errors, 0 skips
 

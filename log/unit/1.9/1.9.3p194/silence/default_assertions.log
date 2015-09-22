@@ -1,0 +1,7 @@
+testing
+2015-09-22 06:31:13.289
+ruby -v -W0 test/unit/default_assertions_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/default_assertions_test.rb:9:in `<module:DefaultAssertionTests>': uninitialized constant DefaultAssertionTests::DefaultAssertions (NameError)
+	from test/unit/default_assertions_test.rb:8:in `<main>'

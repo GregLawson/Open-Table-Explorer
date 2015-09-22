@@ -1,0 +1,10 @@
+testing
+2015-09-22 07:04:49.807
+ruby -v -W0 test/unit/rebuild_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/rebuild.rb:53:in `<module:Constants>': uninitialized constant Repository::Constants::Temporary (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/rebuild.rb:49:in `<class:Repository>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/rebuild.rb:9:in `<top (required)>'
+	from test/unit/rebuild_test.rb:9:in `require_relative'
+	from test/unit/rebuild_test.rb:9:in `<main>'

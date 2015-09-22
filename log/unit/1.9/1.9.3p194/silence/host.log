@@ -1,12 +1,7 @@
-edited
-2015-04-19 13:37:55.311
+testing
+2015-09-22 06:31:43.426
+ruby -v -W0 test/unit/host_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: 
 
-# Running tests:
-
-.
-
-Finished tests in 0.003835s, 260.7564 tests/s, 0.0000 assertions/s.
-
-1 tests, 0 assertions, 0 failures, 0 errors, 0 skips
+test/unit/host_test.rb:13:in `<class:HostTest>': uninitialized constant NewTestClass::TE (NameError)
+	from test/unit/host_test.rb:11:in `<main>'
