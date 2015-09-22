@@ -1,0 +1,10 @@
+passed
+2015-09-22 07:18:44.062
+ruby -v -W0 test/unit/generic_type_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- test/test_helper (LoadError)
+	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_type_assertions.rb:8:in `<top (required)>'
+	from test/unit/generic_type_test.rb:9:in `require_relative'
+	from test/unit/generic_type_test.rb:9:in `<main>'

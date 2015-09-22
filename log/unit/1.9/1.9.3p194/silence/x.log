@@ -1,0 +1,11 @@
+passed
+2015-09-22 07:36:26.946
+ruby -v -W0 test/unit/x_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/x.rb:81:in `read': No such file or directory - /var/log/Xorg.1.log (Errno::ENOENT)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/x.rb:81:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/x.rb:79:in `<class:X>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/x.rb:10:in `<top (required)>'
+	from test/unit/x_test.rb:9:in `require_relative'
+	from test/unit/x_test.rb:9:in `<main>'

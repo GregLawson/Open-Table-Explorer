@@ -1,0 +1,7 @@
+passed
+2015-09-22 07:36:11.680
+ruby -v -W0 test/unit/unit_maturity_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/unit_maturity_test.rb:13:in `<class:UnitMaturityTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
+	from test/unit/unit_maturity_test.rb:12:in `<main>'

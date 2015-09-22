@@ -1,0 +1,14 @@
+passed
+2015-09-22 07:35:48.024
+ruby -v -W0 test/unit/tedprimary_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 27372
+
+# Running:
+
+.....
+
+Finished in 0.004026s, 1241.9858 runs/s, 248.3972 assertions/s.
+
+5 runs, 1 assertions, 0 failures, 0 errors, 0 skips
+

@@ -1,0 +1,7 @@
+passed
+2015-09-22 07:36:19.445
+ruby -v -W0 test/unit/usc_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/usc_test.rb:11:in `<class:UscTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
+	from test/unit/usc_test.rb:10:in `<main>'

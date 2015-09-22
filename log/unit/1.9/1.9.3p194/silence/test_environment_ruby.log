@@ -1,0 +1,8 @@
+passed
+2015-09-22 07:35:50.089
+ruby -v -W0 test/unit/test_environment_ruby_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/test_environment_ruby_test.rb:51: syntax error, unexpected keyword_end, expecting $end
+end # MinitestTest
+   ^

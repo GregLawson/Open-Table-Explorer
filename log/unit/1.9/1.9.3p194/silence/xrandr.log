@@ -1,0 +1,14 @@
+passed
+2015-09-22 07:36:28.425
+ruby -v -W0 test/unit/xrandr_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 61634
+
+# Running:
+
+.......
+
+Finished in 0.004288s, 1632.5308 runs/s, 0.0000 assertions/s.
+
+7 runs, 0 assertions, 0 failures, 0 errors, 0 skips
+

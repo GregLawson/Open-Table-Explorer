@@ -1,0 +1,8 @@
+passed
+2015-09-22 07:35:17.553
+ruby -v -W0 test/unit/router_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/router.rb:30:in `<top (required)>': uninitialized constant ActiveRecord (NameError)
+	from test/unit/router_test.rb:2:in `require_relative'
+	from test/unit/router_test.rb:2:in `<main>'

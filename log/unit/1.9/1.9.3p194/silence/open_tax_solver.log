@@ -1,0 +1,9 @@
+passed
+2015-09-22 07:23:03.220
+ruby -v -W0 test/unit/open_tax_solver_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:8:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_files.rb (LoadError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:8:in `<top (required)>'
+	from test/unit/open_tax_solver_test.rb:9:in `require_relative'
+	from test/unit/open_tax_solver_test.rb:9:in `<main>'

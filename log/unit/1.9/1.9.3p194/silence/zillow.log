@@ -1,0 +1,7 @@
+passed
+2015-09-22 07:36:29.277
+ruby -v -W0 test/unit/zillow_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/zillow_test.rb:13:in `<class:ZillowTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
+	from test/unit/zillow_test.rb:12:in `<main>'
