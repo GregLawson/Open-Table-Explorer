@@ -1,0 +1,11 @@
+master
+2015-09-22 07:42:35.192
+ruby -v -W0 test/unit/generic_table_html_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:11:in `<module:Examples>': uninitialized constant OpenTableExplorer::OpenTableBrowser::Examples::ActiveRecord (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:10:in `<module:OpenTableBrowser>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:9:in `<module:OpenTableExplorer>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:8:in `<top (required)>'
+	from test/unit/generic_table_html_test.rb:12:in `require_relative'
+	from test/unit/generic_table_html_test.rb:12:in `<main>'

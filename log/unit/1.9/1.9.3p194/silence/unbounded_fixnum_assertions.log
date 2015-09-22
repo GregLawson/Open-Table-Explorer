@@ -1,0 +1,16 @@
+master
+2015-09-22 07:49:59.197
+ruby -v -W0 test/unit/unbounded_fixnum_assertions_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/usr/lib/ruby/1.9.1/test/unit.rb:328:in `autorun': uninitialized class variable @@installed_at_exit in Test::Unit::Runner (NameError)
+	from /usr/lib/ruby/1.9.1/test/unit.rb:640:in `<top (required)>'
+	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/default_assertions.rb:9:in `<module:DefaultAssertions>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/default_assertions.rb:8:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unbounded_fixnum_assertions.rb:11:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unbounded_fixnum_assertions.rb:11:in `<class:UnboundedFixnum>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unbounded_fixnum_assertions.rb:10:in `<top (required)>'
+	from test/unit/unbounded_fixnum_assertions_test.rb:9:in `require_relative'
+	from test/unit/unbounded_fixnum_assertions_test.rb:9:in `<main>'

@@ -1,0 +1,21 @@
+master
+2015-09-22 07:49:09.863
+ruby -v -W0 test/unit/regexp_tree_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:396:in `raw_captures?': undefined method `raw_capture?' for (?-mix:(?<label>a)):Regexp::Expression::Root (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:199:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:209:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:392:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:420:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:420:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:417:in `<class:ParsedCapture>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:387:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:11:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:11:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_tree_assertions.rb:9:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_tree_assertions.rb:9:in `<top (required)>'
+	from test/unit/regexp_tree_test.rb:9:in `require_relative'
+	from test/unit/regexp_tree_test.rb:9:in `<main>'

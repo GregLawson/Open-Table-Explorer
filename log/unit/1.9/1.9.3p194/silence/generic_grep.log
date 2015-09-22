@@ -1,0 +1,8 @@
+master
+2015-09-22 07:42:29.991
+ruby -v -W0 test/unit/generic_grep_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- test_helper.rb (LoadError)
+	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+	from test/unit/generic_grep_test.rb:8:in `<main>'

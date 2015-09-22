@@ -1,0 +1,14 @@
+master
+2015-09-22 07:49:45.102
+ruby -v -W0 test/unit/test_environment_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 3864
+
+# Running:
+
+.......
+
+Finished in 0.004249s, 1647.3530 runs/s, 2118.0253 assertions/s.
+
+7 runs, 9 assertions, 0 failures, 0 errors, 0 skips
+

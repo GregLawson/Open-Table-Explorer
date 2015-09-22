@@ -1,0 +1,8 @@
+master
+2015-09-22 07:42:59.697
+ruby -v -W0 test/unit/method_model_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/method_model_test.rb:247:in `test': can't convert String into Integer (TypeError)
+	from test/unit/method_model_test.rb:247:in `<class:MethodModelTest>'
+	from test/unit/method_model_test.rb:2:in `<main>'

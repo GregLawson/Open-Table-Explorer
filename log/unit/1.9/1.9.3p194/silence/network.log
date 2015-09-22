@@ -1,0 +1,7 @@
+master
+2015-09-22 07:43:08.896
+ruby -v -W0 test/unit/network_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/network_test.rb:12:in `<class:NetworkTest>': uninitialized constant NewTestClass::TE (NameError)
+	from test/unit/network_test.rb:10:in `<main>'

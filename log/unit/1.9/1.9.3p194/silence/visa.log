@@ -1,0 +1,10 @@
+master
+2015-09-22 07:50:15.741
+ruby -v -W0 test/unit/visa_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+/usr/lib/ruby/1.9.1/test/unit.rb:328:in `autorun': uninitialized class variable @@installed_at_exit in Test::Unit::Runner (NameError)
+	from /usr/lib/ruby/1.9.1/test/unit.rb:640:in `<top (required)>'
+	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+	from test/unit/visa_test.rb:9:in `<main>'

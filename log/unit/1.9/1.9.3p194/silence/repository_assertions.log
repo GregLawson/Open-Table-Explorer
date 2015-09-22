@@ -1,0 +1,7 @@
+master
+2015-09-22 07:49:11.743
+ruby -v -W0 test/unit/repository_assertions_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/repository_assertions_test.rb:11:in `<class:RepositoryTest>': uninitialized constant RepositoryTest::DefaultTests (NameError)
+	from test/unit/repository_assertions_test.rb:10:in `<main>'

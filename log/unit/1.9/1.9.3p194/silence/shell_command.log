@@ -1,0 +1,7 @@
+master
+2015-09-22 07:49:25.051
+ruby -v -W0 test/unit/shell_command_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/shell_command_test.rb:13:in `<class:ShellCommandsTest>': uninitialized constant ShellCommandsTest::DefaultTests (NameError)
+	from test/unit/shell_command_test.rb:12:in `<main>'

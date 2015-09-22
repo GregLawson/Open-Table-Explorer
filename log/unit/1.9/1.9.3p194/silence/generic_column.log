@@ -1,0 +1,14 @@
+master
+2015-09-22 07:42:28.118
+ruby -v -W0 test/unit/generic_column_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 64267
+
+# Running:
+
+...........
+
+Finished in 0.011262s, 976.7580 runs/s, 4439.8093 assertions/s.
+
+11 runs, 50 assertions, 0 failures, 0 errors, 0 skips
+

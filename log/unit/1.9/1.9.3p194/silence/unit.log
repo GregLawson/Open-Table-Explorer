@@ -1,0 +1,356 @@
+master
+2015-09-22 07:50:08.880
+ruby -v -W0 test/unit/unit_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 18412
+
+# Running:
+
+..........E....E....E.....E.E..E...E.....EE.E.FE...
+
+Finished in 0.316098s, 161.3422 runs/s, 278.3943 assertions/s.
+
+  1) Error:
+NewTestClass#test_assert_invariant:
+NoMethodError: undefined method `model_class?' for #<NewTestClass:0x0000000154e268>
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/default_test_case.rb:21:in `each_example'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/default_test_case.rb:179:in `test_assert_invariant'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  2) Error:
+NewTestClass#test_initialize:
+NoMethodError: undefined method `assertions' for #<Unit:0x00000001e5dea8>
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:238:in `refute_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:51:in `assert_pre_conditions'
+    test/unit/unit_test.rb:52:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  3) Error:
+NewTestClass#test_related_files:
+NoMethodError: undefined method `model_class?' for #<NewTestClass:0x00000001aab878>
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/default_test_case.rb:206:in `test_related_files'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  4) Error:
+NewTestClass#test_Unit_assert_post_conditions:
+NameError: uninitialized constant FilePattern::Examples::SELF
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:38:in `assert_post_conditions'
+    test/unit/unit_test.rb:153:in `test_Unit_assert_post_conditions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  5) Error:
+NewTestClass#test_Examples:
+NoMethodError: undefined method `assertions' for #<Unit:0x00000001e60400>
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:238:in `refute_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:51:in `assert_pre_conditions'
+    test/unit/unit_test.rb:172:in `test_Examples'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  6) Error:
+NewTestClass#test_aaa_environment:
+NoMethodError: undefined method `model_class?' for #<NewTestClass:0x000000017c73c8>
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/default_test_case.rb:116:in `test_aaa_environment'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  7) Error:
+NewTestClass#test_Unit_assert_pre_conditions:
+NoMethodError: undefined method `assertions' for Unit:Class
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:314:in `assert_includes'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:32:in `assert_pre_conditions'
+    test/unit/unit_test.rb:150:in `test_Unit_assert_pre_conditions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  8) Error:
+NewTestClass#test_pathnames:
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001eec1f8>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:341:in `assert_array_of'
+    test/unit/unit_test.rb:93:in `test_pathnames'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  9) Error:
+NewTestClass#test_default_test_class_id:
+NoMethodError: undefined method `model_name?' for #<NewTestClass:0x00000001ee9ac0>
+    test/unit/unit_test.rb:114:in `test_default_test_class_id'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+ 10) Error:
+NewTestClass#test_assert_default_test_class_id:
+NoMethodError: undefined method `assertions' for #<Unit:0x00000001eedbc0>
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:163:in `assert_equal'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:68:in `assert_default_test_class_id'
+    test/unit/unit_test.rb:165:in `test_assert_default_test_class_id'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+ 11) Failure:
+NewTestClass#test_case_pre_conditions [/home/greg/Desktop/src/Open-Table-Explorer/app/models/default_test_case.rb:88]:
+2Naming convention is to end test class names with 'Test' not NewTestClass callers=/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'.
+Expected: "Test"
+  Actual: "lass"
+
+
+ 12) Error:
+NewTestClass#test_assertion_inclusion:
+NoMethodError: undefined method `model_class?' for #<NewTestClass:0x00000001efb6a8>
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/default_test_case.rb:188:in `test_assertion_inclusion'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+51 runs, 88 assertions, 1 failures, 11 errors, 0 skips
+
