@@ -7,3 +7,4 @@ db/*.sqlite3
 log/*.log
 *.jpg
 *.pdf
+/test/data_sources/nmap/nmap.xml
