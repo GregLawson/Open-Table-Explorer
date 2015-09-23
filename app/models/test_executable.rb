@@ -35,7 +35,7 @@ def new_from_path(executable_file,
 end # new_from_path
 end # ClassMethods
 extend ClassMethods
-def log_path?(logging = :quiet,
+def log_path?(logging = :silence,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
 	@unit = Unit.new_from_path(executable_file)
@@ -50,7 +50,7 @@ def log_path?(logging = :quiet,
 		@log_path += '/' + @unit.model_basename.to_s + '.log'
 		end # if
 end # log_path?
-def ruby_test_string(logging = :quiet,
+def ruby_test_string(logging = :silence,
 		minor_version = '1.9',
 		patch_version = '1.9.3p194')
 	case logging 
