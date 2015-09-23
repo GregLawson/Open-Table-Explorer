@@ -20,6 +20,7 @@ class BranchReference
 	attribute :timestamp, Time, :default => Time.now
 end # values
 module Constants
+include Repository::Constants
 Branch_name_regexp = /[a-zA-Z0-9_\/]+/ # conventional syntax
 #Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
 
@@ -58,15 +59,21 @@ def new_from_ref(reflog_line)
 		new(branch: capture.output?[:ambiguous_branch].to_sym, age: capture.output?[:age].to_i, timestamp: capture.output?[:timestamp])
 	end # if
 end # new_from_ref
-def reflog?(filename, repository)
-	reflog_run = repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
-#	reflog_run = repository.git_command("reflog  --all --summary --pretty=format:%gd,%gD,%h,%aD -- " + filename)
-#	reflog_run.assert_post_conditions
-	lines = reflog_run.output.split("\n")
+def reflog_command_string(filename, repository, range = 0..10)
+	'reflog  --all --skip=' + range.first.to_s + ' --max-count=' + range.last.to_s + ' --pretty=format:%gd,%gD,%h,%aD -- ' + filename
+end # reflog_command_string
+def reflog_command_lines(filename, repository, range = 0..10)
+	repository.git_command(reflog_command_string(filename, repository, range)).output.split("\n")
+end # reflog_command_lines
+def reflog?(filename, repository, range = 0..10)
+	lines = reflog_command_lines(filename, repository, range)
 	lines = lines[0..-2] if lines[-1..-1] == ''
 	lines.map do |reflog_line|
-		BranchReference.new_from_ref(reflog_line) if reflog_line != ''
-		
+		if reflog_line == '' then
+			nil
+		else
+			BranchReference.new_from_ref(reflog_line)
+		end # if
 	end # map
 end # reflog?
 def last_change?(filename, repository)
