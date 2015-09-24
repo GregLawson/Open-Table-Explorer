@@ -1,21 +1,23 @@
 testing
-2015-09-22 06:35:55.153
+2015-09-23 07:36:26.117
 ruby -v -W0 test/unit/parse_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 48962
+Run options: --seed 3
 
 # Running:
 
-.........E.........................E.........
+.............E.............................E.
 
-Finished in 0.058935s, 763.5580 runs/s, 1442.2763 assertions/s.
+Finished in 0.041726s, 1078.4654 runs/s, 2037.1012 assertions/s.
 
   1) Error:
-CaptureTest#test_assert_success:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000025eb0f8>
+CaptureTest#test_Capture_Examples:
+NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000003305630>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:145:in `assert_success'
-    test/unit/parse_test.rb:246:in `test_assert_success'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:119:in `assert_pre_conditions'
+    test/unit/parse_test.rb:271:in `test_Capture_Examples'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -40,13 +42,11 @@ NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000025eb0f8
 
 
   2) Error:
-CaptureTest#test_Capture_Examples:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000001faca48>
+CaptureTest#test_assert_success:
+NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000039f11d8>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:119:in `assert_pre_conditions'
-    test/unit/parse_test.rb:271:in `test_Capture_Examples'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:145:in `assert_success'
+    test/unit/parse_test.rb:246:in `test_assert_success'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'

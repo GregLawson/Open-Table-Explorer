@@ -1,14 +1,14 @@
 testing
-2015-09-22 06:30:58.578
+2015-09-23 07:31:21.249
 ruby -v -W0 test/unit/assertions_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 5087
+Run options: --seed 3
 
 # Running:
 
 .....
 
-Finished in 0.003572s, 1399.6036 runs/s, 0.0000 assertions/s.
+Finished in 0.003828s, 1306.2125 runs/s, 0.0000 assertions/s.
 
 5 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 

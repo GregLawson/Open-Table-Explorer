@@ -1,8 +1,8 @@
 testing
-2015-09-22 06:30:57.266
+2015-09-23 07:31:19.856
 ruby -v -W0 test/unit/arp_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 10599
+Run options: --seed 3
 
 # Running:
 
@@ -16,7 +16,7 @@ Run options: --seed 10599
 
 F..
 
-Finished in 0.007467s, 803.5836 runs/s, 267.8612 assertions/s.
+Finished in 0.030278s, 198.1647 runs/s, 66.0549 assertions/s.
 
   1) Error:
 NewTestClass#test_MAC:

@@ -1,59 +1,28 @@
 testing
-2015-09-22 06:31:06.673
+2015-09-23 07:31:31.963
 ruby -v -W0 test/unit/branch_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 16824
+Run options: --seed 3
 
 # Running:
 
-EF.EEE.EEEF.EEEE...
+..FEFFE.E..EEE..EE.E.
 
-Finished in 0.965687s, 19.6751 runs/s, 11.3909 assertions/s.
+Finished in 2.918404s, 7.1957 runs/s, 7.8810 assertions/s.
 
-  1) Error:
-NewTestClass#test_assert_reflog_line:
-NoMethodError: undefined method `assertions' for BranchReference:Class
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    test/unit/branch_test.rb:113:in `test_assert_reflog_line'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  2) Failure:
-NewTestClass#test_branch_names? [test/unit/branch_test.rb:160]:
+  1) Failure:
+NewTestClass#test_branch_names? [test/unit/branch_test.rb:181]:
 [:edited]
 
 
-  3) Error:
-NewTestClass#test_merged?:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
+  2) Error:
+NewTestClass#test_remotes?:
+NoMethodError: undefined method `assert_block' for :ShellCommands
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:231:in `merged?'
-    test/unit/branch_test.rb:156:in `test_merged?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:234:in `remotes?'
+    test/unit/branch_test.rb:173:in `test_remotes?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -77,37 +46,32 @@ NoMethodError: undefined method `assert_post_conditions' for * master
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  4) Error:
-NewTestClass#test_initialize:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:163:in `test_initialize'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+  3) Failure:
+NewTestClass#test_new_from_ref [test/unit/branch_test.rb:57]:
+#<BranchReference branch=:testing age=1 timestamp=2015-09-22 22:58:59 -0700>.
+--- expected
++++ actual
+@@ -1 +1 @@
+-"Tue, 22 Sep 2015 22:58:59 -0700"
++2015-09-22 22:58:59 -0700
+
+
+
+  4) Failure:
+NewTestClass#test_last_change? [test/unit/branch_test.rb:123]:
+Expected [:edited] to include :testing.
 
 
   5) Error:
-NewTestClass#test_reflog?:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:81:in `test_reflog?'
+NewTestClass#test_merged?:
+NoMethodError: undefined method `assert_block' for * master
+  passed
+:ShellCommands
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:238:in `merged?'
+    test/unit/branch_test.rb:177:in `test_merged?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -132,11 +96,13 @@ NameError: uninitialized constant NewTestClass::This_code_repository
 
 
   6) Error:
-NewTestClass#test_current_branch_name?:
-NoMethodError: undefined method `assert_post_conditions' for * master
+NewTestClass#test_branch_capture:
+NoMethodError: undefined method `assert_block' for * master
   passed
 :ShellCommands
-    test/unit/branch_test.rb:134:in `test_current_branch_name?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/branch_test.rb:150:in `test_branch_capture'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -161,13 +127,14 @@ NoMethodError: undefined method `assert_post_conditions' for * master
 
 
   7) Error:
-NewTestClass#test_BranchReference_Constants:
+NewTestClass#test_assert_output:
 NoMethodError: undefined method `assertions' for BranchReference:Class
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    test/unit/branch_test.rb:27:in `test_BranchReference_Constants'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:109:in `assert_reflog_line'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:122:in `assert_output'
+    test/unit/branch_test.rb:140:in `test_assert_output'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -192,11 +159,13 @@ NoMethodError: undefined method `assertions' for BranchReference:Class
 
 
   8) Error:
-NewTestClass#test_branch_capture:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    test/unit/branch_test.rb:129:in `test_branch_capture'
+NewTestClass#test_assert_reflog_line:
+NoMethodError: undefined method `assertions' for BranchReference:Class
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:109:in `assert_reflog_line'
+    test/unit/branch_test.rb:134:in `test_assert_reflog_line'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -220,21 +189,45 @@ NoMethodError: undefined method `assert_post_conditions' for * master
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  9) Failure:
-NewTestClass#test_new_from_ref [test/unit/branch_test.rb:56]:
-#<BranchReference branch=:tax_form age=1 timestamp=2015-09-22 06:17:51 -0700>.
---- expected
-+++ actual
-@@ -1 +1 @@
--"Tue, 22 Sep 2015 06:17:51 -0700"
-+2015-09-22 06:17:51 -0700
-
+  9) Error:
+NewTestClass#test_BranchReference_Constants:
+NoMethodError: undefined method `assertions' for BranchReference:Class
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:109:in `assert_reflog_line'
+    test/unit/branch_test.rb:28:in `test_BranchReference_Constants'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
  10) Error:
-NewTestClass#test_last_change?:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:102:in `test_last_change?'
+NewTestClass#test_branches?:
+NoMethodError: undefined method `assert_block' for * master
+  passed
+:ShellCommands
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/branch_test.rb:160:in `test_branches?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -259,14 +252,13 @@ NameError: uninitialized constant NewTestClass::This_code_repository
 
 
  11) Error:
-NewTestClass#test_assert_output:
-NoMethodError: undefined method `assertions' for BranchReference:Class
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:225:in `assert_match'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:115:in `assert_output'
-    test/unit/branch_test.rb:119:in `test_assert_output'
+NewTestClass#test_current_branch_name?:
+NoMethodError: undefined method `assert_block' for * master
+  passed
+:ShellCommands
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/branch_test.rb:155:in `test_current_branch_name?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -291,11 +283,14 @@ NoMethodError: undefined method `assertions' for BranchReference:Class
 
 
  12) Error:
-NewTestClass#test_remotes?:
-NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
+NewTestClass#test_initialize:
+NoMethodError: undefined method `assert_block' for #<ShellCommands:0x00000001756380>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:227:in `remotes?'
-    test/unit/branch_test.rb:152:in `test_remotes?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:234:in `remotes?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:270:in `find_origin'
+    test/unit/branch_test.rb:187:in `test_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -318,34 +313,5 @@ NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-
- 13) Error:
-NewTestClass#test_branches?:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    test/unit/branch_test.rb:139:in `test_branches?'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-19 runs, 11 assertions, 2 failures, 11 errors, 0 skips
+21 runs, 23 assertions, 3 failures, 9 errors, 0 skips
 

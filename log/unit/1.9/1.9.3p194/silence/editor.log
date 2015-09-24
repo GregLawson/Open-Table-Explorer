@@ -1,19 +1,23 @@
 testing
-2015-09-22 06:31:20.485
+2015-09-23 07:31:47.578
 ruby -v -W0 test/unit/editor_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 39600
+Run options: --seed 3
 
 # Running:
 
-..E...FE...EE..
+.....E.F.EEE...
 
-Finished in 0.026218s, 572.1256 runs/s, 266.9920 assertions/s.
+Finished in 0.037708s, 397.7929 runs/s, 185.6367 assertions/s.
 
   1) Error:
-NewTestClass#test_goldilocks:
-NoMethodError: undefined method `repository' for #<Editor:0x000000023fdae8>
-    test/unit/editor_test.rb:29:in `test_goldilocks'
+NewTestClass#test_local_assert_pre_conditions:
+NoMethodError: undefined method `assertions' for #<Editor:0x00000002f079c0>
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/editor.rb:147:in `assert_pre_conditions'
+    test/unit/editor_test.rb:69:in `test_local_assert_pre_conditions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -48,9 +52,9 @@ NewTestClass#test_minimal_comparison [test/unit/editor_test.rb:50]:
 
 
   3) Error:
-NewTestClass#test_initializes:
-NoMethodError: undefined method `file' for #<TestExecutable:0x000000023f5870>
-    test/unit/editor_test.rb:23:in `test_initializes'
+NewTestClass#test_goldilocks:
+NoMethodError: undefined method `repository' for #<Editor:0x00000002f079c0>
+    test/unit/editor_test.rb:29:in `test_goldilocks'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -75,11 +79,9 @@ NoMethodError: undefined method `file' for #<TestExecutable:0x000000023f5870>
 
 
   4) Error:
-NewTestClass#test_local_assert_post_conditions:
-NoMethodError: undefined method `assert_block' for #<Editor:0x000000023fdae8>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/editor.rb:155:in `assert_post_conditions'
-    test/unit/editor_test.rb:66:in `test_local_assert_post_conditions'
+NewTestClass#test_initializes:
+NoMethodError: undefined method `file' for #<TestExecutable:0x00000002ee2e68>
+    test/unit/editor_test.rb:23:in `test_initializes'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -104,13 +106,11 @@ NoMethodError: undefined method `assert_block' for #<Editor:0x000000023fdae8>
 
 
   5) Error:
-NewTestClass#test_local_assert_pre_conditions:
-NoMethodError: undefined method `assertions' for #<Editor:0x000000023fdae8>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/editor.rb:147:in `assert_pre_conditions'
-    test/unit/editor_test.rb:69:in `test_local_assert_pre_conditions'
+NewTestClass#test_local_assert_post_conditions:
+NoMethodError: undefined method `assert_block' for #<Editor:0x00000002f079c0>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:244:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/editor.rb:155:in `assert_post_conditions'
+    test/unit/editor_test.rb:66:in `test_local_assert_post_conditions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'

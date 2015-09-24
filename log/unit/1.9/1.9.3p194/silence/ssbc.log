@@ -1,0 +1,8 @@
+testing
+2015-09-23 07:42:47.549
+ruby -v -W0 test/unit/ssbc_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+test/unit/ssbc_test.rb:1:in `initialize': can't convert String into Integer (TypeError)
+	from test/unit/ssbc_test.rb:1:in `open'
+	from test/unit/ssbc_test.rb:1:in `<main>'

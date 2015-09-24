@@ -1,19 +1,19 @@
 testing
-2015-09-22 06:30:55.941
+2015-09-23 07:31:18.381
 ruby -v -W0 test/unit/EEG_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 36830
+Run options: --seed 3
 
 # Running:
 
-....EE..
+.....EE.
 
-Finished in 0.004419s, 1810.3058 runs/s, 0.0000 assertions/s.
+Finished in 0.004963s, 1612.0780 runs/s, 0.0000 assertions/s.
 
   1) Error:
-EegTest#test_associations:
-NameError: uninitialized constant EegTest::StreamPattern
-    test/unit/EEG_test.rb:66:in `test_associations'
+EegTest#test_all:
+NameError: uninitialized constant EegTest::Url
+    test/unit/EEG_test.rb:16:in `test_all'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -38,9 +38,9 @@ NameError: uninitialized constant EegTest::StreamPattern
 
 
   2) Error:
-EegTest#test_all:
-NameError: uninitialized constant EegTest::Url
-    test/unit/EEG_test.rb:16:in `test_all'
+EegTest#test_associations:
+NameError: uninitialized constant EegTest::StreamPattern
+    test/unit/EEG_test.rb:66:in `test_associations'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'

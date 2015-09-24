@@ -1,5 +1,5 @@
 testing
-2015-09-22 06:31:55.480
+2015-09-23 07:32:25.337
 ruby -v -W0 test/unit/iwup_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 $VERBOSE=
@@ -8,13 +8,13 @@ rescue exception #<Errno::ENOENT: No such file or directory - /sbin/iwlist wlan0
 Please enter an ESSID:
 rescue exception #<Errno::ENOENT: No such file or directory - /usr/sbin/wifi-radar>
 
-Run options: --seed 16433
+Run options: --seed 3
 
 # Running:
 
 .....
 
-Finished in 0.004209s, 1188.0672 runs/s, 0.0000 assertions/s.
+Finished in 0.005743s, 870.5498 runs/s, 0.0000 assertions/s.
 
 5 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 
