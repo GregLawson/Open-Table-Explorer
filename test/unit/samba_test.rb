@@ -8,9 +8,9 @@
 require_relative 'test_environment'
 require_relative '../../app/models/samba.rb'
 class SambaTest < TestCase
-include DefaultTests
+#include DefaultTests
 include Samba::Constants
-include TE.model_class?::Examples
+#include TE.model_class?::Examples
 def test_Constants
 	line = Samba::Examples::Comment_line
 	capture = line.capture?(Comment_regexp)
