@@ -173,32 +173,6 @@ def candidate_commands_strings
 		end # case
 	end # map
 end # candidate_commands_strings
-def command_line_parser
-	command_line = self
-	Trollop::Parser.new do
-		banner 'Usage: ' + ' unit_basename subcommand  options args'
-		banner 'Possible unit names:'
-		banner Unit.all_basenames.join(' ,')
-		banner ' subcommands or units:  ' + SUB_COMMANDS.join(', ')
-		banner ' candidate_commands with ' + command_line.number_of_arguments.to_s + ' or variable number of arguments:  '
-		command_line.candidate_commands_strings.each do |candidate_commands_string|
-			banner '   '  + candidate_commands_string
-		end # each
-		banner 'args may be paths, units, branches, etc.'
-		banner 'options:'
-		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
-		opt :test, "Test unit."       # string --name <s>, default nil
-	  stop_on SUB_COMMANDS
-	  end
-end # command_line_parser
-def command_line_opts
-  p = command_line_parser
-	Trollop::with_standard_exception_handling p do
-  o = p.parse @argv
-  raise Trollop::HelpNeeded if @argv.empty? # show help screen
-  o
-end
-end # command_line_opts
 def run(&non_default_actions)
 	done = if block_given? then
 		non_default_actions.call
