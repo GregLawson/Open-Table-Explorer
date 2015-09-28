@@ -135,7 +135,7 @@ def mounted?
 	mtab_grep = ShellCommands.new('grep ' + @mount_point + ' /etc/mtab')
 	mtab_grep.output == ''
 end # mounted?
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def nested_scope_modules?

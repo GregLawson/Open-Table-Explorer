@@ -72,7 +72,7 @@ Test_url_record=Url.find_by_name('nmap_local_network_0')
 end #Examples
 include Examples
 
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 include DefaultAssertions
 module ClassMethods

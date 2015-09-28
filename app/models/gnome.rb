@@ -24,7 +24,7 @@ def ps
 	ps=ShellCommands.new('ps -ef')
 	IO.binwrite(Data_Sources_Dir+'test.ps', ps.output)
 end #lsof
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods

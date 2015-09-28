@@ -126,7 +126,7 @@ end # nmap
 def update_attribute(name, value)
 	instance_variable_set(name, value)
 end # update_attribute
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

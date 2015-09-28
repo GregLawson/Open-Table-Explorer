@@ -62,7 +62,7 @@ end #ruby_mime
 module Constants
 end #Constants
 include Constants
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 #require 'test/unit/assertions.rb'
 module Assertions
 module ClassMethods

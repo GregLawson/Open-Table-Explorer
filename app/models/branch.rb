@@ -97,7 +97,7 @@ def to_s
 		@branch.to_s + '@{' + @age.to_s + '}'
 	end # if
 end # to_s
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 include BranchReference::Constants

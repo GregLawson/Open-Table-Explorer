@@ -132,7 +132,7 @@ def emacs(executable = @executable.unit.model_test_pathname?)
 	puts emacs.command_string
 	emacs.assert_post_conditions
 end # emacs
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods

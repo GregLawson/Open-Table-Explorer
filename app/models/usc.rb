@@ -15,7 +15,7 @@ include Constants
 #Usc_file.gets # attr_reader
 def initialize
 end # initialize
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

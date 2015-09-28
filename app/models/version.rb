@@ -35,7 +35,7 @@ def [](string)
 end # square_brackets
 end # ClassMethods
 extend ClassMethods
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def nested_scope_modules?(context = self)
