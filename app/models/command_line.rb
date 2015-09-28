@@ -184,6 +184,7 @@ def run(&non_default_actions)
 			puts 'number_of_arguments == 0 '
 			puts 'Trollop command_line_opts = ' + command_line_opts.inspect
 			candidate_commands
+			dispatch_one_argument(nil)
 		elsif number_of_arguments == 1 then
 			dispatch_one_argument(arguments[0])
 			candidate_commands
