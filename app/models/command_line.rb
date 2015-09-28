@@ -180,15 +180,12 @@ def run(&non_default_actions)
 		false # non-default commands not done cause they don't exist
 	end # if
 	ret = if !done then
-		if number_of_arguments == 0 then
+		if number_of_arguments == required_arguments(sub_command) then
+			dispatch_one_argument(arguments)
+		elsif number_of_arguments < required_arguments(sub_command) then
 			puts 'number_of_arguments == 0 '
-			puts 'Trollop command_line_opts = ' + command_line_opts.inspect
-			candidate_commands
-			dispatch_one_argument(nil)
-		elsif number_of_arguments == 1 then
-			dispatch_one_argument(arguments[0])
-			candidate_commands
-		elsif number_of_arguments >= 2 then # enough arguments to loop over
+		elsif required_arguments(sub_command) == 0 ||
+		(number_of_arguments % required_arguments(sub_command)) == 0 then
 			arguments.each do |argument|
 				dispatch_one_argument(argument)
 			end # each
