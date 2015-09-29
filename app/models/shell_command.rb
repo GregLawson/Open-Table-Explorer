@@ -30,6 +30,7 @@ def [](command_on_remote)
 end # []
 end # Ssh
 end # Shell
+
 class ShellCommands
 module ClassMethods
 include Shellwords
