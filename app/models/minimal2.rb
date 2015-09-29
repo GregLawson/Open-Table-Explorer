@@ -13,7 +13,7 @@ class Minimal2
 # 	attribute :branch, Symbol
 #	attribute :age, Fixnum, :default => 789
 #	attribute :timestamp, Time, :default => Time.now
-end # values
+	end # values
 module Constants # constant parameters of the type
 end #Constants
 include Constants
@@ -28,6 +28,7 @@ end # Constants
 include Constants
 # attr_reader
 require_relative 'assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
