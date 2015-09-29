@@ -1,9 +1,9 @@
 testing
-2015-09-23 07:42:22.737
+2015-09-28 16:06:00.299
 ruby -v -W0 test/unit/regexp_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
 /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert': undefined method `assertions' for main:Object (NoMethodError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:314:in `assert_includes'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:390:in `assert_global_name'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:315:in `assert_includes'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:391:in `assert_global_name'
 	from test/unit/regexp_test.rb:9:in `<main>'

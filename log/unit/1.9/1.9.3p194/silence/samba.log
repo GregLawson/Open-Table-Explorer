@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:42:44.565
+2015-09-28 19:42:14.096
 ruby -v -W0 test/unit/samba_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -8,12 +8,13 @@ Run options: --seed 3
 
 ..EFE.EEEE..E.
 
-Finished in 1.958879s, 7.1469 runs/s, 91.3788 assertions/s.
+Finished in 1.957721s, 7.1512 runs/s, 91.9437 assertions/s.
 
   1) Error:
 NewTestClass#test_tree:
-NameError: uninitialized constant NewTestClass::Default_workgroup
-    test/unit/samba_test.rb:81:in `test_tree'
+RuntimeError: First argument of assert_include must be an Array or Set, not "IPC$"
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:314:in `assert_includes'
+    test/unit/samba_test.rb:83:in `test_tree'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -38,7 +39,7 @@ NameError: uninitialized constant NewTestClass::Default_workgroup
 
 
   2) Failure:
-NewTestClass#test_Constants [test/unit/samba_test.rb:59]:
+NewTestClass#test_Constants [test/unit/samba_test.rb:58]:
 --- expected
 +++ actual
 @@ -1 +1 @@
@@ -49,7 +50,7 @@ NewTestClass#test_Constants [test/unit/samba_test.rb:59]:
 
   3) Error:
 NewTestClass#test_umount:
-NoMethodError: undefined method `assertions' for #<Samba:0x000000028c8348>
+NoMethodError: undefined method `assertions' for #<Samba:0x00000002111028>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:163:in `assert_equal'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:188:in `assert_unmounted'
@@ -79,8 +80,8 @@ NoMethodError: undefined method `assertions' for #<Samba:0x000000028c8348>
 
   4) Error:
 NewTestClass#test_servers:
-NoMethodError: undefined method `output?' for #<ShellCommands:0x0000000283ced8>
-    test/unit/samba_test.rb:77:in `test_servers'
+NoMethodError: undefined method `output?' for #<ShellCommands:0x00000002364a50>
+    test/unit/samba_test.rb:76:in `test_servers'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -134,8 +135,9 @@ TypeError: can't convert nil into String
 
   6) Error:
 NewTestClass#test_workgroups:
-NameError: uninitialized constant NewTestClass::Default_workgroup
-    test/unit/samba_test.rb:74:in `test_workgroups'
+RuntimeError: First argument of assert_include must be an Array or Set, not "WORKGROUP"
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:314:in `assert_includes'
+    test/unit/samba_test.rb:73:in `test_workgroups'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -161,7 +163,7 @@ NameError: uninitialized constant NewTestClass::Default_workgroup
 
   7) Error:
 NewTestClass#test_mount:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000002783b68>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001e84008>
     test/unit/samba_test.rb:134:in `test_mount'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -188,7 +190,7 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
 
   8) Error:
 NewTestClass#test_mounted?:
-NoMethodError: undefined method `assertions' for #<Samba:0x0000000291fa58>
+NoMethodError: undefined method `assertions' for #<Samba:0x00000001e39e90>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:163:in `assert_equal'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:183:in `assert_mounted'
@@ -215,5 +217,5 @@ NoMethodError: undefined method `assertions' for #<Samba:0x0000000291fa58>
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-14 runs, 179 assertions, 1 failures, 7 errors, 0 skips
+14 runs, 180 assertions, 1 failures, 7 errors, 0 skips
 

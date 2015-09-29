@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:32:10.218
+2015-09-28 16:01:07.483
 ruby -v -W0 test/unit/homerun_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 rescue exception #<Errno::ENOENT: No such file or directory - hdhomerun_config discover>
@@ -10,7 +10,7 @@ Run options: --seed 3
 ...rescue exception #<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>
 FEE..
 
-Finished in 0.011382s, 702.8845 runs/s, 175.7211 assertions/s.
+Finished in 0.012563s, 636.8006 runs/s, 159.2001 assertions/s.
 
   1) Failure:
 HomeRunTest#test_scan [test/unit/homerun_test.rb:17]:
@@ -23,9 +23,9 @@ Expected /^unable to connect to device\n|^$/ to match "#<Errno::ENOENT: No such 
 
   2) Error:
 HomeRunTest#test_initialize:
-NoMethodError: undefined method `assertions' for #<HomeRun:0x00000002a980d8 @id="10311E80">
+NoMethodError: undefined method `assertions' for #<HomeRun:0x00000002bb11e0 @id="10311E80">
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:314:in `assert_includes'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:315:in `assert_includes'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:36:in `assert_post_conditions'
     test/unit/homerun_test.rb:13:in `test_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'

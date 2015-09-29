@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:31:55.119
+2015-09-28 16:00:51.945
 ruby -v -W0 test/unit/frequency_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -8,11 +8,11 @@ Run options: --seed 3
 
 ..EEEEE.
 
-Finished in 0.003668s, 2180.9187 runs/s, 0.0000 assertions/s.
+Finished in 0.003963s, 2018.5892 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_specific__stable_and_working:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000000aefcb8>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001ceb0e8>
     test/unit/frequency_test.rb:7:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -39,7 +39,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   2) Error:
 NewTestClass#test_id_equal:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000000af4f60>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001cf3f90>
     test/unit/frequency_test.rb:7:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -66,7 +66,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   3) Error:
 NewTestClass#test_class_name:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000000ca5288>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001cf7820>
     test/unit/frequency_test.rb:7:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -93,7 +93,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   4) Error:
 NewTestClass#test_general_associations:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000000c1b498>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001cf5de0>
     test/unit/frequency_test.rb:7:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -120,7 +120,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   5) Error:
 NewTestClass#test_aaa_test_new_assertions_:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000000c1a408>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001cfc028>
     test/unit/frequency_test.rb:7:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'

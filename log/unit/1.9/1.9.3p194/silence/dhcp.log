@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:31:41.741
+2015-09-28 16:00:37.955
 ruby -v -W0 test/unit/dhcp_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -8,7 +8,7 @@ Run options: --seed 3
 
 ....$ /sbin/dhclient -v eth0
 @errors="Internet Systems Consortium DHCP Client 4.3.2\nCopyright 2004-2015 Internet Systems Consortium.\nAll rights reserved.\nFor info, please visit https://www.isc.org/software/dhcp/\n\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\nCorrupt lease file - possible data loss!\ncan't create /var/lib/dhcp/dhclient.leases: Permission denied\nRTNETLINK answers: Operation not permitted\nOpen a socket for LPF: Operation not permitted\n\nIf you think you have received this message due to a bug rather\nthan a configuration issue please read the section on submitting\nbugs on either our web page at www.isc.org or in the README file\nbefore submitting a bug.  These pages explain the proper\nprocess and the information we find helpful for debugging..\n\nexiting.\n"
-@process_status=#<Process::Status: pid 32750 exit 1>
+@process_status=#<Process::Status: pid 4372 exit 1>
 Internet Systems Consortium DHCP Client 4.3.2
 Copyright 2004-2015 Internet Systems Consortium.
 All rights reserved.
@@ -40,7 +40,7 @@ process and the information we find helpful for debugging..
 exiting.
 F.
 
-Finished in 0.396854s, 15.1189 runs/s, 5.0396 assertions/s.
+Finished in 0.321957s, 18.6360 runs/s, 6.2120 assertions/s.
 
   1) Failure:
 DHCPTest#test_dhclient [test/unit/dhcp_test.rb:9]:

@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:36:26.117
+2015-09-28 16:01:44.309
 ruby -v -W0 test/unit/parse_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -8,11 +8,11 @@ Run options: --seed 3
 
 .............E.............................E.
 
-Finished in 0.041726s, 1078.4654 runs/s, 2037.1012 assertions/s.
+Finished in 0.041565s, 1082.6303 runs/s, 2044.9683 assertions/s.
 
   1) Error:
 CaptureTest#test_Capture_Examples:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000003305630>
+NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000002fc2590>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
@@ -43,7 +43,7 @@ NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000003305630
 
   2) Error:
 CaptureTest#test_assert_success:
-NoMethodError: undefined method `assertions' for #<MatchCapture:0x000000039f11d8>
+NoMethodError: undefined method `assertions' for #<MatchCapture:0x00000002c6f6e0>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:145:in `assert_success'
     test/unit/parse_test.rb:246:in `test_assert_success'

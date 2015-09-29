@@ -1,14 +1,14 @@
 testing
-2015-09-23 07:42:30.884
+2015-09-28 16:06:08.876
 ruby -v -W0 test/unit/repository_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
 
 # Running:
 
-...E.EE....EEE...EE..E...
+...E.EE.E..EEE..EEE..E...
 
-Finished in 2.295214s, 10.8922 runs/s, 15.6848 assertions/s.
+Finished in 2.161859s, 11.5641 runs/s, 5.5508 assertions/s.
 rescue exception #<Errno::ENOENT: No such file or directory - chdir>
 
   1) Error:
@@ -41,7 +41,7 @@ NoMethodError: undefined method `assert_post_conditions' for ## master
 
   2) Error:
 NewTestClass#test_git_parse:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000018173c8>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001c34f28>
     test/unit/repository_test.rb:160:in `test_git_parse'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -68,13 +68,10 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
 
   3) Error:
 NewTestClass#test_initialize:
-NoMethodError: undefined method `assertions' for #<Repository:0x00000001aac2f0>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:483:in `assert_pathname_exists'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:35:in `assert_pre_conditions'
-    test/unit/repository_test.rb:76:in `test_initialize'
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001d57b80>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:485:in `assert_pathname_exists'
+    test/unit/repository_test.rb:74:in `test_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -99,6 +96,35 @@ NoMethodError: undefined method `assertions' for #<Repository:0x00000001aac2f0>
 
 
   4) Error:
+NewTestClass#test_create_empty:
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001a833c8>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:485:in `assert_pathname_exists'
+    test/unit/repository_test.rb:49:in `test_create_empty'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  5) Error:
 NewTestClass#test_corruption_fsck:
 NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
     test/unit/repository_test.rb:95:in `test_corruption_fsck'
@@ -125,7 +151,7 @@ NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  5) Error:
+  6) Error:
 NewTestClass#test_Repository_git_command:
 NoMethodError: undefined method `assert_post_conditions' for   master
 * passed
@@ -154,7 +180,7 @@ NoMethodError: undefined method `assert_post_conditions' for   master
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  6) Error:
+  7) Error:
 NewTestClass#test_corruption_gc:
 NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
     test/unit/repository_test.rb:103:in `test_corruption_gc'
@@ -181,9 +207,41 @@ NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  7) Error:
+  8) Error:
+NewTestClass#test_delete_existing:
+Grit::InvalidGitRepositoryError: /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository2015-09-28_16.06.06.216
+    /var/lib/gems/1.9.1/gems/grit-2.5.0/lib/grit/repo.rb:51:in `initialize'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:106:in `new'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:106:in `initialize'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:72:in `new'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:72:in `create_if_missing'
+    test/unit/repository_test.rb:63:in `test_delete_existing'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  9) Error:
 NewTestClass#test_revert_changes:
-NoMethodError: undefined method `assert_post_conditions' for HEAD is now at c53d014 create_empty initial commit of README
+NoMethodError: undefined method `assert_post_conditions' for HEAD is now at 7ea141c create_empty initial commit of README
 :ShellCommands
     test/unit/repository_test.rb:136:in `test_revert_changes'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -209,7 +267,7 @@ NoMethodError: undefined method `assert_post_conditions' for HEAD is now at c53d
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  8) Error:
+ 10) Error:
 NewTestClass#test_force_change:
 NoMethodError: undefined method `assertions' for :Repository
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
@@ -239,15 +297,12 @@ NoMethodError: undefined method `assertions' for :Repository
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  9) Error:
+ 11) Error:
 NewTestClass#test_Constants:
-NoMethodError: undefined method `assertions' for #<Repository:0x00000001f9d9f8>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:483:in `assert_pathname_exists'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:35:in `assert_pre_conditions'
-    test/unit/repository_test.rb:34:in `test_Constants'
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000020f5a80>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:485:in `assert_pathname_exists'
+    test/unit/repository_test.rb:23:in `test_Constants'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -270,5 +325,5 @@ NoMethodError: undefined method `assertions' for #<Repository:0x00000001f9d9f8>
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-25 runs, 36 assertions, 0 failures, 9 errors, 0 skips
+25 runs, 12 assertions, 0 failures, 11 errors, 0 skips
 

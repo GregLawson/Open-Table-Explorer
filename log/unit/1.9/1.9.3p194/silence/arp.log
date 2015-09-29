@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:31:19.856
+2015-09-28 16:00:14.799
 ruby -v -W0 test/unit/arp_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -7,16 +7,18 @@ Run options: --seed 3
 # Running:
 
 ..EIP address       HW type     Flags       HW address            Mask     Device
-192.168.0.28     0x1         0x2         c4:8e:8f:76:a0:3b     *        wlan0
-192.168.0.1      0x1         0x2         40:70:09:93:05:67     *        wlan0
-192.168.1.1      0x1         0x2         00:13:10:17:b5:99     *        eth0
 192.168.1.115    0x1         0x2         04:7d:7b:51:ed:87     *        eth0
+192.168.0.25     0x1         0x2         90:b6:86:2c:8c:4c     *        wlan0
 192.168.0.6      0x1         0x0         00:00:00:00:00:00     *        wlan0
 192.168.0.12     0x1         0x2         00:10:75:41:41:d3     *        wlan0
+192.168.1.1      0x1         0x2         00:13:10:17:b5:99     *        eth0
+192.168.0.1      0x1         0x2         40:70:09:93:05:67     *        wlan0
+192.168.0.3      0x1         0x2         00:50:b6:0f:ce:8d     *        wlan0
+192.168.0.28     0x1         0x2         c4:8e:8f:76:a0:3b     *        wlan0
 
 F..
 
-Finished in 0.030278s, 198.1647 runs/s, 66.0549 assertions/s.
+Finished in 0.065722s, 91.2937 runs/s, 30.4312 assertions/s.
 
   1) Error:
 NewTestClass#test_MAC:

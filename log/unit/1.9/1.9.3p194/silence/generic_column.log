@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:31:56.572
+2015-09-28 16:00:53.387
 ruby -v -W0 test/unit/generic_column_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -8,7 +8,7 @@ Run options: --seed 3
 
 ...........
 
-Finished in 0.011076s, 993.1720 runs/s, 4514.4183 assertions/s.
+Finished in 0.011434s, 962.0598 runs/s, 4372.9990 assertions/s.
 
 11 runs, 50 assertions, 0 failures, 0 errors, 0 skips
 

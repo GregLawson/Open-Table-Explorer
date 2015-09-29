@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:42:50.447
+2015-09-28 16:06:27.787
 ruby -v -W0 test/unit/stream_method_argument_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 

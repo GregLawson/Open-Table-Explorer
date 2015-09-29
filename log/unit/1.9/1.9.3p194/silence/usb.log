@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:43:37.857
+2015-09-28 16:07:17.441
 ruby -v -W0 test/unit/usb_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 

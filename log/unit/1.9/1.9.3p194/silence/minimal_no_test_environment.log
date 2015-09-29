@@ -1,9 +1,14 @@
 testing
-2015-09-23 07:32:33.730
+2015-09-28 16:01:31.651
 ruby -v -W0 test/unit/minimal_no_test_environment_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 3
 
-/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:76:in `<module:RubyAssertions>': uninitialized constant RubyAssertions::AssertionsModule (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:75:in `<top (required)>'
-	from test/unit/minimal_no_test_environment_test.rb:11:in `require_relative'
-	from test/unit/minimal_no_test_environment_test.rb:11:in `<main>'
+# Running:
+
+..
+
+Finished in 0.002472s, 809.1597 runs/s, 1213.7395 assertions/s.
+
+2 runs, 3 assertions, 0 failures, 0 errors, 0 skips
+

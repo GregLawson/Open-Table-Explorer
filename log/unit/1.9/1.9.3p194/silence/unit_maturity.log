@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:43:31.813
+2015-09-28 16:07:10.543
 ruby -v -W0 test/unit/unit_maturity_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -8,7 +8,7 @@ Run options: --seed 3
 
 ...FFE.FF...E.
 
-Finished in 0.676960s, 20.6807 runs/s, 70.9052 assertions/s.
+Finished in 0.804964s, 17.3921 runs/s, 59.6300 assertions/s.
 
   1) Failure:
 NewTestClass#test_bracketing_versions? [test/unit/unit_maturity_test.rb:167]:
@@ -68,8 +68,12 @@ Expected false to be nil.
 
   6) Error:
 NewTestClass#test_deserving_branch?:
-NoMethodError: undefined method `data_source_directory?' for #<NewTestClass:0x00000002615e98>
-    test/unit/unit_maturity_test.rb:66:in `block in test_deserving_branch?'
+NoMethodError: Expected "test/data_source//repository//success.rb" to respond to #to_hash
+    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:197:in `coerce'
+    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:170:in `set'
+    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/instance_methods.rb:17:in `initialize'
+    test/unit/unit_maturity_test.rb:67:in `new'
+    test/unit/unit_maturity_test.rb:67:in `block in test_deserving_branch?'
     test/unit/unit_maturity_test.rb:65:in `each_pair'
     test/unit/unit_maturity_test.rb:65:in `test_deserving_branch?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'

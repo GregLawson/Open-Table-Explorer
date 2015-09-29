@@ -1,5 +1,5 @@
 testing
-2015-09-23 07:31:23.454
+2015-09-28 16:00:18.534
 ruby -v -W0 test/unit/battery_measurement_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 3
@@ -8,11 +8,11 @@ Run options: --seed 3
 
 ..EE...
 
-Finished in 0.004423s, 1582.7958 runs/s, 0.0000 assertions/s.
+Finished in 0.004196s, 1668.2026 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_all:
-NoMethodError: undefined method `model_class?' for #<NewTestClass:0x00000000f425b8>
+NoMethodError: undefined method `model_class?' for #<NewTestClass:0x00000000d930a0>
     test/unit/battery_measurement_test.rb:13:in `test_all'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
