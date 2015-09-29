@@ -309,7 +309,9 @@ def assert_overlap(enum1,enum2)
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
 def assert_includes(list, element,  message = '')
-	raise "Second argument of assert_include must be an Array or Set" if !(list.instance_of?(Array) || list.instance_of?(Set))
+	message = "First argument of assert_include must be an Array or Set"
+	message += ', not ' + list.inspect
+	fail message if !(list.instance_of?(Array) || list.instance_of?(Set))
 	message = message + element.inspect
 	message += " is not in list " + list.inspect
 	assert(list.include?(element),message)
@@ -474,6 +476,7 @@ def missing_file_message(pathname)
 	else
 		existing_dir = nil
 		pathname.ascend { |f| existing_dir = f and break if f.exist? }
+		'pathname = ' + pathname + " does not exist\n" +
 		'parent directory ' + 
 		existing_dir.to_s + 
 		' does exists containing ' + 

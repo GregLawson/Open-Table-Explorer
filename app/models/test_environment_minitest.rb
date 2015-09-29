@@ -27,6 +27,12 @@ def assert_method(method_name, scope = self)
 	methods = scope.instance_methods(false)
 	assert(methods.include?(method_name), methods)
 end # method
-def assert_included_modules(module_name, scope = self)
-	assert(scope.included_modules.include?(module_name))
+def assert_included_modules(module_name, scope = self, message = '')
+	message += 'In assert_included_modules, ' + module_name.to_s + ' is not included in ' + scope.inspect
+	if scope.included_modules.empty? then
+		message += ' which does not include any modules.'
+	else
+		message += ' which includes ' + scope.included_modules.inspect
+	end # if
+	assert(scope.included_modules.include?(module_name), message)
 end # assert_included_modules

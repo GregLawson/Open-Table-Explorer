@@ -41,6 +41,16 @@ end #test_instance_method
 def self.test_class_method
 end #test_class_method
 end #TestClass
+def test_requires
+	assert_included_modules(:Fish, MiniTest::Assertions)
+	assert_included_modules(:RubyAssertions, MiniTest::Assertions)
+	assert(MiniTest::Assertions.included_modules.empty?, MiniTest::Assertions.included_modules)
+	assert(MiniTest::Unit.included_modules.include?(:RubyAssertions), MiniTest::Unit.included_modules.inspect)
+	assert_included_modules(MiniTest::Assertions, :RubyAssertions)
+	assert(MiniTest::Assertions.instance_methods.include?(:assert_block), MiniTest::Assertions.instance_methods.inspect)
+	assert(AssertionsModule.instance_methods.include?(:assert_block), AssertionsModule.instance_methods.inspect)
+	assert(RubyAssertions.instance_methods.include?(:assert_block), RubyAssertions.instance_methods.inspect)
+end # requires
 def test_warn
 end #warn
 def test_info
