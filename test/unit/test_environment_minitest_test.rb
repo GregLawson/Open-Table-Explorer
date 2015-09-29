@@ -9,11 +9,7 @@ require "minitest/autorun"
 require_relative '../../app/models/test_environment_minitest.rb'
 class TestEnvironmentMinitestTest < TestCase
 include AssertionsModule
-include RubyAssertions
 extend AssertionsModule
-extend RubyAssertions
-assert_included_modules(:RubyAssertions, TestEnvironmentMinitestTest)
-assert_included_modules(:RubyAssertions, self)
 def test_AssertionsModule
 	message = 'AssertionsModule defined'
 	assert_equal(MiniTest::Assertions, AssertionsModule, message)
@@ -23,15 +19,6 @@ def test_AssertionsModule
 	exception = Exception.new(message)
 	raise exception if !AssertionsModule.instance_methods(false).include?(:assert_equal)
 end # AssertionsModule
-def test_RubyAssertions
-	message = "\n RubyAssertions.methods = " + RubyAssertions.methods(false).inspect
-	exception = Exception.new(message)
-	raise exception if !RubyAssertions.instance_methods(false).include?(:refute_empty)
-	refute_empty([1])
-end # RubyAssertions
-def test_ruby_assertions
-	refute_empty([1])
-end # ruby_assertions
 def test_constant_scope
 	fail 'in test_environment_minitest.rb AssertionsModule not found in ' + Module.constants.inspect unless Module.constants.include?(:AssertionsModule)
 	assert_global_name(:AssertionsModule)

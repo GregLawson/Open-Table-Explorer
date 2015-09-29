@@ -8,6 +8,11 @@
 require_relative '../../app/models/test_environment_ruby.rb'
 require_relative '../../app/models/default_test_case.rb'
 class TestEnvironmentRubyTest < TestCase
+include RubyAssertions
+extend RubyAssertions
+assert_included_modules(:RubyAssertions, TestEnvironmentMinitestTest)
+assert_included_modules(:RubyAssertions, self)
+def test_AssertionsModule
 	message = 'AssertionsModule defined'
 	assert_equal(MiniTest::Assertions, AssertionsModule, message)
 	#puts "\nin test_environment_minitest.rb, Module.constants = " + Module.constants.inspect
@@ -48,4 +53,4 @@ rescue Exception => exception
 	assert_includes(exception.class.ancestors, Exception)
 	assert_instance_of(AssertionFailedError, exception)
 end # AssertionFailedError
-end # MinitestTest
+end # TestEnvironmentRuby
