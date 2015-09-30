@@ -10,6 +10,18 @@ require_relative '../app/models/unit.rb' # before command_line
 require_relative "../app/models/#{Unit::Executable.model_basename}"
 require_relative '../app/models/command_line.rb'
 class CommandLine  < Command
+def help_banner_string
+		ret = 'Usage: ' + ' unit_basename subcommand  options args'
+		ret += 'Possible unit names:'
+		ret += Unit.all_basenames.join(' ,')
+		ret += ' subcommands or units:  ' + SUB_COMMANDS.join(', ')
+		ret += ' candidate_commands with ' + command_line.number_of_arguments.to_s + ' or variable number of arguments:  '
+		command_line.candidate_commands_strings.each do |candidate_commands_string|
+			ret += '   '  + candidate_commands_string
+		end # each
+		ret += 'args may be paths, units, branches, etc.'
+		ret += 'options:'
+end # help_string
 def command_line_parser
 	command_line = self
 	Trollop::Parser.new do
