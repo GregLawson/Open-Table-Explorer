@@ -9,8 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/samba.rb'
 class SambaTest < TestCase
 #include DefaultTests
-include Samba::Constants
-#include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_Constants
 	line = Samba::Examples::Comment_line
 	capture = line.capture?(Comment_regexp)
@@ -80,7 +79,8 @@ end # servers
 def test_tree
 	workgroup = Default_workgroup
 	server = ''
-	assert_includes(Default_share, Samba.tree(Samba::Examples::Default_workgroup, Samba::Examples::Default_server))
+	assert_instance_of(Hash, Samba.tree(Samba::Examples::Default_workgroup, Samba::Examples::Default_server), Smb_tree.inspect)
+	assert_includes(Default_share, Samba.tree(Samba::Examples::Default_workgroup, Samba::Examples::Default_server).values, Smb_tree.inspect)
 end # tree
 def test_parse_options
 	options_string = 'ip=1.2.3.4,unix'
