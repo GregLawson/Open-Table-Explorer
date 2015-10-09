@@ -9,7 +9,8 @@ class Usc
 module ClassMethods
 end # ClassMethods
 module Constants
-Usc_file = File.new('/dev/ttyUSB0')
+Usc_filename = '/dev/ttyUSB0'
+Usc_file = File.new(Usc_filename)
 end # Constants
 include Constants
 #Usc_file.gets # attr_reader
