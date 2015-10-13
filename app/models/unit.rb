@@ -32,7 +32,7 @@ def all_basenames
 	Unit.all.map {|u| u.model_basename}.uniq.sort
 end # all_basenames
 def data_source_directories?
-	'test/data_source/'
+	'test/data_sources/'
 end #data_source_directory?
 end #ClassMethods
 extend ClassMethods
@@ -70,7 +70,7 @@ def ==(other)
 	end #if
 end #==
 def data_source_directory?
-	Unit.data_source_directories? + '/' + @model_basename.to_s + '/'
+	@project_root_directory + Unit.data_source_directories? + @model_basename.to_s + '/'
 end #data_source_directory?
 def pathname_pattern?(file_spec, test = nil)
 	raise "project_root_dir" if @project_root_dir.nil?

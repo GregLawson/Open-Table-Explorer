@@ -40,7 +40,7 @@ end # all
 def test_all_basenames
 end # all_basenames
 def test_Unit_data_source_directory?
-	assert_equal('test/data_source/', Unit.data_source_directories?)
+	assert_equal('test/data_sources/', Unit.data_source_directories?)
 end #data_source_directory?
 def test_initialize
 	assert_respond_to(UnboundedFixnumUnit, :model_basename)
