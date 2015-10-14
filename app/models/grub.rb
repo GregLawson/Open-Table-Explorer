@@ -21,7 +21,9 @@ module Constants # constant parameters of the type
 Generated_file = Unit::Executable.data_sources_directory? + '/generated.cfg'
 Config_run = IO.read(Generated_file)
 Indent = /^\s*/.capture(:indent)
-Config_pattern = Indent * /linux\s/ * (/\/boot/.group * Regexp::Optional).capture(:boot) * /\/vmlinuz-/ * Version::Version_regexp * ' root=UUID='
+UUID_regexp =/[-0-9a-fA-F]{36}/.capture(:uuid)
+Config_pattern = Indent * /linux\s/ * (/\/boot/.group * Regexp::Optional).capture(:boot) * /\/vmlinuz-/ * Version::Version_regexp * ' root=UUID=' * UUID_regexp
+Search_regexp = Indent * /search\s+--no-floppy/ * /.+/ * UUID_regexp
 end #Constants
 include Constants
 module ClassMethods
