@@ -9,6 +9,6 @@ gem 'libusb'
 gem 'multi_xml'
 gem 'nokogiri'
 gem 'ox'
-gem 'libxml-ruby'
+# gem 'libxml-ruby'
 gem 'oga'
 # gem "rails"
