@@ -7,19 +7,20 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/tax_form.rb'
+require_relative '../assertions/shell_command_assertions.rb'
 #require_relative '../assertions/regexp_parse_assertions.rb'
 class TaxFormTest < TestCase
 def model_class?
 	OpenTableExplorer::Finance::TaxForm
 end #model_class?
-include DefaultTests
+#include DefaultTests
 include OpenTableExplorer::Finance::Constants
 extend OpenTableExplorer::Finance::Constants
 include OpenTableExplorer::Finance::TaxForm::Examples
 def test_Constants
 	refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
-
+	assert_pathname_exists(IRS_pdf_directory)
 end #Constants
 def test_open_tax_solver_distribution_directories
 	refute_empty(Dir[Downloaded_src_dir+"OpenTaxSolver#{Default_tax_year}*-*"])
@@ -83,7 +84,7 @@ def test_example
 	US1040_example.build.assert_build.assert_pdf_to_jpeg
 	CA540_example.build
 	CA540_example.assert_open_tax_solver
-	CA540_example.assert_ots_to_json
+#	CA540_example.assert_ots_to_json
 	US1040_example.commit_minor_change!(Dir['test/data_sources/tax_form/*/*'], 'fixup! TaxForm update timestamps')
 	CA540_example.build.assert_build
 	CA540_example.build.assert_build.assert_ots_to_json
@@ -93,9 +94,6 @@ def test_user
 	US1040_user.build.assert_build.assert_pdf_to_jpeg
 #	CA540_user.build.assert_ots_to_json
 end #user
-def test_example1
-	US1040_example1.build.assert_open_tax_solver
-end #build
 def test_template
 	US1040_template.build.assert_open_tax_solver
 #	CA540_template.build.assert_ots_to_json
@@ -170,16 +168,45 @@ end #run_open_tax_solver
 #	US1040_user.run_json_to_fdf.assert_json_to_fdf
 #	CA540_user.run_json_to_fdf.assert_json_to_fdf
 #end #run_json_to_fdf
-def test_run_fdf_to_pdf
-	Dir[US1040_example.output_xfdf_glob].each do |xfdf_file|
-		jurisdiction_pattern = /#{@jurisdiction}/.capture(:jurisdiction)/
-		form_pattern = /#{@form}/.capture(:form)
-		taxpayer_pattern = /#{@taxpayer}/.capture(:taxpayer)
-		schedule_pattern = /_f#{@form}/ * /[a-z]*/.capture(:schedule) * /.xfdf/
-		xfdf_file_pattern = jurisdiction_pattern * /_/ * form_pattern * /_/ * taxpayer_pattern * schedule_pattern
-		xfdf_file.capture?(xfdf_file_pattern)
+def test_generated_xfdf_files
+	assert(!Dir[US1040_example.output_xfdf_glob].empty?, Dir[US1040_example.output_xfdf_glob].inspect)
+	assert(!Dir[CA540_example.output_xfdf_glob].empty?, Dir[CA540_example.output_xfdf_glob].inspect)
+	assert(!Dir[US1040_user.output_xfdf_glob].empty?, Dir[US1040_user.output_xfdf_glob].inspect)
+	assert(!Dir[CA540_user.output_xfdf_glob].empty?, Dir[CA540_user.output_xfdf_glob].inspect)
+	assert(!US1040_example.generated_xfdf_files.empty?, Dir[US1040_example.output_xfdf_glob].inspect)
+	assert(!CA540_example.generated_xfdf_files.empty?, Dir[CA540_example.output_xfdf_glob].inspect)
+	assert(!US1040_user.generated_xfdf_files.empty?, Dir[US1040_user.output_xfdf_glob].inspect)
+	assert(!CA540_user.generated_xfdf_files.empty?, Dir[CA540_user.output_xfdf_glob].inspect)
+	assert_instance_of(Array, US1040_example.generated_xfdf_files)
+	US1040_example.generated_xfdf_files.each do |xdf_capture|
+		assert_kind_of(Capture, xdf_capture, US1040_example.generated_xfdf_files)
 	end # each
+end # generated_xfdf_files
+def test_run_fdf_to_pdf
+	US1040_user.generated_xfdf_files.map do |xdf_capture|
+		matching_pdf_filename = 'f' + xdf_capture.output?[:form].to_s  + xdf_capture.output?[:form_suffix].to_s + '--' + Default_tax_year.to_s+ '.pdf'
+		matching_pdf_file = IRS_pdf_directory + matching_pdf_filename
+		assert(File.exist?(matching_pdf_file), matching_pdf_file + "\n" + xdf_capture.inspect)
+		matching_pdf_filled_in_file = IRS_pdf_directory + matching_pdf_filename
+		assert(File.exist?(matching_pdf_file), matching_pdf_file + "\n" + xdf_capture.inspect)
+	end # each
+	US1040_user.run_fdf_to_pdf.assert_fdf_to_pdf
+	CA540_user.run_fdf_to_pdf.assert_fdf_to_pdf
 end # run_fdf_to_pdf
+def test_filled_in_pdf_files
+	assert(!US1040_example.filled_in_pdf_files.empty?, Dir[US1040_example.output_xfdf_glob].inspect)
+	assert(!CA540_example.filled_in_pdf_files.empty?, Dir[CA540_example.output_xfdf_glob].inspect)
+	assert(!US1040_user.filled_in_pdf_files.empty?, Dir[US1040_user.output_xfdf_glob].inspect)
+	assert(!CA540_user.filled_in_pdf_files.empty?, Dir[CA540_user.output_xfdf_glob].inspect)
+	US1040_user.filled_in_pdf_files.each do |filled_in_pdf_file|
+#		assert(File.exist?(filled_in_pdf_file), filled_in_pdf_file.inspect)
+		ShellCommands.new('evince ' + filled_in_pdf_file).assert_pre_conditions
+	end # each
+	CA540_user.filled_in_pdf_files.each do |filled_in_pdf_file|
+		assert(File.exist?(filled_in_pdf_file), filled_in_pdf_file + CA540_user.generated_xfdf_files.inspect)
+		ShellCommands.new('evince ' + filled_in_pdf_file).assert_pre_conditions
+	end # each
+end # filled_in_pdf_files
 def 	test_run_pdf_to_jpeg
 	output_pdf_pathname=Pathname.new(File.expand_path(US1040_example.output_pdf))
 	assert_instance_of(Pathname, output_pdf_pathname)
@@ -216,7 +243,7 @@ def test_assert_open_tax_solver
 		# fed not found
 		message+="\nfed input not found"
 		message+="\nUS1040_example.open_tax_solver_output=#{US1040_example.open_tax_solver_output}\n"
-		CA540_example.open_tax_solver_run.assert_post_conditions('else peculiar_status '+message)
+		CA540_example.open_tax_solver_run.assert_post_conditions('peculiar_status == 1 '+message)
 	when 2 then
 		assert_pathname_exists(CA540_example.open_tax_solver_output)
 		assert_pathname_exists(CA540_example.open_tax_solver_sysout)
@@ -239,7 +266,7 @@ def test_assert_pdf_to_jpeg
 end #assert_json_to_fdf
 def test_assert_build
 	CA540_example.build.assert_build
-	CA540_example.build.assert_build.assert_ots_to_json
+#	CA540_example.build.assert_build.assert_ots_to_json
 end #build
 def test_Examples
 	OpenTableExplorer::Finance::TaxForm::Examples.constants.each do |e|

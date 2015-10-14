@@ -17,13 +17,14 @@ module OpenTableExplorer
 extend AssertionsModule
 module Finance
 module Constants
+IRS_pdf_directory = Pathname.new('../IRS').expand_path.to_s + '/'
 OTS_example_directories = Pathname.new('test/data_sources/tax_form/').expand_path.to_s
 Downloaded_src_dir = FilePattern.repository_dir?($0) + '/../'
 #Possible_tax_years=[2011, 2012, 2013, 2014].sort
 Possible_tax_years=[2014].sort
 Default_tax_year = Possible_tax_years[-1]
 
-Open_Tax_Filler_Directory=Downloaded_src_dir+'OpenTaxFormFiller'
+Open_Tax_Filler_Directory = Downloaded_src_dir+'OpenTaxFormFiller'
 OpenTaxSolver_directories_glob = Downloaded_src_dir + "OpenTaxSolver#{Default_tax_year}*-*"
 OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 #Open_tax_solver_examples_directory="#{Open_tax_solver_directory}/examples_and_templates/"
@@ -79,7 +80,7 @@ def initialize(taxpayer, #='example',
 	@form_filename="#{@jurisdiction.to_s}_#{@form}"
 	@open_tax_solver_form_directory = @open_tax_solver_all_form_directory + @form_filename + '/'
 	@taxpayer_basename="#{@form_filename}_#{@taxpayer}"
-	@taxpayer_basename_with_year=@form_filename+'_'+@tax_year.to_s+'_'+@taxpayer
+	@taxpayer_basename_with_year=@form_filename+'_'+ @tax_year.to_s+'_'+@taxpayer
 	if File.exists?(@open_tax_solver_form_directory + '/' + @taxpayer_basename_with_year+'.txt') then
 		@taxpayer_basename = @taxpayer_basename_with_year
 	end #if
@@ -140,22 +141,46 @@ def run_json_to_fdf
 	@json_to_fdf_run=ShellCommands.new(command)
 	self
 end #run_json_to_fdf
+def generated_xfdf_files
+	Dir[output_xfdf_glob].map do |xfdf_file|
+		jurisdiction_pattern = /#{@jurisdiction}/.capture(:jurisdiction)
+		form_pattern = /#{@form}/.capture(:form)
+		taxpayer_pattern = /#{@taxpayer}/.capture(:taxpayer)
+		optional_year = (/#{@tax_year.to_s}/.capture(:tax_year) * '_').group * Regexp::Optional
+		schedule_pattern = /_/* /[a-z]*/.capture(:form_prefix) * /#{@form}/ * /[a-z]*/.capture(:form_suffix) * /.xfdf/
+		xfdf_file_pattern = jurisdiction_pattern * /_/ * form_pattern * /_/ * optional_year * taxpayer_pattern * schedule_pattern
+		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
+	end # map
+end # generated_xfdf_files
 def run_fdf_to_pdf
+# misses ./bin/fill_form_CA_540_2014 examples_and_templates/CA_540/CA_540_2014_greg_out.txt
+# probably year in filename for state but not federal.
+	xfdf_script_filename = @jurisdiction.to_s + '_' + @form + '_' + @tax_year.to_s
+	@xfdf_script = '~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + @jurisdiction.to_s + '_' + @form + '_' + @tax_year.to_s
+	@script_run = ShellCommands.new(@xfdf_script + ' ' +@open_tax_solver_output)
 	@fdf_to_pdf_run = Dir[@output_xfdf_glob].map do |xfdf_file|
-		jurisdiction_pattern = /#{@jurisdiction}/.capture(:jurisdiction)/
+		jurisdiction_pattern = /#{@jurisdiction}/.capture(:jurisdiction)
 		form_pattern = /#{@form}/.capture(:form)
 		taxpayer_pattern = /#{@taxpayer}/.capture(:taxpayer)
 		schedule_pattern = /_f#{@form}/ * /[a-z]*/.capture(:schedule) * /.xfdf/
 		xfdf_file_pattern = jurisdiction_pattern * /_/ * form_pattern * /_/ * taxpayer_pattern * schedule_pattern
-		xfdf_file.capture(xfdf_file_pattern)
-		ShellCommands.new("pdftk #{Open_Tax_Filler_Directory}/#{@tax_year}/PDF/#{@otff_form}.pdf fill_form #{xfdf_file} output #{xfdf_file}.pdf")
+		xfdf_file.capture?(xfdf_file_pattern)
+		matching_pdf_file = "#{IRS_pdf_directory}/#{@tax_year}--#{@otff_form}.pdf"
+		ShellCommands.new("pdftk #{IRS_pdf_directory}/#{@tax_year}--#{@otff_form}.pdf fill_form #{xfdf_file} output #{xfdf_file}.pdf")
 	end # each
-#	assert_pathname_exists(@open_tax_solver_form_directory, @open_tax_solver_form_directory+' does not exist')
-#	assert_pathname_exists(@open_tax_solver_form_directory+'Federal_f1040_otff.pdf', Dir[@open_tax_solver_form_directory+'*'].join(';'))
-	@evince_run=ShellCommands.new("evince #{xfdf_file}.pdf") if $VERBOSE
-	@evince_run.assert_post_conditions if $VERBOSE
 	self
 end # run_fdf_to_pdf
+def filled_in_pdf_files
+	generated_xfdf_files.map do |xdf_capture|
+		ots = xdf_capture.output?[:jurisdiction].to_s + '_' + xdf_capture.output?[:form].to_s
+#		'US_1040/US_1040_greg_f1040sd.pdf'	
+		matching_pdf_filename = ots + '/' + ots + '_' + xdf_capture.output?[:taxpayer].to_s + '_'
+		matching_pdf_filename += xdf_capture.output?[:form_prefix].to_s
+		matching_pdf_filename += xdf_capture.output?[:form].to_s
+		matching_pdf_filename +=xdf_capture.output?[:form_suffix].to_s + '.pdf'
+		'~/Desktop/src/OpenTaxSolver2014_12.01-forms/examples_and_templates/' + matching_pdf_filename
+	end # map
+end # filled_in_pdf_files
 def run_pdf_to_jpeg
 	output_pdf_pathname=Pathname.new(File.expand_path(@output_pdf))
 	assert_instance_of(Pathname, output_pdf_pathname)
@@ -174,8 +199,8 @@ module ClassMethods
 
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-	refute_nil(ENV['USER'], "ENV['USER']\n"+message) # defined inXfce & Gnome
-	warn {refute_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } #not defined in Xfce.
+	refute_nil(ENV['USER'], "ENV['USER']\n" + message) # defined in Xfce & Gnome
+	warn {refute_nil(ENV['USERNAME'], "ENV['USERNAME']\n"+message) } # not defined in Xfce.
 	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Downloaded_src_dir)
 	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
 	assert_directory_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
@@ -213,7 +238,7 @@ def assert_open_tax_solver
 	else
 		message="file=#{@open_tax_solver_sysout} does not exist"
 	end #if
-	message+=@open_tax_solver_run.errors
+	message += @open_tax_solver_run.errors
 	@open_tax_solver_run.puts
 	puts "peculiar_status=#{peculiar_status}"
 	puts "message='#{message}'"
@@ -241,7 +266,8 @@ end #assert_open_tax_solver
 #	@json_to_fdf_run.assert_post_conditions
 #end #assert_json_to_fdf
 def assert_fdf_to_pdf
-	@fdf_to_pdf_run.assert_post_conditions
+	@script_run.assert_post_conditions
+	assert(File.exist?(@xfdf_script), @xfdf_script)
 end #assert_json_to_fdf
 def assert_pdf_to_jpeg
 	@pdf_to_jpeg_run.assert_post_conditions
@@ -259,13 +285,13 @@ def assert_build
 #	elsif !@json_to_fdf_run.success? then
 #		assert_json_to_fdf
 	else
-		@fdf_to_pdf_run.each do |run|
-			if !run.success? then
-				run.puts
-			else
-				assert_pdf_to_jpeg
-			end #if
-		end # each
+#		@fdf_to_pdf_run.each do |run|
+#			if !run.success? then
+#				run.puts
+#			else
+#				assert_pdf_to_jpeg
+#			end #if
+#		end # each
 	end #if
 	self
 end # build
