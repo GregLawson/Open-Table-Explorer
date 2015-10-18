@@ -1,15 +1,1399 @@
 passed
-2015-09-22 07:35:46.179
+2015-10-18 15:37:27.500
 ruby -v -W0 test/unit/tax_form_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 32275
 
-/usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert': undefined method `assertions' for OpenTableExplorer::Finance::TaxForm:Class (NoMethodError)
-	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:177:in `assert_pre_conditions'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:275:in `<class:TaxForm>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:36:in `<module:Finance>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:18:in `<module:OpenTableExplorer>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:15:in `<top (required)>'
-	from test/unit/tax_form_test.rb:9:in `require_relative'
-	from test/unit/tax_form_test.rb:9:in `<main>'
+# Running tests:
+
+.$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt
+@process_status=#<Process::Status: pid 24213 exit 1>
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt
+Error: unrecognized status '??'. Exiting.
+peculiar_status=true
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt
+Error: unrecognized status '??'. Exiting.
+'
+.$ ~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+@errors="--2015-10-18 15:37:17--  http://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:28a::f50, 2600:1406:28:284::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040--2014.pdf [following]\n--2015-10-18 15:37:17--  https://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 192301 (188K) [application/pdf]\nSaving to: `f1040--2014.pdf.1'\n\n     0K .......... .......... .......... .......... .......... 26% 1.62M 0s\n    50K .......... .......... .......... .......... .......... 53% 2.32M 0s\n   100K .......... .......... .......... .......... .......... 79% 3.70M 0s\n   150K .......... .......... .......... .......              100% 4.13M=0.07s\n\n2015-10-18 15:37:18 (2.50 MB/s) - `f1040--2014.pdf.1' saved [192301/192301]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n--2015-10-18 15:37:18--  http://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:284::f50, 2600:1406:28:28a::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf [following]\n--2015-10-18 15:37:18--  https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 85193 (83K) [application/pdf]\nSaving to: `f1040sd--2014.pdf.1'\n\n     0K .......... .......... .......... .......... .......... 60% 1.84M 0s\n    50K .......... .......... .......... ...                  100% 5.91M=0.03s\n\n2015-10-18 15:37:19 (2.53 MB/s) - `f1040sd--2014.pdf.1' saved [85193/85193]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n"
+The US 1040 pdf has changed. Please report to dwalker@fifo99.com.
+MD5 (f1040--2014.pdf) = a7cc4b3ca751e03e06ad4dd7301b7e84
+The US 1040 Schedule D pdf has changed. Please report to dwalker@fifo99.com.
+MD5 (f1040sd--2014.pdf) = 5bf069cdf422f6950d7a73058ab6a4ef
+F..$ pdftoppm -jpeg  US_1040_greg_otff.pdf US_1040_2014_greg
+@errors="Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 24316 exit 1>
+F.E$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example.txt
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Sun Oct 18 15:37:22 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+peculiar_status=false
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Sun Oct 18 15:37:22 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+'
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Sun Oct 18 15:37:22 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+peculiar_status=false
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Sun Oct 18 15:37:22 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+'
+$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg.txt
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+	Qual. Div & Gains WorkSheet 1:  88907.25
+	Qual. Div & Gains WorkSheet 2:      0.00
+	Qual. Div & Gains WorkSheet 3:  47400.00
+	Qual. Div & Gains WorkSheet 4:  47400.00
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:  47400.00
+	Qual. Div & Gains WorkSheet 7:  41507.25
+	Qual. Div & Gains WorkSheet 8:  73800.00
+	Qual. Div & Gains WorkSheet 9:  73800.00
+	Qual. Div & Gains WorkSheet 10:  41507.25
+	Qual. Div & Gains WorkSheet 11:  32292.75
+	Qual. Div & Gains WorkSheet 12:  47400.00
+	Qual. Div & Gains WorkSheet 13:  32292.75
+	Qual. Div & Gains WorkSheet 14:  15107.25
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  88907.25
+	Qual. Div & Gains WorkSheet 17:  73800.00
+	Qual. Div & Gains WorkSheet 18:  15107.25
+	Qual. Div & Gains WorkSheet 19:  15107.25
+	Qual. Div & Gains WorkSheet 20:   2266.09
+	Qual. Div & Gains WorkSheet 21:  47400.00
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   5321.00
+	Qual. Div & Gains WorkSheet 25:   7587.09
+	Qual. Div & Gains WorkSheet 26:  13944.00
+	Qual. Div & Gains WorkSheet 27:   7587.09
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 109207.25
+ 		AMT Form 6251, L28 = 109207.25
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L30 = 27107.25
+ 		AMT Form 6251, L34 =  7587.09
+ 		AMT Form 6251, L35 =     0.00
+ 		AMT Form 6251, L36 = 27107.25
+ 		AMT Form 6251, L37 = 47400.00
+ 		AMT Form 6251, L39 = 47400.00
+ 		AMT Form 6251, L40 = 27107.25
+ 		AMT Form 6251, L43 = 73800.00
+ 		AMT Form 6251, L44 = 41507.25
+ 		AMT Form 6251, L45 = 32292.75
+ 		AMT Form 6251, L46 = 27107.25
+ 		AMT Form 6251, L47 = 27107.25
+ 		AMT Form 6251, L49 = 457600.00
+ 		AMT Form 6251, L50 = 32292.75
+ 		AMT Form 6251, L51 = 41507.25
+ 		AMT Form 6251, L52 = 73800.00
+ 		AMT Form 6251, L53 = 383800.00
+ 		AMT Form 6251, L56 = 27107.25
+ 		AMT Form 6251, L63 =  7047.89
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 	Sun Oct 18 15:37:22 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 =   0.00
+L8a = 121.26
+L9 =   0.00
+L9b =   0.00
+ Schedule-B:
+  B2 = 121.26
+  B4 = 121.26
+  B6 =   0.00
+L10 =   0.00
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+   Appraisal at inheritance  02/17/2000 06/03/2014       57400.00      -10000.00       47400.00
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                              57400.00      -10000.00       47400.00
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =       0.00
+	Net Forms-8949 Long-term Gains  =   47400.00
+ D1b: d =       0.00   e =       0.00    h =       0.00
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 =   0.00		{ Net short-term capital gain or loss }
+ D8b: d =   57400.00   e =  -10000.00   h =   47400.00
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 47400.00		{ Net long-term capital gain or loss }
+ D16 = 47400.00
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 47400.00
+L15 = 65455.99
+L20 = 3780.00
+L22 = 116757.25		total income
+L25 = 7550.00
+L36 = 7550.00
+L37 = 109207.25		Adjusted Gross Income
+L38 = 109207.25
+L39a = 0
+ A2 = 109207.25
+ A3 = 10920.73
+ A25 = 109207.25
+ A26 = 2184.14
+ Your deduction is not limited.
+Use standard deduction.
+L40 = 12400.00
+L41 = 96807.25
+L42 = 7900.00
+L43 = 88907.25		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  88907.25
+	Qual. Div & Gains WorkSheet 2:      0.00
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:  47400.00
+	Qual. Div & Gains WorkSheet 4:  47400.00
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:  47400.00
+	Qual. Div & Gains WorkSheet 7:  41507.25
+	Qual. Div & Gains WorkSheet 8:  73800.00
+	Qual. Div & Gains WorkSheet 9:  73800.00
+	Qual. Div & Gains WorkSheet 10:  41507.25
+	Qual. Div & Gains WorkSheet 11:  32292.75
+	Qual. Div & Gains WorkSheet 12:  47400.00
+	Qual. Div & Gains WorkSheet 13:  32292.75
+	Qual. Div & Gains WorkSheet 14:  15107.25
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  88907.25
+	Qual. Div & Gains WorkSheet 17:  73800.00
+	Qual. Div & Gains WorkSheet 18:  15107.25
+	Qual. Div & Gains WorkSheet 19:  15107.25
+	Qual. Div & Gains WorkSheet 20:   2266.09
+	Qual. Div & Gains WorkSheet 21:  47400.00
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   5321.00
+	Qual. Div & Gains WorkSheet 25:   7587.09
+	Qual. Div & Gains WorkSheet 26:  13944.00
+	Qual. Div & Gains WorkSheet 27:   7587.09
+L44 = 7587.09		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=7587.09)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 109207.25
+ 		AMT Form 6251, L28 = 109207.25
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L30 = 27107.25
+ 		AMT Form 6251, L34 =  7587.09
+ 		AMT Form 6251, L35 =     0.00
+ 		AMT Form 6251, L36 = 27107.25
+ 		AMT Form 6251, L37 = 47400.00
+ 		AMT Form 6251, L39 = 47400.00
+ 		AMT Form 6251, L40 = 27107.25
+ 		AMT Form 6251, L43 = 73800.00
+ 		AMT Form 6251, L44 = 41507.25
+ 		AMT Form 6251, L45 = 32292.75
+ 		AMT Form 6251, L46 = 27107.25
+ 		AMT Form 6251, L47 = 27107.25
+ 		AMT Form 6251, L49 = 457600.00
+ 		AMT Form 6251, L50 = 32292.75
+ 		AMT Form 6251, L51 = 41507.25
+ 		AMT Form 6251, L52 = 73800.00
+ 		AMT Form 6251, L53 = 383800.00
+ 		AMT Form 6251, L56 = 27107.25
+ 		AMT Form 6251, L63 =  7047.89
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 7587.09
+L55 =   0.00
+L56 = 7587.09
+L63 = 7587.09		total tax
+L64 = 10118.47
+L74 = 10118.47		total payments
+L75 = 2531.38  REBATE!!!
+L76a = 2531.38 
+peculiar_status=false
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+	Qual. Div & Gains WorkSheet 1:  88907.25
+	Qual. Div & Gains WorkSheet 2:      0.00
+	Qual. Div & Gains WorkSheet 3:  47400.00
+	Qual. Div & Gains WorkSheet 4:  47400.00
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:  47400.00
+	Qual. Div & Gains WorkSheet 7:  41507.25
+	Qual. Div & Gains WorkSheet 8:  73800.00
+	Qual. Div & Gains WorkSheet 9:  73800.00
+	Qual. Div & Gains WorkSheet 10:  41507.25
+	Qual. Div & Gains WorkSheet 11:  32292.75
+	Qual. Div & Gains WorkSheet 12:  47400.00
+	Qual. Div & Gains WorkSheet 13:  32292.75
+	Qual. Div & Gains WorkSheet 14:  15107.25
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  88907.25
+	Qual. Div & Gains WorkSheet 17:  73800.00
+	Qual. Div & Gains WorkSheet 18:  15107.25
+	Qual. Div & Gains WorkSheet 19:  15107.25
+	Qual. Div & Gains WorkSheet 20:   2266.09
+	Qual. Div & Gains WorkSheet 21:  47400.00
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   5321.00
+	Qual. Div & Gains WorkSheet 25:   7587.09
+	Qual. Div & Gains WorkSheet 26:  13944.00
+	Qual. Div & Gains WorkSheet 27:   7587.09
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 109207.25
+ 		AMT Form 6251, L28 = 109207.25
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L30 = 27107.25
+ 		AMT Form 6251, L34 =  7587.09
+ 		AMT Form 6251, L35 =     0.00
+ 		AMT Form 6251, L36 = 27107.25
+ 		AMT Form 6251, L37 = 47400.00
+ 		AMT Form 6251, L39 = 47400.00
+ 		AMT Form 6251, L40 = 27107.25
+ 		AMT Form 6251, L43 = 73800.00
+ 		AMT Form 6251, L44 = 41507.25
+ 		AMT Form 6251, L45 = 32292.75
+ 		AMT Form 6251, L46 = 27107.25
+ 		AMT Form 6251, L47 = 27107.25
+ 		AMT Form 6251, L49 = 457600.00
+ 		AMT Form 6251, L50 = 32292.75
+ 		AMT Form 6251, L51 = 41507.25
+ 		AMT Form 6251, L52 = 73800.00
+ 		AMT Form 6251, L53 = 383800.00
+ 		AMT Form 6251, L56 = 27107.25
+ 		AMT Form 6251, L63 =  7047.89
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 	Sun Oct 18 15:37:22 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 =   0.00
+L8a = 121.26
+L9 =   0.00
+L9b =   0.00
+ Schedule-B:
+  B2 = 121.26
+  B4 = 121.26
+  B6 =   0.00
+L10 =   0.00
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+   Appraisal at inheritance  02/17/2000 06/03/2014       57400.00      -10000.00       47400.00
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                              57400.00      -10000.00       47400.00
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =       0.00
+	Net Forms-8949 Long-term Gains  =   47400.00
+ D1b: d =       0.00   e =       0.00    h =       0.00
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 =   0.00		{ Net short-term capital gain or loss }
+ D8b: d =   57400.00   e =  -10000.00   h =   47400.00
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 47400.00		{ Net long-term capital gain or loss }
+ D16 = 47400.00
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 47400.00
+L15 = 65455.99
+L20 = 3780.00
+L22 = 116757.25		total income
+L25 = 7550.00
+L36 = 7550.00
+L37 = 109207.25		Adjusted Gross Income
+L38 = 109207.25
+L39a = 0
+ A2 = 109207.25
+ A3 = 10920.73
+ A25 = 109207.25
+ A26 = 2184.14
+ Your deduction is not limited.
+Use standard deduction.
+L40 = 12400.00
+L41 = 96807.25
+L42 = 7900.00
+L43 = 88907.25		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  88907.25
+	Qual. Div & Gains WorkSheet 2:      0.00
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:  47400.00
+	Qual. Div & Gains WorkSheet 4:  47400.00
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:  47400.00
+	Qual. Div & Gains WorkSheet 7:  41507.25
+	Qual. Div & Gains WorkSheet 8:  73800.00
+	Qual. Div & Gains WorkSheet 9:  73800.00
+	Qual. Div & Gains WorkSheet 10:  41507.25
+	Qual. Div & Gains WorkSheet 11:  32292.75
+	Qual. Div & Gains WorkSheet 12:  47400.00
+	Qual. Div & Gains WorkSheet 13:  32292.75
+	Qual. Div & Gains WorkSheet 14:  15107.25
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  88907.25
+	Qual. Div & Gains WorkSheet 17:  73800.00
+	Qual. Div & Gains WorkSheet 18:  15107.25
+	Qual. Div & Gains WorkSheet 19:  15107.25
+	Qual. Div & Gains WorkSheet 20:   2266.09
+	Qual. Div & Gains WorkSheet 21:  47400.00
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   5321.00
+	Qual. Div & Gains WorkSheet 25:   7587.09
+	Qual. Div & Gains WorkSheet 26:  13944.00
+	Qual. Div & Gains WorkSheet 27:   7587.09
+L44 = 7587.09		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=7587.09)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 109207.25
+ 		AMT Form 6251, L28 = 109207.25
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L30 = 27107.25
+ 		AMT Form 6251, L34 =  7587.09
+ 		AMT Form 6251, L35 =     0.00
+ 		AMT Form 6251, L36 = 27107.25
+ 		AMT Form 6251, L37 = 47400.00
+ 		AMT Form 6251, L39 = 47400.00
+ 		AMT Form 6251, L40 = 27107.25
+ 		AMT Form 6251, L43 = 73800.00
+ 		AMT Form 6251, L44 = 41507.25
+ 		AMT Form 6251, L45 = 32292.75
+ 		AMT Form 6251, L46 = 27107.25
+ 		AMT Form 6251, L47 = 27107.25
+ 		AMT Form 6251, L49 = 457600.00
+ 		AMT Form 6251, L50 = 32292.75
+ 		AMT Form 6251, L51 = 41507.25
+ 		AMT Form 6251, L52 = 73800.00
+ 		AMT Form 6251, L53 = 383800.00
+ 		AMT Form 6251, L56 = 27107.25
+ 		AMT Form 6251, L63 =  7047.89
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 7587.09
+L55 =   0.00
+L56 = 7587.09
+L63 = 7587.09		total tax
+L64 = 10118.47
+L74 = 10118.47		total payments
+L75 = 2531.38  REBATE!!!
+L76a = 2531.38 
+'
+E.....$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 24392 exit 1>
+F.F.E$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 24430 exit 1>
+F..FEE
+
+Finished tests in 10.281640s, 2.4315 tests/s, 13.2275 assertions/s.
+
+  1) Failure:
+test_run_fdf_to_pdf(NewTestClass) [test/unit/tax_form_test.rb:193]:
+self=$ ~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+@errors="--2015-10-18 15:37:17--  http://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:28a::f50, 2600:1406:28:284::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040--2014.pdf [following]\n--2015-10-18 15:37:17--  https://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 192301 (188K) [application/pdf]\nSaving to: `f1040--2014.pdf.1'\n\n     0K .......... .......... .......... .......... .......... 26% 1.62M 0s\n    50K .......... .......... .......... .......... .......... 53% 2.32M 0s\n   100K .......... .......... .......... .......... .......... 79% 3.70M 0s\n   150K .......... .......... .......... .......              100% 4.13M=0.07s\n\n2015-10-18 15:37:18 (2.50 MB/s) - `f1040--2014.pdf.1' saved [192301/192301]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n--2015-10-18 15:37:18--  http://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:284::f50, 2600:1406:28:28a::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf [following]\n--2015-10-18 15:37:18--  https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 85193 (83K) [application/pdf]\nSaving to: `f1040sd--2014.pdf.1'\n\n     0K .......... .......... .......... .......... .......... 60% 1.84M 0s\n    50K .......... .......... .......... ...                  100% 5.91M=0.03s\n\n2015-10-18 15:37:19 (2.53 MB/s) - `f1040sd--2014.pdf.1' saved [85193/85193]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n"
+The US 1040 pdf has changed. Please report to dwalker@fifo99.com.
+MD5 (f1040--2014.pdf) = a7cc4b3ca751e03e06ad4dd7301b7e84
+The US 1040 Schedule D pdf has changed. Please report to dwalker@fifo99.com.
+MD5 (f1040sd--2014.pdf) = 5bf069cdf422f6950d7a73058ab6a4ef
+expected errors to be empty\n
+"--2015-10-18 15:37:17--  http://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:28a::f50, 2600:1406:28:284::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040--2014.pdf [following]\n--2015-10-18 15:37:17--  https://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 192301 (188K) [application/pdf]\nSaving to: `f1040--2014.pdf.1'\n\n     0K .......... .......... .......... .......... .......... 26% 1.62M 0s\n    50K .......... .......... .......... .......... .......... 53% 2.32M 0s\n   100K .......... .......... .......... .......... .......... 79% 3.70M 0s\n   150K .......... .......... .......... .......              100% 4.13M=0.07s\n\n2015-10-18 15:37:18 (2.50 MB/s) - `f1040--2014.pdf.1' saved [192301/192301]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n--2015-10-18 15:37:18--  http://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:284::f50, 2600:1406:28:28a::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf [following]\n--2015-10-18 15:37:18--  https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 85193 (83K) [application/pdf]\nSaving to: `f1040sd--2014.pdf.1'\n\n     0K .......... .......... .......... .......... .......... 60% 1.84M 0s\n    50K .......... .......... .......... ...                  100% 5.91M=0.03s\n\n2015-10-18 15:37:19 (2.53 MB/s) - `f1040sd--2014.pdf.1' saved [85193/85193]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n" is not empty..
+Expected block to return true value.
+
+  2) Failure:
+test_user(NewTestClass) [test/unit/tax_form_test.rb:94]:
+self=$ pdftoppm -jpeg  US_1040_greg_otff.pdf US_1040_2014_greg
+@errors="Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 24316 exit 1>
+expected errors to be empty\n
+"Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n" is not empty..
+Expected block to return true value.
+
+  3) Error:
+test_generated_xfdf_files(NewTestClass):
+NameError: uninitialized constant NewTestClass::CA540_example
+    test/unit/tax_form_test.rb:173:in `test_generated_xfdf_files'
+
+  4) Error:
+test_run_tax_solver(NewTestClass):
+NameError: uninitialized constant NewTestClass::CA540_user
+    test/unit/tax_form_test.rb:127:in `test_run_tax_solver'
+
+  5) Failure:
+test_run_pdf_to_jpeg(NewTestClass) [test/unit/tax_form_test.rb:216]:
+self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 24392 exit 1>
+expected errors to be empty\n
+"Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty..
+Expected block to return true value.
+
+  6) Failure:
+test_Examples(NewTestClass) [test/unit/tax_form_test.rb:284]:
+constant name=US1040_user
+In assert_pre_conditions, self=#<OpenTableExplorer::Finance::TaxForm:0x00000001b17410 @taxpayer="greg", @form="1040", @jurisdiction=:US, @tax_year=2014, @open_tax_solver_all_form_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/", @form_filename="US_1040", @open_tax_solver_form_directory="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040/", @taxpayer_basename="US_1040_greg", @taxpayer_basename_with_year="US_1040_2014_greg", @open_tax_solver_binary="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014", @open_tax_solver_input="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg.txt", @open_tax_solver_output="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt", @open_tax_solver_sysout="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_sysout.txt", @output_xfdf_glob="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg*.xfdf", @output_pdf="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_otff.pdf", @open_tax_solver_run=US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+	Qual. Div & Gains WorkSheet 1:  88907.25
+	Qual. Div & Gains WorkSheet 2:      0.00
+	Qual. Div & Gains WorkSheet 3:  47400.00
+	Qual. Div & Gains WorkSheet 4:  47400.00
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:  47400.00
+	Qual. Div & Gains WorkSheet 7:  41507.25
+	Qual. Div & Gains WorkSheet 8:  73800.00
+	Qual. Div & Gains WorkSheet 9:  73800.00
+	Qual. Div & Gains WorkSheet 10:  41507.25
+	Qual. Div & Gains WorkSheet 11:  32292.75
+	Qual. Div & Gains WorkSheet 12:  47400.00
+	Qual. Div & Gains WorkSheet 13:  32292.75
+	Qual. Div & Gains WorkSheet 14:  15107.25
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  88907.25
+	Qual. Div & Gains WorkSheet 17:  73800.00
+	Qual. Div & Gains WorkSheet 18:  15107.25
+	Qual. Div & Gains WorkSheet 19:  15107.25
+	Qual. Div & Gains WorkSheet 20:   2266.09
+	Qual. Div & Gains WorkSheet 21:  47400.00
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   5321.00
+	Qual. Div & Gains WorkSheet 25:   7587.09
+	Qual. Div & Gains WorkSheet 26:  13944.00
+	Qual. Div & Gains WorkSheet 27:   7587.09
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 109207.25
+ 		AMT Form 6251, L28 = 109207.25
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L30 = 27107.25
+ 		AMT Form 6251, L34 =  7587.09
+ 		AMT Form 6251, L35 =     0.00
+ 		AMT Form 6251, L36 = 27107.25
+ 		AMT Form 6251, L37 = 47400.00
+ 		AMT Form 6251, L39 = 47400.00
+ 		AMT Form 6251, L40 = 27107.25
+ 		AMT Form 6251, L43 = 73800.00
+ 		AMT Form 6251, L44 = 41507.25
+ 		AMT Form 6251, L45 = 32292.75
+ 		AMT Form 6251, L46 = 27107.25
+ 		AMT Form 6251, L47 = 27107.25
+ 		AMT Form 6251, L49 = 457600.00
+ 		AMT Form 6251, L50 = 32292.75
+ 		AMT Form 6251, L51 = 41507.25
+ 		AMT Form 6251, L52 = 73800.00
+ 		AMT Form 6251, L53 = 383800.00
+ 		AMT Form 6251, L56 = 27107.25
+ 		AMT Form 6251, L63 =  7047.89
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 	Sun Oct 18 15:37:22 2015
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 =   0.00
+L8a = 121.26
+L9 =   0.00
+L9b =   0.00
+ Schedule-B:
+  B2 = 121.26
+  B4 = 121.26
+  B6 =   0.00
+L10 =   0.00
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+   Appraisal at inheritance  02/17/2000 06/03/2014       57400.00      -10000.00       47400.00
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                              57400.00      -10000.00       47400.00
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =       0.00
+	Net Forms-8949 Long-term Gains  =   47400.00
+ D1b: d =       0.00   e =       0.00    h =       0.00
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 =   0.00		{ Net short-term capital gain or loss }
+ D8b: d =   57400.00   e =  -10000.00   h =   47400.00
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 47400.00		{ Net long-term capital gain or loss }
+ D16 = 47400.00
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 47400.00
+L15 = 65455.99
+L20 = 3780.00
+L22 = 116757.25		total income
+L25 = 7550.00
+L36 = 7550.00
+L37 = 109207.25		Adjusted Gross Income
+L38 = 109207.25
+L39a = 0
+ A2 = 109207.25
+ A3 = 10920.73
+ A25 = 109207.25
+ A26 = 2184.14
+ Your deduction is not limited.
+Use standard deduction.
+L40 = 12400.00
+L41 = 96807.25
+L42 = 7900.00
+L43 = 88907.25		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  88907.25
+	Qual. Div & Gains WorkSheet 2:      0.00
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:  47400.00
+	Qual. Div & Gains WorkSheet 4:  47400.00
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:  47400.00
+	Qual. Div & Gains WorkSheet 7:  41507.25
+	Qual. Div & Gains WorkSheet 8:  73800.00
+	Qual. Div & Gains WorkSheet 9:  73800.00
+	Qual. Div & Gains WorkSheet 10:  41507.25
+	Qual. Div & Gains WorkSheet 11:  32292.75
+	Qual. Div & Gains WorkSheet 12:  47400.00
+	Qual. Div & Gains WorkSheet 13:  32292.75
+	Qual. Div & Gains WorkSheet 14:  15107.25
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  88907.25
+	Qual. Div & Gains WorkSheet 17:  73800.00
+	Qual. Div & Gains WorkSheet 18:  15107.25
+	Qual. Div & Gains WorkSheet 19:  15107.25
+	Qual. Div & Gains WorkSheet 20:   2266.09
+	Qual. Div & Gains WorkSheet 21:  47400.00
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   5321.00
+	Qual. Div & Gains WorkSheet 25:   7587.09
+	Qual. Div & Gains WorkSheet 26:  13944.00
+	Qual. Div & Gains WorkSheet 27:   7587.09
+L44 = 7587.09		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=7587.09)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 109207.25
+ 		AMT Form 6251, L28 = 109207.25
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L30 = 27107.25
+ 		AMT Form 6251, L34 =  7587.09
+ 		AMT Form 6251, L35 =     0.00
+ 		AMT Form 6251, L36 = 27107.25
+ 		AMT Form 6251, L37 = 47400.00
+ 		AMT Form 6251, L39 = 47400.00
+ 		AMT Form 6251, L40 = 27107.25
+ 		AMT Form 6251, L43 = 73800.00
+ 		AMT Form 6251, L44 = 41507.25
+ 		AMT Form 6251, L45 = 32292.75
+ 		AMT Form 6251, L46 = 27107.25
+ 		AMT Form 6251, L47 = 27107.25
+ 		AMT Form 6251, L49 = 457600.00
+ 		AMT Form 6251, L50 = 32292.75
+ 		AMT Form 6251, L51 = 41507.25
+ 		AMT Form 6251, L52 = 73800.00
+ 		AMT Form 6251, L53 = 383800.00
+ 		AMT Form 6251, L56 = 27107.25
+ 		AMT Form 6251, L63 =  7047.89
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 7587.09
+L55 =   0.00
+L56 = 7587.09
+L63 = 7587.09		total tax
+L64 = 10118.47
+L74 = 10118.47		total payments
+L75 = 2531.38  REBATE!!!
+L76a = 2531.38 
+, @xfdf_script="~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_US_1040_2014", @script_run=$ ~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_out.txt
+@errors="--2015-10-18 15:37:19--  http://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:28a::f50, 2600:1406:28:284::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040--2014.pdf [following]\n--2015-10-18 15:37:19--  https://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 192301 (188K) [application/pdf]\nSaving to: `f1040--2014.pdf.2'\n\n     0K .......... .......... .......... .......... .......... 26% 1.60M 0s\n    50K .......... .......... .......... .......... .......... 53% 2.42M 0s\n   100K .......... .......... .......... .......... .......... 79% 4.14M 0s\n   150K .......... .......... .......... .......              100% 3.76M=0.07s\n\n2015-10-18 15:37:20 (2.54 MB/s) - `f1040--2014.pdf.2' saved [192301/192301]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n--2015-10-18 15:37:21--  http://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:28:284::f50, 2600:1406:28:28a::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:80... connected.\nHTTP request sent, awaiting response... 301 Moved Permanently\nLocation: https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf [following]\n--2015-10-18 15:37:21--  https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 85193 (83K) [application/pdf]\nSaving to: `f1040sd--2014.pdf.2'\n\n     0K .......... .......... .......... .......... .......... 60% 1.34M 0s\n    50K .......... .......... .......... ...                  100% 8.69M=0.04s\n\n2015-10-18 15:37:21 (2.03 MB/s) - `f1040sd--2014.pdf.2' saved [85193/85193]\n\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\nmd5sum: unrecognized option '--tag'\nTry `md5sum --help' for more information.\n"
+The US 1040 pdf has changed. Please report to dwalker@fifo99.com.
+MD5 (f1040--2014.pdf) = a7cc4b3ca751e03e06ad4dd7301b7e84
+The US 1040 Schedule D pdf has changed. Please report to dwalker@fifo99.com.
+MD5 (f1040sd--2014.pdf) = 5bf069cdf422f6950d7a73058ab6a4ef
+, @fdf_to_pdf_run=[$ pdftk /home/greg/Desktop/src/IRS//2014--.pdf fill_form /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_f1040sd.xfdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_f1040sd.xfdf.pdf
+@errors="Error: Failed to open PDF file: \n   /home/greg/Desktop/src/IRS//2014--.pdf\nErrors encountered.  No output created.\nDone.  Input errors, so no output created.\n"
+@process_status=#<Process::Status: pid 24308 exit 1>
+, $ pdftk /home/greg/Desktop/src/IRS//2014--.pdf fill_form /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_f1040.xfdf output /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_greg_f1040.xfdf.pdf
+@errors="Error: Failed to open PDF file: \n   /home/greg/Desktop/src/IRS//2014--.pdf\nErrors encountered.  No output created.\nDone.  Input errors, so no output created.\n"
+@process_status=#<Process::Status: pid 24312 exit 1>
+], @_assertions=12, @pdf_to_jpeg_run=$ pdftoppm -jpeg  US_1040_greg_otff.pdf US_1040_2014_greg
+@errors="Error: Couldn't open file 'US_1040_greg_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 24316 exit 1>
+>.
+Expected nil to not be nil.
+
+  7) Error:
+test_assert_build(NewTestClass):
+NameError: uninitialized constant NewTestClass::CA540_example
+    test/unit/tax_form_test.rb:268:in `test_assert_build'
+
+  8) Failure:
+test_example(NewTestClass) [test/unit/tax_form_test.rb:84]:
+self=$ pdftoppm -jpeg  US_1040_example_otff.pdf US_1040_2014_example
+@errors="Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n"
+@process_status=#<Process::Status: pid 24430 exit 1>
+expected errors to be empty\n
+"Error: Couldn't open file 'US_1040_example_otff.pdf': No such file or directory.\n" is not empty..
+Expected block to return true value.
+
+  9) Failure:
+test_initialize(NewTestClass) [test/unit/tax_form_test.rb:75]:
+
+Pathname(/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_2014_template.txt).exist?=false
+parent directory /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040 does exists containing ["README_US_1040.txt", "US_1040_example_OTS.json", "US_1040_template.txt", "US_1040_template_OTS.json", "US_1040_example_f1040sd.pdf", "US_1040_example_out.txt", "US_1040_example1_OTS.json", "US_1040_example_f1040.xfdf", "US_1040_example.txt", "US_1040_example_f1040.pdf", "US_1040_example_f1040sd.xfdf", "US_1040_example_sysout.txt", "US_1040_template_sysout.txt", "US_1040_template_out.txt"]
+
+ 10) Error:
+test_filled_in_pdf_files(NewTestClass):
+NameError: uninitialized constant NewTestClass::CA540_example
+    test/unit/tax_form_test.rb:198:in `test_filled_in_pdf_files'
+
+ 11) Error:
+test_assert_open_tax_solver(NewTestClass):
+NameError: uninitialized constant NewTestClass::CA540_example
+    test/unit/tax_form_test.rb:226:in `test_assert_open_tax_solver'
+
+25 tests, 136 assertions, 6 failures, 5 errors, 0 skips
+
