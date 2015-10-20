@@ -1,5 +1,14 @@
 testing
-2015-09-28 16:00:36.491
+2015-10-20 12:05:59.383
 ruby -v -W0 test/unit/default_test_case_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 35820
+
+# Running tests:
+
+.....................
+
+Finished tests in 0.044325s, 473.7735 tests/s, 225.6064 assertions/s.
+
+21 tests, 10 assertions, 0 failures, 0 errors, 0 skips
 

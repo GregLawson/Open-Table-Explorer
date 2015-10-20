@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'active_support/all'
+require_relative 'test_environment_ruby.rb'
 module ExampleCall
 def examples_submodule?
   model_class?::Examples
