@@ -1,10 +1,14 @@
 testing
-2015-09-28 16:00:49.185
+2015-10-20 12:10:06.647
 ruby -v -W0 test/unit/file_pattern_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
 
-/usr/lib/ruby/1.9.1/test/unit.rb:328:in `autorun': uninitialized class variable @@installed_at_exit in Test::Unit::Runner (NameError)
-	from /usr/lib/ruby/1.9.1/test/unit.rb:640:in `<top (required)>'
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from test/unit/file_pattern_test.rb:9:in `<main>'
+# Running tests:
+
+.............................
+
+Finished tests in 0.030742s, 943.3288 tests/s, 6635.8304 assertions/s.
+
+29 tests, 204 assertions, 0 failures, 0 errors, 0 skips
+

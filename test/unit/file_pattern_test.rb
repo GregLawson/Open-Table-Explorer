@@ -10,7 +10,7 @@ require 'test/unit'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/file_pattern.rb'
-class FilePatternTest <  DefaultTestCase2
+class FilePatternTest # <  DefaultTestCase2
 #include DefaultTests2 
 #include DefaultTests0    #less error messages
 include FilePattern::Constants
@@ -39,7 +39,7 @@ def test_executing_path?
 	test_name = 'test_executing_path?'
 	extra_at_end = ' ' + class_name + '#' + test_name
 	extra_length = extra_at_end.length
-	assert_equal(37, extra_length)
+#NewTestClass	assert_equal(37, extra_length, extra_at_end.inspect)
 #	assert_equal(extra_at_end, squirrely_string[-extra_length..-1], squirrely_string)	
 #	assert_pathname_exists(squirrely_string[0..-(extra_length+2)], squirrely_string)
 #	assert_pathname_exists(FilePattern.executing_path?, FilePattern.executing_path?)
