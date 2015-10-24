@@ -1,9 +1,8 @@
 testing
-2015-09-28 16:06:53.198
+2015-10-25 06:37:29.745
 ruby -v -W0 /etc/mtab
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-/etc/mtab:2: unknown regexp options - prc
-/etc/mtab:2: syntax error, unexpected tIDENTIFIER, expecting $end
-proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
-               ^
+/etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('
+rootfs / rootfs rw 0 0
+                  ^
