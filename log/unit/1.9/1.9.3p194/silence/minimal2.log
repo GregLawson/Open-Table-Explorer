@@ -1,14 +1,14 @@
 testing
-2015-10-25 06:37:30.962
+2015-10-25 16:35:47.708
 ruby -v -W0 test/unit/minimal2_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 28076
+Run options: --seed 0
 
-# Running tests:
+# Running:
 
-..
+....
 
-Finished tests in 0.001088s, 1837.5192 tests/s, 0.0000 assertions/s.
+Finished in 0.003356s, 1191.9146 runs/s, 0.0000 assertions/s.
 
-2 tests, 0 assertions, 0 failures, 0 errors, 0 skips
+4 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 

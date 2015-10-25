@@ -1,99 +1,125 @@
 testing
-2015-10-25 06:37:31.680
+2015-10-25 16:35:48.641
 ruby -v -W0 test/unit/test_run_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 41867
+Run options: --seed 0
 
-# Running tests:
+# Running:
 
-..E.F-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x0000000301d7b0>>
+..EE.EFEFEEE.E.EE.-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x000000027f8d28>>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:260:in `run'
 test/unit/test_run_test.rb:209:in `test_run'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:949:in `run'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:787:in `block in _run_suite'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:780:in `map'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:780:in `_run_suite'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:770:in `block in _run_suites'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:770:in `map'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:770:in `_run_suites'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:746:in `_run_anything'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:909:in `run_tests'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:896:in `block in _run'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:895:in `each'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:895:in `_run'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:884:in `run'
-/usr/lib/ruby/1.9.1/minitest/unit.rb:664:in `block in autorun'
-EE.E.EE.EEEE.EF
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:108:in `block (3 levels) in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:205:in `capture_exceptions'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:105:in `block (2 levels) in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:256:in `time_it'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:104:in `block in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:334:in `on_signal'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:276:in `with_info_handler'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:103:in `run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:781:in `run_one_method'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:308:in `run_one_method'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:296:in `block (2 levels) in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:295:in `each'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:295:in `block in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:334:in `on_signal'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:321:in `with_info_handler'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:294:in `run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `block in __run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `map'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `__run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:129:in `run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:56:in `block in autorun'
+EE..
 
-Finished tests in 2.096249s, 9.5409 tests/s, 10.9720 assertions/s.
+Finished in 2.152360s, 10.2213 runs/s, 10.2213 assertions/s.
 
   1) Error:
-test_ruby_run_and_log(NewTestClass):
-NoMethodError: undefined method `error_score?' for #<Repository:0x00000003305428>
-    test/unit/test_run_test.rb:83:in `test_ruby_run_and_log'
-
-  2) Failure:
-test_error_score?(NewTestClass) [test/unit/test_run_test.rb:199]:
-executable_file = /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/single_test_fail.rb.
-Expected: 1
-  Actual: 0
-
-  3) Error:
-test_run(NewTestClass):
-NoMethodError: undefined method `output' for nil:NilClass
-    test/unit/test_run_test.rb:209:in `test_run'
-
-  4) Error:
-test_ruby_test_string(NewTestClass):
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000003305428>
-    test/unit/test_run_test.rb:58:in `test_ruby_test_string'
-
-  5) Error:
-test_log_path?(NewTestClass):
-NoMethodError: undefined method `log_path?' for #<Repository:0x00000003305428>
-    test/unit/test_run_test.rb:53:in `test_log_path?'
-
-  6) Error:
-test_new_from_pathname(NewTestClass):
-NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x00000003021dd8>
-    test/unit/test_run_test.rb:48:in `test_new_from_pathname'
-
-  7) Error:
-test_parse_header(NewTestClass):
-NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:154:in `test_parse_header'
-
-  8) Error:
-test_log_passed?(NewTestClass):
-ArgumentError: wrong number of arguments (0 for 1)
-    test/unit/test_run_test.rb:147:in `test_log_passed?'
-
-  9) Error:
-test_test_file?(NewTestClass):
-NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:74:in `test_test_file?'
-
- 10) Error:
-test_file_bug_reports(NewTestClass):
-NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:101:in `test_file_bug_reports'
-
- 11) Error:
-test_virtus_initialize(NewTestClass):
+NewTestClass#test_virtus_initialize:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
     test/unit/test_run_test.rb:18:in `test_virtus_initialize'
 
- 12) Error:
-test_log_file(NewTestClass):
+
+  2) Error:
+NewTestClass#test_log_file:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
     test/unit/test_run_test.rb:18:in `test_virtus_initialize'
     test/unit/test_run_test.rb:64:in `test_log_file'
 
- 13) Failure:
-test_parse_log_file(NewTestClass) [test/unit/test_run_test.rb:133]:
-headerArray[-1]='"ruby -v -W0 test/unit/test_run_test.rb"'.
-Expected: "Finished"
-  Actual: "ruby"
 
-20 tests, 23 assertions, 2 failures, 11 errors, 0 skips
+  3) Error:
+NewTestClass#test_shell:
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002f80578>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
+    test/unit/test_run_test.rb:98:in `test_shell'
+
+
+  4) Failure:
+NewTestClass#test_parse_log_file [test/unit/test_run_test.rb:133]:
+headerArray[-1]='"Run options: --seed 41867"'.
+Expected: "Finished"
+  Actual: "Run"
+
+
+  5) Error:
+NewTestClass#test_log_passed?:
+ArgumentError: wrong number of arguments (0 for 1)
+    test/unit/test_run_test.rb:147:in `test_log_passed?'
+
+
+  6) Failure:
+NewTestClass#test_error_score? [test/unit/test_run_test.rb:199]:
+executable_file = /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/single_test_fail.rb.
+Expected: 1
+  Actual: 0
+
+
+  7) Error:
+NewTestClass#test_log_path?:
+NoMethodError: undefined method `log_path?' for #<Repository:0x00000002db9a78>
+    test/unit/test_run_test.rb:53:in `test_log_path?'
+
+
+  8) Error:
+NewTestClass#test_ruby_run_and_log:
+NoMethodError: undefined method `error_score?' for #<Repository:0x00000002db9a78>
+    test/unit/test_run_test.rb:83:in `test_ruby_run_and_log'
+
+
+  9) Error:
+NewTestClass#test_ruby_test_string:
+NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000002db9a78>
+    test/unit/test_run_test.rb:58:in `test_ruby_test_string'
+
+
+ 10) Error:
+NewTestClass#test_file_bug_reports:
+NameError: uninitialized constant NewTestClass::Odd_plural_executable
+    test/unit/test_run_test.rb:101:in `test_file_bug_reports'
+
+
+ 11) Error:
+NewTestClass#test_new_from_pathname:
+NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x00000002f6b088>
+    test/unit/test_run_test.rb:48:in `test_new_from_pathname'
+
+
+ 12) Error:
+NewTestClass#test_test_file?:
+NameError: uninitialized constant NewTestClass::Odd_plural_executable
+    test/unit/test_run_test.rb:74:in `test_test_file?'
+
+
+ 13) Error:
+NewTestClass#test_run:
+NoMethodError: undefined method `output' for nil:NilClass
+    test/unit/test_run_test.rb:209:in `test_run'
+
+
+ 14) Error:
+NewTestClass#test_parse_header:
+NameError: uninitialized constant NewTestClass::Odd_plural_executable
+    test/unit/test_run_test.rb:154:in `test_parse_header'
+
+22 runs, 22 assertions, 2 failures, 12 errors, 0 skips
 

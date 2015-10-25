@@ -171,7 +171,7 @@ def error_score?(logging = :silence,
 	@ruby_test_string = @executable.ruby_test_string(logging,
 		minor_version,
 		patch_version)
-	@recent_test = ShellCommands.new({'seed' => '0'}, @ruby_test_string, :chdir=> @executable.repository.path)
+	@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @executable.repository.path)
 	log_path = @executable.log_path?(logging, minor_version, patch_version)
 	if !log_path.empty? then
 	end # if
