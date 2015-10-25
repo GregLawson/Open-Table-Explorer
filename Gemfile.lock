@@ -23,6 +23,7 @@ GEM
     libusb (0.5.1)
       ffi (>= 1.0)
     mime-types (1.25.1)
+    minitest (5.8.1)
     multi_xml (0.5.5)
     nokogiri (1.5.5)
     oga (1.3.1)
@@ -49,6 +50,7 @@ DEPENDENCIES
   grit
   i18n
   libusb
+  minitest (~> 5.8.1)
   multi_xml
   nokogiri
   oga
