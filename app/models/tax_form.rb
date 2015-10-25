@@ -17,9 +17,9 @@ module OpenTableExplorer
 extend AssertionsModule
 module Finance
 module Constants
+Downloaded_src_dir = FilePattern.repository_dir?($0) + '/../'
 IRS_pdf_directory = Pathname.new('../IRS').expand_path.to_s + '/'
 OTS_example_directories = Pathname.new('test/data_sources/tax_form/').expand_path.to_s
-Downloaded_src_dir = FilePattern.repository_dir?($0) + '/../'
 #Possible_tax_years=[2011, 2012, 2013, 2014].sort
 Possible_tax_years=[2014].sort
 Default_tax_year = Possible_tax_years[-1]
@@ -115,17 +115,6 @@ def run_fdf_to_pdf
 		ShellCommands.new("pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf")
 	self
 end # run_fdf_to_pdf
-def filled_in_pdf_files
-	generated_xfdf_files.map do |xdf_capture|
-		ots = xdf_capture.output?[:jurisdiction].to_s + '_' + xdf_capture.output?[:form].to_s
-#		'US_1040/US_1040_greg_f1040sd.pdf'	
-		matching_pdf_filename = ots + '/' + ots + '_' + xdf_capture.output?[:taxpayer].to_s + '_'
-		matching_pdf_filename += xdf_capture.output?[:form_prefix].to_s
-		matching_pdf_filename += xdf_capture.output?[:form].to_s
-		matching_pdf_filename +=xdf_capture.output?[:form_suffix].to_s + '.pdf'
-		'~/Desktop/src/OpenTaxSolver2014_12.01-forms/examples_and_templates/' + matching_pdf_filename
-	end # map
-end # filled_in_pdf_files
 def run_pdf_to_jpeg
 	output_pdf_pathname=Pathname.new(File.expand_path(output_pdf))
 	cleanpath_name = output_pdf_pathname.cleanpath
