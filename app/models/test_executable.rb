@@ -95,7 +95,7 @@ def write_error_file(recent_test, log_path)
 	contents = @repository.current_branch_name?.to_s
 	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 	contents += "\n" + recent_test.command_string
-	contents += "\n" + recent_test.output
+	contents += "\n" + recent_test.output.to_s
 	contents += "\n" + recent_test.errors
 	IO.write(log_path, contents)
 end # write_error_file
@@ -104,7 +104,7 @@ def write_commit_message(recent_test,files)
 	if !recent_test.nil? then
 		commit_message += "\n" + @repository.current_branch_name?.to_s + "\n"
 		commit_message += "\n" + recent_test.command_string
-		commit_message += "\n" + recent_test.output
+		commit_message += "\n" + recent_test.output.to_s
 		commit_message += recent_test.errors
 	end #if
 	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
