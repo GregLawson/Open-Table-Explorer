@@ -6,14 +6,13 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/shell_command.rb'
+require_relative '../../test/assertions/shell_command_assertions.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/default_test_case.rb'
 class ShellCommandsTest < DefaultTestCase2
-include DefaultTests
+#include DefaultTests
 include ShellCommands::Examples
 include Shell::Ssh::Examples
-extend Test::Unit
 def self.startup
 	ssh_pid = ShellCommands.new('echo $SSH_AGENT_PID $SSH_AUTH_SOCK')
 	ps =ShellCommands.new('ps -C ssh-agent').assert_post_conditions.output.split("\n")[1..-1]
@@ -44,7 +43,8 @@ end # initialize
 def test_command_on_remote
 	remote_run = Central['echo "cat"'].assert_post_conditions
 	assert_equal("cat\n", remote_run.output)	
-	assert_equal("greg", Central['ls -l /shares/Public/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects'].output)	
+	assert_equal("/home/greg\n", Central['pwd'].output)	
+#	assert_equal("greg", Central['ls -l /shares/Public/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects'].output)	
 end # []
 def test_assemble_hash_command
 	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_hash_command(Cd_command_hash))

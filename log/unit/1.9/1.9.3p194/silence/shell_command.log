@@ -1,7 +1,5 @@
 testing
-2015-10-23 17:05:55.310
+2015-10-24 12:48:21.439
 ruby -v -W0 test/unit/shell_command_test.rb
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-test/unit/shell_command_test.rb:13:in `<class:ShellCommandsTest>': uninitialized constant ShellCommandsTest::DefaultTests (NameError)
-	from test/unit/shell_command_test.rb:12:in `<main>'
+#<TypeError: can't convert Symbol into String>

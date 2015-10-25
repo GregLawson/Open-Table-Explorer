@@ -24,7 +24,7 @@ end #assert_post_conditions
 end # Assertions
 #self.assert_pre_conditions
 module Examples
-Central = Ssh.new('greg@172.31.42.104')
+Central = Ssh.new('greg@localhost')
 end # Examples
 end # Ssh
 end # Shell

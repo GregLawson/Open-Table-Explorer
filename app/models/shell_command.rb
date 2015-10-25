@@ -97,9 +97,11 @@ def execute
 	}
 	self #allows command chaining
 rescue StandardError => exception
-	$stdout.puts "rescue exception "+exception.inspect
-#	info "@command="+@command.inspect
-#	info "@command_string="+@command_string.inspect
+	message = "rescue exception in Shell#execute" + exception.inspect
+	message += "\n" + caller.join("\n")
+	$stdout.puts message
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
 	if @errors.nil? then
 		@errors=exception.inspect
 	else
