@@ -1,12 +1,12 @@
 testing
-2015-10-25 16:35:48.641
+2015-10-25 17:23:35.883
 ruby -v -W0 test/unit/test_run_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
 
 # Running:
 
-..EE.EFEFEEE.E.EE.-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x000000027f8d28>>
+..EE.EFEFEEE.E.EE.-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x00000003270210>>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:260:in `run'
 test/unit/test_run_test.rb:209:in `test_run'
 /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:108:in `block (3 levels) in run'
@@ -32,7 +32,7 @@ test/unit/test_run_test.rb:209:in `test_run'
 /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:56:in `block in autorun'
 EE..
 
-Finished in 2.152360s, 10.2213 runs/s, 10.2213 assertions/s.
+Finished in 2.065773s, 10.6498 runs/s, 10.6498 assertions/s.
 
   1) Error:
 NewTestClass#test_virtus_initialize:
@@ -49,14 +49,14 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
 
   3) Error:
 NewTestClass#test_shell:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002f80578>
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000031745c8>
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
     test/unit/test_run_test.rb:98:in `test_shell'
 
 
   4) Failure:
 NewTestClass#test_parse_log_file [test/unit/test_run_test.rb:133]:
-headerArray[-1]='"Run options: --seed 41867"'.
+headerArray[-1]='"Run options: --seed 0"'.
 Expected: "Finished"
   Actual: "Run"
 
@@ -76,19 +76,19 @@ Expected: 1
 
   7) Error:
 NewTestClass#test_log_path?:
-NoMethodError: undefined method `log_path?' for #<Repository:0x00000002db9a78>
+NoMethodError: undefined method `log_path?' for #<Repository:0x00000002fbcc08>
     test/unit/test_run_test.rb:53:in `test_log_path?'
 
 
   8) Error:
 NewTestClass#test_ruby_run_and_log:
-NoMethodError: undefined method `error_score?' for #<Repository:0x00000002db9a78>
+NoMethodError: undefined method `error_score?' for #<Repository:0x00000002fbcc08>
     test/unit/test_run_test.rb:83:in `test_ruby_run_and_log'
 
 
   9) Error:
 NewTestClass#test_ruby_test_string:
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000002db9a78>
+NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000002fbcc08>
     test/unit/test_run_test.rb:58:in `test_ruby_test_string'
 
 
@@ -100,7 +100,7 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
 
  11) Error:
 NewTestClass#test_new_from_pathname:
-NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x00000002f6b088>
+NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x0000000303f658>
     test/unit/test_run_test.rb:48:in `test_new_from_pathname'
 
 

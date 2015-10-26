@@ -1,14 +1,14 @@
 testing
-2015-09-28 16:01:31.651
+2015-10-25 16:55:55.130
 ruby -v -W0 test/unit/minimal_no_test_environment_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 3
+Run options: --seed 0
 
 # Running:
 
 ..
 
-Finished in 0.002472s, 809.1597 runs/s, 1213.7395 assertions/s.
+Finished in 0.002381s, 839.8675 runs/s, 1259.8013 assertions/s.
 
 2 runs, 3 assertions, 0 failures, 0 errors, 0 skips
 

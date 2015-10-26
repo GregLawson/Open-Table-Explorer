@@ -1,14 +1,14 @@
 testing
-2015-10-20 12:10:06.647
+2015-10-25 16:55:14.789
 ruby -v -W0 test/unit/file_pattern_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: 
 
 # Running tests:
 
-.............................
+............................
 
-Finished tests in 0.030742s, 943.3288 tests/s, 6635.8304 assertions/s.
+Finished tests in 0.023303s, 1201.5726 tests/s, 8754.3147 assertions/s.
 
-29 tests, 204 assertions, 0 failures, 0 errors, 0 skips
+28 tests, 204 assertions, 0 failures, 0 errors, 0 skips
 

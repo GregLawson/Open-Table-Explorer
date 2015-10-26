@@ -1,9 +1,9 @@
 testing
-2015-09-28 20:33:38.709
+2015-10-25 17:23:27.381
 ruby -v -W0 test/unit/test_environment_ruby_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-/usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert': undefined method `assertions' for NewTestClass:Class (NoMethodError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:31:in `assert_included_modules'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/assertions.rb:125:in `assert': undefined method `assertions' for NewTestClass:Class (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:37:in `assert_included_modules'
 	from test/unit/test_environment_ruby_test.rb:15:in `<class:TestEnvironmentRubyTest>'
 	from test/unit/test_environment_ruby_test.rb:10:in `<main>'

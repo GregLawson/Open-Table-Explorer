@@ -1,14 +1,14 @@
 testing
-2015-09-28 16:06:47.754
+2015-10-25 17:23:30.617
 ruby -v -W0 test/unit/test_executable_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 3
+Run options: --seed 0
 
 # Running:
 
 ................
 
-Finished in 0.235067s, 68.0656 runs/s, 140.3853 assertions/s.
+Finished in 0.163564s, 97.8208 runs/s, 201.7553 assertions/s.
 
 16 runs, 33 assertions, 0 failures, 0 errors, 0 skips
 

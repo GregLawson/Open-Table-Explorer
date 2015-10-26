@@ -1,10 +1,43 @@
 testing
-2015-09-28 16:00:36.686
+2015-10-25 16:55:02.575
 ruby -v -W0 test/unit/dependancies_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
 
-/usr/lib/ruby/1.9.1/test/unit.rb:328:in `autorun': uninitialized class variable @@installed_at_exit in Test::Unit::Runner (NameError)
-	from /usr/lib/ruby/1.9.1/test/unit.rb:640:in `<top (required)>'
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from test/unit/dependancies_test.rb:10:in `<main>'
+# Running tests:
+
+.....EE.FEEE..
+
+Finished tests in 446.011106s, 0.0314 tests/s, 0.0022 assertions/s.
+
+  1) Error:
+test_script(NewTestClass):
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000017a6ba0>
+    test/unit/dependancies_test.rb:17:in `test_script'
+
+  2) Error:
+test_active_support(NewTestClass):
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000017acbb8>
+    test/unit/dependancies_test.rb:29:in `test_active_support'
+
+  3) Failure:
+test_dpkg_lock(NewTestClass) [test/unit/dependancies_test.rb:42]:
+/var/cache/apt/archives/lock
+
+  4) Error:
+test_bundle(NewTestClass):
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000017b24a0>
+    test/unit/dependancies_test.rb:38:in `test_bundle'
+
+  5) Error:
+test_active_model(NewTestClass):
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000017b5fb0>
+    test/unit/dependancies_test.rb:25:in `test_active_model'
+
+  6) Error:
+test_grit(NewTestClass):
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001bb1a60>
+    test/unit/dependancies_test.rb:33:in `test_grit'
+
+14 tests, 1 assertions, 1 failures, 5 errors, 0 skips
+

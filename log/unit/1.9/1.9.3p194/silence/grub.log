@@ -1,0 +1,20 @@
+testing
+2015-10-25 16:55:31.557
+ruby -v -W0 test/unit/grub_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 0
+
+# Running:
+
+..F..
+
+Finished in 0.662618s, 7.5458 runs/s, 3.0183 assertions/s.
+
+  1) Failure:
+NewTestClass#test_Constants [test/unit/grub_test.rb:27]:
+[[{}, {:indent=>"  ", :uuid=>"51e0851a-6300-4d9a-b27e-e4a5b5db7bac"}], [{}, {:indent=>"\t  ", :uuid=>"76114a0e-75ca-4841-8af4-a1ba2184ccbf"}], [{:indent=>"\t", :boot=>"", :major=>"4", :minor=>"0", :patch=>"0", :build=>"2-amd64", :uuid=>"51e0851a-6300-4d9a-b27e-e4a5b5db7bac"}, {}], [{}, {:indent=>"\t\t  ", :uuid=>"76114a0e-75ca-4841-8af4-a1ba2184ccbf"}], [{:indent=>"\t\t", :boot=>"", :major=>"4", :minor=>"0", :patch=>"0", :build=>"2-amd64", :uuid=>"51e0851a-6300-4d9a-b27e-e4a5b5db7bac"}, {}], [{:indent=>"\t\t", :boot=>"", :major=>"3", :minor=>"16", :patch=>"3", :build=>"amd64", :uuid=>"51e0851a-6300-4d9a-b27e-e4a5b5db7bac"}, {}], [{}, {:indent=>"\t  ", :uuid=>"52f03b01-fc97-4d5c-abd7-71c905498a3a"}], [{:indent=>"\t", :boot=>"/boot", :major=>"3", :minor=>"2", :patch=>"0", :build=>"4-amd64", :uuid=>"52f03b01-fc97-4d5c-abd7-71c905498a3a"}, {}], [{}, {:indent=>"\t\t  ", :uuid=>"52f03b01-fc97-4d5c-abd7-71c905498a3a"}], [{:indent=>"\t\t", :boot=>"/boot", :major=>"3", :minor=>"2", :patch=>"0", :build=>"4-amd64", :uuid=>"52f03b01-fc97-4d5c-abd7-71c905498a3a"}, {}]].
+Expected: 5
+  Actual: 10
+
+5 runs, 2 assertions, 1 failures, 0 errors, 0 skips
+

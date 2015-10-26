@@ -1,22 +1,47 @@
 testing
-2015-09-28 16:07:10.543
+2015-10-25 17:23:48.824
 ruby -v -W0 test/unit/unit_maturity_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 3
+Run options: --seed 0
 
 # Running:
 
-...FFE.FF...E.
+..F..E.FE..FF.
 
-Finished in 0.804964s, 17.3921 runs/s, 59.6300 assertions/s.
+Finished in 0.559083s, 25.0410 runs/s, 85.8549 assertions/s.
 
   1) Failure:
+NewTestClass#test_working_different_from? [test/unit/unit_maturity_test.rb:112]:
+Expected false to be nil.
+
+
+  2) Error:
+NewTestClass#test_deserving_branch?:
+NoMethodError: undefined method `+' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:73:in `data_source_directory?'
+    test/unit/unit_maturity_test.rb:66:in `block in test_deserving_branch?'
+    test/unit/unit_maturity_test.rb:65:in `each_pair'
+    test/unit/unit_maturity_test.rb:65:in `test_deserving_branch?'
+
+
+  3) Failure:
+NewTestClass#test_differences? [test/unit/unit_maturity_test.rb:117]:
+Expected false to be nil.
+
+
+  4) Error:
+NewTestClass#test_diff_command?:
+NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
+    test/unit/unit_maturity_test.rb:92:in `test_diff_command?'
+
+
+  5) Failure:
 NewTestClass#test_bracketing_versions? [test/unit/unit_maturity_test.rb:167]:
 Expected: -4
   Actual: -2
 
 
-  2) Failure:
+  6) Failure:
 NewTestClass#test_scan_verions? [test/unit/unit_maturity_test.rb:160]:
 filename="test/long_test/repository_test.rb"
 range=-2..3
@@ -27,76 +52,6 @@ existing_indices=[-2, -1, 0, 1, 2, 3]
 scan_verions=-2.
 Expected: 13
   Actual: -4
-
-
-  3) Error:
-NewTestClass#test_diff_command?:
-NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
-    test/unit/unit_maturity_test.rb:92:in `test_diff_command?'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  4) Failure:
-NewTestClass#test_differences? [test/unit/unit_maturity_test.rb:117]:
-Expected false to be nil.
-
-
-  5) Failure:
-NewTestClass#test_working_different_from? [test/unit/unit_maturity_test.rb:112]:
-Expected false to be nil.
-
-
-  6) Error:
-NewTestClass#test_deserving_branch?:
-NoMethodError: Expected "test/data_source//repository//success.rb" to respond to #to_hash
-    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:197:in `coerce'
-    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:170:in `set'
-    /var/lib/gems/1.9.1/gems/virtus-1.0.3/lib/virtus/instance_methods.rb:17:in `initialize'
-    test/unit/unit_maturity_test.rb:67:in `new'
-    test/unit/unit_maturity_test.rb:67:in `block in test_deserving_branch?'
-    test/unit/unit_maturity_test.rb:65:in `each_pair'
-    test/unit/unit_maturity_test.rb:65:in `test_deserving_branch?'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 14 runs, 48 assertions, 4 failures, 2 errors, 0 skips
 

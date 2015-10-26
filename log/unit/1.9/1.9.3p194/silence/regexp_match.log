@@ -1,5 +1,5 @@
 testing
-2015-09-28 16:05:52.654
+2015-10-25 17:13:03.173
 ruby -v -W0 test/unit/regexp_match_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 

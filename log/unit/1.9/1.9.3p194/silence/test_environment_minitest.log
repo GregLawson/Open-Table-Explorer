@@ -1,14 +1,18 @@
 testing
-2015-09-28 20:33:38.043
+2015-10-25 17:23:25.174
 ruby -v -W0 test/unit/test_environment_minitest_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 3
+Run options: --seed 0
 
 # Running:
 
-....
+F....
 
-Finished in 0.002839s, 1409.1890 runs/s, 2818.3781 assertions/s.
+Finished in 0.002882s, 1735.0333 runs/s, 2776.0533 assertions/s.
 
-4 runs, 8 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+TestEnvironmentMinitestTest#test_requires [test/unit/test_environment_minitest_test.rb:14]:
+In assert_included_modules, Fish is not included in Minitest::Assertions which does not include any modules.
+
+5 runs, 8 assertions, 1 failures, 0 errors, 0 skips
 

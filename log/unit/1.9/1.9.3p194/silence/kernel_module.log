@@ -1,10 +1,20 @@
 testing
-2015-09-28 16:01:23.244
+2015-10-25 16:55:47.087
 ruby -v -W0 test/unit/kernel_module_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: 
 
-/usr/lib/ruby/1.9.1/test/unit.rb:328:in `autorun': uninitialized class variable @@installed_at_exit in Test::Unit::Runner (NameError)
-	from /usr/lib/ruby/1.9.1/test/unit.rb:640:in `<top (required)>'
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from test/unit/kernel_module_test.rb:9:in `<main>'
+# Running tests:
+
+........E
+
+Finished tests in 0.435779s, 20.6527 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_script(UsbtmcTest):
+NoMethodError: undefined method `assert_post_conditions' for /lib/modules/3.2.0-4-amd64/kernel/drivers/usb/class/usbtmc.ko
+:ShellCommands
+    test/unit/kernel_module_test.rb:16:in `test_script'
+
+9 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+

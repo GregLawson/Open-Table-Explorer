@@ -1,7 +1,21 @@
 testing
-2015-09-28 16:07:18.904
+2015-10-25 17:23:56.753
 ruby -v -W0 test/unit/usc_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 0
 
-test/unit/usc_test.rb:11:in `<class:UscTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
-	from test/unit/usc_test.rb:10:in `<main>'
+# Running:
+
+..E..
+
+Finished in 0.003526s, 1418.0583 runs/s, 0.0000 assertions/s.
+
+  1) Error:
+NewTestClass#test_Constants:
+TypeError: can't convert nil into String
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:24:in `+'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:24:in `path'
+    test/unit/usc_test.rb:15:in `test_Constants'
+
+5 runs, 0 assertions, 0 failures, 1 errors, 0 skips
+

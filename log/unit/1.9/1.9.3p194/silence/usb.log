@@ -1,10 +1,19 @@
 testing
-2015-09-28 16:07:17.441
+2015-10-25 17:23:55.181
 ruby -v -W0 test/unit/usb_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 0
 
-/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- libusb (LoadError)
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/usb.rb:8:in `<top (required)>'
-	from test/unit/usb_test.rb:9:in `require_relative'
-	from test/unit/usb_test.rb:9:in `<main>'
+# Running:
+
+.....E..
+
+Finished in 0.183764s, 43.5342 runs/s, 0.0000 assertions/s.
+
+  1) Error:
+UsbBbusTest#test_find_devices:
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001d441c0>
+    test/unit/usb_test.rb:18:in `test_find_devices'
+
+8 runs, 0 assertions, 0 failures, 1 errors, 0 skips
+

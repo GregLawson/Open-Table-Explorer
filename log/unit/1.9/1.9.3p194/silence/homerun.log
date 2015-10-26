@@ -1,81 +1,72 @@
 testing
-2015-09-28 16:01:07.483
+2015-10-25 16:55:33.034
 ruby -v -W0 test/unit/homerun_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-rescue exception #<Errno::ENOENT: No such file or directory - hdhomerun_config discover>
-Run options: --seed 3
+rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - hdhomerun_config discover>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:43:in `new'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:43:in `<module:Constants>'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:42:in `<class:HomeRun>'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:10:in `<top (required)>'
+test/unit/homerun_test.rb:9:in `require_relative'
+test/unit/homerun_test.rb:9:in `<main>'
+Run options: --seed 0
 
 # Running:
 
-...rescue exception #<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>
-FEE..
+...EE.rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:23:in `new'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:23:in `scan'
+test/unit/homerun_test.rb:16:in `test_scan'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:108:in `block (3 levels) in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:205:in `capture_exceptions'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:105:in `block (2 levels) in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:256:in `time_it'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:104:in `block in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:334:in `on_signal'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:276:in `with_info_handler'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:103:in `run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:781:in `run_one_method'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:308:in `run_one_method'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:296:in `block (2 levels) in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:295:in `each'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:295:in `block in run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:334:in `on_signal'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:321:in `with_info_handler'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:294:in `run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `block in __run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `map'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `__run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:129:in `run'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:56:in `block in autorun'
+F.
 
-Finished in 0.012563s, 636.8006 runs/s, 159.2001 assertions/s.
+Finished in 0.008523s, 938.6630 runs/s, 234.6657 assertions/s.
 
-  1) Failure:
+  1) Error:
+HomeRunTest#test_initialize:
+NoMethodError: undefined method `assertions' for #<HomeRun:0x00000002603b30 @id="10311E80">
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:317:in `assert_includes'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:36:in `assert_post_conditions'
+    test/unit/homerun_test.rb:13:in `test_initialize'
+
+
+  2) Error:
+HomeRunTest#test_Constants:
+NoMethodError: undefined method `size' for nil:NilClass
+    test/unit/homerun_test.rb:21:in `test_Constants'
+
+
+  3) Failure:
 HomeRunTest#test_scan [test/unit/homerun_test.rb:17]:
 scan=$ hdhomerun_config 10311E80 scan
 @errors="#<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>"
 @process_status=nil
 .
 Expected /^unable to connect to device\n|^$/ to match "#<Errno::ENOENT: No such file or directory - hdhomerun_config 10311E80 scan>".
-
-
-  2) Error:
-HomeRunTest#test_initialize:
-NoMethodError: undefined method `assertions' for #<HomeRun:0x00000002bb11e0 @id="10311E80">
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:315:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:36:in `assert_post_conditions'
-    test/unit/homerun_test.rb:13:in `test_initialize'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  3) Error:
-HomeRunTest#test_Constants:
-NoMethodError: undefined method `size' for nil:NilClass
-    test/unit/homerun_test.rb:21:in `test_Constants'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 8 runs, 2 assertions, 1 failures, 2 errors, 0 skips
 

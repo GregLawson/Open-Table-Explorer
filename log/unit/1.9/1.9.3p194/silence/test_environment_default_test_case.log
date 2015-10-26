@@ -1,5 +1,6 @@
 testing
-2015-09-28 19:59:57.489
+2015-10-25 17:23:23.928
 ruby -v -W0 test/unit/test_environment_default_test_case_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
+test/unit/test_environment_default_test_case_test.rb:8:in `<main>': superclass mismatch for class TestEnvironmentDefaultTestCaseTest (TypeError)

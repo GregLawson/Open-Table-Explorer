@@ -1,20 +1,30 @@
 testing
-2015-09-28 16:01:23.034
+2015-10-25 16:55:46.015
 ruby -v -W0 test/unit/iwup_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 $VERBOSE=
 ARGV=[]
-rescue exception #<Errno::ENOENT: No such file or directory - /sbin/iwlist wlan0 scanning>
+rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - /sbin/iwlist wlan0 scanning>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+test/unit/iwup_test.rb:24:in `new'
+test/unit/iwup_test.rb:24:in `<class:IwTest>'
+test/unit/iwup_test.rb:10:in `<main>'
 Please enter an ESSID:
-rescue exception #<Errno::ENOENT: No such file or directory - /usr/sbin/wifi-radar>
+rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - /usr/sbin/wifi-radar>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+test/unit/iwup_test.rb:28:in `new'
+test/unit/iwup_test.rb:28:in `<class:IwTest>'
+test/unit/iwup_test.rb:10:in `<main>'
 
-Run options: --seed 3
+Run options: --seed 0
 
 # Running:
 
 .....
 
-Finished in 0.006934s, 721.0963 runs/s, 0.0000 assertions/s.
+Finished in 0.003805s, 1314.0283 runs/s, 0.0000 assertions/s.
 
 5 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 
