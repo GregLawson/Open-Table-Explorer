@@ -15,36 +15,20 @@ require 'multi_xml'
 class Nmap # < ActiveRecord::Base
 include Virtus.model
   attribute :ip_range, String, :default => nil
+	attribute :parser, Symbol, :default => :nokogiri
   attribute :xml, Hash, :default => ''
   attribute :last_detection, Time, :default => Time.now
   attribute :nmap_execution_time, Time, :default => nil
 module Constants # first of two
 Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
-Nmap_xml_pathname = Unit.new_from_path($0).data_sources_directory? + '/nmap.xml'
 end # Constants
 include Constants
 module ClassMethods
 include Constants
-def nmap(ip_range, options = '-oX ' + Nmap_xml_pathname)
-	ShellCommands.new(nmap_command_string(ip_range, options))
-end # nmap
-def nmap_command_string(ip_range, options = '-oX ' + Nmap_xml_pathname)
-	'nmap ' + options + ' ' + ip_range
-end # nmap_command_string
-def nmap_xml_command_string(ip_range, xml_pathname = Nmap_xml_pathname)
-	nmap_command_string(ip_range, '-oX ' + Nmap_xml_pathname)
-end # nmap_xml_command_string
-def nmap_xml(ip_range, xml_pathname = Nmap_xml_pathname, parser = :nokogiri)
-	nmap(ip_range, options = '-oX ' + xml_pathname)
-	Nmap.new(ip_range: ip_range, xml: parse_xml_file(xml_pathname, parser))
-end # nmap_xml
 def parse_xml(string = '<tag>This is the contents</tag>', parser)
 	MultiXml.parser = parser
 	MultiXml.parser = eval('MultiXml::Parsers::' + parser[0..0].upcase + parser[1..-1])  # Same as above
 	MultiXml.parse(string)
-end # parse_xml_file
-def parse_xml_file(filename = Nmap_xml_pathname, parser = :nokogiri)
-	parse_xml(IO.read(filename), parser)
 end # parse_xml_file
 def logical_primary_key
 #	return [:name]
@@ -72,14 +56,30 @@ end # smbs
 end # ClassMethods
 extend ClassMethods
 module Constants
-Eth0_ip = '192.168.5.100'
-My_host_nmap = Nmap.nmap_xml(Eth0_ip)
-#My_host_nmap_simplified_xml = My_host_nmap.xml["nmaprun"]
-Eth0_network = '192.168.5.1-254'
-Eth0_network_nmap = Nmap.nmap_xml(Eth0_network)
-Failed_nmap = Nmap.nmap_xml('192.168.5.1-2')
 end # Constants
 include Constants
+def xml_pathname
+	Unit.new_from_path($0).data_sources_directory? + '/nmap.xml'
+end # xml_pathname
+def nmap(options = '-oX ' + xml_pathname)
+	ShellCommands.new(nmap_command_string(options))
+end # nmap
+def nmap_command_string(options = '-oX ' + xml_pathname)
+	'nmap ' + 
+	options + 
+	' ' + 
+	@ip_range.to_s # debug
+end # nmap_command_string
+def nmap_xml_command_string
+	nmap_command_string(@ip_range, '-oX ' + xml_pathname)
+end # nmap_xml_command_string
+def parse_xml_file
+	parse_xml(IO.read(xml_pathname), @parser)
+end # parse_xml_file
+def nmap_xml
+	nmap(options = '-oX ' + xml_pathname)
+	@xml = parse_xml_file
+end # nmap_xml
 # returns Array in all cases
 def hosts?
 	host_xml = xml["nmaprun"]["host"]
@@ -166,49 +166,4 @@ def scanNmapSummary(s)
 end
 # attr_reader
 #require_relative '../../app/models/assertions.rb'
-module Assertions
-module ClassMethods
-def assert_xml(parsed_xml)
-	keys = parsed_xml["nmaprun"].keys.each do |key|
-	assert_includes(["scaninfo",  "verbose",  "debugging",  "host",  "runstats",  "scanner",  "args",
-		"start",  "startstr",  "version",  "xmloutputversion"], key)
-	end # each
-	assert_equal(["type", "protocol", "numservices", "services"], parsed_xml["nmaprun"]["scaninfo"].keys)
-	parsed_xml["nmaprun"]["host"].enumerate(:each) do |host|
-		message = "host = " + host.inspect
-		assert_equal(["status", "address", "hostnames", "ports", "times", "starttime", "endtime"], host.keys, message.inspect)
-		assert_equal(["status", "address", "hostnames", "ports", "times", "starttime", "endtime"], host.keys)
-		assert_equal(["addr", "addrtype"], host["address"].keys)
-		assert_equal(["extraports", "port"], host["ports"].keys)
-#		assert_equal([0, 1, 2, 3, 4], host["ports"]["port"].keys)
-		host["ports"]["port"].each_with_index do |port, index|
-			assert_instance_of(Fixnum, index)
-			assert_instance_of(Hash, port)
-			assert_equal(["state", "service", "protocol", "portid"], port.keys)
-			assert_equal(["name", "method", "conf"], port["service"].keys)
-			assert_includes(["ssh", "rpcbind",  "netbios-ssn", "microsoft-ds", "samba-swat", "telnet", "domain", "http"], port["service"]["name"])
-		end # each
-	end # enumerate
-end # xml
-def assert_pre_conditions(message='')
-	message+="In assert_pre_conditions, self=#{inspect}"
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-end #assert_post_conditions
-end #ClassMethods
-def assert_xml(parsed_xml)
-	Nmap.assert_xml(@nmap)
-end # assert_xml
-def assert_pre_conditions(message='')
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-end #assert_post_conditions
-end # Assertions
-include Assertions
-extend Assertions::ClassMethods
-#self.assert_pre_conditions
-module Examples
-include Constants
-end # Examples
 end # Nmap

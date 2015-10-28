@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/nmap.rb'
+require_relative '../../test/assertions/nmap_assertions.rb'
 # executed in alphabetical order. Longer names sort later.
 class NmapTest < TestCase
 #include DefaultTests
