@@ -10,16 +10,12 @@ require_relative '../../test/assertions/nmap_assertions.rb'
 # executed in alphabetical order. Longer names sort later.
 class NmapTest < TestCase
 #include DefaultTests
-include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_Constants
 
 MultiXml.parser = :ox
 MultiXml.parser = MultiXml::Parsers::Ox # Same as above
 MultiXml.parse('<tag>This is the contents</tag>') # Parsed using Ox
-
-MultiXml.parser = :libxml
-MultiXml.parser = MultiXml::Parsers::Libxml # Same as above
-MultiXml.parse('<tag>This is the contents</tag>') # Parsed using LibXML
 
 MultiXml.parser = :nokogiri
 MultiXml.parser = MultiXml::Parsers::Nokogiri # Same as above
@@ -32,6 +28,11 @@ MultiXml.parse('<tag>This is the contents</tag>') # Parsed using REXML
 #MultiXml.parser = :oga
 #MultiXml.parser = MultiXml::Parsers::Oga # Same as above
 #MultiXml.parse('<tag>This is the contents</tag>') # Parsed using Oga
+
+MultiXml.parser = :libxml
+MultiXml.parser = MultiXml::Parsers::Libxml # Same as above
+MultiXml.parse('<tag>This is the contents</tag>') # Parsed using LibXML
+
 end # Constants
 def test_nmap
 	ip_range = Eth0_ip

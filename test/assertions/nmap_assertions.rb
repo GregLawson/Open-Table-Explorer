@@ -53,10 +53,10 @@ extend Assertions::ClassMethods
 module Examples
 include Constants
 Eth0_ip = '192.168.5.100'
-My_host_nmap = Nmap.nmap_xml(Eth0_ip)
+My_host_nmap = Nmap.new(ip_range: Eth0_ip)
 #My_host_nmap_simplified_xml = My_host_nmap.xml["nmaprun"]
 Eth0_network = '192.168.5.1-254'
-Eth0_network_nmap = Nmap.nmap_xml(Eth0_network)
-Failed_nmap = Nmap.nmap_xml('192.168.5.1-2')
+Eth0_network_nmap = Nmap.new(ip_range: Eth0_network)
+Failed_nmap = Nmap.new(ip_range: '192.168.5.1-2')
 end # Examples
 end # Nmap

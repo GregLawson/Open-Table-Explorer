@@ -74,10 +74,11 @@ def nmap_xml_command_string
 	nmap_command_string(@ip_range, '-oX ' + xml_pathname)
 end # nmap_xml_command_string
 def parse_xml_file
-	parse_xml(IO.read(xml_pathname), @parser)
+	Nmap.parse_xml(IO.read(xml_pathname), @parser)
 end # parse_xml_file
 def nmap_xml
-	nmap(options = '-oX ' + xml_pathname)
+	run_status = nmap(options = '-oX ' + xml_pathname)
+	fail Exception.new(run_status.inspect) unless run_status.success?
 	@xml = parse_xml_file
 end # nmap_xml
 # returns Array in all cases
