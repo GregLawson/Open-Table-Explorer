@@ -11,7 +11,7 @@ require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/open_tax_form_filler.rb'
 class GenericJsonsTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_raw_acquisitions  #acquisition=next
 	all_files=Dir[OpenTaxFormFiller::Definitions::Input_filenames]
 	all=all_files.map do |filename|

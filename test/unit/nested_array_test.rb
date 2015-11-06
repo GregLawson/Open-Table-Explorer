@@ -10,7 +10,7 @@ require_relative '../../app/models/nested_array.rb'
 #require_relative '../../test/assertions/ruby_assertions.rb'
 class NestedArrayTest  < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_initialize
 	refute_nil(NestedArray.new(['K']))
 	assert_equal(['K'], NestedArray.new(['K']))

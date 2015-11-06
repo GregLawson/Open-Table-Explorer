@@ -11,7 +11,7 @@ require_relative '../../app/models/zillow.rb'
 require_relative '../../app/models/parse.rb'
 class ZillowTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_Examples
 #	command_string = 'wget --no-verbose -O- ' + All_units_url
 	variant_options = ''

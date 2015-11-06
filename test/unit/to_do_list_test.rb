@@ -10,7 +10,7 @@ require_relative '../../app/models/to_do_list.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 class ToDoListTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 include Repository::Examples
 #include Branch::Examples
 def test_initialize

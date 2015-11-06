@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/command.rb'
 class CommandTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_paths?
 	Command.paths?.each do |path|
 		assert_pathname_exists(path)
