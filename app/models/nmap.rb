@@ -20,6 +20,7 @@ include Virtus.model
   attribute :last_detection, Time, :default => Time.now
   attribute :nmap_execution_time, Time, :default => nil
 module Constants # first of two
+Library_Unit = Unit.new_from_path(__FILE__)
 Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
 end # Constants
 include Constants
@@ -59,7 +60,7 @@ module Constants
 end # Constants
 include Constants
 def xml_pathname
-	Unit.new_from_path($0).data_sources_directory? + '/nmap.xml'
+	Library_Unit.data_sources_directory? + '/nmap.xml'
 end # xml_pathname
 def nmap(options = '-oX ' + xml_pathname)
 	ShellCommands.new(nmap_command_string(options))

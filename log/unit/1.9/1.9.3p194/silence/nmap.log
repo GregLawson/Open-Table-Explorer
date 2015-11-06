@@ -1,13 +1,69 @@
 testing
-2015-10-25 16:55:59.182
+2015-11-06 08:42:05.335
 ruby -v -W0 test/unit/nmap_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 0
 
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:47:in `read': No such file or directory - /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/nmap/nmap.xml (Errno::ENOENT)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:47:in `parse_xml_file'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:39:in `nmap_xml'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:76:in `<module:Constants>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:74:in `<class:Nmap>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:15:in `<top (required)>'
-	from test/unit/nmap_test.rb:9:in `require_relative'
-	from test/unit/nmap_test.rb:9:in `<main>'
+# Running:
+
+..EEEE.EE.E.E..
+
+Finished in 3.325769s, 4.5102 runs/s, 0.3007 assertions/s.
+
+  1) Error:
+NewTestClass#test_save:
+NoMethodError: undefined method `[]' for nil:NilClass
+    test/unit/nmap_test.rb:73:in `test_save'
+
+
+  2) Error:
+NewTestClass#test_hosts?:
+NoMethodError: undefined method `[]' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:87:in `hosts?'
+    test/unit/nmap_test.rb:68:in `test_hosts?'
+
+
+  3) Error:
+NewTestClass#test_assert_xml:
+NoMethodError: undefined method `keys' for nil:NilClass
+    test/unit/nmap_test.rb:83:in `test_assert_xml'
+
+
+  4) Error:
+NewTestClass#test_nmap:
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001693ad8>
+    test/unit/nmap_test.rb:39:in `test_nmap'
+
+
+  5) Error:
+NewTestClass#test_smbs:
+NoMethodError: undefined method `keys' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/nmap_assertions.rb:14:in `assert_xml'
+    test/unit/nmap_test.rb:64:in `test_smbs'
+
+
+  6) Error:
+NewTestClass#test_nmap_xml:
+NoMethodError: undefined method `nmap' for Nmap:Class
+    test/unit/nmap_test.rb:44:in `test_nmap_xml'
+
+
+  7) Error:
+NewTestClass#test_parse_xml_file:
+NoMethodError: undefined method `keys' for "":String
+    test/unit/nmap_test.rb:54:in `test_parse_xml_file'
+
+
+  8) Error:
+NewTestClass#test_Constants:
+LoadError: cannot load such file -- libxml
+    /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+    /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+    /var/lib/gems/1.9.1/gems/multi_xml-0.5.5/lib/multi_xml/parsers/libxml.rb:1:in `<top (required)>'
+    /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+    /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+    /var/lib/gems/1.9.1/gems/multi_xml-0.5.5/lib/multi_xml.rb:107:in `parser='
+    test/unit/nmap_test.rb:32:in `test_Constants'
+
+15 runs, 1 assertions, 0 failures, 8 errors, 0 skips
+
