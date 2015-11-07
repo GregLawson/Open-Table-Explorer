@@ -5,8 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment'
-require_relative '../../app/models/test_environment_minitest.rb'
+require_relative 'test_environment'
+#require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../assertions/command_line_assertions.rb'
 class CommandLineTest < TestCase
 include CommandLine::Examples
@@ -122,6 +122,7 @@ def test_executable_method
 	refute_nil(Script_command_line.executable_method(:argument_types))
 	refute_nil(Script_command_line.executable_method(:argument_types))
 	refute_nil(Script_command_line.executable_method(:argument_types))
+	assert(ShellCommand.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb').success?)
 end # executable_method
 def test_arity
 	refute_nil(Script_command_line.executable_method(:argument_types))
