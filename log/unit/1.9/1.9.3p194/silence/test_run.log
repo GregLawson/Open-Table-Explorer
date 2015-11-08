@@ -1,14 +1,14 @@
 passed
-2015-11-08 08:48:43.667
+2015-11-08 09:02:06.142
 ruby -v -W0 test/unit/test_run_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
 
 # Running:
 
-..EE..FEFEEE.E.EE.-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x00000003058a90>>
+..EE..FEFEEE.E.EE.-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x00000001d94210>>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:260:in `run'
-test/unit/test_run_test.rb:209:in `test_run'
+test/unit/test_run_test.rb:208:in `test_run'
 /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:108:in `block (3 levels) in run'
 /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:205:in `capture_exceptions'
 /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:105:in `block (2 levels) in run'
@@ -32,24 +32,24 @@ test/unit/test_run_test.rb:209:in `test_run'
 /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:56:in `block in autorun'
 EE..
 
-Finished in 2.127575s, 10.3404 runs/s, 10.8104 assertions/s.
+Finished in 2.083334s, 10.5600 runs/s, 11.0400 assertions/s.
 
   1) Error:
 NewTestClass#test_virtus_initialize:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:18:in `test_virtus_initialize'
+    test/unit/test_run_test.rb:17:in `test_virtus_initialize'
 
 
   2) Error:
 NewTestClass#test_log_file:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:18:in `test_virtus_initialize'
-    test/unit/test_run_test.rb:64:in `test_log_file'
+    test/unit/test_run_test.rb:17:in `test_virtus_initialize'
+    test/unit/test_run_test.rb:63:in `test_log_file'
 
 
   3) Failure:
-NewTestClass#test_parse_log_file [test/unit/test_run_test.rb:133]:
-headerArray[-1]='"Run options: --seed 58354"'.
+NewTestClass#test_parse_log_file [test/unit/test_run_test.rb:132]:
+headerArray[-1]='"Run options: --seed 0"'.
 Expected: "Finished"
   Actual: "Run"
 
@@ -57,11 +57,11 @@ Expected: "Finished"
   4) Error:
 NewTestClass#test_log_passed?:
 ArgumentError: wrong number of arguments (0 for 1)
-    test/unit/test_run_test.rb:147:in `test_log_passed?'
+    test/unit/test_run_test.rb:146:in `test_log_passed?'
 
 
   5) Failure:
-NewTestClass#test_error_score? [test/unit/test_run_test.rb:199]:
+NewTestClass#test_error_score? [test/unit/test_run_test.rb:198]:
 executable_file = /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/single_test_fail.rb.
 Expected: 1
   Actual: 0
@@ -69,50 +69,50 @@ Expected: 1
 
   6) Error:
 NewTestClass#test_log_path?:
-NoMethodError: undefined method `log_path?' for #<Repository:0x00000003002ac8>
-    test/unit/test_run_test.rb:53:in `test_log_path?'
+NoMethodError: undefined method `log_path?' for #<Repository:0x000000022b78a0>
+    test/unit/test_run_test.rb:52:in `test_log_path?'
 
 
   7) Error:
 NewTestClass#test_ruby_run_and_log:
-NoMethodError: undefined method `error_score?' for #<Repository:0x00000003002ac8>
-    test/unit/test_run_test.rb:83:in `test_ruby_run_and_log'
+NoMethodError: undefined method `error_score?' for #<Repository:0x000000022b78a0>
+    test/unit/test_run_test.rb:82:in `test_ruby_run_and_log'
 
 
   8) Error:
 NewTestClass#test_ruby_test_string:
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000003002ac8>
-    test/unit/test_run_test.rb:58:in `test_ruby_test_string'
+NoMethodError: undefined method `ruby_test_string' for #<Repository:0x000000022b78a0>
+    test/unit/test_run_test.rb:57:in `test_ruby_test_string'
 
 
   9) Error:
 NewTestClass#test_file_bug_reports:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:101:in `test_file_bug_reports'
+    test/unit/test_run_test.rb:100:in `test_file_bug_reports'
 
 
  10) Error:
 NewTestClass#test_new_from_pathname:
-NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x00000003051df8>
-    test/unit/test_run_test.rb:48:in `test_new_from_pathname'
+NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x000000023868d0>
+    test/unit/test_run_test.rb:47:in `test_new_from_pathname'
 
 
  11) Error:
 NewTestClass#test_test_file?:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:74:in `test_test_file?'
+    test/unit/test_run_test.rb:73:in `test_test_file?'
 
 
  12) Error:
 NewTestClass#test_run:
 NoMethodError: undefined method `output' for nil:NilClass
-    test/unit/test_run_test.rb:209:in `test_run'
+    test/unit/test_run_test.rb:208:in `test_run'
 
 
  13) Error:
 NewTestClass#test_parse_header:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:154:in `test_parse_header'
+    test/unit/test_run_test.rb:153:in `test_parse_header'
 
 22 runs, 23 assertions, 2 failures, 11 errors, 0 skips
 

@@ -185,7 +185,7 @@ def error_score?(logging = :silence,
 	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
 		syntax_test = @executable.repository.shell_command("ruby -c "+executable_file)
 		if syntax_test.output=="Syntax OK\n" then
-			initialize_test = @executable.repository.shell_command("ruby "+executable_file+' -n test_initialize')
+			initialize_test = @executable.repository.shell_command("ruby "+executable_file+' --name test_initialize')
 			if initialize_test.success? then
 				1
 			else # initialization  failure or test_initialize failure
