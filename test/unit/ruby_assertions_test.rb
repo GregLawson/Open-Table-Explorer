@@ -243,7 +243,7 @@ def test_assert_constant_instance_respond_to
 end #assert_constant_instance_respond_to
 def test_missing_file_message
 	missing_pathname = '/root-kit/bad_stuff/exploit.sh'
-	existing_data_file = '~/.profile'
+	existing_data_file = '~/.gem'
 	assert_empty(missing_file_message(existing_data_file))
 	missing_pathname = Pathname.new(missing_pathname).expand_path
 	existing_dir = nil
