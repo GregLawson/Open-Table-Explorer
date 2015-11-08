@@ -9,7 +9,6 @@ require_relative 'test_environment'
 require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/regexp.rb'
 require_relative '../../app/models/test_run.rb'
-# executed in alphabetical order. Longer names sort later.
 class TestRunTest < TestCase
 include TestExecutable::Examples
 include TestRun::Examples

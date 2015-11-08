@@ -171,7 +171,7 @@ def error_score?(logging = :silence,
 	@ruby_test_string = @executable.ruby_test_string(logging,
 		minor_version,
 		patch_version)
-	@recent_test = @executable.repository.shell_command(@ruby_test_string)
+	@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @executable.repository.path)
 	log_path = @executable.log_path?(logging, minor_version, patch_version)
 	if !log_path.empty? then
 	end # if
@@ -180,6 +180,8 @@ def error_score?(logging = :silence,
 #	@recent_test.puts if $VERBOSE
 	@error_score = if @recent_test.success? then
 		0
+	elsif @recent_test.process_status.nil? then
+		100000 # really bad
 	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
 		syntax_test = @executable.repository.shell_command("ruby -c "+executable_file)
 		if syntax_test.output=="Syntax OK\n" then
@@ -264,7 +266,7 @@ def run
 	if !@test.nil? then
 		command +="-n #{@test}"
 	end #if
-	run =ShellCommands.new(command)
+	run = ShellCommands.new(command)
 rescue StandardError => exception_raised
 	puts  '-StandardError Error: ' + exception_raised.inspect 
 	puts exception_raised.backtrace.join("\n")
@@ -282,7 +284,7 @@ end #ruby_run_and_log
 def file_bug_reports
 	TestRun.file_bug_reports(test_file?,log_path?,@test)
 end #file_bug_reports
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
