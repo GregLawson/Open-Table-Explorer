@@ -5,10 +5,38 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment'
-require_relative '../../app/models/test_environment_minitest.rb'
+require_relative 'test_environment'
+#require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../assertions/command_line_assertions.rb'
 class CommandLineTest < TestCase
+def test_arity
+	assert_equal(-1, Script_command_line.method(:candidate_commands).arity)
+	assert_equal(-2, Script_command_line.method(:initialize).arity)
+#	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
+#	assert_equal(-2, Script_command_line.unit_class.method(:initialize).arity)
+	refute_nil(Script_command_line.executable_method?(:argument_types))
+	assert_equal(0, Script_command_line.arity(:argument_types), Script_command_line.inspect)
+	assert_equal(-1, Script_command_line.arity(:executable_object), Script_command_line.inspect)
+	assert_equal(1, Script_command_line.arity(:executable_method), Script_command_line.inspect)
+	assert_equal(1, Script_command_line.arity(:arity), Script_command_line.inspect)
+	assert_equal(-1, Test_unit_commandline.arity(:error_score?), Test_unit_commandline.to_s)
+end # arity
+def test_default_arguments?
+	executable_object = Test_unit_commandline.executable_object
+	message = 'Script_command_line = ' + Script_command_line.inspect
+	assert_equal(false, Script_command_line.default_arguments?(:argument_types), message)
+	assert_equal(true, Script_command_line.default_arguments?(:executable_object), message)
+	assert_equal(false, Script_command_line.default_arguments?(:executable_method), message)
+	assert_equal(false, Script_command_line.default_arguments?(:arity), message)
+end # default_arguments
+def test_required_arguments
+	executable_object = Test_unit_commandline.executable_object
+	assert_equal(:error_score?, Test_unit_commandline.sub_command)
+	assert_respond_to(executable_object, Test_unit_commandline.sub_command)
+	method = executable_object.method(Test_unit_commandline.sub_command)
+	assert_equal(-1, method.arity)
+	assert_equal(0, method.required_arguments, Test_unit_commandline.to_s)
+end # required_arguments
 include CommandLine::Examples
 Test_unit = Unit.new(:TestRun)
 require Test_unit.model_pathname?
@@ -76,8 +104,8 @@ def test_find_examples
 	Example.find_all_in_class(TestRun).each do |example|
 	end # each
 	refute_equal([], Example.find_by_class(CommandLine, CommandLine))
-	refute_equal([], Script_command_line.find_examples, Script_command_line.to_s)
-	refute_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.to_s)
+	refute_equal([], Script_command_line.find_examples, Script_command_line.inspect)
+	refute_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.inspect)
 #			assert_equal(example_class, Unit::Executable.model_class?)
 	refute_equal([], Test_unit_commandline.find_examples)
 	refute_equal([], Not_virtus_unit_commandline.find_examples)
@@ -119,44 +147,34 @@ def test_executable_method
 	refute_nil(Script_command_line.executable_object)
 	assert(Script_command_line.executable_object.respond_to?(:argument_types))
 
-	refute_nil(Script_command_line.executable_method(:argument_types))
-	refute_nil(Script_command_line.executable_method(:argument_types))
-	refute_nil(Script_command_line.executable_method(:argument_types))
+	refute_nil(Script_command_line.executable_method?(:argument_types))
+	refute_nil(Script_command_line.executable_method?(:argument_types))
+	refute_nil(Script_command_line.executable_method?(:argument_types))
+	assert(ShellCommands.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb').success?)
 end # executable_method
-def test_arity
-	refute_nil(Script_command_line.executable_method(:argument_types))
-	assert_equal(0, Script_command_line.arity(:argument_types), Script_command_line.to_s)
-	assert_equal(-1, Script_command_line.arity(:executable_object), Script_command_line.to_s)
-	assert_equal(1, Script_command_line.arity(:executable_method), Script_command_line.to_s)
-	assert_equal(1, Script_command_line.arity(:arity), Script_command_line.to_s)
-	assert_equal(-1, Test_unit_commandline.arity(:error_score?), Test_unit_commandline.to_s)
-end # arity
-def test_default_arguments?
-	assert_equal(false, Script_command_line.default_arguments?(:argument_types), Script_command_line.to_s)
-	assert_equal(true, Script_command_line.default_arguments?(:executable_object), Script_command_line.to_s)
-	assert_equal(false, Script_command_line.default_arguments?(:executable_method), Script_command_line.to_s)
-	assert_equal(false, Script_command_line.default_arguments?(:arity), Script_command_line.to_s)
-end # default_arguments
-def test_required_arguments
-	executable_object = Test_unit_commandline.executable_object
-	assert_equal(:error_score?, Test_unit_commandline.sub_command)
-	assert_respond_to(executable_object, Test_unit_commandline.sub_command)
-	method = executable_object.method(Test_unit_commandline.sub_command)
-	assert_equal(-1, method.arity)
-	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
-end # required_arguments
 def test_dispatch_one_argument
 	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
 
-	fail Exception.new('possible infinite loop here')
+	fail Exception.new('infinite loop follows')
 
 	refute_nil(Test_unit_commandline.dispatch_one_argument($0))
 end # dispatch_one_argument
 def test_candidate_commands
-	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
 	assert_equal(-2, Script_command_line.method(:initialize).arity)
+#	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
 #	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
 #	assert_equal(-2, Script_command_line.unit_class.method(:initialize).arity)
+
+	refute_equal([], Script_command_line.executable_object.methods(true))
+	refute_equal([], Test_unit_commandline.executable_object.methods(true))
+	refute_equal([], Not_virtus_unit_commandline.executable_object.methods(true))
+
+	refute_equal([], Script_command_line.executable_object.class.instance_methods(false), Script_command_line.executable_object.methods(true))
+	refute_equal([], Test_unit_commandline.executable_object.class.instance_methods(false), Test_unit_commandline.executable_object.methods(true))
+	refute_equal([], Not_virtus_unit_commandline.executable_object.class.instance_methods(false), Not_virtus_unit_commandline.executable_object.methods(true))
+	refute_equal([], Script_command_line.candidate_commands)
+	refute_equal([], Test_unit_commandline.candidate_commands)
+	refute_equal([], Not_virtus_unit_commandline.candidate_commands)
 end # candidate_commands
 def test_candidate_commands_strings
 end # candidate_commands_strings
