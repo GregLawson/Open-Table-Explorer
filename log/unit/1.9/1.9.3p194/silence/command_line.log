@@ -1,14 +1,14 @@
 testing
-2015-11-07 09:26:34.032
+2015-11-08 05:39:49.030
 ruby -v -W0 test/unit/command_line_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
 
 # Running:
 
-..EF...EEE.E......FE.EE......F.
+..EF...E.E.E......FE.........F.
 
-Finished in 6.427410s, 4.8231 runs/s, 9.3350 assertions/s.
+Finished in 6.445015s, 4.8099 runs/s, 11.0163 assertions/s.
 
   1) Error:
 NewTestClass#test_dispatch_one_argument:
@@ -31,69 +31,43 @@ NameError: uninitialized constant NewTestClass::ShellCommand
 
 
   4) Error:
-NewTestClass#test_executable_object:
-NoMethodError: undefined method `build_message' for #<NewTestClass:0x00000002773628>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:323:in `refute_includes'
-    test/unit/command_line_test.rb:107:in `test_executable_object'
-
-
-  5) Error:
 NewTestClass#test_readme_example:
 NoMethodError: undefined method `assertions' for CommandLine:Class
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:317:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:511:in `nested_scope_modules?'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:517:in `assert_nested_scope_submodule'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
     test/unit/command_line_test.rb:206:in `test_readme_example'
 
 
-  6) Error:
+  5) Error:
 NewTestClass#test_Constants:
 NoMethodError: undefined method `assertions' for CommandLine:Class
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:317:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:511:in `nested_scope_modules?'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:517:in `assert_nested_scope_submodule'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
     test/unit/command_line_test.rb:24:in `test_Constants'
 
 
-  7) Failure:
+  6) Failure:
 NewTestClass#test_argument_type [test/unit/command_line_test.rb:178]:
 [:edited]
 
 
-  8) Error:
+  7) Error:
 NewTestClass#test_run:
 NoMethodError: undefined method `assertions' for CommandLine:Class
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:317:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:511:in `nested_scope_modules?'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:517:in `assert_nested_scope_submodule'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
     test/unit/command_line_test.rb:169:in `test_run'
 
 
-  9) Error:
-NewTestClass#test_ruby_assertions:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000035f3018>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    test/unit/command_line_test.rb:20:in `test_ruby_assertions'
-
-
- 10) Error:
-NewTestClass#test_argument_types:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000035f2410>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    test/unit/command_line_test.rb:58:in `block in test_argument_types'
-    test/unit/command_line_test.rb:57:in `map'
-    test/unit/command_line_test.rb:57:in `test_argument_types'
-
-
- 11) Failure:
+  8) Failure:
 NewTestClass#test_default_arguments? [test/unit/command_line_test.rb:138]:
 @argv = []
  sub_command = :help.
 Expected: false
   Actual: true
 
-31 runs, 60 assertions, 3 failures, 8 errors, 0 skips
+31 runs, 71 assertions, 3 failures, 5 errors, 0 skips
 

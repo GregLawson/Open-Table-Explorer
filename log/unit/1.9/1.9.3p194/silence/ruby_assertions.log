@@ -1,23 +1,16 @@
 testing
-2015-10-25 17:13:23.811
+2015-11-08 05:35:06.359
 ruby -v -W0 test/unit/ruby_assertions_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
 
 # Running:
 
-..EEEEEE.E.E.EE..EE....EE.FEE.E.E.EE....F.EEE..
+...E..FE.E.E..E..EE....EE.FEE...E.E.....F.E.E..
 
-Finished in 0.025782s, 1822.9718 runs/s, 3801.0900 assertions/s.
+Finished in 0.027494s, 1709.4542 runs/s, 7310.6448 assertions/s.
 
   1) Error:
-NewTestClass#test_assert_subset:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001ebeb68>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:245:in `assert_empty'
-    test/unit/ruby_assertions_test.rb:115:in `test_assert_subset'
-
-
-  2) Error:
 NewTestClass#test_missing_file_message:
 TypeError: can't convert Pathname into String
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:479:in `+'
@@ -25,145 +18,98 @@ TypeError: can't convert Pathname into String
     test/unit/ruby_assertions_test.rb:257:in `test_missing_file_message'
 
 
+  2) Failure:
+NewTestClass#test_assert_constant_instance_respond_to [test/unit/ruby_assertions_test.rb:251]:
+DefaultAssertions is not a constant in module NewTestClass.
+Expected [:TestClass, :PASSTHROUGH_EXCEPTIONS, :TEARDOWN_METHODS, :LifecycleHooks, :UNDEFINED, :E, :SIGNALS] to include :DefaultAssertions.
+
+
   3) Error:
-NewTestClass#test_assert_directory_exists:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001f47d50>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:488:in `assert_pathname_exists'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:496:in `assert_directory_exists'
-    test/unit/ruby_assertions_test.rb:276:in `test_assert_directory_exists'
+NewTestClass#test_assert_path_to_constant:
+RuntimeError: names=[:TestClass, :TestConstant], path="TestClass::TestConstant"
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:436:in `rescue in assert_path_to_constant'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:433:in `assert_path_to_constant'
+    test/unit/ruby_assertions_test.rb:241:in `test_assert_path_to_constant'
 
 
   4) Error:
-NewTestClass#test_assert_scope_path:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001f9bae0>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:397:in `assert_scope_path'
-    test/unit/ruby_assertions_test.rb:236:in `test_assert_scope_path'
+NewTestClass#test_assert_pathname_exists:
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x000000010f42a8>
+    test/unit/ruby_assertions_test.rb:270:in `test_assert_pathname_exists'
 
 
   5) Error:
-NewTestClass#test_assert_constant_instance_respond_to:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001f994c0>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:397:in `assert_scope_path'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:449:in `assert_constant_path_respond_to'
-    test/unit/ruby_assertions_test.rb:249:in `test_assert_constant_instance_respond_to'
+NewTestClass#test_refute_include:
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000001108d98>
+    test/unit/ruby_assertions_test.rb:162:in `test_refute_include'
 
 
   6) Error:
-NewTestClass#test_assert_path_to_constant:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001f6b408>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:397:in `assert_scope_path'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:428:in `assert_path_to_constant'
-    test/unit/ruby_assertions_test.rb:240:in `test_assert_path_to_constant'
-
-
-  7) Error:
-NewTestClass#test_assert_pathname_exists:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001f7e8f0>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:488:in `assert_pathname_exists'
-    test/unit/ruby_assertions_test.rb:268:in `test_assert_pathname_exists'
-
-
-  8) Error:
-NewTestClass#test_refute_include:
-NoMethodError: undefined method `build_message' for #<NewTestClass:0x00000001f81960>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:323:in `refute_includes'
-    test/unit/ruby_assertions_test.rb:161:in `test_refute_include'
-
-
-  9) Error:
-NewTestClass#test_assert_dir_include:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001fe6ba8>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    test/unit/ruby_assertions_test.rb:152:in `test_assert_dir_include'
-
-
- 10) Error:
 NewTestClass#test_assert_overlap:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002010de0>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:307:in `assert_overlap'
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001185aa0>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:309:in `assert_overlap'
     test/unit/ruby_assertions_test.rb:135:in `test_assert_overlap'
 
 
- 11) Error:
+  7) Error:
 NewTestClass#test_assert_regexp:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000002019760>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x0000000124e4f0>
     test/unit/ruby_assertions_test.rb:224:in `test_assert_regexp'
 
 
- 12) Error:
+  8) Error:
 NewTestClass#test_assert_module_included:
 NameError: uninitialized constant NewTestClass::Test
     test/unit/ruby_assertions_test.rb:228:in `test_assert_module_included'
 
 
- 13) Error:
+  9) Error:
 NewTestClass#test_assert_public_instance_method:
 NameError: uninitialized constant NewTestClass::StreamPattern
     test/unit/ruby_assertions_test.rb:165:in `test_assert_public_instance_method'
 
 
- 14) Error:
+ 10) Error:
 NewTestClass#test_assert_array_of:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002035d98>
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000011f8820>
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:344:in `assert_array_of'
     test/unit/ruby_assertions_test.rb:181:in `test_assert_array_of'
 
 
- 15) Failure:
+ 11) Failure:
 NewTestClass#test_requires [test/unit/ruby_assertions_test.rb:45]:
 In assert_included_modules, Fish is not included in Minitest::Assertions which does not include any modules.
 
 
- 16) Error:
+ 12) Error:
 NewTestClass#test_assert_include:
-NameError: undefined local variable or method `fixture_names' for #<NewTestClass:0x00000002076578>
+NameError: undefined local variable or method `fixture_names' for #<NewTestClass:0x00000001308da0>
     test/unit/ruby_assertions_test.rb:144:in `test_assert_include'
 
 
- 17) Error:
+ 13) Error:
 NewTestClass#test_assert_data_file:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002074930>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:488:in `assert_pathname_exists'
+TypeError: can't convert Pathname into String
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:479:in `+'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:479:in `missing_file_message'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:487:in `assert_pathname_exists'
     test/unit/ruby_assertions_test.rb:280:in `test_assert_data_file'
 
 
- 18) Error:
-NewTestClass#test_assert_constant_path_respond_to:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000020814a0>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:397:in `assert_scope_path'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:449:in `assert_constant_path_respond_to'
-    test/unit/ruby_assertions_test.rb:244:in `test_assert_constant_path_respond_to'
-
-
- 19) Error:
+ 14) Error:
 NewTestClass#test_assert_no_duplicates:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000002090f18>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x0000000126baf0>
     test/unit/ruby_assertions_test.rb:215:in `test_assert_no_duplicates'
 
 
- 20) Error:
+ 15) Error:
 NewTestClass#test_equal_sets:
-NoMethodError: undefined method `build_message' for #<NewTestClass:0x00000002210578>
+NoMethodError: undefined method `build_message' for #<NewTestClass:0x0000000131aff0>
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:290:in `assert_equal_sets'
     test/unit/ruby_assertions_test.rb:129:in `test_equal_sets'
 
 
- 21) Error:
-NewTestClass#test_refute_empty:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002214740>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:240:in `refute_empty'
-    test/unit/ruby_assertions_test.rb:86:in `test_refute_empty'
-
-
- 22) Failure:
+ 16) Failure:
 NewTestClass#test_caller_lines [test/unit/ruby_assertions_test.rb:14]:
 
 test/unit/ruby_assertions_test.rb:14:in `test_caller_lines'
@@ -184,25 +130,17 @@ test/unit/ruby_assertions_test.rb:14:in `test_caller_lines'
 
 
 
- 23) Error:
+ 17) Error:
 NewTestClass#test_assert_nested_scope_submodule:
 NoMethodError: undefined method `assertions' for RubyAssertions:Module
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:317:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:511:in `nested_scope_modules?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
     test/unit/ruby_assertions_test.rb:298:in `test_assert_nested_scope_submodule'
 
 
- 24) Error:
-NewTestClass#test_assert_empty:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002231098>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:245:in `assert_empty'
-    test/unit/ruby_assertions_test.rb:91:in `test_assert_empty'
-
-
- 25) Error:
+ 18) Error:
 NewTestClass#test_assert_flat_set:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000002230490>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x000000012b0498>
     test/unit/ruby_assertions_test.rb:100:in `test_assert_flat_set'
 
-47 runs, 98 assertions, 2 failures, 23 errors, 0 skips
+47 runs, 201 assertions, 3 failures, 15 errors, 0 skips
 
