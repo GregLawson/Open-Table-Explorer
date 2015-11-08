@@ -1,33 +1,35 @@
 testing
-2015-11-08 05:39:49.030
+2015-11-08 06:21:39.005
 ruby -v -W0 test/unit/command_line_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
 
 # Running:
 
-..EF...E.E.E......FE.........F.
+..EE...F.E.E......FE.........E.
 
-Finished in 6.445015s, 4.8099 runs/s, 11.0163 assertions/s.
+Finished in 10.752270s, 2.8831 runs/s, 7.4403 assertions/s.
 
   1) Error:
 NewTestClass#test_dispatch_one_argument:
-Exception: possible infinite loop here
-    test/unit/command_line_test.rb:152:in `test_dispatch_one_argument'
+Exception: infinite loop follows
+    test/unit/command_line_test.rb:158:in `test_dispatch_one_argument'
 
 
-  2) Failure:
-NewTestClass#test_arity [test/unit/command_line_test.rb:131]:
-@argv = []
- sub_command = :help.
-Expected: 1
-  Actual: -2
+  2) Error:
+NewTestClass#test_arity:
+TypeError: can't convert nil into String
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:207:in `+'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:207:in `block in candidate_commands_strings'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:201:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:201:in `candidate_commands_strings'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:137:in `arity'
+    test/unit/command_line_test.rb:20:in `test_arity'
 
 
-  3) Error:
-NewTestClass#test_executable_method:
-NameError: uninitialized constant NewTestClass::ShellCommand
-    test/unit/command_line_test.rb:125:in `test_executable_method'
+  3) Failure:
+NewTestClass#test_executable_method [test/unit/command_line_test.rb:153]:
+Failed assertion, no message given.
 
 
   4) Error:
@@ -36,7 +38,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
-    test/unit/command_line_test.rb:206:in `test_readme_example'
+    test/unit/command_line_test.rb:223:in `test_readme_example'
 
 
   5) Error:
@@ -45,11 +47,11 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
-    test/unit/command_line_test.rb:24:in `test_Constants'
+    test/unit/command_line_test.rb:52:in `test_Constants'
 
 
   6) Failure:
-NewTestClass#test_argument_type [test/unit/command_line_test.rb:178]:
+NewTestClass#test_argument_type [test/unit/command_line_test.rb:195]:
 [:edited]
 
 
@@ -59,15 +61,19 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
-    test/unit/command_line_test.rb:169:in `test_run'
+    test/unit/command_line_test.rb:186:in `test_run'
 
 
-  8) Failure:
-NewTestClass#test_default_arguments? [test/unit/command_line_test.rb:138]:
-@argv = []
- sub_command = :help.
-Expected: false
-  Actual: true
+  8) Error:
+NewTestClass#test_default_arguments?:
+TypeError: can't convert nil into String
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:207:in `+'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:207:in `block in candidate_commands_strings'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:201:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:201:in `candidate_commands_strings'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:137:in `arity'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:146:in `default_arguments?'
+    test/unit/command_line_test.rb:29:in `test_default_arguments?'
 
-31 runs, 71 assertions, 3 failures, 5 errors, 0 skips
+31 runs, 80 assertions, 2 failures, 6 errors, 0 skips
 

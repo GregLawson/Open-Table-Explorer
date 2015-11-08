@@ -185,7 +185,7 @@ def candidate_commands(number_arguments = nil)
 		if Nonscriptable_methods.include?(candidate_command_name) then
 			nil
 		else
-			method = executable_object.class.instance_method(candidate_command_name)
+			method = executable_object.method(candidate_command_name)
 			selected = number_arguments.nil?
 			selected ||= number_arguments == required_arguments(method_name)
 			selected ||= (default_arguments?(method_name) && number_arguments <= required_arguments(method_name))
@@ -199,7 +199,12 @@ def candidate_commands(number_arguments = nil)
 end # candidate_commands
 def candidate_commands_strings
 	candidate_commands.map do |c|
-		c[:candidate_command].to_s + ' ' + ['arg'] * c[:required_arguments] * ' '
+		c[:candidate_command].to_s + ' ' + case c[:required_arguments]
+		when -1 then 'args...'
+		when 0 then ''
+		when 1 then 'arg'
+		when 2 then 'arg arg'
+		end + (c[:default_arguments] ? '...' : '') # case
 	end # map
 end # candidate_commands_strings
 def run(&non_default_actions)

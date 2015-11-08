@@ -104,8 +104,8 @@ def test_find_examples
 	Example.find_all_in_class(TestRun).each do |example|
 	end # each
 	refute_equal([], Example.find_by_class(CommandLine, CommandLine))
-	refute_equal([], Script_command_line.find_examples, Script_command_line.to_s)
-	refute_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.to_s)
+	refute_equal([], Script_command_line.find_examples, Script_command_line.inspect)
+	refute_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.inspect)
 #			assert_equal(example_class, Unit::Executable.model_class?)
 	refute_equal([], Test_unit_commandline.find_examples)
 	refute_equal([], Not_virtus_unit_commandline.find_examples)
@@ -147,23 +147,34 @@ def test_executable_method
 	refute_nil(Script_command_line.executable_object)
 	assert(Script_command_line.executable_object.respond_to?(:argument_types))
 
-	refute_nil(Script_command_line.executable_method(:argument_types))
-	refute_nil(Script_command_line.executable_method(:argument_types))
-	refute_nil(Script_command_line.executable_method(:argument_types))
-	assert(ShellCommand.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb').success?)
+	refute_nil(Script_command_line.executable_method?(:argument_types))
+	refute_nil(Script_command_line.executable_method?(:argument_types))
+	refute_nil(Script_command_line.executable_method?(:argument_types))
+	assert(ShellCommands.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb').success?)
 end # executable_method
 def test_dispatch_one_argument
 	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
 
-	fail Exception.new('possible infinite loop here')
+	fail Exception.new('infinite loop follows')
 
 	refute_nil(Test_unit_commandline.dispatch_one_argument($0))
 end # dispatch_one_argument
 def test_candidate_commands
-	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
 	assert_equal(-2, Script_command_line.method(:initialize).arity)
+#	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
 #	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
 #	assert_equal(-2, Script_command_line.unit_class.method(:initialize).arity)
+
+	refute_equal([], Script_command_line.executable_object.methods(true))
+	refute_equal([], Test_unit_commandline.executable_object.methods(true))
+	refute_equal([], Not_virtus_unit_commandline.executable_object.methods(true))
+
+	refute_equal([], Script_command_line.executable_object.class.instance_methods(false), Script_command_line.executable_object.methods(true))
+	refute_equal([], Test_unit_commandline.executable_object.class.instance_methods(false), Test_unit_commandline.executable_object.methods(true))
+	refute_equal([], Not_virtus_unit_commandline.executable_object.class.instance_methods(false), Not_virtus_unit_commandline.executable_object.methods(true))
+	refute_equal([], Script_command_line.candidate_commands)
+	refute_equal([], Test_unit_commandline.candidate_commands)
+	refute_equal([], Not_virtus_unit_commandline.candidate_commands)
 end # candidate_commands
 def test_candidate_commands_strings
 end # candidate_commands_strings
