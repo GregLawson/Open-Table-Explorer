@@ -1,90 +1,40 @@
 passed
-2015-09-22 07:35:44.028
+2015-11-08 12:55:36.386
 ruby -v -W0 test/unit/stream_tree_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 32064
+Run options: --seed 0
 
 # Running:
 
-...F.F...F...E.E........F......E....
+...EF....FE.....F.......F.......E...
 
-Finished in 1.122380s, 32.0747 runs/s, 108.6975 assertions/s.
+Finished in 0.090065s, 399.7128 runs/s, 1354.5821 assertions/s.
 
-  1) Failure:
+  1) Error:
+NewTestClass#test_ref:
+NoMethodError: undefined method `ref' for #<NewTestClass:0x0000000346ec38>
+    test/unit/stream_tree_test.rb:106:in `test_ref'
+
+
+  2) Failure:
 NewTestClass#test_children? [test/unit/stream_tree_test.rb:111]:
 Expected nil (NilClass) to respond to #empty?.
 
 
-  2) Failure:
+  3) Failure:
 NewTestClass#test_rgl_readme [test/unit/stream_tree_test.rb:23]:
 Expected: [5, 6, 1, 2, 3, 4]
   Actual: [1, 2, 3, 4, 5, 6]
 
 
-  3) Failure:
-NewTestClass#test_NestedArrayType_Assertions [test/unit/stream_tree_test.rb:201]:
-Expected [:children?] to include :each_pair.
-
-
   4) Error:
-NewTestClass#test_to_hash:
-NoMethodError: undefined method `each_pair' for [1, 2, 3]:Array
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:416:in `to_hash'
-    test/unit/stream_tree_test.rb:261:in `test_to_hash'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  5) Error:
 NewTestClass#test_Assertions:
 NoMethodError: undefined method `assertions' for Connectivity:Class
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:163:in `assert_equal'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:199:in `assert_pre_conditions'
     test/unit/stream_tree_test.rb:179:in `test_Assertions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  6) Failure:
+  5) Failure:
 NewTestClass#test_inspect_recursive [test/unit/stream_tree_test.rb:173]:
 leaf typed[0], [1, [2, [3], 4], 5]
 leaf typed[1], 1
@@ -118,31 +68,16 @@ leaf typed[1], 5
 
 
 
+  6) Failure:
+NewTestClass#test_NestedArrayType_Assertions [test/unit/stream_tree_test.rb:201]:
+Expected [:children?] to include :each_pair.
+
+
   7) Error:
-NewTestClass#test_ref:
-NoMethodError: undefined method `ref' for #<NewTestClass:0x00000001ba5670>
-    test/unit/stream_tree_test.rb:106:in `test_ref'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+NewTestClass#test_to_hash:
+NoMethodError: undefined method `each_pair' for [1, 2, 3]:Array
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:416:in `to_hash'
+    test/unit/stream_tree_test.rb:261:in `test_to_hash'
 
 36 runs, 122 assertions, 4 failures, 3 errors, 0 skips
 
