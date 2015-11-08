@@ -1,148 +1,43 @@
 passed
-2015-09-22 07:18:27.683
+2015-11-08 08:59:20.771
 ruby -v -W0 test/unit/error_type_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 3108
+Run options: --seed 0
 
 # Running:
 
-EEEEE...
+..EEEEE.
 
-Finished in 0.004198s, 1905.8909 runs/s, 0.0000 assertions/s.
+Finished in 0.003338s, 2396.9865 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_specific__stable_and_working:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001782408>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000025d6180>
     test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
   2) Error:
-NewTestClass#test_id_equal:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000016f4090>
+NewTestClass#test_aaa_test_new_assertions_:
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000025d98f8>
     test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
   3) Error:
-NewTestClass#test_class_name:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000015d07e0>
+NewTestClass#test_general_associations:
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000025df028>
     test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
   4) Error:
-NewTestClass#test_general_associations:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000011f63b8>
+NewTestClass#test_class_name:
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000025e3d08>
     test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
   5) Error:
-NewTestClass#test_aaa_test_new_assertions_:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000000f926f8>
+NewTestClass#test_id_equal:
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000025e85d8>
     test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 8 runs, 0 assertions, 0 failures, 5 errors, 0 skips
 

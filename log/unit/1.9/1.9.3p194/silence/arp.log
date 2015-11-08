@@ -1,54 +1,28 @@
 passed
-2015-09-22 07:17:58.325
+2015-11-08 08:58:31.483
 ruby -v -W0 test/unit/arp_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 45571
+Run options: --seed 0
 
 # Running:
 
-...IP address       HW type     Flags       HW address            Mask     Device
-192.168.0.28     0x1         0x2         c4:8e:8f:76:a0:3b     *        wlan0
-192.168.0.1      0x1         0x2         40:70:09:93:05:67     *        wlan0
+..E.IP address       HW type     Flags       HW address            Mask     Device
 192.168.1.1      0x1         0x2         00:13:10:17:b5:99     *        eth0
-192.168.1.115    0x1         0x2         04:7d:7b:51:ed:87     *        eth0
-192.168.0.6      0x1         0x0         00:00:00:00:00:00     *        wlan0
-192.168.0.12     0x1         0x2         00:10:75:41:41:d3     *        wlan0
 
-FE.
+F.
 
-Finished in 0.024772s, 242.2123 runs/s, 80.7374 assertions/s.
+Finished in 0.025241s, 237.7124 runs/s, 79.2375 assertions/s.
 
-  1) Failure:
-NewTestClass#test_inialize [test/unit/arp_test.rb:9]:
-arp.errors=.
-Expected /DHCPACK/ to match "".
-
-
-  2) Error:
+  1) Error:
 NewTestClass#test_MAC:
 ArgumentError: wrong number of arguments (0 for 1)
     test/unit/arp_test.rb:22:in `test_MAC'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  2) Failure:
+NewTestClass#test_inialize [test/unit/arp_test.rb:9]:
+arp.errors=.
+Expected /DHCPACK/ to match "".
 
 6 runs, 2 assertions, 1 failures, 1 errors, 0 skips
 

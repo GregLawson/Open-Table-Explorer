@@ -1,14 +1,14 @@
 passed
-2015-09-22 07:36:22.988
+2015-11-08 09:02:29.429
 ruby -v -W0 test/unit/weather_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 60797
+Run options: --seed 0
 
 # Running:
 
 .....
 
-Finished in 0.004132s, 1210.1173 runs/s, 242.0235 assertions/s.
+Finished in 0.003500s, 1428.3837 runs/s, 285.6767 assertions/s.
 
 5 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 

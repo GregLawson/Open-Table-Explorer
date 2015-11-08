@@ -1,5 +1,5 @@
 passed
-2015-09-22 07:18:39.795
+2015-11-08 08:59:31.773
 ruby -v -W0 test/unit/generic_table_examples_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 

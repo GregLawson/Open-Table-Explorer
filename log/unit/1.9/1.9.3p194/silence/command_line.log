@@ -1,5 +1,5 @@
 passed
-2015-11-08 07:56:33.508
+2015-11-08 08:58:55.863
 ruby -v -W0 test/unit/command_line_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..EE...F.E.E......FE.........E.
 
-Finished in 10.710634s, 2.8943 runs/s, 7.4692 assertions/s.
+Finished in 10.698905s, 2.8975 runs/s, 7.4774 assertions/s.
 
   1) Error:
 NewTestClass#test_dispatch_one_argument:

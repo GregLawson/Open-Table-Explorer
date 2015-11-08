@@ -1,5 +1,5 @@
 passed
-2015-09-22 07:35:11.975
+2015-11-08 09:01:24.439
 ruby -v -W0 test/unit/repository_assertions_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 

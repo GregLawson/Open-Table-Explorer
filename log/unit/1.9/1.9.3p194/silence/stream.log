@@ -1,14 +1,14 @@
 passed
-2015-09-22 07:35:41.899
+2015-11-08 09:01:50.896
 ruby -v -W0 test/unit/stream_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 53161
+Run options: --seed 0
 
 # Running:
 
 ....
 
-Finished in 0.005483s, 729.5243 runs/s, 0.0000 assertions/s.
+Finished in 0.003561s, 1123.2948 runs/s, 0.0000 assertions/s.
 
 4 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 

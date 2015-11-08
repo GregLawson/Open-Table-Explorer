@@ -1,5 +1,5 @@
 passed
-2015-09-22 07:19:13.354
+2015-11-08 09:00:01.194
 ruby -v -W0 test/unit/nested_array_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 

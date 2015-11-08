@@ -1,5 +1,5 @@
 passed
-2015-09-22 07:18:13.301
+2015-11-08 08:58:43.494
 ruby -v -W0 test/unit/column_group_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
