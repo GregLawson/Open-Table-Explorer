@@ -72,6 +72,7 @@ def default_message
 end # default_message
 end # Kernel
 
+require_relative '../../app/models/test_environment_minitest.rb'
 module RubyAssertions
 include AssertionsModule
 extend AssertionsModule
@@ -232,18 +233,18 @@ def explain_assert_respond_to(obj,methodName,message='')
 		end
 	end
 end #explain_assert_respond_to
-def refute_empty(object,message='')
+#def refute_empty(object,message='')
 #	puts "in refute_empty: message=#{message.inspect}"
-	message+="\n#{object.canonicalName}, is empty with value #{object.inspect}."
-	refute_nil(object,message)
-	assert_block(message){!object.empty?}
-end #refute_empty
-def assert_empty(object,message='')
-	message = newline_if_not_empty(message) + object.inspect + " is not empty."
-	if !object.nil?  then # nil is empty
-		assert_block(message){object.empty? || object==Set[nil]}
-	end #if
-end #assert_empty
+#	message+="\n#{object.canonicalName}, is empty with value #{object.inspect}."
+#	refute_nil(object,message)
+#	assert_block(message){!object.empty?}
+#end #refute_empty
+#def assert_empty(object,message='')
+#	message = newline_if_not_empty(message) + object.inspect + " is not empty."
+#	if !object.nil?  then # nil is empty
+#		assert_block(message){object.empty? || object==Set[nil]}
+#	end #if
+#end #assert_empty
 def assert_flat_set(set)
 	set.to_a.each do |e|
 		assert(!e.instance_of?(Set))
@@ -307,12 +308,14 @@ def assert_overlap(enum1,enum2)
 	refute_empty(enum2, "Assume second set to not be empty.")
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
-def assert_includes(list, element,  message = '')
-	raise "Second argument of assert_include must be an Array or Set" if !(list.instance_of?(Array) || list.instance_of?(Set))
-	message = message + element.inspect
-	message += " is not in list " + list.inspect
-	assert(list.include?(element),message)
-end #assert_include
+#def assert_includes(list, element,  message = '')
+#	message = "First argument of assert_include must be an Array or Set"
+#	message += ', not ' + list.inspect
+#	fail message if !(list.instance_of?(Array) || list.instance_of?(Set))
+#	message = message + element.inspect
+#	message += " is not in list " + list.inspect
+#	assert(list.include?(element),message)
+#end #assert_include
 def assert_dir_includes(filename,glob)
 	assert_includes(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include

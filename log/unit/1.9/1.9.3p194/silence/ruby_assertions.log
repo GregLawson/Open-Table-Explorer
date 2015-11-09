@@ -1,5 +1,5 @@
 passed
-2015-11-08 13:13:00.756
+2015-11-09 08:54:44.511
 ruby -v -W0 test/unit/ruby_assertions_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ......FE..EE..E..EE....EE..EF...E.E....F.E..E.
 
-Finished in 0.041990s, 1095.4939 runs/s, 5167.8734 assertions/s.
+Finished in 0.028759s, 1599.4904 runs/s, 7545.4220 assertions/s.
 
   1) Failure:
 NewTestClass#test_assert_constant_instance_respond_to [test/unit/ruby_assertions_test.rb:241]:
@@ -19,33 +19,33 @@ Expected [:TestClass, :PASSTHROUGH_EXCEPTIONS, :TEARDOWN_METHODS, :LifecycleHook
   2) Error:
 NewTestClass#test_assert_path_to_constant:
 RuntimeError: names=[:TestClass, :TestConstant], path="TestClass::TestConstant"
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:433:in `rescue in assert_path_to_constant'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:430:in `assert_path_to_constant'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:436:in `rescue in assert_path_to_constant'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:433:in `assert_path_to_constant'
     test/unit/ruby_assertions_test.rb:231:in `test_assert_path_to_constant'
 
 
   3) Error:
 NewTestClass#test_assert_pathname_exists:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x000000016013e0>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000001c067e0>
     test/unit/ruby_assertions_test.rb:260:in `test_assert_pathname_exists'
 
 
   4) Error:
 NewTestClass#test_refute_include:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000001610908>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000001c0ccf8>
     test/unit/ruby_assertions_test.rb:152:in `test_refute_include'
 
 
   5) Error:
 NewTestClass#test_assert_overlap:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000016e6d50>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:308:in `assert_overlap'
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001cecbf0>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:309:in `assert_overlap'
     test/unit/ruby_assertions_test.rb:125:in `test_assert_overlap'
 
 
   6) Error:
 NewTestClass#test_assert_regexp:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x000000016fb980>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000001cff908>
     test/unit/ruby_assertions_test.rb:214:in `test_assert_regexp'
 
 
@@ -63,14 +63,14 @@ NameError: uninitialized constant NewTestClass::StreamPattern
 
   9) Error:
 NewTestClass#test_assert_array_of:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001723e80>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:341:in `assert_array_of'
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001d2bda0>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:344:in `assert_array_of'
     test/unit/ruby_assertions_test.rb:171:in `test_assert_array_of'
 
 
  10) Error:
 NewTestClass#test_assert_include:
-NameError: undefined local variable or method `fixture_names' for #<NewTestClass:0x000000017d64e0>
+NameError: undefined local variable or method `fixture_names' for #<NewTestClass:0x00000001da8008>
     test/unit/ruby_assertions_test.rb:134:in `test_assert_include'
 
 
@@ -83,14 +83,14 @@ parent directory /home/greg does exists containing ["Public", "Templates", "font
 
  12) Error:
 NewTestClass#test_assert_no_duplicates:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x000000018af1f0>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000001eb6148>
     test/unit/ruby_assertions_test.rb:205:in `test_assert_no_duplicates'
 
 
  13) Error:
 NewTestClass#test_equal_sets:
-NoMethodError: undefined method `build_message' for #<NewTestClass:0x0000000181a2d0>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:289:in `assert_equal_sets'
+NoMethodError: undefined method `build_message' for #<NewTestClass:0x00000001e1c4d0>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:290:in `assert_equal_sets'
     test/unit/ruby_assertions_test.rb:119:in `test_equal_sets'
 
 
@@ -118,13 +118,13 @@ test/unit/ruby_assertions_test.rb:14:in `test_caller_lines'
  15) Error:
 NewTestClass#test_assert_nested_scope_submodule:
 NoMethodError: undefined method `assertions' for RubyAssertions:Module
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:507:in `nested_scope_modules?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:510:in `nested_scope_modules?'
     test/unit/ruby_assertions_test.rb:288:in `test_assert_nested_scope_submodule'
 
 
  16) Error:
 NewTestClass#test_assert_flat_set:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x000000018de130>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000001edd2c0>
     test/unit/ruby_assertions_test.rb:90:in `test_assert_flat_set'
 
 46 runs, 217 assertions, 3 failures, 13 errors, 0 skips
