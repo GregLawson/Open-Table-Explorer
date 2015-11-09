@@ -10,7 +10,7 @@ require 'test/unit'
 TestCase=Test::Unit::TestCase
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
-require_relative '../../app/models/shell_command.rb'
+require_relative '../assertions/shell_command_assertions.rb'
 require 'fiddle'
 require 'ffi'
 class VisaTest < TestCase

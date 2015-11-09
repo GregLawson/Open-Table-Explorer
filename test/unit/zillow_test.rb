@@ -6,7 +6,7 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/shell_command.rb'
+require_relative '../assertions/shell_command_assertions.rb'
 require_relative '../../app/models/zillow.rb'
 require_relative '../../app/models/parse.rb'
 class ZillowTest < TestCase

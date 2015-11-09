@@ -7,7 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/regexp.rb'
-require_relative '../../app/models/shell_command.rb'
+require_relative '../assertions/shell_command_assertions.rb'
 require_relative '../../app/models/version.rb'
 # executed in alphabetical order. Longer names sort later.
 class VersionTest < TestCase
