@@ -126,9 +126,7 @@ def method_exception_string(method_name)
 		message = "#{method_name.to_s} is not an instance method of #{executable_object.class.inspect}"
 		message += "\n candidate_commands = "
 		message += candidate_commands_strings.join("\n")
-#		message += "\n candidate_commands = " + candidate_commands.inspect
 #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-		fail Exception.new(message)
 end # method_exception_string
 def arity(method_name)
 	executable_method = executable_method?(method_name)
@@ -204,7 +202,7 @@ def candidate_commands_strings
 		when 0 then ''
 		when 1 then 'arg'
 		when 2 then 'arg arg'
-		end + (c[:default_arguments] ? '...' : '') # case
+		end.to_s + (c[:default_arguments] ? '...' : '') # case
 	end # map
 end # candidate_commands_strings
 def run(&non_default_actions)

@@ -150,7 +150,8 @@ def test_executable_method
 	refute_nil(Script_command_line.executable_method?(:argument_types))
 	refute_nil(Script_command_line.executable_method?(:argument_types))
 	refute_nil(Script_command_line.executable_method?(:argument_types))
-	assert(ShellCommands.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb').success?)
+	test_run = ShellCommands.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb')
+	assert(test_run.success?, test_run.inspect)
 end # executable_method
 def test_dispatch_one_argument
 	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
@@ -191,7 +192,7 @@ def test_run
 end # run
 def test_argument_type
 	assert_equal(Dir, CommandLine.argument_type('/*'))
-	assert_equal(File, CommandLine.argument_type('/'))
+	assert_equal(File, CommandLine.argument_type('/'), CommandLine.inspect)
 	assert(Branch.branch_names?.include?(:master), Branch.branch_names?.inspect) 
 	assert(Branch.branch_names?.include?(:master)) 
 	assert_equal(Branch, CommandLine.argument_type('master'))
