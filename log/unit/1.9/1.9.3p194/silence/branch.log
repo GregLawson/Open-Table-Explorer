@@ -1,38 +1,49 @@
 master
-2015-11-10 10:12:17.690
+2015-11-10 10:53:28.180
 ruby -v -W0 test/unit/branch_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 61184
+Run options: --seed 0
 
 # Running:
 
-.E.E..EFEEEFEEEEE..
+..EE.EEFEEEF.EEEE..
 
-Finished in 0.937630s, 20.2639 runs/s, 11.7317 assertions/s.
+Finished in 0.884015s, 21.4928 runs/s, 12.4432 assertions/s.
 
   1) Error:
-NewTestClass#test_initialize:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:163:in `test_initialize'
-
-
-  2) Error:
-NewTestClass#test_remotes?:
-NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:227:in `remotes?'
-    test/unit/branch_test.rb:152:in `test_remotes?'
-
-
-  3) Error:
-NewTestClass#test_current_branch_name?:
+NewTestClass#test_merged?:
 NoMethodError: undefined method `assert_post_conditions' for * master
   passed
 :ShellCommands
-    test/unit/branch_test.rb:134:in `test_current_branch_name?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:231:in `merged?'
+    test/unit/branch_test.rb:156:in `test_merged?'
 
 
-  4) Failure:
+  2) Error:
+NewTestClass#test_assert_reflog_line:
+NoMethodError: undefined method `assertions' for BranchReference:Class
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
+    test/unit/branch_test.rb:113:in `test_assert_reflog_line'
+
+
+  3) Error:
+NewTestClass#test_branch_capture:
+NoMethodError: undefined method `assert_post_conditions' for * master
+  passed
+:ShellCommands
+    test/unit/branch_test.rb:129:in `test_branch_capture'
+
+
+  4) Error:
+NewTestClass#test_assert_output:
+NoMethodError: undefined method `assertions' for BranchReference:Class
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:115:in `assert_output'
+    test/unit/branch_test.rb:119:in `test_assert_output'
+
+
+  5) Failure:
 NewTestClass#test_new_from_ref [test/unit/branch_test.rb:56]:
 #<BranchReference branch=:passed age=0 timestamp=2015-11-10 09:47:47 -0800>.
 --- expected
@@ -43,44 +54,39 @@ NewTestClass#test_new_from_ref [test/unit/branch_test.rb:56]:
 
 
 
-  5) Error:
-NewTestClass#test_last_change?:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:102:in `test_last_change?'
-
-
   6) Error:
-NewTestClass#test_assert_reflog_line:
-NoMethodError: undefined method `assertions' for BranchReference:Class
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    test/unit/branch_test.rb:113:in `test_assert_reflog_line'
-
-
-  7) Error:
-NewTestClass#test_assert_output:
-NoMethodError: undefined method `assertions' for BranchReference:Class
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:102:in `assert_reflog_line'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:115:in `assert_output'
-    test/unit/branch_test.rb:119:in `test_assert_output'
-
-
-  8) Failure:
-NewTestClass#test_branch_names? [test/unit/branch_test.rb:160]:
-[:edited]
-
-
-  9) Error:
-NewTestClass#test_reflog?:
-NameError: uninitialized constant NewTestClass::This_code_repository
-    test/unit/branch_test.rb:81:in `test_reflog?'
-
-
- 10) Error:
 NewTestClass#test_branches?:
 NoMethodError: undefined method `assert_post_conditions' for * master
   passed
 :ShellCommands
     test/unit/branch_test.rb:139:in `test_branches?'
+
+
+  7) Error:
+NewTestClass#test_reflog?:
+NameError: uninitialized constant NewTestClass::This_code_repository
+    test/unit/branch_test.rb:81:in `test_reflog?'
+
+
+  8) Error:
+NewTestClass#test_remotes?:
+NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:227:in `remotes?'
+    test/unit/branch_test.rb:152:in `test_remotes?'
+
+
+  9) Failure:
+NewTestClass#test_branch_names? [test/unit/branch_test.rb:160]:
+[:edited]
+
+
+ 10) Error:
+NewTestClass#test_current_branch_name?:
+NoMethodError: undefined method `assert_post_conditions' for * master
+  passed
+:ShellCommands
+    test/unit/branch_test.rb:134:in `test_current_branch_name?'
 
 
  11) Error:
@@ -91,21 +97,15 @@ NoMethodError: undefined method `assertions' for BranchReference:Class
 
 
  12) Error:
-NewTestClass#test_merged?:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:172:in `git_parse'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:231:in `merged?'
-    test/unit/branch_test.rb:156:in `test_merged?'
+NewTestClass#test_last_change?:
+NameError: uninitialized constant NewTestClass::This_code_repository
+    test/unit/branch_test.rb:102:in `test_last_change?'
 
 
  13) Error:
-NewTestClass#test_branch_capture:
-NoMethodError: undefined method `assert_post_conditions' for * master
-  passed
-:ShellCommands
-    test/unit/branch_test.rb:129:in `test_branch_capture'
+NewTestClass#test_initialize:
+NameError: uninitialized constant NewTestClass::This_code_repository
+    test/unit/branch_test.rb:163:in `test_initialize'
 
 19 runs, 11 assertions, 2 failures, 11 errors, 0 skips
 

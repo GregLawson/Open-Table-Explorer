@@ -1,9 +1,9 @@
 master
-2015-09-22 07:49:43.657
+2015-11-10 11:00:36.837
 ruby -v -W0 test/unit/test_environment_minitest_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-/usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert': undefined method `assertions' for TestEnvironmentMinitestTest:Class (NoMethodError)
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/assertions.rb:125:in `assert': undefined method `assertions' for TestEnvironmentMinitestTest:Class (NoMethodError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:33:in `assert_included_modules'
 	from test/unit/test_environment_minitest_test.rb:15:in `<class:TestEnvironmentMinitestTest>'
 	from test/unit/test_environment_minitest_test.rb:10:in `<main>'

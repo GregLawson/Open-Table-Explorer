@@ -1,11 +1,11 @@
 master
-2015-09-22 07:49:40.508
+2015-11-10 11:00:33.915
 ruby -v -W0 test/unit/tax_form_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-/usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert': undefined method `assertions' for OpenTableExplorer::Finance::TaxForm:Class (NoMethodError)
-	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
+/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/assertions.rb:125:in `assert': undefined method `assertions' for OpenTableExplorer::Finance::TaxForm:Class (NoMethodError)
+	from /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/assertions.rb:505:in `refute'
+	from /var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/assertions.rb:594:in `refute_nil'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:177:in `assert_pre_conditions'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:275:in `<class:TaxForm>'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:36:in `<module:Finance>'

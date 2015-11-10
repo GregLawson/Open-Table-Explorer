@@ -1,72 +1,30 @@
 master
-2015-09-22 07:49:20.953
+2015-11-10 11:00:14.559
 ruby -v -W0 test/unit/ruby_interpreter_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 25350
+Run options: --seed 0
 
 # Running:
 
-.....EE.F
+...FE..E.
 
-Finished in 0.014393s, 625.3153 runs/s, 833.7537 assertions/s.
+Finished in 0.011683s, 770.3177 runs/s, 1027.0903 assertions/s.
 
-  1) Error:
-NewTestClass#test_initialize:
-NameError: uninitialized constant NewTestClass::Singular_ruby_interpreter
-    test/unit/ruby_interpreter_test.rb:56:in `test_initialize'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+  1) Failure:
+NewTestClass#test_Constants [test/unit/ruby_interpreter_test.rb:20]:
+Expected [/ruby /, Version] to match "ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]\n".
 
 
   2) Error:
 NewTestClass#test_ruby_version:
-NoMethodError: undefined method `run' for #<RubyInterpreter:0x00000000bca9a8>
+NoMethodError: undefined method `run' for #<RubyInterpreter:0x00000001573d88>
     test/unit/ruby_interpreter_test.rb:29:in `test_ruby_version'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:779:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:306:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:332:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:319:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  3) Failure:
-NewTestClass#test_Constants [test/unit/ruby_interpreter_test.rb:20]:
-Expected [/ruby /, Version] to match "ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]\n".
+  3) Error:
+NewTestClass#test_initialize:
+NameError: uninitialized constant NewTestClass::Singular_ruby_interpreter
+    test/unit/ruby_interpreter_test.rb:56:in `test_initialize'
 
 9 runs, 12 assertions, 1 failures, 2 errors, 0 skips
 

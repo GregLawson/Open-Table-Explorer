@@ -1,17 +1,17 @@
 master
-2015-11-10 10:12:07.947
+2015-11-10 10:53:19.275
 ruby -v -W0 test/unit/arp_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 21027
+Run options: --seed 0
 
 # Running:
 
-....EIP address       HW type     Flags       HW address            Mask     Device
+..E.IP address       HW type     Flags       HW address            Mask     Device
 192.168.1.1      0x1         0x2         00:13:10:17:b5:99     *        eth0
 
-F
+F.
 
-Finished in 0.007733s, 775.9239 runs/s, 258.6413 assertions/s.
+Finished in 0.034842s, 172.2050 runs/s, 57.4017 assertions/s.
 
   1) Error:
 NewTestClass#test_MAC:

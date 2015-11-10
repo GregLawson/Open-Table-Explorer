@@ -1,7 +1,12 @@
 master
-2015-09-22 07:50:13.088
+2015-11-10 11:01:07.447
 ruby -v -W0 test/unit/usc_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-test/unit/usc_test.rb:11:in `<class:UscTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
-	from test/unit/usc_test.rb:10:in `<main>'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:12:in `initialize': No such file or directory - /dev/ttyUSB0 (Errno::ENOENT)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:12:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:12:in `<module:Constants>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:11:in `<class:Usc>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:8:in `<top (required)>'
+	from test/unit/usc_test.rb:9:in `require_relative'
+	from test/unit/usc_test.rb:9:in `<main>'

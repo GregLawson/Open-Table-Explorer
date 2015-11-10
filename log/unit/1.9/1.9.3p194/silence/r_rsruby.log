@@ -1,10 +1,17 @@
 master
-2015-09-22 07:47:07.792
+2015-11-10 11:00:10.171
 ruby -v -W0 test/unit/r_rsruby_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- rserve (LoadError)
-	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:2:in `<top (required)>'
+Rserve: no process found
+/usr/lib/R/bin/Rcmd: 62: exec: Rserve: not found
+/var/lib/gems/1.9.1/gems/rserve-client-0.3.1/lib/rserve/connection.rb:83:in `rescue in initialize': Can't start Rserve (Rserve::Connection::RserveNotStartedError)
+	from /var/lib/gems/1.9.1/gems/rserve-client-0.3.1/lib/rserve/connection.rb:66:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:5:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:5:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:33:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:33:in `<module:Constants>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:32:in `<class:RSession>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:3:in `<top (required)>'
 	from test/unit/r_rsruby_test.rb:1:in `require_relative'
 	from test/unit/r_rsruby_test.rb:1:in `<main>'

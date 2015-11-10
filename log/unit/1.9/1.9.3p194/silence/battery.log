@@ -1,14 +1,14 @@
 master
-2015-11-10 10:12:12.421
+2015-11-10 10:53:23.807
 ruby -v -W0 test/unit/battery_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 23155
+Run options: --seed 0
 
 # Running:
 
 ..E....
 
-Finished in 0.002988s, 2342.9676 runs/s, 0.0000 assertions/s.
+Finished in 0.003001s, 2332.9414 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_Battery:

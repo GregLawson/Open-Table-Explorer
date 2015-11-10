@@ -1,25 +1,25 @@
 master
-2015-11-10 10:12:11.163
+2015-11-10 10:53:22.527
 ruby -v -W0 test/unit/battery_measurement_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-Run options: --seed 33397
+Run options: --seed 0
 
 # Running:
 
-..E.E..
+..EE...
 
-Finished in 0.003926s, 1782.8140 runs/s, 0.0000 assertions/s.
+Finished in 0.003967s, 1764.6977 runs/s, 0.0000 assertions/s.
 
   1) Error:
-NewTestClass#test_dump:
-NameError: uninitialized constant NewTestClass::BatteryMeasurement
-    test/unit/battery_measurement_test.rb:22:in `test_dump'
+NewTestClass#test_all:
+NoMethodError: undefined method `model_class?' for #<NewTestClass:0x00000001c474e8>
+    test/unit/battery_measurement_test.rb:13:in `test_all'
 
 
   2) Error:
-NewTestClass#test_all:
-NoMethodError: undefined method `model_class?' for #<NewTestClass:0x00000001922448>
-    test/unit/battery_measurement_test.rb:13:in `test_all'
+NewTestClass#test_dump:
+NameError: uninitialized constant NewTestClass::BatteryMeasurement
+    test/unit/battery_measurement_test.rb:22:in `test_dump'
 
 7 runs, 0 assertions, 0 failures, 2 errors, 0 skips
 
