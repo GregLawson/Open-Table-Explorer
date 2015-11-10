@@ -8,6 +8,7 @@
 require_relative '../unit/test_environment'
 require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../../test/assertions/branch_assertions.rb'
+require_relative '../../test/assertions/shell_command_assertions.rb'
 #require_relative '../../test/assertions/repository_assertions.rb'
 #require_relative '../../app/models/branch.rb'
 class BranchTest < TestCase
@@ -75,18 +76,38 @@ def test_new_from_ref
 	Reflog_reference.assert_pre_conditions
 
 end # new_from_ref
+def test_reflog_command_string
+	filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
+	repository = This_code_repository
+	range = 0..10
+	reflog_run = repository.git_command(BranchReference.reflog_command_string(filename, repository, range))
+	assert(reflog_run.success?, reflog_run.inspect)
+end # reflog_command_string
+def test_reflog_command_output
+	filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
+	repository = This_code_repository
+	range = 0..10
+	reflog_command_lines = BranchReference.reflog_command_lines(filename, repository, range)
+	assert_operator(4, :<, reflog_command_lines.size, reflog_command_lines.inspect)
+end # reflog_command_lines
 def test_reflog?
+	filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
+#	filename = $0
+	repository = This_code_repository
+	range = 0..10
 #	reflog?(filename).output.split("/n")[0].split(',')[0]
-	filename = $0
-	reflog_run = This_code_repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + filename)
-	Reflog_run_executable.assert_post_conditions
-	lines = Reflog_run_executable.output.split("\n")
-	Reflog_lines.map do |reflog_line|
-		BranchReference.assert_reflog_line(reflog_line)
+	reflog_run = repository.git_command(BranchReference.reflog_command_string(filename, repository, range))
+#	Reflog_run_executable.assert_post_conditions
+	lines = reflog_run.output.split("\n")
+	manual_reflog = lines.map do |reflog_line|
+		refute_equal('', reflog_line, Reflog_lines.inspect)
+#		BranchReference.assert_reflog_line(reflog_line)
+			BranchReference.new_from_ref(reflog_line)
 #		new(capture.output?[:ambiguous_branch].to_sym,capture.output?[:age].to_i)
-
 	end # map
 	reflog = BranchReference.reflog?(filename, This_code_repository)
+	assert_equal(manual_reflog, reflog, reflog.inspect)
+	refute_equal([], reflog, BranchReference.reflog_command_string(filename, repository, range = 0..10).inspect)
 #	reflog.assert_post_conditions
 #	refute_empty(reflog.output)
 ##	lines = reflog.output.split("\n")
