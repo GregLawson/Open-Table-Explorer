@@ -1,0 +1,16 @@
+master
+2015-11-20 23:12:39.957
+ruby -v -W0 test/unit/sleep_study_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 0
+
+# Running:
+
+...............data size = 442848000
+factors = [[2, 8], [3, 1], [5, 3], [7, 1], [659, 1]]
+...............
+
+Finished in 0.467868s, 64.1206 runs/s, 329.1526 assertions/s.
+
+30 runs, 154 assertions, 0 failures, 0 errors, 0 skips
+
