@@ -1,0 +1,36 @@
+testing
+2015-11-19 06:25:09.723
+ruby -v -W0 test/unit/sleep_study_test.rb
+ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+Run options: --seed 0
+
+# Running:
+
+.....F........data size = 442848000
+factors = [[2, 8], [3, 1], [5, 3], [7, 1], [659, 1]]
+..F..E.........
+
+Finished in 0.445500s, 65.0954 runs/s, 318.7431 assertions/s.
+
+  1) Failure:
+BinaryRecordEnumeratorTest#test_extract_record [test/unit/sleep_study_test.rb:123]:
+Expected: [[97]]
+  Actual: "a"
+
+
+  2) Failure:
+BinaryTableTest#test_table [test/unit/sleep_study_test.rb:152]:
+Expected: [[[97]], [[98]], [[99]]]
+  Actual: ["a", "b", "c"]
+
+
+  3) Error:
+BinaryTableTest#test_csv:
+NoMethodError: undefined method `flatten' for "a":String
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/sleep_study.rb:193:in `block in csv'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/sleep_study.rb:192:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/sleep_study.rb:192:in `csv'
+    test/unit/sleep_study_test.rb:156:in `test_csv'
+
+29 runs, 142 assertions, 2 failures, 1 errors, 0 skips
+

@@ -7,103 +7,153 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/sleep_study.rb'
-class BinaryTableTest < TestCase
+class FixedEnumeratorTest < TestCase
 #include DefaultTests
 #include Unit::Executable.model_class?::Examples
-include BinaryIO::Examples
-include BinaryTable::Examples
+#include StringEnumerator::Examples
+#include BinaryIO::Examples
 def setup
-	Bin_file.rewind
+	BinaryIO::Examples::Bin_file.rewind
+	BinaryIO::Examples::Null_BinaryIO.rewind
+	StringEnumerator::Examples::ABC.rewind
 end # setup
+def test_rewind
+	assert_equal(0,StringEnumerator::Examples::ABC.record_index)
+	assert_equal(0, BinaryIO::Examples::Bin_file.record_index)
+	assert_equal(0, BinaryIO::Examples::Null_BinaryIO.record_index)
+	assert_equal(0,StringEnumerator::Examples::ABC.rewind.record_index)
+	assert_equal(0, BinaryIO::Examples::Bin_file.rewind.record_index)
+	assert_equal(0, BinaryIO::Examples::Null_BinaryIO.rewind.record_index)
+end # rewind
 def test_initialize
 #	Bin_file.eof?
 end # initialize
 def test_next
-	assert_equal(First_line_hash, Bin_file.next)
-	assert_equal("\n", Bin_file.next[0, 1])
+	assert_equal(BinaryIO::Examples::First_line_hash, BinaryIO::Examples::Bin_file.next)
+	assert_equal("\n", BinaryIO::Examples::Bin_file.next[0, 1])
+	assert_equal('a',StringEnumerator::Examples::ABC.next)
+	assert_equal(BinaryIO::Examples::First_line_hash, BinaryIO::Examples::Bin_file.rewind.next)
+	assert_equal('', BinaryIO::Examples::Null_BinaryIO.next)
 end # next
 def test_each
+	message = BinaryIO::Examples::Bin_file.inspect
 	characters_in_file = 0
-	Bin_file.each do |c|
+	BinaryIO::Examples::Bin_file.each do |c|
+		refute_nil(c, message)
 		characters_in_file += c.size
 	end # each
-	assert_equal(Bin_file.size, characters_in_file)
+	message = BinaryIO::Examples::Bin_file.inspect # update
+	message += "\nextract_record = " + BinaryIO::Examples::Bin_file.extract_record.to_s
+	assert_nil(BinaryIO::Examples::Bin_file.extract_record, message)
+#	message += "\nsize = " + Bin_file.extract_record.size.to_s
+	assert_equal(BinaryIO::Examples::Bin_file.size, characters_in_file, message)
 end # each
-include BinaryTable::Examples
-def test_factors_of
-def test_slice_string
+def test_next
+	assert_equal(BinaryIO::Examples::First_line_hash, BinaryIO::Examples::Bin_file.next)
+	assert_equal("\n", BinaryIO::Examples::Bin_file.next[0, 1])
+end # next
+end # FixedEnumerator
+class BinaryIOTest < TestCase
+include BinaryIO::Examples
+def setup
+	Bin_file.rewind
+end # setup
 def test_BinaryRecordEnumerator
-	assert_equal('C',ABC.format)
-	assert_equal(1,ABC.record_length)
-	assert_instance_of(Fixnum,ABC.record_length)
-	assert_equal('a',ABC.enumerator.next)
+	assert_equal(First_line_hash.size, Bin_file.record_length)
+	assert_instance_of(Fixnum, Bin_file.record_length)
+	assert_equal(First_line_hash, Bin_file.next)
 end # values
+end # BinaryIO
+class StringEnumeratorTest < TestCase
+include StringEnumerator::Examples
+def setup
+	ABC.rewind
+end # setup
+def test_StringEnumerator
+	assert_instance_of(Fixnum,ABC.record_length)
+	assert_equal(1,ABC.record_length)
+	assert_equal('a',ABC.next)
+end # values
+def test_extract_record
+	assert_equal('a',ABC.extract_record)
+end # extract_record
+end # StringEnumerator
+class BinaryRecordEnumeratorTest < TestCase
+include BinaryRecordEnumerator::Examples
+def setup
+	ABC_BinaryRecord.rewind
+	Bin_file_BinaryRecord.rewind
+	Null_BinaryRecord.rewind
+end # setup
+def test_BinaryRecordEnumerator
+	assert_equal('C',ABC_BinaryRecord.format)
+	assert_equal(1,ABC_BinaryRecord.enumerator.record_length)
+	assert_instance_of(Fixnum,ABC_BinaryRecord.enumerator.record_length)
+	assert_equal('a',ABC_BinaryRecord.enumerator.next)
+
+	assert_equal('b', ABC_BinaryRecord.enumerator.next)
+	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.next)
+	assert_raises(StopIteration) { Null_BinaryRecord.enumerator.next }
+end # values
+def test_new_from_string
+end # new_from_StringEnumerator
+def test_new_from_IO
+end # new_from_BinaryIO
+def test_size
+	assert_equal(3, ABC_BinaryRecord.size)
+	assert_instance_of(Fixnum, Bin_file_BinaryRecord.size)
+	assert_equal(0, Null_BinaryRecord.size)
+end # size
+def test_slice_string
 end # slice_string
 def test_format_bytes_unpacked
-	assert_equal(1,ABC.format_bytes_unpacked)
+	assert_equal(1,ABC_BinaryRecord.format_bytes_unpacked)
+	assert_equal(1, Bin_file_BinaryRecord.format_bytes_unpacked)
+	assert_equal(0, Null_BinaryRecord.format_bytes_unpacked)
 end # format_bytes_unpacked
-def test_unpack_row
-end # unpack_row
+def test_extract_record
+	assert_equal('a',ABC_BinaryRecord.enumerator.extract_record)
+
+	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.extract_record)
+	assert_equal(nil, Null_BinaryRecord.enumerator.extract_record)
+	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.next)
+
+	refute_nil(ABC_BinaryRecord.enumerator.record_index)
+	assert_equal('a', ABC_BinaryRecord.next)
+	assert_equal([[97]],ABC_BinaryRecord.rewind.next)
+	assert_equal([[98]],ABC_BinaryRecord.next)
+	assert_equal([[99]],ABC_BinaryRecord.next)
+	assert_raises(StopIteration) { ABC_BinaryRecord.next }
+	assert_raises(StopIteration) { Null_BinaryRecord.next }
+end # extract_record
+end # BinaryRecordEnumerator
+class BinaryTableTest < TestCase
+include BinaryTable::Examples
 def test_BinaryTable
-#	assert_equal('abc',ABC.enumerator)
-	assert_equal(3,ABC.size)
 	assert_equal(4800.prime_division, [[2, 6], [3, 1], [5, 2]])
-	assert_equal([[3,1]],ABC.factors)
-	assert_equal('C',ABC.format)
-	assert_equal(3,ABC.largest_factor)
-	assert_equal(3,ABC.rows)
-	assert_equal(1,ABC.record_length)
-	assert_instance_of(Fixnum,ABC.record_length)
+	assert_equal([[3,1]],ABC_BinaryTable.factors)
+	assert_equal('C',ABC_BinaryTable.format)
+	assert_equal(3,ABC_BinaryTable.largest_factor)
+	assert_equal(3,ABC_BinaryTable.rows)
+	assert_equal(1,ABC_BinaryTable.record_length)
+	assert_instance_of(Fixnum,ABC_BinaryTable.record_length)
+#	assert_equal('abc',ABC_BinaryTable.enumerator)
+	assert_equal(3, ABC_BinaryTable.size)
 end # values
+def test_factors_of
 end # factors_of
-# @see http://ruby-doc.org/core-1.9.3/Enumerator.html
-def test_readme
-def each_to_a(enumerator, &block)
-	array = []
-	begin
-		array << enumerator.each(&block).next
-	end # loop
-rescue StopIteration
-	array
-end # each_to_a
-def ext_each(e)
-  while true
-    begin
-      vs = e.next_values
-    rescue StopIteration
-      return $!.result
-    end
-    y = yield(*vs)
-    e.feed y
-  end
-end
-
-o = Object.new
-
-def o.each(&block)
-  puts yield
-  puts yield(1)
-  puts yield(1, 2)
-  3
-end
-#	enumerator = o.each
-#	assert_instance_of(Enumerator, enumerator)
-	internal_array = each_to_a(o) {|*x| x; [:b, *x] }
-	answer = [[], [:b], [1], [:b, 1], [1, 2], [:b, 1, 2], 3]
-#	assert_instance_of(Enumerator, enumerator)
-# use o.each as an internal iterator directly.
-#assert_equal(internal_array, answer)
-
-# convert o.each to an external iterator for
-# implementing an internal iterator.
-	external_array = each_to_a(o) {|*x| x; [:b, *x] }
-#	assert_equal(ext_each(o.to_enum) {|*x| x; [:b, *x] }, answer)
-end # readme
 def test_table
-	assert_equal([[[97]], [[98]], [[99]]],ABC.table)
+	assert_equal(3,ABC_BinaryTable.size)
+#	assert_equal(1,ABC_BinaryRecord.format_bytes_unpacked)
+	assert_equal('a',ABC_BinaryTable.next)
+	assert_equal('b',ABC_BinaryTable.next)
+	assert_equal('c',ABC_BinaryTable.next)
+	assert_raises(StopIteration) { ABC_BinaryTable.next }
+	assert_equal([[[97]], [[98]], [[99]]],ABC_BinaryTable.table)
 end # table
 def test_csv
-	assert_equal("97\n98\n99", ABC.csv)
+	assert_equal(3,ABC_BinaryTable.size)
+	assert_equal("97\n98\n99", ABC_BinaryTable.csv)
 end # csv
 def test_Examples
 	array_BinaryTable = BinaryTable.new(enumerator: [1, 2, 3])
