@@ -1,5 +1,5 @@
 master
-2015-11-17 01:37:00.642
+2015-11-17 03:17:35.273
 ruby -v -W0 test/unit/sleep_study_test.rb
 ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..data size = 442848000
 factors = [[2, 8], [3, 1], [5, 3], [7, 1], [659, 1]]
-.......b
+....F..b
 b
 1
 b
@@ -20,9 +20,26 @@ b
 b
 1
 2
-.........
+.F...
 
-Finished in 0.458892s, 39.2249 runs/s, 34.8666 assertions/s.
+Finished in 0.579620s, 24.1537 runs/s, 10.3516 assertions/s.
 
-18 runs, 16 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+BinaryTableTest#test_csv [test/unit/sleep_study_test.rb:106]:
+--- expected
++++ actual
+@@ -1,3 +1 @@
+-"97
+-98
+-99"
++""
+
+
+
+  2) Failure:
+BinaryTableTest#test_table [test/unit/sleep_study_test.rb:103]:
+Expected: [[[97]], [[98]], [[99]]]
+  Actual: []
+
+14 runs, 6 assertions, 2 failures, 0 errors, 0 skips
 

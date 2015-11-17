@@ -30,8 +30,22 @@ def test_each
 	assert_equal(Bin_file.size, characters_in_file)
 end # each
 include BinaryTable::Examples
+def test_factors_of
+def test_slice_string
+def test_BinaryRecordEnumerator
+	assert_equal('C',ABC.format)
+	assert_equal(1,ABC.record_length)
+	assert_instance_of(Fixnum,ABC.record_length)
+	assert_equal('a',ABC.enumerator.next)
+end # values
+end # slice_string
+def test_format_bytes_unpacked
+	assert_equal(1,ABC.format_bytes_unpacked)
+end # format_bytes_unpacked
+def test_unpack_row
+end # unpack_row
 def test_BinaryTable
-	assert_equal('abc',ABC.enumerator)
+#	assert_equal('abc',ABC.enumerator)
 	assert_equal(3,ABC.size)
 	assert_equal(4800.prime_division, [[2, 6], [3, 1], [5, 2]])
 	assert_equal([[3,1]],ABC.factors)
@@ -41,7 +55,6 @@ def test_BinaryTable
 	assert_equal(1,ABC.record_length)
 	assert_instance_of(Fixnum,ABC.record_length)
 end # values
-def test_factors_of
 end # factors_of
 # @see http://ruby-doc.org/core-1.9.3/Enumerator.html
 def test_readme
@@ -86,13 +99,6 @@ end
 	external_array = each_to_a(o) {|*x| x; [:b, *x] }
 #	assert_equal(ext_each(o.to_enum) {|*x| x; [:b, *x] }, answer)
 end # readme
-def test_slice_string
-end # slice_string
-def test_format_bytes_unpacked
-	assert_equal(1,ABC.format_bytes_unpacked)
-end # format_bytes_unpacked
-def test_unpack_row
-end # unpack_row
 def test_table
 	assert_equal([[[97]], [[98]], [[99]]],ABC.table)
 end # table
