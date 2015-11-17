@@ -1,3 +1,4 @@
+!/doc/COPYING.html
 .yardoc/*
 doc/*
 *.RData

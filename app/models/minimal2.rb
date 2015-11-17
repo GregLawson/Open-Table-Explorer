@@ -27,7 +27,6 @@ module Constants # constant objects of the type
 end # Constants
 include Constants
 # attr_reader
-require_relative 'assertions.rb'
 require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
