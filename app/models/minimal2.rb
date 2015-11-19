@@ -14,7 +14,7 @@ class Minimal2
 #	attribute :age, Fixnum, :default => 789
 #	attribute :timestamp, Time, :default => Time.now
 	end # values
-module Constants # constant parameters of the type
+module Constants # constant parameters of the type (suggest all CAPS)
 end #Constants
 include Constants
 module ClassMethods
@@ -23,7 +23,7 @@ end # ClassMethods
 extend ClassMethods
 #def initialize
 #end # initialize
-module Constants # constant objects of the type
+module Constants # constant objects of the type (e.g. default_objects)
 end # Constants
 include Constants
 # attr_reader
@@ -54,7 +54,7 @@ end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
-module Examples
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
 include Constants
 end # Examples
 end # Minimal2
