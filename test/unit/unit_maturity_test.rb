@@ -10,9 +10,10 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/unit_maturity.rb'
 class UnitMaturityTest < TestCase
-include DefaultTests
+#include DefaultTests
 include Repository::Examples
 include Branch::Constants
+include TestRun::Constants
 #include Branch::Examples
 include UnitMaturity::Examples
 def test_branch_symbol?
@@ -61,8 +62,8 @@ def test_deserving_branch?
 	error_classifications=[]
 	branch_compressions=[]
 	branch_enhancements=[]
-	Repository::Error_classification.each_pair do |key, value|
-		executable = data_source_directory?('repository')+'/'+value.to_s+'.rb'
+	Error_classification.each_pair do |key, value|
+		executable = Repository_Unit.data_source_directory?+'/'+value.to_s+'.rb'
 		test_run = TestRun.new(executable)
 		error_score = test_run.error_score?(executable)
 		assert_equal(key, error_score, TestUnitMaturity.repository.recent_test.inspect)

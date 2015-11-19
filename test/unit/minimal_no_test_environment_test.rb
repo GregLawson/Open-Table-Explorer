@@ -12,7 +12,7 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 TestCase = MiniTest::Unit::TestCase
 AssertionFailedError = RuntimeError
 class MinimalTest < TestCase
-#include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_RegexpError
 	regexp_string = ')'
 	Regexp.new(regexp_string) # test

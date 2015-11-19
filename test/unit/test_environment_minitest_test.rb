@@ -9,11 +9,17 @@ require "minitest/autorun"
 require_relative '../../app/models/test_environment_minitest.rb'
 class TestEnvironmentMinitestTest < TestCase
 include AssertionsModule
-include RubyAssertions
 extend AssertionsModule
-extend RubyAssertions
-assert_included_modules(:RubyAssertions, TestEnvironmentMinitestTest)
-assert_included_modules(:RubyAssertions, self)
+def test_requires
+	assert_included_modules(:Fish, MiniTest::Assertions)
+	assert_included_modules(:RubyAssertions, MiniTest::Assertions)
+	assert(MiniTest::Assertions.included_modules.empty?, MiniTest::Assertions.included_modules)
+	assert(MiniTest::Unit.included_modules.include?(:RubyAssertions), MiniTest::Unit.included_modules.inspect)
+	assert_included_modules(MiniTest::Assertions, :RubyAssertions)
+	assert(MiniTest::Assertions.instance_methods.include?(:assert_block), MiniTest::Assertions.instance_methods.inspect)
+	assert(AssertionsModule.instance_methods.include?(:assert_block), AssertionsModule.instance_methods.inspect)
+	assert(RubyAssertions.instance_methods.include?(:assert_block), RubyAssertions.instance_methods.inspect)
+end # requires
 def test_AssertionsModule
 	message = 'AssertionsModule defined'
 	assert_equal(MiniTest::Assertions, AssertionsModule, message)
@@ -23,25 +29,16 @@ def test_AssertionsModule
 	exception = Exception.new(message)
 	raise exception if !AssertionsModule.instance_methods(false).include?(:assert_equal)
 end # AssertionsModule
-def test_RubyAssertions
-	message = "\n RubyAssertions.methods = " + RubyAssertions.methods(false).inspect
-	exception = Exception.new(message)
-	raise exception if !RubyAssertions.instance_methods(false).include?(:refute_empty)
-	refute_empty([1])
-end # RubyAssertions
-def test_ruby_assertions
-	refute_empty([1])
-end # ruby_assertions
 def test_constant_scope
 	fail 'in test_environment_minitest.rb AssertionsModule not found in ' + Module.constants.inspect unless Module.constants.include?(:AssertionsModule)
-	assert_global_name(:AssertionsModule)
+#	assert_global_name(:AssertionsModule)
 end # constant_scope
 def test_RegexpError
 	regexp_string = ')'
 	Regexp.new(regexp_string) # test
 rescue RegexpError => exception
 	assert_instance_of(RegexpError, exception)
-	assert_includes(exception.class.ancestors, Exception)
+	assert(exception.class.ancestors.include?(Exception))
 end # AssertionFailedError
 def test_AssertionFailedError
 	fail # test

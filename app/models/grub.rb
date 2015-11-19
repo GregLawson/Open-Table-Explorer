@@ -7,14 +7,23 @@
 ###########################################################################
 require 'virtus'
 #require_relative '../../app/models/no_db.rb'
-class Minimal2
+require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/version.rb'
+class Grub
   include Virtus.value_object
   values do
-# 	attribute :branch, Symbol
-#	attribute :age, Fixnum, :default => 789
+ 	attribute :kernel_version, String
+	attribute :root_partition, String
 #	attribute :timestamp, Time, :default => Time.now
 	end # values
-module Constants # constant parameters of the type (suggest all CAPS)
+module Constants # constant parameters of the type
+Generated_file = Unit::Executable.data_sources_directory? + '/generated.cfg'
+Config_run = IO.read(Generated_file)
+Indent = /^\s*/.capture(:indent)
+UUID_regexp =/[-0-9a-fA-F]{36}/.capture(:uuid)
+Config_pattern = Indent * /linux\s/ * (/\/boot/.group * Regexp::Optional).capture(:boot) * /\/vmlinuz-/ * Version::Version_regexp * ' root=UUID=' * UUID_regexp
+Search_regexp = Indent * /search\s+--no-floppy/ * /.+/ * UUID_regexp
 end #Constants
 include Constants
 module ClassMethods
@@ -23,18 +32,22 @@ end # ClassMethods
 extend ClassMethods
 #def initialize
 #end # initialize
-module Constants # constant objects of the type (e.g. default_objects)
+def mkconfig
+  ShellCommands.new('sudo /usr/sbin/grub-mkconfig --output=' + Generated_file)
+end # mkconfig
+module Constants # constant objects of the type
 end # Constants
 include Constants
 # attr_reader
+require_relative 'assertions.rb'
 require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
-#	asset_nested_and_included(:ClassMethods, self)
-#	asset_nested_and_included(:Constants, self)
-#	asset_nested_and_included(:Assertions, self)
+#	assert_nested_and_included(:ClassMethods, self)
+#	assert_nested_and_included(:Constants, self)
+#	assert_nested_and_included(:Assertions, self)
 	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
@@ -54,7 +67,7 @@ end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
-module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+module Examples
 include Constants
 end # Examples
-end # Minimal2
+end # Grub

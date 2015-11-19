@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/discrete_dimension.rb'
 class DiscreteDimensionTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include Unit::Executable.model_class?::Examples
 def test_next
 	assert_equal(:passed, Branches.next)
 end #next

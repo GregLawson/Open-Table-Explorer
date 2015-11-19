@@ -31,7 +31,7 @@ def status
 	run = ShellCommands.new('xrandr ' + display)
 	Parse.parse_string(run.output, Status_pattern)
 end # status
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

@@ -5,10 +5,9 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/test_executable.rb'
 #require_relative '../../app/models/no_db.rb'
 require 'virtus'
-require 'fileutils'
+#require 'fileutils'
 require_relative '../../app/models/repository.rb'
 #require_relative '../../app/models/ruby_interpreter.rb'
 #require_relative '../../app/models/shell_command.rb'
@@ -96,7 +95,7 @@ def write_error_file(recent_test, log_path)
 	contents = @repository.current_branch_name?.to_s
 	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
 	contents += "\n" + recent_test.command_string
-	contents += "\n" + recent_test.output
+	contents += "\n" + recent_test.output.to_s
 	contents += "\n" + recent_test.errors
 	IO.write(log_path, contents)
 end # write_error_file
@@ -105,7 +104,7 @@ def write_commit_message(recent_test,files)
 	if !recent_test.nil? then
 		commit_message += "\n" + @repository.current_branch_name?.to_s + "\n"
 		commit_message += "\n" + recent_test.command_string
-		commit_message += "\n" + recent_test.output
+		commit_message += "\n" + recent_test.output.to_s
 		commit_message += recent_test.errors
 	end #if
 	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	

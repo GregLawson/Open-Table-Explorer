@@ -26,7 +26,7 @@ def next
 		self[@index-1] #preincrement value
 	end #if
 end #next
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods

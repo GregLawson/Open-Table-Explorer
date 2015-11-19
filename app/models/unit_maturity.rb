@@ -164,7 +164,7 @@ def bracketing_versions?(filename, current_index)
 	right_index = scan_verions?(filename, current_index + 1..Last_slot_index, :first)
 	[left_index, right_index]
 end # bracketing_versions?
-#require_relative '../../test/assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 end #ClassMethods

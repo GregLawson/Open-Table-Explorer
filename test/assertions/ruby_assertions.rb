@@ -319,10 +319,10 @@ end #assert_overlap
 def assert_dir_includes(filename,glob)
 	assert_includes(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
-def refute_includes(list, element,  message = '')
-	message=build_message(message, "? is in list ?", element,list)   
-	assert_block(message){!list.include?(element)}
-end #refute_include
+#def refute_includes(list, element,  message = '')
+#	message=build_message(message, "? is in list ?", element,list)   
+#	assert_block(message){!list.include?(element)}
+#end #refute_include
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then
@@ -476,6 +476,7 @@ def missing_file_message(pathname)
 	else
 		existing_dir = nil
 		pathname.ascend { |f| existing_dir = f and break if f.exist? }
+		'pathname = ' + pathname + " does not exist\n" +
 		'parent directory ' + 
 		existing_dir.to_s + 
 		' does exists containing ' + 
@@ -483,6 +484,7 @@ def missing_file_message(pathname)
 	end # if
 end # missing_file_message
 def assert_pathname_exists(pathname, message='')
+	message = missing_file_message(pathname) + message
 	refute_nil(pathname, message)
 	refute_empty(pathname.to_s, message+"Assume pathname to not be empty.")
 	pathname = Pathname.new(pathname).expand_path

@@ -202,7 +202,7 @@ def candidate_commands_strings
 		when 0 then ''
 		when 1 then 'arg'
 		when 2 then 'arg arg'
-		end.to_s + (c[:default_arguments] ? '...' : '') # case
+		end + (c[:default_arguments] ? '...' : '') # case
 	end # map
 end # candidate_commands_strings
 def run(&non_default_actions)

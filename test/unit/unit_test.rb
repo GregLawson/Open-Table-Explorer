@@ -39,6 +39,9 @@ def test_all
 end # all
 def test_all_basenames
 end # all_basenames
+def test_Unit_data_source_directory?
+	assert_equal('test/data_sources/', Unit.data_source_directories?)
+end #data_source_directory?
 def test_initialize
 	assert_respond_to(UnboundedFixnumUnit, :model_basename)
 	assert_equal(:unbounded_fixnum, UnboundedFixnumUnit.model_basename)	
@@ -57,6 +60,11 @@ end #initialize
 def test_equals
 	assert(Unit.new==Unit.new)
 end #==
+def test_data_source_directory?
+	assert_equal('test/data_source/unit', Unit::Executable.data_source_directory?)
+end # data_source_directory?
+def test_pathname_pattern?
+end # pathname_pattern
 def test_model_pathname
 	assert(File.exists?(UnboundedFixnumUnit.model_pathname?), UnboundedFixnumUnit.model_pathname?)
 	assert_data_file(UnboundedFixnumUnit.model_pathname?)
