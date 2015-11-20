@@ -11,6 +11,17 @@ require 'prime'
 module FixedEnumerator
 include Enumerable
 	@record_index = 0
+module Constants
+Eof_lambda = lambda {|record_number, size| record_index <= size.fdiv(record_length).ceil - 1 }
+end # Constants
+include Constants
+def eof?
+	if size.kind_of?(Integer) then
+		@record_index > size.fdiv(@record_length).ceil - 1
+	else
+		false
+	end # if
+end # eof
 def rewind
 	@record_index = 0
 	self # allows chaining
@@ -27,9 +38,10 @@ def each(&block)
 rescue StopIteration
 end # each
 def next
-	if @size.nil? || @size == Float::INFINITY then # can't end
-		ret = extract_record
-	elsif @record_index > @rows-1 then
+	if (defined? @record_index).nil? then # new object
+		@record_index = 0
+	end # if
+	if eof? then
 		raise StopIteration
 	else
 		ret = extract_record
@@ -47,6 +59,7 @@ values do
 	attribute :size, Fixnum, :default => lambda { |file, attribute| File.size?(file.path) }
 	attribute :rows, Fixnum, :default => lambda { |file, attribute| file.size.fdiv(file.record_length).ceil}
 	attribute :record_index, Fixnum, :default => 0
+	attribute :eof_lambda, Proc, :default => nil # infinite stream by default
 end # values
 include FixedEnumerator
 def extract_record
@@ -74,6 +87,7 @@ def extract_record
 end # extract_record
 module Examples
 ABC = StringEnumerator.new(data: 'abc', record_length: 1)
+Eof_lambda = lambda {|record_number| record_index <= @rows-1 }
 end # Examples
 end # StringEnumerator
 
@@ -85,7 +99,6 @@ values do
 	attribute :format, String, :default => 'C'
 end # values
 include Enumerable
-#include FixedEnumerator
 module ClassMethods
 #include Constants
 def new_from_StringEnumerator(args)
@@ -97,10 +110,18 @@ end # new_from_BinaryIO
 end # ClassMethods
 extend ClassMethods
 def next
-	@enumerator.next
+	slice_string(@enumerator.next, format_bytes_unpacked).map do |record|
+		record.unpack(@format)
+	end # map
+	
 end # next
 def each(&block)
-	@enumerator.each(&block)
+	@record_index = 0
+	loop do # infinite until StopIteration exception 
+		
+		block.call(self.next)
+	end # begin
+rescue StopIteration
 end # each
 def size
 	if @enumerator.respond_to?(:size) then
@@ -111,10 +132,11 @@ def size
 		end # if
 	else
 		Float::INFINITY # unknown or infinite 
-	end # size
+	end # if
 end # size
 def rewind
 	@enumerator.rewind
+	self
 end # rewind
 def slice_string(string, slice_length)
 	slices =[] # accumulate here
@@ -125,22 +147,11 @@ def slice_string(string, slice_length)
 	slices
 end # slice_string
 def format_bytes_unpacked
-	ret = @enumerator.extract_record.unpack(@format).size
-	@enumerator.rewind
-	ret
-rescue
-	@enumerator.rewind
-	0	# end of file on first read
+	('abcd' * (@format.size)).unpack(@format).size
 end # format_bytes_unpacked
-def extract_record # peek do not move position
-	slice_string(@enumerator.extract_record, format_bytes_unpacked).map do |record|
-		record.unpack(@format)
-	end # map
-end # extract_record
-
 def csv(path = nil)
-	record = @enumerator.next
-	csv_string = record.flatten.join("\t") + "/n"
+	record = self.next
+	csv_string = record.flatten.join("\t") + "\n"
 	if path.nil? then
 		csv_string
 	else
@@ -156,17 +167,12 @@ end # BinaryRecordEnumerator
 
 # include a fixed size
 class BinaryTable < BinaryRecordEnumerator
-include Enumerable
 include Virtus.value_object
 values do
- 	attribute :enumerator, Object
 	attribute :size, Fixnum, :default => lambda { |block, attribute| block.enumerator.size }
 	attribute :factors, Array, :default => lambda { |block, attribute| (block.size == 0 || block.size.nil?? [] : block.size.prime_division) }
-	attribute :format, String, :default => 'C'
 	attribute :largest_factor, Fixnum, :default => lambda { |block, attribute| (block.factors.empty? ? 0 : block.factors[-1][0]) }
 	attribute :rows, Fixnum, :default => lambda { |block, attribute| block.largest_factor}
-	attribute :record_length, Fixnum, :default => lambda { |block, attribute| (block.rows == 0 ? 0 :block.size / block.rows) }
-	attribute :record_index, Fixnum, :default => 0
 end # values
 module Constants # constant parameters of the type
 end #Constants
@@ -184,7 +190,7 @@ def factors_of(number)
 end # factors_of
 
 def table
-	@enumerator.map do |record|
+	map do |record|
 		record
 	end # map
 end # table
@@ -203,35 +209,11 @@ end # Constants
 include Constants
 # attr_reader
 require_relative 'assertions.rb'
-module Assertions
-module ClassMethods
-def assert_pre_conditions(message='')
-	message+="In assert_pre_conditions, self=#{inspect}"
-#	asset_nested_and_included(:ClassMethods, self)
-#	asset_nested_and_included(:Constants, self)
-#	asset_nested_and_included(:Assertions, self)
-	self
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-	self
-end #assert_post_conditions
-end #ClassMethods
-def assert_pre_conditions(message='')
-	message+="In assert_pre_conditions, self=#{inspect}"
-	self
-end #assert_pre_conditions
-def assert_post_conditions(message='')
-	message+="In assert_post_conditions, self=#{inspect}"
-	self
-end #assert_post_conditions
-end # Assertions
-include Assertions
-extend Assertions::ClassMethods
-#self.assert_pre_conditions
 module Examples
 include BinaryIO::Examples
-ABC_BinaryTable = BinaryTable.new(enumerator: BinaryRecordEnumerator.new(enumerator: StringEnumerator.new(data: 'abc', record_length: 1)))
+ABC_BinaryTable = BinaryTable.new(enumerator: StringEnumerator::Examples::ABC)
+Null_BinaryTable = BinaryTable.new(enumerator: BinaryIO::Examples::Null_BinaryIO)
+Bin_file_BinaryTable = BinaryTable.new(enumerator: BinaryIO::Examples::Bin_file)
 end # Examples
 end # BinaryTable
 

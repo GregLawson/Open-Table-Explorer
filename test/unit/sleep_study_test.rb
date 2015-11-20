@@ -92,13 +92,25 @@ def test_BinaryRecordEnumerator
 	assert_equal('a',ABC_BinaryRecord.enumerator.next)
 
 	assert_equal('b', ABC_BinaryRecord.enumerator.next)
-	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.next)
+#	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.next)
 	assert_raises(StopIteration) { Null_BinaryRecord.enumerator.next }
+	assert_instance_of(StringEnumerator, ABC_BinaryRecord.enumerator)
 end # values
 def test_new_from_string
 end # new_from_StringEnumerator
 def test_new_from_IO
 end # new_from_BinaryIO
+def test_next
+#	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.next)
+
+	refute_nil(ABC_BinaryRecord.enumerator.record_index)
+#	assert_equal('a', ABC_BinaryRecord.next)
+	assert_equal([[97]],ABC_BinaryRecord.rewind.next)
+	assert_equal([[98]],ABC_BinaryRecord.next)
+	assert_equal([[99]],ABC_BinaryRecord.next)
+	assert_raises(StopIteration) { ABC_BinaryRecord.next }
+	assert_raises(StopIteration) { Null_BinaryRecord.next }
+end # next
 def test_size
 	assert_equal(3, ABC_BinaryRecord.size)
 	assert_instance_of(Fixnum, Bin_file_BinaryRecord.size)
@@ -109,24 +121,13 @@ end # slice_string
 def test_format_bytes_unpacked
 	assert_equal(1,ABC_BinaryRecord.format_bytes_unpacked)
 	assert_equal(1, Bin_file_BinaryRecord.format_bytes_unpacked)
-	assert_equal(0, Null_BinaryRecord.format_bytes_unpacked)
+	assert_equal(1, Null_BinaryRecord.format_bytes_unpacked)
 end # format_bytes_unpacked
-def test_extract_record
-	assert_equal('a',ABC_BinaryRecord.enumerator.extract_record)
-
-	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.extract_record)
-	assert_equal(nil, Null_BinaryRecord.enumerator.extract_record)
-	assert_equal(BinaryIO::Examples::First_line_hash, Bin_file_BinaryRecord.rewind.next)
-
-	refute_nil(ABC_BinaryRecord.enumerator.record_index)
-	assert_equal('a', ABC_BinaryRecord.next)
-	assert_equal([[97]],ABC_BinaryRecord.rewind.next)
-	assert_equal([[98]],ABC_BinaryRecord.next)
-	assert_equal([[99]],ABC_BinaryRecord.next)
-	assert_raises(StopIteration) { ABC_BinaryRecord.next }
-	assert_raises(StopIteration) { Null_BinaryRecord.next }
-end # extract_record
+def test_BinaryRecordEnumerator_csv
+	assert_equal("97\n", ABC_BinaryRecord.csv)
+end # csv
 end # BinaryRecordEnumerator
+
 class BinaryTableTest < TestCase
 include BinaryTable::Examples
 def test_BinaryTable
@@ -135,25 +136,32 @@ def test_BinaryTable
 	assert_equal('C',ABC_BinaryTable.format)
 	assert_equal(3,ABC_BinaryTable.largest_factor)
 	assert_equal(3,ABC_BinaryTable.rows)
-	assert_equal(1,ABC_BinaryTable.record_length)
-	assert_instance_of(Fixnum,ABC_BinaryTable.record_length)
+	assert_instance_of(StringEnumerator, ABC_BinaryTable.enumerator)
+	refute_nil(ABC_BinaryTable.enumerator.record_index)
+	assert_instance_of(Fixnum, ABC_BinaryTable.enumerator.record_length)
+	assert_equal(1,ABC_BinaryTable.enumerator.record_length)
 #	assert_equal('abc',ABC_BinaryTable.enumerator)
 	assert_equal(3, ABC_BinaryTable.size)
+	assert_equal([[97]],ABC_BinaryTable.rewind.next)
+	assert_equal([[98]],ABC_BinaryTable.next)
+	assert_equal([[99]],ABC_BinaryTable.next)
+	assert_raises(StopIteration) { ABC_BinaryTable.next }
+	assert_raises(StopIteration) { Null_BinaryTable.next }
 end # values
 def test_factors_of
 end # factors_of
 def test_table
 	assert_equal(3,ABC_BinaryTable.size)
-#	assert_equal(1,ABC_BinaryRecord.format_bytes_unpacked)
-	assert_equal('a',ABC_BinaryTable.next)
-	assert_equal('b',ABC_BinaryTable.next)
-	assert_equal('c',ABC_BinaryTable.next)
+#	assert_equal(1,ABC_BinaryTable.format_bytes_unpacked)
+	assert_equal([[97]],ABC_BinaryTable.rewind.next)
+	assert_equal([[98]],ABC_BinaryTable.next)
+	assert_equal([[99]],ABC_BinaryTable.next)
 	assert_raises(StopIteration) { ABC_BinaryTable.next }
-	assert_equal([[[97]], [[98]], [[99]]],ABC_BinaryTable.table)
+	assert_equal([[[97]], [[98]], [[99]]],ABC_BinaryTable.rewind.table)
 end # table
-def test_csv
+def test_BinaryTable_csv
 	assert_equal(3,ABC_BinaryTable.size)
-	assert_equal("97\n98\n99", ABC_BinaryTable.csv)
+#	assert_equal("97\n98\n99", ABC_BinaryTable.csv)
 end # csv
 def test_Examples
 	array_BinaryTable = BinaryTable.new(enumerator: [1, 2, 3])
