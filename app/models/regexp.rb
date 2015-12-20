@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'active_support/all'
 require 'active_model/naming'
 require 'active_model/errors'
 class Regexp
