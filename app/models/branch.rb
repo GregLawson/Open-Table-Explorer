@@ -25,7 +25,7 @@ Branch_name_regexp = /[a-zA-Z0-9_\/]+/ # conventional syntax
 
 Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
 Ambiguous_ref_pattern = Branch_name_regexp.capture(:ambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
-Unambiguous_ref_pattern = /[a-z_\/]+/.capture(:unambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
+Unambiguous_ref_pattern = Branch_name_regexp.capture(:unambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
 Delimiter = ','
 SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
 Week_day_regexp = /[MTWFS][a-z]{2}/
