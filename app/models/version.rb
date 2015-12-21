@@ -10,28 +10,31 @@ require_relative '../../app/models/no_db.rb'
 require 'fileutils'
 require_relative '../../app/models/parse.rb'
 # see http://semver.org/
-class Version
-include Virtus.model
+class Version # semantic version and base class for incompatible versioning convertions
+# see http://semver.org/
+module Constants # constant parameters of the type (suggest all CAPS)
+Version_digits = /[1-9]?[0-9]{1,3}/ # 1 to 9999 or 0 to 099 ? counter-examples in the wild?
+
+Major_minor_regexp = Version_digits.capture(:major) * '.' * Version_digits.capture(:minor)
+Major_minor_patch_regexp = Major_minor_regexp * '.' * Version_digits.capture(:patch)
+Semantic_version_regexp = Major_minor_patch_regexp * (/[-+.]/ * /[-.a-zA-Z0-9]*/.capture(:pre_release)).group * Regexp::Optional
+end # Constants
+include Constants
+include Virtus.value_object
+  values do
   attribute :major, String, :default => '0' # system version
   attribute :minor, String, :default => '0'
   attribute :patch, String, :default => '0'
   attribute :pre_release, String, :default => '0'
-module Constants
-# see http://semver.org/
-Version_digits = /[1-9]?[0-9]{1,3}/
-Version_pattern = [Version_digits.capture(:major)] + 
-	['.', Version_digits.capture(:minor)] + 
-	['.', Version_digits.capture(:patch)] +
-	[(/[-+.]/ * /[-.a-zA-Z0-9]*/.capture(:build)) * Regexp::Optional]
-Version_regexp = Regexp.new(Version_pattern.join)
-end # Constants
-include Constants
+  attribute :regexp, Regexp, :default => Semantic_version_regexp
+  attribute :source_string, String
+end # values
 module ClassMethods
 include Constants
-def [](string)
-	parse = string.parse(Version_pattern)
-	Version.new(parse)
-end # square_brackets
+def new_from_string(string)
+	parse = string.parse(Semantic_version_regexp)
+	Version.new(major: parse[:major], minor: parse[:minor], patch: parse[:patch], pre_release: parse[:pre_release])
+end # new_from_string
 end # ClassMethods
 extend ClassMethods
 #require_relative '../../app/models/assertions.rb'
@@ -76,10 +79,12 @@ end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
-module Examples
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
 include Version::Constants
+Consecutive_string = '1.2.3'
+
 Sorted_version_names = ['1.9.0', '1.10.0', '1.11.0.']
 First_example_version_name = Sorted_version_names[0]
-#First_example_version = Version[First_example_version_name]
+First_example_version = Version.new_from_string(First_example_version_name)
 end # Examples
 end # Version

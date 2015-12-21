@@ -1,35 +1,14 @@
 passed
-2015-11-08 09:02:27.115
+2015-12-21 11:52:22.788
 ruby -v -W0 test/unit/version_test.rb
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-...F..EE.
+.........
 
-Finished in 0.022391s, 401.9490 runs/s, 803.8980 assertions/s.
+Finished in 0.036384s, 247.3588 runs/s, 1264.2782 assertions/s.
 
-  1) Failure:
-NewTestClass#test_Version_Examples [test/unit/version_test.rb:53]:
---- expected
-+++ actual
-@@ -1 +1 @@
--{:major=>"1", :minor=>"9", :patch=>"0"}
-+{}
-
-
-
-  2) Error:
-NewTestClass#test_square_brackets:
-NoMethodError: undefined method `First_example_version' for "1":String
-    test/unit/version_test.rb:19:in `test_square_brackets'
-
-
-  3) Error:
-NewTestClass#test_initialize:
-NameError: uninitialized constant NewTestClass::First_example_version
-    test/unit/version_test.rb:47:in `test_initialize'
-
-9 runs, 18 assertions, 1 failures, 2 errors, 0 skips
+9 runs, 46 assertions, 0 failures, 0 errors, 0 skips
 
