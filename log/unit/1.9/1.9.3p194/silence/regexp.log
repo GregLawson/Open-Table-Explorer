@@ -1,5 +1,5 @@
 passed
-2015-12-20 11:06:36.451
+2015-12-20 19:31:56.825
 ruby -v -W0 test/unit/regexp_test.rb
 ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 

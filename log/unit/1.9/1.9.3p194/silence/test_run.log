@@ -1,43 +1,64 @@
 passed
-2015-11-08 09:02:06.142
+2015-12-20 19:32:21.597
 ruby -v -W0 test/unit/test_run_test.rb
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-..EE..FEFEEE.E.EE.-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x00000001d94210>>
+.E..EEEEE.F.F.E-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x00000002e1d140>>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:260:in `run'
 test/unit/test_run_test.rb:208:in `test_run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:108:in `block (3 levels) in run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:205:in `capture_exceptions'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:105:in `block (2 levels) in run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:256:in `time_it'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:104:in `block in run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:334:in `on_signal'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:276:in `with_info_handler'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest/test.rb:103:in `run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:781:in `run_one_method'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:308:in `run_one_method'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:296:in `block (2 levels) in run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:295:in `each'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:295:in `block in run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:334:in `on_signal'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:321:in `with_info_handler'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:294:in `run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `block in __run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `map'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:155:in `__run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:129:in `run'
-/var/lib/gems/1.9.1/gems/minitest-5.8.1/lib/minitest.rb:56:in `block in autorun'
-EE..
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+E.EEE..
 
-Finished in 2.083334s, 10.5600 runs/s, 11.0400 assertions/s.
+Finished in 2.670781s, 8.2373 runs/s, 8.6117 assertions/s.
 
   1) Error:
-NewTestClass#test_virtus_initialize:
-NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:17:in `test_virtus_initialize'
+NewTestClass#test_new_from_pathname:
+NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x000000029d3288>
+    test/unit/test_run_test.rb:47:in `test_new_from_pathname'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
   2) Error:
@@ -45,74 +66,284 @@ NewTestClass#test_log_file:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
     test/unit/test_run_test.rb:17:in `test_virtus_initialize'
     test/unit/test_run_test.rb:63:in `test_log_file'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  3) Failure:
+  3) Error:
+NewTestClass#test_ruby_test_string:
+NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000002d007d0>
+    test/unit/test_run_test.rb:57:in `test_ruby_test_string'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  4) Error:
+NewTestClass#test_virtus_initialize:
+NameError: uninitialized constant NewTestClass::Odd_plural_executable
+    test/unit/test_run_test.rb:17:in `test_virtus_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  5) Error:
+NewTestClass#test_log_passed?:
+ArgumentError: wrong number of arguments (0 for 1)
+    test/unit/test_run_test.rb:146:in `test_log_passed?'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  6) Error:
+NewTestClass#test_parse_header:
+NameError: uninitialized constant NewTestClass::Odd_plural_executable
+    test/unit/test_run_test.rb:153:in `test_parse_header'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  7) Failure:
 NewTestClass#test_parse_log_file [test/unit/test_run_test.rb:132]:
 headerArray[-1]='"Run options: --seed 0"'.
 Expected: "Finished"
   Actual: "Run"
 
 
-  4) Error:
-NewTestClass#test_log_passed?:
-ArgumentError: wrong number of arguments (0 for 1)
-    test/unit/test_run_test.rb:146:in `test_log_passed?'
-
-
-  5) Failure:
+  8) Failure:
 NewTestClass#test_error_score? [test/unit/test_run_test.rb:198]:
 executable_file = /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/repository/single_test_fail.rb.
 Expected: 1
   Actual: 0
 
 
-  6) Error:
-NewTestClass#test_log_path?:
-NoMethodError: undefined method `log_path?' for #<Repository:0x000000022b78a0>
-    test/unit/test_run_test.rb:52:in `test_log_path?'
-
-
-  7) Error:
-NewTestClass#test_ruby_run_and_log:
-NoMethodError: undefined method `error_score?' for #<Repository:0x000000022b78a0>
-    test/unit/test_run_test.rb:82:in `test_ruby_run_and_log'
-
-
-  8) Error:
-NewTestClass#test_ruby_test_string:
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x000000022b78a0>
-    test/unit/test_run_test.rb:57:in `test_ruby_test_string'
-
-
   9) Error:
-NewTestClass#test_file_bug_reports:
-NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:100:in `test_file_bug_reports'
+NewTestClass#test_log_path?:
+NoMethodError: undefined method `log_path?' for #<Repository:0x00000002d007d0>
+    test/unit/test_run_test.rb:52:in `test_log_path?'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
  10) Error:
-NewTestClass#test_new_from_pathname:
-NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x000000023868d0>
-    test/unit/test_run_test.rb:47:in `test_new_from_pathname'
+NewTestClass#test_run:
+NoMethodError: undefined method `output' for nil:NilClass
+    test/unit/test_run_test.rb:208:in `test_run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
  11) Error:
 NewTestClass#test_test_file?:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
     test/unit/test_run_test.rb:73:in `test_test_file?'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
  12) Error:
-NewTestClass#test_run:
-NoMethodError: undefined method `output' for nil:NilClass
-    test/unit/test_run_test.rb:208:in `test_run'
+NewTestClass#test_ruby_run_and_log:
+NoMethodError: undefined method `error_score?' for #<Repository:0x00000002d007d0>
+    test/unit/test_run_test.rb:82:in `test_ruby_run_and_log'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
  13) Error:
-NewTestClass#test_parse_header:
+NewTestClass#test_file_bug_reports:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:153:in `test_parse_header'
+    test/unit/test_run_test.rb:100:in `test_file_bug_reports'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 22 runs, 23 assertions, 2 failures, 11 errors, 0 skips
 

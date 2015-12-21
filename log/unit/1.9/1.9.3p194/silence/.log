@@ -1,7 +1,7 @@
 passed
-2015-11-08 09:02:04.020
+2015-12-20 19:32:19.045
 ruby -v -W0 /etc/mtab
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 
 /etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('
 rootfs / rootfs rw 0 0

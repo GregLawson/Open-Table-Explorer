@@ -1,37 +1,14 @@
 passed
-2015-11-08 09:01:59.853
+2015-12-20 19:36:14.375
 ruby -v -W0 test/unit/test_executable_test.rb
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-...E..EE..E..
+................
 
-Finished in 0.062662s, 207.4633 runs/s, 239.3808 assertions/s.
+Finished in 0.203713s, 78.5419 runs/s, 161.9926 assertions/s.
 
-  1) Error:
-TestTestExecutable#test_virtus_initialize:
-NameError: uninitialized constant TestTestExecutable::Odd_plural_executable
-    test/unit/test_executable_test.rb:17:in `test_virtus_initialize'
-
-
-  2) Error:
-TestTestExecutable#test_Examples:
-NameError: uninitialized constant TestTestExecutable::Unit_executable
-    test/unit/test_executable_test.rb:82:in `test_Examples'
-
-
-  3) Error:
-TestTestExecutable#test_new_from_path:
-NameError: uninitialized constant TestTestExecutable::Unit_executable
-    test/unit/test_executable_test.rb:61:in `test_new_from_path'
-
-
-  4) Error:
-TestTestExecutable#test_test_file?:
-NameError: uninitialized constant TestTestExecutable::Odd_plural_executable
-    test/unit/test_executable_test.rb:79:in `test_test_file?'
-
-13 runs, 15 assertions, 0 failures, 4 errors, 0 skips
+16 runs, 33 assertions, 0 failures, 0 errors, 0 skips
 
