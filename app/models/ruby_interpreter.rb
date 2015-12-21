@@ -1,35 +1,82 @@
 ###########################################################################
-#    Copyright (C) 2011-2014 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2011-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
 require 'virtus'
-require 'fileutils'
 require_relative '../../app/models/version.rb'
-class RubyInterpreter # < ActiveRecord::Base
-include Virtus.model
-  attribute :processor_version, String, :default => nil # system version
-  attribute :options, String, :default => '-W0'
-module Constants
-include Version::Constants
-# see http://semver.org/
-Ruby_pattern = [/ruby /, Version]
-Parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
-Bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
+
+require_relative '../../app/models/shell_command.rb'
+class ReportedVersion < Version # version can be reported by a command
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+Man_regexp = /\/usr\/share\/man\/man1\// * /[a-z]+/ * /.1.gz/.capture(:man_path)
+Lib_regexp = /\/usr\/lib\// * /[a-z]+/.capture(:lib_path)
+Bin_regexp = /\/usr\/bin\// * /[a-z0-9.]+/.capture(:bin_path)
+Whereis_regexp = /ruby: / * Man_regexp
+end # DefinitionalConstants
+  include Virtus.value_object
+  values do
+  attribute :test_command, String
+
+  attribute :version_reporting_option, String, :default => '--version'
+  attribute :version_report, String, :default => lambda { |version, attribute| ShellCommands.new(version.test_command + ' ' + version.version_reporting_option).output }
+	end # values
+def which
+	ShellCommands.new('which ' + @test_command).output.chomp
+end # which
+def whereis
+	ShellCommands.new('whereis ' + @test_command).output
+end # whereis
+def versions
+end # versions
+module Examples
+include DefinitionalConstants
+Ruby_version = ReportedVersion.new(test_command: 'ruby')  # system version
+Ruby_whereis = Ruby_version.whereis
+Ruby_which = Ruby_version.which
+Linux_version = ReportedVersion.new(test_command: 'uname', version_reporting_option: '-a')  # system version
+Ruby_file_version = ReportedVersion.new(test_command: 'file /usr/bin/ruby2.2', version_reporting_option: '')
+end # Examples
+end # ReportedVersion
+
+class RubyVersion < ReportedVersion
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+Ruby_version_regexp = Version::Semantic_version_regexp
+Ruby_versions = Dir['/usr/bin/ruby[0-9]']
+Ruby_pattern = /ruby / * Ruby_version_regexp
+Parenthetical_date_pattern = / \(/ * /20[0-9]{2}-[01][0-9]-[0-3][0-9]/.capture(:compile_date) * /\)/
+Bracketed_os = / \[/ * /[-_a-z0-9]+/ * /\]/ * "\n"
 Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
-end # Constants
-include Constants
-#include Generic_Table
-#has_many :bugs
+Ruby_version = ShellCommands.new('ruby --version').output
+end # DefinitionalConstants
+include DefinitionalConstants
 module ClassMethods
 def ruby_version(executable_suffix = '')
 	ShellCommands.new('ruby --version').output.split(' ')
 	testRun = RubyInterpreter.new(test_command: 'ruby', options: '--version').run
 	testRun.output.parse(Version_pattern).output
 end # ruby_version
+end # ClassMethods
+end # RubyVersion
+
+require 'fileutils'
+require_relative '../../app/models/version.rb'
+
+class RubyInterpreter # < ActiveRecord::Base
+include Virtus.model
+  attribute :processor_version, String, :default => nil # system version
+  attribute :options, String, :default => '-W0'
+module DefinitionalConstants
+include Version::Constants
+# see http://semver.org/
+end # DefinitionalConstants
+include DefinitionalConstants
+#include Generic_Table
+#has_many :bugs
+module ClassMethods
 def shell(command, &proc)
 #	puts "command='#{command}'"
 	run =ShellCommands.new(command)
@@ -59,7 +106,6 @@ def assert_logical_primary_key_defined(message=nil)
 	refute_nil(self.singular_table, message)
 end #assert_logical_primary_key_defined
 module Examples
-include Constants
-Ruby_version = ShellCommands.new('ruby --version').output
+include DefinitionalConstants
 end # Examples
 end # RubyInterpreter
