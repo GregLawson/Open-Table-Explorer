@@ -127,7 +127,7 @@ def safely_visit_branch(target_branch, &block)
 #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
 		@repository.git_command('stash save --include-untracked')
 		@repository.merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
+			@repository.shell_command('diffuse -m '+conflict[:file])
 			confirm_commit
 		end #each
 		changes_branch=:stash
@@ -150,7 +150,7 @@ def safely_visit_branch(target_branch, &block)
 			apply_run #.assert_post_conditions('unexpected stash apply fail')
 		end #if
 		@repository.merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
+			@repository.shell_command('diffuse -m '+conflict[:file])
 			confirm_commit
 		end #each
 	end #if
@@ -177,7 +177,7 @@ def stash_and_checkout(target_branch)
 #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
 		@repository.git_command('stash save --include-untracked')
 		@repository.merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
+			@repository.shell_command('diffuse -m '+conflict[:file])
 			confirm_commit
 		end #each
 		changes_branch=:stash
@@ -190,7 +190,7 @@ def stash_and_checkout(target_branch)
 end # stash_and_checkout
 def merge_cleanup(editor)
 	@repository.merge_conflict_files?.each do |conflict|
-		shell_command('diffuse -m '+conflict[:file])
+		@repository.shell_command('diffuse -m '+conflict[:file])
 		confirm_commit
 	end #each
 end # merge_cleanup

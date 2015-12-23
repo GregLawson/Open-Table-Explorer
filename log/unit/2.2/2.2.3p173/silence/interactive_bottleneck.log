@@ -1,5 +1,5 @@
 passed
-2015-12-23 10:37:51.063
+2015-12-23 12:01:36.768
 ruby -v -W0 test/unit/interactive_bottleneck_test.rb
 ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,13 +8,13 @@ Run options: --seed 0
 
 .EE.EE.E.E.E.EEE$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 21246 exit 1>
+@process_status=#<Process::Status: pid 27544 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 21266 exit 128>
+@process_status=#<Process::Status: pid 27564 exit 128>
 E..
 
-Finished in 3.501373s, 5.4264 runs/s, 0.2856 assertions/s.
+Finished in 3.501926s, 5.4256 runs/s, 0.2856 assertions/s.
 rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - chdir>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
@@ -127,7 +127,7 @@ NoMethodError: undefined method `assertions' for :Repository
 
   2) Error:
 NewTestClass#test_merge_command:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000032357c8>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001e43210>
     test/unit/interactive_bottleneck_test.rb:117:in `test_merge_command'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -154,7 +154,7 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
 
   3) Error:
 NewTestClass#test_help_command:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000003112120>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001d32470>
     test/unit/interactive_bottleneck_test.rb:113:in `test_help_command'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -181,7 +181,7 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
 
   4) Error:
 NewTestClass#test_local_assert_pre_conditions:
-NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x00000002bc6608>
+NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x000000017d69e0>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
@@ -212,10 +212,7 @@ NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x00000
 
   5) Error:
 NewTestClass#test_merge:
-NoMethodError: undefined method `assert_post_conditions' for greg (1):
-      fixup! ruby_interpreter
-
-:ShellCommands
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001bc8940>
     test/unit/interactive_bottleneck_test.rb:83:in `test_merge'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -269,7 +266,7 @@ NoMethodError: undefined method `executable_file' for TestExecutable:Class
 
   7) Error:
 NewTestClass#test_safely_visit_branch:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000002cafb50>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000018d87f8>
     test/unit/interactive_bottleneck_test.rb:57:in `test_safely_visit_branch'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -296,7 +293,7 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
 
   8) Error:
 NewTestClass#test_local_assert_post_conditions:
-NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x00000002bc6608>
+NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x000000017d69e0>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
@@ -327,7 +324,7 @@ NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x00000
 
   9) Error:
 NewTestClass#test_state?:
-NoMethodError: undefined method `state?' for #<NewTestClass:0x00000002564b98>
+NoMethodError: undefined method `state?' for #<NewTestClass:0x000000011b08e0>
     test/unit/interactive_bottleneck_test.rb:40:in `test_state?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
