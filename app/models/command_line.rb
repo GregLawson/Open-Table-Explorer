@@ -158,7 +158,7 @@ def required_arguments(method_name)
 		method_arity
 	end # if
 end # required_arguments
-def dispatch_one_argument(argument)
+def dispatch_required_arguments(argument)
 	method = executable_method?(sub_command, argument)
 	if method.nil? then
 		message = method_exception_string(sub_command)
@@ -170,14 +170,14 @@ def dispatch_one_argument(argument)
 		when 1 then
 			method.call(argument)
 		else
-			message = "\nIn CommandLine#dispatch_one_argument, "
+			message = "\nIn CommandLine#dispatch_required_arguments, "
 			message += "\nargument =  " + argument
 			message += "\nsub_command =  " + sub_command.to_s
 			message += "\narity =  " + required_arguments(sub_command).to_s
 			fail Exception.new(message)
 		end # case
 	end # if nil?
-end # dispatch_one_argument
+end # dispatch_required_arguments
 def candidate_commands(number_arguments = nil)
 	executable_object.methods(true).map do |candidate_command_name|
 		if Nonscriptable_methods.include?(candidate_command_name) then
@@ -216,14 +216,16 @@ def run(&non_default_actions)
 		if method.nil? then
 			message = method_exception_string(sub_command)
 			fail Exception.new(message)
+		elsif number_of_arguments == 0 then
+			method.call
 		elsif number_of_arguments == required_arguments(sub_command) then
-			dispatch_one_argument(arguments)
+			dispatch_required_arguments(arguments)
 		elsif number_of_arguments < required_arguments(sub_command) then
 			puts 'number_of_arguments == 0 '
 		elsif required_arguments(sub_command) == 0 ||
 		(number_of_arguments % required_arguments(sub_command)) == 0 then
 			arguments.each do |argument|
-				dispatch_one_argument(argument)
+				dispatch_required_arguments(argument)
 			end # each
 		else
 			fail
