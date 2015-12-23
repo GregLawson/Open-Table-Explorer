@@ -70,7 +70,10 @@ def ==(other)
 	end #if
 end #==
 def data_source_directory?
-	@project_root_directory + Unit.data_source_directories? + @model_basename.to_s + '/'
+	ret = @project_root_directory + Unit.data_source_directories? + @model_basename.to_s + '/'
+
+	Pathname.new(ret).mkpath
+	ret
 end #data_source_directory?
 def pathname_pattern?(file_spec, test = nil)
 	raise "project_root_dir" if @project_root_dir.nil?
@@ -208,3 +211,28 @@ def value
 	eval(fully_qualified_name)
 end # value
 end # Example
+
+class RailsUnit  # naming conventions typical of Ruby Rails S.B. deprecated
+include Virtus.model
+	attribute :singular_table, String
+	attribute :plural_table, String, :default => nil
+def test_file?
+	case @test_type
+	when :unit
+		return "test/unit/#{@singular_table}_test.rb"
+	when :controller
+		return "test/functional/#{@plural_table}_controller_test.rb"
+	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
+	end #case
+end #test_file?
+def unit?
+	Unit.new(@singular_table)
+end # unit?
+module Examples
+#include Constants
+Unit_executable = RailsUnit.new(:test_type => :unit)
+Plural_executable = RailsUnit.new({:test_type => :unit, :plural_table => 'test_runs'})
+Singular_executable = RailsUnit.new(:test_type => :unit,  :singular_table => 'test_run')
+Odd_plural_executable = RailsUnit.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
+end # Examples
+end # RailsUnit

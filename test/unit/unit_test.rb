@@ -189,3 +189,37 @@ end # fully_qualified_name
 def test_value
 end # value
 end # UnitTest
+
+class RailsUnitTest < TestCase
+include RailsUnit::Examples
+def test_RailsUnit_initialize
+	assert_equal('code_base', Odd_plural_executable.singular_table)
+	assert_equal('code_bases', Odd_plural_executable.plural_table)
+	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name, Odd_plural_executable.inspect)
+	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_executable.inspect)
+
+	assert_equal(:code_base, Odd_plural_executable.unit?.model_basename, Odd_plural_executable.inspect)
+	assert_equal(:unit, Odd_plural_executable.test_type)
+end # RailsUnit
+def test_new_from_path
+	executable_file = $0
+	unit = Unit.new_from_path(executable_file)
+	repository = Repository::This_code_repository
+	new_executable = TestExecutable.new(executable_file: executable_file, 
+								unit: unit, repository: repository)
+	new_from_path_executable = TestExecutable.new_from_path($0)
+	assert_instance_of(TestExecutable, new_executable)
+	assert_equal(:unit, Unit_executable.test_type)
+	assert_equal(:unit, new_executable.test_type)
+	assert_equal(:unit, new_from_path_executable.test_type)
+end # new_from_path
+def test_test_file?
+	assert_equal('test/unit/code_base_test.rb',Odd_plural_executable.test_file?)
+end #test_file?
+def test_Examples
+	assert_equal(:unit, Unit_executable.test_type)
+	assert_equal(:unit, Plural_executable.test_type)
+	assert_equal(:unit, Singular_executable.test_type)
+	assert_equal(:unit, Odd_plural_executable.test_type)
+end # Examples
+end # RailsUnit
