@@ -9,81 +9,48 @@
 require 'virtus'
 #require 'fileutils'
 require_relative '../../app/models/repository.rb'
-#require_relative '../../app/models/ruby_interpreter.rb'
+require_relative '../../app/models/ruby_interpreter.rb'
 #require_relative '../../app/models/shell_command.rb'
 #require_relative '../../app/models/branch.rb'
 class FileArgument
 include Virtus.model
 	attribute :executable_file, String
-	attribute :unit, Unit
+	attribute :unit, Unit, :default => 	lambda { |argument, attribute| Unit.new_from_path(argument.executable_file) }
+	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion
 	attribute :repository, Repository, :default => Repository::This_code_repository
 module Examples
 end # Examples
 end # FileArgument
 
-class RailsUnit < FileArgument # naming conventions typical of Ruby Rails S.B. deprecated
-include Virtus.model
-	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion
-	attribute :singular_table, String
-	attribute :plural_table, String, :default => nil
-def test_file?
-	case @test_type
-	when :unit
-		return "test/unit/#{@singular_table}_test.rb"
-	when :controller
-		return "test/functional/#{@plural_table}_controller_test.rb"
-	else raise "Unnown @test_type=#{@test_type} for #{self.inspect}"
-	end #case
-end #test_file?
-def unit?
-	Unit.new(@singular_table)
-end # unit?
-module Examples
-#include Constants
-Unit_executable = RailsUnit.new(:test_type => :unit)
-Plural_executable = RailsUnit.new({:test_type => :unit, :plural_table => 'test_runs'})
-Singular_executable = RailsUnit.new(:test_type => :unit,  :singular_table => 'test_run')
-Odd_plural_executable = RailsUnit.new(:test_type => :unit, :singular_table => :code_base, :plural_table => :code_bases, :test => nil)
-end # Examples
-end # RailsUnit
 
-class TestExecutable < RailsUnit # executable / testable ruby unit with executable
+class TestExecutable < FileArgument # executable / testable ruby unit with executable
 include Virtus.model
+  attribute :ruby_interpreter, RubyInterpreter, :default => RubyInterpreter::Preferred
 	attribute :test, String, :default => nil # all tests in file
-	attribute :test_command, String, :default => 'ruby'
-	attribute :processor_version, String, :default => nil # system version
-	attribute :options, String, :default => '-W0'
-	attribute :timestamp, Time, :default => Time.now
-#	attribute :executable_file, String
-	attribute :unit, Unit
 module ClassMethods
 def new_from_path(executable_file,
 		repository = Repository::This_code_repository)
-	unit = Unit.new_from_path(executable_file)
 	new_executable = TestExecutable.new(executable_file: executable_file, 
-								unit: unit, repository: repository)
+								repository: repository)
 end # new_from_path
 end # ClassMethods
 extend ClassMethods
-def log_path?(logging = :silence,
-		minor_version = '1.9',
-		patch_version = '1.9.3p194')
-	@unit = Unit.new_from_path(executable_file)
+def log_path?
 	if @unit.nil? then
 		@log_path = '' # empty file string
 	else
 		@log_path = 'log/'
 		@log_path += @test_type.to_s 
-		@log_path += '/' + minor_version
-		@log_path += '/' + patch_version
-		@log_path += '/' + logging.to_s
+		@log_path += '/' + @ruby_interpreter.minor_version
+		@log_path += '/' + @ruby_interpreter.patch_version
+		@log_path += '/' + @ruby_interpreter.logging.to_s
+		Pathname.new(@log_path).mkpath
 		@log_path += '/' + @unit.model_basename.to_s + '.log'
 		end # if
+	@log_path
 end # log_path?
-def ruby_test_string(logging = :silence,
-		minor_version = '1.9',
-		patch_version = '1.9.3p194')
-	case logging 
+def ruby_test_string
+	case @ruby_interpreter.logging 
 	when :silence then @ruby_test_string = 'ruby -v -W0 '
 	when :medium then @ruby_test_string = 'ruby -v -W1 '
 	when :verbose then @ruby_test_string = 'ruby -v -W2 '
@@ -91,15 +58,17 @@ def ruby_test_string(logging = :silence,
 	end # case
 	@ruby_test_string += executable_file
 end # ruby_test_string
-def write_error_file(recent_test, log_path)
-	contents = @repository.current_branch_name?.to_s
-	contents += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
-	contents += "\n" + recent_test.command_string
-	contents += "\n" + recent_test.output.to_s
-	contents += "\n" + recent_test.errors
-	IO.write(log_path, contents)
+def error_file(recent_test)
+	ret = @repository.current_branch_name?.to_s
+	ret += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	ret += "\n" + recent_test.command_string
+	ret += "\n" + recent_test.output.to_s
+	ret += "\n" + recent_test.errors
+end # error_file
+def write_error_file(recent_test)
+	IO.write(log_path?, error_file(recent_test))
 end # write_error_file
-def write_commit_message(recent_test,files)
+def commit_message(recent_test, files)
 	commit_message= 'fixup! ' + Unit.unit_names?(files).uniq.join(', ')
 	if !recent_test.nil? then
 		commit_message += "\n" + @repository.current_branch_name?.to_s + "\n"
@@ -107,7 +76,9 @@ def write_commit_message(recent_test,files)
 		commit_message += "\n" + recent_test.output.to_s
 		commit_message += recent_test.errors
 	end #if
-	IO.binwrite('.git/GIT_COLA_MSG', commit_message)	
+end # commit_message
+def write_commit_message(recent_test, files)
+	IO.binwrite('.git/GIT_COLA_MSG', commit_message(recent_test, files))	
 end # write_commit_message
 # log_file => String
 # Filename of log file from test run

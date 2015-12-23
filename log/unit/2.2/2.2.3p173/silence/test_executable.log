@@ -1,5 +1,5 @@
 passed
-2015-12-23 02:01:27.369
+2015-12-23 02:44:30.131
 ruby -v -W0 test/unit/test_executable_test.rb
 ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ...........
 
-Finished in 0.085000s, 129.4114 runs/s, 117.6467 assertions/s.
+Finished in 0.110053s, 99.9517 runs/s, 90.8652 assertions/s.
 
 11 runs, 10 assertions, 0 failures, 0 errors, 0 skips
 
