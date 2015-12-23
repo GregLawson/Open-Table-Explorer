@@ -1,0 +1,203 @@
+passed
+2015-12-23 03:03:37.415
+ruby -v -W0 test/unit/nmap_test.rb
+ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.....EEEE.EEE..
+
+Finished in 0.330314s, 45.4114 runs/s, 3.0274 assertions/s.
+
+  1) Error:
+NewTestClass#test_parse_xml_file:
+NoMethodError: undefined method `keys' for "":String
+    test/unit/nmap_test.rb:54:in `test_parse_xml_file'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  2) Error:
+NewTestClass#test_nmap_xml:
+NoMethodError: undefined method `nmap' for Nmap:Class
+    test/unit/nmap_test.rb:44:in `test_nmap_xml'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  3) Error:
+NewTestClass#test_save:
+NoMethodError: undefined method `[]' for nil:NilClass
+    test/unit/nmap_test.rb:73:in `test_save'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  4) Error:
+NewTestClass#test_hosts?:
+NoMethodError: undefined method `[]' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:88:in `hosts?'
+    test/unit/nmap_test.rb:68:in `test_hosts?'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  5) Error:
+NewTestClass#test_smbs:
+NoMethodError: undefined method `keys' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/nmap_assertions.rb:14:in `assert_xml'
+    test/unit/nmap_test.rb:64:in `test_smbs'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  6) Error:
+NewTestClass#test_nmap:
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000002c22bd8>
+    test/unit/nmap_test.rb:39:in `test_nmap'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  7) Error:
+NewTestClass#test_assert_xml:
+NoMethodError: undefined method `keys' for nil:NilClass
+    test/unit/nmap_test.rb:83:in `test_assert_xml'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+

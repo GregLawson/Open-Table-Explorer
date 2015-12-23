@@ -21,12 +21,13 @@ include Virtus.model
   attribute :nmap_execution_time, Time, :default => nil
 module Constants # first of two
 Library_Unit = Unit.new_from_path(__FILE__)
+Pathname.new(Library_Unit.data_sources_directory?).mkpath
 Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
 end # Constants
 include Constants
 module ClassMethods
 include Constants
-def parse_xml(string = '<tag>This is the contents</tag>', parser)
+def parse_xml(string = '<tag>This is the test contents</tag>', parser)
 	MultiXml.parser = parser
 	MultiXml.parser = eval('MultiXml::Parsers::' + parser[0..0].upcase + parser[1..-1])  # Same as above
 	MultiXml.parse(string)
