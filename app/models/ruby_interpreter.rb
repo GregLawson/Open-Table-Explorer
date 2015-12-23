@@ -66,12 +66,16 @@ require 'fileutils'
 require_relative '../../app/models/version.rb'
 
 class RubyInterpreter # < ActiveRecord::Base
-include Virtus.model
-  attribute :processor_version, String, :default => nil # system version
+  include Virtus.value_object
+  values do
   attribute :options, String, :default => '-W0'
+  attribute :logging, Symbol, :default => :silence
+  attribute :minor_version, String, :default => '2.2'
+  attribute :patch_version, String, :default => '2.2.3p173'
+	end # values
 module DefinitionalConstants
 include Version::Constants
-# see http://semver.org/
+Preferred = RubyInterpreter.new(options: '-W0', logging: :silence, minor_version: '2.2', patch_version: '2.2.3p173')
 end # DefinitionalConstants
 include DefinitionalConstants
 #include Generic_Table
