@@ -17,8 +17,6 @@ require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
 include Virtus.model
   attribute :executable, TestExecutable
-  attribute :logging, Symbol
-  attribute :ruby_interpreter, RubyInterpreter
 module Constants
 #include Version::Constants
 Error_classification={0 => :success,
@@ -163,19 +161,18 @@ end #parse_header
 end # ClassMethods
 extend ClassMethods
 # attr_reader
-def error_score?(logging = :silence,
-		minor_version = '1.9',
-		patch_version = '1.9.3p194')
+def <=>(other)
+	error_score? <=> other.error_score?
+end # <=>
+def error_score?
 	executable_file = @executable.executable_file
 	fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !File.exists?(executable_file)
-	@ruby_test_string = @executable.ruby_test_string(logging,
-		minor_version,
-		patch_version)
+	@ruby_test_string = @executable.ruby_test_string
 	@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @executable.repository.path)
-	log_path = @executable.log_path?(logging, minor_version, patch_version)
+	log_path = @executable.log_path?
 	if !log_path.empty? then
 	end # if
-	@executable.write_error_file(@recent_test, log_path)
+	@executable.write_error_file(@recent_test)
 	@executable.write_commit_message(@recent_test, [executable_file])
 #	@recent_test.puts if $VERBOSE
 	@error_score = if @recent_test.success? then

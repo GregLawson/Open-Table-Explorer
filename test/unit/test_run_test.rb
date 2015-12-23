@@ -9,6 +9,7 @@ require_relative 'test_environment'
 require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/regexp.rb'
 require_relative '../../app/models/test_run.rb'
+require_relative '../../test/assertions/shell_command_assertions.rb'
 class TestRunTest < TestCase
 include TestExecutable::Examples
 include TestRun::Examples
@@ -186,6 +187,9 @@ def test_error_score?
 
 	executable_file ='test/unit/minimal2_test.rb'
 	test_executable = TestExecutable.new(executable_file: executable_file)
+	log_path = test_executable.log_path?
+	ShellCommands.new('grep "seed 0" ' + log_path).assert_post_conditions
+
 		recent_test=This_code_repository.shell_command("ruby "+executable_file)
 		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
 		syntax_test=This_code_repository.shell_command("ruby -c "+executable_file)
@@ -195,7 +199,9 @@ def test_error_score?
 	Error_classification.each_pair do |key, value|
 		executable_file = Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
 		message = 'executable_file = ' + executable_file
-		assert_equal(key, TestRun.new(executable: TestExecutable.new(executable_file: executable_file)).error_score?, message)
+		assert_path_exists(executable_file)
+		test_run = TestRun.new(executable: TestExecutable.new(executable_file: executable_file))
+		assert_equal(key, test_run.error_score?, test_run.inspect + message)
 	end #each
 end # error_score
 def test_TestRun_initialize
