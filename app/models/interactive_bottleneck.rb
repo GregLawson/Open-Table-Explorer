@@ -102,7 +102,7 @@ def merge_conflict_recovery(from_branch)
 				end # case
 			end # if
 		end # each
-		@repository.confirm_commit
+		confirm_commit
 	end # if
 end # merge_conflict_recovery
 def confirm_branch_switch(branch)
@@ -209,7 +209,7 @@ def merge(target_branch, source_branch, interact=:interactive)
 				merge_conflict_recovery(source_branch)
 			end # if
 		end # if
-		@repository.confirm_commit(interact)
+		confirm_commit(interact)
 	end # safely_visit_branch
 end # merge
 def merge_down(deserving_branch = @repository.current_branch_name?)
@@ -218,7 +218,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 			puts 'merge(' + UnitMaturity::Branch_enhancement[i].to_s + '), ' + UnitMaturity::Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(UnitMaturity::Branch_enhancement[i], UnitMaturity::Branch_enhancement[i - 1])
 			merge_conflict_recovery(UnitMaturity::Branch_enhancement[i - 1])
-			@repository.confirm_commit(:interactive)
+			confirm_commit(:interactive)
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -233,6 +233,7 @@ def confirm_commit(interact=:interactive)
 		when :interactive then
 			cola_run = @repository.git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
+			@repository.git_command('rerere')
 			cola_run #.assert_post_conditions
 			if !@repository.something_to_commit? then
 #				@repository.git_command('cola rebase '+@repository.current_branch_name?.to_s)
