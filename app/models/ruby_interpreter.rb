@@ -51,6 +51,7 @@ Parenthetical_date_pattern = / \(/ * /20[0-9]{2}-[01][0-9]-[0-3][0-9]/.capture(:
 Bracketed_os = / \[/ * /[-_a-z0-9]+/ * /\]/ * "\n"
 Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
 Ruby_version = ShellCommands.new('ruby --version').output
+Preferred = RubyVersion.new(test_command: 'ruby', logging: :silence, minor_version: '2.2', patch_version: '2.2.3p173')
 end # DefinitionalConstants
 include DefinitionalConstants
 module ClassMethods
@@ -69,6 +70,7 @@ class RubyInterpreter # < ActiveRecord::Base
   include Virtus.value_object
   values do
   attribute :options, String, :default => '-W0'
+  attribute :processor_version, RubyVersion, :default => RubyVersion::Preferred # system version
   attribute :logging, Symbol, :default => :silence
   attribute :minor_version, String, :default => '2.2'
   attribute :patch_version, String, :default => '2.2.3p173'
