@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -8,17 +8,17 @@
 require 'virtus'
 #require_relative '../../app/models/no_db.rb'
 class Minimal2
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+end # DefinitionalConstants
+include DefinitionalConstants
   include Virtus.value_object
   values do
 # 	attribute :branch, Symbol
 #	attribute :age, Fixnum, :default => 789
 #	attribute :timestamp, Time, :default => Time.now
 	end # values
-module Constants # constant parameters of the type (suggest all CAPS)
-end #Constants
-include Constants
 module ClassMethods
-include Constants
+include DefinitionalConstants
 end # ClassMethods
 extend ClassMethods
 #def initialize
@@ -55,6 +55,7 @@ include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+include DefinitionalConstants
 include Constants
 end # Examples
 end # Minimal2
