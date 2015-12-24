@@ -1,5 +1,5 @@
 passed
-2015-12-23 04:05:17.143
+2015-12-23 20:54:12.143
 ruby -v -W0 test/unit/ruby_interpreter_test.rb
 ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ...................
 
-Finished in 0.064691s, 293.7051 runs/s, 556.4940 assertions/s.
+Finished in 0.058968s, 322.2062 runs/s, 610.4959 assertions/s.
 
 19 runs, 36 assertions, 0 failures, 0 errors, 0 skips
 

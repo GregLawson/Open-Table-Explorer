@@ -8,7 +8,6 @@
 require_relative '../../app/models/no_db.rb'
 require 'virtus'
 require_relative '../../app/models/version.rb'
-
 require_relative '../../app/models/shell_command.rb'
 class ReportedVersion < Version # version can be reported by a command
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
@@ -17,10 +16,10 @@ Lib_regexp = /\/usr\/lib\// * /[a-z]+/.capture(:lib_path)
 Bin_regexp = /\/usr\/bin\// * /[a-z0-9.]+/.capture(:bin_path)
 Whereis_regexp = /ruby: / * Man_regexp
 end # DefinitionalConstants
+include DefinitionalConstants
   include Virtus.value_object
   values do
   attribute :test_command, String
-
   attribute :version_reporting_option, String, :default => '--version'
   attribute :version_report, String, :default => lambda { |version, attribute| ShellCommands.new(version.test_command + ' ' + version.version_reporting_option).output }
 	end # values
@@ -32,7 +31,7 @@ def whereis
 end # whereis
 def versions
 end # versions
-module Examples
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
 include DefinitionalConstants
 Ruby_version = ReportedVersion.new(test_command: 'ruby')  # system version
 Ruby_whereis = Ruby_version.whereis
@@ -51,7 +50,6 @@ Parenthetical_date_pattern = / \(/ * /20[0-9]{2}-[01][0-9]-[0-3][0-9]/.capture(:
 Bracketed_os = / \[/ * /[-_a-z0-9]+/ * /\]/ * "\n"
 Version_pattern = [Ruby_pattern, Parenthetical_date_pattern, Bracketed_os]
 Ruby_version = ShellCommands.new('ruby --version').output
-Preferred = RubyVersion.new(test_command: 'ruby', logging: :silence, minor_version: '2.2', patch_version: '2.2.3p173')
 end # DefinitionalConstants
 include DefinitionalConstants
 module ClassMethods
@@ -61,16 +59,21 @@ def ruby_version(executable_suffix = '')
 	testRun.output.parse(Version_pattern).output
 end # ruby_version
 end # ClassMethods
+extend ClassMethods
 end # RubyVersion
 
 require 'fileutils'
 require_relative '../../app/models/version.rb'
 
 class RubyInterpreter # < ActiveRecord::Base
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+Preferred = RubyVersion.new(test_command: 'ruby', logging: :silence, minor_version: '2.2', patch_version: '2.2.3p173')
+end # DefinitionalConstants
+include DefinitionalConstants
   include Virtus.value_object
   values do
   attribute :options, String, :default => '-W0'
-  attribute :processor_version, RubyVersion, :default => RubyVersion::Preferred # system version
+  attribute :processor_version, RubyVersion, :default => Preferred # system version
   attribute :logging, Symbol, :default => :silence
   attribute :minor_version, String, :default => '2.2'
   attribute :patch_version, String, :default => '2.2.3p173'

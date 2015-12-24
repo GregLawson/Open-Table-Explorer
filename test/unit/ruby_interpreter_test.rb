@@ -87,6 +87,6 @@ def test_shell
 	refute_empty(RubyInterpreter.shell('pwd'){|run| run.inspect})
 end #shell
 def test_initialize
-	
+
 end #initialize
 end # RubyInterpreter
