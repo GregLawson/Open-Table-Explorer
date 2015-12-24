@@ -126,6 +126,7 @@ def minimal_edit
 	edit = @executable.repository.shell_command('diffuse' + version_comparison + test_files + minimal_comparison?)
 	puts edit.command_string
 	edit.assert_post_conditions
+	edit
 end # minimal_edit
 def emacs(executable = @executable.unit.model_test_pathname?)
 	emacs = @executable.repository.shell_command('emacs --no-splash ' + @executable.unit.edit_files.join(' '))
