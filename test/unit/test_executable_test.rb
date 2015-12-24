@@ -47,7 +47,14 @@ def test_ruby_test_string
 	ruby_test_string = Default_executable.ruby_test_string
 	assert_match(executable_file, ruby_test_string)
 end # ruby_test_string
+def test_write_error_file
+	recent_test = ShellCommands.new('pwd')
+	Default_executable.write_error_file(recent_test)
+
+end # write_error_file
 def test_write_commit_message
+	recent_test = ShellCommands.new('pwd')
+	Default_executable.write_commit_message(recent_test, [$0])
 end # write_commit_message
 def test_Examples
 	assert_equal(:unit, Default_executable.test_type)
