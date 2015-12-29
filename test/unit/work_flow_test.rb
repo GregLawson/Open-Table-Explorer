@@ -83,4 +83,8 @@ def test_related_command
 #	related_run=ShellCommands.new('ruby  script/work_flow.rb --related '+$0).assert_post_conditions
 #	assert_match(/#{$0}/, related_run.output)
 end #  related_command
+def test_help_command
+	help_run=ShellCommands.new('ruby  script/work_flow.rb --help') #.assert_post_conditions
+	assert_equal('', help_run.errors)
+end #  help_command
 end # WorkFlow
