@@ -17,6 +17,7 @@ include Virtus.model
 	attribute :executable_file, String
 	attribute :unit, Unit, :default => 	lambda { |argument, attribute| Unit.new_from_path(argument.executable_file) }
 	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion
+	attribute :pattern_name, Symbol, :default => 	lambda { |argument, attribute| FilePattern.find_from_path(argument.executable_file) }
 	attribute :repository, Repository, :default => Repository::This_code_repository
 module Examples
 end # Examples
