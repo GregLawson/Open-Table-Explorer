@@ -1,20 +1,59 @@
 passed
-2015-12-23 12:01:36.768
+2015-12-29 02:23:00.741
 ruby -v -W0 test/unit/interactive_bottleneck_test.rb
 ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.EE.EE.E.E.E.EEE$ git rebase --abort
+.EF.F..merge(:edited, :testing, :interactive)
+merge_status= $ git merge --no-commit testing
+@process_status=#<Process::Status: pid 11983 exit 1>
+Auto-merging test/unit/interactive_bottleneck_test.rb
+CONFLICT (content): Merge conflict in test/unit/interactive_bottleneck_test.rb
+Auto-merging log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+CONFLICT (content): Merge conflict in log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+Auto-merging log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+CONFLICT (content): Merge conflict in log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+Automatic merge failed; fix conflicts and then commit the result.
+merge_conflict_recovery$ git merge --no-commit testing
+@process_status=#<Process::Status: pid 11983 exit 1>
+Auto-merging test/unit/interactive_bottleneck_test.rb
+CONFLICT (content): Merge conflict in test/unit/interactive_bottleneck_test.rb
+Auto-merging log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+CONFLICT (content): Merge conflict in log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+Auto-merging log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+CONFLICT (content): Merge conflict in log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+Automatic merge failed; fix conflicts and then commit the result.
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+ruby script/workflow.rb --test test/unit/interactive_bottleneck_test.rb
+@repository.merge_conflict_files?= [{:conflict=>"UU", :file=>"log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log"}, {:conflict=>"UU", :file=>"log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log"}, {:conflict=>"UU", :file=>"test/unit/interactive_bottleneck_test.rb"}]
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+ruby script/workflow.rb --test test/unit/interactive_bottleneck_test.rb
+merge --abort
+merge --X ours testing
+checkout HEAD log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+checkout HEAD log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+not checkout HEAD test/unit/interactive_bottleneck_test.rb
+confirm_commit(:interactive @repository.something_to_commit?=false
+confirm_commit(:interactive @repository.something_to_commit?=false
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+ruby script/workflow.rb --test test/unit/interactive_bottleneck_test.rb
+confirm_commit(:interactive @repository.something_to_commit?=true
+confirm_commit(:interactive @repository.something_to_commit?=true
+..E.E...E$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 27544 exit 1>
+@process_status=#<Process::Status: pid 12843 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 27564 exit 128>
+@process_status=#<Process::Status: pid 12863 exit 128>
+$ git checkout master
+@errors="Already on 'master'\n"
 E..
 
-Finished in 3.501926s, 5.4256 runs/s, 0.2856 assertions/s.
+Finished in 50.712241s, 0.3747 runs/s, 0.1183 assertions/s.
 rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - chdir>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
@@ -22,33 +61,6 @@ rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - ch
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:47:in `git_command'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:115:in `git_command'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:118:in `inspect'
-/usr/lib/ruby/vendor_ruby/minitest.rb:703:in `to_str'
-/usr/lib/ruby/vendor_ruby/minitest.rb:703:in `to_s'
-/usr/lib/ruby/vendor_ruby/minitest.rb:703:in `message'
-/usr/lib/ruby/vendor_ruby/minitest.rb:703:in `message'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:265:in `block in to_s'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:264:in `map'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:264:in `to_s'
-/usr/lib/ruby/vendor_ruby/minitest.rb:582:in `%'
-/usr/lib/ruby/vendor_ruby/minitest.rb:582:in `block in aggregated_results'
-/usr/lib/ruby/vendor_ruby/minitest.rb:581:in `each'
-/usr/lib/ruby/vendor_ruby/minitest.rb:581:in `each_with_index'
-/usr/lib/ruby/vendor_ruby/minitest.rb:581:in `each'
-/usr/lib/ruby/vendor_ruby/minitest.rb:581:in `map'
-/usr/lib/ruby/vendor_ruby/minitest.rb:581:in `aggregated_results'
-/usr/lib/ruby/vendor_ruby/minitest.rb:568:in `report'
-/usr/lib/ruby/vendor_ruby/minitest.rb:640:in `each'
-/usr/lib/ruby/vendor_ruby/minitest.rb:640:in `report'
-/usr/lib/ruby/vendor_ruby/minitest.rb:134:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - chdir>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:47:in `new'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:47:in `git_command'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:115:in `git_command'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:118:in `inspect'
-/usr/lib/ruby/vendor_ruby/minitest.rb:703:in `inspect'
 /usr/lib/ruby/vendor_ruby/minitest.rb:703:in `to_str'
 /usr/lib/ruby/vendor_ruby/minitest.rb:703:in `to_s'
 /usr/lib/ruby/vendor_ruby/minitest.rb:703:in `message'
@@ -101,7 +113,7 @@ NoMethodError: undefined method `assertions' for :Repository
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:163:in `assert_equal'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/repository_assertions.rb:45:in `assert_nothing_to_commit'
-    test/unit/interactive_bottleneck_test.rb:91:in `test_validate_commit'
+    test/unit/interactive_bottleneck_test.rb:92:in `test_validate_commit'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -125,119 +137,65 @@ NoMethodError: undefined method `assertions' for :Repository
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  2) Error:
-NewTestClass#test_merge_command:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001e43210>
-    test/unit/interactive_bottleneck_test.rb:117:in `test_merge_command'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+  2) Failure:
+NewTestClass#test_merge_command [test/unit/interactive_bottleneck_test.rb:119]:
+--- expected
++++ actual
+@@ -1 +1,20 @@
+-""
++"/home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:45: warning: duplicated key at line 46 ignored: :master
++/home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_interpreter.rb:83: warning: already initialized constant RubyInterpreter::DefinitionalConstants::Preferred
++/home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_interpreter.rb:70: warning: previous definition of Preferred was here
++Warning: you should require 'minitest/autorun' instead.
++Warning: or add 'gem \"minitest\"' before 'require \"minitest/autorun\"'
++From:
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:10:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/assertions.rb:8:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/assertions.rb:8:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:167:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:167:in `<class:UnitMaturity>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:12:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:10:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:10:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:8:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:8:in `<top (required)>'
++  script/work_flow.rb:12:in `require_relative'
++  script/work_flow.rb:12:in `<main>'
++script/work_flow.rb:14:in `<main>': undefined method `new_from_pathname' for TestExecutable:Class (NoMethodError)
++"
 
 
-  3) Error:
-NewTestClass#test_help_command:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001d32470>
-    test/unit/interactive_bottleneck_test.rb:113:in `test_help_command'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+  3) Failure:
+NewTestClass#test_help_command [test/unit/interactive_bottleneck_test.rb:115]:
+--- expected
++++ actual
+@@ -1 +1,20 @@
+-""
++"/home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:45: warning: duplicated key at line 46 ignored: :master
++/home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_interpreter.rb:83: warning: already initialized constant RubyInterpreter::DefinitionalConstants::Preferred
++/home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_interpreter.rb:70: warning: previous definition of Preferred was here
++Warning: you should require 'minitest/autorun' instead.
++Warning: or add 'gem \"minitest\"' before 'require \"minitest/autorun\"'
++From:
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:10:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/assertions.rb:8:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/assertions.rb:8:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:167:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:167:in `<class:UnitMaturity>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:12:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:10:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:10:in `<top (required)>'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:8:in `require_relative'
++  /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:8:in `<top (required)>'
++  script/work_flow.rb:12:in `require_relative'
++  script/work_flow.rb:12:in `<main>'
++script/work_flow.rb:14:in `<main>': undefined method `new_from_pathname' for TestExecutable:Class (NoMethodError)
++"
+
 
 
   4) Error:
-NewTestClass#test_local_assert_pre_conditions:
-NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x000000017d69e0>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:504:in `refute'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:593:in `refute_nil'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:282:in `assert_pre_conditions'
-    test/unit/interactive_bottleneck_test.rb:124:in `test_local_assert_pre_conditions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  5) Error:
-NewTestClass#test_merge:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001bc8940>
-    test/unit/interactive_bottleneck_test.rb:83:in `test_merge'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  6) Error:
 NewTestClass#test_initialize:
 NoMethodError: undefined method `executable_file' for TestExecutable:Class
     test/unit/interactive_bottleneck_test.rb:24:in `test_initialize'
@@ -264,10 +222,10 @@ NoMethodError: undefined method `executable_file' for TestExecutable:Class
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  7) Error:
+  5) Error:
 NewTestClass#test_safely_visit_branch:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000018d87f8>
-    test/unit/interactive_bottleneck_test.rb:57:in `test_safely_visit_branch'
+NoMethodError: undefined method `confirm_branch_switch' for nil:NilClass
+    test/unit/interactive_bottleneck_test.rb:63:in `test_safely_visit_branch'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -291,68 +249,10 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  8) Error:
-NewTestClass#test_local_assert_post_conditions:
-NoMethodError: undefined method `assertions' for #<InteractiveBottleneck:0x000000017d69e0>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:326:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:290:in `assert_post_conditions'
-    test/unit/interactive_bottleneck_test.rb:121:in `test_local_assert_post_conditions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  9) Error:
-NewTestClass#test_state?:
-NoMethodError: undefined method `state?' for #<NewTestClass:0x000000011b08e0>
-    test/unit/interactive_bottleneck_test.rb:40:in `test_state?'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
- 10) Error:
+  6) Error:
 NewTestClass#test_confirm_branch_switch:
-NoMethodError: undefined method `confirm_branch_switch' for :Repository
-    test/unit/interactive_bottleneck_test.rb:46:in `test_confirm_branch_switch'
+NoMethodError: undefined method `confirm_branch_switch' for nil:NilClass
+    test/unit/interactive_bottleneck_test.rb:47:in `test_confirm_branch_switch'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -376,11 +276,10 @@ NoMethodError: undefined method `confirm_branch_switch' for :Repository
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
- 11) Error:
+  7) Error:
 NewTestClass#test_standardize_position:
-NoMethodError: undefined method `assert_post_conditions' for No local changes to save
-:ShellCommands
-    test/unit/interactive_bottleneck_test.rb:35:in `test_standardize_position'
+NoMethodError: undefined method `standardize_position!' for :Repository
+    test/unit/interactive_bottleneck_test.rb:37:in `test_standardize_position'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -403,5 +302,5 @@ NoMethodError: undefined method `assert_post_conditions' for No local changes to
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-19 runs, 1 assertions, 0 failures, 11 errors, 0 skips
+19 runs, 6 assertions, 2 failures, 5 errors, 0 skips
 
