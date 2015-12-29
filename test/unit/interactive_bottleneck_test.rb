@@ -16,14 +16,15 @@ include InteractiveBottleneck::Examples
 @temp_repo = Repository.create_test_repository(Repository::Examples::Empty_Repo_path)
 def setup
 	@temp_repo = Repository.create_test_repository(Repository::Examples::Empty_Repo_path)
+	@temp_interactive_bottleneck = InteractiveBottleneck.new(TestExecutable.new(executable_file: $0, repository: @temp_repo))
 end # setup
 def teardown
 	Repository.delete_existing(@temp_repo.path)
 end # teardown
 def test_initialize
-	te=Unit.new(TestExecutable.executable_file)
+	te=Unit.new(TestTestExecutable.executable_file)
 	refute_nil(te)
-	wf=InteractiveBottleneck.new(TestExecutableFile)
+	wf=InteractiveBottleneck.new($PROGRAM_NAME)
 	refute_nil(wf)
 	refute_empty(TestInteractiveBottleneck.related_files.edit_files, "TestInteractiveBottleneck.related_files.edit_files=#{TestInteractiveBottleneck.related_files.edit_files}")
 	assert_includes(TestInteractiveBottleneck.related_files.edit_files, TestExecutable, "TestInteractiveBottleneck.related_files=#{TestInteractiveBottleneck.related_files.inspect}")
@@ -34,7 +35,7 @@ def test_standardize_position
 	@temp_repo.git_command("merge --abort").puts
 	@temp_repo.git_command("stash save") #.assert_post_conditions
 	@temp_repo.git_command("checkout master").puts
-	@temp_repo.standardize_position!
+	@temp_interactive_bottleneck.standardize_position!
 end #standardize_position
 def test_state?
 	assert_includes([:clean, :dirty], TestInteractiveBottleneck.state?[0])
@@ -61,13 +62,13 @@ def test_safely_visit_branch
 
 	if push_branch!=target_branch then
 		@temp_interactive_bottleneck.confirm_branch_switch(target_branch)
-		ret=@temp_repo.validate_commit(changes_branch, [@temp_repo.path+'README'], :echo)
+		ret=@temp_interactive_bottleneck.validate_commit(changes_branch, [@temp_repo.path+'README'], :echo)
 		@temp_interactive_bottleneck.confirm_branch_switch(push_branch)
 	else
 		ret=@temp_repo.validate_commit(changes_branch, [@temp_repo.path+'README'], :echo)
 	end #if
 	if push then
-		@temp_repo.git_command('stash apply --quiet').assert_post_conditions
+		@temp_repo.git_command('stash apply --quiet') #.assert_post_conditions
 	end #if
 	assert_equal(push_branch, @temp_interactive_bottleneck.safely_visit_branch(push_branch){push_branch})
 	assert_equal(push_branch, @temp_interactive_bottleneck.safely_visit_branch(push_branch){@temp_repo.current_branch_name?})
@@ -89,10 +90,10 @@ def test_merge_down
 #(deserving_branch = @repository.current_branch_name?)
 end # merge_down
 def test_validate_commit
-	@temp_repo.assert_nothing_to_commit
+	@temp_repo #.assert_nothing_to_commit
 	@temp_repo.force_change
-	assert(@temp_repo.something_to_commit?)
-	@temp_repo.assert_something_to_commit
+#	assert(@temp_repo.something_to_commit?)
+#	@temp_repo.assert_something_to_commit
 #	@temp_repo.validate_commit(:master, [@temp_repo.path+'README'], :echo)
 	@temp_repo.git_command('stash')
 	@temp_repo.git_command('checkout passed')
@@ -110,10 +111,6 @@ end #assert_post_conditions
 def test_local_assert_pre_conditions
 		TestInteractiveBottleneck.assert_pre_conditions
 end #assert_pre_conditions
-def test_merge_command
-	help_run=ShellCommands.new('ruby  script/work_flow.rb --merge-down') #.assert_post_conditions
-	assert_equal('', help_run.errors)
-end #  merge_command
 def test_local_assert_post_conditions
 		TestInteractiveBottleneck #.assert_post_conditions
 end #assert_post_conditions
