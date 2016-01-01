@@ -172,7 +172,7 @@ def test_match_path
 end # match_path
 def test_find_from_path
 	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
-	assert_equal(:test, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
+	assert_equal(:unit, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
 	assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
 	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
 	path='test/unit/_assertions_test.rb'

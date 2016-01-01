@@ -14,7 +14,7 @@ module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns=[
 	{:suffix =>'.rb', :name => :model, :prefix => 'app/models/', :example_file => __FILE__},
-	{:suffix =>'_test.rb', :name => :test, :prefix => 'test/unit/', :example_file => $0},
+	{:suffix =>'_test.rb', :name => :unit, :prefix => 'test/unit/', :example_file => $0},
 	{:suffix =>'.rb', :name => :script, :prefix => 'script/', :example_file => 'script/work_flow.rb'},
 	{:suffix =>'_test.rb', :name => :integration_test, :prefix => 'test/integration/', :example_file => 'test/integration/repository_test.rb'}, 
 	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
@@ -138,6 +138,14 @@ def find_from_path(path)
 		p[:full_match]
 	end #find
 end #find_from_path
+def find_name_from_path(path)
+	pattern = find_from_path(path)
+	if pattern.nil? then
+		nil
+	else
+		pattern[:name]
+	end # if
+end # find_name_from_path
 def path?(pattern, unit_base_name)
 	raise pattern.inspect if !pattern.instance_of?(Hash)
 	raise pattern.inspect if !pattern[:prefix].instance_of?(String)
@@ -201,6 +209,7 @@ Library = FilePattern.new_from_path(__FILE__)
 Executable = FilePattern.new_from_path($0)
 end #Constants
 include Constants
+require_relative '../../test/assertions.rb'
 module Assertions
 
 module ClassMethods
