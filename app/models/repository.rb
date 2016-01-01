@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -36,8 +36,8 @@ require_relative 'parse.rb'
 class Repository #<Grit::Repo
 module Constants
 Repository_Unit = Unit.new_from_path(__FILE__)
-Root_directory=FilePattern.project_root_dir?(__FILE__)
-Source=File.dirname(Root_directory)+'/'
+Root_directory = FilePattern.project_root_dir?(__FILE__)
+Source = File.dirname(Root_directory)+'/'
 README_start_text='Minimal repository.'
 end #Constants
 include Constants
@@ -46,12 +46,11 @@ include Constants
 def git_command(git_command, repository_dir)
 	ShellCommands.new('git '+ShellCommands.assemble_command_string(git_command), :chdir=>repository_dir)
 end #git_command
-def create_empty(path, interactive = :interactive)
+def create_empty(path)
 	Dir.mkdir(path)
-	@interactive = interactive
 	if File.exists?(path) then
 		ShellCommands.new([['cd', path], '&&', ['git', 'init']])
-		new_repository = Repository.new(path, @interactive)
+		new_repository = Repository.new(path)
 	else
 		raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exists?(path)}"
 	end #if
@@ -61,28 +60,26 @@ def delete_existing(path)
 # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
 	FileUtils.remove_entry_secure(path) #, force = false)
 end #delete_existing
-def replace_or_create(path, interactive)
+def replace_or_create(path)
 	if File.exists?(path) then
 		delete_existing(path)
 	end #if
-	create_empty(path, interactive)
+	create_empty(path)
 end #replace_or_create
-def create_if_missing(path, interactive = :interactive)
+def create_if_missing(path)
 	if File.exists?(path) then
-		Repository.new(path, interactive)
+		Repository.new(path)
 	else
-		create_empty(path, interactive)
+		create_empty(path)
 	end #if
 end #create_if_missing
 def timestamped_repository_name?
 	Repository_Unit.data_sources_directory? + Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")
 end # timestamped_repository_name?
-def create_test_repository(path=timestamped_repository_name?, 
-	interactive)
-	replace_or_create(path, interactive)
-	@interactive = interactive
+def create_test_repository(path=timestamped_repository_name?)
+	replace_or_create(path)
 	if File.exists?(path) then
-		new_repository=Repository.new(path, @interactive)
+		new_repository=Repository.new(path)
 		IO.write(path+'/README', README_start_text+"\n") # two consecutive slashes = one slash
 		new_repository.git_command('add README')
 		new_repository.git_command('commit -m "create_empty initial commit of README"')
@@ -94,20 +91,20 @@ def create_test_repository(path=timestamped_repository_name?,
 end #create_test_repository
 end #ClassMethods
 extend ClassMethods
-attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files, :interactive
-def initialize(path, interactive = :interactive)
+attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files
+def initialize(path)
 	if path.to_s[-1,1]!='/' then
 		path=path.to_s+'/'
 	end #if
 	@url=path
 	@path=path.to_s
 	puts '@path='+@path if $VERBOSE
-	@interactive = interactive
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
 module Constants
-This_code_repository = Repository.new(Root_directory, :interactive)
+This_code_repository = Repository.new(Root_directory)
 end #Constants
+include Constants
 def shell_command(command, working_directory=@path)
 	ShellCommands.new(command, :chdir=>working_directory)
 end #shell_command
@@ -129,6 +126,17 @@ end #corruption
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
+def status
+	changes = git_command('status --porcelain --untracked-files=no').output
+	ret=[]
+	if !changes.empty? then
+		changes.split("\n").map do |line|
+			file=line[3..-1]
+			ret << {:change => line[0..1], :file => file}
+		end #map
+	end #if
+	ret
+end # status
 def something_to_commit?
 	status=@grit_repo.status
 	ret=status.added!={}||status.changed!={}||status.deleted!={}
@@ -152,7 +160,7 @@ def revert_changes
 	git_command('reset --hard')
 end #revert_changes
 def merge_conflict_files?
-	unmerged_files=git_command('status --porcelain --untracked-files=no').output
+	unmerged_files = git_command('status --porcelain --untracked-files=no').output
 	ret=[]
 	if !unmerged_files.empty? then
 		unmerged_files.split("\n").map do |line|
