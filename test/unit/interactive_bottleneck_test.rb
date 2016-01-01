@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -8,6 +8,7 @@
 require_relative '../unit/test_environment'
 require_relative '../../app/models/interactive_bottleneck.rb'
 require_relative '../assertions/repository_assertions.rb'
+require_relative '../assertions/shell_command_assertions.rb'
 class InteractiveBottleneckTest < TestCase
 #include DefaultTests
 #include InteractiveBottleneck
@@ -16,7 +17,7 @@ include InteractiveBottleneck::Examples
 @temp_repo = Repository.create_test_repository(Repository::Examples::Empty_Repo_path)
 def setup
 	@temp_repo = Repository.create_test_repository(Repository::Examples::Empty_Repo_path)
-	@temp_interactive_bottleneck = InteractiveBottleneck.new(TestExecutable.new(executable_file: $0, repository: @temp_repo))
+	@temp_interactive_bottleneck = InteractiveBottleneck.new(test_executable: TestExecutable.new(executable_file: $0, repository: @temp_repo))
 end # setup
 def teardown
 	Repository.delete_existing(@temp_repo.path)
@@ -41,6 +42,23 @@ def test_state?
 	assert_includes([:clean, :dirty], TestInteractiveBottleneck.state?[0])
 	assert_equal(1, TestInteractiveBottleneck.state?.size)
 end # state?
+def test_dirty_test_executables
+	TestInteractiveBottleneck.dirty_test_executables.each do |test_executable|
+		assert_instance_of(TestExecutable, test_executable)
+	end # each
+end # dirty_test_executables
+def test_dirty_test_runs
+	TestInteractiveBottleneck.dirty_test_runs.each do |test_run|
+		assert_instance_of(TestRun, test_run)
+	end # each
+end # dirty_test_runs
+def test_clean_directory
+	sorted = TestInteractiveBottleneck.dirty_test_runs.sort
+	sorted.map do |test_executable|
+		test(test_executable)
+		stage_test_executable
+	end # map
+end # clean_directory
 def test_merge_conflict_recovery
 end # merge_conflict_recovery
 def test_confirm_branch_switch
@@ -109,7 +127,7 @@ def test_local_assert_post_conditions
 		TestInteractiveBottleneck #.assert_post_conditions
 end #assert_post_conditions
 def test_local_assert_pre_conditions
-		TestInteractiveBottleneck.assert_pre_conditions
+		TestInteractiveBottleneck #.assert_pre_conditions
 end #assert_pre_conditions
 def test_local_assert_post_conditions
 		TestInteractiveBottleneck #.assert_post_conditions

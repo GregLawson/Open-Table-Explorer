@@ -15,26 +15,28 @@ end # Constants
 include Constants
 module ClassMethods
 include Constants
+def index(repository)
+	ret = UnitMaturity::Branch_enhancement.index(repository.current_branch_name?)
+	if ret.nil? then
+		UnitMaturity::First_slot_index
+	else
+		ret
+	end # if
+end # index
 end # ClassMethods
 extend ClassMethods
 # Define related (unit) versions
 # Use as current, lower/upper bound, branch history
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
-attr_reader :related_files, :edit_files, :repository, :unit_maturity, :editor
-def initialize(test_executable, editor = Editor.new(test_executable))
-	@test_executable = test_executable
-	@editor = editor
-	@unit_maturity = UnitMaturity.new(@test_executable.repository, related_files)
-	@related_files = related_files
-	@repository = @test_executable.repository
-	index = UnitMaturity::Branch_enhancement.index(@repository.current_branch_name?)
-	if index.nil? then
-		@branch_index = UnitMaturity::First_slot_index
-	else
-		@branch_index = index
-	end # if
-end # initialize
+include Virtus.value_object
+  values do
+	attribute :test_executable, TestExecutable
+	attribute :editor, Editor, :default => lambda { |interactive_bottleneck, attribute| Editor.new(interactive_bottleneck.test_executable) }
+	attribute :repository, Repository, :default => lambda { |interactive_bottleneck, attribute| interactive_bottleneck.test_executable.repository }
+	attribute :unit_maturity, UnitMaturity, :default => lambda { |interactive_bottleneck, attribute| UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
+	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
+	end # values
 def standardize_position!
 	 abort_rebase_and_merge!
 	@repository.git_command("checkout master")
@@ -63,6 +65,22 @@ def state?
 	end # if
 	return state
 end # state?
+def dirty_test_executables
+	@repository.status.map do |file_status|
+		TestExecutable.new_from_path(file_status[:file])
+	end.uniq # map
+end # dirty_test_executables
+def dirty_test_runs
+	dirty_test_executables.map do |test_executable|
+		TestRun.new(test_executable: test_executable).error_score?
+	end.sort
+end # dirty_test_runs
+def clean_directory
+	dirty_test_executables.sort.map do |test_executable|
+		test(test_executable)
+		stage_test_executable
+	end # map
+end # clean_directory
 def merge_conflict_recovery(from_branch)
 # see man git status
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
@@ -279,8 +297,8 @@ def assert_post_conditions
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions
-	refute_nil(@related_files)
-	refute_empty(@related_files.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @related_files.edit_files=#{@related_files.edit_files.inspect}")
+	refute_nil(@test_executable.unit)
+	refute_empty(@test_executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_executable.unit.edit_files=#{@test_executable.unit.edit_files.inspect}")
 	assert_kind_of(Grit::Repo, @repository.grit_repo)
 	assert_respond_to(@repository.grit_repo, :status)
 	assert_respond_to(@repository.grit_repo.status, :changed)
@@ -296,7 +314,7 @@ extend Assertions::ClassMethods
 include Constants
 module Examples
 TestTestExecutable = TestExecutable.new(executable_file: File.expand_path($PROGRAM_NAME))
-TestInteractiveBottleneck = InteractiveBottleneck.new(TestTestExecutable, Editor::Examples::TestEditor)
+TestInteractiveBottleneck = InteractiveBottleneck.new(test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
 include Constants
 end # Examples
 include Examples
