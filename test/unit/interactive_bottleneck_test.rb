@@ -17,7 +17,7 @@ include InteractiveBottleneck::Examples
 @temp_repo = Repository.create_test_repository(Repository::Examples::Empty_Repo_path)
 def setup
 	@temp_repo = Repository.create_test_repository(Repository::Examples::Empty_Repo_path)
-	@temp_interactive_bottleneck = InteractiveBottleneck.new(test_executable: TestExecutable.new(executable_file: $0, repository: @temp_repo))
+	@temp_interactive_bottleneck = InteractiveBottleneck.new(test_executable: TestExecutable.new(executable_file: $0, repository: @temp_repo, interactive: :echo))
 end # setup
 def teardown
 	Repository.delete_existing(@temp_repo.path)
