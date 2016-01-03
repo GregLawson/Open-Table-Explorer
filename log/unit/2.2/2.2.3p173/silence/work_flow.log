@@ -1,0 +1,7 @@
+passed
+2016-01-03 13:33:10.516
+ruby -v -W0 test/unit/work_flow_test.rb
+ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
+
+test/unit/work_flow_test.rb:12:in `<class:WorkFlowTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
+	from test/unit/work_flow_test.rb:11:in `<main>'

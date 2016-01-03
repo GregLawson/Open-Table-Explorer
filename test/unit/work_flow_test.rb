@@ -9,7 +9,7 @@ require_relative '../unit/test_environment'
 require_relative '../../app/models/work_flow.rb'
 
 class WorkFlowTest < TestCase
-include DefaultTests
+#include DefaultTests
 #include WorkFlow
 #extend WorkFlow::ClassMethods
 include WorkFlow::Examples
