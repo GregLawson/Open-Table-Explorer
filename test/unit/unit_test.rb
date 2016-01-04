@@ -8,26 +8,49 @@
 require_relative 'test_environment' # avoid recursive requires
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/unit_assertions.rb'
-TE=Unit.new
-DefaultTests=eval(TE.default_tests_module_name?)
-#TestCase=eval(TE.test_case_class_name?)
-class UnitTest <  TestCase
-include DefaultTests2 
-#include DefaultTests0    #less error messages
-#include Unit::Assertions
-#extend Unit::Assertions::ClassMethods
-def test_class_assert_pre_conditions
-#	Unit.assert_pre_conditions
-end #class_assert_pre_conditions
-def test_class_assert_post_conditions
-#	Unit.assert_post_conditions
-end #class_assert_post_conditions
-end #Unit
+DefaultTests=eval(Unit::Executable.default_tests_module_name?)
+#TestCase=eval(Unit::Executable.test_case_class_name?)
 class UnitTest < TestCase
-include DefaultTests
+#include DefaultTests
 include Unit::Examples
+def test_initialize
+	assert_respond_to(Unit::Executable, :model_basename)
+	assert_equal(:unit, Unit::Executable.model_basename)	
+	assert_equal(:unit_with_assertions, Unit.new(:UnitWithAssertions).model_basename)
+	model_class_name=FilePattern.path2model_name?
+	assert_equal(:Unit, model_class_name)
+	project_root_dir=FilePattern.project_root_dir?
+	assert_equal(:Unit, Executable.model_class_name)
+	assert_equal(:unit, Executable.model_basename)
+	refute_empty(Executable.project_root_dir)
+	Executable #.assert_pre_conditions
+	te=Unit.new(Executable.model_name?)
+	assert_equal(:Unit, te.model_class_name)
+	assert_equal(:Unit, Executable.model_class_name)
+end # values
+def test_edit_files
+	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb"], Executable.edit_files)
+end # edit_files
+def test_not_files
+	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit"], Executable.not_files)
+end # not_files
+def test_directories
+	assert_equal([], Executable.directories)
+end # directories
+def test_missing_files
+	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log"], Executable.missing_files)
+end # missing_files
 def test_new_from_path
-end #new_from_path
+	path = $0
+	library_name = FilePattern.unit_base_name?(path)
+	assert_equal(:unit, library_name)	
+	unit = Unit.new(library_name, FilePattern.project_root_dir?(path))
+	assert_equal(:unit, unit.model_basename)	
+	assert_equal(unit.model_basename, Unit.new_from_path(path).model_basename)
+	assert_equal(unit.project_root_dir, Unit.new_from_path(path).project_root_dir)
+	assert_equal(unit.patterns, Unit.new_from_path(path).patterns)
+end # new_from_path
+
 def test_unit_names?
 	assert_equal(['unit'], Unit.unit_names?([$0]))	
 end #unit_names?
@@ -39,56 +62,40 @@ def test_all
 end # all
 def test_all_basenames
 end # all_basenames
-def test_Unit_data_source_directory?
+def test_data_source_directories?
 	assert_equal('test/data_sources/', Unit.data_source_directories?)
 end #data_source_directory?
 def test_initialize
-	assert_respond_to(UnboundedFixnumUnit, :model_basename)
-	assert_equal(:unbounded_fixnum, UnboundedFixnumUnit.model_basename)	
-	assert_equal(:unbounded_fixnum, Unit.new(:UnboundedFixnum).model_basename)
+	assert_respond_to(Unit::Executable, :model_basename)
+	assert_equal(:unit, Unit::Executable.model_basename)	
+	assert_equal(:unit_with_assertions, Unit.new(:UnitWithAssertions).model_basename)
 	model_class_name=FilePattern.path2model_name?
 	assert_equal(:Unit, model_class_name)
 	project_root_dir=FilePattern.project_root_dir?
-	assert_equal(:Unit, SELF.model_class_name)
-	assert_equal(:unit, SELF.model_basename)
-	refute_empty(SELF.project_root_dir)
-	SELF.assert_pre_conditions
-	te=Unit.new(SELF.model_name?)
+	assert_equal(:Unit, Executable.model_class_name)
+	assert_equal(:unit, Executable.model_basename)
+	refute_empty(Executable.project_root_dir)
+	Executable #.assert_pre_conditions
+	te=Unit.new(Executable.model_name?)
 	assert_equal(:Unit, te.model_class_name)
-	assert_equal(:Unit, SELF.model_class_name)
+	assert_equal(:Unit, Executable.model_class_name)
 end #initialize
 def test_equals
 	assert(Unit.new==Unit.new)
 end #==
 def test_data_source_directory?
-	assert_equal('test/data_source/unit', Unit::Executable.data_source_directory?)
+	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/', Unit::Executable.project_root_dir)
+	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/', Unit::Executable.project_root_dir + Unit.data_source_directories?)
+	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.project_root_dir + Unit.data_source_directories? + Unit::Executable.model_basename.to_s + '/')
+	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.data_source_directory?)
 end # data_source_directory?
 def test_pathname_pattern?
 end # pathname_pattern
-def test_model_pathname
-	assert(File.exists?(UnboundedFixnumUnit.model_pathname?), UnboundedFixnumUnit.model_pathname?)
-	assert_data_file(UnboundedFixnumUnit.model_pathname?)
-end #model_pathname?
-def test_model_test_pathname
-	assert(File.exists?(UnboundedFixnumUnit.model_test_pathname?))
-	assert_data_file(UnboundedFixnumUnit.model_test_pathname?)
-end #model_test_pathname?
-def test_assertions_pathname
-#	assert(File.exists?(UnboundedFixnumUnit.assertions_pathname?))
-	assert_data_file(UnboundedFixnumUnit.assertions_pathname?)
-end #assertions_pathname?
-def test_assertions_test_pathname
-	refute_nil("UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumUnit.inspect)
-	refute_nil(UnboundedFixnumUnit.assertions_test_pathname?)
-	refute_equal('', "../../test/unit/"+"UnboundedFixnum"+"_assertions_test.rb", UnboundedFixnumUnit.inspect)
-	assert(File.exists?(UnboundedFixnumUnit.assertions_test_pathname?), UnboundedFixnumUnit.inspect)
-	assert_data_file(UnboundedFixnumUnit.assertions_test_pathname?)
-end #assertions_test_pathname?
 def test_data_sources_directory
-	message='TE.data_sources_directory?='+TE.data_sources_directory?+"\n"
-	message+='Dir[TE.data_sources_directory?]='+Dir[TE.data_sources_directory?].inspect+"\n"
-	refute_empty(TE.data_sources_directory?, message)
-	assert_empty(Dir[TE.data_sources_directory?], message)
+	message='Unit::Executable.data_sources_directory?='+Unit::Executable.data_sources_directory?+"\n"
+	message+='Dir[Unit::Executable.data_sources_directory?]='+Dir[Unit::Executable.data_sources_directory?].inspect+"\n"
+	refute_empty(Unit::Executable.data_sources_directory?, message)
+	refute_empty(Dir[Unit::Executable.data_sources_directory?], message)
 	related_file=Unit.new_from_path('test/unit/tax_form_test.rb')
 	message='related_file='+related_file.inspect+"\n"
 	message+='related_file.data_sources_directory?='+related_file.data_sources_directory?+"\n"
@@ -96,17 +103,42 @@ def test_data_sources_directory
 	refute_empty(Dir[related_file.data_sources_directory?], message)
 end #data_sources_directory
 def test_pathnames
-	assert_instance_of(Array, UnboundedFixnumUnit.pathnames?)
-	assert_operator(5, :<=, UnboundedFixnumUnit.pathnames?.size)
-	assert_array_of(UnboundedFixnumUnit.pathnames?, String)
+	assert_instance_of(Array, UnitWithAssertionsTest.pathnames?)
+	assert_operator(5, :<=, UnitWithAssertionsTest.pathnames?.size)
+#	assert_array_of(UnitWithAssertionsTest.pathnames?, String)
 	pathnames=FilePattern::Patterns.map do |p|
-		UnboundedFixnumUnit.		pathname_pattern?(p[:name])
+		UnitWithAssertionsTest.		pathname_pattern?(p[:name])
 	end #map
-	assert_equal(UnboundedFixnumUnit.pathnames?, pathnames)
-	SELF.assert_pre_conditions
-	SELF.assert_post_conditions
-	assert_includes(SELF.pathnames?, File.expand_path($0), SELF)
+	assert_equal(UnitWithAssertionsTest.pathnames?, pathnames)
+	Executable #.assert_pre_conditions
+	Executable #.assert_post_conditions
+	assert_includes(Executable.pathnames?, File.expand_path($0), Executable)
 end #pathnames
+end # Unit
+
+class RubyUnitTest < TestCase
+include Unit::Examples
+def test_model_pathname
+	message = 'Executable = ' + Executable.inspect
+	message += "\n" + 'Executable.model_pathname? = ' + Executable.model_pathname?
+	assert(File.exists?(Executable.model_pathname?), message)
+	assert_data_file(Executable.model_pathname?, message)
+end #model_pathname?
+def test_model_test_pathname
+	assert(File.exists?(Executable.model_test_pathname?))
+	assert_data_file(Executable.model_test_pathname?)
+end #model_test_pathname?
+def test_assertions_pathname
+#	assert(File.exists?(Executable.assertions_pathname?))
+	assert_data_file(Executable.assertions_pathname?)
+end #assertions_pathname?
+def test_assertions_test_pathname
+	refute_nil("UnitWithAssertions"+"_assertions_test.rb", UnitWithAssertionsTest.inspect)
+	refute_nil(UnitWithAssertionsTest.assertions_test_pathname?)
+	refute_equal('', "../../test/unit/"+"UnitWithAssertions"+"_assertions_test.rb", UnitWithAssertionsTest.inspect)
+	assert(File.exists?(UnitWithAssertionsTest.assertions_test_pathname?), UnitWithAssertionsTest.inspect)
+	assert_data_file(UnitWithAssertionsTest.assertions_test_pathname?)
+end #assertions_test_pathname?
 def test_default_test_class_id
 	assert_path_to_constant(:DefaultTestCase0)
 	assert_path_to_constant(:DefaultTestCase1)
@@ -118,9 +150,8 @@ def test_default_test_class_id
 	assert_path_to_constant(:DefaultTests2)
 	assert_path_to_constant(:DefaultTests3)
 	assert_path_to_constant(:DefaultTests4)
-	assert_equal(4, UnboundedFixnumUnit.default_test_class_id?, UnboundedFixnumUnit.inspect)
-	te=Unit.new(model_name?)
-	default_test_class_id=te.default_test_class_id?
+	assert_equal(4, UnitWithAssertionsTest.default_test_class_id?, UnitWithAssertionsTest.inspect)
+	default_test_class_id = Executable.default_test_class_id?
 	test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
 	tests=eval("DefaultTests"+default_test_class_id.to_s)
 #till split	assert_equal(2, default_test_class_id, te.inspect)
@@ -132,21 +163,41 @@ end #default_tests_module?
 def test_test_case_class_name
 end #test_case_class?
 def test_functional_parallelism
-	edit_files=SELF.edit_files
-	assert_operator(SELF.functional_parallelism(edit_files).size, :>=, 1)
-	assert_operator(SELF.functional_parallelism.size, :<=, 4)
+	pairs =[
+	[Executable.model_pathname?, Executable.model_test_pathname?],
+	[Executable.assertions_pathname?, Executable.model_test_pathname?],
+	[Executable.model_test_pathname?, Executable.pathname_pattern?(:integration_test)],
+	[Executable.assertions_pathname?, Executable.assertions_test_pathname?]
+	]
+	pairs.select do |fp|
+		refute_nil(fp, pairs.inspect)
+		fp - Executable.edit_files==[] # files must exist to be edited?
+	end #map
+	edit_files = Executable.edit_files
+	assert_operator(Executable.functional_parallelism(edit_files).size, :>=, 1)
+	assert_operator(Executable.functional_parallelism(edit_files).size, :<=, 4)
 end #functional_parallelism
 def test_tested_files
-	executable=SELF.model_test_pathname?
-	tested_files=SELF.tested_files(executable)
-	assert_operator(SELF.default_test_class_id?, :<=, tested_files.size)
+	executable=Executable.model_test_pathname?
+	tested_files=Executable.tested_files(executable)
+	assert_operator(Executable.default_test_class_id?, :<=, tested_files.size)
 end #tested_files
+def test_test_class_name
+end # test_class
+def test_test_class
+end # test_class
+def test_create_test_class
+end # create_test_class
+end # Unit
+
+class RailsishRubyUnitTest < TestCase
+include Unit::Examples
 def test_model_class
-	assert_equal(Unit, SELF.model_class?)
+	assert_equal(Unit, Executable.model_class?)
 end #model_class
 def test_model_name
-	assert_equal(:Unit, SELF.model_class_name)
-	assert_equal(:Unit, SELF.model_name?)
+	assert_equal(:Unit, Executable.model_class_name)
+	assert_equal(:Unit, Executable.model_name?)
 end #model_name?
 def test_test_class_name
 end # test_class
@@ -155,10 +206,10 @@ end # test_class
 def test_create_test_class
 end # create_test_class
 def test_Unit_assert_pre_conditions
-	Unit.assert_pre_conditions
+	Unit #.assert_pre_conditions
 end #class_assert_pre_conditions
 def test_Unit_assert_post_conditions
-	Unit.assert_post_conditions
+	Unit #.assert_post_conditions
 end #class_assert_post_conditions
 def test_assert_pre_conditions
 end #class_assert_pre_conditions
@@ -170,24 +221,16 @@ def test_assert_default_test_class_id
 #	Unit.assert_constant_path_respond_to(:TestIntrospection, :Unit, :KernelMethods, :assert_default_test_class_id)
 #	assert_respond_to(UnitTest, :assert_default_test_class_id)
 #	explain_assert_respond_to(self, :assert_default_test_class_id)
-	Unit.new(:UnboundedFixnum).assert_default_test_class_id(4,'')
+	Unit.new(:UnitWithAssertions) #.assert_default_test_class_id(4,'')
 #til split	Unit.new(:Unit).assert_default_test_class_id(2,'')
-	Unit.new(:DefaultTestCase).assert_default_test_class_id(2,'')
-	Unit.new(:EmptyDefaultTest).assert_default_test_class_id(0,'')
-	Unit.new(:GenericType).assert_default_test_class_id(3,'')
+	Unit.new(:DefaultTestCase) #.assert_default_test_class_id(2,'')
+	Unit.new(:EmptyDefaultTest) #.assert_default_test_class_id(0,'')
+	Unit.new(:GenericType) #.assert_default_test_class_id(3,'')
 end #default_test_class_id
 def test_Examples
-	UnboundedFixnumUnit.assert_pre_conditions
-	UnboundedFixnumUnit.assert_post_conditions
+	UnitWithAssertionsTest #.assert_pre_conditions
+	UnitWithAssertionsTest #.assert_post_conditions
 end #Examples
-def test_find_all_in_class
-end # find_all_in_class
-def test_find_by_class
-end # find_by_class
-def test_fully_qualified_name
-end # fully_qualified_name
-def test_value
-end # value
 end # UnitTest
 
 class RailsUnitTest < TestCase
@@ -201,18 +244,6 @@ def test_RailsUnit_initialize
 	assert_equal(:code_base, Odd_plural_executable.unit?.model_basename, Odd_plural_executable.inspect)
 	assert_equal(:unit, Odd_plural_executable.test_type)
 end # RailsUnit
-def test_new_from_path
-	executable_file = $0
-	unit = Unit.new_from_path(executable_file)
-	repository = Repository::This_code_repository
-	new_executable = TestExecutable.new(executable_file: executable_file, 
-								unit: unit, repository: repository)
-	new_from_path_executable = TestExecutable.new_from_path($0)
-	assert_instance_of(TestExecutable, new_executable)
-	assert_equal(:unit, Unit_executable.test_type)
-	assert_equal(:unit, new_executable.test_type)
-	assert_equal(:unit, new_from_path_executable.test_type)
-end # new_from_path
 def test_test_file?
 	assert_equal('test/unit/code_base_test.rb',Odd_plural_executable.test_file?)
 end #test_file?
@@ -223,3 +254,13 @@ def test_Examples
 	assert_equal(:unit, Odd_plural_executable.test_type)
 end # Examples
 end # RailsUnit
+class ExampleTest < TestCase
+def test_find_all_in_class
+end # find_all_in_class
+def test_find_by_class
+end # find_by_class
+def test_fully_qualified_name
+end # fully_qualified_name
+def test_value
+end # value
+end # Example
