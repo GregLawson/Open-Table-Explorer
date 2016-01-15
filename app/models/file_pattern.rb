@@ -132,11 +132,9 @@ def find_all_from_path(path)
 		p[:full_match]
 	end # select
 	ret
-end #find_from_path
+end #find_all_from_path
 def find_from_path(path)
-	match_all?(path).find do |p|
-		p[:full_match]
-	end #find
+	find_all_from_path(path).last
 end #find_from_path
 def find_name_from_path(path)
 	pattern = find_from_path(path)
@@ -273,6 +271,7 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 module Examples
+Path4 = 'test/unit/minimal4_assertions_test.rb'
 DCT_filename='script/dct.rb'
 #DCT=FilePattern.new_from_path(FilePattern.path2model_name?(DCT_filename), FilePattern.project_root_dir?(DCT_filename))
 SELF_Model=__FILE__
