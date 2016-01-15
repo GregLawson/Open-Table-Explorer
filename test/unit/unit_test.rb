@@ -13,7 +13,7 @@ DefaultTests=eval(Unit::Executable.default_tests_module_name?)
 class UnitTest < TestCase
 #include DefaultTests
 include Unit::Examples
-def test_initialize
+def test_UnitTest
 	assert_respond_to(Unit::Executable, :model_basename)
 	assert_equal(:unit, Unit::Executable.model_basename)	
 	assert_equal(:unit_with_assertions, Unit.new(:UnitWithAssertions).model_basename)
@@ -49,6 +49,8 @@ def test_new_from_path
 	assert_equal(unit.model_basename, Unit.new_from_path(path).model_basename)
 	assert_equal(unit.project_root_dir, Unit.new_from_path(path).project_root_dir)
 	assert_equal(unit.patterns, Unit.new_from_path(path).patterns)
+	assert_equal(:minimal4, FilePattern.unit_base_name?('test/unit/minimal4_assertions_test.rb'))
+	assert_equal(:minimal4, UnitWithAssertionsTest.model_basename)
 end # new_from_path
 
 def test_unit_names?
@@ -65,21 +67,6 @@ end # all_basenames
 def test_data_source_directories?
 	assert_equal('test/data_sources/', Unit.data_source_directories?)
 end #data_source_directory?
-def test_initialize
-	assert_respond_to(Unit::Executable, :model_basename)
-	assert_equal(:unit, Unit::Executable.model_basename)	
-	assert_equal(:unit_with_assertions, Unit.new(:UnitWithAssertions).model_basename)
-	model_class_name=FilePattern.path2model_name?
-	assert_equal(:Unit, model_class_name)
-	project_root_dir=FilePattern.project_root_dir?
-	assert_equal(:Unit, Executable.model_class_name)
-	assert_equal(:unit, Executable.model_basename)
-	refute_empty(Executable.project_root_dir)
-	Executable #.assert_pre_conditions
-	te=Unit.new(Executable.model_name?)
-	assert_equal(:Unit, te.model_class_name)
-	assert_equal(:Unit, Executable.model_class_name)
-end #initialize
 def test_equals
 	assert(Unit.new==Unit.new)
 end #==
@@ -150,10 +137,10 @@ def test_default_test_class_id
 	assert_path_to_constant(:DefaultTests2)
 	assert_path_to_constant(:DefaultTests3)
 	assert_path_to_constant(:DefaultTests4)
-	assert_equal(4, UnitWithAssertionsTest.default_test_class_id?, UnitWithAssertionsTest.inspect)
+	assert_equal(4, UnitWithAssertionsTest.default_test_class_id?, UnitWithAssertionsTest.edit_files.inspect)
 	default_test_class_id = Executable.default_test_class_id?
 	test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
-	tests=eval("DefaultTests"+default_test_class_id.to_s)
+	tests = eval("DefaultTests"+default_test_class_id.to_s)
 #till split	assert_equal(2, default_test_class_id, te.inspect)
 #till split	assert_equal(2, Unit.new(te.model_name?).default_test_class_id?, te.inspect)
 #	assert_equal(1, Unit.new('DefaultTestCase').default_test_class_id?)

@@ -65,7 +65,7 @@ end #default_test_class_id
 
 module Examples
 include Constants
-UnitWithAssertionsTest = Unit.new(:UnboundedFixnum)
+UnitWithAssertionsTest = RailsishRubyUnit.new_from_path('test/unit/minimal4_assertions_test.rb')
 end #Examples
 include Examples
 module Assertions
