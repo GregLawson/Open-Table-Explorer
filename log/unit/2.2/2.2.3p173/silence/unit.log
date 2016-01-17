@@ -1,5 +1,5 @@
 passed
-2016-01-15 12:33:02.473
+2016-01-19 15:54:52.311
 ruby -v -W0 test/unit/unit_test.rb
 ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ............................................................
 
-Finished in 0.399687s, 150.1175 runs/s, 282.7214 assertions/s.
+Finished in 0.656765s, 91.3568 runs/s, 169.0101 assertions/s.
 
-60 runs, 113 assertions, 0 failures, 0 errors, 0 skips
+60 runs, 111 assertions, 0 failures, 0 errors, 0 skips
 

@@ -7,13 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
 require 'virtus'
-class Unit
-  include Virtus.value_object
-  values do
-	attribute :model_basename, Symbol, :default => :unit
-	attribute :project_root_dir, String, :default => FilePattern.project_root_dir?
-	attribute :patterns, Array, :default => 	FilePattern::Patterns
-end # values
+module FileUnit
 def edit_files
 	pathnames?.select do |p|
 		File.file?(p)
@@ -35,10 +29,6 @@ def missing_files
 	end # select
 end # missing_files
 module ClassMethods
-def new_from_path(path)
-	library_name = FilePattern.path2model_name?(path)
-	self.new(library_name, FilePattern.project_root_dir?(path))
-end # new_from_path
 def unit_names?(files)
 	files.map do |f|
 		FilePattern.unit_base_name?(f).to_s
@@ -63,32 +53,6 @@ end #data_source_directory?
 end #ClassMethods
 extend ClassMethods
 
-attr_reader :model_basename,  :model_class_name, :project_root_dir
-def initialize(model_class_name = FilePattern.path2model_name?, 
-	project_root_dir = FilePattern.project_root_dir?)
-	message="model_class is nil\n$0=#{$0}\n model_class_name=#{model_class_name}\nFile.expand_path=File.expand_path(#{File.expand_path($0)}"
-	if model_class_name.nil? then
-		warn message if model_class_name.nil?
-		@model_class_name=nil
-	else
-		@model_class_name=model_class_name.to_sym
-	end #if
-	if project_root_dir.nil? then
-		@project_root_dir='' #empty string not nil
-	else
-		@project_root_dir= project_root_dir  #not nil
-	end #
-	@model_basename=@model_class_name.to_s.underscore.to_sym
-	raise "@model_basename" if @model_basename.nil?
-end #initialize
-# Equality of defining content
-def ==(other)
-	if model_class_name==other.model_class_name && project_root_dir==other.project_root_dir then
-		true
-	else
-		false
-	end #if
-end #==
 def data_source_directory?
 	ret = @project_root_dir + Unit.data_source_directories? + @model_basename.to_s + '/'
 
@@ -113,7 +77,7 @@ def data_sources_directory?
 end #data_sources_directory
 #  Initially the number of files for the model
 def pathnames?
-#	[assertions_test_pathname?, assertions_pathname?, model_test_pathname?, model_pathname?]
+#	[assertions_test_pathname?, assertions_pathname?, pathname_pattern?(:unit), pathname_pattern?(:model)]
 	raise "project_root_dir" if @project_root_dir.nil?
 	raise "@model_basename" if @model_basename.nil?
 	FilePattern::Patterns.map do |pattern|
@@ -125,10 +89,6 @@ def patterned_files
 		Dir[globs]
 	end.flatten # map
 end # patterned_files
-module Constants
-Executable = Unit.new_from_path($PROGRAM_NAME)
-end #Constants
-include Constants
 def assertions_pathname?
 	pathname_pattern?(:assertions)
 end #assertions_pathname?
@@ -140,25 +100,19 @@ def default_test_class_id?
 		4
 	elsif File.exists?(self.assertions_pathname?) then
 		3
-	elsif File.exists?(self.model_pathname?) then
+	elsif File.exists?(self.pathname_pattern?(:model)) then
 		2
-	elsif File.exists?(self.model_test_pathname?) then
+	elsif File.exists?(self.pathname_pattern?(:unit)) then
 		1
 	else
 		0 # fewest assumptions, no files
 	end #if
 end #default_test_class_id
-def default_tests_module_name?
-	"DefaultTests"+default_test_class_id?.to_s
-end #default_tests_module?
-def test_case_class_name?
-	"DefaultTestCase"+default_test_class_id?.to_s
-end #test_case_class?
 def functional_parallelism(edit_files)
 	[
-	[model_pathname?, model_test_pathname?],
-	[assertions_pathname?, model_test_pathname?],
-	[model_test_pathname?, pathname_pattern?(:integration_test)],
+	[pathname_pattern?(:model), pathname_pattern?(:unit)],
+	[assertions_pathname?, pathname_pattern?(:unit)],
+	[pathname_pattern?(:unit), pathname_pattern?(:integration_test)],
 	[assertions_pathname?, assertions_test_pathname?]
 	].select do |fp|
 		fp - edit_files==[] # files must exist to be edited?
@@ -166,16 +120,66 @@ def functional_parallelism(edit_files)
 end #functional_parallelism
 def tested_files(executable)
 	if executable==pathname_pattern?(:script) then # script only
-		[model_pathname?, executable]
+		[pathname_pattern?(:model), executable]
 	else case default_test_class_id? # test files
-	when 0 then [model_test_pathname?]
-	when 1 then [model_test_pathname?]
-	when 2 then [model_pathname?, executable]
-	when 3 then [model_pathname?, model_test_pathname?, assertions_pathname?]
-	when 4 then [model_pathname?, model_test_pathname?, assertions_pathname?, assertions_test_pathname?]
+	when 0 then [pathname_pattern?(:unit)]
+	when 1 then [pathname_pattern?(:unit)]
+	when 2 then [pathname_pattern?(:model), executable]
+	when 3 then [pathname_pattern?(:model), pathname_pattern?(:unit), assertions_pathname?]
+	when 4 then [pathname_pattern?(:model), pathname_pattern?(:unit), assertions_pathname?, assertions_test_pathname?]
 	end #case
 	end - missing_files #if
 end #tested_files
+end # FileUnit
+
+module RubyClassUnit # class not in expected file
+end # RubyClassUnit
+
+class Unit # base class
+# Fully reconfigurable via FilePattern
+# FileUnit or RubyClassUnit?
+  include Virtus.value_object
+  values do
+	attribute :model_basename, Symbol, :default => :unit
+	attribute :project_root_dir, String, :default => FilePattern.project_root_dir?
+	attribute :patterns, Array, :default => 	FilePattern::Patterns
+	attribute :model_class_name, Symbol, :default => lambda { |unit, attribute| unit.model_basename.to_s.classify }
+end # values
+include FileUnit
+extend FileUnit::ClassMethods
+def Unit.new_from_path(path)
+	library_name = FilePattern.unit_base_name?(path)
+	Unit.new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
+end # new_from_path
+# Equality of defining content
+#def ==(other)
+#	if model_class_name==other.model_class_name && project_root_dir==other.project_root_dir then
+#		true
+#	else
+#		false
+#	end #if
+#end #==
+module Constants
+Executable = Unit.new_from_path($PROGRAM_NAME)
+end #Constants
+include Constants
+end # Unit
+
+class RubyUnit < Unit
+  include Virtus.value_object
+  values do
+end # values
+extend FileUnit::ClassMethods
+def RubyUnit.new_from_path(path)
+	library_name = FilePattern.unit_base_name?(path)
+	RubyUnit.new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
+end # new_from_path
+def default_tests_module_name?
+	"DefaultTests"+default_test_class_id?.to_s
+end #default_tests_module?
+def test_case_class_name?
+	"DefaultTestCase"+default_test_class_id?.to_s
+end #test_case_class?
 def test_class_name
 	@model_class_name.to_s + 'Test'
 end # test_class
@@ -190,12 +194,22 @@ def create_test_class
 	Object.const_set(test_class_name, anonomous_test_class)
 end # create_test_class
 module Constants
-Executable = Unit.new_from_path($PROGRAM_NAME)
+Executable = RubyUnit.new_from_path($PROGRAM_NAME)
 end #Constants
 include Constants
-def model_basename
-	@model_class_name.to_s.underscore.to_sym
-end # model_basename
+end # RubyUnit
+
+class RailsishRubyUnit < RubyUnit
+# Follow Rails naming colnventions, but not require all of Rails
+extend FileUnit::ClassMethods
+def RailsishRubyUnit.new_from_path(path)
+	library_name = FilePattern.unit_base_name?(path)
+	RailsishRubyUnit.new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
+end # new_from_path
+module Constants
+Executable = RailsishRubyUnit.new_from_path($PROGRAM_NAME)
+end #Constants
+include Constants
 def model_class?
 	eval(@model_class_name.to_s)
 end #model_class
@@ -208,9 +222,8 @@ end #model_pathname?
 def model_test_pathname?
 	pathname_pattern?(:unit)
 end #model_test_pathname?
-end # Unit
+end # RailsishRubyUnit
 
-RailsishRubyUnit = Unit
 class RailsUnit  # naming conventions typical of Ruby Rails S.B. deprecated
 include Virtus.model
 	attribute :test_type, Symbol, :default => :unit
