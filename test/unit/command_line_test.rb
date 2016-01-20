@@ -38,10 +38,10 @@ def test_required_arguments
 	assert_equal(0, method.required_arguments, Test_unit_commandline.to_s)
 end # required_arguments
 include CommandLine::Examples
-Test_unit = Unit.new(:TestRun)
+Test_unit = RailsishRubyUnit.new(model_basename: :test_run)
 require Test_unit.model_pathname?
 Test_unit_commandline = CommandLine.new(Test_unit.model_test_pathname?, Test_unit.model_class?, ['error_score?', $0])
-Not_virtus_unit = Unit.new(:CommandLine)
+Not_virtus_unit = RailsishRubyUnit.new(model_basename: :command_line)
 Not_virtus_unit_commandline = CommandLine.new(Not_virtus_unit.model_test_pathname?, Not_virtus_unit.model_class?, ['help', $0])
 def test_ruby_assertions
 	assert(self.class.included_modules.include?(AssertionsModule))

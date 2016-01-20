@@ -261,7 +261,7 @@ end # ClassMethods
 extend ClassMethods
 module Constants # constant objects of the type
 Command = Unit::Executable.model_basename
-Script_class = Unit::Executable.model_class?
+Script_class = RailsishRubyUnit::Executable.model_class?
 Script_command_line = CommandLine.new($0, Script_class, ARGV)
 # = Script_class.new(TestExecutable.new_from_path($0))
 

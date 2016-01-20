@@ -7,7 +7,7 @@
 #
 ###########################################################################
 require_relative '../app/models/unit.rb' # before command_line
-require_relative "../app/models/#{Unit::Executable.model_basename}"
+require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
 require_relative '../app/models/command_line.rb'
 class CommandLine  < Command
 def help_banner_string
@@ -58,13 +58,13 @@ end
 end # command_line_opts
 end # CommandLine
 
-run = CommandLine::Script_command_line.run do
+CommandLine::Script_command_line.run do
 	if CommandLine::Script_command_line.command_line_opts[:help] then
 			puts 'command_line_opts[:help]'
 			true # done
 	else
 		sub_command = CommandLine::Script_command_line.sub_command
-			unit = Unit.new(sub_command.to_s.camelize.to_sym)
+			unit = RailsishRubyUnit.new(model_basename: sub_command.to_sym)
 			required_library_file = unit.model_pathname?
 			if File.exist?(required_library_file) then
 				require required_library_file
@@ -76,6 +76,8 @@ run = CommandLine::Script_command_line.run do
 			puts 'sub_command = ' + sub_command.inspect + unit.inspect if $VERBOSE
 			unit_commandline = CommandLine.new($0, unit.model_class?, ARGV[1..-1])
 			unit_commandline.run do
+				puts 'run in command_line script.' + CommandLine::Script_command_line.command_line_parser.inspect if $VERBOSE
+				false # not done
 			end # run
 		end # if help
 end # do run

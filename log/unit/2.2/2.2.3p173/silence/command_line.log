@@ -1,16 +1,43 @@
 passed
-2015-12-23 10:43:08.723
+2016-01-20 09:17:01.132
 ruby -v -W0 test/unit/command_line_test.rb
 ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-..E..FE....E..E.E......EF...F..
+.EE..FE....E..E.E......EF...F..
 
-Finished in 11.262585s, 2.7525 runs/s, 7.0144 assertions/s.
+Finished in 14.486412s, 2.1399 runs/s, 4.7631 assertions/s.
 
   1) Error:
+NewTestClass#test_find_examples:
+NoMethodError: undefined method `model_class?' for #<Unit:0x00000001ddf490>
+    test/unit/command_line_test.rb:91:in `test_find_examples'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:781:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:296:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:295:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:334:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:321:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:294:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:155:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  2) Error:
 NewTestClass#test_Constants:
 NoMethodError: undefined method `assertions' for CommandLine:Class
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
@@ -43,13 +70,13 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  2) Failure:
+  3) Failure:
 NewTestClass#test_required_arguments [test/unit/command_line_test.rb:37]:
 Expected: -1
   Actual: 0
 
 
-  3) Error:
+  4) Error:
 NewTestClass#test_default_arguments?:
 TypeError: no implicit conversion of nil into String
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:205:in `+'
@@ -82,7 +109,7 @@ TypeError: no implicit conversion of nil into String
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  4) Error:
+  5) Error:
 NewTestClass#test_arity:
 TypeError: no implicit conversion of nil into String
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:205:in `+'
@@ -114,7 +141,7 @@ TypeError: no implicit conversion of nil into String
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  5) Error:
+  6) Error:
 NewTestClass#test_run:
 NoMethodError: undefined method `assertions' for CommandLine:Class
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
@@ -147,7 +174,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  6) Error:
+  7) Error:
 NewTestClass#test_readme_example:
 NoMethodError: undefined method `assertions' for CommandLine:Class
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
@@ -180,7 +207,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  7) Error:
+  8) Error:
 NewTestClass#test_dispatch_one_argument:
 Exception: infinite loop follows
     test/unit/command_line_test.rb:159:in `test_dispatch_one_argument'
@@ -207,17 +234,17 @@ Exception: infinite loop follows
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-  8) Failure:
+  9) Failure:
 NewTestClass#test_executable_method [test/unit/command_line_test.rb:154]:
 $ ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb
 @errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:218:in `run': minimal is not an instance method of Editor (Exception)\n candidate_commands = ! \n!= arg\n!~ arg\n<=> arg\n== arg\n=== arg\n=~ arg\n__id__ \n__send__ ...\n_synchronize \n` arg\nacts_like? arg\nadd_default_message ...\nas_json ...\nassert arg...\nassert_empty arg...\nassert_equal arg arg...\nassert_in_delta arg arg...\nassert_in_epsilon arg arg...\nassert_includes arg arg...\nassert_instance_of arg arg...\nassert_kind_of arg arg...\nassert_match arg arg...\nassert_nil arg...\nassert_operator arg arg...\nassert_output ...\nassert_post_conditions \nassert_pre_conditions \nassert_predicate arg arg...\nassert_raises ...\nassert_respond_to arg arg...\nassert_same arg arg...\nassert_send arg...\nassert_silent \nassert_throws arg...\nblank? \nbreakpoint \ncaller_lines ...\ncanonicalName \ncapture arg\ncapture_io \ncapture_subprocess_io \nclass \nclass_eval ...\nclone \ncontext_names ...\ndebugger \ndeep_dup \ndefault_message \ndefine_singleton_method ...\ndiff arg arg\ndisplay ...\ndup \nduplicable? \nedit \nemacs ...\nenable_warnings \nenum_for ...\nenumerate ...\nenumerate_single ...\neql? arg\nequal? arg\nexception_details arg arg\nextend ...\nflunk ...\nfreeze \nfrozen? \ngoldilocks arg...\nhash \nhtml_safe? \nin? arg\ninfo arg\ninspect \ninstance_eval ...\ninstance_exec ...\ninstance_of? arg\ninstance_values \ninstance_variable_defined? arg\ninstance_variable_get arg\ninstance_variable_names \ninstance_variable_set arg arg\ninstance_variables \nis_a? arg\nitself \nkind_of? arg\nmatching_methods_in_context arg...\nmessage ...\nmethod arg\nmethod_context arg\nmethod_contexts ...\nmethods ...\nminimal_comparison? \nminimal_edit \nmodule? \nmodule_included? arg\nmu_pp arg\nmu_pp_for_diff arg\nnewline_if_not_empty arg\nnil? \nnoninherited_modules \nnoninherited_public_class_methods \nnoninherited_public_instance_methods \nobjectClass ...\nobjectKind \nobjectName ...\nobject_id \nobject_identities \npass ...\npresence \npresence_in arg\npresent? \nprivate_methods ...\nprotected_methods ...\npsych_to_yaml ...\npublic_method arg\npublic_methods ...\npublic_send ...\nquietly \nrefute arg...\nrefute_empty arg...\nrefute_equal arg arg...\nrefute_in_delta arg arg...\nrefute_in_epsilon arg arg...\nrefute_includes arg arg...\nrefute_instance_of arg arg...\nrefute_kind_of arg arg...\nrefute_match arg arg...\nrefute_nil arg...\nrefute_operator arg arg...\nrefute_predicate arg arg...\nrefute_respond_to arg arg...\nrefute_same arg arg...\nrelationship ...\nremove_instance_variable arg\nrespond_to? ...\nsend ...\nsilence arg\nsilence_stderr \nsilence_stream arg\nsilence_warnings \nsingleton_class \nsingleton_method arg\nsingleton_methods ...\nskip ...\nskipped? \nsplit arg arg\nsuppress ...\ntaint \ntainted? \ntap \ntest_files ...\nto_enum ...\nto_json ...\nto_json_with_active_support_encoder ...\nto_json_without_active_support_encoder ...\nto_param \nto_query arg\nto_s \nto_yaml ...\nto_yaml_properties \ntrace arg\ntrace_names? ...\ntrace_to_s arg\ntrace_value arg...\ntrust \ntry ...\ntry! ...\nunit_maturity \nuntaint \nuntrust \nuntrusted? \nversion_comparison ...\nwhoAmI ...\nwith_options arg\nwith_warnings arg\n\tfrom script/command_line.rb:78:in `block in <main>'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:210:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:210:in `run'\n\tfrom script/command_line.rb:61:in `<main>'\n"
-@process_status=#<Process::Status: pid 21784 exit 1>
+@process_status=#<Process::Status: pid 2485 exit 1>
 
 
 
-  9) Failure:
+ 10) Failure:
 NewTestClass#test_argument_type [test/unit/command_line_test.rb:196]:
 [:edited]
 
-31 runs, 79 assertions, 3 failures, 6 errors, 0 skips
+31 runs, 69 assertions, 3 failures, 7 errors, 0 skips
 
