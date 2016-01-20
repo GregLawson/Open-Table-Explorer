@@ -11,7 +11,7 @@ class TestEnvironmentMinitestTest < TestCase
 include AssertionsModule
 extend AssertionsModule
 def test_requires
-	assert_included_modules(:Fish, MiniTest::Assertions)
+#	assert_included_modules(:Fish, MiniTest::Assertions)
 	assert_included_modules(:RubyAssertions, MiniTest::Assertions)
 	assert(MiniTest::Assertions.included_modules.empty?, MiniTest::Assertions.included_modules)
 	assert(MiniTest::Unit.included_modules.include?(:RubyAssertions), MiniTest::Unit.included_modules.inspect)

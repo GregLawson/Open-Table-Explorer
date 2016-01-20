@@ -11,7 +11,7 @@ require "minitest/unit"
 require 'active_support/all'
 AssertionsModule = MiniTest::Assertions
 #require_relative '../../test/assertions/ruby_assertions.rb'
-require_relative '../../app/models/unit.rb'
+#require_relative '../../app/models/unit.rb'
 BaseTestCase = MiniTest::Unit::TestCase 
 TestCase = BaseTestCase # allows subclassing BaseTestCase, sets default value
 AssertionFailedError = RuntimeError

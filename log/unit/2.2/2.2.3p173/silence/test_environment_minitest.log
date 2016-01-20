@@ -1,0 +1,18 @@
+passed
+2016-01-20 15:45:42.259
+ruby -v -W0 test/unit/test_environment_minitest_test.rb
+ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+....F
+
+Finished in 0.003050s, 1639.3243 runs/s, 2622.9188 assertions/s.
+
+  1) Failure:
+TestEnvironmentMinitestTest#test_requires [test/unit/test_environment_minitest_test.rb:15]:
+In assert_included_modules, RubyAssertions is not included in Minitest::Assertions which does not include any modules.
+
+5 runs, 8 assertions, 1 failures, 0 errors, 0 skips
+
