@@ -29,6 +29,10 @@ def missing_files
 	end # select
 end # missing_files
 module ClassMethods
+def new_from_path(path)
+	library_name = FilePattern.unit_base_name?(path)
+	self.new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
+end # new_from_path
 def unit_names?(files)
 	files.map do |f|
 		FilePattern.unit_base_name?(f).to_s
@@ -147,10 +151,6 @@ class Unit # base class
 end # values
 include FileUnit
 extend FileUnit::ClassMethods
-def Unit.new_from_path(path)
-	library_name = FilePattern.unit_base_name?(path)
-	Unit.new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
-end # new_from_path
 # Equality of defining content
 #def ==(other)
 #	if model_class_name==other.model_class_name && project_root_dir==other.project_root_dir then
@@ -170,10 +170,6 @@ class RubyUnit < Unit
   values do
 end # values
 extend FileUnit::ClassMethods
-def RubyUnit.new_from_path(path)
-	library_name = FilePattern.unit_base_name?(path)
-	RubyUnit.new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
-end # new_from_path
 def default_tests_module_name?
 	"DefaultTests"+default_test_class_id?.to_s
 end #default_tests_module?
@@ -202,10 +198,6 @@ end # RubyUnit
 class RailsishRubyUnit < RubyUnit
 # Follow Rails naming colnventions, but not require all of Rails
 extend FileUnit::ClassMethods
-def RailsishRubyUnit.new_from_path(path)
-	library_name = FilePattern.unit_base_name?(path)
-	RailsishRubyUnit.new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
-end # new_from_path
 module Constants
 Executable = RailsishRubyUnit.new_from_path($PROGRAM_NAME)
 end #Constants
@@ -224,7 +216,8 @@ def model_test_pathname?
 end #model_test_pathname?
 end # RailsishRubyUnit
 
-class RailsUnit  # naming conventions typical of Ruby Rails S.B. deprecated
+class RailsUnit < RailsishRubyUnit # naming conventions typical of Ruby Rails S.B. deprecated
+
 include Virtus.model
 	attribute :test_type, Symbol, :default => :unit
 	attribute :singular_table, String
