@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2015 by Greg Lawson                                      
+#    Copyright (C) 2012-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -147,7 +147,6 @@ class Unit # base class
 	attribute :model_basename, Symbol, :default => :unit
 	attribute :project_root_dir, String, :default => FilePattern.project_root_dir?
 	attribute :patterns, Array, :default => 	FilePattern::Patterns
-	attribute :model_class_name, Symbol, :default => lambda { |unit, attribute| unit.model_basename.to_s.classify }
 end # values
 include FileUnit
 extend FileUnit::ClassMethods
@@ -168,6 +167,7 @@ end # Unit
 class RubyUnit < Unit
   include Virtus.value_object
   values do
+	attribute :model_class_name, Symbol, :default => lambda { |unit, attribute| unit.model_basename.to_s.classify }
 end # values
 extend FileUnit::ClassMethods
 def default_tests_module_name?

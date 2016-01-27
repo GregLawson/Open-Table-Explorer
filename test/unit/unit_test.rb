@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -165,7 +165,28 @@ end # test_class
 def test_create_test_class
 end # create_test_class
 def test_Constants
-	assert_equal(:Unit, RubyUnitTest::Executable.model_class_name)
+	assert_instance_of(RubyUnit, RubyUnit::Executable)
+	assert_respond_to(RubyUnit, :new_from_path)
+	ancestor_classes = RubyUnit::Executable.class.ancestors
+	assert_includes(ancestor_classes, RubyUnit)
+	ancestral_methods = ancestor_classes.map do |ancestor|
+		ancestor.instance_methods.map do |ancestral_method|
+		{enumerator: :ancestors, module: ancestor, method: ancestral_method}
+		end # map
+	end # map
+	module_methods = RubyUnit::Executable.class.included_modules.map do |ancestor|
+		ancestor.instance_methods.map do |ancestral_method|
+		{enumerator: :included_modules, module: ancestor, method: ancestral_method}
+		end # map
+	end # map
+	message = (ancestral_methods + module_methods).map do |ancestor| 
+		ancestor.map do |ancestral_method| 
+			ancestral_method[:module].to_s + '#' + ancestral_method[:method].to_s
+		end # map
+	end.join("\n") # map
+	assert_includes(RubyUnit::Executable.methods, :model_class_name, message)
+#	assert_includes(RubyUnit::Executable.methods(false), :model_class_name)
+	assert_equal(:Unit, RubyUnit::Executable.model_class_name)
 end #Constants
 end # RubyUnit
 
@@ -175,7 +196,7 @@ def test_Constants
 	assert_instance_of(RailsishRubyUnit, RailsishRubyUnit::Executable)
 	assert_respond_to(RailsishRubyUnit, :new_from_path)
 	assert_respond_to(RailsishRubyUnit::Executable, :model_class_name)
-	assert_equal(:Unit, RailsishRubyUnitTest::Executable.model_class_name)
+	assert_equal(:Unit, RailsishRubyUnit::Executable.model_class_name)
 end #Constants
 def test_model_class
 	assert_equal(Unit, RailsishRubyUnit::Executable.model_class?)
