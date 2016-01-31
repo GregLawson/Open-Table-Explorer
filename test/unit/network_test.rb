@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/network.rb'
 class NetworkTest < TestCase
 #include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
 	example_nmap_line = 'Nmap scan report for 192.168.0.5'
 	private_C_network = /192\.168\./.capture(:network)
