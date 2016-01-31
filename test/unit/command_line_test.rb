@@ -88,12 +88,12 @@ def test_argument_types
 #	assert_equal([Method], Test_unit_commandline.argument_types)
 end # argument_types
 def test_find_examples
-	assert(Unit::Executable.model_class?.constants.include?(:Examples), Unit::Executable.model_class?.constants.inspect)
-	constants = Unit::Executable.model_class?.constants
+	assert(RailsishRubyUnit::Executable.model_class?.constants.include?(:Examples), RailsishRubyUnit::Executable.model_class?.constants.inspect)
+	constants = RailsishRubyUnit::Executable.model_class?.constants
 	assert(constants.include?(:Examples))
-	example_constants = Unit::Executable.model_class?::Examples.constants
-	example_classes = Unit::Executable.model_class?::Examples.constants.map do |example_name|
-			example_fully_qualified_name = Unit::Executable.model_class_name.to_s + '::Examples::' + example_name.to_s
+	example_constants = RailsishRubyUnit::Executable.model_class?::Examples.constants
+	example_classes = RailsishRubyUnit::Executable.model_class?::Examples.constants.map do |example_name|
+			example_fully_qualified_name = RailsishRubyUnit::Executable.model_class_name.to_s + '::Examples::' + example_name.to_s
 			example_value = eval(example_fully_qualified_name)
 			example_class = example_value.class
 			Example.new(containing_class: CommandLine, example_constant_name: example_name)
@@ -106,7 +106,7 @@ def test_find_examples
 	refute_equal([], Example.find_by_class(CommandLine, CommandLine))
 	refute_equal([], Script_command_line.find_examples, Script_command_line.inspect)
 	refute_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.inspect)
-#			assert_equal(example_class, Unit::Executable.model_class?)
+#			assert_equal(example_class, RailsishRubyUnit::Executable.model_class?)
 	refute_equal([], Test_unit_commandline.find_examples)
 	refute_equal([], Not_virtus_unit_commandline.find_examples)
 	refute_equal([], Script_command_line.find_examples)

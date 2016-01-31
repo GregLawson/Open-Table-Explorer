@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/usc.rb'
 class UscTest < TestCase
 #include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 #Usc_file.gets 
 def test_Constants
 	assert(File.exist?(First_usc.path))

@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/minimal2.rb'
 class NestedLoopTest < TestCase
 include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
 	Loops.map do |dimension|
 		if dimension.methods.includes?(:enumerator) then

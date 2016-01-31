@@ -10,7 +10,7 @@ require_relative '../../test/assertions/nmap_assertions.rb'
 # executed in alphabetical order. Longer names sort later.
 class NmapTest < TestCase
 #include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
 
 MultiXml.parser = :ox

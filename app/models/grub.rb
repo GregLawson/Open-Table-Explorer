@@ -18,7 +18,7 @@ class Grub
 #	attribute :timestamp, Time, :default => Time.now
 	end # values
 module Constants # constant parameters of the type
-Generated_file = Unit::Executable.data_sources_directory? + '/generated.cfg'
+Generated_file = RailsishRubyUnit::Executable.data_sources_directory? + '/generated.cfg'
 Config_run = IO.read(Generated_file)
 Indent = /^\s*/.capture(:indent)
 UUID_regexp =/[-0-9a-fA-F]{36}/.capture(:uuid)

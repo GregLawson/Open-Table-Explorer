@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../test/assertions/minimal4_assertions.rb'
 class Minimal4Test < TestCase
 include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
 end #Constants
 def test_initialize

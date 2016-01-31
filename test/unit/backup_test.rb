@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/backup.rb'
 class BackupTest < TestCase
 include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_backup
 #	assert_equal(Rsync.new().backup, 'rsync -ruav --links /mnt/crashed_gui /media/central-greg/')
 	assert_equal(Backup::Examples::Space.backup, 'rsync -ruav --links /mnt/space/* /media/central-greg/space/')

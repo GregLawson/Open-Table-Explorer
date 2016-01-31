@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/stream_tree.rb'
 class StreamTreeTest < TestCase
 #include DefaultTests
-#include Unit::Executable.model_class?::Examples
+#include RailsishRubyUnit::Executable.model_class?::Examples
 include GraphPath::Examples
 include Tree::Examples
 include Connectivity::Examples

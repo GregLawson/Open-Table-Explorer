@@ -10,7 +10,7 @@ require_relative '../../app/models/grub.rb'
 require_relative '../assertions/shell_command_assertions.rb'
 class GrubTest < TestCase
 #include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
   linux = Config_run.lines.map do |line|
  #   puts line

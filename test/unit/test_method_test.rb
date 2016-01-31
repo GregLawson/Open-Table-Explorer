@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/test_method.rb'
 class TestMethodTest < TestCase
 include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 include Parse
 def test_initialize
 	test_executable=$0

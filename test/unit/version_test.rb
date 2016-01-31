@@ -11,7 +11,7 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/version.rb'
 # executed in alphabetical order. Longer names sort later.
 class VersionTest < TestCase
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
 
 	assert_match(Version_digits, Consecutive_string)

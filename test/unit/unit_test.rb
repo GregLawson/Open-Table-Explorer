@@ -9,7 +9,7 @@ require_relative 'test_environment' # avoid recursive requires
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../test/assertions/unit_assertions.rb'
 DefaultTests=eval(RailsishRubyUnit::Executable.default_tests_module_name?)
-#TestCase=eval(Unit::Executable.test_case_class_name?)
+#TestCase=eval(RailsishRubyUnit::Executable.test_case_class_name?)
 class UnitTest < TestCase
 #include DefaultTests
 include Unit::Examples

@@ -10,7 +10,7 @@ require_relative '../../app/models/host.rb'
 # executed in alphabetical order. Longer names sort later.
 class HostTest < TestCase
 #include DefaultTests
-include Unit::Executable.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
 
 end # Constants
