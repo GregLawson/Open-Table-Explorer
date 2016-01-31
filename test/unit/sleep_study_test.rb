@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2015 by Greg Lawson
+#    Copyright (C) 2015-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/sleep_study.rb'
 class FixedEnumeratorTest < TestCase
 #include DefaultTests
-#include Unit::Executable.model_class?::Examples
+#include RailsishRubyUnit::Executable.model_class?::Examples
 #include StringEnumerator::Examples
 #include BinaryIO::Examples
 def setup
@@ -161,7 +161,20 @@ def test_table
 end # table
 def test_BinaryTable_csv
 	assert_equal(3,ABC_BinaryTable.size)
-#	assert_equal("97\n98\n99", ABC_BinaryTable.csv)
+	refute(ABC_BinaryTable.rewind.enumerator.eof?, ABC_BinaryTable.enumerator.inspect)
+	assert_equal([[97]],ABC_BinaryTable.rewind.next)
+	assert_equal([[98]],ABC_BinaryTable.next)
+	assert_equal([[99]],ABC_BinaryTable.next)
+	ABC_BinaryTable.rewind
+	csv_string = ''
+	begin
+		loop do
+			csv_string += ABC_BinaryTable.next.flatten.join("\t") + "\n"
+		end # loop
+	rescue StopIteration
+	end # loop
+	assert_equal("97\n98\n99\n", csv_string, csv_string.inspect)
+	assert_equal("97\n98\n99\n", ABC_BinaryTable.rewind.csv)
 end # csv
 def test_Examples
 	array_BinaryTable = BinaryTable.new(enumerator: [1, 2, 3])

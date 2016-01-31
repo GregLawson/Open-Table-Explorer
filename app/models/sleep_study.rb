@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2015 by Greg Lawson
+#    Copyright (C) 2015-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -197,7 +197,7 @@ end # table
 def csv(path = nil)
 	csv_string = table.map do |record|
 		record.flatten.join("\t")
-	end.join("\n") # map
+	end.join("\n")  + "\n" # map
 	if path.nil? then
 		csv_string
 	else
