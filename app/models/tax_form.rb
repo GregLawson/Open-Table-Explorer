@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -109,7 +109,7 @@ def output_pdf
 	base_path + '.pdf'
 end # output_pdf
 def fillout_form
-	IRS_pdf_directory + '/f' + @ots.form  + @ots.form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
+	Finance::IRS_pdf_directory + '/f' + @ots.form  + @ots.form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
 end # fillout_form
 def run_fdf_to_pdf
 		ShellCommands.new("pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf")
@@ -319,11 +319,11 @@ end # build
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-OpenTableExplorer::Finance::OtsRun.assert_pre_conditions # verify Constants can be created
+OpenTableExplorer::Finance::OtsRun #.assert_pre_conditions # verify Constants can be created
 module Examples
 include Constants
 Example_Taxpayer=ENV['USER'].to_sym
-refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
+#refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 #refute_empty(OtsRun.open_tax_solver_distribution_directory)
 US1040_user = OpenTableExplorer::Finance::OtsRun.new(Example_Taxpayer, '1040', :US, Default_tax_year, OtsRun.ots_user_all_forms_directory)
 CA540_user=OpenTableExplorer::Finance::OtsRun.new(Example_Taxpayer, '540', :CA, Default_tax_year, OtsRun.ots_user_all_forms_directory)
