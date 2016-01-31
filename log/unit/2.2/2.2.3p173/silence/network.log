@@ -1,5 +1,5 @@
 passed
-2016-01-31 11:00:18.482
+2016-01-31 11:10:42.541
 ruby -v -W0 test/unit/network_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,22 +8,22 @@ Run options: --seed 0
 
 .....FFE.E..
 
-Finished in 33.395160s, 0.3593 runs/s, 1.1079 assertions/s.
+Finished in 17.187937s, 0.6982 runs/s, 2.1527 assertions/s.
 
   1) Failure:
 NewTestClass#test_nmap [test/unit/network_test.rb:170]:
-Expected /Nmap scan report for (?<ip>(?<network>10\.)(?<host>[0-2]?[0-9]?[0-9][0-2]?[0-9]?[0-9][0-2]?[0-9]?[0-9])|(?<network>172\.16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)(?<host>[0-2]?[0-9]?[0-9][0-2]?[0-9]?[0-9])|(?<network>192\.168\.)(?<host>[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9])|(?<network>169\.254.))\n/ to match "\nStarting Nmap 7.01 ( https://nmap.org ) at 2016-01-31 10:59 PST\nNmap done: 254 IP addresses (0 hosts up) scanned in 33.38 seconds\n".
+Expected /Nmap scan report for (?<ip>(?<network>10\.)(?<host>[0-2]?[0-9]?[0-9][0-2]?[0-9]?[0-9][0-2]?[0-9]?[0-9])|(?<network>172\.16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)(?<host>[0-2]?[0-9]?[0-9][0-2]?[0-9]?[0-9])|(?<network>192\.168\.)(?<host>[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9])|(?<network>169\.254.))\n/ to match "\nStarting Nmap 7.01 ( https://nmap.org ) at 2016-01-31 11:10 PST\nNmap done: 254 IP addresses (0 hosts up) scanned in 17.17 seconds\n".
 
 
   2) Failure:
 NewTestClass#test_ifconfig [test/unit/network_test.rb:53]:
-Expected /^\s+(?<device_name>[a-z]+[0-9]+)\s+Link encap:Ethernet  HWaddr (?<hw_address>(?:[0-9a-f][0-9a-f]:){5}[0-9a-f][0-9a-f])  \n/ to match "eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 192.168.1.125  netmask 255.255.255.0  broadcast 192.168.1.255\n        inet6 fe80::fa0f:41ff:fed2:26c7  prefixlen 64  scopeid 0x20<link>\n        ether f8:0f:41:d2:26:c7  txqueuelen 1000  (Ethernet)\n        RX packets 199659  bytes 284205809 (271.0 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 102701  bytes 7243420 (6.9 MiB)\n        TX errors 0  dropped 127 overruns 0  carrier 0  collisions 0\n        device interrupt 103  base 0xa000  \n\nlo: flags=73<UP,LOOPBACK,RUNNING>  mtu 16436\n        inet 127.0.0.1  netmask 255.0.0.0\n        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n        loop  txqueuelen 0  (Local Loopback)\n        RX packets 34790  bytes 10903461 (10.3 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 34790  bytes 10903461 (10.3 MiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nwlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        ether 30:10:b3:40:00:e5  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n".
+Expected /^\s+(?<device_name>[a-z]+[0-9]+)\s+Link encap:Ethernet  HWaddr (?<hw_address>(?:[0-9a-f][0-9a-f]:){5}[0-9a-f][0-9a-f])  \n/ to match "eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 192.168.1.125  netmask 255.255.255.0  broadcast 192.168.1.255\n        inet6 fe80::fa0f:41ff:fed2:26c7  prefixlen 64  scopeid 0x20<link>\n        ether f8:0f:41:d2:26:c7  txqueuelen 1000  (Ethernet)\n        RX packets 199659  bytes 284205809 (271.0 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 103223  bytes 7265344 (6.9 MiB)\n        TX errors 0  dropped 178 overruns 0  carrier 0  collisions 0\n        device interrupt 103  base 0xa000  \n\nlo: flags=73<UP,LOOPBACK,RUNNING>  mtu 16436\n        inet 127.0.0.1  netmask 255.0.0.0\n        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n        loop  txqueuelen 0  (Local Loopback)\n        RX packets 35450  bytes 11001516 (10.4 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 35450  bytes 11001516 (10.4 MiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nwlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        ether 30:10:b3:40:00:e5  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n".
 
 
   3) Error:
 NewTestClass#test_whereAmI:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000028c5878>
-    test/unit/network_test.rb:146:in `test_whereAmI'
+NameError: uninitialized constant NewTestClass::Context_Pattern
+    test/unit/network_test.rb:149:in `test_whereAmI'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'

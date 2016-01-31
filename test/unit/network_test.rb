@@ -143,7 +143,7 @@ def test_all
 	assert_equal(all, Network.all)
 end #all
 def test_whereAmI
-	ifconfig= ShellCommands.new('/sbin/ifconfig|grep "inet addr" ').assert_post_conditions.output
+	ifconfig= ShellCommands.new('/sbin/ifconfig|grep "inet addr" ').output
 	private_C = ifconfig.parse(Private_C)
 	private_network = ifconfig.parse(Private_Network_Pattern)
 	context = ifconfig.parse(Context_Pattern)
@@ -186,7 +186,7 @@ def test_nmap
 	end # map
 end # nmap
 def test_update_attribute
-#	assert_equal
+#	assert_equal update_attribute(name, value)
 	refute_empty()
 end # update_attribute
 end #Network
