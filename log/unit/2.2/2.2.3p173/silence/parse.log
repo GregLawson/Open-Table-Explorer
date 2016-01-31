@@ -1,0 +1,14 @@
+passed
+2016-01-31 09:21:36.218
+ruby -v -W0 test/unit/parse_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.............................................
+
+Finished in 0.049367s, 911.5346 runs/s, 1742.0440 assertions/s.
+
+45 runs, 86 assertions, 0 failures, 0 errors, 0 skips
+
