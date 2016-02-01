@@ -1,0 +1,9 @@
+passed
+2016-02-01 18:16:52.035
+ruby -v -W0 test/unit/test_method_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_method.rb:21:in `<class:TestMethod>': uninitialized constant TestMethod::Parse (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_method.rb:12:in `<top (required)>'
+	from test/unit/test_method_test.rb:9:in `require_relative'
+	from test/unit/test_method_test.rb:9:in `<main>'

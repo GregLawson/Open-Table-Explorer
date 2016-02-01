@@ -1,0 +1,7 @@
+passed
+2016-02-01 12:21:03.272
+ruby -v -W0 test/unit/command_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/command_test.rb:11:in `<class:CommandTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
+	from test/unit/command_test.rb:10:in `<main>'

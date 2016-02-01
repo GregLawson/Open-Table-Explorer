@@ -1,0 +1,10 @@
+passed
+2016-02-01 12:28:20.823
+ruby -v -W0 test/unit/generic_type_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- test/test_helper (LoadError)
+	from /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_type_assertions.rb:8:in `<top (required)>'
+	from test/unit/generic_type_test.rb:9:in `require_relative'
+	from test/unit/generic_type_test.rb:9:in `<main>'

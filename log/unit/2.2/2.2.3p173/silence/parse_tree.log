@@ -1,0 +1,7 @@
+passed
+2016-02-01 18:11:36.966
+ruby -v -W0 test/unit/parse_tree_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/parse_tree_test.rb:12:in `<class:ParseTest>': uninitialized constant ParseTest::Parse (NameError)
+	from test/unit/parse_tree_test.rb:10:in `<main>'

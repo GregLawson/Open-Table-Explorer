@@ -1,14 +1,21 @@
 passed
-2016-01-27 04:36:54.223
+2016-02-01 18:17:17.788
 ruby -v -W0 test/unit/unit_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-............................................................
+..........................................F.................
 
-Finished in 0.599060s, 100.1568 runs/s, 195.3058 assertions/s.
+Finished in 0.647489s, 92.6657 runs/s, 177.6093 assertions/s.
 
-60 runs, 117 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+NewTestClass#test_data_sources_directory [test/unit/unit_test.rb:70]:
+Unit::Executable.data_sources_directory?=/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit
+Dir[Unit::Executable.data_sources_directory?]=[]
+.
+Expected [] to not be empty.
+
+60 runs, 115 assertions, 1 failures, 0 errors, 0 skips
 

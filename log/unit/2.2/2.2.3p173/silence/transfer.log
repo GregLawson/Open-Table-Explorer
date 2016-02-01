@@ -1,0 +1,20 @@
+passed
+2016-02-01 18:17:03.551
+ruby -v -W0 test/unit/transfer_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/transfer_test.rb:103: dynamic constant assignment
+T=Arel::Table.new(:transfers, :as => 'T')
+  ^
+test/unit/transfer_test.rb:104: dynamic constant assignment
+A =Arel::Table.new(:accounts, :as => 'A')
+   ^
+test/unit/transfer_test.rb:107: dynamic constant assignment
+G =T.join(A)  #(implicit) will reference final joined relationship
+   ^
+test/unit/transfer_test.rb:110: dynamic constant assignment
+G =T.join(A).on( T[:account_id].eq(A[:id] )) 
+   ^
+test/unit/transfer_test.rb:116: dynamic constant assignment
+G=G.group(T[:account_id])
+  ^

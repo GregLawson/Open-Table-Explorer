@@ -1,0 +1,8 @@
+passed
+2016-02-01 12:28:04.159
+ruby -v -W0 test/unit/example_type_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- test/assertions/example_type_assertions.rb (LoadError)
+	from /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from test/unit/example_type_test.rb:9:in `<main>'

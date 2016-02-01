@@ -1,0 +1,7 @@
+passed
+2016-02-01 18:16:20.629
+ruby -v -W0 test/unit/stream_method_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/stream_method_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
+	from test/unit/stream_method_test.rb:9:in `<main>'

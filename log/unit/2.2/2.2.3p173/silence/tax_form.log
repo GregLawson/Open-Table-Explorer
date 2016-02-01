@@ -1,5 +1,5 @@
 passed
-2016-01-31 10:17:50.443
+2016-02-01 18:16:42.400
 ruby -v -W0 test/unit/tax_form_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,11 +8,11 @@ Run options: --seed 0
 
 ............EF...E.F.......E...F..
 
-Finished in 10.952092s, 3.1044 runs/s, 25.3833 assertions/s.
+Finished in 11.904952s, 2.8560 runs/s, 23.3516 assertions/s.
 
   1) Error:
 OtsRunTest#test_filled_in_pdf_files:
-NoMethodError: undefined method `filled_in_pdf_files' for #<OpenTableExplorer::Finance::OtsRun:0x0000000364f318>
+NoMethodError: undefined method `filled_in_pdf_files' for #<OpenTableExplorer::Finance::OtsRun:0x000000022d2b50>
     test/unit/tax_form_test.rb:116:in `test_filled_in_pdf_files'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -39,7 +39,7 @@ NoMethodError: undefined method `filled_in_pdf_files' for #<OpenTableExplorer::F
 
   2) Failure:
 OtsRunTest#test_run_pdf_to_jpeg [test/unit/tax_form_test.rb:130]:
-#<OpenTableExplorer::Finance::OtsRun:0x0000000364f318 @taxpayer="example", @form="1040", @jurisdiction=:US, @tax_year=2014, @open_tax_solver_all_form_directory="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/", @form_filename="US_1040", @open_tax_solver_form_directory="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/", @taxpayer_basename="US_1040_example", @taxpayer_basename_with_year="US_1040_2014_example", @open_tax_solver_binary="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014", @open_tax_solver_input="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt", @open_tax_solver_output="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt", @open_tax_solver_sysout="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt", @output_xfdf_glob="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example*.xfdf", @open_tax_solver_run=US 1040 2014 - v12.01
+#<OpenTableExplorer::Finance::OtsRun:0x000000022d2b50 @taxpayer="example", @form="1040", @jurisdiction=:US, @tax_year=2014, @open_tax_solver_all_form_directory="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/", @form_filename="US_1040", @open_tax_solver_form_directory="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040/", @taxpayer_basename="US_1040_example", @taxpayer_basename_with_year="US_1040_2014_example", @open_tax_solver_binary="/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014", @open_tax_solver_input="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example.txt", @open_tax_solver_output="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt", @open_tax_solver_sysout="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_sysout.txt", @output_xfdf_glob="/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example*.xfdf", @open_tax_solver_run=US 1040 2014 - v12.01
 Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
 	Qual. Div & Gains WorkSheet 1:  30863.94
 	Qual. Div & Gains WorkSheet 2:    146.51
@@ -80,7 +80,7 @@ Your Alternative Minimum Tax =     0.00
 Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_out.txt
 
 
-Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Sun Jan 31 10:17:39 2016
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Mon Feb  1 18:16:30 2016
 
 Status = Married/Joint (2)
  (Under65 = 2)
@@ -216,7 +216,7 @@ Expected nil to not be nil.
 
   3) Error:
 OtsRunTest#test_run_fdf_to_pdf:
-NoMethodError: undefined method `output?' for #<OpenTableExplorer::Finance::Schedule:0x000000030bf060>
+NoMethodError: undefined method `output?' for #<OpenTableExplorer::Finance::Schedule:0x00000001d31f20>
     test/unit/tax_form_test.rb:106:in `block in test_run_fdf_to_pdf'
     test/unit/tax_form_test.rb:105:in `map'
     test/unit/tax_form_test.rb:105:in `test_run_fdf_to_pdf'
@@ -250,7 +250,7 @@ OtsRunTest#test_xfdf_file [test/unit/tax_form_test.rb:96]:
 
   5) Error:
 OtsRunTest#test_fillout_form:
-NoMethodError: undefined method `form_suffix' for #<OpenTableExplorer::Finance::OtsRun:0x0000000364f318>
+NoMethodError: undefined method `form_suffix' for #<OpenTableExplorer::Finance::OtsRun:0x000000022d2b50>
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:112:in `fillout_form'
     test/unit/tax_form_test.rb:102:in `test_fillout_form'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'

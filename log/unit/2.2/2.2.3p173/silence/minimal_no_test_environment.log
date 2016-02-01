@@ -1,0 +1,7 @@
+passed
+2016-02-01 18:11:22.150
+ruby -v -W0 test/unit/minimal_no_test_environment_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/minimal_no_test_environment_test.rb:15:in `<class:MinimalTest>': uninitialized constant MinimalTest::RailsishRubyUnit (NameError)
+	from test/unit/minimal_no_test_environment_test.rb:14:in `<main>'

@@ -1,0 +1,420 @@
+passed
+2016-02-01 18:16:09.525
+ruby -v -W0 test/unit/shell_command_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.....EE..rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+test/unit/shell_command_test.rb:126:in `new'
+test/unit/shell_command_test.rb:126:in `test_03'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+...F$ ssh greg@localhost echo "cat"
+@errors="Connection closed by ::1\r\n"
+@process_status=#<Process::Status: pid 22343 exit 255>
+E...$ echo "1 2;3 4"
+1 2;3 4
+.FE.EEE.rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+test/unit/shell_command_test.rb:122:in `new'
+test/unit/shell_command_test.rb:122:in `test_02'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+..rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+test/unit/shell_command_test.rb:130:in `new'
+test/unit/shell_command_test.rb:130:in `test_04'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+.rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+test/unit/shell_command_test.rb:134:in `new'
+test/unit/shell_command_test.rb:134:in `test_05'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+..EE.......
+
+Finished in 214.256956s, 0.1820 runs/s, 0.1960 assertions/s.
+
+  1) Error:
+ShellCommandsTest#test_tolerate_status:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:179:in `test_tolerate_status'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  2) Error:
+ShellCommandsTest#test_01:
+NoMethodError: undefined method `assertions' for #<ShellCommands:0x00000001c09fa8>
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:113:in `test_01'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  3) Failure:
+ShellCommandsTest#test_clear_error_message [test/unit/shell_command_test.rb:164]:
+Expected: 0
+  Actual: true
+
+
+  4) Error:
+ShellCommandsTest#test_command_on_remote:
+NoMethodError: undefined method `assertions' for #<ShellCommands:0x00000001bdf190>
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:44:in `test_command_on_remote'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  5) Failure:
+ShellCommandsTest#test_success? [test/unit/shell_command_test.rb:160]:
+Expected: 127
+  Actual: false
+
+
+  6) Error:
+ShellCommandsTest#test_initialize:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:79:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  7) Error:
+ShellCommandsTest#test_tolerate_error_pattern:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:183:in `test_tolerate_error_pattern'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  8) Error:
+ShellCommandsTest#test_force_success:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:172:in `test_force_success'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  9) Error:
+ShellCommandsTest#test_inspect:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:199:in `test_inspect'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+ 10) Error:
+ShellCommandsTest#test_tolerate_status_and_error_message:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:187:in `test_tolerate_status_and_error_message'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+ 11) Error:
+ShellCommandsTest#test_assert_post_conditions:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    test/unit/shell_command_test.rb:213:in `test_assert_post_conditions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+39 runs, 42 assertions, 2 failures, 9 errors, 0 skips
+

@@ -1,0 +1,8 @@
+passed
+2016-02-01 12:28:12.493
+ruby -v -W0 test/unit/generic_grep_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- test_helper.rb (LoadError)
+	from /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from test/unit/generic_grep_test.rb:8:in `<main>'

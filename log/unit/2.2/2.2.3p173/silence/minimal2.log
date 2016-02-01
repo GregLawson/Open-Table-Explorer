@@ -1,14 +1,14 @@
 passed
-2015-12-23 21:00:29.304
+2016-02-01 18:11:17.286
 ruby -v -W0 test/unit/minimal2_test.rb
-ruby 2.2.3p173 (2015-08-18) [x86_64-linux-gnu]
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
 ....
 
-Finished in 0.003418s, 1170.3469 runs/s, 0.0000 assertions/s.
+Finished in 0.004235s, 944.6106 runs/s, 0.0000 assertions/s.
 
 4 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 

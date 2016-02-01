@@ -1,0 +1,8 @@
+passed
+2016-02-01 18:11:15.688
+ruby -v -W0 test/unit/method_model_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/method_model_test.rb:247:in `test': no implicit conversion of String into Integer (TypeError)
+	from test/unit/method_model_test.rb:247:in `<class:MethodModelTest>'
+	from test/unit/method_model_test.rb:2:in `<main>'

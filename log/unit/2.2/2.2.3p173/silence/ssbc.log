@@ -1,0 +1,8 @@
+passed
+2016-02-01 18:16:14.548
+ruby -v -W0 test/unit/ssbc_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/ssbc_test.rb:1:in `initialize': no implicit conversion of String into Integer (TypeError)
+	from test/unit/ssbc_test.rb:1:in `open'
+	from test/unit/ssbc_test.rb:1:in `<main>'

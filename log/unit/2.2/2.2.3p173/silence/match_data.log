@@ -1,0 +1,6 @@
+passed
+2016-02-01 18:11:14.169
+ruby -v -W0 test/unit/match_data_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/match_data_test.rb:9:in `<main>': uninitialized constant Parse (NameError)

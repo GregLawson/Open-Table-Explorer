@@ -1,0 +1,10 @@
+passed
+2016-02-01 12:20:21.324
+ruby -v -W0 test/unit/battery_type_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/battery_type.rb:77:in `<module:Examples>': uninitialized constant BatteryType::Examples::Constants (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/battery_type.rb:76:in `<class:BatteryType>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/battery_type.rb:20:in `<top (required)>'
+	from test/unit/battery_type_test.rb:9:in `require_relative'
+	from test/unit/battery_type_test.rb:9:in `<main>'

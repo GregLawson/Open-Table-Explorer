@@ -1,0 +1,7 @@
+passed
+2016-02-01 12:28:19.357
+ruby -v -W0 test/unit/generic_table_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/generic_table_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
+	from test/unit/generic_table_test.rb:9:in `<main>'

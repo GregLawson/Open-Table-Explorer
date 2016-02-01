@@ -1,0 +1,14 @@
+passed
+2016-02-01 18:11:44.904
+ruby -v -W0 test/unit/production_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.....
+
+Finished in 0.004683s, 1067.7377 runs/s, 213.5475 assertions/s.
+
+5 runs, 1 assertions, 0 failures, 0 errors, 0 skips
+

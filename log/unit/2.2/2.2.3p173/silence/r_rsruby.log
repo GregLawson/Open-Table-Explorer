@@ -1,0 +1,17 @@
+passed
+2016-02-01 18:12:25.275
+ruby -v -W0 test/unit/r_rsruby_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+Rserve: no process found
+/usr/lib/R/bin/Rcmd: 62: exec: Rserve: not found
+/var/lib/gems/2.2.0/gems/rserve-client-0.3.1/lib/rserve/connection.rb:83:in `rescue in initialize': Can't start Rserve (Rserve::Connection::RserveNotStartedError)
+	from /var/lib/gems/2.2.0/gems/rserve-client-0.3.1/lib/rserve/connection.rb:66:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:5:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:5:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:33:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:33:in `<module:Constants>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:32:in `<class:RSession>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/r.rb:3:in `<top (required)>'
+	from test/unit/r_rsruby_test.rb:1:in `require_relative'
+	from test/unit/r_rsruby_test.rb:1:in `<main>'

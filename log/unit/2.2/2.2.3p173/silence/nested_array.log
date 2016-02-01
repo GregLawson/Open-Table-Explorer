@@ -1,0 +1,7 @@
+passed
+2016-02-01 18:11:23.394
+ruby -v -W0 test/unit/nested_array_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/nested_array_test.rb:12:in `<class:NestedArrayTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
+	from test/unit/nested_array_test.rb:11:in `<main>'

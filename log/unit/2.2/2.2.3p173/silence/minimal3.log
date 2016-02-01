@@ -1,0 +1,10 @@
+passed
+2016-02-01 18:11:18.008
+ruby -v -W0 test/unit/minimal3_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:59:in `<module:Examples>': uninitialized constant Minimal3::Examples::Constants (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:58:in `<class:Minimal3>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:8:in `<top (required)>'
+	from test/unit/minimal3_test.rb:9:in `require_relative'
+	from test/unit/minimal3_test.rb:9:in `<main>'

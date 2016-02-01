@@ -1,0 +1,10 @@
+passed
+2016-02-01 18:17:01.666
+ruby -v -W0 test/unit/to_do_list_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/to_do_list.rb:120:in `<module:Examples>': uninitialized constant Branch::Examples::Empty_repo_master_branch (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/to_do_list.rb:117:in `<class:ToDoList>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/to_do_list.rb:9:in `<top (required)>'
+	from test/unit/to_do_list_test.rb:9:in `require_relative'
+	from test/unit/to_do_list_test.rb:9:in `<main>'

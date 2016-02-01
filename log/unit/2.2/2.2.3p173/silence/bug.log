@@ -1,0 +1,8 @@
+passed
+2016-02-01 12:20:26.125
+ruby -v -W0 test/unit/bug_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- test/test_helper (LoadError)
+	from /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from test/unit/bug_test.rb:1:in `<main>'

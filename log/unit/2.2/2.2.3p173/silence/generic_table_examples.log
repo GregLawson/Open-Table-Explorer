@@ -1,0 +1,9 @@
+passed
+2016-02-01 12:28:16.489
+ruby -v -W0 test/unit/generic_table_examples_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/generic_table_examples_test.rb:12:in `<class:GenericTableExamplesTest>': uninitialized constant OpenTableExplorer::Tests::GenericTableExamplesTest::DefaultTests2 (NameError)
+	from test/unit/generic_table_examples_test.rb:11:in `<module:Tests>'
+	from test/unit/generic_table_examples_test.rb:9:in `<module:OpenTableExplorer>'
+	from test/unit/generic_table_examples_test.rb:8:in `<main>'

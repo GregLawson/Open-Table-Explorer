@@ -1,5 +1,5 @@
 passed
-2016-01-30 18:56:04.335
+2016-02-01 18:16:14.302
 ruby -v -W0 test/unit/sleep_study_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -10,7 +10,7 @@ Run options: --seed 0
 factors = [[2, 8], [3, 1], [5, 3], [7, 1], [659, 1]]
 .....
 
-Finished in 0.412780s, 72.6780 runs/s, 402.1514 assertions/s.
+Finished in 2.716529s, 11.0435 runs/s, 61.1074 assertions/s.
 
 30 runs, 166 assertions, 0 failures, 0 errors, 0 skips
 

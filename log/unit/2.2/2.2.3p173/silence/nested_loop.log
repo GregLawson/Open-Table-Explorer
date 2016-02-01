@@ -1,0 +1,9 @@
+passed
+2016-02-01 18:11:24.219
+ruby -v -W0 test/unit/nested_loop_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/unit/nested_loop_test.rb:18: syntax error, unexpected keyword_end, expecting ')'
+		end # map
+		   ^
+test/unit/nested_loop_test.rb:29: syntax error, unexpected end-of-input, expecting keyword_end
