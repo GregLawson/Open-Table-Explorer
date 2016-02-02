@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:11:20.904
+2016-02-01 18:58:22.799
 ruby -v -W0 test/unit/minimal4_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

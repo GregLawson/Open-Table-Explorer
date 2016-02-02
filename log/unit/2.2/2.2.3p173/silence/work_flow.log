@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:35.874
+2016-02-01 19:03:46.428
 ruby -v -W0 test/unit/work_flow_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..EEEEE.F..E...
 
-Finished in 5.305785s, 2.8271 runs/s, 0.1885 assertions/s.
+Finished in 5.178421s, 2.8966 runs/s, 0.1931 assertions/s.
 
   1) Error:
 NewTestClass#test_all:
@@ -68,7 +68,7 @@ NoMethodError: undefined method `error_score?' for TestRun:Class
 
   3) Error:
 NewTestClass#test_local_assert_post_conditions:
-NoMethodError: undefined method `assertions' for #<WorkFlow:0x0000000238dd38>
+NoMethodError: undefined method `assertions' for #<WorkFlow:0x00000002507c18>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
@@ -99,7 +99,7 @@ NoMethodError: undefined method `assertions' for #<WorkFlow:0x0000000238dd38>
 
   4) Error:
 NewTestClass#test_merge_command:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0000000208ded0>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000022053d0>
     test/unit/work_flow_test.rb:70:in `test_merge_command'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -126,7 +126,7 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
 
   5) Error:
 NewTestClass#test_local_assert_pre_conditions:
-NoMethodError: undefined method `assertions' for #<WorkFlow:0x0000000238dd38>
+NoMethodError: undefined method `assertions' for #<WorkFlow:0x00000002507c18>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:505:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:594:in `refute_nil'

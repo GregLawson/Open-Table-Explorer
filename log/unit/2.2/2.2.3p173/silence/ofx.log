@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:11:31.259
+2016-02-01 18:58:33.558
 ruby -v -W0 test/unit/ofx_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,11 +8,11 @@ Run options: --seed 0
 
 .EEEEE..
 
-Finished in 0.004220s, 1895.7535 runs/s, 0.0000 assertions/s.
+Finished in 0.003478s, 2299.9113 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_id_equal:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000017689b8>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001cc8a70>
     test/unit/ofx_test.rb:8:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -39,7 +39,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   2) Error:
 NewTestClass#test_aaa_test_new_assertions_:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000017681e8>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001cc8188>
     test/unit/ofx_test.rb:8:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -66,7 +66,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   3) Error:
 NewTestClass#test_class_name:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001f7bdd0>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000024e7dc8>
     test/unit/ofx_test.rb:8:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -93,7 +93,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   4) Error:
 NewTestClass#test_general_associations:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001f7bb00>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000024e7a30>
     test/unit/ofx_test.rb:8:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -120,7 +120,7 @@ NameError: undefined local variable or method `define_model_of_test' for #<NewTe
 
   5) Error:
 NewTestClass#test_specific__stable_and_working:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000001f7b768>
+NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x000000024e7760>
     test/unit/ofx_test.rb:8:in `setup'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:106:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'

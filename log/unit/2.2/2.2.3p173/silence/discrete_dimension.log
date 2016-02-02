@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:27:54.019
+2016-02-01 18:31:27.270
 ruby -v -W0 test/unit/discrete_dimension_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:11:43.338
+2016-02-01 18:58:46.391
 ruby -v -W0 test/unit/production_ftp_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..E..
 
-Finished in 0.003879s, 1288.9990 runs/s, 0.0000 assertions/s.
+Finished in 0.004018s, 1244.5083 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_the:

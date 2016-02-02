@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:11:36.966
+2016-02-01 18:58:39.681
 ruby -v -W0 test/unit/parse_tree_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:10:52.700
+2016-02-01 18:58:12.154
 ruby -v -W0 test/unit/interactive_bottleneck_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -9,8 +9,7 @@ Run options: --seed 0
 ...EE.confirm_commit(:echo @repository.something_to_commit?=true
 .Emerge(:edited, :testing, :interactive)
 merge_status= $ git merge --no-commit testing
-@errors="Recorded preimage for 'log/unit/2.2/2.2.3p173/silence/parse.log'\nRecorded preimage for 'log/unit/2.2/2.2.3p173/silence/sleep_study.log'\nRecorded preimage for 'log/unit/2.2/2.2.3p173/silence/tax_form.log'\nRecorded preimage for 'log/unit/2.2/2.2.3p173/silence/unit.log'\nRecorded preimage for 'test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example_out.txt'\nRecorded preimage for 'test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_out.txt'\nRecorded preimage for 'test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt'\n"
-@process_status=#<Process::Status: pid 12764 exit 1>
+@process_status=#<Process::Status: pid 27015 exit 1>
 Auto-merging test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt
 CONFLICT (content): Merge conflict in test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt
 Auto-merging test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_sysout.txt
@@ -29,8 +28,7 @@ Auto-merging log/unit/2.2/2.2.3p173/silence/parse.log
 CONFLICT (content): Merge conflict in log/unit/2.2/2.2.3p173/silence/parse.log
 Automatic merge failed; fix conflicts and then commit the result.
 merge_conflict_recovery$ git merge --no-commit testing
-@errors="Recorded preimage for 'log/unit/2.2/2.2.3p173/silence/parse.log'\nRecorded preimage for 'log/unit/2.2/2.2.3p173/silence/sleep_study.log'\nRecorded preimage for 'log/unit/2.2/2.2.3p173/silence/tax_form.log'\nRecorded preimage for 'log/unit/2.2/2.2.3p173/silence/unit.log'\nRecorded preimage for 'test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example_out.txt'\nRecorded preimage for 'test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_out.txt'\nRecorded preimage for 'test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt'\n"
-@process_status=#<Process::Status: pid 12764 exit 1>
+@process_status=#<Process::Status: pid 27015 exit 1>
 Auto-merging test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt
 CONFLICT (content): Merge conflict in test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt
 Auto-merging test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_example_sysout.txt
@@ -77,160 +75,118 @@ not checkout HEAD test/data_sources/tax_form/2014/examples_and_templates/US_1040
 not checkout HEAD test/data_sources/tax_form/2014/examples_and_templates/US_1040/US_1040_template_out.txt
 confirm_commit(:interactive @repository.something_to_commit?=false
 confirm_commit(:interactive @repository.something_to_commit?=false
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/EEG.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/arp.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/assertions.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/backup.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/battery.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/battery_measurement.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/battery_type.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/blue_tooth.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/branch.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/bug.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/code.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/column_group.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/command.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/command_line.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/default.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/default_test_case.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/dependancies.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/dhcp.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/discrete_dimension.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/edison.log
 ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/editor.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/error_type.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/example_type.log
 ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/file_pattern.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/flora.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/frequency.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_column.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_file.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_grep.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_table.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_table_association.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_table_examples.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_table_html.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/generic_type.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/global.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/gnome.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/grub.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/homerun.log
 ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/host.log
-ruby script/workflow.rb --test test/unit/dependancies_test.rb
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/huelserie.log
+ruby script/workflow.rb --test log/unit/2.2/2.2.3p173/silence/huelshow.log
 confirm_commit(:interactive @repository.something_to_commit?=true
-confirm_commit(:interactive @repository.something_to_commit?=false
-confirm_commit(:interactive @repository.something_to_commit?=false
-confirm_commit(:interactive @repository.something_to_commit?=false
-.....$ git rebase --abort
-@errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 20135 exit 1>
-$ git merge --abort
-@errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 20155 exit 128>
-$ git checkout master
-@errors="Already on 'master'\n"
-..confirm_commit(:echo @repository.something_to_commit?=true
-ruby script/workflow.rb --test README
 
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92: [BUG] Bus Error at 0x0003e8000054ba
+[BUG] Bus Error at 0x0003e8000054ba
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 
 -- Control frame information -----------------------------------------------
-c:0034 p:---- s:0173 e:000172 CFUNC  :read
-c:0033 p:0015 s:0170 e:000169 BLOCK  /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92
-c:0032 p:0077 s:0164 e:000163 METHOD /usr/lib/ruby/2.2.0/open3.rb:199
-c:0031 p:0125 s:0154 e:000153 METHOD /usr/lib/ruby/2.2.0/open3.rb:93
-c:0030 p:0052 s:0142 E:000b30 METHOD /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:90
-c:0029 p:0026 s:0137 e:000136 METHOD /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117 [FINISH]
-c:0028 p:---- s:0133 e:000132 CFUNC  :new
-c:0027 p:0022 s:0128 e:000127 METHOD /home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:109
-c:0026 p:0019 s:0123 e:000122 BLOCK  /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:172 [FINISH]
-c:0025 p:---- s:0120 e:000119 CFUNC  :each
-c:0024 p:0185 s:0117 e:000116 METHOD /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:171
-c:0023 p:0165 s:0107 E:001c40 METHOD test/unit/interactive_bottleneck_test.rb:91
-c:0022 p:0024 s:0096 e:000095 BLOCK  /usr/lib/ruby/vendor_ruby/minitest/test.rb:108
-c:0021 p:0006 s:0094 e:000093 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:205
-c:0020 p:0007 s:0090 e:000089 BLOCK  /usr/lib/ruby/vendor_ruby/minitest/test.rb:105
-c:0019 p:0019 s:0088 e:000087 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:256
-c:0018 p:0007 s:0084 e:000083 BLOCK  /usr/lib/ruby/vendor_ruby/minitest/test.rb:104
-c:0017 p:0034 s:0082 e:000081 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:331
-c:0016 p:0035 s:0075 E:000298 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:276
-c:0015 p:0007 s:0069 E:000dc0 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:103
-c:0014 p:0012 s:0066 e:000065 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:778
-c:0013 p:0019 s:0060 e:000058 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:305
-c:0012 p:0013 s:0053 e:000052 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:293 [FINISH]
-c:0011 p:---- s:0050 e:000049 CFUNC  :each
-c:0010 p:0008 s:0047 e:000046 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:292
-c:0009 p:0034 s:0045 e:000044 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:331
-c:0008 p:0020 s:0038 E:0014b8 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:318
-c:0007 p:0076 s:0032 E:001440 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:291
-c:0006 p:0012 s:0025 e:000024 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:152 [FINISH]
-c:0005 p:---- s:0022 e:000021 CFUNC  :map
-c:0004 p:0036 s:0019 e:000018 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:152
-c:0003 p:0140 s:0011 e:000010 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:129
-c:0002 p:0065 s:0005 E:0025e8 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:56 [FINISH]
-c:0001 p:0000 s:0002 E:001e70 TOP    [FINISH]
+c:0001 p:---- s:0002 e:000001 TOP    [FINISH]
 
--- Ruby level backtrace information ----------------------------------------
-/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-test/unit/interactive_bottleneck_test.rb:91:in `test_safely_visit_branch'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:171:in `safely_visit_branch'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:171:in `each'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:172:in `block in safely_visit_branch'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:109:in `shell_command'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/repository.rb:109:in `new'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:90:in `execute'
-/usr/lib/ruby/2.2.0/open3.rb:93:in `popen3'
-/usr/lib/ruby/2.2.0/open3.rb:199:in `popen_run'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92:in `block in execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92:in `read'
 
 -- Machine register context ------------------------------------------------
- RIP: 0x00007f0bcc31681d RBP: 0x0000000000002000 RSP: 0x00007fffee1ee860
- RAX: 0xfffffffffffffffc RBX: 0x0000000000bc75f0 RCX: 0xffffffffffffffff
- RDX: 0x0000000000002000 RDI: 0x0000000000000009 RSI: 0x0000000002d21730
-  R8: 0x0000000000bc6f30  R9: 0x0000000000000000 R10: 0x0000000000000000
- R11: 0x0000000000000293 R12: 0x0000000002d21730 R13: 0x00007fffee1eea10
- R14: 0x0000000002d21730 R15: 0x0000000000002000 EFL: 0x0000000000000293
+ RIP: 0x00007f3ae057481d RBP: 0x0000000000002000 RSP: 0x00007ffd86e5ac80
+ RAX: 0xfffffffffffffffc RBX: 0x0000000000bb25f0 RCX: 0xffffffffffffffff
+ RDX: 0x0000000000002000 RDI: 0x0000000000000009 RSI: 0x0000000002dedb40
+  R8: 0x0000000000bb1f30  R9: 0x0000000000000000 R10: 0x0000000000000001
+ R11: 0x0000000000000293 R12: 0x0000000002dedb40 R13: 0x00007ffd86e5ae30
+ R14: 0x0000000002dedb40 R15: 0x0000000000002000 EFL: 0x0000000000000293
 
 -- C level backtrace information -------------------------------------------
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6b5de5]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6b601c]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc591fcb]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc64753e]
-/lib/x86_64-linux-gnu/libpthread.so.0 [0x7f0bcc317660]
-/lib/x86_64-linux-gnu/libpthread.so.0(read+0x2d) [0x7f0bcc31681d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_thread_io_blocking_region+0xcc) [0x7f0bcc6bfadc]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc5beb76]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc5bec44]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ensure+0xb0) [0x7f0bcc5976f0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc5bac9c]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc5be405]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc5c0bdf]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc69fa21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a35c2]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a8d8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6aa484]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6ab8e6]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_class_new_instance+0x21) [0x7f0bcc5e7171]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc69fa21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a35c2]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a8d8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6ae1c0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f0bcc6af36b]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ary_each+0x52) [0x7f0bcc5517f2]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc69fa21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a3517]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a8d8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6ae1c0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f0bcc6af36b]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ary_each+0x52) [0x7f0bcc5517f2]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc69fa21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a3517]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a8d8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6ae1c0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f0bcc6af36b]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc5567bd]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc69fa21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6afebe]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a3517]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6a8d8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6ae1c0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6ae6f0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc6ae7e8]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_proc_call+0x42) [0x7f0bcc59de62]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc595054]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_exec_end_proc+0x93) [0x7f0bcc5982f3]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f0bcc598423]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(ruby_cleanup+0x200) [0x7f0bcc5987d0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(ruby_run_node+0x25) [0x7f0bcc598c35]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0913de5]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae091401c]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae07effcb]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae08a553e]
+/lib/x86_64-linux-gnu/libpthread.so.0 [0x7f3ae0575660]
+/lib/x86_64-linux-gnu/libpthread.so.0(read+0x2d) [0x7f3ae057481d]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_thread_io_blocking_region+0xcc) [0x7f3ae091dadc]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae081cb76]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae081cc44]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ensure+0xb0) [0x7f3ae07f56f0]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0818c9c]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae081c405]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae081ebdf]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae08fda21]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae09015c2]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0906d8d]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0908484]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae09098e6]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_class_new_instance+0x21) [0x7f3ae0845171]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae08fda21]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae09015c2]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0906d8d]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090c1c0]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f3ae090d36b]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ary_each+0x52) [0x7f3ae07af7f2]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae08fda21]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090debe]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0901517]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0906d8d]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090c1c0]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f3ae090d36b]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ary_each+0x52) [0x7f3ae07af7f2]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae08fda21]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0901517]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0906d8d]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090c1c0]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f3ae090d36b]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae07b47bd]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae08fda21]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090debe]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0901517]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae0906d8d]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090c1c0]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090c6f0]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae090c7e8]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_proc_call+0x42) [0x7f3ae07fbe62]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae07f3054]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_exec_end_proc+0x93) [0x7f3ae07f62f3]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f3ae07f6423]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(ruby_cleanup+0x200) [0x7f3ae07f67d0]
+/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(ruby_run_node+0x25) [0x7f3ae07f6c35]
 ruby [0x40089b]
-/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0) [0x7f0bcb5c0870]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0) [0x7f3adf81e870]
 ruby(_start+0x29) [0x4008c9]
 
 -- Other runtime information -----------------------------------------------
@@ -781,178 +737,178 @@ ruby(_start+0x29) [0x4008c9]
 00400000-00401000 r-xp 00000000 103:00 2649509                           /usr/bin/ruby2.2
 00600000-00601000 r--p 00000000 103:00 2649509                           /usr/bin/ruby2.2
 00601000-00602000 rw-p 00001000 103:00 2649509                           /usr/bin/ruby2.2
-00bc6000-02f02000 rw-p 00000000 00:00 0                                  [heap]
-7f0bb8000000-7f0bb8021000 rw-p 00000000 00:00 0 
-7f0bb8021000-7f0bbc000000 ---p 00000000 00:00 0 
-7f0bbc000000-7f0bbc021000 rw-p 00000000 00:00 0 
-7f0bbc021000-7f0bc0000000 ---p 00000000 00:00 0 
-7f0bc0000000-7f0bc0021000 rw-p 00000000 00:00 0 
-7f0bc0021000-7f0bc4000000 ---p 00000000 00:00 0 
-7f0bc706f000-7f0bc7070000 rw-p 00000000 00:00 0 
-7f0bc7070000-7f0bc7212000 r--s 00000000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f0bc7212000-7f0bc747d000 r--s 00000000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f0bc747d000-7f0bc7493000 r-xp 00000000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
-7f0bc7493000-7f0bc7692000 ---p 00016000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
-7f0bc7692000-7f0bc7693000 rw-p 00015000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
-7f0bc7693000-7f0bc7694000 ---p 00000000 00:00 0 
-7f0bc7694000-7f0bc7895000 rw-p 00000000 00:00 0 
-7f0bc7895000-7f0bc7896000 ---p 00000000 00:00 0 
-7f0bc7896000-7f0bc7a97000 rw-p 00000000 00:00 0 
-7f0bc7a97000-7f0bc7a98000 ---p 00000000 00:00 0 
-7f0bc7a98000-7f0bc7c99000 rw-p 00000000 00:00 0 
-7f0bc7c99000-7f0bc7cb7000 r-xp 00000000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f0bc7cb7000-7f0bc7eb6000 ---p 0001e000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f0bc7eb6000-7f0bc7eb7000 r--p 0001d000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f0bc7eb7000-7f0bc7eb8000 rw-p 0001e000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f0bc7eb8000-7f0bc7ebe000 r-xp 00000000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f0bc7ebe000-7f0bc80bd000 ---p 00006000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f0bc80bd000-7f0bc80be000 r--p 00005000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f0bc80be000-7f0bc80bf000 rw-p 00006000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f0bc80bf000-7f0bc80c2000 r-xp 00000000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
-7f0bc80c2000-7f0bc82c1000 ---p 00003000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
-7f0bc82c1000-7f0bc82c2000 r--p 00002000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
-7f0bc82c2000-7f0bc82c3000 rw-p 00003000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
-7f0bc82c3000-7f0bc82dd000 r-xp 00000000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
-7f0bc82dd000-7f0bc84dc000 ---p 0001a000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
-7f0bc84dc000-7f0bc84dd000 r--p 00019000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
-7f0bc84dd000-7f0bc84de000 rw-p 0001a000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
-7f0bc84de000-7f0bc84eb000 r-xp 00000000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
-7f0bc84eb000-7f0bc86eb000 ---p 0000d000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
-7f0bc86eb000-7f0bc86ec000 r--p 0000d000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
-7f0bc86ec000-7f0bc86ed000 rw-p 0000e000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
-7f0bc86ed000-7f0bc86ee000 r-xp 00000000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
-7f0bc86ee000-7f0bc88ed000 ---p 00001000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
-7f0bc88ed000-7f0bc88ee000 r--p 00000000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
-7f0bc88ee000-7f0bc88ef000 rw-p 00001000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
-7f0bc88ef000-7f0bc88f5000 r-xp 00000000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f0bc88f5000-7f0bc8af4000 ---p 00006000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f0bc8af4000-7f0bc8af5000 r--p 00005000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f0bc8af5000-7f0bc8af6000 rw-p 00006000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f0bc8af6000-7f0bc8afb000 r-xp 00000000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f0bc8afb000-7f0bc8cfa000 ---p 00005000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f0bc8cfa000-7f0bc8cfb000 r--p 00004000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f0bc8cfb000-7f0bc8cfc000 rw-p 00005000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f0bc8cfc000-7f0bc8d04000 r-xp 00000000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f0bc8d04000-7f0bc8f03000 ---p 00008000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f0bc8f03000-7f0bc8f04000 r--p 00007000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f0bc8f04000-7f0bc8f05000 rw-p 00008000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f0bc8f05000-7f0bc8f06000 r-xp 00000000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f0bc8f06000-7f0bc9106000 ---p 00001000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f0bc9106000-7f0bc9107000 r--p 00001000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f0bc9107000-7f0bc9108000 rw-p 00002000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f0bc9108000-7f0bc9109000 r-xp 00000000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f0bc9109000-7f0bc9309000 ---p 00001000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f0bc9309000-7f0bc930a000 r--p 00001000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f0bc930a000-7f0bc930b000 rw-p 00002000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f0bc930b000-7f0bc930c000 r-xp 00000000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f0bc930c000-7f0bc950c000 ---p 00001000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f0bc950c000-7f0bc950d000 r--p 00001000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f0bc950d000-7f0bc950e000 rw-p 00002000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f0bc950e000-7f0bc950f000 r-xp 00000000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f0bc950f000-7f0bc970f000 ---p 00001000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f0bc970f000-7f0bc9710000 r--p 00001000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f0bc9710000-7f0bc9711000 rw-p 00002000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f0bc9711000-7f0bc9717000 r-xp 00000000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f0bc9717000-7f0bc9916000 ---p 00006000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f0bc9916000-7f0bc9917000 r--p 00005000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f0bc9917000-7f0bc9918000 rw-p 00006000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f0bc9918000-7f0bc9929000 r-xp 00000000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f0bc9929000-7f0bc9b28000 ---p 00011000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f0bc9b28000-7f0bc9b29000 r--p 00010000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f0bc9b29000-7f0bc9b2a000 rw-p 00011000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f0bc9b2a000-7f0bc9b59000 r-xp 00000000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f0bc9b59000-7f0bc9d59000 ---p 0002f000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f0bc9d59000-7f0bc9d5a000 r--p 0002f000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f0bc9d5a000-7f0bc9d5b000 rw-p 00030000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f0bc9d5b000-7f0bc9d5c000 rw-p 00000000 00:00 0 
-7f0bc9d5c000-7f0bc9d5d000 r-xp 00000000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f0bc9d5d000-7f0bc9f5c000 ---p 00001000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f0bc9f5c000-7f0bc9f5d000 r--p 00000000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f0bc9f5d000-7f0bc9f5e000 rw-p 00001000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f0bc9f5e000-7f0bc9f61000 r-xp 00000000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f0bc9f61000-7f0bca160000 ---p 00003000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f0bca160000-7f0bca161000 r--p 00002000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f0bca161000-7f0bca162000 rw-p 00003000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f0bca162000-7f0bca395000 r-xp 00000000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f0bca395000-7f0bca595000 ---p 00233000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f0bca595000-7f0bca5b1000 r--p 00233000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f0bca5b1000-7f0bca5c0000 rw-p 0024f000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f0bca5c0000-7f0bca5c4000 rw-p 00000000 00:00 0 
-7f0bca5c4000-7f0bca623000 r-xp 00000000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f0bca623000-7f0bca822000 ---p 0005f000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f0bca822000-7f0bca826000 r--p 0005e000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f0bca826000-7f0bca82d000 rw-p 00062000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f0bca82d000-7f0bca87c000 r-xp 00000000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f0bca87c000-7f0bcaa7b000 ---p 0004f000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f0bcaa7b000-7f0bcaa7d000 r--p 0004e000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f0bcaa7d000-7f0bcaa7f000 rw-p 00050000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f0bcaa7f000-7f0bcaa80000 rw-p 00000000 00:00 0 
-7f0bcaa80000-7f0bcaa87000 r-xp 00000000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f0bcaa87000-7f0bcac86000 ---p 00007000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f0bcac86000-7f0bcac87000 r--p 00006000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f0bcac87000-7f0bcac88000 rw-p 00007000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f0bcac88000-7f0bcac8e000 r-xp 00000000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f0bcac8e000-7f0bcae8d000 ---p 00006000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f0bcae8d000-7f0bcae8e000 r--p 00005000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f0bcae8e000-7f0bcae8f000 rw-p 00006000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f0bcae8f000-7f0bcae92000 r-xp 00000000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f0bcae92000-7f0bcb091000 ---p 00003000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f0bcb091000-7f0bcb092000 r--p 00002000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f0bcb092000-7f0bcb093000 rw-p 00003000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f0bcb093000-7f0bcb095000 r-xp 00000000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f0bcb095000-7f0bcb295000 ---p 00002000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f0bcb295000-7f0bcb296000 r--p 00002000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f0bcb296000-7f0bcb297000 rw-p 00003000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f0bcb297000-7f0bcb299000 r-xp 00000000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f0bcb299000-7f0bcb498000 ---p 00002000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f0bcb498000-7f0bcb499000 r--p 00001000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f0bcb499000-7f0bcb49a000 rw-p 00002000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f0bcb49a000-7f0bcb49b000 rw-p 00000000 00:00 0 
-7f0bcb49b000-7f0bcb49c000 ---p 00000000 00:00 0 
-7f0bcb49c000-7f0bcb5a0000 rw-p 00000000 00:00 0 
-7f0bcb5a0000-7f0bcb73a000 r-xp 00000000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f0bcb73a000-7f0bcb93a000 ---p 0019a000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f0bcb93a000-7f0bcb93e000 r--p 0019a000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f0bcb93e000-7f0bcb940000 rw-p 0019e000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f0bcb940000-7f0bcb944000 rw-p 00000000 00:00 0 
-7f0bcb944000-7f0bcba47000 r-xp 00000000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f0bcba47000-7f0bcbc47000 ---p 00103000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f0bcbc47000-7f0bcbc48000 r--p 00103000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f0bcbc48000-7f0bcbc49000 rw-p 00104000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f0bcbc49000-7f0bcbc51000 r-xp 00000000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f0bcbc51000-7f0bcbe50000 ---p 00008000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f0bcbe50000-7f0bcbe51000 r--p 00007000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f0bcbe51000-7f0bcbe52000 rw-p 00008000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f0bcbe52000-7f0bcbe80000 rw-p 00000000 00:00 0 
-7f0bcbe80000-7f0bcbe82000 r-xp 00000000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f0bcbe82000-7f0bcc082000 ---p 00002000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f0bcc082000-7f0bcc083000 r--p 00002000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f0bcc083000-7f0bcc084000 rw-p 00003000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f0bcc084000-7f0bcc106000 r-xp 00000000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f0bcc106000-7f0bcc305000 ---p 00082000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f0bcc305000-7f0bcc306000 r--p 00081000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f0bcc306000-7f0bcc307000 rw-p 00082000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f0bcc307000-7f0bcc31f000 r-xp 00000000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f0bcc31f000-7f0bcc51e000 ---p 00018000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f0bcc51e000-7f0bcc51f000 r--p 00017000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f0bcc51f000-7f0bcc520000 rw-p 00018000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f0bcc520000-7f0bcc524000 rw-p 00000000 00:00 0 
-7f0bcc524000-7f0bcc786000 r-xp 00000000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f0bcc786000-7f0bcc986000 ---p 00262000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f0bcc986000-7f0bcc98b000 r--p 00262000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f0bcc98b000-7f0bcc98e000 rw-p 00267000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f0bcc98e000-7f0bcc99f000 rw-p 00000000 00:00 0 
-7f0bcc99f000-7f0bcc9c1000 r-xp 00000000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
-7f0bcc9e9000-7f0bcca0a000 r--s 00000000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f0bcca0a000-7f0bccb93000 r--p 00000000 103:00 2625802                   /usr/lib/locale/locale-archive
-7f0bccb93000-7f0bccb98000 rw-p 00000000 00:00 0 
-7f0bccb99000-7f0bccb9b000 r--s 00000000 103:00 2649509                   /usr/bin/ruby2.2
-7f0bccb9b000-7f0bccbc0000 rw-p 00000000 00:00 0 
-7f0bccbc0000-7f0bccbc1000 r--p 00021000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
-7f0bccbc1000-7f0bccbc2000 rw-p 00022000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
-7f0bccbc2000-7f0bccbc3000 rw-p 00000000 00:00 0 
-7fffed9f4000-7fffee1f3000 rw-p 00000000 00:00 0                          [stack]
-7fffee1f4000-7fffee1f5000 r-xp 00000000 00:00 0                          [vdso]
+00bb1000-031c0000 rw-p 00000000 00:00 0                                  [heap]
+7f3acc000000-7f3acc021000 rw-p 00000000 00:00 0 
+7f3acc021000-7f3ad0000000 ---p 00000000 00:00 0 
+7f3ad0000000-7f3ad0021000 rw-p 00000000 00:00 0 
+7f3ad0021000-7f3ad4000000 ---p 00000000 00:00 0 
+7f3ad4000000-7f3ad4021000 rw-p 00000000 00:00 0 
+7f3ad4021000-7f3ad8000000 ---p 00000000 00:00 0 
+7f3adb2cd000-7f3adb2ce000 rw-p 00000000 00:00 0 
+7f3adb2ce000-7f3adb470000 r--s 00000000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
+7f3adb470000-7f3adb6db000 r--s 00000000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
+7f3adb6db000-7f3adb6f1000 r-xp 00000000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f3adb6f1000-7f3adb8f0000 ---p 00016000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f3adb8f0000-7f3adb8f1000 rw-p 00015000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f3adb8f1000-7f3adb8f2000 ---p 00000000 00:00 0 
+7f3adb8f2000-7f3adbaf3000 rw-p 00000000 00:00 0 
+7f3adbaf3000-7f3adbaf4000 ---p 00000000 00:00 0 
+7f3adbaf4000-7f3adbcf5000 rw-p 00000000 00:00 0 
+7f3adbcf5000-7f3adbcf6000 ---p 00000000 00:00 0 
+7f3adbcf6000-7f3adbef7000 rw-p 00000000 00:00 0 
+7f3adbef7000-7f3adbf15000 r-xp 00000000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
+7f3adbf15000-7f3adc114000 ---p 0001e000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
+7f3adc114000-7f3adc115000 r--p 0001d000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
+7f3adc115000-7f3adc116000 rw-p 0001e000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
+7f3adc116000-7f3adc11c000 r-xp 00000000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
+7f3adc11c000-7f3adc31b000 ---p 00006000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
+7f3adc31b000-7f3adc31c000 r--p 00005000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
+7f3adc31c000-7f3adc31d000 rw-p 00006000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
+7f3adc31d000-7f3adc320000 r-xp 00000000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
+7f3adc320000-7f3adc51f000 ---p 00003000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
+7f3adc51f000-7f3adc520000 r--p 00002000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
+7f3adc520000-7f3adc521000 rw-p 00003000 103:00 3155116                   /var/lib/gems/2.2.0/extensions/x86_64-linux/2.2.0/posix-spawn-0.3.8/posix_spawn_ext.so
+7f3adc521000-7f3adc53b000 r-xp 00000000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
+7f3adc53b000-7f3adc73a000 ---p 0001a000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
+7f3adc73a000-7f3adc73b000 r--p 00019000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
+7f3adc73b000-7f3adc73c000 rw-p 0001a000 103:00 5505343                   /lib/x86_64-linux-gnu/libz.so.1.2.8
+7f3adc73c000-7f3adc749000 r-xp 00000000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
+7f3adc749000-7f3adc949000 ---p 0000d000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
+7f3adc949000-7f3adc94a000 r--p 0000d000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
+7f3adc94a000-7f3adc94b000 rw-p 0000e000 103:00 2761452                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/zlib.so
+7f3adc94b000-7f3adc94c000 r-xp 00000000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
+7f3adc94c000-7f3adcb4b000 ---p 00001000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
+7f3adcb4b000-7f3adcb4c000 r--p 00000000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
+7f3adcb4c000-7f3adcb4d000 rw-p 00001000 103:00 2768271                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest/sha1.so
+7f3adcb4d000-7f3adcb53000 r-xp 00000000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
+7f3adcb53000-7f3adcd52000 ---p 00006000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
+7f3adcd52000-7f3adcd53000 r--p 00005000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
+7f3adcd53000-7f3adcd54000 rw-p 00006000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
+7f3adcd54000-7f3adcd59000 r-xp 00000000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
+7f3adcd59000-7f3adcf58000 ---p 00005000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
+7f3adcf58000-7f3adcf59000 r--p 00004000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
+7f3adcf59000-7f3adcf5a000 rw-p 00005000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
+7f3adcf5a000-7f3adcf62000 r-xp 00000000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
+7f3adcf62000-7f3add161000 ---p 00008000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
+7f3add161000-7f3add162000 r--p 00007000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
+7f3add162000-7f3add163000 rw-p 00008000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
+7f3add163000-7f3add164000 r-xp 00000000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
+7f3add164000-7f3add364000 ---p 00001000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
+7f3add364000-7f3add365000 r--p 00001000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
+7f3add365000-7f3add366000 rw-p 00002000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
+7f3add366000-7f3add367000 r-xp 00000000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
+7f3add367000-7f3add567000 ---p 00001000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
+7f3add567000-7f3add568000 r--p 00001000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
+7f3add568000-7f3add569000 rw-p 00002000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
+7f3add569000-7f3add56a000 r-xp 00000000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
+7f3add56a000-7f3add76a000 ---p 00001000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
+7f3add76a000-7f3add76b000 r--p 00001000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
+7f3add76b000-7f3add76c000 rw-p 00002000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
+7f3add76c000-7f3add76d000 r-xp 00000000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
+7f3add76d000-7f3add96d000 ---p 00001000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
+7f3add96d000-7f3add96e000 r--p 00001000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
+7f3add96e000-7f3add96f000 rw-p 00002000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
+7f3add96f000-7f3add975000 r-xp 00000000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
+7f3add975000-7f3addb74000 ---p 00006000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
+7f3addb74000-7f3addb75000 r--p 00005000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
+7f3addb75000-7f3addb76000 rw-p 00006000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
+7f3addb76000-7f3addb87000 r-xp 00000000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
+7f3addb87000-7f3addd86000 ---p 00011000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
+7f3addd86000-7f3addd87000 r--p 00010000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
+7f3addd87000-7f3addd88000 rw-p 00011000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
+7f3addd88000-7f3adddb7000 r-xp 00000000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
+7f3adddb7000-7f3addfb7000 ---p 0002f000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
+7f3addfb7000-7f3addfb8000 r--p 0002f000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
+7f3addfb8000-7f3addfb9000 rw-p 00030000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
+7f3addfb9000-7f3addfba000 rw-p 00000000 00:00 0 
+7f3addfba000-7f3addfbb000 r-xp 00000000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
+7f3addfbb000-7f3ade1ba000 ---p 00001000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
+7f3ade1ba000-7f3ade1bb000 r--p 00000000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
+7f3ade1bb000-7f3ade1bc000 rw-p 00001000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
+7f3ade1bc000-7f3ade1bf000 r-xp 00000000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
+7f3ade1bf000-7f3ade3be000 ---p 00003000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
+7f3ade3be000-7f3ade3bf000 r--p 00002000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
+7f3ade3bf000-7f3ade3c0000 rw-p 00003000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
+7f3ade3c0000-7f3ade5f3000 r-xp 00000000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
+7f3ade5f3000-7f3ade7f3000 ---p 00233000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
+7f3ade7f3000-7f3ade80f000 r--p 00233000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
+7f3ade80f000-7f3ade81e000 rw-p 0024f000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
+7f3ade81e000-7f3ade822000 rw-p 00000000 00:00 0 
+7f3ade822000-7f3ade881000 r-xp 00000000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
+7f3ade881000-7f3adea80000 ---p 0005f000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
+7f3adea80000-7f3adea84000 r--p 0005e000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
+7f3adea84000-7f3adea8b000 rw-p 00062000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
+7f3adea8b000-7f3adeada000 r-xp 00000000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
+7f3adeada000-7f3adecd9000 ---p 0004f000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
+7f3adecd9000-7f3adecdb000 r--p 0004e000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
+7f3adecdb000-7f3adecdd000 rw-p 00050000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
+7f3adecdd000-7f3adecde000 rw-p 00000000 00:00 0 
+7f3adecde000-7f3adece5000 r-xp 00000000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
+7f3adece5000-7f3adeee4000 ---p 00007000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
+7f3adeee4000-7f3adeee5000 r--p 00006000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
+7f3adeee5000-7f3adeee6000 rw-p 00007000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
+7f3adeee6000-7f3adeeec000 r-xp 00000000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
+7f3adeeec000-7f3adf0eb000 ---p 00006000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
+7f3adf0eb000-7f3adf0ec000 r--p 00005000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
+7f3adf0ec000-7f3adf0ed000 rw-p 00006000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
+7f3adf0ed000-7f3adf0f0000 r-xp 00000000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
+7f3adf0f0000-7f3adf2ef000 ---p 00003000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
+7f3adf2ef000-7f3adf2f0000 r--p 00002000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
+7f3adf2f0000-7f3adf2f1000 rw-p 00003000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
+7f3adf2f1000-7f3adf2f3000 r-xp 00000000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
+7f3adf2f3000-7f3adf4f3000 ---p 00002000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
+7f3adf4f3000-7f3adf4f4000 r--p 00002000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
+7f3adf4f4000-7f3adf4f5000 rw-p 00003000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
+7f3adf4f5000-7f3adf4f7000 r-xp 00000000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
+7f3adf4f7000-7f3adf6f6000 ---p 00002000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
+7f3adf6f6000-7f3adf6f7000 r--p 00001000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
+7f3adf6f7000-7f3adf6f8000 rw-p 00002000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
+7f3adf6f8000-7f3adf6f9000 rw-p 00000000 00:00 0 
+7f3adf6f9000-7f3adf6fa000 ---p 00000000 00:00 0 
+7f3adf6fa000-7f3adf7fe000 rw-p 00000000 00:00 0 
+7f3adf7fe000-7f3adf998000 r-xp 00000000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
+7f3adf998000-7f3adfb98000 ---p 0019a000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
+7f3adfb98000-7f3adfb9c000 r--p 0019a000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
+7f3adfb9c000-7f3adfb9e000 rw-p 0019e000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
+7f3adfb9e000-7f3adfba2000 rw-p 00000000 00:00 0 
+7f3adfba2000-7f3adfca5000 r-xp 00000000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
+7f3adfca5000-7f3adfea5000 ---p 00103000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
+7f3adfea5000-7f3adfea6000 r--p 00103000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
+7f3adfea6000-7f3adfea7000 rw-p 00104000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
+7f3adfea7000-7f3adfeaf000 r-xp 00000000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
+7f3adfeaf000-7f3ae00ae000 ---p 00008000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
+7f3ae00ae000-7f3ae00af000 r--p 00007000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
+7f3ae00af000-7f3ae00b0000 rw-p 00008000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
+7f3ae00b0000-7f3ae00de000 rw-p 00000000 00:00 0 
+7f3ae00de000-7f3ae00e0000 r-xp 00000000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
+7f3ae00e0000-7f3ae02e0000 ---p 00002000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
+7f3ae02e0000-7f3ae02e1000 r--p 00002000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
+7f3ae02e1000-7f3ae02e2000 rw-p 00003000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
+7f3ae02e2000-7f3ae0364000 r-xp 00000000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
+7f3ae0364000-7f3ae0563000 ---p 00082000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
+7f3ae0563000-7f3ae0564000 r--p 00081000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
+7f3ae0564000-7f3ae0565000 rw-p 00082000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
+7f3ae0565000-7f3ae057d000 r-xp 00000000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
+7f3ae057d000-7f3ae077c000 ---p 00018000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
+7f3ae077c000-7f3ae077d000 r--p 00017000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
+7f3ae077d000-7f3ae077e000 rw-p 00018000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
+7f3ae077e000-7f3ae0782000 rw-p 00000000 00:00 0 
+7f3ae0782000-7f3ae09e4000 r-xp 00000000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
+7f3ae09e4000-7f3ae0be4000 ---p 00262000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
+7f3ae0be4000-7f3ae0be9000 r--p 00262000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
+7f3ae0be9000-7f3ae0bec000 rw-p 00267000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
+7f3ae0bec000-7f3ae0bfd000 rw-p 00000000 00:00 0 
+7f3ae0bfd000-7f3ae0c1f000 r-xp 00000000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
+7f3ae0c47000-7f3ae0c68000 r--s 00000000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
+7f3ae0c68000-7f3ae0df1000 r--p 00000000 103:00 2625802                   /usr/lib/locale/locale-archive
+7f3ae0df1000-7f3ae0df6000 rw-p 00000000 00:00 0 
+7f3ae0df7000-7f3ae0df9000 r--s 00000000 103:00 2649509                   /usr/bin/ruby2.2
+7f3ae0df9000-7f3ae0e1e000 rw-p 00000000 00:00 0 
+7f3ae0e1e000-7f3ae0e1f000 r--p 00021000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
+7f3ae0e1f000-7f3ae0e20000 rw-p 00022000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
+7f3ae0e20000-7f3ae0e21000 rw-p 00000000 00:00 0 
+7ffd86660000-7ffd86e5f000 rw-p 00000000 00:00 0                          [stack]
+7ffd86edd000-7ffd86ede000 r-xp 00000000 00:00 0                          [vdso]
 ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
 
 

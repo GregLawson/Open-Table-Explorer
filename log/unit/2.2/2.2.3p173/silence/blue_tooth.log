@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:20:22.426
+2016-02-01 18:30:38.395
 ruby -v -W0 test/unit/blue_tooth_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

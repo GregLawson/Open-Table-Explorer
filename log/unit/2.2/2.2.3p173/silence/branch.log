@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:20:24.197
+2016-02-01 18:30:40.289
 ruby -v -W0 test/unit/branch_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .EEEEEEEEEEEEEEEEEE..
 
-Finished in 0.004547s, 4617.9595 runs/s, 0.0000 assertions/s.
+Finished in 0.004774s, 4399.0389 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_class_name:

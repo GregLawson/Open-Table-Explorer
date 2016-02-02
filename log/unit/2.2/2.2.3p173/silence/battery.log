@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:20:19.518
+2016-02-01 18:30:35.462
 ruby -v -W0 test/unit/battery_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .E.....
 
-Finished in 0.003286s, 2129.9559 runs/s, 0.0000 assertions/s.
+Finished in 0.003529s, 1983.4248 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_Battery:

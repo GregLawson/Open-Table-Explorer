@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:27:58.443
+2016-02-01 18:31:31.518
 ruby -v -W0 test/unit/editor_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .F..E.E.E..E...
 
-Finished in 0.015317s, 979.2979 runs/s, 195.8596 assertions/s.
+Finished in 0.015241s, 984.1613 runs/s, 196.8323 assertions/s.
 
   1) Failure:
 NewTestClass#test_minimal_comparison [test/unit/editor_test.rb:50]:
@@ -22,7 +22,7 @@ NewTestClass#test_minimal_comparison [test/unit/editor_test.rb:50]:
 
   2) Error:
 NewTestClass#test_local_assert_post_conditions:
-NoMethodError: undefined method `assertions' for #<Editor:0x00000001c842a8>
+NoMethodError: undefined method `assertions' for #<Editor:0x0000000276d728>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
@@ -53,7 +53,7 @@ NoMethodError: undefined method `assertions' for #<Editor:0x00000001c842a8>
 
   3) Error:
 NewTestClass#test_local_assert_pre_conditions:
-NoMethodError: undefined method `assertions' for #<Editor:0x00000001c842a8>
+NoMethodError: undefined method `assertions' for #<Editor:0x0000000276d728>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:505:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:594:in `refute_nil'
@@ -84,7 +84,7 @@ NoMethodError: undefined method `assertions' for #<Editor:0x00000001c842a8>
 
   4) Error:
 NewTestClass#test_goldilocks:
-NoMethodError: undefined method `repository' for #<Editor:0x00000001c842a8>
+NoMethodError: undefined method `repository' for #<Editor:0x0000000276d728>
     test/unit/editor_test.rb:29:in `test_goldilocks'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'

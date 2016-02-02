@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:39.684
+2016-02-01 19:03:50.114
 ruby -v -W0 test/unit/x_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

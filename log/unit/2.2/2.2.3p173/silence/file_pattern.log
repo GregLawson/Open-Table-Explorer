@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:28:05.863
+2016-02-01 18:31:39.467
 ruby -v -W0 test/unit/file_pattern_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ......E.E..E.....E....E..E.E..
 
-Finished in 0.028565s, 1050.2258 runs/s, 5671.2195 assertions/s.
+Finished in 0.029415s, 1019.9014 runs/s, 5507.4676 assertions/s.
 
   1) Error:
 NewTestClass#test_unit_base_name:
@@ -102,7 +102,7 @@ NoMethodError: undefined method `assertions' for FilePattern:Class
 
   4) Error:
 NewTestClass#test_new_from_path:
-NoMethodError: undefined method `assertions' for #<FilePattern:0x00000001945e70>
+NoMethodError: undefined method `assertions' for #<FilePattern:0x000000025a8168>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:505:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:526:in `refute_equal'
@@ -133,7 +133,7 @@ NoMethodError: undefined method `assertions' for #<FilePattern:0x00000001945e70>
 
   5) Error:
 NewTestClass#test_initialize:
-NoMethodError: undefined method `assertions' for #<FilePattern:0x00000001929978>
+NoMethodError: undefined method `assertions' for #<FilePattern:0x00000002582fa8>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:505:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:526:in `refute_equal'
@@ -164,7 +164,7 @@ NoMethodError: undefined method `assertions' for #<FilePattern:0x00000001929978>
 
   6) Error:
 NewTestClass#test_pathnames:
-NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000001928190>
+NoMethodError: undefined method `assert_block' for #<NewTestClass:0x00000002581950>
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:344:in `assert_array_of'
     test/unit/file_pattern_test.rb:190:in `test_pathnames'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -192,7 +192,7 @@ NoMethodError: undefined method `assert_block' for #<NewTestClass:0x000000019281
 
   7) Error:
 NewTestClass#test_Constants:
-NoMethodError: undefined method `assertions' for #<FilePattern:0x000000015646a8>
+NoMethodError: undefined method `assertions' for #<FilePattern:0x000000021f2258>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:505:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:526:in `refute_equal'

@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:28:22.373
+2016-02-01 18:31:56.214
 ruby -v -W0 test/unit/global_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -11,7 +11,7 @@ obj is Symbol :cat
 Can't figure out relation between :cat and NewTestClass::TestClass
 .E.F.E.E.FF..
 
-Finished in 0.016076s, 1555.1455 runs/s, 2488.2328 assertions/s.
+Finished in 0.016506s, 1514.6136 runs/s, 2423.3818 assertions/s.
 
   1) Error:
 NewTestClass#test_module_included:
@@ -270,7 +270,7 @@ TypeError: no implicit conversion of Array into String
 
  11) Failure:
 NewTestClass#test_set_inspect [test/unit/global_test.rb:38]:
-Expected /\{4408\},\(\?-mix:3\),\/3\/>/ to match "#<Set: {/1/, /3/}>; <Regexp #17875120{2701626047848511724},(?-mix:1),/1/>, <Regexp #16825420{22872648520452879},(?-mix:3),/3/>".
+Expected /\{4408\},\(\?-mix:3\),\/3\/>/ to match "#<Set: {/1/, /3/}>; <Regexp #5456160{3331666546887736198},(?-mix:1),/1/>, <Regexp #4407100{-888060733217056140},(?-mix:3),/3/>".
 
 
  12) Failure:

@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:26.590
+2016-02-01 19:03:37.146
 ruby -v -W0 test/unit/visa_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -7,10 +7,10 @@ Run options: --seed 0
 # Running:
 
 ......EE.$ locate libvisa
-@process_status=#<Process::Status: pid 24017 exit 1>
+@process_status=#<Process::Status: pid 1052 exit 1>
 E..
 
-Finished in 0.577218s, 20.7894 runs/s, 0.0000 assertions/s.
+Finished in 0.510067s, 23.5263 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_example:
@@ -74,7 +74,7 @@ Fiddle::DLError: /usr/lib/x86_64-linux-gnu/libvisa.so: cannot open shared object
 
   3) Error:
 NewTestClass#test_script:
-NoMethodError: undefined method `assertions' for #<ShellCommands:0x000000021e9b80>
+NoMethodError: undefined method `assertions' for #<ShellCommands:0x00000001fc3590>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'

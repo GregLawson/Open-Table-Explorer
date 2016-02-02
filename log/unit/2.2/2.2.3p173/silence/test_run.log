@@ -1,12 +1,12 @@
 passed
-2016-02-01 18:16:57.734
+2016-02-01 19:03:08.733
 ruby -v -W0 test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.E..EEEEE.F.E.E-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x00000003164ce0 @executable=nil>>
+.E..EEEEE.F.E.E-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x000000035a0868 @executable=nil>>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:257:in `run'
 test/unit/test_run_test.rb:214:in `test_run'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -32,11 +32,11 @@ test/unit/test_run_test.rb:214:in `test_run'
 /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 E.EEE..
 
-Finished in 0.565590s, 38.8974 runs/s, 31.8251 assertions/s.
+Finished in 0.552797s, 39.7976 runs/s, 32.5617 assertions/s.
 
   1) Error:
 NewTestClass#test_new_from_pathname:
-NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x00000003188ca8>
+NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x000000035c4ad8>
     test/unit/test_run_test.rb:48:in `test_new_from_pathname'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -91,7 +91,7 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
 
   3) Error:
 NewTestClass#test_ruby_test_string:
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000003182268>
+NoMethodError: undefined method `ruby_test_string' for #<Repository:0x000000035beef8>
     test/unit/test_run_test.rb:58:in `test_ruby_test_string'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -238,7 +238,7 @@ NoMethodError: undefined method `assertions' for Run options: --seed 0
 
   9) Error:
 NewTestClass#test_log_path?:
-NoMethodError: undefined method `log_path?' for #<Repository:0x00000003182268>
+NoMethodError: undefined method `log_path?' for #<Repository:0x000000035beef8>
     test/unit/test_run_test.rb:53:in `test_log_path?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -319,7 +319,7 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
 
  12) Error:
 NewTestClass#test_ruby_run_and_log:
-NoMethodError: undefined method `error_score?' for #<Repository:0x00000003182268>
+NoMethodError: undefined method `error_score?' for #<Repository:0x000000035beef8>
     test/unit/test_run_test.rb:83:in `test_ruby_run_and_log'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'

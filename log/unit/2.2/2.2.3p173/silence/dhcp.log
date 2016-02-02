@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:27:52.340
+2016-02-01 18:31:25.595
 ruby -v -W0 test/unit/dhcp_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .....$ /sbin/dhclient -v eth0
 @errors="Internet Systems Consortium DHCP Client 4.3.3\nCopyright 2004-2015 Internet Systems Consortium.\nAll rights reserved.\nFor info, please visit https://www.isc.org/software/dhcp/\n\ncan't create /var/lib/dhcp/dhclient.leases: Permission denied\nRTNETLINK answers: Operation not permitted\nOpen a socket for LPF: Operation not permitted\n\nIf you think you have received this message due to a bug rather\nthan a configuration issue please read the section on submitting\nbugs on either our web page at www.isc.org or in the README file\nbefore submitting a bug.  These pages explain the proper\nprocess and the information we find helpful for debugging..\n\nexiting.\n"
-@process_status=#<Process::Status: pid 11753 exit 1>
+@process_status=#<Process::Status: pid 25938 exit 1>
 Internet Systems Consortium DHCP Client 4.3.3
 Copyright 2004-2015 Internet Systems Consortium.
 All rights reserved.
@@ -27,7 +27,7 @@ process and the information we find helpful for debugging..
 exiting.
 F
 
-Finished in 0.056368s, 106.4429 runs/s, 35.4810 assertions/s.
+Finished in 0.078165s, 76.7606 runs/s, 25.5869 assertions/s.
 
   1) Failure:
 DHCPTest#test_dhclient [test/unit/dhcp_test.rb:9]:

@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:12:28.119
+2016-02-01 18:59:42.473
 ruby -v -W0 test/unit/ruby_assertions_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,11 +8,11 @@ Run options: --seed 0
 
 .....E.....E..E.EEEF.EE....FEE...E.E...F...E.EE.
 
-Finished in 0.052382s, 916.3479 runs/s, 4047.2034 assertions/s.
+Finished in 0.023779s, 2018.5839 runs/s, 8915.4123 assertions/s.
 
   1) Error:
 RubyAssertionsTest#test_assert_include:
-NameError: undefined local variable or method `fixture_names' for #<RubyAssertionsTest:0x000000034611c8>
+NameError: undefined local variable or method `fixture_names' for #<RubyAssertionsTest:0x0000000278f440>
     test/unit/ruby_assertions_test.rb:144:in `test_assert_include'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -39,7 +39,7 @@ NameError: undefined local variable or method `fixture_names' for #<RubyAssertio
 
   2) Error:
 RubyAssertionsTest#test_assert_regexp:
-NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000034486f0>
+NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000027af1f0>
     test/unit/ruby_assertions_test.rb:224:in `test_assert_regexp'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -66,7 +66,7 @@ NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000
 
   3) Error:
 RubyAssertionsTest#test_refute_include:
-NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x0000000343f028>
+NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000027ad9e0>
     test/unit/ruby_assertions_test.rb:162:in `test_refute_include'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -93,7 +93,7 @@ NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000
 
   4) Error:
 RubyAssertionsTest#test_assert_flat_set:
-NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x0000000343e858>
+NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000027ad300>
     test/unit/ruby_assertions_test.rb:100:in `test_assert_flat_set'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -197,7 +197,7 @@ test/unit/ruby_assertions_test.rb:14:in `test_caller_lines'
 
   8) Error:
 RubyAssertionsTest#test_assert_overlap:
-NoMethodError: undefined method `assert_block' for #<RubyAssertionsTest:0x0000000342de68>
+NoMethodError: undefined method `assert_block' for #<RubyAssertionsTest:0x000000027c2e58>
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:309:in `assert_overlap'
     test/unit/ruby_assertions_test.rb:135:in `test_assert_overlap'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -225,7 +225,7 @@ NoMethodError: undefined method `assert_block' for #<RubyAssertionsTest:0x000000
 
   9) Error:
 RubyAssertionsTest#test_equal_sets:
-NoMethodError: undefined method `build_message' for #<RubyAssertionsTest:0x0000000342d4b8>
+NoMethodError: undefined method `build_message' for #<RubyAssertionsTest:0x000000027c2700>
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:290:in `assert_equal_sets'
     test/unit/ruby_assertions_test.rb:129:in `test_equal_sets'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -320,7 +320,7 @@ NoMethodError: undefined method `assertions' for RubyAssertions:Module
 
  13) Error:
 RubyAssertionsTest#test_assert_no_duplicates:
-NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000033fe078>
+NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000027d49c8>
     test/unit/ruby_assertions_test.rb:215:in `test_assert_no_duplicates'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -347,7 +347,7 @@ NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000
 
  14) Error:
 RubyAssertionsTest#test_assert_pathname_exists:
-NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000033e9808>
+NoMethodError: undefined method `assert_raise' for #<RubyAssertionsTest:0x000000027ef520>
     test/unit/ruby_assertions_test.rb:270:in `test_assert_pathname_exists'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -408,7 +408,7 @@ RuntimeError: names=[:TestClass, :TestConstant], path="TestClass::TestConstant"
 
  17) Error:
 RubyAssertionsTest#test_assert_array_of:
-NoMethodError: undefined method `assert_block' for #<RubyAssertionsTest:0x000000033d1578>
+NoMethodError: undefined method `assert_block' for #<RubyAssertionsTest:0x000000028008c0>
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:344:in `assert_array_of'
     test/unit/ruby_assertions_test.rb:181:in `test_assert_array_of'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'

@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:11:38.768
+2016-02-01 18:58:41.553
 ruby -v -W0 test/unit/partition_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,11 +8,11 @@ Run options: --seed 0
 
 ..E..
 
-Finished in 0.005874s, 851.1612 runs/s, 0.0000 assertions/s.
+Finished in 0.006019s, 830.6549 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_initialize:
-NoMethodError: undefined method `assert_pre_conditions' for #<ShellCommands:0x00000001076ce0>
+NoMethodError: undefined method `assert_pre_conditions' for #<ShellCommands:0x00000000cb66a0>
     test/unit/partition_test.rb:15:in `test_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'

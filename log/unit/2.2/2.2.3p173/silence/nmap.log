@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:11:28.107
+2016-02-01 18:58:30.212
 ruby -v -W0 test/unit/nmap_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .....EEEE.EEE..
 
-Finished in 0.691093s, 21.7047 runs/s, 1.4470 assertions/s.
+Finished in 0.646286s, 23.2095 runs/s, 1.5473 assertions/s.
 
   1) Error:
 NewTestClass#test_parse_xml_file:
@@ -149,7 +149,7 @@ NoMethodError: undefined method `keys' for nil:NilClass
 
   6) Error:
 NewTestClass#test_nmap:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001ac1b28>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000025887c8>
     test/unit/nmap_test.rb:39:in `test_nmap'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -200,5 +200,4 @@ NoMethodError: undefined method `keys' for nil:NilClass
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-15 runs, 1 assertions, 0 failures, 7 errors, 0 skips
 

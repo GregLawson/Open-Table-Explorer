@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:16:44.605
+2016-02-01 19:02:57.675
 ruby -v -W0 test/unit/tedprimary_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .....
 
-Finished in 0.003908s, 1279.3184 runs/s, 255.8637 assertions/s.
+Finished in 0.003695s, 1352.9973 runs/s, 270.5995 assertions/s.
 
 5 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 

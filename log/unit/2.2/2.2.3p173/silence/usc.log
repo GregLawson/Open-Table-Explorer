@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:23.150
+2016-02-01 19:03:33.418
 ruby -v -W0 test/unit/usc_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .E...
 
-Finished in 0.004072s, 1227.9602 runs/s, 0.0000 assertions/s.
+Finished in 0.004266s, 1171.9914 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_Constants:

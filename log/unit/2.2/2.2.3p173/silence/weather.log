@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:28.397
+2016-02-01 19:03:38.963
 ruby -v -W0 test/unit/weather_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .....
 
-Finished in 0.003794s, 1317.8766 runs/s, 263.5753 assertions/s.
+Finished in 0.004325s, 1156.0103 runs/s, 231.2021 assertions/s.
 
 5 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 

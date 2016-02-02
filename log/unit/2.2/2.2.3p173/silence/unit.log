@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:17.788
+2016-02-01 19:03:27.545
 ruby -v -W0 test/unit/unit_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..........................................F.................
 
-Finished in 0.647489s, 92.6657 runs/s, 177.6093 assertions/s.
+Finished in 0.661680s, 90.6782 runs/s, 173.7999 assertions/s.
 
   1) Failure:
 NewTestClass#test_data_sources_directory [test/unit/unit_test.rb:70]:

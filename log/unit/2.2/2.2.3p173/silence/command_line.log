@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:20:45.427
+2016-02-01 18:31:01.449
 ruby -v -W0 test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..E..FE....E..E.E......EF...F..
 
-Finished in 15.130794s, 2.0488 runs/s, 5.2211 assertions/s.
+Finished in 14.822016s, 2.0915 runs/s, 5.3299 assertions/s.
 
   1) Error:
 NewTestClass#test_Constants:
@@ -211,7 +211,7 @@ Exception: infinite loop follows
 NewTestClass#test_executable_method [test/unit/command_line_test.rb:154]:
 $ ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb
 @errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:218:in `run': minimal is not an instance method of Editor (Exception)\n candidate_commands = ! \n!= arg\n!~ arg\n<=> arg\n== arg\n=== arg\n=~ arg\n__id__ \n__send__ ...\n_synchronize \n` arg\nacts_like? arg\nadd_default_message ...\nas_json ...\nassert arg...\nassert_empty arg...\nassert_equal arg arg...\nassert_in_delta arg arg...\nassert_in_epsilon arg arg...\nassert_includes arg arg...\nassert_instance_of arg arg...\nassert_kind_of arg arg...\nassert_match arg arg...\nassert_nil arg...\nassert_operator arg arg...\nassert_output ...\nassert_post_conditions \nassert_pre_conditions \nassert_predicate arg arg...\nassert_raises ...\nassert_respond_to arg arg...\nassert_same arg arg...\nassert_send arg...\nassert_silent \nassert_throws arg...\nblank? \ncaller_lines ...\ncanonicalName \ncapture arg\ncapture_io \ncapture_subprocess_io \nclass \nclass_eval ...\nclone \nconcern arg\ncontext_names ...\ndeep_dup \ndefault_message \ndefine_singleton_method ...\ndiff arg arg\ndisplay ...\ndup \nduplicable? \nedit \nemacs ...\nenable_warnings \nenum_for ...\nenumerate ...\nenumerate_single ...\neql? arg\nequal? arg\nexception_details arg arg\nextend ...\nflunk ...\nfreeze \nfrozen? \ngoldilocks arg...\nhash \nhtml_safe? \nin? arg\ninfo arg\ninspect \ninstance_eval ...\ninstance_exec ...\ninstance_of? arg\ninstance_values \ninstance_variable_defined? arg\ninstance_variable_get arg\ninstance_variable_names \ninstance_variable_set arg arg\ninstance_variables \nis_a? arg\nitself \nkind_of? arg\nmatching_methods_in_context arg...\nmessage ...\nmethod arg\nmethod_context arg\nmethod_contexts ...\nmethods ...\nminimal_comparison? \nminimal_edit \nmodule? \nmodule_included? arg\nmu_pp arg\nmu_pp_for_diff arg\nnewline_if_not_empty arg\nnil? \nnoninherited_modules \nnoninherited_public_class_methods \nnoninherited_public_instance_methods \nobjectClass ...\nobjectKind \nobjectName ...\nobject_id \nobject_identities \npass ...\npresence \npresence_in arg\npresent? \nprivate_methods ...\nprotected_methods ...\npsych_to_yaml ...\npublic_method arg\npublic_methods ...\npublic_send ...\nquietly \nrefute arg...\nrefute_empty arg...\nrefute_equal arg arg...\nrefute_in_delta arg arg...\nrefute_in_epsilon arg arg...\nrefute_includes arg arg...\nrefute_instance_of arg arg...\nrefute_kind_of arg arg...\nrefute_match arg arg...\nrefute_nil arg...\nrefute_operator arg arg...\nrefute_predicate arg arg...\nrefute_respond_to arg arg...\nrefute_same arg arg...\nrelationship ...\nremove_instance_variable arg\nrespond_to? ...\nsend ...\nsilence arg\nsilence_stderr \nsilence_stream arg\nsilence_warnings \nsingleton_class \nsingleton_method arg\nsingleton_methods ...\nskip ...\nskipped? \nsplit arg arg\nsuppress ...\ntaint \ntainted? \ntap \ntest_files ...\nto_enum ...\nto_json ...\nto_json_with_active_support_encoder ...\nto_json_without_active_support_encoder ...\nto_param \nto_query arg\nto_s \nto_yaml ...\nto_yaml_properties \ntrace arg\ntrace_names? ...\ntrace_to_s arg\ntrace_value arg...\ntrust \ntry ...\ntry! ...\nunit_maturity \nuntaint \nuntrust \nuntrusted? \nversion_comparison ...\nwhoAmI ...\nwith_options arg\nwith_warnings arg\n\tfrom script/command_line.rb:78:in `block in <main>'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:210:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:210:in `run'\n\tfrom script/command_line.rb:61:in `<main>'\n"
-@process_status=#<Process::Status: pid 10892 exit 1>
+@process_status=#<Process::Status: pid 25595 exit 1>
 
 
 

@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:11.053
+2016-02-01 19:03:21.133
 ruby -v -W0 test/unit/unbounded_range_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,11 +8,11 @@ Run options: --seed 0
 
 ...E..F...
 
-Finished in 0.011075s, 902.9610 runs/s, 3611.8441 assertions/s.
+Finished in 0.010217s, 978.7337 runs/s, 3914.9347 assertions/s.
 
   1) Error:
 NewTestClass#test_UnboundedRange_initialize:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000003440180>
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000003748558>
     test/unit/unbounded_range_test.rb:17:in `test_UnboundedRange_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -39,7 +39,7 @@ NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x000000034401
 
   2) Failure:
 NewTestClass#test_intersect [test/unit/unbounded_range_test.rb:77]:
-Expected #<NewTestClass:0x000000034431a0 @NAME="test_intersect", @failures=[], @assertions=1> (NewTestClass) to respond to #assert_include.
+Expected #<NewTestClass:0x0000000373c370 @NAME="test_intersect", @failures=[], @assertions=1> (NewTestClass) to respond to #assert_include.
 
 10 runs, 40 assertions, 1 failures, 1 errors, 0 skips
 

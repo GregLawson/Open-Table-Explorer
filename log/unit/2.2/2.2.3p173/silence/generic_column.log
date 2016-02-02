@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:28:10.547
+2016-02-01 18:31:44.391
 ruby -v -W0 test/unit/generic_column_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ...........
 
-Finished in 0.010532s, 1044.4174 runs/s, 4747.3516 assertions/s.
+Finished in 0.010620s, 1035.7965 runs/s, 4708.1658 assertions/s.
 
 11 runs, 50 assertions, 0 failures, 0 errors, 0 skips
 

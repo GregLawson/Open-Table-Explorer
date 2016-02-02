@@ -1,9 +1,9 @@
 passed
-2016-02-01 12:28:11.384
+2016-02-01 18:31:45.228
 ruby -v -W0 test/unit/generic_file_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:396:in `raw_captures?': undefined method `raw_capture?' for #<Regexp::Expression::Root:0x0000000252ca18> (NoMethodError)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:396:in `raw_captures?': undefined method `raw_capture?' for #<Regexp::Expression::Root:0x000000017b1500> (NoMethodError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:199:in `initialize'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:209:in `initialize'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:392:in `initialize'

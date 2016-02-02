@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:11:41.849
+2016-02-01 18:58:44.901
 ruby -v -W0 test/unit/pcf8591_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

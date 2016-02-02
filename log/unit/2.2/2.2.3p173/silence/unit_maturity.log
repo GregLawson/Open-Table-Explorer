@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:14.336
+2016-02-01 19:03:24.190
 ruby -v -W0 test/unit/unit_maturity_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .FF.E.EF..F...
 
-Finished in 0.263497s, 53.1316 runs/s, 155.5997 assertions/s.
+Finished in 0.274846s, 50.9376 runs/s, 149.1744 assertions/s.
 
   1) Failure:
 NewTestClass#test_differences? [test/unit/unit_maturity_test.rb:117]:

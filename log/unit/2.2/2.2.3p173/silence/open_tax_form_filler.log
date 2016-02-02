@@ -1,9 +1,9 @@
 passed
-2016-02-01 18:11:32.906
+2016-02-01 18:58:35.252
 ruby -v -W0 test/unit/open_tax_form_filler_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:396:in `raw_captures?': undefined method `raw_capture?' for #<Regexp::Expression::Root:0x00000002381d58> (NoMethodError)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:396:in `raw_captures?': undefined method `raw_capture?' for #<Regexp::Expression::Root:0x00000001766fc8> (NoMethodError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:199:in `initialize'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:209:in `initialize'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:392:in `initialize'

@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:12:22.116
+2016-02-01 18:59:36.389
 ruby -v -W0 test/unit/repository_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..EE.E.E...E...E.E.E.E...
 
-Finished in 0.814513s, 30.6932 runs/s, 44.1982 assertions/s.
+Finished in 0.828138s, 30.1882 runs/s, 43.4710 assertions/s.
 rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - chdir>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
@@ -38,7 +38,7 @@ rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - ch
 
   1) Error:
 NewTestClass#test_Constants:
-NoMethodError: undefined method `assertions' for #<Repository:0x00000002364d70>
+NoMethodError: undefined method `assertions' for #<Repository:0x00000002e522c8>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:505:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:594:in `refute_nil'
@@ -184,7 +184,7 @@ NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
 
   6) Error:
 NewTestClass#test_git_parse:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000001c13080>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000002765370>
     test/unit/repository_test.rb:160:in `test_git_parse'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -211,7 +211,7 @@ NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x0
 
   7) Error:
 NewTestClass#test_initialize:
-NoMethodError: undefined method `assertions' for #<Repository:0x00000001f16b38>
+NoMethodError: undefined method `assertions' for #<Repository:0x00000002a001c0>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:505:in `refute'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:594:in `refute_nil'
@@ -270,7 +270,7 @@ NoMethodError: undefined method `assert_post_conditions' for :ShellCommands
 
   9) Error:
 NewTestClass#test_revert_changes:
-NoMethodError: undefined method `assert_post_conditions' for HEAD is now at 3dd95a0 create_empty initial commit of README
+NoMethodError: undefined method `assert_post_conditions' for HEAD is now at 084aef2 create_empty initial commit of README
 :ShellCommands
     test/unit/repository_test.rb:136:in `test_revert_changes'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'

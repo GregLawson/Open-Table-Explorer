@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:16:17.665
+2016-02-01 19:02:31.559
 ruby -v -W0 test/unit/stream_method_argument_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

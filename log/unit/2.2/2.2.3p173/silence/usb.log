@@ -1,5 +1,5 @@
 passed
-2016-02-01 18:17:21.249
+2016-02-01 19:03:31.324
 ruby -v -W0 test/unit/usb_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,11 +8,11 @@ Run options: --seed 0
 
 .....E..
 
-Finished in 0.216603s, 36.9340 runs/s, 0.0000 assertions/s.
+Finished in 0.208102s, 38.4427 runs/s, 0.0000 assertions/s.
 
   1) Error:
 UsbBbusTest#test_find_devices:
-NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x000000033a7ae8>
+NoMethodError: undefined method `assert_post_conditions' for #<ShellCommands:0x00000003a0ec10>
     test/unit/usb_test.rb:18:in `test_find_devices'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'

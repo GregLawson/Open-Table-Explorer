@@ -1,8 +1,8 @@
 passed
-2016-02-01 18:16:45.335
+2016-02-01 19:02:58.419
 ruby -v -W0 test/unit/test_environment_default_test_case_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_default_test_case.rb:11:in `<top (required)>': undefined method `default_tests_module_name?' for #<Unit:0x00000002da5118> (NoMethodError)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_default_test_case.rb:11:in `<top (required)>': undefined method `default_tests_module_name?' for #<Unit:0x00000002a942d0> (NoMethodError)
 	from test/unit/test_environment_default_test_case_test.rb:7:in `require_relative'
 	from test/unit/test_environment_default_test_case_test.rb:7:in `<main>'

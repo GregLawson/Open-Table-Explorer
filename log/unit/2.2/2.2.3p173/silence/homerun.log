@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:28:27.173
+2016-02-01 18:32:01.053
 ruby -v -W0 test/unit/homerun_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - hdhomerun_config>
@@ -44,7 +44,7 @@ test/unit/homerun_test.rb:16:in `test_scan'
 /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 F
 
-Finished in 0.005618s, 1423.9624 runs/s, 355.9906 assertions/s.
+Finished in 0.005189s, 1541.6245 runs/s, 385.4061 assertions/s.
 
   1) Error:
 HomeRunTest#test_Constants:
@@ -75,7 +75,7 @@ NoMethodError: undefined method `size' for nil:NilClass
 
   2) Error:
 HomeRunTest#test_initialize:
-NoMethodError: undefined method `assertions' for #<HomeRun:0x00000001125c40 @id="10311E80">
+NoMethodError: undefined method `assertions' for #<HomeRun:0x000000016d11d0 @id="10311E80">
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:195:in `assert_includes'

@@ -1,5 +1,5 @@
 passed
-2016-02-01 12:20:13.762
+2016-02-01 18:30:29.668
 ruby -v -W0 test/unit/arp_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -10,7 +10,7 @@ Run options: --seed 0
 
 F..
 
-Finished in 0.005965s, 1005.8556 runs/s, 335.2852 assertions/s.
+Finished in 0.030403s, 197.3481 runs/s, 65.7827 assertions/s.
 
   1) Error:
 NewTestClass#test_MAC:
