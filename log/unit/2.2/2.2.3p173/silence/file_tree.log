@@ -1,0 +1,14 @@
+passed
+2016-02-07 10:50:10.768
+ruby -v -W0 test/unit/file_tree_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+..........
+
+Finished in 0.599791s, 16.6725 runs/s, 46.6830 assertions/s.
+
+10 runs, 28 assertions, 0 failures, 0 errors, 0 skips
+
