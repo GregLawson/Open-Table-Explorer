@@ -15,7 +15,7 @@ class EditorTest < TestCase
 include Editor::Examples
 include UnitMaturity::Examples
 def test_initializes
-	te=Unit.new(TestEditor.executable.executable_file)
+	te=Unit.new_from_path(TestEditor.executable.executable_file)
 	refute_nil(te)
 	wf=Editor.new(TestEditor.executable)
 	refute_nil(wf)
@@ -26,7 +26,7 @@ def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
 end #version_comparison
 def test_goldilocks
-	refute_nil(UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym))
+	refute_nil(UnitMaturity.branch_index?(TestEditor.executable.repository.current_branch_name?.to_sym))
 #	assert_includes(Editor::Branch_enhancement, TestEditor.repository.current_branch_name?.to_sym)
 	current_index=UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym)
 	filename= Most_stable_file
@@ -47,7 +47,7 @@ def test_test_files
 # 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestEditor.test_files([TestEditor.edit_files]))
 end #test_files
 def test_minimal_comparison
-	assert_equal(' -t app/models/editor.rb app/models/minimal2.rb -t test/unit/editor_test.rb test/unit/minimal2_test.rb', TestEditor.minimal_comparison?)
+	assert_equal(' -t app/models/editor.rb app/models/minimal2.rb -t test/unit/editor_test.rb test/unit/minimal2_test.rb -t script/editor.rb script/minimal2.rb', TestEditor.minimal_comparison?)
 #	assert_equal(' -t app/models/work_flow.rb app/models/minimal2.rb -t test/unit/work_flow_test.rb test/unit/minimal2_test.rb -t script/work_flow.rb script/minimal2.rb -t test/integration/work_flow_test.rb test/integration/minimal2_test.rb -t test/long_test/work_flow_test.rb test/long_test/minimal2_test.rb -t test/assertions/work_flow_assertions.rb test/assertions/minimal2_assertions.rb -t test/unit/work_flow_assertions_test.rb test/unit/minimal2_assertions_test.rb -t log/library/work_flow.log log/library/minimal2.log -t log/assertions/work_flow.log log/assertions/minimal2.log -t log/integration/work_flow.log log/integration/minimal2.log -t log/long/work_flow.log log/long/minimal2.log -t test/data_sources/work_flow test/data_sources/minimal2', TestEditor.minimal_comparison?)
 #	assert_equal(' -t app/models/regexp_parse.rb app/models/minimal4.rb -t test/unit/regexp_parse_test.rb test/unit/minimal4_test.rb -t script/regexp_parse.rb script/minimal4.rb -t test/integration/regexp_parse_test.rb test/integration/minimal4_test.rb -t test/long_test/regexp_parse_test.rb test/long_test/minimal4_test.rb -t test/assertions/regexp_parse_assertions.rb test/assertions/minimal4_assertions.rb -t test/unit/regexp_parse_assertions_test.rb test/unit/minimal4_assertions_test.rb -t log/library/regexp_parse.log log/library/minimal4.log -t log/assertions/regexp_parse.log log/assertions/minimal4.log -t log/integration/regexp_parse.log log/integration/minimal4.log -t log/long/regexp_parse.log log/long/minimal4.log -t test/data_sources/regexp_parse test/data_sources/minimal4', Editor.new('test/unit/regexp_parse_test.rb').minimal_comparison?)
 end #minimal_comparison

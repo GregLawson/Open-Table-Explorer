@@ -106,10 +106,9 @@ def edit
 		command_string = 'diffuse' + version_comparison + test_files
 	end # if
 	puts command_string if !$VERBOSE.nil?
-	edit = @executable.repository.shell_command(command_string)
-	edit = edit.tolerate_status_and_error_pattern(0, /Warning/)
-	status =edit
-#	status.assert_post_conditions
+	status = @executable.repository.shell_command(command_string)
+	status = edit.tolerate_status_and_error_pattern(0, /Warning/)
+	status #.assert_post_conditions
 end # edit
 def split(executable, new_base_name)
 	new_unit = Unit.new(new_base_name, project_root_dir)
@@ -118,20 +117,19 @@ def split(executable, new_base_name)
 		split_tab += ' -t ' + f + new_unit.pattern?(pattern_name)
 		@executable.repository.shell_command('cp ' + f +  new_unit.pattern?(pattern_name))
 	end #map
-	edit = @executable.repository.shell_command('diffuse' + version_comparison + test_files + split_tab)
-	puts edit.command_string
-	edit.assert_post_conditions
+	status = @executable.repository.shell_command('diffuse' + version_comparison + test_files + split_tab)
+	puts status.command_string
+	status #.assert_post_conditions
 end # split
 def minimal_edit
-	edit = @executable.repository.shell_command('diffuse' + version_comparison + test_files + minimal_comparison?)
-	puts edit.command_string
-	edit.assert_post_conditions
-	edit
+	status = @executable.repository.shell_command('diffuse' + version_comparison + test_files + minimal_comparison?)
+	puts status.command_string
+	status #.assert_post_conditions
 end # minimal_edit
 def emacs(executable = @executable.unit.model_test_pathname?)
-	emacs = @executable.repository.shell_command('emacs --no-splash ' + @executable.unit.edit_files.join(' '))
-	puts emacs.command_string
-	emacs.assert_post_conditions
+	status = @executable.repository.shell_command('emacs --no-splash ' + @executable.unit.edit_files.join(' '))
+	puts status.command_string
+	status #.assert_post_conditions
 end # emacs
 #require_relative '../../app/models/assertions.rb'
 module Assertions
@@ -162,7 +160,6 @@ extend Assertions::ClassMethods
 include Constants
 module Examples
 TestExecutable = TestExecutable.new_from_path(File.expand_path($PROGRAM_NAME))
-#TestFile = File.expand_path($PROGRAM_NAME)
 TestEditor = Editor.new(TestExecutable)
 include Constants
 end # Examples
