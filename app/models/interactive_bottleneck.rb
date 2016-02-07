@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson
+#    Copyright (C) 2013-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -37,7 +37,7 @@ include Virtus.value_object
 	attribute :unit_maturity, UnitMaturity, :default => lambda { |interactive_bottleneck, attribute| UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
 	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
 	attribute :interactive, Symbol, :default => :interactive
-	end # values
+end # values
 def standardize_position!
 	 abort_rebase_and_merge!
 	@repository.git_command("checkout master")
@@ -145,10 +145,7 @@ def safely_visit_branch(target_branch, &block)
 #		puts "status.deleted=#{status.deleted.inspect}"
 #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
 		@repository.git_command('stash save --include-untracked')
-		@repository.merge_conflict_files?.each do |conflict|
-			@repository.shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
+		merge_cleanup
 		changes_branch=:stash
 	end #if
 
@@ -168,10 +165,7 @@ def safely_visit_branch(target_branch, &block)
 		else
 			apply_run #.assert_post_conditions('unexpected stash apply fail')
 		end #if
-		@repository.merge_conflict_files?.each do |conflict|
-			@repository.shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
+		merge_cleanup
 	end #if
 	ret
 end # safely_visit_branch
@@ -195,10 +189,7 @@ def stash_and_checkout(target_branch)
 #		puts "status.deleted=#{status.deleted.inspect}"
 #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
 		@repository.git_command('stash save --include-untracked')
-		@repository.merge_conflict_files?.each do |conflict|
-			@repository.shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
+		merge_cleanup
 		changes_branch=:stash
 	end #if
 
@@ -207,14 +198,17 @@ def stash_and_checkout(target_branch)
 	end #if
 	push # if switched?
 end # stash_and_checkout
-def merge_cleanup(editor)
+def merge_cleanup
 	@repository.merge_conflict_files?.each do |conflict|
-		@repository.shell_command('diffuse -m '+conflict[:file])
+		case @interactive
+		when :interactive then
+			@repository.shell_command('diffuse -m '+conflict[:file])
+		end # case
 		confirm_commit
 	end #each
 end # merge_cleanup
-def merge(target_branch, source_branch, interact=:interactive)
-	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
+def merge(target_branch, source_branch)
+	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+ @interactive.inspect+')'
 	safely_visit_branch(target_branch) do |changes_branch|
 		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 		puts 'merge_status= ' + merge_status.inspect
@@ -228,7 +222,7 @@ def merge(target_branch, source_branch, interact=:interactive)
 				merge_conflict_recovery(source_branch)
 			end # if
 		end # if
-		confirm_commit(interact)
+		confirm_commit
 	end # safely_visit_branch
 end # merge
 def merge_down(deserving_branch = @repository.current_branch_name?)
@@ -237,7 +231,7 @@ def merge_down(deserving_branch = @repository.current_branch_name?)
 			puts 'merge(' + UnitMaturity::Branch_enhancement[i].to_s + '), ' + UnitMaturity::Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
 			merge(UnitMaturity::Branch_enhancement[i], UnitMaturity::Branch_enhancement[i - 1])
 			merge_conflict_recovery(UnitMaturity::Branch_enhancement[i - 1])
-			confirm_commit(:interactive)
+			confirm_commit
 		end # safely_visit_branch
 	end # each
 end # merge_down
@@ -246,9 +240,9 @@ def stage_files(branch, files)
 		validate_commit(changes_branch, files)
 	end # safely_visit_branch
 end #stage_files
-def confirm_commit(interact=:interactive)
+def confirm_commit
 	if @repository.something_to_commit? then
-		case interact
+		case @interactive
 		when :interactive then
 			cola_run = @repository.git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
@@ -264,19 +258,19 @@ def confirm_commit(interact=:interactive)
 			@repository.git_command('add . ').assert_post_conditions
 			@repository.git_command('commit ').assert_post_conditions
 		else
-			raise 'Unimplemented option=' + interact.to_s
+			raise 'Unimplemented option=' + @interactive.to_s
 		end #case
 	end #if
-	puts 'confirm_commit('+interact.inspect+" @repository.something_to_commit?="+@repository.something_to_commit?.inspect
+	puts 'confirm_commit('+ @interactive.inspect+" @repository.something_to_commit?="+@repository.something_to_commit?.inspect
 end # confirm_commit
-def validate_commit(changes_branch, files, interact=:interactive)
+def validate_commit(changes_branch, files)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
 		puts p.inspect  if $VERBOSE
 		@repository.git_command(['checkout', changes_branch.to_s, p])
 	end #each
 	if @repository.something_to_commit? then
-		confirm_commit(interact)
+		confirm_commit
 #		@repository.git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
@@ -298,15 +292,15 @@ def assert_post_conditions
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions
-	refute_nil(@test_executable.unit)
-	refute_empty(@test_executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_executable.unit.edit_files=#{@test_executable.unit.edit_files.inspect}")
-	assert_kind_of(Grit::Repo, @repository.grit_repo)
-	assert_respond_to(@repository.grit_repo, :status)
-	assert_respond_to(@repository.grit_repo.status, :changed)
+#	refute_nil(@test_executable.unit)
+#	refute_empty(@test_executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_executable.unit.edit_files=#{@test_executable.unit.edit_files.inspect}")
+#	assert_kind_of(Grit::Repo, @repository.grit_repo)
+#	assert_respond_to(@repository.grit_repo, :status)
+#	assert_respond_to(@repository.grit_repo.status, :changed)
 end # assert_pre_conditions
 def assert_post_conditions
 	odd_files = Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
-	assert_empty(odd_files, 'InteractiveBottleneck#assert_post_conditions')
+#	assert_empty(odd_files, 'InteractiveBottleneck#assert_post_conditions')
 end # assert_post_conditions
 end # Assertions
 include Assertions
