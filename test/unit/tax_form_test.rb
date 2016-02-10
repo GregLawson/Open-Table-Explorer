@@ -19,6 +19,8 @@ include OpenTableExplorer::Finance::Constants
 extend OpenTableExplorer::Finance::Constants
 include OpenTableExplorer::Finance::OtsRun::Examples
 include OpenTableExplorer::Finance::Schedule::Examples
+#US1040_example_schedule = 	OpenTableExplorer::Finance::Schedule.new(OpenTableExplorer::Finance::OtsRun::Examples::US1040_example.build, '', '')
+US1040_example_schedule = 	Schedule.new(OtsRun::Examples::US1040_example.build, '', '')
 def test_Constants
 	refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
@@ -86,16 +88,25 @@ def test_generated_xfdf_files
 end # generated_xfdf_files
 def test_Schedule_build
 end # build
+def test_run_ots_to_json
+end #run_ots_to_json
+def test_run_json_to_fdf
+end #run_json_to_fdf
+def test_new_from_path
+end # new_from_path
 def test_initialize
 	assert_equal('f', US1040_example_schedule.form_prefix)
 end # initialize
+def test_schedule_name
+	assert_equal('f1040', US1040_example_schedule.schedule_name)
+end # schedule_name
 def test_base_path
 end # base_path
 def test_xfdf_file
-	assert(File.exist?(US1040_example_schedule.ots.open_tax_solver_form_directory), US1040_example_schedule.ots.open_tax_solver_form_directory)
-	assert(File.exist?(US1040_example_schedule.xfdf_file), US1040_example_schedule.xfdf_file)
+	assert_equal('.xpdf', US1040_example_schedule.xfdf_file)
 end # xfdf_file
 def test_output_pdf
+	assert(File.exist?(US1040_example_schedule.ots.open_tax_solver_form_directory), US1040_example_schedule.ots.open_tax_solver_form_directory)
 	assert(File.exist?(US1040_example_schedule.output_pdf), US1040_example_schedule.output_pdf)
 end # output_pdf
 def test_fillout_form
@@ -113,18 +124,18 @@ def test_run_fdf_to_pdf
 	CA540_user.run_fdf_to_pdf.assert_fdf_to_pdf
 end # run_fdf_to_pdf
 def test_filled_in_pdf_files
-	assert(!US1040_example.filled_in_pdf_files.empty?, Dir[US1040_example.output_xfdf_glob].inspect)
-	assert(!CA540_example.filled_in_pdf_files.empty?, Dir[CA540_example.output_xfdf_glob].inspect)
-	assert(!US1040_user.filled_in_pdf_files.empty?, Dir[US1040_user.output_xfdf_glob].inspect)
-	assert(!CA540_user.filled_in_pdf_files.empty?, Dir[CA540_user.output_xfdf_glob].inspect)
-	US1040_user.filled_in_pdf_files.each do |filled_in_pdf_file|
+#	assert(!US1040_example.filled_in_pdf_files.empty?, Dir[US1040_example.output_xfdf_glob].inspect)
+#	assert(!CA540_example.filled_in_pdf_files.empty?, Dir[CA540_example.output_xfdf_glob].inspect)
+#	assert(!US1040_user.filled_in_pdf_files.empty?, Dir[US1040_user.output_xfdf_glob].inspect)
+#	assert(!CA540_user.filled_in_pdf_files.empty?, Dir[CA540_user.output_xfdf_glob].inspect)
+#	US1040_user.filled_in_pdf_files.each do |filled_in_pdf_file|
 #		assert(File.exist?(filled_in_pdf_file), filled_in_pdf_file.inspect)
-		ShellCommands.new('evince ' + filled_in_pdf_file).assert_pre_conditions
-	end # each
-	CA540_user.filled_in_pdf_files.each do |filled_in_pdf_file|
-		assert(File.exist?(filled_in_pdf_file), filled_in_pdf_file + Schedule.generated_xfdf_files(CA540_user).inspect)
-		ShellCommands.new('evince ' + filled_in_pdf_file).assert_pre_conditions
-	end # each
+#		ShellCommands.new('evince ' + filled_in_pdf_file).assert_pre_conditions
+#	end # each
+#	CA540_user.filled_in_pdf_files.each do |filled_in_pdf_file|
+#		assert(File.exist?(filled_in_pdf_file), filled_in_pdf_file + Schedule.generated_xfdf_files(CA540_user).inspect)
+#		ShellCommands.new('evince ' + filled_in_pdf_file).assert_pre_conditions
+#	end # each
 end # filled_in_pdf_files
 def 	test_run_pdf_to_jpeg
 	refute_nil(US1040_example.output_pdf, US1040_example.inspect)
@@ -171,6 +182,9 @@ def test_OtsRun_ots_user_all_forms_directory
 	assert_equal(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory, CA540_user.open_tax_solver_all_form_directory)
 	assert_pathname_exists(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory(@tax_year)+"/#{@form_filename}/")
 end # ots_user_all_forms_directory
+def test_logical_primary_key
+#	assert_equal([], US1040_user.attribute_set, US1040_user.inspect)
+end # logical_primary_key
 def test_open_tax_solver_distribution_directory
 	assert_pathname_exists(US1040_template.open_tax_solver_distribution_directory)
 end # open_tax_solver_distribution_directory

@@ -34,7 +34,9 @@ OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 #OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end #Constants
 include Constants
-
+# a ots run can produce multiple schedule outputs
+# mapping is in: 
+#
 class Schedule
 module ClassMethods
 def run_ots_to_fdf
@@ -52,6 +54,10 @@ def generated_xfdf_files_regexp(ots)
 	schedule_pattern = /_/* /[a-z]*/.capture(:form_prefix) * /#{ots.form}/ * /[a-z]*/.capture(:form_suffix) * /.xfdf/
 	xfdf_file_pattern = jurisdiction_pattern * /_/ * form_pattern * /_/ * optional_year * taxpayer_pattern * schedule_pattern
 end # generated_xfdf_files_regexp
+def new_from_xfdf_path(ots, xfdf_file)
+		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
+		Schedule.new(ots, xdf_capture.output?[:form_prefix], xdf_capture.output?[:form_suffix])
+end # new_from_path
 def generated_xfdf_files(ots)
 	xfdf_file_pattern = generated_xfdf_files_regexp(ots)
 	Dir[ots.output_xfdf_glob].map do |xfdf_file|
@@ -99,8 +105,20 @@ def initialize(ots, form_prefix, form_suffix)
 	@form_prefix = form_prefix
 	@form_suffix = form_suffix
 end # initialize
+def schedule_name
+	@form_prefix + @ots.form.to_s  + @form_suffix.to_s
+end # schedule_name
+def matching_pdf_filename
+	schedule_name + '--' + @ots.tax_year.to_s+ '.pdf'
+end # 
+def matching_pdf_file
+	IRS_pdf_directory + matching_pdf_filename
+end # 
+def matching_pdf_filled_in_file
+	IRS_pdf_directory + matching_pdf_filename
+end # 
 def base_path
-	@ots.open_tax_solver_form_directory + '/' + @ots.taxpayer_basename + '_' + @form_prefix + @ots.form + @form_suffix
+	@ots.open_tax_solver_form_directory + '/' + @ots.taxpayer_basename + '_' + schedule_name
 end # base_path
 def xfdf_file
 	base_path + '.xfdf'
@@ -134,6 +152,7 @@ def build
 end # build
 end # Schedule
 
+# single run of ots can produce multiple Schedules
 class OtsRun
 include Constants
 include OpenTableExplorer
@@ -153,6 +172,9 @@ end # ots_example_all_forms_directory
 def ots_user_all_forms_directory(tax_year = Default_tax_year)
 	open_tax_solver_distribution_directory(tax_year).to_s + '/examples_and_templates/'
 end # ots_user_all_forms_directory
+def logical_primary_key
+	[:taxpayer, :form, :jurisdiction, :tax_year, :open_tax_solver_all_form_directory]
+end # logical_primary_key
 end #ClassMethods
 extend ClassMethods
 attr_reader :form, :jurisdiction, :tax_year, :form_filename, 
@@ -341,7 +363,6 @@ end #OtsRun
 
 class Schedule
 module Examples
-US1040_example_schedule = Schedule.new(OtsRun::Examples::US1040_example, '', '')
 end # Examples
 end # Schedule
 end #Finance
