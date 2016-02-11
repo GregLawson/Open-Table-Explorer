@@ -35,8 +35,8 @@ include Virtus.value_object
 	attribute :editor, Editor, :default => lambda { |interactive_bottleneck, attribute| Editor.new(interactive_bottleneck.test_executable) }
 	attribute :repository, Repository, :default => lambda { |interactive_bottleneck, attribute| interactive_bottleneck.test_executable.repository }
 	attribute :unit_maturity, UnitMaturity, :default => lambda { |interactive_bottleneck, attribute| UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
-	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
-	attribute :interactive, Symbol, :default => :interactive
+#	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
+	attribute :interactive, Symbol, :default => :interactive # non-defaults are primarily for non-interactive testing testing
 end # values
 def standardize_position!
 	 abort_rebase_and_merge!
@@ -71,6 +71,15 @@ def dirty_test_executables
 		TestExecutable.new_from_path(file_status[:file])
 	end.uniq # map
 end # dirty_test_executables
+def dirty_units
+	dirty_test_executables.map do |test_executable|
+		if test_executable.unit.model_basename.nil? then
+			{test_executable: test_executable, unit: nil}
+		else
+			{test_executable: test_executable, unit: test_executable.unit}
+		end # if
+	end # map
+end # dirty_units
 def dirty_test_runs
 	dirty_test_executables.map do |test_executable|
 		TestRun.new(test_executable: test_executable).error_score?
@@ -258,7 +267,7 @@ def confirm_commit
 			@repository.git_command('add . ').assert_post_conditions
 			@repository.git_command('commit ').assert_post_conditions
 		else
-			raise 'Unimplemented option=' + @interactive.to_s
+			raise 'Unimplemented option @interactive = ' + @interactive.inspect
 		end #case
 	end #if
 	puts 'confirm_commit('+ @interactive.inspect+" @repository.something_to_commit?="+@repository.something_to_commit?.inspect

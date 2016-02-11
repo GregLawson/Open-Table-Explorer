@@ -26,8 +26,8 @@ def teardown
 	Repository.delete_existing(@temp_repo.path)
 end # teardown
 def test_initialize
-	refute_empty(TestInteractiveBottleneck.related_files.edit_files, "TestInteractiveBottleneck.related_files.edit_files=#{TestInteractiveBottleneck.related_files.edit_files}")
-	assert_includes(TestInteractiveBottleneck.related_files.edit_files, TestExecutable, "TestInteractiveBottleneck.related_files=#{TestInteractiveBottleneck.related_files.inspect}")
+	refute_empty(TestInteractiveBottleneck.test_executable.unit.edit_files, "TestInteractiveBottleneck.test_executable.unit.edit_files=#{TestInteractiveBottleneck.test_executable.unit.edit_files}")
+	assert_includes(TestInteractiveBottleneck.test_executable.unit.edit_files, File.expand_path($PROGRAM_NAME), "TestInteractiveBottleneck.unit=#{TestInteractiveBottleneck.test_executable.unit.inspect}")
 end # values
 include InteractiveBottleneck::Examples
 def test_standardize_position!
@@ -46,11 +46,20 @@ end # state?
 def test_dirty_test_executables
 	TestInteractiveBottleneck.dirty_test_executables.each do |test_executable|
 		assert_instance_of(TestExecutable, test_executable)
+#OK		refute_nil(test_executable.unit.model_basename, test_executable.inspect)
+#OK		assert_equal(test_executable.unit, Unit::Executable, test_executable.inspect)
 	end # each
 end # dirty_test_executables
+def test_dirty_units
+	TestInteractiveBottleneck.dirty_units.each do |prospective_unit|
+		assert_instance_of(Unit, prospective_unit[:unit])
+		refute_nil(prospective_unit[:unit].unit.model_basename, prospective_unit.inspect)
+		assert_equal(prospective_unit.unit, Unit::Executable, prospective_unit.inspect)
+	end # each
+end # dirty_units
 def test_dirty_test_runs
 	TestInteractiveBottleneck.dirty_test_runs.each do |test_run|
-		assert_instance_of(TestRun, test_run)
+		assert_instance_of(TestRun, test_run[:test_run])
 	end # each
 end # dirty_test_runs
 def test_clean_directory

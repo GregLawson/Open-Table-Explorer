@@ -1,23 +1,22 @@
 passed
-2016-02-08 13:28:08.392
+2016-02-12 04:11:01.935
 ruby -v -W0 test/unit/interactive_bottleneck_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-....E..ruby script/workflow.rb --test README
+.ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
-...$ git rebase --abort
+...E$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 16063 exit 1>
+@process_status=#<Process::Status: pid 16621 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 16083 exit 128>
+@process_status=#<Process::Status: pid 16641 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
-.E....confirm_commit(:echo @repository.something_to_commit?=true
-.confirm_commit(:echo @repository.something_to_commit?=true
+......E...confirm_commit(:echo @repository.something_to_commit?=true
 ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
 ruby script/workflow.rb --test README
@@ -26,19 +25,20 @@ ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
 ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
-.....confirm_commit(:echo @repository.something_to_commit?=false
-.E...
+....confirm_commit(:echo @repository.something_to_commit?=true
+.confirm_commit(:echo @repository.something_to_commit?=false
+.E......
 
-Finished in 2.861882s, 9.4344 runs/s, 29.7007 assertions/s.
+Finished in 2.314922s, 12.0954 runs/s, 40.1741 assertions/s.
 
   1) Error:
 NewTestClass#test_dirty_test_runs:
 NoMethodError: undefined method `executable_file' for nil:NilClass
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:168:in `error_score?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:76:in `block in dirty_test_runs'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:75:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:75:in `dirty_test_runs'
-    test/unit/interactive_bottleneck_test.rb:52:in `test_dirty_test_runs'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:85:in `block in dirty_test_runs'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:84:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:84:in `dirty_test_runs'
+    test/unit/interactive_bottleneck_test.rb:61:in `test_dirty_test_runs'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -66,10 +66,10 @@ NoMethodError: undefined method `executable_file' for nil:NilClass
 NewTestClass#test_clean_directory:
 NoMethodError: undefined method `executable_file' for nil:NilClass
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:168:in `error_score?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:76:in `block in dirty_test_runs'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:75:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:75:in `dirty_test_runs'
-    test/unit/interactive_bottleneck_test.rb:57:in `test_clean_directory'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:85:in `block in dirty_test_runs'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:84:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:84:in `dirty_test_runs'
+    test/unit/interactive_bottleneck_test.rb:66:in `test_clean_directory'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -94,9 +94,11 @@ NoMethodError: undefined method `executable_file' for nil:NilClass
 
 
   3) Error:
-NewTestClass#test_initialize:
-NoMethodError: undefined method `related_files' for #<InteractiveBottleneck:0x00000003597d80>
-    test/unit/interactive_bottleneck_test.rb:29:in `test_initialize'
+NewTestClass#test_dirty_units:
+NoMethodError: undefined method `unit' for #<Unit:0x00000002dd36a8>
+    test/unit/interactive_bottleneck_test.rb:56:in `block in test_dirty_units'
+    test/unit/interactive_bottleneck_test.rb:54:in `each'
+    test/unit/interactive_bottleneck_test.rb:54:in `test_dirty_units'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -119,5 +121,5 @@ NoMethodError: undefined method `related_files' for #<InteractiveBottleneck:0x00
     /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
-27 runs, 85 assertions, 0 failures, 3 errors, 0 skips
+28 runs, 93 assertions, 0 failures, 3 errors, 0 skips
 
