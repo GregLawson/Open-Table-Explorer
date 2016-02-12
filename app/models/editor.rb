@@ -79,7 +79,7 @@ def test_files(edit_files = @executable.unit.edit_files)
 end # test_files
 def minimal_comparison?
 	if @executable.unit.edit_files == [] then
-		unit_pattern = FilePattern.new_from_path(_FILE_)
+		unit_pattern = FilePattern.new_from_path(__FILE__)
 	else
 		unit_pattern = FilePattern.new_from_path(@executable.unit.edit_files[0])
 	end # if

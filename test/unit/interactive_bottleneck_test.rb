@@ -48,16 +48,26 @@ def test_dirty_test_executables
 		assert_instance_of(TestExecutable, test_executable)
 #OK		refute_nil(test_executable.unit.model_basename, test_executable.inspect)
 #OK		assert_equal(test_executable.unit, Unit::Executable, test_executable.inspect)
+		if test_executable.unit.model_basename.nil? then
+			puts test_executable.inspect + ' does not match a known pattern.'
+		end # if
 	end # each
 end # dirty_test_executables
 def test_dirty_units
 	TestInteractiveBottleneck.dirty_units.each do |prospective_unit|
 		assert_instance_of(Unit, prospective_unit[:unit])
-		refute_nil(prospective_unit[:unit].unit.model_basename, prospective_unit.inspect)
-		assert_equal(prospective_unit.unit, Unit::Executable, prospective_unit.inspect)
+		refute_nil(prospective_unit[:unit].model_basename, prospective_unit.inspect)
+		assert_equal(prospective_unit[:unit], Unit::Executable, prospective_unit.inspect)
 	end # each
 end # dirty_units
 def test_dirty_test_runs
+	TestInteractiveBottleneck.dirty_test_executables.map do |test_executable|
+		assert_equal(test_executable.unit, Unit::Executable, test_executable.inspect)
+		if test_executable == $PROGRAM_NAME then
+			{test_executable: test_executable, test_run: nil, error_score: nil} # terminate recursion
+		else
+		end # if
+	end.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
 	TestInteractiveBottleneck.dirty_test_runs.each do |test_run|
 		assert_instance_of(TestRun, test_run[:test_run])
 	end # each

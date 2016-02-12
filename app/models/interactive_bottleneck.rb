@@ -82,8 +82,13 @@ def dirty_units
 end # dirty_units
 def dirty_test_runs
 	dirty_test_executables.map do |test_executable|
-		TestRun.new(test_executable: test_executable).error_score?
-	end.sort
+		if test_executable.executable_file == $PROGRAM_NAME then
+			{test_executable: test_executable, test_run: nil, error_score: nil} # terminate recursion
+		else
+			test_run  = TestRun.new(executable: test_executable)
+			{test_executable: test_executable, test_run: test_run, error_score: test_run.error_score?}
+		end # if
+	end.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
 end # dirty_test_runs
 def clean_directory
 	dirty_test_executables.sort.map do |test_executable|
