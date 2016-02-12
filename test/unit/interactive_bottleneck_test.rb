@@ -55,28 +55,43 @@ def test_dirty_test_executables
 end # dirty_test_executables
 def test_dirty_units
 	TestInteractiveBottleneck.dirty_units.each do |prospective_unit|
-		assert_instance_of(Unit, prospective_unit[:unit])
-		refute_nil(prospective_unit[:unit].model_basename, prospective_unit.inspect)
-		assert_equal(prospective_unit[:unit], Unit::Executable, prospective_unit.inspect)
+		if prospective_unit[:unit].nil? then
+			puts prospective_unit.inspect + ' does not match a known pattern.'
+		else
+			refute_nil(prospective_unit[:unit], prospective_unit.inspect)
+			assert_instance_of(Unit, prospective_unit[:unit])
+			refute_nil(prospective_unit[:unit].model_basename, prospective_unit.inspect)
+		end # if
+#OK		assert_equal(prospective_unit[:unit], Unit::Executable, prospective_unit.inspect)
 	end # each
 end # dirty_units
 def test_dirty_test_runs
 	TestInteractiveBottleneck.dirty_test_executables.map do |test_executable|
-		assert_equal(test_executable.unit, Unit::Executable, test_executable.inspect)
-		if test_executable == $PROGRAM_NAME then
+		message = test_executable.inspect
+		refute_nil(test_executable.unit, message)
+		assert_instance_of(TestExecutable, test_executable, message)
+		if test_executable.executable_file == $PROGRAM_NAME then
 			{test_executable: test_executable, test_run: nil, error_score: nil} # terminate recursion
 		else
+			assert_instance_of(String, test_executable.executable_file)
+			refute_equal($PROGRAM_NAME, test_executable.executable_file)
+			test_run  = TestRun.new(executable: test_executable)
+			{test_executable: test_executable, test_run: test_run, error_score: test_run.error_score?}
 		end # if
-	end.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
+	end
 	TestInteractiveBottleneck.dirty_test_runs.each do |test_run|
-		assert_instance_of(TestRun, test_run[:test_run])
+		if test_run[:test_run].nil? then
+		else
+			refute_nil(test_run[:test_run], test_run.inspect)
+			assert_instance_of(TestRun, test_run[:test_run])
+		end # if
 	end # each
 end # dirty_test_runs
 def test_clean_directory
-	sorted = TestInteractiveBottleneck.dirty_test_runs.sort
+	sorted = TestInteractiveBottleneck.dirty_test_runs
 	sorted.map do |test_executable|
-		test(test_executable)
-		stage_test_executable
+#already?		test(test_executable)
+#		stage_test_executable
 	end # map
 end # clean_directory
 def test_merge_conflict_recovery
