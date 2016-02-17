@@ -1,17 +1,19 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'virtus'
 #require_relative '../../app/models/no_db.rb'
 #assert_global_name(:Repository)
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_run.rb'
 class UnitMaturity
+TestMaturity = UnitMaturity # until split complete
 #include Repository::Constants
-module Constants
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 #assert_global_name(:Repository)
 #include Repository::Examples
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
@@ -47,11 +49,21 @@ Subset_branch = {
 	:work_flow => :unit,
 	:unit => :regexp
 }
-end #Constants
-include Constants
+end # DefinitionalConstants
+include DefinitionalConstants
 module ClassMethods
-#include Repository::Constants
-include Constants
+include DefinitionalConstants
+def revison_tag?(branch_index)
+	'-r ' + branch_symbol?(branch_index).to_s
+end # revison_tag?
+def merge_range(deserving_branch)
+	deserving_index = UnitMaturity.branch_index?(deserving_branch)
+	if deserving_index.nil? then
+		fail deserving_branch.inspect + ' not found in ' + UnitMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
+	else
+		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
+	end # if
+end # merge_range
 def branch_symbol?(branch_index)
 	case branch_index
 	when nil then fail 'branch_index=' + branch_index.inspect
@@ -78,17 +90,7 @@ def branch_index?(branch_name)
 	end # if
 	branch_index
 end # branch_index?
-def revison_tag?(branch_index)
-	'-r ' + branch_symbol?(branch_index).to_s
-end # revison_tag?
-def merge_range(deserving_branch)
-	deserving_index = UnitMaturity.branch_index?(deserving_branch)
-	if deserving_index.nil? then
-		fail deserving_branch.inspect + ' not found in ' + UnitMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
-	else
-		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
-	end # if
-end # merge_range
+end # ClassMethods
 def deserving_branch?(executable,
 	repository)
 	if File.exists?(executable) then
@@ -100,7 +102,11 @@ def deserving_branch?(executable,
 		:edited
 	end # if
 end # deserving_branch
-end #ClassMethods
+module Constants
+First_slot_index = TestMaturity::Extended_branches.keys.min
+Last_slot_index = TestMaturity::Branch_enhancement.size + 10 # how many is too slow?
+end #Constants
+include Constants
 extend ClassMethods
 attr_reader :repository, :unit
 def initialize(repository, unit)
