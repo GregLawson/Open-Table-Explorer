@@ -16,7 +16,7 @@ require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
 include Virtus.model
-  attribute :executable, TestExecutable
+  attribute :test_executable, TestExecutable
 module Constants
 #include Version::Constants
 Error_classification={0 => :success,
@@ -165,24 +165,24 @@ def <=>(other)
 	error_score? <=> other.error_score?
 end # <=>
 def error_score?
-	executable_file = @executable.executable_file
+	executable_file = @test_executable.executable_file
 	fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !File.exists?(executable_file)
-	@ruby_test_string = @executable.ruby_test_string
-	@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @executable.repository.path)
-	log_path = @executable.log_path?
+	@ruby_test_string = @test_executable.ruby_test_string
+	@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @test_executable.repository.path)
+	log_path = @test_executable.log_path?
 	if !log_path.empty? then
 	end # if
-	@executable.write_error_file(@recent_test)
-	@executable.write_commit_message(@recent_test, [executable_file])
+	@test_executable.write_error_file(@recent_test)
+	@test_executable.write_commit_message(@recent_test, [executable_file])
 #	@recent_test.puts if $VERBOSE
 	@error_score = if @recent_test.success? then
 		0
 	elsif @recent_test.process_status.nil? then
 		100000 # really bad
 	elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-		syntax_test = @executable.repository.shell_command("ruby -c "+executable_file)
+		syntax_test = @test_executable.repository.shell_command("ruby -c "+executable_file)
 		if syntax_test.output=="Syntax OK\n" then
-			initialize_test = @executable.repository.shell_command("ruby "+executable_file+' --name test_initialize')
+			initialize_test = @test_executable.repository.shell_command("ruby "+executable_file+' --name test_initialize')
 			if initialize_test.success? then
 				1
 			else # initialization  failure or test_initialize failure
@@ -245,7 +245,7 @@ end #initialize
 # Unconditionally run the test
 def run
 #  attribute :test_type, Symbol, :default => :unit
-#  attribute :singular_table, String, :default => TE.model_name?
+#  attribute :singular_table, String, :default => Unit::Executable.model_name?
 #  attribute :plural_table, String, :default => nil
 #  attribute :test, String, :default => nil # all tests in file
 #  attribute :test_processor, String, :default => 'ruby'
@@ -313,6 +313,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Default_testRun = TestRun.new(executable: TestExecutable::Examples::Default_executable)
+Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::Default_executable)
 end # Examples
 end # TestRun

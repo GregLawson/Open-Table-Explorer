@@ -178,8 +178,8 @@ def test_error_score?
 	assert(!recent_test.success?, error_message)
 		syntax_test=This_code_repository.shell_command("ruby -c "+executable_file)
 		refute_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-#	test_run = TestRun.new(:executable => executable)
-	test_run = TestRun.new(executable: TestExecutable.new(executable_file: executable_file))
+#	test_run = TestRun.new(test_executable: executable)
+	test_run = TestRun.new(test_executable: TestExecutable.new(executable_file: executable_file))
 #	assert_equal(nil, Unit.new_from_path(executable_file))
 #	assert_equal(nil, test_run.executable.unit, test_run.inspect)
 	assert_equal(10000, test_run.error_score?, recent_test.inspect)
@@ -205,7 +205,7 @@ def test_error_score?
 	end #each
 end # error_score
 def test_TestRun_initialize
-	assert_equal(TestExecutable::Examples::Default_executable, Default_testRun.executable)
+	assert_equal(TestExecutable::Examples::Default_executable, Default_testRun.test_executable)
 	assert_equal(TestExecutable::Examples::Default_executable.executable_file, Default_testRun.executable.executable_file)
 	assert_equal($PROGRAM_NAME, Default_testRun.executable.executable_file)
 	assert_equal(TestExecutable::Examples::Default_executable.unit, Default_testRun.executable.unit)
