@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -92,7 +92,7 @@ def find_example?
 end # find_example?
 def make_executable_object(file_argument)
 	if @unit_class.included_modules.include?(Virtus::InstanceMethods) then
-		@unit_class.new(executable: TestExecutable.new(executable_file: file_argument))
+		@unit_class.new(test_executable: TestExecutable.new(executable_file: file_argument))
 	else
 		@unit_class.new(TestExecutable.new_from_path(file_argument))
 	end # if

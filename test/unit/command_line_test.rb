@@ -124,13 +124,13 @@ def test_find_example?
 end # find_example?
 def test_executable_object
 	assert_includes(Test_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
-	test_run_object = TestRun.new(executable: TestExecutable.new(executable_file: $0))
+	test_run_object = TestRun.new(test_executable: TestExecutable.new(executable_file: $0))
 	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object.methods)
 #	assert_equal(test_run_object, Test_unit_commandline.executable_object)
-#	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object.executable)
-	refute_nil(test_run_object.executable)
-	assert_equal($0, test_run_object.executable.executable_file)
-	assert_equal($0, Test_unit_commandline.executable_object.executable.executable_file)
+#	assert_equal(test_run_object.test_executable, Test_unit_commandline.executable_object.executable)
+	refute_nil(test_run_object.test_executable)
+	assert_equal($0, test_run_object.test_executable.executable_file)
+	assert_equal($0, Test_unit_commandline.executable_object.test_executable.executable_file)
 
 	refute_includes(CommandLine.included_modules, Virtus::InstanceMethods)
 	refute_includes(Not_virtus_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
@@ -141,7 +141,7 @@ def test_executable_object
 	refute_nil(test_run_object.executable)
 	assert_instance_of(TestExecutable, test_run_object.executable)
 	assert_equal($0, test_run_object.executable.executable_file)
-	assert_equal($0, Test_unit_commandline.executable_object.executable.executable_file)
+	assert_equal($0, Test_unit_commandline.executable_object.test_executable.executable_file)
 end # executable_object
 def test_executable_method
 	refute_nil(Script_command_line.executable_object)
