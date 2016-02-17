@@ -12,17 +12,16 @@ require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_run.rb'
 class UnitMaturity
 TestMaturity = UnitMaturity # until split complete
-#include Repository::Constants
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-#assert_global_name(:Repository)
-#include Repository::Examples
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
 Extended_branches = { -4 => :'origin/master',
 	-3 => :work_flow,
 	-2 => :tax_form,
 	-1 => :master }
-First_slot_index = Extended_branches.keys.min
-Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
+Error_classification={0 => :success,
+				1     => :single_test_fail,
+				100 => :initialization_fail,
+				10000 => :syntax_error}
 Deserving_commit_to_branch = { success:             0,
 				single_test_fail:    1,
 			              multiple_tests_fail: 1, # visibility boundary
@@ -35,20 +34,7 @@ Expected_next_commit_branch = { success:             0,
 			              initialization_fail: 1,
 			              syntax_error:        2
 			}
-# define branch maturity partial order
-# use for merge-down and maturity promotion
-More_mature = {
-	:master => :'origin/master',
-	:passed => :master,
-	:testing => :passed,
-	:edited => :testing
-}
-Subset_branch = {
-	:master => :tax_form,
-	:master => :work_flow,
-	:work_flow => :unit,
-	:unit => :regexp
-}
+Error_score_directory = Unit.data_source_directories + '/test_maturity/'
 end # DefinitionalConstants
 include DefinitionalConstants
 module ClassMethods
@@ -57,11 +43,11 @@ def revison_tag?(branch_index)
 	'-r ' + branch_symbol?(branch_index).to_s
 end # revison_tag?
 def merge_range(deserving_branch)
-	deserving_index = UnitMaturity.branch_index?(deserving_branch)
+	deserving_index = TestMaturity.branch_index?(deserving_branch)
 	if deserving_index.nil? then
-		fail deserving_branch.inspect + ' not found in ' + UnitMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
+		fail deserving_branch.inspect + ' not found in ' + TestMaturity::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
 	else
-		deserving_index + 1..UnitMaturity::Branch_enhancement.size - 1
+		deserving_index + 1..TestMaturity::Branch_enhancement.size - 1
 	end # if
 end # merge_range
 def branch_symbol?(branch_index)
@@ -71,10 +57,10 @@ def branch_symbol?(branch_index)
 	when -3 then :work_flow
 	when -2 then :tax_form
 	when -1 then :master
-	when 0..UnitMaturity::Branch_enhancement.size - 1 then UnitMaturity::Branch_enhancement[branch_index]
-	when UnitMaturity::Branch_enhancement.size then :stash
+	when 0..TestMaturity::Branch_enhancement.size - 1 then TestMaturity::Branch_enhancement[branch_index]
+	when TestMaturity::Branch_enhancement.size then :stash
 	else
-		('stash~' + (branch_index - UnitMaturity::Branch_enhancement.size).to_s).to_sym
+		('stash~' + (branch_index - TestMaturity::Branch_enhancement.size).to_s).to_sym
 	end # case
 end # branch_symbol?
 def branch_index?(branch_name)
@@ -90,23 +76,69 @@ def branch_index?(branch_name)
 	end # if
 	branch_index
 end # branch_index?
+def example_files
+	ret = {} # accumulate a hash
+ 	Error_classification.each_pair do |key, value|
+		executable_file = Error_score_directory + value.to_s + '.rb'
+		ret = ret.merge({executable_file => key})
+	end # each_pair
+	ret
+end # example_files
 end # ClassMethods
-def deserving_branch?(executable,
+extend ClassMethods
+def get_error_score!
+	if @cached_error_score.nil? then
+		@cached_error_score = TestRun.new(test_executable: @test_executable).error_score?
+	else
+		@cached_error_score
+	end # if
+end # error_score
+def deserving_branch?(executable_file,
 	repository)
-	if File.exists?(executable) then
-		@working_test_run = TestRun.new(executable).error_score?(executable)
-		@deserving_commit_to_branch = UnitMaturity::Deserving_commit_to_branch[test_run.error_classification]
-		@expected_next_commit_branch = UnitMaturity::Expected_next_commit_branch[test_run.error_classification]
-		@branch_enhancement = UnitMaturity::Branch_enhancement[@deserving_commit_to_branch]
+	if File.exists?(@test_executable.executable_file) then
+		error_classification
 	else
 		:edited
 	end # if
 end # deserving_branch
+def error_classification
+	Error_classification.fetch(get_error_score!, :multiple_tests_fail)
+end # error_classification
+def deserving_commit_to_branch
+	TestMaturity::Deserving_commit_to_branch[error_classification]
+end # deserving_commit_to_branch
+def expected_next_commit_branch
+	TestMaturity::Expected_next_commit_branch[error_classification]
+end # expected_next_commit_branch
+def branch_enhancement
+	TestMaturity::Branch_enhancement[deserving_commit_to_branch]
+end # branch_enhancement
+module Examples
+include DefinitionalConstants
+end # Examples
 module Constants
+# define branch maturity partial order
+# use for merge-down and maturity promotion
+More_mature = {
+	:master => :'origin/master',
+	:passed => :master,
+	:testing => :passed,
+	:edited => :testing
+}
+Subset_branch = {
+	:master => :tax_form,
+	:master => :work_flow,
+	:work_flow => :unit,
+	:unit => :regexp
+}
 First_slot_index = TestMaturity::Extended_branches.keys.min
 Last_slot_index = TestMaturity::Branch_enhancement.size + 10 # how many is too slow?
 end #Constants
 include Constants
+module ClassMethods
+#include Repository::Constants
+include Constants
+end #ClassMethods
 extend ClassMethods
 attr_reader :repository, :unit
 def initialize(repository, unit)
@@ -119,7 +151,7 @@ def initialize(repository, unit)
 end # initialize
 def diff_command?(filename, branch_index)
 	fail filename + ' does not exist.' if !File.exists?(filename)
-	branch_string = UnitMaturity.branch_symbol?(branch_index).to_s
+	branch_string = TestMaturity.branch_symbol?(branch_index).to_s
 	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
 	diff_run = @repository.git_command(git_command)
 end # diff_command?
@@ -175,7 +207,7 @@ module Assertions
 module ClassMethods
 end #ClassMethods
 def assert_deserving_branch(branch_expected, executable, message = '')
-	deserving_branch = UnitMaturity.deserving_branch?(executable, @repository)
+	deserving_branch = TestMaturity.deserving_branch?(executable, @repository)
 	recent_test = shell_command('ruby ' + executable)
 	message += "\nrecent_test=" + recent_test.inspect
 	message += "\nrecent_test.process_status=" + recent_test.process_status.inspect
