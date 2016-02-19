@@ -49,16 +49,16 @@ def test_all
 end # all
 def test_all_basenames
 end # all_basenames
-def test_data_source_directories?
-	assert_equal('test/data_sources/', Unit.data_source_directories?)
+def test_data_source_directories
+	assert_equal('test/data_sources/', Unit.data_source_directories)
 end #data_source_directory?
 def test_equals
 	assert(Unit.new==Unit.new)
 end #==
 def test_data_source_directory?
 	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/', Unit::Executable.project_root_dir)
-	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/', Unit::Executable.project_root_dir + Unit.data_source_directories?)
-	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.project_root_dir + Unit.data_source_directories? + Unit::Executable.model_basename.to_s + '/')
+	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/', Unit::Executable.project_root_dir + Unit.data_source_directories)
+	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.project_root_dir + Unit.data_source_directories + Unit::Executable.model_basename.to_s + '/')
 	assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.data_source_directory?)
 end # data_source_directory?
 def test_pathname_pattern?
@@ -67,7 +67,7 @@ def test_data_sources_directory
 	message='Unit::Executable.data_sources_directory?='+Unit::Executable.data_sources_directory?+"\n"
 	message+='Dir[Unit::Executable.data_sources_directory?]='+Dir[Unit::Executable.data_sources_directory?].inspect+"\n"
 	refute_empty(Unit::Executable.data_sources_directory?, message)
-	refute_empty(Dir[Unit::Executable.data_sources_directory?], message)
+	assert_empty(Dir[Unit::Executable.data_sources_directory? + '/*'], message)
 	related_file=Unit.new_from_path('test/unit/tax_form_test.rb')
 	message='related_file='+related_file.inspect+"\n"
 	message+='related_file.data_sources_directory?='+related_file.data_sources_directory?+"\n"

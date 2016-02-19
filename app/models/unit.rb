@@ -51,14 +51,14 @@ end # all
 def all_basenames
 	Unit.all.map {|u| u.model_basename}.uniq.sort
 end # all_basenames
-def data_source_directories?
+def data_source_directories
 	'test/data_sources/'
 end #data_source_directory?
 end #ClassMethods
 extend ClassMethods
 
 def data_source_directory?
-	ret = @project_root_dir + Unit.data_source_directories? + @model_basename.to_s + '/'
+	ret = @project_root_dir + Unit.data_source_directories + @model_basename.to_s + '/'
 
 	Pathname.new(ret).mkpath
 	ret
