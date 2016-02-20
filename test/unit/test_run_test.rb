@@ -89,10 +89,6 @@ def test_ruby_run_and_log
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(0, This_code_repository.error_score?('test/unit/minimal2_test.rb'))
 #	This_code_repository.assert_deserving_branch(:passed, executable)
-	Error_classification.each_pair do |key, value|
-		executable=data_source_directory?+'/'+value.to_s+'.rb'
-		assert_equal(key, This_code_repository.error_score?(executable), This_code_repository.recent_test.inspect)
-	end #each
 end # ruby_run_and_log
 def test_shell
 	refute_empty(TestRun.shell('pwd'){|run| run.inspect})
@@ -196,13 +192,6 @@ def test_error_score?
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(0, TestRun.new(executable: test_executable).error_score?)
 #	This_code_repository.assert_deserving_branch(:passed, executable_file)
-	Error_classification.each_pair do |key, value|
-		executable_file = Repository_Unit.data_sources_directory?+'/'+value.to_s+'.rb'
-		message = 'executable_file = ' + executable_file
-		assert_path_exists(executable_file)
-		test_run = TestRun.new(executable: TestExecutable.new(executable_file: executable_file))
-		assert_equal(key, test_run.error_score?, test_run.inspect + message)
-	end #each
 end # error_score
 def test_TestRun_initialize
 	assert_equal(TestExecutable::Examples::Default_executable, Default_testRun.test_executable)

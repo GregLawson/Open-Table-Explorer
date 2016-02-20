@@ -19,10 +19,6 @@ include Virtus.model
   attribute :test_executable, TestExecutable
 module Constants
 #include Version::Constants
-Error_classification={0 => :success,
-				1     => :single_test_fail,
-				100 => :initialization_fail,
-				10000 => :syntax_error}
 end # Constants
 include Constants
 #include Generic_Table
@@ -161,9 +157,6 @@ end #parse_header
 end # ClassMethods
 extend ClassMethods
 # attr_reader
-def <=>(other)
-	error_score? <=> other.error_score?
-end # <=>
 def error_score?
 	executable_file = @test_executable.executable_file
 	fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !File.exists?(executable_file)
@@ -194,7 +187,6 @@ def error_score?
 	else
 		@recent_test.process_status.exitstatus # num_errors>1
 	end #if
-	@error_classification = Error_classification.fetch(@error_score, :multiple_tests_fail)
 	@error_score
 end # error_score
 def hide_initialize(testType=nil, singular_table=nil, plural_table=nil, test=nil)

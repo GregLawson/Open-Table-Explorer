@@ -1,14 +1,14 @@
 passed
-2016-02-17 14:36:33.662
+2016-02-20 05:35:45.694
 ruby -v -W0 test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.E.EEEEEE.F.E.E-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x00000003c974f0 @test_executable=nil>>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:257:in `run'
-test/unit/test_run_test.rb:214:in `test_run'
+.E.EEEEEE.F.E.E-StandardError Error: #<NoMethodError: undefined method `log_path?' for #<TestRun:0x0000000320d700 @test_executable=nil>>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:249:in `run'
+test/unit/test_run_test.rb:203:in `test_run'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -32,11 +32,11 @@ test/unit/test_run_test.rb:214:in `test_run'
 /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 E.EEE..
 
-Finished in 0.570642s, 38.5531 runs/s, 26.2862 assertions/s.
+Finished in 0.586217s, 37.5288 runs/s, 25.5878 assertions/s.
 
   1) Error:
 NewTestClass#test_new_from_pathname:
-NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x00000003d3bd70>
+NameError: undefined local variable or method `executable_file_file' for #<NewTestClass:0x0000000322cf60>
     test/unit/test_run_test.rb:48:in `test_new_from_pathname'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -63,8 +63,8 @@ NameError: undefined local variable or method `executable_file_file' for #<NewTe
 
   2) Error:
 NewTestClass#test_TestRun_initialize:
-NoMethodError: undefined method `executable' for #<TestRun:0x000000037ab1f8>
-    test/unit/test_run_test.rb:209:in `test_TestRun_initialize'
+NoMethodError: undefined method `executable' for #<TestRun:0x00000002d19e60>
+    test/unit/test_run_test.rb:198:in `test_TestRun_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -118,7 +118,7 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
 
   4) Error:
 NewTestClass#test_ruby_test_string:
-NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000003ca1ba8>
+NoMethodError: undefined method `ruby_test_string' for #<Repository:0x00000003206b58>
     test/unit/test_run_test.rb:58:in `test_ruby_test_string'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -173,7 +173,7 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
   6) Error:
 NewTestClass#test_log_passed?:
 ArgumentError: wrong number of arguments (0 for 1)
-    test/unit/test_run_test.rb:147:in `test_log_passed?'
+    test/unit/test_run_test.rb:143:in `test_log_passed?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -200,7 +200,7 @@ ArgumentError: wrong number of arguments (0 for 1)
   7) Error:
 NewTestClass#test_parse_header:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:154:in `test_parse_header'
+    test/unit/test_run_test.rb:150:in `test_parse_header'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -225,10 +225,10 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
 
 
   8) Failure:
-NewTestClass#test_parse_log_file [test/unit/test_run_test.rb:133]:
-headerArray[-1]='"Run options: --seed 0"'.
+NewTestClass#test_parse_log_file [test/unit/test_run_test.rb:129]:
+headerArray[-1]='"ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]"'.
 Expected: "Finished"
-  Actual: "Run"
+  Actual: "ruby"
 
 
   9) Error:
@@ -239,7 +239,7 @@ NoMethodError: undefined method `assertions' for Run options: --seed 0
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
-    test/unit/test_run_test.rb:191:in `test_error_score?'
+    test/unit/test_run_test.rb:187:in `test_error_score?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -265,7 +265,7 @@ NoMethodError: undefined method `assertions' for Run options: --seed 0
 
  10) Error:
 NewTestClass#test_log_path?:
-NoMethodError: undefined method `log_path?' for #<Repository:0x00000003ca1ba8>
+NoMethodError: undefined method `log_path?' for #<Repository:0x00000003206b58>
     test/unit/test_run_test.rb:53:in `test_log_path?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -293,7 +293,7 @@ NoMethodError: undefined method `log_path?' for #<Repository:0x00000003ca1ba8>
  11) Error:
 NewTestClass#test_run:
 NoMethodError: undefined method `output' for nil:NilClass
-    test/unit/test_run_test.rb:214:in `test_run'
+    test/unit/test_run_test.rb:203:in `test_run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -346,7 +346,7 @@ NameError: uninitialized constant NewTestClass::Odd_plural_executable
 
  13) Error:
 NewTestClass#test_ruby_run_and_log:
-NoMethodError: undefined method `error_score?' for #<Repository:0x00000003ca1ba8>
+NoMethodError: undefined method `error_score?' for #<Repository:0x00000003206b58>
     test/unit/test_run_test.rb:83:in `test_ruby_run_and_log'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
@@ -374,7 +374,7 @@ NoMethodError: undefined method `error_score?' for #<Repository:0x00000003ca1ba8
  14) Error:
 NewTestClass#test_file_bug_reports:
 NameError: uninitialized constant NewTestClass::Odd_plural_executable
-    test/unit/test_run_test.rb:101:in `test_file_bug_reports'
+    test/unit/test_run_test.rb:97:in `test_file_bug_reports'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
