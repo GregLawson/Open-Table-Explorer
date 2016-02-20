@@ -1,0 +1,6 @@
+passed
+2016-02-20 05:35:52.022
+ruby -v -W0 test/data_sources//test_maturity/syntax_error.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+test/data_sources//test_maturity/syntax_error.rb:1: syntax error, unexpected &

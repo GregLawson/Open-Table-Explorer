@@ -1,14 +1,14 @@
 passed
-2016-02-19 05:19:33.014
+2016-02-20 05:35:52.146
 ruby -v -W0 test/unit/unit_maturity_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.................
+.......................
 
-Finished in 1.653180s, 10.2832 runs/s, 28.4300 assertions/s.
+Finished in 2.433694s, 9.4507 runs/s, 31.2282 assertions/s.
 
-17 runs, 47 assertions, 0 failures, 0 errors, 0 skips
+23 runs, 76 assertions, 0 failures, 0 errors, 0 skips
 

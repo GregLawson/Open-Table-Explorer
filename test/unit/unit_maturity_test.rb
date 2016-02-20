@@ -10,23 +10,15 @@ require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/unit_maturity.rb'
 class TestMaturityTest < TestCase
-TestMaturity = UnitMaturity
-#include DefaultTests
-include Repository::Examples
-include Branch::Constants
-include TestRun::Constants
-#include Branch::Examples
-include UnitMaturity::Examples
-def test_DefinitionalConstants
-	Error_classification.each_pair do |key, value|
-		executable_file = Unit.data_source_directories + '/test_maturity/' + value.to_s + '.rb'
-		assert(File.exists?(executable_file), executable_file.inspect)
-		message = 'executable_file = ' + executable_file
-#		assert_path_exists(executable_file)
-		test_run = TestRun.new(test_executable: TestExecutable.new(executable_file: executable_file))
-#		assert_equal(key, test_run.error_score?, test_run.inspect + message)
-	end #each
-end # DefinitionalConstants
+include TestMaturity::Examples
+def test_Error_classification
+	Error_classification.each_pair do |expected_error_score, classification|
+		assert_instance_of(Fixnum, expected_error_score)
+		assert_instance_of(Symbol, classification)
+	end # each_pair
+	assert_equal(4, Error_classification.keys.size, Error_classification.inspect)
+	assert_equal(4, Error_classification.values.size, Error_classification.inspect)
+end # Error_classification
 def test_revison_tag?
 	assert_equal('-r master', TestMaturity.revison_tag?(-1))
 	assert_equal('-r passed', TestMaturity.revison_tag?(0))
@@ -57,7 +49,7 @@ def test_branch_symbol?
 	assert_equal(:'origin/master', TestMaturity.branch_symbol?(-4))
 end # branch_symbol?
 def test_branch_index?
-	assert_equal(0, UnitMaturity.branch_index?(:passed))
+	assert_equal(0, TestMaturity.branch_index?(:passed))
 	assert_equal(1, TestMaturity.branch_index?(:testing))
 	assert_equal(2, TestMaturity.branch_index?(:edited))
 	assert_equal(3, TestMaturity.branch_index?(:stash))
@@ -69,12 +61,33 @@ def test_branch_index?
 	assert_equal(-4, TestMaturity.branch_index?(:'origin/master'))
 	assert_equal(nil, TestMaturity.branch_index?('/home/greg'))
 end # branch_index?
+def test_example_files
+	ret = {} # accumulate a hash
+ 	Error_classification.each_pair do |expected_error_score, classification|
+		executable_file = Error_score_directory + classification.to_s + '.rb'
+		message = 'executable_file = ' + executable_file
+		assert(File.exists?(executable_file), message)
+		ret = ret.merge({executable_file => expected_error_score})
+	end # each_pair
+	refute_empty(TestMaturity.example_files)
+	assert_equal(4, TestMaturity.example_files.keys.size, TestMaturity.example_files.inspect)
+	assert_equal(4, TestMaturity.example_files.values.size, TestMaturity.example_files.inspect)
+end # example_files
+def test_get_error_score!
+	assert_includes(TestMaturity.new(test_executable: TestExecutable.new(executable_file: $0)).instance_variables, :@test_executable)
+	refute_includes(TestMaturity.new(test_executable: TestExecutable.new(executable_file: $0)).instance_variables, :@cached_error_score)
+	assert_includes(ExecutableMaturity.instance_variables, :@test_executable)
+	assert_nil(ExecutableMaturity.get_error_score!)
+end # error_score
 def test_deserving_branch?
 	error_classifications=[]
 	branch_compressions=[]
 	branch_enhancements=[]
 	TestMaturity.example_files.each_pair do |executable_file, expected_error_score|
-		test_run = TestRun.new(test_executable: TestExecutable.new(executable_file: executable_file))
+		test_executable = TestExecutable.new(executable_file: executable_file)
+		refute_nil(test_executable.unit) # nonstandard unit assignment
+		assert_equal(:unit, test_executable.test_type) # nonstandard unit assignment
+		test_run = TestRun.new(test_executable: test_executable)
 		error_score = test_run.error_score?
 #		assert_equal(expected_error_score, error_score, test_run.inspect)
 		error_classification = Error_classification.fetch(error_score, :multiple_tests_fail)
@@ -90,10 +103,21 @@ def test_deserving_branch?
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
 #	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
 end #deserving_branch
-#include TestMaturity::DefinitionalConstants
+def test_error_classification
+	Error_classification.fetch(MinimalMaturity.get_error_score!, :multiple_tests_fail)
+end # error_classification
+def test_deserving_commit_to_branch
+	TestMaturity::Deserving_commit_to_branch[MinimalMaturity.error_classification]
+end # deserving_commit_to_branch
+def test_expected_next_commit_branch
+	TestMaturity::Expected_next_commit_branch[MinimalMaturity.error_classification]
+end # expected_next_commit_branch
+def test_branch_enhancement
+	TestMaturity::Branch_enhancement[MinimalMaturity.deserving_commit_to_branch]
+end # branch_enhancement
 end # TestMaturity
 class UnitMaturityTest < TestCase
-TestMaturity = UnitMaturity
+#include DefaultTests
 include Repository::Examples
 def test_DefinitionalConstants
 end # DefinitionalConstants

@@ -10,15 +10,16 @@ require 'virtus'
 #assert_global_name(:Repository)
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_run.rb'
-class UnitMaturity
-TestMaturity = UnitMaturity # until split complete
+# abstracts TestRun and git commits for comparison
+class TestMaturity
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
 Extended_branches = { -4 => :'origin/master',
 	-3 => :work_flow,
 	-2 => :tax_form,
 	-1 => :master }
-Error_classification={0 => :success,
+# Error score is a SWAG at order of magnitude of errors
+Error_classification = {0 => :success,
 				1     => :single_test_fail,
 				100 => :initialization_fail,
 				10000 => :syntax_error}
@@ -37,6 +38,13 @@ Expected_next_commit_branch = { success:             0,
 Error_score_directory = Unit.data_source_directories + '/test_maturity/'
 end # DefinitionalConstants
 include DefinitionalConstants
+  include Virtus.value_object
+  values do
+ 	attribute :version, BranchReference, :default => nil # working_directory
+	attribute :test_executable, TestExecutable
+#	attribute :age, Fixnum, :default => 789
+#	attribute :timestamp, Time, :default => Time.now
+	end # values
 module ClassMethods
 include DefinitionalConstants
 def revison_tag?(branch_index)
@@ -78,16 +86,18 @@ def branch_index?(branch_name)
 end # branch_index?
 def example_files
 	ret = {} # accumulate a hash
- 	Error_classification.each_pair do |key, value|
-		executable_file = Error_score_directory + value.to_s + '.rb'
-		ret = ret.merge({executable_file => key})
+ 	Error_classification.each_pair do |expected_error_score, classification|
+		executable_file = Error_score_directory + classification.to_s + '.rb'
+		ret = ret.merge({executable_file => classification})
 	end # each_pair
 	ret
 end # example_files
 end # ClassMethods
 extend ClassMethods
 def get_error_score!
-	if @cached_error_score.nil? then
+	if File.expand_path(@test_executable.executable_file) == File.expand_path($PROGRAM_NAME) then
+		nil # avoid recursion
+	elsif @cached_error_score.nil? then
 		@cached_error_score = TestRun.new(test_executable: @test_executable).error_score?
 	else
 		@cached_error_score
@@ -101,6 +111,9 @@ def deserving_branch?(executable_file,
 		:edited
 	end # if
 end # deserving_branch
+def <=>(other)
+	get_error_score! <=> other.get_error_score!
+end # <=>
 def error_classification
 	Error_classification.fetch(get_error_score!, :multiple_tests_fail)
 end # error_classification
@@ -115,7 +128,13 @@ def branch_enhancement
 end # branch_enhancement
 module Examples
 include DefinitionalConstants
+ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(executable_file: $0))
+MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(executable_file: 'test/unit/minimal2_test.rb'))
 end # Examples
+end # TestMaturity
+
+class UnitMaturity
+#include Repository::Constants
 module Constants
 # define branch maturity partial order
 # use for merge-down and maturity promotion
