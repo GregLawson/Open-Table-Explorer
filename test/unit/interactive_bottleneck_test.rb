@@ -65,33 +65,33 @@ def test_dirty_units
 #OK		assert_equal(prospective_unit[:unit], Unit::Executable, prospective_unit.inspect)
 	end # each
 end # dirty_units
-def test_dirty_test_runs
+def test_dirty_test_maturities
 	TestInteractiveBottleneck.dirty_test_executables.map do |test_executable|
 		message = test_executable.inspect
 		refute_nil(test_executable.unit, message)
 		assert_instance_of(TestExecutable, test_executable, message)
 		if test_executable.executable_file == $PROGRAM_NAME then
-			{test_executable: test_executable, test_run: nil, error_score: nil} # terminate recursion
+			{test_executable: test_executable, test_maturity: nil, error_score: nil} # terminate recursion
 		else
 			assert_instance_of(String, test_executable.executable_file)
 			refute_equal($PROGRAM_NAME, test_executable.executable_file)
-			test_run  = TestRun.new(executable: test_executable)
-			{test_executable: test_executable, test_run: test_run, error_score: test_run.error_score?}
+			test_maturity  = TestMaturity.new(test_executable: test_executable)
+			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
 		end # if
 	end
-	TestInteractiveBottleneck.dirty_test_runs.each do |test_run|
-		if test_run[:test_run].nil? then
+	TestInteractiveBottleneck.dirty_test_maturities.each do |test_maturity|
+		if test_maturity[:test_maturity].nil? then
 		else
-			refute_nil(test_run[:test_run], test_run.inspect)
-			assert_instance_of(TestRun, test_run[:test_run])
+			refute_nil(test_maturity[:test_maturity], test_maturity.inspect)
+			assert_instance_of(TestMaturity, test_maturity[:test_maturity])
 		end # if
 	end # each
-end # dirty_test_runs
+end # dirty_test_maturities
 def test_clean_directory
-	sorted = TestInteractiveBottleneck.dirty_test_runs
-	sorted.map do |test_executable|
+	sorted = TestInteractiveBottleneck.dirty_test_maturities #.sort
+	sorted.map do |test_maturity_hash|
 #already?		test(test_executable)
-#		stage_test_executable
+		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity_hash[:test_maturity].deserving_branch)
 	end # map
 end # clean_directory
 def test_merge_conflict_recovery

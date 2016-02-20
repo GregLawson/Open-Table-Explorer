@@ -1,5 +1,5 @@
 passed
-2016-02-12 12:09:20.883
+2016-02-20 05:45:45.661
 ruby -v -W0 test/unit/interactive_bottleneck_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -10,10 +10,10 @@ Run options: --seed 0
 confirm_commit(:echo @repository.something_to_commit?=true
 ....$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 3783 exit 1>
+@process_status=#<Process::Status: pid 10754 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 3803 exit 128>
+@process_status=#<Process::Status: pid 10774 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ..........confirm_commit(:echo @repository.something_to_commit?=true
@@ -25,47 +25,11 @@ ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
 ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
-..#<TestExecutable:0x00000003490f18 @executable_file="log/unit/2.2/2.2.3p173/silence/.log", @repository=## passed...origin/passed [ahead 3]
- M log/unit/2.2/2.2.3p173/silence/.log
- M log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
- M test/unit/interactive_bottleneck_test.rb
-?? log/unit_log/
-?? test/data_sources/repository2016-02-11_07.29.49.311/
-?? test/data_sources/repository2016-02-11_07.29.56.544/
-?? test/data_sources/repository2016-02-11_07.30.02.073/
-, @unit=#<Unit model_basename=nil project_root_dir=nil patterns=[{:suffix=>".rb", :name=>:model, :prefix=>"app/models/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb"}, {:suffix=>"_test.rb", :name=>:unit, :prefix=>"test/unit/", :example_file=>"test/unit/interactive_bottleneck_test.rb"}, {:suffix=>".rb", :name=>:script, :prefix=>"script/", :example_file=>"script/work_flow.rb"}, {:suffix=>"_test.rb", :name=>:integration_test, :prefix=>"test/integration/", :example_file=>"test/integration/repository_test.rb"}, {:suffix=>"_test.rb", :name=>:long_test, :prefix=>"test/long_test/", :example_file=>"test/long_test/repository_test.rb"}, {:suffix=>"_assertions.rb", :name=>:assertions, :prefix=>"test/assertions/", :example_file=>"test/assertions/repository_assertions.rb"}, {:suffix=>"_assertions_test.rb", :name=>:assertions_test, :prefix=>"test/unit/", :example_file=>"test/unit/repository_assertions_test.rb"}, {:suffix=>".log", :name=>:library_log, :prefix=>"log/library/", :example_file=>"log/library/repository.log"}, {:suffix=>".log", :name=>:assertions_log, :prefix=>"log/assertions/", :example_file=>"log/assertions/repository.log"}, {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/repository.log"}, {:suffix=>".log", :name=>:long_log, :prefix=>"log/long/", :example_file=>"log/long/repository.log"}, {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/CA540"}]>, @test_type=:unit, @pattern_name=nil, @ruby_interpreter=#<RubyInterpreter options="-W0" processor_version=#<RubyVersion major="0" minor="0" patch="0" pre_release="0" regexp=/(?<major>[1-9]?[0-9]{1,3})\.(?<minor>[1-9]?[0-9]{1,3})\.(?<patch>[1-9]?[0-9]{1,3})(?:[-+.](?<pre_release>[-.a-zA-Z0-9]*))?/ source_string=nil test_command="ruby" version_reporting_option="--version" version_report="ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]\n"> logging=:silence minor_version="2.2" patch_version="2.2.3p173">, @test=nil> does not match a known pattern.
-#<TestExecutable:0x000000034766e0 @executable_file="log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log", @repository=## passed...origin/passed [ahead 3]
- M log/unit/2.2/2.2.3p173/silence/.log
- M log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
- M test/unit/interactive_bottleneck_test.rb
-?? log/unit_log/
-?? test/data_sources/repository2016-02-11_07.29.49.311/
-?? test/data_sources/repository2016-02-11_07.29.56.544/
-?? test/data_sources/repository2016-02-11_07.30.02.073/
-, @unit=#<Unit model_basename=nil project_root_dir=nil patterns=[{:suffix=>".rb", :name=>:model, :prefix=>"app/models/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb"}, {:suffix=>"_test.rb", :name=>:unit, :prefix=>"test/unit/", :example_file=>"test/unit/interactive_bottleneck_test.rb"}, {:suffix=>".rb", :name=>:script, :prefix=>"script/", :example_file=>"script/work_flow.rb"}, {:suffix=>"_test.rb", :name=>:integration_test, :prefix=>"test/integration/", :example_file=>"test/integration/repository_test.rb"}, {:suffix=>"_test.rb", :name=>:long_test, :prefix=>"test/long_test/", :example_file=>"test/long_test/repository_test.rb"}, {:suffix=>"_assertions.rb", :name=>:assertions, :prefix=>"test/assertions/", :example_file=>"test/assertions/repository_assertions.rb"}, {:suffix=>"_assertions_test.rb", :name=>:assertions_test, :prefix=>"test/unit/", :example_file=>"test/unit/repository_assertions_test.rb"}, {:suffix=>".log", :name=>:library_log, :prefix=>"log/library/", :example_file=>"log/library/repository.log"}, {:suffix=>".log", :name=>:assertions_log, :prefix=>"log/assertions/", :example_file=>"log/assertions/repository.log"}, {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/repository.log"}, {:suffix=>".log", :name=>:long_log, :prefix=>"log/long/", :example_file=>"log/long/repository.log"}, {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/CA540"}]>, @test_type=:unit, @pattern_name=nil, @ruby_interpreter=#<RubyInterpreter options="-W0" processor_version=#<RubyVersion major="0" minor="0" patch="0" pre_release="0" regexp=/(?<major>[1-9]?[0-9]{1,3})\.(?<minor>[1-9]?[0-9]{1,3})\.(?<patch>[1-9]?[0-9]{1,3})(?:[-+.](?<pre_release>[-.a-zA-Z0-9]*))?/ source_string=nil test_command="ruby" version_reporting_option="--version" version_report="ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]\n"> logging=:silence minor_version="2.2" patch_version="2.2.3p173">, @test=nil> does not match a known pattern.
-..confirm_commit(:echo @repository.something_to_commit?=true
+....confirm_commit(:echo @repository.something_to_commit?=true
 .confirm_commit(:echo @repository.something_to_commit?=false
-.{:test_executable=>#<TestExecutable:0x000000031d9950 @executable_file="log/unit/2.2/2.2.3p173/silence/.log", @repository=## passed...origin/passed [ahead 3]
- M log/unit/2.2/2.2.3p173/silence/.log
- M log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
- M test/unit/interactive_bottleneck_test.rb
-?? log/unit_log/
-?? test/data_sources/repository2016-02-11_07.29.49.311/
-?? test/data_sources/repository2016-02-11_07.29.56.544/
-?? test/data_sources/repository2016-02-11_07.30.02.073/
-, @unit=#<Unit model_basename=nil project_root_dir=nil patterns=[{:suffix=>".rb", :name=>:model, :prefix=>"app/models/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb"}, {:suffix=>"_test.rb", :name=>:unit, :prefix=>"test/unit/", :example_file=>"test/unit/interactive_bottleneck_test.rb"}, {:suffix=>".rb", :name=>:script, :prefix=>"script/", :example_file=>"script/work_flow.rb"}, {:suffix=>"_test.rb", :name=>:integration_test, :prefix=>"test/integration/", :example_file=>"test/integration/repository_test.rb"}, {:suffix=>"_test.rb", :name=>:long_test, :prefix=>"test/long_test/", :example_file=>"test/long_test/repository_test.rb"}, {:suffix=>"_assertions.rb", :name=>:assertions, :prefix=>"test/assertions/", :example_file=>"test/assertions/repository_assertions.rb"}, {:suffix=>"_assertions_test.rb", :name=>:assertions_test, :prefix=>"test/unit/", :example_file=>"test/unit/repository_assertions_test.rb"}, {:suffix=>".log", :name=>:library_log, :prefix=>"log/library/", :example_file=>"log/library/repository.log"}, {:suffix=>".log", :name=>:assertions_log, :prefix=>"log/assertions/", :example_file=>"log/assertions/repository.log"}, {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/repository.log"}, {:suffix=>".log", :name=>:long_log, :prefix=>"log/long/", :example_file=>"log/long/repository.log"}, {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/CA540"}]>, @test_type=:unit, @pattern_name=nil, @ruby_interpreter=#<RubyInterpreter options="-W0" processor_version=#<RubyVersion major="0" minor="0" patch="0" pre_release="0" regexp=/(?<major>[1-9]?[0-9]{1,3})\.(?<minor>[1-9]?[0-9]{1,3})\.(?<patch>[1-9]?[0-9]{1,3})(?:[-+.](?<pre_release>[-.a-zA-Z0-9]*))?/ source_string=nil test_command="ruby" version_reporting_option="--version" version_report="ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]\n"> logging=:silence minor_version="2.2" patch_version="2.2.3p173">, @test=nil>, :unit=>nil} does not match a known pattern.
-{:test_executable=>#<TestExecutable:0x000000031d1d68 @executable_file="log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log", @repository=## passed...origin/passed [ahead 3]
- M log/unit/2.2/2.2.3p173/silence/.log
- M log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
- M test/unit/interactive_bottleneck_test.rb
-?? log/unit_log/
-?? test/data_sources/repository2016-02-11_07.29.49.311/
-?? test/data_sources/repository2016-02-11_07.29.56.544/
-?? test/data_sources/repository2016-02-11_07.30.02.073/
-, @unit=#<Unit model_basename=nil project_root_dir=nil patterns=[{:suffix=>".rb", :name=>:model, :prefix=>"app/models/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb"}, {:suffix=>"_test.rb", :name=>:unit, :prefix=>"test/unit/", :example_file=>"test/unit/interactive_bottleneck_test.rb"}, {:suffix=>".rb", :name=>:script, :prefix=>"script/", :example_file=>"script/work_flow.rb"}, {:suffix=>"_test.rb", :name=>:integration_test, :prefix=>"test/integration/", :example_file=>"test/integration/repository_test.rb"}, {:suffix=>"_test.rb", :name=>:long_test, :prefix=>"test/long_test/", :example_file=>"test/long_test/repository_test.rb"}, {:suffix=>"_assertions.rb", :name=>:assertions, :prefix=>"test/assertions/", :example_file=>"test/assertions/repository_assertions.rb"}, {:suffix=>"_assertions_test.rb", :name=>:assertions_test, :prefix=>"test/unit/", :example_file=>"test/unit/repository_assertions_test.rb"}, {:suffix=>".log", :name=>:library_log, :prefix=>"log/library/", :example_file=>"log/library/repository.log"}, {:suffix=>".log", :name=>:assertions_log, :prefix=>"log/assertions/", :example_file=>"log/assertions/repository.log"}, {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/repository.log"}, {:suffix=>".log", :name=>:long_log, :prefix=>"log/long/", :example_file=>"log/long/repository.log"}, {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/CA540"}]>, @test_type=:unit, @pattern_name=nil, @ruby_interpreter=#<RubyInterpreter options="-W0" processor_version=#<RubyVersion major="0" minor="0" patch="0" pre_release="0" regexp=/(?<major>[1-9]?[0-9]{1,3})\.(?<minor>[1-9]?[0-9]{1,3})\.(?<patch>[1-9]?[0-9]{1,3})(?:[-+.](?<pre_release>[-.a-zA-Z0-9]*))?/ source_string=nil test_command="ruby" version_reporting_option="--version" version_report="ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]\n"> logging=:silence minor_version="2.2" patch_version="2.2.3p173">, @test=nil>, :unit=>nil} does not match a known pattern.
-.......
+........
 
-Finished in 3.751158s, 7.4644 runs/s, 29.0577 assertions/s.
+Finished in 2.297399s, 12.1877 runs/s, 38.7395 assertions/s.
 
-28 runs, 109 assertions, 0 failures, 0 errors, 0 skips
+28 runs, 89 assertions, 0 failures, 0 errors, 0 skips
 

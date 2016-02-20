@@ -80,18 +80,18 @@ def dirty_units
 		end # if
 	end # map
 end # dirty_units
-def dirty_test_runs
+def dirty_test_maturities
 	dirty_test_executables.map do |test_executable|
 		if test_executable.unit.nil? then # probably can't test if not in a unit
 			nil
 		elsif test_executable.executable_file == $PROGRAM_NAME then
-			{test_executable: test_executable, test_run: nil, error_score: nil} # terminate recursion
+			{test_executable: test_executable, test_maturity: nil, error_score: nil} # terminate recursion
 		else
-			test_run  = TestRun.new(executable: test_executable)
-			{test_executable: test_executable, test_run: test_run, error_score: test_run.error_score?}
+			test_maturity  = TestMaturity.new(test_executable: test_executable)
+			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
 		end.compact # if
 	end
-end # dirty_test_runs
+end # dirty_test_maturities
 def clean_directory
 	dirty_test_executables.sort.map do |test_executable|
 		test(test_executable)
