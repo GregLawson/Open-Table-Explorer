@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-15 by Greg Lawson
+#    Copyright (C) 2013-16 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -29,7 +29,7 @@ def initialize(executable)
 	@executable = executable
 	@specific_file = @executable.executable_file
 	@unit_maturity = UnitMaturity.new(@executable.repository, executable.unit)
-	index = UnitMaturity::Branch_enhancement.index(@executable.repository.current_branch_name?)
+	index = TestMaturity::Branch_enhancement.index(@executable.repository.current_branch_name?)
 	if index.nil? then
 		@branch_index = UnitMaturity::First_slot_index
 	else
@@ -47,20 +47,20 @@ def version_comparison(files = nil)
 end # version_comparison
 def goldilocks(filename, middle_branch = @executable.repository.current_branch_name?.to_sym)
 	if File.exists?(filename) then
-		current_index = UnitMaturity.branch_index?(middle_branch)
+		current_index = TestMaturity.branch_index?(middle_branch)
 		left_index, right_index = @unit_maturity.bracketing_versions?(filename, current_index)
 		relative_filename = Pathname.new(File.expand_path(filename)).relative_path_from(Pathname.new(Dir.pwd)).to_s
 		ret = ' -t '
 		if left_index.nil? then
 			ret += " #{relative_filename} "
 		else
-			ret += "#{UnitMaturity.revison_tag?(left_index)} #{relative_filename} "
+			ret += "#{TestMaturity.revison_tag?(left_index)} #{relative_filename} "
 		end # if
 		ret += relative_filename
 		if right_index.nil? then
 			ret += " #{relative_filename} "
 		else
-			ret += " #{UnitMaturity.revison_tag?(right_index)} #{relative_filename}"
+			ret += " #{TestMaturity.revison_tag?(right_index)} #{relative_filename}"
 		end # if
 	else
 		ret = ''
