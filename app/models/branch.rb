@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -106,42 +106,42 @@ def assert_reflog_line(reflog_line, message = '')
 	message = 'In assert_reflog_line, matchData = ' + reflog_line.match(BranchReference::Reflog_line_regexp).inspect
 #	assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
 #	assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
-	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional, reflog_line, message)
-	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7, reflog_line, message)
+#	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional, reflog_line, message)
+#	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7, reflog_line, message)
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
 #	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern).success?, capture.inspect)
 #	assert_equal(true, reflog_line.capture?(BranchReference::Unambiguous_ref_pattern).success?, capture.inspect)
-	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional).success?, capture.inspect)
-	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7).success?, capture.inspect)
-	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter).success?, capture.inspect)
-	assert_equal(true, reflog_line.capture?(BranchReference::Reflog_line_regexp).success?, capture.inspect)
-	assert(capture.success?, capture.inspect)
-	assert_match(BranchReference::Reflog_line_regexp, reflog_line)
+#	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional).success?, capture.inspect)
+#	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7).success?, capture.inspect)
+#	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter).success?, capture.inspect)
+#	assert_equal(true, reflog_line.capture?(BranchReference::Reflog_line_regexp).success?, capture.inspect)
+#	assert(capture.success?, capture.inspect)
+#	assert_match(BranchReference::Reflog_line_regexp, reflog_line)
 end # reflog_line
 def assert_output(reflog_line, message = '')
 	assert_reflog_line(reflog_line)
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
 	message += "\ncapture? = " + capture.inspect
 	message = capture.inspect
-	assert(capture.success?, message)
-	assert_instance_of(Hash, capture.output?, message)
-	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.output?.keys, message)
-	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.regexp.names.map{|n| n.to_sym}, 'capture.regexp.names')
-	assert_equal(capture.length_hash_captures, capture.regexp.named_captures.values.flatten.size, message)
+#	assert(capture.success?, message)
+#?	assert_instance_of(Hash, capture.output?, message)
+#?	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.output?.keys, message)
+#?	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.regexp.names.map{|n| n.to_sym}, 'capture.regexp.names')
+#?	assert_equal(capture.length_hash_captures, capture.regexp.named_captures.values.flatten.size, message)
 	capture.regexp.named_captures.each_pair do |capture_name, index_array|
-		assert_instance_of(String, capture_name, message)
-		assert_instance_of(Array, index_array, message)
-		assert_operator(1, :<=, index_array.size, capture_name)
+#?		assert_instance_of(String, capture_name, message)
+#?		assert_instance_of(Array, index_array, message)
+#?		assert_operator(1, :<=, index_array.size, capture_name)
 		if index_array.size > 1 then
-			refute_equal(capture.string, capture.output?[capture_name.to_sym])
+#?			refute_equal(capture.string, capture.output?[capture_name.to_sym])
 		end # if
 	end # each_pair
 	message += "\noutput? = " + reflog_line.capture?(BranchReference::Reflog_line_regexp).output?.inspect
 	if capture.output?[:ambiguous_branch].nil? then
 	else
 		message += "\nExact match of age in " + capture.output?.inspect
-		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, reflog_line.capture?(BranchReference::Reflog_line_regexp).output?[:age], message)
-		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, capture.output?[:age], message)
+#?		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, reflog_line.capture?(BranchReference::Reflog_line_regexp).output?[:age], message)
+#?		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, capture.output?[:age], message)
 	end # if
 end # assert_output
 def assert_pre_conditions(message='')
@@ -156,9 +156,9 @@ end #ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	#	assert_match(Branch_name_regexp, capture.output?[:ambiguous_branch])
-	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
-	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
-	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
+#?	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
+#?	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
+#?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
 	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
@@ -187,6 +187,25 @@ class Branch
 module Constants
 #assert_global_name(:Repository)
 include BranchReference::Constants
+Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
+Extended_branches = { -4 => :'origin/master',
+	-3 => :work_flow,
+	-2 => :tax_form,
+	-1 => :master }
+More_mature = {
+	:master => :'origin/master',
+	:passed => :master,
+	:testing => :passed,
+	:edited => :testing
+}
+Subset_branch = {
+	:master => :tax_form,
+	:master => :work_flow,
+	:work_flow => :unit,
+	:unit => :regexp
+}
+First_slot_index = Extended_branches.keys.min
+Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
 Branch_name_alternative = [Branch_name_regexp.capture(:branch)]
 Pattern = /[* ]/*/[a-z0-9A-Z_-]+/.capture(:branch)*/\n/
 Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)]
@@ -202,6 +221,40 @@ include Constants
 module ClassMethods
 #include Repository::Constants
 include Constants
+def branch_symbol?(branch_index)
+	case branch_index
+	when nil then fail 'branch_index=' + branch_index.inspect
+	when -4 then :'origin/master'
+	when -3 then :work_flow
+	when -2 then :tax_form
+	when -1 then :master
+	when 0..Branch::Branch_enhancement.size - 1 then Branch::Branch_enhancement[branch_index]
+	when Branch::Branch_enhancement.size then :stash
+	else
+		('stash~' + (branch_index - Branch::Branch_enhancement.size).to_s).to_sym
+	end # case
+end # branch_symbol?
+def branch_index?(branch_name)
+	branch_index = Branch::Branch_enhancement.index(branch_name.to_sym)
+	if branch_index.nil? then
+		if branch_name.to_s[0, 5] == 'stash' then
+			stash_depth = branch_name.to_s[6, branch_name.size - 1].to_i
+			branch_index = stash_depth + Branch::Branch_enhancement.size
+		end # if
+		Branch::Extended_branches.each_pair do |index, branch|
+			branch_index = index if branch == branch_name.to_sym
+		end # each_pair
+	end # if
+	branch_index
+end # branch_index?
+def merge_range(deserving_branch)
+	deserving_index = Branch.branch_index?(deserving_branch)
+	if deserving_index.nil? then
+		fail deserving_branch.inspect + ' not found in ' + Branch::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
+	else
+		deserving_index + 1..Branch::Branch_enhancement.size - 1
+	end # if
+end # merge_range
 def branch_capture?(repository, branch_command = '--list')
 	branch_run = repository.git_command('branch ' + branch_command)
 	if branch_run.success? then
@@ -243,6 +296,9 @@ end # branch_names?
 def new_from_git_branch_line(git_branch_line)
 
 end # new_from_git_branch_line
+def revison_tag?(branch_index)
+	'-r ' + Branch.branch_symbol?(branch_index).to_s
+end # revison_tag?
 end #ClassMethods
 extend ClassMethods
 attr_reader :repository, :branch, :remote_branch
