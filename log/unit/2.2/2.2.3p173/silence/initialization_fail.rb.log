@@ -1,5 +1,5 @@
 passed
-2016-02-20 05:35:51.548
+2016-02-25 04:18:52.416
 ruby -v -W0 test/data_sources//test_maturity/initialization_fail.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite test/data_sources//test_maturity/initialization_fail
@@ -17,10 +17,10 @@ test/data_sources//test_maturity/initialization_fail.rb:4:in `test_initialize'
 ===============================================================================
 
 
-Finished in 0.003030307 seconds.
+Finished in 0.002987038 seconds.
 ------
 1 tests, 0 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
 0% passed
 ------
-330.00 tests/s, 0.00 assertions/s
+334.78 tests/s, 0.00 assertions/s
 

@@ -19,48 +19,6 @@ def test_Error_classification
 	assert_equal(4, Error_classification.keys.size, Error_classification.inspect)
 	assert_equal(4, Error_classification.values.size, Error_classification.inspect)
 end # Error_classification
-def test_revison_tag?
-	assert_equal('-r master', TestMaturity.revison_tag?(-1))
-	assert_equal('-r passed', TestMaturity.revison_tag?(0))
-	assert_equal('-r testing', TestMaturity.revison_tag?(1))
-	assert_equal('-r edited', TestMaturity.revison_tag?(2))
-	assert_equal('-r stash', TestMaturity.revison_tag?(3))
-	assert_equal('-r stash~1', TestMaturity.revison_tag?(4))
-	assert_equal('-r stash~2', TestMaturity.revison_tag?(5))
-	assert_equal('-r work_flow', TestMaturity.revison_tag?(-3))
-	assert_equal('-r origin/master', TestMaturity.revison_tag?(-4))
-end # revison_tag?
-def test_merge_range
-	assert_equal(1..2, TestMaturity.merge_range(:passed))
-	assert_equal(2..2, TestMaturity.merge_range(:testing))
-	assert_equal(3..2, TestMaturity.merge_range(:edited))
-	assert_equal(0..2, TestMaturity.merge_range(:master))
-end # merge_range
-def test_branch_symbol?
-	assert_equal(:master, TestMaturity.branch_symbol?(-1))
-	assert_equal(:passed, TestMaturity.branch_symbol?(0))
-	assert_equal(:testing, TestMaturity.branch_symbol?(1))
-	assert_equal(:edited, TestMaturity.branch_symbol?(2))
-	assert_equal(:stash, TestMaturity.branch_symbol?(3))
-	assert_equal(:'stash~1', TestMaturity.branch_symbol?(4))
-	assert_equal(:'stash~2', TestMaturity.branch_symbol?(5))
-	assert_equal(:work_flow, TestMaturity.branch_symbol?(-3))
-	assert_equal(:tax_form, TestMaturity.branch_symbol?(-2))
-	assert_equal(:'origin/master', TestMaturity.branch_symbol?(-4))
-end # branch_symbol?
-def test_branch_index?
-	assert_equal(0, TestMaturity.branch_index?(:passed))
-	assert_equal(1, TestMaturity.branch_index?(:testing))
-	assert_equal(2, TestMaturity.branch_index?(:edited))
-	assert_equal(3, TestMaturity.branch_index?(:stash))
-	assert_equal(4, TestMaturity.branch_index?(:'stash~1'))
-	assert_equal(5, TestMaturity.branch_index?(:'stash~2'))
-	assert_equal(-1, TestMaturity.branch_index?(:master))
-	assert_equal(-3, TestMaturity.branch_index?(:'work_flow'))
-	assert_equal(-2, TestMaturity.branch_index?(:'tax_form'))
-	assert_equal(-4, TestMaturity.branch_index?(:'origin/master'))
-	assert_equal(nil, TestMaturity.branch_index?('/home/greg'))
-end # branch_index?
 def test_example_files
 	ret = {} # accumulate a hash
  	Error_classification.each_pair do |expected_error_score, classification|
@@ -79,12 +37,12 @@ def test_get_error_score!
 	assert_includes(ExecutableMaturity.instance_variables, :@test_executable)
 	assert_nil(ExecutableMaturity.get_error_score!)
 end # error_score
-def test_deserving_branch?
+def test_deserving_branch
 	error_classifications=[]
 	branch_compressions=[]
 	branch_enhancements=[]
 	TestMaturity.example_files.each_pair do |executable_file, expected_error_score|
-		test_executable = TestExecutable.new(executable_file: executable_file)
+		test_executable = TestExecutable.new(executable_file: executable_file, test_type: :unit)
 		refute_nil(test_executable.unit) # nonstandard unit assignment
 		assert_equal(:unit, test_executable.test_type) # nonstandard unit assignment
 		test_run = TestRun.new(test_executable: test_executable)
@@ -102,7 +60,7 @@ def test_deserving_branch?
 #	assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
 #	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
-end #deserving_branch
+end # deserving_branch
 def test_error_classification
 	Error_classification.fetch(MinimalMaturity.get_error_score!, :multiple_tests_fail)
 end # error_classification
@@ -113,7 +71,8 @@ def test_expected_next_commit_branch
 	TestMaturity::Expected_next_commit_branch[MinimalMaturity.error_classification]
 end # expected_next_commit_branch
 def test_branch_enhancement
-	TestMaturity::Branch_enhancement[MinimalMaturity.deserving_commit_to_branch]
+	assert_instance_of(Symbol, MinimalMaturity.deserving_commit_to_branch)
+#	Branch::Branch_enhancement[MinimalMaturity.deserving_commit_to_branch]
 end # branch_enhancement
 end # TestMaturity
 class UnitMaturityTest < TestCase
@@ -124,9 +83,9 @@ end # DefinitionalConstants
 include UnitMaturity::Examples
 def test_diff_command?
 	filename=Most_stable_file
-	branch_index=TestMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
+	branch_index=Branch.branch_index?(This_code_repository.current_branch_name?.to_sym)
 	refute_nil(branch_index)
-	branch_string = TestMaturity.branch_symbol?(branch_index).to_s
+	branch_string = Branch.branch_symbol?(branch_index).to_s
 	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
 	diff_run = This_code_repository.git_command(git_command)
 #	diff_run.assert_post_conditions
@@ -138,7 +97,7 @@ def test_diff_command?
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, branch_index).output)
 end # diff_command?
 def test_working_different_from?
-	current_branch_index=TestMaturity.branch_index?(This_code_repository.current_branch_name?.to_sym)
+	current_branch_index=Branch.branch_index?(This_code_repository.current_branch_name?.to_sym)
 	assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, current_branch_index).output)
 	assert_equal(false, TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index))
 #	assert(!TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index + 1))
@@ -202,13 +161,13 @@ end #scan_verions?
 def test_bracketing_versions?
 	filename=Most_stable_file
 	current_index=0
-	left_index=TestUnitMaturity.scan_verions?(filename, First_slot_index..current_index, :last)
-	right_index=TestUnitMaturity.scan_verions?(filename, current_index+1..Last_slot_index, :first)
-#	assert_equal(First_slot_index, TestUnitMaturity.scan_verions?(filename, First_slot_index..current_index, :last))
-#	assert_equal(First_slot_index, left_index)
+	left_index=TestUnitMaturity.scan_verions?(filename, Branch::First_slot_index..current_index, :last)
+	right_index=TestUnitMaturity.scan_verions?(filename, current_index+1..Branch::Last_slot_index, :first)
+#	assert_equal(First_slot_index, TestUnitMaturity.scan_verions?(filename, Branch::First_slot_index..current_index, :last))
+#	assert_equal(Branch::First_slot_index, left_index)
 #	assert(!TestUnitMaturity.working_different_from?(filename, 1))
 #	assert_equal(false, TestUnitMaturity.working_different_from?(filename, 1))
-#	assert_equal(Last_slot_index, right_index)
-#	assert_equal([First_slot_index, Last_slot_index], TestUnitMaturity.bracketing_versions?(filename, 0))
+#	assert_equal(Branch::Last_slot_index, right_index)
+#	assert_equal([Branch::First_slot_index, Branch::Last_slot_index], TestUnitMaturity.bracketing_versions?(filename, 0))
 end #bracketing_versions?
 end # UnitMaturity
