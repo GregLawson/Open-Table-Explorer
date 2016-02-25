@@ -65,10 +65,10 @@ def test_error_classification
 	Error_classification.fetch(MinimalMaturity.get_error_score!, :multiple_tests_fail)
 end # error_classification
 def test_deserving_commit_to_branch
-	TestMaturity::Deserving_commit_to_branch[MinimalMaturity.error_classification]
+	TestMaturity::Push_branch[MinimalMaturity.error_classification]
 end # deserving_commit_to_branch
 def test_expected_next_commit_branch
-	TestMaturity::Expected_next_commit_branch[MinimalMaturity.error_classification]
+	TestMaturity::Pull_branch[MinimalMaturity.error_classification]
 end # expected_next_commit_branch
 def test_branch_enhancement
 	assert_instance_of(Symbol, MinimalMaturity.deserving_commit_to_branch)

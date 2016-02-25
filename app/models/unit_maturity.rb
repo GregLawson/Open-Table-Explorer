@@ -18,13 +18,13 @@ Error_classification = {0 => :success,
 				1     => :single_test_fail,
 				100 => :initialization_fail,
 				10000 => :syntax_error}
-Deserving_commit_to_branch = { success:             :passed,
+Push_branch = { success:             :passed,
 				single_test_fail:    :testing,
 			              multiple_tests_fail: :testing, # visibility boundary
 			              initialization_fail: :edited,
 			              syntax_error:        :edited
 			}
-Expected_next_commit_branch = { success:             :passed,
+Pull_branch = { success:             :passed,
 							  single_test_fail:    :passed,
 			              multiple_tests_fail: :testing, # visibility boundary
 			              initialization_fail: :testing,
@@ -75,10 +75,10 @@ def error_classification
 	Error_classification.fetch(get_error_score!, :multiple_tests_fail)
 end # error_classification
 def deserving_commit_to_branch
-	TestMaturity::Deserving_commit_to_branch[error_classification]
+	TestMaturity::Push_branch[error_classification]
 end # deserving_commit_to_branch
 def expected_next_commit_branch
-	TestMaturity::Expected_next_commit_branch[error_classification]
+	TestMaturity::Pull_branch[error_classification]
 end # expected_next_commit_branch
 def branch_enhancement
 	Branch::Branch_enhancement[deserving_commit_to_branch]

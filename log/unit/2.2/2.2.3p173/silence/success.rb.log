@@ -1,5 +1,5 @@
 passed
-2016-02-25 04:18:51.627
+2016-02-25 04:48:35.139
 ruby -v -W0 test/data_sources//test_maturity/success.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 
