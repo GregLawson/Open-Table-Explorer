@@ -89,6 +89,75 @@ def create_test_repository(path=timestamped_repository_name?)
 	end #if
 	new_repository
 end #create_test_repository
+# The following decoding is from man git status
+def file_change(status_char)
+	case status_char
+   when ' ' then :unmodified
+    when 'M' then :modified
+    when 'A' then :added
+    when 'D' then :deleted
+    when 'R' then :renamed
+    when 'C' then :copied
+    when 'U' then :updated_but_unmerged
+    when '?' then :untracked
+    when '!' then :ignored
+	 else
+		nil
+	 end # case
+end # file_change
+def match_possibilities?(one_letter_code, possibilities)
+	if possibilities.size == 1 then
+		one_letter_code == possibilities
+	else 
+		if possibilities[1..-2].index(one_letter_code).nil? 
+			false
+		else
+			true
+		end # if
+	end # if
+end # match_possibilities?
+def match_two_possibilities?(two_letter_code, index, work_tree)
+	match_possibilities?(two_letter_code[0..0], index) &&
+	match_possibilities?(two_letter_code[1..1], work_tree)
+end # match_two_possibilities?
+def normal_status_descriptions(two_letter_code)
+	if match_two_possibilities?(two_letter_code, ' ', '[MD]') then 'not updated'
+	elsif match_two_possibilities?(two_letter_code, 'M', '[ MD]') then 'updated in index'
+	elsif match_two_possibilities?(two_letter_code, 'A', '[ MD]') then 'added to index'
+	elsif match_two_possibilities?(two_letter_code, 'D', ' [ M]') then 'deleted from index'
+	elsif match_two_possibilities?(two_letter_code, 'R', '[ MD]') then 'renamed in index'
+	elsif match_two_possibilities?(two_letter_code, 'C', '[ MD]') then 'copied in index'
+	elsif match_two_possibilities?(two_letter_code, '[MARC]', ' ') then 'index and work tree matches'
+	elsif match_two_possibilities?(two_letter_code, '[ MARC]', 'M') then 'work tree changed since index'
+	elsif match_two_possibilities?(two_letter_code, '[ MARC]', 'D') then 'deleted in work tree'
+	else
+		unmerged_status_descriptions	= unmerged_status_descriptions(two_letter_code)
+		if unmerged_status_descriptions.nil? then
+			index = file_change(two_letter_code[0..0])
+			work_tree = file_change(two_letter_code[1..1])
+			if index == work_tree then 
+				'both ' + work_tree.to_s
+			else
+				index.to_s + ' then ' + work_tree.to_s
+			end # if
+		else
+			unmerged_status_descriptions
+		end # if
+	end # if
+end # normal_status_descriptions
+def unmerged_status_descriptions(two_letter_code)
+	case two_letter_code
+	when 'DD' then 'unmerged, both deleted'
+	when 'AU' then 'unmerged, added by us'
+	when 'UD' then 'unmerged, deleted by them'
+	when 'UA' then 'unmerged, added by them'
+	when 'DU' then 'unmerged, deleted by us'
+	when 'AA' then 'unmerged, both added'
+	when 'UU' then 'unmerged, both modified'
+	else
+		nil
+	end # case
+end # unmerged_status_descriptions
 end #ClassMethods
 extend ClassMethods
 attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files
@@ -126,17 +195,31 @@ end #corruption
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def status
-	changes = git_command('status --porcelain --untracked-files=no').output
+def status(options = '--untracked-files=no')
+	changes = git_command('status -z ' + options).output
 	ret=[]
 	if !changes.empty? then
-		changes.split("\n").map do |line|
+		changes.split("\u0000").map do |line|
 			file=line[3..-1]
-			ret << {:change => line[0..1], :file => file}
+			ret << {index: Repository.file_change(line[0..0]), work_tree: Repository.file_change(line[1..1]), description: Repository.normal_status_descriptions(line[0..1]), file: file}
 		end #map
 	end #if
 	ret
 end # status
+def status_descriptions(working_file_status)
+	case working_file_status[:change]
+	when 'DD' then 'unmerged, both deleted'
+	when 'AU' then 'unmerged, added by us'
+	when 'UD' then 'unmerged, deleted by them'
+	# UA unmerged, added by them
+	when 'UA' then fail Exception.new(conflict.inspect)
+	# DU unmerged, deleted by us
+	when 'DU' then fail Exception.new(conflict.inspect)
+	# AA unmerged, both added
+	# UU unmerged, both modified
+	when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
+	 end # case
+end # status_descriptions
 def something_to_commit?
 	status=@grit_repo.status
 	ret=status.added!={}||status.changed!={}||status.deleted!={}
@@ -177,7 +260,7 @@ def merge_conflict_files?
 	ret
 end #merge_conflict_files?
 def git_parse(command, pattern)
-	output=git_command(command).assert_post_conditions.output
+	output=git_command(command).output #.assert_post_conditions
 	output.parse(pattern)
 
 end # git_parse
