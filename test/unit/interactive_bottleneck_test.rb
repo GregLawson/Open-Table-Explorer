@@ -50,6 +50,7 @@ def test_dirty_test_executables
 #OK		assert_equal(test_executable.unit, Unit::Executable, test_executable.inspect)
 		if test_executable.unit.model_basename.nil? then
 			puts test_executable.inspect + ' does not match a known pattern.'
+			assert_equal(:unit, test_executable.test_type, test_executable.inspect)
 		end # if
 	end # each
 end # dirty_test_executables
@@ -78,8 +79,8 @@ def test_dirty_test_maturities
 			test_maturity  = TestMaturity.new(test_executable: test_executable)
 			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
 		end # if
-	end
-	TestInteractiveBottleneck.dirty_test_maturities.each do |test_maturity|
+	end #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
+	TestInteractiveBottleneck.dirty_test_maturities(:danger).each do |test_maturity|
 		if test_maturity[:test_maturity].nil? then
 		else
 			refute_nil(test_maturity[:test_maturity], test_maturity.inspect)
@@ -88,12 +89,34 @@ def test_dirty_test_maturities
 	end # each
 end # dirty_test_maturities
 def test_clean_directory
-	sorted = TestInteractiveBottleneck.dirty_test_maturities #.sort
+	sorted = TestInteractiveBottleneck.dirty_test_maturities(:danger) #.sort
 	sorted.map do |test_maturity_hash|
 #already?		test(test_executable)
-		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity_hash[:test_maturity].deserving_branch)
+		if test_maturity_hash[:test_maturity].nil? then # rercursion avoided
+		else
+			refute_nil(test_maturity_hash[:test_maturity], test_maturity_hash.inspect)
+			assert_instance_of(TestMaturity, test_maturity_hash[:test_maturity], test_maturity_hash.inspect)
+			assert_includes(Branch::Branch_enhancement, test_maturity_hash[:test_maturity].deserving_branch, test_maturity_hash.inspect)
+			assert_equal(:unit, test_maturity_hash[:test_maturity].test_executable.test_type, test_maturity_hash.inspect)
+	#OK		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity_hash[:test_maturity].deserving_branch, test_maturity_hash.inspect)
+			end # if
 	end # map
 end # clean_directory
+def test_discard_log_file_merge
+	unmerged_files = Repository::This_code_repository.status
+	unmerged_files.each do |conflict|
+		if conflict[:file][-4..-1] == '.log' then
+			if conflict[:work_tree] == :modified || conflict[:working_tree] == :added then
+			elsif conflict[:work_tree] == :updated_but_unmerged
+				assert_equal({}, conflict[:description])
+				Repository::This_code_repository.git_command('checkout HEAD ' + conflict[:file])
+				puts 'checkout HEAD ' + conflict[:file]
+			else
+				fail Exception.new(conflict.inspect)
+			end # if
+		end # if
+	end # each
+end # discard_log_file_merge
 def test_merge_conflict_recovery
 end # merge_conflict_recovery
 def test_confirm_branch_switch

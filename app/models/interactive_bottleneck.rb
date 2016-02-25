@@ -16,7 +16,7 @@ include Constants
 module ClassMethods
 include Constants
 def index(repository)
-	ret = UnitMaturity::Branch_enhancement.index(repository.current_branch_name?)
+	ret = Branch::Branch_enhancement.index(repository.current_branch_name?)
 	if ret.nil? then
 		UnitMaturity::First_slot_index
 	else
@@ -80,17 +80,17 @@ def dirty_units
 		end # if
 	end # map
 end # dirty_units
-def dirty_test_maturities
+def dirty_test_maturities(recursion_danger = nil)
 	dirty_test_executables.map do |test_executable|
 		if test_executable.unit.nil? then # probably can't test if not in a unit
 			nil
-		elsif test_executable.executable_file == $PROGRAM_NAME then
+		elsif !recursion_danger.nil? &&(test_executable.executable_file == $PROGRAM_NAME) then
 			{test_executable: test_executable, test_maturity: nil, error_score: nil} # terminate recursion
 		else
 			test_maturity  = TestMaturity.new(test_executable: test_executable)
 			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
 		end.compact # if
-	end
+	end #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
 end # dirty_test_maturities
 def clean_directory
 	dirty_test_executables.sort.map do |test_executable|
@@ -98,6 +98,15 @@ def clean_directory
 		stage_test_executable
 	end # map
 end # clean_directory
+def discard_log_file_merge
+	unmerged_files = @repository.merge_conflict_files?
+		unmerged_files.each do |conflict|
+			if conflict[:file][-4..-1] == '.log' then
+				@repository.git_command('checkout HEAD ' + conflict[:file])
+				puts 'checkout HEAD ' + conflict[:file]
+			end # if
+		end # each
+end # discard_log_file_merge
 def merge_conflict_recovery(from_branch)
 # see man git status
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
@@ -109,11 +118,8 @@ def merge_conflict_recovery(from_branch)
 			puts 'merge --X ours ' + from_branch.to_s
 			remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
 		end # if
+		discard_log_file_merge
 		unmerged_files.each do |conflict|
-			if conflict[:file][-4..-1] == '.log' then
-				@repository.git_command('checkout HEAD ' + conflict[:file])
-				puts 'checkout HEAD ' + conflict[:file]
-			else
 				puts 'not checkout HEAD ' + conflict[:file]
 				case conflict[:conflict]
 				# DD unmerged, both deleted
@@ -135,7 +141,6 @@ def merge_conflict_recovery(from_branch)
 				else
 					fail Exception.new(conflict.inspect)
 				end # case
-			end # if
 		end # each
 		confirm_commit
 	end # if
@@ -242,11 +247,11 @@ def merge(target_branch, source_branch)
 	end # safely_visit_branch
 end # merge
 def merge_down(deserving_branch = @repository.current_branch_name?)
-	UnitMaturity.merge_range(deserving_branch).each do |i|
-		safely_visit_branch(UnitMaturity::Branch_enhancement[i]) do |changes_branch|
-			puts 'merge(' + UnitMaturity::Branch_enhancement[i].to_s + '), ' + UnitMaturity::Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
-			merge(UnitMaturity::Branch_enhancement[i], UnitMaturity::Branch_enhancement[i - 1])
-			merge_conflict_recovery(UnitMaturity::Branch_enhancement[i - 1])
+	Branch.merge_range(deserving_branch).each do |i|
+		safely_visit_branch(Branch::Branch_enhancement[i]) do |changes_branch|
+			puts 'merge(' + Branch::Branch_enhancement[i].to_s + '), ' + Branch::Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
+			merge(Branch::Branch_enhancement[i], Branch::Branch_enhancement[i - 1])
+			merge_conflict_recovery(Branch::Branch_enhancement[i - 1])
 			confirm_commit
 		end # safely_visit_branch
 	end # each
