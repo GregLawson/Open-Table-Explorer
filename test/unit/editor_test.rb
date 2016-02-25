@@ -1,12 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-16 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative '../unit/test_environment'
-require_relative '../../app/models/work_flow.rb'
+require_relative '../../app/models/editor.rb'
 
 class EditorTest < TestCase
 #include DefaultTests
@@ -15,20 +15,20 @@ class EditorTest < TestCase
 include Editor::Examples
 include UnitMaturity::Examples
 def test_initializes
-	te=Unit.new_from_path(TestEditor.executable.executable_file)
+	te=Unit.new_from_path(TestEditor.test_executable.executable_file)
 	refute_nil(te)
-	wf=Editor.new(TestEditor.executable)
+	wf=Editor.new(TestEditor.test_executable)
 	refute_nil(wf)
-	refute_empty(TestEditor.executable.unit.edit_files, "TestEditor.executable.unit.edit_files=#{TestEditor.executable.unit.edit_files}")
-	assert_includes(TestEditor.executable.unit.edit_files, TestEditor.executable.file, "TestEditor.executable.unit=#{TestEditor.executable.unit.inspect}")
+	refute_empty(TestEditor.test_executable.unit.edit_files, "TestEditor.test_executable.unit.edit_files=#{TestEditor.test_executable.unit.edit_files}")
+	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.executable_file, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
 end #version_comparison
 def test_goldilocks
-	refute_nil(UnitMaturity.branch_index?(TestEditor.executable.repository.current_branch_name?.to_sym))
+	refute_nil(Branch.branch_index?(TestEditor.test_executable.repository.current_branch_name?.to_sym))
 #	assert_includes(Editor::Branch_enhancement, TestEditor.repository.current_branch_name?.to_sym)
-	current_index=UnitMaturity.branch_index?(TestEditor.repository.current_branch_name?.to_sym)
+	current_index=Branch.branch_index?(TestEditor.test_executable.repository.current_branch_name?.to_sym)
 	filename= Most_stable_file
 	left_index,right_index= TestEditor.unit_maturity.bracketing_versions?(filename, current_index)
 	assert_operator(current_index, :<, right_index)
@@ -55,12 +55,12 @@ def test_edit
 #(context = nil)
 end # edit
 def test_split
-#(executable, new_base_name)
+#(test_executable, new_base_name)
 end # split
 def test_minimal_edit
 end # minimal_edit
 def test_emacs
-#(executable = @executable.unit.model_test_pathname?)
+#(test_executable = @test_executable.unit.model_test_pathname?)
 end # emacs
 def test_local_assert_post_conditions
 		TestEditor.assert_post_conditions

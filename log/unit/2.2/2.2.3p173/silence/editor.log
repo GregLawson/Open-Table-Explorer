@@ -1,5 +1,14 @@
 passed
-2016-02-20 05:35:35.849
-ruby -v -W0 app/models/editor.rb
+2016-02-25 04:30:54.774
+ruby -v -W0 test/unit/editor_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+...............
+
+Finished in 1.308080s, 11.4672 runs/s, 25.2278 assertions/s.
+
+15 runs, 33 assertions, 0 failures, 0 errors, 0 skips
 
