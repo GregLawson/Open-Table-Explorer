@@ -1,84 +1,17 @@
 passed
-2016-02-01 18:58:15.165
+2016-02-28 19:30:52.088
 ruby -v -W0 test/unit/iwup_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-$VERBOSE=
-ARGV=[]
-Please enter an ESSID:
-          Cell 01 - Address: 68:EE:96:18:04:29
-                    Frequency:5.26 GHz (Channel 52)
-                    Quality=44/70  Signal level=-66 dBm  
-                    ESSID:"Cisco_96180429"
-                        Authentication Suites (1) : PSK
-          Cell 02 - Address: 24:A2:E1:EE:3C:D9
-                    Frequency:5.66 GHz (Channel 132)
-                    Quality=44/70  Signal level=-66 dBm  
-                    ESSID:"SOLERA"
-                        Authentication Suites (1) : PSK
-          Cell 03 - Address: 40:70:09:93:05:65
-                    Frequency:5.785 GHz
-                    Quality=67/70  Signal level=-43 dBm  
-                    ESSID:"greg-5G"
-                        Authentication Suites (1) : PSK
-          Cell 04 - Address: 34:68:95:F6:D5:E9
-                    Frequency:5.18 GHz (Channel 36)
-                    Quality=43/70  Signal level=-67 dBm  
-                    ESSID:"CLHGUE 5"
-                        Authentication Suites (1) : PSK
-          Cell 05 - Address: 34:68:95:F6:D5:E8
-                    Frequency:2.412 GHz (Channel 1)
-                    Quality=43/70  Signal level=-67 dBm  
-                    ESSID:"CLHGUE"
-                        Authentication Suites (1) : PSK
-          Cell 06 - Address: 30:B5:C2:5D:1C:58
-                    Frequency:2.412 GHz (Channel 1)
-                    Quality=33/70  Signal level=-77 dBm  
-                    ESSID:"TP-LINK_5D1C58"
-                        Authentication Suites (1) : PSK
-          Cell 07 - Address: 40:70:09:93:05:60
-                    Frequency:2.437 GHz (Channel 6)
-                    Quality=70/70  Signal level=-32 dBm  
-                    ESSID:"greg-arris"
-                        Authentication Suites (1) : PSK
-          Cell 08 - Address: 24:A2:E1:EE:3C:D8
-                    Frequency:2.462 GHz (Channel 11)
-                    Quality=47/70  Signal level=-63 dBm  
-                    ESSID:"SOLERA"
-                        Authentication Suites (1) : PSK
-          Cell 09 - Address: 8C:7F:3B:3B:DA:90
-                    Frequency:2.462 GHz (Channel 11)
-                    Quality=38/70  Signal level=-72 dBm  
-                    ESSID:"The Deals"
-                        Authentication Suites (1) : PSK
-                        Authentication Suites (1) : PSK
-          Cell 10 - Address: 74:9D:DC:F1:D3:29
-                    Frequency:2.452 GHz (Channel 9)
-                    Quality=32/70  Signal level=-78 dBm  
-                    ESSID:"2WIRE905"
-                        Authentication Suites (1) : PSK
-                        Authentication Suites (1) : PSK
-          Cell 11 - Address: 0C:F8:93:4A:DD:90
-                    Frequency:2.462 GHz (Channel 11)
-                    Quality=37/70  Signal level=-73 dBm  
-                    ESSID:"Bev's Network"
-                        Authentication Suites (1) : PSK
-          Cell 12 - Address: 78:96:84:1D:E2:C0
-                    Frequency:2.462 GHz (Channel 11)
-                    Quality=34/70  Signal level=-76 dBm  
-                    ESSID:"ATTrKqcSBA"
-                        Authentication Suites (1) : PSK
-          Cell 13 - Address: C8:FB:26:0A:16:75
-                    Frequency:5.785 GHz
-                    Quality=43/70  Signal level=-67 dBm  
-                    ESSID:"Cisco_260A1674"
-                        Authentication Suites (1) : PSK
 Run options: --seed 0
 
 # Running:
 
-.....
+.....authentication=Not connected.
+authenicated_MAC=
+connection=
+...
 
-Finished in 0.003933s, 1271.2932 runs/s, 0.0000 assertions/s.
+Finished in 0.005552s, 1440.8532 runs/s, 1080.6399 assertions/s.
 
-5 runs, 0 assertions, 0 failures, 0 errors, 0 skips
+8 runs, 6 assertions, 0 failures, 0 errors, 0 skips
 
