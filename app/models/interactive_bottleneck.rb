@@ -15,14 +15,14 @@ end # Constants
 include Constants
 module ClassMethods
 include Constants
-def index(repository)
-	ret = Branch::Branch_enhancement.index(repository.current_branch_name?)
-	if ret.nil? then
-		UnitMaturity::First_slot_index
+def calc_test_maturity!(test_executable, recursion_danger = nil)
+		if test_executable.testable?(recursion_danger) then
+			test_maturity  = TestMaturity.new(test_executable: test_executable)
+			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
 	else
-		ret
-	end # if
-end # index
+			{test_executable: test_executable}
+		end # if
+end # calc_test_maturity!
 end # ClassMethods
 extend ClassMethods
 # Define related (unit) versions
@@ -68,8 +68,14 @@ def state?
 end # state?
 def dirty_test_executables
 	@repository.status.map do |file_status|
-		TestExecutable.new_from_path(file_status[:file])
-	end.uniq # map
+		test_executable = TestExecutable.new_from_path(file_status[:file])
+		testable = test_executable.testable?
+		if testable then
+			test_executable # find unique
+		else
+			nil
+		end # if
+	end.compact.uniq # map
 end # dirty_test_executables
 def dirty_units
 	dirty_test_executables.map do |test_executable|
@@ -85,7 +91,7 @@ def dirty_test_maturities(recursion_danger = nil)
 		if test_executable.unit.nil? then # probably can't test if not in a unit
 			nil
 		elsif !recursion_danger.nil? &&(test_executable.executable_file == $PROGRAM_NAME) then
-			{test_executable: test_executable, test_maturity: nil, error_score: nil} # terminate recursion
+			{test_executable: test_executable} # terminate recursion
 		else
 			test_maturity  = TestMaturity.new(test_executable: test_executable)
 			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
