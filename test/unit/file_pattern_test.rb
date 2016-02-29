@@ -187,7 +187,7 @@ end # path?
 def test_pathnames
 	assert_instance_of(Array, FilePattern.pathnames?('test'))
 	assert_equal(Patterns.size, FilePattern.pathnames?('test').size)
-	assert_array_of(FilePattern.pathnames?('test'), String)
+#	assert_array_of(FilePattern.pathnames?('test'), String)
 end #pathnames
 def test_new_from_path
 	n=FilePattern.new_from_path($0)
