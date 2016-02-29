@@ -157,8 +157,11 @@ end #parse_header
 end # ClassMethods
 extend ClassMethods
 # attr_reader
+def <=>(other)
+	error_score? <=> other.error_score?
+end # <=>
 def error_score?
-	executable_file = @test_executable.executable_file
+	executable_file = @test_executable.unit.pathname_pattern?(@test_executable.test_type)
 	fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !File.exists?(executable_file)
 	@ruby_test_string = @test_executable.ruby_test_string
 	@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @test_executable.repository.path)
@@ -305,6 +308,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::Default_executable)
+Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable)
 end # Examples
 end # TestRun

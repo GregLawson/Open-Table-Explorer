@@ -190,7 +190,7 @@ def test_error_score?
 		assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
 		syntax_test=This_code_repository.shell_command("ruby -c "+executable_file)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
-	assert_equal(0, TestRun.new(executable: test_executable).error_score?)
+	assert_equal(0, TestRun.new(test_executable: test_executable).error_score?)
 #	This_code_repository.assert_deserving_branch(:passed, executable_file)
 end # error_score
 def test_TestRun_initialize
