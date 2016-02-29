@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2015 by Greg Lawson                                      
+#    Copyright (C) 2011-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -10,6 +10,11 @@ require_relative 'test_environment'
 require_relative '../../app/models/test_executable.rb'
 class FileArgumentTest < TestCase
 include FileArgument::Examples
+def test_Examples
+	assert_equal(:unit, Executable.test_type)
+	assert_equal(nil, Non_executable.pattern)
+	assert_equal(:non_unit, Non_executable.test_type)
+end # Examples
 end # FileArgument
 
 class TestExecutableTest < TestCase

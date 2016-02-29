@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2015 by Greg Lawson                                      
+#    Copyright (C) 2011-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -16,18 +16,23 @@ class FileArgument
 include Virtus.model
 	attribute :executable_file, String
 	attribute :unit, Unit, :default => 	lambda { |argument, attribute| Unit.new_from_path(argument.executable_file) }
-	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion
-	attribute :pattern_name, Symbol, :default => 	lambda { |argument, attribute| FilePattern.find_from_path(argument.executable_file) }
+#	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion
+	attribute :pattern, Symbol, :default => 	lambda { |argument, attribute| FilePattern.find_from_path(argument.executable_file) }
+	attribute :test_type, Symbol, :default => 	lambda { |argument, attribute| (argument.pattern.nil? ? :non_unit : argument.pattern[:name]) }
 	attribute :repository, Repository, :default => Repository::This_code_repository
 module Examples
+Executable = FileArgument.new(executable_file: $0)
+Non_executable = FileArgument.new(executable_file: '/dev/null')
 end # Examples
 end # FileArgument
 
 
 class TestExecutable < FileArgument # executable / testable ruby unit with executable
-include Virtus.model
+  include Virtus.value_object
+  values do
   attribute :ruby_interpreter, RubyInterpreter, :default => RubyInterpreter::Preferred
 	attribute :test, String, :default => nil # all tests in file
+	end # values
 module ClassMethods
 def new_from_path(executable_file,
 		repository = Repository::This_code_repository)
