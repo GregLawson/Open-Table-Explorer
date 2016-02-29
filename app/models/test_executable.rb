@@ -21,9 +21,22 @@ include Virtus.model
 	attribute :test_type, Symbol, :default => 	lambda { |argument, attribute| (argument.pattern.nil? ? :non_unit : argument.pattern[:name]) }
 	attribute :repository, Repository, :default => Repository::This_code_repository
 module Examples
-Executable = FileArgument.new(executable_file: $0)
-Non_executable = FileArgument.new(executable_file: '/dev/null')
+TestSelf = FileArgument.new(executable_file: $PROGRAM_NAME)
+Not_unit = FileArgument.new(executable_file: '/dev/null')
+TestMinimal  = FileArgument.new(executable_file: 'test/unit/minimal2_test.rb')
+Non_executable = FileArgument.new(executable_file: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
 end # Examples
+def testable?(recursion_danger = nil)
+		if @unit.nil? then # probably can't test if not in a unit
+			nil
+		elsif !recursion_danger.nil? &&(@executable_file == $PROGRAM_NAME) then
+			false # terminate recursion
+		elsif @test_type != :unit then
+			false
+		else
+			true
+		end # if
+end # testable?
 end # FileArgument
 
 
@@ -35,8 +48,12 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
 	end # values
 module ClassMethods
 def new_from_path(executable_file,
+		test_type = :unit,
 		repository = Repository::This_code_repository)
+	unit = Unit.new_from_path(executable_file)
 	new_executable = TestExecutable.new(executable_file: executable_file, 
+								unit: unit,
+								test_type: test_type,
 								repository: repository)
 end # new_from_path
 end # ClassMethods
@@ -90,7 +107,7 @@ end # write_commit_message
 # Filename of log file from test run
 module Examples
 #include Constants
-Default_executable = TestExecutable.new_from_path($PROGRAM_NAME)
+TestTestExecutable = TestExecutable.new_from_path($PROGRAM_NAME)
 end # Examples
 end # TestExecutable
 
