@@ -31,6 +31,17 @@ Pull_branch = { success:             :passed,
 			              syntax_error:        :edited
 			}
 Error_score_directory = Unit.data_source_directories + '/test_maturity/'
+Example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
+Example_testunit_log = IO.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
+Tests_pattern = /[0-9]+/.capture(:tests) * / / * (/tests/ | /runs/) * /, /
+Assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/ * /, /
+Failures_pattern = /[0-9]+/.capture(:failures) * / / * /failures/ * /, /
+Errors_pattern = /[0-9]+/.capture(:errors) * / / * /errors/ * /, /
+Pendings_pattern = /[0-9]+/.capture(:pendings) * / / * /pendings/ * /, /
+Omissions_pattern = /[0-9]+/.capture(:omissions) * / / * /omissions/ * /, /
+Notifications_pattern = /[0-9]+/.capture(:notifications) * / / * /notifications/ * /\n/
+Common_summary_regexp = Tests_pattern * Assertions_pattern * Failures_pattern * Errors_pattern
+
 end # DefinitionalConstants
 include DefinitionalConstants
   include Virtus.value_object
@@ -50,10 +61,87 @@ def example_files
 	end # each_pair
 	ret
 end # example_files
+def file_bug_reports(ruby_source,log_file,test=nil)
+	table,test_type= CodeBase.test_type_from_source(ruby_source)
+	header,errors,summary=parse_log_file(log_file)
+	if summary.nil? then
+		puts "summary is nil. probable rake failure."
+		stop=true
+	else
+		sysout,run_time=TestRun.parse_header(header)
+		puts "sysout='#{sysout.inspect}'"
+		puts "run_time='#{run_time}'"
+		tests,assertions,failures,tests_stop_on_error=TestRun.parse_summary(summary)
+		#~ puts "failures+tests_stop_on_error=#{failures+tests_stop_on_error}"
+		if    (failures+tests_stop_on_error)==0 then
+			stop=false
+		else
+			stop=true
+		end #if
+		open('db/tests.sql',"a" ) {|f| f.write("insert into test_runs(model,test,test_type,environment,tests,assertions,failures,tests_stop_on_error,created_at,updated_at) values('#{table}','#{ENV["TEST"]}','#{test_type}','#{ENV["RAILS_ENV"]}',#{tests},#{assertions},#{failures},#{tests_stop_on_error},'#{Time.now.rfc2822}','#{Time.now.rfc2822}');\n") }
+	end #if
+	if !errors.nil? then
+		errors.each do |error|
+			Bug.new(test_type,table,error)
+#			puts "error='#{error}'"
+		end #each
+	end #if 
+#	puts "ARGF.argv.inspect=#{ARGF.argv.inspect}"
+	puts "file_bug_reports stop=#{stop}"
+	puts "summary='#{summary}'"
+	return stop
+end #file_bug_reports
+def parse_log_file(log_file)
+	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
+#	puts "blocks=#{blocks.inspect}"
+	header= blocks[0]
+	errors=blocks[1..-2]
+	summary=blocks[-1]
+	return [header,errors,summary]
+end #parse_log_file
+def log_passed?(log_file)
+	if !File.size?(log_file) then
+		return false # no file or empty file, no evidence of passing
+	end #if
+	header,errors,summary=TestRun.parse_log_file(log_file)
+	if summary.nil? then
+		return false
+	else
+		tests,assertions,failures,tests_stop_on_error=TestRun.parse_summary(summary)
+		if    (failures+tests_stop_on_error)==0 then
+			return true
+		else
+			return false
+		end #if
+	end #if
+end # log_passed?
+def summarize
+	sh %Q(ls -1 -s log/{unit,functional}|grep " 0 "|cut --delim=' ' -f 3 >log/empty_tests.tmp)
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] error" log/{unit,functional}/* | cut --delim='/' -f 3  >log/error_tests.tmp}
+#	sh %Q{grep "[0-9 ,][0-9 ][1-9] failures," log/{unit,functional}/* | cut --delim='/' -f 3  >log/failure_tests.tmp}
+	sh %Q{cat log/empty_tests.tmp log/error_tests.tmp log/failure_tests.tmp|sort|uniq >log/failed_tests.log}
+end # summarize
+def parse_summary(summary)
+	summary=summary.split(' ')
+	tests=summary[0].to_i
+	assertions=summary[2].to_i
+	failures=summary[4].to_i
+	tests_stop_on_error=summary[6].to_i
+	return [tests,assertions,failures,tests_stop_on_error]
+end # parse_summary
+def parse_header(header)
+	headerArray=header.split("\n")
+	sysout=headerArray[0..-2]
+	run_time=headerArray[-1].split(' ')[2].to_f
+	return [sysout,run_time]
+end #parse_header
 end # ClassMethods
 extend ClassMethods
+def recursion_danger?
+	File.expand_path(@test_executable.executable_file) == File.expand_path($PROGRAM_NAME)
+end # recursion_danger?
 def get_error_score!
-	if File.expand_path(@test_executable.executable_file) == File.expand_path($PROGRAM_NAME) then
+	if recursion_danger? then
 		nil # avoid recursion
 	elsif @cached_error_score.nil? then
 		@cached_error_score = TestRun.new(test_executable: @test_executable).error_score?
@@ -69,7 +157,20 @@ def deserving_branch
 	end # if
 end # deserving_branch
 def <=>(other)
+	if @test_executable.testable? then
+		if other.test_executable.testable? then
 	get_error_score! <=> other.get_error_score!
+		else
+			+1
+		end # if
+
+	else
+		if other.test_executable.testable? then
+			-1
+		else
+			@test_executable <=> other.test_executable
+		end # if
+	end # if
 end # <=>
 def error_classification
 	Error_classification.fetch(get_error_score!, :multiple_tests_fail)
@@ -83,10 +184,39 @@ end # expected_next_commit_branch
 def branch_enhancement
 	Branch::Branch_enhancement[deserving_commit_to_branch]
 end # branch_enhancement
+module Assertions
+module ClassMethods
+end #ClassMethods
+def assert_deserving_branch(branch_expected, executable, message = '')
+	deserving_branch = TestMaturity.deserving_branch
+	recent_test = shell_command('ruby ' + executable)
+	message += "\nrecent_test=" + recent_test.inspect
+	message += "\nrecent_test.process_status=" + recent_test.process_status.inspect
+	syntax_test = shell_command('ruby -c ' + executable)
+	message += "\nsyntax_test=" + syntax_test.inspect
+	message += "\nsyntax_test.process_status=" + syntax_test.process_status.inspect
+	message += "\nbranch_expected=#{branch_expected.inspect}"
+	message += "\ndeserving_branch=#{deserving_branch.inspect}"
+	case deserving_branch
+	when :edited then
+		assert_equal(1, recent_test.process_status.exitstatus, message)
+		refute_equal("Syntax OK\n", syntax_test.output, message)
+		assert_equal(1, syntax_test.process_status.exitstatus, message)
+	when :testing then
+		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	when :passed then
+		assert_equal(0, recent_test.process_status.exitstatus, message)
+		assert_equal("Syntax OK\n", syntax_test.output, message)
+	end # case
+	assert_equal(deserving_branch, branch_expected, message)
+end # deserving_branch
+end # Assertions
 module Examples
 include DefinitionalConstants
 ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(executable_file: $0))
 MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(executable_file: 'test/unit/minimal2_test.rb'))
+MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(executable_file: 'test/unit/minimal3_test.rb'))
 end # Examples
 end # TestMaturity
 
@@ -165,34 +295,6 @@ def bracketing_versions?(filename, current_index)
 	[left_index, right_index]
 end # bracketing_versions?
 require_relative '../../app/models/assertions.rb'
-module Assertions
-module ClassMethods
-end #ClassMethods
-def assert_deserving_branch(branch_expected, executable, message = '')
-	deserving_branch = TestMaturity.deserving_branch
-	recent_test = shell_command('ruby ' + executable)
-	message += "\nrecent_test=" + recent_test.inspect
-	message += "\nrecent_test.process_status=" + recent_test.process_status.inspect
-	syntax_test = shell_command('ruby -c ' + executable)
-	message += "\nsyntax_test=" + syntax_test.inspect
-	message += "\nsyntax_test.process_status=" + syntax_test.process_status.inspect
-	message += "\nbranch_expected=#{branch_expected.inspect}"
-	message += "\ndeserving_branch=#{deserving_branch.inspect}"
-	case deserving_branch
-	when :edited then
-		assert_equal(1, recent_test.process_status.exitstatus, message)
-		refute_equal("Syntax OK\n", syntax_test.output, message)
-		assert_equal(1, syntax_test.process_status.exitstatus, message)
-	when :testing then
-		assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
-		assert_equal("Syntax OK\n", syntax_test.output, message)
-	when :passed then
-		assert_equal(0, recent_test.process_status.exitstatus, message)
-		assert_equal("Syntax OK\n", syntax_test.output, message)
-	end # case
-	assert_equal(deserving_branch, branch_expected, message)
-end # deserving_branch
-end # Assertions
 module Examples
 include Constants
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'

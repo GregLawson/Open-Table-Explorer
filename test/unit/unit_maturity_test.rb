@@ -11,14 +11,26 @@ require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/unit_maturity.rb'
 class TestMaturityTest < TestCase
 include TestMaturity::Examples
-def test_Error_classification
+def test_DefinitionalConstants
 	Error_classification.each_pair do |expected_error_score, classification|
 		assert_instance_of(Fixnum, expected_error_score)
 		assert_instance_of(Symbol, classification)
 	end # each_pair
 	assert_equal(4, Error_classification.keys.size, Error_classification.inspect)
 	assert_equal(4, Error_classification.values.size, Error_classification.inspect)
-end # Error_classification
+	assert_match(Tests_pattern, Example_minitest_log)
+	assert_match(Assertions_pattern, Example_minitest_log)
+	assert_match(Failures_pattern, Example_minitest_log)
+	assert_match(Errors_pattern, Example_minitest_log)
+	assert_match(Tests_pattern, Example_testunit_log)
+	assert_match(Pendings_pattern, Example_testunit_log)
+	assert_match(Omissions_pattern, Example_testunit_log)
+	assert_match(Notifications_pattern, Example_testunit_log)
+	minitest_summary_regexp = Tests_pattern * Assertions_pattern * Failures_pattern * Errors_pattern
+	assert_match(Common_summary_regexp, Example_minitest_log)
+	testunit_summary_regexp = Common_summary_regexp * Pendings_pattern * Omissions_pattern * Notifications_pattern
+	assert_match(testunit_summary_regexp, Example_testunit_log)
+end # DefinitionalConstants
 def test_example_files
 	ret = {} # accumulate a hash
  	Error_classification.each_pair do |expected_error_score, classification|
@@ -31,6 +43,115 @@ def test_example_files
 	assert_equal(4, TestMaturity.example_files.keys.size, TestMaturity.example_files.inspect)
 	assert_equal(4, TestMaturity.example_files.values.size, TestMaturity.example_files.inspect)
 end # example_files
+def test_log_path?
+	executable_file = $PROGRAM_NAME
+	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity..test_executable.log_path?(executable_file))
+#	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity..test_executable.log_path?)
+end # log_path?
+def test_file_bug_reports
+	header,errors,summary=TestMaturity.parse_log_file(MinimalMaturity.test_executable.log_path?)
+	headerArray=header.split("\n")
+	assert_instance_of(Array, headerArray)
+	sysout=headerArray[0..-2]
+	assert_instance_of(Array, sysout)
+	assert_equal(headerArray.size,sysout.size+1)
+	run_time=headerArray[-1].split(' ')[2]
+	assert_equal('Finished',headerArray[-1].split(' ')[0],"headerArray='#{headerArray.inspect}', header='#{header.inspect}'")
+	assert_equal('in',headerArray[-1].split(' ')[1])
+	assert_equal('seconds.',headerArray[-1].split(' ')[3])
+	sysout,run_time=TestMaturity.parse_header(header)
+	assert_instance_of(Array, sysout)
+	refute_nil(run_time)
+	assert_operator(run_time, :>=, 0)
+	sysout,run_time=TestMaturity.parse_header(header)
+	refute_nil(run_time)
+	assert_operator(run_time, :>=, 0)
+end #file_bug_reports
+def test_parse_log_file
+	log_file = MinimalMaturity..test_executable.log_path?
+	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
+#	puts "blocks='#{blocks.inspect}'"
+	header= blocks[0]
+	errors=blocks[1..-2]
+	summary=blocks[-1]
+	headerArray=header.split("\n")
+	assert_instance_of(Array, headerArray)
+	assert_operator(headerArray.size,:>,1)
+	sysout=headerArray[0..-2]
+	assert_instance_of(Array, sysout)
+	assert_equal(headerArray.size,sysout.size+1)
+	run_time=headerArray[-1].split(' ')[2]
+	assert_equal('Finished',headerArray[-1].split(' ')[0],"headerArray[-1]='#{headerArray[-1].inspect}'")
+	assert_equal('in',headerArray[-1].split(' ')[1])
+	assert_equal('seconds.',headerArray[-1].split(' ')[3])
+	sysout,run_time=TestMaturity.parse_header(header)
+	assert_instance_of(Array, sysout)
+	refute_nil(run_time)
+	assert_operator(run_time, :>=, 0)
+	sysout,run_time=TestMaturity.parse_header(header)
+	refute_nil(run_time)
+	assert_operator(run_time, :>=, 0)
+	header,errors,summary=TestMaturity.parse_log_file(testRun..test_executable.log_path?)
+	refute_nil(header)
+	refute_nil(summary)
+end #parse_log_file
+def test_log_passed?
+end # log_passed?
+def test_summarize
+end # summarize
+def test_parse_summary
+end #parse_summary
+def test_parse_header
+	header,errors,summary=TestMaturity.parse_log_file(MinimalMaturity..test_executable.log_path?)
+	assert_operator(header.size,:>,0)
+	headerArray=header.split("\n")
+	assert_instance_of(Array, headerArray)
+	sysout=headerArray[0..-2]
+	assert_instance_of(Array, sysout)
+	assert_equal(headerArray.size,sysout.size+1)
+	run_time=headerArray[-1].split(' ')[2]
+	assert_equal('Finished',headerArray[-1].split(' ')[0],"headerArray[-1]='#{headerArray[-1].inspect}'")
+	assert_equal('in',headerArray[-1].split(' ')[1])
+	assert_equal('seconds.',headerArray[-1].split(' ')[3])
+	sysout,run_time=TestMaturity.parse_header(header)
+	assert_instance_of(Array, sysout)
+	refute_nil(run_time)
+	assert_operator(run_time, :>=, 0)
+end #parse_header
+def test_recursion_danger?
+	assert_equal(true, ExecutableMaturity.recursion_danger?)
+	assert_equal(false, MinimalMaturity.recursion_danger?)
+	assert_equal(false, MinimalMaturity3.recursion_danger?)
+end # recursion_danger?
+def test_run
+	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)
+	ruby_pattern = /ruby / * /2.1.2p95/
+	parenthetical_date_pattern = / \(/ * /2014-05-08/.capture(:compile_date) * /\)/
+	bracketed_os = / \[/ * /i386-linux-gnu/ * /\]/ * "\n"
+	version_pattern = ruby_pattern * parenthetical_date_pattern * bracketed_os
+	assert_match(ruby_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(parenthetical_date_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(ruby_pattern * parenthetical_date_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(parenthetical_date_pattern * bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	assert_match(version_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
+	output = TestRun.new(test_command: 'ruby', singular_table: 'unit').run.assert_post_conditions.output
+	unit_run = TestRun.new(test_command: 'ruby', singular_table: 'unit').run
+	assert_equal(0, unit_run.process_status, unit_run.inspect)
+	unit_run.assert_post_conditions
+	output = unit_run.output
+	tests_pattern = /[0-9]+/.capture(:tests) * / / * /tests/
+	assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/
+	failures_pattern = /[0-9]+/.capture(:failures) * / / * /failures/
+	errors_pattern = /[0-9]+/.capture(:errors) * / / * /errors/
+	pendings_pattern = /[0-9]+/.capture(:pendings) * / / * /pendings/
+	omissions_pattern = /[0-9]+/.capture(:omissions) * / / * /omissions/
+	notifications_pattern = /[0-9]+/.capture(:notifications) * / / * /notifications/
+	output_pattern = [tests_pattern, assertions_pattern, failures_pattern, errors_pattern,pendings_pattern]
+	output_pattern += [omissions_pattern, notifications_pattern]
+	test_results = output.parse(output_pattern)
+	assert_instance_of(Array, test_results)
+end #run
 def test_get_error_score!
 	assert_includes(TestMaturity.new(test_executable: TestExecutable.new(executable_file: $0)).instance_variables, :@test_executable)
 	refute_includes(TestMaturity.new(test_executable: TestExecutable.new(executable_file: $0)).instance_variables, :@cached_error_score)
@@ -61,6 +182,20 @@ def test_deserving_branch
 #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
 #	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
 end # deserving_branch
+def test_compare
+	assert_equal(0, MinimalMaturity3 <=> MinimalMaturity3)
+	assert_equal(0, MinimalMaturity <=> MinimalMaturity)
+	assert(MinimalMaturity.test_executable.testable?)
+	assert(MinimalMaturity3.test_executable.testable?)
+	refute_nil(MinimalMaturity.get_error_score!)
+	refute_nil(MinimalMaturity3.get_error_score!)
+	assert_equal(-1, MinimalMaturity.get_error_score! <=> MinimalMaturity3.get_error_score!)
+	assert_equal(-1, MinimalMaturity <=> MinimalMaturity3)
+	assert_equal(+1, MinimalMaturity3 <=> MinimalMaturity) # symmetric
+	assert_equal(true, ExecutableMaturity.test_executable.testable?)
+	assert_equal(false, ExecutableMaturity.test_executable.testable?(:recursion_danger))
+	
+end # <=>
 def test_error_classification
 	Error_classification.fetch(MinimalMaturity.get_error_score!, :multiple_tests_fail)
 end # error_classification
@@ -75,6 +210,7 @@ def test_branch_enhancement
 #	Branch::Branch_enhancement[MinimalMaturity.deserving_commit_to_branch]
 end # branch_enhancement
 end # TestMaturity
+
 class UnitMaturityTest < TestCase
 #include DefaultTests
 include Repository::Examples
