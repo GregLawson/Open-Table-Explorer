@@ -1,14 +1,48 @@
 passed
-2016-02-29 05:37:43.250
-ruby -v -W0 test/unit/test_executable_test.rb
+2016-03-04 12:43:06.594
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-..............
+................FE
 
-Finished in 0.069694s, 200.8777 runs/s, 301.3165 assertions/s.
+Finished in 0.099654s, 180.6241 runs/s, 341.1788 assertions/s.
 
-14 runs, 21 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+FileArgumentTest#test_unit_file? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:27]:
+Expected: false
+  Actual: true
+
+
+  2) Error:
+FileArgumentTest#test_regression_unit_test_file:
+RuntimeError: FilePattern.find_by_name(nil)=nil not found
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:69:in `pathname_pattern?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:59:in `regression_unit_test_file'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:37:in `test_regression_unit_test_file'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+18 runs, 34 assertions, 1 failures, 1 errors, 0 skips
 
