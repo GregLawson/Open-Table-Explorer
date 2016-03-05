@@ -15,12 +15,12 @@ class EditorTest < TestCase
 include Editor::Examples
 include UnitMaturity::Examples
 def test_initializes
-	te=Unit.new_from_path(TestEditor.test_executable.executable_file)
+	te=Unit.new_from_path(TestEditor.test_executable.argument_path)
 	refute_nil(te)
 	wf=Editor.new(TestEditor.test_executable)
 	refute_nil(wf)
 	refute_empty(TestEditor.test_executable.unit.edit_files, "TestEditor.test_executable.unit.edit_files=#{TestEditor.test_executable.unit.edit_files}")
-	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.executable_file, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
+	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.argument_path, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
