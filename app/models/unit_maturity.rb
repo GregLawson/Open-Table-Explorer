@@ -56,8 +56,8 @@ include DefinitionalConstants
 def example_files
 	ret = {} # accumulate a hash
  	Error_classification.each_pair do |expected_error_score, classification|
-		executable_file = Error_score_directory + classification.to_s + '.rb'
-		ret = ret.merge({executable_file => classification})
+		argument_path = Error_score_directory + classification.to_s + '.rb'
+		ret = ret.merge({argument_path => classification})
 	end # each_pair
 	ret
 end # example_files
@@ -137,11 +137,8 @@ def parse_header(header)
 end #parse_header
 end # ClassMethods
 extend ClassMethods
-def recursion_danger?
-	File.expand_path(@test_executable.executable_file) == File.expand_path($PROGRAM_NAME)
-end # recursion_danger?
 def get_error_score!
-	if recursion_danger? then
+	if @test_executable.recursion_danger? then
 		nil # avoid recursion
 	elsif @cached_error_score.nil? then
 		@cached_error_score = TestRun.new(test_executable: @test_executable).error_score?
@@ -150,8 +147,8 @@ def get_error_score!
 	end # if
 end # error_score
 def deserving_branch
-	if File.exists?(@test_executable.executable_file) then
-		deserving_commit_to_branch
+	if File.exists?(@test_executable.argument_path) then
+		deserving_commit_to_branch!
 	else
 		:edited
 	end # if
@@ -172,18 +169,18 @@ def <=>(other)
 		end # if
 	end # if
 end # <=>
-def error_classification
+def error_classification!
 	Error_classification.fetch(get_error_score!, :multiple_tests_fail)
-end # error_classification
-def deserving_commit_to_branch
-	TestMaturity::Push_branch[error_classification]
-end # deserving_commit_to_branch
-def expected_next_commit_branch
-	TestMaturity::Pull_branch[error_classification]
-end # expected_next_commit_branch
-def branch_enhancement
-	Branch::Branch_enhancement[deserving_commit_to_branch]
-end # branch_enhancement
+end # error_classification!
+def deserving_commit_to_branch!
+	TestMaturity::Push_branch[error_classification!]
+end # deserving_commit_to_branch!
+def expected_next_commit_branch!
+	TestMaturity::Pull_branch[error_classification!]
+end # expected_next_commit_branch!
+def branch_enhancement!
+	Branch::Branch_enhancement[deserving_commit_to_branch!]
+end # branch_enhancement!
 module Assertions
 module ClassMethods
 end #ClassMethods
@@ -214,9 +211,9 @@ end # deserving_branch
 end # Assertions
 module Examples
 include DefinitionalConstants
-ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(executable_file: $0))
-MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(executable_file: 'test/unit/minimal2_test.rb'))
-MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(executable_file: 'test/unit/minimal3_test.rb'))
+ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $0))
+MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb'))
+MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal3_test.rb'))
 end # Examples
 end # TestMaturity
 
