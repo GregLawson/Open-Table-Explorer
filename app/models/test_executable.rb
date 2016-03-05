@@ -17,7 +17,6 @@ include Virtus.model
 	attribute :argument_path, Pathname
 	attribute :unit, Unit, :default => 	lambda { |argument, attribute| Unit.new_from_path(argument.argument_path) }
 	attribute :pattern, Symbol, :default => 	lambda { |argument, attribute| FilePattern.find_from_path(argument.argument_path) }
-#	attribute :test_type, Symbol, :default => 	lambda { |argument, attribute| (argument.pattern.nil? ? :non_unit : argument.pattern[:name]) }
 	attribute :repository, Repository, :default => Repository::This_code_repository
 module Examples
 TestSelf = FileArgument.new(argument_path: $PROGRAM_NAME)
@@ -54,13 +53,6 @@ def generatable_unit_file?
 			false
 		end # if
 end # generatable_unit_file?
-def regression_unit_test_file
-	if unit_file? then
-			@unit.pathname_pattern?(@test_type) # unit_test_path
-	else
-		File.expand_path(@argument_path) # nonunit file
-	end # if
-end # regression_unit_test_file
 def recursion_danger?
 	File.expand_path(regression_unit_test_file) == File.expand_path($PROGRAM_NAME)
 end # recursion_danger?
@@ -103,6 +95,13 @@ def testable?(recursion_danger = nil)
 		nil # return nil if not in unit since regression testing is then impossible
 	end # if
 end # testable?
+def regression_unit_test_file
+	if generatable_unit_file? then
+			@unit.pathname_pattern?(@test_type) # unit_test_path
+	else
+		File.expand_path(@argument_path) # nonunit file
+	end # if
+end # regression_unit_test_file
 def regression_test
 	if testable? then
 		test_run = TestRun.new(TestExecutable.new(argument_path: unit_test_path)).error_score?

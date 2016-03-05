@@ -24,7 +24,7 @@ def test_unit_file?
 	assert_equal(true, TestMinimal.unit_file?)
 	assert_equal(true, Unit_non_executable.unit_file?)
 	assert_equal(false, Not_unit.unit_file?)
-	assert_equal(false, Not_unit_executable.unit_file?)
+	assert_equal(true, Not_unit_executable.unit_file?)
 end # unit_file?
 def generatable_unit_file?
 	assert_equal(true, TestSelf.generatable_unit_file?)
@@ -33,13 +33,6 @@ def generatable_unit_file?
 	assert_equal(false, Not_unit.generatable_unit_file?)
 	assert_equal(false, Not_unit_executable.generatable_unit_file?)
 end # generatable_unit_file?
-def test_regression_unit_test_file
-	assert_equal(File.expand_path($PROGRAM_NAME), TestSelf.regression_unit_test_file)
-	assert_equal(File.expand_path(TestMinimal.argument_path), TestMinimal.regression_unit_test_file)
-	assert_equal(File.expand_path(Not_unit.argument_path), Not_unit.regression_unit_test_file)
-	assert_equal(File.expand_path(Unit_non_executable.unit.pathname_pattern?(:unit)), Unit_non_executable.regression_unit_test_file)
-	assert_equal(File.expand_path(Not_unit_executable.unit.pathname_pattern?(:unit)), Not_unit_executable.regression_unit_test_file)
-end # regression_unit_test_file
 def test_recursion_danger?
 end # recursion_danger?
 end # FileArgument
@@ -78,6 +71,13 @@ def test_testable?
 	assert_equal(true, Not_unit_executable.testable?, Unit_non_executable.inspect)
 	assert_equal(true, Unit_non_executable.testable?, Unit_non_executable.inspect)
 end # testable?
+def test_regression_unit_test_file
+	assert_equal(File.expand_path($PROGRAM_NAME), TestSelf.regression_unit_test_file)
+	assert_equal(File.expand_path(TestMinimal.argument_path), TestMinimal.regression_unit_test_file)
+	assert_equal(File.expand_path(Not_unit.argument_path), Not_unit.regression_unit_test_file)
+	assert_equal(File.expand_path(Not_unit_executable.argument_path), Not_unit_executable.regression_unit_test_file)
+	assert_equal(File.expand_path(Unit_non_executable.argument_path), Unit_non_executable.regression_unit_test_file)
+end # regression_unit_test_file
 def test_regression_test
 end # regression_test
 def test_log_path?
