@@ -27,7 +27,7 @@ def initialize(test_executable)
 #	related_files = Unit.new_from_path(specific_file),
 #	repository = Repository.new(FilePattern.repository_dir?, :interactive))
 	@test_executable = test_executable
-	@specific_file = @test_executable.executable_file
+	@specific_file = @test_executable.argument_path
 	@unit_maturity = UnitMaturity.new(@test_executable.repository, test_executable.unit)
 	index = Branch::Branch_enhancement.index(@test_executable.repository.current_branch_name?)
 	if index.nil? then
@@ -139,7 +139,7 @@ module ClassMethods
 def assert_pre_conditions
 end # assert_pre_conditions
 def assert_post_conditions
-#	assert_pathname_exists(TestEditor.test_executable.executable_file, "assert_post_conditions")
+#	assert_pathname_exists(TestEditor.test_executable.argument_path, "assert_post_conditions")
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions
