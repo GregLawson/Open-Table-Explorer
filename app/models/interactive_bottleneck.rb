@@ -17,10 +17,9 @@ module ClassMethods
 include Constants
 def calc_test_maturity!(test_executable, recursion_danger = nil)
 		if test_executable.testable?(recursion_danger) then
-			test_maturity  = TestMaturity.new(test_executable: test_executable)
-			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
+			TestMaturity.new(test_executable: test_executable)
 	else
-			{test_executable: test_executable}
+			nil
 		end # if
 end # calc_test_maturity!
 end # ClassMethods
@@ -90,7 +89,7 @@ def dirty_test_maturities(recursion_danger = nil)
 	dirty_test_executables.map do |test_executable|
 		if test_executable.unit.nil? then # probably can't test if not in a unit
 			nil
-		elsif !recursion_danger.nil? &&(test_executable.executable_file == $PROGRAM_NAME) then
+		elsif !recursion_danger.nil? &&(test_executable.argument_path == $PROGRAM_NAME) then
 			{test_executable: test_executable} # terminate recursion
 		else
 			test_maturity  = TestMaturity.new(test_executable: test_executable)
@@ -335,7 +334,7 @@ extend Assertions::ClassMethods
 # TestWorkFlow.assert_pre_conditions
 include Constants
 module Examples
-TestTestExecutable = TestExecutable.new(executable_file: File.expand_path($PROGRAM_NAME))
+TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
 TestInteractiveBottleneck = InteractiveBottleneck.new(test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
 include Constants
 end # Examples

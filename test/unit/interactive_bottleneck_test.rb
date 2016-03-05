@@ -17,7 +17,7 @@ include InteractiveBottleneck::Examples
 def setup
 	@temp_repo = Repository.create_test_repository
 	refute_equal(Repository::This_code_repository, @temp_repo)
-	@temp_interactive_bottleneck = InteractiveBottleneck.new(test_executable: TestExecutable.new(executable_file: $0), repository: @temp_repo, interactive: :echo)
+	@temp_interactive_bottleneck = InteractiveBottleneck.new(test_executable: TestExecutable.new(argument_path: $0), repository: @temp_repo, interactive: :echo)
 	assert_equal(@temp_repo, @temp_interactive_bottleneck.repository)
 	refute_nil(@temp_interactive_bottleneck.interactive)
 end # setup
@@ -31,23 +31,22 @@ def test_calc_test_maturity
 		calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable, :recursion_danger)
 		message = calc_test_maturity.inspect
 		assert_instance_of(TestExecutable, test_executable, message)
-		assert_includes(calc_test_maturity.keys, :test_executable, message)
 		testable = test_executable.testable?
 		if testable then
 			refute_nil(test_executable.unit, message)
-			nil
+			calc_test_maturity # to be sorted
 		elsif testable.nil?
 			assert_nil(test_executable.unit, message)
 			nil
-		elsif !recursion_danger.nil? &&(TestInteractiveBottleneck.test_executable.executable_file == $PROGRAM_NAME) then
+		elsif !recursion_danger.nil? &&(TestInteractiveBottleneck.test_executable.argument_path == $PROGRAM_NAME) then
 			nil
 		else
 			refute_nil(test_executable.unit, message)
 			refute_nil(calc_test_maturity[:error_score], message)
 			assert_instance_of(Fixnum, calc_test_maturity[:error_score])
-			calc_test_maturity # to be sorted
+			nil
 		end # if
-	end.compact.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
+	end.compact.sort
 end # calc_test_maturity!
 def test_initialize
 	refute_empty(TestInteractiveBottleneck.test_executable.unit.edit_files, "TestInteractiveBottleneck.test_executable.unit.edit_files=#{TestInteractiveBottleneck.test_executable.unit.edit_files}")
@@ -110,7 +109,6 @@ def test_dirty_test_maturities
 		calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable, :recursion_danger)
 		message = calc_test_maturity.inspect
 		assert_instance_of(TestExecutable, test_executable, message)
-		assert_includes(calc_test_maturity.keys, :test_executable, message)
 		testable = test_executable.testable?
 		if testable then
 			refute_nil(test_executable.unit, message)
@@ -118,7 +116,7 @@ def test_dirty_test_maturities
 		elsif testable.nil?
 			assert_nil(test_executable.unit, message)
 			nil
-		elsif !recursion_danger.nil? &&(TestInteractiveBottleneck.test_executable.executable_file == $PROGRAM_NAME) then
+		elsif !recursion_danger.nil? &&(TestInteractiveBottleneck.test_executable.argument_path == $PROGRAM_NAME) then
 			nil
 		else
 			refute_nil(test_executable.unit, message)
@@ -126,26 +124,40 @@ def test_dirty_test_maturities
 			assert_instance_of(Fixnum, calc_test_maturity[:error_score])
 			calc_test_maturity # to be sorted
 		end # if
-	end.compact.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
-	TestInteractiveBottleneck.dirty_test_maturities(:danger).each do |test_maturity|
-		if test_maturity[:test_maturity].nil? then
-		else
-			refute_nil(test_maturity[:test_maturity], test_maturity.inspect)
-			assert_instance_of(TestMaturity, test_maturity[:test_maturity])
-		end # if
+	end.compact.sort
+	dirty_test_maturities = TestInteractiveBottleneck.dirty_test_maturities(:danger)
+	start_message = 'dirty_test_maturities[0] = ' + dirty_test_maturities[0].inspect + "\n"
+	start_message += 'dirty_test_maturities[0].test_executable.testable? = ' + dirty_test_maturities[0].test_executable.testable?.inspect + "\n"
+#	refute_nil(dirty_test_maturities[0].get_error_score!, message)
+	dirty_test_maturities.each do |test_maturity|
+		refute_nil(test_maturity, test_maturity.inspect)
+		assert_instance_of(TestMaturity, test_maturity)
+		message = start_message + 'test_maturity = ' + test_maturity.inspect
+		message += 'test_maturity.test_executable.testable? = ' + test_maturity.test_executable.testable?.inspect + "\n"
+		message += "\n"
+		assert_includes([1,0,-1], test_maturity.test_executable <=> dirty_test_maturities[0].test_executable, message)
+#		refute_nil(test_maturity.get_error_score!, message)
+		assert_includes([1,0,-1, nil], test_maturity.get_error_score! <=> dirty_test_maturities[0].get_error_score!, message)
+		assert_includes([1,0,-1], test_maturity <=> dirty_test_maturities[0], message)
+	end # each
+	dirty_test_maturities = dirty_test_maturities.sort
+	dirty_test_maturities.each do |test_maturity|
+		refute_nil(test_maturity, test_maturity.inspect)
+		assert_instance_of(TestMaturity, test_maturity)
 	end # each
 end # dirty_test_maturities
 def test_clean_directory
-	sorted = TestInteractiveBottleneck.dirty_test_maturities(:danger) #.sort
+	dirty_test_maturities = TestInteractiveBottleneck.dirty_test_maturities(:danger).compact
+	sorted = dirty_test_maturities #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
 	sorted.map do |test_maturity_hash|
 #already?		test(test_executable)
-		if test_maturity_hash[:test_maturity].nil? then # rercursion avoided
+		if test_maturity_hash.nil? then # rercursion avoided
 		else
-			refute_nil(test_maturity_hash[:test_maturity], test_maturity_hash.inspect)
-			assert_instance_of(TestMaturity, test_maturity_hash[:test_maturity], test_maturity_hash.inspect)
-			assert_includes(Branch::Branch_enhancement, test_maturity_hash[:test_maturity].deserving_branch, test_maturity_hash.inspect)
-			assert_equal(:unit, test_maturity_hash[:test_maturity].test_executable.test_type, test_maturity_hash.inspect)
-	#OK		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity_hash[:test_maturity].deserving_branch, test_maturity_hash.inspect)
+			refute_nil(test_maturity_hash, test_maturity_hash.inspect)
+			assert_instance_of(TestMaturity, test_maturity_hash, test_maturity_hash.inspect)
+			assert_includes(Branch::Branch_enhancement, test_maturity_hash.deserving_branch, test_maturity_hash.inspect)
+			assert_equal(:unit, test_maturity_hash.test_executable.test_type, test_maturity_hash.inspect)
+	#OK		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity_hash.deserving_branch, test_maturity_hash.inspect)
 			end # if
 	end # map
 end # clean_directory
