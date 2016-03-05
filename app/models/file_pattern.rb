@@ -13,19 +13,19 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
 module Constants
 # ordered from ambiguous to specific, common to rare
 Patterns = [
-	{:suffix =>'.rb', :name => :model, :prefix => 'app/models/', :example_file => __FILE__},
-	{:suffix =>'_test.rb', :name => :unit, :prefix => 'test/unit/', :example_file => $0},
-	{:suffix =>'.rb', :name => :script, :prefix => 'script/', :example_file => 'script/work_flow.rb'},
-	{:suffix =>'_test.rb', :name => :integration_test, :prefix => 'test/integration/', :example_file => 'test/integration/release_test.rb'}, 
-	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb'}, 
-	{:suffix =>'_assertions.rb', :name => :assertions, :prefix => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb'}, 
-	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :prefix => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb'},
-#	{:suffix =>'.log', :name => :library_log, :prefix => 'log/unit/', :example_file => 'log/unit/repository.log'},
-	{:suffix =>'.log', :name => :unit_log, :prefix => 'log/unit/', :example_file => 'log/unit/2.2/2.2.3p173/silence/repository.log'},
-	{:suffix =>'.log', :name => :assertions_test_log, :prefix => 'log/assertions_test/', :example_file => 'log/assertions_test/2.2/2.2.3p173/silence/minimal4.log'},
-	{:suffix =>'.log', :name => :long_log, :prefix => 'log/long/', :example_file => 'log/long/2.2/2.2.3p173/silence/repository.log'},
-	{:suffix =>'', :name => :data_sources_dir, :prefix => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540'},
-	{:suffix =>'.log', :name => :integration_log, :prefix => 'log/integration/', :example_file => 'log/integration/2.2/2.2.3p173/silence/repository.log'}
+	{:suffix =>'.rb', :name => :model, :prefix => 'app/models/', :example_file => __FILE__, :generate => true},
+	{:suffix =>'_test.rb', :name => :unit, :prefix => 'test/unit/', :example_file => $0, :generate => true},
+	{:suffix =>'.rb', :name => :script, :prefix => 'script/', :example_file => 'script/work_flow.rb', :generate => true},
+	{:suffix =>'_test.rb', :name => :integration_test, :prefix => 'test/integration/', :example_file => 'test/integration/release_test.rb', :generate => true}, 
+	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb', :generate => true}, 
+	{:suffix =>'_assertions.rb', :name => :assertions, :prefix => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb', :generate => true}, 
+	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :prefix => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb', :generate => true},
+#	{:suffix =>'.log', :name => :library_log, :prefix => 'log/unit/', :example_file => 'log/unit/repository.log', :generate => false},
+	{:suffix =>'.log', :name => :unit_log, :prefix => 'log/unit/', :example_file => 'log/unit/2.2/2.2.3p173/silence/repository.log', :generate => false},
+	{:suffix =>'.log', :name => :assertions_test_log, :prefix => 'log/assertions_test/', :example_file => 'log/assertions_test/2.2/2.2.3p173/silence/minimal4.log', :generate => false},
+	{:suffix =>'.log', :name => :long_log, :prefix => 'log/long/', :example_file => 'log/long/2.2/2.2.3p173/silence/repository.log', :generate => false},
+	{:suffix =>'', :name => :data_sources_dir, :prefix => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540', :generate => false},
+	{:suffix =>'.log', :name => :integration_log, :prefix => 'log/integration/', :example_file => 'log/integration/2.2/2.2.3p173/silence/repository.log', :generate => false}
 	]
 include Regexp::Constants
 Directory_delimiter=/\//
