@@ -92,7 +92,7 @@ def find_example?
 end # find_example?
 def make_executable_object(file_argument)
 	if @unit_class.included_modules.include?(Virtus::InstanceMethods) then
-		@unit_class.new(test_executable: TestExecutable.new(executable_file: file_argument))
+		@unit_class.new(test_executable: TestExecutable.new(argument_path: file_argument))
 	else
 		@unit_class.new(TestExecutable.new_from_path(file_argument))
 	end # if
@@ -197,12 +197,9 @@ def candidate_commands(number_arguments = nil)
 end # candidate_commands
 def candidate_commands_strings
 	candidate_commands.map do |c|
-		c[:candidate_command].to_s + ' ' + case c[:required_arguments]
-		when -1 then 'args...'
-		when 0 then ''
-		when 1 then 'arg'
-		when 2 then 'arg arg'
-		end + (c[:default_arguments] ? '...' : '') # case
+		c[:candidate_command].to_s + ' ' + 
+			(['arg'] * c[:required_arguments]).join(' ') + 
+			(c[:default_arguments] ? '...' : '')
 	end # map
 end # candidate_commands_strings
 def run(&non_default_actions)
