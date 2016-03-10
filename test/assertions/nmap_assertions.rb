@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2015 by Greg Lawson                                      
+#    Copyright (C) 2011-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -52,8 +52,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Eth0_ip = '192.168.1.126'
-My_host_nmap = Nmap.new(ip_range: Eth0_ip)
 #My_host_nmap_simplified_xml = My_host_nmap.xml["nmaprun"]
 Eth0_network = '192.168.1.1-254'
 Eth0_network_nmap = Nmap.new(ip_range: Eth0_network)

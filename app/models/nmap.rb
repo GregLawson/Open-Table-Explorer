@@ -10,6 +10,7 @@ require 'virtus'
 #require_relative '../../app/models/generic_table.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/network.rb'
 require_relative '../../app/models/host.rb'
 require 'multi_xml'
 class Nmap # < ActiveRecord::Base
@@ -23,6 +24,8 @@ module Constants # first of two
 Library_Unit = Unit.new_from_path(__FILE__)
 Pathname.new(Library_Unit.data_sources_directory?).mkpath
 Start_line = /Starting Nmap|Interesting ports|PORT|^$|Note: Host seems down/
+Eth0_ip = Network::My_IP
+My_host_nmap = Nmap.new(ip_range: Eth0_ip)
 end # Constants
 include Constants
 module ClassMethods
@@ -79,8 +82,10 @@ def parse_xml_file
 	Nmap.parse_xml(IO.read(xml_pathname), @parser)
 end # parse_xml_file
 def nmap_xml
-	run_status = nmap(options = '-oX ' + xml_pathname)
-	fail Exception.new(run_status.inspect) unless run_status.success?
+	if !File.exists?(xml_pathname) then
+		run_status = nmap(options = '-oX ' + xml_pathname)
+		fail Exception.new(run_status.inspect) unless run_status.success?
+	end # if
 	@xml = parse_xml_file
 end # nmap_xml
 # returns Array in all cases
