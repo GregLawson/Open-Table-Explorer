@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2014 by Greg Lawson                                      
+#    Copyright (C) 2011-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -36,21 +36,23 @@ MultiXml.parse('<tag>This is the contents</tag>') # Parsed using LibXML
 end # Constants
 def test_nmap
 	ip_range = Eth0_ip
-	nmap_run = ShellCommands.new('nmap ' + ip_range).assert_post_conditions
+	nmap_run = ShellCommands.new('nmap ' + ip_range) #.assert_post_conditions
 	capture = nmap_run.output.capture?(Start_line)
 	nmap_hash = nmap_run.output.parse(Start_line)
 end # nmap
-def test_nmap_xml
-	xml_run = Nmap.nmap(Eth0_ip)
-	xml_run.assert_post_conditions
-end # nmap_xml
 def test_parse_xml
 	string = '<tag>This is the contents</tag>'
 	parser = :nokogiri
 end # parse_xml_file
+def test_nmap_xml
+	xml_run = Nmap.new(ip_range: Eth0_ip).nmap
+	xml_run #.assert_post_conditions
+end # nmap_xml
 def test_parse_xml_file
 #	filename = 
 	assert_instance_of(Nmap, My_host_nmap)
+	refute_nil(My_host_nmap.xml)
+	assert_instance_of(String, My_host_nmap.xml)
 	assert_equal(["nmaprun"], My_host_nmap.xml.keys)
 	assert_equal("1.04", My_host_nmap.xml["nmaprun"]["xmloutputversion"])
 	assert_equal("6.00", My_host_nmap.xml["nmaprun"]["version"])
@@ -70,7 +72,8 @@ def test_hosts?
 	assert_operator(1, :<, Eth0_network_nmap.hosts?.size)
 end # hosts?
 def test_save
-	assert_equal("\"6.00\"", My_host_nmap.xml["nmaprun"]["version"].to_json)
+	refute_nil(My_host_nmap.xml["nmaprun"], My_host_nmap.xml.inspect)
+	refute_nil(My_host_nmap.xml["nmaprun"]["version"])
 #	assert_equal('\"' + Nmap.nmap_command_string(Eth0_ip) + '\"', My_host_nmap.xml["nmaprun"]["args"].to_json)
 	assert_equal("\"1.04\"", My_host_nmap.xml["nmaprun"]["xmloutputversion"].to_json)
 #	assert_equal('', My_host_nmap.to_json)

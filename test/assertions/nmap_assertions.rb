@@ -52,11 +52,11 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Eth0_ip = '192.168.5.100'
+Eth0_ip = '192.168.1.126'
 My_host_nmap = Nmap.new(ip_range: Eth0_ip)
 #My_host_nmap_simplified_xml = My_host_nmap.xml["nmaprun"]
-Eth0_network = '192.168.5.1-254'
+Eth0_network = '192.168.1.1-254'
 Eth0_network_nmap = Nmap.new(ip_range: Eth0_network)
-Failed_nmap = Nmap.new(ip_range: '192.168.5.1-2')
+Failed_nmap = Nmap.new(ip_range: '192.168.1.1-2')
 end # Examples
 end # Nmap
