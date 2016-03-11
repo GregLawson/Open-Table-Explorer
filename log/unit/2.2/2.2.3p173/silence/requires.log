@@ -1,0 +1,118 @@
+passed
+2016-03-09 15:51:32.570
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+..F..
+
+Finished in 0.009444s, 529.4313 runs/s, 105.8863 assertions/s.
+
+  1) Failure:
+NewTestClass#test_scan [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:20]:
+--- expected
++++ actual
+@@ -1,96 +1 @@
+-{"/home/greg/Desktop/src/Open-Table-Explorer/app/models/requires.rb"=>#<MatchCapture:0xXXXXXX @string="###########################################################################
+-#    Copyright (C) 2013-2016 by Greg Lawson
+-#    <GregLawson123@gmail.com>
+-#
+-# Copyright: See COPYING file that comes with this distribution
+-#
+-###########################################################################
+-require 'virtus'
+-#require_relative '../../app/models/no_db.rb'
+-require_relative '../../app/models/unit.rb'
+-require_relative '../../app/models/parse.rb'
+-class Require
+-module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+-Require_regexp = /require/ * /_relative/.capture(:relative)
+-end # DefinitionalConstants
+-include DefinitionalConstants
+-  include Virtus.value_object
+-  values do
+- \tattribute :unit, Unit
+-#\tattribute :age, Fixnum, :default => 789
+-#\tattribute :timestamp, Time, :default => Time.now
+-\tend # values
+-module ClassMethods
+-include DefinitionalConstants
+-def all
+-end # all
+-end # ClassMethods
+-extend ClassMethods
+-def scan
+-\tret = {}
+-\t@unit.edit_files.each do |file|
+-\t\tcode = IO.read(file)
+-\t\tparse = code.capture?(Require_regexp)
+-\t\tret = ret.merge({file => parse})
+-\tend # each
+-end # scan
+-module Constants # constant objects of the type (e.g. default_objects)
+-end # Constants
+-include Constants
+-# attr_reader
+-require_relative '../../app/models/assertions.rb'
+-module Assertions
+-module ClassMethods
+-def assert_pre_conditions(message='')
+-\tmessage+=\"In assert_pre_conditions, self=\#{inspect}\"
+-#\tasset_nested_and_included(:ClassMethods, self)
+-#\tasset_nested_and_included(:Constants, self)
+-#\tasset_nested_and_included(:Assertions, self)
+-\tself
+-end #assert_pre_conditions
+-def assert_post_conditions(message='')
+-\tmessage+=\"In assert_post_conditions, self=\#{inspect}\"
+-\tself
+-end #assert_post_conditions
+-end #ClassMethods
+-def assert_pre_conditions(message='')
+-\tmessage+=\"In assert_pre_conditions, self=\#{inspect}\"
+-\tself
+-end #assert_pre_conditions
+-def assert_post_conditions(message='')
+-\tmessage+=\"In assert_post_conditions, self=\#{inspect}\"
+-\tself
+-end #assert_post_conditions
+-end # Assertions
+-include Assertions
+-extend Assertions::ClassMethods
+-#self.assert_pre_conditions
+-module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+-include DefinitionalConstants
+-include Constants
+-Executing_requires = Require.new(unit: Unit::Executable)
+-end # Examples
+-end # Require
+-", @regexp=/require(?<relative>_relative)/, @length_hash_captures=1, @raw_captures=#<MatchData "require_relative" relative:"_relative">>, "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb"=>#<MatchCapture:0xXXXXXX @string="###########################################################################
+-#    Copyright (C) 2012-2016 by Greg Lawson
+-#    <GregLawson123@gmail.com>
+-#
+-# Copyright: See COPYING file that comes with this distribution
+-#
+-###########################################################################
+-require_relative 'test_environment'
+-require_relative '../../app/models/requires.rb'
+-class RequireTest < TestCase
+-#include DefaultTests
+-include RailsishRubyUnit::Executable.model_class?::Examples
+-def test_scan
+-\tret = {}
+-\tUnit::Executable.edit_files.each do |file|
+-\t\tcode = IO.read(file)
+-\t\tparse = code.capture?(Require_regexp)
+-\t\tret = ret.merge({file => parse})
+-\tend # each
+-\tassert_equal(ret, Executing_requires.scan)
+-end # scan
+-end # Requires
+-", @regexp=/require(?<relative>_relative)/, @length_hash_captures=1, @raw_captures=#<MatchData "require_relative" relative:"_relative">>}
++["/home/greg/Desktop/src/Open-Table-Explorer/app/models/requires.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb"]
+
+
+5 runs, 1 assertions, 1 failures, 0 errors, 0 skips
+
