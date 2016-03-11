@@ -198,6 +198,15 @@ def test_whereAmI
 #	explain_assert_respond_to(ifconfig, :fire)
 	Network.whereAmI
 end # whereAmI
+def test_Constants
+	arp_IP_file = IO.read('/proc/net/arp')
+	arp_IP_lines = IO.read('/proc/net/arp').split("\n")
+	assert_instance_of(Array, arp_IP_lines)
+	assert_operator(1, :<=, arp_IP_lines.size, arp_IP_lines.inspect)
+	if 2 <= arp_IP_lines.size then
+		arp_IP = IO.read('/proc/net/arp').split("\n")[1].split(' ')
+	end # if
+end # Constants
 def test_initialize
 end #initialize
 def test_equals

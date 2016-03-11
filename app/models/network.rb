@@ -124,7 +124,8 @@ end #ClassMethods
 extend ClassMethods
 module Constants # constant objects of the type (e.g. default_objects)
 My_IP = Network.ifconfig[:eth0][:ipv4]
-Arp_IP = IO.read('/proc/net/arp').split("\n")[1].split(' ')
+Arp_IP_file = IO.read('/proc/net/arp')
+Arp_IP_lines = IO.read('/proc/net/arp').split("\n")
 end # Constants
 include Constants
 attr_reader :ip_range
