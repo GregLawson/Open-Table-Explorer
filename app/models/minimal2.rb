@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2011-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -16,17 +16,18 @@ include DefinitionalConstants
 # 	attribute :branch, Symbol
 #	attribute :age, Fixnum, :default => 789
 #	attribute :timestamp, Time, :default => Time.now
-	end # values
+end # values
+# attr_reader
+#def initialize
+#end # initialize
 module ClassMethods
 include DefinitionalConstants
 end # ClassMethods
 extend ClassMethods
-#def initialize
-#end # initialize
 module Constants # constant objects of the type (e.g. default_objects)
+include DefinitionalConstants
 end # Constants
 include Constants
-# attr_reader
 require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
@@ -58,4 +59,4 @@ module Examples # usually constant objects of the type (easy to understand (perh
 include DefinitionalConstants
 include Constants
 end # Examples
-end # Minimal2
+end # Minimal
