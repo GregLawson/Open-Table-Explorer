@@ -77,7 +77,7 @@ def test_ifconfig
 	end # each_pair
 	
 #	assert_match(ipv6_CIDR_regexp, IFCONFIG.output)
-	inet6_addr_regexp = Leading_whitespace * /inet6 addr: / * ipv6_CIDR_regexp * / Scope:/ * (/Link|Global|Host/).capture(:scope) */\n/
+	inet6_addr_regexp = Leading_whitespace * /inet6 / * ipv6_CIDR_regexp * / Scope:/ * (/Link|Global|Host/).capture(:scope) */\n/
 #	assert_match(inet6_addr_regexp, IFCONFIG.output)
 	status_regexp = Leading_whitespace * /UP LOOPBACK RUNNING  MTU:65536  Metric:1/ */\n/
 #	assert_match(status_regexp, IFCONFIG.output)
@@ -89,40 +89,26 @@ def test_ifconfig
 #	assert_match(congestion_regexp, IFCONFIG.output)
 	rx_bytes_regexp = Leading_whitespace * /RX bytes:/ * /[0-9]+/ * / \(/ * /[0-9]+\.[0-9]/ * / GiB\)  TX bytes:/ * /[0-9]+/ * / \(4.7 GiB\)/ */\n/
 #	assert_match(rx_bytes_regexp, IFCONFIG.output)
-	line1_regexp = Leading_whitespace * device_name * /\s+/ * /Link encap:/ * /Ethernet  HWaddr / * hw_address * /  / * /\n/
-	assert_match(line1_regexp, IFCONFIG.output)
+#	line1_regexp = Leading_whitespace * device_name * /\s+/ * /Link encap:/ * /Ethernet  HWaddr / * hw_address * /  / * /\n/
+#	assert_match(line1_regexp, IFCONFIG.output)
 #	assert_match(line1_regexp * Context_Pattern, IFCONFIG.output)
 #	assert_match(line1_regexp * Context_Pattern * Network_Pattern, IFCONFIG.output)
 #	assert_match(line1_regexp * Context_Pattern * Network_Pattern * Node_Pattern, IFCONFIG.output)
 	
-	assert_match(Leading_whitespace * /inet /, IFCONFIG.output)
 	assert_match(IP_Pattern, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet / * IP_Pattern, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask /, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern * /  broadcast /, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern * /  broadcast / * IP_Pattern, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern * /  broadcast / * IP_Pattern, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern * /  broadcast / * IP_Pattern * /\n/, IFCONFIG.output)
 	assert_match(inet_addr_regexp, IFCONFIG.output)
 
-	ifconfig_regexp = line1_regexp * inet_addr_regexp
-	assert_match(ifconfig_regexp, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: /, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * hex_digit_lc, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * hex4_lc, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ip6_address, IFCONFIG.output)
-	ip6_regexp = Leading_whitespace * /inet6 addr: / * ip6_address
+	assert_match(Leading_whitespace * /inet6 /, IFCONFIG.output)
+	assert_match(Leading_whitespace * /inet6 / * hex_digit_lc, IFCONFIG.output)
+	assert_match(Leading_whitespace * /inet6 / * hex4_lc, IFCONFIG.output)
+	assert_match(Leading_whitespace * /inet6 / * ip6_address, IFCONFIG.output)
+	ip6_regexp = Leading_whitespace * /inet6 / * ip6_address
 	matchData = IFCONFIG.output.match(ip6_regexp)
 #	assert_equal('/64', matchData.post_match[0,3], matchData.inspect)
-	assert_match(Leading_whitespace * /inet6 addr: / * ip6_address * /\//, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ip6_address * /\/64 /, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ipv6_CIDR_regexp, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ipv6_CIDR_regexp * / /, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ipv6_CIDR_regexp * / Scope/, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ipv6_CIDR_regexp * / Scope:/, IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ipv6_CIDR_regexp * / Scope:/ * (/Link|Global|Host/).capture(:scope), IFCONFIG.output)
-	assert_match(Leading_whitespace * /inet6 addr: / * ipv6_CIDR_regexp * / Scope:/ * (/Link|Global|Host/).capture(:scope) */\n/, IFCONFIG.output)
+#	assert_match(Leading_whitespace * /inet6 / * ipv6_CIDR_regexp * / Scope/, IFCONFIG.output)
+#	assert_match(Leading_whitespace * /inet6 / * ipv6_CIDR_regexp * / Scope:/, IFCONFIG.output)
+#	assert_match(Leading_whitespace * /inet6 / * ipv6_CIDR_regexp * / Scope:/ * (/Link|Global|Host/).capture(:scope), IFCONFIG.output)
+#	assert_match(Leading_whitespace * /inet6 / * ipv6_CIDR_regexp * / Scope:/ * (/Link|Global|Host/).capture(:scope) */\n/, IFCONFIG.output)
 	assert_match(inet6_addr_regexp, IFCONFIG.output)
 	assert_match(status_regexp, IFCONFIG.output)
 	assert_match(rx_packets_regexp, IFCONFIG.output)
@@ -199,6 +185,11 @@ def test_whereAmI
 	Network.whereAmI
 end # whereAmI
 def test_Constants
+	assert_instance_of(Hash, Network.ifconfig)
+	assert_instance_of(Hash, Network.ifconfig[:eth0])
+	refute_nil(Network.ifconfig[:eth0][:ipv4], Network.ifconfig)
+	assert_instance_of(String, Network.ifconfig[:eth0][:ipv4])
+	assert_match(IP_Pattern, My_IP)
 	arp_IP_file = IO.read('/proc/net/arp')
 	arp_IP_lines = IO.read('/proc/net/arp').split("\n")
 	assert_instance_of(Array, arp_IP_lines)
