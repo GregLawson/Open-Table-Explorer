@@ -6,10 +6,11 @@
 #
 ###########################################################################
 class FileTree # < ActiveRecord::Base
-module Constants
-end #Constants
-include Constants
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+end # DefinitionalConstants
+include DefinitionalConstants
 module ClassMethods
+include DefinitionalConstants
 def file_type(file)
 	ret = File.ftype(file).to_sym
 	if ret == :file then
@@ -58,25 +59,40 @@ def file_tree(directory)
 end # file_tree
 end # ClassMethods
 extend ClassMethods
+module Constants # constant objects of the type (e.g. default_objects)
+include DefinitionalConstants
+end # Constants
+include Constants
+require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
+#	asset_nested_and_included(:ClassMethods, self)
+#	asset_nested_and_included(:Constants, self)
+#	asset_nested_and_included(:Assertions, self)
+	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
+	self
 end #assert_post_conditions
 end #ClassMethods
 def assert_pre_conditions(message='')
+	message+="In assert_pre_conditions, self=#{inspect}"
+	self
 end #assert_pre_conditions
 def assert_post_conditions(message='')
+	message+="In assert_post_conditions, self=#{inspect}"
+	self
 end #assert_post_conditions
-end #Assertions
+end # Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
-module Examples
-Net_directory = '/sys/class/net'
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+include DefinitionalConstants
 include Constants
-end #Examples
+Net_directory = '/sys/class/net'
+end # Examples
 end # FileTree
