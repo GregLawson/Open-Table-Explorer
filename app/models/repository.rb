@@ -170,6 +170,30 @@ def initialize(path)
 	puts '@path='+@path if $VERBOSE
 	@grit_repo=Grit::Repo.new(@path)
 end #initialize
+def ==(rhs)
+	@path == rhs.path
+end # equal
+def <=>(rhs) # allow sort
+	repository_compare = @path <=> rhs.path
+	if repository_compare.nil? then
+		if @path.nil? then
+			if rhs.path.nil? then
+				0
+			else
+				-1
+			end # if
+		else
+			if rhs.path.nil? then
+				+1
+			else
+				-1
+			end # if
+		end # if
+	else
+		repository_compare
+	end # if
+end # compare
+
 module Constants
 This_code_repository = Repository.new(Root_directory)
 end #Constants
@@ -180,9 +204,9 @@ end #shell_command
 def git_command(git_subcommand)
 	Repository.git_command(git_subcommand, @path)
 end #git_command
-def inspect
-	git_command('status --short --branch').output
-end #inspect
+#def inspect
+#	git_command('status --short --branch').output
+#end #inspect
 def corruption_fsck
 	git_command("fsck")
 end #corruption
