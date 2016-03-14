@@ -36,7 +36,7 @@ end # new_from_path
 def unit_names?(files)
 	files.map do |f|
 		FilePattern.unit_base_name?(f).to_s
-	end #map
+	end.uniq #map
 end #unit_names?
 def patterned_files
 	FilePattern.pathnames?('*').map do |globs|
@@ -122,7 +122,7 @@ def functional_parallelism(edit_files)
 		fp - edit_files==[] # files must exist to be edited?
 	end #map
 end #functional_parallelism
-def tested_files(executable)
+def tested_files(executable) # for staging after test
 	if executable==pathname_pattern?(:script) then # script only
 		[pathname_pattern?(:model), executable]
 	else case default_test_class_id? # test files
@@ -134,6 +134,39 @@ def tested_files(executable)
 	end #case
 	end - missing_files #if
 end #tested_files
+def <=>(other)
+	if self.model_basename.nil? then
+		if other.model_basename.nil? then
+			if self.project_root_dir.nil? then
+				if other.project_root_dir.nil? then
+					nil # never happen in real life?
+				else
+					-1
+				end # if
+			else
+				if other.project_root_dir.nil? then
+					+1
+				else
+					project_root_dir_comparison = self.project_root_dir <=> other.project_root_dir
+				end # if
+			end # if
+		else
+			-1
+		end # if
+
+	else
+		if other.model_basename.nil? then
+			+1
+		else
+			model_comparison = self.model_basename <=> other.model_basename
+			if model_comparison == 0 then
+				self.project_root_dir <=> other.project_root_dir
+			else
+				model_comparison
+			end # if
+		end # if
+	end # if
+end # <=>
 end # FileUnit
 
 module RubyClassUnit # class not in expected file
@@ -162,6 +195,11 @@ module Constants
 Executable = Unit.new_from_path($PROGRAM_NAME)
 end #Constants
 include Constants
+module Examples
+TestMinimal = Unit.new(model_basename: :minimal)
+Not_unit = Unit.new(model_basename: nil)
+Not_rooted = Unit.new(model_basename: nil, project_root_dir: nil) # testing nested conditions
+end # Examples
 end # Unit
 
 class RubyUnit < Unit

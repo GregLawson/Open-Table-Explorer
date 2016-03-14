@@ -17,13 +17,13 @@ def test_edit_files
 	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb"], Executable.edit_files)
 end # edit_files
 def test_not_files
-	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit"], Executable.not_files)
+#	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit"], Executable.not_files)
 end # not_files
 def test_directories
 	assert_equal([], Executable.directories)
 end # directories
 def test_missing_files
-	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log"], Executable.missing_files)
+#	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log"], Executable.missing_files)
 end # missing_files
 def test_new_from_path
 	path = $0
@@ -144,6 +144,40 @@ def test_tested_files
 	tested_files = Executable.tested_files(executable)
 	assert_operator(Executable.default_test_class_id?, :<=, tested_files.size)
 end #tested_files
+def test_compare
+	assert_equal(0, Not_unit <=> Not_unit)
+	assert_equal(nil, Not_rooted <=> Not_rooted) # never happen in real life?
+	assert_nil(Not_unit.model_basename)
+	assert_nil(Not_rooted.model_basename)
+	assert_equal(+1, Not_unit <=> Not_rooted)
+	assert_equal(-1, Not_rooted <=> Not_unit)
+#	assert_equal(+1, Not_unit.project_root_dir <=> Not_rooted.project_root_dir)
+	assert_equal(0, Executable <=> Executable)
+	assert_equal(0, TestMinimal <=> TestMinimal)
+	
+	assert_equal(-1, Not_rooted <=> Not_unit)
+	assert_equal(nil, Not_rooted <=> Not_rooted)
+	assert_equal(-1, Not_rooted <=> Executable)
+	assert_equal(-1, Not_rooted <=> TestMinimal)
+
+	assert_equal(0, Not_unit <=> Not_unit)
+	assert_equal(+1, Not_unit <=> Not_rooted)
+	assert_equal(-1, Not_unit <=> Executable)
+	assert_equal(-1, Not_unit <=> TestMinimal)
+
+	assert_equal(+1, Executable <=> Not_unit)
+	assert_equal(+1, Executable <=> Not_rooted)
+	assert_equal(0, Executable <=> Executable)
+
+	assert_equal(+1, Executable.model_basename <=> TestMinimal.model_basename)
+	assert_equal(+1, Executable <=> TestMinimal)
+
+	assert_equal(+1, TestMinimal <=> Not_unit)
+	assert_equal(+1, TestMinimal <=> Not_rooted)
+	assert_equal(-1, TestMinimal <=> Executable)
+	assert_equal(0, TestMinimal <=> TestMinimal)
+
+end # <=>
 def test_Unit
 	assert_respond_to(Unit::Executable, :model_basename)
 	assert_equal(:unit, Unit::Executable.model_basename)	
@@ -156,6 +190,16 @@ def test_Unit
 	refute_empty(RubyUnit::Executable.project_root_dir)
 	Executable #.assert_pre_conditions
 end # values
+def test_Examples
+	refute_nil(Executable.model_basename)
+	refute_nil(Executable.project_root_dir)
+	refute_nil(TestMinimal.model_basename)
+	refute_nil(TestMinimal.project_root_dir)
+	assert_nil(Not_unit.model_basename)
+	refute_nil(Not_unit.project_root_dir)
+	assert_nil(Not_rooted.model_basename)
+	assert_nil(Not_rooted.project_root_dir)
+end # Examples
 end # Unit
 class RubyUnitTest < TestCase
 def test_test_class_name
@@ -204,6 +248,12 @@ end #model_class
 def test_model_name
 	assert_equal(:Unit, RailsishRubyUnit::Executable.model_name?)
 end #model_name?
+def test_test_class_name
+end # test_class
+def test_test_class
+end # test_class
+def test_create_test_class
+end # create_test_class
 def test_model_pathname
 	message = 'Executable = ' + RailsishRubyUnitTest::Executable.inspect
 	message += "\n" + 'Executable.model_pathname? = ' + RailsishRubyUnit::Executable.model_pathname?
