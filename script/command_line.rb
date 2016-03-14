@@ -13,7 +13,7 @@ class CommandLine  < Command
 def help_banner_string
 		ret = 'Usage: ' + ' unit_basename subcommand  options args'
 		ret += 'Possible unit names:'
-		ret += Unit.all_basenames.join(' ,')
+		ret += Unit.all_basenames.join(', ')
 		ret += ' subcommands or units:  ' + SUB_COMMANDS.join(', ')
 		ret += ' candidate_commands with ' + command_line.number_of_arguments.to_s + ' or variable number of arguments:  '
 		command_line.candidate_commands_strings.each do |candidate_commands_string|
