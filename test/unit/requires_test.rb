@@ -17,6 +17,9 @@ def test_scan
 		parse = code.capture?(Require_regexp)
 		ret = ret.merge({file => parse})
 	end # each
+	assert_instance_of(Hash, ret)
+	assert_instance_of(Hash, Executing_requires.scan)
 	assert_equal(ret, Executing_requires.scan)
+	assert_includes(Executing_requires.scan.keys, Pathname.new('../../app/models/unit.rb').expand_path)
 end # scan
 end # Requires

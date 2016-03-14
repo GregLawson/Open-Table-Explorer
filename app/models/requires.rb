@@ -33,6 +33,7 @@ def scan
 		parse = code.capture?(Require_regexp)
 		ret = ret.merge({file => parse})
 	end # each
+	ret
 end # scan
 module Constants # constant objects of the type (e.g. default_objects)
 end # Constants
