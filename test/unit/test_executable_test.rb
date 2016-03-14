@@ -8,6 +8,63 @@
 require_relative 'test_environment'
 #require_relative '../../app/models/regexp.rb'
 require_relative '../../app/models/test_executable.rb'
+class RepositoryPathnameTest < TestCase
+include RepositoryPathname::Examples
+def test_RepositoryPathname
+	refute_empty(TestSelf.relative_pathname.to_s)
+	refute_empty(Not_unit.relative_pathname.to_s)
+	assert_equal(TestSelf.repository, Repository::This_code_repository)
+end # values
+def test_compare
+	assert_equal(0, TestSelf <=> TestSelf)
+	assert_equal(0, Not_unit <=> Not_unit)
+	assert_equal(0, Not_unit_executable <=> Not_unit_executable)
+	assert_equal(0, TestMinimal <=> TestMinimal)
+	assert_equal(0, Unit_non_executable <=> Unit_non_executable)
+
+	assert_equal(0, TestSelf.repository <=> Not_unit.repository)
+	refute_empty(TestSelf.relative_pathname.to_s)
+	refute_empty(Not_unit.relative_pathname.to_s)
+	refute_equal(TestSelf.relative_pathname.to_s, Not_unit.relative_pathname.to_s)
+	refute_equal(0, TestSelf.relative_pathname.to_s <=> Not_unit.relative_pathname.to_s)
+	assert_equal(1, TestSelf <=> Not_unit)
+	assert_equal(1, TestSelf <=> Not_unit_executable)
+	assert_equal(1, TestSelf <=> TestMinimal)
+	assert_equal(1, TestSelf <=> Unit_non_executable)
+	assert_equal(-1, Not_unit <=> TestSelf)
+	assert_equal(-1, Not_unit <=> Not_unit_executable)
+	assert_equal(-1, Not_unit <=> TestMinimal)
+	assert_equal(-1, Not_unit <=> Unit_non_executable)
+	assert_equal(-1, Not_unit_executable <=> TestSelf)
+	assert_equal(1, Not_unit_executable <=> Not_unit)
+	assert_equal(-1, Not_unit_executable <=> TestMinimal)
+	assert_equal(1, Not_unit_executable <=> Unit_non_executable)
+	assert_equal(-1, TestMinimal <=> TestSelf)
+	assert_equal(1, TestMinimal <=> Not_unit)
+	assert_equal(1, TestMinimal <=> Not_unit_executable)
+	assert_equal(1, TestMinimal <=> Unit_non_executable)
+	assert_equal(-1, Unit_non_executable <=> TestSelf)
+	assert_equal(1, Unit_non_executable <=> Not_unit)
+	assert_equal(-1, Unit_non_executable <=> Not_unit_executable)
+	assert_equal(-1, Unit_non_executable <=> TestMinimal)
+end # compare
+def test_inspect
+	assert_instance_of(String, TestSelf.inspect)
+	assert_equal(TestSelf.repository, Repository::This_code_repository)
+	assert_equal(TestSelf.relative_pathname, TestSelf.inspect)
+end # inspect
+def test_expand_path
+	assert_instance_of(Pathname, TestSelf.expand_path)
+end # expand_path
+def test_to_s
+	assert_includes(TestSelf.methods, :to_s)
+	assert_instance_of(String, TestSelf.to_s)
+	assert_equal(TestSelf.expand_path.to_s, TestSelf.to_s)
+end # to_s
+def test_coerce
+end # coerce
+end # RepositoryPathname
+
 class FileArgumentTest < TestCase
 include FileArgument::Examples
 def test_unit_file_type

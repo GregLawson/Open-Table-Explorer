@@ -12,6 +12,50 @@ require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 #require_relative '../../app/models/shell_command.rb'
 #require_relative '../../app/models/branch.rb'
+class RepositoryPathname < Pathname
+include Virtus.value_object
+  values do
+	attribute :relative_pathname, Pathname # simplify inspect, comparisons, and sorts?
+	attribute :repository, Repository, :default => Repository::This_code_repository
+end # values
+def <=>(rhs)
+	repository_compare = @repository <=> rhs.repository
+	if repository_compare == 0 then
+		@relative_pathname.to_s <=> rhs.relative_pathname.to_s
+	else
+		repository_compare
+	end # if
+end # compare
+def inspect
+	if @repository == Repository::This_code_repository then
+		@relative_pathname
+	elsif @relative_pathname.nil? then
+		'nil pathname'
+	else
+		@relative_pathname + ' in ' + @repository.path
+	end # if
+end # inspect
+def expand_path
+	Pathname.new(@repository.path + @relative_pathname)
+end # expand_path
+def to_s
+	@repository.path.to_s + @relative_pathname.to_s
+end # to_s
+module Examples
+TestSelf = RepositoryPathname.new(relative_pathname: $PROGRAM_NAME)
+Not_unit = RepositoryPathname.new(relative_pathname: '/dev/null')
+Not_unit_executable = RepositoryPathname.new(relative_pathname: 'test/data_sources/unit_maturity/success.rb')
+TestMinimal  = RepositoryPathname.new(relative_pathname: 'test/unit/minimal2_test.rb')
+Unit_non_executable = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
+end # Examples
+end # RepositoryPathname
+
+class RepositoryAssociation < Virtus::Attribute
+  def coerce(path)
+    path.is_a?(::RepositoryPathname) ? path : RepositoryPathname.new(relative_pathname: path)
+  end # coerce
+end # RepositoryAssociation
+
 class FileArgument
 include Virtus.model
 	attribute :argument_path, Pathname

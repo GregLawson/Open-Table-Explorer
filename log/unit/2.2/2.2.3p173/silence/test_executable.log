@@ -1,14 +1,19 @@
 passed
-2016-03-05 12:25:34.248
+2016-03-14 04:13:59.545
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-..................
+.....................F...
 
-Finished in 0.151725s, 118.6355 runs/s, 257.0435 assertions/s.
+Finished in 0.027954s, 894.3257 runs/s, 2361.0198 assertions/s.
 
-18 runs, 39 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+RepositoryPathnameTest#test_compare [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:31]:
+Expected: 1
+  Actual: -1
+
+25 runs, 66 assertions, 1 failures, 0 errors, 0 skips
 
