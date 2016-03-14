@@ -156,7 +156,7 @@ end # deserving_branch
 def <=>(other)
 	if @test_executable.testable? then
 		if other.test_executable.testable? then
-	get_error_score! <=> other.get_error_score!
+			get_error_score! <=> other.get_error_score!
 		else
 			+1
 		end # if

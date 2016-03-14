@@ -1,13 +1,13 @@
 passed
-2016-02-25 04:48:35.930
-ruby -v -W0 test/data_sources//test_maturity/initialization_fail.rb
+2016-03-14 04:31:44.819
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-Loaded suite test/data_sources//test_maturity/initialization_fail
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail
 Started
 E
 ===============================================================================
 Error: test_initialize(InitializationFailTest): RuntimeError: 
-test/data_sources//test_maturity/initialization_fail.rb:4:in `test_initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:4:in `test_initialize'
      1: require 'test/unit'
      2: class InitializationFailTest<Test::Unit::TestCase
      3: def test_initialize
@@ -17,10 +17,10 @@ test/data_sources//test_maturity/initialization_fail.rb:4:in `test_initialize'
 ===============================================================================
 
 
-Finished in 0.002954645 seconds.
+Finished in 0.002989651 seconds.
 ------
 1 tests, 0 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
 0% passed
 ------
-338.45 tests/s, 0.00 assertions/s
+334.49 tests/s, 0.00 assertions/s
 
