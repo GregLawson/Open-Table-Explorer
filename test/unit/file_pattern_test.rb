@@ -60,7 +60,7 @@ def test_unit_base_name
 	assert_includes(FilePattern.included_modules, FilePattern::Assertions)
 	assert_includes(FilePattern.methods, :assert_pre_conditions)
 	assert_respond_to(FilePattern, :assert_pre_conditions)
-	FilePattern.assert_pre_conditions
+	assert_equal(:minimal4, FilePattern.unit_base_name?(Path4))
 #	FilePattern.assert_naming_convention_match(Patterns[expected_match], path)
 	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
 	assert_equal(15, name_length, "basename.size=#{basename.size}, extension.size=#{extension.size}\n Patterns[expected_match]=#{Patterns[expected_match].inspect}\n Patterns[expected_match][:suffix].size=#{Patterns[expected_match][:suffix].size}, ")
@@ -168,8 +168,17 @@ def test_match_path
 		refute_nil(matchData, message)
 #		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
 #		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
+		assert(File.exists?(p[:example_file]), 'It is best for example files to actally exist. But ' + p.inspect + ' does not exist.')
 	end #map
 end # match_path
+def test_match_all?
+	match_all = FilePattern.match_all?(Path4)
+	assert_equal(Patterns.size, match_all.size, "")
+end # match_all
+def test_find_all_from_path
+	find_all_from_path = FilePattern.find_all_from_path(Path4)
+	assert_equal(2, find_all_from_path.size, find_all_from_path)
+end #find_all_from_path
 def test_find_from_path
 	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
 	assert_equal(:unit, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
@@ -181,6 +190,8 @@ def test_find_from_path
 	pattern=FilePattern.find_from_path(path)
 	refute_nil(pattern, path)
 	assert_equal(:data_sources_dir, pattern[:name])
+	match_all = FilePattern.match_all?(Path4)
+	assert_equal(:assertions_test, FilePattern.find_from_path(Path4)[:name], FilePattern.find_from_path(Path4).inspect)
 end #find_from_path
 def test_path?
 end # path?
@@ -202,8 +213,6 @@ def test_initialize
 	n=FilePattern.new(Patterns[0])
 	n.assert_pre_conditions
 	file_pattern=n
-	FilePattern.assert_post_conditions
-	FilePattern.assert_pre_conditions
 	assert_equal(:file_pattern, Library.unit_base_name)
 	assert_equal(:file_pattern, Executable.unit_base_name)
 	Executable.assert_post_conditions

@@ -53,8 +53,8 @@ def path2model_name?(path=$0)
 	unit_base_name?(path).to_s.camelize.to_sym
 end #path2model_name
 def unit_base_name?(path=$0)
-	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
-	path=File.expand_path(path)
+#	raise "path=#{path.inspect} must be a string" if !path.instance_of?(String)
+#	path=File.expand_path(path)
 	matched_pattern = find_from_path(path)
 	if matched_pattern.nil? then
 		nil
@@ -116,7 +116,7 @@ end #find_by_name
 def match_path(pattern, path)
 	p = pattern.clone
 		p[:path] = path
-		p[:prefix_match] = Regexp.new(p[:prefix]).match(path)
+		p[:prefix_match] = Regexp.new(p[:prefix]).match(path.to_s)
 		p[:full_match] = p[:prefix_match] && path[-p[:suffix].size, p[:suffix].size] == p[:suffix]
 	p
 end # match_path
