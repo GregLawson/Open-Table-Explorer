@@ -114,11 +114,11 @@ def find_by_name(name)
 	end #find
 end #find_by_name
 def match_path(pattern, path)
-	p = pattern.clone
-		p[:path] = path
-		p[:prefix_match] = Regexp.new(p[:prefix]).match(path.to_s)
-		p[:full_match] = p[:prefix_match] && path[-p[:suffix].size, p[:suffix].size] == p[:suffix]
-	p
+		pattern_match = pattern.clone
+		pattern_match[:path] = path
+		pattern_match[:prefix_match] = Regexp.new(pattern[:prefix]).match(path.to_s)
+		pattern_match[:full_match] = pattern_match[:prefix_match] && path.to_s[-pattern[:suffix].size, pattern[:suffix].size] == pattern[:suffix]
+	pattern_match
 end # match_path
 def match_all?(path)
 	path=File.expand_path(path)

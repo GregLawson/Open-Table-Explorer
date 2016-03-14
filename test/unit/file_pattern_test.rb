@@ -32,6 +32,10 @@ def test_Constants
 	assert_match(Relative_directory_regexp, Patterns[0][:prefix])
 	assert_match(Absolute_directory_regexp, Library.project_root_dir)
 #	assert_match(Relative_pathname_regexp, )
+	Patterns.each do |pattern|
+		path = Pathname.new(pattern[:example_file])
+		puts "\n\nIt is best for example files to actally exist. But " + pattern.inspect + ' does not exist.' if !File.exists?(path)
+	end # each
 end # Constants
 def test_executing_path?
 	squirrely_string = $PROGRAM_NAME
@@ -157,23 +161,25 @@ end #find_by_name
 def test_match_path
 	path='test/unit/_assertions_test.rb'
 	p=FilePattern.find_from_path(path)
-	successes=Patterns.map do |p|
-		example_file = Pathname.new(p[:example_file])
-		prefix=File.dirname(example_file)
-		expected_prefix=p[:prefix][0..-2] # drops trailing /
-		match_length=expected_prefix.size
-		message='p='+p.inspect
+	
+	successes=Patterns.map do |pattern|
+		path = Pathname.new(pattern[:example_file])
+		pattern_match = pattern.clone
+		pattern_match[:path] = path
+		prefix = File.dirname(path)
+		expected_prefix= pattern[:prefix][0..-2] # drops trailing /
+		match_length = expected_prefix.size
+		message='pattern='+pattern.inspect
 		message+="\nexpected_prefix="+expected_prefix
 		message+="\nprefix="+prefix
 		assert_operator(match_length, :<=, prefix.size, message)
 		refute_nil(prefix[-match_length,match_length], message)
-		assert_match(p[:prefix], example_file.to_s, message)
-		matchData=Regexp.new(p[:prefix]).match(example_file.to_s)
-		refute_nil(matchData, message)
+		assert_match(pattern[:prefix], path.to_s, message)
+		pattern_match[:prefix_match] = Regexp.new(pattern[:prefix]).match(path.to_s)
+		refute_nil(pattern_match[:prefix_match], message)
 #		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
 #		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
-		assert(File.exists?(example_file), 'It is best for example files to actally exist. But ' + p.inspect + ' does not exist.')
-		assert(FilePattern.match_path(p, example_file))
+		assert(FilePattern.match_path(pattern, path))
 	end #map
 end # match_path
 def test_match_all?

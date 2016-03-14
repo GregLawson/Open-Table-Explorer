@@ -1,18 +1,26 @@
 passed
-2016-03-14 04:08:05.209
+2016-03-14 13:04:31.294
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.........F......................
+...........................
 
-Finished in 0.033295s, 961.1185 runs/s, 5736.6762 assertions/s.
-
-  1) Failure:
-NewTestClass#test_match_path [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb:171]:
 It is best for example files to actally exist. But {:suffix=>".log", :name=>:assertions_test_log, :prefix=>"log/assertions_test/", :example_file=>"log/assertions_test/2.2/2.2.3p173/silence/minimal4.log", :generate=>false} does not exist.
 
-32 runs, 191 assertions, 1 failures, 0 errors, 0 skips
+
+It is best for example files to actally exist. But {:suffix=>".log", :name=>:long_log, :prefix=>"log/long/", :example_file=>"log/long/2.2/2.2.3p173/silence/repository.log", :generate=>false} does not exist.
+
+
+It is best for example files to actally exist. But {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/CA540", :generate=>false} does not exist.
+
+
+It is best for example files to actally exist. But {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/2.2/2.2.3p173/silence/repository.log", :generate=>false} does not exist.
+.....
+
+Finished in 0.035245s, 907.9206 runs/s, 6043.3468 assertions/s.
+
+32 runs, 213 assertions, 0 failures, 0 errors, 0 skips
 
