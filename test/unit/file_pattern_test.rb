@@ -120,8 +120,9 @@ def test_repository_dir?
 	end until done
 	assert_pathname_exists(dirname)
 	assert_pathname_exists(git_directory)
-	assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?($0))
 	assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
+	refute_empty(FilePattern.project_root_dir?(File.expand_path($PROGRAM_NAME)))
+	assert_equal(FilePattern.repository_dir?($0), FilePattern.project_root_dir?(File.expand_path($PROGRAM_NAME)))
 end #repository_dir?
 def test_project_root_dir
 #	require 'optparse'
@@ -145,6 +146,8 @@ def test_project_root_dir
 	path='.gitignore'
 	path=File.expand_path(path)
 	assert_pathname_exists(path)
+	refute_empty(FilePattern.project_root_dir?(File.expand_path($PROGRAM_NAME)))
+#	refute_empty(FilePattern.project_root_dir?($0))
 end #project_root_dir
 def test_find_by_name
 	FilePattern::Patterns.each do |p|
@@ -155,7 +158,8 @@ def test_match_path
 	path='test/unit/_assertions_test.rb'
 	p=FilePattern.find_from_path(path)
 	successes=Patterns.map do |p|
-		prefix=File.dirname(p[:example_file])
+		example_file = Pathname.new(p[:example_file])
+		prefix=File.dirname(example_file)
 		expected_prefix=p[:prefix][0..-2] # drops trailing /
 		match_length=expected_prefix.size
 		message='p='+p.inspect
@@ -163,12 +167,13 @@ def test_match_path
 		message+="\nprefix="+prefix
 		assert_operator(match_length, :<=, prefix.size, message)
 		refute_nil(prefix[-match_length,match_length], message)
-		assert_match(p[:prefix], p[:example_file], message)
-		matchData=Regexp.new(p[:prefix]).match(p[:example_file])
+		assert_match(p[:prefix], example_file.to_s, message)
+		matchData=Regexp.new(p[:prefix]).match(example_file.to_s)
 		refute_nil(matchData, message)
 #		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
 #		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
-		assert(File.exists?(p[:example_file]), 'It is best for example files to actally exist. But ' + p.inspect + ' does not exist.')
+		assert(File.exists?(example_file), 'It is best for example files to actally exist. But ' + p.inspect + ' does not exist.')
+		assert(FilePattern.match_path(p, example_file))
 	end #map
 end # match_path
 def test_match_all?
