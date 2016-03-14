@@ -87,15 +87,12 @@ def dirty_units
 end # dirty_units
 def dirty_test_maturities(recursion_danger = nil)
 	dirty_test_executables.map do |test_executable|
-		if test_executable.unit.nil? then # probably can't test if not in a unit
-			nil
-		elsif !recursion_danger.nil? &&(test_executable.argument_path == $PROGRAM_NAME) then
-			{test_executable: test_executable} # terminate recursion
-		else
+		if test_executable.testable? then
 			test_maturity  = TestMaturity.new(test_executable: test_executable)
-			{test_executable: test_executable, test_maturity: test_maturity, error_score: test_maturity.get_error_score!}
-		end.compact # if
-	end #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
+		else
+			nil # drop non-regression testable files
+		end # if
+	end.compact #.sort
 end # dirty_test_maturities
 def clean_directory
 	dirty_test_executables.sort.map do |test_executable|
