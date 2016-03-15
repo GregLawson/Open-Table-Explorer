@@ -102,8 +102,55 @@ def recursion_danger?
 end # recursion_danger?
 end # FileArgument
 
+class NilClass # reluctant monkee patch?
+def <=>(rhs)
+	rhs_nil_greater_defined = rhs.class.methods.include?(:nil_greater_than_all)
+	comparison = super(rhs)
+	if rhs_nil_greater_defined then
+		rhs_nil_greater = rhs.class.nil_greater_than_all?
+		if comparison.nil? then
+			case [self.nil?, rhs.nil?, self.class.nil_greater_than_all?, rhs.class.nil_greater_than_all?]
+			when [false, false, false] then comparison
+			when [false, false, true] then comparison
+			when [false, true, false] then -1
+			when [false, true, true] then +1
+			when [true, false, false] then +1
+			when [true, false, true] then -1
+			when [true, true, false] then 0
+			when [true, true, true] then 0
+			end # case
+		else
+			comparison
+		end # if
+	else
+		comparison
+	end # if
+end # comparison
+end # NilClass
+
+module NilComparable # allow nil; for comparisons
+include Comparable
+def <=>(rhs)
+	comparison = self <=> rhs
+	if comparison.nil? then
+		case [self.nil?, rhs.nil?, self.class.nil_greater_than_all?]
+		when [false, false, false] then comparison
+		when [false, false, true] then comparison
+		when [false, true, false] then -1
+		when [false, true, true] then +1
+		when [true, false, false] then +1
+		when [true, false, true] then -1
+		when [true, true, false] then 0
+		when [true, true, true] then 0
+		end # case
+	else
+		comparison
+	end # if
+end # comparison
+end # NilComparable
 
 class TestExecutable < FileArgument # executable / testable ruby unit with executable
+include NilComparable
 include Virtus.value_object
 values do
 	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion

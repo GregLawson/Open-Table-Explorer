@@ -1,19 +1,53 @@
 passed
-2016-03-14 04:13:59.545
+2016-03-16 15:03:45.830
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.....................F...
+.F..E....................F...
 
-Finished in 0.027954s, 894.3257 runs/s, 2361.0198 assertions/s.
+Finished in 0.034956s, 829.6106 runs/s, 2116.9374 assertions/s.
 
   1) Failure:
+NilClassTest#test_NilClass_comparison [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:102]:
+Expected [:to_i, :to_f, :to_s, :to_a, :to_h, :inspect, :&, :|, :^, :nil?, :to_r, :rationalize, :to_c, :blank?, :to_param, :try, :try!, :duplicable?, :to_json_with_active_support_encoder, :to_json_without_active_support_encoder, :to_json, :as_json, :<=>, :stub, :acts_like?, :present?, :presence, :to_query, :deep_dup, :in?, :presence_in, :instance_values, :instance_variable_names, :with_options, :`, :html_safe?, :info, :object_identities, :objectKind, :objectClass, :objectName, :canonicalName, :noninherited_public_instance_methods, :noninherited_public_class_methods, :whoAmI, :relationship, :module?, :noninherited_modules, :module_included?, :method_contexts, :context_names, :method_context, :matching_methods_in_context, :default_message, :caller_lines, :test_class_name, :psych_to_yaml, :to_yaml, :to_yaml_properties, :enumerate_single, :enumerate, :warn, :quieter, :assert_call_result, :assert_call, :assert_answer, :explain_assert_equal, :explain_assert_block, :explain_assert_respond_to, :assert_flat_set, :assert_set_promotable, :assert_subset, :assert_equal_sets, :assert_overlap, :assert_dir_includes, :assert_public_instance_method, :assert_array_of, :assert_no_duplicates, :assert_single_element_array, :assert_regexp, :assert_attribute_of, :assert_has_instance_methods, :assert_module_included, :global_name?, :assert_global_name, :assert_scope_path, :assert_path_to_constant, :assert_constant_path_respond_to, :assert_constant_instance_respond_to, :missing_file_message, :assert_pathname_exists, :assert_directory_exists, :assert_data_file, :nested_scope_modules?, :assert_nested_scope_submodule, :assert_included_submodule, :asset_nested_and_included, :diff, :mu_pp, :mu_pp_for_diff, :assert, :_synchronize, :assert_empty, :assert_equal, :assert_in_delta, :assert_in_epsilon, :assert_includes, :assert_instance_of, :assert_kind_of, :assert_match, :assert_nil, :assert_operator, :assert_output, :assert_predicate, :assert_raises, :assert_respond_to, :assert_same, :assert_send, :assert_silent, :assert_throws, :capture_io, :capture_subprocess_io, :exception_details, :flunk, :message, :pass, :refute, :refute_empty, :refute_equal, :refute_in_delta, :refute_in_epsilon, :refute_includes, :refute_instance_of, :refute_kind_of, :refute_match, :refute_nil, :refute_operator, :refute_predicate, :refute_respond_to, :refute_same, :skip, :skipped?, :must_be_empty, :must_equal, :must_be_close_to, :must_be_within_delta, :must_be_within_epsilon, :must_include, :must_be_instance_of, :must_be_kind_of, :must_match, :must_be_nil, :must_be, :must_output, :must_raise, :must_respond_to, :must_be_same_as, :must_be_silent, :must_throw, :wont_be_empty, :wont_equal, :wont_be_close_to, :wont_be_within_delta, :wont_be_within_epsilon, :wont_include, :wont_be_instance_of, :wont_be_kind_of, :wont_match, :wont_be_nil, :wont_be, :wont_respond_to, :wont_be_same_as, :===, :=~, :!~, :eql?, :hash, :class, :singleton_class, :clone, :dup, :itself, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?, :remove_instance_variable, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to?, :extend, :display, :method, :public_method, :singleton_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :class_eval, :silence_warnings, :enable_warnings, :with_warnings, :silence_stderr, :silence_stream, :suppress, :capture, :silence, :quietly, :concern, :add_default_message, :newline_if_not_empty, :trace_value, :trace_to_s, :trace, :trace_names?, :==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__] to include :>=.
+
+
+  2) Error:
+NilComparableTest#test_NilComparable_comparison:
+ArgumentError: comparison of Fixnum with nil failed
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:246:in `>='
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:246:in `assert_operator'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:113:in `test_NilComparable_comparison'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  3) Failure:
 RepositoryPathnameTest#test_compare [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:31]:
 Expected: 1
   Actual: -1
 
-25 runs, 66 assertions, 1 failures, 0 errors, 0 skips
+29 runs, 74 assertions, 2 failures, 1 errors, 0 skips
 

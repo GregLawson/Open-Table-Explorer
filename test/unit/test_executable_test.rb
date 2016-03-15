@@ -93,6 +93,30 @@ end # generatable_unit_file?
 def test_recursion_danger?
 end # recursion_danger?
 end # FileArgument
+class NilClassTest < TestCase
+def test_NilClass_comparison
+
+	assert_operator(nil, :==, nil)
+	assert_equal(false, nil != nil)
+	assert_includes(NilClass.instance_methods, :<=>)
+	assert_includes(NilClass.instance_methods, :>=)
+	assert_operator(nil, :>=, nil)
+	assert_operator(nil, :<=, nil)
+	assert_operator(nil, :>, nil)
+	assert_operator(nil, :<, nil)
+end # comparison
+end # NilClass
+class NilComparableTest < TestCase
+def test_NilComparable_comparison
+	assert_operator(nil, :==, nil)
+	assert_operator(0, :!=, nil)
+	assert_operator(0, :>=, nil)
+	assert_operator(0, :<=, nil)
+	assert_operator(0, :>, nil)
+	assert_operator(0, :<, nil)
+
+end # comparison
+end # NilComparable
 
 class TestExecutableTest < TestCase
 include TestExecutable::Examples
