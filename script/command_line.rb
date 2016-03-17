@@ -67,7 +67,7 @@ CommandLine::Script_command_line.run do
 			unit = RailsishRubyUnit.new(model_basename: sub_command.to_sym)
 			required_library_file = unit.model_pathname?
 			if File.exist?(required_library_file) then
-				require required_library_file
+				require required_library_file.to_s
 			elsif !Unit.all.include?(unit) then
 				fail unit.inspect + " is not a unit :" +Unit.all_basenames.join(' ,')
 			else

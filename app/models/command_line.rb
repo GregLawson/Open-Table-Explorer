@@ -230,7 +230,10 @@ def run(&non_default_actions)
 	end # if
 #	cleanup_ARGV
 #		scripting_workflow.script_deserves_commit!(:passed)
-	puts "run returns "+ run.inspect if command_line_opts[:inspect]
+	message = 'command_line  (' + inspect + ') '
+	message += ' run returns ' + ret.inspect + command_line_opts.inspect + caller.join("\n")
+	puts message if command_line_opts[:inspect]
+	puts "run returns "+ ret.inspect if command_line_opts[:inspect]
 	ret
 end #run
 def cleanup_ARGV
