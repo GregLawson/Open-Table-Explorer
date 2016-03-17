@@ -111,6 +111,7 @@ def discard_log_file_merge
 end # discard_log_file_merge
 def merge_conflict_recovery(from_branch)
 # see man git status
+	discard_log_file_merge # each branch's log file status is independant
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
 	unmerged_files = @repository.merge_conflict_files?
 	if !unmerged_files.empty? then
@@ -120,7 +121,6 @@ def merge_conflict_recovery(from_branch)
 			puts 'merge --X ours ' + from_branch.to_s
 			remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
 		end # if
-		discard_log_file_merge
 		unmerged_files.each do |conflict|
 				puts 'not checkout HEAD ' + conflict[:file]
 				case conflict[:conflict]
