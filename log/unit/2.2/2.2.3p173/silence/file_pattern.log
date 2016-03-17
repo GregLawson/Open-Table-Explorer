@@ -1,6 +1,6 @@
 passed
-2016-03-14 13:04:31.294
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb
+2016-03-17 07:30:20.566
+ruby -v -W0 test/unit/file_pattern_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
@@ -8,19 +8,19 @@ Run options: --seed 0
 
 ...........................
 
+It is best for example files to actally exist. But {:suffix=>"_test.rb", :name=>:long_test, :prefix=>"test/long_test/", :example_file=>"test/long_test/interactive_bottleneck_test.rb", :generate=>true} does not exist.
+
+
 It is best for example files to actally exist. But {:suffix=>".log", :name=>:assertions_test_log, :prefix=>"log/assertions_test/", :example_file=>"log/assertions_test/2.2/2.2.3p173/silence/minimal4.log", :generate=>false} does not exist.
 
 
-It is best for example files to actally exist. But {:suffix=>".log", :name=>:long_log, :prefix=>"log/long/", :example_file=>"log/long/2.2/2.2.3p173/silence/repository.log", :generate=>false} does not exist.
-
-
-It is best for example files to actally exist. But {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/CA540", :generate=>false} does not exist.
+It is best for example files to actally exist. But {:suffix=>".log", :name=>:long_log, :prefix=>"log/long_test/", :example_file=>"log/long_test/2.2/2.2.3p173/silence/interactive_bottleneck.log", :generate=>false} does not exist.
 
 
 It is best for example files to actally exist. But {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/2.2/2.2.3p173/silence/repository.log", :generate=>false} does not exist.
 .....
 
-Finished in 0.035245s, 907.9206 runs/s, 6043.3468 assertions/s.
+Finished in 0.039207s, 816.1784 runs/s, 5432.6875 assertions/s.
 
 32 runs, 213 assertions, 0 failures, 0 errors, 0 skips
 

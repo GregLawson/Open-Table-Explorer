@@ -17,14 +17,14 @@ Patterns = [
 	{:suffix =>'_test.rb', :name => :unit, :prefix => 'test/unit/', :example_file => $0, :generate => true},
 	{:suffix =>'.rb', :name => :script, :prefix => 'script/', :example_file => 'script/work_flow.rb', :generate => true},
 	{:suffix =>'_test.rb', :name => :integration_test, :prefix => 'test/integration/', :example_file => 'test/integration/release_test.rb', :generate => true}, 
-	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/repository_test.rb', :generate => true}, 
+	{:suffix =>'_test.rb', :name => :long_test, :prefix => 'test/long_test/', :example_file => 'test/long_test/interactive_bottleneck_test.rb', :generate => true}, 
 	{:suffix =>'_assertions.rb', :name => :assertions, :prefix => 'test/assertions/', :example_file => 'test/assertions/repository_assertions.rb', :generate => true}, 
 	{:suffix =>'_assertions_test.rb', :name => :assertions_test, :prefix => 'test/unit/', :example_file => 'test/unit/repository_assertions_test.rb', :generate => true},
 #	{:suffix =>'.log', :name => :library_log, :prefix => 'log/unit/', :example_file => 'log/unit/repository.log', :generate => false},
 	{:suffix =>'.log', :name => :unit_log, :prefix => 'log/unit/', :example_file => 'log/unit/2.2/2.2.3p173/silence/repository.log', :generate => false},
 	{:suffix =>'.log', :name => :assertions_test_log, :prefix => 'log/assertions_test/', :example_file => 'log/assertions_test/2.2/2.2.3p173/silence/minimal4.log', :generate => false},
-	{:suffix =>'.log', :name => :long_log, :prefix => 'log/long/', :example_file => 'log/long/2.2/2.2.3p173/silence/repository.log', :generate => false},
-	{:suffix =>'', :name => :data_sources_dir, :prefix => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/CA540', :generate => false},
+	{:suffix =>'.log', :name => :long_log, :prefix => 'log/long_test/', :example_file => 'log/long_test/2.2/2.2.3p173/silence/interactive_bottleneck.log', :generate => false},
+	{:suffix =>'', :name => :data_sources_dir, :prefix => 'test/data_sources/', :example_file => 'test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example.txt', :generate => false},
 	{:suffix =>'.log', :name => :integration_log, :prefix => 'log/integration/', :example_file => 'log/integration/2.2/2.2.3p173/silence/repository.log', :generate => false}
 	]
 include Regexp::Constants
@@ -59,7 +59,7 @@ def unit_base_name?(path=$0)
 	if matched_pattern.nil? then
 		nil
 	else
-		basename=File.basename(path)
+		basename=File.basename(path.to_s)
 		name_length = basename.size - matched_pattern[:suffix].size
 		basename[0,name_length].to_sym
 	end # if
@@ -89,10 +89,10 @@ def repository_dir?(path=$0)
 end #repository_dir?
 # returns nil if file does not follow any pattern
 def project_root_dir?(path=$0)
-	path=File.expand_path(path)
+#	path=File.expand_path(path)
 	matched_pattern = find_from_path(path)
 	roots=Constants::Patterns.map do |p|
-		matchData=Regexp.new(p[:prefix]).match(path)
+		matchData=Regexp.new(p[:prefix]).match(path.to_s)
 		if matchData.nil? then
 			nil
 		else
@@ -121,7 +121,7 @@ def match_path(pattern, path)
 	pattern_match
 end # match_path
 def match_all?(path)
-	path=File.expand_path(path)
+#	path=File.expand_path(path)
 	ret = Constants::Patterns.map do |p|
 		match = match_path(p, path)
 	end # map
