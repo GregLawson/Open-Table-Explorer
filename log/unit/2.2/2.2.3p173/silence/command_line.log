@@ -1,6 +1,6 @@
 passed
-2016-03-17 07:09:23.126
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
+2016-03-17 07:33:44.847
+ruby -v -W0 test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ..E..FE....E.EE.E......EF...F..
 
-Finished in 17.229614s, 1.7992 runs/s, 3.8887 assertions/s.
+Finished in 17.022737s, 1.8211 runs/s, 4.0534 assertions/s.
 
   1) Error:
 NewTestClass#test_Constants:
@@ -19,7 +19,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:52:in `test_Constants'
+    test/unit/command_line_test.rb:52:in `test_Constants'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -44,7 +44,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
 
 
   2) Failure:
-NewTestClass#test_required_arguments [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:37]:
+NewTestClass#test_required_arguments [test/unit/command_line_test.rb:37]:
 Expected: -1
   Actual: 0
 
@@ -310,7 +310,7 @@ wont_match ...
 wont_respond_to ...
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:138:in `arity'
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:144:in `default_arguments?'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:29:in `test_default_arguments?'
+    test/unit/command_line_test.rb:29:in `test_default_arguments?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -594,7 +594,7 @@ wont_include ...
 wont_match ...
 wont_respond_to ...
     /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:138:in `arity'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:20:in `test_arity'
+    test/unit/command_line_test.rb:20:in `test_arity'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -620,26 +620,8 @@ wont_respond_to ...
 
   5) Error:
 NewTestClass#test_executable_object:
-TypeError: no implicit conversion of nil into String
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb:124:in `expand_path'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb:124:in `match_all?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb:131:in `find_all_from_path'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb:137:in `find_from_path'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb:58:in `unit_base_name?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:33:in `new_from_path'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:115:in `block in <class:FileArgument>'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/default_value/from_callable.rb:29:in `call'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/default_value/from_callable.rb:29:in `call'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/accessor.rb:79:in `set_default_value'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:186:in `block in set_defaults'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:46:in `block in each'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:46:in `each'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:46:in `each'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:184:in `set_defaults'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/instance_methods.rb:185:in `set_default_attributes'
-    /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/instance_methods.rb:18:in `initialize'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:127:in `new'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:127:in `test_executable_object'
+NoMethodError: undefined method `executable_file' for #<TestExecutable:0x000000039fdaf0>
+    test/unit/command_line_test.rb:132:in `test_executable_object'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -672,7 +654,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:187:in `test_run'
+    test/unit/command_line_test.rb:187:in `test_run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -705,7 +687,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:512:in `nested_scope_modules?'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:518:in `assert_nested_scope_submodule'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/command_line_assertions.rb:21:in `assert_pre_conditions'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:224:in `test_readme_example'
+    test/unit/command_line_test.rb:224:in `test_readme_example'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -732,7 +714,7 @@ NoMethodError: undefined method `assertions' for CommandLine:Class
   8) Error:
 NewTestClass#test_dispatch_one_argument:
 Exception: infinite loop follows
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:159:in `test_dispatch_one_argument'
+    test/unit/command_line_test.rb:159:in `test_dispatch_one_argument'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -757,16 +739,16 @@ Exception: infinite loop follows
 
 
   9) Failure:
-NewTestClass#test_executable_method [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:154]:
+NewTestClass#test_executable_method [test/unit/command_line_test.rb:154]:
 $ ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb
 @errors="/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:215:in `run': minimal is not an instance method of Editor (Exception)\n candidate_commands = ! \n!= arg\n!~ arg\n<=> arg\n== arg\n=== arg\n=~ arg\n__id__ \n__send__ ...\n_synchronize \n` arg\nacts_like? arg\nadd_default_message ...\nas_json ...\nassert arg...\nassert_empty arg...\nassert_equal arg arg...\nassert_in_delta arg arg...\nassert_in_epsilon arg arg...\nassert_includes arg arg...\nassert_instance_of arg arg...\nassert_kind_of arg arg...\nassert_match arg arg...\nassert_nil arg...\nassert_operator arg arg...\nassert_output ...\nassert_post_conditions \nassert_pre_conditions \nassert_predicate arg arg...\nassert_raises ...\nassert_respond_to arg arg...\nassert_same arg arg...\nassert_send arg...\nassert_silent \nassert_throws arg...\nblank? \ncaller_lines ...\ncanonicalName \ncapture arg\ncapture_io \ncapture_subprocess_io \nclass \nclass_eval ...\nclone \nconcern arg\ncontext_names ...\ndeep_dup \ndefault_message \ndefine_singleton_method ...\ndiff arg arg\ndisplay ...\ndup \nduplicable? \nedit \nemacs ...\nenable_warnings \nenum_for ...\nenumerate ...\nenumerate_single ...\neql? arg\nequal? arg\nexception_details arg arg\nextend ...\nflunk ...\nfreeze \nfrozen? \ngoldilocks arg...\nhash \nhtml_safe? \nin? arg\ninfo arg\ninspect \ninstance_eval ...\ninstance_exec ...\ninstance_of? arg\ninstance_values \ninstance_variable_defined? arg\ninstance_variable_get arg\ninstance_variable_names \ninstance_variable_set arg arg\ninstance_variables \nis_a? arg\nitself \nkind_of? arg\nmatching_methods_in_context arg...\nmessage ...\nmethod arg\nmethod_context arg\nmethod_contexts ...\nmethods ...\nminimal_comparison? \nminimal_edit \nmodule? \nmodule_included? arg\nmu_pp arg\nmu_pp_for_diff arg\nnewline_if_not_empty arg\nnil? \nnoninherited_modules \nnoninherited_public_class_methods \nnoninherited_public_instance_methods \nobjectClass ...\nobjectKind \nobjectName ...\nobject_id \nobject_identities \npass ...\npresence \npresence_in arg\npresent? \nprivate_methods ...\nprotected_methods ...\npsych_to_yaml ...\npublic_method arg\npublic_methods ...\npublic_send ...\nquietly \nrefute arg...\nrefute_empty arg...\nrefute_equal arg arg...\nrefute_in_delta arg arg...\nrefute_in_epsilon arg arg...\nrefute_includes arg arg...\nrefute_instance_of arg arg...\nrefute_kind_of arg arg...\nrefute_match arg arg...\nrefute_nil arg...\nrefute_operator arg arg...\nrefute_predicate arg arg...\nrefute_respond_to arg arg...\nrefute_same arg arg...\nrelationship ...\nremove_instance_variable arg\nrespond_to? ...\nsend ...\nsilence arg\nsilence_stderr \nsilence_stream arg\nsilence_warnings \nsingleton_class \nsingleton_method arg\nsingleton_methods ...\nskip ...\nskipped? \nsplit arg arg\nsuppress ...\ntaint \ntainted? \ntap \ntest_executable \ntest_files ...\nto_enum ...\nto_json ...\nto_json_with_active_support_encoder ...\nto_json_without_active_support_encoder ...\nto_param \nto_query arg\nto_s \nto_yaml ...\nto_yaml_properties \ntrace arg\ntrace_names? ...\ntrace_to_s arg\ntrace_value arg...\ntrust \ntry ...\ntry! ...\nunit_maturity \nuntaint \nuntrust \nuntrusted? \nversion_comparison ...\nwhoAmI ...\nwith_options arg\nwith_warnings arg\n\tfrom script/command_line.rb:78:in `block in <main>'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:207:in `call'\n\tfrom /home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:207:in `run'\n\tfrom script/command_line.rb:61:in `<main>'\n"
-@process_status=#<Process::Status: pid 18155 exit 1>
+@process_status=#<Process::Status: pid 20654 exit 1>
 
 
 
  10) Failure:
-NewTestClass#test_argument_type [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:196]:
+NewTestClass#test_argument_type [test/unit/command_line_test.rb:196]:
 [:edited]
 
-31 runs, 67 assertions, 3 failures, 7 errors, 0 skips
+31 runs, 69 assertions, 3 failures, 7 errors, 0 skips
 

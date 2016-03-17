@@ -39,7 +39,7 @@ def test_required_arguments
 end # required_arguments
 include CommandLine::Examples
 Test_unit = RailsishRubyUnit.new(model_basename: :test_run)
-require Test_unit.model_pathname?
+require File.expand_path(Test_unit.model_pathname?)
 Test_unit_commandline = CommandLine.new(Test_unit.model_test_pathname?, Test_unit.model_class?, ['error_score?', $0])
 Not_virtus_unit = RailsishRubyUnit.new(model_basename: :command_line)
 Not_virtus_unit_commandline = CommandLine.new(Not_virtus_unit.model_test_pathname?, Not_virtus_unit.model_class?, ['help', $0])
